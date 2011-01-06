@@ -1,42 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/3
-Message-Id: <20110714164922.ebbccde6.erikd@mega-nerd.com>
-Date: Thu, 14 Jul 2011 16:49:22 +1000
-From: Erik de Castro Lopo <erikd@...a-nerd.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/6
+Message-ID: <AANLkTin4drz4DWXngqHVT70y0PyzBQ=6943Y-sZFqovf@mail.gmail.com>
+Date: Thu, 6 Jan 2011 17:12:22 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+Subject: CVE Request for Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
+http://seclists.org/fulldisclosure/2011/Jan/43
 
->    an integer overflow, leading to heap-based buffer overflow flaw was
-> found in the way libsndfile, library for reading and writing of sound
-> files, processed certain PARIS Audio Format (PAF) audio files with
-> crafted count of channels in the PAF file header. A remote attacker
-> could provided a specially-crafted PAF audio file, which once opened by
-> a local, unsuspecting user in an application, linked against libsndfile,
-> could lead to that particular application crash (denial of service),
+http://yehg.net/lab/pr0js/advisories/joomla/core/%5Bjoomla_1.0.x~15%5D_cross_site_scripting
 
-I agree with everything up to here.
 
-> or, potentially arbitrary code execution with the privileges of the
-> user running the application.
 
-but this is rubbish. The heap gets overwritten with zeros which would
-certainly lead to the application segfaulting. However, there is
-no way for arbitrary code to be executed on amy sane OS with proper
-memory protection.
+==============================================================================
+ Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
+==============================================================================
 
-Furthermore, Secunia when they contacted me about this said they would
-release information about this vulernability on the 18th and then ended
-up releasing it on the 12th instead which means I had to rush out the
-release I was working on (and would have easily had ready for the
-18th). That is not the way to win friends and influence people.
 
-Regards,
-Erik
--- 
-----------------------------------------------------------------------
-Erik de Castro Lopo
-http://www.mega-nerd.com/
+1. OVERVIEW
+
+The Joomla! 1.0.x series are currently vulnerable to Cross Site Scripting.
+
+
+2. BACKGROUND
+
+Joomla! is a free and open source content management system (CMS) for
+publishing content on the World Wide Web and intranets.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The "ordering" parameter in a core module,com_search, is not properly
+sanitized and thus vulnerable to XSS.
+By leveraging this vulnerability, attackers can compromise currently
+logged-in user/administrator session and impersonate arbitrary user
+actions available under /administrator/ functions. As the
+vulnerability is based on the core module, it affects both classic and
+customized Joomla! 1.0.x based web sites.
+
+
+4. VERSIONS AFFECTED
+
+Joomla! 1.0.x ~ 1.0.15 series
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://attacker.in/joomla1015/index.php?option=com_search&searchword=xss&searchphrase=any&ordering=newest%22%20onmousemove=alert%28document.cookie%29%20style=position:fixed;top:0;left:0;width:100%;height:100%;%22
+
+
+6. SOLUTION
+
+Joomla 1.0.x series has been at end of life since 2009-07-22.
+
+Upgrade to Joomla! 1.5.x family (1.5.22 as of 2011-01-06)
+
+
+7. VENDOR
+
+Joomla! Developer Team
+http://www.joomla.org
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-01-03: notified Joomla! Security Strike Team regardless of EOL status
+2011-01-06: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.0.x~15]_cross_site_scripting
+Joomla! 1.0.x End of Life -
+http://community.joomla.org/blogs/community/509-an-old-friend-comes-of-age.html
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-01-06]
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
