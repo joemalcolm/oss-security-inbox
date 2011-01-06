@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/11
-Message-Id: <20110106132934.dd49fe67.michael.s.gilbert@gmail.com>
-Date: Thu, 6 Jan 2011 13:29:34 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/14
+Message-ID: <872510506.193295.1294339837872.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 6 Jan 2011 13:50:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: hastymail before 1.01 XSS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 6 Jan 2011 13:08:59 -0500, Dan Rosenberg wrote:
-> This is a slippery slope.  I'm in favor of not having a CVE assigned
-> for this issue.
+Please use CVE-2010-4646 for this.
+
+Thanks.
+
+-- 
+     JB
+
+----- Original Message -----
+> See
+> http://www.hastymail.org/security/
 > 
-> Otherwise, wouldn't we need a CVE for every vector that allows
-> transitioning from various capabilities to root?  The capability
-> system may be poorly designed to allow such transitions, but I don't
-> think they represent unexpected behavior.
-
-What's the point of a capabilities system if its equivalent to root
-in the majority of cases anyway?  For file access/operations, there is
-always sudo and the /etc/sudoers file for making it easy to access to
-stuff thats accessed often without a password.  For port binding, the
-capabilities system makes sense; and according to Brad Spengler's list,
-those caps don't appear to be root equivalent so that could stay.
-Otherwise, I don't see the point.
-
-I'm not sure if there is a written security model for the capabilities
-system, but this looks to me like it would be a violation of it.
-
-Best wishes,
-Mike
+> "Many thanks to Julien CAYSSOL who discovered and reported the issue.
+> The
+> specific problem is an XSS attack vector in HTML formatted messages
+> that takes
+> advantage of background attributes used with table cell elements. Due
+> to an
+> incorrect implementation of the new htmLawed HTML filter this
+> attribute value
+> was not properly sanitized and could be used to inject executable
+> JavaScript.
+> This was NOT a flaw in the htmLawed filter code itself, but a problem
+> with
+> it's specific use in Hastymail2. The Hastymail2 1.01 release was
+> pacakages
+> specifically to address this one issue. "
+> 
+> --
+> Hanno Böck Blog: http://www.hboeck.de/
+> GPG: 3DBD3B20 Jabber/Mail: hanno@...eck.de
+> 
+> http://schokokeks.org - professional webhosting
