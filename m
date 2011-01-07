@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/1
-Message-Id: <201102232317.13530.timb@nth-dimension.org.uk>
-Date: Wed, 23 Feb 2011 23:16:59 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/4
+Message-ID: <2102528121.13641.1294430082647.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 7 Jan 2011 14:54:42 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Pattern lock bypass on SE X10 with Android 1.6
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request - pimd - Insecure file creation in /var/tmp
 Content-Type: text/plain; charset=utf-8
 
-Would something like http://www.nth-dimension.org.uk/blog.php?id=89 qualify 
-for a CVE?  I didn't really consider it when I published it because I was 
-working on the principal that it required physical access and you could 
-therefore argue that all bets are off but I was was wondering in the light of 
-the recent discussions about auto mounting bugs which share a similar quality.
+Please use CVE-2011-0007
 
-Tim
+Thanks.
+
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+    JB
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+----- Original Message -----
+> We received this report recently:
+> 
+> --
+> 
+> Hi!
+> 
+> There is a simple security hole in pimd allowing a user to destroy any
+> file in the filesystem. On USR1, pimd will write to /var/tmp/pimd.dump
+> a dump of the multicast route table. Since /var/tmp is writable by any
+> user, a user can create a symlink to any file he wants to destroy with
+> the content of the multicast routing table.
+> 
+> Attached is a simple patch that will instruct pimd to write the dump
+> to /var/lib/misc which is writable by root only and seems a valid
+> target according to the FHS (state files that don't need a
+> subdirectory).
+> 
+> This patch may cause tools that were sending USR1 and waiting for a
+> /var/tmp/pimd.dump file fail. I don't have a solution for this.
+> 
+> The patch also applies to /var/tmp/pimd.cache which is not implemented
+> yet but still creates the file when receiving USR2 signal. Despite its
+> name, this is also a state file, not a cache. The patch also just
+> drops the possibility to use /usr/tmp/pimd.dump based on some C
+> preprocessor conditions since I don't know if the preconditions would
+> work correctly on Debian/kFreeBSD.
