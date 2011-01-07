@@ -1,65 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/2
-Message-ID: <1314287667.1902.16.camel@scapa>
-Date: Thu, 25 Aug 2011 17:54:23 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: 639151@...s.debian.org
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com,  Sebastian Krahmer <krahmer@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/1
+Message-ID: <Pine.GSO.4.64.1101062115160.25420@faron.mitre.org>
+Date: Thu, 6 Jan 2011 21:26:26 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2011-08-24 at 20:55 +0200, Yves-Alexis Perez wrote:
-> And, out of curiosity, how would you achieve privilege escalation? You
-> should be able to erase/rewrite arbitrary files, including /etc/shadow,
-> but you don't really have control on what's written there. 
 
-In gdm (CVE-2011-0727 I guess) the issue was that a g_file_copy() was
-run as root from files under user control (.dmrc and the avatar), to a
-cache dir with write permissions (afaict). So it was easy to put
-whatever stuff you need in the original file and make a symlink
-to /etc/shadow in the destination folder so the g_file_copy() would
-erase that:
+On Thu, 6 Jan 2011, Michael Gilbert wrote:
 
-                 res = g_file_copy (src_file,
-                                    dst_file,
-                                    G_FILE_COPY_OVERWRITE |
-                                    G_FILE_COPY_NOFOLLOW_SYMLINKS,
-                                    NULL,
-                                    NULL,
-                                    NULL,
-                                    &error);
+> On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
+>> re: http://seclists.org/fulldisclosure/2011/Jan/39
+>>
+>> Just in case someone tries to request a CVE name for this, I'm not
+>> requesting for one because if you need CAP_SYS_ADMIN capability to
+>> exploit this, you are already privileged.
+>
+> Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
+> mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
+> exist. There is an exposure here, and for that it deserves a CVE
+> identifier (of course in my opinion).  See Brad Spengler's recent
+> write-up [0]. There should be some effort toward making those 21 root
+> equivalent capabilities discussed there non-equivalent.
 
+Unless/until there's some formal/semi-formal statement that "CAP_SYS_ADMIN 
+is equivalent to root in all cases," then these kinds of 
+privileged-to-privileged issues are within the scope of CVE since they 
+violate the security model; now, they might receive very low risk scores 
+because the attacker is already privileged, and I could see how vendors 
+might reasonably avoid publishing advisories for them, but that doesn't 
+mean there shouldn't be a CVE assigned to it.  Personally I agree with 
+Michael that if two cap's/privileges have both "A implies B" and "B 
+implies A," then one of them doesn't need to exist, but that's irrelevant.
 
-I'm not too sure what G_FILE_COPY_OVERWRITE means, if it truncate()s and
-write over of if it unlink()s and start fresh (digging in glib to find
-out). Apparenlty in the fallback case (not sure if it's the case here)
-it ends up doing a g_file_replace()).
+It would be interesting (though I suspect controversial) for someone in 
+the Linux kernel world to take a stab at more closely defining/defining a 
+"security policy" regarding capability-to-capability transitions.  (Or 
+could someone point me to one?)  As a Linux outsider, I like seeing these 
+kinds of discussions.
 
-In any case, in lightdm case, for .Xauthority file it uses
-g_file_replace() which creates a temporary file and then rename over the
-new file, so in the worst case you overwrite a system file with
-xauthority data.
-
-Same thing for .dmrc, you can overwrite system files but with dmrc data
-which look like 
-
-[Desktop]
-Session=xfce
-Lang=fr_FR.UTF-8
-
-so it doesn't look easy to gain root access with that.
-
-LightDM maintains a cache for dmrc files in /var/cache/lightdm but the
-folder is created 0700 so it doesn't look like one can put symlinks
-there and have it use a user-controled .dmrc.
-
-All in all, I'm not too sure there's a privilege escalation for
-Xauthority/.dmrc files (but if one exists, I'm interested in how to do
-it, by curiosity). But you still damage pretty much any arbitrary file,
-which is still an easy DoS.
-
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Steve
