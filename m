@@ -1,47 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/5
-Message-ID: <Pine.GSO.4.64.1103021804390.24409@faron.mitre.org>
-Date: Wed, 2 Mar 2011 18:05:45 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/1
+Message-ID: <Pine.GSO.4.64.1101062115160.25420@faron.mitre.org>
+Date: Thu, 6 Jan 2011 21:26:26 -0500 (EST)
 From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
+Subject: Re: CVE-NONE kernel: PHONET signedness issue
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 21 Feb 2011, Moritz Muehlenhoff wrote:
+On Thu, 6 Jan 2011, Michael Gilbert wrote:
 
-> 1. FreeBSD kernel: local DoS
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
-> http://www.exploit-db.com/exploits/16064/
-> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
+> On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
+>> re: http://seclists.org/fulldisclosure/2011/Jan/39
+>>
+>> Just in case someone tries to request a CVE name for this, I'm not
+>> requesting for one because if you need CAP_SYS_ADMIN capability to
+>> exploit this, you are already privileged.
+>
+> Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
+> mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
+> exist. There is an exposure here, and for that it deserves a CVE
+> identifier (of course in my opinion).  See Brad Spengler's recent
+> write-up [0]. There should be some effort toward making those 21 root
+> equivalent capabilities discussed there non-equivalent.
 
-Use CVE-2011-1132
+Unless/until there's some formal/semi-formal statement that "CAP_SYS_ADMIN 
+is equivalent to root in all cases," then these kinds of 
+privileged-to-privileged issues are within the scope of CVE since they 
+violate the security model; now, they might receive very low risk scores 
+because the attacker is already privileged, and I could see how vendors 
+might reasonably avoid publishing advisories for them, but that doesn't 
+mean there shouldn't be a CVE assigned to it.  Personally I agree with 
+Michael that if two cap's/privileges have both "A implies B" and "B 
+implies A," then one of them doesn't need to exist, but that's irrelevant.
 
-> 2. Xinha: Multiple vulnerabilities
-> (The code is included in a few web apps, e.g. serendipity, openacs or dotlrn)
-> http://secunia.com/advisories/40669/
-
-CVE-2011-1133 - XSS in mode param to 
-plugins/ExtendedFileManager/backend.php (David Vieira-Kurz)
-
-CVE-2011-1134 - file upload
-
-CVE-2011-1135 - XSS at end of URL to 
-plugins/ExtendedFileManager/manager.php and 
-plugins/ImageManager/manager.php (Riss McRee)
-
-
-> 3. tesseract: Insecure temp file handling
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
-
-CVE-2011-1136
-
-> 4. proftpd mod_sftp integer overflow
-> http://bugs.proftpd.org/show_bug.cgi?id=3586
-> http://www.exploit-db.com/exploits/16129/
-
-CVE-2011-1137
-
+It would be interesting (though I suspect controversial) for someone in 
+the Linux kernel world to take a stab at more closely defining/defining a 
+"security policy" regarding capability-to-capability transitions.  (Or 
+could someone point me to one?)  As a Linux outsider, I like seeing these 
+kinds of discussions.
 
 - Steve
