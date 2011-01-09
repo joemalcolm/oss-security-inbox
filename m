@@ -1,55 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/4
-Message-ID: <AANLkTin4pfxJma9Ev+ygaZ-ceXcXnCNHdTS7kFr0hG-6@mail.gmail.com>
-Date: Wed, 30 Mar 2011 13:26:43 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/09/1
+Message-ID: <AANLkTinvVDGHTHcef-u6ofXn7xkxN-yWg+XCfNRpHxF7@mail.gmail.com>
+Date: Sat, 8 Jan 2011 20:58:30 -0600
+From: Hyrum K Wright <hyrum@...umwright.org>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kurt@...fried.org>,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-Any update on this?
+On Wed, Jan 5, 2011 at 10:09 AM, Josh Bressers <bressers@...hat.com> wrote:
+>
+> OK, let's split the CVE id then.
+>
+> So for
+> A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
+>  Upstream changeset:
+>  http://svn.apache.org/viewvc?view=revision&revision=1033166
+>
+> Let's use CVE-2010-4539.
+>
+> For
+> B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+>   References:
+>   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+>   Upstream changeset:
+>   http://svn.apache.org/viewvc?view=revision&revision=1032808
+>
+> Let's use CVE-2010-4644.
 
-Thanks,
-Dan
+Sounds great.
 
-On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com> wrote:
-> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
->>
->> I sent in a patch [1] resolving two issues in ROSE:
->>
->> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
->> for a remote host to provide more digipeaters than expected, resulting
->> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
->> overflows, and abort facilities parsing on failure.
->>
->> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
->> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
->> length of less than 10, resulting in an underflow in a memcpy size,
->> causing a kernel panic due to massive heap corruption.  A length of
->> greater than 20 results in a stack overflow of the callsign array.
->> Abort facilities parsing on these invalid length values."
->>
->> These issues may both result in code execution.  They may be triggered
->> by a remote attacker if the victim has a listening ROSE socket, or by
->> a local attacker (for privilege escalation) if a ROSE device exists
->> (e.g. rose0).
->>
->> Ben Hutchings followed up with a patch [2] that resolves a number of
->> other ROSE issues related to lack of size field validation, some of
->> which may also result in heap corruption.
->>
->> Not sure about the proper CVE breakdown for all these issues, since
->> the entire protocol was quite broken.  Perhaps one is enough to cover
->> everything.
->
-> I am not sure. I would just assign one for the collection of issues here but
-> I will let Steve decide instead.
->
->> [1] http://marc.info/?l=linux-netdev&m=130060344616926
->> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
->
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
+Should the Subversion project plan to write and publish advisories for
+these CVEs, or has the requester already done so?
+
+-Hyrum
