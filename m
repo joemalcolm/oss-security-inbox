@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/4
-Message-ID: <4EC9C65D.3040803@redhat.com>
-Date: Mon, 21 Nov 2011 11:32:45 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-4112 kernel: null ptr deref at dev_queue_xmit+0x35/0x4d0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/09/1
+Message-ID: <AANLkTinvVDGHTHcef-u6ofXn7xkxN-yWg+XCfNRpHxF7@mail.gmail.com>
+Date: Sat, 8 Jan 2011 20:58:30 -0600
+From: Hyrum K Wright <hyrum@...umwright.org>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, Kurt Seifried <kurt@...fried.org>,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
+Subject: Re: CVE request for subversion
 Content-Type: text/plain; charset=utf-8
 
-This can be triggered by setting up a bridge over vlan, and running pktgen.
+On Wed, Jan 5, 2011 at 10:09 AM, Josh Bressers <bressers@...hat.com> wrote:
+>
+> OK, let's split the CVE id then.
+>
+> So for
+> A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
+>  Upstream changeset:
+>  http://svn.apache.org/viewvc?view=revision&revision=1033166
+>
+> Let's use CVE-2010-4539.
+>
+> For
+> B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
+>   References:
+>   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
+>   Upstream changeset:
+>   http://svn.apache.org/viewvc?view=revision&revision=1032808
+>
+> Let's use CVE-2010-4644.
 
-Reference:
-https://bugzilla.redhat.com/CVE-2011-4112
+Sounds great.
 
-Upstream commits:
-After the last patch, We are left in a state in which only drivers
-calling ether_setup have IFF_TX_SKB_SHARING set (we assume that drivers
-touching real hardware call ether_setup for their net_devices and don't
-hold any state in their skbs.  There are a handful of drivers that
-violate this assumption of course, and need to be fixed up.  This patch
-identifies those drivers, and marks them as not being able to support
-the safe transmission of skbs by clearning the IFF_TX_SKB_SHARING flag
-in priv_flags
-http://git.kernel.org/linus/550fd08c2cebad61c548def135f67aba284c6162
+Should the Subversion project plan to write and publish advisories for
+these CVEs, or has the requester already done so?
 
-Pktgen attempts to transmit shared skbs to net devices, which can't be
-used by some drivers as they keep state information in skbs.  This patch
-adds a flag marking drivers as being able to handle shared skbs in their
-tx path.  Drivers are defaulted to being unable to do so, but calling
-ether_setup enables this flag, as 90% of the drivers calling ether_setup
-touch real hardware and can handle shared skbs.  A subsequent patch will
-audit drivers to ensure that the flag is set properly
-http://git.kernel.org/linus/d8873315065f1f527c7c380402cf59b1e1d0ae36
+-Hyrum
