@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/3
-Message-ID: <4E267FCF.6030003@redhat.com>
-Date: Wed, 20 Jul 2011 15:12:15 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: ipv6: make fragment identifications less predictable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/2
+Message-ID: <AANLkTi=VApwAGz+n7Y39r2B8fVdvkm3HcmNwe+xd4hD-@mail.gmail.com>
+Date: Mon, 10 Jan 2011 20:48:01 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: Eygene Ryabinkin <rea-sec@...elabs.ru>
+Cc: oss-security@...ts.openwall.com, kalle@....net, felipe@....net,  cellog@....net, pajoye@....net
+Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
 Content-Type: text/plain; charset=utf-8
 
-IPv6 fragment identification generation is way beyond what we use for
-IPv4 : It uses a single generator. Its not scalable and allows DoS attacks.
+I have to do it. But I would suggest to use the released version in
+the mean time. Zero difference in the code base.
 
-Now inetpeer is IPv6 aware, we can use it to provide a more secure and
-scalable frag ident generator (per destination, instead of system wide)
+On Mon, Jan 10, 2011 at 6:38 PM, Eygene Ryabinkin <rea-sec@...elabs.ru> wrote:
+> Felipe, good day.
+>
+> Sun, Dec 26, 2010 at 05:26:29PM -0200, Felipe Pena wrote:
+>> Yes, I will contact anyone to do it... (I'm not the ext/phar maintainer)
+>
+> Any news on this?  http://pecl.php.net/package/phar shows no
+> revisions :((
+> --
+> Eygene
+>
 
-This patch :
-1) defines a new secure_ipv6_id() helper
-2) extends inet_getid() to provide 32bit results
-3) extends ipv6_select_ident() with a new dest parameter
 
-http://thread.gmane.org/gmane.linux.network/201773/focus=201776
-https://bugzilla.redhat.com/show_bug.cgi?id=723429
 
-Thanks, Eugene
+-- 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
