@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/4
-Message-ID: <0F278B0E7FB40349B635BE500A9BA27F0E3334C6@ALA-MBB.corp.ad.wrs.com>
-Date: Wed, 11 May 2011 16:05:15 +0000
-From: "Zhao, Zhenfeng" <Zhenfeng.Zhao@...driver.com>
-To: Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [security-vendor] Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/3
+Message-ID: <411266069.30501.1294694524342.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Jan 2011 16:22:04 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
 Content-Type: text/plain; charset=utf-8
 
-Much Thanks.
+"The semantics of the ',password' option to -vnc are that it enables the VNC
+auth scheme. If the VNC server password is unset or empty string, all attempts
+to authenticate with the server will be explicitly blocked.
 
-Zhenfeng(Jeffrey) Zhao
+This allows applications to enable and selectively allow access for a period of
+time, before clearing the password again to prevent further access.
 
-> -----Original Message-----
-> From: owner-security-vendor@...driver.com [mailto:owner-security-
-> vendor@...driver.com] On Behalf Of Solar Designer
-> Sent: Wednesday, May 11, 2011 11:56 PM
-> To: oss-security@...ts.openwall.com
-> Subject: [security-vendor] Re: [oss-security] Closed list
-> 
-> On Mon, May 02, 2011 at 02:56:16PM -0400, Josh Bressers wrote:
-> > ----- Original Message -----
-> > > On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
-> > > > I think this is suitable. The goal here is to ensure that a vendor
-> > > > is actually producing updates and aren't just a potential leak.
-> > >
-> > > OK, so do you propose that we subscribe Wind River, and wait for
-> > > MontaVista to setup something similar to these RSS feeds before we
-> > > also subscribe them?
-> >
-> > I'm OK with this action.
-> 
-> I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
-> 
-> Alexander
+Upstream changes have introduced a flaw by disabling all authentication when
+the password was cleared with upstream commit [1].
+
+[1]
+http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=668589
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
+
