@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/3
-Message-ID: <4EA8172F.50005@redhat.com>
-Date: Wed, 26 Oct 2011 08:20:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: xfs: potential buffer overflow in xfs_readlink()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/2
+Message-ID: <AANLkTi=VApwAGz+n7Y39r2B8fVdvkm3HcmNwe+xd4hD-@mail.gmail.com>
+Date: Mon, 10 Jan 2011 20:48:01 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: Eygene Ryabinkin <rea-sec@...elabs.ru>
+Cc: oss-security@...ts.openwall.com, kalle@....net, felipe@....net,  cellog@....net, pajoye@....net
+Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2011 05:05 AM, Petr Matousek wrote:
-> A flaw was found in the way Linux kernel's XFS filesystem implementation
-> handled links with pathname larger than MAXPATHLEN. When
-> CONFIG_XFS_DEBUG configuration option was not enabled when compiling
-> Linux kernel, an attacker able to mount malicious XFS image could use
-> this flaw to crash the system, or potentially, elevate his privileges
-> on that system.
+I have to do it. But I would suggest to use the released version in
+the mean time. Zero difference in the code base.
+
+On Mon, Jan 10, 2011 at 6:38 PM, Eygene Ryabinkin <rea-sec@...elabs.ru> wrote:
+> Felipe, good day.
 >
-> Proposed upstream patch:
-> http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+> Sun, Dec 26, 2010 at 05:26:29PM -0200, Felipe Pena wrote:
+>> Yes, I will contact anyone to do it... (I'm not the ext/phar maintainer)
 >
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=749156
-> http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+> Any news on this?  http://pecl.php.net/package/phar shows no
+> revisions :((
+> --
+> Eygene
 >
-> Thanks,
-Please use CVE-2011-4077 for this issue.
+
+
 
 -- 
+Pierre
 
--Kurt Seifried / Red Hat Security Response Team
-
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
