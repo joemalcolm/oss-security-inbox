@@ -1,56 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/6
-Message-ID: <4EA818AA.5020907@redhat.com>
-Date: Wed, 26 Oct 2011 08:26:50 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/3
+Message-ID: <411266069.30501.1294694524342.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Jan 2011 16:22:04 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Round Cube Webmail -- DoS (unavailability to access user's INBOX) after receiving an email message with the URL in the Subject
+Cc: coley@...us.mitre.org
+Subject: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2011 07:14 AM, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
->
->   a security flaw was found in the way Round Cube Webmail,
-> a browser-based multilingual IMAP client, processed certail
-> email-messages containing URL link in the message Subject,
-> when the Suhosin check for dangerous PHP files inclusion
-> was enabled. A remote attacker could send a specially-crafted
-> email message to the victim, leading to denial of service
-> (situation, where victim could not open their mail INBOX
-> folder with the crafted email message present).
->
-> References:
-> [1] http://trac.roundcube.net/ticket/1488086
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=646675
-> [3] https://bugs.php.net/bug.php?id=55475
->
-> Note: This is a strange one. The original source of the issue
->       seems to be PHP-Pear is_a() routine autoload bug:
->       https://bugs.php.net/bug.php?id=55475
->
->       and truly this deficiency might affect another package,
->       than roundcubemail (php-pear-MDB2 in Fedora case).
->
->       But it is a combination of this php-pear-MDB2 deficiency,
->       roundcube's handling of is_a() routine and Suhosin's
->       check for dangerous *.php files inclusion, which in
->       result might lead into situation, where valid roundcubemail
->       user couldn't access their INBOX just for some email
->       message being present in it.
->
->       In short, not sure if the CVE id should be assigned to
->       the PHP PEAR bug or to the roundcubemail package.
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+"The semantics of the ',password' option to -vnc are that it enables the VNC
+auth scheme. If the VNC server password is unset or empty string, all attempts
+to authenticate with the server will be explicitly blocked.
 
-Please use CVE-2011-4078 for this issue
+This allows applications to enable and selectively allow access for a period of
+time, before clearing the password again to prevent further access.
 
--- 
+Upstream changes have introduced a flaw by disabling all authentication when
+the password was cleared with upstream commit [1].
 
--Kurt Seifried / Red Hat Security Response Team
+[1]
+http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=668589
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
 
