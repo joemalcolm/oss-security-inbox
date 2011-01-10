@@ -1,61 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/1
-Message-ID: <20111208101926.GF7151@foo.fgeek.fi>
-Date: Thu, 8 Dec 2011 12:19:26 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/1
+Message-ID: </WTtvnPaOhy09Y0pKwQoORG6itg@fEEwdAuY7Lvf1o+SaK2fw+gdbpE>
+Date: Mon, 10 Jan 2011 20:38:55 +0300
+From: Eygene Ryabinkin <rea-sec@...elabs.ru>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request WordPress pretty-link plugin 1.5.2 XSS
+Cc: kalle@....net, felipe@....net, cellog@....net, pajoye@....net
+Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue? I have verified this and reported this to the developer in here: http://wordpress.org/support/topic/plugin-pretty-link-lite-152-xss-vulnerability
+Felipe, good day.
 
-- Henri Salo
+Sun, Dec 26, 2010 at 05:26:29PM -0200, Felipe Pena wrote:
+> Yes, I will contact anyone to do it... (I'm not the ext/phar maintainer)
 
-Original post below:
-
------ Forwarded message from irist.ir@...il.com -----
-
-Date: Sun, 4 Dec 2011 15:26:35 GMT
-From: irist.ir@...il.com
-To: bugtraq@...urityfocus.com
-Subject: Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting
-	Vulnerabilities
-X-Mailer: MIME-tools 5.420 (Entity 5.420)
-
-a bug in Wordpress pretty-link plugin that allows to us to occur a Cross-Site Scripting on a Remote machin.
-
-
-
-
-
-############################################################################################################################################
-#                                                                                                                                          #
-#                           ISlamic Republic Of IRan Security Team                                                                         #
-#                                                                                                                                          #
-#                                http://irist.ir/forum/                                                                                    #
-#                                                                                                                                          #
-############################################################################################################################################
-#                                                                                                                                          #
-# Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting Vulnerabilities                                                                  #
-#                                                                                                                                          #
-# Download......: http://wordpress.org/extend/plugins/pretty-link/                                                                         #
-#                                                                                                                                          #
-# Exploit.......: http://www.site.com/[path]/wp-content/plugins/pretty-link/pretty-bar.php?url=[xss]                                       #
-#                                                                                                                                          #
-# Google Search.: "Powered by Wordpress"                                                                                                   #
-#                                                                                                                                          #
-############################################################################################################################################
-#                                                                                                                                          #
-# Bug Found.....: IrIsT.Ir                                                                                                                 #
-#                                                                                                                                          #
-# discovery.....: Am!r (IrIsT?)                                                                                                            #
-#                                                                                                                                          #
-# contact.......: Amir[at]IrIsT.ir                                                                                                         #
-#                                                                                                                                          #
-# SP TNX........: The-0utl4w & A.u.r.A & B3HZ4D & m3hdi & joker_s & all IrIsT And Aria-security members                                    #
-#                                                                                                                                          #
-#   & Mehdi.H4ckcity &  2MzRp & mikili & All H4ckcity Members                                                                              #
-#                                                                                                                                          #
-############################################################################################################################################
-
------ End forwarded message -----
+Any news on this?  http://pecl.php.net/package/phar shows no
+revisions :((
+-- 
+Eygene
