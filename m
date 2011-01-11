@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/7
-Message-ID: <4ECE8598.3040206@redhat.com>
-Date: Thu, 24 Nov 2011 10:57:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: kvm: device assignment DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/1
+Message-ID: <AANLkTinofL+U6LepV6kahhUCdJZ+Df9fpvShY4zu5YZ8@mail.gmail.com>
+Date: Mon, 10 Jan 2011 17:42:43 -0700
+From: Kurt Seifried <kurt@...fried.org>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
 Content-Type: text/plain; charset=utf-8
 
-On 11/24/2011 10:49 AM, Petr Matousek wrote:
-> It was found that kvm_vm_ioctl_assign_device function did not check if
-> the user requesting assignment was privileged or not. Together with
-> /dev/kvm being 666, unprivileged user could assign unused pci devices,
-> or even devices that were in use and whose resources were not properly
-> claimed by the respective drivers.
+> Upstream changes have introduced a flaw by disabling all authentication when
+> the password was cleared with upstream commit [1].
 >
-> Please note that privileged access was still needed to re-program the
-> device to for example issue DMA requests. This is typically achieved by
-> touching files on sysfs filesystem. These files are usually not
-> accessible to unprivileged users.
->
-> As a result, local user could use this flaw to crash the system.
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=756084
-> http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
->
-> Thanks,
-Please use CVE-2011-4347 for this issue.
+> [1]
+> http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+
+Confirmed vulnerable in qemu-kvm source code 0.10.6, fixed in 0.11.0
+
+http://sourceforge.net/projects/kvm/files/qemu-kvm/
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
