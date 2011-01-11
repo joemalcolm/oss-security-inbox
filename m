@@ -1,52 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/2
-Message-ID: <20110908122534.GA2939@inutil.org>
-Date: Thu, 8 Sep 2011 14:25:34 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/3
+Message-ID: <20110111225246.GU9238@redhat.com>
+Date: Tue, 11 Jan 2011 15:52:46 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Ferdinand <debbug@...tplaza.com>, Russ Allbery <rra@...ian.org>, Sven Verdoolaege <skimo@...net.org>, Chris Weyl <cweyl@...mni.drew.edu>
-Subject: Re: CVE Request -- libfcgi-perl / perl-FCGI: Certain environment variables shared between first and subsequent HTTP requests
+Subject: CVE request: sudo does not ask for password on GID changes
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 08, 2011 at 10:32:47AM +0200, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
->
->   it was found that the perl Fast CGI module did not properly clean up
-> certain environment variables, related to a particular HTTP request,
-> between subsequent incoming requests. Any environment variable set in
-> the first pass through the code by processing the first request, that
-> wasn't set in some subsequent request, has been added to the hash
-> containing environment variables for that subsequent request. A remote
-> attacker could use this flaw to bypass the authentication process and
-> obtain access to resources, which would be otherwise protected by
-> authentication.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=736604
->
-> Russ Allbery of Debian (Cc-ed) provides further elaborated analysis
-> of the reasons of the issue:
-> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479#10
->
-> Cc-ed also Sven Verdoolaege, the perl FCGI module author (as noted
-> on CPAN) for his opinion too.
->
-> Could you allocate a CVE id for this issue?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Though the issue has been reported Sat, 18 Dec 2010 22:13:40 +0100
->       already, only Russ's analysis (Wed, 07 Sep 2011 20:24:00 -0700)
->       unveiled the full security implications of this issue. So I
->       assume, the CVE-2011-* identifier would be sufficient to cover
->       this issue. But feel free to correct me if I am wrong here.
->       Thanks, Jan.
+A Debian bug report noted that sudo does not access for a password on
+GID changes, like it does for UID changes.  This could allow a user to
+execute commands using '-g [group]' without being prompted for their
+password.
 
-FYI: Debian already allocated CVE-2011-2766 to this.
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=19;bug=607479
+It uses a (newer?) syntax; on 1.6.7p5 at least the '(ALL:ALL)'
+specification gives a syntax error; I'm not sure when this behaviour was
+introduced.
 
-Cheers,
-        Moritz
+References:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=609641
+http://www.sudo.ws/repos/sudo/rev/fe8a94f96542
+http://www.sudo.ws/repos/sudo/rev/07d1b0ce530e
+https://bugzilla.redhat.com/show_bug.cgi?id=668879
+
+Could a CVE name be assigned to this please?
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
