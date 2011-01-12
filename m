@@ -1,32 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/27
-Message-ID: <1300136870.5865.3.camel@macbook.infradead.org>
-Date: Mon, 14 Mar 2011 21:07:49 +0000
-From: David Woodhouse <dwmw2@...radead.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, David King <amigadave@...gadave.com>,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/4
+Message-ID: <Pine.GSO.4.64.1101121750300.17455@faron.mitre.org>
+Date: Wed, 12 Jan 2011 17:51:08 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE assignments for Wireshark
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-03-14 at 16:59 -0400, Josh Bressers wrote:
-> This looks like one id for vino improperly claiming that machine is only
-> accessible via the local network.
-> 
-> Another for it using uPnP to open up a router without proper warning.
 
-I'd concur with the former, but not the latter. Issuing a CVE for that
-kind of thing just encourages the people who mistakenly view NAT as a
-form of security. uPnP is just one of the *many* reasons that viewpoint
-is wrong.
+CVE-2011-0444 - MAC-LTE
 
-If you wouldn't issue a CVE for vino listening with socket() and bind()
-system calls, then you shouldn't issue a CVE for it using uPnP to listen
-either. uPnP is just the normal way to work around broken networking.
+CVE-2011-0445 - ASN.1 BER
 
-As far as I'm concerned there is only one issue here; the misreporting
-that only local access is possible when in fact it's not.
 
--- 
-David Woodhouse                            Open Source Technology Centre
-David.Woodhouse@...el.com                              Intel Corporation
+
+======================================================
+Name: CVE-2011-0444
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0444
+Reference: MISC:https://bugs.wireshark.org/bugzilla/attachment.cgi?id=5676
+Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-01.html
+Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
+Reference: VUPEN:ADV-2011-0079
+Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+
+Buffer overflow in the MAC-LTE dissector
+(epan/dissectors/packet-mac-lte.c) in Wireshark 1.2.0 through 1.2.13
+and 1.4.0 through 1.4.2 allows remote attackers to cause a denial of
+service (crash) and possibly execute arbitrary code via a large number
+of RARs.
+
+
+======================================================
+Name: CVE-2011-0445
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0445
+Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5537
+Reference: VUPEN:ADV-2011-0079
+Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+
+The ASN.1 BER dissector in Wireshark 1.4.0 through 1.4.2 allows remote
+attackers to cause a denial of service (assertion failure) via crafted
+packets, as demonstrated by fuzz-2010-12-30-28473.pcap.
+
 
