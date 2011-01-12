@@ -1,21 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/20/2
-Message-ID: <CAPZ8mV5HBmTNYJKq-pnAWUbTKeZ4cDYNs47zymiCbVagC+A1+g@mail.gmail.com>
-Date: Sat, 20 Aug 2011 10:59:50 -0700
-From: Mark Doliner <mark@...gant.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/4
+Message-ID: <Pine.GSO.4.64.1101121750300.17455@faron.mitre.org>
+Date: Wed, 12 Jan 2011 17:51:08 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Pidgin crash
+Subject: CVE assignments for Wireshark
 Content-Type: text/plain; charset=utf-8
 
-Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
 
-"Certain characters in the nicknames of IRC users can trigger a null
-pointer dereference in the IRC protocol plugin's handling of responses
-to WHO requests. This can cause a crash on some operating systems.
-Clients based on libpurple 2.8.0 through 2.9.0 are affected."
-http://pidgin.im/news/security/?id=53
+CVE-2011-0444 - MAC-LTE
 
-The crash was discovered by Djego Ibanez.
+CVE-2011-0445 - ASN.1 BER
 
-Thanks,
-Mark
+
+
+======================================================
+Name: CVE-2011-0444
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0444
+Reference: MISC:https://bugs.wireshark.org/bugzilla/attachment.cgi?id=5676
+Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-01.html
+Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
+Reference: VUPEN:ADV-2011-0079
+Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+
+Buffer overflow in the MAC-LTE dissector
+(epan/dissectors/packet-mac-lte.c) in Wireshark 1.2.0 through 1.2.13
+and 1.4.0 through 1.4.2 allows remote attackers to cause a denial of
+service (crash) and possibly execute arbitrary code via a large number
+of RARs.
+
+
+======================================================
+Name: CVE-2011-0445
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0445
+Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5537
+Reference: VUPEN:ADV-2011-0079
+Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+
+The ASN.1 BER dissector in Wireshark 1.4.0 through 1.4.2 allows remote
+attackers to cause a denial of service (assertion failure) via crafted
+packets, as demonstrated by fuzz-2010-12-30-28473.pcap.
+
+
