@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/13
-Message-ID: <20110106184038.GA2780@nxnw.org>
-Date: Thu, 6 Jan 2011 10:40:38 -0800
-From: Steve Beattie <steve@...w.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/2
+Message-ID: <1349870341.72848.1294841820197.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 12 Jan 2011 09:17:00 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
-> We got a heads up on a directory traversal flaw in patch.  I don't think
-> a CVE name has been assigned to it; could we get one?  It allows for the
-> creation of arbitrary files in unexpected places due to the use of '..'.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=667529
-> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
-> 
-> Thanks.
+Please use CVE-2011-0011
 
-I believe the Debian security team assigned CVE-2010-1679 for this
-issue.
+Thanks.
 
 -- 
-Steve Beattie
-<sbeattie@...ntu.com>
-http://NxNW.org/~steve/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+----- Original Message -----
+> "The semantics of the ',password' option to -vnc are that it enables
+> the VNC
+> auth scheme. If the VNC server password is unset or empty string, all
+> attempts
+> to authenticate with the server will be explicitly blocked.
+> 
+> This allows applications to enable and selectively allow access for a
+> period of
+> time, before clearing the password again to prevent further access.
+> 
+> Upstream changes have introduced a flaw by disabling all
+> authentication when
+> the password was cleared with upstream commit [1].
+> 
+> [1]
+> http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=668589
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
