@@ -1,35 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/2
-Message-ID: <1195949274.350777.1301876578359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Sun, 3 Apr 2011 20:22:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/1
+Message-ID: <1071366949.72601.1294840987745.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 12 Jan 2011 09:03:07 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: sudo does not ask for password on GID changes
 Content-Type: text/plain; charset=utf-8
 
-> 
-> Benji's trolling does raise a couple real issues. The private keys and
-> passphrases of those responding here have now become highly lucrative
-> targets for attackers. Hence, everyone on this new list needs to use good
-> practices to keep their keys, hard drives, and computers safe.  There
-> should probably be some common guidelines for key safety for all
-> participants.
-> 
-
-I don't buy this. It's really no secret who is involved in open source
-security, or most any security in general. If you're in this business and
-don't worry about such threats all the time, you're probably in the wrong
-field.
-
-I think keeping this wide open will make us better at what we do. This is a
-bit silly I agree, but it's also brutally honest.
-
-I've often found that if nobody is complaining about what you're doing,
-you're not doing anything interesting.
-
-At least I can keep telling myself this is interesting ;)
+Please use CVE-2011-0010
 
 Thanks.
 
 -- 
     JB
+
+
+----- Original Message -----
+> A Debian bug report noted that sudo does not access for a password on
+> GID changes, like it does for UID changes. This could allow a user to
+> execute commands using '-g [group]' without being prompted for their
+> password.
+> 
+> It uses a (newer?) syntax; on 1.6.7p5 at least the '(ALL:ALL)'
+> specification gives a syntax error; I'm not sure when this behaviour
+> was
+> introduced.
+> 
+> References:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=609641
+> http://www.sudo.ws/repos/sudo/rev/fe8a94f96542
+> http://www.sudo.ws/repos/sudo/rev/07d1b0ce530e
+> https://bugzilla.redhat.com/show_bug.cgi?id=668879
+> 
+> Could a CVE name be assigned to this please?
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
