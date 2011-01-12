@@ -1,20 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/48
-Message-ID: <20110404190448.GE14209@openwall.com>
-Date: Mon, 4 Apr 2011 23:04:48 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/1
+Message-ID: <1071366949.72601.1294840987745.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 12 Jan 2011 09:03:07 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: sudo does not ask for password on GID changes
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 09:18:12AM +0530, Huzaifa Sidhpurwala wrote:
-> Please subscribe me as well:
-> 
-> pub  1024D/DA5BDAE5 2006-08-25
-> Huzaifa S. Sidhpurwala <huzaifas@...hat.com>
-> 
-> key: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCC70DCF2DA5BDAE5
+Please use CVE-2011-0010
 
-Added.
+Thanks.
 
-Alexander
+-- 
+    JB
+
+
+----- Original Message -----
+> A Debian bug report noted that sudo does not access for a password on
+> GID changes, like it does for UID changes. This could allow a user to
+> execute commands using '-g [group]' without being prompted for their
+> password.
+> 
+> It uses a (newer?) syntax; on 1.6.7p5 at least the '(ALL:ALL)'
+> specification gives a syntax error; I'm not sure when this behaviour
+> was
+> introduced.
+> 
+> References:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=609641
+> http://www.sudo.ws/repos/sudo/rev/fe8a94f96542
+> http://www.sudo.ws/repos/sudo/rev/07d1b0ce530e
+> https://bugzilla.redhat.com/show_bug.cgi?id=668879
+> 
+> Could a CVE name be assigned to this please?
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
