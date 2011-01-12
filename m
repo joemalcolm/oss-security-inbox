@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/1
-Message-Id: <201108021058.31390.thomas@suse.de>
-Date: Tue, 2 Aug 2011 10:58:31 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/3
+Message-Id: <201101122056.p0CKuOsj006751@core.courtesan.com>
+Date: Wed, 12 Jan 2011 15:56:23 -0500
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: webkit ZDI-11-138 and ZDI-11-139
+Subject: Re: CVE request: sudo does not ask for password on GID changes
 Content-Type: text/plain; charset=utf-8
 
-Am Donnerstag, 14. Juli 2011, 17:02:10 schrieb Thomas Biege:
-> Looks like the following two issus have no CVE-ID assigned:
-> 
-> 
-> http://www.zerodayinitiative.com/advisories/ZDI-11-138/
-> Webkit Undefined DOM Prototype Attach Remote Code Execution Vulnerability
-> ZDI-11-138: April 19th, 2011 
+On Tue, 11 Jan 2011 15:52:46 MST, Vincent Danen wrote:
 
-CVE-2011-0234
- 
-> http://www.zerodayinitiative.com/advisories/ZDI-11-139/
-> Webkit Anonymous Frame Remote Code Execution Vulnerability
-> ZDI-11-139: April 19th, 2011 
+> A Debian bug report noted that sudo does not access for a password on
+> GID changes, like it does for UID changes.  This could allow a user to
+> execute commands using '-g [group]' without being prompted for their
+> password.
 
-none yet...
+This is fixed in sudo 1.7.4p5, available now.
 
+I've written up details of the bug in:
+    http://www.sudo.ws/sudo/alerts/runas_group_pw.html
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+ - todd
