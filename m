@@ -1,49 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/1
-Message-Id: <20110718211319.0c06099ac63b110ec5d31e21@gmail.com>
-Date: Mon, 18 Jul 2011 21:13:19 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...-smtp.mitre.org
-Subject: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/13/1
+Message-ID: <4d2e6afd.0849960a.6d7e.4efb@mx.google.com>
+Date: Wed, 12 Jan 2011 21:01:09 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: "Steven M. Christey" <coley@...re.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE requests: IO::Socket::SSL, cakephp, collectd, gnash, ocrodjvu, hypermail, libcloud, piwigo
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Josh Bressers wrote:
+[...]
+> Steve, can MITRE take the one below. It's quite large and I don't have
+> time to do it right now. Thanks.
+> 
+>> piwigo:
+>> a1) CSRF
+>> a2) SQL injection
+>> a3) stored XSS
+>> http://secunia.com/advisories/41365/
+>> http://piwigo.org/releases/2.1.3
+>> http://www.exploit-db.com/exploits/14973/
+>> (the issues mentioned by the exploit-db entry appear to be the same
+>> that
+>> were fixed in 2.1.3)
+>> b) search.php SQL injection
+>> http://secunia.com/advisories/38305/
+>> http://piwigo.org/releases/2.0.8
+>> c) CSRF in the admin panel:
+>> http://secunia.com/advisories/37681/
+>> http://www.exploit-db.com/exploits/10417
+>> (the exploit-db entry details two other issues, but are "admin-only"
+>> -- feel
+>> free to assign or ignore those.)
+>>
 
-This may be an odd request.  The proprietary fglrx driver has an
-info disclosure flaw in one of it's shell scripts [0].  It passes the
-xauth secret cookie in an insecure manner (such that it's exposed to
-prying eyes in the output of ps for example).
+Ping.
 
-The oddness in this request is that the driver is proprietary; but
-then again it is also included in most linux distributions in one form
-or another, so I think oss-sec is an appropriate forum.  There is also
-a specific additional right granted in the script's header: "Distro
-maintainers may modify this reference script as necessary to conform
-to their distribution policies."
+Not urgent, but I saw them again on the list of issues without ids on our 
+tracker.
 
-This is debian bug #625868 [1], and I've commited an untested fix
-(I don't use authatieventsd myself) to our svn repo [2].
-
-Note that there is discussion in the bug report claiming the
-debian-specific patch is to blame, but that conclusion is incorrect.
-The same flaw is also present in the upstream ati code as well.
-The debian code is only different in that it was made to handle a
-slightly different use case, but the underlying flaw is indeed
-present in both, so other distros are very likely affected as well.
-
-Note also that xauth's design makes this insecure usage seem like
-an obvious solution for the cookie handling problem, so there are
-probably many other flawed implementations like this, which could
-be found by grepping for xauth and auditing those cases handling
-the secret cookie.  This may be something worth calling out as a
-CWE.
-
-Credit goes to Vincent Zweije who submitted the debian bug report.
-
-Best wishes,
-Mike
-
-[0] common/etc/ati/authatieventsd.sh
-[1] http://bugs.debian.org/625868
-[2] svn://svn.debian.org/svn/pkg-fglrx/fglrx-driver/trunk
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
