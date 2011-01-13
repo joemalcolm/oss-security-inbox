@@ -1,24 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/2
-Message-Id: <201101040211.35057.hanno@hboeck.de>
-Date: Tue, 4 Jan 2011 02:11:34 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/13/2
+Message-ID: <igm068$vv0$1@dough.gmane.org>
+Date: Wed, 12 Jan 2011 22:48:06 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: AusweisApp
+Subject: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
 Content-Type: text/plain; charset=utf-8
 
-Sorry, after sending this I noted myself that it's probably not the right 
-place here, as it's OSS-security.
+Hi,
 
-I just got so used to send CVE requests here I didn't think about that.
+Could CVE ids be assigned for the following issues? Thanks in advance.
 
-Still, MITRE, please assign CVE(s).
+ftpls: XSS in directory listing
+http://bugs.debian.org/607494
 
+xdigger: buffer overflow when parsing CLI arguments
+(it is SGID, at least in Debian)
+http://bugs.debian.org/609096
+
+lbreakout2: buffer overflow with overly long HOME env var
+(it is SGID, at least in Debian)
+http://bugs.debian.org/608980
+
+calibre: XSS and file disclosure
+http://www.waraxe.us/advisory-77.html
+http://bugs.debian.org/608822
+
+typo3: 8 vulnerabilities
+http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-022/
+http://seclists.org/fulldisclosure/2010/Dec/690
+http://bugs.debian.org/607286
+
+
+There are more issues without ids, will request them later.
+
+Regards,
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
 
-http://schokokeks.org - professional webhosting
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
