@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/5
-Message-ID: <4EDFB572.2070100@redhat.com>
-Date: Wed, 07 Dec 2011 11:50:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: glibc: timezone integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/13/1
+Message-ID: <4d2e6afd.0849960a.6d7e.4efb@mx.google.com>
+Date: Wed, 12 Jan 2011 21:01:09 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: "Steven M. Christey" <coley@...re.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE requests: IO::Socket::SSL, cakephp, collectd, gnash, ocrodjvu, hypermail, libcloud, piwigo
 Content-Type: text/plain; charset=utf-8
 
-On 12/05/2011 03:14 AM, Matthias Weckbecker wrote:
-> Hi,
->
-> looks like this has never got a CVE so far or at least I couldn't find one,
->
-> http://dividead.wordpress.com/tag/heap-overflow/
-> http://lists.grok.org.uk/pipermail/full-disclosure/2011-December/084452.html
->  
-> Could there possibly be a CVE assigned, please? Thanks in advance.
->
-> Matthias
->
-Ok it appears although this is difficult to exploit, it can be triggered
-potentially allowing a security boundary to be crossed in some
-situations. Please use CVE-2009-5029 for this glibc timezone integer
-overflow issue.
+Josh Bressers wrote:
+[...]
+> Steve, can MITRE take the one below. It's quite large and I don't have
+> time to do it right now. Thanks.
+> 
+>> piwigo:
+>> a1) CSRF
+>> a2) SQL injection
+>> a3) stored XSS
+>> http://secunia.com/advisories/41365/
+>> http://piwigo.org/releases/2.1.3
+>> http://www.exploit-db.com/exploits/14973/
+>> (the issues mentioned by the exploit-db entry appear to be the same
+>> that
+>> were fixed in 2.1.3)
+>> b) search.php SQL injection
+>> http://secunia.com/advisories/38305/
+>> http://piwigo.org/releases/2.0.8
+>> c) CSRF in the admin panel:
+>> http://secunia.com/advisories/37681/
+>> http://www.exploit-db.com/exploits/10417
+>> (the exploit-db entry details two other issues, but are "admin-only"
+>> -- feel
+>> free to assign or ignore those.)
+>>
 
+Ping.
+
+Not urgent, but I saw them again on the list of issues without ids on our 
+tracker.
+
+Regards,
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
