@@ -1,18 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/3
-Message-ID: <CAAsmaPa1AEmhRT=UsEZDJH61f0NYj8qEMT2=xNt+uL4=wjVPGg@mail.gmail.com>
-Date: Fri, 18 Nov 2011 07:20:14 -0600
-From: Tim Zingelman <tez@...src.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/5
+Message-ID: <462508465.25588.1295039113480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 14 Jan 2011 16:05:13 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
+Hi Steve,
 
-> I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
-> specific people that they're interested.  So please reply to this
-> message to indicate your interest and we'll proceed.
+Can MITRE take these. I'm having trouble finding time for them this week :(
 
-I am interested.  Thanks for doing this.
+Thanks.
 
- - Tim
+-- 
+    JB
+
+----- Original Message -----
+> Hi,
+> 
+> Could CVE ids be assigned for the following issues? Thanks in advance.
+> 
+> ftpls: XSS in directory listing
+> http://bugs.debian.org/607494
+> 
+> xdigger: buffer overflow when parsing CLI arguments
+> (it is SGID, at least in Debian)
+> http://bugs.debian.org/609096
+> 
+> lbreakout2: buffer overflow with overly long HOME env var
+> (it is SGID, at least in Debian)
+> http://bugs.debian.org/608980
+> 
+> calibre: XSS and file disclosure
+> http://www.waraxe.us/advisory-77.html
+> http://bugs.debian.org/608822
+> 
+> typo3: 8 vulnerabilities
+> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-022/
+> http://seclists.org/fulldisclosure/2010/Dec/690
+> http://bugs.debian.org/607286
+> 
+> 
+> There are more issues without ids, will request them later.
+> 
+> Regards,
+> --
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
