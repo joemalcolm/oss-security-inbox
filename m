@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/1
-Message-ID: <4DF4B8B4.5030806@redhat.com>
-Date: Sun, 12 Jun 2011 15:01:40 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>, 629938@...s.debian.org
-Subject: CVE Request -- dbus -- Local DoS via messages with non-native byte order
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/6
+Message-ID: <935531799.25619.1295039260525.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 14 Jan 2011 16:07:40 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: proftpd before 1.3.3d
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+I could have swore this flaw got an ID, but I can't find it.
 
-   It was found that D-BUS message bus service / messaging facility did
-not update the byte-order flag of the message properly by swapping the
-byte order of incoming messages into their native endiannes. A local,
-authenticated user could use this flaw to send a specially-crafted
-message to a system service (like Avahi or NetworkManager), using the
-system bus, potentially leading to disconnect of such a service from
-system bus (denial of service).
+Use CVE-2010-4652
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
-[2] https://bugs.freedesktop.org/show_bug.cgi?id=38120
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=712676
+Thanks.
 
-Upstream patches:
-[4] 
-http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.2&id=6519a1f77c61d753d4c97efd6e15630eb275336e
-     (in upstream v1.2.28 version)
+-- 
+    JB
 
-[5] 
-http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.4&id=c3223ba6c401ba81df1305851312a47c485e6cd7
-     (in upstream v1.4.12 version)
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Original Message -----
+> See:
+> http://www.securityfocus.com/bid/44933
+> http://phrack.org/issues.html?issue=67&id=7#article
+> http://bugs.gentoo.org/show_bug.cgi?id=348998
+> 
+> Quote from securityfocus:
+> "ProFTPD is prone to a remote heap-based buffer-overflow
+> vulnerability.
+> 
+> Attackers can exploit this vulnerability to execute arbitrary code
+> with
+> SYSTEM-level privileges. Failed exploit attempts will result in a
+> denial-of-service condition."
+> 
+> Please assign CVE (a 2010 / last year one).
+> 
+> --
+> Hanno Böck mail/jabber: hanno@...eck.de
+> GPG: BBB51E42 http://www.hboeck.de/
