@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/2
-Message-ID: <20111030104857.GA14677@foo.fgeek.fi>
-Date: Sun, 30 Oct 2011 12:48:57 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/6
+Message-ID: <935531799.25619.1295039260525.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 14 Jan 2011 16:07:40 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Jara 1.6 SQL injection and XSS
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: proftpd before 1.3.3d
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifiers for these issues:
+I could have swore this flaw got an ID, but I can't find it.
 
-SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
-Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
+Use CVE-2010-4652
 
-XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
-Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+Thanks.
 
-No vendor reply. No fix.
+-- 
+    JB
 
-Best regards,
-Henri Salo
+----- Original Message -----
+> See:
+> http://www.securityfocus.com/bid/44933
+> http://phrack.org/issues.html?issue=67&id=7#article
+> http://bugs.gentoo.org/show_bug.cgi?id=348998
+> 
+> Quote from securityfocus:
+> "ProFTPD is prone to a remote heap-based buffer-overflow
+> vulnerability.
+> 
+> Attackers can exploit this vulnerability to execute arbitrary code
+> with
+> SYSTEM-level privileges. Failed exploit attempts will result in a
+> denial-of-service condition."
+> 
+> Please assign CVE (a 2010 / last year one).
+> 
+> --
+> Hanno Böck mail/jabber: hanno@...eck.de
+> GPG: BBB51E42 http://www.hboeck.de/
