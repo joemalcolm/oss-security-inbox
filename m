@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/4
-Message-ID: <4EBA9CBA.4060404@redhat.com>
-Date: Wed, 09 Nov 2011 08:31:06 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/7
+Message-ID: <alpine.DEB.2.00.1101141348250.3549@familiar.castaglia.org>
+Date: Fri, 14 Jan 2011 13:50:02 -0800 (PST)
+From: "TJ Saunders" <tj@...taglia.org>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: gnutls possible DoS (GNUTLS-SA-2011-2)
+cc: coley <coley@...re.org>
+Subject: Re: CVE request: proftpd before 1.3.3d
 Content-Type: text/plain; charset=utf-8
 
-On 11/08/2011 11:40 PM, Vincent Danen wrote:
-> A potential DoS flaw was found in gnutls:
->
-> http://www.gnu.org/s/gnutls/security.html
-> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5596
-> https://bugzilla.redhat.com/show_bug.cgi?id=752308
->
-> Fixes are available in git, and fixed in upstream 2.12.14 and 3.0.7
-> versions:
->
-> http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=190cef6eed37d0e73a73c1e205eb31d45ab60a3c
->
-> http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=e82ef4545e9e98cbcb032f55d7c750b81e3a0450
->
->
-> It seems to me like the DoS is on the client side, from a malicious
-> server, and upstream also indicates it is unaware of any clients that
-> use the code improperly (as not documented) and would be vulnerable.
->
-> Could a CVE be assigned to this issue please?
->
-> Thanks.
->
-Please use CVE-2011-4128  for this issue.
 
--- 
+> I could have swore this flaw got an ID, but I can't find it.
 
--Kurt Seifried / Red Hat Security Response Team
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4221
 
+Was the one assigned for the Telnet IAC issue:
+
+  http://bugs.proftpd.org/show_bug.cgi?id=3521
+
+The issue from the Phrack article did not have a CVE assigned, to my 
+knowledge; it was related to code in ProFTPD's mod_sql module:
+
+  http://bugs.proftpd.org/show_bug.cgi?id=3536
+
+Cheers,
+TJ
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   He who has never hoped can never despair.
+
+   	-George Bernard Shaw
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
