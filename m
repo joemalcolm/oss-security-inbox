@@ -1,28 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/8
-Message-ID: <4ED7B586.40107@redhat.com>
-Date: Thu, 01 Dec 2011 10:12:38 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/2
+Message-ID: <Pine.GSO.4.64.1101141235400.17455@faron.mitre.org>
+Date: Fri, 14 Jan 2011 12:47:59 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Moritz Mühlenhoff <jmm@...til.org>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
 Content-Type: text/plain; charset=utf-8
 
-On 12/01/2011 02:59 AM, Henri Salo wrote:
-> Original post: http://seclists.org/bugtraq/2011/Nov/15
-> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
-> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
->
-> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
->
-> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
->
-> Please notify me if this is not enough information.
->
-> - Henri Salo
-Please use CVE-2011-4365 for this issue.
 
--- 
+On Fri, 14 Jan 2011, Moritz Mühlenhoff wrote:
 
--Kurt Seifried / Red Hat Security Response Team
+> We're still missing CVE assignments for several issues from 2009.
+> These have been requested on oss-security before, but couldn't be
+> processed by Josh/Red Hat, since RH doesn't have 2009 IDs. As such,
+> they need to be handled by MITRE:
+>
+> 1. Overkill (this should be a CVE-2009 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
 
+Use CVE-2009-5041
+
+> 2. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
+
+Use CVE-2009-5042
+
+> 3. FireGPG (this should be a CVE-2008 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
+> http://securityvulns.com/Udocument757.html
+
+There are 2 CVEs needed:
+
+CVE-2008-7272 - storage of cleartext/passphrase on disk
+CVE-2008-7273 - symlink following
+
+> 4. Burn (Homepage: http://www.bigpaul.org/burn/) (That's a CVE-2009 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542329
+
+CVE-2009-5043
+
+> 5. pdfroff (from GNU groff) (That's a CVE-2009 ID)
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/groff/groff-1.20.1-owl-tmp.diff
+
+CVE-2009-5044
+
+> 6. Jetty (That's a CVE-2009 ID)
+> http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
+
+There are a number of CVEs to assign here.
+
+>A) "Dump Servlet" information leak
+>   (Affected versions: Any)
+
+CVE-2009-5045
+
+>B) "FORM Authentication demo" information leak
+>   (Affected versions: Any)
+
+No CVE assigned - ability to detect presence of a particular
+application is not CVE-worthy unless the app's design intends to allow
+it to be hidden.
+
+>C) "JSP Dump" reflected XSS
+>    (Affected versions: Any)
+>D) "Session Dump Servlet" stored XSS
+>   (Affected versions: Any)
+
+CVE-2009-5046
+
+>E) "Cookie Dump Servlet" escape sequence injection
+     (Affected versions: Any)
+>F) Http Content-Length header escape sequence injection
+>   (Affected versions: Any)
+
+CVE-2009-5047
+
+
+>G) "Cookie Dump Servlet" stored XSS
+>   (Affected versions: =<6.1.20)
+
+CVE-2009-5048
+
+>H) WebApp JSP Snoop page XSS
+>(Affected versions: =<6.1.21)
+
+CVE-2009-5049
+
+
+> 7. Konversation (That's a CVE-2009 ID)
+> http://bugs.kde.org/show_bug.cgi?id=219985
+
+CVE-2009-5050
