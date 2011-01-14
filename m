@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/5
-Message-ID: <20110929132540.GJ21938@mars-attacks.org>
-Date: Thu, 29 Sep 2011 15:25:40 +0200
-From: nicolas vigier <boklm@...s-attacks.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/3
+Message-ID: <20110114200459.6897e16f@redhat.com>
+Date: Fri, 14 Jan 2011 20:04:59 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
+Cc: coley@...us.mitre.org, Moritz Mühlenhoff <jmm@...til.org>
+Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 27 Sep 2011, Tavis Ormandy wrote:
+On Fri, 14 Jan 2011 12:47:59 -0500 (EST) Steven M. Christey wrote:
 
+> > 6. Jetty (That's a CVE-2009 ID)
+> > http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
 > 
-> Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
-> rpm signature verification. Some trivial bitflipping found a few memory
-> corruption issues.
-> 
-> Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
-> native module wrapper that exports librpm to python. I'll step through the
-> signature verification logic when I get a chance.
-> 
-> Obviously we need the sections of rpm code touched before signature
-> verification to be bulletproof, as most distributions rely on public mirror
-> services that may or may not be trusted. Any volunteers who know crypto
-> better than me appreciated, I'll be primarily looking for memory corruption.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=741606
-> https://bugzilla.redhat.com/show_bug.cgi?id=741612
+> There are a number of CVEs to assign here.
 
-Patches on rpm git :
-http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=11a7e5d95a8ca8c7d4eaff179094afd8bb74fc3f
-http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=a48f0e20cbe2ababc88b2fc52fb7a281d6fc1656
+These do have CVEs already - CVE-2009-4609 - CVE-2009-4612
 
+-- 
+Tomas Hoger / Red Hat Security Response Team
