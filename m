@@ -1,37 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/28
-Message-ID: <20110404144131.GM543@ngolde.de>
-Date: Mon, 4 Apr 2011 16:41:31 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/5
+Message-ID: <462508465.25588.1295039113480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 14 Jan 2011 16:05:13 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Solar Designer <solar@...nwall.com> [2011-04-04 15:41]:
-> On Mon, Apr 04, 2011 at 02:07:16PM +0200, Nico Golde wrote:
-[...] 
-> > or alternatively a stronger key:
-> > pub   4096R/A0A0AAAA 2009-06-01
-> >       Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
-> > uid                  Nico Golde <nion@...ian.org>
-> > uid                  Nico Golde <nico@...lde.de>
-> > uid                  Nico Golde <nion@...tu-berlin.de>
-> > uid                  Nico Golde <nion@....net>
-> > sub   4096R/E89CCA30 2009-06-02
-> 
-> Please suggest a specific e-mail address and key combination.  And if
-> you suggest other than your @debian.org address, please suggest a way to
-> verify that the address is really "yours" (the Debian security person's).
+Hi Steve,
 
-Ok please use nion@...ian.org with E1AB DE0E FFCA AEF3 9494 7592 CD4B 2AF3 A0A0 AAAA.
-This key is signed by 73647CFF which is in the Debian keyring and a transition 
-statement signed by 73647CFF as well is online at http://nion.modprobe.de/key-transition-2008-06-01.txt.asc
+Can MITRE take these. I'm having trouble finding time for them this week :(
 
-Cheers
-Nico
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+    JB
 
-Content of type "application/pgp-signature" skipped
+----- Original Message -----
+> Hi,
+> 
+> Could CVE ids be assigned for the following issues? Thanks in advance.
+> 
+> ftpls: XSS in directory listing
+> http://bugs.debian.org/607494
+> 
+> xdigger: buffer overflow when parsing CLI arguments
+> (it is SGID, at least in Debian)
+> http://bugs.debian.org/609096
+> 
+> lbreakout2: buffer overflow with overly long HOME env var
+> (it is SGID, at least in Debian)
+> http://bugs.debian.org/608980
+> 
+> calibre: XSS and file disclosure
+> http://www.waraxe.us/advisory-77.html
+> http://bugs.debian.org/608822
+> 
+> typo3: 8 vulnerabilities
+> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-022/
+> http://seclists.org/fulldisclosure/2010/Dec/690
+> http://bugs.debian.org/607286
+> 
+> 
+> There are more issues without ids, will request them later.
+> 
+> Regards,
+> --
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
