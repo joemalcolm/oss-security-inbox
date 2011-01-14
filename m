@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/6
-Message-ID: <20110430163639.GA30650@openwall.com>
-Date: Sat, 30 Apr 2011 20:36:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/7
+Message-ID: <alpine.DEB.2.00.1101141348250.3549@familiar.castaglia.org>
+Date: Fri, 14 Jan 2011 13:50:02 -0800 (PST)
+From: "TJ Saunders" <tj@...taglia.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+cc: coley <coley@...re.org>
+Subject: Re: CVE request: proftpd before 1.3.3d
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 24, 2011 at 04:44:29PM -0400, Michael Gilbert wrote:
-> Finally, the cleartext message should be posted to an open list after a
-> period of time (probably two months max) so that the entire community
-> can see and validate the closed discussion .  This eliminates the
-> possibility of a secret cabal forming or at least empowers the outside
-> world to see the true reality (although with a delay).
 
-Does anyone in here know of an existing program to mass-decrypt all
-PGP/MIME messages in an mbox file, resulting in another mbox file?
-Note: the messages may contain multiple MIME parts.
+> I could have swore this flaw got an ID, but I can't find it.
 
-Could this possibly be a script around Mutt (which includes PGP/MIME
-handling)?
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4221
 
-Suggestions are welcome (but let's not turn this into a lengthy thread
-of its own).
+Was the one assigned for the Telnet IAC issue:
 
-Alexander
+  http://bugs.proftpd.org/show_bug.cgi?id=3521
+
+The issue from the Phrack article did not have a CVE assigned, to my 
+knowledge; it was related to code in ProFTPD's mod_sql module:
+
+  http://bugs.proftpd.org/show_bug.cgi?id=3536
+
+Cheers,
+TJ
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   He who has never hoped can never despair.
+
+   	-George Bernard Shaw
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
