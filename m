@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/8
-Message-ID: <AANLkTi=GfhNJqQR5KKeeX8tNaEqXXTUTJFfCvwrt0SZO@mail.gmail.com>
-Date: Tue, 1 Mar 2011 13:21:46 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: oss-security@...ts.openwall.com,  Helgi Þormar Þorbjörnsson <helgi@....net>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/1
+Message-ID: <20110114170158.GB3381@pisco.westfalen.local>
+Date: Fri, 14 Jan 2011 18:01:58 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 1, 2011 at 1:19 PM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+On Wed, Jan 12, 2011 at 10:48:06PM -0600, Raphael Geissert wrote:
+> Hi,
+> 
+> Could CVE ids be assigned for the following issues? Thanks in advance.
+> 
+> There are more issues without ids, will request them later.
 
-> The easiest way is to just open the target with the O_NOFOLLOW flag to
-> avoid following symlinks and abort on failure.  If you need to support
-> systems that don't have this flag, then perhaps you could consider
-> using an application-specific temporary directory instead of operating
-> in the world-writable /tmp.
+We're still missing CVE assignments for several issues from 2009.
+These have been requested on oss-security before, but couldn't be 
+processed by Josh/Red Hat, since RH doesn't have 2009 IDs. As such, 
+they need to be handled by MITRE:
 
-In php, hard to do. But that's something we should keep in mind, maybe
-we can expose this flag somehow.
+1. Overkill (this should be a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
 
->>> Also, I don't see a reason why a hard link couldn't be used for exploitation
->>> instead.
->>
->> Hard link are not detectable (lstat), they are treated like normal files.
->>
->
-> Sure they are - just open the file, fstat() it,
+2. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
 
-+from PHP script.
+3. FireGPG (this should be a CVE-2008 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
+http://securityvulns.com/Udocument757.html
+
+4. Burn (Homepage: http://www.bigpaul.org/burn/) (That's a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542329
+
+5. pdfroff (from GNU groff) (That's a CVE-2009 ID)
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/groff/groff-1.20.1-owl-tmp.diff
+
+6. Jetty (That's a CVE-2009 ID)
+http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
+
+7. Konversation (That's a CVE-2009 ID)
+http://bugs.kde.org/show_bug.cgi?id=219985
+
+Cheers,
+        Moritz
 
 
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
