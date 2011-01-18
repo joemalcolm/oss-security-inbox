@@ -1,71 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/1
-Message-ID: <4D37BA8C.1030107@redhat.com>
-Date: Thu, 20 Jan 2011 10:01:08 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/1
+Message-Id: <201101181222.16630.timb@nth-dimension.org.uk>
+Date: Tue, 18 Jan 2011 12:22:05 +0000
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE assignments for Wireshark
+Subject: CVE request
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
+Guys,
 
-On 01/13/2011 04:21 AM, Steven M. Christey wrote:
-> 
-> CVE-2011-0444 - MAC-LTE
-> 
-> CVE-2011-0445 - ASN.1 BER
+What's the best way for an open source project to request a CVE prior to 
+disclosure?  I'm more that happy to coordinate the disclosure with 
+distributions where appropriate if that makes a difference.
 
-Looking at the following wireshark bug and the relevant commits:
-
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
-
-http://anonsvn.wireshark.org/viewvc?view=rev&revision=35292
-http://anonsvn.wireshark.org/viewvc?view=rev&revision=35298
-
-It seems that there are two issues here, buffer overflow in MAC-LTE
-dissector as well as buffer overflow in SNMP engineID preferences.
-
-This issue was however assigned only one CVE i.e. CVE-2011-0444.
-Do you think two CVEs (for each individual issues), should be assigned
-in this case?
-
-> 
-> 
-> 
-> ======================================================
-> Name: CVE-2011-0444
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0444
-> Reference: MISC:https://bugs.wireshark.org/bugzilla/attachment.cgi?id=5676
-> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-01.html
-> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
-> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
-> Reference: VUPEN:ADV-2011-0079
-> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
-> 
-> Buffer overflow in the MAC-LTE dissector
-> (epan/dissectors/packet-mac-lte.c) in Wireshark 1.2.0 through 1.2.13
-> and 1.4.0 through 1.4.2 allows remote attackers to cause a denial of
-> service (crash) and possibly execute arbitrary code via a large number
-> of RARs.
-> 
-> 
-> ======================================================
-> Name: CVE-2011-0445
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0445
-> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
-> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5537
-> Reference: VUPEN:ADV-2011-0079
-> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
-> 
-> The ASN.1 BER dissector in Wireshark 1.4.0 through 1.4.2 allows remote
-> attackers to cause a denial of service (assertion failure) via crafted
-> packets, as demonstrated by fuzz-2010-12-30-28473.pcap.
-> 
-> 
-
-
+Tim
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
