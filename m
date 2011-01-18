@@ -1,18 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/7
-Message-ID: <4DAF7031.6070402@redhat.com>
-Date: Thu, 21 Apr 2011 07:45:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/6
+Message-ID: <AANLkTikeFtNiVKpTE7xwri_JpmYH7EmD94YCGsXh5s0E@mail.gmail.com>
+Date: Tue, 18 Jan 2011 14:43:02 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+Subject: CVE request: heap corruption in libpango
 Content-Type: text/plain; charset=utf-8
 
-On 04/21/2011 04:52 AM, Josh Bressers wrote:
-> Please use CVE-2011-1598
+>From Launchpad [1]:
 
-Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+"When used with FreeType2 as a backend, Pango is vulnerable to heap
+corruption when rendering malformed fonts. The vulnerability occurs in
+pango_ft2_font_render_box_glyph() in pango/pangoft2-render.c. A buffer
+is malloc'd with size box->bitmap.rows * box->bitmap.pitch.
+Subsequently, 0xff is written at offsets into this buffer without
+checking that these offsets fall within the buffer's boundaries,
+leading to heap corruption."
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+-Dan
+
+[1] https://bugs.launchpad.net/ubuntu/+source/pango1.0/+bug/696616
