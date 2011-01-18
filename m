@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/16
-Message-ID: <20111020181827.GB3779@pisco.westfalen.local>
-Date: Thu, 20 Oct 2011 20:18:27 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/2
+Message-Id: <20110118114042.f13f5cd7.michael.s.gilbert@gmail.com>
+Date: Tue, 18 Jan 2011 11:40:42 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2011 at 01:17:48PM -0400, Josh Bressers wrote:
-> Steve,
+On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
+> Guys,
 > 
-> Can MITRE take this one? It's far bigger than I'm able to handle.
+> What's the best way for an open source project to request a CVE prior to 
+> disclosure?  I'm more that happy to coordinate the disclosure with 
+> distributions where appropriate if that makes a difference.
 
-Steve,
-As a reminder, my previous CVE request for Moodle is still open:
-http://www.openwall.com/lists/oss-security/2011/05/18/12
+You're looking for vendor-sec:
+http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
 
-Cheers,
-        Moritz
+Best wishes,
+Mike
