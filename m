@@ -1,48 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/5
-Message-ID: <4E2D5380.6020907@redhat.com>
-Date: Mon, 25 Jul 2011 13:29:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Squirrelmail CVE duplicates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/5
+Message-ID: <723654629.3189.1295375239162.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Jan 2011 13:27:19 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Michael Gilbert <michael.s.gilbert@...il.com>
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
-Hi Moritz,
+----- Original Message -----
+> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
+> >
+> > You're looking for vendor-sec:
+> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+> 
+> That's a closed list though isn't it? If anyone wants to sponsor me on to
+> it, I'm willing to put my OpenVAS hat on and jump through the necessary
+> hoops :)
+> 
 
-   thank you for checking this.
+You can still post to the list with flaws and CVE requests even if you're
+not a member. In fact many projects and researchers are not members but
+still post info.
 
-On 07/24/2011 06:17 PM, Moritz Muehlenhoff wrote:
-> Hi,
-> there seems to be a duplicate CVE assignment for Squirrelmail?
->
-> CVE-2010-4555 / CVE-2011-2753
+You are also welcome to mail me directly if you need a CVE ID.
 
-If I got it right, the CVE-2010-4555 ID has been assigned to the XSS
-flaws:
+Thanks.
 
-Multiple cross-site scripting (XSS) flaws were found in the SquirrelMail
-webmail client:
-* XSS flaws in generic options inputs,
-* XSS flaw in the SquirrelSpell plug-in,
-* XSS flaw in the Index Order page.
-
-[1]
-https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
-
-while the CVE-2011-2753 ID has been assigned to the CSRF protection add-ons:
-
-Also protection against Cross-site Request Forgery (CSRF) flaws has
-been added to the empty trash feature and to the Index Order page.
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=722832#c0
-
-Hope this helps && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> Cheers,
->          Moritz
->
-
+-- 
+    JB
