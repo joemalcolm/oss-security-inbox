@@ -1,91 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/8
-Message-ID: <AANLkTi=EauEYOCbf3V4inrR4ReWdDZ-T6sxXhP2ucC1Q@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:22:54 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/7
+Message-ID: <939770879.7201.1295383303522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Jan 2011 15:41:43 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Geeklog 1.7.1 <= Cross Site Scripting Vulnerability
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: tor
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
-
-The Geeklog was vulnerable to Cross Site Scripting in its
-administration backend.
 
 
-2. BACKGROUND
+----- Original Message -----
+> Hi,
+> 
+> Tor 0.2.1.29 fixes three security issues:
+> http://archives.seul.org/or/announce/Jan-2011/msg00000.html
+> 
+> While the first already has a CVE ID listed, two more are
+> still needed.
+> 
 
-Geeklog is a PHP/MySQL based application for managing dynamic web content.
-"Out of the box", it is a blog engine, or a CMS with support for
-comments, trackbacks,
-multiple syndication formats, spam protection, and all the other vital
-features of such a system.
-
-
-3. VULNERABILITY DESCRIPTION
-
-User supplied input is not probably sanitized in the "subgroup" and "conf_group"
-parameters when the configuration settings are saved in
-/admin/configuration.php.
-Attackers who manage to get/bypass anti-csrf token (_glsectoken) via
-other means can effectively perform XSS against admin users.
+Here you go:
+CVE-2011-0015 Tor zlib DoS
+CVE-2011-0016 Tor keys not zeroed in memory
 
 
-4. VERSIONS AFFECTED
+Thanks.
 
-1.7.1 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-[Request]
-
-POST /geeklog/admin/configuration.php HTTP/1.1
-
-_glsectoken=&conf_group=Core'"--></script><script>alert(/XSS/)</script>&subgroup='"--></script><script>alert(/XSS/)</script>
-
-[/Request]
-
-
-6. SOLUTION
-
-Upgrade to 1.7.1sr1
-
-
-7. VENDOR
-
-Geeklog Development Team
-http://www.geeklog.net/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-31: notified vendor
-2011-01-02: vendor released fixed version
-2011-01-04: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[geeklog1.7.1]_cross_site_scripting
-Vendor Advisory: http://www.geeklog.net/article.php/geeklog-1.7.1sr1
-About Geeklog: http://www.geeklog.net/docs/english/#introduction
-http://stephensclafani.com/2009/05/26/exploiting-unexploitable-xss/
-http://kuza55.blogspot.com/2008/02/exploiting-csrf-protected-xss.html
-
-#yehg [2011-01-04]
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+-- 
+    JB
