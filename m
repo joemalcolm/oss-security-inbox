@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/6
-Message-Id: <201108100947.26910.sgrubb@redhat.com>
-Date: Wed, 10 Aug 2011 09:47:26 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/5
+Message-ID: <723654629.3189.1295375239162.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Jan 2011 13:27:19 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Yves-Alexis Perez" <corsac@...ian.org>
-Subject: Re: CVE request: perf: may parse user-controlled config file
+Cc: Michael Gilbert <michael.s.gilbert@...il.com>
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, August 09, 2011 09:25:24 AM Yves-Alexis Perez wrote:
-> On mar., 2011-08-09 at 09:18 -0400, Steve Grubb wrote:
-> > And in recent kernels has an executable stack:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=704296
+----- Original Message -----
+> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
+> >
+> > You're looking for vendor-sec:
+> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
 > 
-> We don't have access to that bug.
+> That's a closed list though isn't it? If anyone wants to sponsor me on to
+> it, I'm willing to put my OpenVAS hat on and jump through the necessary
+> hoops :)
+> 
 
-Its marked as a security bug and I guess its not been reclassified. The short of it is 
-this:
+You can still post to the list with flaws and CVE requests even if you're
+not a member. In fact many projects and researchers are not members but
+still post info.
 
-/usr/bin/eu-readelf -l /usr/bin/perf  | grep STACK
+You are also welcome to mail me directly if you need a CVE ID.
 
-If you get RWE for the permissions, its executable. If you get RW, then everything is 
-fine. While this itself is not exploitable, if there were any other problems then this 
-could be susceptible to putting shell code on the stack which should have been 
-banished long ago. IOW, the ease of exploit goes up since you don't need to defeat any 
-advanced security mechanisms like ASLR.
+Thanks.
 
-I have a number of security assessment utilities located here:
-http://people.redhat.com/sgrubb/security/
-that can scan systems looking for problems like this. Some are rpm centric because 
-once you find a problem you want to know the associated package, but they could be 
-easily modified for other packaging tools.
-
--Steve
+-- 
+    JB
