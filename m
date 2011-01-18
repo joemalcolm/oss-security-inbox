@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/25/2
-Message-ID: <4D8C697C.2010909@redhat.com>
-Date: Fri, 25 Mar 2011 11:07:56 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- php-doctrine-Doctrine -- SQL injection flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/4
+Message-Id: <20110118122109.722d85ba.michael.s.gilbert@gmail.com>
+Date: Tue, 18 Jan 2011 12:21:09 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 18 Jan 2011 16:53:51 +0000, Tim Brown wrote:
+> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
+> > On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
+> > > Guys,
+> > > 
+> > > What's the best way for an open source project to request a CVE prior to
+> > > disclosure?  I'm more that happy to coordinate the disclosure with
+> > > distributions where appropriate if that makes a difference.
+> > 
+> > You're looking for vendor-sec:
+> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+> 
+> That's a closed list though isn't it?  If anyone wants to sponsor me on to it, 
+> I'm willing to put my OpenVAS hat on and jump through the necessary hoops :)
 
-Hello Steve, vendors,
+There are some notes at the bottom of the above page that describe what
+to do if you are not a vendor-sec member.
 
-   a SQL injection flaw has been reported against Doctrine, the PHP Object Relational Mapper:
-   [1] http://www.doctrine-project.org/blog/doctrine-security-fix
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=689396
-
-Further from [1]:
-"The security hole was found today and affects the Doctrine\DBAL\Platforms\AbstractPlatform::modifyLimitQuery()
-function which does not cast input values for limit and offset to integer and allows malicious SQL to be executed
-if these parameters are passed into Doctrine 2 directly from request variables without previous cast to integer."
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Best wishes,
+Mike
