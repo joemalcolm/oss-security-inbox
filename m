@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/1
-Message-ID: <4E1AB63A.1010508@suse.de>
-Date: Mon, 11 Jul 2011 10:37:14 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>
-Subject: CVE Request: ruby PRNG fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/2
+Message-Id: <20110118114042.f13f5cd7.michael.s.gilbert@gmail.com>
+Date: Tue, 18 Jan 2011 11:40:42 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
+> Guys,
+> 
+> What's the best way for an open source project to request a CVE prior to 
+> disclosure?  I'm more that happy to coordinate the disclosure with 
+> distributions where appropriate if that makes a difference.
 
-Ruby 1.8.7-p352 fixes initialization of the PRNG in forked
-processes:
+You're looking for vendor-sec:
+http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
 
-http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-http://redmine.ruby-lang.org/issues/4579
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-
-cu
-Ludwig
-
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
-Imendörffer, HRB 16746 (AG Nürnberg)
+Best wishes,
+Mike
