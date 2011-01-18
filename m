@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/4
-Message-Id: <201103161044.09804.ludwig.nussel@suse.de>
-Date: Wed, 16 Mar 2011 10:44:09 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/4
+Message-Id: <20110118122109.722d85ba.michael.s.gilbert@gmail.com>
+Date: Tue, 18 Jan 2011 12:21:09 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Josh, Steve, David, vendors,
+On Tue, 18 Jan 2011 16:53:51 +0000, Tim Brown wrote:
+> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
+> > On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
+> > > Guys,
+> > > 
+> > > What's the best way for an open source project to request a CVE prior to
+> > > disclosure?  I'm more that happy to coordinate the disclosure with
+> > > distributions where appropriate if that makes a difference.
+> > 
+> > You're looking for vendor-sec:
+> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
 > 
->    this is due the following vino deficiency:
->    [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
->    [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> As noted in [1] Vino may incorrectly report, that relevant user desktop
-> is reachable only over local network, when in fact it's reachable from everywhere.
-> 
-> As this is issue slightly on the border, not sure it should receive a CVE identifier,
-> so Cc-ed David Woodhouse to elaborate more on issue impact if necessary.
-> 
-> Under my opinion, the trust boundary is crossed (it is wrongly reported to the the user, they
-> have a secure setup, when they do not have it and otherwise would perform steps to correct the
-> settings). But left the final decision for further discussion.
-> 
-> What are the thoughts of the others? Should this one get a CVE identifier or not?
+> That's a closed list though isn't it?  If anyone wants to sponsor me on to it, 
+> I'm willing to put my OpenVAS hat on and jump through the necessary hoops :)
 
-Claiming that the system is only reachable via local network while
-it's not doesn't sound correct to me either. However, how would a
-fix look like? A program basically can't know nor reliably determine
-whether it's reachable from outside. Private IP addresses are no
-indication either. So the only sane thing seems to be to not make
-any claims about local networks and just list the IP addresses/host
-names of the system.
+There are some notes at the bottom of the above page that describe what
+to do if you are not a vendor-sec member.
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Best wishes,
+Mike
