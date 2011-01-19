@@ -1,39 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/5
-Message-ID: <BANLkTi=khwAhieJwxwRzvQ25qv8Cfhchqg@mail.gmail.com>
-Date: Mon, 27 Jun 2011 15:45:06 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Mambo CMS 4.6.x | Multiple Cross Site Scripting Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/1
+Message-ID: <Pine.GSO.4.64.1101182205280.9694@faron.mitre.org>
+Date: Tue, 18 Jan 2011 22:09:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: tor
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
 
-Mambo CMS 4.6.5 and lower versions are vulnerable to Cross Site Scripting.
+On Tue, 18 Jan 2011, Josh Bressers wrote:
 
-
-2. BACKGROUND
-
-Mambo is a full-featured, award-winning content management system that
-can be used for everything from simple websites to complex corporate
-applications. It is used all over the world to power government
-portals, corporate intranets and extranets, ecommerce sites, nonprofit
-outreach, schools, church, and community sites. Mambo's "power in
-simplicity" also makes it the CMS of choice for many small businesses
-and personal sites.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Multiple parameters are not properly sanitized, which allows attacker
-to conduct Cross Site Scripting attack.
-This may allow an attacker to create a specially crafted URL that
-would execute arbitrary script code in a victim's browser.
-If a user has already logged in to the application, an XSS attack will
-execute promptly.
-If not, it will execute after the user's successful logging in.
+> ----- Original Message -----
+>> Hi,
+>>
+>> Tor 0.2.1.29 fixes three security issues:
+>> http://archives.seul.org/or/announce/Jan-2011/msg00000.html
+>>
+>> While the first already has a CVE ID listed, two more are
+>> still needed.
+>>
+>
+> Here you go:
+> CVE-2011-0015 Tor zlib DoS
+> CVE-2011-0016 Tor keys not zeroed in memory
 
 
-4. VERSIONS AFFECTED
+The advisory above also has a section on crashes which the Tor developers 
+"think are hard to exploit remotely," but still (most likely) qualify for 
+CVE inclusion.
 
-Tested on Mambo CMS 4.6.5 (current as of 2011-06-27)
+CVE-2011-0490 - libevent
+CVE-2011-0491 - tor_realloc crash / "underflow errors"
+CVE-2011-0492 - assertion failure on specific file sizes
+CVE-2011-0493 - assertion failure / malformed router caches
+
+
+- Steve
+
+
+======================================================
+Name: CVE-2011-0490
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0490
+Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
+Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
+Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
+Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
+Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2190
+
+Tor before 0.2.1.29 and 0.2.2.x before 0.2.2.21-alpha makes calls to
+Libevent within Libevent log handlers, which might allow remote
+attackers to cause a denial of service (daemon crash) via vectors that
+trigger certain log messages.
+
+
+======================================================
+Name: CVE-2011-0491
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0491
+Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
+Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
+Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
+Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
+Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2324
+
+The tor_realloc function in Tor before 0.2.1.29 and 0.2.2.x before
+0.2.2.21-alpha does not validate a certain size value during memory
+allocation, which might allow remote attackers to cause a denial of
+service (daemon crash) via unspecified vectors, related to "underflow
+errors."
+
+
+======================================================
+Name: CVE-2011-0492
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0492
+Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
+Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
+Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
+Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
+Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2326
+
+Tor before 0.2.1.29 and 0.2.2.x before 0.2.2.21-alpha allows remote
+attackers to cause a denial of service (assertion failure and daemon
+exit) via blobs that trigger a certain file size, as demonstrated by
+the cached-descriptors.new file.
+
+
+======================================================
+Name: CVE-2011-0493
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0493
+Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
+Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
+Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
+Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
+Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2352
+
+Tor before 0.2.1.29 and 0.2.2.x before 0.2.2.21-alpha might allow
+remote attackers to cause a denial of service (assertion failure and
+daemon exit) via vectors related to malformed router caches and
+improper handling of integer values.
+
+
