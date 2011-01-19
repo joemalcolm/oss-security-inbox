@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/2
-Message-ID: <4EAEC663.3060409@redhat.com>
-Date: Mon, 31 Oct 2011 10:01:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Jara 1.6 SQL injection and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/5
+Message-ID: <1295444206.15884.32.camel@solo.digium.internal>
+Date: Wed, 19 Jan 2011 07:36:46 -0600
+From: Matthew Nicholson <mnicholson@...ium.com>
+To: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
 Content-Type: text/plain; charset=utf-8
 
-On 10/30/2011 04:48 AM, Henri Salo wrote:
-> Can I get CVE-identifiers for these issues:
->
-> SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
-> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
->
-> XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
-> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
->
-I assume here you are referring to the comment:
+On Wed, 2011-01-19 at 07:21 -0500, Steven M. Christey wrote:
+> On Wed, 19 Jan 2011, Jan Lieskovsky wrote:
+> 
+> >  Asterisk upstream yesterday released AST-2011-001, also with patches for 
+> > supported versions.
+> >  References:
+> >  [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
+> >  [2] http://seclists.org/fulldisclosure/2011/Jan/297
+> >  [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
+> >  [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
+> 
+> Use CVE-2011-0495
+> 
+> - Steve
 
-"http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
-
-> No vendor reply. No fix.
->
-> Best regards,
-> Henri Salo
-
--Kurt
+Our website has been updated with this information.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Matthew Nicholson
+Digium, Inc. | Software Developer
 
