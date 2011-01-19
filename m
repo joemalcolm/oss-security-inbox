@@ -1,59 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/13
-Message-ID: <20111117205517.GA21920@openwall.com>
-Date: Fri, 18 Nov 2011 00:55:17 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/3
+Message-ID: <Pine.GSO.4.64.1101190721080.9694@faron.mitre.org>
+Date: Wed, 19 Jan 2011 07:21:36 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Matthew Nicholson <mnicholson@...ium.com>
+Subject: Re: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
 Content-Type: text/plain; charset=utf-8
 
-Speaking of BIND 9.3.x:
 
-On Thu, Nov 17, 2011 at 10:43:51PM +0400, Solar Designer wrote:
-> So do we (distro vendors) choose to go ahead and release updates with
-> just those changes for now?
+On Wed, 19 Jan 2011, Jan Lieskovsky wrote:
 
-Red Hat has just released an update for 9.3.6 in RHEL5:
+>  Asterisk upstream yesterday released AST-2011-001, also with patches for 
+> supported versions.
+>  References:
+>  [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
+>  [2] http://seclists.org/fulldisclosure/2011/Jan/297
+>  [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
+>  [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
 
-https://rhn.redhat.com/errata/RHSA-2011-1458.html
+Use CVE-2011-0495
 
-bind-9.3.6-16.P1.el5_7.1.src.rpm
-
-Meanwhile, per my further analysis, BIND 9.3.x's affected code in
-query.c is only reached if the dnssec-enable option is set to yes,
-regardless of whether the build of BIND includes full DNSSEC support
-(is linked against OpenSSL) or not.
-
-In 9.4.x+, it probably does not take "dnssec-enable yes" to make the
-issue triggerable, because of the added query_addadditional2() function
-with an extra instance of the assertion.  This extra function does not
-have the same check for DNSSEC being enabled that query_addadditional()
-does.  Here's query_addadditional()'s check in 9.3.x:
-
-	if (!WANTDNSSEC(client) && dns_rdatatype_isdnssec(qtype))
-		return (ISC_R_SUCCESS);
-
-where WANTDNSSEC() is:
-
-#define WANTDNSSEC(c)           (((c)->attributes & \
-                                  NS_CLIENTATTR_WANTDNSSEC) != 0)
-
-where the NS_CLIENTATTR_WANTDNSSEC flag is set when:
-
-	if (!client->view->enablednssec) {
-		message->flags &= ~DNS_MESSAGEFLAG_CD;
-		client->extflags &= ~DNS_MESSAGEEXTFLAG_DO;
-	}
-[...]
-	if ((client->extflags & DNS_MESSAGEEXTFLAG_DO) != 0)
-		client->attributes |= NS_CLIENTATTR_WANTDNSSEC;
-
-where server.c sets:
-
-	result = ns_config_get(maps, "dnssec-enable", &obj);
-	INSIST(result == ISC_R_SUCCESS);
-	view->enablednssec = cfg_obj_asboolean(obj);
-
-I hope I am not misreading this.
-
-Alexander
+- Steve
