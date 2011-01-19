@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/13
-Message-ID: <20110502182907.GA20415@openwall.com>
-Date: Mon, 2 May 2011 22:29:07 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/3
+Message-ID: <Pine.GSO.4.64.1101190721080.9694@faron.mitre.org>
+Date: Wed, 19 Jan 2011 07:21:36 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Matthew Nicholson <mnicholson@...ium.com>
+Subject: Re: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 01:04:44PM -0500, Mark Hatle wrote:
-> I am a bit confused though.  If I (as a non-RH customer) look to download their
-> latest security updates, I don't see an obvious way of doing it based on their
-> advisories.  For instance:
-> 
-> https://rhn.redhat.com/errata/RHSA-2011-0421.html
-> 
-> This advisory ends with:  (The unlinked packages above are only available from
-> the Red Hat Network)
 
-Yes, Red Hat advisories say that, but in practice the .src.rpm's are
-freely downloadable.  Here's one mentioned in the advisory above:
+On Wed, 19 Jan 2011, Jan Lieskovsky wrote:
 
-lftp ftp.redhat.com:/pub/redhat/linux/enterprise/6Server/en/os/SRPMS> ls -l kernel-2.6.32-71.24.1.el6.src.rpm
--rw-r--r--    5 ftp      ftp      67060785 Apr 07 02:51 kernel-2.6.32-71.24.1.el6.src.rpm
+>  Asterisk upstream yesterday released AST-2011-001, also with patches for 
+> supported versions.
+>  References:
+>  [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
+>  [2] http://seclists.org/fulldisclosure/2011/Jan/297
+>  [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
+>  [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
 
-Yes, it's weird.
+Use CVE-2011-0495
 
-> This requires that I have a support account in order to download the update.
-
-For binary updates, yes.  For sources, no (although the wording in the
-advisories is such that you get that impression).
-
-Alexander
+- Steve
