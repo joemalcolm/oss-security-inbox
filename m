@@ -1,16 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/6
-Message-ID: <20110301105709.GA26297@nashi.nerv.fi>
-Date: Tue, 1 Mar 2011 12:57:09 +0200
-From: henri@...v.fi
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Atlassian JIRA Parameter-Based Redirection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/5
+Message-ID: <1295444206.15884.32.camel@solo.digium.internal>
+Date: Wed, 19 Jan 2011 07:36:46 -0600
+From: Matthew Nicholson <mnicholson@...ium.com>
+To: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue:
+On Wed, 2011-01-19 at 07:21 -0500, Steven M. Christey wrote:
+> On Wed, 19 Jan 2011, Jan Lieskovsky wrote:
+> 
+> >  Asterisk upstream yesterday released AST-2011-001, also with patches for 
+> > supported versions.
+> >  References:
+> >  [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
+> >  [2] http://seclists.org/fulldisclosure/2011/Jan/297
+> >  [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
+> >  [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
+> 
+> Use CVE-2011-0495
+> 
+> - Steve
 
-http://confluence.atlassian.com/display/JIRA/JIRA+Security+Advisory+2011-02-21
-http://secunia.com/advisories/43384
+Our website has been updated with this information.
 
-Best regards,
-Henri Salo
+-- 
+Matthew Nicholson
+Digium, Inc. | Software Developer
+
