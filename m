@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/7
-Message-ID: <2179836.0NOP2RJeYK@neon>
-Date: Thu, 08 Sep 2011 22:14:25 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/6
+Message-ID: <AANLkTi=nyB6Os2vAtg_scSuSf6cNumMYnOecyEhOsZh=@mail.gmail.com>
+Date: Wed, 19 Jan 2011 17:52:35 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Quassel < 0.7.3 CTCP request core DoS
+Subject: CVE request: heap corruption in VLC media player
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+>From upstream git [1]:
 
-please assign a CVE for the following issue:
-CtcpParser::packedReply in src/core/ctcpparser.cpp in Quassel does not process
-certain CTCP requests correctly, allowing a remote attacker connected to the
-same IRC network as the victim to cause a Denial of Service condition by
-sending specially crafted CTCP requests. This was demonstrated in various
-exploits on freenode today.
+"This patch resolves two heap corruption vulnerabilities in the CDG
+decoder for VLC media player.  In both cases, a failure to properly
+validate indexes into statically-sized arrays on the heap allows a
+maliciously crafted CDG video to corrupt the heap in a controlled
+manner, potentially leading to code execution."
 
-Gentoo tracks the issue in [1], upstream fix is [2].
+-Dan
 
-Thanks,
-Alex
-
-[1] https://bugs.gentoo.org/show_bug.cgi?id=382313
-[2] http://git.quassel-
-irc.org/?p=quassel.git;a=commit;h=da215fcb9cd3096a3e223c87577d5d4ab8f8518b
-
--- 
-Alex Legler <a3li@...too.org>
-Gentoo Security / Ruby
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+[1] http://git.videolan.org/?p=vlc.git;a=commit;h=f9b664eac0e1a7bceed9d7b5854fd9fc351b4aab
