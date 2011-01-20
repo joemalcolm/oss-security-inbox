@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/4
-Message-ID: <Pine.GSO.4.64.1105050952580.15686@faron.mitre.org>
-Date: Thu, 5 May 2011 10:04:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/5
+Message-ID: <20110120175218.GU2115@redhat.com>
+Date: Thu, 20 Jan 2011 10:52:18 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
+Subject: Re: CVE-2010-4225: XSP/mod_mono source code disclosure
 Content-Type: text/plain; charset=utf-8
 
+* [2011-01-20 18:22:03 +0100] Oden Eriksson wrote:
 
-Assuming I understand the issue correctly, there is precedent in CVE for 
-this kind of problem, or at least the exploitation of recursive 
-backup/archive programs as they process files (many seem related to 
-setting insecure permissions during the copy, and only setting the secure 
-permissions afterward, a la CWE-689).
+>fredag 07 januari 2011 10:36:00 skrev  Thomas Biege:
+>> Hello,
+>>
+>> our Mono team released a security update to fix a source-code disclosure
+>> bug.
+>>
+>> http://www.mono-project.com/Vulnerabilities
+>> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
+>>
+>> Cheers,
+>> Thomas
+>
+>Where's the fix for this?
 
-CVE-2009-4411 is the only example I can easily find.
+It's fixed in mod_mono 2.8.2.  I have no idea where a patch can be found
+(in their git repo somewhere probably).
 
-There is a "risk" of sorts to the community that a large number of these 
-issues could get disclosed for different packages in a short timeframe, 
-but this happens with any discovery of a new "class" of security problems 
-or attacks (look at the untrusted path stuff that happened last year with 
-Windows and Linux).  But IMO, better sooner rather than later.  Linux is a 
-multi-user OS and should be treated as such, which means local 
-file-writing/privilege attacks matter, even though they might not be as 
-severe as other kinds of attacks.  Somebody audited simpler symlink 
-problems in Debian packages a couple years ago, but while it must have 
-been very painful and there were dozens (hundreds?) of separate issues, 
-most of those problems seemed to get fixed in a relatively quick amount of 
-time.
-
-Maybe the appropriate strategy is for the community to agree on a good way 
-of solving these problems before announcing all the different packages 
-that are affected, but it's just a thought.  Ultimately this decision is 
-up to the researcher, affected developers, and customers.
-
-- Steve
+-- 
+Vincent Danen / Red Hat Security Response Team 
