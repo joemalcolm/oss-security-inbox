@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/5
-Message-ID: <Pine.GSO.4.64.1102171308200.2314@faron.mitre.org>
-Date: Thu, 17 Feb 2011 13:10:21 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/4
+Message-Id: <201101201822.03830.oeriksson@mandriva.com>
+Date: Thu, 20 Jan 2011 18:22:03 +0100
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Webkit Dupes
+Subject: Re: CVE-2010-4225: XSP/mod_mono source code disclosure
 Content-Type: text/plain; charset=utf-8
 
+fredag 07 januari 2011 10:36:00 skrev  Thomas Biege:
+> Hello,
+> 
+> our Mono team released a security update to fix a source-code disclosure
+> bug.
+> 
+> http://www.mono-project.com/Vulnerabilities
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
+> 
+> Cheers,
+> Thomas
 
-On Sat, 5 Feb 2011, Michael Gilbert wrote:
+Where's the fix for this?
 
-> Hi,
->
-> The following issues are duplicate CVE assignments for webkit.  Please
-> merge and reject these as appropriate.
-
-I will handle these accordingly.  As you've noticed, a lot of CVE 
-descriptions don't have detailed information, so sometimes it's hard to be 
-certain when there are dupes.
-
-> Would it be possible to force Google and Apple to coordinate better to 
-> avoid these dupes?  This is creating unnecessary work and making it 
-> appear that webkit has a lot more issues than it really does.
-
-I started this conversation with both organizations a while ago, and your 
-findings (plus a separate effort by Josh Bressers) are renewing this 
-conversation.  That is, I'm working on it :)
-
-- Steve
+-- 
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
