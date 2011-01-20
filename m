@@ -1,33 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/3
-Message-ID: <4EF4E865.3080907@redhat.com>
-Date: Fri, 23 Dec 2011 13:45:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/1
+Message-ID: <4D37BA8C.1030107@redhat.com>
+Date: Thu, 20 Jan 2011 10:01:08 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: simplesamlphp / Typo3
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE assignments for Wireshark
 Content-Type: text/plain; charset=utf-8
 
-On 12/23/2011 01:20 PM, Moritz Muehlenhoff wrote:
-> Hi,
->
-> 1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
-> a while ago:
-> http://lists.debian.org/debian-security-announce/2011/msg00206.html
-Please use CVE-2011-4625 for this issue
+Hi Steven,
 
-> 2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
-> a while ago:
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
-> http://lists.debian.org/debian-security-announce/2011/msg00163.html
+On 01/13/2011 04:21 AM, Steven M. Christey wrote:
+> 
+> CVE-2011-0444 - MAC-LTE
+> 
+> CVE-2011-0445 - ASN.1 BER
 
-Argh. This one will have to wait since 1) I need to assign CVE's for ALL 
-the typo3 issues for 2011 and 2) I don't have enough spare CVE' right 
-now (here's hoping someone at Mitre is still in the office this 
-afternoon =). Once I get the CVE #'s I'll do an email like I did for moodle.
+Looking at the following wireshark bug and the relevant commits:
 
-> Cheers,
->          Moritz
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
+
+http://anonsvn.wireshark.org/viewvc?view=rev&revision=35292
+http://anonsvn.wireshark.org/viewvc?view=rev&revision=35298
+
+It seems that there are two issues here, buffer overflow in MAC-LTE
+dissector as well as buffer overflow in SNMP engineID preferences.
+
+This issue was however assigned only one CVE i.e. CVE-2011-0444.
+Do you think two CVEs (for each individual issues), should be assigned
+in this case?
+
+> 
+> 
+> 
+> ======================================================
+> Name: CVE-2011-0444
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0444
+> Reference: MISC:https://bugs.wireshark.org/bugzilla/attachment.cgi?id=5676
+> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-01.html
+> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
+> Reference: VUPEN:ADV-2011-0079
+> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+> 
+> Buffer overflow in the MAC-LTE dissector
+> (epan/dissectors/packet-mac-lte.c) in Wireshark 1.2.0 through 1.2.13
+> and 1.4.0 through 1.4.2 allows remote attackers to cause a denial of
+> service (crash) and possibly execute arbitrary code via a large number
+> of RARs.
+> 
+> 
+> ======================================================
+> Name: CVE-2011-0445
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0445
+> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5537
+> Reference: VUPEN:ADV-2011-0079
+> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+> 
+> The ASN.1 BER dissector in Wireshark 1.4.0 through 1.4.2 allows remote
+> attackers to cause a denial of service (assertion failure) via crafted
+> packets, as demonstrated by fuzz-2010-12-30-28473.pcap.
+> 
+> 
+
 
 -- 
--Kurt Seifried / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
