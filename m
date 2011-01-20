@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/6
-Message-ID: <4D65EACA.5010803@lordepsylon.net>
-Date: Thu, 24 Feb 2011 06:21:14 +0100
-From: psy <root@...depsylon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/6
+Message-ID: <AANLkTimFDaP1ZDrpfkMtRpYSFmdi7tMNP00R0ZXADQE9@mail.gmail.com>
+Date: Thu, 20 Jan 2011 18:15:49 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: XSSer v1.5 -beta- aka "Swarm Edition!" released.
+Subject: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I identified two issues in xpdf.  I don't think the first requires a
+CVE, since it's incredibly unlikely to be exploitable, but I include
+it here in case someone disagrees.
 
-I am very happy to present a new version of *XSSer* (v1.5-beta-) - the
-cross site scripter framework.
+1. Due to an integer overflow when parsing CharCodes for fonts and a
+failure to check the return value of a memory allocation, it is
+possible to trigger writes to a narrow range of offsets from a NULL
+pointer.  The chance of being able to exploit this for anything other
+than a crash is very remote: on x86 32-bit, there's no chance (since
+the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
+write lands in valid userspace on x86-64, but in my testing this
+memory is never mapped.  Fixed in poppler commit at [1], hopefully
+fixed soon at xpdf upstream.
 
-Take a look to the XSSer website to see new features implemented,
-screenshoots, documentation, etc...
+2. Malformed commands may cause corruption of the internal stack used
+to maintain graphics contexts, leading to potentially exploitable
+memory corruption.  Fixed in poppler commit at [2], hopefully fixed
+soon at xpdf upstream.
 
-http://xsser.sf.net
+-Dan
 
-You can download new code directly from here:
-
-http://sourceforge.net/projects/xsser/files/xsser_1.5-1.tar.gz/download
-
-There is one package pre-compiled for Ubuntu/Debian here:
-
-http://xsser.sourceforge.net/xsser/xsser_1.5-1_all.deb.tar.gz
-
-And here, you have a video demostration:
-
-http://blip.tv/file/4806587/
-
-"Remeber, now mosquitos... are swarm!"
-
-Happy cross hacking.
-
-psy.
-
-
-
+[1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
+[2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
