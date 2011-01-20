@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/2
-Message-ID: <4DD14646.1030507@redhat.com>
-Date: Mon, 16 May 2011 17:44:06 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Matej Vela <vela@...ian.org>, Jakub Jelinek <jakub@...hat.com>
-Subject: CVE Request -- pmake -- Use of insecure temporary file for 'depend' target
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/6
+Message-ID: <AANLkTimFDaP1ZDrpfkMtRpYSFmdi7tMNP00R0ZXADQE9@mail.gmail.com>
+Date: Thu, 20 Jan 2011 18:15:49 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
+I identified two issues in xpdf.  I don't think the first requires a
+CVE, since it's incredibly unlikely to be exploitable, but I include
+it here in case someone disagrees.
 
-Hello Josh, Steve, vendors,
+1. Due to an integer overflow when parsing CharCodes for fonts and a
+failure to check the return value of a memory allocation, it is
+possible to trigger writes to a narrow range of offsets from a NULL
+pointer.  The chance of being able to exploit this for anything other
+than a crash is very remote: on x86 32-bit, there's no chance (since
+the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
+write lands in valid userspace on x86-64, but in my testing this
+memory is never mapped.  Fixed in poppler commit at [1], hopefully
+fixed soon at xpdf upstream.
 
-   it was found that pmake (BSD 4.4 version of make) used insecure
-temporary file for 'depend' target when building libraries (/usr/share
-/mk/bsd.lib.mk) and executables (/usr/share/mk/bsd.prog.mk). A local
-attacker could use this flaw to conduct symlink attacks possibly
-leading to their ability to replace content of arbitrary files,
-belonging to user running the pmake tool or ability to modify the
-integrity of .depend file in the home directory of the victim.
+2. Malformed commands may cause corruption of the internal stack used
+to maintain graphics contexts, leading to potentially exploitable
+memory corruption.  Fixed in poppler commit at [2], hopefully fixed
+soon at xpdf upstream.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626673
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=705090
+-Dan
 
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
+[2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
