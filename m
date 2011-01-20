@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/5
-Message-ID: <20111009182839.GA4474@pisco.westfalen.local>
-Date: Sun, 9 Oct 2011 20:28:39 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/2
+Message-ID: <1110969345.43645.1295541408005.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Jan 2011 11:36:48 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: Tahoe-LAFS and atop
+Subject: Re: CVE request: heap corruption in libpango
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs for the following issues:
+Please use CVE-2011-0020 for this.
 
-1. Tahoe-LAFS
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641540
+Thanks.
 
-2. atop
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
+-- 
+    JB
 
-Cheers,
-        Moritz
+----- Original Message -----
+> From Launchpad [1]:
+> 
+> "When used with FreeType2 as a backend, Pango is vulnerable to heap
+> corruption when rendering malformed fonts. The vulnerability occurs in
+> pango_ft2_font_render_box_glyph() in pango/pangoft2-render.c. A buffer
+> is malloc'd with size box->bitmap.rows * box->bitmap.pitch.
+> Subsequently, 0xff is written at offsets into this buffer without
+> checking that these offsets fall within the buffer's boundaries,
+> leading to heap corruption."
+> 
+> -Dan
+> 
+> [1] https://bugs.launchpad.net/ubuntu/+source/pango1.0/+bug/696616
