@@ -1,20 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/3
-Message-ID: <20110418171614.GA16021@inutil.org>
-Date: Mon, 18 Apr 2011 19:16:15 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/4
+Message-Id: <201101201822.03830.oeriksson@mandriva.com>
+Date: Thu, 20 Jan 2011 18:22:03 +0100
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mojolicious
+Subject: Re: CVE-2010-4225: XSP/mod_mono source code disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+fredag 07 januari 2011 10:36:00 skrev  Thomas Biege:
+> Hello,
+> 
+> our Mono team released a security update to fix a source-code disclosure
+> bug.
+> 
+> http://www.mono-project.com/Vulnerabilities
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
+> 
+> Cheers,
+> Thomas
 
-Please assign a CVE ID for this Mojolicious issue:
+Where's the fix for this?
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
-http://perlninja.posterous.com/sharks-in-the-water
-http://cpansearch.perl.org/src/KRAIH/Mojolicious-1.16/Changes
-https://github.com/kraih/mojo/issues/114
-
-Cheers,
-        Moritz
+-- 
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
