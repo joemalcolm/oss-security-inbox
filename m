@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/1
-Message-Id: <201105061437.54933.thomas@suse.de>
-Date: Fri, 6 May 2011 14:37:54 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/3
+Message-ID: <777693093.44058.1295542633717.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Jan 2011 11:57:13 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libarchive, multiple overflows
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: heap corruption in VLC media player
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-our maintainer found the following patches:
------------
-I was doing some maintainance on bsdtar package and noticed that there was a
-buffer overflow fix upstream, see
-http://code.google.com/p/libarchive/source/detail?r=3158&path=/trunk/libarchive/archive_read_support_format_iso9660.c
+This should only need one ID. Please use CVE-2011-0021.
 
-Also SUSE package does not include the
-http://pkgs.fedoraproject.org/gitweb/?p=libarchive.git;a=blob_plain;f=libarchive-2.8.4-iso9660-data-types.patch;hb=HEAD
-patch which seems to be security sensitive also.
-----------
-More overflow fixes:
-
-http://code.google.com/p/libarchive/source/detail?r=2842
-http://code.google.com/p/libarchive/source/detail?r=3160
-
-Use-after-free fix (not sure if exploitable):
-
-http://code.google.com/p/libarchive/source/detail?r=3038
-----------
-
-Cheers,
-Thomas
-
+Thanks.
 
 -- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+    JB
+
+
+----- Original Message -----
+> From upstream git [1]:
+> 
+> "This patch resolves two heap corruption vulnerabilities in the CDG
+> decoder for VLC media player. In both cases, a failure to properly
+> validate indexes into statically-sized arrays on the heap allows a
+> maliciously crafted CDG video to corrupt the heap in a controlled
+> manner, potentially leading to code execution."
+> 
+> -Dan
+> 
+> [1]
+> http://git.videolan.org/?p=vlc.git;a=commit;h=f9b664eac0e1a7bceed9d7b5854fd9fc351b4aab
