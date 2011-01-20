@@ -1,33 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/7
-Message-ID: <20110308101439.0cbe5720@orphan>
-Date: Tue, 8 Mar 2011 10:14:39 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/1
+Message-ID: <4D37BA8C.1030107@redhat.com>
+Date: Thu, 20 Jan 2011 10:01:08 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: sgrubb@...hat.com
-Subject: Re: ldd can execute an app unexpectedly
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE assignments for Wireshark
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 7 Mar 2011 18:27:05 -0500 Steve Grubb wrote:
+Hi Steven,
 
->  http://reverse.lostrealm.com/protect/ldd.html
->  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+On 01/13/2011 04:21 AM, Steven M. Christey wrote:
 > 
-> Besides telling everyone don't do that. ldd could take the PoV that
-> it should only call runtime linkers in trusted directories like /sbin
-> or /usr/sbin.
+> CVE-2011-0444 - MAC-LTE
+> 
+> CVE-2011-0445 - ASN.1 BER
 
-Upstream does not seem to consider this to be an issue:
-  https://bugzilla.redhat.com/show_bug.cgi?id=531160#c1
+Looking at the following wireshark bug and the relevant commits:
 
-Debian also uses the patch similar to what ldv pointed out - it changes
-ldd to always do:
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
 
-  LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 /path/to/ELF-lib-or-binary
+http://anonsvn.wireshark.org/viewvc?view=rev&revision=35292
+http://anonsvn.wireshark.org/viewvc?view=rev&revision=35298
 
-rather than:
+It seems that there are two issues here, buffer overflow in MAC-LTE
+dissector as well as buffer overflow in SNMP engineID preferences.
 
-  LD_TRACE_LOADED_OBJECTS=1 /path/to/ELF-lib-or-binary
+This issue was however assigned only one CVE i.e. CVE-2011-0444.
+Do you think two CVEs (for each individual issues), should be assigned
+in this case?
+
+> 
+> 
+> 
+> ======================================================
+> Name: CVE-2011-0444
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0444
+> Reference: MISC:https://bugs.wireshark.org/bugzilla/attachment.cgi?id=5676
+> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-01.html
+> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
+> Reference: VUPEN:ADV-2011-0079
+> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+> 
+> Buffer overflow in the MAC-LTE dissector
+> (epan/dissectors/packet-mac-lte.c) in Wireshark 1.2.0 through 1.2.13
+> and 1.4.0 through 1.4.2 allows remote attackers to cause a denial of
+> service (crash) and possibly execute arbitrary code via a large number
+> of RARs.
+> 
+> 
+> ======================================================
+> Name: CVE-2011-0445
+> Status: Candidate
+> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0445
+> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
+> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5537
+> Reference: VUPEN:ADV-2011-0079
+> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
+> 
+> The ASN.1 BER dissector in Wireshark 1.4.0 through 1.4.2 allows remote
+> attackers to cause a denial of service (assertion failure) via crafted
+> packets, as demonstrated by fuzz-2010-12-30-28473.pcap.
+> 
+> 
+
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
