@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/13
-Message-ID: <20110621192214.GL1952@redhat.com>
-Date: Tue, 21 Jun 2011 13:22:15 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/21/1
+Message-ID: <4D390191.9080307@kernel.org>
+Date: Fri, 21 Jan 2011 11:46:25 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
+To: Vasiliy Kulikov <segoon@...nwall.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-* [2011-06-21 22:15:25 +0400] Solar Designer wrote:
+On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+> File position is not controlled, it may lead to overwrites of arbitrary
+> kernel memory.  Also the code may kfree() the same pointer multiple
+> times.
 
->On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
->> Ok, so taking a quick look at php-suhosin, we have:
->>
->> ...
->>  61 typedef unsigned int BF_word;
->> ...
->> 558     BF_word tmp;
->> 559
->> 560     for (i = 0; i < BF_N + 2; i++) {
->> 561         tmp = 0;
->> 562         for (j = 0; j < 4; j++) {
->> 563             tmp <<= 8;
->> 564             tmp |= *ptr;
->>
->> I'm assuming the above means it is vulnerable (unsigned int vs unsigned
->> char).
->
->No, we can't conclude anything from just the excerpt you quoted above.
->If *ptr is signed char, then we have the bug.  If it's unsigned char,
->then we don't.  If it's just char, which it was in my original code,
->then we have the bug on most platforms, but not on those few where char
->defaults to unsigned.  Or rather, the bug is mitigated on those.
+http://lkml.org/lkml/2011/1/20/348
+https://bugzilla.redhat.com/CVE-2011-0023
 
-So should have included this:
+Please use CVE-2011-0023 (this does not include the unresolved flaw 
+described in the following paragraph below).
 
-556     __CONST char *ptr = key; 
+> One more flaw is still present: if multiple processes open the file then
+> all 3 static variables are shared, leading to various race conditions.
+> They should be moved to file->private_data.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks, Eugene
