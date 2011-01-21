@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/10
-Message-ID: <Pine.GSO.4.64.1109141437030.18631@faron.mitre.org>
-Date: Wed, 14 Sep 2011 14:43:50 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/21/3
+Message-ID: <AANLkTimwAq7aVW4X_q_dr52nbt8fotHNhnyxpsoRHRqa@mail.gmail.com>
+Date: Fri, 21 Jan 2011 17:36:53 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: Vasiliy Kulikov <segoon@...nwall.com>
+Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
+> On Fri, Jan 21, 2011 at 11:46 +0800, Eugene Teo wrote:
+>> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+>> >File position is not controlled, it may lead to overwrites of arbitrary
+>> >kernel memory.  Also the code may kfree() the same pointer multiple
+>> >times.
+>>
+>> http://lkml.org/lkml/2011/1/20/348
+>> https://bugzilla.redhat.com/CVE-2011-0023
+>>
+>> Please use CVE-2011-0023 (this does not include the unresolved flaw
+>> described in the following paragraph below).
+>>
+>> >One more flaw is still present: if multiple processes open the file then
+>> >all 3 static variables are shared, leading to various race conditions.
+>> >They should be moved to file->private_data.
+>
+> Since ed3aada1bf34c this file is available to root only.  This may be
+> exploited if and only if the file is chmod'ed/chown/ed to nonroot.
 
-I've assigned CVE's to the rest of these:
+That upstream commit has an associated CVE name already. If we take
+that into consideration, then this shouldn't be security relevant. I
+will reject CVE-2011-0023.
 
->> 1, Wireshark CSN.1 dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-16.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737783
-
-CVE-2011-3482
-
->> 3. Wireshark buffer exception handling vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-14.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737785
-
-CVE-2011-3483
-
->> 4. Wireshark OpenSafety dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-12.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737787
-
-CVE-2011-3484
-
-
-- Steve
+Thanks, Eugene
