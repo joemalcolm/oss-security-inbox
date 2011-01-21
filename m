@@ -1,58 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/5
-Message-ID: <20110316100911.GD26611@core.inversepath.com>
-Date: Wed, 16 Mar 2011 11:09:11 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/21/1
+Message-ID: <4D390191.9080307@kernel.org>
+Date: Fri, 21 Jan 2011 11:46:25 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
+To: Vasiliy Kulikov <segoon@...nwall.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 14, 2011 at 11:28:14PM -0400, Mike O'Connor wrote:
-> [catching up on old email]
-> 
-> :> > As suggested by Josh Bressers oCERT would be favourable to providing a
-> :> > system that would accept user submission and allow selection of security
-> :> > contacts from our existing member database as well as other verified
-> :> > contacts.
-> 
-> ...
-> 
-> :It all depends on how this process is going to be handled. I can see oCERT
-> :helping in routing reports to the proper contacts via email to our trusted
-> :member contacts as well as external ones that we can seek on a report basis.
-> 
-> What I've observed is that some times, the reporter or coordinator
-> doesn't have a good idea of the scope of their issue.  To cite some
-> real-world examples involving folks who I thought would know better:
-> 
->   1) no, BSD networking isn't just in Free/Net/OpenBSD 
->   2) no, ONC RPC just isn't in Sun products
->   3) no, a RH-specific kernel issue is a general Linux kernel issue
-> 
-> Scoping issues isn't always easy.  How do you know whether I backported
-> some bleeding-edge fix with broken security implications into one of the
-> OSes I care about last week?  Sometimes, I'll need specific info just to
-> confirm that I don't care about the issue.  Scoping is one of the things
-> that vendor-sec was occasionally quite helpful with.  
-> 
+On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+> File position is not controlled, it may lead to overwrites of arbitrary
+> kernel memory.  Also the code may kfree() the same pointer multiple
+> times.
 
-Putting reports within the proper context and hunting down all occurrences of
-affected code in other projects has been one of oCERT goals from the
-beginning.
+http://lkml.org/lkml/2011/1/20/348
+https://bugzilla.redhat.com/CVE-2011-0023
 
-I agree 100% that reporters often do not have this knowledge or do not care
-about making the effort in scoping things in depth, that's exactly why oCERT
-was created.
+Please use CVE-2011-0023 (this does not include the unresolved flaw 
+described in the following paragraph below).
 
-> -- 
->  Michael J. O'Connor                                          mjo@...o.mi.org
->  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-> "I'd be terrific!  Colossal!  Stupendous!  Mediocre even!"        -Babs Bunny
+> One more flaw is still present: if multiple processes open the file then
+> all 3 static variables are shared, leading to various race conditions.
+> They should be moved to file->private_data.
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Thanks, Eugene
