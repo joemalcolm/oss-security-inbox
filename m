@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/4
-Message-ID: <20111111164824.GA28950@dhcp-25-225.brq.redhat.com>
-Date: Fri, 11 Nov 2011 17:48:24 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/21/3
+Message-ID: <AANLkTimwAq7aVW4X_q_dr52nbt8fotHNhnyxpsoRHRqa@mail.gmail.com>
+Date: Fri, 21 Jan 2011 17:36:53 +0800
+From: Eugene Teo <eugeneteo@...nel.sg>
+To: Vasiliy Kulikov <segoon@...nwall.com>
+Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-"nfs4_getfacl decoding causes a kernel Oops when a server returns more
-than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
-request.
+> On Fri, Jan 21, 2011 at 11:46 +0800, Eugene Teo wrote:
+>> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+>> >File position is not controlled, it may lead to overwrites of arbitrary
+>> >kernel memory.  Also the code may kfree() the same pointer multiple
+>> >times.
+>>
+>> http://lkml.org/lkml/2011/1/20/348
+>> https://bugzilla.redhat.com/CVE-2011-0023
+>>
+>> Please use CVE-2011-0023 (this does not include the unresolved flaw
+>> described in the following paragraph below).
+>>
+>> >One more flaw is still present: if multiple processes open the file then
+>> >all 3 static variables are shared, leading to various race conditions.
+>> >They should be moved to file->private_data.
+>
+> Since ed3aada1bf34c this file is available to root only.  This may be
+> exploited if and only if the file is chmod'ed/chown/ed to nonroot.
 
-While the NFS client only asks for one attribute (FATTR4_ACL) in the
-first bitmap word, the NFSv4 protocol allows for the server to return
-unbounded bitmaps (more than two)."
+That upstream commit has an associated CVE name already. If we take
+that into consideration, then this shouldn't be security relevant. I
+will reject CVE-2011-0023.
 
-Upstream commit:
-e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
-case when 2 words are expected and 3 are returned
-
-Proposed complete upstream patch:
-http://www.spinics.net/lists/linux-nfs/msg25288.html
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=747106
-
-Credit: Andy Adamson
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Thanks, Eugene
