@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/1
-Message-ID: <4E23D8DC.208@redhat.com>
-Date: Mon, 18 Jul 2011 12:25:24 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/21/2
+Message-ID: <20110121085238.GB5040@albatros>
+Date: Fri, 21 Jan 2011 11:52:38 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Eugene Teo <eugeneteo@...nel.org>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On 07/14/2011 12:05 PM, Jan Lieskovsky wrote:
-> 
-> Could you allocate a CVE identifier for this?
-> 
+Eugene,
 
-This has been assigned CVE-2011-2696
+On Fri, Jan 21, 2011 at 11:46 +0800, Eugene Teo wrote:
+> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+> >File position is not controlled, it may lead to overwrites of arbitrary
+> >kernel memory.  Also the code may kfree() the same pointer multiple
+> >times.
+> 
+> http://lkml.org/lkml/2011/1/20/348
+> https://bugzilla.redhat.com/CVE-2011-0023
+> 
+> Please use CVE-2011-0023 (this does not include the unresolved flaw
+> described in the following paragraph below).
+> 
+> >One more flaw is still present: if multiple processes open the file then
+> >all 3 static variables are shared, leading to various race conditions.
+> >They should be moved to file->private_data.
+
+Since ed3aada1bf34c this file is available to root only.  This may be
+exploited if and only if the file is chmod'ed/chown/ed to nonroot.
+
+
+Thanks,
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
