@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/6
-Message-ID: <20111115041614.GB8578@openwall.com>
-Date: Tue, 15 Nov 2011 08:16:14 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/22/1
+Message-ID: <Pine.GSO.4.64.1101221511360.23018@faron.mitre.org>
+Date: Sat, 22 Jan 2011 15:13:29 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Eugene Teo <eugeneteo@...nel.org>
+cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 15, 2011 at 07:54:04AM +0400, Solar Designer wrote:
-> What happens when the salt string contains characters outside of the
-> usual base-64 alphabet is implementation-specific.  Typically,
-> implementations map those invalid salts onto the 12-bit values in one of
-> several ways.  FreeSec, an otherwise very good implementation by David
-> Burren, appears to be the only widespread implementation that maps all
-> invalid salt characters onto just one 6-bit value - zero.  FreeSec is
-> the implementation used by FreeBSD, OpenBSD, DragonFly BSD.  The code in
-> NetBSD is different, but it appears to share this problem.
 
-Speaking of NetBSD, it also appears to have out of bounds array reads on
-salt characters with the 8th bit set:
+On Fri, 21 Jan 2011, Eugene Teo wrote:
 
-static unsigned char a64toi[128];	/* ascii-64 => 0..63 */
-[...]
-		/* get iteration count */
-		num_iter = 0;
-		for (i = 4; --i >= 0; ) {
-			if ((t = (unsigned char)setting[i]) == '\0')
-				t = '.';
-			encp[i] = t;
-			num_iter = (num_iter<<6) | a64toi[t];
-		}
-[...]
-	salt = 0;
-	for (i = salt_size; --i >= 0; ) {
-		if ((t = (unsigned char)setting[i]) == '\0')
-			t = '.';
-		encp[i] = t;
-		salt = (salt<<6) | a64toi[t];
-	}
+> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+>> File position is not controlled, it may lead to overwrites of arbitrary
+>> kernel memory.  Also the code may kfree() the same pointer multiple
+>> times.
+>
+> http://lkml.org/lkml/2011/1/20/348
+> https://bugzilla.redhat.com/CVE-2011-0023
+>
+> Please use CVE-2011-0023 (this does not include the unresolved flaw described 
+> in the following paragraph below).
 
-This has no security impact that I can see, though.  Perhaps with PHP
-safe_mode and the like it could be used to read data beyond array
-bounds, but unless the order of variables in .bss is heavily changed by
-the compiler or linker there's nothing interesting to read in the 128
-bytes following a64toi[], and it would not result in a crash either.
+There seem to be 2 types of issues described above - the uncontrolled file 
+position / memory overwrite, and a "double free".  So there should 
+probably be 2 separate CVEs, not one.  Am I missing something?
 
-Alexander
+- Steve
