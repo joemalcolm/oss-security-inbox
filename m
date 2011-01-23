@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/2
-Message-ID: <4ECFB086.6010200@redhat.com>
-Date: Fri, 25 Nov 2011 16:13:10 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: colord sql injections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/23/1
+Message-ID: <4D3B7803.4090806@kernel.org>
+Date: Sun, 23 Jan 2011 08:36:19 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-Hi Ludwig,
-
-   thank you for the report.
-
-On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
-> Hi,
+On 01/23/2011 04:13 AM, Steven M. Christey wrote:
 >
-> colord did not quote user supplied strings which made it prone to
-> SQL injections:
-> https://bugs.freedesktop.org/show_bug.cgi?id=42904
-> https://bugzilla.novell.com/show_bug.cgi?id=698250
-
-Just to have this one sorted out wrt to the patches, the relevant
-upstream patches are these two:
-[1] 
-http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
-[2] 
-http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
-
-right?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+> On Fri, 21 Jan 2011, Eugene Teo wrote:
 >
-> When colord runs as root and local active users are allowed to
-> create new devices (both are the defaults AFAIK) this allows not
-> only to corrupt colord's own database but also to leverage it to
-> modify other databases in the system (PackageKit for example also
-> uses sqlite).
+>> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+>>> File position is not controlled, it may lead to overwrites of arbitrary
+>>> kernel memory. Also the code may kfree() the same pointer multiple
+>>> times.
+>>
+>> http://lkml.org/lkml/2011/1/20/348
+>> https://bugzilla.redhat.com/CVE-2011-0023
+>>
+>> Please use CVE-2011-0023 (this does not include the unresolved flaw
+>> described in the following paragraph below).
 >
-> PoC available on request.
->
-> cu
-> Ludwig
->
+> There seem to be 2 types of issues described above - the uncontrolled
+> file position / memory overwrite, and a "double free". So there should
+> probably be 2 separate CVEs, not one. Am I missing something?
 
+Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
+
+Eugene
