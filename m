@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/8
-Message-ID: <20110627145835.GA14674@foo.fgeek.fi>
-Date: Mon, 27 Jun 2011 17:58:35 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/23/1
+Message-ID: <4D3B7803.4090806@kernel.org>
+Date: Sun, 23 Jan 2011 08:36:19 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
 To: oss-security@...ts.openwall.com
-Cc: incidents@...rt.org, lists@...g.net, bressers@...hat.com
-Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 27, 2011 at 03:53:27PM +0800, YGN Ethical Hacker Group wrote:
-> Path Disclosure should better be regarded as more closely related to
-> server-side issue.
-> It may be too redundant or unnecessary to create one path disclosure
-> issue per CVE.
-> 
-> Another Path Disclosure issue in Joomla! 1.6.1
-> 
-> http://bl0g.yehg.net/2011/04/joomla-161-and-lower-information.html
-> 
-> 
-> Almost all php CMS applications have this issue going on where  some
-> of them are listed at:
-> 
-> http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln
+On 01/23/2011 04:13 AM, Steven M. Christey wrote:
+>
+> On Fri, 21 Jan 2011, Eugene Teo wrote:
+>
+>> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+>>> File position is not controlled, it may lead to overwrites of arbitrary
+>>> kernel memory. Also the code may kfree() the same pointer multiple
+>>> times.
+>>
+>> http://lkml.org/lkml/2011/1/20/348
+>> https://bugzilla.redhat.com/CVE-2011-0023
+>>
+>> Please use CVE-2011-0023 (this does not include the unresolved flaw
+>> described in the following paragraph below).
+>
+> There seem to be 2 types of issues described above - the uncontrolled
+> file position / memory overwrite, and a "double free". So there should
+> probably be 2 separate CVEs, not one. Am I missing something?
 
-I think this deserves own CVE-identifier as Joomla did announce security vulnerability. As far as I know the vulnerability was described as "Information Disclosure" not patch disclosure. Path disclosures should be fixed from software also, but usually it is a problem in web-server configuration. Do you have more information about issue CVE-2011-2488? Still no reply from Joomla security team regarding issue CVE-2011-2488. I asked more details nearly a week ago.
+Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
 
-Btw. I would use domain example.org in advisories if I were you. You might not always want to keep that attacker.in domain.
-
-Best regards,
-Henri Salo
+Eugene
