@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/7
-Message-ID: <887697103.140954.1294149892279.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 4 Jan 2011 09:04:52 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/4
+Message-ID: <1493366954.102437.1295894087346.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 24 Jan 2011 13:34:47 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for buffer overflows in gimp
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-
-
 ----- Original Message -----
-> Hello Steve, Vendors,
+> On 01/23/2011 04:13 AM, Steven M. Christey wrote:
+> >
+> > On Fri, 21 Jan 2011, Eugene Teo wrote:
+> >
+> >> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+> >>> File position is not controlled, it may lead to overwrites of
+> >>> arbitrary
+> >>> kernel memory. Also the code may kfree() the same pointer multiple
+> >>> times.
+> >>
+> >> http://lkml.org/lkml/2011/1/20/348
+> >> https://bugzilla.redhat.com/CVE-2011-0023
+> >>
+> >> Please use CVE-2011-0023 (this does not include the unresolved flaw
+> >> described in the following paragraph below).
+> >
+> > There seem to be 2 types of issues described above - the
+> > uncontrolled
+> > file position / memory overwrite, and a "double free". So there
+> > should
+> > probably be 2 separate CVEs, not one. Am I missing something?
 > 
-> This one is from the debian bug tracker [1], there are four buffer
-> overflows in gimp plugins.
-> 
-> I am not sure if this would need one CVE or four?
-> 
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=608497
-> 
+> Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
 > 
 
-I'm going to give this four. We *might* be able to get away with two, but
-since they're all in quite different bits of code, I'm betting the affected
-versions are different, and it's likely upstream is going to fix these all
-at different times in their SCM.
-
-CVE-2010-4540 gimp LIGHTING EFFECTS > LIGHT plugin stack buffer overflow
-CVE-2010-4541 gimp SPHERE DESIGNER plugin stack buffer overflow
-CVE-2010-4542 gimp GFIG plugin stack buffer overflow
-CVE-2010-4543 gimp heap overflow read_channel_data() in file-psp.c
+Eugene, does the "unresolved flaw" still need an ID? This thread now
+confuses me.
 
 Thanks.
 
