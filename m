@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/2
-Message-ID: <20111212162444.GD1648@redhat.com>
-Date: Mon, 12 Dec 2011 09:24:56 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/9
+Message-ID: <20110124214624.GE4979@outflux.net>
+Date: Mon, 24 Jan 2011 13:46:24 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: rocksndiamonds world-writable working/config directory
+Cc: coley <coley@...re.org>
+Subject: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-rocksndiamonds creates its ~/.rocksndiamonds/ directory as
-world-writable.  This could allow a local attacker to replace a cache
-file with a symbolic link to a file they would not otherwise have access
-to, and the next time the victim loaded the game, it would be
-overwritten.
+Hello,
 
-Could a CVE be assigned to this please?
+I don't think these minor issues I reported to the Linux Kernel have
+had CVEs assigned to them:
 
-References:
+heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651620
-https://bugzilla.redhat.com/show_bug.cgi?id=766805
+iowarrior usb device heap overflow
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+
+
+Thanks,
+
+-Kees
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Kees Cook
+Ubuntu Security Team
