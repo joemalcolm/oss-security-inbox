@@ -1,65 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/13
-Message-ID: <AANLkTinwuK7UuzhwG2KGGyRE2TGSFEjDHcCQyZVhH=xB@mail.gmail.com>
-Date: Tue, 22 Mar 2011 15:56:40 -0700
-From: Julien Tinnes <jt@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/3
+Message-ID: <546398682.102388.1295893931536.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 24 Jan 2011 13:32:11 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel signal spoofing vulnerability (CVE request)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-The libc' sigqueue() function allows to queue a signal, as well as some
-accompanying data to a process.
 
-The kernel's interface that is used to implement this function is known
-as rt_sigqueueinfo(). It has been added in Linux 2.2.
+----- Original Message -----
+> I identified two issues in xpdf. I don't think the first requires a
+> CVE, since it's incredibly unlikely to be exploitable, but I include
+> it here in case someone disagrees.
+> 
+> 1. Due to an integer overflow when parsing CharCodes for fonts and a
+> failure to check the return value of a memory allocation, it is
+> possible to trigger writes to a narrow range of offsets from a NULL
+> pointer. The chance of being able to exploit this for anything other
+> than a crash is very remote: on x86 32-bit, there's no chance (since
+> the write occurs between 0xffffffc4 and 0xfffffffc). At least the
+> write lands in valid userspace on x86-64, but in my testing this
+> memory is never mapped. Fixed in poppler commit at [1], hopefully
+> fixed soon at xpdf upstream.
 
-This system call is interesting from a security perspective, because it
-allows userland to compeletely specify the siginfo_t structure. This
-structure is normally typically almost entirely written by the kernel
-when a signal is delivered.
+I'm going to give this an ID. Better safe than sorry.
+CVE-2010-4653
 
-Since at least Linux 2.4.0, most abuses of the kernel interface have
-been prevented with a simple check:
+> 
+> 2. Malformed commands may cause corruption of the internal stack used
+> to maintain graphics contexts, leading to potentially exploitable
+> memory corruption. Fixed in poppler commit at [2], hopefully fixed
+> soon at xpdf upstream.
+> 
 
-	/* Not even root can pretend to send signals from the kernel.
-	   Nor can they impersonate a kill(), which adds source info.  */
-	if (info.si_code >= 0)
-		return -EPERM;
+CVE-2010-4654
 
-This check made sure that rt_sigqueueinfo() could not spoof a signal
-whose SI_CODE would be SI_KERNEL or SI_USER. As the comment indicates, a
-process receiving a signal should be able to trust its source pid or uid
-if its si_code matches SI_USER.
 
-Unfortunately, a couple of years later, when tgkill() and tkill() were
-added, this check was forgotten and was not updated to prevent the
-spoofing of a TGKILL si_code.  Because of this, userland is unable to
-trust the pid and uid information of a TKILL signal.
+> [1]
+> http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
+> [2]
+> http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
 
-This is bad, because it is a useful feature in a scenario where a
-process which cannot ptrace you can send you signals. This includes at
-least the startup code of setuid binaries.
 
-Meanwhile, userland and libc writers still assumed that they could trust
-the origin of a SI_TKILL signal. Glibc authors too [1]. Worse: they
-even silently patched SI_TKILL with SI_USER [2], [3]. So even a userland
-application that (righfully so) only trusts SI_USER signals will be
-vulnerable.
+Thanks.
 
-A tentative patch for this vulnerability has been committed to Linus'
-kernel tree [4].
-
-In this patch, we prevent rt_sigqueueinfo() from specifying any si_code
-!= SI_QUEUE. While we believe it to be very unlikley, this could in
-theory break userland in some older Linux distributions, so we may
-have to revert to a more concervative patch and prevent ( (si_code ==
-SI_TKILL) || (si_code >= SI_QUEUE) ) instead.
-
-Please credit "Julien Tinnes, Google security team" in any related advisory.
-
-Julien
-
-[1]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/nptl/init.c&l=175
-[2]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/sysdeps/unix/sysv/linux/sigwaitinfo.c&l=63
-[3]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/sysdeps/unix/sysv/linux/sigtimedwait.c&l=62
-[4]: http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=da48524eb20662618854bb3df2db01fc65f3070c
+-- 
+    JB
