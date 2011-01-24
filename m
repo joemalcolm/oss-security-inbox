@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/1
-Message-ID: <CAOSRhRNqCGvtx=z57gZ5q_GkgkjEc3SsyRjV3209ioE2zQFp0g@mail.gmail.com>
-Date: Thu, 3 Nov 2011 07:14:26 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/2
+Message-ID: <20110124171300.GW4979@outflux.net>
+Date: Mon, 24 Jan 2011 09:13:00 -0800
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com, Dan Carpenter <error27@...il.com>, Mauro Carvalho Chehab <mchehab@...hat.com>
+Subject: Linux kernel av7110 negative array offset
 Content-Type: text/plain; charset=utf-8
 
-> Oh, and I suppose there's a very obvious but critical #6:
->
-> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
-> root permissions. Danger.
->
-> This may help to "confirm":
-> https://bugs.launchpad.net/calibre/+bug/885027/
->
->
-> As well, the maintainer has already issued a fix. From the bug report:
-> "Fixed in branch lp:calibre. The fix will be in the next release.
-> calibre is usually released every Friday.", which means the above
-> source link, that went to the trunk, now shows the fixed result. The
-> old broken code is still available here:
-> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
->
-> Note that the maintainer has chosen only to address #5.
->
+Hi,
 
-I'd recommend holding off on the CVE assignments for now, since these
-issues are currently in progress and the final tally of issues isn't
-complete.
+Tavis Ormandy pointed this[1] out to me today. Has this already been
+assigned a CVE? It looks exploitable if someone has this hardware in their
+system.
 
--Dan
+Thanks,
+
+-Kees
+
+[1] http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=cb26a24ee9706473f31d34cc259f4dcf45cd0644
+
+-- 
+Kees Cook
+Ubuntu Security Team
