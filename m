@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/5
-Message-ID: <4E4E811F.3060307@redhat.com>
-Date: Fri, 19 Aug 2011 23:28:31 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/5
+Message-ID: <20110124183757.GA28279@albatros>
+Date: Mon, 24 Jan 2011 21:37:59 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Cc: Eugene Teo <eugeneteo@...nel.org>, oss-security@...ts.openwall.com
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On 08/19/2011 03:18 PM, Timo Warns wrote:
-> The Linux kernel contains a vulnerability in the driver for Be file
-> systems that may lead to a kernel oops via a corrupted Be file system.
+On Sat, Jan 22, 2011 at 15:13 -0500, Steven M. Christey wrote:
 > 
-> In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
-> a long symlink from a data stream of a Be file system.
+> On Fri, 21 Jan 2011, Eugene Teo wrote:
 > 
->     befs_data_stream *data = &befs_ino->i_data.ds;
->     befs_off_t len = data->size;
+> >On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+> >>File position is not controlled, it may lead to overwrites of arbitrary
+> >>kernel memory.  Also the code may kfree() the same pointer multiple
+> >>times.
+> >
+> >http://lkml.org/lkml/2011/1/20/348
+> >https://bugzilla.redhat.com/CVE-2011-0023
+> >
+> >Please use CVE-2011-0023 (this does not include the unresolved
+> >flaw described in the following paragraph below).
 > 
-> The data->size / len value is not validated and can be 0 on a corrupted
-> file system.
-> 
-> befs_follow_link() allocates some memory based on len. Effectively,
-> kmalloc returns ZERO_SIZE_PTR in this case.
-> 
->         link = kmalloc(len, GFP_NOFS);
-> 
-> Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
-> oops:
-> 
-> 			link[len - 1] = '\0';
-> 
-> A patch is available at
-> http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
+> There seem to be 2 types of issues described above - the
+> uncontrolled file position / memory overwrite, and a "double free".
 
-Please use CVE-2011-2928.
+If you want to count every bug in this code, here you are: if zero *ppos
+after each write() then buf is leaked :-)
 
-Eugene
+> So there should probably be 2 separate CVEs, not one.  Am I missing
+> something?
+> 
+> - Steve
 
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
