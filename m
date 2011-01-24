@@ -1,39 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/25/1
-Message-ID: <4D8C3121.7090907@redhat.com>
-Date: Fri, 25 Mar 2011 14:07:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/4
+Message-ID: <1493366954.102437.1295894087346.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 24 Jan 2011 13:34:47 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: two OSS fixes
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On 03/23/2011 11:56 PM, Dan Rosenberg wrote:
-> For both issues, access to /dev/sequencer is required, which is
-> typically reserved for group audio.  Additionally, these only affect
-> systems that use OSS (not to be confused with the OSS emulation layer
-> provided by ALSA).
->
-> 1. Specially crafted requests may be written to /dev/sequencer
-> resulting in an underflow when calculating a size for a
-> copy_from_user() operation in the driver for MIDI interfaces.  On x86,
-> this just returns an error, but it may cause memory corruption on
-> other architectures.  Other malformed requests may result in the use
-> of uninitialized variables.  [1]
+----- Original Message -----
+> On 01/23/2011 04:13 AM, Steven M. Christey wrote:
+> >
+> > On Fri, 21 Jan 2011, Eugene Teo wrote:
+> >
+> >> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+> >>> File position is not controlled, it may lead to overwrites of
+> >>> arbitrary
+> >>> kernel memory. Also the code may kfree() the same pointer multiple
+> >>> times.
+> >>
+> >> http://lkml.org/lkml/2011/1/20/348
+> >> https://bugzilla.redhat.com/CVE-2011-0023
+> >>
+> >> Please use CVE-2011-0023 (this does not include the unresolved flaw
+> >> described in the following paragraph below).
+> >
+> > There seem to be 2 types of issues described above - the
+> > uncontrolled
+> > file position / memory overwrite, and a "double free". So there
+> > should
+> > probably be 2 separate CVEs, not one. Am I missing something?
+> 
+> Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
+> 
 
-CVE-2011-1476
+Eugene, does the "unresolved flaw" still need an ID? This thread now
+confuses me.
 
-> 2. Due to a failure to validate user-supplied indexes in the driver
-> for Yamaha YM3812 and OPL-3 chips, a specially crafted ioctl request
-> may be sent to /dev/sequencer, resulting in reading and writing beyond
-> the bounds of heap buffers, and potentially allowing privilege
-> escalation.  [2]
+Thanks.
 
-CVE-2011-1477
-
-> [1] http://marc.info/?l=linux-kernel&m=130089204124354&w=2
-> [2] http://marc.info/?l=linux-kernel&m=130089499728386&w=2
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
