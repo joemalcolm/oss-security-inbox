@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/10
-Message-ID: <Pine.LNX.4.64.1106271743170.17115@wotan.suse.de>
-Date: Mon, 27 Jun 2011 17:44:42 +0200 (CEST)
-From: Michael Matz <matz@...e.de>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/6
+Message-ID: <1791702979.102517.1295894287405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 24 Jan 2011 13:38:07 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, 610834-submitter@...s.debian.org, maradns@...il.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: MaraDNS DoS via long queries
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2011-0520.
 
-On Mon, 27 Jun 2011, Ludwig Nussel wrote:
+Thanks.
 
-> > Additionally, for the paranoid, when the option to treat 2a as 2x is 
-> > disabled, disallow logins with passwords containing 0xff chars 
-> > (possible attack).  Maybe only for 2a hashes, but not for 2y.  In 
-> > order not to leak this fact via timings, perform the hashing anyway.  
-> > (I'll consider making this built-in in a new version of 
-> > crypt_blowfish, which should let us be more careful with timings.)
+-- 
+    JB
+
+
+----- Original Message -----
+> Hi,
 > 
-> Ok, so we'd need two config options, one to toggle signedness bug compat 
-> mode (2a=2x) and one to disallow 0xff if compat mode is off.
-
-What's this 0xff business that crept up recently?  It's all characters 
-with the high bit set, not just 0xff, that pose problems.  Let's be 
-precise with these issues.
-
-
-Ciao,
-Michael.
+> A crash bug has been reported against MaraDNS 1.4.03 when long queries
+> are
+> sent to the resolver. Details can be found at:
+> http://bugs.debian.org/610834
+> 
+> As of the time of writing, the reporter is testing other versions and
+> at least
+> 1.4.05 also seems to be affected.
+> 
+> Josh, Steven: could a CVE id be assigned? Thanks in advance.
+> 
+> Regards,
+> --
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
