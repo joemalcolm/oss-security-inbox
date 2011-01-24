@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/1
-Message-ID: <9f039f38-a3f2-473a-a751-3c8e5a7da73b@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Sep 2011 08:31:36 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/8
+Message-ID: <20110124214124.GD4979@outflux.net>
+Date: Mon, 24 Jan 2011 13:41:24 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request? etherape remote crash (denial of service)
+Cc: coley <coley@...re.org>
+Subject: CVE request: libxml2 heap contents leak
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> The authors of Etherape, a network traffic overview tool, fixed a remote
-> denial of service (NULL ptr dereference) fixed in etherape 0.9.12.
-> 
-> http://etherape.sourceforge.net/
-> http://sourceforge.net/tracker/?func=detail&aid=3309061&group_id=2712&atid=102712
-> 
-> This tool is in the same area as wireshark, so this probably needs a CVE.
-> 
+Hello,
 
-Please use CVE-2011-3369.
+I'd like to get a CVE assigned for a minor heap contents leak in
+libxml2. I reported that it is possible to leak heap memory contents
+from libxml2 (and things linked against it, for example PHP[1], or things
+written in PHP[2]):
 
-Thanks.
+https://bugzilla.gnome.org/show_bug.cgi?id=631551
+
+Thanks,
+
+-Kees
+
+[1] http://bugs.php.net/bug.php?id=52998
+[2] http://status.net/open-source/issues/2798
 
 -- 
-    JB
+Kees Cook
+Ubuntu Security Team
