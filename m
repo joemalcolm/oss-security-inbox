@@ -1,17 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/56
-Message-ID: <4D9A445E.6090503@xiscosoft.es>
-Date: Tue, 05 Apr 2011 00:21:18 +0200
-From: klondike <klondike@...cosoft.es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/1
+Message-Id: <201101231955.42970.geissert@debian.org>
+Date: Sun, 23 Jan 2011 19:55:40 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: maradns@...il.com, 610834-submitter@...s.debian.org
+Subject: CVE request: MaraDNS DoS via long queries
 Content-Type: text/plain; charset=utf-8
 
-El 04/04/11 22:03, Jeffrey Czerniak escribió:
-> I'm Jeffrey Czerniak, a member of Apple's Product Security team.  I was a member of vendor-sec via the Apple exploder.   Please subscribe me to the new list.
->
-> My PGP public key can be found at https://www.apple.com/support/security/pgp/   I have also pasted it below for convenience:
-I thought Apple didn't made a Linux distro. Has that changed?
+Hi,
 
+A crash bug has been reported against MaraDNS 1.4.03 when long queries are 
+sent to the resolver. Details can be found at:
+http://bugs.debian.org/610834
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+As of the time of writing, the reporter is testing other versions and at least 
+1.4.05 also seems to be affected.
+
+Josh, Steven: could a CVE id be assigned? Thanks in advance.
+
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
