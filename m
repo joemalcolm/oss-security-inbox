@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/3
-Message-ID: <1428885404.213777.1296484373924.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 31 Jan 2011 09:32:53 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/6
+Message-ID: <1791702979.102517.1295894287405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 24 Jan 2011 13:38:07 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE assignments for Wireshark
+To: oss-security@...ts.openwall.com, 610834-submitter@...s.debian.org, maradns@...il.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: MaraDNS DoS via long queries
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 01/13/2011 04:21 AM, Steven M. Christey wrote:
-> >
-> > CVE-2011-0444 - MAC-LTE
-> >
-> > CVE-2011-0445 - ASN.1 BER
-> 
-> Looking at the following wireshark bug and the relevant commits:
-> 
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
-> 
-> http://anonsvn.wireshark.org/viewvc?view=rev&revision=35292
-> http://anonsvn.wireshark.org/viewvc?view=rev&revision=35298
-> 
-> It seems that there are two issues here, buffer overflow in MAC-LTE
-> dissector as well as buffer overflow in SNMP engineID preferences.
-> 
-> This issue was however assigned only one CVE i.e. CVE-2011-0444.
-> Do you think two CVEs (for each individual issues), should be assigned
-> in this case?
-> 
-
-Hi Steve,
-
-Can MITRE handle this one?
+Please use CVE-2011-0520.
 
 Thanks.
 
 -- 
     JB
+
+
+----- Original Message -----
+> Hi,
+> 
+> A crash bug has been reported against MaraDNS 1.4.03 when long queries
+> are
+> sent to the resolver. Details can be found at:
+> http://bugs.debian.org/610834
+> 
+> As of the time of writing, the reporter is testing other versions and
+> at least
+> 1.4.05 also seems to be affected.
+> 
+> Josh, Steven: could a CVE id be assigned? Thanks in advance.
+> 
+> Regards,
+> --
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
