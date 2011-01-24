@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/13/2
-Message-ID: <20111013144339.GB32345@foo.fgeek.fi>
-Date: Thu, 13 Oct 2011 17:43:39 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: fluxbb before 1.4.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/5
+Message-ID: <20110124183757.GA28279@albatros>
+Date: Mon, 24 Jan 2011 21:37:59 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Cc: Eugene Teo <eugeneteo@...nel.org>, oss-security@...ts.openwall.com
+Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 10, 2011 at 08:41:48PM +0200, Hanno Böck wrote:
-> http://fluxbb.org/forums/viewtopic.php?id=5751
+On Sat, Jan 22, 2011 at 15:13 -0500, Steven M. Christey wrote:
 > 
-> "This is a security release, however only affects anyone running FluxBB
-> behind a reverse proxy, with FORUM_BEHIND_REVERSE_PROXY enabled - we
-> expect this to be a small number of users."
+> On Fri, 21 Jan 2011, Eugene Teo wrote:
 > 
-> Whatever that means... I suggest something like
-> "Unknown security vulnerability related to reverse proxying"
+> >On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+> >>File position is not controlled, it may lead to overwrites of arbitrary
+> >>kernel memory.  Also the code may kfree() the same pointer multiple
+> >>times.
+> >
+> >http://lkml.org/lkml/2011/1/20/348
+> >https://bugzilla.redhat.com/CVE-2011-0023
+> >
+> >Please use CVE-2011-0023 (this does not include the unresolved
+> >flaw described in the following paragraph below).
 > 
-> -- 
-> Hanno Böck		mail/jabber: hanno@...eck.de
-> GPG: BBB51E42		http://www.hboeck.de/
+> There seem to be 2 types of issues described above - the
+> uncontrolled file position / memory overwrite, and a "double free".
 
-Documentation about the feature: http://fluxbb.org/docs/v1.4/constants#forum_behind_reverse_proxy
+If you want to count every bug in this code, here you are: if zero *ppos
+after each write() then buf is leaked :-)
 
-I can ask more details from the vendor.
+> So there should probably be 2 separate CVEs, not one.  Am I missing
+> something?
+> 
+> - Steve
 
-Best regards,
-Henri Salo
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
