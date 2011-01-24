@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/8
-Message-ID: <20110811174948.GN1360@redhat.com>
-Date: Thu, 11 Aug 2011 11:49:49 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/1
+Message-Id: <201101231955.42970.geissert@debian.org>
+Date: Sun, 23 Jan 2011 19:55:40 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: improper permissions on ~/.qtnx/*.nxml
+Cc: maradns@...il.com, 610834-submitter@...s.debian.org
+Subject: CVE request: MaraDNS DoS via long queries
 Content-Type: text/plain; charset=utf-8
 
-A Debian bug report noted that qtnx stores its configuration file
-insecurely.  If a non-default SSH key is used, the key is stored in this
-world-readable file (~/.qtnx/*.nxml) in a world-readable directory
-(~/.qtnx/).
+Hi,
 
-Could a CVE be assigned to this please?
+A crash bug has been reported against MaraDNS 1.4.03 when long queries are 
+sent to the resolver. Details can be found at:
+http://bugs.debian.org/610834
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=637439
-https://bugzilla.redhat.com/show_bug.cgi?id=730081
+As of the time of writing, the reporter is testing other versions and at least 
+1.4.05 also seems to be affected.
 
+Josh, Steven: could a CVE id be assigned? Thanks in advance.
+
+Regards,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
