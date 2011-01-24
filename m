@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/5
-Message-ID: <20110518172817.GA3817@openwall.com>
-Date: Wed, 18 May 2011 21:28:17 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/7
+Message-ID: <20110124213827.GC4979@outflux.net>
+Date: Mon, 24 Jan 2011 13:38:27 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Cc: coley <coley@...re.org>
+Subject: CVE request: multiple status.net issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 18, 2011 at 06:53:23PM +0200, yersinia wrote:
-> It happens that I am, with another name, an rpm5/popt comantainer . I am very
-> interested to integrate these patches, being also a   security
-> professional. Very
+Hello,
 
-<offtopic>
-We have many more rpm patches here:
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/rpm/
-These are against rpm-4.2 and most of them are non-security, but they
-were required to make rpm usable for us.  For example, when a package is
-rebuilt with some changes but without Epoch/Version/Release change, and
-the old build contains some files that are not in the new build, and the
-package is upgraded on a system (such as with "-U --force"), the
-original rpm would leave orphaned files around on the system (security
-relevance: even SUID/SGID program binaries).  Ours removes those files.
-You could want to take a look at our patches and see if any are still
-relevant to rpm5.
-</offtopic>
+I wanted to get some CVEs assigned for some minor issues that I reported to
+status.net.
 
-> useful to follow this mailing list, but I am not part of a distro, at least
-> for now, and I can no longer follow it in the future due to the  recent
-> policy change. Thanks anyway.
+    syslog message spoofing via newline injections into logging
+    http://status.net/open-source/issues/2795
 
-Huh?  There's no policy change.  Are you possibly misinterpreting the
-"Closed list" thread as applying to the oss-security list?  It does not.
-The closed list is an alternative to the old vendor-sec and to the CC
-lists that started to appear in the month without vendor-sec.  It is not
-an alternative to oss-security.  In fact, with the new closed list being
-more limited than the old vendor-sec was, I expect more topics to be
-discussed on oss-security than there were when vendor-sec was around.
+    limited XSS in error message contents
+    http://status.net/open-source/issues/2796 (fixed)
+
+    unsafe use of addslashes for SQL string escapes
+    http://status.net/open-source/issues/2797 (fixed)
 
 Thanks,
 
-Alexander
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
