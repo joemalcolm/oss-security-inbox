@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/2
-Message-ID: <4DAD86F9.5090005@redhat.com>
-Date: Tue, 19 Apr 2011 14:58:33 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Gerlof Langeveld <gerlof@...omputing.nl>
-Subject: CVE Request -- atop: Symlink attacks via process accounting file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/15
+Message-ID: <4D3F52CA.8070204@redhat.com>
+Date: Wed, 26 Jan 2011 06:46:34 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2010-4238 xen dom0 issue
 Content-Type: text/plain; charset=utf-8
 
+A missing sanity check was found in vbd_create() in the Xen hypervisor
+implementation. As CD-ROM drives are not supported by the blkback 
+back-end driver, attempting to use a virtual CD-ROM drive with blkback 
+could trigger a denial of service (crash) on the host system running the 
+Xen hypervisor.
 
-Hello Josh, Steve, vendors,
+https://bugzilla.redhat.com/CVE-2010-4238
 
-   atop v1.23 and earlier created process accounting file (/tmp/atop.d/atop.acct)
-in an insecure way. A local attacker could use this flaw to conduct symlink
-attacks (e.g. overwrite arbitrary system files).
+This affects Red Hat Enterprise Linux 5 only. There's no upstream patch.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
-[2] http://secunia.com/advisories/44175/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=697848
+https://bugzilla.redhat.com/CVE-2010-4238
 
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Eugene
