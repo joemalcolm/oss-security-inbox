@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/5
-Message-ID: <4DADCFE2.30408@redhat.com>
-Date: Tue, 19 Apr 2011 20:09:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- OpenVAS Manager v2.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/8
+Message-ID: <1085727233.121783.1295972810357.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Jan 2011 11:26:50 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: libxml2 heap contents leak
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2010-4657.
 
-Hello Josh, Steve, vendors,
+Thanks.
 
-   based on:
-   [1] http://lists.wald.intevation.org/pipermail/openvas-announce/2011-April/000120.html
+-- 
+    JB
 
-This release fixes a severe security issue discovered after the release
-of openvas-manager 2.0.2. By crafting a special report format plugin,
-and knowing about the operating system on which OpenVAS Manager is
-running, a rogue user was able to upload the plugin and execute
-arbitrary code with the privileges of the user running the OpenVAS
-Manager.
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Original Message -----
+> Hello,
+> 
+> I'd like to get a CVE assigned for a minor heap contents leak in
+> libxml2. I reported that it is possible to leak heap memory contents
+> from libxml2 (and things linked against it, for example PHP[1], or
+> things
+> written in PHP[2]):
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=631551
+> 
+> Thanks,
+> 
+> -Kees
+> 
+> [1] http://bugs.php.net/bug.php?id=52998
+> [2] http://status.net/open-source/issues/2798
+> 
+> --
+> Kees Cook
+> Ubuntu Security Team
