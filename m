@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/39
-Message-ID: <20110404181420.GB32295@altlinux.org>
-Date: Mon, 4 Apr 2011 22:14:20 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/13
+Message-ID: <379223907.122864.1295975285015.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Jan 2011 12:08:05 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: multiple status.net issues
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 04:00:29PM +0200, phocean wrote:
-> On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
-> >On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
-> >>Please subscribe me to the new list. I was a vendor-sec subscriber.
-> >>
-> >>pub   2048R/519FE93C 2011-01-26
-> >>uid                  ksha <ksha@...m.cl>
-> >
-> >Are you a security contact for a Linux distro, and for which one?
-> >And how do we verify that?
-> >
-> >How did you receive vendor-sec mail?
-> >
-> >Alexander
+
+
+----- Original Message -----
+> Hello,
 > 
-> I is work for Alt Linux Russia and is want to subscribe to yor list.
+> I wanted to get some CVEs assigned for some minor issues that I
+> reported to
+> status.net.
+> 
+> syslog message spoofing via newline injections into logging
+> http://status.net/open-source/issues/2795
 
-I cannot confirm this statement. ;)
+Use CVE-2010-4658.
 
+> 
+> limited XSS in error message contents
+> http://status.net/open-source/issues/2796 (fixed)
+
+Use CVE-2010-4659.
+
+> 
+> unsafe use of addslashes for SQL string escapes
+> http://status.net/open-source/issues/2797 (fixed)
+> 
+
+Use CVE-2010-4660.
+
+Thanks.
 
 -- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+    JB
