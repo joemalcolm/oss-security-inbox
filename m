@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/2
-Message-ID: <4EDBBDAF.3040706@redhat.com>
-Date: Sun, 04 Dec 2011 11:36:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/4
+Message-ID: <4D3E480D.9090609@redhat.com>
+Date: Tue, 25 Jan 2011 11:48:29 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: ffmpeg
+CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
+Subject: Re: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2011 04:06 AM, Marc Deslauriers wrote:
+On 01/25/2011 05:46 AM, Kees Cook wrote:
 > Hello,
 >
-> This doesn't seem to have a CVE:
+> I don't think these minor issues I reported to the Linux Kernel have
+> had CVEs assigned to them:
 >
-> An error within the "svq1_decode_frame()" function
-> (libavcodec/svq1dec.c) can be exploited to corrupt memory.
->
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
->
-> http://secunia.com/advisories/46888/
-> http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
->
->
-> Thanks,
->
-> Marc.
->
->
-The secunia page lists 3 CVE's and 4 issues with no mappings to CVE's to
-issues that I can see. Can you reply with the mapping information that
-you used to determine that this issue was not assigned a CVE (as opposed
-to one of the other issues)?. Also can you confirm or proove that these
-4 issues are all separate and that two of them have not been merged
-(thus obviating any need for a third CVE)? Thanks in advance. If anyone
-from Secunia is on this list I'd love to hear from you/any comments on
-this issue are more then welcome.
+> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
 
--- 
+These require CAP_NET_ADMIN.
 
--Kurt Seifried / Red Hat Security Response Team
+CVE-2010-4655.
 
+> iowarrior usb device heap overflow
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+
+CVE-2010-4656.
+
+Eugene
