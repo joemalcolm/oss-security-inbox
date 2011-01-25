@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/6
-Message-ID: <20110424123611.GA368@openwall.com>
-Date: Sun, 24 Apr 2011 16:36:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/5
+Message-ID: <4D3E5ABB.6080306@redhat.com>
+Date: Tue, 25 Jan 2011 13:08:11 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
+Subject: Re: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 15, 2011 at 05:23:17AM +0000, Zhao, Zhenfeng wrote:
-> Now I use my own e-mail address instead of one exploder to apply for the membership, and I also have added Wind River info to the wiki pages. OK,  I was  a vendor-sec member representing Wind River, please add me to the new list.  
+On 01/25/2011 11:48 AM, Eugene Teo wrote:
+> On 01/25/2011 05:46 AM, Kees Cook wrote:
+>> Hello,
+>>
+>> I don't think these minor issues I reported to the Linux Kernel have
+>> had CVEs assigned to them:
+>>
+>> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+>>
+>
+> These require CAP_NET_ADMIN.
+>
+> CVE-2010-4655.
 
-Thanks.  Unfortunately, the info you have added puts you in the same
-category with MontaVista.  We haven't yet decided on what to do with
-"closed" Linux vendors like this.  There has been some opposition to
-them receiving advance notifications of security vulnerabilities via the
-new list because the community would not be able to tell whether such
-vendors are making intended use of the advance notifications or not.
+Take note that you will need this too:
+http://marc.info/?l=linux-kernel&m=129593098003553&w=2
 
-http://oss-security.openwall.org/wiki/vendors#wind-river
+>> iowarrior usb device heap overflow
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+>>
+>
+> CVE-2010-4656.
 
-"The process for receiving security advisories requires a Support or
-Maintenance subscription."
-
-As I wrote in another message, I am considering setting up a separate
-list that would include Linux vendors like this.  Then message senders
-will be the ones to decide on which categories of vendors to inform.
-
-I consider both the existing new list and any other lists we might setup
-experimental.  Everything is subject to change, even the very existence
-of these lists.  We're merely trying to see what works best.
-
-Alexander
+Eugene
