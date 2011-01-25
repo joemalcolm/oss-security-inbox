@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/5
-Message-ID: <4DA54204.1000308@redhat.com>
-Date: Wed, 13 Apr 2011 14:26:12 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/7
+Message-ID: <1295971348.3101.180.camel@localhost>
+Date: Tue, 25 Jan 2011 11:02:27 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kurt@...fried.org>
-Subject: Re: CVE request: mediawiki 1.16.3
+Subject: CVE Request: VLC Subtitle StripTags heap corruption
 Content-Type: text/plain; charset=utf-8
 
-On 04/13/2011 01:51 PM, Kurt Seifried wrote:
-> BTW I submitted this as a bug for fedora:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=695577
->
-> My evil(ish) plan is to take over the mediawiki package for fedora and
-> then EPEL and then all the plugins. muahahaha! =).
+Hi,
 
-Now I know what you are up to ;)
+I couldn't find a CVE for this one:
 
-Eugene
+"Subtitle StripTags heap corruption, potentially exploitable."
 
-> On Tue, Apr 12, 2011 at 11:21 PM, Vincent Danen<vdanen@...hat.com>  wrote:
->> Mediawiki 1.16.3 has been released with three noted flaws:
->>
->> 1) XSS with IE<= 6 due to improper handling of uploaded file names
->> 2) CSS validation error in wikitext parser
->> 3) transwiki import neglects to perform access control checks
->>
->> Can CVE names be assigned to these issues?
->>
->> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
->>
->> Thanks.
->>
->> --
->> Vincent Danen / Red Hat Security Response Team
->
->
->
+http://mailman.videolan.org/pipermail/vlc-devel/2011-January/078607.html
+
+http://git.videolan.org/gitweb.cgi?p=vlc/vlc-1.1.git;a=commit;h=dc14617f39c03bbe80c3cc4f92799dca840966eb
+
+Thanks,
+
+Marc.
 
 
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
