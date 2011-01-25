@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/5
-Message-ID: <1321627655.11489.11.camel@hurina>
-Date: Fri, 18 Nov 2011 16:47:35 +0200
-From: Timo Sirainen <tss@....fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/3
+Message-ID: <AANLkTi=94Z4TaO71mp2GVr-HjgxHc+dDkkjQ6ujxw2nt@mail.gmail.com>
+Date: Mon, 24 Jan 2011 20:09:57 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2011-11-18 at 14:37 +0100, Jan Lieskovsky wrote:
-
->    a security flaw was found in the way Dovecot, an IMAP and POP3 email
-> server, performed remote server identity verification (x509
-> certificate's Common Name field was not checked to match provided
-> remote server host name), when Dovecot was configured to proxy IMAP and
-> POP3 connections to remote hosts and TLS/SSL protocols were requested
-> (ssl=yes or starttls=yes) in the configuration to secure these
-> connections to the destination server. A remote attacker could use
-> this flaw to conduct man-in-the-middle (MITM) attacks via specially-
-> crafted x509v3 certificate.
-..
-> But on the other hand, this change is important enough, to be
-> backported to all affected versions,
-
-SSL proxy connections were added in some Dovecot v1.x version, but v1.x
-doesn't support giving hostname as proxy destination, only IP address.
-So this can't really be backported to v1.x.
-
-My v2.0 change keeps this backwards compatible with existing setups that
-use IP addresses, so that the hostname check is skipped when connecting
-with IP.
-
-Upcoming v2.1 is stricter and doesn't skip the check, which basically
-means that ssl=yes with IP address as destination always fails.
+> Hello,
+>
+> I don't think these minor issues I reported to the Linux Kernel have
+> had CVEs assigned to them:
+>
+> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+>
+> iowarrior usb device heap overflow
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
 
 
+Just a note: both fixed in  Kernel 2.6.37:
+
+[root@...ver v2.6]# grep 3ed780117dbe5acb64280d218f0347f238dafed0 *
+ChangeLog-2.6.37:commit 3ed780117dbe5acb64280d218f0347f238dafed0
+[root@...ver v2.6]# grep 3ed780117dbe5acb64280d218f0347f238dafed0 *
+ChangeLog-2.6.37:commit 3ed780117dbe5acb64280d218f0347f238dafed0
+
+
+
+>
+> Thanks,
+>
+> -Kees
+
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
