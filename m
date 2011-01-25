@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/4
-Message-ID: <20111028100225.30092af1@laverne>
-Date: Fri, 28 Oct 2011 10:02:25 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/7
+Message-ID: <1295971348.3101.180.camel@localhost>
+Date: Tue, 25 Jan 2011 11:02:27 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: serendipity before 1.6 backend XSS in karma plugin
+Subject: CVE Request: VLC Subtitle StripTags heap corruption
 Content-Type: text/plain; charset=utf-8
 
-http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+Hi,
 
-"Fixes a backend XSS issue in the karma plugin and media database
-filtering, thanks to Stefan Schurtz!"
+I couldn't find a CVE for this one:
 
-If anyone asks: Backend XSS are a security issue in multiuser webapps,
-one less priviliged user can use them to gain more privilege.
+"Subtitle StripTags heap corruption, potentially exploitable."
 
-Please assign CVE.
+http://mailman.videolan.org/pipermail/vlc-devel/2011-January/078607.html
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+http://git.videolan.org/gitweb.cgi?p=vlc/vlc-1.1.git;a=commit;h=dc14617f39c03bbe80c3cc4f92799dca840966eb
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks,
+
+Marc.
+
+
