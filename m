@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/1
-Message-ID: <4E8EB58B.4090704@redhat.com>
-Date: Fri, 07 Oct 2011 10:17:15 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, MustLive <mustlive@...security.com.ua>
-Subject: CVE Request -- Multiple security issues in various versions of AWStats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/3
+Message-ID: <AANLkTi=94Z4TaO71mp2GVr-HjgxHc+dDkkjQ6ujxw2nt@mail.gmail.com>
+Date: Mon, 24 Jan 2011 20:09:57 -0700
+From: Kurt Seifried <kurt@...fried.org>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+> Hello,
+>
+> I don't think these minor issues I reported to the Linux Kernel have
+> had CVEs assigned to them:
+>
+> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+>
+> iowarrior usb device heap overflow
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
 
-   these doesn't look like CVE ids have been already assigned for:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=740926#c0
-   [2] http://secunia.com/advisories/46160/
-   [3] http://seclists.org/fulldisclosure/2011/Sep/234
-   [4] http://websecurity.com.ua/5380/
 
-If I counted correctly, six CVE ids should be assigned for these
-(since different versions are listed as vulnerable):
+Just a note: both fixed in  Kernel 2.6.37:
 
-1) XSS (WASC-08) (in versions <=1.1):
-    http://site/awredir.pl?url=javascript:alert(document.cookie)
+[root@...ver v2.6]# grep 3ed780117dbe5acb64280d218f0347f238dafed0 *
+ChangeLog-2.6.37:commit 3ed780117dbe5acb64280d218f0347f238dafed0
+[root@...ver v2.6]# grep 3ed780117dbe5acb64280d218f0347f238dafed0 *
+ChangeLog-2.6.37:commit 3ed780117dbe5acb64280d218f0347f238dafed0
 
-2) Redirector (URL Redirector Abuse in WASC 2.0) (WASC-38):
-    http://site/awredir.pl?url=http://websecurity.com.ua
 
-3) SQL Injection (WASC-19): (version 1.2)
-    http://site/awredir.pl?url='%20and%20benchmark(10000,md5(now()))/*
 
-4) XSS (WASC-08) (in version 1.2):
+>
+> Thanks,
+>
+> -Kees
 
-    http://site/awredir.pl?url=%3Cscript%3Ealert(document.cookie)%3C
-    /script%3E
-
-    http://site/awredir.pl?key=%3Cscript%3Ealert(document.cookie)%3C
-    /script%3E
-
-5) HTTP Response Splitting (WASC-25):
-
-    http://site/awredir.pl?key=04ed5362e853c72ca275818a7c0c5857&
-    url=%0AHeader:1
-
-6) CRLF Injection (Improper Input Handling in WASC 2.0) (WASC-20):
-
-    http://site/awredir.pl?key=4b9faa91e2529400c4f3c70833b4e4a5&
-    url=%0AText
-
-Could you allocate CVE identifiers for these? (let me know
-if further description of each of the issues is necessary prior
-assignment).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
