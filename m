@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/5
-Message-ID: <838898319.353177.1297192974199.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Feb 2011 14:22:54 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/9
+Message-ID: <14921541.122208.1295973514769.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Jan 2011 11:38:34 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: phpbb before 3.0.8
+Subject: Re: CVE Request: VLC Subtitle StripTags heap corruption
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> http://www.phpbb.com/support/documents.php?mode=changelog&version=3#v307-PL1
-> 
-> [PHPBB3-9903] - Execute javascript in [flash=] BBCode
-> 
-> Seems to be XSS. Please assign CVE.
-> 
-
-Sadly I can't find any public information, it seems you need a login
-to view the changelog. If someone has an upstream contact can you ask
-them to change this policy.
+Please use CVE-2011-0522.
 
 Thanks.
 
-Use CVE-2011-0544
-
 -- 
     JB
+
+----- Original Message -----
+> Hi,
+> 
+> I couldn't find a CVE for this one:
+> 
+> "Subtitle StripTags heap corruption, potentially exploitable."
+> 
+> http://mailman.videolan.org/pipermail/vlc-devel/2011-January/078607.html
+> 
+> http://git.videolan.org/gitweb.cgi?p=vlc/vlc-1.1.git;a=commit;h=dc14617f39c03bbe80c3cc4f92799dca840966eb
+> 
+> Thanks,
+> 
+> Marc.
