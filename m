@@ -1,54 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/11
-Message-ID: <1830487479.425541.1306959803399.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 1 Jun 2011 16:23:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/10
+Message-ID: <15766132.122498.1295974181252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Jan 2011 11:49:41 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
+Subject: Re: CVE request: multiple gypsy vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+I'm giving these 2011 IDs. None of the information was public in 2010.
+
 ----- Original Message -----
-> I didn't see any CVE's in the Wireshark Bug tracking/advisory nor could I
-> find these in the Red Hat Bugzilla (but I'm guessing as a CNA they have
-> CVE #'s assigned?)
+> Hello,
 > 
-> Wireshark 1.2.17 fixes the following vulnerabilities:
+> I'd like to get CVEs assigned for two issues in Gypsy[1]:
 > 
-> Large/infinite loop in the DICOM dissector. (Bug 5876)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-1957
+> reads arbitrary files as root user on behalf of regular user
+> https://bugs.freedesktop.org/show_bug.cgi?id=33431
+
+Use CVE-2011-0523.
 
 > 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Diameter dictionary file could crash Wireshark.
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-1958
+> buffer overflow in nmea device input handling
+> https://bugs.freedesktop.org/show_bug.cgi?id=33431
+> 
 
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted snoop file could crash Wireshark. (Bug 5912)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-1959
-
-> 
-> David Maciejak of Fortinet's FortiGuard Labs discovered that malformed
-> compressed capture data could crash Wireshark. (Bug 5908)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-2174
-
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Visual Networks file could crash Wireshark. (Bug
-> 5934)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-2175
-
-> 
-> 
-> http://www.wireshark.org/security/wnpa-sec-2011-07.html
-> http://www.wireshark.org/security/wnpa-sec-2011-08.html
-> 
+Use CVE-2011-0524.
 
 Thanks.
 
