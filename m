@@ -1,26 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/7
-Message-ID: <20110922162611.GC4095@suse.de>
-Date: Thu, 22 Sep 2011 18:26:11 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Missing input sanitation in various X GLX calls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/13
+Message-ID: <379223907.122864.1295975285015.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Jan 2011 12:08:05 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: multiple status.net issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-https://bugs.freedesktop.org/show_bug.cgi?id=28823 
-is a tracker bug for input sanitation lacking in various GLX X calls.
 
-Reporter is me@...fdog.net
+----- Original Message -----
+> Hello,
+> 
+> I wanted to get some CVEs assigned for some minor issues that I
+> reported to
+> status.net.
+> 
+> syslog message spoofing via newline injections into logging
+> http://status.net/open-source/issues/2795
 
-These can probably allow a attacker with access to the GLX calls
-(typically just the logged in user) to crash the X server or execute
-code within it.
+Use CVE-2010-4658.
 
-(Not thought about WebGL introduced crash potential here.)
+> 
+> limited XSS in error message contents
+> http://status.net/open-source/issues/2796 (fixed)
 
-The lacking checks were reported and fixed in x.org git in 2010, so they
-probably need a 2010 CVE id. (Single one should be sufficient I guess.)
+Use CVE-2010-4659.
 
-Ciao, Marcus
+> 
+> unsafe use of addslashes for SQL string escapes
+> http://status.net/open-source/issues/2797 (fixed)
+> 
+
+Use CVE-2010-4660.
+
+Thanks.
+
+-- 
+    JB
