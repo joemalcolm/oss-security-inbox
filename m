@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/1
-Message-ID: <4E4E0E35.60609@pre-sense.de>
-Date: Fri, 19 Aug 2011 09:18:13 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/8
+Message-ID: <1085727233.121783.1295972810357.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Jan 2011 11:26:50 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: libxml2 heap contents leak
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel contains a vulnerability in the driver for Be file
-systems that may lead to a kernel oops via a corrupted Be file system.
+Please use CVE-2010-4657.
 
-In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
-a long symlink from a data stream of a Be file system.
+Thanks.
 
-    befs_data_stream *data = &befs_ino->i_data.ds;
-    befs_off_t len = data->size;
+-- 
+    JB
 
-The data->size / len value is not validated and can be 0 on a corrupted
-file system.
-
-befs_follow_link() allocates some memory based on len. Effectively,
-kmalloc returns ZERO_SIZE_PTR in this case.
-
-        link = kmalloc(len, GFP_NOFS);
-
-Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
-oops:
-
-			link[len - 1] = '\0';
-
-A patch is available at
-http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
-
+----- Original Message -----
+> Hello,
+> 
+> I'd like to get a CVE assigned for a minor heap contents leak in
+> libxml2. I reported that it is possible to leak heap memory contents
+> from libxml2 (and things linked against it, for example PHP[1], or
+> things
+> written in PHP[2]):
+> 
+> https://bugzilla.gnome.org/show_bug.cgi?id=631551
+> 
+> Thanks,
+> 
+> -Kees
+> 
+> [1] http://bugs.php.net/bug.php?id=52998
+> [2] http://status.net/open-source/issues/2798
+> 
+> --
+> Kees Cook
+> Ubuntu Security Team
