@@ -1,52 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/2
-Message-ID: <2039889913.22716.1313526873673.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 16 Aug 2011 16:34:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/12
+Message-ID: <20110125165739.GV4979@outflux.net>
+Date: Tue, 25 Jan 2011 08:57:39 -0800
+From: Kees Cook <kees@...flux.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: two vulnerabilities in ktsuss 1.4 and earlier
+Cc: coley <coley@...re.org>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: libxml2 heap contents leak
 Content-Type: text/plain; charset=utf-8
 
+If it's a requirement that "xmlChar *" be valid null-terminated utf8, then
+I'd agree it seems this is PHP's responsibility. Are there perhaps other
+places where this needs to be checked besides just with
+xmlTextWriterWriteAttribute()?
 
-
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On Tue, Jan 25, 2011 at 05:45:48PM +0100, Pierre Joye wrote:
+> Btw, I re opened the php one as Daniel seems to think that it is the
+> application responsibility and not libxml. I'm not totally convinced
+> and I asked Rob to check this problem again.
 > 
-> I reported these bugs privately to the Debian security team and the
-> upstream author some time ago, but it does not appear that any CVE was
-> created as a result.
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626178
-> 
-> The 1.3 and 1.4 versions of ktsuss which include a setuid ktsuss binary
-> suffered from two separate security bugs which can be used for local root
-> exploits.
-> 
-> The "1.314" version which does not include a setuid ktsuss binary and
-> uses "su" for privilege escalation does not suffer from these problems.
-> 
-> 
-> 1) When the target UID is the same as the real UID ktsuss skips
-> authentication. Under these circumstances, ktsuss fails to change the
-> effective UID back to the real UID. (line 118 of src/ktsuss.c in version
-> 1.3.)
-> 
-> $ ktsuss -u `whoami` whoami
-> root
-
-Use CVE-2011-2921 for the above issue.
-
+> On Mon, Jan 24, 2011 at 10:41 PM, Kees Cook <kees@...ntu.com> wrote:
+> > Hello,
+> >
+> > I'd like to get a CVE assigned for a minor heap contents leak in
+> > libxml2. I reported that it is possible to leak heap memory contents
+> > from libxml2 (and things linked against it, for example PHP[1], or things
+> > written in PHP[2]):
+> >
+> > https://bugzilla.gnome.org/show_bug.cgi?id=631551
+> >
+> > Thanks,
+> >
+> > -Kees
+> >
+> > [1] http://bugs.php.net/bug.php?id=52998
+> > [2] http://status.net/open-source/issues/2798
+> >
+> > --
+> > Kees Cook
+> > Ubuntu Security Team
+> >
 > 
 > 
-> 2) The setuid ktsuss binary executes a GTK interface subprocess to prompt
-> for username and password. This GTK interface runs as root and allows
-> arbitrary code execution via the GTK_MODULES environmental variable.
-
-Use CVE-2011-2922 for this issue.
-
-Thanks.
+> 
+> -- 
+> Pierre
+> 
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
 
 -- 
-    JB
+Kees Cook                                            @outflux.net
