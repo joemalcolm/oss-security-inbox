@@ -1,59 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/13
-Message-Id: <201107191132.30985.aboudreault@mapgears.com>
-Date: Tue, 19 Jul 2011 11:32:30 -0400
-From: Alan Boudreault <aboudreault@...gears.com>
-To: Even Rouault <even.rouault@...es-paris.org>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Pavel  Lisý <pavel.lisy@...il.com>
-Subject: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/11
+Message-ID: <AANLkTikD+VGvyONLSt8+3RBNKM-GUUczGDfakYtRG-e0@mail.gmail.com>
+Date: Tue, 25 Jan 2011 17:45:48 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: libxml2 heap contents leak
 Content-Type: text/plain; charset=utf-8
 
-I got new from the debian security guy yesterday. I should get the CVE id 
-soon.
+hi,
 
-Thanks,
-Alan
+Btw, I re opened the php one as Daniel seems to think that it is the
+application responsibility and not libxml. I'm not totally convinced
+and I asked Rob to check this problem again.
 
-On July 19, 2011 11:28:29 am Even Rouault wrote:
-> Selon Jan Lieskovsky <jlieskov@...hat.com>:
-> 
-> Jan,
-> 
-> I believe Alan Boudreault (MapServer team member that I've added to the CC
-> list) has already asked the Debian security team to request for a CVE
-> number, but without any result for now. Maybe he can confirm.
-> 
-> Best regards,
-> 
-> Even
-> 
-> > Hello Josh, Steve, vendors,
-> > 
-> >    the following has been brought to our attention:
-> >    [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
-> >    [2] http://trac.osgeo.org/mapserver/ticket/3903
-> > 
-> > More from [2]:
-> > 
-> > This ticket is to track fixes to prevent SQL injections through OGC
-> > filter encoding (in WMS, WFS and SOS), as well as a potential SQL
-> > injection in WMS time support.
-> > 
-> > Your system may be vulnerable if it has MapServer with OGC protocols
-> > enabled, with layers connecting to an SQL RDBMS backend, either natively
-> > or via OGR.
-> > 
-> > All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
-> > All users are ** strongly encouraged ** to upgrade to one of the latest
-> > releases with the fixes.
-> > 
-> > Could you allocate a CVE id for this?
-> > 
-> > Thank you && Regards, Jan.
-> > --
-> > Jan iankko Lieskovsky / Red Hat Security Response Team
+On Mon, Jan 24, 2011 at 10:41 PM, Kees Cook <kees@...ntu.com> wrote:
+> Hello,
+>
+> I'd like to get a CVE assigned for a minor heap contents leak in
+> libxml2. I reported that it is possible to leak heap memory contents
+> from libxml2 (and things linked against it, for example PHP[1], or things
+> written in PHP[2]):
+>
+> https://bugzilla.gnome.org/show_bug.cgi?id=631551
+>
+> Thanks,
+>
+> -Kees
+>
+> [1] http://bugs.php.net/bug.php?id=52998
+> [2] http://status.net/open-source/issues/2798
+>
+> --
+> Kees Cook
+> Ubuntu Security Team
+>
+
+
 
 -- 
-Alan Boudreault
-Mapgears
-http://www.mapgears.com
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
