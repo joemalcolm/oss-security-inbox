@@ -1,55 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/8
-Message-ID: <4EEA691C.2000803@redhat.com>
-Date: Thu, 15 Dec 2011 14:39:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/11
+Message-ID: <AANLkTikD+VGvyONLSt8+3RBNKM-GUUczGDfakYtRG-e0@mail.gmail.com>
+Date: Tue, 25 Jan 2011 17:45:48 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-CC: vladz <vladz@...zero.fr>
-Subject: Re: CVE request: bypass default security level of the X wrapper (xserver-xorg <= 1:7.5+8)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: libxml2 heap contents leak
 Content-Type: text/plain; charset=utf-8
 
+hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Btw, I re opened the php one as Daniel seems to think that it is the
+application responsibility and not libxml. I'm not totally convinced
+and I asked Rob to check this problem again.
 
-On 12/15/2011 11:09 AM, vladz wrote:
-> Hi,
+On Mon, Jan 24, 2011 at 10:41 PM, Kees Cook <kees@...ntu.com> wrote:
+> Hello,
 >
-> On Debian systems, the X wrapper (/usr/bin/X) is a setuid-root binary that
-> checks for some security requirements before launching Xorg with root
-> privileges.
+> I'd like to get a CVE assigned for a minor heap contents leak in
+> libxml2. I reported that it is possible to leak heap memory contents
+> from libxml2 (and things linked against it, for example PHP[1], or things
+> written in PHP[2]):
 >
-> By default, the wrapper's configuration file only allows users whose
-> controlling TTY (console) to start the X server, but it is possible to
-> bypass this restriction by connecting another file (with similar tty
-> properties) to standard input before launching the X wrapper.
+> https://bugzilla.gnome.org/show_bug.cgi?id=631551
 >
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652249
+> Thanks,
 >
-> Could you allocate CVE id for this issue?
+> -Kees
 >
-> Thank you,
-> vladz.
-Please use CVE-2011-4613 for this issue.
+> [1] http://bugs.php.net/bug.php?id=52998
+> [2] http://status.net/open-source/issues/2798
+>
+> --
+> Kees Cook
+> Ubuntu Security Team
+>
 
-- -- 
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
 
-iQIcBAEBAgAGBQJO6mkcAAoJEBYNRVNeJnmTcMYP/0Q8NBMWVqvawJGaEpaYd0Jv
-OG8CwczJJsDoQVJ9UfQYEe96uIgcUUWAoCASc9W+l9hBm7YIo33XvaqlgllKtjXV
-PR683V+UvMqlFBFlm+O4+7HBdME2QFw+PHYkolbButZl/DBNTQzByafIcW9FDHJz
-8gbuOTn8C7wKm9FQv3iFbE3QwQOg94gHW69Sen7Xe47xuShIg9rVUFjo+5duMq5/
-qvAA6kSNwgjyrDCesWmdQjezDIibVei4SIDKrpKpwLUmCwScvBshkTOsy/bRPkZL
-MYkU2YB6HitYc21VW/ampeX/aa2HduYilOcWKx25LNcXAx6P0dCT12aluj+Ca4qm
-30YMe5Dd61CqgP+yaqQXXxlM0XTP8o1du9TKGct/0GizlUfYvJ9m+Pc6NSjFkdVL
-zxiktRXVFoyGNy0tkCYDF7eXtCrctpbk5aDdy4p+LlV281StML311WN0MEe37mPa
-70L3pAZTgvIUq08NscAQkFdzYYV5jEz3M3tqsg99KrbqrCNkUMuMuxqMz7Mu6KnA
-H8mu9iEI/lZQnLVti/65aoB6T7ewYzlPTA0E/nNo4BIshYuIxsrimrcvkDLAjwuc
-IiqogpTGCjTadZXkeSIk+j7CqyTOwmXFg0RLTx66kyTJJg6zdEMkWFBjF4O3OGfH
-6SCBBBD7bdllA+IByZ6j
-=hyxS
------END PGP SIGNATURE-----
+-- 
+Pierre
 
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
