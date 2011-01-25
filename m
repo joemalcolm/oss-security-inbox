@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/15
-Message-ID: <20110411212449.GA2641@pisco.westfalen.local>
-Date: Mon, 11 Apr 2011 23:24:49 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/2
+Message-ID: <4D3E3D23.3080805@redhat.com>
+Date: Tue, 25 Jan 2011 11:01:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Kees Cook <kees@...ntu.com>, Dan Carpenter <error27@...il.com>, Mauro Carvalho Chehab <mchehab@...hat.com>
+Subject: Re: Linux kernel av7110 negative array offset
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
+On 01/25/2011 01:13 AM, Kees Cook wrote:
+> Hi,
+>
+> Tavis Ormandy pointed this[1] out to me today. Has this already been
+> assigned a CVE? It looks exploitable if someone has this hardware in their
+> system.
 
-> I'm happy to draw a line in the sand and make public advisories a mandatory
-> requirement. If anyone disagrees, please speak up. This is my personal
-> opinion, other viewpoints are welcome.
+Please use CVE-2011-0521.
 
-I fully agree with public advisories being a requirement.
+Thanks, Eugene
 
-Cheers,
-        Moritz
+> Thanks,
+>
+> -Kees
+>
+> [1] http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=cb26a24ee9706473f31d34cc259f4dcf45cd0644
+>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
