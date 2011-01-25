@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/6
-Message-ID: <20110804142314.GB6651@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 17:23:14 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/2
+Message-ID: <4D3E3D23.3080805@redhat.com>
+Date: Tue, 25 Jan 2011 11:01:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: foomatic-gui
+CC: Kees Cook <kees@...ntu.com>, Dan Carpenter <error27@...il.com>, Mauro Carvalho Chehab <mchehab@...hat.com>
+Subject: Re: Linux kernel av7110 negative array offset
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 05, 2011 at 12:17:14AM +1000, dave bl wrote:
-> So while there aren't that many "users" of the old
-> system-config-printer - it appears that debian old-stable (lenny)
-> maybe vulnerable (where python-smbc is not available) ... is it worth
-> while giving system-config-printer a 2008 CVE as well (if none
-> currently exists).
-> @Tim any thoughts?
+On 01/25/2011 01:13 AM, Kees Cook wrote:
+> Hi,
+>
+> Tavis Ormandy pointed this[1] out to me today. Has this already been
+> assigned a CVE? It looks exploitable if someone has this hardware in their
+> system.
 
-I'll bet there is still lot of system-config-printer installations: http://qa.debian.org/popcon.php?package=system-config-printer
+Please use CVE-2011-0521.
 
-Best regards,
-Henri Salo
+Thanks, Eugene
+
+> Thanks,
+>
+> -Kees
+>
+> [1] http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=cb26a24ee9706473f31d34cc259f4dcf45cd0644
+>
+
