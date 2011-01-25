@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/11
-Message-ID: <BANLkTim2D7H17BeFnJdSRZ9UnkU06nxAYg@mail.gmail.com>
-Date: Wed, 13 Apr 2011 12:19:20 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/5
+Message-ID: <4D3E5ABB.6080306@redhat.com>
+Date: Tue, 25 Jan 2011 13:08:11 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
+Subject: Re: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Armin,
-
-> What method of proving this would be acceptable? screen shot, temporary
-> access to our site, public list or other?
+On 01/25/2011 11:48 AM, Eugene Teo wrote:
+> On 01/25/2011 05:46 AM, Kees Cook wrote:
+>> Hello,
+>>
+>> I don't think these minor issues I reported to the Linux Kernel have
+>> had CVEs assigned to them:
+>>
+>> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+>>
 >
+> These require CAP_NET_ADMIN.
+>
+> CVE-2010-4655.
 
-I'm confused why you think posting an advisory publicly would somehow
-put your customers in any sort of additional danger.  All of the
-vulnerabilities you would be fixing are certain to have public
-advisories for other distributions, so it seems obvious that your
-customers would be affected also.  It's not as though your advisories
-are the only indication to an attacker that your customers are
-vulnerable.
+Take note that you will need this too:
+http://marc.info/?l=linux-kernel&m=129593098003553&w=2
 
-Regards,
-Dan
+>> iowarrior usb device heap overflow
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+>>
+>
+> CVE-2010-4656.
+
+Eugene
