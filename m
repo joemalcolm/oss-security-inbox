@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/36
-Message-ID: <20110405210351.GA20599@openwall.com>
-Date: Wed, 6 Apr 2011 01:03:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/10
+Message-ID: <15766132.122498.1295974181252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Jan 2011 11:49:41 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: multiple gypsy vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 05, 2011 at 03:52:32PM -0500, Jamie Strandboge wrote:
-> In that spirit, I am a member of the Ubuntu security team and was a
-> vendor-sec member via the Ubuntu exploder. In Ubuntu, the security team
-> rotates triage of new issues on a weekly basis and internally discusses
-> and assigns open issues to the different members of the team (I imagine
-> other vendors operate similarly). For me to adequately participate in
-> this triage and actively participate in discussions around embargoed
-> issues that I am tasked with fixing, I am requesting membership to the
-> new list.
+I'm giving these 2011 IDs. None of the information was public in 2010.
+
+----- Original Message -----
+> Hello,
 > 
-> pub   4096R/CC559573 2010-09-30
->       Key fingerprint = 4C20 C06B 5D8B DE68 8854  D28A 51DB DC58 CC55 9573
-> uid                  Jamie Strandboge (Canonical Ltd) <jamie@...onical.com>
-> sub   4096R/4C8A9DA4 2010-09-30
+> I'd like to get CVEs assigned for two issues in Gypsy[1]:
+> 
+> reads arbitrary files as root user on behalf of regular user
+> https://bugs.freedesktop.org/show_bug.cgi?id=33431
 
-Added.
+Use CVE-2011-0523.
 
-Alexander
+> 
+> buffer overflow in nmea device input handling
+> https://bugs.freedesktop.org/show_bug.cgi?id=33431
+> 
+
+Use CVE-2011-0524.
+
+Thanks.
+
+-- 
+    JB
