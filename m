@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/13
-Message-ID: <379223907.122864.1295975285015.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Jan 2011 12:08:05 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/4
+Message-ID: <4D3E480D.9090609@redhat.com>
+Date: Tue, 25 Jan 2011 11:48:29 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: multiple status.net issues
+CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
+Subject: Re: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
+On 01/25/2011 05:46 AM, Kees Cook wrote:
 > Hello,
-> 
-> I wanted to get some CVEs assigned for some minor issues that I
-> reported to
-> status.net.
-> 
-> syslog message spoofing via newline injections into logging
-> http://status.net/open-source/issues/2795
+>
+> I don't think these minor issues I reported to the Linux Kernel have
+> had CVEs assigned to them:
+>
+> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
 
-Use CVE-2010-4658.
+These require CAP_NET_ADMIN.
 
-> 
-> limited XSS in error message contents
-> http://status.net/open-source/issues/2796 (fixed)
+CVE-2010-4655.
 
-Use CVE-2010-4659.
+> iowarrior usb device heap overflow
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
 
-> 
-> unsafe use of addslashes for SQL string escapes
-> http://status.net/open-source/issues/2797 (fixed)
-> 
+CVE-2010-4656.
 
-Use CVE-2010-4660.
-
-Thanks.
-
--- 
-    JB
+Eugene
