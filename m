@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/3
-Message-ID: <20110727013720.GA28937@openwall.com>
-Date: Wed, 27 Jul 2011 05:37:20 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/1
+Message-ID: <4D3E1CF7.2010207@redhat.com>
+Date: Tue, 25 Jan 2011 08:44:39 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple libraries getenv() misuse
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 31, 2011 at 10:21:33AM +0200, Sebastian Krahmer wrote:
-> While investigating the libs vs. fscaps issue [1] which showed
-> that most libs need patching in order to work properly with fscaps
-> binaries, it was also found that a lot of libs do not even honour
-> suid binaries correctly. These libs use getenv() to obtain information
-> about configuration/files or plugin directories. These info can be
-> "chosen with care" by attackers to trick the suid programs to execute
-> code as root or do harm otherwise.
-> Among these libs are libudev, libdbus, libhal, libgssglue or libcrypto
-> (openssl). libudev, libdbus, libhal are linked against suid Xorg.
-> libgssglue is linked against mount.nfs.
-> Most of these libs were probably never intented to be linked against
-> suids, but nevertheless they are.
-> 
-> Since the issues are all of the same family I would suggest to assign
-> one CVE (or two, if you want to separate missing fscaps checks from
-> euid != uid issue).
+On 01/25/2011 02:34 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>> On 01/23/2011 04:13 AM, Steven M. Christey wrote:
+>>>
+>>> On Fri, 21 Jan 2011, Eugene Teo wrote:
+>>>
+>>>> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+>>>>> File position is not controlled, it may lead to overwrites of
+>>>>> arbitrary
+>>>>> kernel memory. Also the code may kfree() the same pointer multiple
+>>>>> times.
+>>>>
+>>>> http://lkml.org/lkml/2011/1/20/348
+>>>> https://bugzilla.redhat.com/CVE-2011-0023
+>>>>
+>>>> Please use CVE-2011-0023 (this does not include the unresolved flaw
+>>>> described in the following paragraph below).
+>>>
+>>> There seem to be 2 types of issues described above - the
+>>> uncontrolled
+>>> file position / memory overwrite, and a "double free". So there
+>>> should
+>>> probably be 2 separate CVEs, not one. Am I missing something?
+>>
+>> Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
+>
+> Eugene, does the "unresolved flaw" still need an ID? This thread now
+> confuses me.
 
-I think it'd be a good idea to keep track of these issues per-library on
-the wiki:
+No need. Thanks.
 
-http://oss-security.openwall.org/wiki/code-reviews
-
-> [1] http://www.suse.de/~krahmer/libs-vs-fscaps/
-
-I got your OpenSSL changes into Owl-current yesterday (except for the
-changes to OPENSSL_issetugid() itself, which on Owl was already using
-__libc_enable_secure).  The rest of the libraries that you mention are
-not in Owl.
-
-Thanks,
-
-Alexander
+Eugene
