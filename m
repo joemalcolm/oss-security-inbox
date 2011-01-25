@@ -1,21 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/3
-Message-ID: <4D5B8CFC.5070608@redhat.com>
-Date: Wed, 16 Feb 2011 16:38:20 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/1
+Message-ID: <4D3E1CF7.2010207@redhat.com>
+Date: Tue, 25 Jan 2011 08:44:39 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: s390 task_show_regs infoleak
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
 Content-Type: text/plain; charset=utf-8
 
-"task_show_regs used to be a debugging aid in the early bringup days of 
-Linux on s390. /proc/<pid>/status is a world readable file, it is not a 
-good idea to show the registers of a process. The only correct fix is to 
-remove task_show_regs."
+On 01/25/2011 02:34 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>> On 01/23/2011 04:13 AM, Steven M. Christey wrote:
+>>>
+>>> On Fri, 21 Jan 2011, Eugene Teo wrote:
+>>>
+>>>> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
+>>>>> File position is not controlled, it may lead to overwrites of
+>>>>> arbitrary
+>>>>> kernel memory. Also the code may kfree() the same pointer multiple
+>>>>> times.
+>>>>
+>>>> http://lkml.org/lkml/2011/1/20/348
+>>>> https://bugzilla.redhat.com/CVE-2011-0023
+>>>>
+>>>> Please use CVE-2011-0023 (this does not include the unresolved flaw
+>>>> described in the following paragraph below).
+>>>
+>>> There seem to be 2 types of issues described above - the
+>>> uncontrolled
+>>> file position / memory overwrite, and a "double free". So there
+>>> should
+>>> probably be 2 separate CVEs, not one. Am I missing something?
+>>
+>> Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
+>
+> Eugene, does the "unresolved flaw" still need an ID? This thread now
+> confuses me.
 
-http://git.kernel.org/linus/261cd298a8c363d7985e3482946edb4bfedacf98
-https://bugzilla.redhat.com/677850
+No need. Thanks.
 
-This does all the way back to 2.4.x.
-
-Thanks, Eugene
+Eugene
