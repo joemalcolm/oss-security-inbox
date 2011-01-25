@@ -1,41 +1,167 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/13
-Message-ID: <1137441234.19166.1300222011542.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:46:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: tpm infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/6
+Message-ID: <1295950035.2935.8.camel@mochrul.balabit>
+Date: Tue, 25 Jan 2011 11:07:15 +0100
+From: SZALAY Attila <sasa@...abit.hu>
+To: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
+Subject: syslog-ng wrong file permission vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
-> infoleak
+==========================================================================
+syslog-ng 2.0, 3.0, 3.1, 3.2 OSE and PE <= Information leak, access
+                                           prevention and possible
+                                           priviledge escalation
 
-Please use CVE-2011-1160
+CVE-2011-0343
+==========================================================================
+
+1. OVERVIEW
+
+Versions 3.0, 3.1 and 3.2 of syslog-ng Open Source Edition (OSE) and 
+versions 3.0, 3.1 and 3.2 of syslog-ng Premium Edition (PE) create log
+files 
+with all permission bit set by default on FreeBSD and HP-UX
+architectures. 
+These permissions allow anybody with local access to read and write the
+log 
+files. The setuid and execution bits are also set, allowing the log
+files to be 
+executed.
+
+2. BACKGROUND
+
+The syslog-ng application is an enhanced version of the default Syslog
+service 
+found on FreeBSD and other UNIX and Unix-like operating systems. The
+syslog-
+ng application supports reliable and encrypted transport using TCP and
+TLS, 
+SQL support, and offers powerful message filtering, sorting,
+pre-processing and 
+log normalization capabilities. Utilizing message parsing and
+classification, 
+syslog-ng is able to correlate log messages both real-time and offline,
+making 
+it especially suited to implement the artificial ignorance principle. 
+
+3. VULNERABILITY DESCRIPTION
+
+This vulnerability affects only architectures where sizeof(mod_t) is not
+equal to sizeof(int). Because of bad casts in the code and the internal 
+representation of the ``use the default permission'' setting being -1,
+this
+number in the chmod call is interpreted as 07777. This means that the
+permission 
+of the file is readable, writable and executable to all, and the setuid,
+setgid, 
+and sticky bits are set. Everybody who can see the file can read it,
+write it 
+and even run it with root permission.
+
+4. VERSIONS AFFECTED
+
+The following table summarizes in which product versions is the
+vulnerable code 
+present and in which versions has it been corrected.
+
+syslog-ng Open Source Edition (OSE):
+Branch  Vulnerable from Fixed in
+2.0.X   this branch is not vulnerable
+3.0.X   3.0.7           3.0.10
+3.1.X   3.1.3           3.1.4
+3.2.X   3.2alpha1       3.2.2?
+
+syslog-ng Premium Edition (PE):
+Branch  Vulnerable from Fixed in
+3.0.X   3.0.6           3.0.6a
+3.1.X   this branch is not vulnerable
+3.2.X   3.2.0           3.2.1a
 
 
-> 
-> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
-> infoleak
+5. PROOF-OF-CONCEPT/EXPLOIT
 
-Please use CVE-2011-1161
+None. But it's easy to imagine.
 
+6. IMPACT
 
-> 
-> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
-> prevents storing of previous result, leakage to other drivers
-> 
+This problem causes that every user can see, modify or destroy the log
+messages directly and make it difficult to detect harmful operations.
+With a 
+small trick even (shell)code execution is possible with root
+permissions, 
+causing privilege escalation.
 
-Please use CVE-2011-1162
+7. SOLUTION
 
-Thanks.
+Upgrade to a newer, unaffected version.
+syslog-ng Open Source Edition (OSE):
+3.0.X  3.0.10
+3.1.X  3.1.4
+3.2.X  3.2.2
+
+syslog-ng Premium Edition (PE):
+3.0.X  3.0.6a
+3.2.X  3.2.1a
+
+8. VENDOR
+
+BalaBit IT Security Ltd.
+http://www.balabit.com
+Product page:
+http://www.balabit.com/network-security/syslog-ng/
+
+9. CREDIT
+
+This vulnerability was discovered by Steven Chamberlain steven :at: pyro
+dot eu dot org
+
+10. DISCLOSURE TIME-LINE
+
+2010-12-31: The problem reported to the debian bug tracking system
+2010-12-31: notified vendor by the debian maintainer
+2011-01-01: upstream proposed a fix
+2011-01-02: freebsd port maintainer notified
+2011-01-07: every linux port notified
+2011-01-10: PE version 3.0.6a and 3.2.1a released
+2011-01-14: OSE version 3.0.10 and 3.1.4 released
+2011-01-16: OSE version 3.2.2 released
+
+11. VENDOR RESPONSE
+
+12. REFERENCES
+
+Debian bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=608491
+Debian security track:
+http://security-tracker.debian.org/tracker/CVE-2011-0343
+upstream patch:
+http://git.balabit.hu/?p=bazsi/syslog-ng-3.0.git;a=commit;h=17531d911d544687fb9c5bd3b130dd5bf7903db0
+upstream patch:
+http://git.balabit.hu/?p=bazsi/syslog-ng-3.1.git;a=commit;h=cbcea8c95c3f07ed9eaa4d12f124db8f8ca2f74b
+upstream patch:
+http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=96af7607873e126ecee0eb51a5fff46a920c5630
+upstream announcement:
+https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000101.html
+upstream announcement:
+https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000102.html
+upstream announcement:
+https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000103.html
+upstream announcement:
+https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000104.html
+upstream announcement:
+https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000105.html
+freebsd port:
+http://www.freshports.org/commit.php?category=sysutils&port=syslog-ng3&files=yes&message_id=201101041550.p04Fov6n028317@repoman.freebsd.org
 
 -- 
-    JB
+SZALAY Attila
+Support (L3) Team Leader
+
+e-mail: attila.szalay@...abit.com
+
+BalaBit IT Security
+www.balabit.com
+H-1115 Bártfai str. 54. Budapest
+
+This Communication is Confidential. We only send and receive email on
+the basis of the terms set out at http://www.balabit.com/disclaimer/.
+
