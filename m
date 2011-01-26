@@ -1,23 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/35
-Message-ID: <20110403231636.GK10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:16:36 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/26/1
+Message-ID: <20110126130115.GB7088@albatros>
+Date: Wed, 26 Jan 2011 16:01:15 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 11:09:50AM -0700, Reed Loden wrote:
-> I'm a (now former) vendor-sec member who would like to be added to the
-> new closed list.
-> 
-> My GPG key:
->  pub 1024D/F3C33D5A 2008-11-19
->  Key fingerprint = 6B56 F9AC 07B6 85D7 DC45 60DA 6BA2 2226 F3C3 3D5A
->  uid Reed Loden
->  sub 4096g/C0B72052 2008-11-19
+On Thu, Jan 06, 2011 at 15:52 -0500, Josh Bressers wrote:
+> Please use CVE-2010-4651.
 
-Are you a security contact for a Linux distro, and for which one?
-And how do we verify that?
+Is there any public fix for the issue?
 
-Alexander
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
