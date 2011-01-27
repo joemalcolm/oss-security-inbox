@@ -1,25 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/1
-Message-Id: <201101231955.42970.geissert@debian.org>
-Date: Sun, 23 Jan 2011 19:55:40 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/2
+Message-ID: <AANLkTin6sP-Jsszzsxr06H5rLSSCvfa9wWT8cb-rS_p7@mail.gmail.com>
+Date: Thu, 27 Jan 2011 18:00:20 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: maradns@...il.com, 610834-submitter@...s.debian.org
-Subject: CVE request: MaraDNS DoS via long queries
+Subject: CVE Request:Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+===========================================
+Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
+===========================================
 
-A crash bug has been reported against MaraDNS 1.4.03 when long queries are 
-sent to the resolver. Details can be found at:
-http://bugs.debian.org/610834
 
-As of the time of writing, the reporter is testing other versions and at least 
-1.4.05 also seems to be affected.
+1. OVERVIEW
 
-Josh, Steven: could a CVE id be assigned? Thanks in advance.
+The Vanilla Forums 2.0.16 and lower versions were vulnerable to Cross
+Site Scripting.
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+
+2. BACKGROUND
+
+Vanilla Forums are open-source, standards-compliant, customizable
+discussion forums.
+It is specially made to help small communities grow larger through SEO
+mojo, totally customizable social tools,
+and great user experience. Vanilla is also built with integration at
+the forefront, so it can
+seamlessly integrate with your existing website, blog, or custom-built
+application.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The 'Target' parameter was not properly sanitized after user logs in,
+which allows attacker to conduct Cross Site Scripting attack.
+An attacker could prepare a link in a forum post that includes a link
+to a file which seems to require authentication.
+Upon logging in, user will get XSSed.
+
+
+4. VERSIONS AFFECTED
+
+2.0.16 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://vanilla/index.php?p=/entry/signin&Target=javascript:alert(document.cookie)//http://
+
+
+6. SOLUTION
+
+Upgrade to Vanilla Forums 2.0.17 or higher
+
+
+7. VENDOR
+
+Vanilla Forums Development Team
+http://vanillaforums.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-14: notified vendor
+2011-01-18: vendor released fix
+2011-01-27: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.16]_cross_site_scripting
+What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
+XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
+XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-01-27]
