@@ -1,42 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/4
-Message-ID: <4E157938.8060007@redhat.com>
-Date: Thu, 07 Jul 2011 17:15:36 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: Barry Greene <bgreene@....org>
-CC: oss-security@...ts.openwall.com, security-officer@....org
-Subject: Re: The Bind incident
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/6
+Message-ID: <20110127220336.GA4069@pisco.westfalen.local>
+Date: Thu, 27 Jan 2011 23:03:36 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: puppet
 Content-Type: text/plain; charset=utf-8
 
-On 07/07/2011 03:09 AM, Barry Greene wrote:
-> Hi Eugene,
-> 
-> Yes, we worked hard to contain disclosure process. Politics took over. We will put factors in place for the next security advisory cycle to remediate so it does not happen again.
-> 
-> Thanks,
+Hi,
+please assign a CVE ID for this vulnerability in the Puppet configuration
+management system:
+http://www.mail-archive.com/puppet-users@googlegroups.com/msg16429.html
 
-Thanks Barry.
-
-Eugene
-
-> Barry
-> 
-> On Jul 5, 2011, at 4:21 AM, Eugene Teo wrote:
-> 
->> (Cc'ed the ISC folks)
->>
->> On 07/05/2011 07:17 PM, Eugene Teo wrote:
->>> You might have read about AusCert's accidental disclosure of the ISC
->>> Bind advisories today. If you have more information about this, please
->>> share. AFAICS, the bind source packages are still not available at the
->>> ISC website.
->>>
->>> https://bugzilla.redhat.com/CVE-2011-2464
->>> https://bugzilla.redhat.com/CVE-2011-2465
->>> http://risky.biz/auscert-bind
->>> http://pastebin.com/9NUt8Pk0
->>>
->>> Thanks, Eugene
->>
-> 
-
+Cheers,
+        Moritz
