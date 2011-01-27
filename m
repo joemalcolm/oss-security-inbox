@@ -1,45 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/6
-Message-ID: <20110725114747.GA19113@pisco.westfalen.local>
-Date: Mon, 25 Jul 2011 13:47:47 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/5
+Message-ID: <2025608634.170697.1296160616674.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 27 Jan 2011 15:36:56 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Squirrelmail CVE duplicates
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request:Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-0526. Thanks.
 
-On Mon, Jul 25, 2011 at 01:29:04PM +0200, Jan Lieskovsky wrote:
-> Hi Moritz,
-> 
->   thank you for checking this.
-> 
-> On 07/24/2011 06:17 PM, Moritz Muehlenhoff wrote:
-> >Hi,
-> >there seems to be a duplicate CVE assignment for Squirrelmail?
-> >
-> >CVE-2010-4555 / CVE-2011-2753
-> 
-> If I got it right, the CVE-2010-4555 ID has been assigned to the XSS
-> flaws:
-> 
-> Multiple cross-site scripting (XSS) flaws were found in the SquirrelMail
-> webmail client:
-> * XSS flaws in generic options inputs,
-> * XSS flaw in the SquirrelSpell plug-in,
-> * XSS flaw in the Index Order page.
-> 
-> [1]
-> https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
-> 
-> while the CVE-2011-2753 ID has been assigned to the CSRF protection add-ons:
-> 
-> Also protection against Cross-site Request Forgery (CSRF) flaws has
-> been added to the empty trash feature and to the Index Order page.
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=722832#c0
+-- 
+    JB
 
-That makes sense, thanks.
-
-Cheers,
-        Moritz
+----- Original Message -----
+> ===========================================
+> Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
+> ===========================================
+> 
+> 
+> 1. OVERVIEW
+> 
+> The Vanilla Forums 2.0.16 and lower versions were vulnerable to Cross
+> Site Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Vanilla Forums are open-source, standards-compliant, customizable
+> discussion forums.
+> It is specially made to help small communities grow larger through SEO
+> mojo, totally customizable social tools,
+> and great user experience. Vanilla is also built with integration at
+> the forefront, so it can
+> seamlessly integrate with your existing website, blog, or custom-built
+> application.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The 'Target' parameter was not properly sanitized after user logs in,
+> which allows attacker to conduct Cross Site Scripting attack.
+> An attacker could prepare a link in a forum post that includes a link
+> to a file which seems to require authentication.
+> Upon logging in, user will get XSSed.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 2.0.16 and lower
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://vanilla/index.php?p=/entry/signin&Target=javascript:alert(document.cookie)//http://
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to Vanilla Forums 2.0.17 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> Vanilla Forums Development Team
+> http://vanillaforums.org/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-12-14: notified vendor
+> 2011-01-18: vendor released fix
+> 2011-01-27: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.16]_cross_site_scripting
+> What XSS Can Do:
+> http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
+> XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
+> XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
+> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> #yehg [2011-01-27]
