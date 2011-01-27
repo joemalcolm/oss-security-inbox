@@ -1,55 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/11
-Message-ID: <405505459.1273108.1310497040397.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:57:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/4
+Message-ID: <512050593.170625.1296160465983.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 27 Jan 2011 15:34:25 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, security@...ian.org, coley@...us.mitre.org
-Subject: Re: CVE Request: reseed
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
-> > A security bug was reported by Jeffrey Walton against reseed in
-> > Ubuntu. You are being emailed as the upstream contact. Please keep
-> > oss-security@...ts.openwall.com[1] CC'd for any updates on this
-> > issue.
-> >
-> > This issue should be considered public. A CVE is being requested;
-> > please mention this in any changelogs.
-> >
-> > Details from the public bug follow:
-> > https://launchpad.net/bugs/804594
-> >
-> > From the reporter:
-> > "reseed(8) performs an insecure HTTP fetch of data from random.org.
-> > The script is automatically executed when installed, and any time the
-> > user chooses to execute. In addition, the reseed man pages do not
-> > mention the data is retrieved over an insecure channel."
-> >
-> > As pointed out by the reporter, from the man page: "It is run once
-> > during the installation of the package only". An attacker could perform
-> > a MITM during package installation or whenever the reseed command is
-> > run to provide predictable data for the random number seed.
-> 
-> While the attack is difficult to achieve (need both MITM at time of
-> package installation AIUI), it seems that this still should get a CVE.
-> 
+Steve,
 
-I'll give the HTTP issue CVE-2011-2683.
-
-In all seriousness though, running this on install should probably get an
-ID as you can't say you have complete trust in whatever the default random
-site is (in this case it's random.org).
-
-It's probably not safe at all honestly. If you don't have entropy, HTTPS
-isn't going to be secure either.
-
-I'd rather not start a fight though by assigning a bunch of IDs for
-something that is insecure by design. If you wish for more IDs, please let
-me know.
+Can MITRE comment on this? The advisory suggests that in order to exploit
+this, you already have to have access to the user's account in some way.
+I'm not sure what the precedent is for such a situation.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> http://seclists.org/fulldisclosure/2011/Jan/486
+> 
+> 
+> ===================================================================================
+> phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
+> Vulnerability
+> ===================================================================================
+> 
+> 
+> 1. OVERVIEW
+> 
+> The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
+> 3.4.x were vulnerable to Cross Site Scripting.
+> 
+> 
+> 2. PRODUCT DESCRIPTION
+> 
+> phpMyAdmin is a free software tool written in PHP intended to handle
+> the administration of MySQL over the World Wide Web.
+> phpMyAdmin supports a wide range of operations with MySQL.
+> The most frequently used operations are supported by the user
+> interface (managing databases, tables, fields, relations,
+> indexes, users, permissions, etc), while you still have the ability to
+> directly execute any SQL statement.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
+> inject XSS string in 'db' field when creating or renaming a database.
+> An attacker can create new database name or rename database name
+> through several means like SQL Injection in user's vulnerable web
+> applications or
+> compromise of user account through brute-force or bypassing CSRF
+> protection.
+> Even though the phpMyAdmin uses httpOnly as a protection against
+> cookie theft via XSS, attacker could use XSS tunneling proxy to
+> manipulate database names and fields. From it, he could execute
+> arbitrary database commands to allow him higher access to the server.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
+> 
+> Vendor confirmed this flaw did not exist before the 3.4 version
+> family.
+> Thus, it is assumed 2.x and 3.3 <= versions are not affected.
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
+> http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
+> 
+> 
+> 6. IMPACT
+> 
+> Attackers can compromise currently logged-in user session, plant xss
+> backdoors and inject arbitrary SQL statements
+> (CREATE,INSERT,UPDATE,DELETE)
+> via crafted XSS payloads.
+> 
+> 
+> 7. SOLUTION
+> 
+> For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
+> check out the latest commit (git pull).
+> 
+> 
+> 8. VENDOR
+> 
+> phpMyAdmin (http://www.phpmyadmin.net)
+> 
+> 
+> 9. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 10. DISCLOSURE TIME-LINE
+> 
+> 2011-01-26: notified vendor
+> 2011-01-26: vendor released fix
+> 2011-01-27: vulnerability disclosed
+> 
+> 
+> 11. REFERENCES
+> 
+> Vendor Commit:
+> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> Previous Releases:
+> http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+> http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
+> http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
+> http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
+> 
+> 
+> 
+> #yehg [2011-01-27]
