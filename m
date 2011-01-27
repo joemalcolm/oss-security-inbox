@@ -1,36 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/12
-Message-Id: <FDF5E768-AFDB-48DB-9C26-10D3DD05DC21@isc.org>
-Date: Wed, 6 Jul 2011 12:09:22 -0700
-From: Barry Greene <bgreene@....org>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, security-officer@....org
-Subject: Re: The Bind incident
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/5
+Message-ID: <2025608634.170697.1296160616674.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 27 Jan 2011 15:36:56 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request:Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Eugene,
+Please use CVE-2011-0526. Thanks.
 
-Yes, we worked hard to contain disclosure process. Politics took over. We will put factors in place for the next security advisory cycle to remediate so it does not happen again.
+-- 
+    JB
 
-Thanks,
-
-Barry
-
-On Jul 5, 2011, at 4:21 AM, Eugene Teo wrote:
-
-> (Cc'ed the ISC folks)
+----- Original Message -----
+> ===========================================
+> Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
+> ===========================================
 > 
-> On 07/05/2011 07:17 PM, Eugene Teo wrote:
->> You might have read about AusCert's accidental disclosure of the ISC
->> Bind advisories today. If you have more information about this, please
->> share. AFAICS, the bind source packages are still not available at the
->> ISC website.
->> 
->> https://bugzilla.redhat.com/CVE-2011-2464
->> https://bugzilla.redhat.com/CVE-2011-2465
->> http://risky.biz/auscert-bind
->> http://pastebin.com/9NUt8Pk0
->> 
->> Thanks, Eugene
 > 
-
+> 1. OVERVIEW
+> 
+> The Vanilla Forums 2.0.16 and lower versions were vulnerable to Cross
+> Site Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Vanilla Forums are open-source, standards-compliant, customizable
+> discussion forums.
+> It is specially made to help small communities grow larger through SEO
+> mojo, totally customizable social tools,
+> and great user experience. Vanilla is also built with integration at
+> the forefront, so it can
+> seamlessly integrate with your existing website, blog, or custom-built
+> application.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The 'Target' parameter was not properly sanitized after user logs in,
+> which allows attacker to conduct Cross Site Scripting attack.
+> An attacker could prepare a link in a forum post that includes a link
+> to a file which seems to require authentication.
+> Upon logging in, user will get XSSed.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 2.0.16 and lower
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://vanilla/index.php?p=/entry/signin&Target=javascript:alert(document.cookie)//http://
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to Vanilla Forums 2.0.17 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> Vanilla Forums Development Team
+> http://vanillaforums.org/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-12-14: notified vendor
+> 2011-01-18: vendor released fix
+> 2011-01-27: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.16]_cross_site_scripting
+> What XSS Can Do:
+> http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
+> XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
+> XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
+> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> #yehg [2011-01-27]
