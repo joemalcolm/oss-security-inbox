@@ -1,36 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/10
-Message-Id: <201103211255.25451.sgrubb@redhat.com>
-Date: Mon, 21 Mar 2011 12:55:25 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/1
+Message-ID: <AANLkTimYNegPPBoKKyEZEfyPOwTUBi4H4gkmHzV=DvcC@mail.gmail.com>
+Date: Thu, 27 Jan 2011 11:54:04 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
+Subject: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Monday, March 21, 2011 12:02:40 pm Steven M. Christey wrote:
-> Doesn't memory "belong" to one process (assuming it's not shared), even in 
-> heap management?  So another user couldn't access the memory while it's 
-> used in the process, and (I guess?) if it's free'd, it's still only 
-> accessible to that process (or, alternately, is the region cleared before 
-> another program can access it?)  If this is the case, then the question 
-> becomes what happens to the memory when the vulnerable process exits - is 
-> the memory cleared by the kernel, or is it otherwise left alone?  What 
-> happens if the memory is cached on disk?
-> 
-> I did extremely limited experiments in this area a couple years ago, and 
-> for the limited set of OSes I tried this on (no idea what libraries), I 
-> always got "clean" memory when I ran initial malloc's from a fresh process 
-> (later malloc's could contain contents of memory that was previously freed 
-> in the same session).  That doesn't prove anything, of course...
+http://seclists.org/fulldisclosure/2011/Jan/486
 
-Any OS that passes common criteria (Linux for example) has to meet certain 
-requirements for object reuse. This is FDP_RIP in case anyone is interested. The 
-granularity is at the process level. The clearing action is required at allocation 
-rather than release of the object. Calls to brk() and sbrk() should show cleared 
-memory when address space is increased.
 
-So, if it were found that there is an unintended interprocess memory leak, that is a 
-big problem. Within one process, there are no common criteria claims.
+===================================================================================
+ phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
+Vulnerability
+===================================================================================
 
--Steve
+
+1. OVERVIEW
+
+The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
+3.4.x were vulnerable to Cross Site Scripting.
+
+
+2. PRODUCT DESCRIPTION
+
+phpMyAdmin is a free software tool written in PHP intended to handle
+the administration of MySQL over the World Wide Web.
+phpMyAdmin supports a wide range of operations with MySQL.
+The most frequently used operations are supported by the user
+interface (managing databases, tables, fields, relations,
+indexes, users, permissions, etc), while you still have the ability to
+directly execute any SQL statement.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
+inject XSS string in 'db' field when creating or renaming a database.
+An attacker can create new database name or rename database name
+through several means like SQL Injection in user's vulnerable web
+applications or
+compromise of user account through brute-force or bypassing CSRF protection.
+Even though the phpMyAdmin uses httpOnly as a protection against
+cookie theft via XSS, attacker could use XSS tunneling proxy to
+manipulate database names and fields. From it, he could execute
+arbitrary database commands to allow him higher access to the server.
+
+
+4. VERSIONS AFFECTED
+
+phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
+
+Vendor confirmed this flaw did not exist before the 3.4 version family.
+Thus, it is assumed 2.x and 3.3 <= versions are not affected.
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
+http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
+
+
+6. IMPACT
+
+Attackers can compromise currently logged-in user session, plant xss
+backdoors and inject arbitrary SQL statements
+(CREATE,INSERT,UPDATE,DELETE)
+via crafted XSS payloads.
+
+
+7. SOLUTION
+
+For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
+check out the latest commit (git pull).
+
+
+8. VENDOR
+
+phpMyAdmin (http://www.phpmyadmin.net)
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+2011-01-26: notified vendor
+2011-01-26: vendor released fix
+2011-01-27: vulnerability disclosed
+
+
+11. REFERENCES
+
+Vendor Commit:
+http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+Previous Releases:
+http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
+http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
+http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
+
+
+
+#yehg [2011-01-27]
