@@ -1,26 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/10
-Message-ID: <83807128.253985.1306238112358.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 May 2011 07:55:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/6
+Message-ID: <20110127220336.GA4069@pisco.westfalen.local>
+Date: Thu, 27 Jan 2011 23:03:36 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Zend Framework -- SQL injection when using PDO_MySql
+Subject: CVE request: puppet
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> a possibility of SQL injection flaw has been reported in Zend
-> Framework, when MySQL PDO driver was used:
-> [1] http://framework.zend.com/security/advisory/ZF2011-02
-> 
-> Could you allocate a CVE id for this?
-> 
+Hi,
+please assign a CVE ID for this vulnerability in the Puppet configuration
+management system:
+http://www.mail-archive.com/puppet-users@googlegroups.com/msg16429.html
 
-Please use CVE-2011-1939.
-
-Thanks.
-
--- 
-    JB
+Cheers,
+        Moritz
