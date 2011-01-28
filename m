@@ -1,61 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/3
-Message-Id: <201106141538.59133.ludwig.nussel@suse.de>
-Date: Tue, 14 Jun 2011 15:38:58 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: Jakub Narebski <jnareb@...il.com>
-Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
-Subject: Re: [CVE-2011-2186] XSS security issue in gitweb for 'blob_plain' view with HTML files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/1
+Message-ID: <4D421F73.1010901@redhat.com>
+Date: Fri, 28 Jan 2011 09:44:19 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
+Subject: Re: CVE request: linux kernel heap issues
 Content-Type: text/plain; charset=utf-8
 
-Jakub Narebski wrote:
-> On Tue, 14 June 2011, Ludwig Nussel wrote:
-> > Jakub Narebski wrote:
-> 
-> > > [...] it is enough to enable XSS prevention by adding
-> > > 
-> > >   our $prevent_xss = 1;
-> > > 
-> > > in gitweb configuration file.
-> > 
-> > What about making that the default?
-> 
-> I'll come up with a patch... though I am not sure if it shouldn't be
-> done by distributions, which usually ship their own system-wide
-> gitweb config file.
+On 01/25/2011 01:08 PM, Eugene Teo wrote:
+> On 01/25/2011 11:48 AM, Eugene Teo wrote:
+>> On 01/25/2011 05:46 AM, Kees Cook wrote:
+>>> Hello,
+>>>
+>>> I don't think these minor issues I reported to the Linux Kernel have
+>>> had CVEs assigned to them:
+>>>
+>>> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
+>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+>>>
+>>>
+>>
+>> These require CAP_NET_ADMIN.
+>>
+>> CVE-2010-4655.
+>
+> Take note that you will need this too:
+> http://marc.info/?l=linux-kernel&m=129593098003553&w=2
 
-We don't have a system wide config at least. It's just the defaults
-in the script.
+http://git.kernel.org/linus/b7c7d01aaed1f71d9afe815a569f0a81465a1744
 
-> Note that with $prevent_xss enabled gitweb is a bit poorer in features:
-> no support for $GIT_DIR/README.html, no using gitweb as deploy platform.
-> XSS threat level for gitweb isn't high, I think - there is nothing to
-> steal.
-
-You never know. Better safe than sorry :-)
-
-> > For convenience it may make sense to s!text/.*!text/plain! and allow
-> > to display that inline.
-> 
-> Already done in
-> 
->   [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain' more usable
->   http://article.gmane.org/gmane.comp.version-control.git/175604
->   http://thread.gmane.org/gmane.comp.version-control.git/175057/focus=175604
-> 
-> It is in git repository as
-> 
->   fb76adb (gitweb: Make $prevent_xss protection for 'blob_plain' more usable, 2011-06-10)
-> 
-> currently in 'pu' (proposed updates) patch.
-
-Ah, nice :-)
-
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Eugene
