@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/1
-Message-ID: <1301384153.3849.159.camel@new-desktop>
-Date: Tue, 29 Mar 2011 09:35:53 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/2
+Message-Id: <201101281125.22255.tiposchi@tiscali.it>
+Date: Fri, 28 Jan 2011 11:25:21 +0100
+From: Salvo Tomaselli <tiposchi@...cali.it>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests : Liferay 6.0.6
+Subject: request CVE for weborf
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Greetings,
 
-version 6.0.6 of Liferay correct 3 security vulnerabilities related to
-the processing of XSLT content and 2 XSS.
+i am requesting a CVE for weborf http://galileo.dmi.unict.it/wiki/weborf/
 
-The full 6.0.6 Changelog :
-http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
+weborf 0.12.5 fixes a DoS occurring with malformed fields in HTTP request.
 
-Remote command execution :
-http://issues.liferay.com/browse/LPS-14726
+Diff from previous version 0.12.4:
 
-Arbitrary file disclosure via XXE :
-http://issues.liferay.com/browse/LPS-14927
+$ diff 0.12.4/utils.c 0.12.5/utils.c 
+270a271,272
+>     val += param_len + 2; //Moves the begin of the string to exclude the 
+name of the field
+> 
+276d277
+<     val += param_len + 2; //Moves the begin of the string to exclude the 
+name of the field
 
-XSL/XML file disclosure via file:// :
-http://issues.liferay.com/browse/LPS-13762
+Regards
+-- 
+Salvo Tomaselli
 
-XSS vulnerability :
-http://issues.liferay.com/browse/LPS-11506
-
-XSS in message boards :
-http://issues.liferay.com/browse/LPS-12628
-
-Regards,
-Nicolas Grégoire
-
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
