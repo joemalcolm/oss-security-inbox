@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/13
-Message-ID: <957492588.118513.1300739078366.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 21 Mar 2011 16:24:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: sgunderson@...foot.com, team@...urity.debian.org
-Subject: Re: CVE request: MPM-ITK module for Apache HTTPD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/3
+Message-ID: <4D4307AE.4000404@redhat.com>
+Date: Fri, 28 Jan 2011 19:15:10 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Wouter Verhelst <wouter@...ian.org>
+Subject: CVE Request -- NDB: CVE-2005-3534 reintroduced in upstream nbd-v2.9.0 version
 Content-Type: text/plain; charset=utf-8
 
+Hello Josh, Steve, vendors,
 
+   Originally, CVE-2005-3534:
+   [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3534
 
------ Original Message -----
-> Hi,
-> 
-> please assign a CVE id for this issue:
-> 
-> In certain configurations, the MPM-ITK module for Apache HTTPD serves
-> a
-> request as root user instead of the run user configured in the HTTPD
-> configuration:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
-> 
+has been assigned to NBD and addressed in nbd-v2.8.3 version:
+[2] http://sourceforge.net/project/shownotes.php?release_id=380202&group_id=13229
 
-Please use CVE-2011-1176
+via changeset:
+[3] https://github.com/yoe/nbd/commit/4ed24fe0d64c7cc9963c57b52cad1555ad7c6b60
 
-Thanks.
+But nbd-v2.9.0:
+[4] http://sourceforge.net/projects/nbd/files/nbd/2.9.0/
 
--- 
-    JB
+contains the issue again. This flaw was fixed second time via upstream changeset:
+[5] https://github.com/yoe/nbd/commit/3ef52043861ab16352d49af89e048ba6339d6df8
+
+References:
+[6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611187
+[7] https://bugzilla.redhat.com/show_bug.cgi?id=673562
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
