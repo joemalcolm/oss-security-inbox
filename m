@@ -1,90 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/6
-Message-ID: <20111207221143.GL3090@redhat.com>
-Date: Wed, 7 Dec 2011 15:11:43 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Moodle 1.9.15/2.0.6/2.1.3 releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/3
+Message-ID: <4D4307AE.4000404@redhat.com>
+Date: Fri, 28 Jan 2011 19:15:10 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Wouter Verhelst <wouter@...ian.org>
+Subject: CVE Request -- NDB: CVE-2005-3534 reintroduced in upstream nbd-v2.9.0 version
 Content-Type: text/plain; charset=utf-8
 
-A number of flaws were fixed in the most recent Moodle releases.  Could
-CVEs be assigned for these flaws?
+Hello Josh, Steve, vendors,
 
+   Originally, CVE-2005-3534:
+   [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3534
 
-MSA-11-0042: Information leak in Wiki
-Affects: 2.1.x, 2.0.x 
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=140af2a0f0a4598bf568b9ae182cb81eb583edeb 
-Reference: http://moodle.org/mod/forum/discuss.php?d=191747
+has been assigned to NBD and addressed in nbd-v2.8.3 version:
+[2] http://sourceforge.net/project/shownotes.php?release_id=380202&group_id=13229
 
-MSA-11-0043: Possible link redirect in Calendar
-Affects: 2.1.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28720&sr=1
-Reference: http://moodle.org/mod/forum/discuss.php?d=191748
+via changeset:
+[3] https://github.com/yoe/nbd/commit/4ed24fe0d64c7cc9963c57b52cad1555ad7c6b60
 
-MSA-11-0044: Expired identification information shown in Web services
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28670&sr=1
-Reference: http://moodle.org/mod/forum/discuss.php?d=191750
+But nbd-v2.9.0:
+[4] http://sourceforge.net/projects/nbd/files/nbd/2.9.0/
 
-MSA-11-0045: Potential to masquerade through MNet 
-Affects: 2.1.x, 2.0.x, 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=10df8657c1c138c0d0ab1d4796c552fcec0c299b
-Reference: http://moodle.org/mod/forum/discuss.php?d=191751
+contains the issue again. This flaw was fixed second time via upstream changeset:
+[5] https://github.com/yoe/nbd/commit/3ef52043861ab16352d49af89e048ba6339d6df8
 
-MSA-11-0046: Insecure authentication transmission
-Affects: 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=01dd64a8c8aa95f793accea371b2392e662663c5
-Reference: http://moodle.org/mod/forum/discuss.php?d=191752
+References:
+[6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611187
+[7] https://bugzilla.redhat.com/show_bug.cgi?id=673562
 
-MSA-11-0047: Possible injection attack in Calendar
-Affects: 2.1.x, 2.0.x, 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=581e8dba387f090d89382115fd850d8b44351526
-Reference: moodle.org/mod/forum/discuss.php?d=191754
+Could you allocate a CVE id for this?
 
-MSA-11-0048: Password loss issue
-Affects: 2.1.x, 2.0.x, 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=e079e82c087becf06d902089d14f3f76686bde19
-Reference: http://moodle.org/mod/forum/discuss.php?d=191755
-
-MSA-11-0049: Network restriction ineffective with MNet
-Affects: 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=3ab2851d2a59721445945d0706c58092e07e861e
-Reference: http://moodle.org/mod/forum/discuss.php?d=191756
-
-MSA-11-0050: Backup capability issue
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29591
-Reference: http://moodle.org/mod/forum/discuss.php?d=191758
-
-MSA-11-0051: Authentication issue with Web services
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28629
-Reference: http://moodle.org/mod/forum/discuss.php?d=191759
-
-MSA-11-0052: Potential to exploit developer debugging scripts
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=187672608ec96659e07f2461b3b83634debd16cb
-Reference: http://moodle.org/mod/forum/discuss.php?d=191760
-
-MSA-11-0053: Security and system administration conflict
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=ade30ad3c420ce035a3d68287db701b70e806b3f
-Refrence: http://moodle.org/mod/forum/discuss.php?d=191761
-
-MSA-11-0054: Personal information leak
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=e94113a859015a4a80b9397957b8fc4044e2951f
-Reference: http://moodle.org/mod/forum/discuss.php?d=191762
-
-
-Global-ish references:
-
-http://docs.moodle.org/dev/Moodle_2.1.3_release_notes
-http://docs.moodle.org/dev/Moodle_2.0.6_release_notes
-http://docs.moodle.org/dev/Moodle_1.9.15_release_notes
-https://bugzilla.redhat.com/show_bug.cgi?id=761248
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
