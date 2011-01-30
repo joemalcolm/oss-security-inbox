@@ -1,37 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/1
-Message-ID: <20110704092423.027dc897@redhat.com>
-Date: Mon, 4 Jul 2011 09:24:23 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/30/1
+Message-ID: <AANLkTinPZyWaS1tqMo=aKSweZUsqJennYC2ahXMWd94u@mail.gmail.com>
+Date: Sat, 29 Jan 2011 22:21:08 -0700
+From: Sam Trenholme <strenholme.usenet@...il.com>
+To: list@...adns.org
+Cc: 610834@...s.debian.org, geissert@...ian.org, atomo64@...il.com,  bressers@...hat.com, coley@...re.org, oss-security@...ts.openwall.com
+Subject: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Jul 2011 02:52:41 +0400 Solar Designer wrote:
+In 2002, when I rewrote the compression code for MaraDNS for the first
+time, I made a mistake in allocating an array of integers, allocating
+it in bytes instead of sizeof(int) units.  The resulted in a buffer
+being too small, allowing it to be overwritten.
 
-> Question to OpenSSL developers: is the patch given in Billy Bob
-> Brumley and Nicola Tuveri's paper "Remote Timing Attacks Are Still
-> Practical" OK to be used by distros?  Basically, I am interested in
-> its "review status" by upstream - reviewed and approved, reviewed but
-> not approved for specific reasons, not sufficiently reviewed.  (The
-> patch is tiny, but even tiny changes might have non-obvious
-> implications.)
+The impact of this programming error is that MaraDNS can be crashed by
+sending MaraDNS a single "packet of death".  Since the data placed in
+the overwritten array can not be remotely controlled (it is a list of
+increasing integers), there is no way to increase privileges
+exploiting this bug.
 
-I'm not part of the group you directed this question too, but as I've
-not seen any upstream developer or list in CC...
+The attached patch resolves this issue by allocating in sizeof(int)
+units instead of byte-sized units for an integer array.  In addition,
+it uses a smaller array because a DNS name can only have, at most, 128
+labels.
 
-The fix from the paper was committed in openssl CVS within about a week
-from public disclosure:
+I would like to thank Mr. Witold Baryluk for pointing out this issue,
+taking the time to backtrace the bug, and for bringing it to my
+attention by posting to the MaraDNS mailing list.  However, I need to
+let him know that making this public by filing a public Debian bug
+without first trying to contact me is not the appropriate way to
+handle a security problem with MaraDNS.  The appropriate way to do so
+is via private email.  My email address is here:
 
-http://cvs.openssl.org/chngview?cn=20892
+http://samiam.org/mailme.php
 
-However, there were some concerns raised regarding the extra #ifdef
-wrapping added as part of the commit, which disable the fix by default,
-and the name suggests #ifndef was probably intended:
+(maradns@...il.com was an account created so I could make entries in
+an older MaraDNS blog, and is not presently actively looked at)
 
-http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+As it turns out, I only occasionally look at the Debian bug database
+and people with issues with MaraDNS would be better off joining the
+MaraDNS mailing list instead of filing a Debian bug (unless the issue
+is Debian-specific).
 
-HTH
+In response to this bug, I have released MaraDNS 1.4.06 and 1.3.07.11.
+ These releases are available here:
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+http://maradns.org/download.html
+
+Since sourceforge.net has recently suffered a security breach, their
+file uploading feature is currently undergoing maintenance and new
+files currently can not be uploaded there.
+
+I have not made a new release of MaraDNS 2.0 yet.  Yarin has
+contributed a number of patches, and I would like to integrate his
+patches before making a new MaraDNS 2.0 release; MaraDNS 2.0 users can
+use the supplied patch.
+
+As an aside, I have become a better programmer since making this
+mistake back in 2002.  Deadwood, which is a complete rewrite of
+MaraDNS' recursive code, does not have this issue in its
+compression/decompression code.  Instead of using different data types
+in structures, Deadwood, by and large, uses special overflow-resistant
+strings to store most data.
+
+Also, I would like to take the time to make a public service
+announcement for djbdns users: DjbDNS 1.05 does have known security
+issues, and needs to be patched.  More details are here:
+
+http://samiam.org/blog/20110103.html
+
+(I am making this announcement because I have seen people, as recently
+as last year, claiming djbdns-1.05 is perfectly secure on public
+forums)
+
+- Sam
+
+--- maradns-1.4.05/dns/Compress.c       2010-07-31 01:17:08.000000000 -0600
++++ maradns-1.4.06/dns/Compress.c       2011-01-28 18:28:46.000000000 -0700
+@@ -22,7 +22,7 @@
+ #include "functions_dns.h"
+
+ /* Maximum allowed number of dlabel points */
+-#define MAX_DLABEL_POINTS 512
++#define MAX_DLABEL_POINTS 160
+
+ /* Maximum allowed length of compressed string; this is 4096 for TCP
+  * packets */
+@@ -87,7 +87,8 @@
+         js_dealloc(new);
+         return 0;
+         }
+-    if((new->dlabel_points = js_alloc(MAX_DLABEL_POINTS + 3,1)) == 0) {
++    if((new->dlabel_points = js_alloc(MAX_DLABEL_POINTS + 3,sizeof(int)))
++               == 0) {
+         js_destroy(new->compressed);
+         js_dealloc(new);
+         return 0;
+
+Download attachment "maradns-1.4.05-CVE-2011-0520.patch" of type "application/octet-stream" (701 bytes)
