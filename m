@@ -1,80 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/3
-Message-ID: <4ED2A001.8000201@gmail.com>
-Date: Sun, 27 Nov 2011 21:39:29 +0100
-From: Michael Harrison <n0idx80@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/1
+Message-Id: <20110131121409.ACIBIBQMNSYWFI@hackinthebox.org>
+Date: Mon, 31 Jan 2011 12:14:09 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] Reminder: HITB2011AMS - Call for Papers closes on the 18th of Feb
 Content-Type: text/plain; charset=utf-8
 
-Alexander,
-This is a formal request to be on the non-Linux advance notification
-list. I have signed signed this message. Please let me know if you need
-something more, and thanks again for sending this out.
+Happy 2011 everyone! Just a reminder that the Call for Papers for the
+second annual HITBSecConf in Europe is closing on the 18TH OF FEBRUARY!
+We've received some awesome submissions so far and the event is really
+shaping up nicely.
 
-Sincerely,
+The event will once again take place at the NH Grand Krasnapolsky in
+Amsterdam from the 17th - 20th of May. HITB2011AMS will be a quad-track
+conference line up featuring keynote speaker Joe Sullivan (Chief
+Security Officer of Facebook) and a special keynote panel discussion on
+'The Economics of Vulnerabilities'
 
-Michael
+In addition, the event also features a brand new Capture The Flag -
+World Domination competition run by the HITB.nl CTF Crew, an expanded
+Hackerspaces Village (now featuring a Hackerspaces Challenge with LEGO
+MINDSTORMS!) an updated Lock Picking Village run by members from
+TOOOL.nl and of course the HITBSIGINT sessions - 15 minute talks held
+during the coffee and lunch breaks with a focus on highlighting up and
+coming research and researchers.
 
-On 11/26/11 9:16 AM, Solar Designer wrote:
-> Hi Tim,
->
-> On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
->> On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
->>
->>> I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
->>> specific people that they're interested.  So please reply to this
->>> message to indicate your interest and we'll proceed.
->> I am interested.  Thanks for doing this.
-> Please send me (off-list is OK) your PGP key and e-mail address to
-> subscribe to the new list.
->
-> I thought there would be more interest in this, but I don't mind setting
-> this up as just pkgsrc + Linux distros initially.
->
-> (And, like I said, the Linux distros list will also continue to exist on
-> its own, letting message senders decide on who to notify.)
->
-> Thanks,
->
-> Alexander
+As always, talks that are more technical or that discuss new and never
+before seen attack methods are of more interest than a subject that has
+been covered several times before.
 
--- 
+HITB CFP: http://cfp.hackinthebox.org/
 
-It's not about what you know, but what is left to learn~
+===
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v2.0.17 (GNU/Linux)
+Topics of interest include, but are not limited to the following:
 
-mQENBE6MJ20BCACsvXUqJyxwgr61LOdRVMmczLC5VHDBEaaCfx4AwSihQm6od14h
-6IQJVyHSp5hQz73n9yOmLeAV51akUSNwUcV85Fjxa169MDut7mexir6YkTDrwSdW
-BRvopP6EuJaLAJwdK0/++YRD9eu6YDPlMp50ceCr47Yy8W0BGTb7Z2CvGnNntr7U
-ZkHR+ALdEQNyqSQ/NGxe7lfO+MVSi0W2eDaUtR6JmmZCWyDRWDsiOsl/q+QnIJ7r
-s3flrDe57zMXkw2rdI6lWm745i9kOyg0+Jw0gQwy8oHh/4ktdboU6WLkv2N9eeMR
-l1a0AZeTSuOfWrepTF1K22E++1NuN3Y5TGKvABEBAAG0MU1pY2hhZWwgUi4gSGFy
-cmlzb24gKEN1cnJlbnQpIDxuMGlkeDgwQGdtYWlsLmNvbT6JAT4EEwECACgFAk6M
-J20CGwMFCQHanAAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGcT+eUbMgJy
-T94H/2F98ZYomipk30ZcEZa+MsqLRcBdIvUgfS43cSih2KlhsjWavwYTYANJG4k0
-TImCpoJymmEK0aozlPqeP9eGTFrAM8HPnlBqMqTP5B0dPn2hGnxFwP1NLq4KiwgH
-YM/j2QqTZGvCaq82OtG8FwGNHRCJu+buN3zJ/VZNj5b05USEPnl8w92r5V4gbRyL
-HZsVyGnPDzTsBDqoKjpMcCVD4uXQWDM9jLk366zLM6ChzhEX02bmKrFqkNnb7rd0
-gFGR8svA4uWc2w58zrbZdMTsXDTimHdUm2KU4Cz49UxmyXW+T3SIEtsH8WYlaL+2
-SAk8zYMMb95WjwZwrFt2hhfMBoa5AQ0ETownbQEIALZJ5AbAwQd4qhkPRDmpvgW3
-AZgMj/s20sBo6XiS9PF4iUYwdKbEGUbKuahHH4dP4lrAKO0telzaLW+PY7NKaQ1k
-iLubuiqr7VD2j3bXXD1bvFdmG6w+R+S3jmgZs20Sj+z8472eXXHSokrO8/jolopb
-1xzZGUUVlVoJ7dSYaByqxQgcQCxrCiF1xj3CN32m51LAmaCFnJkVYwRTzZpCcOkf
-I4eF+d+0OYlCEH9VTwhYJKJMuRFJjPJqzCiJyYky7Y5GqaY2QNnSX2tzGpurR6IP
-HW/ZR4SFcnlL8HvHvT6+KVjfItS1M9ybTsXdf8Hl6BGkng+AO/bJKI2f3z2MXP0A
-EQEAAYkBJQQYAQIADwUCTownbQIbDAUJAdqcAAAKCRBnE/nlGzICclJlCAChlNrr
-CeZ3dzj/FrKQFozovCvgYV8GK83BHB3nBAsoOllvEzjmYbqIuCbbxWT5Dl5uatez
-jV7mrfobmnKTsSCGy9WbLc54djiRRcHXpHCeIOCEt8RL85VLim91842Zxw7wTnB0
-CfPM77scCvpekkzFaUj/yWxd6lzugKZ60AmuUxLWxzxPl+tcgRKCQT1XMe+EzyEd
-yAObBp+Pyk8WAWth+mecxJ131AruPzKwTrvzyyQVaa7qwJzgkwOVKpTwHzvLUQqX
-bPj3ZpIt4C0FLc5x91BYAXlt7rk5q3RZajBca+bODlAOJpU4fQs4ln+ZGt3sdTt4
-HvFqkFebN/ZH/wWf
-=Wk3z
------END PGP PUBLIC KEY BLOCK-----
+# Cloud Security
+# 3G/4G/WIMAX Security
+# File System Security
+# SS7/GSM/VoIP Security
+# Smart Card and Physical Security
+# Network Protocols, Analysis and Attacks
+# Applications of Cryptographic Techniques
+# Side Channel Analysis of Hardware Devices
+# Data Recovery, Forensics and Incident Response
+# Analysis of Malicious Code / Viruses / Malware
+# Windows / Linux / OS X / *NIX Security Vulnerabilities
+# Next Generation Exploit and Exploit Mitigation Techniques
+# WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
+
+Each non-resident speaker will receive accommodation for 3 nights / 4
+days at the Krasnapolsky. For each non-resident speaker, HITB will cover
+travel expenses up to EUR1200.00.
+
+Your submission will be reviewed by The HITB CFP Review Committee which
+includes:
+
+Charlie Miller	  (Principal Analyst, Independent Security Evaluators)
+Jeremiah Grossman (Founder, Whitehat Security)
+Red Dragon Thanh  (THC, VNSECURITY, Intel Corp)
+Mark Curphey	  (Director, Microsoft Corp)
+Cesar Cerrudo	  (Founder / CEO ArgenISS)
+Saumil Shah	  (Founder CEO Net-Square)
+Shreeraj Shah	  (Founder, BlueInfy)
+Fredric Raynal	  (Sogeti/Cap Gemini)
+Robert Hansen (rsnake) (SecTheory)
+Alexander Kornburst (Red Database)
+Emmanuel Gadaix	  (Founder, TSTF)
+Andrea Barisani	  (Inverse Path)
+Ed Skoudis	  (InGuardians)
+Haroon Meer	  (Sensepost)
+Chris Evans	  (Google)
+Philippe Langlois (TSTF)
+Skyper		  (THC)
 
 
+PLEASE NOTE:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (536 bytes)
+We do not accept product or vendor related pitches. If you would like to
+showcase your company's products or technology, please contact us for
+further participation opportunities.
+
+===
+
+Event Website:
+http://conference.hackinthebox.org/hitbsecconf2011ams/
+
+We look forward to receiving your submissions and to seeing you in
+Amsterdam in May!
+
+- The HITB.nl Team
+- http://conference.hitb.nl
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
+
