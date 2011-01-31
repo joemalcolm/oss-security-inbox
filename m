@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/8
-Message-ID: <20111026151612.GG28067@dhcp-25-225.brq.redhat.com>
-Date: Wed, 26 Oct 2011 17:16:12 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/2
+Message-ID: <20110131120054.53312d3d@orphan>
+Date: Mon, 31 Jan 2011 12:00:54 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: strenholme.usenet@...il.com
+Cc: oss-security@...ts.openwall.com, list@...adns.org, geissert@...ian.org, atomo64@...il.com, coley@...re.org
+Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-to reset dmesg_restrict to 0.
+Hi Sam!
 
-This is an issue when e.g.  LXC (Linux Containers) are used and complete
-user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
-root user can bypass the dmesg_restrict protection.
+On Sat, 29 Jan 2011 22:21:08 -0700 Sam Trenholme wrote:
 
-Introduced by:
-eaf06b241b091357e72b76863ba16e89610d31bd
+> I would like to thank Mr. Witold Baryluk for pointing out this issue,
+> taking the time to backtrace the bug, and for bringing it to my
+> attention by posting to the MaraDNS mailing list.  However, I need to
+> let him know that making this public by filing a public Debian bug
+> without first trying to contact me is not the appropriate way to
+> handle a security problem with MaraDNS.  The appropriate way to do so
+> is via private email.  My email address is here:
+> 
+> http://samiam.org/mailme.php
 
-Fixed by:
-bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+I think it may be a good idea to have this preferred way of receiving
+security reports for MaraDNS documented on the project web site in a
+way that does not make it hard to find.
 
-Thanks,
+I took a quick look at the maradns.org web to see what contact info I
+can find as someone who may want to report a security flaw, but does
+not have any closer relationship with project's upstream or community.
+
+The main page suggests using mailing list for bug reports.  There is
+the contact.html page that does document what to do when reporting
+security issue, but the page does not seem to be linked from other pages
+(I noticed it thanks to the web site copy bundled in the maradns source
+tarball).  There's a link from sponsors.html, but that page is no longer
+linked from the site menu.
+
+So while the info is there, I don't see an easy way to find it by
+following links from the main page.  Maybe that's something you may
+want to change.
+
+Just my 2c, HTH.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
