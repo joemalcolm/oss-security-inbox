@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/10
-Message-ID: <1926483466.299316.1298926424618.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 15:53:44 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: v86d: Failure to validate netlink message sender
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/2
+Message-ID: <20110131120054.53312d3d@orphan>
+Date: Mon, 31 Jan 2011 12:00:54 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: strenholme.usenet@...il.com
+Cc: oss-security@...ts.openwall.com, list@...adns.org, geissert@...ian.org, atomo64@...il.com, coley@...re.org
+Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1070
+Hi Sam!
 
-Thanks.
+On Sat, 29 Jan 2011 22:21:08 -0700 Sam Trenholme wrote:
+
+> I would like to thank Mr. Witold Baryluk for pointing out this issue,
+> taking the time to backtrace the bug, and for bringing it to my
+> attention by posting to the MaraDNS mailing list.  However, I need to
+> let him know that making this public by filing a public Debian bug
+> without first trying to contact me is not the appropriate way to
+> handle a security problem with MaraDNS.  The appropriate way to do so
+> is via private email.  My email address is here:
+> 
+> http://samiam.org/mailme.php
+
+I think it may be a good idea to have this preferred way of receiving
+security reports for MaraDNS documented on the project web site in a
+way that does not make it hard to find.
+
+I took a quick look at the maradns.org web to see what contact info I
+can find as someone who may want to report a security flaw, but does
+not have any closer relationship with project's upstream or community.
+
+The main page suggests using mailing list for bug reports.  There is
+the contact.html page that does document what to do when reporting
+security issue, but the page does not seem to be linked from other pages
+(I noticed it thanks to the web site copy bundled in the maradns source
+tarball).  There's a link from sponsors.html, but that page is no longer
+linked from the site menu.
+
+So while the info is there, I don't see an easy way to find it by
+following links from the main page.  Maybe that's something you may
+want to change.
+
+Just my 2c, HTH.
 
 -- 
-    JB
-
-
------ Original Message -----
-> Versions of the v86d userspace helper for the Linux uvesafb driver
-> before 0.1.10 did not verify that received netlink messages were sent
-> by the kernel, allowing unprivileged users to manipulate the video
-> mode and potentially other consequences.
-> 
-> v86d executes video BIOS code with access to /dev/mem in response to
-> netlink messages, using either vm86 mode or an x86 emulator, depending
-> on configuration. I an unclear on whether it is possible to e.g. crash
-> the machine or escalate privileges by spoofing requests, or only to
-> mess with the video card.
-> 
-> References:
-> http://repo.or.cz/w/v86d.git/commit/f9abfd412639286c3143e93e8ba2c9598dfba640
+Tomas Hoger / Red Hat Security Response Team
