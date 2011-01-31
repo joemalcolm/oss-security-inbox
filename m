@@ -1,26 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/1
-Message-ID: <4EF8206F.5080804@redhat.com>
-Date: Mon, 26 Dec 2011 12:51:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/4
+Message-ID: <AANLkTin1nNC8wVY+zLL=MyYB6Dbng0tox2HMcT2gvhnq@mail.gmail.com>
+Date: Mon, 31 Jan 2011 10:18:20 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4862 is not BSD-specific
+Subject: CVE request: code execution in VLC media player
 Content-Type: text/plain; charset=utf-8
 
-On 12/25/2011 10:44 PM, Florian Weimer wrote:
-> This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
-> overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
-> seems to have been added at MIT when the BSD telnetd was Kerberized,
-> and it ended up in the Heimdal recryptofication of Kerberos (from
-> where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
-> pre-authentication segfault with both versions (as shipped by Debian).
->
-> The telnetd from netkit does not appear to be affected.
+When opening a malformed MKV (WebM or Matroska) file in VLC, it is
+possible to corrupt memory and execute arbitrary code.
+Proof-of-concept exploit code is available and may be made public
+soon.
 
-The patch seems to be applicable though, probably you need to do 
-something else to make it segfault?
+-Dan
 
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+[1] http://www.videolan.org/security/sa1102.html
+[2] http://git.videolan.org/?p=vlc.git;a=commit;h=59491dcedffbf97612d2c572943b56ee4289dd07
