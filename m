@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/10
-Message-Id: <201104040814.30976.oeriksson@mandriva.com>
-Date: Mon, 4 Apr 2011 08:14:30 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/8
+Message-ID: <43666129.226293.1296509409891.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 31 Jan 2011 16:30:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: code execution in VLC media player
 Content-Type: text/plain; charset=utf-8
 
-fredag 01 april 2011 20:03:12 skrev  Josh Bressers:
-> Hello everyone,
+Please use CVE-2011-0531.
 
-[...]
-
-Hello, please subscibe me as well. I'm the Mandriva Linux security team 
-manager and was on vendor-sec.
-
-pub   4096R/EF5A2947 2009-12-17
-      Key fingerprint = CACF 1B05 DBE9 1B83 243A  AF73 C7B2 9DA0 EF5A 2947
-uid                  Oden Eriksson <oeriksson@...driva.com>
-
-
-Cheers.
+Thanks.
 
 -- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+    JB
+
+----- Original Message -----
+> When opening a malformed MKV (WebM or Matroska) file in VLC, it is
+> possible to corrupt memory and execute arbitrary code.
+> Proof-of-concept exploit code is available and may be made public
+> soon.
+> 
+> -Dan
+> 
+> [1] http://www.videolan.org/security/sa1102.html
+> [2]
+> http://git.videolan.org/?p=vlc.git;a=commit;h=59491dcedffbf97612d2c572943b56ee4289dd07
