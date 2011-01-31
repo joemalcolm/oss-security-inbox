@@ -1,55 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/2
-Message-ID: <4DD24612.60803@redhat.com>
-Date: Tue, 17 May 2011 11:55:30 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/6
+Message-ID: <2075640592.225906.1296508672982.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 31 Jan 2011 16:17:52 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Mike O'Connor" <mjo@...o.mi.org>
-Subject: CVE Request -- Cyrus-IMAP STARTTLS issue -- [was: Re:  pure-ftpd STARTTLS command injection / new CVE?]
+Cc: coley <coley@...re.org>
+Subject: Re: request CVE for weborf
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-0529.
 
-Hello, Josh, Steve, vendors,
+Thanks.
 
-   it was reported that Cyrus-IMAP is also prone to the CVE-2011-0411 
-issue (in IMAP, LMTP, NNTP, POP3, .. protocols):
-[1] http://bugzilla.cyrusimap.org/show_bug.cgi?id=3424
+-- 
+    JB
 
-Relevant upstream patch:
-[2] 
-http://git.cyrusimap.org/cyrus-imapd/patch/?id=523a91a5e86c8b9a27a138f04a3e3f2d8786f162
-
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=705288
-
-To my knowledge the list of CVE-2011-0411 related CVEs:
-
-CVE-2011-0411 Postfix
-CVE-2011-1430 Ipswich IMAIL
-CVE-2011-1431 1431 netqmail
-CVE-2011-1432 SCO Soffice Server
-CVE-2011-1575 pure-ftpd
-
-does not include Cyrus case yet (but not sure this list being
-complete, so worthy of double-checking).
-
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 04/11/2011 07:19 PM, Mike O'Connor wrote:
-> :http://www.pureftpd.org/project/pure-ftpd/news
-> :
-> :states that pure-ftpd is affected by the same STARTTLS
-> :injection bug as postifx's CVE-2011-0411.
-> :
-> :Is this CVE postfix-specific or can it be used for
-> :pure-ftpd as well? If needed, can someone assign a new CVE?
->
-> It should get its own CVE assignment.  Other products with the
-> same STARTTLS issue have gotten unique CVE assignments for them
-> -- see CVE-2011-143[012].
->
-
+----- Original Message -----
+> Greetings,
+> 
+> i am requesting a CVE for weborf
+> http://galileo.dmi.unict.it/wiki/weborf/
+> 
+> weborf 0.12.5 fixes a DoS occurring with malformed fields in HTTP
+> request.
+> 
+> Diff from previous version 0.12.4:
+> 
+> $ diff 0.12.4/utils.c 0.12.5/utils.c
+> 270a271,272
+> >     val += param_len + 2; //Moves the begin of the string to exclude
+> >     the
+> name of the field
+> >
+> 276d277
+> < val += param_len + 2; //Moves the begin of the string to exclude the
+> name of the field
+> 
+> Regards
+> --
+> Salvo Tomaselli
