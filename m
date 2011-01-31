@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/14
-Message-ID: <1103040800390.25284@mjc.redhat.com>
-Date: Fri, 4 Mar 2011 08:08:03 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/7
+Message-ID: <1057850136.226145.1296509049436.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 31 Jan 2011 16:24:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: Wouter Verhelst <wouter@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- NDB: CVE-2005-3534 reintroduced in upstream nbd-v2.9.0 version
 Content-Type: text/plain; charset=utf-8
 
-> This certainly underscores that very few flaws need vendor-sec
-> coordination, but I would suspect that out of those roughly 725 flaws,
-> many of the really critical ones came through vendor-sec.
+Please use CVE-2011-0530.
 
-Actually, not so much.  Of the flaws we rated impact critical or with a 
-CVSS of 'high', only 4 were from that 29 from vendor-sec.
+Thanks.
 
-> I'm also curious what "issues already public but found out about it on
-> vendor-sec" means?
+-- 
+    JB
 
-It's where the date the issue was public is the same date it was reported 
-to vendor-sec.  This can be because it was brought to the wrong list, the 
-embargo was a day or less, or less often vendors wanted to discuss 
-something about it confidentially (a way to exploit it, etc)
-
-Mark
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> Originally, CVE-2005-3534:
+> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3534
+> 
+> has been assigned to NBD and addressed in nbd-v2.8.3 version:
+> [2]
+> http://sourceforge.net/project/shownotes.php?release_id=380202&group_id=13229
+> 
+> via changeset:
+> [3]
+> https://github.com/yoe/nbd/commit/4ed24fe0d64c7cc9963c57b52cad1555ad7c6b60
+> 
+> But nbd-v2.9.0:
+> [4] http://sourceforge.net/projects/nbd/files/nbd/2.9.0/
+> 
+> contains the issue again. This flaw was fixed second time via upstream
+> changeset:
+> [5]
+> https://github.com/yoe/nbd/commit/3ef52043861ab16352d49af89e048ba6339d6df8
+> 
+> References:
+> [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611187
+> [7] https://bugzilla.redhat.com/show_bug.cgi?id=673562
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
