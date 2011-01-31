@@ -1,30 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/1
-Message-ID: <20110930054632.GA29071@inutil.org>
-Date: Fri, 30 Sep 2011 07:46:32 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Firefox: CVE-2011-3867 a dupe of CVE-2011-2998
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/1
+Message-Id: <20110131121409.ACIBIBQMNSYWFI@hackinthebox.org>
+Date: Mon, 31 Jan 2011 12:14:09 +0800
+From: Hafez Kamal <aphesz@...kinthebox.org>
+To: <oss-security@...ts.openwall.com>
+Subject: [HITB-Announce] Reminder: HITB2011AMS - Call for Papers closes on the 18th of Feb
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-When http://www.mozilla.org/security/announce/2011/mfsa2011-37.html
-went live it initially listed "CVE-2011-XXXX" as the CVE ID. However,
-since it was obvious that CVE-2011-2998 was missing in the block of
-Mozilla IDs I asked the Mozilla security group for confirmation if
-MFSA 2011-37 is in fact CVE-2011-2998, which they confirmed  and 
-fixed on the website later the day.
+Happy 2011 everyone! Just a reminder that the Call for Papers for the
+second annual HITBSecConf in Europe is closing on the 18TH OF FEBRUARY!
+We've received some awesome submissions so far and the event is really
+shaping up nicely.
 
-MITRE then seems to have assigned CVE-2011-3867 to this issue:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3867, which
-links to the MFSA page, which itself mentions CVE-2011-2998.
+The event will once again take place at the NH Grand Krasnapolsky in
+Amsterdam from the 17th - 20th of May. HITB2011AMS will be a quad-track
+conference line up featuring keynote speaker Joe Sullivan (Chief
+Security Officer of Facebook) and a special keynote panel discussion on
+'The Economics of Vulnerabilities'
 
-Beside Debian CVE-2011-2998 was also used by Red Hat:
-https://rhn.redhat.com/errata/RHSA-2011-1341.html and since it's also 
-mentioned on the Mozilla page my recommendation would be to reject 
-CVE-2011-3867, before it gets used more widely.
+In addition, the event also features a brand new Capture The Flag -
+World Domination competition run by the HITB.nl CTF Crew, an expanded
+Hackerspaces Village (now featuring a Hackerspaces Challenge with LEGO
+MINDSTORMS!) an updated Lock Picking Village run by members from
+TOOOL.nl and of course the HITBSIGINT sessions - 15 minute talks held
+during the coffee and lunch breaks with a focus on highlighting up and
+coming research and researchers.
 
-Cheers,
-        Moritz
+As always, talks that are more technical or that discuss new and never
+before seen attack methods are of more interest than a subject that has
+been covered several times before.
 
+HITB CFP: http://cfp.hackinthebox.org/
+
+===
+
+Topics of interest include, but are not limited to the following:
+
+# Cloud Security
+# 3G/4G/WIMAX Security
+# File System Security
+# SS7/GSM/VoIP Security
+# Smart Card and Physical Security
+# Network Protocols, Analysis and Attacks
+# Applications of Cryptographic Techniques
+# Side Channel Analysis of Hardware Devices
+# Data Recovery, Forensics and Incident Response
+# Analysis of Malicious Code / Viruses / Malware
+# Windows / Linux / OS X / *NIX Security Vulnerabilities
+# Next Generation Exploit and Exploit Mitigation Techniques
+# WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
+
+Each non-resident speaker will receive accommodation for 3 nights / 4
+days at the Krasnapolsky. For each non-resident speaker, HITB will cover
+travel expenses up to EUR1200.00.
+
+Your submission will be reviewed by The HITB CFP Review Committee which
+includes:
+
+Charlie Miller	  (Principal Analyst, Independent Security Evaluators)
+Jeremiah Grossman (Founder, Whitehat Security)
+Red Dragon Thanh  (THC, VNSECURITY, Intel Corp)
+Mark Curphey	  (Director, Microsoft Corp)
+Cesar Cerrudo	  (Founder / CEO ArgenISS)
+Saumil Shah	  (Founder CEO Net-Square)
+Shreeraj Shah	  (Founder, BlueInfy)
+Fredric Raynal	  (Sogeti/Cap Gemini)
+Robert Hansen (rsnake) (SecTheory)
+Alexander Kornburst (Red Database)
+Emmanuel Gadaix	  (Founder, TSTF)
+Andrea Barisani	  (Inverse Path)
+Ed Skoudis	  (InGuardians)
+Haroon Meer	  (Sensepost)
+Chris Evans	  (Google)
+Philippe Langlois (TSTF)
+Skyper		  (THC)
+
+
+PLEASE NOTE:
+
+We do not accept product or vendor related pitches. If you would like to
+showcase your company's products or technology, please contact us for
+further participation opportunities.
+
+===
+
+Event Website:
+http://conference.hackinthebox.org/hitbsecconf2011ams/
+
+We look forward to receiving your submissions and to seeing you in
+Amsterdam in May!
+
+- The HITB.nl Team
+- http://conference.hitb.nl
+
+---
+Hafez Kamal
+HITB Crew
+Hack in The Box (M) Sdn. Bhd.
+Suite 26.3, Level 26, Menara IMC,
+No. 8 Jalan Sultan Ismail,
+50250 Kuala Lumpur,
+Malaysia
+
+Tel: +603-20394724
+Fax: +603-20318359
 
