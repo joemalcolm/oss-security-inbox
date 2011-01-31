@@ -1,24 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/2
-Message-ID: <4D36C719.3070200@redhat.com>
-Date: Wed, 19 Jan 2011 12:12:25 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Matthew Nicholson <mnicholson@...ium.com>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/4
+Message-ID: <AANLkTin1nNC8wVY+zLL=MyYB6Dbng0tox2HMcT2gvhnq@mail.gmail.com>
+Date: Mon, 31 Jan 2011 10:18:20 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: code execution in VLC media player
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+When opening a malformed MKV (WebM or Matroska) file in VLC, it is
+possible to corrupt memory and execute arbitrary code.
+Proof-of-concept exploit code is available and may be made public
+soon.
 
-   Asterisk upstream yesterday released AST-2011-001, also with patches for supported versions.
-   References:
-   [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
-   [2] http://seclists.org/fulldisclosure/2011/Jan/297
-   [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
+-Dan
 
-Could you allocate CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[1] http://www.videolan.org/security/sa1102.html
+[2] http://git.videolan.org/?p=vlc.git;a=commit;h=59491dcedffbf97612d2c572943b56ee4289dd07
