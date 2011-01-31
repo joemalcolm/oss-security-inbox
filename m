@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/4
-Message-ID: <20110429194208.GV2160@redhat.com>
-Date: Fri, 29 Apr 2011 13:42:08 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/6
+Message-ID: <2075640592.225906.1296508672982.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 31 Jan 2011 16:17:52 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: vulnerability in sssd 1.5.0+ (CVE-2011-1758)
+Cc: coley <coley@...re.org>
+Subject: Re: request CVE for weborf
 Content-Type: text/plain; charset=utf-8
 
-Hello all.
+Please use CVE-2011-0529.
 
-Anyone shipping sssd 1.5.0 or higher will want to be aware of a flaw
-that was found in how it handled cached passwords when renewal kerberos
-tickets is enabled (this is a new feature in 1.5.0).  Due to a bug, the
-cached password was overwritten with a (moderately) predictable
-filename, which could allow a user to authenticate as someone else if
-they knew the name of the cache file (under some pretty specific
-conditions).
-
-We've assigned the name CVE-2011-1758 to this issue and it is now fixed
-upstream.
-
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=700867
-http://git.fedorahosted.org/git/?p=sssd.git;a=commitdiff;h=fffdae81651b460f3d2c119c56d5caa09b4de42a
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+----- Original Message -----
+> Greetings,
+> 
+> i am requesting a CVE for weborf
+> http://galileo.dmi.unict.it/wiki/weborf/
+> 
+> weborf 0.12.5 fixes a DoS occurring with malformed fields in HTTP
+> request.
+> 
+> Diff from previous version 0.12.4:
+> 
+> $ diff 0.12.4/utils.c 0.12.5/utils.c
+> 270a271,272
+> >     val += param_len + 2; //Moves the begin of the string to exclude
+> >     the
+> name of the field
+> >
+> 276d277
+> < val += param_len + 2; //Moves the begin of the string to exclude the
+> name of the field
+> 
+> Regards
+> --
+> Salvo Tomaselli
