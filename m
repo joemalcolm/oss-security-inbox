@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/11
-Message-ID: <651729557.1262135.1316026161955.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:49:21 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/3
+Message-ID: <1428885404.213777.1296484373924.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 31 Jan 2011 09:32:53 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE assignments for Wireshark
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> > Are the below worth assigning CVE ids to? The advisory seems to suggest
-> > they are crash only fixes. Do those deserve CVE IDs? I know we've been
-> > fairly generous with wireshark in the past, but I'm wondering if we
-> > need to draw a line somewhere.
+> On 01/13/2011 04:21 AM, Steven M. Christey wrote:
+> >
+> > CVE-2011-0444 - MAC-LTE
+> >
+> > CVE-2011-0445 - ASN.1 BER
 > 
-> Crash-only issues are always/typically worth a CVE when it can prevent a
-> product from working in a security context. Wireshark monitors network
-> traffic, sometimes live; therefore, in some reasonable/common usage
-> scenarios, attackers can cause a crash and prevent network activities
-> from being detected.
+> Looking at the following wireshark bug and the relevant commits:
 > 
-> We apply similar logic in forensics and other scenarios. Therefore a CVE
-> is needed for both wnpa-sec-2011-12 (crash reading live packets) as well
-> as wnpa-sec-2011-14 (by only reading a packet trace file) - in the
-> latter, analysis of a packet trace could be hampered/delayed because the
-> investigator can't use the product without it crashing.
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
 > 
-> Wireshark does not get any more "preference" than any other tool, except
-> indirectly because it gets more attention.
+> http://anonsvn.wireshark.org/viewvc?view=rev&revision=35292
+> http://anonsvn.wireshark.org/viewvc?view=rev&revision=35298
+> 
+> It seems that there are two issues here, buffer overflow in MAC-LTE
+> dissector as well as buffer overflow in SNMP engineID preferences.
+> 
+> This issue was however assigned only one CVE i.e. CVE-2011-0444.
+> Do you think two CVEs (for each individual issues), should be assigned
+> in this case?
 > 
 
-I wasn't thinking in the sense of live monitoring. You're right of course,
-which also means previous crash IDs were needed.
+Hi Steve,
 
-Sorry for the confusion.
+Can MITRE handle this one?
 
 Thanks.
 
