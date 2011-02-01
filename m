@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/3
-Message-ID: <4EDF77A4.50600@kde.org>
-Date: Wed, 07 Dec 2011 09:26:44 -0500
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/4
+Message-ID: <20110201153625.7fdd2ca9@angelo.pretender.us>
+Date: Tue, 1 Feb 2011 15:36:25 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-CC: cve@...re.org
-Subject: Disputing CVE-2011-4122
+Subject: CVE request: Server-side arbitrary script inclusion vulnerability in MediaWiki <=1.16.1
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Greetings,
 
-I've been asked by the kcheckpass maintainer to lodge a dispute of
-CVE-2011-4122.
+MediaWiki 1.16.2 was just released as a security update for two
+vulnerabilities. One already has a CVE, but this one still needs one:
 
-As explained in the blog entry linked from the CVE[1], the problem is
-that neither kcheckpass nor OpenPAM validate the 'service_name' input
-argument of pam_start(). This hole can be used to make PAM load
-arbitrary shared libraries, which can be used to execute arbitrary code
-as root, as kcheckpass is setuid root.
+"An arbitrary script inclusion vulnerability was discovered. The
+vulnerability only allows execution of files with names ending in
+".php" which are already present in the local filesystem. Only servers
+running Microsoft Windows and possibly Novell Netware are affected.
+Despite these mitigating factors, all users are advised to upgrade,
+since there is a risk of complete server compromise. MediaWiki 1.8.0
+and later is affected. For more details, see bug 27094"
 
-One could assume that kcheckpass should do the validation. However, the
-PAM documentation makes no mention of what a service name is supposed to
-look like, and consequently it must be treated as opaque by the
-application code. Therefore all validation must be expected to be done
-by the library, and failure to do so must be seen as a bug in the
-library exclusively.
-
-As a result, it is correct to list kcheckpass as an affected
-application, but not as the origin of the vulnerability. The linked
-advisories from ISS and Secunia are clearer about that.
+https://bugzilla.wikimedia.org/show_bug.cgi?id=27094
 
 Thanks,
-Jeff
+~reed
 
-[1]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4122
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
+-- 
+Reed Loden
+reed@...dloden.com
