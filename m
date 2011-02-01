@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/10
-Message-Id: <201104051405.20760.thomas@suse.de>
-Date: Tue, 5 Apr 2011 14:05:20 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/4
+Message-ID: <20110201153625.7fdd2ca9@angelo.pretender.us>
+Date: Tue, 1 Feb 2011 15:36:25 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+Subject: CVE request: Server-side arbitrary script inclusion vulnerability in MediaWiki <=1.16.1
 Content-Type: text/plain; charset=utf-8
 
-Am Freitag, 1. April 2011, 20:03:12 schrieb Josh Bressers:
-[...]
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+Greetings,
 
+MediaWiki 1.16.2 was just released as a security update for two
+vulnerabilities. One already has a CVE, but this one still needs one:
 
-pub   2048R/558EBF03 2010-10-29
-uid                  Thomas Biege (SuSE Security-Team) <thomas@...ell.com>
-uid                  Thomas Biege (SuSE Security-Team) <thomas@...e.de>
+"An arbitrary script inclusion vulnerability was discovered. The
+vulnerability only allows execution of files with names ending in
+".php" which are already present in the local filesystem. Only servers
+running Microsoft Windows and possibly Novell Netware are affected.
+Despite these mitigating factors, all users are advised to upgrade,
+since there is a risk of complete server compromise. MediaWiki 1.8.0
+and later is affected. For more details, see bug 27094"
 
-Well.. you know me.
+https://bugzilla.wikimedia.org/show_bug.cgi?id=27094
 
-
-Cheers,
-Thomas
+Thanks,
+~reed
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
-
-Download attachment "thomas_suse.asc" of type "application/pgp-keys" (2244 bytes)
+Reed Loden
+reed@...dloden.com
