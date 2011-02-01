@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/1
-Message-ID: <1071366949.72601.1294840987745.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 12 Jan 2011 09:03:07 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: sudo does not ask for password on GID changes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/3
+Message-ID: <20110201152723.3b36d8c1@orphan>
+Date: Tue, 1 Feb 2011 15:27:23 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request: glibc CVE-2010-3847 fix regression
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0010
+Hi!
 
-Thanks.
+It seems this does not have any CVE assigned yet...
+
+The original patch for CVE-2010-3847, as used by multiple vendors,
+introduced a bug in the way $ORIGIN is (not-)expanded when used in ELF
+R*PATH.  This could allow a local user to escalate privileges via
+privileged program using a library with $ORIGIN in R*PATH (such as
+certain glibc iconv modules).
+
+There are at least Debian and Ubuntu advisories addressing this issue:
+http://lists.debian.org/debian-security-announce/2011/msg00005.html
+https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-January/001226.html
+
+Note that privileged programs that themselves have $ORIGIN in R*PATH
+could have been abused before and are not addressed in the above
+advisories.  It's unclear if any distro provides any privileged program
+with such R*PATH though.
 
 -- 
-    JB
-
-
------ Original Message -----
-> A Debian bug report noted that sudo does not access for a password on
-> GID changes, like it does for UID changes. This could allow a user to
-> execute commands using '-g [group]' without being prompted for their
-> password.
-> 
-> It uses a (newer?) syntax; on 1.6.7p5 at least the '(ALL:ALL)'
-> specification gives a syntax error; I'm not sure when this behaviour
-> was
-> introduced.
-> 
-> References:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=609641
-> http://www.sudo.ws/repos/sudo/rev/fe8a94f96542
-> http://www.sudo.ws/repos/sudo/rev/07d1b0ce530e
-> https://bugzilla.redhat.com/show_bug.cgi?id=668879
-> 
-> Could a CVE name be assigned to this please?
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
