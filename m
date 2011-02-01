@@ -1,84 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/18
-Message-ID: <20111121180112.GA21332@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 20:01:12 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/1
+Message-ID: <AANLkTikyPJVo1P1p2NpqAeVB1f6jxsXuuu==tZOyHhrD@mail.gmail.com>
+Date: Tue, 1 Feb 2011 17:03:19 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: advisories@...itunasecurity.com
-Subject: Fwd: XSS vulnerability in Joomla 1.6.3
+Subject: CVE Request: Zikula CMS 1.2.4 <= Cross Site Request Forgery (CSRF) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Can we get CVE-identifier assigned for this issue, thank you?
+=====================================================================
+Zikula CMS 1.2.4 <= Cross Site Request Forgery (CSRF) Vulnerability
+=====================================================================
 
-Best regards,
-Henri Salo
 
------ Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
+1. OVERVIEW
 
-Date: Thu, 10 Nov 2011 16:32:12 +0200
-From: Netsparker Advisories <advisories@...itunasecurity.com>
-To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
-Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
+The Zikula 1.2.4 and lower versions were vulnerable to Cross Site
+Request Forgery (CSRF).
 
-Information
---------------------
-Name :  XSS vulnerability in Joomla 1.6.3.
-Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
-Vendor Hompeage :  http://www.joomla.org
-Vulnerability Type :  Cross-Site Scripting
-Severity :  High
-Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
-Advisory Reference :  NS-11-009
 
-Description
-------------------
-Joomla is an award-winning content management system (CMS), which
-enables you to build Web sites and powerful online applications. Many
-aspects, including its ease-of-use and extensibility, have made Joomla
-the most popular Web site software available. Best of all, Joomla is
-an open source solution that is freely available to everyone.
+2. BACKGROUND
 
-Details
--------------------
-Joomla is affected by a XSS vulnerability in various administrator
-screens. All 1.6.x installs prior to and including 1.6.3 are affected.
-You can read the full article about Cross-Site Scripting
-vulnerabilities from here :
-http://www.mavitunasecurity.com/crosssite-scripting-xss/
+Zikula is a Web Application Toolkit, which allows you to run
+impressive websites and build powerful online applications. Zikula has
+received praise for many things, but we belive the highlights are ease
+of use, quick and easy development, security and performance and
+lastly flexibility.
 
-Solution
--------------------
-Upgrade to the latest Joomla! version (1.6.4 or later).
 
-Credits
--------------------
-It has been discovered on testing of Netsparker, Web Application
-Security Scanner - http://www.mavitunasecurity.com/netsparker/
+3. VULNERABILITY DESCRIPTION
 
-References
--------------------
-1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
-2. MSL Advisory Link :
-http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
-3. Netsparker Advisories :
-http://www.mavitunasecurity.com/netsparker-advisories/
+Zikula CMS 1.2.4 and lower versions contain a flaw that allows a
+remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
+exists because the application does not require multiple steps or
+explicit confirmation for sensitive transactions for majority of
+administrator functions such as adding new user, assigning user to
+administrative privilege. By using a crafted URL, an attacker may
+trick the victim into visiting to his web page to take advantage of
+the trust relationship between the authenticated victim and the
+application. Such an attack could trick the victim into executing
+arbitrary commands in the context of their session with the
+application, without further prompting or verification.
 
-About Netsparker
--------------------
-Netsparker® can find and report security issues such as SQL Injection
-and Cross-site Scripting (XSS) in all web applications regardless of
-the platform and the technology they are built on. Netsparker's unique
-detection and exploitation techniques allows it to be dead accurate in
-reporting hence it's the first and the only False Positive Free web
-application security scanner.
 
--- 
-Netsparker Advisories, <advisories@...itunasecurity.com>
-Homepage, http://www.mavitunasecurity.com/netsparker-advisories/
+4. VERSIONS AFFECTED
 
-_______________________________________________
-Full-Disclosure - We believe in it.
-Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-Hosted and sponsored by Secunia - http://secunia.com/
+1.2.4 <=
 
------ End forwarded message -----
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+The following request escalates a normal user to an administrator.
+
+[REQUEST]
+POST /zikula/index.php?module=users&type=admin&func=processusers&op=edit
+HTTP/1.1
+
+authid=&userid=3&do=yes&access_permissions%5B%5D=2&access_permissions%5B%5D=1&uname=tester&email=tester%40yehg.net&pass=&vpass=&activated=1&theme=&submit=
+[/REQUEST]
+
+
+6. SOLUTION
+
+Upgrade to Zikula 1.2.5 or higher
+
+
+7. VENDOR
+
+Zikula Foundation
+http://zikula.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-24: notified vendor
+2011-01-25: vendor released fix
+2011-02-01: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL: http://yehg.net/lab/pr0js/advisories/
+Vendor Released Info:
+http://community.zikula.org/index.php?module=News&func=display&sid=3041&title=zikula-1.2.5-released
+Zikula 1.2.5 Changlog:
+http://code.zikula.org/core12/browser/tags/Zikula-1.2.5/src/docs/CHANGELOG
+CSRF Wiki: https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
+
+
+#yehg [2011-02-01]
