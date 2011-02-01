@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/1
-Message-ID: <AANLkTika9qwJUfh_+LEGS1bP_w8Q6gfm6YZfTG-RB+hK@mail.gmail.com>
-Date: Wed, 5 Jan 2011 19:46:02 -0500
-From: Anthon Pang <anthon.pang@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Multiple XSS Vulnerabiliies < Piwik 1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/3
+Message-ID: <20110201152723.3b36d8c1@orphan>
+Date: Tue, 1 Feb 2011 15:27:23 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request: glibc CVE-2010-3847 fix regression
 Content-Type: text/plain; charset=utf-8
 
-Piwik 1.1 released on Jan 4, 2011, addresses numerous security issues
-following a security audit by SektionEins (led by Stefan Esser), an internal
-review, and coordinated disclosures from Jarosław Sajko (Pentesters.pl) and
-Fabian Becker.
+Hi!
 
-Notably, versions of Piwik prior to 1.1 contain multiple persistent and
-reflective XSS vulnerabilities through unescaped parameters and/or output.
+It seems this does not have any CVE assigned yet...
 
-Security advisory:
-http://piwik.org/blog/2011/01/piwik-1-1-security-advisory/
-Other advisory:
-http://piwik.org/blog/2011/01/professional-security-audit-in-piwik/
-Changelog: http://piwik.org/blog/2011/01/piwik-1-1-2/
+The original patch for CVE-2010-3847, as used by multiple vendors,
+introduced a bug in the way $ORIGIN is (not-)expanded when used in ELF
+R*PATH.  This could allow a local user to escalate privileges via
+privileged program using a library with $ORIGIN in R*PATH (such as
+certain glibc iconv modules).
 
+There are at least Debian and Ubuntu advisories addressing this issue:
+http://lists.debian.org/debian-security-announce/2011/msg00005.html
+https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-January/001226.html
+
+Note that privileged programs that themselves have $ORIGIN in R*PATH
+could have been abused before and are not addressed in the above
+advisories.  It's unclear if any distro provides any privileged program
+with such R*PATH though.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
