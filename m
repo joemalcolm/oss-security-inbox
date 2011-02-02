@@ -1,40 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/20
-Message-ID: <BANLkTikdSO8W-zu6OTPeYwCOzR32bBYkLw@mail.gmail.com>
-Date: Tue, 5 Apr 2011 09:46:25 -0500
-From: Tim Zingelman <tez@...bsd.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/02/3
+Message-ID: <Pine.GSO.4.64.1102021418450.5082@faron.mitre.org>
+Date: Wed, 2 Feb 2011 14:33:44 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 4, 2011 at 10:02 AM, Matthias Andree <matthias.andree@....de> wrote:
-> Am 02.04.2011 02:08, schrieb Dan Rosenberg:
+
+I'm not sure about this one.
+
+My read of the situation is that the attack depends entirely on the 
+successful exploitation of another issue that gives the attacker 
+privileges to modify the database.  This would rarely be a vulnerability 
+to me unless the problem was in some protection mechanism.
+
+It seems likely that phpMyAdmin's "intended" security policy is that 
+anybody with privileges to directly modify the DB (e.g. to create or 
+rename the DB) is a "trusted" user who also has privileges to generate 
+HTML/scripting code.  If that's the case, then this XSS is only available 
+to a privileged user - even if it happens to be someone who got the 
+privileges through some other attack.
+
+Consequently, the XSS is "resultant" from some other vulnerability, and 
+would not be worthy of a CVE itself.
+
+If there's some specific vulnerability that gives someone the 
+privileges to modify the DB when they shouldn't be able to, then a CVE 
+could be assigned for that specific issue.
+
+If there's more than one user with privileges to modify the DB, then one 
+user could XSS the other, so I suppose that would get a CVE.
+
+If I'm mis-understanding the advisory and the attacker (or the XSS victim) 
+does not have privileges to modify DB names or create a DB, then it gets a 
+CVE.
+
+If phpMyAdmin's "intended" security policy is that the application should 
+be safe from XSS injected into a compromised DB, then it gets a CVE.
+
+- Steve
+
+
+
+On Thu, 27 Jan 2011, Josh Bressers wrote:
+
+> Steve,
 >
-> This raises an interesting point, "downstream providers of third-party
-> software".
+> Can MITRE comment on this? The advisory suggests that in order to exploit
+> this, you already have to have access to the user's account in some way.
+> I'm not sure what the precedent is for such a situation.
 >
-> In my case, I'd understand that I might want to offer vendors the
-> possibility to co-ordinate upgrades for bogofilter, fetchmail, and
-> leafnode, in lexicographical order, and possibly for a FreeBSD port --
-> although I'm not a representative of FreeBSD's security officer team
-> (nor would that team usually deal with third-party software
-> vulnerabilities unless it's in the basde system).
-
-Both FreeBSD and NetBSD have separate security teams that work to keep
-the third-party software provided by the FreeBSD ports system
-http://www.freebsd.org/ports/index.html and NetBSD pkgsrc system
-http://www.netbsd.org/docs/software/packages.html patched for
-vulnerabilities.  (Note that the pkgsrc system is cross platform and
-works on *BSD, Solaris, Linux and many other platforms.)  I'd guess
-other BSD and Solaris distro's have similar teams.  I'd like to either
-see members of these teams included, or a second list created for all
-issues not specific to linux.  (FWIW I am on the pkgsrc security
-team.)
-
-I'll also second the question someone else posed about how cc'ing
-others off the list could reasonably work if all messages are
-encrypted.
-
-Thanks,
-
- - Tim
+> Thanks.
+>
+> --
+>    JB
+>
+> ----- Original Message -----
+>> http://seclists.org/fulldisclosure/2011/Jan/486
+>>
+>>
+>> ===================================================================================
+>> phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
+>> Vulnerability
+>> ===================================================================================
+>>
+>>
+>> 1. OVERVIEW
+>>
+>> The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
+>> 3.4.x were vulnerable to Cross Site Scripting.
+>>
+>>
+>> 2. PRODUCT DESCRIPTION
+>>
+>> phpMyAdmin is a free software tool written in PHP intended to handle
+>> the administration of MySQL over the World Wide Web.
+>> phpMyAdmin supports a wide range of operations with MySQL.
+>> The most frequently used operations are supported by the user
+>> interface (managing databases, tables, fields, relations,
+>> indexes, users, permissions, etc), while you still have the ability to
+>> directly execute any SQL statement.
+>>
+>>
+>> 3. VULNERABILITY DESCRIPTION
+>>
+>> The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
+>> inject XSS string in 'db' field when creating or renaming a database.
+>> An attacker can create new database name or rename database name
+>> through several means like SQL Injection in user's vulnerable web
+>> applications or
+>> compromise of user account through brute-force or bypassing CSRF
+>> protection.
+>> Even though the phpMyAdmin uses httpOnly as a protection against
+>> cookie theft via XSS, attacker could use XSS tunneling proxy to
+>> manipulate database names and fields. From it, he could execute
+>> arbitrary database commands to allow him higher access to the server.
+>>
+>>
+>> 4. VERSIONS AFFECTED
+>>
+>> phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
+>>
+>> Vendor confirmed this flaw did not exist before the 3.4 version
+>> family.
+>> Thus, it is assumed 2.x and 3.3 <= versions are not affected.
+>>
+>>
+>> 5. PROOF-OF-CONCEPT/EXPLOIT
+>>
+>> http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
+>> http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
+>>
+>>
+>> 6. IMPACT
+>>
+>> Attackers can compromise currently logged-in user session, plant xss
+>> backdoors and inject arbitrary SQL statements
+>> (CREATE,INSERT,UPDATE,DELETE)
+>> via crafted XSS payloads.
+>>
+>>
+>> 7. SOLUTION
+>>
+>> For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
+>> check out the latest commit (git pull).
+>>
+>>
+>> 8. VENDOR
+>>
+>> phpMyAdmin (http://www.phpmyadmin.net)
+>>
+>>
+>> 9. CREDIT
+>>
+>> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+>> Ethical Hacker Group, Myanmar.
+>>
+>>
+>> 10. DISCLOSURE TIME-LINE
+>>
+>> 2011-01-26: notified vendor
+>> 2011-01-26: vendor released fix
+>> 2011-01-27: vulnerability disclosed
+>>
+>>
+>> 11. REFERENCES
+>>
+>> Vendor Commit:
+>> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
+>> Original Advisory URL:
+>> http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
+>> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+>> Previous Releases:
+>> http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+>> http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
+>> http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
+>> http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
+>>
+>>
+>>
+>> #yehg [2011-01-27]
+>
