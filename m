@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/2
-Message-ID: <4DEC731A.4000309@redhat.com>
-Date: Mon, 06 Jun 2011 11:56:34 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/02/1
+Message-ID: <AANLkTinbk+EJVzewvQ2HhN-pt=8tQn-Pv7Lis76qTfa3@mail.gmail.com>
+Date: Wed, 2 Feb 2011 03:23:32 +0000
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "stev >> \"Steven M. Christey\"" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: set cred->user_ns in key_replace_session_keyring
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-On 06/03/2011 12:10 PM, Eugene Teo wrote:
-> new->user_ns is uninitialised if the cred is not created with
-> copy_creds(). If I'm not mistaken, this was introduced by
-> 47a150edc2ae734c0f4bf50aa19499 (v2.6.39).
-> 
-> Thread starts from https://lkml.org/lkml/2011/5/23/199;
-> Proposed patch: https://lkml.org/lkml/2011/5/25/265
-> 
-> Thanks, Eugene
+On Thu, Jan 20, 2011 at 11:15 PM, Dan Rosenberg wrote:
+> 2. Malformed commands may cause corruption of the internal stack used
+> to maintain graphics contexts, leading to potentially exploitable
+> memory corruption.  Fixed in poppler commit at [2], hopefully fixed
+> soon at xpdf upstream.
 
-This has been assigned CVE-2011-2184
+Correct me if I'm wrong, but it looks like all versions of xpdf and
+poppler <= 0.12.x should not be affected by this issue (since graphics
+states are not tracked via stackheight in those versions).  Also,
+according to redhat, poppler in rhel5 does not crash when tested with
+your poc.  Would you be willing to share so we can test that?
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Best wishes,
+Mike
