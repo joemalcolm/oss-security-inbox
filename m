@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/7
-Message-ID: <4ECE8598.3040206@redhat.com>
-Date: Thu, 24 Nov 2011 10:57:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/3
+Message-ID: <1418086390.282600.1296749422278.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Feb 2011 11:10:22 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- kernel: kvm: device assignment DoS
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Server-side arbitrary script inclusion vulnerability in MediaWiki <=1.16.1
 Content-Type: text/plain; charset=utf-8
 
-On 11/24/2011 10:49 AM, Petr Matousek wrote:
-> It was found that kvm_vm_ioctl_assign_device function did not check if
-> the user requesting assignment was privileged or not. Together with
-> /dev/kvm being 666, unprivileged user could assign unused pci devices,
-> or even devices that were in use and whose resources were not properly
-> claimed by the respective drivers.
->
-> Please note that privileged access was still needed to re-program the
-> device to for example issue DMA requests. This is typically achieved by
-> touching files on sysfs filesystem. These files are usually not
-> accessible to unprivileged users.
->
-> As a result, local user could use this flaw to crash the system.
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=756084
-> http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
->
-> Thanks,
-Please use CVE-2011-4347 for this issue.
+Please use CVE-2011-0537
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
 
+----- Original Message -----
+> Greetings,
+> 
+> MediaWiki 1.16.2 was just released as a security update for two
+> vulnerabilities. One already has a CVE, but this one still needs one:
+> 
+> "An arbitrary script inclusion vulnerability was discovered. The
+> vulnerability only allows execution of files with names ending in
+> ".php" which are already present in the local filesystem. Only servers
+> running Microsoft Windows and possibly Novell Netware are affected.
+> Despite these mitigating factors, all users are advised to upgrade,
+> since there is a risk of complete server compromise. MediaWiki 1.8.0
+> and later is affected. For more details, see bug 27094"
+> 
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=27094
+> 
+> Thanks,
+> ~reed
+> 
+> --
+> Reed Loden
+> reed@...dloden.com
