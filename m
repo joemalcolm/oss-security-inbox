@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/13
-Message-ID: <1601135524.1024438.1309377311109.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:55:11 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/4
+Message-ID: <983552901.282778.1296749832050.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Feb 2011 11:17:12 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Luciano Bello <luciano@...ian.org>
-Subject: Re: CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism
+Subject: Re: CVE request: fuse
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2510.
+----- Original Message -----
+> 
+> A few more fixes have made their way to FUSE to prevent TOCTTOU symlink
+> attacks. An unprivileged user was able to unmount arbitrary mounts:
+> 
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
+> 
+> Could we please get one or more CVE numbers for them?
+> 
+
+I don't understand what these flaws are just by reading the commit
+messages. Can you explain them?
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found that DokuWiki's RSS embedding mechanism did not properly
-> escape user-provided links. An attacker could use this flaw to conduct
-> cross-site scripting (XSS) attacks, potentially leading to arbitrary
-> JavaScript code execution.
-> 
-> References:
-> -----------
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
-> [2]
-> http://www.certa.ssi.gouv.fr/site/CERTA-2011-AVI-366/CERTA-2011-AVI-366.html
-> [3]
-> http://www.freelists.org/post/dokuwiki/Hotfix-Release-20110525a-Rincewind
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=717146
-> 
-> Solution:
-> ---------
-> This issue has been addressed in upstream "2011-05-25 Rincewind"
-> release:
-> [5] http://www.dokuwiki.org/changes
-> 
-> This issue doesn't seem to have a CVE identifier yet. Could you
-> allocate
-> one?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
