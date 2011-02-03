@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/2
-Message-ID: <c95a1a9e-b5f9-46ff-b9eb-324858da6e74@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 27 Sep 2011 14:26:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/2
+Message-ID: <822284632.282461.1296749025708.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Feb 2011 11:03:45 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@....net
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: glibc CVE-2010-3847 fix regression
 Content-Type: text/plain; charset=utf-8
 
-Let's use CVE-2011-3379 for this.
+Please use CVE-2011-0536.
 
 Thanks.
 
 -- 
     JB
 
-
 ----- Original Message -----
-> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the
-> is_a()
-> function worked, and as a result it could allow for remote arbitrary
-> code execution if certain specific conditions are met (the blog post
-> referenced below has a good writeup of the flaw).
+> Hi!
 > 
-> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
-> https://bugs.php.net/bug.php?id=55475
-> https://bugzilla.redhat.com/show_bug.cgi?id=741020
+> It seems this does not have any CVE assigned yet...
 > 
-> It looks like this is the fix:
+> The original patch for CVE-2010-3847, as used by multiple vendors,
+> introduced a bug in the way $ORIGIN is (not-)expanded when used in ELF
+> R*PATH. This could allow a local user to escalate privileges via
+> privileged program using a library with $ORIGIN in R*PATH (such as
+> certain glibc iconv modules).
 > 
-> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+> There are at least Debian and Ubuntu advisories addressing this issue:
+> http://lists.debian.org/debian-security-announce/2011/msg00005.html
+> https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-January/001226.html
 > 
-> Thanks.
+> Note that privileged programs that themselves have $ORIGIN in R*PATH
+> could have been abused before and are not addressed in the above
+> advisories. It's unclear if any distro provides any privileged program
+> with such R*PATH though.
 > 
 > --
-> Vincent Danen / Red Hat Security Response Team
-> 
+> Tomas Hoger / Red Hat Security Response Team
