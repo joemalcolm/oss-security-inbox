@@ -1,45 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/13
-Message-ID: <1484768598.651167.1307993291113.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:28:11 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/3
+Message-ID: <1418086390.282600.1296749422278.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Feb 2011 11:10:22 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Damyan Ivanov <dmn@...ian.org>, Mark Stosberg <mark@...mersault.com>, 629511@...s.debian.org, Iain Arnell <iarnell@...il.com>, Marcela Maslanova <mmaslano@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Server-side arbitrary script inclusion vulnerability in MediaWiki <=1.16.1
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> It was found that perl-Data-FormValidator, a HTML form user input
-> validator, used to treat certain invalid fields as valid, when the
-> untaint_all_constraints directive was used (default for majority of
-> Data-FormValidator routines). A remote attacker could use this flaw to
-> bypass perl Taint mode protection mechanism via specially-crafted
-> input
-> provided to the HTML form.
-> 
-> Note: Hopefully Damyan, Mark can clarify here, if valid data from
-> Data-FormValidator are automatically marked as untainted for
-> perl Taint mode or not. If there still is perl Taint mode
-> protection check present, even on valid Data-FormValidator
-> data and it couldn't happen, that tainted data would be passed
-> further to the script processing, then this is not a security
-> issue.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
-> [2] https://rt.cpan.org/Public/Bug/Display.html?id=61792
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712694
-> 
-
-Upstream seem to believe this is a security flaw.
-
-Please use CVE-2011-2201.
+Please use CVE-2011-0537
 
 Thanks.
 
 -- 
     JB
+
+
+----- Original Message -----
+> Greetings,
+> 
+> MediaWiki 1.16.2 was just released as a security update for two
+> vulnerabilities. One already has a CVE, but this one still needs one:
+> 
+> "An arbitrary script inclusion vulnerability was discovered. The
+> vulnerability only allows execution of files with names ending in
+> ".php" which are already present in the local filesystem. Only servers
+> running Microsoft Windows and possibly Novell Netware are affected.
+> Despite these mitigating factors, all users are advised to upgrade,
+> since there is a risk of complete server compromise. MediaWiki 1.8.0
+> and later is affected. For more details, see bug 27094"
+> 
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=27094
+> 
+> Thanks,
+> ~reed
+> 
+> --
+> Reed Loden
+> reed@...dloden.com
