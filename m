@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/24
-Message-ID: <622252736.190729.1298491199267.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 14:59:59 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/4
+Message-ID: <983552901.282778.1296749832050.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Feb 2011 11:17:12 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+Subject: Re: CVE request: fuse
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
 > 
-> The kernel automatically evaluates partition tables of storage devices.
-> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
-> a bug that allows to overflow the kernel heap. It may be possible to
-> escalate privileges by exploiting this bug.
+> A few more fixes have made their way to FUSE to prevent TOCTTOU symlink
+> attacks. An unprivileged user was able to unmount arbitrary mounts:
 > 
-> (This bug is distinct from the LDM bug reported by Eugene Teo on
-> 2011-02-23.)
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
 > 
-> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-> CONFIG_LDM_PARTITION needs to be set.
+> Could we please get one or more CVE numbers for them?
 > 
 
-Can you point to a commit message or something else that is public? It's
-not clear how this differs from Eugene's request.
+I don't understand what these flaws are just by reading the commit
+messages. Can you explain them?
 
 Thanks.
 
