@@ -1,56 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/5
-Message-ID: <222873656.467105.1302295052562.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 8 Apr 2011 16:37:32 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/1
+Message-ID: <2064387265.282418.1296748930248.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Feb 2011 11:02:10 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE requests : Liferay 6.0.6
+Subject: Re: CVE Request: Zikula CMS 1.2.4 <= Cross Site Request Forgery (CSRF) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the delay, this one was bigger than a breadbox so I needed to
-find a block of time to handle it.
+Please use CVE-2011-0535.
 
------ Original Message -----
-> Hello,
-> 
-> version 6.0.6 of Liferay correct 3 security vulnerabilities related to
-> the processing of XSLT content and 2 XSS.
-> 
-> The full 6.0.6 Changelog :
-> http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
-> 
-> Remote command execution :
-> http://issues.liferay.com/browse/LPS-14726
-
-Use CVE-2011-1501
-
-
-> Arbitrary file disclosure via XXE :
-> http://issues.liferay.com/browse/LPS-14927
-
-Use CVE-2011-1502
-
-
-> XSL/XML file disclosure via file:// :
-> http://issues.liferay.com/browse/LPS-13762
-
-Use CVE-2011-1503
-
-
-> XSS vulnerability :
-> http://issues.liferay.com/browse/LPS-11506
-
-Use CVE-2011-1504
-
-
-> XSS in message boards :
-> http://issues.liferay.com/browse/LPS-12628
-
-Use CVE-2011-1570
-
-
-Thanks
+Thanks.
 
 -- 
     JB
+
+
+----- Original Message -----
+> =====================================================================
+> Zikula CMS 1.2.4 <= Cross Site Request Forgery (CSRF) Vulnerability
+> =====================================================================
+> 
+> 
+> 1. OVERVIEW
+> 
+> The Zikula 1.2.4 and lower versions were vulnerable to Cross Site
+> Request Forgery (CSRF).
+> 
+> 
+> 2. BACKGROUND
+> 
+> Zikula is a Web Application Toolkit, which allows you to run
+> impressive websites and build powerful online applications. Zikula has
+> received praise for many things, but we belive the highlights are ease
+> of use, quick and easy development, security and performance and
+> lastly flexibility.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Zikula CMS 1.2.4 and lower versions contain a flaw that allows a
+> remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
+> exists because the application does not require multiple steps or
+> explicit confirmation for sensitive transactions for majority of
+> administrator functions such as adding new user, assigning user to
+> administrative privilege. By using a crafted URL, an attacker may
+> trick the victim into visiting to his web page to take advantage of
+> the trust relationship between the authenticated victim and the
+> application. Such an attack could trick the victim into executing
+> arbitrary commands in the context of their session with the
+> application, without further prompting or verification.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 1.2.4 <=
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> The following request escalates a normal user to an administrator.
+> 
+> [REQUEST]
+> POST
+> /zikula/index.php?module=users&type=admin&func=processusers&op=edit
+> HTTP/1.1
+> 
+> authid=&userid=3&do=yes&access_permissions%5B%5D=2&access_permissions%5B%5D=1&uname=tester&email=tester%40yehg.net&pass=&vpass=&activated=1&theme=&submit=
+> [/REQUEST]
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to Zikula 1.2.5 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> Zikula Foundation
+> http://zikula.org/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-12-24: notified vendor
+> 2011-01-25: vendor released fix
+> 2011-02-01: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL: http://yehg.net/lab/pr0js/advisories/
+> Vendor Released Info:
+> http://community.zikula.org/index.php?module=News&func=display&sid=3041&title=zikula-1.2.5-released
+> Zikula 1.2.5 Changlog:
+> http://code.zikula.org/core12/browser/tags/Zikula-1.2.5/src/docs/CHANGELOG
+> CSRF Wiki:
+> https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
+> 
+> 
+> #yehg [2011-02-01]
