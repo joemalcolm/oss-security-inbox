@@ -1,18 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/1
-Message-ID: <4D23F024.2030804@redhat.com>
-Date: Wed, 05 Jan 2011 12:14:28 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/04/1
+Message-ID: <4D4BDB73.2030504@redhat.com>
+Date: Fri, 04 Feb 2011 16:26:51 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
+Subject: Wireshark: Freeing uninitialized pointer
 Content-Type: text/plain; charset=utf-8
 
-In addition to CVE-2010-3881, some versions of the Linux kernel forgot 
-to initialize the kvm_vcpu_events.interrupt.pad field before being 
-copied to userspace. I have assigned CVE-2010-4525 to this. I briefly 
-checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y are not.
+Hi,
+The following wireshark issue has been assigned CVE-2011-0538
 
-https://bugzilla.redhat.com/CVE-2010-4525
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5652
 
-Thanks, Eugene
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
