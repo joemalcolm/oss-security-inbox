@@ -1,37 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/2
-Message-ID: <20110811052041.GB2043@mutt-is@awesome>
-Date: Thu, 11 Aug 2011 08:20:41 +0300
-From: Eren Türkay <eren@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/04/1
+Message-ID: <4D4BDB73.2030504@redhat.com>
+Date: Fri, 04 Feb 2011 16:26:51 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <ax25@...erg.in-berlin.de>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+Subject: Wireshark: Freeing uninitialized pointer
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
-> The AX.25 daemon (ax25d), typically provided in the ax25-tools
-> package, allows administrators to associate incoming AX.25, NET/ROM,
-> and ROSE traffic with the execution of an endpoint program (most
-> commonly "node"), which is run under a specified user account.
-> Because ax25d is missing a check on the return code for a setuid call
-> responsible for dropping privileges to the specified user, it may be
-> possible to cause setuid to fail, after which the chosen program will
-> be executed with root privileges.  In other words, if you're in the
-> business of handing out unprivileged shells over amateur radio (don't
-> we all? :p ), this would allow for remote compromise.
+Hi,
+The following wireshark issue has been assigned CVE-2011-0538
 
-Hello,
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5652
 
-Thank you for your investigation on the topic. Although this issue seems
-to be low-priority, it's good to let the maintainers know.
-
-I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
-linux-ac25 site, are the maintainers of ax25 utilities.
-
-> 
-> -Dan
 
 -- 
-        . 73! DE TA1AET
-
-Content of type "application/pgp-signature" skipped
+Huzaifa Sidhpurwala / Red Hat Security Response Team
