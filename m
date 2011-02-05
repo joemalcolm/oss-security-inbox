@@ -1,77 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/2
-Message-ID: <20110725065710.GB21793@suse.de>
-Date: Mon, 25 Jul 2011 08:57:10 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/05/2
+Message-Id: <20110205183517.39b7fb56.michael.s.gilbert@gmail.com>
+Date: Sat, 5 Feb 2011 18:35:17 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+Subject: Webkit Dupes
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Hi
+The following issues are duplicate CVE assignments for webkit.  Please
+merge and reject these as appropriate.
 
-You probably speak about:
+CVE-2010-2902 and CVE-2010-1793:
+webkit commit #62662
+http://code.google.com/p/chromium/issues/detail?id=48284
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
 
-http://www.suse.de/~krahmer/libs-vs-fscaps/
+CVE-2010-2647 and CVE-2010-1786:
+webkit commit #61667
+http://code.google.com/p/chromium/issues/detail?id=43488
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
 
-There was a discussion some months ago on OSS with more or less no result,
-so we started fixing on our own.
-The openssl patch has been posted to openssl patch list without results
-so far either:
+CVE-2010-2302 and CVE-2010-1771:
+webkit commit #59876
+http://code.google.com/p/chromium/issues/detail?id=44740
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1771
 
-http://rt.openssl.org/Ticket/Display.html?id=2532
+CVE-2010-2301 and CVE-2010-1762:
+webkit commit #59241 and #59242
+http://code.google.com/p/chromium/issues/detail?id=43902
 
-Similar issues are inside libudev and libhal, both linked against
-suids like Xorg.
+CVE-2010-2300 and CVE-2010-1759:
+webkit commit #59109
+http://code.google.com/p/chromium/issues/detail?id=43315
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1759
 
--s
+CVE-2010-2902 and CVE-2010-1793:
+webkit commit #62662 and #62482
+http://code.google.com/p/chromium/issues/detail?id=48284
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
 
-On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
-> I presume this only needs one ID
-> 
-> Use CVE-2011-2709
-> 
-> Thanks.
-> 
-> -- 
->     JB
-> 
-> ----- Original Message -----
-> > Hello Josh, Steve, vendors,
-> > 
-> > this:
-> > [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
-> > [2]
-> > http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
-> > [3] http://lwn.net/Alerts/449415/
-> > [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
-> > 
-> > doesn't seem to have CVE identifier yet (though Sebastian Krahmer
-> > requested one for related fscaps issue).
-> > 
-> > Josh, Steve, could you allocate a CVE id for this?
-> > 
-> > [4] contains also further issue description + links to SUSE patches
-> > (from [2]). Could not find their plaintext (*.src.rpm) version though.
-> > 
-> > So Sebastian, if you could share those with us, it would be
-> > appreciated.
-> > 
-> > Thank you && Regards, Jan.
-> > --
-> > Jan iankko Lieskovsky / Red Hat Security Response Team
+CVE-2010-2647 and CVE-2010-1786:
+webkit commit #61667
+http://code.google.com/p/chromium/issues/detail?id=43488
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
 
--- 
+CVE-2010-2899 and CVE-2010-1783:
+webkit commit #62134
+http://code.google.com/p/chromium/issues/detail?id=42736
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+CVE-2010-1769 and CVE-2010-1774:
+webkit commit #59495
+both are apple announcements, and the only difference in the CVE
+descriptions is "itunes" vs "safari"
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+CVE-2010-2441 and CVE-2010-1757
+webkit commit #58829
+i'm not 100% sure about this one since there is no useful info in
+CVE-2010-1757. the descriptions sound very much the same issue, but
+descriptions differ by "webkit on apple" vs "webkit"
 
+CVE-2010-1665 and CVE-2010-1417:
+webkit commit #58201
+http://code.google.com/p/chromium/issues/detail?id=42294
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1417
+
+CVE-2010-0651 and CVE-2010-0051:
+webkit commit #52784
+http://code.google.com/p/chromium/issues/detail?id=9877
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-0051
+
+Would it be possible to force Google and Apple to coordinate better to
+avoid these dupes?  This is creating unnecessary work and making it
+appear that webkit has a lot more issues than it really does.
+
+Thanks,
+Mike
