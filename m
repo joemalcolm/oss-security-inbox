@@ -1,67 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/16
-Message-ID: <1741420034.507249.1307382130192.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:42:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/05/1
+Message-Id: <20110205174537.237e05b9.michael.s.gilbert@gmail.com>
+Date: Sat, 5 Feb 2011 17:45:37 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Bernhard Reiter <bernhard@...evation.de>, Tomas Mraz <tmraz@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- dirmngr -- Improper dealing with blocking system calls, when verifying a certificate
+Subject: Webkit Roundup
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello, Josh, Steve, Bernhard, vendors,
-> 
-> based on:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377
-> [2] https://bugs.g10code.com/gnupg/issue1313
-> (upstream bug report)
-> [3] https://bugs.g10code.com/gnupg/file324/DTAG_Issuing_CA_i01.der
-> (public PoC)
-> [4] http://cvs.gnupg.org/cgi-bin/viewcvs.cgi?root=Dirmngr&view=rev
-> (relevant upstream patch)
-> 
-> it concluded:
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=710529
-> 
-> i.e.:
-> "Dirmngr, server/client tool for managing and downloading CRLS, used user
-> land threads implementation (Pth) for wrapping up of system calls, that
-> may potentially block. A remote attacker could use this flaw to cause a
-> hang of an end-user application, relying of the proper services of the
-> dirmngr daemon, via a request to verify a specially-crafted certificate."
-> 
-> But simultaneously with filling that Red Hat Bugzilla issue tracking
-> system entry performed some basic investigation, results of which can
-> be seen at:
-> [6] https://bugzilla.redhat.com/show_bug.cgi?id=710529#c2
-> 
-> IOW was not able to reproduce the complete / indefinite dirmngr-client
-> hang (thus blocking other clients from access). As noted in [6], it is
-> true that during small time period running 'dirmngr' daemon instance is
-> unresponsive also for '--ping' (dirmngr-client --ping) commands, but
-> after finite time (~21 seconds in my test) the connection ends up with
-> timeout.
-> 
-> Though Bernard in:
-> [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377#5
-> 
-> mentions "For example the KMail hung when trying to verify a signature
-> which has the certificate in the chain." which would suggest there may
-> exist clients / end-user application not able to recover from this bug
-> properly. Bernhard, hopefully here, you could clarify / list such
-> applications and provide also time details, how long that hang of such
-> applications took.
-> 
-> Based on your reply, this may not / may be worthy (in case there are
-> such end-user applications) of an CVE identifier.
-> 
+Hello,
 
-Is this expected to only be used by end user applications? It seems to me
-that if an attacker can DoS a client, it's not a security issue, especially
-when you consider the use (if a bad guy can interact with dirmngr, there
-are probably bigger potential issues).
+I've been doing some work on applying security patches to the stable
+webkitgtk release in Debian.  However, I've found a lot of the security
+issues were published without sufficient detail to be able to review
+the problems.  I would really appreciate help resolving the status of
+the following issues.  You can see the current state of what we know in
+the Debian security tracker [0].
 
-Thanks.
+CVE-2008-1010, CVE-2008-1011:
+- This is a case of apple providing no useful info, but are two redhat
+bug reports; both of which are claim the issues fixed as of svn31787,
+unfortunately, there is no info about the actual problems to be able to
+check. I suppose there is no reason to believe these are still open,
+but I would feel more comfortable if there were some concrete info
+about the problems to be able to check.
 
--- 
-    JB
+CVE-2009-2068:
+- This issue was assigned based on an academic paper, and there are no
+patches or fixes for reference in the CVE references. Chrome claims
+the issue is fixed as of version 5.0.342.9.  Was webkit itself ever
+affected by this issue, and when was it fixed?
+
+CVE-2010-1403, CVE-2010-1404:
+- According to redhat, both of these issues were fixed in the same
+webkit commit.  That seems a bit surprising, but may be true.  I was
+just wondering if anyone can confirm that the info is correct?
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1403
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1404
+
+CVE-2010-1757:
+- This issue sounds like an iphone-specific duplicate of
+CVE-2010-2441.  If that is the case, can the two CVEs be merged?  If
+its a different problem, is it in iphone-specific or is webkit itself
+affected?
+
+CVE-2010-1781:
+- This is claimed fixed by Vincent Danen in webkitgtk 1.2.4, but there
+is no redhat bug report about it and no info available to check whether
+this is indeed fixed or not.  Does anyone have any info on this?
+http://gitorious.org/webkitgtk/stable/commit/9d07fda89aab7105962d933eef32ca15dda610d8
+
+CVE-2010-1783:
+- According to redhat's info webkit commit 62134 fixes this, which is
+believed to be the same commit that fixes CVE-2010-2899, but google is
+still embargoing the bug report for that.  Does anyone have any info?
+http://code.google.com/p/chromium/issues/detail?id=42736
+
+CVE-2010-2264:
+- This is claimed to fixed in webkitgtk 1.2.3, but wasn't noted until
+after the fact. There is no info anywhere to be able to check that this
+statement is true.
+http://gitorious.org/webkitgtk/stable/commit/9d07fda89aab7105962d933eef32ca15dda610d8
+
+CVE-2010-3803, CVE-2010-3804, CVE-2010-3805, CVE-2010-3808,
+CVE-2010-3809, CVE-2010-3810, CVE-2010-3811, CVE-2010-3816,
+CVE-2010-3817, CVE-2010-3818, CVE-2010-3819, CVE-2010-3820,
+CVE-2010-3821, CVE-2010-3822, CVE-2010-3823, CVE-2010-3824,
+CVE-2010-3826, CVE-2010-3829: 
+- These are all recent apple webkit announcements without any relevant
+details :( Does anyone have any info to be able to check this deluge
+of issues?
+
+Thanks so much for any help in advance.
+
+Best wishes,
+Mike
+
+[0] http://security-tracker.debian.org/tracker/source-package/webkit
