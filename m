@@ -1,46 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/9
-Message-ID: <20110305223002.GC30397@kroah.com>
-Date: Sat, 5 Mar 2011 14:30:02 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/4
+Message-ID: <1072365723.352933.1297192158428.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Feb 2011 14:09:18 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: fuse
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
-> Hi,
+Sorry for the dealy, some other things popped up :(
+
+I'm going to assign 3 IDs. These look like they maybe could be combined,
+but I'd rather not try to just to have a big split later on when we find
+out various versions are affected in different ways.
+
 > 
-> Thus wrote Solar Designer (solar@...nwall.com):
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
 > 
-> > > - If yes, would it be an idea to confine or split into lists of focus groups?
-> > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-> > 
-> > My current proposal is: split into several sub-lists.  I'd start with
-> > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-> > groups would be for externally submitted reports (by non-members) and
-> > for cross-vendor discussions.
+> Fuse tries to mount a directory without resolving symlinks, and then
+> tries to update mtab. If it couldn't update mtab, it would unmount the
+> directory while resolving symlinks this time, resulting in a different
+> directory being unmounted.
+
+Use CVE-2011-0541
+
+
 > 
-> I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
-> items shared between BSDs, but not commonly seen in Linux distributions),
-> shared/userland (who eg doesn't have OpenSSL?), and researchers
-> (no opinion on the latter).
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
+> 
+> This prevents local users from changing the location of the current
+> directory from under fuse using a timing attack.
 
-This means that for a "normal" Linux distribution, someone would have to
-be subscribed to at least 2 lists, and possibly three?
+Use CVE-2011-0542
 
-And where would someone post a problem to?  How would they know if a
-pacakge is shared from BSD and Linux without having to do a lot of
-research first?
 
-I really don't mind seeing all of the traffic for all of the issues, but
-perhaps the BSD developers get tired of seeing all of the Linux kernel
-issues go across their mailbox so they don't want to have to see them
-anymore :)
+> 
+> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
+> 
+> Fuse uses the --no-canonicalize mount option to prevent a symlink attack
+> on the mount point written to mtab. For backwards compatibility reasons,
+> it would fallback to using mount in an insecure way. This fallback could
+> get triggered by a user when an entry already existed in mtab.
+> 
 
-Either way, I think we still need a vendor-sec-like list for the
-Linux distros, as it is very invaluable and provides a way to coordinate
-things that is needed at times.
+Use CVE-2011-0543
 
-thanks,
+Thanks.
 
-greg k-h
+-- 
+    JB
