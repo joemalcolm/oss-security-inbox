@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/8
-Message-ID: <20110304015908.GB16394@kroah.com>
-Date: Thu, 3 Mar 2011 17:59:08 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/1
+Message-Id: <201102081154.16647.thomas@suse.de>
+Date: Tue, 8 Feb 2011 11:54:16 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 08:11:00PM -0500, Michael Gilbert wrote:
-> On Thu, 3 Mar 2011 16:41:07 -0800 Greg KH wrote:
-> > On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
-> > > Of course failing to anticipate security impact is bound to happen in
-> > > the kernel; it frequently happens in userland too, and is unavoidable.
-> > >  That doesn't mean we can't try, and it doesn't mean we should be
-> > > overly paranoid and have security folks manually audit every patch.
-> > > Currently, maintainers and bug reporters are expected to ask
-> > > themselves a simple question when deciding whether or not to CC
-> > > stable: "does this fix a bug or security issue, or is it a new
-> > > feature?".  Similarly, I don't think it's too much to ask for people
-> > > to consider the question of "does this bug it allow an unprivileged
-> > > user to crash the system, gain additional access, or otherwise cross
-> > > privilege boundaries?"  And if the answer is "I don't know, maybe?",
-> > > then they should CC this list to be safe.  I think this would result
-> > > in not nearly as much volume as you're anticipating.
-> > 
-> > They do this already today, that's what security@...nel.org is for, and
-> > it gets a bit of traffic like this every week.
+
+Should CVE-IDs be assigned to this issues?
+
+Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
+> I identified two issues in xpdf.  I don't think the first requires a
+> CVE, since it's incredibly unlikely to be exploitable, but I include
+> it here in case someone disagrees.
 > 
-> Is this list open to the public?  It doesn't seem to be available on
-> http://vger.kernel.org/vger-lists.html.
+> 1. Due to an integer overflow when parsing CharCodes for fonts and a
+> failure to check the return value of a memory allocation, it is
+> possible to trigger writes to a narrow range of offsets from a NULL
+> pointer.  The chance of being able to exploit this for anything other
+> than a crash is very remote: on x86 32-bit, there's no chance (since
+> the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
+> write lands in valid userspace on x86-64, but in my testing this
+> memory is never mapped.  Fixed in poppler commit at [1], hopefully
+> fixed soon at xpdf upstream.
+> 
+> 2. Malformed commands may cause corruption of the internal stack used
+> to maintain graphics contexts, leading to potentially exploitable
+> memory corruption.  Fixed in poppler commit at [2], hopefully fixed
+> soon at xpdf upstream.
+> 
+> -Dan
+> 
+> [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
+> [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
+> 
 
-No, it is closed, as it should be as potential security problems are
-mailed there.  You don't want that to be totally open, right?
-
-thanks,
-
-greg k-h
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
