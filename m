@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/12
-Message-ID: <20111028131026.GA32179@devzero.fr>
-Date: Fri, 28 Oct 2011 15:10:26 +0200
-From: vladz <vladz@...zero.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/3
+Message-Id: <201102081215.41570.thomas@suse.de>
+Date: Tue, 8 Feb 2011 12:15:41 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: rcvalle@...hat.com
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-
-Hi,
-
-On Fri, Oct 28, 2011 at 02:22:13PM +0200, Hanno Böck wrote:
-> Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT) schrieb Ramon de C Valle <rcvalle@...hat.com>:
-> > This is a security issue reported by vladz in bzexe. This is a low
-> > impact security issue, since bzexe is rarely used and the race
-> > condition window is very narrow, but still exploitable.
+Am Dienstag 08 Februar 2011 11:54:16 schrieb Thomas Biege:
 > 
-> Have you checked if this also affects gzexe? It is pretty much the same
-> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
+> Should CVE-IDs be assigned to this issues?
 
-I already checked gzexe and it's not affected because it use "mktemp" to
-create its temporary directory.  For the same purposes, bzexe use
-"/tmp/command" as directory name.
+Sorry, I missed Josh'd mail.
 
-Best regards,
-vladz.
+> 
+> Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
+> > I identified two issues in xpdf.  I don't think the first requires a
+> > CVE, since it's incredibly unlikely to be exploitable, but I include
+> > it here in case someone disagrees.
+> > 
+> > 1. Due to an integer overflow when parsing CharCodes for fonts and a
+> > failure to check the return value of a memory allocation, it is
+> > possible to trigger writes to a narrow range of offsets from a NULL
+> > pointer.  The chance of being able to exploit this for anything other
+> > than a crash is very remote: on x86 32-bit, there's no chance (since
+> > the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
+> > write lands in valid userspace on x86-64, but in my testing this
+> > memory is never mapped.  Fixed in poppler commit at [1], hopefully
+> > fixed soon at xpdf upstream.
+> > 
+> > 2. Malformed commands may cause corruption of the internal stack used
+> > to maintain graphics contexts, leading to potentially exploitable
+> > memory corruption.  Fixed in poppler commit at [2], hopefully fixed
+> > soon at xpdf upstream.
+> > 
+> > -Dan
+> > 
+> > [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
+> > [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
+> > 
+> 
+> 
+
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
