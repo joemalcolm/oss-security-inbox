@@ -1,32 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/9
-Message-ID: <2003613449.141475.1313779943068.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:52:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/2
+Message-ID: <20110208121251.413ea354@orphan>
+Date: Tue, 8 Feb 2011 12:12:51 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Can I get 2010 CVE-ID for this issue? I am not sure if other
-> distributions/operating systems need their own IDs. If I am correct
-> one ID should be enough.
-> 
-> Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
-> Bug report to FreeBSD:
-> http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
-> NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
-> Reported to OpenBSD (and patched), but can't find references.
-> Does not affect Debian:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572813
-> Not listed in OSVDB, but I can handle it.
-> 
+On Tue, 8 Feb 2011 11:54:16 +0100 Thomas Biege wrote:
 
-Please use CVE-2010-4816. It appears these are all the same codebase, so
-one ID will do.
+> Should CVE-IDs be assigned to this issues?
 
-Thanks.
+http://thread.gmane.org/gmane.comp.security.oss.general/4109/focus=4117
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
