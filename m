@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/9
-Message-ID: <4EA82599.9040007@redhat.com>
-Date: Wed, 26 Oct 2011 09:22:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/6
+Message-ID: <20110208202708.59e6cd14@laverne>
+Date: Tue, 8 Feb 2011 20:27:08 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
+Subject: Re: CVE request: phpbb before 3.0.8
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2011 08:26 AM, Marcus Meissner wrote:
-> Hi,
->
-> From our openldap2 Maintainer Ralf:
-> |A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
-> |is passed a zero length string. (Can e.g. be triggered by passing a
-> |"postalAddressAttribute" with the value "$" (or no value a all). What the code
-> |does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
-> |least as far as I understand it)
-> |
-> |Upstream Bug: ITS#7059
-> |http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
-> |
-> |This bug is present in older releases as well.
-> |
-> |I wonder if this is really security relevant as it seem the worst that might
-> |happen is that an authenticated user can crash the daemon. I was not able to do
-> |so during a short test but I guess that is just a matter of trying long enough.
->
-> Ciao, Marcus
-Please use CVE-2011-4079 for this issue
+Am Tue, 8 Feb 2011 14:22:54 -0500 (EST)
+schrieb Josh Bressers <bressers@...hat.com>:
+
+> Sadly I can't find any public information, it seems you need a login
+> to view the changelog. If someone has an upstream contact can you ask
+> them to change this policy.
+
+There is some more info including patch:
+http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068
 
 -- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
--Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
