@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/13/2
-Message-ID: <igm068$vv0$1@dough.gmane.org>
-Date: Wed, 12 Jan 2011 22:48:06 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/5
+Message-ID: <838898319.353177.1297192974199.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Feb 2011 14:22:54 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: phpbb before 3.0.8
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Could CVE ids be assigned for the following issues? Thanks in advance.
-
-ftpls: XSS in directory listing
-http://bugs.debian.org/607494
-
-xdigger: buffer overflow when parsing CLI arguments
-(it is SGID, at least in Debian)
-http://bugs.debian.org/609096
-
-lbreakout2: buffer overflow with overly long HOME env var
-(it is SGID, at least in Debian)
-http://bugs.debian.org/608980
-
-calibre: XSS and file disclosure
-http://www.waraxe.us/advisory-77.html
-http://bugs.debian.org/608822
-
-typo3: 8 vulnerabilities
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-022/
-http://seclists.org/fulldisclosure/2010/Dec/690
-http://bugs.debian.org/607286
 
 
-There are more issues without ids, will request them later.
+----- Original Message -----
+> http://www.phpbb.com/support/documents.php?mode=changelog&version=3#v307-PL1
+> 
+> [PHPBB3-9903] - Execute javascript in [flash=] BBCode
+> 
+> Seems to be XSS. Please assign CVE.
+> 
 
-Regards,
+Sadly I can't find any public information, it seems you need a login
+to view the changelog. If someone has an upstream contact can you ask
+them to change this policy.
+
+Thanks.
+
+Use CVE-2011-0544
+
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+    JB
