@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/4
-Message-ID: <4DBEC61E.8090308@mvista.com>
-Date: Mon, 02 May 2011 04:56:30 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/6
+Message-ID: <20110208202708.59e6cd14@laverne>
+Date: Tue, 8 Feb 2011 20:27:08 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Subject: Re: CVE request: phpbb before 3.0.8
 Content-Type: text/plain; charset=utf-8
 
+Am Tue, 8 Feb 2011 14:22:54 -0500 (EST)
+schrieb Josh Bressers <bressers@...hat.com>:
 
+> Sadly I can't find any public information, it seems you need a login
+> to view the changelog. If someone has an upstream contact can you ask
+> them to change this policy.
 
-On 04/30/2011 04:51 AM, Solar Designer wrote:
-<snipped>
+There is some more info including patch:
+http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068
 
-> Hence, I've saved your subscription request to a separate folder, to
-> revisit it if a decision is made to start adding "closed" vendors to the
-> list, if Wind River starts to publish advisories and updates (in other
-> words, if it becomes no more closed than Red Hat), or if a suitable
-> separate list is setup.
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-Can you clarify what is meant by updates?
-
-- Armin
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
