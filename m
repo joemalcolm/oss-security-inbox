@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/37
-Message-ID: <20110405230056.GU543@ngolde.de>
-Date: Wed, 6 Apr 2011 01:00:56 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/1
+Message-Id: <201102081154.16647.thomas@suse.de>
+Date: Tue, 8 Feb 2011 11:54:16 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: tmux (debian specific)
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-due to a patch that was introduced to our tmux package, tmux is not properly 
-dropping group privileges anymore when invoked with -S (tmux is installed 
-setgid).
 
-Bug report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=620304
-Can I get a CVE id for this?
+Should CVE-IDs be assigned to this issues?
 
-Cheers
-Nico
+Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
+> I identified two issues in xpdf.  I don't think the first requires a
+> CVE, since it's incredibly unlikely to be exploitable, but I include
+> it here in case someone disagrees.
+> 
+> 1. Due to an integer overflow when parsing CharCodes for fonts and a
+> failure to check the return value of a memory allocation, it is
+> possible to trigger writes to a narrow range of offsets from a NULL
+> pointer.  The chance of being able to exploit this for anything other
+> than a crash is very remote: on x86 32-bit, there's no chance (since
+> the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
+> write lands in valid userspace on x86-64, but in my testing this
+> memory is never mapped.  Fixed in poppler commit at [1], hopefully
+> fixed soon at xpdf upstream.
+> 
+> 2. Malformed commands may cause corruption of the internal stack used
+> to maintain graphics contexts, leading to potentially exploitable
+> memory corruption.  Fixed in poppler commit at [2], hopefully fixed
+> soon at xpdf upstream.
+> 
+> -Dan
+> 
+> [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
+> [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
+> 
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
