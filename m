@@ -1,44 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/5
-Message-ID: <20110313162839.GD21770@outflux.net>
-Date: Sun, 13 Mar 2011 09:28:39 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/3
+Message-Id: <201102081215.41570.thomas@suse.de>
+Date: Tue, 8 Feb 2011 12:15:41 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing libwipe
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 12, 2011 at 01:29:13AM -0500, Andrew Clausen wrote:
-> to the original programs.  To use it for all programs in a single shell
-> session, set the LD_PRELOAD environment variable with the shell command
+Am Dienstag 08 Februar 2011 11:54:16 schrieb Thomas Biege:
 > 
->         export LD_PRELOAD=/usr/local/lib/libwipe.so
+> Should CVE-IDs be assigned to this issues?
+
+Sorry, I missed Josh'd mail.
+
 > 
-> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
-> configure file.
+> Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
+> > I identified two issues in xpdf.  I don't think the first requires a
+> > CVE, since it's incredibly unlikely to be exploitable, but I include
+> > it here in case someone disagrees.
+> > 
+> > 1. Due to an integer overflow when parsing CharCodes for fonts and a
+> > failure to check the return value of a memory allocation, it is
+> > possible to trigger writes to a narrow range of offsets from a NULL
+> > pointer.  The chance of being able to exploit this for anything other
+> > than a crash is very remote: on x86 32-bit, there's no chance (since
+> > the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
+> > write lands in valid userspace on x86-64, but in my testing this
+> > memory is never mapped.  Fixed in poppler commit at [1], hopefully
+> > fixed soon at xpdf upstream.
+> > 
+> > 2. Malformed commands may cause corruption of the internal stack used
+> > to maintain graphics contexts, leading to potentially exploitable
+> > memory corruption.  Fixed in poppler commit at [2], hopefully fixed
+> > soon at xpdf upstream.
+> > 
+> > -Dan
+> > 
+> > [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
+> > [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
+> > 
 > 
-> The program uses two mechanisms:
-> (1) when memory is deallocated with free(3), it is zeroed out.
-> (2) when the process terminates, the entire memory is zeroed out.
-
-Cool, thanks for the announcement.
-
-#1 can also be done using glibc's $MALLOC_PERTURB_ environment variable (it
-initializes memory with new() to its value, and then fills memory with the
-inverse on free(). For example, "export MALLOC_PERTURB_=85" will get you an
-alternating bit pattern.
-
-Feature #2, however, is not handled by MALLOC_PERTURB_, and there isn't a
-particularly good way I've found to set MALLOC_PERTURB_ globally, unlike
-the /etc/ld.so.preload example for libwipe.
-
-If libwipe grew similar bit-pattern handling for new(), it could be used
-for similar purposes (trying to ferret out use-after-free or
-use-before-init bugs in general).
-
-Thanks,
-
--Kees
+> 
 
 -- 
-Kees Cook
-Ubuntu Security Team
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
