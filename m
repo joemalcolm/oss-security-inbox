@@ -1,49 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/16
-Message-ID: <1476048552.143760.1313782823697.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:40:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/2
+Message-ID: <20110208121251.413ea354@orphan>
+Date: Tue, 8 Feb 2011 12:12:51 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: MantisBT <1.2.7 search.php multiple XSS vulnerabilities
+Subject: Re: CVE request: xpdf
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2938 for the multiple XSS issues.
+On Tue, 8 Feb 2011 11:54:16 +0100 Thomas Biege wrote:
 
-Thanks.
+> Should CVE-IDs be assigned to this issues?
+
+http://thread.gmane.org/gmane.comp.security.oss.general/4109/focus=4117
 
 -- 
-    JB
-
-
------ Original Message -----
-> Original vulnerability report by Net.Edit0r (Net.Edit0r@....net) from
-> BlACK Hat Group [http://black-hg.org] is available at:
-> http://packetstormsecurity.org/files/104149
-> 
-> MantisBT bug report for full details of the issue:
-> http://www.mantisbt.org/bugs/view.php?id=13245
-> 
-> Please note that the second SQL injection vulnerability identified by
-> Net.Edit0r is not reproducible (refer to the MantisBT bug report above
-> for reasons why).
-> 
-> A patch for 1.2.6 is available at:
-> https://github.com/mantisbt/mantisbt/commit/317f3db3a3c68775de3acf3b15f55b1e3c18f93b
-> 
-> MantisBT 1.2.7 is currently being packaged and will be available
-> shortly
-> through usual channels for distributions and standalone users to pick
-> up.
-> 
-> Bug reports cross-posted elsewhere:
-> Gentoo: https://bugs.gentoo.org/show_bug.cgi?id=379739
-> Fedora/Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=731777
-> Debian: Submitted (queued)
-> Ubuntu: https://bugs.launchpad.net/ubuntu/+source/mantis/+bug/828857
-> 
-> Thanks,
-> 
-> David Hicks
-> MantisBT Developer
-> mantisbt.org, #mantishelp on freenode
+Tomas Hoger / Red Hat Security Response Team
