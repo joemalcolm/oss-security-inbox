@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/6
-Message-Id: <201108221043.24093.mweckbecker@suse.de>
-Date: Mon, 22 Aug 2011 10:43:23 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/11
+Message-ID: <20110209172505.GA4081@inutil.org>
+Date: Wed, 9 Feb 2011 18:25:06 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libqt4: two memory issues
+Cc: Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Feb 09, 2011 at 10:49:35AM -0500, Dan Rosenberg wrote:
+> I'm not aware of any distributions that support 2.6.37 kernels, but as
+> far as I know this doesn't affect CVE eligibility (please correct me
+> if I'm wrong).
 
-A) buffer overflow (looks only like an off-by-one from a very quick look)
-http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+The usual criteria for Linux kernel CVE assignments was/is if the
+issue affects a released kernel, not if it's supported by someone,
+i.e. if it had been introduced in 2.6.38-rc1 it would not receive
+a CVE ID.
 
-B) buffer overflow on greyscale images with multiple samples per pixel
-https://bugzilla.novell.com/show_bug.cgi?id=637275
-http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
-
-Could there possibly be CVEs assign, please? Thanks in advance.
-
-ciao,
-Matthias
-
---
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Cheers,
+        Moritz
