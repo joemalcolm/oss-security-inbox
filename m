@@ -1,17 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/2
-Message-ID: <Pine.GSO.4.64.1101101924100.8774@faron.mitre.org>
-Date: Mon, 10 Jan 2011 19:27:28 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/10
+Message-Id: <201102091127.13556.stephane@archlinux.org>
+Date: Wed, 9 Feb 2011 11:27:13 -0500
+From: Stéphane Gaudreault <stephane@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
+ArchLinux support 2.6.37, although it is not commercial.
 
-Since this problem stems from a single codebase, strtod.c, so it gets a 
-single CVE identifier (already assigned CVE-2010-4645).  The CVE 
-description will "blame" strtod.c and mention PHP, and any other 
-high-profile software that is discovered to use the same vulnerable, 
-shared code.
+Stéphane
 
-- Steve
+Le 9 février 2011 10:49:35, Dan Rosenberg a écrit :
+> I'm not aware of any distributions that support 2.6.37 kernels, but as
+> far as I know this doesn't affect CVE eligibility (please correct me
+> if I'm wrong).
+> 
+> -Dan
+> 
+> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo <eugene@...hat.com> wrote:
+> > On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+> >> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+> >> btrfs_ioctl_space_info() and introduced security issues.  Since they
+> >> were all introduced at once and fixed at the same time, one CVE should
+> >> suffice.
+> >> 
+> >> Due to integer truncation or a signedness error in a typecasted
+> >> comparison, an integer overflow in an allocation size calculation, and
+> >> a failure to properly check bounds when copying data, it was possible
+> >> for an unprivileged user to cause a denial-of-service due to writing
+> >> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+> >> 
+> >> -Dan
+> >> 
+> >> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+> > 
+> > Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last
+> > year. Do we have commercially supported kernels that are affected by
+> > this?
+> > 
+> > Thanks, Eugene
