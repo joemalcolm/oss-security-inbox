@@ -1,49 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/9
-Message-ID: <AANLkTimvQdK0dTDBVowuPo-FtA6mDj=QZ3+45AK7fQ9A@mail.gmail.com>
-Date: Sun, 13 Mar 2011 15:41:55 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/14
+Message-ID: <692064672.379039.1297288790104.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 9 Feb 2011 16:59:50 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Oden Eriksson <oeriksson@...driva.com>
-Subject: Re: CVE request: PHP substr_replace() use-after-free
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for feh
 Content-Type: text/plain; charset=utf-8
 
-2011/3/13 Oden Eriksson <oeriksson@...driva.com>
+Please use CVE-2011-0702 for this.
 
-> söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
-> > Hi,
-> >
-> > I just found an use-after-free in PHP's substr_replace() function caused
-> by
-> > passing the same variable multiple times to the function, which makes the
-> > PHP to use the same pointer in three variables inside the function, so
-> when
-> > the pointer is changed by a type conversion inside the function, it
-> > invalids the other variables.
-> >
-> > The PHP security team has seen noticed, and a bug already was filed in
-> the
-> > bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
-> >
-> > $ sapi/cli/php ../bug.php
-> > array(1) {
-> > [0]=>
-> > string(5) "0Ȅ y"
-> > }
-> > array(1) {
-> > [0]=>
-> > string(1) "0"
-> > }
-> >
-> >
-> > Thanks.
->
-> It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
->
->
-It affects 5.2, 5.3 and even trunk. I can reproduce it in all the branches.
+Thanks.
 
 -- 
-Regards,
-Felipe Pena
+    JB
 
+----- Original Message -----
+> Hi,
+> 
+> I guess there is no CVE request for this one yet:
+> 
+> On https://bugs.launchpad.net/ubuntu/+source/feh/+bug/607328 seegooon
+> wrote:
+> 
+> --------------------------------------------------
+> Hi, I've just discovered that feh is vulnerable to rewriting any user
+> file:
+> 
+> tmpname_timestamper =
+> estrjoin("", "/tmp/feh_", cppid, "_", basename, NULL);
+> ...
+> execlp("wget", "wget", "-N", "-O", tmpname_timestamper, newurl,
+> quiet, (char*) NULL);
+> 
+> If attacker knows PID of feh and knows the URL, it can create the link
+> to any user file. wget would overwrite it.
+> 
+> --------------------------------------------------
+> 
+> Thanks in advance,
+> 
+> Craig
