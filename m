@@ -1,20 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/2
-Message-ID: <1312896324.6878.15.camel@scapa>
-Date: Tue, 09 Aug 2011 15:25:24 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/7
+Message-ID: <4D52BA63.6050209@redhat.com>
+Date: Thu, 10 Feb 2011 00:01:39 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: perf: may parse user-controlled config file
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On mar., 2011-08-09 at 09:18 -0400, Steve Grubb wrote:
-> And in recent kernels has an executable stack:
-> https://bugzilla.redhat.com/show_bug.cgi?id=704296 
+On 02/09/2011 11:49 PM, Dan Rosenberg wrote:
+> I'm not aware of any distributions that support 2.6.37 kernels, but as
+> far as I know this doesn't affect CVE eligibility (please correct me
+> if I'm wrong).
 
-We don't have access to that bug.
+Ok, I'm just asking. Please use CVE-2011-0696.
 
-Regards,
--- 
-Yves-Alexis
+Eugene
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo<eugene@...hat.com>  wrote:
+>> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+>>>
+>>> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+>>> btrfs_ioctl_space_info() and introduced security issues.  Since they
+>>> were all introduced at once and fixed at the same time, one CVE should
+>>> suffice.
+>>>
+>>> Due to integer truncation or a signedness error in a typecasted
+>>> comparison, an integer overflow in an allocation size calculation, and
+>>> a failure to properly check bounds when copying data, it was possible
+>>> for an unprivileged user to cause a denial-of-service due to writing
+>>> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+>>>
+>>> -Dan
+>>>
+>>> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+>>
+>> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last year.
+>> Do we have commercially supported kernels that are affected by this?
+>>
+>> Thanks, Eugene
+>>
+
