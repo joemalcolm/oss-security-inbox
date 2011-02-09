@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/12
-Message-ID: <1202580859.1273610.1310497822198.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 15:10:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foo2zjs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/1
+Message-ID: <4D51E4A8.5060408@gentoo.org>
+Date: Wed, 09 Feb 2011 01:49:44 +0100
+From: Stefan Behte <craig@...too.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request for feh
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello,
-> 
-> A temp file issue was reported in a distro-specific patch to foo2zjs.
-> This probably only affects Debian/Ubuntu and derivatives.
-> 
-> The original bug report can be found here:
-> 
-> https://bugs.launchpad.net/bugs/805370
-> 
-> Could a CVE please be assigned to this?
-> 
+Hi,
 
-Please use CVE-2011-2684.
+I guess there is no CVE request for this one yet:
 
-Thanks.
+On https://bugs.launchpad.net/ubuntu/+source/feh/+bug/607328 seegooon wrote:
 
--- 
-    JB
+--------------------------------------------------
+Hi, I've just discovered that feh is vulnerable to rewriting any user file:
+
+      tmpname_timestamper =
+         estrjoin("", "/tmp/feh_", cppid, "_", basename, NULL);
+...
+            execlp("wget", "wget", "-N", "-O", tmpname_timestamper, newurl,
+                   quiet, (char*) NULL);
+
+If attacker knows PID of feh and knows the URL, it can create the link
+to any user file. wget would overwrite it.
+
+--------------------------------------------------
+
+Thanks in advance,
+
+Craig
