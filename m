@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/30/2
-Message-ID: <20110530134154.GB9701@suse.de>
-Date: Mon, 30 May 2011 15:41:54 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/3
+Message-ID: <4D52B0C4.901@redhat.com>
+Date: Wed, 09 Feb 2011 23:20:36 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libgnomesu privilege escalation
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+> btrfs_ioctl_space_info() and introduced security issues.  Since they
+> were all introduced at once and fixed at the same time, one CVE should
+> suffice.
+>
+> Due to integer truncation or a signedness error in a typecasted
+> comparison, an integer overflow in an allocation size calculation, and
+> a failure to properly check bounds when copying data, it was possible
+> for an unprivileged user to cause a denial-of-service due to writing
+> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+>
+> -Dan
+>
+> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
 
-The /usr/lib/libgnomesu/gnomesu-pam-backend suid binary which belongs
-to the libgnomesu package is not checking setuid() return values.
+Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last 
+year. Do we have commercially supported kernels that are affected by this?
 
-As a result, two cooperating users, or users with access to guest,
-cgi or web accounts can run arbitrary commands as root very easily.
-Attacker just needs to 'su' to this account where he knows the password
-from inside the second account and take care that enough zombie
-processes exist at the target account.
-
-A patch is attached in our bugzilla:
-
-https://bugzilla.novell.com/show_bug.cgi?id=695627
-
--s
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Thanks, Eugene
