@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/13
-Message-ID: <273444736.398067.1306872250377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 16:04:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: movabletype-opensource
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/5
+Message-ID: <AANLkTinoQO+2nqJcsoCY_mS61bkyAUr_t2umi63ktG8r@mail.gmail.com>
+Date: Wed, 9 Feb 2011 10:49:35 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
+I'm not aware of any distributions that support 2.6.37 kernels, but as
+far as I know this doesn't affect CVE eligibility (please correct me
+if I'm wrong).
 
+-Dan
 
------ Original Message -----
-> Hi,
-> 
-> Could a please get a CVE id for this issue:
-> http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
-> and
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627936
-> 
-
-This one sounds tricky. The way I read it, it's two flaws, but I'm not very sure.
-
-I'm going to defer this one to MITRE, they're better at vague things like this.
-
-thanks.
-
--- 
-    JB
+On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo <eugene@...hat.com> wrote:
+> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+>>
+>> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+>> btrfs_ioctl_space_info() and introduced security issues.  Since they
+>> were all introduced at once and fixed at the same time, one CVE should
+>> suffice.
+>>
+>> Due to integer truncation or a signedness error in a typecasted
+>> comparison, an integer overflow in an allocation size calculation, and
+>> a failure to properly check bounds when copying data, it was possible
+>> for an unprivileged user to cause a denial-of-service due to writing
+>> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+>>
+>> -Dan
+>>
+>> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+>
+> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last year.
+> Do we have commercially supported kernels that are affected by this?
+>
+> Thanks, Eugene
+>
