@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/4
-Message-ID: <4D6480DC.7090600@redhat.com>
-Date: Wed, 23 Feb 2011 11:37:00 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/2
+Message-ID: <AANLkTimMxUh-yWhpp=tiEUvMtUw0b=MGTguo8YW-=RM7@mail.gmail.com>
+Date: Wed, 9 Feb 2011 09:27:32 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: Corrupted LDM partition table issues
+Subject: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Reported by Timo Warns, "The kernel automatically evaluates partition 
-tables of storage devices. The code for evaluating LDM partitions (in 
-fs/partitions/ldm.c) contains a bug that causes a kernel oops on certain 
-corrupted LDM partitions.  A kernel subsystem seems to crash, because, 
-after the oops, the kernel no longer recognizes newly connected storage 
-devices."
+Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+btrfs_ioctl_space_info() and introduced security issues.  Since they
+were all introduced at once and fixed at the same time, one CVE should
+suffice.
 
-http://www.spinics.net/lists/mm-commits/msg82429.html
+Due to integer truncation or a signedness error in a typecasted
+comparison, an integer overflow in an allocation size calculation, and
+a failure to properly check bounds when copying data, it was possible
+for an unprivileged user to cause a denial-of-service due to writing
+to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
 
-This should affect kernels version v2.6.27-rc1 and above. Of course, 
-CONFIG_LDM_PARTITION needs to be set.
+-Dan
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+[1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
