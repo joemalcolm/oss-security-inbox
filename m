@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/5
-Message-ID: <AANLkTimYJ2WO0ukQcAqZMqBAOb8u95KDbYcks_V9b38m@mail.gmail.com>
-Date: Tue, 22 Mar 2011 06:55:48 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/8
+Message-ID: <4D52BACE.5010702@redhat.com>
+Date: Thu, 10 Feb 2011 00:03:26 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests - kernel: irda/decnet issues
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 22, 2011 at 3:27 AM, Eugene Teo <eugene@...hat.com> wrote:
-> Both are reported by Dan Rosenberg. Description of the issues can be found
-> in the following links:-
+On 02/10/2011 12:01 AM, Eugene Teo wrote:
+> On 02/09/2011 11:49 PM, Dan Rosenberg wrote:
+>> I'm not aware of any distributions that support 2.6.37 kernels, but as
+>> far as I know this doesn't affect CVE eligibility (please correct me
+>> if I'm wrong).
 >
-> irda: validate peer name and attribute lengths
-> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
+> Ok, I'm just asking. Please use CVE-2011-0696.
+
+Wrong, race condition. Please use CVE-2011-0699 instead.
+
+Thanks, Eugene
+
+> Eugene
 >
-> DECnet: need to validate user data and access data?
-> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
+>> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo<eugene@...hat.com> wrote:
+>>> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+>>>>
+>>>> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+>>>> btrfs_ioctl_space_info() and introduced security issues. Since they
+>>>> were all introduced at once and fixed at the same time, one CVE should
+>>>> suffice.
+>>>>
+>>>> Due to integer truncation or a signedness error in a typecasted
+>>>> comparison, an integer overflow in an allocation size calculation, and
+>>>> a failure to properly check bounds when copying data, it was possible
+>>>> for an unprivileged user to cause a denial-of-service due to writing
+>>>> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+>>>>
+>>>> -Dan
+>>>>
+>>>> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+>>>
+>>> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last
+>>> year.
+>>> Do we have commercially supported kernels that are affected by this?
+>>>
+>>> Thanks, Eugene
+>>>
 >
 
-Steve Whitehouse provided some clarification on DECnet, which not an
-actual security issue (thus the question mark in the thread title):
-http://marc.info/?l=linux-netdev&m=130078511604840&w=2
-
-IrDA seems to be valid though.
-
--Dan
-
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
