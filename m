@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/1
-Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A712D0030@GVW0671EXC.americas.hpqcorp.net>
-Date: Wed, 23 Mar 2011 18:03:42 +0000
-From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: oss-security is on twitter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/7
+Message-ID: <4D52BA63.6050209@redhat.com>
+Date: Thu, 10 Feb 2011 00:01:39 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Cool! How do you do this?  Part of the mail hosting, or just a filter in
-your email reader?
+On 02/09/2011 11:49 PM, Dan Rosenberg wrote:
+> I'm not aware of any distributions that support 2.6.37 kernels, but as
+> far as I know this doesn't affect CVE eligibility (please correct me
+> if I'm wrong).
 
-Mark Menkhus
-Hewlett Packard Software Security Response Team
-> -----Original Message-----
-> From: Eugene Teo [mailto:eugene@...hat.com]
-> Sent: Tuesday, March 22, 2011 11:43 PM
-> To: oss-security@...ts.openwall.com
-> Subject: [oss-security] oss-security is on twitter
-> 
-> Just in case you do not know, oss-security is on twitter.
-> 
-> Follow @oss_security :)
-> 
-> Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Ok, I'm just asking. Please use CVE-2011-0696.
 
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
+Eugene
+
+> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo<eugene@...hat.com>  wrote:
+>> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+>>>
+>>> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+>>> btrfs_ioctl_space_info() and introduced security issues.  Since they
+>>> were all introduced at once and fixed at the same time, one CVE should
+>>> suffice.
+>>>
+>>> Due to integer truncation or a signedness error in a typecasted
+>>> comparison, an integer overflow in an allocation size calculation, and
+>>> a failure to properly check bounds when copying data, it was possible
+>>> for an unprivileged user to cause a denial-of-service due to writing
+>>> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+>>>
+>>> -Dan
+>>>
+>>> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+>>
+>> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last year.
+>> Do we have commercially supported kernels that are affected by this?
+>>
+>> Thanks, Eugene
+>>
+
