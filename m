@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/5
-Message-Id: <201103141314.36806.ludwig.nussel@suse.de>
-Date: Mon, 14 Mar 2011 13:14:36 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/11
+Message-ID: <20110209172505.GA4081@inutil.org>
+Date: Wed, 9 Feb 2011 18:25:06 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Cc: Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Dan Rosenberg wrote:
-> There are a few possible options   We could patch glibc to try to
-> raise the rlimit in addmntent(). [...]
+On Wed, Feb 09, 2011 at 10:49:35AM -0500, Dan Rosenberg wrote:
+> I'm not aware of any distributions that support 2.6.37 kernels, but as
+> far as I know this doesn't affect CVE eligibility (please correct me
+> if I'm wrong).
 
-Citing our glibc maintainer Petr Baudis via Bugzilla:
+The usual criteria for Linux kernel CVE assignments was/is if the
+issue affects a released kernel, not if it's supported by someone,
+i.e. if it had been introduced in 2.6.38-rc1 it would not receive
+a CVE ID.
 
-| I have been thinking about it and I'm not at all sure the proposed solution
-| makes sense. First, this may also concern the obscure interfaces like
-| putspent() (not sure if anyone uses these, moreover in security relevant
-| contexts). Second, messing with RLIMIT_FSIZE within library routine is just
-| evil. The caller may be multi-threaded or just do something else between
-| setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
-| programs must sanitize things like this, on their own terms.
-
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Cheers,
+        Moritz
