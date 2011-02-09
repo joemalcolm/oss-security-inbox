@@ -1,105 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/7
-Message-ID: <AANLkTikghCt3SurFRM8kWcPnKAAOXH+s5XAJ1ZoW31o5@mail.gmail.com>
-Date: Mon, 14 Mar 2011 01:46:18 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/14
+Message-ID: <692064672.379039.1297288790104.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 9 Feb 2011 16:59:50 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.6.0 | SQL Injection Vulnerability
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for feh
 Content-Type: text/plain; charset=utf-8
 
-=================================
- Joomla! 1.6.0 | SQL Injection Vulnerability
-=================================
+Please use CVE-2011-0702 for this.
 
+Thanks.
 
-1. OVERVIEW
+-- 
+    JB
 
-Joomla! 1.6.0 was vulnerable to SQL Injection.
-
-
-2. BACKGROUND
-
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Parameters (filter_order, filer_order_Dir) were not properly sanitized
-in Joomla! that lead to SQL Injection vulnerability.  This could an
-attacker to inject or manipulate SQL queries in the back-end database,
-allowing for the manipulation or disclosure of arbitrary data.
-
-
-4. VERSION AFFECTED
-
-Joomla! 1.6.0
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=yehg.net.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAA,&filter_order_Dir=2&limit=3&limitstart=4
-
-
-http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=1,&filter_order_Dir=yehg.net.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB,&limit=3&limitstart=4
-
-
-This is the exact same variant as shown in Joomla! 1.5.21:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
-
-We thought Joomla! team would fix this issue in 1.6.0 stable release
-whilst they fixed it in Joomla! 1.5.22!
-
-
-6. SOLUTION
-
-Upgrade to Joomla! 1.6.1 or higher
-
-
-7. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-01-24: notified vendor
-2011-03-08: vendor released fix
-2011-03-14: vulnerability disclosed
-
-
-10. REFERENCES
-
-Vendor Advisory URL:
-http://developer.joomla.org/security/news/328-20110201-core-sql-injection-path-disclosure.html
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_sql_injection
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-89: http://cwe.mitre.org/data/definitions/89.html
-
-
-#yehg [2011-03-14]
-
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+----- Original Message -----
+> Hi,
+> 
+> I guess there is no CVE request for this one yet:
+> 
+> On https://bugs.launchpad.net/ubuntu/+source/feh/+bug/607328 seegooon
+> wrote:
+> 
+> --------------------------------------------------
+> Hi, I've just discovered that feh is vulnerable to rewriting any user
+> file:
+> 
+> tmpname_timestamper =
+> estrjoin("", "/tmp/feh_", cppid, "_", basename, NULL);
+> ...
+> execlp("wget", "wget", "-N", "-O", tmpname_timestamper, newurl,
+> quiet, (char*) NULL);
+> 
+> If attacker knows PID of feh and knows the URL, it can create the link
+> to any user file. wget would overwrite it.
+> 
+> --------------------------------------------------
+> 
+> Thanks in advance,
+> 
+> Craig
