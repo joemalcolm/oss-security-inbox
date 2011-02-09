@@ -1,48 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/3
-Message-ID: <4E0ABF68.6070906@kernel.org>
-Date: Wed, 29 Jun 2011 14:00:08 +0800
-From: Eugene Teo <eugeneteo@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/2
+Message-ID: <AANLkTimMxUh-yWhpp=tiEUvMtUw0b=MGTguo8YW-=RM7@mail.gmail.com>
+Date: Wed, 9 Feb 2011 09:27:32 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+Subject: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On 06/29/2011 04:22 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> It can be used to learn ssh and ftp password length. If privsep is
->> enabled in openssh and vsftpd, the unprivileged process' activity very
->> precisely shows password information.
->>
->> For vsftpd read characters count is strlen("USER username\r\n") +
->> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
->> related to a privileged parent. If measure statistics between user and
->> passwords commands, actual password length and username length can be
->> gathered.
->>
->> For ssh, vice versa, networking activity is constant in packets length,
->> but interprocess communications, specifically passwords, depend on user
->> input.
->>
->> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
->> CONST.
->>
->> Another daemons with more or less constant io activity might be
->> vulnerable too. PAM greatly complicates precise measurements.
->>
->>
->> I think it needs 2 CVE, one for /proc/PID/io and another for
->> taskstats.
->>
->> https://lkml.org/lkml/2011/6/24/88
->>
-> 
-> I can't find a nice description of both issues. Can you give me one or two
-> sentence explanations with a few references for the CVE database?
-> 
-> Once I have those I'll give it two IDs.
+Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+btrfs_ioctl_space_info() and introduced security issues.  Since they
+were all introduced at once and fixed at the same time, one CVE should
+suffice.
 
-I have assigned the CVE names for these two issues.
+Due to integer truncation or a signedness error in a typecasted
+comparison, an integer overflow in an allocation size calculation, and
+a failure to properly check bounds when copying data, it was possible
+for an unprivileged user to cause a denial-of-service due to writing
+to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
 
-Thanks, Eugene
+-Dan
+
+[1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
