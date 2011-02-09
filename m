@@ -1,32 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/11
-Message-ID: <20111107175759.GA5278@pisco.westfalen.local>
-Date: Mon, 7 Nov 2011 18:57:59 +0100
-From: jmm@...ian.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/13
+Message-ID: <1139942889.379029.1297288704824.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 9 Feb 2011 16:58:24 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: DSA 2338-1 moodle security update
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: wordpress before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 07, 2011 at 07:46:19PM +0200, Henri Salo wrote:
-> Has someone requested CVE-identifiers for these already?
 
-Yes, but to no avail so far:
 
-1. For MSA-11-0002 to MSA-11-0017:
+----- Original Message -----
+> http://wordpress.org/news/2011/02/wordpress-3-0-5/
+> 
+> From release announcement, I'm unsure which of them deserves CVEs:
+> 
+> "Two moderate security issues were fixed that could have allowed a
+> Contributor- or Author-level user to gain further access to the site.
+> 
+> One information disclosure issue was addressed that could have allowed
+> an Author-level user to view contents of posts they should not be able
+> to see, such as draft or private posts.
+> 
+> Two security enhancements were added. One improved the security of any
+> plugins which were not properly leveraging our security API. The other
+> offers additional defense in depth against a vulnerability that was
+> fixed in previous release."
+> 
+> 
+> 
 
-Date: Wed, 18 May 2011 23:48:05 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: [oss-security] CVE request: Several Moodle issues
+I'm not going to assign anything to the "enhancements" unless someone wants
+me to. They don't sound like security flaws.
 
--> Poked 16 Jun 2011 w/o success
+There is more information on these here:
+http://codex.wordpress.org/Version_3.0.5
 
-2. For MSA-11-0026 to MSA-11-0041:
 
-Date: Wed, 19 Oct 2011 14:09:42 -0600
-From: Vincent Danen <vdanen@...hat.com>
-Subject: [oss-security] CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
+# Fix XSS bug: Properly encode title used in Quick/Bulk Edit, and offer
+  additional sanitization to various fields. Affects users of the Author or
+  Contributor role. (r17397, r17406, r17412)
+# Fix XSS bug: Preserve tag escaping in the tags meta box. Affects users of
+  the Author or Contributor role. (r17401)
 
-There have been no requests for MSA-11-0018 to MSA-11-0025 so far.
+Use CVE-2011-0700 for the XSS flaws.
 
-Cheers,
-        Moritz
+
+# Fix potential information disclosure of posts through the media uploader.
+  Affects users of the Author role. (r17393)
+
+Use CVE-2011-0701 for the information disclosure.
+
+Thanks.
+
+-- 
+    JB
