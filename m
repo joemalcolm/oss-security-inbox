@@ -1,32 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/23/1
-Message-ID: <4D3B7803.4090806@kernel.org>
-Date: Sun, 23 Jan 2011 08:36:19 +0800
-From: Eugene Teo <eugeneteo@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/13
+Message-ID: <1139942889.379029.1297288704824.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 9 Feb 2011 16:58:24 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: wordpress before 3.0.5
 Content-Type: text/plain; charset=utf-8
 
-On 01/23/2011 04:13 AM, Steven M. Christey wrote:
->
-> On Fri, 21 Jan 2011, Eugene Teo wrote:
->
->> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
->>> File position is not controlled, it may lead to overwrites of arbitrary
->>> kernel memory. Also the code may kfree() the same pointer multiple
->>> times.
->>
->> http://lkml.org/lkml/2011/1/20/348
->> https://bugzilla.redhat.com/CVE-2011-0023
->>
->> Please use CVE-2011-0023 (this does not include the unresolved flaw
->> described in the following paragraph below).
->
-> There seem to be 2 types of issues described above - the uncontrolled
-> file position / memory overwrite, and a "double free". So there should
-> probably be 2 separate CVEs, not one. Am I missing something?
 
-Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
 
-Eugene
+----- Original Message -----
+> http://wordpress.org/news/2011/02/wordpress-3-0-5/
+> 
+> From release announcement, I'm unsure which of them deserves CVEs:
+> 
+> "Two moderate security issues were fixed that could have allowed a
+> Contributor- or Author-level user to gain further access to the site.
+> 
+> One information disclosure issue was addressed that could have allowed
+> an Author-level user to view contents of posts they should not be able
+> to see, such as draft or private posts.
+> 
+> Two security enhancements were added. One improved the security of any
+> plugins which were not properly leveraging our security API. The other
+> offers additional defense in depth against a vulnerability that was
+> fixed in previous release."
+> 
+> 
+> 
+
+I'm not going to assign anything to the "enhancements" unless someone wants
+me to. They don't sound like security flaws.
+
+There is more information on these here:
+http://codex.wordpress.org/Version_3.0.5
+
+
+# Fix XSS bug: Properly encode title used in Quick/Bulk Edit, and offer
+  additional sanitization to various fields. Affects users of the Author or
+  Contributor role. (r17397, r17406, r17412)
+# Fix XSS bug: Preserve tag escaping in the tags meta box. Affects users of
+  the Author or Contributor role. (r17401)
+
+Use CVE-2011-0700 for the XSS flaws.
+
+
+# Fix potential information disclosure of posts through the media uploader.
+  Affects users of the Author role. (r17393)
+
+Use CVE-2011-0701 for the information disclosure.
+
+Thanks.
+
+-- 
+    JB
