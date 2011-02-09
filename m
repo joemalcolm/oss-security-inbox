@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/12
-Message-Id: <201101040050.19789.hanno@hboeck.de>
-Date: Tue, 4 Jan 2011 00:50:19 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/12
+Message-ID: <20110209172439.GC30950@kroah.com>
+Date: Wed, 9 Feb 2011 09:24:39 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: silverstripe before 2.4.4
+Cc: Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-http://www.silverstripe.org/security-releases/
+On Wed, Feb 09, 2011 at 10:49:35AM -0500, Dan Rosenberg wrote:
+> I'm not aware of any distributions that support 2.6.37 kernels, but as
+> far as I know this doesn't affect CVE eligibility (please correct me
+> if I'm wrong).
 
-Silverstripe 2.4.4 notes:
-SQL information disclosure, SQL injection in Translatable extension, Cross 
-Site Request Forgery in various CMS interfaces, XSS in controller action 
-handling
+openSUSE 11.4 is based on 2.6.37, but it's not released yet, but will be
+in a few weeks.
 
-(if someone is motivated one could also assign CVEs to all the old version 
-issues)
+thanks,
 
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+greg k-h
