@@ -1,48 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/12
-Message-ID: <4DA711CE.7030807@mvista.com>
-Date: Thu, 14 Apr 2011 05:25:02 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/10
+Message-Id: <201102091127.13556.stephane@archlinux.org>
+Date: Wed, 9 Feb 2011 11:27:13 -0500
+From: Stéphane Gaudreault <stephane@...hlinux.org>
 To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>
-Subject: Re: Closed list
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Thomas,
+ArchLinux support 2.6.37, although it is not commercial.
 
-Thanks for the feedback. That kind of list is what I had hoped MV could
-have created a year ago. Resources shot it down then and now MV has
-added a few more issues to work through.
+Stéphane
 
-If SUSE's http://support.novell.com/security/cve/ is an example of what
-is being sot to meet the public advisory requirement, then I know what
-MV needs to do.
-
-Mahalo,
-Armin
-
-On 04/13/2011 10:38 PM, Tomas Hoger wrote:
-> Hi Armin!
+Le 9 février 2011 10:49:35, Dan Rosenberg a écrit :
+> I'm not aware of any distributions that support 2.6.37 kernels, but as
+> far as I know this doesn't affect CVE eligibility (please correct me
+> if I'm wrong).
 > 
-> On Wed, 13 Apr 2011 05:59:20 -1000 akuster wrote:
+> -Dan
 > 
->>> It's clear that one of the membership requirements is now producing
->>> security updates. 
->>
->> What method of proving this would be acceptable? screen shot,
->> temporary access to our site, public list or other?
-> 
-> A quick idea, rather than a real guidance:  Several vendors offer some
-> sort of public CVE database that can be used to search for vendor's
-> updates to address particular flaw.  If you're already tagging your
-> updates with CVE ids, this may not be hard to provide.  Not because
-> folks on this list ask you to do so, but because it's likely to provide
-> a significant benefit to your customers with little extra cost/effort on
-> top of what you already do.
-> 
-> SUSE's database is probably closest to what may work for you as well.
-> CVE info is split by a patched product+version, with links to
-> customer-only download site for the enterprise products.
-> 
-> http://support.novell.com/security/cve/
-> 
+> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo <eugene@...hat.com> wrote:
+> > On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+> >> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+> >> btrfs_ioctl_space_info() and introduced security issues.  Since they
+> >> were all introduced at once and fixed at the same time, one CVE should
+> >> suffice.
+> >> 
+> >> Due to integer truncation or a signedness error in a typecasted
+> >> comparison, an integer overflow in an allocation size calculation, and
+> >> a failure to properly check bounds when copying data, it was possible
+> >> for an unprivileged user to cause a denial-of-service due to writing
+> >> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+> >> 
+> >> -Dan
+> >> 
+> >> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+> > 
+> > Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last
+> > year. Do we have commercially supported kernels that are affected by
+> > this?
+> > 
+> > Thanks, Eugene
