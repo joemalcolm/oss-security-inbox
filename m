@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/2
-Message-ID: <4EF2572B.4050506@redhat.com>
-Date: Wed, 21 Dec 2011 15:01:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/10/1
+Message-ID: <Pine.GSO.4.64.1102101005280.6839@faron.mitre.org>
+Date: Thu, 10 Feb 2011 10:13:57 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: plib ulSetError() buffer overflow - CVE-2011-4620
+cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-https://secunia.com/advisories/47297/
-http://plib.sourceforge.net/index.html
-http://www.exploit-db.com/exploits/18258/
 
- From Secunia:
+The Linux kernel (and open source in general) can be unusual because, 
+ideally, you only want CVEs assigned for "published" code that has some 
+chance of being used in somebody's network.  The OSS model more-or-less 
+means that all code is public.  In the ancient days of early CVE, we 
+considered excluding code that was only in beta, but then you had software 
+with extremely large user bases (sometimes in the millions)  that were in 
+permanent "beta," and that still happens today.
 
-======================
-*Description*
-A vulnerability has been discovered in PLIB, which can be exploited by 
-malicious people to compromise an application using the library.
+Add on the rapidly-changing nature of the Linux kernel and the fact that 
+so many different versions are used in so many distros and other 
+environments, and the amount of research that the distros seem to have to 
+conduct to figure out if their local kernel version is affected or not, 
+and the impossibility of an outsider (CVE) having full knowledge of which 
+code is being used where, means that CVE assignment even for release 
+candidates is a reasonable thing to do (the analytical expense of studying 
+the kernel, affected versions, and related distributions is just too high 
+- creating a CVE for a reported issue is much less expensive).
 
-The vulnerability is caused due to a boundary error within the 
-"ulSetError()" function (src/util/ulError.cxx) when creating the error 
-message, which can be exploited to overflow a static buffer.
-
-Successful exploitation allows the execution of arbitrary code but 
-requires that the attacker can e.g. control the content of an overly 
-long error message passed to the "ulSetError()" function.
-
-The vulnerability is confirmed in version 1.8.5. Other versions may also 
-be affected.
-======================
-
-Please use CVE-2011-4620 for this issue.
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
+- Steve
