@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/3
-Message-ID: <1319562711.16989.5.camel@localhost>
-Date: Tue, 25 Oct 2011 12:11:51 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: thierry@...nstack.org, security <security@...ntu.com>
-Subject: CVE request: nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/10/1
+Message-ID: <Pine.GSO.4.64.1102101005280.6839@faron.mitre.org>
+Date: Thu, 10 Feb 2011 10:13:57 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-A flaw was discovered in OpenStack nova[1] which allows someone with
-access to an EC2_ACCESS_KEY (equivalent to a username) to obtain the
-EC2_SECRET_KEY (equivalent to a password). While the EC2_ACCESS_KEY is
-typically not public, if the user exposes it via http or tools that
-allow MITM over https, then an attacker could obtain the EC2_SECRET_KEY
-easily. An attacker could also presumably brute force values for
-EC2_ACCESS_KEY.
 
-Fix:
-https://review.openstack.org/#change,794
+The Linux kernel (and open source in general) can be unusual because, 
+ideally, you only want CVEs assigned for "published" code that has some 
+chance of being used in somebody's network.  The OSS model more-or-less 
+means that all code is public.  In the ancient days of early CVE, we 
+considered excluding code that was only in beta, but then you had software 
+with extremely large user bases (sometimes in the millions)  that were in 
+permanent "beta," and that still happens today.
 
-[1]https://launchpad.net/bugs/868360
+Add on the rapidly-changing nature of the Linux kernel and the fact that 
+so many different versions are used in so many distros and other 
+environments, and the amount of research that the distros seem to have to 
+conduct to figure out if their local kernel version is affected or not, 
+and the impossibility of an outsider (CVE) having full knowledge of which 
+code is being used where, means that CVE assignment even for release 
+candidates is a reasonable thing to do (the analytical expense of studying 
+the kernel, affected versions, and related distributions is just too high 
+- creating a CVE for a reported issue is much less expensive).
 
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Steve
