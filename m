@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/5
-Message-ID: <226963363.35919.1299787475271.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 10 Mar 2011 15:04:35 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: libvirt: several API calls do not honour read-only connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/14/2
+Message-ID: <1297727697.2930.17.camel@localhost>
+Date: Mon, 14 Feb 2011 18:54:57 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: aircrack-ng
 Content-Type: text/plain; charset=utf-8
 
+Hello,
+
+I can't seem to locate a CVE for this issue:
+
+"Remote buffer overflow in aircrack-ng causes DOS and possible code
+execution"
+http://seclists.org/bugtraq/2010/Mar/236
+http://pyrit.wordpress.com/2010/03/28/remote-exploit-against-aircrack-ng/
+
+version 1.1 was released with the following fix:
+http://trac.aircrack-ng.org/changeset/1676
+
+This bug was then opened stating the fix was incomplete:
+http://trac.aircrack-ng.org/ticket/728
+https://bugzilla.redhat.com/show_bug.cgi?id=577654
+
+And then the following commits were done post-1.1:
+http://trac.aircrack-ng.org/changeset/1683
+http://trac.aircrack-ng.org/changeset/1687
+http://trac.aircrack-ng.org/changeset/1699
+http://trac.aircrack-ng.org/changeset/1701
+http://trac.aircrack-ng.org/changeset/1702
+
+Thanks,
+
+Marc.
 
 
------ Original Message -----
-> "It has been found that several libvirt API calls
-> (virNodeDeviceDettach,
-> virNodeDeviceReset, virDomainRevertToSnapshot,
-> virDomainSnapshotDelete) did not
-> honour read-only connection. Remote attacker could use this flaw to
-> crash the
-> host server (DoS)."
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=683650
-> 
-
-This should only need one ID.
-
-Please use CVE-2011-1146
-
-Thanks.
-
--- 
-    JB
