@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/3
-Message-ID: <4DF4D1FD.7070604@redhat.com>
-Date: Sun, 12 Jun 2011 16:49:33 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Damyan Ivanov <dmn@...ian.org>, Mark Stosberg <mark@...mersault.com>, 629511@...s.debian.org, Iain Arnell <iarnell@...il.com>, Marcela Maslanova <mmaslano@...hat.com>
-Subject: CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/14/2
+Message-ID: <1297727697.2930.17.camel@localhost>
+Date: Mon, 14 Feb 2011 18:54:57 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: aircrack-ng
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+Hello,
 
-   It was found that perl-Data-FormValidator, a HTML form user input
-validator, used to treat certain invalid fields as valid, when the
-untaint_all_constraints directive was used (default for majority of
-Data-FormValidator routines). A remote attacker could use this flaw to
-bypass perl Taint mode protection mechanism via specially-crafted input
-provided to the HTML form.
+I can't seem to locate a CVE for this issue:
 
-Note: Hopefully Damyan, Mark can clarify here, if valid data from
-       Data-FormValidator are automatically marked as untainted for
-       perl Taint mode or not. If there still is perl Taint mode
-       protection check present, even on valid Data-FormValidator
-       data and it couldn't happen, that tainted data would be passed
-       further to the script processing, then this is not a security
-       issue.
+"Remote buffer overflow in aircrack-ng causes DOS and possible code
+execution"
+http://seclists.org/bugtraq/2010/Mar/236
+http://pyrit.wordpress.com/2010/03/28/remote-exploit-against-aircrack-ng/
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
-[2] https://rt.cpan.org/Public/Bug/Display.html?id=61792
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=712694
+version 1.1 was released with the following fix:
+http://trac.aircrack-ng.org/changeset/1676
 
-Could you allocate a CVE id for this?
+This bug was then opened stating the fix was incomplete:
+http://trac.aircrack-ng.org/ticket/728
+https://bugzilla.redhat.com/show_bug.cgi?id=577654
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+And then the following commits were done post-1.1:
+http://trac.aircrack-ng.org/changeset/1683
+http://trac.aircrack-ng.org/changeset/1687
+http://trac.aircrack-ng.org/changeset/1699
+http://trac.aircrack-ng.org/changeset/1701
+http://trac.aircrack-ng.org/changeset/1702
+
+Thanks,
+
+Marc.
+
+
