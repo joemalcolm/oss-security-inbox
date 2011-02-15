@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/4
-Message-ID: <20110519153151.GG32435@foo.fgeek.fi>
-Date: Thu, 19 May 2011 18:31:51 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/15/1
+Message-ID: <20110215111803.GL13313@ngolde.de>
+Date: Tue, 15 Feb 2011 12:18:04 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
+Subject: Re: CVE request: aircrack-ng
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 17, 2011 at 03:27:15PM -0400, Josh Bressers wrote:
-> Steve,
+Hi,
+* Marc Deslauriers <marc.deslauriers@...onical.com> [2011-02-15 00:58]:
+> I can't seem to locate a CVE for this issue:
 > 
-> Can MITRE deal with this one (also, have you folks assigned this yet?).
-> 
-> I'm not sure how you've handled the crashes historically.
-> 
-> Thanks.
-> 
-> -- 
->     JB
+> "Remote buffer overflow in aircrack-ng causes DOS and possible code
+> execution"
+> http://seclists.org/bugtraq/2010/Mar/236
+> http://pyrit.wordpress.com/2010/03/28/remote-exploit-against-aircrack-ng/
+[...] 
 
-What is the status of this?
+CVE-2010-1159 was reserved for this.
 
-Best regards,
-Henri Salo
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
