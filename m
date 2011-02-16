@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/6
-Message-ID: <4EB321F1.7050706@redhat.com>
-Date: Thu, 03 Nov 2011 17:21:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/9
+Message-ID: <1347860776.58325.1297863916185.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:45:16 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for Calibre
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: s390 task_show_regs infoleak
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/2011 05:14 AM, Dan Rosenberg wrote:
->> Oh, and I suppose there's a very obvious but critical #6:
->>
->> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
->> root permissions. Danger.
->>
->> This may help to "confirm":
->> https://bugs.launchpad.net/calibre/+bug/885027/
->>
->>
->> As well, the maintainer has already issued a fix. From the bug report:
->> "Fixed in branch lp:calibre. The fix will be in the next release.
->> calibre is usually released every Friday.", which means the above
->> source link, that went to the trunk, now shows the fixed result. The
->> old broken code is still available here:
->> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
->>
->> Note that the maintainer has chosen only to address #5.
->>
-> I'd recommend holding off on the CVE assignments for now, since these
-> issues are currently in progress and the final tally of issues isn't
-> complete.
->
-> -Dan
-I took a quick look at that, I'm not clear on which ones have
-beenaddressed , if you could comment on the original issues, which are
-addressed and link to code commit I can start assigning CVEs.
+
+
+----- Original Message -----
+> "task_show_regs used to be a debugging aid in the early bringup days of
+> Linux on s390. /proc/<pid>/status is a world readable file, it is not a
+> good idea to show the registers of a process. The only correct fix is to
+> remove task_show_regs."
+> 
+> http://git.kernel.org/linus/261cd298a8c363d7985e3482946edb4bfedacf98
+> https://bugzilla.redhat.com/677850
+> 
+> This does all the way back to 2.4.x.
+> 
+
+Please use CVE-2011-0710.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
