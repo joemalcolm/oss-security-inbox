@@ -1,47 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/11
-Message-Id: <201103140937.51078.sgrubb@redhat.com>
-Date: Mon, 14 Mar 2011 09:37:50 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/5
+Message-ID: <4D5B8E30.6010604@redhat.com>
+Date: Wed, 16 Feb 2011 16:43:28 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: Untrusted fs and invalid filenames
+Subject: kernel: ALSA: caiaq - Fix possible string-buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Monday, March 14, 2011 09:28:59 am Ludwig Nussel wrote:
-> Stephan Mueller wrote:
-> > Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
-> > > What I suggest is something like "-o untrusted" option to mount.  This
-> > > would mean that the system considers the input from such fs as a
-> > > malicious input.  Such mounted fs would try to consider the data on
-> > > disk as untrusted and to be as robust as possible, e.g. check against
-> > > "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
-> > > hear opinions about the usefulness of this feature.
-> > 
-> > I completely second your concerns.
-> > 
-> > However, how do you propose to implement that "untrusted" option? The
-> > core problem IMHO is that the physical layout and structure in a file
-> > system is assumed to be correct in general by the kernel. The physical
-> > file system implementations (including any depending code, like the LSMs
-> > for interpreting XATTRs) have some checks for an input validation. But I
-> > highly doubt that all checks necessary for an untrusted file system
-> > layout are implemented - to have all such checks would cause some speed
-> > penalties nobody wants to carry.
-> 
-> For the hot plugged USB drive case speed of the file system
-> shouldn't be much of a concern. I wonder whether it would be
-> possible to create a wrapper API that allow to compile kernel fs
-> modules as user space programs for use with e.g. fuse.
+Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to 
+overflow the string array sizes by too long USB device name string."
 
-I think you lose auditing in that case. 
+http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
 
-I'm still thinking improving fsck is the best solution. The kernel can be hardened. 
-That is what tools like fsfuzz can help with. But in the case where the drive is 
-otherwise fine, but some unexpected characters are in otherwise legal directory 
-structure is something unexpected. Normally the kernel prevents certain sequences, but 
-if the fs has been modified through a different technique, then the kernel was not able 
-to prevent these modifications. All scripts and programs depend on the kernel making 
-sure this never happened.
+Just FYI, I'm not requesting a CVE name for this as it only affects 
+Native Instruments USB audio devices with very long device name which I 
+think is unlikely.
 
--Steve
+https://bugzilla.redhat.com/show_bug.cgi?id=677881
+
+Thanks, Eugene
