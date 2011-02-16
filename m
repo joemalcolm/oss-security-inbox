@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/2
-Message-ID: <20110819102534.2ea3e9be@redhat.com>
-Date: Fri, 19 Aug 2011 10:25:34 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/4
+Message-ID: <4D5B8DBA.8040600@redhat.com>
+Date: Wed, 16 Feb 2011 16:41:30 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: GIF loader buffer overflow when initializing decompression tables
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: xfs infoleak
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2 Aug 2011 17:34:28 +0200 Thomas Biege wrote:
+ From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat 
+equivalent) calls out to xfs_fs_geometry() with a version number of 3. 
+This code path does not fill in the logsunit member of the passed 
+xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized 
+stack data to potentially unprivileged callers.  Since all other members 
+are filled in all code paths and there are no padding bytes in this 
+structure, it's safe to avoid an expensive memset() in favor of just 
+clearing this one field."
 
-> The same flaw was previously reported for several other components
-> that include GIF reading code based on David Koblas' parser, such as:
-> gd (CVE-2006-4484), SDL_image (CVE-2007-6697), tk (CVE-2008-0553),
-> netbpm (CVE-2008-0554), cups (CVE-2008-1373).
+https://patchwork.kernel.org/patch/555461/
+https://bugzilla.redhat.com/show_bug.cgi?id=677260
 
-The similar was spotted in XPCE when reviewing upstream
-fix for CVE-2011-2896:
-
-http://www.swi-prolog.org/bugzilla/show_bug.cgi?id=7#c2
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Eugene
