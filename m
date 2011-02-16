@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/3
-Message-ID: <4D7CE261.50002@redhat.com>
-Date: Sun, 13 Mar 2011 23:27:29 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/4
+Message-ID: <4D5B8DBA.8040600@redhat.com>
+Date: Wed, 16 Feb 2011 16:41:30 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: PHP substr_replace() use-after-free
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: xfs infoleak
 Content-Type: text/plain; charset=utf-8
 
-On 03/13/2011 10:00 PM, Felipe Pena wrote:
-> Hi,
->
-> I just found an use-after-free in PHP's substr_replace() function caused by
-> passing the same variable multiple times to the function, which makes the
-> PHP to use the same pointer in three variables inside the function, so when
-> the pointer is changed by a type conversion inside the function, it invalids
-> the other variables.
->
-> The PHP security team has seen noticed, and a bug already was filed in the
-> bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
->
-> $ sapi/cli/php ../bug.php
-> array(1) {
-> [0]=>
-> string(5) "0Ȅ y"
-> }
-> array(1) {
-> [0]=>
-> string(1) "0"
-> }
+ From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat 
+equivalent) calls out to xfs_fs_geometry() with a version number of 3. 
+This code path does not fill in the logsunit member of the passed 
+xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized 
+stack data to potentially unprivileged callers.  Since all other members 
+are filled in all code paths and there are no padding bytes in this 
+structure, it's safe to avoid an expensive memset() in favor of just 
+clearing this one field."
 
-Please use CVE-2011-1148.
+https://patchwork.kernel.org/patch/555461/
+https://bugzilla.redhat.com/show_bug.cgi?id=677260
 
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Eugene
