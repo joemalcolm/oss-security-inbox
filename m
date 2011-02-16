@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/8
-Message-ID: <20111121144412.GH23814@suse.de>
-Date: Mon, 21 Nov 2011 15:44:12 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: openssh 5.8p2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/1
+Message-ID: <4D5B8B61.5020602@redhat.com>
+Date: Wed, 16 Feb 2011 16:31:29 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: bridge br_multicast NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+"Somewhere along the line the NULL check in br_mdb_ip_get went AWOL, 
+causing crashes when we receive an IGMP packet with no multicast table 
+allocated.
 
-http://www.openssh.com/txt/release-5.8p2
-http://www.openssh.com/txt/portable-keysign-rand-helper.adv
-http://www.nessus.org/plugins/index.php?view=single&id=53841
+This patch restores it and ensures all br_mdb_*_get functions use it."
 
-has a security issue listed without a assigned CVE.
+http://git.kernel.org/linus/7f285fa78d4b81b8458f05e77fb6b46245121b4e
 
-Could someone please assign a CVE id?
+Did a quick check: net/bridge/br_multicast.c was introduced in eb1d1641 
+(2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and 
+subsequently restored in 7f285fa78d (v2.6.35-rc5).
 
-(We are not affected, but as we got customer queries regarding the
-Nessus check already it should get a CVE id I think.)
-
-Ciao, Marcus
+Thanks, Eugene
