@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/4
-Message-ID: <AANLkTinUdSydhjxvGixDsb=TdNfKDygBpQg8zJ56K2FF@mail.gmail.com>
-Date: Tue, 1 Mar 2011 10:11:19 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/12
+Message-ID: <4D5BDF62.4020704@redhat.com>
+Date: Wed, 16 Feb 2011 22:29:54 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>,  Helgi Þormar Þorbjörnsson <helgi@....net>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
+Subject: Re: kernel: ALSA: caiaq - Fix possible string-buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On 02/16/2011 09:48 PM, Josh Bressers wrote:
+>
+> ----- Original Message -----
+>> Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to
+>> overflow the string array sizes by too long USB device name string."
+>>
+>> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
+>>
+>> Just FYI, I'm not requesting a CVE name for this as it only affects
+>> Native Instruments USB audio devices with very long device name which I
+>> think is unlikely.
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=677881
+>>
+>
+> I'm assigning this CVE-2011-0712.
+>
+> With the recent research about having a smartphone impersonate various USB
+> devices, I think this attack is now more plausible than in previous years.
 
-2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
-> I'm not familiar with this code or any of the context surrounding this
-> fix, but it appears to be an incomplete fix.  Checking for existence
-> of a symlink and then opening the resource leaves open a window during
-> which a legitimate file can be replaced with a symlink.
+Actually this is hardware-specific, and the strcpys are in the 
+initialisation part of the code.
 
-Not sure it is fixable, or maybe using a lock on the symbolic link
-while fetching its target (to be tested to be sure that such locks
-cannot be overridden from shell).
-
-> Also, I don't see a reason why a hard link couldn't be used for exploitation
-> instead.
-
-Hard link are not detectable (lstat), they are treated like normal files.
-
-Cheers,
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Eugene
