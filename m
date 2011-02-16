@@ -1,69 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/8
-Message-ID: <20110812212604.GO4930@lupin.home.powdarrmonkey.net>
-Date: Fri, 12 Aug 2011 22:26:04 +0100
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/10
+Message-ID: <979245400.58352.1297863982545.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:46:22 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org, zigo@...ian.org
-Subject: CVE request: multiple vulnerabilities in dtc
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: xfs infoleak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-A number of problems have been found recently in dtc (Domain Technologie
-Control) and reported to the Debian BTS. These are the bugs that affect
-upstream code; please assign CVEs as you feel appropriate:
+----- Original Message -----
+> From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat equivalent)
+> calls out to xfs_fs_geometry() with a version number of 3.  This code
+> path does not fill in the logsunit member of the passed xfs_fsop_geom_t,
+> leading to the leaking of four bytes of uninitialized stack data to
+> potentially unprivileged callers. Since all other members are filled in
+> all code paths and there are no padding bytes in this structure, it's
+> safe to avoid an expensive memset() in favor of just clearing this one
+> field."
+> 
+> https://patchwork.kernel.org/patch/555461/
+> https://bugzilla.redhat.com/show_bug.cgi?id=677260
+> 
 
-#566654
-dtc saves the administrator password in plain text in
-/var/lib/dtc/saved_install_config under the variable name conf_adm_pass.
-It remains there even after initial configuration.
+Please use CVE-2011-0711.
 
-#611680
-dtc-xen includes several command executions as root that use unchecked
-user input in dtc-soap-server.
-
-#614304
-dtc stores user passwords and passwords for various services in unencrypted
-form in the database.
-
-#637477
-Insufficient input checking in /shared/inc/sql/lists.php
-
-#637485
-The setup script for dtc writes the password for the MySQL user in the
-world-readable file /etc/apache2/apache2.conf.
-
-#637487
-Insufficient input checking leads to a SQL injection vulnerability in
-shared/inc/forms/domain_info.php.
-
-#637498
-A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
-files as the MySQL system user.
-
-#637537
-dtc passes passwords to htpasswd using command line arguments, which can be
-read by a local user.
-
-#637584
-dtc does not escape variables in HTML output in many places; for example
-in the "Domain root TXT record:" field on the "DNS and MX" page where
-JavaScript can be injected.
-
-Note that these descriptions are mostly taken from the bug reports and may
-not be suitable for direct publication without editing. I have checked as
-far as possible that none of these were previously assigned CVEs but they
-could be duplicates. There are often mitigating factors such as
-user or administrator authentication.
-
-Thanks,
-
+Thanks.
 
 -- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
-
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
