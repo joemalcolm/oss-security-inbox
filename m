@@ -1,108 +1,227 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/18
-Message-ID: <Pine.GSO.4.64.1104051030060.20885@faron.mitre.org>
-Date: Tue, 5 Apr 2011 10:35:47 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/6
+Message-ID: <AANLkTin9X=yXuwA5TYkCDHuu3PybZCWELXxBKQfz=8Tq@mail.gmail.com>
+Date: Wed, 16 Feb 2011 10:04:42 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: PHP Exif 64bit Casting Vulnerability, CVE request
 Content-Type: text/plain; charset=utf-8
 
+thanks!
 
-On Mon, 4 Apr 2011, Dan Rosenberg wrote:
+will be present in 5.3.6 (RC tomorrow).
 
-> I think one makes sense, since all the problems were in a single
-> protocol and were addressed at the same time.
-
-These days, some of the main criteria for splitting into separate CVEs 
-are:
-
-(1) different bug types [where we can argue about whether 
-memory-corruption/overflow variants are all "one type"]
-
-(2) different affected versions [using best-available knowledge of 
-affected versions at the time of assignment]
-
-(3) different researchers [this being a relatively recent development in 
-CVE-land, which ultimately creates more CVEs but is also much more useful 
-in many scenarios]
-
-When you get a large number of bugs/fixes at one time, these criteria are 
-sometimes relaxed for the sake of usability to CVE consumers (by keeping 
-the number of CVE's reasonably low), and keeping the amount of analysis 
-time relatively low.  In the case of the ROSE patches, there's a fairly 
-large number but it doesn't seem too bad.
-
-CVE consistency can't be guaranteed all the time, but where reasonable, it 
-makes sense to follow the guidelines.
-
-- Steve
-
-
-
->
-> -Dan
->
->> Thanks.
+On Wed, Feb 16, 2011 at 9:47 AM, Huzaifa Sidhpurwala
+<huzaifas@...hat.com> wrote:
+> On 02/16/2011 02:04 PM, Pierre Joye wrote:
+>> anyone?
 >>
->> --
->>    JB
->>
->> ----- Original Message -----
->>> Any update on this?
+> This has been assigned CVE-2011-0708
+>> On Mon, Feb 14, 2011 at 10:50 AM, Pierre Joye <pierre.php@...il.com> wrote:
+>>> hi,
 >>>
->>> Thanks,
->>> Dan
+>>> Can someone assign a CVE for the following issue please?
 >>>
->>> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
->>> wrote:
->>>> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
->>>>>
->>>>> I sent in a patch [1] resolving two issues in ROSE:
->>>>>
->>>>> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
->>>>> possible
->>>>> for a remote host to provide more digipeaters than expected,
->>>>> resulting
->>>>> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
->>>>> overflows, and abort facilities parsing on failure.
->>>>>
->>>>> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
->>>>> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
->>>>> length of less than 10, resulting in an underflow in a memcpy size,
->>>>> causing a kernel panic due to massive heap corruption. A length of
->>>>> greater than 20 results in a stack overflow of the callsign array.
->>>>> Abort facilities parsing on these invalid length values."
->>>>>
->>>>> These issues may both result in code execution. They may be
->>>>> triggered
->>>>> by a remote attacker if the victim has a listening ROSE socket, or
->>>>> by
->>>>> a local attacker (for privilege escalation) if a ROSE device exists
->>>>> (e.g. rose0).
->>>>>
->>>>> Ben Hutchings followed up with a patch [2] that resolves a number
->>>>> of
->>>>> other ROSE issues related to lack of size field validation, some of
->>>>> which may also result in heap corruption.
->>>>>
->>>>> Not sure about the proper CVE breakdown for all these issues, since
->>>>> the entire protocol was quite broken. Perhaps one is enough to
->>>>> cover
->>>>> everything.
->>>>
->>>> I am not sure. I would just assign one for the collection of issues
->>>> here but
->>>> I will let Steve decide instead.
->>>>
->>>>> [1] http://marc.info/?l=linux-netdev&m=130060344616926
->>>>> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
->>>>
->>>> Thanks, Eugene
->>>> --
->>>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
->>>> main(++i); }
->>>>
+>>> Fix is already applied in our 5.3 and trunk branches:
+>>>
+>>> http://svn.php.net/viewvc?view=revision&revision=308316
+>>> http://svn.php.net/viewvc?view=revision&revision=308317
+>>>
+>>> Note for the distro maintainers, please hang on a bit before applying
+>>> it, at least a couple of day to be sure that the fix covers all cases
+>>> or do not break anything. Tests pass but we never know :)
+>>>
+>>> Cheers,
+>>>
+>>> ---------- Forwarded message ----------
+>>> From: Luca Carettoni <luca.carettoni@...isoft.com>
+>>> Date: Fri, Jan 14, 2011 at 8:05 PM
+>>> Subject: PHP Exif 64bit Casting Vulnerability
+>>> To: security@....net
+>>>
+>>>
+>>> Hi,
+>>>    please find enclosed a security advisory of a discovered
+>>> vulnerability in /php-5.3.5/ext/exif/exif.c
+>>>
+>>> Looking forward to receiving your follow-up.
+>>>
+>>> Regards,
+>>> Luca
+>>>
+>>> =====================================================================
+>>> PHP Exif 64bit Casting Vulnerability
+>>> =====================================================================
+>>>
+>>> Affected Software : PHP <= 5.3.5 (Exif extension for 64bit platforms)
+>>> Severity          : Low
+>>> Local/Remote      : Remote
+>>> Author            : @_ikki, @paradoxengine (blog.nibblesec.org)
+>>>
+>>> [Summary]
+>>>
+>>> PHP Exif extension allows developers to work with image metadata
+>>> within their PHP code. For instance, using exif functions it is possible
+>>> to read metadata from digital camera pictures.
+>>> For further details on this file format, please refer to:
+>>> http://www.media.mit.edu/pia/Research/deepview/exif.html
+>>>
+>>> PHP Exif extension for 64bit platforms is affected by a casting
+>>> vulnerability that occurs during the image header parsing.
+>>> According to our preliminary analysis, exploitation of this flaw results
+>>> in Denial of Service.
+>>>
+>>> This vulnerability affects PHP 5.3.5 and likely all previous versions.
+>>> During our analysis, we have successfully tested our PoC against PHP
+>>> 5.3.2, PHP 5.3.3 and the latest PHP release 5.3.5.
+>>>
+>>> Using the following configuration, a system is most likely vulnerable:
+>>>  (a) PHP 64bit version
+>>>  (b) PHP compiled with --enable-exif
+>>>  (c) memory_limit = -1
+>>>
+>>> [Vulnerability Details]
+>>>
+>>> In case of 64bit platforms, an improper conversion occurs within
+>>> "/php-5.3.5/ext/exif/exif.c" at line 1100 (php_ifd_get32s) and 1118
+>>> (php_ifd_get32u).
+>>>
+>>> In detail, an image having properly crafted Image File Directory (IFD)
+>>> can be used to trigger a segmentation fault caused by a memory access
+>>> violation:
+>>>
+>>> $ gdb ./sapi/cli/php
+>>> GNU gdb 6.8-debian
+>>> Copyright (C) 2008 Free Software Foundation, Inc.
+>>> License GPLv3+: GNU GPL version 3 or later
+>>> <http://gnu.org/licenses/gpl.html>
+>>> This is free software: you are free to change and redistribute it.
+>>> There is NO WARRANTY, to the extent permitted by law.  Type "show
+>>> copying"
+>>> and "show warranty" for details.
+>>> This GDB was configured as "x86_64-linux-gnu"...
+>>> (gdb) run  -c /etc/php5/cli/php.ini ../exif.php ../ihaterepeating2.jpeg
+>>> Starting
+>>> program: /archive/stuff/vulnsResearch/php_exif/php-5.3.5/sapi/cli/php
+>>> -c /etc/php5/cli/php.ini ../exif.php ../ihaterepeating2.jpeg
+>>> [Thread debugging using libthread_db enabled]
+>>>
+>>>  --- start ../ihaterepeating2.jpeg ---
+>>>
+>>> [New Thread 0x7ff7d45a26e0 (LWP 10941)]
+>>>
+>>> Program received signal SIGSEGV, Segmentation fault.
+>>> [Switching to Thread 0x7ff7d45a26e0 (LWP 10941)]
+>>> 0x000000000055e297 in php_ifd_get32s (value=0x2055000, motorola_intel=0)
+>>> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1108
+>>> 1108                return  (((char  *)value)[3] << 24)
+>>>
+>>> (gdb) backtrace
+>>> #0  0x000000000055e297 in php_ifd_get32s (value=0x2055000,
+>>> motorola_intel=0)
+>>> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1108
+>>> #1  0x000000000055e2f9 in php_ifd_get32u (value=0x2055000,
+>>> motorola_intel=0)
+>>> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1120
+>>> #2  0x000000000055f37e in exif_iif_add_value
+>>> (image_info=0x7fff68f4e0d0,
+>>> section_index=13, name=0x7fff68f4d920 "UndefinedTag:0x0205", tag=517,
+>>> format=5,
+>>>    length=536870913, value=0x2017124, motorola_intel=0) at
+>>>        /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1760
+>>> #3  0x000000000055f4d1 in exif_iif_add_tag (image_info=0x7fff68f4e0d0,
+>>> section_index=13, name=0x7fff68f4d920 "UndefinedTag:0x0205", tag=517,
+>>> format=5,
+>>>    length=536870913, value=0x2017124) at
+>>>        /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1801
+>>> #4  0x00000000005625a8 in exif_process_IFD_TAG
+>>> (ImageInfo=0x7fff68f4e0d0,
+>>> dir_entry=0x20170e8 "\005\002\005", offset_base=0x2016da0 "II*",
+>>> IFDlength=7157,
+>>> displacement=12, section_index=13, ReadNextIFD=0, tag_table=0x949740)
+>>> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:3115
+>>> [...]
+>>>
+>>> Within the PoC image, bytes in position 358-35B can be used to craft
+>>> the value of the 'components' variable (int) which is later used within
+>>> memory read operations.
+>>>
+>>> Two cases appear to be interesting:
+>>>
+>>> {Case A - Negative value}
+>>> $hexdump -C ihaterepeating.jpeg | grep -i "03 00 00 A0"
+>>> results in "components=-1610612733"
+>>>
+>>> {Case B - Positive value}
+>>> $hexdump -C ihaterepeating2.jpeg | grep -i "01 00 00 20"
+>>> results in "components=536870913"
+>>> Please note that 0x20 = 32dec
+>>>
+>>> As mentioned, the value of the 'components' variable is later computed
+>>> in memory operations within another variable named 'length'.
+>>> Such value is used in a for-loop instruction (line 1745) to read image
+>>> metadata starting from a memory address.
+>>>
+>>> Although it is possible to control the offset, the following
+>>> instructions (line 1671) limit such value to positive integers only.
+>>>
+>>>  <-- cut here -->
+>>> if (length < 0) {
+>>>                return;
+>>> }
+>>>  <-- cut here -->
+>>>
+>>> Consequently it seems possible to oversize the expected value only,
+>>> which results in a memory access violation.
+>>>
+>>> [Proof-Of-Concept]
+>>>
+>>> Two images (case A and B) have been properly crafted:
+>>> http://www.ikkisoft.com/stuff/ihaterepeating.jpeg
+>>> http://www.ikkisoft.com/stuff/ihaterepeating2.jpeg (SegFault)
+>>>
+>>> You may want to use this script to read exif data:
+>>>
+>>>  <-- cut here -->
+>>>  <?php
+>>> echo" --- start ---\n\n";
+>>> exif_read_data($argv[1]);
+>>> echo" --- end ---\n\n";
+>>>  ?>
+>>>  <-- cut here -->
+>>>
+>>> [Fix Information]
+>>>
+>>> n/a
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> --
+>>> Luca Carettoni <luca.carettoni@...isoft.com>
+>>>
+>>>
+>>>
+>>>
+>>> --
+>>> Pierre
+>>>
+>>> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>>>
+>>
+>>
 >>
 >
 >
+> --
+> Huzaifa Sidhpurwala / Red Hat Security Response Team
+>
+
+
+
+-- 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
