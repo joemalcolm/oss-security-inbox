@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/4
-Message-ID: <4E7B3006.4000401@redhat.com>
-Date: Thu, 22 Sep 2011 14:54:30 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Drupal Security Team <security@...pal.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- drupal6-views_bulk_operations: XSS due improper escaping of a vocabulary help (SA-CONTRIB-2011-042)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/8
+Message-ID: <682433666.58305.1297863848820.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:44:08 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: bridge br_multicast NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
 
-   it was found in the way Drupal Views Builk Operations (VBO) module
-did not escape the vocabulary help properly, when the vocabulary has
-had user tagging enabled and "Modify node taxonomy terms" action was
-used for modification of the taxonomy. A remote attacker could provide
-a specially-crafted URL, which once visited by unsuspecting Drupal
-user, disposing with the 'administer taxonomy' permission / privilege,
-could lead to arbitrary HTML or web script execution (cross-site
-scripting [XSS] attack).
 
-References:
-[1] http://drupal.org/node/1286844
-[2] http://secunia.com/advisories/46114/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=740553
+----- Original Message -----
+> "Somewhere along the line the NULL check in br_mdb_ip_get went AWOL,
+> causing crashes when we receive an IGMP packet with no multicast table
+> allocated.
+> 
+> This patch restores it and ensures all br_mdb_*_get functions use it."
+> 
+> http://git.kernel.org/linus/7f285fa78d4b81b8458f05e77fb6b46245121b4e
+> 
+> Did a quick check: net/bridge/br_multicast.c was introduced in
+> eb1d1641
+> (2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and
+> subsequently restored in 7f285fa78d (v2.6.35-rc5).
+> 
 
-Upstream solution:
+Please use CVE-2011-0709.
 
-Upgrage to 6.x-1.11:
-[4] http://drupal.org/node/1286778
+Thanks.
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
