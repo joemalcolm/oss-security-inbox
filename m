@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/19
-Message-ID: <1020327824.1475004.1311193706140.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 16:28:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/12
+Message-ID: <4D5BDF62.4020704@redhat.com>
+Date: Wed, 16 Feb 2011 22:29:54 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Fwd: Joomla! Security News
+CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
+Subject: Re: kernel: ALSA: caiaq - Fix possible string-buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2708
+On 02/16/2011 09:48 PM, Josh Bressers wrote:
+>
+> ----- Original Message -----
+>> Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to
+>> overflow the string array sizes by too long USB device name string."
+>>
+>> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
+>>
+>> Just FYI, I'm not requesting a CVE name for this as it only affects
+>> Native Instruments USB audio devices with very long device name which I
+>> think is unlikely.
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=677881
+>>
+>
+> I'm assigning this CVE-2011-0712.
+>
+> With the recent research about having a smartphone impersonate various USB
+> devices, I think this attack is now more plausible than in previous years.
 
-Thanks.
+Actually this is hardware-specific, and the strcpys are in the 
+initialisation part of the code.
 
--- 
-    JB
-
------ Original Message -----
-> Joomla! Developer Network - Security News
-> 
-> ///////////////////////////////////////////
-> [20110701] - XSS Vulnerability
-> 
-> Posted: 19 Jul 2011 09:15 PM PDT
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/4KDvSjZRIvs/357-20110701-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
-> 
-> 
-> Project: Joomla!
-> SubProject: All
-> Severity: Medium
-> Versions: 1.6.5 and all earlier 1.6.x versions
-> Exploit type: XSS
-> Reported Date: 2011-July-11
-> Fixed Date: 2011-July-19
-> 
-> Description
-> 
-> Inadequate escaping leads to XSS vulnerability.
-> 
-> Affected Installs
-> 
-> Joomla! version 1.6.5 and all earlier 1.6.x versions
-> Solution
-> 
-> Upgrade to the latest Joomla! version (1.7.0 or later)
-> 
-> Reported by Aung Khant
-> Contact
-> 
-> The JSST at the Joomla! Security Center.
+Eugene
