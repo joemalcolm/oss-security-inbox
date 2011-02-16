@@ -1,63 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/8
-Message-ID: <4DE90A03.1060900@redhat.com>
-Date: Fri, 03 Jun 2011 18:21:23 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Bernhard Reiter <bernhard@...evation.de>, Tomas Mraz <tmraz@...hat.com>
-Subject: CVE Request / Discussion -- dirmngr -- Improper dealing with blocking system calls, when verifying a certificate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/9
+Message-ID: <1347860776.58325.1297863916185.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:45:16 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: s390 task_show_regs infoleak
 Content-Type: text/plain; charset=utf-8
 
 
-Hello, Josh, Steve, Bernhard, vendors,
 
-   based on:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377
-   [2] https://bugs.g10code.com/gnupg/issue1313
-       (upstream bug report)
-   [3] https://bugs.g10code.com/gnupg/file324/DTAG_Issuing_CA_i01.der
-       (public PoC)
-   [4] http://cvs.gnupg.org/cgi-bin/viewcvs.cgi?root=Dirmngr&view=rev
-       (relevant upstream patch)
+----- Original Message -----
+> "task_show_regs used to be a debugging aid in the early bringup days of
+> Linux on s390. /proc/<pid>/status is a world readable file, it is not a
+> good idea to show the registers of a process. The only correct fix is to
+> remove task_show_regs."
+> 
+> http://git.kernel.org/linus/261cd298a8c363d7985e3482946edb4bfedacf98
+> https://bugzilla.redhat.com/677850
+> 
+> This does all the way back to 2.4.x.
+> 
 
-it concluded:
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=710529
+Please use CVE-2011-0710.
 
-i.e.:
-"Dirmngr, server/client tool for managing and downloading CRLS, used
-user land threads implementation (Pth) for wrapping up of system calls,
-that may potentially block. A remote attacker could use this flaw to
-cause a hang of an end-user application, relying of the proper services
-of the dirmngr daemon, via a request to verify a specially-crafted
-certificate."
+Thanks.
 
-But simultaneously with filling that Red Hat Bugzilla issue tracking
-system entry performed some basic investigation, results of which can
-be seen at:
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=710529#c2
-
-IOW was not able to reproduce the complete / indefinite dirmngr-client
-hang (thus blocking other clients from access). As noted in [6], it
-is true that during small time period running 'dirmngr' daemon instance
-is unresponsive also for '--ping' (dirmngr-client --ping) commands, but
-after finite time (~21 seconds in my test) the connection ends up with
-timeout.
-
-Though Bernard in:
-[7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377#5
-
-mentions "For example the KMail hung when trying to verify a signature
-which has the certificate in the chain." which would suggest there may
-exist clients / end-user application not able to recover from this bug
-properly. Bernhard, hopefully here, you could clarify / list such
-applications and provide also time details, how long that hang of such
-applications took.
-
-Based on your reply, this may not / may be worthy (in case there are
-such end-user applications) of an CVE identifier.
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+-- 
+    JB
