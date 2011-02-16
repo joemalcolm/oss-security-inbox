@@ -1,48 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/08/2
-Message-ID: <BANLkTik7WyQ977-+8XapTgBrVRMyexyHKg@mail.gmail.com>
-Date: Sun, 8 May 2011 21:57:25 +0200
-From: Filip Palian <s3810@...stk.edu.pl>
-To: Marcel Holtmann <marcel@...tmann.org>, "Gustavo F. Padovan" <padovan@...fusion.mobi>,  "David S. Miller" <davem@...emloft.net>, linux-bluetooth@...r.kernel.org,  netdev@...r.kernel.org, linux-kernel@...r.kernel.org
-Cc: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/3
+Message-ID: <4D5B8CFC.5070608@redhat.com>
+Date: Wed, 16 Feb 2011 16:38:20 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: s390 task_show_regs infoleak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+"task_show_regs used to be a debugging aid in the early bringup days of 
+Linux on s390. /proc/<pid>/status is a world readable file, it is not a 
+good idea to show the registers of a process. The only correct fix is to 
+remove task_show_regs."
 
-Structures "l2cap_conninfo" and "rfcomm_conninfo" have one padding
-byte each. This byte in "cinfo" is copied to userspace uninitialized.
+http://git.kernel.org/linus/261cd298a8c363d7985e3482946edb4bfedacf98
+https://bugzilla.redhat.com/677850
 
-patch no.1:
--- cut --
---- a/net/bluetooth/l2cap_sock.c        2011-05-04 03:59:13.000000000 +0100
-+++ b/net/bluetooth/l2cap_sock.c        2011-05-08 18:57:20.000000000 +0100
-@@ -446,6 +446,7 @@ static int l2cap_sock_getsockopt_old(str
-                        break;
-                }
+This does all the way back to 2.4.x.
 
-+               memset(&cinfo, 0, sizeof(cinfo));
-                cinfo.hci_handle = l2cap_pi(sk)->conn->hcon->handle;
-                memcpy(cinfo.dev_class, l2cap_pi(sk)->conn->hcon->dev_class, 3);
-
--- cut --
-
-patch no.2:
--- cut --
---- a/net/bluetooth/rfcomm/sock.c       2011-05-04 03:59:13.000000000 +0100
-+++ b/net/bluetooth/rfcomm/sock.c       2011-05-08 19:00:24.000000000 +0100
-@@ -787,6 +787,7 @@ static int rfcomm_sock_getsockopt_old(st
-
-                l2cap_sk = rfcomm_pi(sk)->dlc->session->sock->sk;
-
-+               memset(&cinfo, 0, sizeof(cinfo));
-                cinfo.hci_handle = l2cap_pi(l2cap_sk)->conn->hcon->handle;
-                memcpy(cinfo.dev_class,
-l2cap_pi(l2cap_sk)->conn->hcon->dev_class, 3);
--- cut --
-
-Found by Marek Kroemeke and Filip Palian. Special thanks to Vasiliy
-Kulikov for verifying this bug.
-
-
-Best regards.
+Thanks, Eugene
