@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/9
-Message-ID: <454836448.1272235.1310495411052.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:30:11 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/8
+Message-ID: <682433666.58305.1297863848820.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:44:08 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: plone privilege escalation flaw
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: bridge br_multicast NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2528.
+
+
+----- Original Message -----
+> "Somewhere along the line the NULL check in br_mdb_ip_get went AWOL,
+> causing crashes when we receive an IGMP packet with no multicast table
+> allocated.
+> 
+> This patch restores it and ensures all br_mdb_*_get functions use it."
+> 
+> http://git.kernel.org/linus/7f285fa78d4b81b8458f05e77fb6b46245121b4e
+> 
+> Did a quick check: net/bridge/br_multicast.c was introduced in
+> eb1d1641
+> (2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and
+> subsequently restored in 7f285fa78d (v2.6.35-rc5).
+> 
+
+Please use CVE-2011-0709.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> Looks like the previous fix for Plone/Zope (CVE-2011-0720) caused a
-> new
-> privilege escalation flaw in Plone 3.x and 4.x.
-> 
-> Could a CVE be assigned?
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=718824
-> http://plone.org/products/plone/security/advisories/20110622
-> http://plone.org/products/plone-hotfix/releases/20110622
-> http://secunia.com/advisories/45111
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
