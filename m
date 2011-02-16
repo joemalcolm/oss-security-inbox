@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/8
-Message-ID: <4EC6899F.6090400@redhat.com>
-Date: Fri, 18 Nov 2011 09:36:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/10
+Message-ID: <979245400.58352.1297863982545.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:46:22 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Ruby on Rails / rubygem-actionpack -- XSS in the 'translate' helper method
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: xfs infoleak
 Content-Type: text/plain; charset=utf-8
 
-On 11/18/2011 07:52 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a cross-site scripting (XSS) flaw was found in the way the
-> 'translate' helper method of the Ruby on Rails performed HTML
-> escaping of interpolated user input, when interpolation in
-> combination with HTML-safe translations were used. A remote
-> attacker could use this flaw to execute arbitrary HTML or web
-> script by providing a specially-crafted input to Ruby on Rails
-> application, using the ActionPack module and its 'translate'
-> helper method without explicit (application specific) sanitization
-> of user provided input.
->
-> References:
-> [1]
-> http://weblog.rubyonrails.org/2011/11/18/rails-3-1-2-has-been-released
-> [2]
-> http://weblog.rubyonrails.org/2011/11/18/rails-3-0-11-has-been-released
-> [3] https://secunia.com/advisories/46877/
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=390915
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=755004
->
-> Relevant upstream patches:
-> [6]
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b61d70fb73c7cc5
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Please use CVE-2011-4319 for this issue.
+----- Original Message -----
+> From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat equivalent)
+> calls out to xfs_fs_geometry() with a version number of 3.  This code
+> path does not fill in the logsunit member of the passed xfs_fsop_geom_t,
+> leading to the leaking of four bytes of uninitialized stack data to
+> potentially unprivileged callers. Since all other members are filled in
+> all code paths and there are no padding bytes in this structure, it's
+> safe to avoid an expensive memset() in favor of just clearing this one
+> field."
+> 
+> https://patchwork.kernel.org/patch/555461/
+> https://bugzilla.redhat.com/show_bug.cgi?id=677260
+> 
+
+Please use CVE-2011-0711.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
