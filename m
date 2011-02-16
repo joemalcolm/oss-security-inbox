@@ -1,24 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/3
-Message-ID: <4E31366F.4010704@redhat.com>
-Date: Thu, 28 Jul 2011 15:44:07 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/13
+Message-ID: <4D5BE0BA.7010808@redhat.com>
+Date: Wed, 16 Feb 2011 20:05:38 +0530
 From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
+Subject: wireshark dct3trace buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 07/28/2011 03:34 PM, Tavis Ormandy wrote:
+Hi All,
 
-> Interesting, I also looked at systemtap and found a local root
-> (CVE-2010-4170), but was under the impression we had agreed it should be
-> restricted to a privileged group?
-> 
-> https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
-> 
-> I stopped looking because I concluded that had eliminated any security risk,
-> is that no longer the case?
-> 
-I believe this does reduce the risk, but does not totally eliminate it.
+The following buffer overflow vuln. is assigned CVE-2011-0713:
+http://anonsvn.wireshark.org/viewvc?view=rev&revision=35953
 
 
 
