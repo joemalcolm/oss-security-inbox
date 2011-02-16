@@ -1,84 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/18
-Message-ID: <20111121180112.GA21332@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 20:01:12 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/11
+Message-ID: <376087124.58391.1297864103780.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:48:23 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: advisories@...itunasecurity.com
-Subject: Fwd: XSS vulnerability in Joomla 1.6.3
+Cc: coley <coley@...re.org>
+Subject: Re: kernel: ALSA: caiaq - Fix possible string-buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Can we get CVE-identifier assigned for this issue, thank you?
 
-Best regards,
-Henri Salo
+----- Original Message -----
+> Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to
+> overflow the string array sizes by too long USB device name string."
+> 
+> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
+> 
+> Just FYI, I'm not requesting a CVE name for this as it only affects
+> Native Instruments USB audio devices with very long device name which I
+> think is unlikely.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=677881
+> 
 
------ Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
+I'm assigning this CVE-2011-0712.
 
-Date: Thu, 10 Nov 2011 16:32:12 +0200
-From: Netsparker Advisories <advisories@...itunasecurity.com>
-To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
-Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
+With the recent research about having a smartphone impersonate various USB
+devices, I think this attack is now more plausible than in previous years.
 
-Information
---------------------
-Name :  XSS vulnerability in Joomla 1.6.3.
-Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
-Vendor Hompeage :  http://www.joomla.org
-Vulnerability Type :  Cross-Site Scripting
-Severity :  High
-Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
-Advisory Reference :  NS-11-009
-
-Description
-------------------
-Joomla is an award-winning content management system (CMS), which
-enables you to build Web sites and powerful online applications. Many
-aspects, including its ease-of-use and extensibility, have made Joomla
-the most popular Web site software available. Best of all, Joomla is
-an open source solution that is freely available to everyone.
-
-Details
--------------------
-Joomla is affected by a XSS vulnerability in various administrator
-screens. All 1.6.x installs prior to and including 1.6.3 are affected.
-You can read the full article about Cross-Site Scripting
-vulnerabilities from here :
-http://www.mavitunasecurity.com/crosssite-scripting-xss/
-
-Solution
--------------------
-Upgrade to the latest Joomla! version (1.6.4 or later).
-
-Credits
--------------------
-It has been discovered on testing of Netsparker, Web Application
-Security Scanner - http://www.mavitunasecurity.com/netsparker/
-
-References
--------------------
-1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
-2. MSL Advisory Link :
-http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
-3. Netsparker Advisories :
-http://www.mavitunasecurity.com/netsparker-advisories/
-
-About Netsparker
--------------------
-Netsparker® can find and report security issues such as SQL Injection
-and Cross-site Scripting (XSS) in all web applications regardless of
-the platform and the technology they are built on. Netsparker's unique
-detection and exploitation techniques allows it to be dead accurate in
-reporting hence it's the first and the only False Positive Free web
-application security scanner.
+Thanks.
 
 -- 
-Netsparker Advisories, <advisories@...itunasecurity.com>
-Homepage, http://www.mavitunasecurity.com/netsparker-advisories/
-
-_______________________________________________
-Full-Disclosure - We believe in it.
-Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-Hosted and sponsored by Secunia - http://secunia.com/
-
------ End forwarded message -----
+    JB
