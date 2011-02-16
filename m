@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/9
-Message-ID: <198284865.375307.1299184319905.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 15:31:59 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/14
+Message-ID: <20110216183742.GB11446@inutil.org>
+Date: Wed, 16 Feb 2011 19:37:42 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: VLC bookmark buffer overflow
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: bridge br_multicast NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Argh, this should have gotten a 2010 ID.
+On Wed, Feb 16, 2011 at 08:44:08AM -0500, Josh Bressers wrote:
 
-Steve, does MITRE want to reassign, or just leave it as is?
-
-Thanks.
-
--- 
-    JB
-
-
------ Original Message -----
-> ----- Original Message -----
-> > Can I get CVE-identifier for this issue:
-> >
-> > "VLC media player is vulnerable to a buffer overflow attack when
-> > processing .mp3 file and its metadata. It fails to perform boundry
-> > checks when creating a bookmark from the malicious media file
-> > playing,
-> > resulting in a crash, overwriting ECX register. While the evil .mp3
-> > is
-> > playing, you go Playback > Bookmarks > Manage bookmarks > Create."
-> >
-> > References:
-> > http://osvdb.org/show/osvdb/62728/printer
+> > (2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and
+> > subsequently restored in 7f285fa78d (v2.6.35-rc5).
+> > 
 > 
-> Please use CVE-2011-1087
-> 
-> Thanks.
-> 
-> --
-> JB
+> Please use CVE-2011-0709.
+
+I don't think it makes sense to assign CVE IDs to issues, which only
+occured in development snapshots?
+
+This wasn't done in the past and it creates needless overhead.
+
+Cheers,
+        Moritz
