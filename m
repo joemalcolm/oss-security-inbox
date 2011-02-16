@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/12
-Message-ID: <52972005.217119.1314043426149.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 16:03:46 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/11
+Message-ID: <376087124.58391.1297864103780.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 08:48:23 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Mühlenhoff <jmm@...til.org>, coley <coley@...re.org>
-Subject: Re: CVE request: Pidgin crash
+Cc: coley <coley@...re.org>
+Subject: Re: kernel: ALSA: caiaq - Fix possible string-buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 
-
 ----- Original Message -----
-> 2011/8/22 Moritz Mühlenhoff <jmm@...til.org>:
-> > On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
-> >> Hi Mark,
-> >>
-> >> >Hi! Would it be possible to issue a CVE for a new crash in Pidgin?
-> >>
-> >> >http://pidgin.im/news/security/?id=53
-> >>
-> >> Please use CVE-2011-2942 for this issue.
-> >>
-> >> Also looking at http://pidgin.im/news/security it seems two other
-> >> security issues were also fixed in 2.10.0, do you want CVEs to be
-> >> assigned for them as well?
-> >
-> > Please do. Since they're published in the form of upstream advisories
-> > we'd like to properly track them in the Debian Security Tracker.
+> Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to
+> overflow the string array sizes by too long USB device name string."
 > 
-> That's fine by me. As an upstream developer I don't feel like I have a
-> strong incentive to obtain a CVE. But if it's helpful to packagers, than
-> sure.
+> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
 > 
-> The two issues in question are discussed here:
-> http://pidgin.im/news/security/?id=54
-
-This is a MSN crash. Use CVE-2011-3184
-
-
-> http://pidgin.im/news/security/?id=55
+> Just FYI, I'm not requesting a CVE name for this as it only affects
+> Native Instruments USB audio devices with very long device name which I
+> think is unlikely.
 > 
-> The second one only affects Pidgin on Microsoft Windows.
+> https://bugzilla.redhat.com/show_bug.cgi?id=677881
 > 
 
-Use CVE-2011-3185 for this.
+I'm assigning this CVE-2011-0712.
+
+With the recent research about having a smartphone impersonate various USB
+devices, I think this attack is now more plausible than in previous years.
 
 Thanks.
 
