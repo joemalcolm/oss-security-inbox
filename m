@@ -1,41 +1,210 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/8
-Message-ID: <BANLkTimQGPhOTOc1DD1dexwyYgk3HuokPw@mail.gmail.com>
-Date: Wed, 18 May 2011 16:13:05 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/2
+Message-ID: <AANLkTikipYsmikmwyboZ1diKK3dWM4tGHLHyyZZXKJJd@mail.gmail.com>
+Date: Wed, 16 Feb 2011 09:34:01 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: klibc@...or.com
-Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+Subject: Re: PHP Exif 64bit Casting Vulnerability, CVE request
 Content-Type: text/plain; charset=utf-8
 
-Might it be worth fixing the insecure temporary file usage?
+anyone?
 
-122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
-123         f = fopen(fn, "w");
-
-What if someone else has already created that file, or put a symlink
-or hard link there?  What if someone overwrites your string with
-command injection characters despite your stripping?
-
--Dan
-
-On Wed, May 18, 2011 at 4:44 AM, maximilian attems <max@...o.at> wrote:
-> Related to CVE-2011-0997
+On Mon, Feb 14, 2011 at 10:50 AM, Pierre Joye <pierre.php@...il.com> wrote:
+> hi,
 >
-> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
-> used unquoted, than proof of concept involves
-> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
+> Can someone assign a CVE for the following issue please?
 >
-> fix:
-> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
-> will be part of the just to be released klibc-1.5.22
+> Fix is already applied in our 5.3 and trunk branches:
+>
+> http://svn.php.net/viewvc?view=revision&revision=308316
+> http://svn.php.net/viewvc?view=revision&revision=308317
+>
+> Note for the distro maintainers, please hang on a bit before applying
+> it, at least a couple of day to be sure that the fix covers all cases
+> or do not break anything. Tests pass but we never know :)
+>
+> Cheers,
+>
+> ---------- Forwarded message ----------
+> From: Luca Carettoni <luca.carettoni@...isoft.com>
+> Date: Fri, Jan 14, 2011 at 8:05 PM
+> Subject: PHP Exif 64bit Casting Vulnerability
+> To: security@....net
+>
+>
+> Hi,
+>    please find enclosed a security advisory of a discovered
+> vulnerability in /php-5.3.5/ext/exif/exif.c
+>
+> Looking forward to receiving your follow-up.
+>
+> Regards,
+> Luca
+>
+> =====================================================================
+> PHP Exif 64bit Casting Vulnerability
+> =====================================================================
+>
+> Affected Software : PHP <= 5.3.5 (Exif extension for 64bit platforms)
+> Severity          : Low
+> Local/Remote      : Remote
+> Author            : @_ikki, @paradoxengine (blog.nibblesec.org)
+>
+> [Summary]
+>
+> PHP Exif extension allows developers to work with image metadata
+> within their PHP code. For instance, using exif functions it is possible
+> to read metadata from digital camera pictures.
+> For further details on this file format, please refer to:
+> http://www.media.mit.edu/pia/Research/deepview/exif.html
+>
+> PHP Exif extension for 64bit platforms is affected by a casting
+> vulnerability that occurs during the image header parsing.
+> According to our preliminary analysis, exploitation of this flaw results
+> in Denial of Service.
+>
+> This vulnerability affects PHP 5.3.5 and likely all previous versions.
+> During our analysis, we have successfully tested our PoC against PHP
+> 5.3.2, PHP 5.3.3 and the latest PHP release 5.3.5.
+>
+> Using the following configuration, a system is most likely vulnerable:
+>  (a) PHP 64bit version
+>  (b) PHP compiled with --enable-exif
+>  (c) memory_limit = -1
+>
+> [Vulnerability Details]
+>
+> In case of 64bit platforms, an improper conversion occurs within
+> "/php-5.3.5/ext/exif/exif.c" at line 1100 (php_ifd_get32s) and 1118
+> (php_ifd_get32u).
+>
+> In detail, an image having properly crafted Image File Directory (IFD)
+> can be used to trigger a segmentation fault caused by a memory access
+> violation:
+>
+> $ gdb ./sapi/cli/php
+> GNU gdb 6.8-debian
+> Copyright (C) 2008 Free Software Foundation, Inc.
+> License GPLv3+: GNU GPL version 3 or later
+> <http://gnu.org/licenses/gpl.html>
+> This is free software: you are free to change and redistribute it.
+> There is NO WARRANTY, to the extent permitted by law.  Type "show
+> copying"
+> and "show warranty" for details.
+> This GDB was configured as "x86_64-linux-gnu"...
+> (gdb) run  -c /etc/php5/cli/php.ini ../exif.php ../ihaterepeating2.jpeg
+> Starting
+> program: /archive/stuff/vulnsResearch/php_exif/php-5.3.5/sapi/cli/php
+> -c /etc/php5/cli/php.ini ../exif.php ../ihaterepeating2.jpeg
+> [Thread debugging using libthread_db enabled]
+>
+>  --- start ../ihaterepeating2.jpeg ---
+>
+> [New Thread 0x7ff7d45a26e0 (LWP 10941)]
+>
+> Program received signal SIGSEGV, Segmentation fault.
+> [Switching to Thread 0x7ff7d45a26e0 (LWP 10941)]
+> 0x000000000055e297 in php_ifd_get32s (value=0x2055000, motorola_intel=0)
+> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1108
+> 1108                return  (((char  *)value)[3] << 24)
+>
+> (gdb) backtrace
+> #0  0x000000000055e297 in php_ifd_get32s (value=0x2055000,
+> motorola_intel=0)
+> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1108
+> #1  0x000000000055e2f9 in php_ifd_get32u (value=0x2055000,
+> motorola_intel=0)
+> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1120
+> #2  0x000000000055f37e in exif_iif_add_value
+> (image_info=0x7fff68f4e0d0,
+> section_index=13, name=0x7fff68f4d920 "UndefinedTag:0x0205", tag=517,
+> format=5,
+>    length=536870913, value=0x2017124, motorola_intel=0) at
+>        /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1760
+> #3  0x000000000055f4d1 in exif_iif_add_tag (image_info=0x7fff68f4e0d0,
+> section_index=13, name=0x7fff68f4d920 "UndefinedTag:0x0205", tag=517,
+> format=5,
+>    length=536870913, value=0x2017124) at
+>        /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:1801
+> #4  0x00000000005625a8 in exif_process_IFD_TAG
+> (ImageInfo=0x7fff68f4e0d0,
+> dir_entry=0x20170e8 "\005\002\005", offset_base=0x2016da0 "II*",
+> IFDlength=7157,
+> displacement=12, section_index=13, ReadNextIFD=0, tag_table=0x949740)
+> at /archive/stuff/vulnsResearch/php_exif/php-5.3.5/ext/exif/exif.c:3115
+> [...]
+>
+> Within the PoC image, bytes in position 358-35B can be used to craft
+> the value of the 'components' variable (int) which is later used within
+> memory read operations.
+>
+> Two cases appear to be interesting:
+>
+> {Case A - Negative value}
+> $hexdump -C ihaterepeating.jpeg | grep -i "03 00 00 A0"
+> results in "components=-1610612733"
+>
+> {Case B - Positive value}
+> $hexdump -C ihaterepeating2.jpeg | grep -i "01 00 00 20"
+> results in "components=536870913"
+> Please note that 0x20 = 32dec
+>
+> As mentioned, the value of the 'components' variable is later computed
+> in memory operations within another variable named 'length'.
+> Such value is used in a for-loop instruction (line 1745) to read image
+> metadata starting from a memory address.
+>
+> Although it is possible to control the offset, the following
+> instructions (line 1671) limit such value to positive integers only.
+>
+>  <-- cut here -->
+> if (length < 0) {
+>                return;
+> }
+>  <-- cut here -->
+>
+> Consequently it seems possible to oversize the expected value only,
+> which results in a memory access violation.
+>
+> [Proof-Of-Concept]
+>
+> Two images (case A and B) have been properly crafted:
+> http://www.ikkisoft.com/stuff/ihaterepeating.jpeg
+> http://www.ikkisoft.com/stuff/ihaterepeating2.jpeg (SegFault)
+>
+> You may want to use this script to read exif data:
+>
+>  <-- cut here -->
+>  <?php
+> echo" --- start ---\n\n";
+> exif_read_data($argv[1]);
+> echo" --- end ---\n\n";
+>  ?>
+>  <-- cut here -->
+>
+> [Fix Information]
+>
+> n/a
+>
+>
+>
 >
 >
 > --
-> maks
+> Luca Carettoni <luca.carettoni@...isoft.com>
 >
-> _______________________________________________
-> klibc mailing list
-> klibc@...or.com
-> http://www.zytor.com/mailman/listinfo/klibc
 >
+>
+>
+> --
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
+
+
+
+-- 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
