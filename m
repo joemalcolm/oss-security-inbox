@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/9
-Message-Id: <201103141406.47580.stephan.mueller@atsec.com>
-Date: Mon, 14 Mar 2011 14:06:46 +0100
-From: Stephan Mueller <stephan.mueller@...ec.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: oss-security@...ts.openwall.com, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/2
+Message-ID: <4D5C83F3.7010800@redhat.com>
+Date: Thu, 17 Feb 2011 10:12:03 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: deficiency in processing igmp host membership reports in br_multicast
 Content-Type: text/plain; charset=utf-8
 
-Am Montag, 14. März 2011, um 13:56:45 schrieb Dan Rosenberg:
+On 02/17/2011 08:09 AM, Petr Matousek wrote:
+> "It was found that executing bridge snooping code triggered by host
+> originated IGMP packets could cause corruption in 512-byte slabs,
+> most commonly leading to crashes in jbd2. This could be possibly
+> exploited by local unprivileged user to crash the host (DoS)."
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=678169
+> http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commitdiff;h=6b0d6a9b4296fa16a28d10d416db7a770fc03287
 
-Hi Dan,
+Please use CVE-2011-0716.
 
-> 
-> I'd like to add that while this kind of hardening would be nice in
-> theory, there is little urgency in making these improvements since the
-> proposed attack vectors are extremely limited.  As I see it, there are
-> four scenarios where this might matter:
-
-I am not so sure that all the following is unlikely:
-> 
-> 1. An attacker convinces a victim to download an evil filesystem image
-> and manually mount it.
-
-I guess that is the most likely vector - how often did you download ISO images 
-from somewhere - it is often for me?
-
-How often did you get USB drives from somebody - it happens frequently?
-
-How often did you mount them?
-
-I guess, this happened often. The concern here is that most users are very 
-unsuspecting of the discussed issue. Most people think that you should not 
-execute files from unknown media. But hardly anyone thinks that simply 
-mounting the media or listing directory contents would cause problems. At 
-least that is what I have learned.
-
-Ciao
-Stephan
+Eugene
