@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/2
-Message-ID: <4E1FF43B.8010507@redhat.com>
-Date: Fri, 15 Jul 2011 16:03:07 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/1
+Message-ID: <128863757.71904.1297901372227.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Feb 2011 19:09:32 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-4067 kernel: usb: buffer overflow in auerswald_probe()
+Cc: coley@...us.mitre.org
+Subject: CVE request -- kernel: deficiency in processing igmp host membership reports in br_multicast
 Content-Type: text/plain; charset=utf-8
 
-A buffer overflow flaw was found in the Linux kernel's Auerswald
-PBX/System Telephone usb driver implementation. There's no upstream
-patch as the affected driver was removed from the kernel in 2.6.27.
+"It was found that executing bridge snooping code triggered by host
+originated IGMP packets could cause corruption in 512-byte slabs,
+most commonly leading to crashes in jbd2. This could be possibly
+exploited by local unprivileged user to crash the host (DoS)."
 
-For more information, check out the references:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4067
-http://labs.mwrinfosecurity.com/files/Advisories/mwri_linux-usb-buffer-overflow_2009-10-29.pdf
-https://bugzilla.redhat.com/CVE-2009-4067
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=678169
+http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commitdiff;h=6b0d6a9b4296fa16a28d10d416db7a770fc03287
 
-(Attention Steve:) Looks like MITRE assigned this CVE to the reporter on
-Nov 24, 2009, but did not update their CVE database entry for this since
-then. Fortunately this is not a critical issue...
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
 
-Eugene
