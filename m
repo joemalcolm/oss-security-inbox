@@ -1,84 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/18
-Message-ID: <C9CBD61C.80B79%oss-security@securityview.nl>
-Date: Wed, 13 Apr 2011 22:42:43 +0200
-From: Ronald van den Blink <oss-security@...urityview.nl>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/2
+Message-ID: <4D5C83F3.7010800@redhat.com>
+Date: Thu, 17 Feb 2011 10:12:03 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: deficiency in processing igmp host membership reports in br_multicast
 Content-Type: text/plain; charset=utf-8
 
-
-
-On 4/13/11 5:17 PM, "akuster" <akuster@...sta.com> wrote:
-
+On 02/17/2011 08:09 AM, Petr Matousek wrote:
+> "It was found that executing bridge snooping code triggered by host
+> originated IGMP packets could cause corruption in 512-byte slabs,
+> most commonly leading to crashes in jbd2. This could be possibly
+> exploited by local unprivileged user to crash the host (DoS)."
 >
->
->On 04/12/2011 11:25 PM, Ronald van den Blink wrote:
->> On 4/12/11 11:49 PM, "akuster" <akuster@...sta.com> wrote:
->> 
->>>
->>>
->>> On 04/11/2011 09:57 AM, Josh Bressers wrote:
->>>> ----- Original Message -----
->>>>>
->>>>> Postponed. I'd like to see any support for you getting onto the Linux
->>>>> distros security contacts list, with reasoning, or/and any other
->>>>> suggestions on what to do in this case. Josh - what do you think (as
->>>>> someone who advocated the setup of a vendor-sec replacement)?
->>>>>
->>>>
->>>> My initial thought is that a vendor without public advisories is a
->>>> liability.
->>>
->>> Making our Advisories public could put our customers' customers at risk
->>> depending on when we publish and when our customers can get the fixes
->>> into their customers hands and so on down the line.
->>>
->>> - Armin
->> Hi Armin,
->> 
->> Sorry for putting my $0.02 in the bucket here as well, but the whole
->> purpose of a closed list is that you can fix them before releasing a
->> public advisory. When you fixed it, the customers can (just like other
->> dist's do, just get it patched before you publish it.
->
->Are you joking? I was told Embargoes could not be released to our
->customers until the agreed to release date. That would change some
->things and would be more like .02 euros.
->
->- Armin
-The specifics for this list are not clear to me, but fixing a security
-issue/bug can be done before the public release of the advisory. The
-second the advisory hits "the news" you have the patches ready for you
-customers. That's what I was trying to say. What Dan is pointing out as
-well is important here, I'm sure that only advisories for your own
-specific distri's and keeping those "in house" are providing your
-customers with a false sense of security. A clever sysadmin will be aware
-that a security fix for $distri will also mean that your software is
-affected. And an evil hacker will know this as well.
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=678169
+> http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commitdiff;h=6b0d6a9b4296fa16a28d10d416db7a770fc03287
 
-But I'm taking my ass out of this discussion. I'm not providing a Linux
-distribution, only part of the development team of an open source
-e-commerce solution with the luck of only having one security bug / CVE in
-the last 4 releases :P
+Please use CVE-2011-0716.
 
-Cheers,
-
-Ronald 
-Batavi.org
-
->
->It's not that this
->> is so strange, as closed source OS makers are doing the same (remember
->> Black Tuesday's at MS and Apple's releases).
->> 
->> Just my 2 cents.
->> 
->> Ronald 
->> Batavi.org
->> 
->>>
->> 
->> 
-
-
+Eugene
