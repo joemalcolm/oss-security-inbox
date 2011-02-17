@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/12
-Message-ID: <20110209172439.GC30950@kroah.com>
-Date: Wed, 9 Feb 2011 09:24:39 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/3
+Message-ID: <4D5CCAAD.8070304@redhat.com>
+Date: Thu, 17 Feb 2011 15:13:49 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: thp: prevent hugepages during args/env copying into the user stack
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 09, 2011 at 10:49:35AM -0500, Dan Rosenberg wrote:
-> I'm not aware of any distributions that support 2.6.37 kernels, but as
-> far as I know this doesn't affect CVE eligibility (please correct me
-> if I'm wrong).
+"Transparent hugepages can only be created if rmap is fully functional. 
+A specially crafted binary could allow the user stack to grow huge and 
+backed by hugepages without this patch while is_vma_temporary_stack() is 
+true.
 
-openSUSE 11.4 is based on 2.6.37, but it's not released yet, but will be
-in a few weeks.
+This also optmizes away some harmless but unnecessary setting of 
+khugepaged_scan.address and it switches some BUG_ON to VM_BUG_ON."
 
-thanks,
+mm/huge_memory.c - introduced in 71e3aac0 (v2.6.38-rc1)
 
-greg k-h
+https://bugzilla.redhat.com/show_bug.cgi?id=678209
+http://git.kernel.org/linus/a7d6e4ecdb7648478ddec76d30d87d03d6e22b31
+
+Thanks, Eugene
