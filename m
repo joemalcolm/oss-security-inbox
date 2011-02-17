@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/25
-Message-ID: <20111121213047.GB23629@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 23:30:47 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/6
+Message-ID: <1905456926.90311.1297974895777.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 17 Feb 2011 15:34:55 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: thp: prevent hugepages during args/env copying into the user stack
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 02:23:49PM -0700, Kurt Seifried wrote:
-> On 11/21/2011 10:53 AM, Henri Salo wrote:
-> > Can I get CVE-identifier for this issue:
-> >
-> > http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
-> >
-> > Other references:
-> >
-> > http://osvdb.org/show/osvdb/76933
-> > http://osvdb.org/show/osvdb/76934
-> > http://osvdb.org/show/osvdb/76932
-> > http://secunia.com/advisories/46762/
-> >
-> > Best regards,
-> > Henri Salo
-> There appear to be two separate issues here, can you confirm this?
+Please use CVE-2011-0999.
+
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> "Transparent hugepages can only be created if rmap is fully
+> functional.
+> A specially crafted binary could allow the user stack to grow huge and
+> backed by hugepages without this patch while is_vma_temporary_stack()
+> is
+> true.
 > 
-> -- 
+> This also optmizes away some harmless but unnecessary setting of
+> khugepaged_scan.address and it switches some BUG_ON to VM_BUG_ON."
 > 
-> -Kurt Seifried / Red Hat Security Response Team
-
-I think this needs three different CVE-identifiers. Here is a description from Secunia and the last item seems critical.
-
-1) Input passed to the "from" parameter in index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-
-2) Input passed to the "page_no" parameter in recentchanges.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-
-3) Input passed to the "userfile" POST parameter in edit.php is not properly verified before being used to upload files. This can be exploited to e.g. upload arbitrary PHP files with e.g. a ".gif" extension.
-
-Best regards,
-Henri Salo
+> mm/huge_memory.c - introduced in 71e3aac0 (v2.6.38-rc1)
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=678209
+> http://git.kernel.org/linus/a7d6e4ecdb7648478ddec76d30d87d03d6e22b31
+> 
+> Thanks, Eugene
