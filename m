@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/9
-Message-ID: <20110715171848.GS18284@redhat.com>
-Date: Fri, 15 Jul 2011 11:18:49 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com, dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/3
+Message-ID: <4D5CCAAD.8070304@redhat.com>
+Date: Thu, 17 Feb 2011 15:13:49 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: thp: prevent hugepages during args/env copying into the user stack
 Content-Type: text/plain; charset=utf-8
 
-* [2011-07-15 15:13:02 +0200] dfncert@...-cert.de wrote:
+"Transparent hugepages can only be created if rmap is fully functional. 
+A specially crafted binary could allow the user stack to grow huge and 
+backed by hugepages without this patch while is_vma_temporary_stack() is 
+true.
 
->There is a vulnerability in the recently introduced OCSP feature in
->FreeRADIUS version 2.1.11.
->
->A patch was proposed to the packet maintainer.
+This also optmizes away some harmless but unnecessary setting of 
+khugepaged_scan.address and it switches some BUG_ON to VM_BUG_ON."
 
-This is pretty light on the details.  Any references to supply or an
-actual description of the problem?
+mm/huge_memory.c - introduced in 71e3aac0 (v2.6.38-rc1)
 
-Link to upstream fixes, emails, bugs, whatever?
+https://bugzilla.redhat.com/show_bug.cgi?id=678209
+http://git.kernel.org/linus/a7d6e4ecdb7648478ddec76d30d87d03d6e22b31
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks, Eugene
