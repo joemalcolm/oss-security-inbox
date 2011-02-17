@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/7
-Message-ID: <4ECD5CF4.8070300@redhat.com>
-Date: Wed, 23 Nov 2011 13:52:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/5
+Message-ID: <Pine.GSO.4.64.1102171308200.2314@faron.mitre.org>
+Date: Thu, 17 Feb 2011 13:10:21 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
+Subject: Re: Webkit Dupes
 Content-Type: text/plain; charset=utf-8
 
-On 11/23/2011 05:23 AM, Hanno Böck wrote:
-> New ffmpeg releases contain a couple of security fixes:
-> http://secunia.com/advisories/46888/
->
-> 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
-> exploited to cause a buffer overflow.
->
-> 2) An integer overflow error within the "vp3_dequant()" function
-> (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
->
-> 3) Errors within the "av_image_fill_pointers()", the
-> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
-> exploited to trigger out-of-bounds reads.
->
->
-> Please assign CVEs.
->
->
-> Maybe someone wants to have a look if other issues in those releases are
-> security relevant:
-> http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
->
-This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
-correct?
 
--- 
+On Sat, 5 Feb 2011, Michael Gilbert wrote:
 
--Kurt Seifried / Red Hat Security Response Team
+> Hi,
+>
+> The following issues are duplicate CVE assignments for webkit.  Please
+> merge and reject these as appropriate.
 
+I will handle these accordingly.  As you've noticed, a lot of CVE 
+descriptions don't have detailed information, so sometimes it's hard to be 
+certain when there are dupes.
 
+> Would it be possible to force Google and Apple to coordinate better to 
+> avoid these dupes?  This is creating unnecessary work and making it 
+> appear that webkit has a lot more issues than it really does.
+
+I started this conversation with both organizations a while ago, and your 
+findings (plus a separate effort by Josh Bressers) are renewing this 
+conversation.  That is, I'm working on it :)
+
+- Steve
