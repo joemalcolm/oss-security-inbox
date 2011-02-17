@@ -1,16 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/5
-Message-ID: <4ED69938.8070401@redhat.com>
-Date: Wed, 30 Nov 2011 13:59:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/5
+Message-ID: <Pine.GSO.4.64.1102171308200.2314@faron.mitre.org>
+Date: Thu, 17 Feb 2011 13:10:21 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: ffmpeg
+Subject: Re: Webkit Dupes
 Content-Type: text/plain; charset=utf-8
 
-Does anyone happen to know the email address for fx of recurity labs? If
-so please message me off list (got a host not found error).
 
--- 
+On Sat, 5 Feb 2011, Michael Gilbert wrote:
 
--Kurt Seifried / Red Hat Security Response Team
+> Hi,
+>
+> The following issues are duplicate CVE assignments for webkit.  Please
+> merge and reject these as appropriate.
 
+I will handle these accordingly.  As you've noticed, a lot of CVE 
+descriptions don't have detailed information, so sometimes it's hard to be 
+certain when there are dupes.
+
+> Would it be possible to force Google and Apple to coordinate better to 
+> avoid these dupes?  This is creating unnecessary work and making it 
+> appear that webkit has a lot more issues than it really does.
+
+I started this conversation with both organizations a while ago, and your 
+findings (plus a separate effort by Josh Bressers) are renewing this 
+conversation.  That is, I'm working on it :)
+
+- Steve
