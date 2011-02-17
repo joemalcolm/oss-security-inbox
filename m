@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/2
-Message-ID: <20110519103901.GJ5100@dhcp-25-225.brq.redhat.com>
-Date: Thu, 19 May 2011 12:39:02 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/4
+Message-ID: <20110217114507.GK13313@ngolde.de>
+Date: Thu, 17 Feb 2011 12:45:07 +0100
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, nelhage@...hage.com
-Subject: CVE-2011-1751 qemu: acpi_piix4: missing hotplug check during device removal
+Subject: CVE id request: telepathy-gabble
 Content-Type: text/plain; charset=utf-8
 
-Writing the value 2 to I/O port 0xae08 ("PCI_EJ_BASE") initiates the
-PIIX3 PCI-ISA bridge removal. Unplugging this causes all of the ISA
-devices to be unplugged and right now the ISA (in particularly the
-RTC) devices cannot handle unplug gracefuly.
+Can I get a CVE id for:
+https://bugs.freedesktop.org/show_bug.cgi?id=34048
 
-During MC146818 removal RTCState structure backing the emulated RTC 
-is freed but embedded timers are not unlinked from active_timers
-list. Next time the timer fires SIGSEGV occurs. RTCState embedds
-several QEMUTimer structures that define function pointers
-(callbacks) that get called when timer expires.
+Thanks!
 
-Since the memory is freed, however, it is possible, under some
-circumstances, for the guest to cause a controlled allocation into
-the freed space, which can ultimately be exploited for code execution
-in the context of the qemu or qemu-kvm process.
-
-Credit: Nelson Elhage
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=699773
-http://lists.nongnu.org/archive/html/qemu-devel/2011-05/msg01810.html
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
