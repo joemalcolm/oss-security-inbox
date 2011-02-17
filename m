@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/8
-Message-ID: <1594226822.1603980.1311708746578.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 15:32:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/6
+Message-ID: <1905456926.90311.1297974895777.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 17 Feb 2011 15:34:55 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: justin@...irish.net, coley <coley@...re.org>
-Subject: Re: CVE request: Drupal Data-module multiple vulnerabilities
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: thp: prevent hugepages during args/env copying into the user stack
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> These issues does not have CVE-identifiers. Could we get one?
-> 
-> http://seclists.org/fulldisclosure/2011/Feb/219
-> 
-> I asked from Justin Klein Keane and he wasn't aware of CVE-identifier.
-> I think this needs identifier even this is an alpha release as this
-> module is used by some production instances. If I am correct two
-> identifiers should be enough. One for XSS and another for SQL
-> injections.
-> 
-> Discussion about the issue: http://drupal.org/node/1056470
-> 
-
-Please use CVE-2011-2714 for the XSS.
-
-CVE-2011-2715 is for the SQL injection.
+Please use CVE-2011-0999.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> "Transparent hugepages can only be created if rmap is fully
+> functional.
+> A specially crafted binary could allow the user stack to grow huge and
+> backed by hugepages without this patch while is_vma_temporary_stack()
+> is
+> true.
+> 
+> This also optmizes away some harmless but unnecessary setting of
+> khugepaged_scan.address and it switches some BUG_ON to VM_BUG_ON."
+> 
+> mm/huge_memory.c - introduced in 71e3aac0 (v2.6.38-rc1)
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=678209
+> http://git.kernel.org/linus/a7d6e4ecdb7648478ddec76d30d87d03d6e22b31
+> 
+> Thanks, Eugene
