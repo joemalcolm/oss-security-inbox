@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/1
-Message-ID: <20110405002712.GB16256@openwall.com>
-Date: Tue, 5 Apr 2011 04:27:12 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Web of trust
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/19/1
+Message-Id: <201102181757.01422.geissert@debian.org>
+Date: Fri, 18 Feb 2011 17:57:00 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: vendor-sec@....de
+Cc: "Steven M. Christey" <coley@...re.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: More Evince overflows
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 11:00:42PM +0200, Yves-Alexis Perez wrote:
-> ... considering the use of GPG, would it make sense to have at
-> least some kind of ???web of trust??? thing on the involved keys?
+On Friday 18 February 2011 08:41:08 Thomas Biege wrote:
+> Has someone assigned a CVE-ID for this already?
+> > https://bugzilla.gnome.org/show_bug.cgi?id=640923
 
-Yes.  I've been checking signatures on keys, although I did "have to"
-accept a few keys that were not verifiable in this way.  I relied on
-other means of verification in those cases.
+Looks like everyone is just waiting for somebody else to assign an id, so 
+let's just assign one:
 
-> That plus
-> subscribing the project address when possible could help maintaining
-> some confidence about where the mail really ends (though that doesn't
-> mean it can't be leaked later).
+Please use CVE-2011-0433
 
-Yes.  With personal addresses, I have to verify that they're
-acknowledged as addresses of the person involved with the project.
-
-There's definitely room for improvement here.
-
-Alexander
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
