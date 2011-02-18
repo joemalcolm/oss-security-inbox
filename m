@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/2
-Message-ID: <20110615220814.GC25196@nekral.nekral.homelinux.net>
-Date: Thu, 16 Jun 2011 00:08:14 +0200
-From: Nicolas François <nicolas.francois@...traliens.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/1
+Message-Id: <201102181532.12697.thomas@suse.de>
+Date: Fri, 18 Feb 2011 15:32:12 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondrej Vasik <ovasik@...hat.com>, kzak@...hat.com
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+Subject: CVE request: avahi daemon remote denial of service by sending NULL UDP
 Content-Type: text/plain; charset=utf-8
 
 Hello,
+does the following need a CVE-ID or already has one assigned?
 
-On Wed, Jun 15, 2011 at 12:50:47PM +0200, Ondrej Vasik wrote:
-> 
-> For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
-> - in util-linux - could only cause a lot of confusion. Some
-> consolidation might be better.
-
-On one hand I agree, on the other hand I remember hard time getting rid of
-Debian specific patches for su.
-The behavior of -c changed and since dependencies to this tool are not
-traced, there were no other ways than grep'ing the whole distro for those
-two letters 'su' to prepare the transition.
-
-One first step could be to compare their features and behaviors
+https://bugzilla.redhat.com/show_bug.cgi?id=667187
 
 
-PS: regarding the original issue, was the CVE requested? I would need the
-    number for documentation purpose.
+Thanks,
+Thomas
 
-Best Regards,
 -- 
-Nekral
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
