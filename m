@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/2
-Message-ID: <BANLkTi=Ny1zUc1B2OYmON9JtU+weG2w35g@mail.gmail.com>
-Date: Fri, 29 Apr 2011 11:24:54 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/3
+Message-Id: <20110218120421.26f58633.michael.s.gilbert@gmail.com>
+Date: Fri, 18 Feb 2011 12:04:21 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel (ARM): heap corruption in OABI semtimedop
+Subject: Re: Webkit Dupes
 Content-Type: text/plain; charset=utf-8
 
-The OABI wrapper for semtimedop does not bound the nsops argument.  A
-sufficiently large value will cause an integer overflow in allocation
-size, followed by copying too much data into the allocated buffer.
-This only affects ARM systems with CONFIG_OABI_COMPAT set.
+On Thu, 17 Feb 2011 13:10:21 -0500 (EST) Steven M. Christey wrote:
 
-This is exploitable for local privilege escalation, but successful
-exploitation requires winning a race.  Because user-to-kernel copy
-functions on ARM zero the destination buffer even on failure to access
-the provided user pointer, the copy loop in the vulnerable function
-that causes the overflow will zero out large amounts of kernel heap if
-not interrupted, crashing the system.  This should be possible to work
-around though.
+> 
+> On Sat, 5 Feb 2011, Michael Gilbert wrote:
+> 
+> > Hi,
+> >
+> > The following issues are duplicate CVE assignments for webkit.  Please
+> > merge and reject these as appropriate.
+> 
+> I will handle these accordingly.  As you've noticed, a lot of CVE 
+> descriptions don't have detailed information, so sometimes it's hard to be 
+> certain when there are dupes.
+> 
+> > Would it be possible to force Google and Apple to coordinate better to 
+> > avoid these dupes?  This is creating unnecessary work and making it 
+> > appear that webkit has a lot more issues than it really does.
+> 
+> I started this conversation with both organizations a while ago, and your 
+> findings (plus a separate effort by Josh Bressers) are renewing this 
+> conversation.  That is, I'm working on it :)
 
--Dan
+Thanks for your wizardry behind the curtain Steve ;)
 
-[1] http://marc.info/?l=linux-kernel&m=130408851326428&w=2
+Mike
