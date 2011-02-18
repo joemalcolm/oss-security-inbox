@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/4
-Message-Id: <201107261658.19639.mweckbecker@suse.de>
-Date: Tue, 26 Jul 2011 16:58:19 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/2
+Message-ID: <20110218165125.GA4245@albatros>
+Date: Fri, 18 Feb 2011 19:51:25 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: hplip: insecure tmp file handling
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The patch of Jim Meyering introduces interdiff regression:
 
-hplip has a tmp file issue:
+$ interdiff -z john-1.7.6-jumbo-9.diff.gz john-1.7.6-jumbo-10.diff.gz
+patch: **** rejecting absolute target file name: /tmp/.private/genie/interdiff-1.7yovIC
+interdiff: Error applying patch1 to reconstructed file
 
-  https://bugzilla.novell.com/show_bug.cgi?id=704608
-  https://bugs.launchpad.net/hplip/+bug/809904
+interdiff creates a patch with absolute filenames, but doesn't pass the
+target filename as an argument to patch.
 
-Could someone possibly assign a CVE to it, please? Thanks in advance!
+It is fixed in the latest upstream version 0.3.2.  The fix itself is as
+follows:
 
-Matthias
+--- patchutils-0.3.1.orig/src/interdiff.c	2011-02-18 17:57:05.000000000 +0300
++++ patchutils-0.3.1/src/interdiff.c	2011-02-18 17:57:24.000000000 +0300
+@@ -808,7 +808,7 @@ apply_patch (FILE *patch, const char *fi
+ 	FILE *w;
+ 
+ 	w = xpipe(PATCH, &child, "w", PATCH,
+-		  reverted ? "-Rsp0" : "-sp0", NULL);
++		  reverted ? "-Rsp0" : "-sp0", file, NULL);
+ 
+ 	fprintf (w, "--- %s\n+++ %s\n", file, file);
+ 	line = NULL;
+--
 
-PS: Not too critical IMO as the code path is probably rarely used anyway.
+
+Thanks,
 
 -- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Vasiliy
