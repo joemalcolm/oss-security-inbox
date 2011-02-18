@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/2
-Message-ID: <CAAsmaPZBrrTKydd=bHsENG6UAPs66sx8+kPh9DTTG21wetjg0w@mail.gmail.com>
-Date: Mon, 18 Jul 2011 22:44:13 -0500
-From: Tim Zingelman <tez@...bsd.org>
-To: dfncert@...-cert.de
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/1
+Message-Id: <201102181532.12697.thomas@suse.de>
+Date: Fri, 18 Feb 2011 15:32:12 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: avahi daemon remote denial of service by sending NULL UDP
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 18, 2011 at 5:37 PM, Solar Designer <solar@...nwall.com> wrote:
->
-> dfncert@...-cert.de wrote:
->> > We would be willing to provide the patch to all Linux distributors
->> > but we do not want to release the patch publicly and wait for the
->> > official patch by the packet maintainer of FreeRADIUS.
->
-> For FreeRADIUS specifically, it sounds like non-Linux vendors could be
-> interested as well.  DFN-CERT did mention Linux distros specifically in
-> the quote above, so the suggestion to use the list was appropriate, but
-> perhaps requests from other distros shipping FreeRADIUS should be
-> accommodated as well.  If something like this arrived to the Linux
-> distros list without prior discussion on oss-security, I would bring
-> this up and suggest that we contact *BSD's at least.  Since this is
-> already on oss-security, I assume that interested *BSD's and others may
-> ask DFN-CERT themselves. ;-)
->
+Hello,
+does the following need a CVE-ID or already has one assigned?
 
-NetBSD pkgsrc security team would be interested in the patch, as
-FreeRADIUS is included in pkgsrc.
-You could send to me, or to pkgsrc-security@...bsd.org in either case
-the message could be encrypted using
-this key  http://ftp.netbsd.org/pub/NetBSD/security/PGP/pkgsrc-security@NetBSD.org.asc
+https://bugzilla.redhat.com/show_bug.cgi?id=667187
+
 
 Thanks,
+Thomas
 
-- Tim
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
