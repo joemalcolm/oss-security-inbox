@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/6
-Message-ID: <20110715131302.GB20116@flens.dfn-cert.de>
-Date: Fri, 15 Jul 2011 15:13:02 +0200
-From: dfncert@...-cert.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/2
+Message-ID: <20110218165125.GA4245@albatros>
+Date: Fri, 18 Feb 2011 19:51:25 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de
-Subject: CVE request: vulnerability in FreeRADIUS (OCSP)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: patch directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The patch of Jim Meyering introduces interdiff regression:
 
-There is a vulnerability in the recently introduced OCSP feature in
-FreeRADIUS version 2.1.11.
+$ interdiff -z john-1.7.6-jumbo-9.diff.gz john-1.7.6-jumbo-10.diff.gz
+patch: **** rejecting absolute target file name: /tmp/.private/genie/interdiff-1.7yovIC
+interdiff: Error applying patch1 to reconstructed file
 
-A patch was proposed to the packet maintainer.
+interdiff creates a patch with absolute filenames, but doesn't pass the
+target filename as an argument to patch.
 
-Thanks.
+It is fixed in the latest upstream version 0.3.2.  The fix itself is as
+follows:
 
-- -- 
-DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
-Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
-Sachsenstrasse 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
------BEGIN PGP SIGNATURE-----
+--- patchutils-0.3.1.orig/src/interdiff.c	2011-02-18 17:57:05.000000000 +0300
++++ patchutils-0.3.1/src/interdiff.c	2011-02-18 17:57:24.000000000 +0300
+@@ -808,7 +808,7 @@ apply_patch (FILE *patch, const char *fi
+ 	FILE *w;
+ 
+ 	w = xpipe(PATCH, &child, "w", PATCH,
+-		  reverted ? "-Rsp0" : "-sp0", NULL);
++		  reverted ? "-Rsp0" : "-sp0", file, NULL);
+ 
+ 	fprintf (w, "--- %s\n+++ %s\n", file, file);
+ 	line = NULL;
+--
 
-iQEVAwUBTiA83fNu3tfxLoPHAQJ4SAf/UVCeXlAojFxccVgLygyZFRboX2hPjeOF
-b5OAyUWSi7Uh9O/NFpyUi/JErQI6Z2QYHnp0gnEWLMN/q3SJe6nnrH7EunNexUvx
-cNAwASJoZS+JXpG9Q33oSLPeAkZ3jO6VgAy5dMQVFLDR0KV7y+1BW93v2yazzeXP
-7vj7+umns4n5mr6/xEi4LXWTuVMvY0WEe3DFvZ21Sj3mxz07VvKp2/NU+LKOGVzT
-76Zt2oJYb5bq3f8HP6Rrg62wY8bQPS2tNBj6MWieWh7Zf7GrwdmdaX4dqwk7Q+X/
-OMN0+NYJLEGVlVayDcV6Dj/hDOQW2m2LRf7uwm//6qj0cwqqoZkyCw==
-=o4QW
------END PGP SIGNATURE-----
+
+Thanks,
+
+-- 
+Vasiliy
