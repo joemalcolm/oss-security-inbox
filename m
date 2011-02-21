@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/12
-Message-ID: <4EC2D257.2050105@redhat.com>
-Date: Tue, 15 Nov 2011 13:57:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/1
+Message-ID: <20110221114858.439da53b@laverne>
+Date: Mon, 21 Feb 2011 11:48:58 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE-2011-3368 suggested patch incomplete for apache2 < 2.2.18
+Subject: clamav 0.97
 Content-Type: text/plain; charset=utf-8
 
-On 11/15/2011 01:31 PM, Vincent Danen wrote:
-> * [2011-10-26 18:02:00 +0200] Marcus Meissner wrote:
->
->> during our QA we noticed that the mod_proxy fix for CVE-2011-3368
->> was incomplete for HTTP 0.9 style requests.
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=722545
->>
->> to cross check, with the RewriteRules setup as in the exploit:
->>
->> $ telnet testhost 80
->> GET @www.otherhost/foo.png
->> ... should give a 400 error, and not the 404 code from www.otherhost
->
-> Did this ever get a CVE name (aka "incomplete fix of CVE-2011-3368")?
->
-The second fix for this issue was assigned CVE-2011-3639
+A new clamav version is out and as usual, they don't mention if it's
+security-relevant.
+
+Though from the changelog
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97
+
+at least this sounds like security:
+ * libclamav/vba_extract.c: fix error path double free (bb#2486)
 
 -- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
--Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
