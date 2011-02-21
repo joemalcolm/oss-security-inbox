@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/8
-Message-ID: <4E099406.9050501@initfour.nl>
-Date: Tue, 28 Jun 2011 10:42:46 +0200
-From: Herman van Rink <rink@...tfour.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/4
+Message-ID: <2055440471.142325.1298316732631.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Feb 2011 14:32:12 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Mango <h@...r.se>,  phpMyAdmin Security Team <security@...myadmin.net>
-Subject: Re: [Phpmyadmin-security] CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
+Cc: coley <coley@...re.org>
+Subject: Re: clamav 0.97
 Content-Type: text/plain; charset=utf-8
 
-On 28-06-11 09:36, Jan Lieskovsky wrote:
-> Hello Mango,
->
->    thank you for your report.
+----- Original Message -----
+> A new clamav version is out and as usual, they don't mention if it's
+> security-relevant.
+> 
+> Though from the changelog
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97
+> 
+> at least this sounds like security:
+> * libclamav/vba_extract.c: fix error path double free (bb#2486)
+> 
 
-Thanks for the info, we'll investigate.
-Mango, could you provide some more details, off-list preferably, on the
-exact methods you used?
+The details here are pretty slim:
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2486
 
+But since it's been reqeusted, let's use CVE-2011-1003.
 
-> Wondering if you have contacted phpMyAdmin Security Team first (Cc-ed
-> too) for their review, opinion and actions planned regarding the issues
-> below? ( http://www.phpmyadmin.net/home_page/security/ )
-
-This had not yet been reported to us, thanks for cc'ing.
+Thanks.
 
 -- 
-Met vriendelijke groet / Regards,
-
-Herman van Rink 
-Initfour websolutions
-
-
+    JB
