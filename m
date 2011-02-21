@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/16
-Message-ID: <AANLkTimn6nZpt8tT-O=c9D=sPSR8VuUkkdFMuu8BEqNT@mail.gmail.com>
-Date: Mon, 21 Mar 2011 19:18:58 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: heap corruption in IrDA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/2
+Message-Id: <201102211233.19436.thomas@suse.de>
+Date: Mon, 21 Feb 2011 12:33:19 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: ruby: FileUtils is vulnerable to symlink race attacks + Exception methods can bypass $SAFE
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 21, 2011 at 12:59 AM, Eugene Teo <eugene@...hat.com> wrote:
-> On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
->>
->> When providing an invalid IrDA nickname for an IrNET peer, a local
->> attacker can cause a kernel panic due to an underflow in a memcpy()
->> size calculation or cause a controllable heap overflow that may lead
->> to privilege escalation.  Write access to the /dev/irnet device file
->> is required to trigger the vulnerability.
->>
->> Reference:
->> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
->
-> The default permissions for /dev/irnet is root-read/write only. In the past
-> I have ignored such issues that can only be triggered by root, even though
-> the permissions can be changed. I wouldn't assign a CVE name for this. CC'ed
-> Steve.
->
 
-Fair enough, I should probably have been more clear about the exact
-impact of the flaw.  But given recent discussions about hardening the
-kernel even against the root user, it seems like reliably triggered
-kernel memory corruption of any kind enables crossing some security
-boundary, so this may still deserve a CVE - just one with a
-description that accurately reflects the relatively less common attack
-scenario.
+AFAIK this two need a CVE-ID:
+1) http://www.ruby-lang.org/en/news/2011/02/18/fileutils-is-vulnerable-to-symlink-race-attacks/
+2) http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
 
--Dan
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
