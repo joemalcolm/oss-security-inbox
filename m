@@ -1,97 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/29/1
-Message-ID: <1314618021.2424.3.camel@scapa>
-Date: Mon, 29 Aug 2011 13:40:16 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/4
+Message-ID: <2055440471.142325.1298316732631.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Feb 2011 14:32:12 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+Cc: coley <coley@...re.org>
+Subject: Re: clamav 0.97
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-26 at 21:14 +0400, Solar Designer wrote:
-> On Fri, Aug 26, 2011 at 11:07:20AM +0200, Yves-Alexis Perez wrote:
-> > Would something like:
-> > 
-> > diff --git a/src/dmrc.c b/src/dmrc.c
-> > index bff1da8..9f38faf 100644
-> > --- a/src/dmrc.c
-> > +++ b/src/dmrc.c
-> > @@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar
-> *username)
-> >      /* Update the users .dmrc */
-> >      if (user)
-> >      {
-> > +      /* write the file as the user itself */
-> > +      pid_t pid;
-> > +      pid = fork();
-> > +
-> > +      if (pid == 0)
-> > +      {
-> > +        if (setuid (user_get_uid(user)) < 0)
-> > +        {
-> > +          g_warning("Error changing uid for %s: %s", username,
-> g_strerror(errno));
-> > +          _exit(EXIT_FAILURE);
-> > +        }
+----- Original Message -----
+> A new clamav version is out and as usual, they don't mention if it's
+> security-relevant.
 > 
-> You also need to switch gid and groups, and you do not have to fork()
-> if
-> you only switch euid/egid/groups or fsuid/fsgid/groups.  The latter
-> may
-> be less portable, but at least on Linux it affects only the current
-> thread in a multi-threaded process.  Probably this difference is
-> irrelevant in your case, though.
+> Though from the changelog
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97
+> 
+> at least this sounds like security:
+> * libclamav/vba_extract.c: fix error path double free (bb#2486)
+> 
 
-Well, I don't think lightdm is linux-only and at least in Debian it'd be
-nice to have it available and safe on kfreebsd (and hurd, haha).
-> 
-> Here's an example:
-> 
-> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
-> 
-> A tricky part is what to do when you have partially switched
-> credentials
-> and one of the syscalls fails (e.g., you've switched the gid but not
-> yet
-> the uid).  The code referenced above (Linux-PAM commit) tries to
-> restore
-> the old credentials, but ignores possible failure to do so.  A better
-> action might be to terminate the current process on failure to restore
-> old credentials.
+The details here are pretty slim:
+https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2486
 
-Yeah, right now with the fork() approach, I think it's safe to exit with
-EXIT_FAILURE if anything goes bad and not try too hard to fall our feet.
-> 
-> >          path = g_build_filename (user_get_home_directory (user),
-> ".dmrc", NULL);
-> >          g_file_set_contents (path, data, length, NULL);
-> > -        if (getuid () == 0 && chown (path, user_get_uid (user),
-> user_get_gid (user)) < 0)
-> > -            g_warning ("Error setting ownership on %s: %s", path,
-> strerror (errno));
-> >          g_free (path);
-> > +        _exit(EXIT_SUCCESS);
-> > +
-> > +      }
-> > +      if (pid > 0)
-> > +        wait(NULL);
-> >      }
-> 
-> You're lucky that you don't seem to need to pass the result of
-> g_file_set_contents() back to the parent process.  If you were reading
-> rather than writing a file, you'd have difficulty using the fork()
-> approach.  However, in your case fork() may actually be fine (but you
-> do
-> need to drop gid and groups as well).
+But since it's been reqeusted, let's use CVE-2011-1003.
 
-By the way, would you know some kind of lib for “safe privileges
-dropping” for that kind of usage. I quickly looked at glib and while
-they do have some primitives for process spawning, there's nothing
-related to dropping privs. It looks like something which might be
-useful.
+Thanks.
 
-Regards,
 -- 
-Yves-Alexis
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
