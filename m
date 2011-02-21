@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/2
-Message-ID: <4E44BF8F.1070007@redhat.com>
-Date: Fri, 12 Aug 2011 11:22:15 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/5
+Message-ID: <484004077.143287.1298317970746.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Feb 2011 14:52:50 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: foomatic-gui
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: ruby: FileUtils is vulnerable to symlink race attacks + Exception methods can bypass $SAFE
 Content-Type: text/plain; charset=utf-8
 
-On 08/04/2011 11:23 PM, Josh Bressers wrote:
 
-> My impression is that the code is the same, which means they will share the
-> same ID. If the code is totally different, we will want to split. Time, you
-> know best, is the code in question the same, or is it different?
+
+----- Original Message -----
+> AFAIK this two need a CVE-ID:
+> 1)
+> http://www.ruby-lang.org/en/news/2011/02/18/fileutils-is-vulnerable-to-symlink-race-attacks/
+
+CVE-2011-1004 Ruby FileUtils.remove_entry_secure symlink attack
+
+
+> 2)
+> http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
 > 
 
-I agree, it does really look like the same code-base to me.
+CVE-2011-1005 Ruby Exception methods can bypass $SAFE
 
-
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
