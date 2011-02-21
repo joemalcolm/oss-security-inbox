@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/6
-Message-ID: <20110316094025.GA15861@lupin.home.powdarrmonkey.net>
-Date: Wed, 16 Mar 2011 09:40:25 +0000
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/2
+Message-Id: <201102211233.19436.thomas@suse.de>
+Date: Mon, 21 Feb 2011 12:33:19 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for python-feedparser
+Subject: CVE request: ruby: FileUtils is vulnerable to symlink race attacks + Exception methods can bypass $SAFE
 Content-Type: text/plain; charset=utf-8
 
 
-Please allocate a CVE for a further XSS vulnerability:
-
-http://code.google.com/p/feedparser/issues/detail?id=195
-
-It's an old bug, but I couldn't find any reference of a CVE ID. I'm not
-subscribed so I'd appreciate a CC.
-
-Thanks,
+AFAIK this two need a CVE-ID:
+1) http://www.ruby-lang.org/en/news/2011/02/18/fileutils-is-vulnerable-to-symlink-race-attacks/
+2) http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
 
 -- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
 
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
