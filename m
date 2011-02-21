@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/2
-Message-id: <5E1237E8-121D-46DD-B38D-33A741841801@apple.com>
-Date: Mon, 04 Apr 2011 19:54:30 -0700
-From: Jeffrey Czerniak <jeffcz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/3
+Message-ID: <20110221183952.GD3901@pisco.westfalen.local>
+Date: Mon, 21 Feb 2011 19:39:52 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE requests: freebsd kernel/tesseract/xinha/proftpd
 Content-Type: text/plain; charset=utf-8
 
-On Apr 4, 2011, at 4:27 PM, Solar Designer wrote:
-> 
-> Yet I recognize that Apple has been contributing to vendor-sec, so I'd
-> be happy to add you to a suitable list if one is setup.  Perhaps a BSD
-> distros list, which would generally be CC'ed on issues that are expected
-> to be shared between Linux and *BSD userlands and thus likely also with
-> Mac OS X?  Do you and other vendors feel that such a list is needed?
-> 
-> So far, yours is the only non-Linux vendor request.  For just one
-> vendor, we can be CC'ing you whenever appropriate, with no list needed.
+Hi,
+Please assign CVE IDs for the following issues from the Debian
+Security Tracker:
 
-Hello Solar Designer,
+1. FreeBSD kernel: local DoS
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
+http://www.exploit-db.com/exploits/16064/
+http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
 
-We found the vendor-sec email list useful not just for reporting issues in open-source projects, but also for receiving advance notification about issues that affect the various open-source libraries and applications that Apple ships.  (More details can be found at http://www.opensource.apple.com/)
+2. Xinha: Multiple vulnerabilities
+(The code is included in a few web apps, e.g. serendipity, openacs or dotlrn)
+http://secunia.com/advisories/40669/
 
-If you are not willing to grant us full membership to the new list, we at least hope we can be cc-ed on all userland issues reported to the list.
+3. tesseract: Insecure temp file handling
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
 
-Best regards,
+4. proftpd mod_sftp integer overflow
+http://bugs.proftpd.org/show_bug.cgi?id=3586
+http://www.exploit-db.com/exploits/16129/
 
-----------------
-Jeffrey Czerniak
-Apple Product Security Response
-jeffcz@...le.com
-----------------
-
-
+Cheers,
+        Moritz
