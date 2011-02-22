@@ -1,26 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/14
-Message-ID: <20110321214927.GF11269@uio.no>
-Date: Mon, 21 Mar 2011 22:49:27 +0100
-From: "Steinar H. Gunderson" <sgunderson@...foot.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, team@...urity.debian.org
-Subject: Re: CVE request: MPM-ITK module for Apache HTTPD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/6
+Message-ID: <4D63CA0F.5080608@redhat.com>
+Date: Tue, 22 Feb 2011 15:37:03 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Shawn M Moore <sartak@...tpractical.com>, Thomas Sibley <trs@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>
+Subject: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 21, 2011 at 04:24:38PM -0400, Josh Bressers wrote:
->> In certain configurations, the MPM-ITK module for Apache HTTPD serves
->> a
->> request as root user instead of the run user configured in the HTTPD
->> configuration:
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
-> Please use CVE-2011-1176
+Hello Josh, Steve, vendors,
 
-Thanks. Here are the relevant announcements (with patches):
+   RT3 upstream has released latest v3.8.9 version:
+   [1] http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
 
-http://lists.err.no/pipermail/mpm-itk/2011-March/000393.html
-http://lists.err.no/pipermail/mpm-itk/2011-March/000394.html
+   addressing three security flaws:
+   1) * Move to a SHA-256 based password hashing scheme
+      This has already got CVE id of CVE-2011-0009:
+      http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0009
 
-/* Steinar */
--- 
-Homepage: http://www.sesse.net/
+   2) * Redirect users to their desired pages after login.
+      This prevents possible back button attacks after a user logs out.
+
+      Further issue details:
+      A security flaw was found in the way the RT3 ticketing
+      system handled resubmitting of form data after the user
+      has logged out of the browser (but not closed it).
+      A local attacker could use this flaw to access the user
+      account of the victim (login without providing a password
+      or obtain user credentials).
+
+      References:
+      [a] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614575
+      [b] http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
+
+      Upstream bug report:
+      [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
+
+      Upstream changeset:
+      [d] https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
+
+      Thomas, could you please confirm [d] is the proper fix for 2) issue? Thank you.
+      (* Redirect users to their desired pages after login.)
+
+   3) * Clone Scrip's TicketObj since we change the CurrentUser and it can leak
+      information (Custom field values, etc)
+
+      Further issue details:
+      A security flaw was found in the way the RT3 ticketing
+      system handled logging of SQL queries during performing
+      of user account transition. A remote, authenticated RT3
+      user could use this flaw to obtain sensitive information.
+
+      References:
+      [i]  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614576
+      [ii] http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
+
+      Upstream changeset (needs confirmation from upstream if it's
+      real fix for the issue yet):
+      [iii] https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
+
+      Shawn, could you please confirm [iii] is the proper fix for 3) issue?
+      (* Clone Scrip's TicketObj since we change the CurrentUser and it can leak)
+
+      If [iii] not being the correct one for 3) issue, could you point us
+      to the right one? Thank you.
+
+
+Steve, once patches confirmed, could you allocate CVE ids for the 2), and 3) issues?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
