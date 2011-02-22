@@ -1,88 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/2
-Message-ID: <CANbgwsFy5SQO_Q7YwyMJmjKA3DOVzdY-PtoaOjV4eSHD+sVwqQ@mail.gmail.com>
-Date: Sat, 30 Jul 2011 22:06:17 +0530
-From: Abhijeet Patil <getabhijeetpatil@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/17
+Message-ID: <20110222225256.2f684e4d@laverne>
+Date: Tue, 22 Feb 2011 22:52:56 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CFP open for ClubHack2011
+Subject: CVE request: simple machines forum before 1.1.13
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-Its time for hackers across the globe to gather in India.
-ClubHack announces its CFP open for ClubHack2011. See
-http://clubhack.com/2011/cfp
+http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
 
-ClubHack2011 is expecting a good deep knowledge technical
-presentations/demonstrations on topics from the world of Information
-Security. These presentations are expected to be of 40 minutes each. The
-schedule time for each presenter would be 50 minutes out of which 40 minutes
-are for the presentation & 10 for the question-answer sessions. We’d request
-you to submit the papers keeping the time constraint in mind.
+No useful info on the kind of vulnerability, just states "Several
+security-related fixes"
 
-:: Event ::
-Date: 3rd & 4th December (As Usual the first weekend of December)
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-
-:: Scope ::
-(includes, but not limited to)
-
-# Cloud Application Security
-# Mobile Security (cellular technologies)
-# Mobile platform attacks (iOS, Android, BB, Win7, Symbian)
-# Cyber Intelligence
-# Cyber warfare
-# Hardware mods
-# Critical Infrastructure Attack & Protection
-# Protocol based vulnerability in networks and computers
-# Firewall Evasion techniques
-# Data Recovery and Incident Response
-# WLAN and Bluetooth Security
-# Cryptography and Cryptanalysis
-# Computer forensics
-# Open source hacking toolkit
-# Cyber Crime & law
-
-:: Exclusion ::
-# Sales Pitch
-
-
-:: Deadlines ::
-Opening: 30th July 2011
-Abstract Submission: 15th October 2011
-Announcement of selected papers: 5th November 2011
-Full Paper Submission: 12th November 2011
-
-:: Speakers' Privileges ::
-# 100% Travel reimbursement of economy return tickets for all Indian speaker
-# Travel arrangement (not reimbursement) for all foreign speakers
-# Accommodation for 2
-# Complementary passes for event & party for 2
-# Gift hampers & freebies
-
-
-:: Sponsors ::
-That reminds, if you are interested in supporting the event in any
-possible way, please write to us sponsor@...bhack.com
-
-
-:: Other details ::
-All other details are available at
-Event website: http://clubhack.com/2011.
-
-See previous years websites at
-    http://clubhack.com/2007
-    http://clubhack.com/2008
-    http://clubhack.com/2009
-    http://clubhack.com/2010
-
-
-:: Submission ::
-Check submission details at http://clubhack.com/2011/cfp & send it to
-cfp@...bhack.com
-
-
-See you in India this winter.
-
-Thanks
-team ClubHack
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
