@@ -1,14 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/1
-Message-ID: <CAJzxamLah2HQnPtbHgFH2ZJtx5PfO70bcxrdobGpcHCwnifwyg@mail.gmail.com>
-Date: Wed, 2 Nov 2011 12:35:55 +1100
-From: David Black <disclosure@....org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/15
+Message-ID: <648243128.170008.1298410056466.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 16:27:36 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
 Content-Type: text/plain; charset=utf-8
 
-The Tastypie announcement can be found at
-http://groups.google.com/group/django-tastypie/browse_thread/thread/8b668d1831d35012
 
-and the patch to fix this bug can be found at
-https://github.com/toastdriven/django-tastypie/commit/e8af315211b07c8f48f32a063233cc3f76dd5bc2
+
+----- Original Message -----
+> On Tue, Feb 22, 2011 at 03:44:29PM -0500, Josh Bressers wrote:
+> >
+> >
+> > ----- Original Message -----
+> > > Reported by Timo Warns, "Validate number of blocks in map and remove
+> > > redundant variable."
+> > >
+> > > http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
+> > > https://bugzilla.redhat.com/show_bug.cgi?id=679282
+> > >
+> >
+> > I don't understand the security implication of this bug. Can you
+> > explain it?
+> 
+> Incorrectly formed mac partition tables could cause bad things to happen
+> when it was automatically scanned after plugging in a device with this
+> type of partition table on it.
+> 
+
+This is good enough for me. Please use CVE-2011-1010.
+
+Thanks.
+
+-- 
+    JB
