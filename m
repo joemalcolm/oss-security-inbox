@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/14
-Message-ID: <20110216183742.GB11446@inutil.org>
-Date: Wed, 16 Feb 2011 19:37:42 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/11
+Message-ID: <20110222204712.GA7594@kroah.com>
+Date: Tue, 22 Feb 2011 12:47:12 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: bridge br_multicast NULL pointer dereference
+Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 16, 2011 at 08:44:08AM -0500, Josh Bressers wrote:
-
-> > (2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and
-> > subsequently restored in 7f285fa78d (v2.6.35-rc5).
+On Tue, Feb 22, 2011 at 03:44:29PM -0500, Josh Bressers wrote:
+> 
+> 
+> ----- Original Message -----
+> > Reported by Timo Warns, "Validate number of blocks in map and remove
+> > redundant variable."
+> > 
+> > http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
+> > https://bugzilla.redhat.com/show_bug.cgi?id=679282
 > > 
 > 
-> Please use CVE-2011-0709.
+> I don't understand the security implication of this bug. Can you explain it?
 
-I don't think it makes sense to assign CVE IDs to issues, which only
-occured in development snapshots?
+Incorrectly formed mac partition tables could cause bad things to happen
+when it was automatically scanned after plugging in a device with this
+type of partition table on it.
 
-This wasn't done in the past and it creates needless overhead.
+Hope this helps,
 
-Cheers,
-        Moritz
+greg k-h
