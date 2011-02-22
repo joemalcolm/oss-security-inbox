@@ -1,44 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/6
-Message-Id: <201103140912.35250.stephan.mueller@atsec.com>
-Date: Mon, 14 Mar 2011 09:12:34 +0100
-From: Stephan Mueller <stephan.mueller@...ec.com>
-To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/16
+Message-ID: <4D642BE8.9070600@bestpractical.com>
+Date: Tue, 22 Feb 2011 16:34:32 -0500
+From: Thomas Sibley <trs@...tpractical.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>,  Shawn M Moore <sartak@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>,  security@...tpractical.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
+Hi folks,
 
-Hi Vasiliy,
+Is Redhat packaging RT now, or are you just handling the CVEs?
 
+In all future security mail, please use our security contact address
+security@...tpractical.com, not developer email addresses pulled from
+commits.  Details for our security contact are at:
+http://bestpractical.com/security/
+
+We have no context for Redhat's (and Debian's?) involvement here.  Can
+you bring us up to speed on your plans regarding CVEs and/or security
+releases in your distributions?
+
+On 22 Feb 2011 09:37, Jan Lieskovsky wrote:
+>   2) * Redirect users to their desired pages after login.
+[snip]
+>      Upstream bug report:
+>      [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
 > 
-> What I suggest is something like "-o untrusted" option to mount.  This
-> would mean that the system considers the input from such fs as a malicious
-> input.  Such mounted fs would try to consider the data on disk as
-> untrusted and to be as robust as possible, e.g. check against
-> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
-> hear opinions about the usefulness of this feature.
+>      Upstream changeset:
+>      [d]
+> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
+> 
+> 
+>      Thomas, could you please confirm [d] is the proper fix for 2)
+> issue? Thank you.
+>      (* Redirect users to their desired pages after login.)
 
-I completely second your concerns.
+The commit you linked to is not the full fix.  As noted in our own bug
+report you also link to above, the fix was merged into 3.8-trunk with
+commit 057552287159e801535e59b8fbd5bd98d1322069.
 
-However, how do you propose to implement that "untrusted" option? The core 
-problem IMHO is that the physical layout and structure in a file system is 
-assumed to be correct in general by the kernel. The physical file system 
-implementations (including any depending code, like the LSMs for interpreting 
-XATTRs) have some checks for an input validation. But I highly doubt that all 
-checks necessary for an untrusted file system layout are implemented - to have 
-all such checks would cause some speed penalties nobody wants to carry.
+That said, what are your plans for the diffset?  The commit itself can't
+be used as a standalone patch for the issue.  It introduced a few other
+bugs in core RT and broke the current stable versions of
+RT-Authen-ExternalAuth (a very popular, critical extension).  The bugs
+have been fixed by other commits and there are development releases of a
+fixed ExternalAuth.
 
-For example, the more sophisticated physical file systems (ext3/4, btrfs or 
-xfs come to mind) use pointers to the different blocks/extends. Is it really 
-ensured that misalignment of these pointers cannot cause adverse consequences 
-- at least crash the system?
+Are you trying to package a patch in a security update?
 
-Therefore, if you consider a file system untrusted, a simple flag "untrusted" 
-which disables some high-level logic (like symlinks across partitions or funky 
-file names) may just be window-dressing until the entire parsing of the 
-physical data structure layout is hardened.
+>   3) * Clone Scrip's TicketObj since we change the CurrentUser and it
+> can leak
+>      information (Custom field values, etc)
+> 
+[snip]
+>      Upstream changeset (needs confirmation from upstream if it's
+>      real fix for the issue yet):
+>      [iii]
+> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
+> 
+> 
+>      Shawn, could you please confirm [iii] is the proper fix for 3) issue?
+>      (* Clone Scrip's TicketObj since we change the CurrentUser and it
+> can leak)
 
-Ciao
-Stephan
+The above commit is an unrelated bug fix.  The correct commit is
+2338cd19ed7a7f4c1e94f639ab2789d6586d01f3, however we've never tested it
+as a standalone fix.  Again, what are your plans?
+
+Thomas, for Best Practical
