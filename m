@@ -1,48 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/8
-Message-ID: <286851831.43477.1303158210927.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Apr 2011 16:23:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/5
+Message-ID: <1330262815.154246.1298379715067.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 08:01:55 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Wireshark 1.2.16 / 1.4.5
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
-> 
-> I noticed that new wireshark versions 1.2.16/1.4.5 were released on
-> 14th/15th April 2011 and some of issues fixed appear to have security
-> impact
-> 
-> 1. Use of un-initialised variables:
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
-> Patch:
-> http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
-> Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
-
-Please use CVE-2011-1590
-
-> 
-> 2. Buffer overflow in DECT dissector
-> The advisory does not list the bug number or the relevant patch.
-
-Please use CVE-2011-1591
-
-> 
-> 3. Crash in NFS dissector
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
-> Versions affected: 1.4.0 to 1.4.4.
-> This affects Windows only.
-> 
-> http://www.wireshark.org/security/wnpa-sec-2011-05.html
-> http://www.wireshark.org/security/wnpa-sec-2011-06.html
-> 
-
-Please use CVE-2011-1592
+Do we know the affected versions? This probably won't be 20 IDs,
+but I suspect it won't be one either.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> There are 20 patches here - some are accepted, some are probably
+> pending. All from Vasiliy Kulikov.
+> 
+> [PATCH 01/20] mach-omap2: mux: world-writable debugfs files
+> https://lkml.org/lkml/2011/2/4/66 arm arch
+> 
+> [PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
+> https://lkml.org/lkml/2011/2/4/67 arm arch
+> 
+> [PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage
+> files
+> https://lkml.org/lkml/2011/2/4/68 arm arch
+> 
+> [PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
+> https://lkml.org/lkml/2011/2/4/69 arm arch
+> 
+> [PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
+> https://lkml.org/lkml/2011/2/4/70
+> 
+> [PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
+> https://lkml.org/lkml/2011/2/4/81
+> 
+> [PATCH 07/20] video: sn9c102: world-wirtable sysfs files
+> https://lkml.org/lkml/2011/2/4/85
+> 
+> [PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
+> https://lkml.org/lkml/2011/2/4/82
+> 
+> [PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
+> https://lkml.org/lkml/2011/2/4/84
+> 
+> [PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
+> https://lkml.org/lkml/2011/2/4/71
+> 
+> [PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
+> https://lkml.org/lkml/2011/2/4/83
+> 
+> [PATCH 12/20] net: can: at91_can: world-writable sysfs files
+> https://lkml.org/lkml/2011/2/4/80
+> fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
+> 
+> [PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination
+> file
+> https://lkml.org/lkml/2011/2/4/72
+> 1e6d93e45b231b3ae87c01902ede2315aacfe976
+> 
+> [PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg
+> file
+> https://lkml.org/lkml/2011/2/4/79
+> b80b168f918bba4b847e884492415546b340e19d
+> 
+> [PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
+> https://lkml.org/lkml/2011/2/4/73
+> 8040835760adf0ef66876c063d47f79f015fb55d
+> 
+> [PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless
+> and jogdial files
+> https://lkml.org/lkml/2011/2/4/78
+> 8a6a142c1286797978e4db266d22875a5f424897
+> 
+> [PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
+> https://lkml.org/lkml/2011/2/4/74
+> 
+> [PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
+> https://lkml.org/lkml/2011/2/4/75
+> 
+> [PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
+> https://lkml.org/lkml/2011/2/4/76
+> 
+> [PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
+> https://lkml.org/lkml/2011/2/4/77
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=679303
+> --
+> Eugene Teo / Red Hat Security Response Team
