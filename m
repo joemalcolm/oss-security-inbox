@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/8
-Message-ID: <20110124214124.GD4979@outflux.net>
-Date: Mon, 24 Jan 2011 13:41:24 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/1
+Message-Id: <201102211852.34619.geissert@debian.org>
+Date: Mon, 21 Feb 2011 18:52:33 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: libxml2 heap contents leak
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: CVE-2011-0436: dtc sends password of new users to site admin by unencrypted email
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+retitle 614302 CVE-2011-0436: new users' unencrypted passwords emailed to site admin
+thanks
 
-I'd like to get a CVE assigned for a minor heap contents leak in
-libxml2. I reported that it is possible to leak heap memory contents
-from libxml2 (and things linked against it, for example PHP[1], or things
-written in PHP[2]):
+Hi Steven, vendors,
 
-https://bugzilla.gnome.org/show_bug.cgi?id=631551
+I have assigned CVE-2011-0436 to the following issue:
+http://bugs.debian.org/614302
 
-Thanks,
-
--Kees
-
-[1] http://bugs.php.net/bug.php?id=52998
-[2] http://status.net/open-source/issues/2798
-
+Regards,
 -- 
-Kees Cook
-Ubuntu Security Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
