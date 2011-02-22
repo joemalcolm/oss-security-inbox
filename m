@@ -1,27 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/17
-Message-ID: <4E130401.3090501@redhat.com>
-Date: Tue, 05 Jul 2011 20:30:57 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/7
+Message-Id: <201102221731.05213.thomas@suse.de>
+Date: Tue, 22 Feb 2011 17:31:05 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: vsftpd download backdoored
+Subject: gdm PostLogin script executes scripts as user gdm
 Content-Type: text/plain; charset=utf-8
 
-On 07/05/2011 01:25 AM, Solar Designer wrote:
-> On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
->> IIRC for such backdoored downloads CVE IDs were assigned in the past
->> to properly track the status of distributions providing the affected 
->> piece of code.
-> 
-> I suspect that no distributions provide the affected code this time.
-> So if affected distributions is the only reason for CVE ID assignment in
-> this case, it might make sense to postpone CVE ID allocation until we
-> learn of an affected distribution (which we probably won't).
+Hello oss-security,
 
-But with a CVE name, it is easier for people to refer to this issue, and
-also easier for distributions to publish an official statement.
+should we consider this as a vulnerability?
+https://bugzilla.gnome.org/show_bug.cgi?id=602403
 
-My two cents.
+cite:
+------------------------------------------------------------------------------
+ericlesoll [reporter] 2009-11-19 13:00:11 UTC
 
-Eugene
+on Ubuntu Karmic Koala and Fedora 12
+After a fresh install on some machines and update from Jaunty on another one,
+we can't catch $USER $USERNAME $LOGNAME
+from /etc/gdm/PostLogin/Default, we get "gdm" for all variables instead of real
+login name. It was working since 7.04 version.
+If in a terminal we run : echo $USER, we get the real login name.
+
+example below :
+
+If I put those 3 lines in /etc/gdm/PostLogin/Default:
+
+echo $USER > /tmp/aaa.txt
+echo $USERNAME >> /tmp/aaa.txt
+echo $LOGNAME >> /tmp/aaa.txt
+
+after every login I get this result:
+
+$ cat /tmp/aaa.txt
+gdm
+gdm
+gdm
+
+I would expect to get my real login name in those 3 variables instead of "gdm",
+which is of no use to take specific action based on which user is logging in.
+This was working as expected with at least the 3 previous versions of Ubuntu.
+------------------------------------------------------------------------------
+
+Cheers,
+Thomas
+
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
