@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/19
-Message-ID: <739815754.450622.1299617404152.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 15:50:04 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/10
+Message-ID: <1327428976.168611.1298407469916.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 15:44:29 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: dccp: fix oops on Reset after close
+Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1093
+
+
+----- Original Message -----
+> Reported by Timo Warns, "Validate number of blocks in map and remove
+> redundant variable."
+> 
+> http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
+> https://bugzilla.redhat.com/show_bug.cgi?id=679282
+> 
+
+I don't understand the security implication of this bug. Can you explain it?
 
 Thanks.
 
 -- 
     JB
-
-
-
------ Original Message -----
-> https://bugzilla.redhat.com/682954
-> http://git.kernel.org/linus/720dc34bbbe9493c7bd48b2243058b4e447a929d
-> 
-> "This fixes a bug in the order of dccp_rcv_state_process() that still
-> permitted reception even after closing the socket. A Reset after close
-> thus causes a NULL pointer dereference by not preventing operations on
-> an already torn-down socket."
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
