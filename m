@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/2
-Message-ID: <4DAF8F40.4050903@redhat.com>
-Date: Thu, 21 Apr 2011 09:58:24 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/2
+Message-ID: <4D6327D8.2030609@redhat.com>
+Date: Tue, 22 Feb 2011 11:04:56 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On 04/21/2011 09:55 AM, Eugene Teo wrote:
-> On 04/21/2011 07:45 AM, Eugene Teo wrote:
->> On 04/21/2011 04:52 AM, Josh Bressers wrote:
->>> Please use CVE-2011-1598
->>
->> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+> btrfs_ioctl_space_info() and introduced security issues.  Since they
+> were all introduced at once and fixed at the same time, one CVE should
+> suffice.
 >
-> Correction: s/Updated patch//. This patch is for a similar issue but for
-> can/raw release. I rather group these two patches with CVE-2011-1598
-> than to have another name assigned for it. But I'm fine either way.
+> Due to integer truncation or a signedness error in a typecasted
+> comparison, an integer overflow in an allocation size calculation, and
+> a failure to properly check bounds when copying data, it was possible
+> for an unprivileged user to cause a denial-of-service due to writing
+> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+>
+> -Dan
+>
+> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
 
-On second thoughts, let's have another CVE assigned.
+http://git.kernel.org/linus/51788b1bdd0d68345bab0af4301e7fa429277228
 
-can/bcm release: credit Dave Jones
-can/raw release: credit Oliver Hartkopp
-
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Eugene
