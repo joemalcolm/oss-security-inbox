@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/3
-Message-ID: <CAPQRN=WDpuBC82mODSbCPokYso04StaxUMrBQB_KTrYzC7Kq3Q@mail.gmail.com>
-Date: Mon, 28 Nov 2011 21:18:50 -0200
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/10
+Message-ID: <1327428976.168611.1298407469916.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 15:44:29 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ckware.com
-Subject: Fwd: Bug script install slackware
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
-Date: 2011/10/28
-Subject: Bug script install slackware
-To: volkerdi@...ckware.com
 
 
-Take a look.... this is the correction sugest to script "SeTpartitions".
+----- Original Message -----
+> Reported by Timo Warns, "Validate number of blocks in map and remove
+> redundant variable."
+> 
+> http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
+> https://bugzilla.redhat.com/show_bug.cgi?id=679282
+> 
 
-EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
+I don't understand the security implication of this bug. Can you explain it?
 
-livecd setup # cat -n  SeTpartitions |grep T_PX
-  10  T_PX=/mnt
- 374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1> $REDIR 2> $REDIR
- 495        if [ ! -d $T_PX/$MTPT ]; then
- 496           mkdir -p $T_PX/$MTPT
- 503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
-$REDIR 2> $REDIR
+Thanks.
 
-
-Att,
-Raphael Bastos aka chemonz
-
-===============================================
-Bastos Service Manutenção Industrial Ltda.
-www.bastosservice.com.br
-Linux Reg. User: 388431  //  LPI ID: LPI000214711
-email:~> $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
-'s/(.)/chr(ord($1)-2)/ge'
-===============================================
-
+-- 
+    JB
