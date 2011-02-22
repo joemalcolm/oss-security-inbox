@@ -1,29 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/8
-Message-ID: <20110124214124.GD4979@outflux.net>
-Date: Mon, 24 Jan 2011 13:41:24 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/8
+Message-ID: <AANLkTimjB3W-0DW5ZF8ChJxac5dLFHHfDu+sPk8WZfqL@mail.gmail.com>
+Date: Wed, 23 Feb 2011 00:18:51 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: libxml2 heap contents leak
+Subject: CVE Request: Vanilla Forums 2.0.17.1 ~ 2.0.17.5 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+1. OVERVIEW
 
-I'd like to get a CVE assigned for a minor heap contents leak in
-libxml2. I reported that it is possible to leak heap memory contents
-from libxml2 (and things linked against it, for example PHP[1], or things
-written in PHP[2]):
+The Vanilla Forums 2.0.17.1 till 2.0.17.5  were vulnerable to Cross
+Site Scripting.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=631551
 
-Thanks,
+2. BACKGROUND
 
--Kees
+Vanilla Forums are open-source, standards-compliant, customizable
+discussion forums.
+It is specially made to help small communities grow larger through SEO
+mojo, totally customizable social tools,
+and great user experience. Vanilla is also built with integration at
+the forefront, so it can
+seamlessly integrate with your existing website, blog, or custom-built
+application.
 
-[1] http://bugs.php.net/bug.php?id=52998
-[2] http://status.net/open-source/issues/2798
 
--- 
-Kees Cook
-Ubuntu Security Team
+3. VULNERABILITY DESCRIPTION
+
+The 'p' parameter  was not properly sanitized upon submission to the
+/index.php url, which allows attacker to conduct Cross Site Scripting
+attack.
+This may allow an attacker to create a specially crafted URL that
+would execute arbitrary script code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+2.0.17.1 ~ 2.0.17.5
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/vanilla/index.php?p=/entry/"><script>alert(/XSS/)</script>
+
+
+6. SOLUTION
+
+Upgrade to Vanilla Forums 2.0.17.6 or higher
+
+
+7. VENDOR
+
+Vanilla Forums Development Team
+http://vanillaforums.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-01-25: notified vendor
+2011-01-27: vendor released fix
+2011-02-22: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.17.5]_cross_site_scripting
+Github Issue Report:
+https://github.com/vanillaforums/Garden/issuesearch?state=closed&q=xss#issue/750
+Vendor Commit: https://github.com/vanillaforums/Garden/commit/0a22506c76ac419d390d5d1bde5ec5f48b195358
+Vendor Release:
+http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released/
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-02-22]
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
