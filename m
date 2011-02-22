@@ -1,31 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/4
-Message-ID: <4E675FF9.5000907@redhat.com>
-Date: Wed, 07 Sep 2011 14:13:45 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Bugs NotHugs <bugsnothugs@...il.com>, Stjepan Gros <stjepan.gros@...il.com>
-Subject: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/8
+Message-ID: <AANLkTimjB3W-0DW5ZF8ChJxac5dLFHHfDu+sPk8WZfqL@mail.gmail.com>
+Date: Wed, 23 Feb 2011 00:18:51 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Vanilla Forums 2.0.17.1 ~ 2.0.17.5 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+1. OVERVIEW
 
-   it was reported that the scanner module for the Open Vulnerability
-Assessment System (OpenVAS) used insecure way for creation of a
-temporary file, when generating OVAL system characteristics document
-from the knowledge base data available, with the ovaldi integrated tool
-enabled. A local attacker could use this flaw to conduct symlink
-attacks to overwrite arbitrary files on the system, accessible with the
-privileges of the user running the SLAD daemon and / or the ovaldi OVAL
-interpreter.
+The Vanilla Forums 2.0.17.1 till 2.0.17.5  were vulnerable to Cross
+Site Scripting.
 
-References:
-[1] http://archives.neohapsis.com/archives/fulldisclosure/2011-09/0057.html
-[2] http://secunia.com/advisories/45836/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=736317
 
-Could you allocate a CVE id for this?
+2. BACKGROUND
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Vanilla Forums are open-source, standards-compliant, customizable
+discussion forums.
+It is specially made to help small communities grow larger through SEO
+mojo, totally customizable social tools,
+and great user experience. Vanilla is also built with integration at
+the forefront, so it can
+seamlessly integrate with your existing website, blog, or custom-built
+application.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The 'p' parameter  was not properly sanitized upon submission to the
+/index.php url, which allows attacker to conduct Cross Site Scripting
+attack.
+This may allow an attacker to create a specially crafted URL that
+would execute arbitrary script code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+2.0.17.1 ~ 2.0.17.5
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/vanilla/index.php?p=/entry/"><script>alert(/XSS/)</script>
+
+
+6. SOLUTION
+
+Upgrade to Vanilla Forums 2.0.17.6 or higher
+
+
+7. VENDOR
+
+Vanilla Forums Development Team
+http://vanillaforums.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-01-25: notified vendor
+2011-01-27: vendor released fix
+2011-02-22: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.17.5]_cross_site_scripting
+Github Issue Report:
+https://github.com/vanillaforums/Garden/issuesearch?state=closed&q=xss#issue/750
+Vendor Commit: https://github.com/vanillaforums/Garden/commit/0a22506c76ac419d390d5d1bde5ec5f48b195358
+Vendor Release:
+http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released/
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-02-22]
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
