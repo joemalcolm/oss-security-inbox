@@ -1,19 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/2
-Message-ID: <87d3bb4qxj.fsf@mid.deneb.enyo.de>
-Date: Mon, 26 Dec 2011 10:34:32 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/7
+Message-Id: <201102221731.05213.thomas@suse.de>
+Date: Tue, 22 Feb 2011 17:31:05 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4862 is not BSD-specific
+Subject: gdm PostLogin script executes scripts as user gdm
 Content-Type: text/plain; charset=utf-8
 
-* Huzaifa Sidhpurwala:
+Hello oss-security,
 
->> The telnetd from netkit does not appear to be affected.
->
-> The patch seems to be applicable though, probably you need to do
-> something else to make it segfault?
+should we consider this as a vulnerability?
+https://bugzilla.gnome.org/show_bug.cgi?id=602403
 
-Our version of netkit (which we once got from
-<ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/>) lacks Kerberos
-support entirely.
+cite:
+------------------------------------------------------------------------------
+ericlesoll [reporter] 2009-11-19 13:00:11 UTC
+
+on Ubuntu Karmic Koala and Fedora 12
+After a fresh install on some machines and update from Jaunty on another one,
+we can't catch $USER $USERNAME $LOGNAME
+from /etc/gdm/PostLogin/Default, we get "gdm" for all variables instead of real
+login name. It was working since 7.04 version.
+If in a terminal we run : echo $USER, we get the real login name.
+
+example below :
+
+If I put those 3 lines in /etc/gdm/PostLogin/Default:
+
+echo $USER > /tmp/aaa.txt
+echo $USERNAME >> /tmp/aaa.txt
+echo $LOGNAME >> /tmp/aaa.txt
+
+after every login I get this result:
+
+$ cat /tmp/aaa.txt
+gdm
+gdm
+gdm
+
+I would expect to get my real login name in those 3 variables instead of "gdm",
+which is of no use to take specific action based on which user is logging in.
+This was working as expected with at least the 3 previous versions of Ubuntu.
+------------------------------------------------------------------------------
+
+Cheers,
+Thomas
+
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
