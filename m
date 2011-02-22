@@ -1,16 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/5
-Message-ID: <CANoWnERMy8WEAL_Tb=aVCYQq3o60QOCjMTgnmBLM9xH9-r-2KQ@mail.gmail.com>
-Date: Fri, 5 Aug 2011 00:17:14 +1000
-From: dave bl <db.pub.mail@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/1
+Message-Id: <201102211852.34619.geissert@debian.org>
+Date: Mon, 21 Feb 2011 18:52:33 -0600
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foomatic-gui
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: CVE-2011-0436: dtc sends password of new users to site admin by unencrypted email
 Content-Type: text/plain; charset=utf-8
 
-So while there aren't that many "users" of the old
-system-config-printer - it appears that debian old-stable (lenny)
-maybe vulnerable (where python-smbc is not available) ... is it worth
-while giving system-config-printer a 2008 CVE as well (if none
-currently exists).
-@Tim any thoughts?
+retitle 614302 CVE-2011-0436: new users' unencrypted passwords emailed to site admin
+thanks
+
+Hi Steven, vendors,
+
+I have assigned CVE-2011-0436 to the following issue:
+http://bugs.debian.org/614302
+
+Regards,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
