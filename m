@@ -1,29 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/4
-Message-Id: <20110118122109.722d85ba.michael.s.gilbert@gmail.com>
-Date: Tue, 18 Jan 2011 12:21:09 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/12
+Message-ID: <699844942.168715.1298407868110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 15:51:08 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request
+Cc: Shawn M Moore <sartak@...tpractical.com>, Thomas Sibley <trs@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 18 Jan 2011 16:53:51 +0000, Tim Brown wrote:
-> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
-> > On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
-> > > Guys,
-> > > 
-> > > What's the best way for an open source project to request a CVE prior to
-> > > disclosure?  I'm more that happy to coordinate the disclosure with
-> > > distributions where appropriate if that makes a difference.
-> > 
-> > You're looking for vendor-sec:
-> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+----- Original Message -----
 > 
-> That's a closed list though isn't it?  If anyone wants to sponsor me on to it, 
-> I'm willing to put my OpenVAS hat on and jump through the necessary hoops :)
+> 2) * Redirect users to their desired pages after login.
+> This prevents possible back button attacks after a user logs out.
 
-There are some notes at the bottom of the above page that describe what
-to do if you are not a vendor-sec member.
+Use CVE-2011-1007 for this one.
 
-Best wishes,
-Mike
+> 
+> Further issue details:
+> A security flaw was found in the way the RT3 ticketing
+> system handled resubmitting of form data after the user
+> has logged out of the browser (but not closed it).
+> A local attacker could use this flaw to access the user
+> account of the victim (login without providing a password
+> or obtain user credentials).
+> 
+> References:
+> [a] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614575
+> [b]
+> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
+> 
+> Upstream bug report:
+> [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
+> 
+> Upstream changeset:
+> [d]
+> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
+> 
+> Thomas, could you please confirm [d] is the proper fix for 2) issue?
+> Thank you.
+> (* Redirect users to their desired pages after login.)
+> 
+> 3) * Clone Scrip's TicketObj since we change the CurrentUser and it can
+> leak information (Custom field values, etc)
+
+Use CVE-2011-1008 for this one.
+
+> 
+> Further issue details:
+> A security flaw was found in the way the RT3 ticketing
+> system handled logging of SQL queries during performing
+> of user account transition. A remote, authenticated RT3
+> user could use this flaw to obtain sensitive information.
+> 
+> References:
+> [i] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614576
+> [ii]
+> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
+> 
+> Upstream changeset (needs confirmation from upstream if it's
+> real fix for the issue yet):
+> [iii]
+> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
+> 
+> Shawn, could you please confirm [iii] is the proper fix for 3) issue?
+> (* Clone Scrip's TicketObj since we change the CurrentUser and it can
+> leak)
+> 
+> If [iii] not being the correct one for 3) issue, could you point us
+> to the right one? Thank you.
+> 
+> 
+
+Thanks.
+
+-- 
+    JB
