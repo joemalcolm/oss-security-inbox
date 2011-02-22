@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/4
-Message-ID: <20110727092848.537e9528@redhat.com>
-Date: Wed, 27 Jul 2011 09:28:48 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/3
+Message-ID: <4D635C8F.8080209@redhat.com>
+Date: Tue, 22 Feb 2011 14:49:51 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - dhcp clients
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 26 Jul 2011 15:35:02 -0400 (EDT) Josh Bressers wrote:
+Reported by Timo Warns, "Validate number of blocks in map and remove 
+redundant variable."
 
-Just to clarify...
+http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
+https://bugzilla.redhat.com/show_bug.cgi?id=679282
 
-> Use CVE-2011-2716 for udhcpc
-
-This is dhcp client that is part of busybox.
-
-> CVE-2011-2717 for udhcp6c.
-
-This should say dhcp6c and is part of the (now obsolete) dhcpv6 project:
-
-  https://fedorahosted.org/dhcpv6/
-
+Thanks, Eugene
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Eugene Teo / Red Hat Security Response Team
