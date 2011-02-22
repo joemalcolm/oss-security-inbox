@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/9
-Message-ID: <20110224172834.GI30355@redhat.com>
-Date: Thu, 24 Feb 2011 10:28:34 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/9
+Message-ID: <Pine.GSO.4.64.1102221221430.21838@faron.mitre.org>
+Date: Tue, 22 Feb 2011 12:27:37 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+Subject: Re: CVE request: avahi daemon remote denial of service by sending NULL UDP
 Content-Type: text/plain; charset=utf-8
 
-* [2011-02-24 18:02:06 +0100] Ralf Corsepius wrote:
 
->On 02/24/2011 05:45 PM, Vincent Danen wrote:
->>* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
+On Fri, 18 Feb 2011, Josh Bressers wrote:
+
+> I just gave it CVE-2011-1002.
+>
+> Thanks for pointing this out!
+
+The original researcher, nuh, originally requested CVE-2011-0634 for this 
+issue.  I see that the RH bug 667187 lists both CVEs, so maybe there was a 
+race condition in CVE assignment somewhere?
+
+Let's prefer CVE-2011-1002, and I will REJECT CVE-2011-0634.
+
+- Steve
+
+
+> --
+>    JB
+>
+> ----- Original Message -----
+>> Hello,
+>> does the following need a CVE-ID or already has one assigned?
 >>
->>>>Is Redhat packaging RT now, or are you just handling the CVEs?
->>>
->>>I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
->>>public issues.
+>> https://bugzilla.redhat.com/show_bug.cgi?id=667187
 >>
->Folks, my feel is you all are picking on words and details.
-
-It is possible that Josh didn't realize it was packaged in Fedora and
-EPEL (we do package quite a few things).
-
->>RT3 is packaged in Fedora and EPEL.
 >>
->Correct. rt3 is community maintained in Fedora and RHEL. I am doing 
->so for Fedora and other people do for RHEL.
->So, strictly speaking it's not "Red Hat packaged", but 
->community-contributed to "Red Hat owned products" (Fedora rsp. Fedora 
->EPEL) and some folks @RH are filing CVS against it, for reasons I 
->don't know.
-
-I'm not sure what you mean by that last statement (filing CVS against
-it).  Do you mean filing bugs?
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+>> Thanks,
+>> Thomas
+>>
+>> --
+>> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+>> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>> --
+>> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>> -- Marie von Ebner-Eschenbach
+>
