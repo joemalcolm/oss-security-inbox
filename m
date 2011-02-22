@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/3
-Message-ID: <20110915144040.GB1593@foo.fgeek.fi>
-Date: Thu, 15 Sep 2011 17:40:40 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/2
+Message-ID: <4D6327D8.2030609@redhat.com>
+Date: Tue, 22 Feb 2011 11:04:56 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: btrfs heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 14, 2011 at 02:22:59PM -0400, Josh Bressers wrote:
-> Steve,
-> 
-> Can MITRE deal with this one? I lack time to properly work through this list right now.
-> 
-> Thanks.
+On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
+> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
+> btrfs_ioctl_space_info() and introduced security issues.  Since they
+> were all introduced at once and fixed at the same time, one CVE should
+> suffice.
+>
+> Due to integer truncation or a signedness error in a typecasted
+> comparison, an integer overflow in an allocation size calculation, and
+> a failure to properly check bounds when copying data, it was possible
+> for an unprivileged user to cause a denial-of-service due to writing
+> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+>
+> -Dan
+>
+> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
 
-What information do you need? I can figure it out and inform this list.
+http://git.kernel.org/linus/51788b1bdd0d68345bab0af4301e7fa429277228
 
-Best regards,
-Henri Salo
+Eugene
