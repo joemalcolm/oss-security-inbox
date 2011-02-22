@@ -1,88 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/15
-Message-ID: <20110303224920.GA22311@openwall.com>
-Date: Fri, 4 Mar 2011 01:49:20 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/14
+Message-ID: <1196368402.169410.1298409651973.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 16:20:51 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Vanilla Forums 2.0.17.1 ~ 2.0.17.5 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus, all -
+Please use CVE-2011-1009.
 
-Thank you for making this public!
+Thanks.
 
-On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
-> So I would like to open up a discussion with _all_ OSS Security folks present.
+-- 
+    JB
+
+
+----- Original Message -----
+> 1. OVERVIEW
 > 
-> - Is a closed vendor coordination like vendor-sec still needed at this time?
-
-Yes, there's some need for it.
-
->   Meaning: does the benefit of a closed group really outweigh the
->   "left out feeling" of non members and its annoyances?
-
-In that meaning, I am not sure.  These things are not possible to
-compare, and there are other things to consider as well.
-
-> - If yes, would it be an idea to confine or split into lists of focus groups?
->   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-
-My current proposal is: split into several sub-lists.  I'd start with
-three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-groups would be for externally submitted reports (by non-members) and
-for cross-vendor discussions.
-
-The Linux vendors group should include distro vendors.  I am unsure
-whether it should also include Linux kernel-only folks or not.  Maybe we
-should be CC'ing security@k.o on relevant messages instead, or maybe we
-need a separate group for Linux distros+kernel.  It feels wrong to
-expose userland-only issues to the kernel-only folks.
-
-The researchers group would (probably) rarely receive external reports
-directly, but could be involved in Linux and/or *BSD vendors discussions
-by CC'ing them when their expertise is needed.  Alternatively, the
-researchers may be included on the vendor lists, which will enable and
-encourage them to contribute a lot more, but then we need to define some
-stricter requirements for them (some minimum activity level?)  We don't
-want a lot of inactive members on any of these private lists.
-
-As to projects such as, say, Samba and X.org, I'd exclude them.
-There's no difficulty for a researcher to notify one of these directly,
-and there's not much difficulty in CC'ing the proper one of these on a
-discussion.
-
-> - Or of course the old option is open:
->   Should we proceed with the current state as-is,
-
-Probably not, although we could do it temporarily if there's a need -
-such as to continue some discussions that are already started.
-
-> but throw a bit more GPG encryption on top?
-
-I think we should have the new list(s), if we do set them up,
-GPG-encrypting to the members.  They should also accept encrypted
-messages (to the list's key).
-
-This will reduce the likelihood of leaks somewhat - from the members'
-mail servers, from their unattended mailboxes, etc.
-
-That said, leaks would nevertheless be quite likely - or at least we
-should assume so.  For this reason, I think these lists should be used
-for medium severity issues only, and CRDs should be set not too far into
-the future (say, up to 2 weeks, with an attempt to make embargoes
-shorter than that whenever possible).
-
-Anything low severity is best made public right away - such as via
-oss-security.  Anything high severity may need to be approached more
-carefully, identifying just the affected distro vendors before initial
-notification by the reporter (then these lists won't be needed).
-
-Of course, not everyone is willing to do that...  If we do receive a
-high severity issue notification via one of the "expander" lists, we'd
-need to apply an even shorter embargo period.
-
-I'd appreciate any comments on the above.
-
-Thanks again,
-
-Alexander
+> The Vanilla Forums 2.0.17.1 till 2.0.17.5 were vulnerable to Cross
+> Site Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Vanilla Forums are open-source, standards-compliant, customizable
+> discussion forums.
+> It is specially made to help small communities grow larger through SEO
+> mojo, totally customizable social tools,
+> and great user experience. Vanilla is also built with integration at
+> the forefront, so it can
+> seamlessly integrate with your existing website, blog, or custom-built
+> application.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The 'p' parameter was not properly sanitized upon submission to the
+> /index.php url, which allows attacker to conduct Cross Site Scripting
+> attack.
+> This may allow an attacker to create a specially crafted URL that
+> would execute arbitrary script code in a victim's browser.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 2.0.17.1 ~ 2.0.17.5
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/vanilla/index.php?p=/entry/"><script>alert(/XSS/)</script>
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to Vanilla Forums 2.0.17.6 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> Vanilla Forums Development Team
+> http://vanillaforums.org/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-01-25: notified vendor
+> 2011-01-27: vendor released fix
+> 2011-02-22: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.17.5]_cross_site_scripting
+> Github Issue Report:
+> https://github.com/vanillaforums/Garden/issuesearch?state=closed&q=xss#issue/750
+> Vendor Commit:
+> https://github.com/vanillaforums/Garden/commit/0a22506c76ac419d390d5d1bde5ec5f48b195358
+> Vendor Release:
+> http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released/
+> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> #yehg [2011-02-22]
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
