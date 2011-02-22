@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/1
-Message-ID: <4DF4B8B4.5030806@redhat.com>
-Date: Sun, 12 Jun 2011 15:01:40 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>, 629938@...s.debian.org
-Subject: CVE Request -- dbus -- Local DoS via messages with non-native byte order
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/3
+Message-ID: <4D635C8F.8080209@redhat.com>
+Date: Tue, 22 Feb 2011 14:49:51 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+Reported by Timo Warns, "Validate number of blocks in map and remove 
+redundant variable."
 
-   It was found that D-BUS message bus service / messaging facility did
-not update the byte-order flag of the message properly by swapping the
-byte order of incoming messages into their native endiannes. A local,
-authenticated user could use this flaw to send a specially-crafted
-message to a system service (like Avahi or NetworkManager), using the
-system bus, potentially leading to disconnect of such a service from
-system bus (denial of service).
+http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
+https://bugzilla.redhat.com/show_bug.cgi?id=679282
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
-[2] https://bugs.freedesktop.org/show_bug.cgi?id=38120
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=712676
-
-Upstream patches:
-[4] 
-http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.2&id=6519a1f77c61d753d4c97efd6e15630eb275336e
-     (in upstream v1.2.28 version)
-
-[5] 
-http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.4&id=c3223ba6c401ba81df1305851312a47c485e6cd7
-     (in upstream v1.4.12 version)
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
