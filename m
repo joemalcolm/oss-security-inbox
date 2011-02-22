@@ -1,64 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/10
-Message-ID: <BANLkTim0-LZPLp6AiQAFyuWvOiKs0B4fpi_e=s=KR4KMwXNdAg@mail.gmail.com>
-Date: Mon, 6 Jun 2011 10:14:13 -0700
-From: Chris Evans <scarybeasts@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
-Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/16
+Message-ID: <4D642BE8.9070600@bestpractical.com>
+Date: Tue, 22 Feb 2011 16:34:32 -0500
+From: Thomas Sibley <trs@...tpractical.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>,  Shawn M Moore <sartak@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>,  security@...tpractical.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 6, 2011 at 9:19 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+Hi folks,
 
-> Hello, Josh, Steve, vendors,
->
->  It was found that vsftpd, Very Secure FTP daemon, when the network
-> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
-> create a new network namespace per connection. A remote attacker could
-> use this flaw to cause a memory pressure and denial of the vsftpd
-> service.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
-> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
->
-> This one being a bit tricky one -- from my understanding of the issue,
-> vsftpd doesn't necessarily have a security flaw on its side. It's
-> kernel issue / bug, which allows this to be used for vsftpd DoS:
->
+Is Redhat packaging RT now, or are you just handling the CVEs?
 
-Yes, I will be considering this a kernel issue.
-vsftpd also uses one (or more!) process per connection. I'd have though that
-a process structure plus stack etc. would be a lot more heavyweight than an
-empty network namespace, but obviously not :)
+In all future security mail, please use our security contact address
+security@...tpractical.com, not developer email addresses pulled from
+commits.  Details for our security contact are at:
+http://bestpractical.com/security/
 
-[4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
-> [5]
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
->
-> Short-term solution would be probably to address this on the vsftpd
-> side, the long-term one then being to get this fixed in kernel.
->
+We have no context for Redhat's (and Debian's?) involvement here.  Can
+you bring us up to speed on your plans regarding CVEs and/or security
+releases in your distributions?
 
-It's actually configurable in vsftpd.conf:
-isolate_network=NO
+On 22 Feb 2011 09:37, Jan Lieskovsky wrote:
+>   2) * Redirect users to their desired pages after login.
+[snip]
+>      Upstream bug report:
+>      [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
+> 
+>      Upstream changeset:
+>      [d]
+> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
+> 
+> 
+>      Thomas, could you please confirm [d] is the proper fix for 2)
+> issue? Thank you.
+>      (* Redirect users to their desired pages after login.)
 
-So for a short term fix, all you need is to deploy that config change.
-Looking at the Changelog, network isolation was added in vsftpd-2.2.0, and
-the config setting has been there from v2.2.0 as well.
+The commit you linked to is not the full fix.  As noted in our own bug
+report you also link to above, the fix was merged into 3.8-trunk with
+commit 057552287159e801535e59b8fbd5bd98d1322069.
 
+That said, what are your plans for the diffset?  The commit itself can't
+be used as a standalone patch for the issue.  It introduced a few other
+bugs in core RT and broke the current stable versions of
+RT-Authen-ExternalAuth (a very popular, critical extension).  The bugs
+have been fixed by other commits and there are development releases of a
+fixed ExternalAuth.
 
-Cheers
-Chris
+Are you trying to package a patch in a security update?
 
+>   3) * Clone Scrip's TicketObj since we change the CurrentUser and it
+> can leak
+>      information (Custom field values, etc)
+> 
+[snip]
+>      Upstream changeset (needs confirmation from upstream if it's
+>      real fix for the issue yet):
+>      [iii]
+> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
+> 
+> 
+>      Shawn, could you please confirm [iii] is the proper fix for 3) issue?
+>      (* Clone Scrip's TicketObj since we change the CurrentUser and it
+> can leak)
 
-> Though not sure, how it would be wrt to CVE identifier(s) assignment.
->
-> Steve, could you advice here?
->
-> Thank you & Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+The above commit is an unrelated bug fix.  The correct commit is
+2338cd19ed7a7f4c1e94f639ab2789d6586d01f3, however we've never tested it
+as a standalone fix.  Again, what are your plans?
 
+Thomas, for Best Practical
