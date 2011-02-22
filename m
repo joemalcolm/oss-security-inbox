@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/10
-Message-ID: <1962168437.55225.1302641231065.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Apr 2011 16:47:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/11
+Message-ID: <20110222204712.GA7594@kroah.com>
+Date: Tue, 22 Feb 2011 12:47:12 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: libtiff CVE assignments
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
 Content-Type: text/plain; charset=utf-8
 
-I've assigned two CVE ids for some things fixed in the 3.9.5 libtiff release.
+On Tue, Feb 22, 2011 at 03:44:29PM -0500, Josh Bressers wrote:
+> 
+> 
+> ----- Original Message -----
+> > Reported by Timo Warns, "Validate number of blocks in map and remove
+> > redundant variable."
+> > 
+> > http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
+> > https://bugzilla.redhat.com/show_bug.cgi?id=679282
+> > 
+> 
+> I don't understand the security implication of this bug. Can you explain it?
 
-        http://www.remotesensing.org/libtiff/v3.9.5.html
+Incorrectly formed mac partition tables could cause bad things to happen
+when it was automatically scanned after plugging in a device with this
+type of partition table on it.
 
-        libtiff/tif_ojpeg.c: fix buffer overflow on problem data
-        http://bugzilla.maptools.org/show_bug.cgi?id=1999
-        CVE-2009-5022
+Hope this helps,
 
-        tools/tiffdump.c: Avoid integer overflows computing the buffer size
-        for large directories. As per bug
-        http://bugzilla.maptools.org/show_bug.cgi?id=2218
-        CVE-2010-4665
-
-Thanks.
-
--- 
-    JB
+greg k-h
