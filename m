@@ -1,50 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/7
-Message-ID: <20110403204433.GB8721@openwall.com>
-Date: Mon, 4 Apr 2011 00:44:33 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/6
+Message-ID: <4D63CA0F.5080608@redhat.com>
+Date: Tue, 22 Feb 2011 15:37:03 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Shawn M Moore <sartak@...tpractical.com>, Thomas Sibley <trs@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>
+Subject: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 01:23:26PM +0200, Miklos Vajna wrote:
-> Please subscribe me to the new list. I was a vendor-sec subscriber.
+Hello Josh, Steve, vendors,
 
-I've tentatively subscribed you, for Frugalware.  However, I am not
-convinced that you are / will be making sufficiently good use of the
-advance notifications on medium-severity security issues.  I went to
-http://frugalware.org and here's what I saw:
+   RT3 upstream has released latest v3.8.9 version:
+   [1] http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
 
-1. There are recent non-security package updates (such as yesterday's).
-Great.
+   addressing three security flaws:
+   1) * Move to a SHA-256 based password hashing scheme
+      This has already got CVE id of CVE-2011-0009:
+      http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0009
 
-2. The latest "security announcement" is dated 2011-02-13, and it is for
-"opera".  Slightly older ones are for "drupal6-mollom", "wireshark",
-"horde-webmail", "wordpress", and even more web apps stuff.  Then we
-finally see an update to "kernel" on 2010-12-12.  Surely a distro that
-supports running and even includes a web browser and popular web apps
-also includes lots of other stuff, common to other distros, however
-where are the security updates to those components for the last 3-4
-months?  There have been some security bugs in them, including many more
-in the kernel since 2010-12-12.  I understand that it's hard to find
-time for all of the low and medium severity updates when you're just one
-person doing security response for a non-tiny distro, and I understand
-that you have a legitimate need for the info.  I am just not convinced
-that the risk of "one more person" is justified when you haven't issued
-an update for 48 days (or so) whereas the suggested embargo period on
-the new list is up to 14 days.
+   2) * Redirect users to their desired pages after login.
+      This prevents possible back button attacks after a user logs out.
 
-Yet you're on the list for now.  Perhaps try to evaluate your use of the
-info that will be arriving to you through the list and ask to be
-unsubscribed if you determine that you're not making timely use of the
-info anyway.
+      Further issue details:
+      A security flaw was found in the way the RT3 ticketing
+      system handled resubmitting of form data after the user
+      has logged out of the browser (but not closed it).
+      A local attacker could use this flaw to access the user
+      account of the victim (login without providing a password
+      or obtain user credentials).
 
-I must admit that we sometimes have the same problem at Openwall -
-non-critical security issues are sometimes not patched for a while, and
-we tended not to start preparing security updates for issues discussed
-on vendor-sec until the CRD was very close.  We did the latter in part
-not to add to the risk of inadvertently disclosing the issue.  This
-suggests that the embargoes were unnecessarily too long, though (for us
-at least).
+      References:
+      [a] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614575
+      [b] http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
 
-Alexander
+      Upstream bug report:
+      [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
+
+      Upstream changeset:
+      [d] https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
+
+      Thomas, could you please confirm [d] is the proper fix for 2) issue? Thank you.
+      (* Redirect users to their desired pages after login.)
+
+   3) * Clone Scrip's TicketObj since we change the CurrentUser and it can leak
+      information (Custom field values, etc)
+
+      Further issue details:
+      A security flaw was found in the way the RT3 ticketing
+      system handled logging of SQL queries during performing
+      of user account transition. A remote, authenticated RT3
+      user could use this flaw to obtain sensitive information.
+
+      References:
+      [i]  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614576
+      [ii] http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
+
+      Upstream changeset (needs confirmation from upstream if it's
+      real fix for the issue yet):
+      [iii] https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
+
+      Shawn, could you please confirm [iii] is the proper fix for 3) issue?
+      (* Clone Scrip's TicketObj since we change the CurrentUser and it can leak)
+
+      If [iii] not being the correct one for 3) issue, could you point us
+      to the right one? Thank you.
+
+
+Steve, once patches confirmed, could you allocate CVE ids for the 2), and 3) issues?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
