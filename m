@@ -1,98 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/4
-Message-ID: <590237914.125935.1294080671893.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 13:51:11 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/12
+Message-ID: <699844942.168715.1298407868110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 15:51:08 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Nicolas Sebrecht <nicolas.s-dev@...oste.net>, david b <db.pub.mail@...il.com>, Johannes Stezenbach <js@...21.net>, Christoph Höger <choeger@...tu-berlin.de>, John Goerzen <jgoerzen@...plete.org>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- OfflineIMAP -- 1), failed to validate remote SSL server certificate 2), allows SSLv2 protocol
+Cc: Shawn M Moore <sartak@...tpractical.com>, Thomas Sibley <trs@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-
-
 ----- Original Message -----
-> On Thu, Dec 23, 2010 at 03:43:40PM +0100, Jan Lieskovsky wrote:
-> >
-> >   I), Didn't check SSL server certificate
-> >
-> >   Description:
-> >   OfflineIMAP prior commit:
-> >   [1]
-> >   https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
-> >
-> >   did not perform SSL server certificate validation,
-> >   even when "ssl = yes" option was specified in the
-> >   configuration file. If an attacker was able to get
-> >   a carefully-crafted certificate signed by a
-> >   Certificate Authority trusted by OfflineIMAP,
-> >   the attacker could use the certificate during a
-> >   man-in-the-middle attack and potentially confuse
-> >   OfflineIMAP into accepting it by mistake.
-> >
-> >   References:
-> >   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603450
-> >   [3] https://bugzilla.redhat.com/show_bug.cgi?id=665382
-> >
 > 
-> First of all, thank you very much Jan and all the Redhat team for
-> reporting it up to the CVE database.
-> 
-> The given patch from Sebastian Spaeth has been released in v6.3.2-rc1.
-> I
-> encourage distribution maintainers who want this fix to either
-> 
-> deploy the RC release as is
-> 
-> or
-> 
-> backport the fix against the last release they own.
-> 
-> I expect to release a new stable soon but I still didn't have feedback
-> from users using SSL. The lack of feedback could mean that
-> 
-> OfflineIMAP users don't expect SSL to work by still refering to the
-> documentation they know (stating that SSL checks is not supported)
-> 
-> or
-> 
-> they don't hit problems at all.
-> 
-> So, I'll wait a bit more before releasing the next stable.
-> 
-> >   II), Allows SSLv2 protocol
-> >
-> >   Description:
-> >   In commit:
-> >   [4]
-> >   https://github.com/nicolas33/offlineimap/commit/4f57b94e2333c37c5a7251fc88dfeda9bc0b226a
-> >
-> >   when SSL server certificate validation support was added
-> >   to OfflineIMAP it was still possible to use SSL v2 protocol
-> >   version. Version 2 of SSL protocol version is known
-> >   to be prone to multiple deficiencies, each of them
-> >   having security implications (to mention some of them):
-> >   [5] http://en.wikipedia.org/wiki/Secure_Sockets_Layer#Security
-> >
-> >   Thus SSLv2 protocol version should be disabled in OfflineIMAP.
-> >
-> >   References:
-> >   [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=606962
-> >   [7] https://bugzilla.redhat.com/show_bug.cgi?id=665386
-> 
-> True.
-> 
-> > Could you allocate CVE ids for these issues? (though opened for
-> > discussion of any / none of them worthy of it)
-> 
-> As the maintainer of OfflineIMAP, I think both issues should have
-> their
-> entry in the CVE List.
-> 
+> 2) * Redirect users to their desired pages after login.
+> This prevents possible back button attacks after a user logs out.
 
-As upstream has requested two, here you go:
+Use CVE-2011-1007 for this one.
 
-CVE-2010-4532 offlineimap doesn't check SSL server certificate
-CVE-2010-4533 offlineimap allows sslv2
+> 
+> Further issue details:
+> A security flaw was found in the way the RT3 ticketing
+> system handled resubmitting of form data after the user
+> has logged out of the browser (but not closed it).
+> A local attacker could use this flaw to access the user
+> account of the victim (login without providing a password
+> or obtain user credentials).
+> 
+> References:
+> [a] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614575
+> [b]
+> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
+> 
+> Upstream bug report:
+> [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
+> 
+> Upstream changeset:
+> [d]
+> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
+> 
+> Thomas, could you please confirm [d] is the proper fix for 2) issue?
+> Thank you.
+> (* Redirect users to their desired pages after login.)
+> 
+> 3) * Clone Scrip's TicketObj since we change the CurrentUser and it can
+> leak information (Custom field values, etc)
+
+Use CVE-2011-1008 for this one.
+
+> 
+> Further issue details:
+> A security flaw was found in the way the RT3 ticketing
+> system handled logging of SQL queries during performing
+> of user account transition. A remote, authenticated RT3
+> user could use this flaw to obtain sensitive information.
+> 
+> References:
+> [i] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614576
+> [ii]
+> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
+> 
+> Upstream changeset (needs confirmation from upstream if it's
+> real fix for the issue yet):
+> [iii]
+> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
+> 
+> Shawn, could you please confirm [iii] is the proper fix for 3) issue?
+> (* Clone Scrip's TicketObj since we change the CurrentUser and it can
+> leak)
+> 
+> If [iii] not being the correct one for 3) issue, could you point us
+> to the right one? Thank you.
+> 
+> 
 
 Thanks.
 
