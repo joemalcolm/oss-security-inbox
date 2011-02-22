@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/7
-Message-Id: <201103070905.39966.sgrubb@redhat.com>
-Date: Mon, 7 Mar 2011 09:05:39 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/9
+Message-ID: <Pine.GSO.4.64.1102221221430.21838@faron.mitre.org>
+Date: Tue, 22 Feb 2011 12:27:37 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: CVE request: avahi daemon remote denial of service by sending NULL UDP
 Content-Type: text/plain; charset=utf-8
 
-On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
-> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
-> > If there's a common usage scenario that doesn't stem from blatant
-> > administrator negligence, then a CVE is probably still appropriate.
-> > ("blatant admin negligence" might be, say, if an admin arbitrarily makes
-> > a script setuid, or modifies the perms for an executable or config file
-> > to be world-writable.)
-> 
-> I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
-> say, "chown nginx /var/log/nginx", it could be negligence or it could be
-> lack of familiarity with the risks involved.  So I am willing to admit
-> that it's not necessarily negligence that turns those issues into
-> vulnerabilities on specific systems.
-> 
-> > We will sometimes write the CVE description more as an "adminisrator
-> > practice" than as "fault of the software."
-> 
-> Oh, this is something I did not realize.  A lot of people assume that
-> CVEs "blame" the software and its authors for having made an error.
-> 
-> It felt wrong, say, to blame a text editor for being unsafe to use on
-> files in untrusted directories when such unsafety was the typical and
-> expected situation for text editors in general.
 
-So, where does that leave us for things like this? :
+On Fri, 18 Feb 2011, Josh Bressers wrote:
 
-http://reverse.lostrealm.com/protect/ldd.html
-http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> I just gave it CVE-2011-1002.
+>
+> Thanks for pointing this out!
 
--Steve
+The original researcher, nuh, originally requested CVE-2011-0634 for this 
+issue.  I see that the RH bug 667187 lists both CVEs, so maybe there was a 
+race condition in CVE assignment somewhere?
+
+Let's prefer CVE-2011-1002, and I will REJECT CVE-2011-0634.
+
+- Steve
+
+
+> --
+>    JB
+>
+> ----- Original Message -----
+>> Hello,
+>> does the following need a CVE-ID or already has one assigned?
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=667187
+>>
+>>
+>> Thanks,
+>> Thomas
+>>
+>> --
+>> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+>> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>> --
+>> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>> -- Marie von Ebner-Eschenbach
+>
