@@ -1,20 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/6
-Message-ID: <Pine.GSO.4.64.1103231044570.12348@faron.mitre.org>
-Date: Wed, 23 Mar 2011 10:45:42 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/14
+Message-ID: <1196368402.169410.1298409651973.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 22 Feb 2011 16:20:51 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Asterisk Security Vulnerability
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Vanilla Forums 2.0.17.1 ~ 2.0.17.5 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-1009.
 
-On Wed, 23 Mar 2011, Matthew Nicholson wrote:
+Thanks.
 
-> I need a CVE for a new Asterisk security vulnerability.
+-- 
+    JB
 
-CVE reservation requests for non-public issues are probably best sent 
-privately, instead of to a public list...
 
-That said, I've reserved a CVE and sent it back to you privately.
-
-- Steve
+----- Original Message -----
+> 1. OVERVIEW
+> 
+> The Vanilla Forums 2.0.17.1 till 2.0.17.5 were vulnerable to Cross
+> Site Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Vanilla Forums are open-source, standards-compliant, customizable
+> discussion forums.
+> It is specially made to help small communities grow larger through SEO
+> mojo, totally customizable social tools,
+> and great user experience. Vanilla is also built with integration at
+> the forefront, so it can
+> seamlessly integrate with your existing website, blog, or custom-built
+> application.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The 'p' parameter was not properly sanitized upon submission to the
+> /index.php url, which allows attacker to conduct Cross Site Scripting
+> attack.
+> This may allow an attacker to create a specially crafted URL that
+> would execute arbitrary script code in a victim's browser.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 2.0.17.1 ~ 2.0.17.5
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/vanilla/index.php?p=/entry/"><script>alert(/XSS/)</script>
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to Vanilla Forums 2.0.17.6 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> Vanilla Forums Development Team
+> http://vanillaforums.org/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-01-25: notified vendor
+> 2011-01-27: vendor released fix
+> 2011-02-22: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.17.5]_cross_site_scripting
+> Github Issue Report:
+> https://github.com/vanillaforums/Garden/issuesearch?state=closed&q=xss#issue/750
+> Vendor Commit:
+> https://github.com/vanillaforums/Garden/commit/0a22506c76ac419d390d5d1bde5ec5f48b195358
+> Vendor Release:
+> http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released/
+> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> #yehg [2011-02-22]
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
