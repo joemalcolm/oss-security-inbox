@@ -1,29 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/9
-Message-ID: <224071656.426608.1299529463806.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Mar 2011 15:24:23 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/17
+Message-ID: <20110222225256.2f684e4d@laverne>
+Date: Tue, 22 Feb 2011 22:52:56 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org, security@...e.de, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Subject: CVE request: simple machines forum before 1.1.13
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> It seems like fixing glibc to either raise the rlimit or correctly handle
-> the error condition is the way to go (as you already mentioned). I share
-> the concern of the helpers maybe not checking addmntent() return codes,
-> though. If they all do, I would think that just correct error handling in
-> glibc would be accepted upstream. Whatever the fix, it really feels like
-> it should be in glibc. It is what is responsible for actually writing to
-> the file...
-> 
+http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
 
-I'm going to assign CVE-2011-1089 to this, under the assumption the fix
-will go into glibc (it's a bit confusing, but I think I follow from playing
-along at home).
-
-Thanks.
+No useful info on the kind of vulnerability, just states "Several
+security-related fixes"
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
