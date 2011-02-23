@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/6
-Message-ID: <AANLkTikeFtNiVKpTE7xwri_JpmYH7EmD94YCGsXh5s0E@mail.gmail.com>
-Date: Tue, 18 Jan 2011 14:43:02 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/13
+Message-ID: <20110223101612.34261c43@laverne>
+Date: Wed, 23 Feb 2011 10:16:12 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: heap corruption in libpango
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
->From Launchpad [1]:
+Am Tue, 22 Feb 2011 23:17:54 -0500
+schrieb Dan Rosenberg <dan.j.rosenberg@...il.com>:
 
-"When used with FreeType2 as a backend, Pango is vulnerable to heap
-corruption when rendering malformed fonts. The vulnerability occurs in
-pango_ft2_font_render_box_glyph() in pango/pangoft2-render.c. A buffer
-is malloc'd with size box->bitmap.rows * box->bitmap.pitch.
-Subsequently, 0xff is written at offsets into this buffer without
-checking that these offsets fall within the buffer's boundaries,
-leading to heap corruption."
+> Should this be considered a vulnerability?  Probably.  But what should
+> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+> a vulnerability if auto-mounting is disabled only when the screen is
+> locked?  Should all filesystems have graceful error handling for every
+> possible edge case that can occur when dealing with corruption?
 
--Dan
+I'd say the later one. Filesystem drivers in the kernel should more or
+less be treated like just another app that is able to read some kind of
+"format". If the filesystem is corrupted, it should fail without
+security impact.
 
-[1] https://bugs.launchpad.net/ubuntu/+source/pango1.0/+bug/696616
+As others already mentioned, the impact is not limited to automounting,
+but also an issue for virtualzation (and maybe other cases we don't
+think of yet).
+
+Maybe it'd be a good idea to start a big fuzzing session on filesystems?
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
