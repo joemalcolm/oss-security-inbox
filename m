@@ -1,56 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/7
-Message-ID: <alpine.LRH.1.00.1104021322310.19200@bronson.owlriver.com>
-Date: Sat, 2 Apr 2011 13:28:18 -0400 (EDT)
-From: R P Herrold <herrold@...river.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/3
+Message-ID: <4D647E5A.1090004@redhat.com>
+Date: Wed, 23 Feb 2011 11:26:18 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Closed list
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02/22/2011 09:01 PM, Josh Bressers wrote:
+> Do we know the affected versions? This probably won't be 20 IDs,
+> but I suspect it won't be one either.
 
-On Fri, 1 Apr 2011, Josh Bressers wrote:
+Just some, not all, since not all the patches listed here affect Red Hat 
+and I do not think I want to go through them again. Other vendors 
+affected by these can provide their inputs.
 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+I read some interesting discussions on LKML. These require debugfs to be 
+mounted on a local system. It is usually not mounted by default, and you 
+would not want to mount it on a production system unless you really have 
+to use the kernel tracer, etc.
 
-Key fingerprint:	0x9B649644
-Distribution:		CentOS
+----- Original Message -----
+ > > There are 20 patches here - some are accepted, some are probably
+ > > pending. All from Vasiliy Kulikov.
+ > >
+ > > [PATCH 01/20] mach-omap2: mux: world-writable debugfs files
+ > > https://lkml.org/lkml/2011/2/4/66 arm arch
+ > >
+ > > [PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
+ > > https://lkml.org/lkml/2011/2/4/67 arm arch
+ > >
+ > > [PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage
+ > > files
+ > > https://lkml.org/lkml/2011/2/4/68 arm arch
+ > >
+ > > [PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
+ > > https://lkml.org/lkml/2011/2/4/69 arm arch
+ > >
+ > > [PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
+ > > https://lkml.org/lkml/2011/2/4/70
+ > >
+ > > [PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
+ > > https://lkml.org/lkml/2011/2/4/81
+ > >
+ > > [PATCH 07/20] video: sn9c102: world-wirtable sysfs files
+ > > https://lkml.org/lkml/2011/2/4/85
+ > >
+ > > [PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
+ > > https://lkml.org/lkml/2011/2/4/82
+ > >
+ > > [PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
+ > > https://lkml.org/lkml/2011/2/4/84
 
-- -----BEGIN PGP PUBLIC KEY BLOCK-----
-Version: SKS 1.1.0
+introduced in 09bcb3f3 v2.6.35-rc1
 
-mQGiBD5F2FQRBAChJ4+VS1v9ON/cuJ74QnymaLetj8r1l9G7v9WkE/ET7cg16z3+SPkF9hbQ
-G0vJqJea19FRT8/e1tu3GTEUAaxSoY63zyjAzF9wmOg/FmNWTmj0Ovwzq4HTN3FF/GeLNZQU
-NkAFO5lPPV739L4LIY5GZwbr8bUtslLyoKvf7JGwZwCgxwe41qBc1T3eCrmUg0bFQRc9pzED
-/1j/kbs38I98YTJWs7Mxljhl4cZRCxL28INzinfTsUvrudrfqSvqTMWOqkApLzPFXBxv+C3S
-QOY8cRusSbNzOvadEMlpZYtSiNC+ZTZxqz4tpSQmNbb0LPHrCpu7FyCsq2jRfDHjJ3ruYPNo
-gxo+47z8DfdGxW6tMZfnEB6jhOEEBACL4yivnd5lBOY1z0f9EohD5UWC5HyCFZ0UK/NDxdE9
-yhSQSg4kGY92sadew3K6W35IYKYkqD+GTZiIn3jXcu8slrwcJRRyIEZGiCg4DAK1TG27eH/K
-BuRkK8hNn/cmDoskoS9J+bSf7kv7Nuf4JGIVhTsIR6pYAwMD5n8goxK8DbQiUiBQIEhlcnJv
-bGQgPGhlcnJvbGRAb3dscml2ZXIuY29tPohGBBMRAgAGBQJAVnRRAAoJEH/ADgRm3IARtc8A
-oJOGMYpDaVxl5fmsIYPMDW2OGqoGAJ9YZ5TCzlh9/ZovD9FFD3mi29MHrYhXBBMRAgAXBQI+
-RdhUBQsHCgMEAxUDAgMWAgECF4AACgkQMRh1QZtklkQlkACdFHDBgFj56ylAQWWvLKQPl1wz
-ygAAniaW1hXO2cppXK2V9G3XHDBkiIBfuQENBD5F2GQQBADxEsiE+x499BrU8z3wfGYL4/Qz
-cLaXF+QnQp7suBnNmgl3vBzifUD+FPIRScCapFmeg7OA+H+htbNN7fNqRfg0aa9az2c+km0v
-ieqDFkrJ8H5ktDo69MjyQAbMyapRYKCv52/K66Gs/mvO9zdSrlI0yXsBTAXmHrAXgq80v8m1
-RwAEDQP/a+N7t/smT1kpXW5l5FhhVkgrAhjZpbfp4weItHyUWclzSTIlXDOO93BEbZjVoiDI
-CY1yoy8iJkXRKch2X3gvqWx/Q/DjVzD8CdVJGOUhpD7JQxsK0A7PbCA54JqZi+4AOhnbRlQM
-Srm4w6qMzfzdKJpIaSOhxgd64+Zfn5zJuJCIRgQYEQIABgUCPkXYZAAKCRAxGHVBm2SWROxG
-AKC4WpQYmqVO06HxjXAR9EC28AguQACfeLiDsch7DJPKjMit20aQNwt7bDU=
-=1PUi
-- -----END PGP PUBLIC KEY BLOCK-----
+ > > [PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
+ > > https://lkml.org/lkml/2011/2/4/71
 
-- - Russ herrold
+introduced in 5814fc35 v2.6.37-rc1
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+ > > [PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
+ > > https://lkml.org/lkml/2011/2/4/83
+ > >
+ > > [PATCH 12/20] net: can: at91_can: world-writable sysfs files
+ > > https://lkml.org/lkml/2011/2/4/80
+ > > fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
 
-iD8DBQFNl1y3MRh1QZtklkQRAsHqAJ9vmeGcaqY9aNdd+osprKN6s6fYKgCgiYdI
-bhGkA/+Lay4+19yw/OstIvY=
-=IdKx
------END PGP SIGNATURE-----
+introduced in 3a5655a5 v2.6.38-rc3
+
+ > > [PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination
+ > > file
+ > > https://lkml.org/lkml/2011/2/4/72
+ > > 1e6d93e45b231b3ae87c01902ede2315aacfe976
+ > >
+ > > [PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg
+ > > file
+ > > https://lkml.org/lkml/2011/2/4/79
+ > > b80b168f918bba4b847e884492415546b340e19d
+ > >
+ > > [PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
+ > > https://lkml.org/lkml/2011/2/4/73
+ > > 8040835760adf0ef66876c063d47f79f015fb55d
+ > >
+ > > [PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless
+ > > and jogdial files
+ > > https://lkml.org/lkml/2011/2/4/78
+ > > 8a6a142c1286797978e4db266d22875a5f424897
+ > >
+ > > [PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
+ > > https://lkml.org/lkml/2011/2/4/74
+ > >
+ > > [PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
+ > > https://lkml.org/lkml/2011/2/4/75
+ > >
+ > > [PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
+ > > https://lkml.org/lkml/2011/2/4/76
+
+introduced in fe4f0bde v2.6.36-rc1
+
+ > > [PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
+ > > https://lkml.org/lkml/2011/2/4/77
+
+-- 
+Eugene Teo / Red Hat Security Response Team
