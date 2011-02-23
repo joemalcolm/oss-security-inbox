@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/12
-Message-Id: <201103040735.33312.ludwig.nussel@suse.de>
-Date: Fri, 4 Mar 2011 07:35:33 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/21
+Message-ID: <913844253.189413.1298487178820.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 13:52:58 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Corrupted LDM partition table issues
 Content-Type: text/plain; charset=utf-8
 
-Dan Rosenberg wrote:
-> > One more option is to replace /etc/mtab regular file with a symlink to
-> > /proc/mounts, thus making any /etc/mtab editing unneeded.
-> 
-> This is a very good point.  I'm not sure why /etc/mtab exists anymore
-> given /proc/mounts is a more reliable source for this information.
+Please use CVE-2011-1012.
 
-/proc/mounts doesn't store options like user=. So replacing /etc/mtab
-with a symlink wasn't feasible in general. util-linux recently
-introduced /dev/.mount/utab which stores the missing information.
-
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
+
+
+----- Original Message -----
+> Reported by Timo Warns, "The kernel automatically evaluates partition
+> tables of storage devices. The code for evaluating LDM partitions (in
+> fs/partitions/ldm.c) contains a bug that causes a kernel oops on
+> certain
+> corrupted LDM partitions. A kernel subsystem seems to crash, because,
+> after the oops, the kernel no longer recognizes newly connected
+> storage
+> devices."
+> 
+> http://www.spinics.net/lists/mm-commits/msg82429.html
+> 
+> This should affect kernels version v2.6.27-rc1 and above. Of course,
+> CONFIG_LDM_PARTITION needs to be set.
+> 
+> Thanks, Eugene
+> --
+> Eugene Teo / Red Hat Security Response Team
