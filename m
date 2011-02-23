@@ -1,50 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/7
-Message-ID: <AANLkTik4UWPimODT4FNQ6E+yuGZT4eOwnMNK0mD8nKFf@mail.gmail.com>
-Date: Thu, 17 Mar 2011 14:18:11 -0400
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/16
+Message-ID: <4D65016D.6030802@pre-sense.de>
+Date: Wed, 23 Feb 2011 13:45:33 +0100
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: The risks of cleaning /tmp
+Subject: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-The tmpreaper package (at least in Debian) has a pretty good writeup
-of a lot of the security problems involved in cleaning /tmp, which
-I've copied at <http://nelhage.com/files/README.security>, since I
-can't find another good source online.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's probably worth reading that document to get perspective on some
-of the thought that's been put into this problem before.
+The kernel automatically evaluates partition tables of storage devices.
+The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+a bug that allows to overflow the kernel heap. It may be possible to
+escalate privileges by exploiting this bug.
 
-- Nelson
+(This bug is distinct from the LDM bug reported by Eugene Teo on
+2011-02-23.)
 
-On Thu, Mar 17, 2011 at 1:56 PM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> Hi all,
->
-> A number of utilities (notably tmpwatch on Red Hat/Fedora) are
-> designed to regularly clean the contents of the /tmp directory.  I
-> wanted to draw some attention to the fact that these applications, as
-> well as setting up cronjobs to perform the same task, introduce the
-> same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
-> Namely, they make it such that the stickiness of /tmp can no longer be
-> relied on.
->
-> Consider a setuid application that relies on the fact that users can't
-> delete its resources in /tmp because they're root owned.  An attacker
-> can simply launch the application and send a SIGSTOP at the right
-> moment to cause it to sleep indefinitely, until tmpwatch (or similar)
-> removes its /tmp resources, allowing them to be replaced by the
-> attacker.  As Tavis pointed out, doing this with ksu could allow
-> denial of service, but it may be possible to escalate privileges by
-> leveraging other applications.
->
-> It seems like a difficult problem to solve - it's hardly feasible to
-> rewrite every suid app that relies on the stickiness of /tmp.
-> Hopefully we can generate some useful discussion here.
->
-> Regards,
-> Dan
->
-> [1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
->
+This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+CONFIG_LDM_PARTITION needs to be set.
+
+Thanks, Timo
+
+- -- 
+Dr. Timo Warns                               warns@...-sense.de
+                                  Tel. +49 - 40 - 244 2407 - 16
+                                  Fax  +49 - 40 - 244 2407 - 24
+PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
+                                         USt-IdNr.: DE263765024
+Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
+Till Dörges           Jürgen Sander              Axel Theilmann
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.15 (GNU/Linux)
+Comment: Using GnuPG with SUSE - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk1lAW0ACgkQneTPdraGveU9wwCePDVkbSTEk4Ltzc4mjs/3Ci83
+5JIAn26q86H3uucoklA5yps8WwJAmrN4
+=ssUq
+-----END PGP SIGNATURE-----
