@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/6
-Message-ID: <1791702979.102517.1295894287405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 24 Jan 2011 13:38:07 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, 610834-submitter@...s.debian.org, maradns@...il.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: MaraDNS DoS via long queries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/11
+Message-ID: <4D64BAC8.2000501@msgid.tls.msk.ru>
+Date: Wed, 23 Feb 2011 10:44:08 +0300
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+CC: Nelson Elhage <nelhage@...lice.com>,  Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0520.
+23.02.2011 08:46, Nelson Elhage wrote:
+> I don't have any definite opinions here about where to draw which
+> lines, but I want to point out that in addition to physical attack
+> vectors, virtualization tools are also potentially affected by these
+> kinds of bugs. If you try to mount an untrusted VM's virtual disk
+> image from somewhere, you're also vulnerable to that VM triggering
+> bugs in the filesystem or other layers.
 
-Thanks.
+And that's why projects like http://www.libguestfs.org/ emerges.
+FWIW ;)
 
--- 
-    JB
-
-
------ Original Message -----
-> Hi,
-> 
-> A crash bug has been reported against MaraDNS 1.4.03 when long queries
-> are
-> sent to the resolver. Details can be found at:
-> http://bugs.debian.org/610834
-> 
-> As of the time of writing, the reporter is testing other versions and
-> at least
-> 1.4.05 also seems to be affected.
-> 
-> Josh, Steven: could a CVE id be assigned? Thanks in advance.
-> 
-> Regards,
-> --
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+/mjt
