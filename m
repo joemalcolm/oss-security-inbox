@@ -1,111 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/19
-Message-ID: <Pine.GSO.4.64.1104051036410.20885@faron.mitre.org>
-Date: Tue, 5 Apr 2011 10:37:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/21
+Message-ID: <913844253.189413.1298487178820.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 13:52:58 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: Corrupted LDM partition table issues
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-1012.
 
-Pending Dan's followup to my post, we can make CVE-2011-1493 specific to 
-Dan's FAC_NATIONAL_DIGIS overflow.
+Thanks.
 
-- Steve
+-- 
+    JB
 
 
-On Mon, 4 Apr 2011, Josh Bressers wrote:
-
-> One it is then. Thanks.
->
-> Use CVE-2011-1493.
->
+----- Original Message -----
+> Reported by Timo Warns, "The kernel automatically evaluates partition
+> tables of storage devices. The code for evaluating LDM partitions (in
+> fs/partitions/ldm.c) contains a bug that causes a kernel oops on
+> certain
+> corrupted LDM partitions. A kernel subsystem seems to crash, because,
+> after the oops, the kernel no longer recognizes newly connected
+> storage
+> devices."
+> 
+> http://www.spinics.net/lists/mm-commits/msg82429.html
+> 
+> This should affect kernels version v2.6.27-rc1 and above. Of course,
+> CONFIG_LDM_PARTITION needs to be set.
+> 
+> Thanks, Eugene
 > --
->    JB
->
-> ----- Original Message -----
->> On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com>
->> wrote:
->>> How do we want this broken down? If nobody complains, I'll just give
->>> it one.
->>>
->>
->> I think one makes sense, since all the problems were in a single
->> protocol and were addressed at the same time.
->>
->> -Dan
->>
->>> Thanks.
->>>
->>> --
->>>    JB
->>>
->>> ----- Original Message -----
->>>> Any update on this?
->>>>
->>>> Thanks,
->>>> Dan
->>>>
->>>> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
->>>> wrote:
->>>>> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
->>>>>>
->>>>>> I sent in a patch [1] resolving two issues in ROSE:
->>>>>>
->>>>>> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
->>>>>> possible
->>>>>> for a remote host to provide more digipeaters than expected,
->>>>>> resulting
->>>>>> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
->>>>>> overflows, and abort facilities parsing on failure.
->>>>>>
->>>>>> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
->>>>>> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide
->>>>>> a
->>>>>> length of less than 10, resulting in an underflow in a memcpy
->>>>>> size,
->>>>>> causing a kernel panic due to massive heap corruption. A length
->>>>>> of
->>>>>> greater than 20 results in a stack overflow of the callsign
->>>>>> array.
->>>>>> Abort facilities parsing on these invalid length values."
->>>>>>
->>>>>> These issues may both result in code execution. They may be
->>>>>> triggered
->>>>>> by a remote attacker if the victim has a listening ROSE socket,
->>>>>> or
->>>>>> by
->>>>>> a local attacker (for privilege escalation) if a ROSE device
->>>>>> exists
->>>>>> (e.g. rose0).
->>>>>>
->>>>>> Ben Hutchings followed up with a patch [2] that resolves a
->>>>>> number
->>>>>> of
->>>>>> other ROSE issues related to lack of size field validation, some
->>>>>> of
->>>>>> which may also result in heap corruption.
->>>>>>
->>>>>> Not sure about the proper CVE breakdown for all these issues,
->>>>>> since
->>>>>> the entire protocol was quite broken. Perhaps one is enough to
->>>>>> cover
->>>>>> everything.
->>>>>
->>>>> I am not sure. I would just assign one for the collection of
->>>>> issues
->>>>> here but
->>>>> I will let Steve decide instead.
->>>>>
->>>>>> [1] http://marc.info/?l=linux-netdev&m=130060344616926
->>>>>> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
->>>>>
->>>>> Thanks, Eugene
->>>>> --
->>>>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
->>>>> main(++i); }
->>>>>
->>>
->
->
+> Eugene Teo / Red Hat Security Response Team
