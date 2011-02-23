@@ -1,89 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/8
-Message-ID: <CAPYM6Vzyvf01NTiQvV17ed0vwcH8LhKgt+SoEXq-0X2rf=-zdw@mail.gmail.com>
-Date: Tue, 23 Aug 2011 01:45:57 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/6
+Message-ID: <4D64971C.8030208@redhat.com>
+Date: Wed, 23 Feb 2011 13:11:56 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Concrete CMS 5.4.1.1 <= Cross Site Scripting
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-Concrete CMS 5.4.1.1  <=  Cross Site Scripting
+On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
+> I originally started writing this as a response to the recent CVE
+> requests for issues in partition handling, but thought it might be a
+> useful discussion on its own.  I was wondering if there are any
+> clear-cut policies on issues involving physical access, since these
+> can be very difficult in terms of assigning blame.
+>
+> For example, many Linux distributions will auto-mount filesystems on
+> removable storage, often going so far as to load corresponding kernel
+> modules for filesystems that aren't compiled in or don't already have
+> an LKM loaded.  Sometimes, this will happen even if the screen is
+> locked.
+>
+> Incidentally, many Linux filesystem implementations don't have
+> especially robust error handling for failures during attempts to mount
+> corrupt filesystems.  As an example, I have a deliberately corrupted
+> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+> formatted a USB stick with this filesystem, so now I have a USB stick
+> that will panic the kernels of distributions that support
+> auto-mounting, in some cases even when the screen is locked.
+>
+> Should this be considered a vulnerability?  Probably.  But what should
+> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+> a vulnerability if auto-mounting is disabled only when the screen is
+> locked?  Should all filesystems have graceful error handling for every
+> possible edge case that can occur when dealing with corruption?
+>
+> I'd be interested to hear opinions on this.  And depending on how the
+> discussion goes, I'd be happy to provide more details on specific
+> cases, such as the btrfs example.
 
+ From the security response perspective, I will likely classify them as 
+security bugs but with a /very/ low impact. The attacking party must 
+already have some form of physical access to the affected system, or the 
+attack must require some social engineering to trick the user to mount a 
+corrupted file system using a portable media.
 
-1. OVERVIEW
+It will be hard to break existing user experience if we were to disable 
+auto-mounting entirely, but it makes sense to disable it if the screen 
+is locked. I'm not sure if this will affect how we classify such bugs. 
+I'm happy to hear more thoughts on this.
 
-Concrete CMS 5.4.1.1  and lower versions are vulnerable to Cross Site Scripting.
-
-
-2. BACKGROUND
-
-Concrete5 makes running a website easy. Go to any page in your site,
-and a editing toolbar gives you all the controls you need to update
-your website. No intimidating manuals, no complicated administration
-interfaces - just point and click.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The rcID parameter is not properly sanitized, which allows attacker to
-conduct Cross Site Scripting attack. This may allow an attacker to
-create a specially crafted URL that would execute arbitrary script
-code in a victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-CMS 5.4.1.1  <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-
-vulnerable parameter: rcID
-
-<form action="http://[target]/Concrete/index.php/login/do_login/"
-method="post">
-<input type="hidden" name="uName" value="test" />
-<input type="hidden" name="uPassword" value="test" />
-<input type="hidden" name="rcID" value='"
-style=display:block;color:red;width:9999;height:9999;z-index:9999;top:0;left:0;background-image:url(javascript:alert(/XSS/));width:expression(alert(/XSS/));
-onmouseover="alert(/XSS/)' />
-<input type="submit" name="submit" value="Get Concrete CMS 5.4.1.1 XSS" />
-</form>
-
-
-6. SOLUTION
-
-Upgrade to 5.4.2 or higher.
-
-
-7. VENDOR
-
-Concrete CMS Developers
-http://www.concrete5.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-04-14: vulnerability reported
-2011-08-04: vendor released fixed version
-2011-08-23: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[concrete_5.4.1.1]_cross_site_scripting
-Project Home: http://www.concrete5.org/
-Vendor Release Note:
-http://www.concrete5.org/documentation/background/version_history/5-4-2-release-notes/
-
-
-
-#yehg [2011-08-23]
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
