@@ -1,80 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/05/2
-Message-Id: <20110205183517.39b7fb56.michael.s.gilbert@gmail.com>
-Date: Sat, 5 Feb 2011 18:35:17 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/3
+Message-ID: <4D647E5A.1090004@redhat.com>
+Date: Wed, 23 Feb 2011 11:26:18 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Webkit Dupes
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 02/22/2011 09:01 PM, Josh Bressers wrote:
+> Do we know the affected versions? This probably won't be 20 IDs,
+> but I suspect it won't be one either.
 
-The following issues are duplicate CVE assignments for webkit.  Please
-merge and reject these as appropriate.
+Just some, not all, since not all the patches listed here affect Red Hat 
+and I do not think I want to go through them again. Other vendors 
+affected by these can provide their inputs.
 
-CVE-2010-2902 and CVE-2010-1793:
-webkit commit #62662
-http://code.google.com/p/chromium/issues/detail?id=48284
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+I read some interesting discussions on LKML. These require debugfs to be 
+mounted on a local system. It is usually not mounted by default, and you 
+would not want to mount it on a production system unless you really have 
+to use the kernel tracer, etc.
 
-CVE-2010-2647 and CVE-2010-1786:
-webkit commit #61667
-http://code.google.com/p/chromium/issues/detail?id=43488
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+----- Original Message -----
+ > > There are 20 patches here - some are accepted, some are probably
+ > > pending. All from Vasiliy Kulikov.
+ > >
+ > > [PATCH 01/20] mach-omap2: mux: world-writable debugfs files
+ > > https://lkml.org/lkml/2011/2/4/66 arm arch
+ > >
+ > > [PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
+ > > https://lkml.org/lkml/2011/2/4/67 arm arch
+ > >
+ > > [PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage
+ > > files
+ > > https://lkml.org/lkml/2011/2/4/68 arm arch
+ > >
+ > > [PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
+ > > https://lkml.org/lkml/2011/2/4/69 arm arch
+ > >
+ > > [PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
+ > > https://lkml.org/lkml/2011/2/4/70
+ > >
+ > > [PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
+ > > https://lkml.org/lkml/2011/2/4/81
+ > >
+ > > [PATCH 07/20] video: sn9c102: world-wirtable sysfs files
+ > > https://lkml.org/lkml/2011/2/4/85
+ > >
+ > > [PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
+ > > https://lkml.org/lkml/2011/2/4/82
+ > >
+ > > [PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
+ > > https://lkml.org/lkml/2011/2/4/84
 
-CVE-2010-2302 and CVE-2010-1771:
-webkit commit #59876
-http://code.google.com/p/chromium/issues/detail?id=44740
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1771
+introduced in 09bcb3f3 v2.6.35-rc1
 
-CVE-2010-2301 and CVE-2010-1762:
-webkit commit #59241 and #59242
-http://code.google.com/p/chromium/issues/detail?id=43902
+ > > [PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
+ > > https://lkml.org/lkml/2011/2/4/71
 
-CVE-2010-2300 and CVE-2010-1759:
-webkit commit #59109
-http://code.google.com/p/chromium/issues/detail?id=43315
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1759
+introduced in 5814fc35 v2.6.37-rc1
 
-CVE-2010-2902 and CVE-2010-1793:
-webkit commit #62662 and #62482
-http://code.google.com/p/chromium/issues/detail?id=48284
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+ > > [PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
+ > > https://lkml.org/lkml/2011/2/4/83
+ > >
+ > > [PATCH 12/20] net: can: at91_can: world-writable sysfs files
+ > > https://lkml.org/lkml/2011/2/4/80
+ > > fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
 
-CVE-2010-2647 and CVE-2010-1786:
-webkit commit #61667
-http://code.google.com/p/chromium/issues/detail?id=43488
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+introduced in 3a5655a5 v2.6.38-rc3
 
-CVE-2010-2899 and CVE-2010-1783:
-webkit commit #62134
-http://code.google.com/p/chromium/issues/detail?id=42736
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+ > > [PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination
+ > > file
+ > > https://lkml.org/lkml/2011/2/4/72
+ > > 1e6d93e45b231b3ae87c01902ede2315aacfe976
+ > >
+ > > [PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg
+ > > file
+ > > https://lkml.org/lkml/2011/2/4/79
+ > > b80b168f918bba4b847e884492415546b340e19d
+ > >
+ > > [PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
+ > > https://lkml.org/lkml/2011/2/4/73
+ > > 8040835760adf0ef66876c063d47f79f015fb55d
+ > >
+ > > [PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless
+ > > and jogdial files
+ > > https://lkml.org/lkml/2011/2/4/78
+ > > 8a6a142c1286797978e4db266d22875a5f424897
+ > >
+ > > [PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
+ > > https://lkml.org/lkml/2011/2/4/74
+ > >
+ > > [PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
+ > > https://lkml.org/lkml/2011/2/4/75
+ > >
+ > > [PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
+ > > https://lkml.org/lkml/2011/2/4/76
 
-CVE-2010-1769 and CVE-2010-1774:
-webkit commit #59495
-both are apple announcements, and the only difference in the CVE
-descriptions is "itunes" vs "safari"
+introduced in fe4f0bde v2.6.36-rc1
 
-CVE-2010-2441 and CVE-2010-1757
-webkit commit #58829
-i'm not 100% sure about this one since there is no useful info in
-CVE-2010-1757. the descriptions sound very much the same issue, but
-descriptions differ by "webkit on apple" vs "webkit"
+ > > [PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
+ > > https://lkml.org/lkml/2011/2/4/77
 
-CVE-2010-1665 and CVE-2010-1417:
-webkit commit #58201
-http://code.google.com/p/chromium/issues/detail?id=42294
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1417
-
-CVE-2010-0651 and CVE-2010-0051:
-webkit commit #52784
-http://code.google.com/p/chromium/issues/detail?id=9877
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-0051
-
-Would it be possible to force Google and Apple to coordinate better to
-avoid these dupes?  This is creating unnecessary work and making it
-appear that webkit has a lot more issues than it really does.
-
-Thanks,
-Mike
+-- 
+Eugene Teo / Red Hat Security Response Team
