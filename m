@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/1
-Message-ID: <4DE49E75.60007@redhat.com>
-Date: Tue, 31 May 2011 15:53:25 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/1
+Message-Id: <201102232317.13530.timb@nth-dimension.org.uk>
+Date: Wed, 23 Feb 2011 23:16:59 +0000
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1763 kernel: xen: improper upper boundary check in get_free_port() function
+Subject: Pattern lock bypass on SE X10 with Android 1.6
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Xen hypervisor checked for upper boundary
-when getting a new event channel port. A privileged DomU user could use
-this flaws to cause denial of service or, possibly, increase his privileges.
+Would something like http://www.nth-dimension.org.uk/blog.php?id=89 qualify 
+for a CVE?  I didn't really consider it when I published it because I was 
+working on the principal that it required physical access and you could 
+therefore argue that all bets are off but I was was wondering in the light of 
+the recent discussions about auto mounting bugs which share a similar quality.
 
-AFAIK, upstream xen is not affected.
+Tim
+-- 
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
 
-https://bugzilla.redhat.com/CVE-2011-1763
-
-fix: xen-unstable c/s 19365:
-http://xenbits.xensource.com/hg/xen-unstable.hg/rev/2dcdd2fcb945
-
-Thanks, Eugene
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
