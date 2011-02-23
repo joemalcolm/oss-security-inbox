@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/2
-Message-ID: <4EC9BE2C.6060906@redhat.com>
-Date: Sun, 20 Nov 2011 19:57:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/12
+Message-Id: <201102231001.08004.thomas@suse.de>
+Date: Wed, 23 Feb 2011 10:01:07 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: websitebaker 2.8.1 and earlier: authentication error in backup module
+Subject: Re: gdm PostLogin script executes scripts as user gdm
 Content-Type: text/plain; charset=utf-8
 
-On 11/20/2011 04:07 AM, Hanno Böck wrote:
-> http://www.websitebaker2.org/posts/security-vulnerability-backup-module-in-wb-core-13.php
->
-> Extended information: Everybody can use the backup module from anywhere
-> and download the backup directly on every PC the "exploiter" likes
-> without any noticing by you.
->
->
+Am Dienstag 22 Februar 2011 21:54:11 schrieb Josh Bressers:
+> 
+> ----- Original Message -----
+> > Hello oss-security,
+> > 
+> > should we consider this as a vulnerability?
+> > https://bugzilla.gnome.org/show_bug.cgi?id=602403
+> > 
+> 
+> I'm not sure this is a security flaw. It's not running user controlled
+> scripts (at least not by default). In order for it to run a user controlled
+> script, the admin would have to modify the Default script. Is this normal?
+> 
+> I'm not all that familiar with expected use of gdm, perhaps someone who
+> knows more can chime in?
 
-Please use CVE-2011-4322 for this issue.
+I am not familiar with this functionality too. The bug reporter states that
+the handling was differently in the past. This different behaviour may
+lead to security problems for the deployed systems... hmmm.
+
+
+Thomas
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
