@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/3
-Message-ID: <4D7CE261.50002@redhat.com>
-Date: Sun, 13 Mar 2011 23:27:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/20
+Message-ID: <993223035.189172.1298486813018.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 13:46:53 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Felipe Pena <felipensp@...il.com>
-Subject: Re: CVE request: PHP substr_replace() use-after-free
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: simple machines forum before 1.1.13
 Content-Type: text/plain; charset=utf-8
 
-On 03/13/2011 10:00 PM, Felipe Pena wrote:
-> Hi,
->
-> I just found an use-after-free in PHP's substr_replace() function caused by
-> passing the same variable multiple times to the function, which makes the
-> PHP to use the same pointer in three variables inside the function, so when
-> the pointer is changed by a type conversion inside the function, it invalids
-> the other variables.
->
-> The PHP security team has seen noticed, and a bug already was filed in the
-> bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
->
-> $ sapi/cli/php ../bug.php
-> array(1) {
-> [0]=>
-> string(5) "0Ȅ y"
-> }
-> array(1) {
-> [0]=>
-> string(1) "0"
-> }
 
-Please use CVE-2011-1148.
+
+----- Original Message -----
+> http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
+> 
+> No useful info on the kind of vulnerability, just states "Several
+> security-related fixes"
+> 
+
+Steve,
+
+Can MITRE take this one.
+
+Thanks.
 
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
