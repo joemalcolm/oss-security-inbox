@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/7
-Message-ID: <939770879.7201.1295383303522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Jan 2011 15:41:43 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/17
+Message-ID: <4D650888.9050604@pre-sense.de>
+Date: Wed, 23 Feb 2011 14:15:52 +0100
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: tor
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi,
+Am 23.02.2011 12:07, schrieb Steve Grubb:
+> On Wednesday, February 23, 2011 12:11:56 am Eugene Teo wrote:
+>> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
+>>> Should auto-mounting be disabled entirely? 
 > 
-> Tor 0.2.1.29 fixes three security issues:
-> http://archives.seul.org/or/announce/Jan-2011/msg00000.html
-> 
-> While the first already has a CVE ID listed, two more are
-> still needed.
-> 
+> You should be able to turn it off. You can also block the loading of any kernel modules 
+> for file systems that you know you don't want to load.
 
-Here you go:
-CVE-2011-0015 Tor zlib DoS
-CVE-2011-0016 Tor keys not zeroed in memory
+To a certain extent, this is what makes the recent issues in partition
+handling special: The current kernels do not allow to turn off the
+evaluation of partition tables.
+(However, some patches allow to do so:
+https://patchwork.kernel.org/patch/47067/)
 
-
-Thanks.
+Best regards, Timo
 
 -- 
-    JB
+Dr. Timo Warns                               warns@...-sense.de
+                                  Tel. +49 - 40 - 244 2407 - 16
+                                  Fax  +49 - 40 - 244 2407 - 24
+PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
+                                         USt-IdNr.: DE263765024
+Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
+Till Dörges           Jürgen Sander              Axel Theilmann
