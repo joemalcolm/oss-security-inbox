@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/9
-Message-ID: <20110405115951.GB11119@suse.de>
-Date: Tue, 5 Apr 2011 13:59:51 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/5
+Message-ID: <AANLkTinj0P1AU31XWEswr+0p0dGHDvPvuTFecMcwQMG2@mail.gmail.com>
+Date: Tue, 22 Feb 2011 23:17:54 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE re-request
+Subject: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I originally started writing this as a response to the recent CVE
+requests for issues in partition handling, but thought it might be a
+useful discussion on its own.  I was wondering if there are any
+clear-cut policies on issues involving physical access, since these
+can be very difficult in terms of assigning blame.
 
-Some issues have been fixed in python-feedparser. One of them
-did not get a CVE yet?
+For example, many Linux distributions will auto-mount filesystems on
+removable storage, often going so far as to load corresponding kernel
+modules for filesystems that aren't compiled in or don't already have
+an LKM loaded.  Sometimes, this will happen even if the screen is
+locked.
 
-This one:
+Incidentally, many Linux filesystem implementations don't have
+especially robust error handling for failures during attempts to mount
+corrupt filesystems.  As an example, I have a deliberately corrupted
+btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+formatted a USB stick with this filesystem, so now I have a USB stick
+that will panic the kernels of distributions that support
+auto-mounting, in some cases even when the screen is locked.
 
-http://code.google.com/p/feedparser/issues/detail?id=195
+Should this be considered a vulnerability?  Probably.  But what should
+be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+a vulnerability if auto-mounting is disabled only when the screen is
+locked?  Should all filesystems have graceful error handling for every
+possible edge case that can occur when dealing with corruption?
 
-Can someone assign one or tell me the id if already assigned?
+I'd be interested to hear opinions on this.  And depending on how the
+discussion goes, I'd be happy to provide more details on specific
+cases, such as the btrfs example.
 
-thx,
-Sebastian
-
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+-Dan
