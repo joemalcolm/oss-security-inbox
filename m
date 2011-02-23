@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/2
-Message-ID: <20110315030124.GI6691@dojo.mi.org>
-Date: Mon, 14 Mar 2011 23:01:24 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/24
+Message-ID: <622252736.190729.1298491199267.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 14:59:59 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: Timo Warns <warns@...-sense.de>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-[catching up on older emails]
+----- Original Message -----
+> 
+> The kernel automatically evaluates partition tables of storage devices.
+> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+> a bug that allows to overflow the kernel heap. It may be possible to
+> escalate privileges by exploiting this bug.
+> 
+> (This bug is distinct from the LDM bug reported by Eugene Teo on
+> 2011-02-23.)
+> 
+> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+> CONFIG_LDM_PARTITION needs to be set.
+> 
 
-:> > They do this already today, that's what security@...nel.org is for, and
-:> > it gets a bit of traffic like this every week.
-:> 
-:> Is this list open to the public?  It doesn't seem to be available on
-:> http://vger.kernel.org/vger-lists.html.
-:
-:No, it is closed, as it should be as potential security problems are
-:mailed there.  You don't want that to be totally open, right?
+Can you point to a commit message or something else that is public? It's
+not clear how this differs from Eugene's request.
 
-One suggestion I've made in the past is to have the list _archives_ be
-open.  So anything older than, say, a month is made public.  That way,
-folks can see how issues were disclosed, how decisions were reached,
-etc.  for old issues that are no longer under embargo.  The way I see
-it, if we don't publish the list archive on our own terms, miscreants
-will get around to publishing it for us.  
+Thanks.
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Why make trillions when we could make... billions?"                -Dr. Evil
+    JB
