@@ -1,45 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/4
-Message-ID: <4E57263C.7040308@canonical.com>
-Date: Fri, 26 Aug 2011 14:51:08 +1000
-From: Robert Ancell <robert.ancell@...onical.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com,  Guido Berhoerster <gber@...nsuse.org>
-Subject: Re: lightdm issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/15
+Message-Id: <201102230607.20216.sgrubb@redhat.com>
+Date: Wed, 23 Feb 2011 06:07:19 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Eugene Teo <eugene@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-On 25/08/11 00:08, Sebastian Krahmer wrote:
-> Hi,
->
-> lightdm (0.9.2) which aims to be a xdm replacement seems to
-> fall into the same pitfalls like kdm and gdm recently. There is
-> a lot of uid 0 code creating and chown()ing files in user dirs such as
-> for ~/.dmrc and ~/.Xauthority. Probably more, depending on
-> how the permissions of cache and log directories are set up. For example
-> process_start() also creates and chown()s logfiles on users behalf.
->
-> There is also one thing that I dont understand about the lightdm
-> user itself and why pam sessions seem to be started for it inside
-> the greeter session code.
->
-> The xdmcp code seems to be OK so far, after a quick review.
->
-> l8er,
-> -s
->
->
-Hi Sebastian,
+On Wednesday, February 23, 2011 12:11:56 am Eugene Teo wrote:
+> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
+> > I originally started writing this as a response to the recent CVE
+> > requests for issues in partition handling, but thought it might be a
+> > useful discussion on its own.  I was wondering if there are any
+> > clear-cut policies on issues involving physical access, since these
+> > can be very difficult in terms of assigning blame.
 
-Thanks for doing this review, this issue is now being tracked in the 
-LightDM issue tracker:
-https://bugs.launchpad.net/lightdm/+bug/834079
+This all sounds like a replay of the month of kernel bugs from back in 2006. I had 
+this new tool that fuzzed file systems. (latest public release is here: 
+http://people.redhat.com/sgrubb/files/fsfuzzer-0.7.tar.gz) The discussion at the time 
+went something like this...in order to exploit it, you have to have physical access. 
+If you have physical access, why not put a live CD in and reboot the system? If DoS is 
+what you are after, why not unplug the machine?
 
-Not sure what you mean in your question about the PAM sessions.  The 
-greeter object inside the daemon creates PAMSession objects which 
-attempt to be authenticated, then passes the successful one to the 
-session code which starts the PAM session.  Might just be bad naming 
-causing confusion?  (I've been meaning to split this into 
-PAMAuthentication and PAMSession objects).
+As far as I know, automounting is not a problem you have to worry about at run level 
+which is most servers. Desktops are different. In run level5, you have the gnome-
+volume-manager which may want to be overly helpful. If you are at your machine, you 
+should be able to smack anyone hand trying to put something in your USB slot. So, the 
+problem comes when you are away from your desk. I opened this bz in attempt to have 
+that addressed:  https://bugzilla.redhat.com/show_bug.cgi?id=215057  Not a lot in 
+details, but supposed there is a new setting.
 
---Robert
+However, this doesn't help in the scenario where you have a kiosk or internet cafe and 
+untrusted people walk up to machines. It was also pointed out at the time that perhaps 
+iSCSI was another attack vector.
 
+ 
+> > For example, many Linux distributions will auto-mount filesystems on
+> > removable storage, often going so far as to load corresponding kernel
+> > modules for filesystems that aren't compiled in or don't already have
+> > an LKM loaded.  Sometimes, this will happen even if the screen is
+> > locked.
+> > 
+> > Incidentally, many Linux filesystem implementations don't have
+> > especially robust error handling for failures during attempts to mount
+> > corrupt filesystems.
+
+The handling _was_ good until sometime last summer. I found that I could kill just 
+about any file system
+
+https://bugzilla.redhat.com/show_bug.cgi?id=513624
+https://bugzilla.redhat.com/show_bug.cgi?id=513635
+
+I think there were others, but can't find them.
+
+
+> > As an example, I have a deliberately corrupted
+> > btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+> > formatted a USB stick with this filesystem, so now I have a USB stick
+> > that will panic the kernels of distributions that support
+> > auto-mounting, in some cases even when the screen is locked.
+> > 
+> > Should this be considered a vulnerability?  Probably.  But what should
+> > be fixed?  Should auto-mounting be disabled entirely? 
+
+You should be able to turn it off. You can also block the loading of any kernel modules 
+for file systems that you know you don't want to load. If you have a bug that alters 
+function pointers or the kernel stack, you have a real vulnerability. I found a couple 
+of those back in 2006. If it simply hits a BUG() or crashes in a way that is not 
+exploitable, you have the same effect as having pulled the power cord. Yes, its a 
+robustness error, but not a security error.
+
+
+> > Is it no longer a vulnerability if auto-mounting is disabled only when the 
+> > screen is
+> > locked?  Should all filesystems have graceful error handling for every
+> > possible edge case that can occur when dealing with corruption?
+> > 
+> > I'd be interested to hear opinions on this.  And depending on how the
+> > discussion goes, I'd be happy to provide more details on specific
+> > cases, such as the btrfs example.
+> 
+>  From the security response perspective, I will likely classify them as
+> security bugs but with a /very/ low impact. The attacking party must
+> already have some form of physical access to the affected system, or the
+> attack must require some social engineering to trick the user to mount a
+> corrupted file system using a portable media.
+> 
+> It will be hard to break existing user experience if we were to disable
+> auto-mounting entirely, but it makes sense to disable it if the screen
+> is locked.
+
+This feature was added a long time ago. (But how does anyone know all the things you 
+can configure in a gnome desktop?)
+
+
+> I'm not sure if this will affect how we classify such bugs.
+> I'm happy to hear more thoughts on this.
+
+MOKB 2006. Not to say that people shouldn't fuzz the file systems and fix all these 
+things. I think I have fuzzing for all major file systems in the fsfuzzer if anyone 
+wanted to go bug hunting. I recently added LVM support, but have not released this 
+newer, more evil fuzzer.
+
+-Steve
