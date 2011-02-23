@@ -1,41 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/8
-Message-ID: <20111108155647.GC3561@suse.de>
-Date: Tue, 8 Nov 2011 16:56:47 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/10
+Message-ID: <20110223073348.GA29003@suse.de>
+Date: Wed, 23 Feb 2011 08:33:48 +0100
 From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: potential OpenPAM vulnerability
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-OpenPAM, until recently, was not filtering the service argument of
-pam_start() invocations. This can lead to a root compromise.
-Note that Linux-PAM is entirely different as forbids anything with '/'
-inside.
+Unfortunally I think nobody would care. As nobody cared
+that you actually do not need physical access. Via udisks DBUS
+service you can load any LKM via
 
-Please see 
+dbus-send --system --print-reply --dest=org.freedesktop.UDisks          \
+                   /org/freedesktop/UDisks/devices/sr0                  \
+                   org.freedesktop.UDisks.Device.FilesystemMount        \
+                   string:'LKM' array:string:''
 
-http://c-skills.blogspot.com/2011/11/openpam-trickery.html
+I reported that several months ago to upstream but it was frozen to more
+or less a non-issue. Indeed nobody agreed that this is an issue to fix.
 
-for more discussion and PoC.
-This most likely affects FreeBSD and Solaris via the kcheckpass
-vector.
-
-regards,
 Sebastian
 
+On Tue, Feb 22, 2011 at 11:17:54PM -0500, Dan Rosenberg wrote:
+> I originally started writing this as a response to the recent CVE
+> requests for issues in partition handling, but thought it might be a
+> useful discussion on its own.  I was wondering if there are any
+> clear-cut policies on issues involving physical access, since these
+> can be very difficult in terms of assigning blame.
+> 
+> For example, many Linux distributions will auto-mount filesystems on
+> removable storage, often going so far as to load corresponding kernel
+> modules for filesystems that aren't compiled in or don't already have
+> an LKM loaded.  Sometimes, this will happen even if the screen is
+> locked.
+> 
+> Incidentally, many Linux filesystem implementations don't have
+> especially robust error handling for failures during attempts to mount
+> corrupt filesystems.  As an example, I have a deliberately corrupted
+> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+> formatted a USB stick with this filesystem, so now I have a USB stick
+> that will panic the kernels of distributions that support
+> auto-mounting, in some cases even when the screen is locked.
+> 
+> Should this be considered a vulnerability?  Probably.  But what should
+> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+> a vulnerability if auto-mounting is disabled only when the screen is
+> locked?  Should all filesystems have graceful error handling for every
+> possible edge case that can occur when dealing with corruption?
+> 
+> I'd be interested to hear opinions on this.  And depending on how the
+> discussion goes, I'd be happy to provide more details on specific
+> cases, such as the btrfs example.
+> 
+> -Dan
 
 -- 
-
+~
 ~ perl self.pl
 ~ $_='print"\$_=\47$_\47;eval"';eval
 ~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
