@@ -1,13 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/16/2
-Message-ID: <20111016134058.GA19228@foo.fgeek.fi>
-Date: Sun, 16 Oct 2011 16:40:58 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/4
+Message-ID: <4D6480DC.7090600@redhat.com>
+Date: Wed, 23 Feb 2011 11:37:00 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Wrong MLIST link in CVE-2011-3783
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: Corrupted LDM partition table issues
 Content-Type: text/plain; charset=utf-8
 
-In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
+Reported by Timo Warns, "The kernel automatically evaluates partition 
+tables of storage devices. The code for evaluating LDM partitions (in 
+fs/partitions/ldm.c) contains a bug that causes a kernel oops on certain 
+corrupted LDM partitions.  A kernel subsystem seems to crash, because, 
+after the oops, the kernel no longer recognizes newly connected storage 
+devices."
 
-Best regards,
-Henri Salo
+http://www.spinics.net/lists/mm-commits/msg82429.html
+
+This should affect kernels version v2.6.27-rc1 and above. Of course, 
+CONFIG_LDM_PARTITION needs to be set.
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
