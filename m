@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/17/1
-Message-ID: <20110417023501.GH2125@redhat.com>
-Date: Sat, 16 Apr 2011 20:35:04 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/9
+Message-ID: <20110223061818.GA22747@openwall.com>
+Date: Wed, 23 Feb 2011 09:18:18 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mojolicious directory traversal vulnerability
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to the directory traversal flaw recently found
-in Mojolicious?
+On Wed, Feb 23, 2011 at 12:46:47AM -0500, Nelson Elhage wrote:
+> I don't have any definite opinions here about where to draw which
+> lines, but I want to point out that in addition to physical attack
+> vectors, virtualization tools are also potentially affected by these
+> kinds of bugs. If you try to mount an untrusted VM's virtual disk
+> image from somewhere, you're also vulnerable to that VM triggering
+> bugs in the filesystem or other layers.
 
-References:
+Excellent point.
 
-https://github.com/kraih/mojo/issues/114
-https://github.com/kraih/mojo/commit/b09854988c5b5b6a2ba53cc8661c4b2677da3818
-https://bugzilla.redhat.com/show_bug.cgi?id=697229
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
+Arguably, that would indicate improper design of the virtualization tool
+or an inappropriate action by a sysadmin, though.  Here's an example:
 
-Thanks.
+http://www.linode.com/backups/
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+"The backup system must be able to mount your disk images on the host."
+
+I wonder if they realize the risk they're taking...
+
+Alexander
