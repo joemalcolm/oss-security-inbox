@@ -1,36 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/9
-Message-ID: <4E32CD19.6010608@redhat.com>
-Date: Fri, 29 Jul 2011 17:09:13 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Jeffrey Layton <jlayton@...hat.com>
-Subject: CVE-2011-2724 assignment notification -- samba -- incomplete fix for CVE-2010-0547 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/8
+Message-ID: <AANLkTikEk9mw4FqbnSKQrJND7OE4Ajp47KH5gXQ8YqTB@mail.gmail.com>
+Date: Wed, 23 Feb 2011 00:46:47 -0500
+From: Nelson Elhage <nelhage@...lice.com>
+To: oss-security@...ts.openwall.com
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+I don't have any definite opinions here about where to draw which
+lines, but I want to point out that in addition to physical attack
+vectors, virtualization tools are also potentially affected by these
+kinds of bugs. If you try to mount an untrusted VM's virtual disk
+image from somewhere, you're also vulnerable to that VM triggering
+bugs in the filesystem or other layers.
 
-   during creation of automated test case for samba CVE-2010-0547 issue 
-I have noticed still to be possible mount.cifs to succeed to mount Samba 
-share to specially-crafted mount point (containing newline character), 
-potentially resulting into mtab corruption (on systems, where glibc 
-package was not patched against CVE-2010-0296 flaw yet).
+- Nelson
 
-The new CVE identifier of CVE-2011-2724 has been assigned to this issue
-(as an incomplete fix for CVE-2010-0547 issue).
-
-Kudos to Tomas Hoger and Jeffrey Layton for their analysis of the issue:
-
-check_mtab() calls check_newline() to check device and directory name.
-check_newline() returns EX_USAGE (1) when error is detected, while 
-check_mtab() expects -1 to indicate an error.
-
-and to Jeffrey Layton again for providing the patch almost immediately:
-[1] http://comments.gmane.org/gmane.linux.kernel.cifs/3827
-
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2724
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+On Tue, Feb 22, 2011 at 11:17 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> I originally started writing this as a response to the recent CVE
+> requests for issues in partition handling, but thought it might be a
+> useful discussion on its own.  I was wondering if there are any
+> clear-cut policies on issues involving physical access, since these
+> can be very difficult in terms of assigning blame.
+>
+> For example, many Linux distributions will auto-mount filesystems on
+> removable storage, often going so far as to load corresponding kernel
+> modules for filesystems that aren't compiled in or don't already have
+> an LKM loaded.  Sometimes, this will happen even if the screen is
+> locked.
+>
+> Incidentally, many Linux filesystem implementations don't have
+> especially robust error handling for failures during attempts to mount
+> corrupt filesystems.  As an example, I have a deliberately corrupted
+> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+> formatted a USB stick with this filesystem, so now I have a USB stick
+> that will panic the kernels of distributions that support
+> auto-mounting, in some cases even when the screen is locked.
+>
+> Should this be considered a vulnerability?  Probably.  But what should
+> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+> a vulnerability if auto-mounting is disabled only when the screen is
+> locked?  Should all filesystems have graceful error handling for every
+> possible edge case that can occur when dealing with corruption?
+>
+> I'd be interested to hear opinions on this.  And depending on how the
+> discussion goes, I'd be happy to provide more details on specific
+> cases, such as the btrfs example.
+>
+> -Dan
+>
