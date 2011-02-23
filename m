@@ -1,35 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/16
-Message-ID: <4D7661A0.7030807@mvista.com>
-Date: Tue, 08 Mar 2011 07:04:32 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/27
+Message-ID: <20110223211807.GA4066@pisco.westfalen.local>
+Date: Wed, 23 Feb 2011 22:18:08 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: R P Herrold <herrold@...river.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: CVE request: Information disclosure in CGIHTTPServer from Python
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+please assign a CVE ID for http://bugs.python.org/issue2254
 
-
-On 03/08/2011 06:19 AM, R P Herrold wrote:
-> On Tue, 8 Mar 2011, Josh Bressers wrote:
-> 
-<snipped>
-> 
-> These track together -- mailman or such will cull dead email accounts
-> that bounce of course, but that is a pretty mild form of management. 
-> Absent a charter to somehow mandate some 'contribution' to remain on a
-> list, there is not a clear rule to 'weed' the list.  But is this really
-> needed except from some idea of avoiding 'too many eyes'?  Frankly
-> running a distribution is work and for non-commercial distributions,
-> unpaid work
-> 
-> If a criteria for remaining on the list is needed, it is needed to make
-> sure that eyes are still reading the content -- handle that with a
-> periodic 'tracer' piece, and drop non-responders
-
-This does not work if the responder your are sending to is an internal
-mailman list. I am surprised this is even allowed.  Secondly, If I
-happen to quit, my email gets forwarded to someone else in my company
-(no bounce) and is another reason why encryption should be used.
-
-- Armin
+Cheers,
+        Moritz
