@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/9
-Message-ID: <20110621175526.GA7482@openwall.com>
-Date: Tue, 21 Jun 2011 21:55:26 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/4
+Message-ID: <4D6480DC.7090600@redhat.com>
+Date: Wed, 23 Feb 2011 11:37:00 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: Corrupted LDM partition table issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
-> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
-> know why that is?
+Reported by Timo Warns, "The kernel automatically evaluates partition 
+tables of storage devices. The code for evaluating LDM partitions (in 
+fs/partitions/ldm.c) contains a bug that causes a kernel oops on certain 
+corrupted LDM partitions.  A kernel subsystem seems to crash, because, 
+after the oops, the kernel no longer recognizes newly connected storage 
+devices."
 
-It is based on the same code, but the author made changes when merging
-the code.  Specifically, he switched to using "unsigned char *".
+http://www.spinics.net/lists/mm-commits/msg82429.html
 
-> I can't promise I will have time to look at it, but I will try if I can
-> find the time.
+This should affect kernels version v2.6.27-rc1 and above. Of course, 
+CONFIG_LDM_PARTITION needs to be set.
 
-Thanks!
-
-Meanwhile, I've released crypt_blowfish 1.1 with the fixes I had
-mentioned in here.
-
-http://www.openwall.com/crypt/
-
-Alexander
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
