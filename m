@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/7
-Message-ID: <20110822164349.GB3746@pisco.westfalen.local>
-Date: Mon, 22 Aug 2011 18:43:49 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/23
+Message-ID: <2080726178.190661.1298490943072.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 14:55:43 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: mark@...gant.net
-Subject: Re: CVE request: Pidgin crash
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: pmwiki before 2.2.21
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
-> Hi Mark,
-> 
-> >Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
-> 
-> >http://pidgin.im/news/security/?id=53
-> 
-> Please use CVE-2011-2942 for this issue.
-> 
-> Also looking at http://pidgin.im/news/security it seems two other security issues were also
-> fixed in 2.10.0, do you want CVEs to be assigned for them as well?
+Please use CVE-2010-4662.
 
-Please do. Since they're published in the form of upstream advisories
-we'd like to properly track them in the Debian Security Tracker.
+Thanks.
 
-Cheers,
-        Moritz
+-- 
+    JB
+
+----- Original Message -----
+> http://www.securelist.com/en/advisories/42608
+> http://www.pmwiki.org/wiki/PmWiki/ChangeLog
+> "Fix potential XSS vulnerability, reported by DFaure."
+> 
+> --
+> Hanno Böck mail/jabber: hanno@...eck.de
+> GPG: BBB51E42 http://www.hboeck.de/
