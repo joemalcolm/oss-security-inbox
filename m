@@ -1,24 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/19/1
-Message-ID: <87aadd22va.fsf@mid.deneb.enyo.de>
-Date: Sun, 19 Jun 2011 18:38:17 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/18
+Message-ID: <20110223143951.58751d5a@laverne>
+Date: Wed, 23 Feb 2011 14:39:51 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Subject: CVE request: pmwiki before 2.2.21
 Content-Type: text/plain; charset=utf-8
 
-* Sebastian Krahmer:
+http://www.securelist.com/en/advisories/42608
+http://www.pmwiki.org/wiki/PmWiki/ChangeLog
+"Fix potential XSS vulnerability, reported by DFaure."
 
-> The libraries that I had a quick look at and which were found
-> "vulnerable" are:
->
-> - openssl-1.0.0c
-> - openldap-2.4.23
-> - cyrus-sasl-2.1.23
->
-> which is probably far from complete.
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-If someone wants to keep track, here's another one:
-
-NSS (the crypto library) has some questionable features controlled by
-environment variables.
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
