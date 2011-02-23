@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/24
-Message-ID: <622252736.190729.1298491199267.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 14:59:59 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/11
+Message-ID: <4D64BAC8.2000501@msgid.tls.msk.ru>
+Date: Wed, 23 Feb 2011 10:44:08 +0300
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Cc: Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+CC: Nelson Elhage <nelhage@...lice.com>,  Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> The kernel automatically evaluates partition tables of storage devices.
-> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
-> a bug that allows to overflow the kernel heap. It may be possible to
-> escalate privileges by exploiting this bug.
-> 
-> (This bug is distinct from the LDM bug reported by Eugene Teo on
-> 2011-02-23.)
-> 
-> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-> CONFIG_LDM_PARTITION needs to be set.
-> 
+23.02.2011 08:46, Nelson Elhage wrote:
+> I don't have any definite opinions here about where to draw which
+> lines, but I want to point out that in addition to physical attack
+> vectors, virtualization tools are also potentially affected by these
+> kinds of bugs. If you try to mount an untrusted VM's virtual disk
+> image from somewhere, you're also vulnerable to that VM triggering
+> bugs in the filesystem or other layers.
 
-Can you point to a commit message or something else that is public? It's
-not clear how this differs from Eugene's request.
+And that's why projects like http://www.libguestfs.org/ emerges.
+FWIW ;)
 
-Thanks.
-
--- 
-    JB
+/mjt
