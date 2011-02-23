@@ -1,89 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/8
-Message-ID: <CAPYM6Vzyvf01NTiQvV17ed0vwcH8LhKgt+SoEXq-0X2rf=-zdw@mail.gmail.com>
-Date: Tue, 23 Aug 2011 01:45:57 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/26
+Message-ID: <1538145496.192012.1298495409359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 16:10:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Concrete CMS 5.4.1.1 <= Cross Site Scripting
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
 Content-Type: text/plain; charset=utf-8
 
-Concrete CMS 5.4.1.1  <=  Cross Site Scripting
+Steve,
 
+Can MITRE handle this one. It's getting old and I'm starting to think
+I won't be able to get to it before the week ends.
 
-1. OVERVIEW
+Thanks.
 
-Concrete CMS 5.4.1.1  and lower versions are vulnerable to Cross Site Scripting.
+-- 
+    JB
 
-
-2. BACKGROUND
-
-Concrete5 makes running a website easy. Go to any page in your site,
-and a editing toolbar gives you all the controls you need to update
-your website. No intimidating manuals, no complicated administration
-interfaces - just point and click.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The rcID parameter is not properly sanitized, which allows attacker to
-conduct Cross Site Scripting attack. This may allow an attacker to
-create a specially crafted URL that would execute arbitrary script
-code in a victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-CMS 5.4.1.1  <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-
-vulnerable parameter: rcID
-
-<form action="http://[target]/Concrete/index.php/login/do_login/"
-method="post">
-<input type="hidden" name="uName" value="test" />
-<input type="hidden" name="uPassword" value="test" />
-<input type="hidden" name="rcID" value='"
-style=display:block;color:red;width:9999;height:9999;z-index:9999;top:0;left:0;background-image:url(javascript:alert(/XSS/));width:expression(alert(/XSS/));
-onmouseover="alert(/XSS/)' />
-<input type="submit" name="submit" value="Get Concrete CMS 5.4.1.1 XSS" />
-</form>
-
-
-6. SOLUTION
-
-Upgrade to 5.4.2 or higher.
-
-
-7. VENDOR
-
-Concrete CMS Developers
-http://www.concrete5.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-04-14: vulnerability reported
-2011-08-04: vendor released fixed version
-2011-08-23: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[concrete_5.4.1.1]_cross_site_scripting
-Project Home: http://www.concrete5.org/
-Vendor Release Note:
-http://www.concrete5.org/documentation/background/version_history/5-4-2-release-notes/
-
-
-
-#yehg [2011-08-23]
+----- Original Message -----
+> Hi,
+> Please assign CVE IDs for the following issues from the Debian
+> Security Tracker:
+> 
+> 1. FreeBSD kernel: local DoS
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
+> http://www.exploit-db.com/exploits/16064/
+> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
+> 
+> 2. Xinha: Multiple vulnerabilities
+> (The code is included in a few web apps, e.g. serendipity, openacs or
+> dotlrn)
+> http://secunia.com/advisories/40669/
+> 
+> 3. tesseract: Insecure temp file handling
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
+> 
+> 4. proftpd mod_sftp integer overflow
+> http://bugs.proftpd.org/show_bug.cgi?id=3586
+> http://www.exploit-db.com/exploits/16129/
+> 
+> Cheers,
+> Moritz
