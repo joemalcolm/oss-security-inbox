@@ -1,35 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/2
-Message-ID: <1441798244.1020639.1315588834916.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 13:20:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/25
+Message-ID: <Pine.GSO.4.64.1102231505040.25301@faron.mitre.org>
+Date: Wed, 23 Feb 2011 15:17:32 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Sebastian Krahmer <krahmer@...e.de>, Guido Berhoerster <gber@...nsuse.org>
-Subject: Re: Re: lightdm issues
+cc: Eugene Teo <eugene@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-Here you go:
 
-CVE-2011-3349 lightdm files written as root to user-controlled folders
+On Wed, 23 Feb 2011, Steve Grubb wrote:
 
-Thanks.
+> However, this doesn't help in the scenario where you have a kiosk or 
+> internet cafe and untrusted people walk up to machines.
 
--- 
-    JB
+I used to be reluctant to use this kind of scenario, but times have 
+changed and kiosks/cafes are a rather common environment.  It seems 
+reasonable for a system owner to expect that the simple insertion of a USB 
+stick is not going to interfere with the operation of the host computer. 
+The presence of auto-mounting doesn't seem to require "user-assistance" 
+(i.e. careful social engineering) in the kiosk exploit scenario.  The 
+attacker is the person with physical access trying to DoS the given 
+machine in a less-detectable fashion than the "defenestration exploit," 
+i.e., throwing the target computer out the window for a literal denial of 
+service (crash).
 
------ Original Message -----
-> On ven., 2011-08-26 at 14:51 +1000, Robert Ancell wrote:
-> > Hi Sebastian,
-> >
-> > Thanks for doing this review, this issue is now being tracked in the
-> > LightDM issue tracker:
-> > https://bugs.launchpad.net/lightdm/+bug/834079
-> 
-> Could a CVE be assigned? Sebastian didn't really asked for it but as
-> it
-> can indeed be used to overwrite root-owned files (with non-controlled
-> content afaict) I guess it deserves ones?
-> 
-> Regards,
-> --
-> Yves-Alexis
+Now, if you have to social-engineer some admin into running "mount" for 
+you, then maybe that's a little too dependent on admin carelessness to get 
+a CVE (might as well tell them to run "rm -rf" or "download and execute 
+this program").
+
+These bugs might have a very low impact due to attack complexity, but 
+there is still a reasonable/realistic attack scenario, so technically it 
+can be given a CVE.
+
+- Steve
