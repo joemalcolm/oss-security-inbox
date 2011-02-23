@@ -1,27 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/5
-Message-ID: <20111222170646.GF7178@dhcp-25-225.brq.redhat.com>
-Date: Thu, 22 Dec 2011 18:06:47 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/26
+Message-ID: <1538145496.192012.1298495409359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 16:10:09 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4127 kernel: possible privilege escalation via SG_IO ioctl
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
 Content-Type: text/plain; charset=utf-8
 
-Paolo Bonzini of Red Hat found out that the host Linux system allows
-executing the SG_IO ioctl on a partition or even on an LVM volume, and
-will pass the command to the underlying block device. This could be
-further exploited in the in the context of virtualization, because
-virtio disks support a limited form of SCSI passthrough via the SG_IO
-ioctl. If virtio disk is hosted on a partition or LVM volume with
-format=raw, tools such as sg_dd can be used to read and write other data
-on the same disk --- even data that belongs to the host or to other
-guests.
+Steve,
 
-References:
-https://lkml.org/lkml/2004/8/12/218
-https://lkml.org/lkml/2004/8/12/260
-https://bugzilla.redhat.com/show_bug.cgi?id=752375
+Can MITRE handle this one. It's getting old and I'm starting to think
+I won't be able to get to it before the week ends.
 
-Thanks,
+Thanks.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+    JB
+
+----- Original Message -----
+> Hi,
+> Please assign CVE IDs for the following issues from the Debian
+> Security Tracker:
+> 
+> 1. FreeBSD kernel: local DoS
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
+> http://www.exploit-db.com/exploits/16064/
+> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
+> 
+> 2. Xinha: Multiple vulnerabilities
+> (The code is included in a few web apps, e.g. serendipity, openacs or
+> dotlrn)
+> http://secunia.com/advisories/40669/
+> 
+> 3. tesseract: Insecure temp file handling
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
+> 
+> 4. proftpd mod_sftp integer overflow
+> http://bugs.proftpd.org/show_bug.cgi?id=3586
+> http://www.exploit-db.com/exploits/16129/
+> 
+> Cheers,
+> Moritz
