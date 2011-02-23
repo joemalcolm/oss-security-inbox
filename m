@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/3
-Message-ID: <20110427201047.08f42008@orphan>
-Date: Wed, 27 Apr 2011 20:10:47 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/13
+Message-ID: <20110223101612.34261c43@laverne>
+Date: Wed, 23 Feb 2011 10:16:12 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Apr 2011 11:00:16 -0400 Dan Rosenberg wrote:
+Am Tue, 22 Feb 2011 23:17:54 -0500
+schrieb Dan Rosenberg <dan.j.rosenberg@...il.com>:
 
-> >> util-linux mount
-> >> =============
-> >> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves
-> >> identically to glibc addmntent() in terms of return code
-> >> * Succeeds on partial writes, does not remove temp file on failure
-> >> (could result in additional corruption of /etc/mtab through
-> >> multiple invocations), does not remove lock file /etc/mtab~ on
-> >> failure (also an issue)
-> >
-> > Dan, would you mind clarifying the way to achieve mtab corruption
-> > via truncated left-over mtab.tmp file and multiple invocations?
-> >  After some discussion with our util-linux maintainer, we fail to
-> > see an obvious way.  util-linux opens mtab.tmp using "w" fopen
-> > open, i.e. using O_TRUNC open flag.  So if there's any mtab.tmp
-> > file found, it's overwritten and its existence does not block
-> > further use of mount / umount as existence of mtab~ lock file does.
-> 
-> Ah, quite right.  I missed that since I was just doing a quick survey
-> of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
-> Thanks for looking into it.
+> Should this be considered a vulnerability?  Probably.  But what should
+> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+> a vulnerability if auto-mounting is disabled only when the screen is
+> locked?  Should all filesystems have graceful error handling for every
+> possible edge case that can occur when dealing with corruption?
 
-Ok, thank you!
+I'd say the later one. Filesystem drivers in the kernel should more or
+less be treated like just another app that is able to read some kind of
+"format". If the filesystem is corrupted, it should fail without
+security impact.
 
-Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
+As others already mentioned, the impact is not limited to automounting,
+but also an issue for virtualzation (and maybe other cases we don't
+think of yet).
 
-Thanks!
+Maybe it'd be a good idea to start a big fuzzing session on filesystems?
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
