@@ -1,40 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/1
-Message-ID: <20111105102754.GA11970@openwall.com>
-Date: Sat, 5 Nov 2011 14:27:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/14
+Message-ID: <20110223102406.GA3454@albatros>
+Date: Wed, 23 Feb 2011 13:24:08 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 04, 2011 at 02:32:50PM -0500, John Lightsey wrote:
-> Symlink A points to foo/bar
-> Symlink B points to /some/real/directory
+On Wed, Feb 23, 2011 at 11:26 +0800, Eugene Teo wrote:
+> On 02/22/2011 09:01 PM, Josh Bressers wrote:
+> >Do we know the affected versions? This probably won't be 20 IDs,
+> >but I suspect it won't be one either.
 > 
-> Code asks for /tmp/parent/childXXXX
+> Just some, not all, since not all the patches listed here affect Red
+> Hat and I do not think I want to go through them again. Other
+> vendors affected by these can provide their inputs.
 > 
-> Attacker hardlinks symlink A to /tmp/parent
-> Attacker creates /tmp/foo directory
-> Attacker hardlinks symlink B to /tmp/foo/bar
+> I read some interesting discussions on LKML. These require debugfs
+> to be mounted on a local system. It is usually not mounted by
+> default, and you would not want to mount it on a production system
+> unless you really have to use the kernel tracer, etc.
+
+Half of these are sysfs, not debugfs files.  One is procfs file.
+debugfs is mounted by default at least in Ubuntu.
+
+> ----- Original Message -----
+> > > There are 20 patches here - some are accepted, some are probably
+> > > pending. All from Vasiliy Kulikov.
+> > >
+> > > [PATCH 01/20] mach-omap2: mux: world-writable debugfs files
+> > > https://lkml.org/lkml/2011/2/4/66 arm arch
+
+4b715efc v2.6.33-rc1
+
+> > > [PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
+> > > https://lkml.org/lkml/2011/2/4/67 arm arch
+
+315e2556 v2.6.37-rc1
+
+> > > [PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage
+> > > files
+> > > https://lkml.org/lkml/2011/2/4/68 arm arch
+
+984aa6db v2.6.38-rc1
+
+> > > [PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
+> > > https://lkml.org/lkml/2011/2/4/69 arm arch
+
+38cdfe06 v2.6.37-rc1
+
+> > > [PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
+> > > https://lkml.org/lkml/2011/2/4/70
+
+500fe141 v2.6.37-rc2
+
+> > > [PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
+> > > https://lkml.org/lkml/2011/2/4/81
+
+0efba16c v2.6.37-rc2
+
+> > > [PATCH 07/20] video: sn9c102: world-wirtable sysfs files
+> > > https://lkml.org/lkml/2011/2/4/85
+
+1da177e4, real commit is older than kernel git epoch.
+
+> > > [PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
+> > > https://lkml.org/lkml/2011/2/4/82
+
+14fa5691 v2.6.31-rc1
+
+> > > [PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
+> > > https://lkml.org/lkml/2011/2/4/84
 > 
-> Now everything looks safe, but it relies on the attacker controled
-> /tmp/foo directory.
+> introduced in 09bcb3f3 v2.6.35-rc1
+> 
+> > > [PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
+> > > https://lkml.org/lkml/2011/2/4/71
+> 
+> introduced in 5814fc35 v2.6.37-rc1
+> 
+> > > [PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
+> > > https://lkml.org/lkml/2011/2/4/83
 
-Yes, in the above scenario everything would look safe to the current
-code with your symlink-safety.patch.  We could enhance the patch to also
-check parent directories of each symlink, but even then an attack would
-remain possible:
+ef12379f v2.6.32-rc1
 
-Attacker hardlinks symlink B to /tmp/parent
+> > > [PATCH 12/20] net: can: at91_can: world-writable sysfs files
+> > > https://lkml.org/lkml/2011/2/4/80
+> > > fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
+> 
+> introduced in 3a5655a5 v2.6.38-rc3
+> 
+> > > [PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination
+> > > file
+> > > https://lkml.org/lkml/2011/2/4/72
+> > > 1e6d93e45b231b3ae87c01902ede2315aacfe976
 
-Then depending on what /some/real/directory actually is, this may be a
-security problem - e.g., if /some/real/directory is /etc/cron.d or /bin.
-And even for most other directories, there's likely a DoS and quota
-bypass possibility here.
+631eb227 v2.6.35-rc1
 
-> It'd probably be simplest if File::Temp::_is_safe() didn't allow any
-> symlinks at all.
+> > > [PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg
+> > > file
+> > > https://lkml.org/lkml/2011/2/4/79
+> > > b80b168f918bba4b847e884492415546b340e19d
 
-Many systems have /tmp itself as a symlink.
+745a5d21 v2.6.25-rc1
 
-Alexander
+> > > [PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
+> > > https://lkml.org/lkml/2011/2/4/73
+> > > 8040835760adf0ef66876c063d47f79f015fb55d
+
+1da177e4, real commit is older than kernel git epoch.
+
+> > > [PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless
+> > > and jogdial files
+> > > https://lkml.org/lkml/2011/2/4/78
+> > > 8a6a142c1286797978e4db266d22875a5f424897
+
+dd8cd779 v2.6.25-rc1
+
+> > > [PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
+> > > https://lkml.org/lkml/2011/2/4/74
+
+8f26795a v2.6.25-rc1
+
+> > > [PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
+> > > https://lkml.org/lkml/2011/2/4/75
+
+1237c98d v2.6.25-rc1
+
+> > > [PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
+> > > https://lkml.org/lkml/2011/2/4/76
+> 
+> introduced in fe4f0bde v2.6.36-rc1
+> 
+> > > [PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
+> > > https://lkml.org/lkml/2011/2/4/77
+
+552ff317 v2.6.29-rc1
+
+
+Thanks,
+
+-- 
+Vasiliy
