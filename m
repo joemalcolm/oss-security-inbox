@@ -1,50 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/11
-Message-ID: <AANLkTimSfNQvob8xSkFtnHZ7reykFdefj=UMJ7vv+iVN@mail.gmail.com>
-Date: Fri, 1 Apr 2011 16:17:32 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/23
+Message-ID: <2080726178.190661.1298490943072.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 14:55:43 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: pmwiki before 2.2.21
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2010-4662.
 
->
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
->
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
->
+Thanks.
 
-I'd prefer if any private replacement for vendor-sec were either:
+-- 
+    JB
 
-1. Strictly limited to vendor coordination of embargoed security
-issues (with membership reflecting this purpose), or
-
-2. Opened up to researchers who have contributed knowledge and
-findings in this area, and are deemed trustworthy by other list
-subscribers or some other community opinion.
-
-In other words, it doesn't make sense to me to use "member of the old
-vendor-sec" as the only requirement for subscription, as some of the
-old members may not be eligible depending on the purpose of the new
-list.  I understand that this is just a preliminary solution, but I
-think the question of membership should be sorted out sooner rather
-than later.
-
-Thanks,
-Dan
-
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
->
-> Thanks.
->
+----- Original Message -----
+> http://www.securelist.com/en/advisories/42608
+> http://www.pmwiki.org/wiki/PmWiki/ChangeLog
+> "Fix potential XSS vulnerability, reported by DFaure."
+> 
 > --
->    JB
->
+> Hanno Böck mail/jabber: hanno@...eck.de
+> GPG: BBB51E42 http://www.hboeck.de/
