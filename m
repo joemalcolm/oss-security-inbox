@@ -1,30 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/15
-Message-ID: <4DA4C644.10001@mvista.com>
-Date: Tue, 12 Apr 2011 11:38:12 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/12
+Message-Id: <201102231001.08004.thomas@suse.de>
+Date: Wed, 23 Feb 2011 10:01:07 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: gdm PostLogin script executes scripts as user gdm
 Content-Type: text/plain; charset=utf-8
 
+Am Dienstag 22 Februar 2011 21:54:11 schrieb Josh Bressers:
+> 
+> ----- Original Message -----
+> > Hello oss-security,
+> > 
+> > should we consider this as a vulnerability?
+> > https://bugzilla.gnome.org/show_bug.cgi?id=602403
+> > 
+> 
+> I'm not sure this is a security flaw. It's not running user controlled
+> scripts (at least not by default). In order for it to run a user controlled
+> script, the admin would have to modify the Default script. Is this normal?
+> 
+> I'm not all that familiar with expected use of gdm, perhaps someone who
+> knows more can chime in?
+
+I am not familiar with this functionality too. The bug reporter states that
+the handling was differently in the past. This different behaviour may
+lead to security problems for the deployed systems... hmmm.
 
 
-On 04/09/2011 10:39 AM, Solar Designer wrote:
-> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
->> Can I get a status on this? (+, -, Ack, Nack)
-> 
-> Postponed.  I'd like to see any support for you getting onto the Linux
-> distros security contacts list, with reasoning, or/and any other
-> suggestions on what to do in this case.  Josh - what do you think (as
-> someone who advocated the setup of a vendor-sec replacement)?
-> 
+Thomas
 
-> Since you pinged me about the status on your subscription, let me ping
-> you about the status on the wiki updates as well. ;-)  Any progress?
-> The pages to update with your info are:
-> 
-> http://oss-security.openwall.org/wiki/vendors
-> http://oss-security.openwall.org/wiki/distro-patches
-> 
-
-Updated for MontaVista.
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
