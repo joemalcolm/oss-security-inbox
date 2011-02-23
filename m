@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/4
-Message-ID: <1316204088.5747.1.camel@scapa>
-Date: Fri, 16 Sep 2011 22:14:42 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/17
+Message-ID: <4D650888.9050604@pre-sense.de>
+Date: Wed, 23 Feb 2011 14:15:52 +0100
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
-> My last day with Canonical is today. Starting on Sep 19th, I will be
-> working for Google on ChromeOS. I'd like to transition my closed-list
-> membership based on the fact that ChromeOS is also a distro, and I'll
-> still have security responsibilities with it. How should this be
-> handled? 
+Am 23.02.2011 12:07, schrieb Steve Grubb:
+> On Wednesday, February 23, 2011 12:11:56 am Eugene Teo wrote:
+>> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
+>>> Should auto-mounting be disabled entirely? 
+> 
+> You should be able to turn it off. You can also block the loading of any kernel modules 
+> for file systems that you know you don't want to load.
 
-I don't have closed-list membership or anything, but I assume you'll
-keep going on Ubuntu security team anyway, even from Google, so it might
-make sense that you keep the membership anyway?
+To a certain extent, this is what makes the recent issues in partition
+handling special: The current kernels do not allow to turn off the
+evaluation of partition tables.
+(However, some patches allow to do so:
+https://patchwork.kernel.org/patch/47067/)
 
-Regards,
+Best regards, Timo
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Dr. Timo Warns                               warns@...-sense.de
+                                  Tel. +49 - 40 - 244 2407 - 16
+                                  Fax  +49 - 40 - 244 2407 - 24
+PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
+                                         USt-IdNr.: DE263765024
+Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
+Till Dörges           Jürgen Sander              Axel Theilmann
