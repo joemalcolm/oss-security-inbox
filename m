@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/4
-Message-ID: <20110824111313.GW25099@lupin.home.powdarrmonkey.net>
-Date: Wed, 24 Aug 2011 12:13:13 +0100
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/19
+Message-ID: <20110223174135.GN30355@redhat.com>
+Date: Wed, 23 Feb 2011 10:41:35 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple vulnerabilities in dtc
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
-> Hi,
-> 
-> A number of problems have been found recently in dtc (Domain Technologie
-> Control) and reported to the Debian BTS. These are the bugs that affect
-> upstream code; please assign CVEs as you feel appropriate:
+* [2011-02-23 08:33:48 +0100] Sebastian Krahmer wrote:
 
-any updates here?
+>Unfortunally I think nobody would care. As nobody cared
+>that you actually do not need physical access. Via udisks DBUS
+>service you can load any LKM via
+>
+>dbus-send --system --print-reply --dest=org.freedesktop.UDisks          \
+>                   /org/freedesktop/UDisks/devices/sr0                  \
+>                   org.freedesktop.UDisks.Device.FilesystemMount        \
+>                   string:'LKM' array:string:''
+>
+>I reported that several months ago to upstream but it was frozen to more
+>or less a non-issue. Indeed nobody agreed that this is an issue to fix.
 
-Thanks,
+Please use CVE-2010-4661 for this udisks flaw.
 
+Some additional references:
+
+https://bugs.freedesktop.org/show_bug.cgi?id=32232
+https://bugzilla.redhat.com/show_bug.cgi?id=664082
 
 -- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
-
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+Vincent Danen / Red Hat Security Response Team 
