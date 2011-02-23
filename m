@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/8
-Message-ID: <20110705043941.GA14096@openwall.com>
-Date: Tue, 5 Jul 2011 08:39:41 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/5
+Message-ID: <AANLkTinj0P1AU31XWEswr+0p0dGHDvPvuTFecMcwQMG2@mail.gmail.com>
+Date: Tue, 22 Feb 2011 23:17:54 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
-> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
-> 
-> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+I originally started writing this as a response to the recent CVE
+requests for issues in partition handling, but thought it might be a
+useful discussion on its own.  I was wondering if there are any
+clear-cut policies on issues involving physical access, since these
+can be very difficult in terms of assigning blame.
 
-So, I tried searching for MD5, SHA-1, and SHA-512 of this - no hits on
-Google web search.  Lots of hits for SHA-256, indeed - due to the
-incident announcement.
+For example, many Linux distributions will auto-mount filesystems on
+removable storage, often going so far as to load corresponding kernel
+modules for filesystems that aren't compiled in or don't already have
+an LKM loaded.  Sometimes, this will happen even if the screen is
+locked.
 
-Thus, chances are that no distro is affected.
+Incidentally, many Linux filesystem implementations don't have
+especially robust error handling for failures during attempts to mount
+corrupt filesystems.  As an example, I have a deliberately corrupted
+btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+formatted a USB stick with this filesystem, so now I have a USB stick
+that will panic the kernels of distributions that support
+auto-mounting, in some cases even when the screen is locked.
 
-More info on what's inside the tarball: user/group "user" (either the
-intruder's username on his/her computer or --owner and --group options
-argument to tar), "GCC: (Ubuntu/Linaro 4.5.2-8ubuntu4) 4.5.2" inside the
-.o files.  This suggests Ubuntu 11.04, right?
+Should this be considered a vulnerability?  Probably.  But what should
+be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+a vulnerability if auto-mounting is disabled only when the screen is
+locked?  Should all filesystems have graceful error handling for every
+possible edge case that can occur when dealing with corruption?
 
-BTW, what if the .o files _don't_ match the source code? ;-)  I think
-they might be used when one builds vsftpd from this tarball, which means
-that the build (or run) will fail on some older systems (yet another
-reason why this would be noticed quickly), but also that the actual
-backdoor might be different (and more sophisticated) from what we see in
-the source code.  No, I don't think this is the case, but the
-possibility is there, and I find it curious.
+I'd be interested to hear opinions on this.  And depending on how the
+discussion goes, I'd be happy to provide more details on specific
+cases, such as the btrfs example.
 
-A trivial way to check for this would be to try compiling the source
-code on Ubuntu 11.04 and see if the .o files match.  If not, the
-differences will need to be analyzed manually.  Not that anyone cares...
-
-Alexander
+-Dan
