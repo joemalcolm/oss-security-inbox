@@ -1,65 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/9
-Message-ID: <Pine.GSO.4.64.1109141428170.18631@faron.mitre.org>
-Date: Wed, 14 Sep 2011 14:35:54 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/7
+Message-ID: <4D6497DC.2000701@redhat.com>
+Date: Wed, 23 Feb 2011 13:15:08 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-
-> Are the below worth assigning CVE ids to? The advisory seems to suggest 
-> they are crash only fixes. Do those deserve CVE IDs? I know we've been 
-> fairly generous with wireshark in the past, but I'm wondering if we need 
-> to draw a line somewhere.
-
-Crash-only issues are always/typically worth a CVE when it can prevent a 
-product from working in a security context.  Wireshark monitors network 
-traffic, sometimes live; therefore, in some reasonable/common usage 
-scenarios, attackers can cause a crash and prevent network activities from 
-being detected.
-
-We apply similar logic in forensics and other scenarios.  Therefore a CVE 
-is needed for both wnpa-sec-2011-12 (crash reading live packets) as well 
-as wnpa-sec-2011-14 (by only reading a packet trace file) - in the latter, 
-analysis of a packet trace could be hampered/delayed because the 
-investigator can't use the product without it crashing.
-
-Wireshark does not get any more "preference" than any other tool, except 
-indirectly because it gets more attention.
-
-- Steve
-
-
-
-On Wed, 14 Sep 2011, Josh Bressers wrote:
-
-> ----- Original Message -----
->
->> 2. Wireshark Lua script execution vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-15.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737784
->
-> Use CVE-2011-3360 for the above.
->
->
+On 02/23/2011 01:11 PM, Eugene Teo wrote:
+> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
+>> I originally started writing this as a response to the recent CVE
+>> requests for issues in partition handling, but thought it might be a
+>> useful discussion on its own. I was wondering if there are any
+>> clear-cut policies on issues involving physical access, since these
+>> can be very difficult in terms of assigning blame.
 >>
->> 1, Wireshark CSN.1 dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-16.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737783
+>> For example, many Linux distributions will auto-mount filesystems on
+>> removable storage, often going so far as to load corresponding kernel
+>> modules for filesystems that aren't compiled in or don't already have
+>> an LKM loaded. Sometimes, this will happen even if the screen is
+>> locked.
 >>
->> 3. Wireshark buffer exception handling vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-14.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737785
+>> Incidentally, many Linux filesystem implementations don't have
+>> especially robust error handling for failures during attempts to mount
+>> corrupt filesystems. As an example, I have a deliberately corrupted
+>> btrfs filesystem that triggers a BUG() if you attempt to mount it. I
+>> formatted a USB stick with this filesystem, so now I have a USB stick
+>> that will panic the kernels of distributions that support
+>> auto-mounting, in some cases even when the screen is locked.
 >>
->> 4. Wireshark OpenSafety dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-12.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737787
+>> Should this be considered a vulnerability? Probably. But what should
+>> be fixed? Should auto-mounting be disabled entirely? Is it no longer
+>> a vulnerability if auto-mounting is disabled only when the screen is
+>> locked? Should all filesystems have graceful error handling for every
+>> possible edge case that can occur when dealing with corruption?
 >>
+>> I'd be interested to hear opinions on this. And depending on how the
+>> discussion goes, I'd be happy to provide more details on specific
+>> cases, such as the btrfs example.
 >
-> Thanks.
+>  From the security response perspective, I will likely classify them as
+> security bugs but with a /very/ low impact. The attacking party must
+> already have some form of physical access to the affected system, or the
+> attack must require some social engineering to trick the user to mount a
+> corrupted file system using a portable media.
 >
-> --
->    JB
->
+> It will be hard to break existing user experience if we were to disable
+
+It will be hard *not* to... :)
+
+> auto-mounting entirely, but it makes sense to disable it if the screen
+> is locked. I'm not sure if this will affect how we classify such bugs.
+> I'm happy to hear more thoughts on this.
+
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
