@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/3
-Message-ID: <db93d4a5-c28e-44dc-8c8d-4183199fa5e9@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:22:16 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/24
+Message-ID: <622252736.190729.1298491199267.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 23 Feb 2011 14:59:59 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: serendipity freetag plugin before 3.30 and probably others
+Cc: Timo Warns <warns@...-sense.de>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3610.
+----- Original Message -----
+> 
+> The kernel automatically evaluates partition tables of storage devices.
+> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+> a bug that allows to overflow the kernel heap. It may be possible to
+> escalate privileges by exploiting this bug.
+> 
+> (This bug is distinct from the LDM bug reported by Eugene Teo on
+> 2011-02-23.)
+> 
+> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+> CONFIG_LDM_PARTITION needs to be set.
+> 
+
+Can you point to a commit message or something else that is public? It's
+not clear how this differs from Eugene's request.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> XSS in the tagcloud generation flash in serendipity freetag before
-> 3.30:
-> http://blog.s9y.org/archives/234-Security-fix-for-flash-based-cloud-in-Freetag-plugin.html
-> 
-> The linked vulnerability report indicates that this flash code is
-> also
-> used by other software, e.g. the wp cumulus plugin:
-> http://websecurity.com.ua/5356/
-> 
-> Though my ukrainian isn't that good ;-)
-> 
-> Please assign cve.
-> 
-> --
-> Hanno Böck		mail/jabber: hanno@...eck.de
-> GPG: BBB51E42		http://www.hboeck.de/
-> 
