@@ -1,23 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/2
-Message-ID: <20110819102534.2ea3e9be@redhat.com>
-Date: Fri, 19 Aug 2011 10:25:34 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/8
+Message-ID: <AANLkTikEk9mw4FqbnSKQrJND7OE4Ajp47KH5gXQ8YqTB@mail.gmail.com>
+Date: Wed, 23 Feb 2011 00:46:47 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: GIF loader buffer overflow when initializing decompression tables
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2 Aug 2011 17:34:28 +0200 Thomas Biege wrote:
+I don't have any definite opinions here about where to draw which
+lines, but I want to point out that in addition to physical attack
+vectors, virtualization tools are also potentially affected by these
+kinds of bugs. If you try to mount an untrusted VM's virtual disk
+image from somewhere, you're also vulnerable to that VM triggering
+bugs in the filesystem or other layers.
 
-> The same flaw was previously reported for several other components
-> that include GIF reading code based on David Koblas' parser, such as:
-> gd (CVE-2006-4484), SDL_image (CVE-2007-6697), tk (CVE-2008-0553),
-> netbpm (CVE-2008-0554), cups (CVE-2008-1373).
+- Nelson
 
-The similar was spotted in XPCE when reviewing upstream
-fix for CVE-2011-2896:
-
-http://www.swi-prolog.org/bugzilla/show_bug.cgi?id=7#c2
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+On Tue, Feb 22, 2011 at 11:17 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> I originally started writing this as a response to the recent CVE
+> requests for issues in partition handling, but thought it might be a
+> useful discussion on its own.  I was wondering if there are any
+> clear-cut policies on issues involving physical access, since these
+> can be very difficult in terms of assigning blame.
+>
+> For example, many Linux distributions will auto-mount filesystems on
+> removable storage, often going so far as to load corresponding kernel
+> modules for filesystems that aren't compiled in or don't already have
+> an LKM loaded.  Sometimes, this will happen even if the screen is
+> locked.
+>
+> Incidentally, many Linux filesystem implementations don't have
+> especially robust error handling for failures during attempts to mount
+> corrupt filesystems.  As an example, I have a deliberately corrupted
+> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+> formatted a USB stick with this filesystem, so now I have a USB stick
+> that will panic the kernels of distributions that support
+> auto-mounting, in some cases even when the screen is locked.
+>
+> Should this be considered a vulnerability?  Probably.  But what should
+> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+> a vulnerability if auto-mounting is disabled only when the screen is
+> locked?  Should all filesystems have graceful error handling for every
+> possible edge case that can occur when dealing with corruption?
+>
+> I'd be interested to hear opinions on this.  And depending on how the
+> discussion goes, I'd be happy to provide more details on specific
+> cases, such as the btrfs example.
+>
+> -Dan
+>
