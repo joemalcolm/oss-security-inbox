@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/10
-Message-ID: <4D9C9E63.5060007@redhat.com>
-Date: Wed, 06 Apr 2011 19:09:55 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Jiri Popelka <jpopelka@...hat.com>
-Subject: CVE Request -- dhcp: DoS (excessive CPU use) by opening an OMAPI connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/25
+Message-ID: <Pine.GSO.4.64.1102231505040.25301@faron.mitre.org>
+Date: Wed, 23 Feb 2011 15:17:32 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Eugene Teo <eugene@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
 
-Hello Josh, Steve, vendors,
+On Wed, 23 Feb 2011, Steve Grubb wrote:
 
-   A security flaw was found in the way DHCP (Dynamic Host Configuration Protocol)
-server processed remote connections when the dhcpd was configured to provide
-Object Management API (OMAPI) capability. A remote attacker could use this flaw
-to cause denial of service (excessive CPU use and dhcpd daemon unreachability).
+> However, this doesn't help in the scenario where you have a kiosk or 
+> internet cafe and untrusted people walk up to machines.
 
-References:
-[1] https://bugzilla.novell.com/show_bug.cgi?id=680298
-[2] https://lists.isc.org/pipermail/dhcp-users/2011-February/012780.html
-[3] https://lists.isc.org/pipermail/dhcp-users/2011-February/012781.html
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=666441
-[5] http://www.mentby.com/Group/dhcp-users/omapi-not-working-in-420.html
+I used to be reluctant to use this kind of scenario, but times have 
+changed and kiosks/cafes are a rather common environment.  It seems 
+reasonable for a system owner to expect that the simple insertion of a USB 
+stick is not going to interfere with the operation of the host computer. 
+The presence of auto-mounting doesn't seem to require "user-assistance" 
+(i.e. careful social engineering) in the kiosk exploit scenario.  The 
+attacker is the person with physical access trying to DoS the given 
+machine in a less-detectable fashion than the "defenestration exploit," 
+i.e., throwing the target computer out the window for a literal denial of 
+service (crash).
 
-Note: Though looks as minor / low severity issue, under proper configuration
-       looks to be a way, how to get dhcpd completely unresponsive for further
-       requests.
+Now, if you have to social-engineer some admin into running "mount" for 
+you, then maybe that's a little too dependent on admin carelessness to get 
+a CVE (might as well tell them to run "rm -rf" or "download and execute 
+this program").
 
-Could you allocate a CVE id for this? (though opened for discussion if this
-being more to be a bug, than a real security issue).
+These bugs might have a very low impact due to attack complexity, but 
+there is still a reasonable/realistic attack scenario, so technically it 
+can be given a CVE.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+- Steve
