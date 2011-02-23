@@ -1,45 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/7
-Message-ID: <20110728124719.GF9382@foo.fgeek.fi>
-Date: Thu, 28 Jul 2011 15:47:19 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/27
+Message-ID: <20110223211807.GA4066@pisco.westfalen.local>
+Date: Wed, 23 Feb 2011 22:18:08 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request Tribiq CMS path disclosure HTB22857
+Subject: CVE request: Information disclosure in CGIHTTPServer from Python
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue? Verified that this is a valid bug.
+Hi,
+please assign a CVE ID for http://bugs.python.org/issue2254
 
-Best regards,
-Henri Salo
-
------ Forwarded message from advisory@...ridge.ch -----
-
-Date: Thu, 3 Mar 2011 12:50:21 +0100 (CET)
-From: advisory@...ridge.ch
-To: bugtraq@...urityfocus.com
-Subject: HTB22857: Path disclosure in Tribiq CMS
-
-Vulnerability ID: HTB22857
-Reference: http://www.htbridge.ch/advisory/full_path_disclosure_in_tribiq_cms.html
-Product: Tribiq CMS
-Vendor: Tribal Limited ( http://tribiq.com/ ) 
-Vulnerable Version: 5.2.7b and probably prior versions
-Vendor Notification: 17 February 2011 
-Vulnerability Type: Path disclosure
-Status: Fixed by Vendor
-Risk level: Low 
-Credit: High-Tech Bridge SA - Ethical Hacking & Penetration Testing (http://www.htbridge.ch/) 
-
-Vulnerability Details:
-The vulnerability exists due to failure in the "templatewrap/templatefoot.php", "cmsjs/plugin.js.php", "cmsincludes/cms_plugin_api_link.inc.php" scripts, it's possible to generate an error that will reveal the full path of the script.
-A remote user can determine the full path to the web root directory and other potentially sensitive information.
-
-
-http://host/templatewrap/templatefoot.php
-http://host/cmsjs/plugin.js.php
-http://host/cmsincludes/cms_plugin_api_link.inc.php
-
-Solution: Upgrade to the most recent version
-
-
------ End forwarded message -----
+Cheers,
+        Moritz
