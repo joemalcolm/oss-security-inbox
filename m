@@ -1,32 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/9
-Message-ID: <4EC52A29.5040804@redhat.com>
-Date: Thu, 17 Nov 2011 08:37:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/10
+Message-ID: <20110223073348.GA29003@suse.de>
+Date: Wed, 23 Feb 2011 08:33:48 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: nginx resolver heap overflow
+Subject: Re: Physical access vulnerabilities and auto-mounting
 Content-Type: text/plain; charset=utf-8
 
-On 11/16/2011 10:50 PM, Ben Hawkes wrote:
-> Hi,
->
-> The nginx team have released stable version 1.0.10, which includes a fix 
-> for a heap overflow bug in the custom DNS resolver:
->
-> http://trac.nginx.org/nginx/changeset/4268/nginx
->
-> The resolver is most commonly used with the proxy and fastcgi modules,
-> which are not enabled by default.
->
-> In order to trigger this condition an attacker would need to be in
-> control of an upstream resolver host, or be in a position to brute-force
-> the weakly generated 16-bit transaction identifier.
->
-> Thanks,
-> Ben Hawkes
-Do you need a CVE # for this issue?
+Hi,
+
+Unfortunally I think nobody would care. As nobody cared
+that you actually do not need physical access. Via udisks DBUS
+service you can load any LKM via
+
+dbus-send --system --print-reply --dest=org.freedesktop.UDisks          \
+                   /org/freedesktop/UDisks/devices/sr0                  \
+                   org.freedesktop.UDisks.Device.FilesystemMount        \
+                   string:'LKM' array:string:''
+
+I reported that several months ago to upstream but it was frozen to more
+or less a non-issue. Indeed nobody agreed that this is an issue to fix.
+
+Sebastian
+
+On Tue, Feb 22, 2011 at 11:17:54PM -0500, Dan Rosenberg wrote:
+> I originally started writing this as a response to the recent CVE
+> requests for issues in partition handling, but thought it might be a
+> useful discussion on its own.  I was wondering if there are any
+> clear-cut policies on issues involving physical access, since these
+> can be very difficult in terms of assigning blame.
+> 
+> For example, many Linux distributions will auto-mount filesystems on
+> removable storage, often going so far as to load corresponding kernel
+> modules for filesystems that aren't compiled in or don't already have
+> an LKM loaded.  Sometimes, this will happen even if the screen is
+> locked.
+> 
+> Incidentally, many Linux filesystem implementations don't have
+> especially robust error handling for failures during attempts to mount
+> corrupt filesystems.  As an example, I have a deliberately corrupted
+> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
+> formatted a USB stick with this filesystem, so now I have a USB stick
+> that will panic the kernels of distributions that support
+> auto-mounting, in some cases even when the screen is locked.
+> 
+> Should this be considered a vulnerability?  Probably.  But what should
+> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
+> a vulnerability if auto-mounting is disabled only when the screen is
+> locked?  Should all filesystems have graceful error handling for every
+> possible edge case that can occur when dealing with corruption?
+> 
+> I'd be interested to hear opinions on this.  And depending on how the
+> discussion goes, I'd be happy to provide more details on specific
+> cases, such as the btrfs example.
+> 
+> -Dan
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
