@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/5
-Message-ID: <4E7EF1CA.5030603@sugarcrm.com>
-Date: Sun, 25 Sep 2011 02:18:02 -0700
-From: Stas Malyshev <smalyshev@...arcrm.com>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/11
+Message-ID: <854174179.216810.1298573420094.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 13:50:20 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Please use CVE-2011-1016
 
-On 9/25/11 2:02 AM, Pierre Joye wrote:
-> I tend to disagree here. One of the CVE goal is not about declaring
-> one or the other guilty of bad practice(s) but about informing users
-> about security issues in the software they use and how to act
-> correctly to fix these issues.
->
-> The is_a change is typically one of these security issues. While being
-> a minor one (recommended ini settings or good code practices would
-> avoid it easily), it is still one. That's why I'd to go with assigning
-> one and link it to the bug.
+Thanks.
 
-I'm concerned that if we do it this way people would take it as "PHP has 
-security bug in is_a and it was fixed in this version, so as long as we 
-run updated version we're OK", not "my code has gaping security hole 
-which by pure luck wasn't exploitable but minor change made it 
-exploitable". If we don't make it crystal clear the latter and not the 
-former is the case, we'd have same problem with 5.4.
 -- 
-Stanislav Malyshev, Software Architect
-SugarCRM: http://www.sugarcrm.com/
-(408)454-6900 ext. 227
+    JB
+
+----- Original Message -----
+> Check values passed in to AARESOLVE_OFFSET on r300. It can be used to
+> write arbitrary data to VRAM, GTT, etc. This is specific to a range of
+> GPUs only.
+> 
+> drm/radeon/kms: check AA resolve registers on r300
+> http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
+> 
+> [PATCH] drm/radeon: fix regression with AA resolve checking
+> https://patchwork.kernel.org/patch/576101/
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=680000
+> 
+> Eugene
+> --
+> Eugene Teo / Red Hat Security Response Team
