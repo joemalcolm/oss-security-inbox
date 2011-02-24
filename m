@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/11
-Message-ID: <AANLkTikbpB-ES6CsuxefjSxwtOEHzEyQ0QgATXPTeZTg@mail.gmail.com>
-Date: Wed, 5 Jan 2011 17:04:59 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/2
+Message-ID: <4D65B37F.3000408@redhat.com>
+Date: Thu, 24 Feb 2011 09:25:19 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+CC: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-Be sure to be careful while applying the patch to fix this one. :p
+On 02/24/2011 03:59 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>>
+>> The kernel automatically evaluates partition tables of storage devices.
+>> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+>> a bug that allows to overflow the kernel heap. It may be possible to
+>> escalate privileges by exploiting this bug.
+>>
+>> (This bug is distinct from the LDM bug reported by Eugene Teo on
+>> 2011-02-23.)
+>>
+>> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+>> CONFIG_LDM_PARTITION needs to be set.
+>>
+>
+> Can you point to a commit message or something else that is public? It's
+> not clear how this differs from Eugene's request.
 
--Dan
+As far as I can tell, it's not public yet. Timo will follow-up once his 
+patch is accepted.
 
-On Wed, Jan 5, 2011 at 4:54 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> We got a heads up on a directory traversal flaw in patch.  I don't think
-> a CVE name has been assigned to it; could we get one?  It allows for the
-> creation of arbitrary files in unexpected places due to the use of '..'.
->
-> References:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=667529
-> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
->
-> Thanks.
->
-> --
-> Vincent Danen / Red Hat Security Response Team
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
