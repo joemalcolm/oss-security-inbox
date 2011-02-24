@@ -1,53 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/10
-Message-ID: <20110518204523.GB5221@openwall.com>
-Date: Thu, 19 May 2011 00:45:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/15
+Message-ID: <1265265450.219398.1298581061714.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 15:57:41 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Cc: Mike Tremaine <mgt@...llarcore.net>, Karel Klic <kklic@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- logwatch: Privilege escalation due improper sanitization of special characters in log file names
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 17, 2011 at 01:18:33PM +0200, Sebastian Krahmer wrote:
-> I uploaded a openssl-1.0.0d patch to
+Please use CVE-2011-1018
+
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> http://suse.de/~krahmer/libs-vs-fscaps
-
-Thank you!
-
-> The prefered way is to check the dumpable flag via prctl() which
-> is detected by the config script.
-
-This is fail-open (at build time).  If the -e "/usr/include/sys/prctl.h"
-check somehow fails, we silently get an insecure build.  Of course,
-risks of this nature are extremely common, but we're trying to deal with
-them.  In our package of rpm, we have the configure-presets script,
-which looks like:
-
-#!/bin/sh
-# These autoconf variables are predefined to harden configure checks for
-# security sensitive functions, and to speedup configure checks for
-# most popular functions.
-export ac_cv_func_alloca=yes
-export ac_cv_func_asprintf=yes
-export ac_cv_func_atexit=yes
-export ac_cv_func_bcopy=yes
-export ac_cv_func_dcgettext=yes
-export ac_cv_func_fchdir=yes
-...
-export ac_cv_func_utimes=yes
-export ac_cv_func_vasprintf=yes
-export ac_cv_func_vfork=yes
-export ac_cv_func_vprintf=yes
-export ac_cv_func_vsnprintf=yes
-export ac_cv_func_waitpid=yes
-export ac_cv_func_wcslen=yes
-export ac_cv_func_wcwidth=yes
-
-This script is sourced in our %___build_pre macro.
-
-Maybe you should simply drop the -e "/usr/include/sys/prctl.h" check,
-leaving only the $target =~ /^linux/i check?
-
-Thanks again,
-
-Alexander
+> a security flaw was found in the way logwatch, a log file
+> analysis program, pre-processed log files, containing certain
+> special characters in their names. A remote attacker could
+> use this flaw to execute arbitrary code with the privileges
+> of the privileged system user (root) by creating a
+> specially-crafted log file, subsequently analyzed by the
+> logwatch script.
+> 
+> Upstream bug report:
+> [1]
+> http://sourceforge.net/tracker/?func=detail&aid=3184223&group_id=312875&atid=1316824
+> 
+> Related patch:
+> [2]
+> http://logwatch.svn.sourceforge.net/viewvc/logwatch?view=revision&revision=26
+> 
+> Other references:
+> [3]
+> http://sourceforge.net/mailarchive/forum.php?thread_name=4D604843.7040303%40mblmail.net&forum_name=logwatch-devel
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=680237
+> 
+> Could you allocate a CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
