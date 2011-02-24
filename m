@@ -1,99 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/13
-Message-ID: <BANLkTi=q8-BiuqSd6HupFgqm3eSwE3_XNg@mail.gmail.com>
-Date: Mon, 6 Jun 2011 19:03:25 +0200
-From: Alvaro Lopez Ortega <alvaro@...ality.com>
-To: Jamie Strandboge <jamie@...onical.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security issue in cherokee
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/4
+Message-ID: <1298515589.25507.9.camel@apollo>
+Date: Wed, 23 Feb 2011 21:46:29 -0500
+From: Jon Oberheide <jon@...rheide.org>
+To: oss-security@...ts.openwall.com
+Cc: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-Hello Jamie,
+On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
+> On 02/24/2011 03:59 AM, Josh Bressers wrote:
+> > ----- Original Message -----
+> >>
+> >> The kernel automatically evaluates partition tables of storage devices.
+> >> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+> >> a bug that allows to overflow the kernel heap. It may be possible to
+> >> escalate privileges by exploiting this bug.
+> >>
+> >> (This bug is distinct from the LDM bug reported by Eugene Teo on
+> >> 2011-02-23.)
+> >>
+> >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+> >> CONFIG_LDM_PARTITION needs to be set.
+> >>
+> >
+> > Can you point to a commit message or something else that is public? It's
+> > not clear how this differs from Eugene's request.
+> 
+> As far as I can tell, it's not public yet. Timo will follow-up once his 
+> patch is accepted.
 
-First of all, thanks for the notice.
+The advisory Timo posted mentioned ldm_frag_add() so it's public for all
+practical purposes at this point:
 
-I've been thinking about this, and I must confess I haven't found a suitable
-solution to the problem. I have even written a patch that mitigates the
-issue, although it isn't still the proper solution. Allow me to elaborate a
-little bit:
+static bool ldm_frag_add (const u8 *data, int size, struct list_head
+*frags)
+{
+...
+        f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
+        if (!f) {
+                ldm_crit ("Out of memory.");
+                return false;
+        }
+...
+        memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
+size);
+        return true;
+}
 
-
-   - Cherokee-admin already puts a security cookie in place. The back-end
-   checks on every single requests (GET and POST). Of course this does not
-   solve the problem. Since the browser already knows the cookie, it sends it
-   even while begin CRSF'ed.
-   - I have cooked a patch that adds a "key=<random>" validation key to
-   every single form of the application. It does work to protect against some
-   very basic CRSF attacks, although it is not completely secure.
-   Web browser are not supposed to allow to perform cross-domain requests,
-   but they do. The problem is obvious then. The attacker could GET one of the
-   app pages, extract the POST validation key and use it to get his POST
-   accepted by the application.
-   - I do not even mention useless techniques like checking the Referrer
-   header.
-
-Am I missing something?
-Is there any idea/proposal on how to fix up the issue properly?
-
-Cheers!
-
-
-On Fri, Jun 3, 2011 at 6:01 PM, Jamie Strandboge <jamie@...onical.com>wrote:
-
-> A security bug was reported against cherokee in Ubuntu. You are being
-> emailed as the upstream contact. Please keep oss-security[1] CC'd for
-> any updates on this issue.
->
-> This issue should be considered public, but has not yet been assigned a
-> CVE. Once a CVE is assigned, please mention it in any changelogs.
->
-> Details from the public bug follow:
-> https://launchpad.net/bugs/784632
->
-> From the reporter:
-> ----
-> The cherokee admin server is vulnerable to csrf.
->
-> Using csrf it is possible to produce a persistent xss in several pages -
-> including the 'status' page via the 'nickname field' of a vserver.
-> An example of this is the following:
->
-> <html>
-> <body>
->  <form action="http://127.0.0.1:9090/vserver/apply" method="post"
-> id="xssform">
->  <input type="text" name="tmp!new_droot" value='/var/www/'></input>
->  <input type="text" name="tmp!new_nick" value='" onselect=alert(1)
-> autofocus> <embed src="javascript:alert(document.cookie)">'></input>
-> </form>
-> <script>document.getElementById("xssform").submit();</script>
-> </body>
->
-> A Worst case scenario could be something like the following:
-> If a user is logged in and the cherokee admin server is running on
-> localhost:9090 then if they visit a $bad page - the bad page may be able
-> to send requests to the server so as to reconfigure it to:
->
-> 1. run as root
-> 2. the logging of error(or access) will run a command ...
-> ----
->
-> Thanks in advance for your cooperation in coordinating a fix for this
-> issue,
->
-> Jamie Strandboge
->
-> [1] oss-security@...ts.openwall.com is a public mailing list for
->    people to collaborate on security vulnerabilities and coordinate
->    security updates.
->
-> --
-> Jamie Strandboge             | http://www.canonical.com
->
-
-
+Regards,
+Jon Oberheide
 
 -- 
-Greetings, alo
-http://www.octality.com/
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
 
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
