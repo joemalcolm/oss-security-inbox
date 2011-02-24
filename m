@@ -1,85 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/1
-Message-ID: <20110624000205.GA26420@openwall.com>
-Date: Fri, 24 Jun 2011 04:02:05 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/9
+Message-ID: <20110224172834.GI30355@redhat.com>
+Date: Thu, 24 Feb 2011 10:28:34 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2011-02-24 18:02:06 +0100] Ralf Corsepius wrote:
 
-I analyzed the impact of the crypt_blowfish bug more thoroughly.
+>On 02/24/2011 05:45 PM, Vincent Danen wrote:
+>>* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
+>>
+>>>>Is Redhat packaging RT now, or are you just handling the CVEs?
+>>>
+>>>I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
+>>>public issues.
+>>
+>Folks, my feel is you all are picking on words and details.
 
-Initially, I thought that only lengths n*4-1 and very large lengths were
-at risk of easy collisions.  And, for small lengths, I estimated that
-roughly 3 out of 16 passwords containing one 8-bit character were at risk.
+It is possible that Josh didn't realize it was packaged in Fedora and
+EPEL (we do package quite a few things).
 
-After more thorough analysis, it turns out that other odd lengths are
-also at risk, and that "very large" starts at length 20.  Thus, I have
-to revise my "3 of 16" estimate.  The new estimate for risky passwords
-with one 8-bit character is 30% for lengths up to 20 inclusive.  Like
-before, this assumes uniform distribution of lengths and positions for
-the 8-bit character, which is obviously not the case in practice, yet it
-works as an estimate.
+>>RT3 is packaged in Fedora and EPEL.
+>>
+>Correct. rt3 is community maintained in Fedora and RHEL. I am doing 
+>so for Fedora and other people do for RHEL.
+>So, strictly speaking it's not "Red Hat packaged", but 
+>community-contributed to "Red Hat owned products" (Fedora rsp. Fedora 
+>EPEL) and some folks @RH are filing CVS against it, for reasons I 
+>don't know.
 
-Lengths that are _not_ at risk: 1, 2, 4, 6, 8, 10, 12, 14, 16, 18.
-The rest are at risk (meaning that 8-bit chars in _some_ positions
-result in 1 to 3 preceding chars being ignored).
+I'm not sure what you mean by that last statement (filing CVS against
+it).  Do you mean filing bugs?
 
-I also analyzed the number of collisions seen on Russian words in koi8-r
-and utf-8 encodings.  I used Russian wordlists found in the Openwall
-collection:
-
-http://download.openwall.net/pub/wordlists/languages/Russian/koi8-r/
-
-After zcat'ing the wordlists together and removing comment lines, I got
-97946 different lines.  Of those, a quick grep for [ -~] suggests that
-1805 contain some regular ASCII characters, and a review of those shows
-that they are indeed genuine Russian wordlist entries - geographical
-names that contain more than one word (and thus contain spaces),
-composite words with dashes, etc.  Anyhow, 1805 out of 97946 is not
-many.  The rest are apparently 8-bit only.
-
-I also converted the resulting file to utf-8 using:
-
-iconv -f koi8-r -t utf-8
-
-Then I ran a trivial program crypt()'ing every line, with the buggy
-version of crypt_blowfish (below 1.1) and using the same salt.
-
-This resulted in 70890 (72%) and 97213 (99%) unique hashes for koi8-r
-and utf-8, respectively.
-
-For koi8-r, 22 hashes are seen over 100 times each, with the top one
-being seen 190 times.  For utf-8, the top hash (most common) is seen 4
-times, then 84 hashes are seen 3 times each.
-
-Thus, obviously the bug does cause collisions.  There are not as many of
-those as some people might expect for nearly purely 8-bit inputs.
-Yet the very common hashes for koi8-r are worrisome.  Even though if one
-were to run the entire koi8-r wordlist against a bunch of hashes they'd
-only achieve a 30% speedup due to the bug, if they focus on words
-producing 22 top hashes - so they only try 22 words - they'd crack
-around 3% of passwords based on randomly picked words from that list
-(assuming uniform distribution of random word numbers).  For utf-8, this
-risk is much lower: trying top 85 passwords (0.087% of candidates)
-effectively tests 256 of them (0.26%).
-
-The relative speedup may be worse for more complicated passwords.  Their
-guessing entropy may be reduced to being not that much higher than that
-of the simple wordlist passwords above.  A mitigating factor is that
-those passwords contain at least some non-8-bit characters (digits,
-spaces, punctuation), which would not overwrite any preceding characters
-(but may be getting overwritten themselves, unfortunately).
-
-I've attached two files - a list of affected {length, position}s with
-their corresponding overwritten character positions, and the program
-used to generate this list.  (Yes, this message is just below the size
-threshold for this mailing list.)
-
-Alexander
-
-View attachment "bugana-output.txt" of type "text/plain" (64630 bytes)
-
-View attachment "bugana.c" of type "text/plain" (1035 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
