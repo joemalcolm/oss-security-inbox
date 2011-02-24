@@ -1,53 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/5
-Message-ID: <2036734578.61013.1304624307741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 5 May 2011 15:38:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/9
+Message-ID: <20110224172834.GI30355@redhat.com>
+Date: Thu, 24 Feb 2011 10:28:34 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mediawiki
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
+* [2011-02-24 18:02:06 +0100] Ralf Corsepius wrote:
 
+>On 02/24/2011 05:45 PM, Vincent Danen wrote:
+>>* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
+>>
+>>>>Is Redhat packaging RT now, or are you just handling the CVEs?
+>>>
+>>>I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
+>>>public issues.
+>>
+>Folks, my feel is you all are picking on words and details.
 
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> I would like to announce the release of MediaWiki 1.16.5. Two security
-> issues were discovered.
-> 
-> The first issue is yet another recurrence of the Internet Explorer 6
-> XSS vulnerability that caused the release of 1.16.4. It was pointed
-> out that there are dangerous extensions with more than four
-> characters, so the regular expressions we introduced had to be updated
-> to match longer extensions.
-> 
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
+It is possible that Josh didn't realize it was packaged in Fedora and
+EPEL (we do package quite a few things).
 
-Use CVE-2011-1765
+>>RT3 is packaged in Fedora and EPEL.
+>>
+>Correct. rt3 is community maintained in Fedora and RHEL. I am doing 
+>so for Fedora and other people do for RHEL.
+>So, strictly speaking it's not "Red Hat packaged", but 
+>community-contributed to "Red Hat owned products" (Fedora rsp. Fedora 
+>EPEL) and some folks @RH are filing CVS against it, for reasons I 
+>don't know.
 
-> 
-> The second issue allows unauthenticated users to gain additional
-> rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
-> it is disabled. The issue occurs when a malicious user sends cookies
-> which contain the user name and user ID of a "victim" account. In
-> certain circumstances, the rights of the victim are loaded and persist
-> throughout the malicious request, allowing the malicious user to
-> perform actions with the victim's rights.
-> 
-> $wgBlockDisablesLogin is a feature which is sometimes used on private
-> wikis to prevent users who have an account from logging in and viewing
-> content on the wiki.
-> 
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
-> 
-
-Use CVE-2011-1766
-
-Thanks.
+I'm not sure what you mean by that last statement (filing CVS against
+it).  Do you mean filing bugs?
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
