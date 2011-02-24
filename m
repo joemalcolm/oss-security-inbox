@@ -1,19 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/5
-Message-Id: <201105311513.13989.thomas@suse.de>
-Date: Tue, 31 May 2011 15:13:13 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/18
+Message-ID: <20110224235706.GU4212@outflux.net>
+Date: Thu, 24 Feb 2011 15:57:06 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libxml vulnerability and interesting integer issues
+Subject: CVE request: kernel: /proc/$pid/ leaks contents across setuid exec
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Please see the following blog posting by Chris evans:
-http://scarybeastsecurity.blogspot.com/2011/05/libxml-vulnerability-and-interesting.html
+I'd like to get a CVE assigned for this information leak issue:
+https://lkml.org/lkml/2011/2/7/368
+
+Pre-opened file descriptors in /proc/$pid/ can bypass DAC allowing
+visibility into setuid process state, especially leaking ASLR offset.
+
+Thanks,
+
+-Kees
 
 -- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Kees Cook
+Ubuntu Security Team
