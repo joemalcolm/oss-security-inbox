@@ -1,60 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/3
-Message-ID: <1314349640.23138.14.camel@scapa>
-Date: Fri, 26 Aug 2011 11:07:20 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/3
+Message-ID: <4D65D3F2.6090408@redhat.com>
+Date: Thu, 24 Feb 2011 11:43:46 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Sebastian Krahmer <krahmer@...e.de>, 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com
-Subject: Re: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-26 at 10:58 +0200, Yves-Alexis Perez wrote:
-> > However I didnt dig deep enough into it to write an exploit as I dont have
-> > a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
-> > to that of the user if doing anything with his files.
-> 
-> Yeah, I'm currently cooking patches doing that, though they'll need
-> review before apply. 
+Check values passed in to AARESOLVE_OFFSET on r300. It can be used to 
+write arbitrary data to VRAM, GTT, etc. This is specific to a range of 
+GPUs only.
 
-Would something like:
+drm/radeon/kms: check AA resolve registers on r300
+http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
 
-diff --git a/src/dmrc.c b/src/dmrc.c
-index bff1da8..9f38faf 100644
---- a/src/dmrc.c
-+++ b/src/dmrc.c
-@@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar *username)
-     /* Update the users .dmrc */
-     if (user)
-     {
-+      /* write the file as the user itself */
-+      pid_t pid;
-+      pid = fork();
-+
-+      if (pid == 0)
-+      {
-+        if (setuid (user_get_uid(user)) < 0)
-+        {
-+          g_warning("Error changing uid for %s: %s", username, g_strerror(errno));
-+          _exit(EXIT_FAILURE);
-+        }
-         path = g_build_filename (user_get_home_directory (user), ".dmrc", NULL);
-         g_file_set_contents (path, data, length, NULL);
--        if (getuid () == 0 && chown (path, user_get_uid (user), user_get_gid (user)) < 0)
--            g_warning ("Error setting ownership on %s: %s", path, strerror (errno));
-         g_free (path);
-+        _exit(EXIT_SUCCESS);
-+
-+      }
-+      if (pid > 0)
-+        wait(NULL);
-     }
- 
-     /* Update the .dmrc cache */
+[PATCH] drm/radeon: fix regression with AA resolve checking
+https://patchwork.kernel.org/patch/576101/
 
-do the job (untested, it's more like a RFC right now).
+https://bugzilla.redhat.com/show_bug.cgi?id=680000
 
-Regards,
+Eugene
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Eugene Teo / Red Hat Security Response Team
