@@ -1,56 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/7
-Message-ID: <1307117712.8176.17.camel@localhost>
-Date: Fri, 03 Jun 2011 11:15:12 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: akub Narebski <jnareb@...il.com>, Junio C Hamano <gitster@...ox.com>
-Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
-Subject: Security issue in gitweb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/14
+Message-ID: <1745647813.218657.1298578952062.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 15:22:32 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: Jon Oberheide <jon@...rheide.org>
+Cc: Timo Warns <warns@...-sense.de>, oss-security@...ts.openwall.com, coley <coley@...re.org>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-A security bug was reported by 'dave b' (in CC) against gitweb in
-Ubuntu. You are being emailed as the upstream contact. Please keep
-oss-security[1] CC'd for any updates on this issue.
 
-This issue should be considered public, but has not yet been assigned a
-CVE. Once a CVE is assigned, please mention it in any changelogs.
+----- Original Message -----
+> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
+> > On 02/24/2011 03:59 AM, Josh Bressers wrote:
+> > > ----- Original Message -----
+> > >>
+> > >> The kernel automatically evaluates partition tables of storage
+> > >> devices.  The code for evaluating LDM partitions (in
+> > >> fs/partitions/ldm.c) contains a bug that allows to overflow the
+> > >> kernel heap. It may be possible to escalate privileges by exploiting
+> > >> this bug.
+> > >>
+> > >> (This bug is distinct from the LDM bug reported by Eugene Teo on
+> > >> 2011-02-23.)
+> > >>
+> > >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+> > >> CONFIG_LDM_PARTITION needs to be set.
+> > >>
+> > >
+> > > Can you point to a commit message or something else that is public?
+> > > It's not clear how this differs from Eugene's request.
+> >
+> > As far as I can tell, it's not public yet. Timo will follow-up once his
+> > patch is accepted.
+> 
+> The advisory Timo posted mentioned ldm_frag_add() so it's public for all
+> practical purposes at this point:
+> 
+> static bool ldm_frag_add (const u8 *data, int size, struct list_head
+> *frags)
+> {
+> ...
+> f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
+> if (!f) {
+> ldm_crit ("Out of memory.");
+> return false;
+> }
+> ...
+> memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
+> size);
+> return true;
+> }
+> 
 
-Details from the public bug follow:
-https://launchpad.net/bugs/777804
+I would still like something along the lines of a proposed patch. I believe
+you folks (as you're much brighter than me), but I still don't quite grasp
+the difference. I suspect there is enough public information for MITRE to
+public a CVE though, so please use CVE-2011-1017.
 
-From the reporter:
-----
-I am reporting a persistent xss vector in gitweb, note this requires a
-user to have commit access to a repository that gitweb is configured
-to display. The vector is the fact that gitweb "serves" up xml files -
-which can (just as gitweb does) embed html that could be used to
-perform a cross-site scripting attack.
-
-e.g. (lol.xml).
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
-lang="en-US">
-<head>
-</head>
-<script>alert(1);</script>
-</html>
-
-and viewed at
-http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
-----
-
-Thanks in advance for your cooperation in coordinating a fix for this
-issue,
-
-Jamie Strandboge
-
-[1] oss-security@...ts.openwall.com is a public mailing list for
-    people to collaborate on security vulnerabilities and coordinate
-    security updates.
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
