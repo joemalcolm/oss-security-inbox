@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/09/1
-Message-ID: <20110409174458.GA26418@ngolde.de>
-Date: Sat, 9 Apr 2011 19:44:58 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/7
+Message-ID: <20110224164530.GH30355@redhat.com>
+Date: Thu, 24 Feb 2011 09:45:30 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: gitolite
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, Ralf Cors?pius <rc040203@...enet.de>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/sitaramc/gitolite/commit/4ce00aef84d1ff7c35f7adbbb99a6241cfda00cc
-http://groups.google.com/group/gitolite/browse_thread/thread/797a93ec26e1dcbc?pli=1
+* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
 
-I didn't find a CVE id for this, could I get one?
+>> Is Redhat packaging RT now, or are you just handling the CVEs?
+>
+>I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
+>public issues.
 
-Kind regards
-Nico
+RT3 is packaged in Fedora and EPEL.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team 
