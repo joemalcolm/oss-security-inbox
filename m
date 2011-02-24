@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/34
-Message-ID: <27335096.369043.1301938468030.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 13:34:28 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/5
+Message-ID: <1464523319.203145.1298555817595.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 08:56:57 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: libvirt: error reporting in libvirtd is not thread safe
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Pattern lock bypass on SE X10 with Android 1.6
 Content-Type: text/plain; charset=utf-8
 
+
+
 ----- Original Message -----
-> "It has been found that when several libvirtd threads are
-> reporting errors at the same time, the errors can get mixed
-> or corrupted, potentially leading to a libvirtd crash (DoS)."
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=693391
-> https://www.redhat.com/archives/libvir-list/2011-March/msg01087.html
+> Would something like http://www.nth-dimension.org.uk/blog.php?id=89
+> qualify for a CVE? I didn't really consider it when I published it
+> because I was working on the principal that it required physical access
+> and you could therefore argue that all bets are off but I was was
+> wondering in the light of the recent discussions about auto mounting bugs
+> which share a similar quality.
 > 
 
-Please use CVE-2011-1486.
+I'll leave this up to MITRE, but in my opinion, phones are a different
+story. The whole reason I lock my phone is because it's so easy for an
+attacker to get access to it. The thoughts of someone grabbing your desktop
+and running down the street with it is laughable, but I suspect this
+happens with phones many times every single day.
+
+I'm expecting the whole mobile security paradigm to change quite a lot in
+the near future as people start to focus there. There's a lot of low
+hanging fruit.
 
 Thanks.
 
