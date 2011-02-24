@@ -1,38 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/8
-Message-ID: <20110422153251.GA6190@albatros>
-Date: Fri, 22 Apr 2011 19:32:51 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Petr Matousek <pmatouse@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/7
+Message-ID: <20110224164530.GH30355@redhat.com>
+Date: Thu, 24 Feb 2011 09:45:30 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, Ralf Cors?pius <rc040203@...enet.de>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 22, 2011 at 11:11 -0400, Petr Matousek wrote:
-> > Another problem in agp code is not addressed in the patch - kernel
-> > memory
-> > exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
-> > checked
-> > whether requested pid is a pid of the caller (no check in
-> > agpioc_reserve_wrap()).
-> > Each allocation is limited to 16KB, though, there is no per-process
-> > limit.
-> > This might lead to OOM situation, which is not even solved in case of
-> > the
-> > caller death by OOM killer - the memory is allocated for another
-> > (faked)
-> > process."
-> 
-> Please use CVE-2011-1747.
+* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
 
-In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-"Reference and patch:", but there is no patch for the issue (as I said
-in the patch description).  I have no agp hardware and I cannot test
-whether forcing the requested pid to the current pid is a good idea (it
-might not).
+>> Is Redhat packaging RT now, or are you just handling the CVEs?
+>
+>I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
+>public issues.
 
-Thanks,
+RT3 is packaged in Fedora and EPEL.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Vincent Danen / Red Hat Security Response Team 
