@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/10
-Message-ID: <1962168437.55225.1302641231065.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Apr 2011 16:47:11 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/11
+Message-ID: <854174179.216810.1298573420094.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 13:50:20 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: libtiff CVE assignments
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
 Content-Type: text/plain; charset=utf-8
 
-I've assigned two CVE ids for some things fixed in the 3.9.5 libtiff release.
-
-        http://www.remotesensing.org/libtiff/v3.9.5.html
-
-        libtiff/tif_ojpeg.c: fix buffer overflow on problem data
-        http://bugzilla.maptools.org/show_bug.cgi?id=1999
-        CVE-2009-5022
-
-        tools/tiffdump.c: Avoid integer overflows computing the buffer size
-        for large directories. As per bug
-        http://bugzilla.maptools.org/show_bug.cgi?id=2218
-        CVE-2010-4665
+Please use CVE-2011-1016
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Check values passed in to AARESOLVE_OFFSET on r300. It can be used to
+> write arbitrary data to VRAM, GTT, etc. This is specific to a range of
+> GPUs only.
+> 
+> drm/radeon/kms: check AA resolve registers on r300
+> http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
+> 
+> [PATCH] drm/radeon: fix regression with AA resolve checking
+> https://patchwork.kernel.org/patch/576101/
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=680000
+> 
+> Eugene
+> --
+> Eugene Teo / Red Hat Security Response Team
