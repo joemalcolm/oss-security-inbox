@@ -1,49 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/6
-Message-ID: <20111104170406.GA10071@openwall.com>
-Date: Fri, 4 Nov 2011 21:04:06 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/18
+Message-ID: <20110224235706.GU4212@outflux.net>
+Date: Thu, 24 Feb 2011 15:57:06 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Subject: CVE request: kernel: /proc/$pid/ leaks contents across setuid exec
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi,
 
-On Thu, Oct 27, 2011 at 11:38:47PM -0400, Steven M. Christey wrote:
-> So, I'll repeat my subtle request in January for someone to try and define 
-> what the acceptable security boundaries are at this stage, and then it 
-> should make it easier to interpret what needs a CVE (or not).  It sounds 
-> like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
-> blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
-> great start; based on my (limited) understanding, this suggests that 
-> CAP_SYS_ADMIN can legitimately transition to full root.
+I'd like to get a CVE assigned for this information leak issue:
+https://lkml.org/lkml/2011/2/7/368
 
-What's "full root"?  Full root in the current container or full root on
-the host system?
+Pre-opened file descriptors in /proc/$pid/ can bypass DAC allowing
+visibility into setuid process state, especially leaking ASLR offset.
 
-Without container-based virtualization, CAP_SYS_ADMIN is pretty much
-equivalent to full root (and I wouldn't ask what that is).
+Thanks,
 
-With containers, CAP_SYS_ADMIN inside a container is not supposed to be
-equivalent to full root on the host.  Such privilege escalation
-possibilities are CVE-worthy.  However, LXC with procfs mounted is
-currently an exception.  We can instead have a CVE id for this exception
-(not for dmesg_restrict specifically), if desired/appropriate.
+-Kees
 
-With OpenVZ, it is OK to have procfs mounted in a container and not
-have a CAP_SYS_ADMIN in container (or other container root access
-equivalent) to host root privilege escalation vulnerability (or rather,
-such vulnerabilities when found would deserve CVEs of their own).
-
-Since such container-based virtualization for Linux exists where
-CAP_SYS_ADMIN is not meant to be equivalent to host root, we should not
-disregard CAP_SYS_ADMIN to root privilege escalation bugs in Linux in
-general.  Many of these are CVE-worthy.  However, there are occasional
-exceptions, such as this case with LXC and procfs where individual
-bypasses are not CVE-worthy (but this entire exception might be
-CVE-worthy on its own).
-
-I hope this helps.
-
-Alexander
+-- 
+Kees Cook
+Ubuntu Security Team
