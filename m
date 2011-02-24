@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/12
-Message-ID: <20110403214928.GB9516@openwall.com>
-Date: Mon, 4 Apr 2011 01:49:28 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/10
+Message-ID: <908015927.216787.1298573364778.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 13:49:24 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Information disclosure in CGIHTTPServer from Python
 Content-Type: text/plain; charset=utf-8
 
-ArkanoiD,
 
-On Sun, Apr 03, 2011 at 01:10:08AM +0400, ArkanoiD wrote:
-> -----BEGIN PGP PUBLIC KEY BLOCK-----
 
-Thanks for the key, but as far as I am aware you do not currently
-qualify for the Linux distros list (even though you did some security
-work on Owl, thanks), nor were you on vendor-sec (Josh's suggested
-requirement for the seed membership of the new list).  You might qualify
-for a separate security researchers list if/once we set one up (or for a
-combined distros+researchers list, but I doubt that we'd set one up).
+----- Original Message -----
+> Hi,
+> please assign a CVE ID for http://bugs.python.org/issue2254
+> 
 
-Alexander
+
+Please use CVE-2011-1015
+
+Thanks.
+
+-- 
+    JB
