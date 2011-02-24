@@ -1,60 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/1
-Message-ID: <20110301001348.GE5871@ksplice.com>
-Date: Mon, 28 Feb 2011 19:13:48 -0500
-From: Nelson Elhage <nelhage@...lice.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: OOM-killer via argv expansion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/12
+Message-ID: <4D66B4D5.608@redhat.com>
+Date: Thu, 24 Feb 2011 20:43:17 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 28, 2011 at 03:28:47PM -0800, Kees Cook wrote:
-> On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
-> > On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
-> > > I think the flaw[1] with argv-expansion triggering the OOM-killer
-> > > incorrectly needs its own CVE.
-> > > 
-> > > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-> > > improved things, argv expansion can still be tricked into OOM-killing the
-> > > entire system. Solutions were discussed on the original thread, but
-> > > were not finished. Recently a set of patches[3] has been re-proposed to fix
-> > > this issue. Regardless, it should probably get its own CVE assigned.
-> > > 
-> > > Thanks,
-> > > 
-> > > -Kees
-> > > 
-> > > [1] https://lkml.org/lkml/2010/8/27/429
-> > > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-> > > [3] https://lkml.org/lkml/2011/2/25/227
-> > 
-> > Sorry, Nelson Elhage pointed out to me that I missed the fix for this
-> > issue. The issue was been fixed with:
-> > http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
-> > 
-> > This was already assigned as CVE-2010-4243
-> > 
-> > Sorry for the noise, and thanks!
-> 
-> Wait, I will continue to make more noise. The upstream commit
-> 3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
-> which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
+Hello Josh, Steve, vendors,
 
-upstream looks to have handled the compat case with:
-http://git.kernel.org/linus/114279be2120a916e8a04feeb2ac976a10016f2f
+   looks like the following two issues did not get a CVE identifiers yet:
+   [1] http://secunia.com/advisories/43331/
+   [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
+   [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
 
->From skimming the LKML thread, I think that upstream believes the issue to be
-fixed, but is trying to clean up the code, since the above two commits were
-considered quick-and-dirty bandaid fixes.
+Could you allocate them?
 
-- Nelson
-
-> 
-> Does this need its own CVE?
-> 
-> Thanks,
-> 
-> -Kees
-> 
-> -- 
-> Kees Cook
-> Ubuntu Security Team
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
