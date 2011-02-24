@@ -1,56 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/7
-Message-ID: <alpine.LRH.1.00.1104021322310.19200@bronson.owlriver.com>
-Date: Sat, 2 Apr 2011 13:28:18 -0400 (EDT)
-From: R P Herrold <herrold@...river.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/6
+Message-ID: <4D65EACA.5010803@lordepsylon.net>
+Date: Thu, 24 Feb 2011 06:21:14 +0100
+From: psy <root@...depsylon.net>
 To: oss-security@...ts.openwall.com
-Subject: Closed list
+Subject: XSSer v1.5 -beta- aka "Swarm Edition!" released.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On Fri, 1 Apr 2011, Josh Bressers wrote:
+I am very happy to present a new version of *XSSer* (v1.5-beta-) - the
+cross site scripter framework.
 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+Take a look to the XSSer website to see new features implemented,
+screenshoots, documentation, etc...
 
-Key fingerprint:	0x9B649644
-Distribution:		CentOS
+http://xsser.sf.net
 
-- -----BEGIN PGP PUBLIC KEY BLOCK-----
-Version: SKS 1.1.0
+You can download new code directly from here:
 
-mQGiBD5F2FQRBAChJ4+VS1v9ON/cuJ74QnymaLetj8r1l9G7v9WkE/ET7cg16z3+SPkF9hbQ
-G0vJqJea19FRT8/e1tu3GTEUAaxSoY63zyjAzF9wmOg/FmNWTmj0Ovwzq4HTN3FF/GeLNZQU
-NkAFO5lPPV739L4LIY5GZwbr8bUtslLyoKvf7JGwZwCgxwe41qBc1T3eCrmUg0bFQRc9pzED
-/1j/kbs38I98YTJWs7Mxljhl4cZRCxL28INzinfTsUvrudrfqSvqTMWOqkApLzPFXBxv+C3S
-QOY8cRusSbNzOvadEMlpZYtSiNC+ZTZxqz4tpSQmNbb0LPHrCpu7FyCsq2jRfDHjJ3ruYPNo
-gxo+47z8DfdGxW6tMZfnEB6jhOEEBACL4yivnd5lBOY1z0f9EohD5UWC5HyCFZ0UK/NDxdE9
-yhSQSg4kGY92sadew3K6W35IYKYkqD+GTZiIn3jXcu8slrwcJRRyIEZGiCg4DAK1TG27eH/K
-BuRkK8hNn/cmDoskoS9J+bSf7kv7Nuf4JGIVhTsIR6pYAwMD5n8goxK8DbQiUiBQIEhlcnJv
-bGQgPGhlcnJvbGRAb3dscml2ZXIuY29tPohGBBMRAgAGBQJAVnRRAAoJEH/ADgRm3IARtc8A
-oJOGMYpDaVxl5fmsIYPMDW2OGqoGAJ9YZ5TCzlh9/ZovD9FFD3mi29MHrYhXBBMRAgAXBQI+
-RdhUBQsHCgMEAxUDAgMWAgECF4AACgkQMRh1QZtklkQlkACdFHDBgFj56ylAQWWvLKQPl1wz
-ygAAniaW1hXO2cppXK2V9G3XHDBkiIBfuQENBD5F2GQQBADxEsiE+x499BrU8z3wfGYL4/Qz
-cLaXF+QnQp7suBnNmgl3vBzifUD+FPIRScCapFmeg7OA+H+htbNN7fNqRfg0aa9az2c+km0v
-ieqDFkrJ8H5ktDo69MjyQAbMyapRYKCv52/K66Gs/mvO9zdSrlI0yXsBTAXmHrAXgq80v8m1
-RwAEDQP/a+N7t/smT1kpXW5l5FhhVkgrAhjZpbfp4weItHyUWclzSTIlXDOO93BEbZjVoiDI
-CY1yoy8iJkXRKch2X3gvqWx/Q/DjVzD8CdVJGOUhpD7JQxsK0A7PbCA54JqZi+4AOhnbRlQM
-Srm4w6qMzfzdKJpIaSOhxgd64+Zfn5zJuJCIRgQYEQIABgUCPkXYZAAKCRAxGHVBm2SWROxG
-AKC4WpQYmqVO06HxjXAR9EC28AguQACfeLiDsch7DJPKjMit20aQNwt7bDU=
-=1PUi
-- -----END PGP PUBLIC KEY BLOCK-----
+http://sourceforge.net/projects/xsser/files/xsser_1.5-1.tar.gz/download
 
-- - Russ herrold
+There is one package pre-compiled for Ubuntu/Debian here:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+http://xsser.sourceforge.net/xsser/xsser_1.5-1_all.deb.tar.gz
 
-iD8DBQFNl1y3MRh1QZtklkQRAsHqAJ9vmeGcaqY9aNdd+osprKN6s6fYKgCgiYdI
-bhGkA/+Lay4+19yw/OstIvY=
-=IdKx
------END PGP SIGNATURE-----
+And here, you have a video demostration:
+
+http://blip.tv/file/4806587/
+
+"Remeber, now mosquitos... are swarm!"
+
+Happy cross hacking.
+
+psy.
+
+
+
