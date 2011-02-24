@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/13
-Message-ID: <20111122225135.GE10743@wopr>
-Date: Tue, 22 Nov 2011 23:51:36 +0100
-From: Guido Berhoerster <gber@...nsuse.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/8
+Message-ID: <4D668F0E.3020106@freenet.de>
+Date: Thu, 24 Feb 2011 18:02:06 +0100
+From: Ralf Corsepius <rc040203@...enet.de>
+To: Vincent Danen <vdanen@...hat.com>
+CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, security@...tpractical.com,  Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
 Content-Type: text/plain; charset=utf-8
 
-* Yves-Alexis Perez <corsac@...ian.org> [2011-11-22 22:39]:
-> On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
-> > On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
-> > > On 11/11/11 08:06, Guido Berhoerster wrote:
-> > > > Replacing the file between the lstat and the open would change
-> > > > its inode and then be caught by the check before the fchown, no?
-> > > 
-> > > Nope.   There is no reason why the same inode should not be reused.
-> > > 
-> > > On ext4 (btrfs seems to be different):
-> > > 
-> > > $ touch test; ls -i test; rm test; touch test; ls -i test
-> > > 656078 test
-> > > 656078 test
-> > > 
-> > > jch
-> > 
-> > How about the attached patch?
-> > 
-> > Marc.
-> 
-> Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
-> on other ports?
+On 02/24/2011 05:45 PM, Vincent Danen wrote:
+> * [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
+>
+>>> Is Redhat packaging RT now, or are you just handling the CVEs?
+>>
+>> I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
+>> public issues.
+>
+Folks, my feel is you all are picking on words and details.
 
-No, it's specified in POSIX.1-2008, at least Linux, FreeBSD and
-Solaris 10 implemented it long before that.
--- 
-Guido Berhoerster
+> RT3 is packaged in Fedora and EPEL.
+>
+Correct. rt3 is community maintained in Fedora and RHEL. I am doing so 
+for Fedora and other people do for RHEL.
+So, strictly speaking it's not "Red Hat packaged", but 
+community-contributed to "Red Hat owned products" (Fedora rsp. Fedora 
+EPEL) and some folks @RH are filing CVS against it, for reasons I don't 
+know.
+
+Ralf
+
