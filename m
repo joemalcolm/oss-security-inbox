@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/6
-Message-ID: <2051246205.43355.1303157841659.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Apr 2011 16:17:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/6
+Message-ID: <4D65EACA.5010803@lordepsylon.net>
+Date: Thu, 24 Feb 2011 06:21:14 +0100
+From: psy <root@...depsylon.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for Thunar (format string errors)
+Subject: XSSer v1.5 -beta- aka "Swarm Edition!" released.
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> > >
-> > http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
-> > > and is triggered when copy/pasting a file named from a format string.
-> > > There's no released version including the fix right now.
-> >
-> > This would probably qualify.
-> 
-> Even if the user has to manually Ctrl-C/Ctrl-V the file in Thunar?
-> Thanks.
-> >
+Hi,
 
-This sounds like it's worth a CVE id. It's likely that the various gcc
-protections aren't used in all situations.
+I am very happy to present a new version of *XSSer* (v1.5-beta-) - the
+cross site scripter framework.
 
-Use CVE-2011-1588
+Take a look to the XSSer website to see new features implemented,
+screenshoots, documentation, etc...
 
-Thanks.
+http://xsser.sf.net
 
--- 
-    JB
+You can download new code directly from here:
+
+http://sourceforge.net/projects/xsser/files/xsser_1.5-1.tar.gz/download
+
+There is one package pre-compiled for Ubuntu/Debian here:
+
+http://xsser.sourceforge.net/xsser/xsser_1.5-1_all.deb.tar.gz
+
+And here, you have a video demostration:
+
+http://blip.tv/file/4806587/
+
+"Remeber, now mosquitos... are swarm!"
+
+Happy cross hacking.
+
+psy.
+
+
+
