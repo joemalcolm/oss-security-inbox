@@ -1,70 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/1
-Message-ID: <4EDEB3F0.7030601@redhat.com>
-Date: Tue, 06 Dec 2011 17:31:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marc Deslauriers <marc.deslauriers@...onical.com>
-Subject: Re: CVE Request: ffmpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/14
+Message-ID: <1745647813.218657.1298578952062.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 15:22:32 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: Jon Oberheide <jon@...rheide.org>
+Cc: Timo Warns <warns@...-sense.de>, oss-security@...ts.openwall.com, coley <coley@...re.org>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
 
+----- Original Message -----
+> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
+> > On 02/24/2011 03:59 AM, Josh Bressers wrote:
+> > > ----- Original Message -----
+> > >>
+> > >> The kernel automatically evaluates partition tables of storage
+> > >> devices.  The code for evaluating LDM partitions (in
+> > >> fs/partitions/ldm.c) contains a bug that allows to overflow the
+> > >> kernel heap. It may be possible to escalate privileges by exploiting
+> > >> this bug.
+> > >>
+> > >> (This bug is distinct from the LDM bug reported by Eugene Teo on
+> > >> 2011-02-23.)
+> > >>
+> > >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+> > >> CONFIG_LDM_PARTITION needs to be set.
+> > >>
+> > >
+> > > Can you point to a commit message or something else that is public?
+> > > It's not clear how this differs from Eugene's request.
+> >
+> > As far as I can tell, it's not public yet. Timo will follow-up once his
+> > patch is accepted.
+> 
+> The advisory Timo posted mentioned ldm_frag_add() so it's public for all
+> practical purposes at this point:
+> 
+> static bool ldm_frag_add (const u8 *data, int size, struct list_head
+> *frags)
+> {
+> ...
+> f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
+> if (!f) {
+> ldm_crit ("Out of memory.");
+> return false;
+> }
+> ...
+> memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
+> size);
+> return true;
+> }
+> 
 
-> Sure!
->
-> The 3 other issues got CVEs assigned here:
->
-> http://marc.info/?l=oss-security&m=132205107221272&w=2
->
-> CVE-2011-4351 - An error within the QDM2 decoder (libavcodec/qdm2.c) can
-> be exploited to cause a buffer overflow.
->
-> Seems to be the following commits in libavcodec/qdm2.c (at least the
-> last one, the others seem to be a bit older):
-> http://git.videolan.org/?p=ffmpeg.git;a=commitdiff;h=491eaf35ae1f9b619441314bec33766e31580184
-> http://git.videolan.org/?p=ffmpeg.git;a=commitdiff;h=291d74a46d32183653db07818c7b3407fd50a288
-> http://git.videolan.org/?p=ffmpeg.git;a=commitdiff;h=7d49f79f1cd47783a963a757a6563b9cac29db62
-> http://git.videolan.org/?p=ffmpeg.git;a=commitdiff;h=14db3af4f26dad8e6ddf2147e96ccc710952ad4d
-> http://git.videolan.org/?p=ffmpeg.git;a=commitdiff;h=895d258e9ba065d035dd30dbc622423031f0185c
->
-> Last commit says this fixes NGS00144
->
-> CVE-2011-4352 - An integer overflow error within the "vp3_dequant()"
-> function (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
->
-> Seems to be the following commit in libavcodec/vp3.c:
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=eef5c35b4352ec49ca41f6198bee8a976b1f81e5
->
-> Commit says this fixes NGS00145
->
-> CVE-2011-4353 - Errors within the "av_image_fill_pointers()", the
-> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
-> exploited to trigger out-of-bounds reads.
->
-> Seems to be the following commits in libavutil/imgutils.c,
-> libavcodec/vp5.c, libavcodec/vp6.c:
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=c693aa6f71b4f539cf9df67ba42f4b1932981687
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=bb4b0ad83b13c3af57675e80163f3f333adef96f
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=e0966eb140b3569b3d6b5b5008961944ef229c06
->
->
-> So, the fourth issue, which is fixed by the following commit that
-> matches the description doesn't seem to have a CVE number, and doesn't
-> seem to be related to the others:
->
-> "An error within the "svq1_decode_frame()" function
-> (libavcodec/svq1dec.c) can be exploited to corrupt memory."
->
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
->
-> Commit says it fixes NGS00148.
->
-> Marc.
->
-Thanks, context is king =). Please use CVE-2011-4579 for this new issue
-( svq1_decode_frame() )
+I would still like something along the lines of a proposed patch. I believe
+you folks (as you're much brighter than me), but I still don't quite grasp
+the difference. I suspect there is enough public information for MITRE to
+public a CVE though, so please use CVE-2011-1017.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
