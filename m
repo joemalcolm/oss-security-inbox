@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/9
-Message-Id: <20110106125422.790cbf0b.michael.s.gilbert@gmail.com>
-Date: Thu, 6 Jan 2011 12:54:22 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/17
+Message-ID: <20110224235430.GT4212@outflux.net>
+Date: Thu, 24 Feb 2011 15:54:30 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+Subject: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
-> re: http://seclists.org/fulldisclosure/2011/Jan/39
-> 
-> Just in case someone tries to request a CVE name for this, I'm not 
-> requesting for one because if you need CAP_SYS_ADMIN capability to 
-> exploit this, you are already privileged.
+Hi,
 
-Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
-mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
-exist. There is an exposure here, and for that it deserves a CVE
-identifier (of course in my opinion).  See Brad Spengler's recent
-write-up [0]. There should be some effort toward making those 21 root
-equivalent capabilities discussed there non-equivalent.
+While not as bad as CVE-2010-4661 (unprivileged module loading)
+I'd like to get a CVE assigned for this issue for tracking purposes:
+https://lkml.org/lkml/2011/2/24/203
 
-Best wishes,
-Mike
+Basically "ifconfig $module" will load any module as long as the process
+has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE).
 
-[0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
