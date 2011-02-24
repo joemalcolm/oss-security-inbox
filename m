@@ -1,51 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/12
-Message-ID: <20110125165739.GV4979@outflux.net>
-Date: Tue, 25 Jan 2011 08:57:39 -0800
-From: Kees Cook <kees@...flux.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/3
+Message-ID: <4D65D3F2.6090408@redhat.com>
+Date: Thu, 24 Feb 2011 11:43:46 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: libxml2 heap contents leak
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
 Content-Type: text/plain; charset=utf-8
 
-If it's a requirement that "xmlChar *" be valid null-terminated utf8, then
-I'd agree it seems this is PHP's responsibility. Are there perhaps other
-places where this needs to be checked besides just with
-xmlTextWriterWriteAttribute()?
+Check values passed in to AARESOLVE_OFFSET on r300. It can be used to 
+write arbitrary data to VRAM, GTT, etc. This is specific to a range of 
+GPUs only.
 
-On Tue, Jan 25, 2011 at 05:45:48PM +0100, Pierre Joye wrote:
-> Btw, I re opened the php one as Daniel seems to think that it is the
-> application responsibility and not libxml. I'm not totally convinced
-> and I asked Rob to check this problem again.
-> 
-> On Mon, Jan 24, 2011 at 10:41 PM, Kees Cook <kees@...ntu.com> wrote:
-> > Hello,
-> >
-> > I'd like to get a CVE assigned for a minor heap contents leak in
-> > libxml2. I reported that it is possible to leak heap memory contents
-> > from libxml2 (and things linked against it, for example PHP[1], or things
-> > written in PHP[2]):
-> >
-> > https://bugzilla.gnome.org/show_bug.cgi?id=631551
-> >
-> > Thanks,
-> >
-> > -Kees
-> >
-> > [1] http://bugs.php.net/bug.php?id=52998
-> > [2] http://status.net/open-source/issues/2798
-> >
-> > --
-> > Kees Cook
-> > Ubuntu Security Team
-> >
-> 
-> 
-> 
-> -- 
-> Pierre
-> 
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+drm/radeon/kms: check AA resolve registers on r300
+http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
 
+[PATCH] drm/radeon: fix regression with AA resolve checking
+https://patchwork.kernel.org/patch/576101/
+
+https://bugzilla.redhat.com/show_bug.cgi?id=680000
+
+Eugene
 -- 
-Kees Cook                                            @outflux.net
+Eugene Teo / Red Hat Security Response Team
