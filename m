@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/11
-Message-ID: <4E2DBB3A.60703@kde.org>
-Date: Mon, 25 Jul 2011 14:51:38 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
-Subject: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/13
+Message-ID: <4D66B6FF.8030503@redhat.com>
+Date: Thu, 24 Feb 2011 20:52:31 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Mike Tremaine <mgt@...llarcore.net>, Karel Klic <kklic@...hat.com>
+Subject: CVE Request -- logwatch: Privilege escalation due improper sanitization of special characters in log file names
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Josh, Steve, vendors,
 
-We've been made aware of an input validation failure affecting multiple
-KDE applications. (The details are not yet public as we're working on
-the fixes.) We'd like a CVE for this.
+   a security flaw was found in the way logwatch, a log file
+   analysis program, pre-processed log files, containing certain
+   special characters in their names. A remote attacker could
+   use this flaw to execute arbitrary code with the privileges
+   of the privileged system user (root) by creating a
+   specially-crafted log file, subsequently analyzed by the
+   logwatch script.
 
-The Arora and Rekonq web browsers are also vulnerable to the same attack
-vector, and other Qt-based programs may be as well. We're working with
-the Qt team to help enhance their documentation to warn developers to
-take care sanitizing their inputs, but it's not actually a Qt flaw. So
-we're a bit unsure how to proceed here. Do we get separate CVEs for
-Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
-applications? I would think the former since other applications may be
-found to be vulnerable down the line, but wanted to check.
+   Upstream bug report:
+   [1] http://sourceforge.net/tracker/?func=detail&aid=3184223&group_id=312875&atid=1316824
 
-(The Rekonq team has been made aware and are currently patching their
-code; I'm in the process of trying to notify the Arora team.)
+   Related patch:
+   [2] http://logwatch.svn.sourceforge.net/viewvc/logwatch?view=revision&revision=26
 
-Thanks,
-Jeff
+   Other references:
+   [3] http://sourceforge.net/mailarchive/forum.php?thread_name=4D604843.7040303%40mblmail.net&forum_name=logwatch-devel
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=680237
+
+Could you allocate a CVE id for this issue?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
