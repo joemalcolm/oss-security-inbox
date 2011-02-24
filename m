@@ -1,80 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/3
-Message-ID: <20111030120834.GA15185@albatros>
-Date: Sun, 30 Oct 2011 16:08:34 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/15
+Message-ID: <1265265450.219398.1298581061714.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 15:57:41 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
-Subject: CVE request: 3 flaws in libobby and libnet6
+Cc: Mike Tremaine <mgt@...llarcore.net>, Karel Klic <kklic@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- logwatch: Privilege escalation due improper sanitization of special characters in log file names
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2011-1018
 
-1) the libobby's server checks for users' color collisions before
-checking users' passwords.  Any user without password authentication
-may check whether a specific color is used by someone.  With knowledge
-of person's color preferences he may learn whether a specific person
-uses the server.  Also, he may enumerate all default colors and learn
-the number of users.
-
-    inc/server_buffer.hpp: 
-
-    bool basic_server_buffer<Document, Selector>::on_auth()
-    {
-    ...
-        // Check colour
-        if(!basic_buffer<Document, Selector>::check_colour(colour) )
-        {
-            error = login::ERROR_COLOUR_IN_USE;
-            return false;
-        }
-
-        // Check global password
-        if(!m_global_password.empty() )
-        {
-            if(global_password != m_global_password)
-            {
-                error = login::ERROR_WRONG_GLOBAL_PASSWORD;
-                return false;
-            }
-        }
-    ...
-    }
-
-
-2) libobby doesn't check server's SSL certificate and passes the
-password in plain text over SSL channel.  All remote clients are
-vulnerable to a MITM attack.
-
-    • The attacker (A) learns the client's (C) and the server's (S) IP
-        addresses and used ports.
-    • A breaks the established TCP connection between C and S.
-    • A changes the way C's packets with dst = S are routed, resulting
-        in all packets from C to S's IP go to A.  The simplest way is
-        ARP cache poisoning.
-    • A starts listening on the same IP:port as S did.
-    • C notices the connection interruption and tries to reconnect to S.
-        (Note: if the client is gobby, this step needs user's interaction.)
-    • As all C's packets intended for S are routed to A, so, in reality
-        C connects to A, not S.
-    • C starts SSL session and, as C doesn't check SSL certificate, he
-        think it talks to S.
-    • A requests C' password.
-    • C passes the password in plain text over SSL channel.
-
-
-3) libnet6 doesn't check basic_server::id_counter for integer overflow.
-This number is used to distinguish among different users.  An attacker
-may open UINT_MAX successive connections and get an identifier of the
-already established connection, resulting in the connection hijacking.
-On i686 uint is a 32 bit counter, so an attacker should be able to open
-4.000.000.000 connections to complete the attack.  This is a rather big
-number: if an attacker may create 2000 connections per second, it would
-took ~24 days of continuous connection attempts.  However, it is a real
-threat for servers with a huge uptime.
-
-Thanks,
+Thanks.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> a security flaw was found in the way logwatch, a log file
+> analysis program, pre-processed log files, containing certain
+> special characters in their names. A remote attacker could
+> use this flaw to execute arbitrary code with the privileges
+> of the privileged system user (root) by creating a
+> specially-crafted log file, subsequently analyzed by the
+> logwatch script.
+> 
+> Upstream bug report:
+> [1]
+> http://sourceforge.net/tracker/?func=detail&aid=3184223&group_id=312875&atid=1316824
+> 
+> Related patch:
+> [2]
+> http://logwatch.svn.sourceforge.net/viewvc/logwatch?view=revision&revision=26
+> 
+> Other references:
+> [3]
+> http://sourceforge.net/mailarchive/forum.php?thread_name=4D604843.7040303%40mblmail.net&forum_name=logwatch-devel
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=680237
+> 
+> Could you allocate a CVE id for this issue?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
