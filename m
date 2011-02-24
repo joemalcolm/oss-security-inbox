@@ -1,115 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/2
-Message-Id: <20110406221617.b538d862.michael.s.gilbert@gmail.com>
-Date: Wed, 6 Apr 2011 22:16:17 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/4
+Message-ID: <1298515589.25507.9.camel@apollo>
+Date: Wed, 23 Feb 2011 21:46:29 -0500
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
+On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
+> On 02/24/2011 03:59 AM, Josh Bressers wrote:
+> > ----- Original Message -----
+> >>
+> >> The kernel automatically evaluates partition tables of storage devices.
+> >> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+> >> a bug that allows to overflow the kernel heap. It may be possible to
+> >> escalate privileges by exploiting this bug.
+> >>
+> >> (This bug is distinct from the LDM bug reported by Eugene Teo on
+> >> 2011-02-23.)
+> >>
+> >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+> >> CONFIG_LDM_PARTITION needs to be set.
+> >>
+> >
+> > Can you point to a commit message or something else that is public? It's
+> > not clear how this differs from Eugene's request.
+> 
+> As far as I can tell, it's not public yet. Timo will follow-up once his 
+> patch is accepted.
 
-> On Tue, Apr 05, 2011 at 09:52:10AM +0100, Benji wrote:
-> > Fixing issues secretly is definitely a no-go in my book.
-> 
-> I think you're mixing up distinct things:
-> 
-> 1. Fixing security bugs secretly, then releasing the fixed software
-> without notifying others of the fixes.
-> 
-> 2. Fixing security bugs secretly, then releasing the fixed software
-> along with information on the fixes on the coordinated release date.
-> 
-> I think #1 has worse drawbacks than #2.  I think that with the current
-> state of the community/industry/technology, we should avoid #1, but we
-> can do #2.
-> 
-> Is your opinion on #2 different, and why?
-> 
-> > It will and clearly
-> > has, created hostility between different developer groups and those that are
-> > allowed in and those that aren't.
-> 
-> Unfortunately, yes, both #1 and #2 may create hostility.
-> 
-> > >>However, my proposal, which I am going to try to enforce, is to only
-> > >>discuss medium-severity issues on this new list.  I think that an
-> > >>embargo period of 1-2 days does not make sense for those; if that's all
-> > >>we can afford, we can as well make them public right away.
-> > 
-> > So.... if this list isnt for high-severity issues what is the point of it?
-> > Why not use OSS-Sec.
-> 
-> For low-severity issues, I propose that we use oss-security right away.
-> 
-> I propose that we use the new closed list(s) for medium-severity issues,
-> where immediate disclosure on oss-security could do some harm.
-> 
-> In this context, I propose to use overall severity defined as the
-> product of risk probability and risk impact.  Of course, we'll use
-> guesstimates.
-> 
-> > I thought the only way this el8 mailing list was even
-> > justified was the fact that the vulnerabilities were mission-critical and
-> > the POCs for these vulnerabilities would potentially lead to throwing us
-> > back into the ice-ages.
-> 
-> That's not my justification.  In those special cases, I'd try to see who
-> is affected before sending out the detail.  However, the list may in
-> fact be useful to probe for affected vendors/distros - post a heads
-> up, with no detail on the issue, and ask to contact the reporter for
-> detail.  Also, propose a much shorter embargo period (than is usual for
-> the list).  vendor-sec was used like that on some occasions, and I think
-> it was an improvement over mailing the same heads up to an arbitrary
-> subset of distros, which happens in the absence of such a list.
-> 
-> > >>That said, I agree that a closed list should be a last resort, to be
-> > >>used whenever other options are determined to be less appropriate for a
-> > >>particular security issue.  Unfortunately, this determination is usually
-> > >>made by just one person (whoever brings the issue to the list), so it is
-> > >>likely to sometimes be "wrong".
-> > 
-> > So why are you using a last resort for 'medium-severity issues'?
-> 
-> The key words above were: "whenever other options are determined to be
-> less appropriate".  "Less appropriate" does not mean that it would be
-> the end of the world if the issue were disclosed publicly right away.
-> Things would just be worse, in the reporter's opinion.  So we provide a
-> convenient way for one distro to share info (or just a heads up) with
-> other likely-affected distros.  In the absence of such a list, the
-> reporter would likely end up notifying an arbitrary subset of the distros.
-> 
-> > Currently, from what you've said, it seems like you're trying to, as some
-> > people apparently correctly feared, an elite mailing list where you can all
-> > boost your egos and, excuse the term for lack of a better one, 'circlejerk'.
-> 
-> I fail to see what in this discussion thread makes you arrive at that
-> conclusion, other than presumably you readily having this opinion of any
-> closed discussion groups.  If that's not the case, then can you name a
-> closed discussion group that you would not categorize that way, and
-> explain why not?  This might help me and others understand you better.
-> 
-> > Question; now that vendor-sec has been compromised, I suppose we can expect
-> > a full public archive of all the emails?
-> 
-> Maybe, or maybe not.  This may happen if someone just goes ahead and
-> posts it publicly.  Other than that, making it public in an ethical
-> fashion feels unrealistic (we'd need to ask everyone who has ever posted
-> to the list).
+The advisory Timo posted mentioned ldm_frag_add() so it's public for all
+practical purposes at this point:
 
-This is something to consider with the new list as well.  Better to get
-approval from all participants now.  No sense in taking on people who
-are just going to "gum up the works" (sorry for the lame cliche, but I
-couldn't think of a more succinct way to put it).
+static bool ldm_frag_add (const u8 *data, int size, struct list_head
+*frags)
+{
+...
+        f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
+        if (!f) {
+                ldm_crit ("Out of memory.");
+                return false;
+        }
+...
+        memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
+size);
+        return true;
+}
 
-Also, completely unrelated to this particular thread, will you be adding
-participants/keys to your wiki so people know who they can contact
-securely if they do want to responsibly submit an issue?  A use case
-may be that a researcher doesn't want to disclose an issue to the
-entire list, but instead to a limited group that they feel is more
-trusted. Such a feature would also alleviate the inadvertent disclosure
-concern so you could add more participants to the overall list, since
-it seems to be exploding.
+Regards,
+Jon Oberheide
 
-Best wishes,
-Mike
+-- 
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
