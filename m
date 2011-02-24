@@ -1,45 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/13
-Message-ID: <c6dc7add-81ad-44af-ae5b-05969d59161b@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:12:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/5
+Message-ID: <1464523319.203145.1298555817595.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 24 Feb 2011 08:56:57 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: double-free vulnerability in logsurfer
+Cc: coley <coley@...re.org>
+Subject: Re: Pattern lock bypass on SE X10 with Android 1.6
 Content-Type: text/plain; charset=utf-8
 
 
 
 ----- Original Message -----
-> Am 17.10.2011 12:07, schrieb Marcus Meissner:
-> > On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
-> >> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
-> >> Logsurfer affecting the function prepare_exec(). The vulnerability is
-> >> caused by an insufficient treatment of an error condition that is
-> >> returned by the function get_word() when it is unable to correctly
-> >> parse its input.
-> >>
-> >> The following versions of logsurfer are affected:
-> >>
-> >>  Logsurfer 1.5b and previous versions
-> >>  Logsurfer+ 1.7 and previous versions
-> >>
-> >> A patch is available at
-> >> http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
-> > 
-> > How can this be exploited?
-> > 
-> > It seems to happen in the argument handling and I doubt an attacker can
-> > inject arguments?
-> 
-> Logsurfer allows to use substrings of log-file entries as arguments for
-> calling external commands. An attacker is able to exploit this
-> vulnerability by injecting specially crafted strings into a log-file that
-> is processed by logsurfer.
+> Would something like http://www.nth-dimension.org.uk/blog.php?id=89
+> qualify for a CVE? I didn't really consider it when I published it
+> because I was working on the principal that it required physical access
+> and you could therefore argue that all bets are off but I was was
+> wondering in the light of the recent discussions about auto mounting bugs
+> which share a similar quality.
 > 
 
-This sounds CVE worthy.
+I'll leave this up to MITRE, but in my opinion, phones are a different
+story. The whole reason I lock my phone is because it's so easy for an
+attacker to get access to it. The thoughts of someone grabbing your desktop
+and running down the street with it is laughable, but I suspect this
+happens with phones many times every single day.
 
-Please use CVE-2011-3626.
+I'm expecting the whole mobile security paradigm to change quite a lot in
+the near future as people start to focus there. There's a lot of low
+hanging fruit.
 
 Thanks.
 
