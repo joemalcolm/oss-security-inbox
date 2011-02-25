@@ -1,41 +1,192 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/2
-Message-ID: <4E3236AC.6000100@redhat.com>
-Date: Fri, 29 Jul 2011 09:57:24 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/8
+Message-ID: <AANLkTinK4GrwrNAimNsGZDqwfgPKAgPHReWHCDqqcr8Q@mail.gmail.com>
+Date: Fri, 25 Feb 2011 13:23:11 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>, veillard@...hat.com, billy.rios@...il.com
-Subject: Re: libxml security fix from apple ... any information?
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 07/28/2011 06:52 PM, Marcus Meissner wrote:
-> Hi folks, Billy, Daniel,
-> 
-> On
-> http://support.apple.com/kb/HT4808
-> there is a libxml security issue listed:
-> 
-> -----------------------------------------
-> libxml
-> 
-> Available for: Windows 7, Vista, XP SP2 or later
-> 
-> Impact: Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution
-> 
-> Description: A one-byte heap buffer overflow existed in libxml's handling of XML data. Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution.
-> 
-> CVE-ID
-> 
-> CVE-2011-0216 : Billy Rios of the Google Security Team
-> -----------------------------------------
-> 
-> I suspect this is libxml2 and it likely also affects Linux?
-> 
-> If this is correct, could you identify the commit fixing this issue?
-> 
+Hi Steve
 
-As far as i know, this does not affect linux
+Thanks for the explanation.
+
+Concerning with this XSS flaw, Attacker can combine this flaw with
+CSRF (phpAdmin's anti-CSRF doesn't include prevention from GET-based
+direct Request)  for the successful modification/manipulation of
+database while a victim user is logged in.
+
+Vulnerabilities are common in administration backend of web
+applications where web app authors overlook these backend. They've
+been attackers' choice of successful exploitation.
+
+According to Steven's explanation, we guess that CVE is not asssigned
+to vulnerabilities that require user/admin privilege.
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+On Thu, Feb 3, 2011 at 3:33 AM, Steven M. Christey
+<coley@...-smtp.mitre.org> wrote:
+>
+> I'm not sure about this one.
+>
+> My read of the situation is that the attack depends entirely on the
+> successful exploitation of another issue that gives the attacker privileges
+> to modify the database.  This would rarely be a vulnerability to me unless
+> the problem was in some protection mechanism.
+>
+> It seems likely that phpMyAdmin's "intended" security policy is that anybody
+> with privileges to directly modify the DB (e.g. to create or rename the DB)
+> is a "trusted" user who also has privileges to generate HTML/scripting code.
+>  If that's the case, then this XSS is only available to a privileged user -
+> even if it happens to be someone who got the privileges through some other
+> attack.
+>
+> Consequently, the XSS is "resultant" from some other vulnerability, and
+> would not be worthy of a CVE itself.
+>
+> If there's some specific vulnerability that gives someone the privileges to
+> modify the DB when they shouldn't be able to, then a CVE could be assigned
+> for that specific issue.
+>
+> If there's more than one user with privileges to modify the DB, then one
+> user could XSS the other, so I suppose that would get a CVE.
+>
+> If I'm mis-understanding the advisory and the attacker (or the XSS victim)
+> does not have privileges to modify DB names or create a DB, then it gets a
+> CVE.
+>
+> If phpMyAdmin's "intended" security policy is that the application should be
+> safe from XSS injected into a compromised DB, then it gets a CVE.
+>
+> - Steve
+>
+>
+>
+> On Thu, 27 Jan 2011, Josh Bressers wrote:
+>
+>> Steve,
+>>
+>> Can MITRE comment on this? The advisory suggests that in order to exploit
+>> this, you already have to have access to the user's account in some way.
+>> I'm not sure what the precedent is for such a situation.
+>>
+>> Thanks.
+>>
+>> --
+>>   JB
+>>
+>> ----- Original Message -----
+>>>
+>>> http://seclists.org/fulldisclosure/2011/Jan/486
+>>>
+>>>
+>>>
+>>> ===================================================================================
+>>> phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
+>>> Vulnerability
+>>>
+>>> ===================================================================================
+>>>
+>>>
+>>> 1. OVERVIEW
+>>>
+>>> The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
+>>> 3.4.x were vulnerable to Cross Site Scripting.
+>>>
+>>>
+>>> 2. PRODUCT DESCRIPTION
+>>>
+>>> phpMyAdmin is a free software tool written in PHP intended to handle
+>>> the administration of MySQL over the World Wide Web.
+>>> phpMyAdmin supports a wide range of operations with MySQL.
+>>> The most frequently used operations are supported by the user
+>>> interface (managing databases, tables, fields, relations,
+>>> indexes, users, permissions, etc), while you still have the ability to
+>>> directly execute any SQL statement.
+>>>
+>>>
+>>> 3. VULNERABILITY DESCRIPTION
+>>>
+>>> The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
+>>> inject XSS string in 'db' field when creating or renaming a database.
+>>> An attacker can create new database name or rename database name
+>>> through several means like SQL Injection in user's vulnerable web
+>>> applications or
+>>> compromise of user account through brute-force or bypassing CSRF
+>>> protection.
+>>> Even though the phpMyAdmin uses httpOnly as a protection against
+>>> cookie theft via XSS, attacker could use XSS tunneling proxy to
+>>> manipulate database names and fields. From it, he could execute
+>>> arbitrary database commands to allow him higher access to the server.
+>>>
+>>>
+>>> 4. VERSIONS AFFECTED
+>>>
+>>> phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
+>>>
+>>> Vendor confirmed this flaw did not exist before the 3.4 version
+>>> family.
+>>> Thus, it is assumed 2.x and 3.3 <= versions are not affected.
+>>>
+>>>
+>>> 5. PROOF-OF-CONCEPT/EXPLOIT
+>>>
+>>>
+>>> http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
+>>> http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
+>>>
+>>>
+>>> 6. IMPACT
+>>>
+>>> Attackers can compromise currently logged-in user session, plant xss
+>>> backdoors and inject arbitrary SQL statements
+>>> (CREATE,INSERT,UPDATE,DELETE)
+>>> via crafted XSS payloads.
+>>>
+>>>
+>>> 7. SOLUTION
+>>>
+>>> For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
+>>> check out the latest commit (git pull).
+>>>
+>>>
+>>> 8. VENDOR
+>>>
+>>> phpMyAdmin (http://www.phpmyadmin.net)
+>>>
+>>>
+>>> 9. CREDIT
+>>>
+>>> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+>>> Ethical Hacker Group, Myanmar.
+>>>
+>>>
+>>> 10. DISCLOSURE TIME-LINE
+>>>
+>>> 2011-01-26: notified vendor
+>>> 2011-01-26: vendor released fix
+>>> 2011-01-27: vulnerability disclosed
+>>>
+>>>
+>>> 11. REFERENCES
+>>>
+>>> Vendor Commit:
+>>>
+>>> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
+>>> Original Advisory URL:
+>>>
+>>> http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
+>>> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+>>> Previous Releases:
+>>> http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+>>> http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
+>>> http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
+>>> http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
+>>>
+>>>
+>>>
+>>> #yehg [2011-01-27]
+>>
+>
