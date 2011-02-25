@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/9
-Message-ID: <20110124214624.GE4979@outflux.net>
-Date: Mon, 24 Jan 2011 13:46:24 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/11
+Message-Id: <201102251020.02709.sgrubb@redhat.com>
+Date: Fri, 25 Feb 2011 10:20:02 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: linux kernel heap issues
+Cc: Eugene Teo <eugene@...hat.com>, Nelson Elhage <nelhage@...lice.com>
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
+> On 02/25/2011 12:32 PM, Nelson Elhage wrote:
+> > The cgrulesengd program from libcgroup failed to properly verify the
+> > sender of netlink messages, allowing arbitrary users to spoof events
+> > to the daemon, causing it to place processes into incorrect cgroups.
+> > 
+> > Note that the default configuration of cgrulesengd does not contain
+> > any any rules, so this is probably only usefully exploitable if an
+> > admin have specifically configured cgrulesengd to enforce some policy.
+> > 
+> > References:
+> > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
+> 
+> Please use CVE-2011-1022.
 
-I don't think these minor issues I reported to the Linux Kernel have
-had CVEs assigned to them:
+That's a shame. I reported this same problem in November last year:
 
-heap contents leak for CAP_NET_ADMIN via ethtool ioctl
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+http://sourceforge.net/mailarchive/message.php?msg_id=26598749
 
-iowarrior usb device heap overflow
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+The current patch does not check  if (from_nla_len != sizeof(from_nla))  before making 
+decisions based on the header. I contacted upstream about this.
 
-
-Thanks,
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+-Steve
