@@ -1,34 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/14
-Message-ID: <298752811.815199.1308597087807.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Jun 2011 15:11:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: thp: madvise on top of /dev/zero private mapping can lead to panic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/12
+Message-ID: <20110225154320.GG7585@ksplice.com>
+Date: Fri, 25 Feb 2011 10:43:20 -0500
+From: Nelson Elhage <nelhage@...lice.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Description of problem:
-> The huge_memory.c THP page fault was allowed to run if vm_ops was null
-> (which would succeed for /dev/zero MAP_PRIVATE, as the f_op->mmap
-> wouldn't setup a special vma->vm_ops and it would fallback to regular
-> anonymous memory) but other THP logics weren't fully activated for
-> vmas with vm_file not NULL (/dev/zero has a not NULL vma->vm_file).
+On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
+> On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
+> > On 02/25/2011 12:32 PM, Nelson Elhage wrote:
+> > > The cgrulesengd program from libcgroup failed to properly verify the
+> > > sender of netlink messages, allowing arbitrary users to spoof events
+> > > to the daemon, causing it to place processes into incorrect cgroups.
+> > > 
+> > > Note that the default configuration of cgrulesengd does not contain
+> > > any any rules, so this is probably only usefully exploitable if an
+> > > admin have specifically configured cgrulesengd to enforce some policy.
+> > > 
+> > > References:
+> > > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
+> > 
+> > Please use CVE-2011-1022.
 > 
-> Unprivileged local user could use this flaw to crash the server.
+> That's a shame. I reported this same problem in November last year:
 > 
-> Upstream patch: 78f11a255749d09025f54d4e2df4fbcb031530e2
+> http://sourceforge.net/mailarchive/message.php?msg_id=26598749
 > 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=714761
-> https://bugzilla.kernel.org/show_bug.cgi?id=33682
-> http://www.spinics.net/lists/stable-commits/msg11762.html
-> 
+> The current patch does not check if (from_nla_len != sizeof(from_nla)) before
+> making decisions based on the header. I contacted upstream about this.
 
-Please use CVE-2011-2479.
+>From my reading of the netlink code, recvmsg() / recvfrom() on a netlink socket
+will never return a from_nla_len != sizeof(struct sockaddaddr_nl). Am I missing
+something, did this change at some point, or are you just suggesting general
+paranoid good practice? It's probably good advice in any case, I'm just curious
+whether you're aware of cases where this can actually be a problem.
 
-Thanks.
+- Nelson
 
--- 
-    JB
+> 
+> -Steve
