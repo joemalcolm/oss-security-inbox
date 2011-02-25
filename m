@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/4
-Message-ID: <139810815.1926293.1312919420488.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 9 Aug 2011 15:50:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/5
+Message-ID: <4D66FFF5.5030703@redhat.com>
+Date: Fri, 25 Feb 2011 09:03:49 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: heap overflow in tcptrack < 1.4.2
+CC: Kees Cook <kees@...ntu.com>
+Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
 Content-Type: text/plain; charset=utf-8
 
+On 02/25/2011 08:32 AM, Kees Cook wrote:
+> Hi,
+>
+> While CVE-2010-4347 covers the unprivileged to fully privileged escalation
+> issue, this interface still allows an unprivileged root user to gain
+> back all their capabilities.
+>
+> Having a system with acpi and debugfs built into the kernel allows
+> a uid=0 user (without capabilities, e.g. in containers) to write to
+> arbitrary kernel memory, likely resulting in escalated capability
+> privileges[1], or unlocking an otherwise modules-disabled kernel by
+> changing /proc/sys/kernel/modules_disabled back to 0.
 
+Use CVE-2011-1021.
 
------ Original Message -----
-> A heap overflow in the parsing of tcptrack's command line was found.
-> The details are pretty sparse, but here are some references:
-> 
-> http://www.rhythm.cx/~steve/devel/tcptrack/#news
-> https://bugs.gentoo.org/show_bug.cgi?id=377917
-> https://bugzilla.redhat.com/show_bug.cgi?id=729096
-> 
-
-Please use CVE-2011-2903.
-
-Thanks.
-
+Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
