@@ -1,17 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/2
-Message-ID: <4D255131.7000604@redhat.com>
-Date: Thu, 06 Jan 2011 13:20:49 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/9
+Message-ID: <4D6744F5.3020103@redhat.com>
+Date: Fri, 25 Feb 2011 13:58:13 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-NONE kernel: PHONET signedness issue
+CC: Nelson Elhage <nelhage@...lice.com>
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
-re: http://seclists.org/fulldisclosure/2011/Jan/39
+On 02/25/2011 12:32 PM, Nelson Elhage wrote:
+> The cgrulesengd program from libcgroup failed to properly verify the
+> sender of netlink messages, allowing arbitrary users to spoof events
+> to the daemon, causing it to place processes into incorrect cgroups.
+>
+> Note that the default configuration of cgrulesengd does not contain
+> any any rules, so this is probably only usefully exploitable if an
+> admin have specifically configured cgrulesengd to enforce some policy.
+>
+> References:
+> http://sourceforge.net/mailarchive/message.php?msg_id=27102603
 
-Just in case someone tries to request a CVE name for this, I'm not 
-requesting for one because if you need CAP_SYS_ADMIN capability to 
-exploit this, you are already privileged.
+Please use CVE-2011-1022.
 
-Thanks, Eugene
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
