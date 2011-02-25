@@ -1,26 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/6
-Message-ID: <20110929125022.GA14031@britannica.bec.de>
-Date: Thu, 29 Sep 2011 14:50:22 +0200
-From: Joerg Sonnenberger <joerg@...tannica.bec.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: Tavis Ormandy <taviso@...xchg8b.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/7
+Message-ID: <AANLkTi=r7_eqdzMwknS8VSMStj+aP7b38NR1ve+7wAzA@mail.gmail.com>
+Date: Fri, 25 Feb 2011 13:12:28 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: PHPShop 0.8.1 <= | Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2011 at 04:38:08AM +0400, Solar Designer wrote:
-> Hi Tavis,
-> 
-> On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
-> > I believe I wrote that patch,
-> 
-> I believe you wrote a different patch, or two:
-> 
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+1. OVERVIEW
 
-This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
-name. The corresponding NetBSD advisory explicitly lists GNU gzip and
-libarchive as not vulnerable.
+The PHPShop 0.8.1 and lower versions are currently vulnerable to Cross
+Site Scripting.
 
-Joerg
+
+2. BACKGROUND
+
+PHPShop is a PHP-powered shopping cart application. It is released
+under the GNU General Public License.
+The primary purpose of PHPShop is to provide a simple shopping cart
+solution that is easy to customize to suit any purpose. PHPShop has
+less features that many other shopping cart applications, but is
+generally easier to customize.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The Query String was not properly sanitized upon submission to the
+/index.php url, which allows attacker to conduct Cross Site Scripting
+attack.
+This may allow an attacker to create a specially crafted URL that
+would execute arbitrary script code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+PHP 0.8.1 <=
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/phpshop0_8_1/?page=store/XSS&%26%26%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E%3d1
+
+
+6. SOLUTION
+
+The vendor has discontinued this product.
+It is recommended that an alternate software package be used in its place.
+
+
+7. VENDOR
+
+PHPShop Development Team
+http://phpshop.org
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-02-25: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[phpshop_0.8.1]_cross_site_scripting
+Project Home: http://code.google.com/p/phpshop/,
+http://sourceforge.net/projects/phpshop/
+PHPShop Download Stats:
+http://sourceforge.net/projects/phpshop/files/phpshop/0.8.1/stats/timeline?dates=2010-01-01+to+2010-01-01
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-02-25]
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
