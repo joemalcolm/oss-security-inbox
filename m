@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/4
-Message-ID: <2055440471.142325.1298316732631.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 21 Feb 2011 14:32:12 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/13
+Message-ID: <2116114525.241894.1298650688611.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 25 Feb 2011 11:18:08 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: clamav 0.97
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> A new clamav version is out and as usual, they don't mention if it's
-> security-relevant.
+> Hello Josh, Steve, vendors,
 > 
-> Though from the changelog
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97
-> 
-> at least this sounds like security:
-> * libclamav/vba_extract.c: fix error path double free (bb#2486)
-> 
+> looks like the following two issues did not get a CVE identifiers yet:
+> [1] http://secunia.com/advisories/43331/
 
-The details here are pretty slim:
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2486
+The above advisory covers both bugs below.
 
-But since it's been reqeusted, let's use CVE-2011-1003.
+
+> [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
+
+CVE-2011-1024 openldap forwarded bind failure messages cause success
+
+
+> [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
+
+CVE-2011-1025 openldap rootpw is not verified with slapd.conf
+
 
 Thanks.
 
