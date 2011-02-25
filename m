@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/12
-Message-ID: <1674131055.506851.1307381083352.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:24:43 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/6
+Message-ID: <20110225043240.GA20649@ksplice.com>
+Date: Thu, 24 Feb 2011 23:32:40 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Cc: Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
+Subject: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
+The cgrulesengd program from libcgroup failed to properly verify the
+sender of netlink messages, allowing arbitrary users to spoof events
+to the daemon, causing it to place processes into incorrect cgroups.
 
+Note that the default configuration of cgrulesengd does not contain
+any any rules, so this is probably only usefully exploitable if an
+admin have specifically configured cgrulesengd to enforce some policy.
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> It was found that fabric, a simple Pythonic remote deployment tool,
-> used insecure way for creation of temporary files, when uploading
-> template text files and project files to a remote system. A local
-> attacker could use this flaw to conduct symlink attacks to upload
-> sensitive information to remote host or to overwrite certain local
-> system files.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
-> 
+References:
+http://sourceforge.net/mailarchive/message.php?msg_id=27102603
 
-Please use CVE-2011-2185.
-
-Thanks.
-
--- 
-    JB
+- Nelson
