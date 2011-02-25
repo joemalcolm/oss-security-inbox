@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/2
-Message-ID: <4E549126.2000309@redhat.com>
-Date: Wed, 24 Aug 2011 13:50:30 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/1
+Message-ID: <4D66F47D.2030604@redhat.com>
+Date: Fri, 25 Feb 2011 08:14:53 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
+CC: Kees Cook <kees@...ntu.com>
+Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
 Content-Type: text/plain; charset=utf-8
 
-On 08/24/2011 10:36 AM, Eugene Teo wrote:
-> The name_len variable in CIFSFindNext is a signed int that gets set to
-> the resume_name_len in the cifs_search_info. The resume_name_len however
-> is unsigned and for some infolevels is populated directly from a 32 bit
-> value sent by the server.
-> 
-> If the server sends a very large value for this, then that value could
-> look negative when converted to a signed int. That would make that value
-> pass the PATH_MAX check later in CIFSFindNext. The name_len would then
-> be used as a length value for a memcpy. It would then be treated as
-> unsigned again, and the memcpy scribbles over a ton of memory.
-> 
-> Fix this by making the name_len an unsigned value in CIFSFindNext.
-> 
-> http://www.spinics.net/lists/linux-cifs/msg03950.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=732869
+On 02/25/2011 07:54 AM, Kees Cook wrote:
+> Hi,
+>
+> While not as bad as CVE-2010-4661 (unprivileged module loading)
+> I'd like to get a CVE assigned for this issue for tracking purposes:
+> https://lkml.org/lkml/2011/2/24/203
+>
+> Basically "ifconfig $module" will load any module as long as the process
+> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE).
 
-David Jorm from my team assigned CVE-2011-3191 to this.
+Please use CVE-2011-1019.
 
-Thanks, Eugene
-
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
