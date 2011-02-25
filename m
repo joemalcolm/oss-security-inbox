@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/11
-Message-ID: <Pine.GSO.4.64.1105091522240.1528@faron.mitre.org>
-Date: Mon, 9 May 2011 15:26:01 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/11
+Message-Id: <201102251020.02709.sgrubb@redhat.com>
+Date: Fri, 25 Feb 2011 10:20:02 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+Cc: Eugene Teo <eugene@...hat.com>, Nelson Elhage <nelhage@...lice.com>
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
+On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
+> On 02/25/2011 12:32 PM, Nelson Elhage wrote:
+> > The cgrulesengd program from libcgroup failed to properly verify the
+> > sender of netlink messages, allowing arbitrary users to spoof events
+> > to the daemon, causing it to place processes into incorrect cgroups.
+> > 
+> > Note that the default configuration of cgrulesengd does not contain
+> > any any rules, so this is probably only usefully exploitable if an
+> > admin have specifically configured cgrulesengd to enforce some policy.
+> > 
+> > References:
+> > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
+> 
+> Please use CVE-2011-1022.
 
-Nicolas,
+That's a shame. I reported this same problem in November last year:
 
-After deeper investigation, this appears to be CVE-2011-1425, which was 
-requested by you and assigned on March 14 (hopefully with email 
-notification to you), and published through CVE on April 2 or 3 after an 
-xmlsec announcement 
-http://www.aleksey.com/pipermail/xmlsec/2011/009120.html
+http://sourceforge.net/mailarchive/message.php?msg_id=26598749
 
-CVE-2011-1425 points to both changeset 79159 and Webkit bug 52688.
+The current patch does not check  if (from_nla_len != sizeof(from_nla))  before making 
+decisions based on the header. I contacted upstream about this.
 
-Are you talking about a different XSLT file-overwrite issue than 
-CVE-2011-1425?
-
-- Steve
-
-
-On Mon, 9 May 2011, Nicolas Gr�goire wrote:
-
->
-> The bug was opened on January 18 :
-> https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
->
-> A patch is available since February 20 :
-> http://trac.webkit.org/changeset/79159 (public)
->
-> Given some recent mail exchanges with Apple, they still not have
-> affected a CVE to this issue. Could you please allocate one, in order
-> for me to have an easier job communicating with the numerous impacted
-> vendors (many Linux distributions, RIM, Maxthon, ...) ?
->
-> Regards,
-> Nicolas Grégoire
->
->
+-Steve
