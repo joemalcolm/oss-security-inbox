@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/3
-Message-Id: <201105311052.23603.thomas@suse.de>
-Date: Tue, 31 May 2011 10:52:23 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/2
+Message-ID: <4D66F488.5000809@redhat.com>
+Date: Fri, 25 Feb 2011 08:15:04 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: openssl timing attack
+CC: Kees Cook <kees@...ntu.com>
+Subject: Re: CVE request: kernel: /proc/$pid/ leaks contents across setuid exec
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-looks like this following has not CVE-ID assigned yet:
-http://www.kb.cert.org/vuls/id/536044
+On 02/25/2011 07:57 AM, Kees Cook wrote:
+> Hi,
+>
+> I'd like to get a CVE assigned for this information leak issue:
+> https://lkml.org/lkml/2011/2/7/368
+>
+> Pre-opened file descriptors in /proc/$pid/ can bypass DAC allowing
+> visibility into setuid process state, especially leaking ASLR offset.
 
-Cheers
-Thomas
+Please use CVE-2011-1020.
+
+Eugene
 -- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Eugene Teo / Red Hat Security Response Team
