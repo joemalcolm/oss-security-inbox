@@ -1,66 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/12
-Message-ID: <20110728212420.GZ4946@outflux.net>
-Date: Thu, 28 Jul 2011 14:24:20 -0700
-From: Kees Cook <kees@...ntu.com>
-To: miniupnp@...e.fr
-Cc: oss-security@...ts.openwall.com
-Subject: multiple flaws in minissdpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/9
+Message-ID: <4D6744F5.3020103@redhat.com>
+Date: Fri, 25 Feb 2011 13:58:13 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Nelson Elhage <nelhage@...lice.com>
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 02/25/2011 12:32 PM, Nelson Elhage wrote:
+> The cgrulesengd program from libcgroup failed to properly verify the
+> sender of netlink messages, allowing arbitrary users to spoof events
+> to the daemon, causing it to place processes into incorrect cgroups.
+>
+> Note that the default configuration of cgrulesengd does not contain
+> any any rules, so this is probably only usefully exploitable if an
+> admin have specifically configured cgrulesengd to enforce some policy.
+>
+> References:
+> http://sourceforge.net/mailarchive/message.php?msg_id=27102603
 
-I recently did an audit[1] of minissdpd for Ubuntu, and found a lot of issues,
-unfortunately. There may be more hiding that I didn't notice, but here
-are the security bits of my notes:
+Please use CVE-2011-1022.
 
-
-Denial of Service:
-
-- off-by-one in packet parsing can trigger crashes on unluckily alignment
-    minissdpd.c line ~290
-
-- walk off end of memory without length check in "cache-control" packet
-    minissdpd.c line ~314
-
-- some unchecked malloc uses could lead to crash
-
-- does not clean up /var/run files on crash
-
-
-Corruption, possible manipulation of responses:
-
-- linefeed injection in service requests
-
-- unchecked write lengths (could get interrupted, lead to corruption)
-
-
-Memory corruption, with execution control likely:
-
-- multiple buffer overflows in processRequest
-    - unchecked decoded lengths
-    - unchecked buffer creation length
-    - integer overflows in decoded lengths
-    - write null byte arbitrarily in heap
-    - could read stack memory out on requests (including canary if OS
-      used stack protector canary that wasn't null-started). e.g.:
-      - add bogus service with giant coded-length "location" entry
-      - read back with type==1 and matching "st"
-
-
-General Safety:
-
-- does not drop privileges
-
-
-Hopefully all of this can get fixed up, it looks like a useful service. :)
-
-Thanks,
-
--Kees
-
-[1] https://bugs.launchpad.net/ubuntu/+source/minissdpd/+bug/813313
-
+Eugene
 -- 
-Kees Cook
-Ubuntu Security Team
+Eugene Teo / Red Hat Security Response Team
