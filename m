@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/05/1
-Message-ID: <1312532620.2261.7.camel@localhost.localdomain>
-Date: Fri, 05 Aug 2011 09:23:35 +0100
-From: Tim Waugh <twaugh@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foomatic-gui
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/14
+Message-Id: <201102251150.33261.sgrubb@redhat.com>
+Date: Fri, 25 Feb 2011 11:50:33 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: Nelson Elhage <nelhage@...lice.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-08-04 at 13:53 -0400, Josh Bressers wrote:
-> My impression is that the code is the same, which means they will share the
-> same ID. If the code is totally different, we will want to split. Time, you
-> know best, is the code in question the same, or is it different?
+On Friday, February 25, 2011 10:43:20 am Nelson Elhage wrote:
+> On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
+> > The current patch does not check if (from_nla_len != sizeof(from_nla))
+> > before making decisions based on the header. I contacted upstream about
+> > this.
+> 
+> From my reading of the netlink code, recvmsg() / recvfrom() on a netlink
+> socket will never return a from_nla_len != sizeof(struct sockaddaddr_nl).
+> Am I missing something, did this change at some point, or are you just
+> suggesting general paranoid good practice? It's probably good advice in
+> any case, I'm just curious whether you're aware of cases where this can
+> actually be a problem.
 
-Oh, it's largely the same by the look of it, but there may be some
-differences.
 
-Tim.
-*/
+I don't know what is considered the ultimate authority on this. You can look at libnl 
+in lib/nl.c you find this:
 
+466         if (msg.msg_namelen != sizeof(struct sockaddr_nl)) {
+467                 free(msg.msg_control);
+468                 free(*buf);
+469                 return -NLE_NOADDR;
+470         }
 
-Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
+There are many projects that do something similar. However, looking at glibc, they do 
+other kinds of validation like the sequence number.
+
+-Steve
