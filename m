@@ -1,16 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/30/1
-Message-ID: <4DE36EC3.7010104@gmx.de>
-Date: Mon, 30 May 2011 12:17:39 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/1
+Message-ID: <4D66F47D.2030604@redhat.com>
+Date: Fri, 25 Feb 2011 08:14:53 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for fetchmail STARTTLS hang (Denial of Service)
+CC: Kees Cook <kees@...ntu.com>
+Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
 Content-Type: text/plain; charset=utf-8
 
-Could I get a CVE name for the issue in
-<http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+On 02/25/2011 07:54 AM, Kees Cook wrote:
+> Hi,
+>
+> While not as bad as CVE-2010-4661 (unprivileged module loading)
+> I'd like to get a CVE assigned for this issue for tracking purposes:
+> https://lkml.org/lkml/2011/2/24/203
+>
+> Basically "ifconfig $module" will load any module as long as the process
+> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE).
 
-Thanks.
+Please use CVE-2011-1019.
 
+Eugene
 -- 
-Matthias Andree
+Eugene Teo / Red Hat Security Response Team
