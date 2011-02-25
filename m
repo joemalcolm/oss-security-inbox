@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/17
-Message-ID: <20110304145232.GA25390@openwall.com>
-Date: Fri, 4 Mar 2011 17:52:32 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/4
+Message-ID: <4D66FFD9.30802@redhat.com>
+Date: Fri, 25 Feb 2011 09:03:21 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2011 at 03:08:31PM +0100, Jan Lieskovsky wrote:
->   we have been contacted by Stefan Fritsch of Debian Security Team
-> about presence of nine security flaws in the logrotate utility
-> (the list is provided below).
+On 02/24/2011 11:43 AM, Eugene Teo wrote:
+> Check values passed in to AARESOLVE_OFFSET on r300. It can be used to
+> write arbitrary data to VRAM, GTT, etc. This is specific to a range of
+> GPUs only.
+>
+> drm/radeon/kms: check AA resolve registers on r300
+> http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
+>
+> [PATCH] drm/radeon: fix regression with AA resolve checking
+> https://patchwork.kernel.org/patch/576101/
 
-I've just skimmed over the list, and I only see one issue that I'd call
-a vulnerability in logrotate, issue #8.  And we need more info on #5.
+http://git.kernel.org/linus/45e4039c3aea597ede44a264cea322908cdedfe9
 
-The rest, as described, appear to rely on sysadmin error and to assume
-security properties that logrotate never advertised it had.  Specifically,
-logrotate was never declared to be safe to use on untrusted directories,
-and it was an error for a sysadmin to make such an assumption.
+> https://bugzilla.redhat.com/show_bug.cgi?id=680000
 
-I don't mind logrotate being enhanced/hardened in this respect, but to
-call these vulnerabilities sounds like a stretch.  Also, even if
-logrotate is hardened, it should not be declared to be safe to use on
-untrusted directories.  It'd be better to explicitly state that it is
-not, to avoid this sort of confusion.
-
-> 5) Issue #5: logrotate: Information disclosure by performing email
->              notifications
-...
-> 8) Issue #8: logrotate: TOCTOU race condition by creation of new files 
-> (between
->              opening the file and moment, final permissions have been 
->              applied)
->              [information disclosure]
-
-Alexander
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
