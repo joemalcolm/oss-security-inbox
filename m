@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/3
-Message-ID: <Pine.GSO.4.64.1103281029530.7261@faron.mitre.org>
-Date: Mon, 28 Mar 2011 10:30:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: CVE Request -- php-doctrine-Doctrine -- SQL injection flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/14
+Message-Id: <201102251150.33261.sgrubb@redhat.com>
+Date: Fri, 25 Feb 2011 11:50:33 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: Nelson Elhage <nelhage@...lice.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
+On Friday, February 25, 2011 10:43:20 am Nelson Elhage wrote:
+> On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
+> > The current patch does not check if (from_nla_len != sizeof(from_nla))
+> > before making decisions based on the header. I contacted upstream about
+> > this.
+> 
+> From my reading of the netlink code, recvmsg() / recvfrom() on a netlink
+> socket will never return a from_nla_len != sizeof(struct sockaddaddr_nl).
+> Am I missing something, did this change at some point, or are you just
+> suggesting general paranoid good practice? It's probably good advice in
+> any case, I'm just curious whether you're aware of cases where this can
+> actually be a problem.
 
-On Fri, 25 Mar 2011, Jan Lieskovsky wrote:
 
->  a SQL injection flaw has been reported against Doctrine, the PHP Object 
-> Relational Mapper:
->  [1] http://www.doctrine-project.org/blog/doctrine-security-fix
->  [2] https://bugzilla.redhat.com/show_bug.cgi?id=689396
+I don't know what is considered the ultimate authority on this. You can look at libnl 
+in lib/nl.c you find this:
 
-Use CVE-2011-1522
+466         if (msg.msg_namelen != sizeof(struct sockaddr_nl)) {
+467                 free(msg.msg_control);
+468                 free(*buf);
+469                 return -NLE_NOADDR;
+470         }
 
-- Steve
+There are many projects that do something similar. However, looking at glibc, they do 
+other kinds of validation like the sequence number.
+
+-Steve
