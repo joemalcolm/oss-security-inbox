@@ -1,89 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/1
-Message-ID: <4EAEBFE9.8000209@redhat.com>
-Date: Mon, 31 Oct 2011 09:34:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>, Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
-Subject: Re: CVE request: 3 flaws in libobby and libnet6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/12
+Message-ID: <20110225154320.GG7585@ksplice.com>
+Date: Fri, 25 Feb 2011 10:43:20 -0500
+From: Nelson Elhage <nelhage@...lice.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
-On 10/30/2011 06:08 AM, Vasiliy Kulikov wrote:
-> Hi,
->
-> 1) the libobby's server checks for users' color collisions before
-> checking users' passwords.  Any user without password authentication
-> may check whether a specific color is used by someone.  With knowledge
-> of person's color preferences he may learn whether a specific person
-> uses the server.  Also, he may enumerate all default colors and learn
-> the number of users.
->
->     inc/server_buffer.hpp: 
->
->     bool basic_server_buffer<Document, Selector>::on_auth()
->     {
->     ...
->         // Check colour
->         if(!basic_buffer<Document, Selector>::check_colour(colour) )
->         {
->             error = login::ERROR_COLOUR_IN_USE;
->             return false;
->         }
->
->         // Check global password
->         if(!m_global_password.empty() )
->         {
->             if(global_password != m_global_password)
->             {
->                 error = login::ERROR_WRONG_GLOBAL_PASSWORD;
->                 return false;
->             }
->         }
->     ...
->     }
->
->
-Please use CVE-2011-4091 for this issue.
+On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
+> On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
+> > On 02/25/2011 12:32 PM, Nelson Elhage wrote:
+> > > The cgrulesengd program from libcgroup failed to properly verify the
+> > > sender of netlink messages, allowing arbitrary users to spoof events
+> > > to the daemon, causing it to place processes into incorrect cgroups.
+> > > 
+> > > Note that the default configuration of cgrulesengd does not contain
+> > > any any rules, so this is probably only usefully exploitable if an
+> > > admin have specifically configured cgrulesengd to enforce some policy.
+> > > 
+> > > References:
+> > > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
+> > 
+> > Please use CVE-2011-1022.
+> 
+> That's a shame. I reported this same problem in November last year:
+> 
+> http://sourceforge.net/mailarchive/message.php?msg_id=26598749
+> 
+> The current patch does not check if (from_nla_len != sizeof(from_nla)) before
+> making decisions based on the header. I contacted upstream about this.
 
-> 2) libobby doesn't check server's SSL certificate and passes the
-> password in plain text over SSL channel.  All remote clients are
-> vulnerable to a MITM attack.
->
->     • The attacker (A) learns the client's (C) and the server's (S) IP
->         addresses and used ports.
->     • A breaks the established TCP connection between C and S.
->     • A changes the way C's packets with dst = S are routed, resulting
->         in all packets from C to S's IP go to A.  The simplest way is
->         ARP cache poisoning.
->     • A starts listening on the same IP:port as S did.
->     • C notices the connection interruption and tries to reconnect to S.
->         (Note: if the client is gobby, this step needs user's interaction.)
->     • As all C's packets intended for S are routed to A, so, in reality
->         C connects to A, not S.
->     • C starts SSL session and, as C doesn't check SSL certificate, he
->         think it talks to S.
->     • A requests C' password.
->     • C passes the password in plain text over SSL channel.
->
-Please use CVE-2011-4092 for this issue
-> 3) libnet6 doesn't check basic_server::id_counter for integer overflow.
-> This number is used to distinguish among different users.  An attacker
-> may open UINT_MAX successive connections and get an identifier of the
-> already established connection, resulting in the connection hijacking.
-> On i686 uint is a 32 bit counter, so an attacker should be able to open
-> 4.000.000.000 connections to complete the attack.  This is a rather big
-> number: if an attacker may create 2000 connections per second, it would
-> took ~24 days of continuous connection attempts.  However, it is a real
-> threat for servers with a huge uptime.
->
-Please use CVE-2011-4093 for this issue.
+>From my reading of the netlink code, recvmsg() / recvfrom() on a netlink socket
+will never return a from_nla_len != sizeof(struct sockaddaddr_nl). Am I missing
+something, did this change at some point, or are you just suggesting general
+paranoid good practice? It's probably good advice in any case, I'm just curious
+whether you're aware of cases where this can actually be a problem.
 
-Note: these are all available from http://gobby.0x539.de/trac/wiki/Download
-> Thanks,
->
+- Nelson
 
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+> 
+> -Steve
