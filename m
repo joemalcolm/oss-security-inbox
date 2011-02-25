@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/4
-Message-ID: <20111127225622.GA21131@openwall.com>
-Date: Mon, 28 Nov 2011 02:56:22 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/6
+Message-ID: <20110225043240.GA20649@ksplice.com>
+Date: Thu, 24 Feb 2011 23:32:40 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: CVE request: libcgroup: Failure to verify netlink messages
 Content-Type: text/plain; charset=utf-8
 
-All -
+The cgrulesengd program from libcgroup failed to properly verify the
+sender of netlink messages, allowing arbitrary users to spoof events
+to the daemon, causing it to place processes into incorrect cgroups.
 
-OK, now this is starting to look about as ridiculous as the old "closed
-list" thread did. ;-)  I am approving these messages so far in part
-because I think they serve as (valid) criticism of the idea of such
-lists, even if the senders did not intend such meaning.  I have mixed
-feelings about these advance notification lists myself.
+Note that the default configuration of cgrulesengd does not contain
+any any rules, so this is probably only usefully exploitable if an
+admin have specifically configured cgrulesengd to enforce some policy.
 
-Michael -
+References:
+http://sourceforge.net/mailarchive/message.php?msg_id=27102603
 
-On Sun, Nov 27, 2011 at 09:39:29PM +0100, Michael Harrison wrote:
-> This is a formal request to be on the non-Linux advance notification
-> list. I have signed signed this message. Please let me know if you need
-> something more, and thanks again for sending this out.
-
-As I wrote to someone else the other day:
-
-"What OS distribution are you a security contact for?  And how do we
-verify that?"
-
-http://www.openwall.com/lists/oss-security/2011/11/26/3
-
-Thanks,
-
-Alexander
+- Nelson
