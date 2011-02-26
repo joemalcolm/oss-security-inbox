@@ -1,42 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/2
-Message-ID: <905281060.247741.1299074247067.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Wed, 2 Mar 2011 08:57:27 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/3
+Message-Id: <20110226092303.53d1a78b.michael.s.gilbert@gmail.com>
+Date: Sat, 26 Feb 2011 09:23:03 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: nelhage@...lice.com
-Subject: Re: CVE request: kernel: Multiple DoS issues in epoll
+Subject: cve request: eglibc memory corruption
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Two requests for bugs in epoll:
-> 
-> (1) The epoll subsystem in Linux did not prevent users from creating
-> circular
-> epoll file structures, potentially leading to a denial of service
-> (kernel
-> deadlock).
-> 
-> Reference: https://lkml.org/lkml/2011/2/5/220
-> Upstream commit:
-> http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
+Hi,
 
-Please use CVE-2011-1082.
+An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
+it.
 
-> (2) The epoll subsystem allows users to create large nested epoll
-> structures,
-> which the kernel will then to walk with preemption disabled, causing a
-> denial of
-> service via excessive CPU consumption in the kernel.
-> 
-> References:
-> http://thread.gmane.org/gmane.linux.kernel/1105744
-> http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
-> 
-> No upstream fix yet for this one.
+Thanks,
+Mike
 
-Please use CVE-2011-1083.
-
-Thank you,
---
-Petr Matousek / Red Hat Security Response Team
+[0] http://seclists.org/fulldisclosure/2011/Feb/635
+[1] http://bugs.debian.org/615120
