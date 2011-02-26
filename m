@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/3
-Message-ID: <4E1574C8.7030802@redhat.com>
-Date: Thu, 07 Jul 2011 16:56:40 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/2
+Message-ID: <20110226073038.GP4669@outflux.net>
+Date: Fri, 25 Feb 2011 23:30:38 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1780, CVE-2011-1936, kernel/xen issues
+Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
 Content-Type: text/plain; charset=utf-8
 
-1) CVE-2011-1780 kernel: xen: svm: insufficiencies in handling emulated
-instructions during vm exits
+On Fri, Feb 25, 2011 at 03:10:10PM +0300, Vasiliy Kulikov wrote:
+> UID 0 without capabilities has not been made really unprivileged yet.
+> It makes sense only within namespace container without any virtual
+> filesystem which handles permissions with uid/gid checks (not CAP_*).
+> But this is rather strange.
 
-A bug was found in the way Xen handles instruction emulation during VM
-exits. Malicious guest user space process running in SMP guest can trick
-the emulator into reading different instruction than the one that caused
-the VM exit. To do so it should run legitimate instruction that causes
-VM exit in one thread and replace this instruction to another one from
-second thread. An unprivileged guest user can potentially use this flaw
-to crash the host. Doesn't affect upstream.
+True, but I was just trying to show some examples. The case I'm most
+concerned about is the case where modules_disable has been set. It
+is possible to use acpi/custom_method to unset this and then load
+kernel rootkit modules, etc.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1780
+I know it's a special case, but it still provides arbitrary kernel
+memory writes which is not an intended ability for any user to
+have, even root.
 
-2) CVE-2011-1936 kernel: xen: vmx: insecure cpuid vmexit
-A bug was found in the way Xen handles cpuid instruction emulation
-during VM exits. An unprivileged guest user can potentially use this
-flaw to crash the guest.
+-Kees
 
-This issue only affects systems running on x86 architecture with Intel
-processor and VMX virtualization extension enabled. Doesn't affect upstream.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1936
-
-Thanks, Eugene
+-- 
+Kees Cook
+Ubuntu Security Team
