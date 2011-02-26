@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/4
-Message-ID: <20110311143651.GA13326@albatros>
-Date: Fri, 11 Mar 2011 17:36:51 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/2
+Message-ID: <20110226073038.GP4669@outflux.net>
+Date: Fri, 25 Feb 2011 23:30:38 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
+Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 24, 2011 at 15:54 -0800, Kees Cook wrote:
-> "ifconfig $module" will load any module as long as the process
-> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE)."
+On Fri, Feb 25, 2011 at 03:10:10PM +0300, Vasiliy Kulikov wrote:
+> UID 0 without capabilities has not been made really unprivileged yet.
+> It makes sense only within namespace container without any virtual
+> filesystem which handles permissions with uid/gid checks (not CAP_*).
+> But this is rather strange.
 
-This was fixed in 8909c9ad8ff:
+True, but I was just trying to show some examples. The case I'm most
+concerned about is the case where modules_disable has been set. It
+is possible to use acpi/custom_method to unset this and then load
+kernel rootkit modules, etc.
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=8909c9ad8ff03611c9c96c9a92656213e4bb495b
+I know it's a special case, but it still provides arbitrary kernel
+memory writes which is not an intended ability for any user to
+have, even root.
+
+-Kees
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Kees Cook
+Ubuntu Security Team
