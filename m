@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/12
-Message-ID: <4DA711CE.7030807@mvista.com>
-Date: Thu, 14 Apr 2011 05:25:02 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/1
+Message-ID: <AANLkTinmiFRonvoLxwdCdNqWbKhO4QzU4DVsWf_EBp-X@mail.gmail.com>
+Date: Fri, 25 Feb 2011 21:17:30 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-CC: Tomas Hoger <thoger@...hat.com>
-Subject: Re: Closed list
+Subject: CVE request: v86d: Failure to validate netlink message sender
 Content-Type: text/plain; charset=utf-8
 
-Thomas,
+Versions of the v86d userspace helper for the Linux uvesafb driver
+before 0.1.10 did not verify that received netlink messages were sent
+by the kernel, allowing unprivileged users to manipulate the video
+mode and potentially other consequences.
 
-Thanks for the feedback. That kind of list is what I had hoped MV could
-have created a year ago. Resources shot it down then and now MV has
-added a few more issues to work through.
+v86d executes video BIOS code with access to /dev/mem in response to
+netlink messages, using either vm86 mode or an x86 emulator, depending
+on configuration. I an unclear on whether it is possible to e.g. crash
+the machine or escalate privileges by spoofing requests, or only to
+mess with the video card.
 
-If SUSE's http://support.novell.com/security/cve/ is an example of what
-is being sot to meet the public advisory requirement, then I know what
-MV needs to do.
-
-Mahalo,
-Armin
-
-On 04/13/2011 10:38 PM, Tomas Hoger wrote:
-> Hi Armin!
-> 
-> On Wed, 13 Apr 2011 05:59:20 -1000 akuster wrote:
-> 
->>> It's clear that one of the membership requirements is now producing
->>> security updates. 
->>
->> What method of proving this would be acceptable? screen shot,
->> temporary access to our site, public list or other?
-> 
-> A quick idea, rather than a real guidance:  Several vendors offer some
-> sort of public CVE database that can be used to search for vendor's
-> updates to address particular flaw.  If you're already tagging your
-> updates with CVE ids, this may not be hard to provide.  Not because
-> folks on this list ask you to do so, but because it's likely to provide
-> a significant benefit to your customers with little extra cost/effort on
-> top of what you already do.
-> 
-> SUSE's database is probably closest to what may work for you as well.
-> CVE info is split by a patched product+version, with links to
-> customer-only download site for the enterprise products.
-> 
-> http://support.novell.com/security/cve/
-> 
+References:
+http://repo.or.cz/w/v86d.git/commit/f9abfd412639286c3143e93e8ba2c9598dfba640
