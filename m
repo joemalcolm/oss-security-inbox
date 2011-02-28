@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/8
-Message-ID: <4D668F0E.3020106@freenet.de>
-Date: Thu, 24 Feb 2011 18:02:06 +0100
-From: Ralf Corsepius <rc040203@...enet.de>
-To: Vincent Danen <vdanen@...hat.com>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, security@...tpractical.com,  Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/3
+Message-ID: <AANLkTikGBBNvXyp1PQ_=h4xHZ0xA_kMHC=ZnoQczqXPx@mail.gmail.com>
+Date: Mon, 28 Feb 2011 18:59:15 +0000
+From: Helgi Þormar Þorbjörnsson <helgi@....net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/2011 05:45 PM, Vincent Danen wrote:
-> * [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
->
->>> Is Redhat packaging RT now, or are you just handling the CVEs?
->>
->> I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
->> public issues.
->
-Folks, my feel is you all are picking on words and details.
+The lack of symlink checks in the PEAR installer 1.9.1 <= while doing
+installation and upgrades, which initiate various system write
+operations, can cause privileged users unknowingly to overwrite
+critical system files.
 
-> RT3 is packaged in Fedora and EPEL.
->
-Correct. rt3 is community maintained in Fedora and RHEL. I am doing so 
-for Fedora and other people do for RHEL.
-So, strictly speaking it's not "Red Hat packaged", but 
-community-contributed to "Red Hat owned products" (Fedora rsp. Fedora 
-EPEL) and some folks @RH are filing CVS against it, for reasons I don't 
-know.
+Further information can be found in this temporary advisory
+http://pear.php.net/advisory-20110228.txt and the
 
-Ralf
+Fixes can be found at http://news.php.net/php.pear.cvs/61264
 
+- Helgi
