@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/5
-Message-ID: <2073872337-1303471792-cardhu_decombobulator_blackberry.rim.net-481378627-@bda862.bisx.prod.on.blackberry>
-Date: Fri, 22 Apr 2011 11:29:45 +0000
-From: "Matthew Nicholson" <mnicholson@...ium.com>
-To: "oss-security" <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Asterisk Security Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/5
+Message-ID: <AANLkTi=uho=v_qMRFC+geM=9eV4CcZgF9bNNLohhwSVm@mail.gmail.com>
+Date: Mon, 28 Feb 2011 14:40:36 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Helgi Þormar Þorbjörnsson <helgi@....net>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-It is for AST-2011-006
--- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
+I'm not familiar with this code or any of the context surrounding this
+fix, but it appears to be an incomplete fix.  Checking for existence
+of a symlink and then opening the resource leaves open a window during
+which a legitimate file can be replaced with a symlink.  Also, I don't
+see a reason why a hard link couldn't be used for exploitation
+instead.
 
------Original Message-----
-From: Jan Lieskovsky <jlieskov@...hat.com>
-Date: Fri, 22 Apr 2011 11:46:27 
-To: Matthew Nicholson<mnicholson@...ium.com>; Steven M. Christey<coley@...us.mitre.org>
-Reply-To: oss-security <oss-security@...ts.openwall.com>
-Cc: oss-security<oss-security@...ts.openwall.com>
-Subject: Re: [oss-security] CVE Request -- Asterisk Security Vulnerability
+-Dan
 
-
-Hello Matthew,
-
-   thank you for the heads up.
-
-Matthew Nicholson wrote:
-> Hi,
-> 
-> I need a CVE for a new Asterisk security vulnerability.
-
-Was this request intended to be for the following one:
-[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
-
-Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
-       already got an id of CVE-2011-1507.
-
-If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
-to be assigned to this?)
-
-Or was it requested for yet something completely different from above two?
-
-Thank you, Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+2011/2/28 Helgi Þormar Þorbjörnsson <helgi@....net>:
+> The lack of symlink checks in the PEAR installer 1.9.1 <= while doing
+> installation and upgrades, which initiate various system write
+> operations, can cause privileged users unknowingly to overwrite
+> critical system files.
+>
+> Further information can be found in this temporary advisory
+> http://pear.php.net/advisory-20110228.txt and the
+>
+> Fixes can be found at http://news.php.net/php.pear.cvs/61264
+>
+> - Helgi
+>
