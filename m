@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/8
-Message-ID: <472217203.1261673.1316025180193.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:33:00 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/14
+Message-ID: <2129000690.299846.1298927603500.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 16:13:23 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: FreeBSD/OS X crontab information leakage
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3362.
+This should probably get three.
+
+----- Original Message -----
+> Details here:
+> http://marc.info/?l=full-disclosure&m=129891323028897&w=2
+> 
+> There are three leaks, each of which amounts to a minor DAC bypass.
+> 
+> 1. Leakage of file/directory existence via stat() calls (e.g.
+> determining if a file exists regardless of search permissions on
+> directories)
+
+CVE-2011-1073
+
+> 
+> 2. Leakage of directory existence via realpath()
+
+CVE-2011-1074
+
+> 
+> 3. Arbitrary MD5 comparison (e.g. ability to determine if any two
+> files have identical MD5 hashes, regardless of read permissions on
+> those files)
+
+CVE-2011-1075
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> Hi,
-> this oCert advisory never seems to have received a CVE
-> assignment: http://www.ocert.org/advisories/ocert-2011-002.html
-> 
-> Upstream fix in ffmpeg:
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=c5cbda50793e311aa73489d12184ffd6761c9fbf
-> 
-> Cheers,
-> Moritz
