@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/1
-Message-ID: <4E1D07DA.2050805@redhat.com>
-Date: Wed, 13 Jul 2011 10:50:02 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/11
+Message-ID: <2135733167.299402.1298926534401.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 15:55:34 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-2689 kernel: gfs2: make sure fallocate bytes is a multiple of blksize
+Cc: coley <coley@...re.org>
+Subject: Re: cve request: eglibc memory corruption
 Content-Type: text/plain; charset=utf-8
 
-The GFS2 fallocate code chooses a target size to for allocating chunks
-of space. Whenever it can't find any resource groups with enough space
-free, it halves its target. Since this target is in bytes, eventually it
-will no longer be a multiple of blksize. As long as there is more space
-available in the resource group than the target, this isn't a problem,
-since gfs2 will use the actual space available, which is always a
-multiple of blksize. However, when gfs couldn't fallocate a bigger chunk
-than the target, it was using the non-blksize aligned number. This
-caused a BUG in later code that required blksize aligned offsets.
+----- Original Message -----
+> Hi,
+> 
+> An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
+> it.
+> 
+> Thanks,
+> Mike
+> 
+> [0] http://seclists.org/fulldisclosure/2011/Feb/635
+> [1] http://bugs.debian.org/615120
 
-Upstream commit:
-http://git.kernel.org/linus/6905d9e4dda6112f007e9090bca80507da158e63
+It should be noted this also affects glibc.
+Does anyone know when this was fixed in glibc by chance? The bug has no details.
 
-Reference:
-https://bugzilla.redhat.com/CVE-2011-2689
+Use CVE-2011-1071
 
-Thanks, Eugene
-@eugeneteo
+Thanks.
+
+-- 
+    JB
