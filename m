@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/4
-Message-ID: <20111221221210.GC7178@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Dec 2011 23:12:10 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/7
+Message-ID: <20110228203255.GA4669@outflux.net>
+Date: Mon, 28 Feb 2011 12:32:55 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: kvm: pit timer with no irqchip crashes the system
+Subject: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
-User space may create the PIT and forget about setting up the irqchips.
-In that case, firing PIT IRQs will crash the host:
+Hi,
 
-BUG: unable to handle kernel NULL pointer dereference at
-0000000000000128
-IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
-...
-Call Trace:
- [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
- [<ffffffff81071431>] process_one_work+0x111/0x4d0
- [<ffffffff81071bb2>] worker_thread+0x152/0x340
- [<ffffffff81075c8e>] kthread+0x7e/0x90
- [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
+I think the flaw[1] with argv-expansion triggering the OOM-killer
+incorrectly needs its own CVE.
 
-Reference:
-http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
-https://bugzilla.redhat.com/show_bug.cgi?id=769721
+While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+improved things, argv expansion can still be tricked into OOM-killing the
+entire system. Solutions were discussed on the original thread, but
+were not finished. Recently a set of patches[3] has been re-proposed to fix
+this issue. Regardless, it should probably get its own CVE assigned.
 
 Thanks,
+
+-Kees
+
+[1] https://lkml.org/lkml/2010/8/27/429
+[2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+[3] https://lkml.org/lkml/2011/2/25/227
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Kees Cook
+Ubuntu Security Team
