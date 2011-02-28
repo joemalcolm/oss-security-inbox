@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/5
-Message-Id: <201103141314.36806.ludwig.nussel@suse.de>
-Date: Mon, 14 Mar 2011 13:14:36 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/5
+Message-ID: <AANLkTi=uho=v_qMRFC+geM=9eV4CcZgF9bNNLohhwSVm@mail.gmail.com>
+Date: Mon, 28 Feb 2011 14:40:36 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Cc: Helgi Þormar Þorbjörnsson <helgi@....net>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-Dan Rosenberg wrote:
-> There are a few possible options   We could patch glibc to try to
-> raise the rlimit in addmntent(). [...]
+I'm not familiar with this code or any of the context surrounding this
+fix, but it appears to be an incomplete fix.  Checking for existence
+of a symlink and then opening the resource leaves open a window during
+which a legitimate file can be replaced with a symlink.  Also, I don't
+see a reason why a hard link couldn't be used for exploitation
+instead.
 
-Citing our glibc maintainer Petr Baudis via Bugzilla:
+-Dan
 
-| I have been thinking about it and I'm not at all sure the proposed solution
-| makes sense. First, this may also concern the obscure interfaces like
-| putspent() (not sure if anyone uses these, moreover in security relevant
-| contexts). Second, messing with RLIMIT_FSIZE within library routine is just
-| evil. The caller may be multi-threaded or just do something else between
-| setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
-| programs must sanitize things like this, on their own terms.
-
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+2011/2/28 Helgi Þormar Þorbjörnsson <helgi@....net>:
+> The lack of symlink checks in the PEAR installer 1.9.1 <= while doing
+> installation and upgrades, which initiate various system write
+> operations, can cause privileged users unknowingly to overwrite
+> critical system files.
+>
+> Further information can be found in this temporary advisory
+> http://pear.php.net/advisory-20110228.txt and the
+>
+> Fixes can be found at http://news.php.net/php.pear.cvs/61264
+>
+> - Helgi
+>
