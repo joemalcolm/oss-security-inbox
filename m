@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/2
-Message-ID: <eec049a5-91a3-4c6a-9b77-803873bcc030@zmail14.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Dec 2011 12:31:48 -0500 (EST)
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/7
+Message-ID: <20110228203255.GA4669@outflux.net>
+Date: Mon, 28 Feb 2011 12:32:55 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+Subject: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
->> Credit: vulnerability report and PoC code received from Alexander
->> Klink <alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
->> cdc.informatik.tu-darmstadt.de>.
->> 
->> CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
->> (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
->
->Kurt or other CVE assigners, can you please assign a bunch for python,
->java, tomcat etc. pp.
->
->-- 
->Hanno Böck		mail/jabber: hanno@...eck.de
->GPG: BBB51E42		http://www.hboeck.de/
+Hi,
 
-I am going to defer this to Steve/etc, as I had nothing to do with the original CVE assignments so I have no idea (maybe they got assigned but not published? Not assigned yet due to split/merge issues? not assigned due to other reasons?). 
+I think the flaw[1] with argv-expansion triggering the OOM-killer
+incorrectly needs its own CVE.
 
--- Kurt Seifried / Red Hat Security Repsonse Team
+While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+improved things, argv expansion can still be tricked into OOM-killing the
+entire system. Solutions were discussed on the original thread, but
+were not finished. Recently a set of patches[3] has been re-proposed to fix
+this issue. Regardless, it should probably get its own CVE assigned.
+
+Thanks,
+
+-Kees
+
+[1] https://lkml.org/lkml/2010/8/27/429
+[2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+[3] https://lkml.org/lkml/2011/2/25/227
+
+-- 
+Kees Cook
+Ubuntu Security Team
