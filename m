@@ -1,30 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/2
-Message-ID: <4EC8050B.1060005@redhat.com>
-Date: Sat, 19 Nov 2011 12:35:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/2
+Message-ID: <20110228163843.GB2114@redhat.com>
+Date: Mon, 28 Feb 2011 09:38:43 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: ejabberd before 2.1.9
+Subject: Re: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
-On 11/19/2011 04:18 AM, Hanno Böck wrote:
-> Hi,
+* [2011-02-28 14:16:06 +0100] Thomas Biege wrote:
+
+>The following might also need a CVE-ID.
 >
-> From
-> http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_2.1.9
+>https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
+>------------------------------------------------------------------------------
+>http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
 >
-> This looks like its security-relevant:
-> - Fix Denial of Service when user sends malformed publish stanza
->   (EJAB-1498)
+>That's a pretty bad DOS. Everybody (even unauthenticated users) can kill the
+>server by submitting a MODRDN request with an empty "olddn" value and "remove
+>old RDN" set (-r). Example:
 >
-> Upstream bug report:
-> https://support.process-one.net/browse/EJAB-1498
+>      ldapmodrdn -x -H ldap://ldapserver -r '' o=test
+>------------------------------------------------------------------------------
+
+I've just tried this here.  I noted in your bug report that you indicate
+that it seems to affect all of your currently maintained products, but
+I've tried it here against openldap 2.3.43 and do not see a crash (I can
+reproduce the crash on 2.4.19).
+
+Have you tested this one against older openldap, or is it just an
+assumption (it might be ACLs or something that is preventing me from
+seeing the crash, but I don't believe so if no authentication is
+required to affect this).
+
+Seems that this is the patch to fix it:
+
+http://www.openldap.org/devel/cvsweb.cgi/servers/slapd/modrdn.c.diff?r1=1.170.2.8&r2=1.170.2.9&hideattic=1&sortbydate=0
+
+The code is different enough in 2.3.x that I can't tell by looking at it
+whether or not it is affected (enough looks similar that perhaps it
+might be and may just require a changed ldapmodrdn command).
+
+>Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
+>> ----- Original Message -----
+>> > Hello Josh, Steve, vendors,
+>> >
+>> > looks like the following two issues did not get a CVE identifiers yet:
+>> > [1] http://secunia.com/advisories/43331/
+>>
+>> The above advisory covers both bugs below.
+>>
+>>
+>> > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
+>>
+>> CVE-2011-1024 openldap forwarded bind failure messages cause success
+>>
+>>
+>> > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
+>>
+>> CVE-2011-1025 openldap rootpw is not verified with slapd.conf
+>>
+>>
+>> Thanks.
+>>
+>>
 >
->
-Please use CVE-2011-4320  for this issue.
+>-- 
+> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>--
+>  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+>                            -- Marie von Ebner-Eschenbach
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
