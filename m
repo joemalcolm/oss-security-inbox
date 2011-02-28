@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/14
-Message-ID: <20111020192243.46b81805@laverne>
-Date: Thu, 20 Oct 2011 19:22:43 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/11
+Message-ID: <2135733167.299402.1298926534401.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 15:55:34 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
+Cc: coley <coley@...re.org>
+Subject: Re: cve request: eglibc memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 20 Oct 2011 13:17:48 -0400 (EDT)
-schrieb Josh Bressers <bressers@...hat.com>:
+----- Original Message -----
+> Hi,
+> 
+> An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
+> it.
+> 
+> Thanks,
+> Mike
+> 
+> [0] http://seclists.org/fulldisclosure/2011/Feb/635
+> [1] http://bugs.debian.org/615120
 
-> Can MITRE take this one? It's far bigger than I'm able to handle.
+It should be noted this also affects glibc.
+Does anyone know when this was fixed in glibc by chance? The bug has no details.
 
-I read this in the past...
-the outcome was usually that nothing happened at all. This is not good.
-See here:
-http://www.openwall.com/lists/oss-security/2011/01/04/11
+Use CVE-2011-1071
 
-The CVE assignment here usually works pretty well, but some requests
-keep unanswered forever. You CVE assigners should try to work out a way
-to avoid that.
+Thanks.
 
-cu,
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
