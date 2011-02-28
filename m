@@ -1,51 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/4
-Message-ID: <1578624989.449766.1307044898092.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Jun 2011 16:01:38 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/12
+Message-ID: <217458435.299563.1298926918414.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 16:01:58 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Evgeny Legerov <admin@...evydis.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenOffice.org -- InteVyDis Demo of OpenOffice 0day. Released with VulnDisco 8.8 pack (release date May,2009)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> A new security flaw, potentially allowing execution of arbitrary code
-> with the privileges of the user running the OpenOffice.org suite tools
-> has been reported by the InteVyDis security researchers team:
-> [1] http://intevydis.com/oo_0day.html
-> [2] http://twitter.com/#!/legerov/status/75482755194032128
-> 
-> References:
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=709705
-> 
-> Unfortunately there doesn't seem to be further detailed information
-> available right now. But from the Twitter post, looks this issue is
-> still valid against OpenOffice.org v3.3.
-> 
-> Hopefully Evgeny Legerov of InteVyDis security researchers team
-> (Cc-ed)
-> could provide further background information about this issue, i.e.
-> if it is an old issue (like date of 2009 would suggest) and thus a CVE
-> identifier has been already assigned to this issue or is this
-> completely
-> new issue (which did not get fixed from 2009 till now) and thus it
-> requires a new CVE id.
-> 
-> Evgeny, any further information you could provide here, to clear the CVE
-> doubt is really appreciated.
-> 
-> Once the CVE doubt cleared, could you allocate a CVE id for this issue?
-> 
-
-I'd say this is plenty to give a CVE ID.
-
-Use CVE-2011-2177
+Please use CVE-2011-1072
 
 Thanks.
 
 -- 
     JB
+
+
+----- Original Message -----
+> The lack of symlink checks in the PEAR installer 1.9.1 <= while doing
+> installation and upgrades, which initiate various system write
+> operations, can cause privileged users unknowingly to overwrite
+> critical system files.
+> 
+> Further information can be found in this temporary advisory
+> http://pear.php.net/advisory-20110228.txt and the
+> 
+> Fixes can be found at http://news.php.net/php.pear.cvs/61264
+> 
+> - Helgi
