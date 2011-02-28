@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/6
-Message-ID: <20111108151040.GA31470@foo.fgeek.fi>
-Date: Tue, 8 Nov 2011 17:10:40 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/6
+Message-ID: <AANLkTikv-wp3eViKJk1wLk1WJHS0=09PRNA7SV4uTSP=@mail.gmail.com>
+Date: Mon, 28 Feb 2011 15:26:41 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
+Subject: CVE request: FreeBSD/OS X crontab information leakage
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 06, 2011 at 10:57:55PM +0100, Marcus Meissner wrote:
-> On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
-> > On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
-> > > Are these duplicates:
-> > > 
-> > > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
-> > > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
-> > > 
-> > > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
-> > 
-> > This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
-> > 
-> > I am really sorry about duplicate CVEs. :(
-> 
-> Did you mail the new cve-assign alias they have?
-> 
-> Ciao, Marcus
+Details here:
+http://marc.info/?l=full-disclosure&m=129891323028897&w=2
 
-http://cve.mitre.org/cve/editorial_policies/duplicates.html
+There are three leaks, each of which amounts to a minor DAC bypass.
 
-I contacted cve@...dress. I would also like to point out that they have never replied to any of my emails, which I have also heard from others.
+1. Leakage of file/directory existence via stat() calls (e.g.
+determining if a file exists regardless of search permissions on
+directories)
 
-Best regards,
-Henri Salo
+2. Leakage of directory existence via realpath()
+
+3. Arbitrary MD5 comparison (e.g. ability to determine if any two
+files have identical MD5 hashes, regardless of read permissions on
+those files)
+
+No preference for single vs. multiple CVEs.
+
+-Dan
