@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/5
-Message-ID: <4DF62560.1040205@summersault.com>
-Date: Mon, 13 Jun 2011 10:57:36 -0400
-From: Mark Stosberg <mark@...mersault.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/8
+Message-ID: <2144421900.298976.1298925561507.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 15:39:21 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Damyan Ivanov <dmn@...ian.org>, 629511@...s.debian.org,  Iain Arnell <iarnell@...il.com>, Marcela Maslanova <mmaslano@...hat.com>
-Subject: Re: CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used
+Cc: monte@...t.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Smarty -- {smarty.template} && {smarty.currentdir} security bypass
 Content-Type: text/plain; charset=utf-8
 
-On 06/12/2011 10:49 AM, Jan Lieskovsky wrote:
-> Hello, Josh, Steve, vendors,
+Please use CVE-2011-1028.
+
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
->   It was found that perl-Data-FormValidator, a HTML form user input
-> validator, used to treat certain invalid fields as valid, when the
-> untaint_all_constraints directive was used (default for majority of
-> Data-FormValidator routines). A remote attacker could use this flaw to
-> bypass perl Taint mode protection mechanism via specially-crafted input
-> provided to the HTML form.
+> Smarty upstream has released v3.0.7 on 11-th of February 2011:
+> [1]
+> http://groups.google.com/group/smarty-announce/browse_thread/thread/18af294596756ac8
 > 
-> Note: Hopefully Damyan, Mark can clarify here, if valid data from
->       Data-FormValidator are automatically marked as untainted for
->       perl Taint mode or not. If there still is perl Taint mode
->       protection check present, even on valid Data-FormValidator
->       data and it couldn't happen, that tainted data would be passed
->       further to the script processing, then this is not a security
->       issue.
-
-I maintain DFV and have looked at this now. The issue was limited to
-fields whose constraints were defined as regular expressions. To trigger
-it, it was also required that a unrelated Regex match before the
-particular field validation happened was successful. In that case, a
-value could be marked as "valid" when it was invalid, and would also be
-untainted.
-
-I've reviewed a test and fix for this now and am ready to release it. If
-there is a CVE number about to be assigned, I can wait for that.
-
-Thanks for bringing this to my attention.
-
-   Mark
+> addressing one security flaw:
+> [2] http://www.smarty.net/forums/viewtopic.php?t=18815
+> [3]
+> http://smarty-php.googlecode.com/svn/trunk/distribution/change_log.txt
+> [4] http://secunia.com/advisories/43284/
+> 
+> Not sure this one got a CVE identifier already. If not, could you
+> allocate one?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
