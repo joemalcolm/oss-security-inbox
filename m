@@ -1,21 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/1
-Message-ID: <4DF7432D.9010800@redhat.com>
-Date: Tue, 14 Jun 2011 19:17:01 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/15
+Message-Id: <20110228165401.849106fa.michael.s.gilbert@gmail.com>
+Date: Mon, 28 Feb 2011 16:54:01 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: Alpha kernel issues
+Subject: Re: cve request: eglibc memory corruption
 Content-Type: text/plain; charset=utf-8
 
-On 06/14/2011 03:31 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> please assign CVE IDs for 
-> http://permalink.gmane.org/gmane.linux.kernel/1153884
+On Mon, 28 Feb 2011 15:55:34 -0500 (EST) Josh Bressers wrote:
 
-Moritz, see my email, [oss-security] CVE request: kernel: alpha: fix
-several security issues.
+> ----- Original Message -----
+> > Hi,
+> > 
+> > An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
+> > it.
+> > 
+> > Thanks,
+> > Mike
+> > 
+> > [0] http://seclists.org/fulldisclosure/2011/Feb/635
+> > [1] http://bugs.debian.org/615120
+> 
+> It should be noted this also affects glibc.
+> Does anyone know when this was fixed in glibc by chance? The bug has no details.
 
-Josh, looks like you missed assigning CVEs for this one.
+According to a follow-up message to the thread above [0], this was fixed
+via [1], which is the patch Debian used to fix the issue.
 
-Thanks, Eugene
+Best wishes,
+Mike
+
+[0]http://seclists.org/fulldisclosure/2011/Feb/644
+[1]http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=f15ce4d8dc139523fe0c273580b604b2453acba6
