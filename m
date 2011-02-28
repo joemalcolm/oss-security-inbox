@@ -1,77 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/15
-Message-ID: <20110318171041.GA24392@albatros>
-Date: Fri, 18 Mar 2011 20:10:41 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/16
+Message-ID: <20110228232847.GF4669@outflux.net>
+Date: Mon, 28 Feb 2011 15:28:47 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: netfilter & econet infoleaks
+Subject: Re: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
+> On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
+> > I think the flaw[1] with argv-expansion triggering the OOM-killer
+> > incorrectly needs its own CVE.
+> > 
+> > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+> > improved things, argv expansion can still be tricked into OOM-killing the
+> > entire system. Solutions were discussed on the original thread, but
+> > were not finished. Recently a set of patches[3] has been re-proposed to fix
+> > this issue. Regardless, it should probably get its own CVE assigned.
+> > 
+> > Thanks,
+> > 
+> > -Kees
+> > 
+> > [1] https://lkml.org/lkml/2010/8/27/429
+> > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+> > [3] https://lkml.org/lkml/2011/2/25/227
+> 
+> Sorry, Nelson Elhage pointed out to me that I missed the fix for this
+> issue. The issue was been fixed with:
+> http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
+> 
+> This was already assigned as CVE-2010-4243
+> 
+> Sorry for the noise, and thanks!
 
-"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
-copied from userspace.  Fields of these structs that are
-zero-terminated strings are not checked.  When they are used as argument
-to a format string containing "%s" in request_module(), some sensitive
-information is leaked to userspace via argument of spawned modprobe
-process.
+Wait, I will continue to make more noise. The upstream commit
+3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
+which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
 
-The first bug was introduced before the git epoch;  the second is
-introduced by 6b7d31fc (v2.6.15-rc1);  the third is introduced by
-6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
-CAP_NET_ADMIN."
-http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
-
-
-"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
-copied from userspace.  Fields of these structs that are
-zero-terminated strings are not checked.  When they are used as argument
-to a format string containing "%s" in request_module(), some sensitive
-information is leaked to userspace via argument of spawned modprobe
-process.
-
-The first and the third bugs were introduced before the git epoch; the
-second was introduced in 2722971c (v2.6.17-rc1).  To trigger the bug
-one should have CAP_NET_ADMIN."
-http://marc.info/?l=linux-kernel&m=129978077609894&w=2
-
-
-"'buffer' string is copied from userspace.  It is not checked whether it is
-zero terminated.  This may lead to overflow inside of simple_strtoul().
-Changli Gao suggested to copy not more than user supplied 'size' bytes.
-
-It was introduced before the git epoch.  Files "ipt_CLUSTERIP/*" are
-root writable only by default, however, on some setups permissions might be
-relaxed to e.g. network admin user."
-http://marc.info/?l=netfilter&m=129978077509888&w=2
-http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
-
-
-"Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
-copied from userspace.  Fields of these structs that are
-zero-terminated strings are not checked.  When they are used as argument
-to a format string containing "%s" in request_module(), some sensitive
-information is leaked to userspace via argument of spawned modprobe
-process.
-
-The first bug was introduced before the git epoch;  the second was
-introduced in 3bc3fe5e (v2.6.25-rc1);  the third is introduced by
-6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
-CAP_NET_ADMIN."
-http://marc.info/?l=linux-kernel&m=129978086410061&w=2
-
-
-"struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
-x86_64.  These bytes are not initialized in the variable 'ah' before
-sending 'ah' to the network.  This leads to 4 bytes kernel stack
-infoleak.
-
-This bug was introduced before the git epoch."
-http://marc.info/?l=linux-netdev&m=130036203528021&w=2
-
+Does this need its own CVE?
 
 Thanks,
 
+-Kees
+
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Kees Cook
+Ubuntu Security Team
