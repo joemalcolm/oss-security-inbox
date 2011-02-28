@@ -1,37 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/10
-Message-ID: <20110422171236.GA9751@albatros>
-Date: Fri, 22 Apr 2011 21:12:38 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: akuster <akuster@...sta.com>
-Cc: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/1
+Message-Id: <201102281416.06874.thomas@suse.de>
+Date: Mon, 28 Feb 2011 14:16:06 +0100
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 22, 2011 at 06:15 -1000, akuster wrote:
-> I am a bit confused.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
-> https://lkml.org/lkml/2011/4/14/294
-> 
->  which is assigned to CVE-2011-1746 not CVE-2011-1747.
-> 
-> is there a patch for CVE-2011-1747?
 
-No.  The problem of CVE-2011-1747 is mentioned in the patch fixing
-CVE-2011-1746 because the patch tries to fix a similar problem - OOM.
+The following might also need a CVE-ID.
 
-CVE-2011-1747 is not fixed yet.
+https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
+------------------------------------------------------------------------------
+http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
+
+That's a pretty bad DOS. Everybody (even unauthenticated users) can kill the
+server by submitting a MODRDN request with an empty "olddn" value and "remove
+old RDN" set (-r). Example:
+
+      ldapmodrdn -x -H ldap://ldapserver -r '' o=test 
+------------------------------------------------------------------------------
 
 
-> >> Please use CVE-2011-1747.
+Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
+> ----- Original Message -----
+> > Hello Josh, Steve, vendors,
 > > 
-> > In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-> > "Reference and patch:", but there is no patch for the issue (as I said
-> > in the patch description).  I have no agp hardware and I cannot test
-> > whether forcing the requested pid to the current pid is a good idea (it
-> > might not).
+> > looks like the following two issues did not get a CVE identifiers yet:
+> > [1] http://secunia.com/advisories/43331/
+> 
+> The above advisory covers both bugs below.
+> 
+> 
+> > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
+> 
+> CVE-2011-1024 openldap forwarded bind failure messages cause success
+> 
+> 
+> > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
+> 
+> CVE-2011-1025 openldap rootpw is not verified with slapd.conf
+> 
+> 
+> Thanks.
+> 
+> 
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
