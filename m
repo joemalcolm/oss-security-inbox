@@ -1,44 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/5
-Message-ID: <4EBA9D55.7020401@redhat.com>
-Date: Wed, 09 Nov 2011 08:33:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/4
+Message-ID: <20110228194836.GA9440@albatros>
+Date: Mon, 28 Feb 2011 22:48:36 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
-Subject: Re: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
+Subject: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
 Content-Type: text/plain; charset=utf-8
 
-On 11/09/2011 08:14 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way the libsocialweb,
-> a social network data aggregator, performed its initialization
-> when this service start was initiated by the dbus daemon.
-> Due to a deficiency in a way the libsocialweb service was
-> initialized, an untrusted (non-SSL) network connection has
-> been opened to remote Twitter service servers without explicit
-> approval of the user, running the libsocialweb service on the
-> local host. A remote attacker could use this flaw to conduct
-> various MITM attacks and potentially alter integrity of the user
-> account in question.
->
-> References:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: This one being on the border a bit (since clear security
->       consequences of this deficiency not completely investigated),
->       but in any case it's a bad programming practice to open
->       untrusted connection to remote servers by default without
->       particular users' approval (trust boundary crossing).
-Please use CVE-2011-4129  for this issue.
+Hi,
+
+"struct sco_conninfo has one padding byte in the end.  Local variable
+cinfo of type sco_conninfo is copied to userspace with this
+uninizialized one byte, leading to old stack contents leak."
+
+https://lkml.org/lkml/2011/2/14/49
+
+
+"Struct ca is copied from userspace.  It is not checked whether the
+"device" field is NULL terminated.  This potentially leads to BUG()
+inside of alloc_netdev_mqs() and/or information leak by creating a
+device with a name made of contents of kernel stack."
+
+https://lkml.org/lkml/2011/2/14/50
+
+
+"Struct tmp is copied from userspace.  It is not checked whether the
+"name" field is NULL terminated.  This may lead to buffer overflow and
+passing contents of kernel stack as a module name to
+try_then_request_module() and, consequently, to modprobe commandline.
+It would be seen by all userspace processes."
+
+https://lkml.org/lkml/2011/2/14/51
+
+
+The vulnerable code was written before the "git epoch".  One needs
+CAP_NET_ADMIN to exploit the 2nd and the 3rd.
+
+
+JFI, the patch to prevent the panic inside of alloc_netdev() (to prevent
+analogues of #2) was rejected by upstream:
+
+https://lkml.org/lkml/2011/2/14/52
+
+
+Thanks,
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
