@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/7
-Message-ID: <4D8BD876.6090507@canonical.com>
-Date: Fri, 25 Mar 2011 10:49:10 +1100
-From: William Grant <william.grant@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/10
+Message-ID: <1926483466.299316.1298926424618.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 15:53:44 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-0728: Loggerhead 1.18.1 security release
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: v86d: Failure to validate netlink message sender
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2011-1070
 
-Loggerhead 1.18.1 has just been released, fixing an XSS vulnerability
-when displaying filenames in revision views (CVE-2011-0728).
+Thanks.
 
-Upstream bug (with patches against 1.17 and 1.18):
- https://bugs.launchpad.net/loggerhead/+bug/740142
-
-Release details:
- https://launchpad.net/loggerhead/1.18/1.18.1
-
-William.
+-- 
+    JB
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+----- Original Message -----
+> Versions of the v86d userspace helper for the Linux uvesafb driver
+> before 0.1.10 did not verify that received netlink messages were sent
+> by the kernel, allowing unprivileged users to manipulate the video
+> mode and potentially other consequences.
+> 
+> v86d executes video BIOS code with access to /dev/mem in response to
+> netlink messages, using either vm86 mode or an x86 emulator, depending
+> on configuration. I an unclear on whether it is possible to e.g. crash
+> the machine or escalate privileges by spoofing requests, or only to
+> mess with the video card.
+> 
+> References:
+> http://repo.or.cz/w/v86d.git/commit/f9abfd412639286c3143e93e8ba2c9598dfba640
