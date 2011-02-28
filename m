@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/3
-Message-ID: <20110907082301.GD2141@suse.de>
-Date: Wed, 7 Sep 2011 10:23:01 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/16
+Message-ID: <20110228232847.GF4669@outflux.net>
+Date: Mon, 28 Feb 2011 15:28:47 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
+Subject: Re: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 07, 2011 at 09:39:21AM +0200, Petr Matousek wrote:
-> On Tue, Sep 06, 2011 at 11:40:43PM +0200, Marcus Meissner wrote:
-> > One of our customers reported an issue in the "ib_sdp" module in the
-> > ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
-> > 1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
-> > does not have it).
+On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
+> On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
+> > I think the flaw[1] with argv-expansion triggering the OOM-killer
+> > incorrectly needs its own CVE.
 > > 
-> > Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
+> > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+> > improved things, argv expansion can still be tricked into OOM-killing the
+> > entire system. Solutions were discussed on the original thread, but
+> > were not finished. Recently a set of patches[3] has been re-proposed to fix
+> > this issue. Regardless, it should probably get its own CVE assigned.
 > > 
-> > /proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
-> > triggered by users on machines with infiniband stack.
+> > Thanks,
 > > 
-> > While there is report of stack corruption and overflow on process (cat
-> > /proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
-> > I can't see where it actually comes from but perhaps the per_cpu vs
-> > single variable printing does something to the stack and not just reads
-> > over arrays.
+> > -Kees
+> > 
+> > [1] https://lkml.org/lkml/2010/8/27/429
+> > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+> > [3] https://lkml.org/lkml/2011/2/25/227
 > 
-> #define __sdpstats_seq_hist_pcpu(seq, msg, hist) ({             \
->         u32 h[NR_CPUS];                                         \
->         unsigned int __i;                                       \
->         memset(h, 0, sizeof(h));                                \
+> Sorry, Nelson Elhage pointed out to me that I missed the fix for this
+> issue. The issue was been fixed with:
+> http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
 > 
-> NR_CPUS can be big (4096 on RHEL6@..._64) and the array is located on
-> the stack.
->  
-> > ofed 1.5.3.2 has a different stat printing algorith according to our developer,
-> > so it no longer is affected.
+> This was already assigned as CVE-2010-4243
 > 
-> The array ^^^ is no longer allocated from the stack but via vmalloc().
-> 
-> > Patch below. Please assign a CVE.
-> 
-> Please use CVE-2011-3345.
+> Sorry for the noise, and thanks!
 
-Thanks!
+Wait, I will continue to make more noise. The upstream commit
+3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
+which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
 
-So the issue is not actually the wrong array iterator, but that there
-is a implicit too huge stack usage caused by the helper.
+Does this need its own CVE?
 
-Ciao, Marcus
+Thanks,
+
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
