@@ -1,36 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/6
-Message-ID: <4DA41D15.5020300@pre-sense.de>
-Date: Tue, 12 Apr 2011 11:36:21 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/9
+Message-ID: <127847674.298986.1298925647709.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 15:40:47 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: PHPShop 0.8.1 <= | Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Am 24.02.2011 02:25, schrieb Eugene Teo:
-> On 02/24/2011 03:59 AM, Josh Bressers wrote:
->> ----- Original Message -----
->>>
->>> The kernel automatically evaluates partition tables of storage devices.
->>> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
->>> a bug that allows to overflow the kernel heap. It may be possible to
->>> escalate privileges by exploiting this bug.
->>>
->>> (This bug is distinct from the LDM bug reported by Eugene Teo on
->>> 2011-02-23.)
->>>
->>> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
->>> CONFIG_LDM_PARTITION needs to be set.
->>>
->>
->> Can you point to a commit message or something else that is public? It's
->> not clear how this differs from Eugene's request.
+Please use CVE-2011-1069.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> 1. OVERVIEW
 > 
-> As far as I can tell, it's not public yet. Timo will follow-up once his
-> patch is accepted.
-
-A patch is now available at
-http://www.spinics.net/lists/mm-commits/msg83181.html
-
-Best regards, Timo
+> The PHPShop 0.8.1 and lower versions are currently vulnerable to Cross
+> Site Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> PHPShop is a PHP-powered shopping cart application. It is released
+> under the GNU General Public License.
+> The primary purpose of PHPShop is to provide a simple shopping cart
+> solution that is easy to customize to suit any purpose. PHPShop has
+> less features that many other shopping cart applications, but is
+> generally easier to customize.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The Query String was not properly sanitized upon submission to the
+> /index.php url, which allows attacker to conduct Cross Site Scripting
+> attack.
+> This may allow an attacker to create a specially crafted URL that
+> would execute arbitrary script code in a victim's browser.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> PHP 0.8.1 <=
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/phpshop0_8_1/?page=store/XSS&%26%26%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E%3d1
+> 
+> 
+> 6. SOLUTION
+> 
+> The vendor has discontinued this product.
+> It is recommended that an alternate software package be used in its
+> place.
+> 
+> 
+> 7. VENDOR
+> 
+> PHPShop Development Team
+> http://phpshop.org
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2011-02-25: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[phpshop_0.8.1]_cross_site_scripting
+> Project Home: http://code.google.com/p/phpshop/,
+> http://sourceforge.net/projects/phpshop/
+> PHPShop Download Stats:
+> http://sourceforge.net/projects/phpshop/files/phpshop/0.8.1/stats/timeline?dates=2010-01-01+to+2010-01-01
+> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> #yehg [2011-02-25]
+> 
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
