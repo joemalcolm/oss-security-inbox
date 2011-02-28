@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/15
-Message-ID: <2091474162.398401.1306873130217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 16:18:50 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/10
+Message-ID: <1926483466.299316.1298926424618.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 28 Feb 2011 15:53:44 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE Request -- syslog-ng -- Possible DoS
+Subject: Re: CVE request: v86d: Failure to validate netlink message sender
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi All,
-> 
-> In syslog-ng if a recent enough libpcre is installed (ie. 8.12 or newer)
-> there is a possible Denial of Service.
-> 
-> In our (BalaBit) opinion tis is not a big security issue, because if you
-> use the vulnerable setting you will run into the DoS for sure without any
-> malicious attack.
-> 
-> The attack vector is that the attacker send a message which the regexp
-> not match.
-> 
-> But because of this bug get this amount of attention, it' may worth the
-> CVE id.
-> 
-> References:
-> http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=09710c0b105e579d35c7b5f6c66d1ea5e3a3d3ff
-> http://www.securityfocus.com/bid/47800/
-> 
-
-Please use CVE-2011-1951.
+Please use CVE-2011-1070
 
 Thanks.
 
 -- 
     JB
+
+
+----- Original Message -----
+> Versions of the v86d userspace helper for the Linux uvesafb driver
+> before 0.1.10 did not verify that received netlink messages were sent
+> by the kernel, allowing unprivileged users to manipulate the video
+> mode and potentially other consequences.
+> 
+> v86d executes video BIOS code with access to /dev/mem in response to
+> netlink messages, using either vm86 mode or an x86 emulator, depending
+> on configuration. I an unclear on whether it is possible to e.g. crash
+> the machine or escalate privileges by spoofing requests, or only to
+> mess with the video card.
+> 
+> References:
+> http://repo.or.cz/w/v86d.git/commit/f9abfd412639286c3143e93e8ba2c9598dfba640
