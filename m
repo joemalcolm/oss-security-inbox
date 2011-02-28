@@ -1,37 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/3
-Message-ID: <4EB403A2.4050606@redhat.com>
-Date: Fri, 04 Nov 2011 09:24:18 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/3
+Message-ID: <AANLkTikGBBNvXyp1PQ_=h4xHZ0xA_kMHC=ZnoQczqXPx@mail.gmail.com>
+Date: Mon, 28 Feb 2011 18:59:15 +0000
+From: Helgi Þormar Þorbjörnsson <helgi@....net>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Drupal (v6.x based) Views module - SQL injection due improper escaping of database parameters for certain filters / arguments (SA-CONTRIB-2011-052)
+Subject: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2011 04:49 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a SQL injection flaw was found in the way the views module for the
-> Drupal (v6.x based), open-source content-management platform, performed
-> sanitization of the database parameters for certain filters / arguments
-> on certain types of views with specific configuration of arguments. A
-> remote attacker could provide a specially-crafted SQL query, which once
-> processed by the Drupal system instance could lead to arbitrary SQL
-> commands execution.
->
-> References:
-> [1] http://drupal.org/node/1329898
-> [2] http://drupal.org/node/1329846
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=751325
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2011-4113 for this issue.
+The lack of symlink checks in the PEAR installer 1.9.1 <= while doing
+installation and upgrades, which initiate various system write
+operations, can cause privileged users unknowingly to overwrite
+critical system files.
 
--- 
+Further information can be found in this temporary advisory
+http://pear.php.net/advisory-20110228.txt and the
 
--Kurt Seifried / Red Hat Security Response Team
+Fixes can be found at http://news.php.net/php.pear.cvs/61264
 
+- Helgi
