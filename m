@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/4
-Message-ID: <0F278B0E7FB40349B635BE500A9BA27F0E3334C6@ALA-MBB.corp.ad.wrs.com>
-Date: Wed, 11 May 2011 16:05:15 +0000
-From: "Zhao, Zhenfeng" <Zhenfeng.Zhao@...driver.com>
-To: Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [security-vendor] Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/15
+Message-Id: <20110228165401.849106fa.michael.s.gilbert@gmail.com>
+Date: Mon, 28 Feb 2011 16:54:01 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: cve request: eglibc memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Much Thanks.
+On Mon, 28 Feb 2011 15:55:34 -0500 (EST) Josh Bressers wrote:
 
-Zhenfeng(Jeffrey) Zhao
+> ----- Original Message -----
+> > Hi,
+> > 
+> > An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
+> > it.
+> > 
+> > Thanks,
+> > Mike
+> > 
+> > [0] http://seclists.org/fulldisclosure/2011/Feb/635
+> > [1] http://bugs.debian.org/615120
+> 
+> It should be noted this also affects glibc.
+> Does anyone know when this was fixed in glibc by chance? The bug has no details.
 
-> -----Original Message-----
-> From: owner-security-vendor@...driver.com [mailto:owner-security-
-> vendor@...driver.com] On Behalf Of Solar Designer
-> Sent: Wednesday, May 11, 2011 11:56 PM
-> To: oss-security@...ts.openwall.com
-> Subject: [security-vendor] Re: [oss-security] Closed list
-> 
-> On Mon, May 02, 2011 at 02:56:16PM -0400, Josh Bressers wrote:
-> > ----- Original Message -----
-> > > On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
-> > > > I think this is suitable. The goal here is to ensure that a vendor
-> > > > is actually producing updates and aren't just a potential leak.
-> > >
-> > > OK, so do you propose that we subscribe Wind River, and wait for
-> > > MontaVista to setup something similar to these RSS feeds before we
-> > > also subscribe them?
-> >
-> > I'm OK with this action.
-> 
-> I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
-> 
-> Alexander
+According to a follow-up message to the thread above [0], this was fixed
+via [1], which is the patch Debian used to fix the issue.
+
+Best wishes,
+Mike
+
+[0]http://seclists.org/fulldisclosure/2011/Feb/644
+[1]http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=f15ce4d8dc139523fe0c273580b604b2453acba6
