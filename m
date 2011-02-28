@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/7
-Message-ID: <4ECFF985.7030202@redhat.com>
-Date: Fri, 25 Nov 2011 13:24:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/13
+Message-ID: <20110228210202.GB4669@outflux.net>
+Date: Mon, 28 Feb 2011 13:02:02 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- yaws -- Directory traversal flaw
+Subject: Re: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
-On 11/25/2011 10:39 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a directory traversal flaw was found in the way yaws, web server
-> for dynamic content written in Erlang, processed certain URLs. A
-> remote, authenticated yaws user could use this flaw to obtain content
-> of arbitrary local file, available to the yaws server user via
-> specially-crafted URL request.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650009
-> [2] https://github.com/klacke/yaws/issues/69
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=757181
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: As of right now, according to [2], there doesn't seem
->       to be an upstream patch for this issue available yet.
+On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
+> I think the flaw[1] with argv-expansion triggering the OOM-killer
+> incorrectly needs its own CVE.
+> 
+> While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+> improved things, argv expansion can still be tricked into OOM-killing the
+> entire system. Solutions were discussed on the original thread, but
+> were not finished. Recently a set of patches[3] has been re-proposed to fix
+> this issue. Regardless, it should probably get its own CVE assigned.
+> 
+> Thanks,
+> 
+> -Kees
+> 
+> [1] https://lkml.org/lkml/2010/8/27/429
+> [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+> [3] https://lkml.org/lkml/2011/2/25/227
 
-Please use CVE-2011-4350 for this issue
+Sorry, Nelson Elhage pointed out to me that I missed the fix for this
+issue. The issue was been fixed with:
+http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
 
->Hey,
->This looks a lot like CVE-2010-4181, just a later version of yaws.
-Thoughts?
-> -Rob
+This was already assigned as CVE-2010-4243
 
-Yes, however this is a different version so new a CVE is warranted, had
-these been released at the same time then they would have been merged
-according to ADT4.
+Sorry for the noise, and thanks!
 
+-Kees
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Kees Cook
+Ubuntu Security Team
