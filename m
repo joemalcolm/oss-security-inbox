@@ -1,43 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/6
-Message-ID: <20110401110950.3a211ee3@angelo.pretender.us>
-Date: Fri, 1 Apr 2011 11:09:50 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/1
+Message-Id: <201102281416.06874.thomas@suse.de>
+Date: Mon, 28 Feb 2011 14:16:06 +0100
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
+The following might also need a CVE-ID.
 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
+------------------------------------------------------------------------------
+http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
 
-I'm a (now former) vendor-sec member who would like to be added to the
-new closed list.
+That's a pretty bad DOS. Everybody (even unauthenticated users) can kill the
+server by submitting a MODRDN request with an empty "olddn" value and "remove
+old RDN" set (-r). Example:
 
-My GPG key:
- pub 1024D/F3C33D5A 2008-11-19
- Key fingerprint = 6B56 F9AC 07B6 85D7 DC45 60DA 6BA2 2226 F3C3 3D5A
- uid Reed Loden
- sub 4096g/C0B72052 2008-11-19
+      ldapmodrdn -x -H ldap://ldapserver -r '' o=test 
+------------------------------------------------------------------------------
 
-Thanks,
-~reed
 
-- -- 
-Reed Loden
-reed@...dloden.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
+> ----- Original Message -----
+> > Hello Josh, Steve, vendors,
+> > 
+> > looks like the following two issues did not get a CVE identifiers yet:
+> > [1] http://secunia.com/advisories/43331/
+> 
+> The above advisory covers both bugs below.
+> 
+> 
+> > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
+> 
+> CVE-2011-1024 openldap forwarded bind failure messages cause success
+> 
+> 
+> > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
+> 
+> CVE-2011-1025 openldap rootpw is not verified with slapd.conf
+> 
+> 
+> Thanks.
+> 
+> 
 
-iEYEARECAAYFAk2WFO4ACgkQa6IiJvPDPVqpTwCg3O5e+uTYtDcLCxHCJ8EF+zYD
-fTsAnjv8NnRnsQRFHswnj5IvASxpj7A+
-=pBPQ
------END PGP SIGNATURE-----
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
