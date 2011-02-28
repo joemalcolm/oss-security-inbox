@@ -1,26 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/6
-Message-ID: <20110719151300.4d435028@redhat.com>
-Date: Tue, 19 Jul 2011 15:13:00 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/4
+Message-ID: <20110228194836.GA9440@albatros>
+Date: Mon, 28 Feb 2011 22:48:36 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de, aland@...eradius.org
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+Subject: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 19 Jul 2011 12:19:57 +0200 dfncert@...-cert.de wrote:
+Hi,
 
-> Are the published information sufficient to get a CVE number for the
-> issue?
+"struct sco_conninfo has one padding byte in the end.  Local variable
+cinfo of type sco_conninfo is copied to userspace with this
+uninizialized one byte, leading to old stack contents leak."
 
-Was your intention to request a CVE for a still-to-remain-non-public
-issue to be disclosed in the future, or actually make the issue public?
+https://lkml.org/lkml/2011/2/14/49
 
-I'm CCing upstream (Alan DeKok), as it seems this thread may be giving
-out more info than expected.  Alan, this is part of the following
-discussion:
 
-http://thread.gmane.org/gmane.comp.security.oss.general/5489
+"Struct ca is copied from userspace.  It is not checked whether the
+"device" field is NULL terminated.  This potentially leads to BUG()
+inside of alloc_netdev_mqs() and/or information leak by creating a
+device with a name made of contents of kernel stack."
+
+https://lkml.org/lkml/2011/2/14/50
+
+
+"Struct tmp is copied from userspace.  It is not checked whether the
+"name" field is NULL terminated.  This may lead to buffer overflow and
+passing contents of kernel stack as a module name to
+try_then_request_module() and, consequently, to modprobe commandline.
+It would be seen by all userspace processes."
+
+https://lkml.org/lkml/2011/2/14/51
+
+
+The vulnerable code was written before the "git epoch".  One needs
+CAP_NET_ADMIN to exploit the 2nd and the 3rd.
+
+
+JFI, the patch to prevent the panic inside of alloc_netdev() (to prevent
+analogues of #2) was rejected by upstream:
+
+https://lkml.org/lkml/2011/2/14/52
+
+
+Thanks,
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
