@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/10
-Message-ID: <20110620163220.GG24658@dhcp-25-225.brq.redhat.com>
-Date: Mon, 20 Jun 2011 18:32:20 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/10
+Message-ID: <439581293.232576.1298994372734.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Mar 2011 10:46:12 -0500 (EST)
 From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: thp: madvise on top of /dev/zero private mapping can lead to panic
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
 Content-Type: text/plain; charset=utf-8
 
-Description of problem:
-The huge_memory.c THP page fault was allowed to run if vm_ops was null
-(which would succeed for /dev/zero MAP_PRIVATE, as the f_op->mmap
-wouldn't setup a special vma->vm_ops and it would fallback to regular
-anonymous memory) but other THP logics weren't fully activated for
-vmas with vm_file not NULL (/dev/zero has a not NULL vma->vm_file).
+> "struct sco_conninfo has one padding byte in the end. Local variable
+> cinfo of type sco_conninfo is copied to userspace with this
+> uninizialized one byte, leading to old stack contents leak."
+> 
+> https://lkml.org/lkml/2011/2/14/49
 
-Unprivileged local user could use this flaw to crash the server.
+Please use CVE-2011-1078.
 
-Upstream patch: 78f11a255749d09025f54d4e2df4fbcb031530e2
+> "Struct ca is copied from userspace. It is not checked whether the
+> "device" field is NULL terminated. This potentially leads to BUG()
+> inside of alloc_netdev_mqs() and/or information leak by creating a
+> device with a name made of contents of kernel stack."
+> 
+> https://lkml.org/lkml/2011/2/14/50
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=714761
-https://bugzilla.kernel.org/show_bug.cgi?id=33682
-http://www.spinics.net/lists/stable-commits/msg11762.html
+Please use CVE-2011-1079.
 
-Thanks,
--- 
+> "Struct tmp is copied from userspace. It is not checked whether the
+> "name" field is NULL terminated. This may lead to buffer overflow and
+> passing contents of kernel stack as a module name to
+> try_then_request_module() and, consequently, to modprobe commandline.
+> It would be seen by all userspace processes."
+> 
+> https://lkml.org/lkml/2011/2/14/51
+
+Please use CVE-2011-1080.
+
+Thanks you,
+--
 Petr Matousek / Red Hat Security Response Team
+
