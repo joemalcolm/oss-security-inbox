@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/23
-Message-ID: <1442939499.87938.1300135991782.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:53:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/3
+Message-ID: <4D6CB75F.5090303@redhat.com>
+Date: Tue, 01 Mar 2011 17:07:43 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: tpm infoleaks
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: xfs infoleak
 Content-Type: text/plain; charset=utf-8
 
-I'm not able to properly parse this. Should this get one CVE id or three?
+On 02/16/2011 04:41 PM, Eugene Teo wrote:
+>  From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat
+> equivalent) calls out to xfs_fs_geometry() with a version number of 3.
+> This code path does not fill in the logsunit member of the passed
+> xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized
+> stack data to potentially unprivileged callers. Since all other members
+> are filled in all code paths and there are no padding bytes in this
+> structure, it's safe to avoid an expensive memset() in favor of just
+> clearing this one field."
+>
+> https://patchwork.kernel.org/patch/555461/
+> https://bugzilla.redhat.com/show_bug.cgi?id=677260
 
-Thanks.
+There's an issue with the patch, here's the fix to the fix:
+http://www.spinics.net/lists/xfs/msg03801.html
 
+Eugene
 -- 
-    JB
-
-
------ Original Message -----
-> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
-> infoleak
-> 
-> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
-> infoleak
-> 
-> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
-> prevents storing of previous result, leakage to other drivers
-> 
-> Credit to Peter Huewe.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=684671
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Eugene Teo / Red Hat Security Response Team
