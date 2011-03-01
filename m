@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/11
-Message-Id: <20110106132934.dd49fe67.michael.s.gilbert@gmail.com>
-Date: Thu, 6 Jan 2011 13:29:34 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/3
+Message-ID: <4D6CB75F.5090303@redhat.com>
+Date: Tue, 01 Mar 2011 17:07:43 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: xfs infoleak
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 6 Jan 2011 13:08:59 -0500, Dan Rosenberg wrote:
-> This is a slippery slope.  I'm in favor of not having a CVE assigned
-> for this issue.
-> 
-> Otherwise, wouldn't we need a CVE for every vector that allows
-> transitioning from various capabilities to root?  The capability
-> system may be poorly designed to allow such transitions, but I don't
-> think they represent unexpected behavior.
+On 02/16/2011 04:41 PM, Eugene Teo wrote:
+>  From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat
+> equivalent) calls out to xfs_fs_geometry() with a version number of 3.
+> This code path does not fill in the logsunit member of the passed
+> xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized
+> stack data to potentially unprivileged callers. Since all other members
+> are filled in all code paths and there are no padding bytes in this
+> structure, it's safe to avoid an expensive memset() in favor of just
+> clearing this one field."
+>
+> https://patchwork.kernel.org/patch/555461/
+> https://bugzilla.redhat.com/show_bug.cgi?id=677260
 
-What's the point of a capabilities system if its equivalent to root
-in the majority of cases anyway?  For file access/operations, there is
-always sudo and the /etc/sudoers file for making it easy to access to
-stuff thats accessed often without a password.  For port binding, the
-capabilities system makes sense; and according to Brad Spengler's list,
-those caps don't appear to be root equivalent so that could stay.
-Otherwise, I don't see the point.
+There's an issue with the patch, here's the fix to the fix:
+http://www.spinics.net/lists/xfs/msg03801.html
 
-I'm not sure if there is a written security model for the capabilities
-system, but this looks to me like it would be a violation of it.
-
-Best wishes,
-Mike
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
