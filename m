@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/3
-Message-ID: <20110908122634.GK11236@ngolde.de>
-Date: Thu, 8 Sep 2011 14:26:34 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/7
+Message-ID: <AANLkTi=ze1G3WRwSM=nZHD_WTCshyka-TmUXAYOXw-VC@mail.gmail.com>
+Date: Tue, 1 Mar 2011 07:19:10 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Pierre Joye <pierre.php@...il.com>
+Cc: oss-security@...ts.openwall.com,  Helgi Þormar Þorbjörnsson <helgi@....net>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* David Hicks <d@...id.au> [2011-09-04 16:11]:
-> On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
-> > Request #2: LFI and XSS via bug_actiongroup_ext_page.php
-> 
-> I don't think my earlier message conveyed the severity of this bug well
-> enough.
-> 
-> MantisBT allows users to upload attachments to bug reports. These
-> attachments are commonly stored on the disk in an 'attachments'
-> directory that should be stored outside the web root (but are still
-> accessible to MantisBT for retrieval).
-[...]
-In case this slipped through the cracks... Can someone assign ids to these 
-issues?
+> Not sure it is fixable, or maybe using a lock on the symbolic link
+> while fetching its target (to be tested to be sure that such locks
+> cannot be overridden from shell).
+>
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+The easiest way is to just open the target with the O_NOFOLLOW flag to
+avoid following symlinks and abort on failure.  If you need to support
+systems that don't have this flag, then perhaps you could consider
+using an application-specific temporary directory instead of operating
+in the world-writable /tmp.
 
-Content of type "application/pgp-signature" skipped
+>> Also, I don't see a reason why a hard link couldn't be used for exploitation
+>> instead.
+>
+> Hard link are not detectable (lstat), they are treated like normal files.
+>
+
+Sure they are - just open the file, fstat() it, and check the st_nlink
+field.  If it's more than one, you know there's hard linking going on.
+ Sometimes this kind of check introduces a race condition of its own
+where the file can be removed by the attacker after a file descriptor
+is obtained but before the fstat(), but in this case since an attacker
+would be creating a hard link to a victim's file, he wouldn't be able
+to remove it since it's in a sticky-bit /tmp directory.
+
+-Dan
