@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/10
-Message-Id: <14029FA2-9126-4E05-A2A2-2CFC33C97FB5@rpath.com>
-Date: Sat, 2 Apr 2011 17:25:11 -0400
-From: Elliot Peele <elliot@...th.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/5
+Message-Id: <0C523CDA-3885-4A60-8F7F-4E9B73924E81@gmail.com>
+Date: Tue, 1 Mar 2011 10:24:48 +0000
+From: Helgi Þormar Þorbjörnsson <helgith@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-On Apr 1, 2011, at 2:03 PM, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+Hi, 
+On 1 Mar 2011, at 09:11, Pierre Joye wrote:
 
-I was on vendor-sec via the security@...th.com exploder as a representative of rPath and rPath Linux.
+> hi,
+> 
+> 2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
+>> I'm not familiar with this code or any of the context surrounding this
+>> fix, but it appears to be an incomplete fix.  Checking for existence
+>> of a symlink and then opening the resource leaves open a window during
+>> which a legitimate file can be replaced with a symlink.
+> 
+> Not sure it is fixable, or maybe using a lock on the symbolic link
+> while fetching its target (to be tested to be sure that such locks
+> cannot be overridden from shell).
 
-pub   1024D/05C54D73 2002-07-02 Elliot Peele <elliot@...th.com>
- Primary key fingerprint: 00F5 0BEE 168B C07E C49E  AEC8 992A A820 05C5 4D73
+I assume you are referring to the parts for REST.php in the patch in question?
+At a second look, that part could do with improvements; I wrote up a function which takes TOCTOU into consideration.
+I'll have that patch done by the end of the day.
 
---
-Elliot Peele
-rPath, Inc.
-elliot@...th.com
+For other situations I am using tempnam() (via the System class) as those files are only temporary and were being extracted from compressed archives; The predictability of their end destination where the centre part of the reported security problem.
 
-
-
-
+- Helgi
