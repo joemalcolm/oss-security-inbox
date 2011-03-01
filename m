@@ -1,20 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/5
-Message-ID: <CAJzxamJXJbT5aaui=ed19OPB=gjchjXZeJ1D01m7WQko4hEOFg@mail.gmail.com>
-Date: Wed, 2 Nov 2011 04:11:28 +1100
-From: David Black <disclosure@....org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/1
+Message-ID: <20110301001348.GE5871@ksplice.com>
+Date: Mon, 28 Feb 2011 19:13:48 -0500
+From: Nelson Elhage <nelhage@...lice.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
-"It was discovered that both Piston and Tastypie share a similar
-vulnerability with respect to their de-serialization of YAML post
-data. Both Piston and Tastypie used the yaml.load method, which is
-unsafe. In certain circumstances this could be used to allow remote
-execution of arbitrary code." [0]
+On Mon, Feb 28, 2011 at 03:28:47PM -0800, Kees Cook wrote:
+> On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
+> > On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
+> > > I think the flaw[1] with argv-expansion triggering the OOM-killer
+> > > incorrectly needs its own CVE.
+> > > 
+> > > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+> > > improved things, argv expansion can still be tricked into OOM-killing the
+> > > entire system. Solutions were discussed on the original thread, but
+> > > were not finished. Recently a set of patches[3] has been re-proposed to fix
+> > > this issue. Regardless, it should probably get its own CVE assigned.
+> > > 
+> > > Thanks,
+> > > 
+> > > -Kees
+> > > 
+> > > [1] https://lkml.org/lkml/2010/8/27/429
+> > > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+> > > [3] https://lkml.org/lkml/2011/2/25/227
+> > 
+> > Sorry, Nelson Elhage pointed out to me that I missed the fix for this
+> > issue. The issue was been fixed with:
+> > http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
+> > 
+> > This was already assigned as CVE-2010-4243
+> > 
+> > Sorry for the noise, and thanks!
+> 
+> Wait, I will continue to make more noise. The upstream commit
+> 3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
+> which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
 
-Can a CVE be assigned to both Tastypie and Django-piston regarding
-these issues ?
+upstream looks to have handled the compat case with:
+http://git.kernel.org/linus/114279be2120a916e8a04feeb2ac976a10016f2f
 
+>From skimming the LKML thread, I think that upstream believes the issue to be
+fixed, but is trying to clean up the code, since the above two commits were
+considered quick-and-dirty bandaid fixes.
 
-[0] https://www.djangoproject.com/weblog/2011/nov/01/piston-and-tastypie-security-releases/
+- Nelson
+
+> 
+> Does this need its own CVE?
+> 
+> Thanks,
+> 
+> -Kees
+> 
+> -- 
+> Kees Cook
+> Ubuntu Security Team
