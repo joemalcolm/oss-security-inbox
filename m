@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/1
-Message-ID: <CAOSRhRMiAK_K1kTtGkHy8_tq9AmN4ncRgpWRP=ehjYX96yKGuA@mail.gmail.com>
-Date: Tue, 9 Aug 2011 20:14:42 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/7
+Message-ID: <AANLkTi=ze1G3WRwSM=nZHD_WTCshyka-TmUXAYOXw-VC@mail.gmail.com>
+Date: Tue, 1 Mar 2011 07:19:10 -0500
 From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+To: Pierre Joye <pierre.php@...il.com>
+Cc: oss-security@...ts.openwall.com,  Helgi Þormar Þorbjörnsson <helgi@....net>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 9, 2011 at 6:49 PM, Eugene Teo <eugene@...hat.com> wrote:
-> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:>
->> 2. [SCSI] pmcraid: reject negative request size
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
->
-> I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
-> the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
-> CVE-2011-2906 for this issue.
->
-> Thanks, Eugene
+> Not sure it is fixable, or maybe using a lock on the symbolic link
+> while fetching its target (to be tested to be sure that such locks
+> cannot be overridden from shell).
 >
 
-This isn't a security issue because there's a check for CAP_SYS_ADMIN
-on pmcraid_chr_open(), which is necessary to obtain a file descriptor
-to the device file in order to call the affected ioctl.  Which is why
-I didn't bother CC'ing security@...nel.org. ;-)
+The easiest way is to just open the target with the O_NOFOLLOW flag to
+avoid following symlinks and abort on failure.  If you need to support
+systems that don't have this flag, then perhaps you could consider
+using an application-specific temporary directory instead of operating
+in the world-writable /tmp.
+
+>> Also, I don't see a reason why a hard link couldn't be used for exploitation
+>> instead.
+>
+> Hard link are not detectable (lstat), they are treated like normal files.
+>
+
+Sure they are - just open the file, fstat() it, and check the st_nlink
+field.  If it's more than one, you know there's hard linking going on.
+ Sometimes this kind of check introduces a race condition of its own
+where the file can be removed by the attacker after a file descriptor
+is obtained but before the fstat(), but in this case since an attacker
+would be creating a hard link to a victim's file, he wouldn't be able
+to remove it since it's in a sticky-bit /tmp directory.
 
 -Dan
