@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/32
-Message-ID: <20110404171359.GB5146@genesis.frugalware.org>
-Date: Mon, 4 Apr 2011 19:13:59 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/8
+Message-ID: <AANLkTi=GfhNJqQR5KKeeX8tNaEqXXTUTJFfCvwrt0SZO@mail.gmail.com>
+Date: Tue, 1 Mar 2011 13:21:46 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com,  Helgi Þormar Þorbjörnsson <helgi@....net>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 12:44:33AM +0400, Solar Designer <solar@...nwall.com> wrote:
-> Yet you're on the list for now.  Perhaps try to evaluate your use of the
-> info that will be arriving to you through the list and ask to be
-> unsubscribed if you determine that you're not making timely use of the
-> info anyway.
+On Tue, Mar 1, 2011 at 1:19 PM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
 
-That's exactly what I will do.
+> The easiest way is to just open the target with the O_NOFOLLOW flag to
+> avoid following symlinks and abort on failure.  If you need to support
+> systems that don't have this flag, then perhaps you could consider
+> using an application-specific temporary directory instead of operating
+> in the world-writable /tmp.
 
-Thanks.
+In php, hard to do. But that's something we should keep in mind, maybe
+we can expose this flag somehow.
 
-Content of type "application/pgp-signature" skipped
+>>> Also, I don't see a reason why a hard link couldn't be used for exploitation
+>>> instead.
+>>
+>> Hard link are not detectable (lstat), they are treated like normal files.
+>>
+>
+> Sure they are - just open the file, fstat() it,
+
++from PHP script.
+
+
+-- 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
