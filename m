@@ -1,20 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/7
-Message-ID: <Pine.GSO.4.64.1110171456060.2890@faron.mitre.org>
-Date: Mon, 17 Oct 2011 15:01:23 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Wrong MLIST link in CVE-2011-3783
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/12
+Message-ID: <AANLkTikFQ5zAvJBsbKcFDut0Ff+0a7K4+YZF0gzzwBea@mail.gmail.com>
+Date: Wed, 2 Mar 2011 04:05:18 +1100
+From: dave b <db.pub.mail@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: cve request for smoothwall & openfiler
 Content-Type: text/plain; charset=utf-8
 
+Hi can someone allocate a cve for smoothwall express 3 regarding the
+csrf and xss issue raised in [1].
+Also if someone could allocate a cve for an xss in Openfiler - see [2].
 
-We generally strive to include the first public announcement from the 
-researcher as a reference in all CVEs.  In this case, 
-http://www.openwall.com/lists/oss-security/2011/06/27/6 was the first 
-(vague) announcement that a lot of path-disclosure issues existed in 
-multiple products, so it is included in the various CVEs that were created 
-as a result of examining the 
-http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln 
-that was mentioned in that MLIST.
 
-- Steve
+[1] http://secunia.com/advisories/42897/
+[2] http://secunia.com/advisories/42507/
