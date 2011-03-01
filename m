@@ -1,35 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/6
-Message-ID: <4D739ABD.9040508@gmail.com>
-Date: Sun, 06 Mar 2011 21:31:25 +0700
-From: Pavel Labushev <p.labushev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/11
+Message-Id: <201103011738.52055.rhafer@suse.de>
+Date: Tue, 1 Mar 2011 17:38:51 +0100
+From: Ralf Haferkamp <rhafer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: Vincent Danen <vdanen@...hat.com>, Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
-06.03.2011 19:26, Solar Designer пишет:
+Am Montag 28 Februar 2011, 17:38:43 schrieb Vincent Danen:
+> * [2011-02-28 14:16:06 +0100] Thomas Biege wrote:
+> >The following might also need a CVE-ID.
+> >
+> >https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
+> >---------------------------------------------------------------------
+> >--------- http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
+> >
+> >That's a pretty bad DOS. Everybody (even unauthenticated users) can
+> >kill the server by submitting a MODRDN request with an empty "olddn"
+> >value and "remove
+> >
+> >old RDN" set (-r). Example:
+> >      ldapmodrdn -x -H ldap://ldapserver -r '' o=test
+> >
+> >---------------------------------------------------------------------
+> >---------
+> 
+> I've just tried this here.  I noted in your bug report that you
+> indicate that it seems to affect all of your currently maintained
+> products, but I've tried it here against openldap 2.3.43 and do not
+> see a crash (I can reproduce the crash on 2.4.19).
+It seems you are right. Even though the bug slipped into CVS HEAD already 
+in 2006 it never got merged into the 2.3 release branch. So only 2.4.x 
+releases are affected by this. Sorry for causing confusion here.
 
-> For this to happen, you need to post info on the specific issues and
-> request CVEs for them.  Will you do this, please?  (Perhaps start a new
-> thread, or even a thread per package - that's up to you.)
+> Have you tested this one against older openldap, or is it just an
+> assumption (it might be ACLs or something that is preventing me from
+> seeing the crash, but I don't believe so if no authentication is
+> required to affect this).
+>
+> Seems that this is the patch to fix it:
+> 
+> http://www.openldap.org/devel/cvsweb.cgi/servers/slapd/modrdn.c.diff?r
+> 1=1.170.2.8&r2=1.170.2.9&hideattic=1&sortbydate=0
+> 
+> The code is different enough in 2.3.x that I can't tell by looking at
+> it whether or not it is affected (enough looks similar that perhaps
+> it might be and may just require a changed ldapmodrdn command).
 
-I mean we shouldn't sweep the logrotate issues under the carpet, even if
-logrotate wasn't suppose to handle such use cases initially. I have an
-impression that's what you suggest. I mean this:
+regards,
+	Ralf
 
-> The rest, as described, appear to rely on sysadmin error and to assume
-> security properties that logrotate never advertised it had.
-
-and
-
-> Indeed.  A vulnerability in the service package, in my opinion.  Now
-> that would require CVE id assignment and a fix to the package, whereas
-> logrotate could merely use some hardening with no CVE ids (except for
-> issue #8, which was different).
-
-So I think all the logrotate issues should get their CVEs with an advise to
-work around misuse cases by chowning the log directories root:root.
-
-The Gentoo issues, I think they don't need CVEs and will be fixed by the
-Gentoo security team (they are aware). The point was to show the misuse
-cases are common.
+-- 
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
