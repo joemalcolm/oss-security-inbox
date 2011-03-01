@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/10
-Message-ID: <CAPZ8mV610770z8PMHf8qoM+abxf=2rueX_HTji0RwQvZfRE-3g@mail.gmail.com>
-Date: Mon, 22 Aug 2011 12:38:28 -0700
-From: Mark Doliner <mark@...gant.net>
-To: Moritz Mühlenhoff <jmm@...til.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Pidgin crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/14
+Message-ID: <1924498187.325698.1299013690930.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Mar 2011 16:08:10 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Atlassian JIRA Parameter-Based Redirection	Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-2011/8/22 Moritz Mühlenhoff <jmm@...til.org>:
-> On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
->> Hi Mark,
->>
->> >Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
->>
->> >http://pidgin.im/news/security/?id=53
->>
->> Please use CVE-2011-2942 for this issue.
->>
->> Also looking at http://pidgin.im/news/security it seems two other security issues were also
->> fixed in 2.10.0, do you want CVEs to be assigned for them as well?
->
-> Please do. Since they're published in the form of upstream advisories
-> we'd like to properly track them in the Debian Security Tracker.
 
-That's fine by me.  As an upstream developer I don't feel like I have
-a strong incentive to obtain a CVE.  But if it's helpful to packagers,
-than sure.
 
-The two issues in question are discussed here:
-http://pidgin.im/news/security/?id=54
-http://pidgin.im/news/security/?id=55
+----- Original Message -----
+> Can I get CVE-identifier for this issue:
+> 
+> http://confluence.atlassian.com/display/JIRA/JIRA+Security+Advisory+2011-02-21
+> http://secunia.com/advisories/43384
+> 
 
-The second one only affects Pidgin on Microsoft Windows.
+JIRA is not open source, this request is out of the scope of this list.
 
---Mark
+I know I gave JIRA an ID in the past, but that was in the context of the
+trouble it caused the Apache group.
+
+You should contact MITRE directly (cve@...re.org) with this request.
+
+Sorry.
+
+-- 
+    JB
