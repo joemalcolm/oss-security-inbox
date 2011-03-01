@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/5
-Message-ID: <20111124163236.GD1081@dhcp-25-225.brq.redhat.com>
-Date: Thu, 24 Nov 2011 17:32:36 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Tavis Ormandy <taviso@...xchg8b.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Please REJECT CVE-2011-4112
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/2
+Message-ID: <4D6C3E1F.5020307@redhat.com>
+Date: Tue, 01 Mar 2011 08:30:23 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Nelson Elhage <nelhage@...lice.com>
+Subject: Re: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 24, 2011 at 05:21:01PM +0100, Tavis Ormandy wrote:
-> Petr Matousek <pmatouse@...hat.com> wrote:
-> 
-> > Hi,
-> > 
-> > could you please reject CVE-2011-4112 as it is not a security bug.
-> > 
-> > Reference: https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
-> > 
-> > Thank you,
-> 
-> Unrelated, but if it did not require CAP_NET_ADMIN, would you have
-> considered it a security bug?
+On 03/01/2011 08:13 AM, Nelson Elhage wrote:
+> On Mon, Feb 28, 2011 at 03:28:47PM -0800, Kees Cook wrote:
+>> On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
+>>> On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
+>>>> I think the flaw[1] with argv-expansion triggering the OOM-killer
+>>>> incorrectly needs its own CVE.
+>>>>
+>>>> While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+>>>> improved things, argv expansion can still be tricked into OOM-killing the
+>>>> entire system. Solutions were discussed on the original thread, but
+>>>> were not finished. Recently a set of patches[3] has been re-proposed to fix
+>>>> this issue. Regardless, it should probably get its own CVE assigned.
+>>>>
+>>>> Thanks,
+>>>>
+>>>> -Kees
+>>>>
+>>>> [1] https://lkml.org/lkml/2010/8/27/429
+>>>> [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+>>>> [3] https://lkml.org/lkml/2011/2/25/227
+>>>
+>>> Sorry, Nelson Elhage pointed out to me that I missed the fix for this
+>>> issue. The issue was been fixed with:
+>>> http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
+>>>
+>>> This was already assigned as CVE-2010-4243
+>>>
+>>> Sorry for the noise, and thanks!
+>>
+>> Wait, I will continue to make more noise. The upstream commit
+>> 3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
+>> which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
+>
+> upstream looks to have handled the compat case with:
+> http://git.kernel.org/linus/114279be2120a916e8a04feeb2ac976a10016f2f
+>
+>  From skimming the LKML thread, I think that upstream believes the issue to be
+> fixed, but is trying to clean up the code, since the above two commits were
+> considered quick-and-dirty bandaid fixes.
 
-Yes.
+Kees, for CVE-2010-4243, we are backporting both 3c77f845 and 114279be, 
+so unless there are other patches that we have missed, we won't be 
+assigning a new CVE name for it.
 
-> I was under the impression that there was general agreement that NULL derefs
-> that are handled gracefully are not security bugs any more.
-> 
-> Is this because you're setting panic_on_oops?
-
-Yes. That's the default in RHEL.
-
-Petr
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
