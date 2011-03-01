@@ -1,52 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/8
-Message-ID: <4ECFFA5F.2010800@redhat.com>
-Date: Fri, 25 Nov 2011 13:28:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/14
+Message-ID: <1924498187.325698.1299013690930.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Mar 2011 16:08:10 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
+Subject: Re: CVE request: Atlassian JIRA Parameter-Based Redirection	Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 11/23/2011 08:20 PM, Hanno Böck wrote:
-> Am Wed, 23 Nov 2011 13:52:04 -0700
-> schrieb Kurt Seifried <kseifried@...hat.com>:
->
->> On 11/23/2011 05:23 AM, Hanno Böck wrote:
->>> New ffmpeg releases contain a couple of security fixes:
->>> http://secunia.com/advisories/46888/
->>>
->>> 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
->>> exploited to cause a buffer overflow.
->>>
 
-Please use CVE-2011-4351 for this issue
->>> 2) An integer overflow error within the "vp3_dequant()" function
->>> (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
->>>
-Please use CVE-2011-4352 for this issue.
 
->>> 3) Errors within the "av_image_fill_pointers()", the
->>> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
->>> exploited to trigger out-of-bounds reads.
->>>
->>>
-Please use CVE-2011-4353 for this issue.
+----- Original Message -----
+> Can I get CVE-identifier for this issue:
+> 
+> http://confluence.atlassian.com/display/JIRA/JIRA+Security+Advisory+2011-02-21
+> http://secunia.com/advisories/43384
+> 
 
->>> Please assign CVEs.
->>>
->>>
->>> Maybe someone wants to have a look if other issues in those
->>> releases are security relevant:
->>> http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
->>>
->> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
->> correct?
-> It is the upstream confirmation - at least it's about the same bugs.
->
+JIRA is not open source, this request is out of the scope of this list.
 
+I know I gave JIRA an ID in the past, but that was in the context of the
+trouble it caused the Apache group.
+
+You should contact MITRE directly (cve@...re.org) with this request.
+
+Sorry.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
