@@ -1,49 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/6
-Message-ID: <fb1366e8-2104-4f08-8a5a-02479e56b015@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 10:57:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/1
+Message-ID: <20110301001348.GE5871@ksplice.com>
+Date: Mon, 28 Feb 2011 19:13:48 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Subject: Re: CVE request: kernel: OOM-killer via argv expansion
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi,
+On Mon, Feb 28, 2011 at 03:28:47PM -0800, Kees Cook wrote:
+> On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
+> > On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
+> > > I think the flaw[1] with argv-expansion triggering the OOM-killer
+> > > incorrectly needs its own CVE.
+> > > 
+> > > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
+> > > improved things, argv expansion can still be tricked into OOM-killing the
+> > > entire system. Solutions were discussed on the original thread, but
+> > > were not finished. Recently a set of patches[3] has been re-proposed to fix
+> > > this issue. Regardless, it should probably get its own CVE assigned.
+> > > 
+> > > Thanks,
+> > > 
+> > > -Kees
+> > > 
+> > > [1] https://lkml.org/lkml/2010/8/27/429
+> > > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
+> > > [3] https://lkml.org/lkml/2011/2/25/227
+> > 
+> > Sorry, Nelson Elhage pointed out to me that I missed the fix for this
+> > issue. The issue was been fixed with:
+> > http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
+> > 
+> > This was already assigned as CVE-2010-4243
+> > 
+> > Sorry for the noise, and thanks!
 > 
-> The hardlink(1) program from Fedora is susceptible to buffer overflows of
-> fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
-> nested directories and/or with long directory or file names.  I was able
-> to reproduce the problem (got a segfault) by running the program on a
-> directory containing 20 nested directories with 250-character names.
+> Wait, I will continue to make more noise. The upstream commit
+> 3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
+> which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
+
+upstream looks to have handled the compat case with:
+http://git.kernel.org/linus/114279be2120a916e8a04feeb2ac976a10016f2f
+
+>From skimming the LKML thread, I think that upstream believes the issue to be
+fixed, but is trying to clean up the code, since the above two commits were
+considered quick-and-dirty bandaid fixes.
+
+- Nelson
+
 > 
-> Another problem is that the program uses full pathnames.  It neither
-> changes the current directory, nor uses openat(2).  Thus, if a pathname
-> component is replaced with a symlink while the program is running, this
-> may result in processing of directories/files outside of the intended
-> directory tree.
+> Does this need its own CVE?
 > 
-> I fixed the buffer overflows (by (re)allocating the buffers dynamically)
-> in the copy that I committed into Owl today:
+> Thanks,
 > 
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/hardlink/
+> -Kees
 > 
-
-Based on the above commits, I'm giving this three IDs.
-
-CVE-2011-3630 hardlink buffer overflows
-https://bugzilla.redhat.com/show_bug.cgi?id=746709
-
-CVE-2011-3631 hardlink integer overflows
-https://bugzilla.redhat.com/show_bug.cgi?id=746710
-
-CVE-2011-3632 hardlink symlink attacks
-https://bugzilla.redhat.com/show_bug.cgi?id=746713
-
-The Red Hat bugs have more details and links.
-
-Thanks.
-
--- 
-    JB
+> -- 
+> Kees Cook
+> Ubuntu Security Team
