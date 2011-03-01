@@ -1,31 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/4
-Message-ID: <BANLkTikYhbyJs=42misf5JjtFsTAK5CM6A@mail.gmail.com>
-Date: Sun, 26 Jun 2011 19:57:23 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Vasiliy Kulikov <segoon@...nwall.com>, Andrew Morton <akpm@...ux-foundation.org>
-Cc: oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/15
+Message-ID: <1454752014.325860.1299014022676.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Mar 2011 16:13:42 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: Thomas Biege <thomas@...e.de>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 24, 2011 at 5:34 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
->
-> I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
+Please use CVE-2011-1081 for this new DoS.
 
-Hmm. Should we just round them down to 1kB boundaries or something?
-People *do* want to know about IO accounting, but I agree that giving
-things at a byte granularity ends up giving way too much information.
-When you can see how many bytes something read off a tty, that's a
-problem.
+Thanks.
 
-Returning accounting information at a 1k granularity should make it
-impractical to use that to guess keys etc. It still gives *some*
-information (and enough for rough statistics), but it doesn't give the
-level of detail required for any simple attack.
+-- 
+    JB
 
-Sometimes excessive precision isn't a good thing.
 
-Andrew - the IO_ACCT stuff went through you (back in 2006), the
-taskstats did too, methinks. Comments?
-
-                     Linus
+----- Original Message -----
+> The following might also need a CVE-ID.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
+> ------------------------------------------------------------------------------
+> http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
+> 
+> That's a pretty bad DOS. Everybody (even unauthenticated users) can
+> kill the
+> server by submitting a MODRDN request with an empty "olddn" value and
+> "remove
+> old RDN" set (-r). Example:
+> 
+> ldapmodrdn -x -H ldap://ldapserver -r '' o=test
+> ------------------------------------------------------------------------------
+> 
+> 
+> Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
+> > ----- Original Message -----
+> > > Hello Josh, Steve, vendors,
+> > >
+> > > looks like the following two issues did not get a CVE identifiers
+> > > yet:
+> > > [1] http://secunia.com/advisories/43331/
+> >
+> > The above advisory covers both bugs below.
+> >
+> >
+> > > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
+> >
+> > CVE-2011-1024 openldap forwarded bind failure messages cause success
+> >
+> >
+> > > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
+> >
+> > CVE-2011-1025 openldap rootpw is not verified with slapd.conf
+> >
+> >
+> > Thanks.
+> >
+> >
+> 
+> --
+> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> --
+> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+> -- Marie von Ebner-Eschenbach
