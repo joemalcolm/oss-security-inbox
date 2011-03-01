@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/5
-Message-ID: <723654629.3189.1295375239162.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Jan 2011 13:27:19 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Michael Gilbert <michael.s.gilbert@...il.com>
-Subject: Re: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/8
+Message-ID: <AANLkTi=GfhNJqQR5KKeeX8tNaEqXXTUTJFfCvwrt0SZO@mail.gmail.com>
+Date: Tue, 1 Mar 2011 13:21:46 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com,  Helgi Þormar Þorbjörnsson <helgi@....net>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
-> >
-> > You're looking for vendor-sec:
-> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
-> 
-> That's a closed list though isn't it? If anyone wants to sponsor me on to
-> it, I'm willing to put my OpenVAS hat on and jump through the necessary
-> hoops :)
-> 
+On Tue, Mar 1, 2011 at 1:19 PM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
 
-You can still post to the list with flaws and CVE requests even if you're
-not a member. In fact many projects and researchers are not members but
-still post info.
+> The easiest way is to just open the target with the O_NOFOLLOW flag to
+> avoid following symlinks and abort on failure.  If you need to support
+> systems that don't have this flag, then perhaps you could consider
+> using an application-specific temporary directory instead of operating
+> in the world-writable /tmp.
 
-You are also welcome to mail me directly if you need a CVE ID.
+In php, hard to do. But that's something we should keep in mind, maybe
+we can expose this flag somehow.
 
-Thanks.
+>>> Also, I don't see a reason why a hard link couldn't be used for exploitation
+>>> instead.
+>>
+>> Hard link are not detectable (lstat), they are treated like normal files.
+>>
+>
+> Sure they are - just open the file, fstat() it,
+
++from PHP script.
+
 
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
