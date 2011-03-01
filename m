@@ -1,61 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/11
-Message-ID: <1805319507.426828.1299529858053.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Mar 2011 15:30:58 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/13
+Message-ID: <20110301202256.GO2114@redhat.com>
+Date: Tue, 1 Mar 2011 13:22:56 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: Ralf Haferkamp <rhafer@...e.de>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: CVE Request -- OpenLDAP -- two issues
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Mon, Mar 07, 2011 at 01:21:05PM +0100, Jan Kaluža wrote:
-> 
-> > I think logrotate should skip rotation of files in unsafe
-> > directories and show error message instead. Logrotate should also
-> > contain something like "--force" switch (this name is already used,
-> > so we have to find better one, but I don't have anything better in
-> > mind just now). With this switch logrotate should *not* skip unsafe
-> > directories and rotate them as it currently does, but show the error
-> > message. Basically it allows backward compatibility.
-> 
-> "--override-unsafe-directory-check" perhaps? Make it a long option,
-> so that there is no doubt that the user is doing something that's
-> potentially dangerous.
-> 
-> (I am following this discussion with great interest.)
-> 
+* [2011-03-01 17:38:51 +0100] Ralf Haferkamp wrote:
 
-It seems there is now a consensus on this (at least that's how I'm reading
-it). Here is what I plan to do with CVE ids unless someone speaks up.
+>Am Montag 28 Februar 2011, 17:38:43 schrieb Vincent Danen:
+>> * [2011-02-28 14:16:06 +0100] Thomas Biege wrote:
+>> >The following might also need a CVE-ID.
+>> >
+>> >https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
+>> >---------------------------------------------------------------------
+>> >--------- http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
+>> >
+>> >That's a pretty bad DOS. Everybody (even unauthenticated users) can
+>> >kill the server by submitting a MODRDN request with an empty "olddn"
+>> >value and "remove
+>> >
+>> >old RDN" set (-r). Example:
+>> >      ldapmodrdn -x -H ldap://ldapserver -r '' o=test
+>> >
+>> >---------------------------------------------------------------------
+>> >---------
+>>
+>> I've just tried this here.  I noted in your bug report that you
+>> indicate that it seems to affect all of your currently maintained
+>> products, but I've tried it here against openldap 2.3.43 and do not
+>> see a crash (I can reproduce the crash on 2.4.19).
+>It seems you are right. Even though the bug slipped into CVS HEAD already
+>in 2006 it never got merged into the 2.3 release branch. So only 2.4.x
+>releases are affected by this. Sorry for causing confusion here.
 
-As best as I can tell, logrotate only needs a CVE id for this:
-
-    8) Issue #8: logrotate: TOCTOU race condition by creation of new files
-       (between opening the file and moment, final permissions have been
-       applied) [information disclosure]
-
-        It was found that logrotate utility used insecure default
-        permissions, when creating of new files (time-of-check,
-        time-of-use, TOCTOU race condition).  In some specific
-        configurations, a local attacker could use this flaw to open the
-        new file before the final permissions have been applied, leading to
-        disclosure of sensitive information. A different vulnerability
-        than:
-        [1] https://bugzilla.redhat.com/show_bug.cgi?id=680787 (Issue #1)
-
-        References:
-        [14] https://bugzilla.redhat.com/show_bug.cgi?id=680798
-
-        Source code background (issue reason):
-        [15] https://bugzilla.redhat.com/show_bug.cgi?id=680798#c3
-
-We then will need to assign IDs for various broken uses of /var/log (If
-someone has a list of the currently known ones, please pass it along)
-
-What does everyone think?
-
-Thanks.
+Thanks for that clarification, Ralf.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
