@@ -1,65 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/10
-Message-ID: <20110223073348.GA29003@suse.de>
-Date: Wed, 23 Feb 2011 08:33:48 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/5
+Message-Id: <0C523CDA-3885-4A60-8F7F-4E9B73924E81@gmail.com>
+Date: Tue, 1 Mar 2011 10:24:48 +0000
+From: Helgi Þormar Þorbjörnsson <helgith@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi, 
+On 1 Mar 2011, at 09:11, Pierre Joye wrote:
 
-Unfortunally I think nobody would care. As nobody cared
-that you actually do not need physical access. Via udisks DBUS
-service you can load any LKM via
-
-dbus-send --system --print-reply --dest=org.freedesktop.UDisks          \
-                   /org/freedesktop/UDisks/devices/sr0                  \
-                   org.freedesktop.UDisks.Device.FilesystemMount        \
-                   string:'LKM' array:string:''
-
-I reported that several months ago to upstream but it was frozen to more
-or less a non-issue. Indeed nobody agreed that this is an issue to fix.
-
-Sebastian
-
-On Tue, Feb 22, 2011 at 11:17:54PM -0500, Dan Rosenberg wrote:
-> I originally started writing this as a response to the recent CVE
-> requests for issues in partition handling, but thought it might be a
-> useful discussion on its own.  I was wondering if there are any
-> clear-cut policies on issues involving physical access, since these
-> can be very difficult in terms of assigning blame.
+> hi,
 > 
-> For example, many Linux distributions will auto-mount filesystems on
-> removable storage, often going so far as to load corresponding kernel
-> modules for filesystems that aren't compiled in or don't already have
-> an LKM loaded.  Sometimes, this will happen even if the screen is
-> locked.
+> 2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
+>> I'm not familiar with this code or any of the context surrounding this
+>> fix, but it appears to be an incomplete fix.  Checking for existence
+>> of a symlink and then opening the resource leaves open a window during
+>> which a legitimate file can be replaced with a symlink.
 > 
-> Incidentally, many Linux filesystem implementations don't have
-> especially robust error handling for failures during attempts to mount
-> corrupt filesystems.  As an example, I have a deliberately corrupted
-> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
-> formatted a USB stick with this filesystem, so now I have a USB stick
-> that will panic the kernels of distributions that support
-> auto-mounting, in some cases even when the screen is locked.
-> 
-> Should this be considered a vulnerability?  Probably.  But what should
-> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-> a vulnerability if auto-mounting is disabled only when the screen is
-> locked?  Should all filesystems have graceful error handling for every
-> possible edge case that can occur when dealing with corruption?
-> 
-> I'd be interested to hear opinions on this.  And depending on how the
-> discussion goes, I'd be happy to provide more details on specific
-> cases, such as the btrfs example.
-> 
-> -Dan
+> Not sure it is fixable, or maybe using a lock on the symbolic link
+> while fetching its target (to be tested to be sure that such locks
+> cannot be overridden from shell).
 
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+I assume you are referring to the parts for REST.php in the patch in question?
+At a second look, that part could do with improvements; I wrote up a function which takes TOCTOU into consideration.
+I'll have that patch done by the end of the day.
 
+For other situations I am using tempnam() (via the System class) as those files are only temporary and were being extracted from compressed archives; The predictability of their end destination where the centre part of the reported security problem.
+
+- Helgi
