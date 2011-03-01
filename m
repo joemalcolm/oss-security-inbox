@@ -1,127 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/16
-Message-ID: <1847100923.193538.1294340697777.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 14:04:57 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/10
+Message-ID: <439581293.232576.1298994372734.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 1 Mar 2011 10:46:12 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, lists@...g.net
-Subject: Re: CVE Request: Eclipse IDE Version: 3.6.1 | Help Server Local Cross Site Scripting (XSS)
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4647 for this.
+> "struct sco_conninfo has one padding byte in the end. Local variable
+> cinfo of type sco_conninfo is copied to userspace with this
+> uninizialized one byte, leading to old stack contents leak."
+> 
+> https://lkml.org/lkml/2011/2/14/49
 
-Thanks.
+Please use CVE-2011-1078.
 
--- 
-    JB
+> "Struct ca is copied from userspace. It is not checked whether the
+> "device" field is NULL terminated. This potentially leads to BUG()
+> inside of alloc_netdev_mqs() and/or information leak by creating a
+> device with a name made of contents of kernel stack."
+> 
+> https://lkml.org/lkml/2011/2/14/50
 
+Please use CVE-2011-1079.
 
------ Original Message -----
-> ==============================================================================
-> Eclipse IDE | Help Server Local Cross Site Scripting (XSS)
-> Vulnerability
-> ==============================================================================
+> "Struct tmp is copied from userspace. It is not checked whether the
+> "name" field is NULL terminated. This may lead to buffer overflow and
+> passing contents of kernel stack as a module name to
+> try_then_request_module() and, consequently, to modprobe commandline.
+> It would be seen by all userspace processes."
 > 
-> 
-> 1. OVERVIEW
-> 
-> The Help Content web application of Eclipse IDE was vulnerable to
-> Cross Site Scripting (XSS) Vulnerability.
-> 
-> 
-> 2. PRODUCT DESCRIPTION
-> 
-> Eclipse is a multi-language software development environment
-> comprising an integrated development environment (IDE) and an
-> extensible plug-in system. It is written mostly in Java and can be
-> used to develop applications in Java and, by means of various
-> plug-ins, other programming languages including Ada, C, C++, COBOL,
-> Perl, PHP, Python, Ruby (including Ruby on Rails framework), Scala,
-> and Scheme. The IDE is often called Eclipse ADT for Ada, Eclipse CDT
-> for C/C++, Eclipse JDT for Java, and Eclipse PDT for PHP.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Eclipse Help Contents are served as a web application via the built-in
-> Jetty Web Server plugin. Cross Site Scripting vulnerabilities were
-> found in /help/index.jsp and /help/advanced/content.jsp URLs. XSS on
-> /help/advanced/content.jsp url makes the browser hang
-> but even after clicking "Stop Executing" button, users can still get
-> XSS.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Eclipse IDE Version: 3.6.1 <=
-> 
-> Tested Editions(SDK, Java, J2EE)
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost:[REPLACE]/help/index.jsp?'onload='alert(0)
-> http://localhost:[REPLACE]/help/advanced/content.jsp?'onload='alert(0)
-> 
-> Script-Check:
-> Request: /advanced/content.jsp?'onload='alert(0)
-> Response: src='contentToolbar.jsp?'onload='alert(0)'
-> 
-> 
-> 6. IMPACT
-> 
-> In a situation where users' browser security settings are weak, the
-> localized XSS vector could enable attackers to perform a number of
-> black acts including cross site content access, smb shares
-> enumeration, remote code execution, malicious trojan downloading and
-> execution ...etc.
-> 
-> 
-> 7. SOLUTION
-> 
-> Apply the recent error-free nightly builds (ie.
-> http://download.eclipse.org/eclipse/downloads/drops/N20101110-2000/index.php)
-> .
-> According to the developer, "Chris Goldthorpe", the fix is in the
-> nightly build,
-> http://download.eclipse.org/eclipse/downloads/drops/N20101108-2000/index.php
-> , it will also be in 3.6.2 (February 2011) and 3.7 (June 2011).
-> 
-> 
-> 8. VENDOR
-> 
-> Eclipse Developers Team
-> http://www.eclipse.org/
-> 
-> 
-> 9. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 10. DISCLOSURE TIME-LINE
-> 
-> 2010-11-04 : vulnerability discovered
-> 2010-11-05 : notified vendor
-> 2010-11-08 : patch released and applied to svn
-> 2010-11-16 : vulnerability disclosed
-> 
-> 
-> 11. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/eclipse/[eclipse_help_server]_cross_site_scripting
-> Eclipse Bug Tracker:
-> https://bugs.eclipse.org/bugs/show_bug.cgi?id=329582
-> Previous XSS Flaws:
-> http://r00tin.blogspot.com/2008/04/eclipse-local-web-server-exploitation.html
-> (searchView.jsp, workingSetManager.jsp)
-> Cross Environment Hopping:
-> http://blog.watchfire.com/wfblog/2008/06/cross-environ-1.html
-> About Eclipse IDE:
-> https://secure.wikimedia.org/wikipedia/en/wiki/Eclipse_%28software%29
-> 
-> #yehg [2010-11-16]
-> 
-> last updated: 2010-12-24
+> https://lkml.org/lkml/2011/2/14/51
+
+Please use CVE-2011-1080.
+
+Thanks you,
+--
+Petr Matousek / Red Hat Security Response Team
+
