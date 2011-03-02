@@ -1,77 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/10
-Message-ID: <1294090435.10245.133.camel@localhost>
-Date: Mon, 03 Jan 2011 15:33:55 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/5
+Message-ID: <Pine.GSO.4.64.1103021804390.24409@faron.mitre.org>
+Date: Wed, 2 Mar 2011 18:05:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: John Johansen <john@...x.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Possible CVE Request: improper AppArmor exec transition
+Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
 Content-Type: text/plain; charset=utf-8
 
-In AppArmor versions that support unconfined fallback exec transitions
-before r1587 of the 2.6 development branch[1], the apparmor_parser did
-not generate correct policy when mixing exec transitions with and
-without unconfined fallback transitions.
 
-Unconfined fallback exec transitions are specified like:
-  /usr/bin/foo pux,
+On Mon, 21 Feb 2011, Moritz Muehlenhoff wrote:
 
-This means if foo has a profile defined, transition to the foo profile
-on exec. If foo does not have a profile defined, transition to the
-unconfined profile.
+> 1. FreeBSD kernel: local DoS
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
+> http://www.exploit-db.com/exploits/16064/
+> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
 
-The bug[2] is that the first rule specifying a 'p', 'P', 'c' or 'C' type
-exec transition will influence subsequent transitions of the same type
-(eg, 'p' affects other 'p' transitions, but not 'P', 'c', or 'C'). To
-illustrate:
+Use CVE-2011-1132
 
-If the policy is:
-/usr/bin/baz {
-  ...
-  /usr/bin/bar px,
-  /usr/bin/foo pux,
-}
+> 2. Xinha: Multiple vulnerabilities
+> (The code is included in a few web apps, e.g. serendipity, openacs or dotlrn)
+> http://secunia.com/advisories/40669/
 
-Then when baz executes /usr/bin/bar, bar will correctly run under the
-'bar' profile if it exists, otherwise baz will receive a failed exec.
-The problem is when baz execs /usr/bin/foo, foo will run under the 'foo'
-profile if it exists (correct), otherwise baz will receive a failed exec
-(incorrect). bar should instead run unconfined. This is a bug, but not
-security relevant as the 'foo pux' rule is treated as a more strict 'foo
-px'.
+CVE-2011-1133 - XSS in mode param to 
+plugins/ExtendedFileManager/backend.php (David Vieira-Kurz)
 
-Conversely, if the policy is:
-/usr/bin/baz {
-  ...
-  /usr/bin/foo pux,
-  /usr/bin/bar px,
-}
+CVE-2011-1134 - file upload
 
-Then when baz execs /usr/bin/foo, foo will correctly run under the 'foo'
-profile if it exists, otherwise run unconfined. The problem is when baz
-execs /usr/bin/bar, bar will run under the 'bar' profile if it exists
-(correct), otherwise run unconfined (incorrect). baz should instead
-receive a failed exec on bar if the profile does not exist. This is
-security relevant as the 'bar px' rule is treated as a looser 'bar pux'.
+CVE-2011-1135 - XSS at end of URL to 
+plugins/ExtendedFileManager/manager.php and 
+plugins/ImageManager/manager.php (Riss McRee)
 
-Confined fallback exec transitions (ie, 'pix', 'Pix', 'cix' and 'Cix')
-are not affected by this bug and work as expected.
 
-The question is whether or not this is just a normal bug or one
-requiring a CVE. While this bug does allow for an unconfined exec when
-policy states it shouldn't, in order to hit the bug the system requires
-misconfigured policy (ie, a policy author would always write the
-accompanying policy for a 'px' transition since the exec is not expected
-to work without it).
+> 3. tesseract: Insecure temp file handling
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
 
-John Johansen (CC'd) discovered the bug and prepared a fix[1] for the
-2.6 branch. Patches for the 2.5 series[3] will be available soon.
+CVE-2011-1136
 
-[1]http://bazaar.launchpad.net/~apparmor-dev/apparmor/master/revision/1587
-[2]https://launchpad.net/bugs/693082
-[3]https://code.launchpad.net/~apparmor-dev/apparmor/release-2.5
+> 4. proftpd mod_sftp integer overflow
+> http://bugs.proftpd.org/show_bug.cgi?id=3586
+> http://www.exploit-db.com/exploits/16129/
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+CVE-2011-1137
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+- Steve
