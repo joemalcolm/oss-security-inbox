@@ -1,35 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/4
-Message-ID: <20111123132301.6db67d53@laverne>
-Date: Wed, 23 Nov 2011 13:23:01 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/5
+Message-ID: <Pine.GSO.4.64.1103021804390.24409@faron.mitre.org>
+Date: Wed, 2 Mar 2011 18:05:45 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
+Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
 Content-Type: text/plain; charset=utf-8
 
-New ffmpeg releases contain a couple of security fixes:
-http://secunia.com/advisories/46888/
 
-1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
-exploited to cause a buffer overflow.
+On Mon, 21 Feb 2011, Moritz Muehlenhoff wrote:
 
-2) An integer overflow error within the "vp3_dequant()" function
-(libavcodec/vp3.c) can be exploited to cause a buffer overflow.
+> 1. FreeBSD kernel: local DoS
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
+> http://www.exploit-db.com/exploits/16064/
+> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
 
-3) Errors within the "av_image_fill_pointers()", the
-"vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
-exploited to trigger out-of-bounds reads.
+Use CVE-2011-1132
+
+> 2. Xinha: Multiple vulnerabilities
+> (The code is included in a few web apps, e.g. serendipity, openacs or dotlrn)
+> http://secunia.com/advisories/40669/
+
+CVE-2011-1133 - XSS in mode param to 
+plugins/ExtendedFileManager/backend.php (David Vieira-Kurz)
+
+CVE-2011-1134 - file upload
+
+CVE-2011-1135 - XSS at end of URL to 
+plugins/ExtendedFileManager/manager.php and 
+plugins/ImageManager/manager.php (Riss McRee)
 
 
-Please assign CVEs.
+> 3. tesseract: Insecure temp file handling
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
+
+CVE-2011-1136
+
+> 4. proftpd mod_sftp integer overflow
+> http://bugs.proftpd.org/show_bug.cgi?id=3586
+> http://www.exploit-db.com/exploits/16129/
+
+CVE-2011-1137
 
 
-Maybe someone wants to have a look if other issues in those releases are
-security relevant:
-http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Steve
