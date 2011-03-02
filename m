@@ -1,37 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/11
-Message-ID: <760428907.397872.1306871631176.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 15:53:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/2
+Message-ID: <905281060.247741.1299074247067.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Wed, 2 Mar 2011 08:57:27 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libgnomesu privilege escalation
+Cc: nelhage@...lice.com
+Subject: Re: CVE request: kernel: Multiple DoS issues in epoll
 Content-Type: text/plain; charset=utf-8
 
-
-
 ----- Original Message -----
-> Hi,
+> Two requests for bugs in epoll:
 > 
-> The /usr/lib/libgnomesu/gnomesu-pam-backend suid binary which belongs
-> to the libgnomesu package is not checking setuid() return values.
+> (1) The epoll subsystem in Linux did not prevent users from creating
+> circular
+> epoll file structures, potentially leading to a denial of service
+> (kernel
+> deadlock).
 > 
-> As a result, two cooperating users, or users with access to guest,
-> cgi or web accounts can run arbitrary commands as root very easily.
-> Attacker just needs to 'su' to this account where he knows the
-> password
-> from inside the second account and take care that enough zombie
-> processes exist at the target account.
-> 
-> A patch is attached in our bugzilla:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=695627
-> 
+> Reference: https://lkml.org/lkml/2011/2/5/220
+> Upstream commit:
+> http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
 
+Please use CVE-2011-1082.
 
-Please use CVE-2011-1946.
+> (2) The epoll subsystem allows users to create large nested epoll
+> structures,
+> which the kernel will then to walk with preemption disabled, causing a
+> denial of
+> service via excessive CPU consumption in the kernel.
+> 
+> References:
+> http://thread.gmane.org/gmane.linux.kernel/1105744
+> http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
+> 
+> No upstream fix yet for this one.
 
-Thanks.
+Please use CVE-2011-1083.
 
--- 
-    JB
+Thank you,
+--
+Petr Matousek / Red Hat Security Response Team
