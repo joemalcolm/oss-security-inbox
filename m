@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/33
-Message-ID: <alpine.LRH.1.00.1104041311380.31509@bronson.owlriver.com>
-Date: Mon, 4 Apr 2011 13:26:50 -0400 (EDT)
-From: R P Herrold <herrold@...river.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/2
+Message-ID: <905281060.247741.1299074247067.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Wed, 2 Mar 2011 08:57:27 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Closed list
+Cc: nelhage@...lice.com
+Subject: Re: CVE request: kernel: Multiple DoS issues in epoll
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Apr 2011, Tomas Hoger wrote:
+----- Original Message -----
+> Two requests for bugs in epoll:
+> 
+> (1) The epoll subsystem in Linux did not prevent users from creating
+> circular
+> epoll file structures, potentially leading to a denial of service
+> (kernel
+> deadlock).
+> 
+> Reference: https://lkml.org/lkml/2011/2/5/220
+> Upstream commit:
+> http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
 
-> Given the aim to keep the subscriber list very limited, this probably
-> falls into a tentatively subscribed category too.  AFAIK, CentOS has
-> rather few components that are not rebuilds of the RHEL SRPMs, the
-> question is how often a v-s info was useful in the past in providing
-> security updates for those extra packages.
+Please use CVE-2011-1082.
 
-Thanks for the post furthering the marketing goals of your 
-corporate master; perhaps the security goal of making sure the 
-Linux server space is well-secured in a timely fashion was 
-overlooked by you as you framed your thought
+> (2) The epoll subsystem allows users to create large nested epoll
+> structures,
+> which the kernel will then to walk with preemption disabled, causing a
+> denial of
+> service via excessive CPU consumption in the kernel.
+> 
+> References:
+> http://thread.gmane.org/gmane.linux.kernel/1105744
+> http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
+> 
+> No upstream fix yet for this one.
 
-Seemingly (you mention 'AFAIK'), you do not follow the 
-'extras' archive, nor the 'testing' where extensions are 
-found, past what Red Hat ships by default in its enterprise 
-product
+Please use CVE-2011-1083.
 
-I have regularly flagged to our updates builder sub-group, for 
-slotting in updates to push out vulnerable content in those 
-side archives, based on vendor-sec notes; further, in ranking 
-the 'urgency' of a push, I posted a rather detailed package by 
-package analysis of un-pushed updates, in the last month or 
-so, as to matters pending during the intersticial 'solve the 
-rebuild' delay as to some updates issued upstream but not yet 
-pushed by the CentOS team, in part based upon tracking 
-vendor-sec
-
--- Russ herrold
- 	herrold@...tos.org
+Thank you,
+--
+Petr Matousek / Red Hat Security Response Team
