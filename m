@@ -1,19 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/5
-Message-Id: <201105311513.13989.thomas@suse.de>
-Date: Tue, 31 May 2011 15:13:13 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/1
+Message-ID: <20110302230559.GA24630@nashi.nerv.fi>
+Date: Thu, 3 Mar 2011 01:05:59 +0200
+From: henri@...v.fi
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libxml vulnerability and interesting integer issues
+Subject: CVE request: gri < 2.12.18 insecure temp file generation
 Content-Type: text/plain; charset=utf-8
 
+Can I get CVE-identifier for this vulnerability? It's old one :)
 
-Please see the following blog posting by Chris evans:
-http://scarybeastsecurity.blogspot.com/2011/05/libxml-vulnerability-and-interesting.html
+Software gri is vulnerable to insecure temp file generation.
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+References:
+http://gri.sourceforge.net/gridoc/html/Version_2_12.html
+http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please note that this URL is not meant for public use as it is temporary)
+
+Best regards,
+Henri Salo
