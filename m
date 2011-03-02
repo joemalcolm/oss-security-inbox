@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/3
-Message-ID: <4EDBBE38.5040204@redhat.com>
-Date: Sun, 04 Dec 2011 11:38:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/4
+Message-ID: <Pine.GSO.4.64.1103021752050.24409@faron.mitre.org>
+Date: Wed, 2 Mar 2011 17:55:17 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: dishix <dishix@...glemail.com>
-Subject: Re: CVE request: CSRF in xt:commerce 3.04 SP2.1
+Subject: Re: CVE request: simple machines forum before 1.1.13
 Content-Type: text/plain; charset=utf-8
 
-On 12/03/2011 01:38 AM, dishix wrote:
-> Hi,
->
-> Can I get CVE-identifier for this:
->
-> xt:commerce 3.04 SP2.1 is prone to CSRF. An attacker can exploit this
-> vulnerability to escalate his/her privileges to gain administrator access.
->
-> >
-> http://dishix.blogspot.com/2011/11/exploiting-xtcommerce-v304-sp21-cross.html
-> >
-> http://dishix.blogspot.com/p/xtcommerce-v304-sp21-cross-site-request_29.html
->
-The second link is 404. Also can you provide links to the project and
-the affected source code so I can verify this issue? Thanks.
->
-> Best regards,
-> dishix
 
--- 
+On Wed, 23 Feb 2011, Josh Bressers wrote:
 
--Kurt Seifried / Red Hat Security Response Team
+> ----- Original Message -----
+>> http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
+>>
+>> No useful info on the kind of vulnerability, just states "Several
+>> security-related fixes"
+>>
+>
+> Steve,
+>
+> Can MITRE take this one.
 
+I almost gave this a single CVE for "multiple unspecified" but there's a 
+readable patch file that gives more hints:
+http://custom.simplemachines.org/mods/downloads/smf_patch_2.0-RC4_security.zip
+
+
+Reversing the patches suggests the following (assuming that ONLY security 
+patches are included in the ZIP, as stated in the initial post).
+
+
+CVE-2011-1127 - guest access to SSI.php
+
+CVE-2011-1128 - "brute force" on Load.php
+
+CVE-2011-1129 - ManageNews.php, probably XSS
+
+CVE-2011-1130 - improper input validation for a number in
+   $_REQUEST['start'] in QueryString.php, and also $start variable in
+   Subs.php
+
+CVE-2011-1131 - unspecified query issues in Search.php, related to 
+$createTemporary variable.
+
+
+- Steve
