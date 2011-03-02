@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/10
-Message-ID: <4DE91968.7060901@redhat.com>
-Date: Fri, 03 Jun 2011 19:27:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- xscreensaver -- exits when activated
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/1
+Message-ID: <20110302230559.GA24630@nashi.nerv.fi>
+Date: Thu, 3 Mar 2011 01:05:59 +0200
+From: henri@...v.fi
+To: oss-security@...ts.openwall.com
+Subject: CVE request: gri < 2.12.18 insecure temp file generation
 Content-Type: text/plain; charset=utf-8
 
+Can I get CVE-identifier for this vulnerability? It's old one :)
 
-Hello, Josh, Steve, vendors,
-
-   it was found that xscreensaver terminated, when it was activated upon 
-launch. A local proximate attacker could use this deficiency to access
-resources, which should be otherwise protected by authentication.
+Software gri is vulnerable to insecure temp file generation.
 
 References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627382
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=703483
+http://gri.sourceforge.net/gridoc/html/Version_2_12.html
+http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please note that this URL is not meant for public use as it is temporary)
 
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Best regards,
+Henri Salo
