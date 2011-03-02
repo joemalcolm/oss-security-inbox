@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/2
-Message-ID: <AANLkTikQK8EhgjWK=LD2NPx6MJWa5hkd37ODc2PCX1vH@mail.gmail.com>
-Date: Wed, 9 Mar 2011 14:18:10 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/1
+Message-ID: <20110302015646.GK5871@ksplice.com>
+Date: Tue, 1 Mar 2011 20:56:46 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: buffer overflow in unixODBC's SQLDriverConnect()
+Subject: CVE request: kernel: Multiple DoS issues in epoll
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Please assign CVE id for a possible buffer overflow in unixODBC's
-SQLDriverConnect() function by specifying a large value for SAVEFILE
-parameter in the connection string.
+Two requests for bugs in epoll:
 
-A fix has been committed in the SVN addressing the issue:
-http://unixodbc.svn.sourceforge.net/viewvc/unixodbc/trunk/DriverManager/SQLDriverConnect.c?r1=23&r2=27
+(1) The epoll subsystem in Linux did not prevent users from creating circular
+epoll file structures, potentially leading to a denial of service (kernel
+deadlock).
 
-Thanks.
+Reference: https://lkml.org/lkml/2011/2/5/220
+Upstream commit: http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
 
--- 
-Regards,
-Felipe Pena
+(2) The epoll subsystem allows users to create large nested epoll structures,
+which the kernel will then to walk with preemption disabled, causing a denial of
+service via excessive CPU consumption in the kernel.
 
+References:
+http://thread.gmane.org/gmane.linux.kernel/1105744
+http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
+
+No upstream fix yet for this one.
+
+- Nelson
