@@ -1,36 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/09/1
-Message-ID: <AANLkTinvVDGHTHcef-u6ofXn7xkxN-yWg+XCfNRpHxF7@mail.gmail.com>
-Date: Sat, 8 Jan 2011 20:58:30 -0600
-From: Hyrum K Wright <hyrum@...umwright.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kurt@...fried.org>,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/3
+Message-ID: <20110302211129.GA22334@nashi.nerv.fi>
+Date: Wed, 2 Mar 2011 23:11:29 +0200
+From: henri@...v.fi
+To: oss-security@...ts.openwall.com
+Subject: CVE request: VLC bookmark buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 5, 2011 at 10:09 AM, Josh Bressers <bressers@...hat.com> wrote:
->
-> OK, let's split the CVE id then.
->
-> So for
-> A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
->  Upstream changeset:
->  http://svn.apache.org/viewvc?view=revision&revision=1033166
->
-> Let's use CVE-2010-4539.
->
-> For
-> B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
->   References:
->   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
->   Upstream changeset:
->   http://svn.apache.org/viewvc?view=revision&revision=1032808
->
-> Let's use CVE-2010-4644.
+Can I get CVE-identifier for this issue:
 
-Sounds great.
+"VLC media player is vulnerable to a buffer overflow attack when processing .mp3 file and its metadata. It fails to perform boundry checks when creating a bookmark from the malicious media file playing, resulting in a crash, overwriting ECX register. While the evil .mp3 is playing, you go Playback > Bookmarks > Manage bookmarks > Create."
 
-Should the Subversion project plan to write and publish advisories for
-these CVEs, or has the requester already done so?
-
--Hyrum
+References:
+http://osvdb.org/show/osvdb/62728/printer
