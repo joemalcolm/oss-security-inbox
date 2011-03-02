@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/3
-Message-ID: <20110311141748.GA14348@openwall.com>
-Date: Fri, 11 Mar 2011 17:17:48 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Florian Zumbiehl <florz@...rz.de>
-Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/1
+Message-ID: <20110302015646.GK5871@ksplice.com>
+Date: Tue, 1 Mar 2011 20:56:46 -0500
+From: Nelson Elhage <nelhage@...lice.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: Multiple DoS issues in epoll
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 10, 2011 at 10:32:43PM +0100, Florian Zumbiehl wrote:
-> > > | However, I think that still #6 (shell injection) and #7 (logrotate
-> > > | DoS with strange characters in file names) should be considered
-> > > | vulnerabilities in logrotate: ...
-[...]
-> I was thinking more in the direction of an existing config that includes
-> a wildcard and software that uses user input to construct file names
-> that would be matched by that wildcard. An example of such software
-> would be samba, which tends to create per-client-host log files named
-> after those hosts. I don't have a clue whether samba could be made to
-> include any shell meta characters (does it even do reverse lookups for
-> that?), but I guess you get the idea.
+Two requests for bugs in epoll:
 
-This makes sense, and I agree that it's a reason for logrotate to treat
-log filenames as potentially untrusted input.  It's probably also a
-reason to get CVE ids assigned.
+(1) The epoll subsystem in Linux did not prevent users from creating circular
+epoll file structures, potentially leading to a denial of service (kernel
+deadlock).
 
-Thank you for explaining the attack vector here!
+Reference: https://lkml.org/lkml/2011/2/5/220
+Upstream commit: http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
 
-Alexander
+(2) The epoll subsystem allows users to create large nested epoll structures,
+which the kernel will then to walk with preemption disabled, causing a denial of
+service via excessive CPU consumption in the kernel.
+
+References:
+http://thread.gmane.org/gmane.linux.kernel/1105744
+http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
+
+No upstream fix yet for this one.
+
+- Nelson
