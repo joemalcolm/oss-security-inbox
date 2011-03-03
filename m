@@ -1,28 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/3
-Message-ID: <20110402093107.GA2769@pisco.westfalen.local>
-Date: Sat, 2 Apr 2011 11:31:07 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/17
+Message-ID: <20110303231601.GA32736@kroah.com>
+Date: Thu, 3 Mar 2011 15:16:01 -0800
+From: Greg KH <greg@...ah.com>
+To: Kees Cook <kees@...ntu.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+On Thu, Mar 03, 2011 at 03:09:55PM -0800, Kees Cook wrote:
+
+<good stuff snipped>
+
+> As I see it, the upstream Linux kernel certainly fixes most flaws
+> discovered, and almost gets to fix level 4 (there are so many variations
+> of the Linux kernel running on end-user's systems, I can't blame the
+> Linux kernel upstream for not offering a patch for every version the
+> majority of their end-users use). Where I am disappointed is in the
+> communication.
+
+Ok, that's fair enough, I will not disagree with that.
+
+> It's generally somewhere between communication style
+> 1 and 2. There is no central list of fixed flaws (style 3, see almost
+> every major upstream's website and append some variation "/security"
+> to the url, etc), and certainly no central list of fixes. There is
+> frequently no mention of the implication of a flaw in commits (style 2),
+> and nothing like style 4, 5, or 6 happening. The only place these things
+> happen are in each distro's bug trackers, or scattered in the Mitre CVE
+> links (which almost invalidates anything above fix level 2 since there is
+> no certain way to find a flaw's fix in an upstream stable kernel update).
 > 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+> So yes, I'm disappointed in the upstream Linux kernel's security flaw
+> fix communications. And while I'm sure some people may not agree with me,
+> I know many do.
 
-I was subscribed through the team@...urity.debian.org exploder. My key:
+Then, as I have always said, someone needs to step up and actually do
+this type of communication work.  I personally don't have the time to, I
+am swamped with just getting the stable updates out in a semi-timely
+fashion.  Digging through every patch in these releases and properly
+conveying the real, or percieved reason why they are needed, is a lot of
+thankless work.  Jon at lwn.net tried it for just one release, and we
+are averaging about one a week (total number of kernels released that
+is).  No one else has yet tried to do that, but if they will, I will be
+_glad_ to point my release notifications at that summary.
 
-pub   1024D/4E2ECA5A 2004-09-08
-uid                  Moritz Muehlenhoff <jmm@...ian.org>
-uid                  Moritz Muehlenhoff <jmm@...til.org>
-sub   2048g/8D1BA24D 2004-09-08
+So in other words, help is gladly accepted :)
 
-Cheers,
-        Moritz
+thanks,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+greg k-h
