@@ -1,65 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/14
-Message-ID: <20110404120716.GK543@ngolde.de>
-Date: Mon, 4 Apr 2011 14:07:16 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/12
+Message-ID: <20110303213640.GG372@outflux.net>
+Date: Thu, 3 Mar 2011 13:36:40 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Marcus Meissner <meissner@...e.de> [2011-04-04 13:24]:
-> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
-> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> > >and Josh).
-> > 
-> > Limiting a distro to two or three representatives is going to make things 
-> > tricky for Red Hat; we have a rather large dedicated security response 
-> > team (as we publish over 300 advisories a year across 70 product/versions 
-> > and have a number of folks dealing with 'incoming' issues spread, and my 
-> > team is dispersed across 9 different countries).  If these representatives 
-> > have been very active on v-s and oss-security is there a reason to limit?
+On Thu, Mar 03, 2011 at 06:31:08PM +0000, Mark J Cox wrote:
+> We monitor how we first found out about every issue we eventually
+> fix, and if we found out before or after the issue was public.
 > 
-> Similar for SUSE. We currently have 3 engineers rotating through the incident
-> manager role (and myself).
+> For vendor-sec, during last calendar years
+> 
+> date		# issues in advance		# issues already public
+> 2008		69				32
+> 2009		57				17
+> 2010		29				22
+> 
+> That 29 represents just 4% of the total number of our
+> vulnerabilities fixed in 2010.  The median time of embargo for those
+> 29 issues was 15 days (average 24)
 
-Same for Debian. We are currently cycling through a one week "front desk" 
-period. Limiting that access to 2-3 people of the team would make that 
-approach a bit unpractical for us in terms of handling undisclosed issues.
-I also would welcome it if people who have been active on oss-sec and v-sec 
-before should be allowed back to this list.
+This certainly underscores that very few flaws need vendor-sec
+coordination, but I would suspect that out of those roughly 725 flaws,
+many of the really critical ones came through vendor-sec. Does that match
+your records? (Ubuntu doesn't currently track the origin of flaws beyond
+giving credit, so I'm curious if RH's data matches my sense of critical
+flaw origin.)
 
-I can understand that you want to keep the list of subscribers low in order to 
-prevent leaks. But from a practical point of view I see really no difference 
-if a mail is passed to a team exploder of a distro by one of the allowed 
-subscribers or directly sent to these members, at least in terms of attack 
-surface/leaking risks. The only practical difference I see is who would be responsible
-for such an incident. But if it's just about moving the responsibility out of
-the list itself to the vendor while keeping the number of subscribers low you could as
-well subscribe our team@ alias and encrypt mails with the team key.
+I'm also curious what "issues already public but found out about it on
+vendor-sec" means? Does that mean it was inappropriately brought to
+vendor-sec after it was already public, or that RH found out about it
+after it was public even though it had already been discussed privately
+on vendor-sec?
 
-That being said, my key data (I was added as part of Debian):
-pub   1024D/73647CFF 2003-11-15
-      Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
-uid                  Nico Golde <nion@...ian.org>
-uid                  Nico Golde <nico@...lde.de>
-uid                  Nico Golde <nion@....net>
-uid                  Nico Golde <nion@...tu-berlin.de>
-sub   2048g/F774030E 2003-11-15
+> But I think that trend is what was expected, as upstream projects
+> communicate with affected vendors directly, and we use oss-security
+> for issues that don't need embargo or co-ordination.
 
-or alternatively a stronger key:
-pub   4096R/A0A0AAAA 2009-06-01
-      Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
-uid                  Nico Golde <nion@...ian.org>
-uid                  Nico Golde <nico@...lde.de>
-uid                  Nico Golde <nion@...tu-berlin.de>
-uid                  Nico Golde <nion@....net>
-sub   4096R/E89CCA30 2009-06-02
+Several upstreams, though disappointingly not the Linux kernel, are very
+good about keeping their end-users in mind and providing direct distro
+coordination for important security updates (MIT Kerberos comes to mind
+first as a great example). This number of upstreams has been growing,
+but it's not nearly large enough to supplant a vendor-sec-like mailing
+list, IMO.
 
-Cheers
-Nico
+I'm all for the public disclosure of things that are low priority. But I
+think it's important to maintain coordination for really nasty flaws,
+otherwise we're in a position to really do a disservice to end-users.
+
+-Kees
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Kees Cook
+Ubuntu Security Team
