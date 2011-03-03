@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/9
-Message-ID: <20110718223746.GA23838@openwall.com>
-Date: Tue, 19 Jul 2011 02:37:46 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/10
+Message-ID: <191850871.375534.1299184712420.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Mar 2011 15:38:32 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- Original Message -----
+> Can I get CVE-identifier for this vulnerability? It's old one :)
+> 
+> Software gri is vulnerable to insecure temp file generation.
+> 
+> References:
+> http://gri.sourceforge.net/gridoc/html/Version_2_12.html
+> http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
+> note that this URL is not meant for public use as it is temporary)
+> 
 
-We have almost 800 subscribers on oss-security, but DFN-CERT doesn't
-appear to be subscribed - so I've re-added the CC on this reply, and
-I'll over-quote a little.
+Steve,
 
-dfncert@...-cert.de wrote:
-> > We would be willing to provide the patch to all Linux distributors
-> > but we do not want to release the patch publicly and wait for the
-> > official patch by the packet maintainer of FreeRADIUS.
+Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
+is here:
+https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
 
-On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
-> Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-> sounds like the right thing to do.
+Thanks.
 
-This is not exactly the new vendor-sec.  As the name suggests, it is a
-Linux distros only list.  Also, please note that the maximum acceptable
-embargo period on this list is 14 days.  We need to communicate this
-detail to whoever we're asking to disclose anything to the list, before
-they disclose.  When posting to the list, you may encrypt messages to
-the attached key.
-
-For FreeRADIUS specifically, it sounds like non-Linux vendors could be
-interested as well.  DFN-CERT did mention Linux distros specifically in
-the quote above, so the suggestion to use the list was appropriate, but
-perhaps requests from other distros shipping FreeRADIUS should be
-accommodated as well.  If something like this arrived to the Linux
-distros list without prior discussion on oss-security, I would bring
-this up and suggest that we contact *BSD's at least.  Since this is
-already on oss-security, I assume that interested *BSD's and others may
-ask DFN-CERT themselves. ;-)
-
-> Gentoo complies to your requirements
-> and would like to get the patch directly, if you do not plan to send it
-> there.
-
-Alexander
-
-View attachment "linux-distros.asc" of type "text/plain" (1858 bytes)
+-- 
+    JB
