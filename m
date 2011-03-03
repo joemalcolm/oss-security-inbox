@@ -1,81 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/11
-Message-ID: <AANLkTik-5iV+n0PiyPzQ8u3fdjvUxpD7w_EtKoD8xbbH@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:41:16 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/9
+Message-ID: <198284865.375307.1299184319905.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Mar 2011 15:31:59 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: PHP Support Ticket 2.2 <= Multiple Vulnerabilities
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: VLC bookmark buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Advisory URL:
-http://yehg.net/lab/pr0js/advisories/php_support_ticket-2.2
-Date published: 2009-07-23
-Severity: High
+Argh, this should have gotten a 2010 ID.
 
-Vendor: Triangle Solutions Ltd (http://www.triangle-solutions.com/)
-Script URL: http://www.phpsupporttickets.com/
+Steve, does MITRE want to reassign, or just leave it as is?
 
-Demo URL:
-http://www.phpsupporttickets.com/modules/phpsupporttickets.com/demo/
+Thanks.
+
+-- 
+    JB
 
 
-Overview
-==========
-This version of PHP Support Ticket is bundled together in today's one-click
-script installer of all/most web hosting providers. Customers have no clue
-of the vulnerabilities. Hosting providers always say marketing voice -
-easy deployment, one-click installation - but no security.
-
-###########################################################################
-
-#1. Lack Of "install" directory removal check
-
-This will allow attackers to overwrite existing config files with junk data,
-making the PHP Ticket application stop working. In extreme case, advanced
-attackers will inject valid php codes to do more harm.
-
-
-#2. Hidden Debug paramter (tri_debug)
-
-File: /include/config.php
-Code:
-	// Conditional Error Reporting
-	if (isset($_GET['tri_debug'])) {
-		$set_ini = ini_set('display_errors', 1);
-		error_reporting(E_ALL);
-
-This will provide attackers every feedback for his attacking.
-For small case, this provides internal path disclosure. 	
-
-
-#3. Addon: PHPMailer Remote Code Execution
-
-PHP Support Ticket employed vulnerable version of PHPMailer class.
-
-File: /classes/class.phpmailer.php
-Code:
-	if ($this->Sender != "")
-		$sendmail = sprintf("%s -oi -f %s -t", $this->Sendmail, $this->Sender);
-	else
-		$sendmail = sprintf("%s -oi -t", $this->Sendmail);
-
-
-4. Possible Script Injection
-
-A number of scripts use dangerous eval function without enough filtering.
-File: /classes/GUI/abstract.GUI.php
-Code:
-	return eval('return PHPST_PAGENAME_' . strtoupper($this->page) . ';');
-
-	
-
-###########################################################################
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+----- Original Message -----
+> ----- Original Message -----
+> > Can I get CVE-identifier for this issue:
+> >
+> > "VLC media player is vulnerable to a buffer overflow attack when
+> > processing .mp3 file and its metadata. It fails to perform boundry
+> > checks when creating a bookmark from the malicious media file
+> > playing,
+> > resulting in a crash, overwriting ECX register. While the evil .mp3
+> > is
+> > playing, you go Playback > Bookmarks > Manage bookmarks > Create."
+> >
+> > References:
+> > http://osvdb.org/show/osvdb/62728/printer
+> 
+> Please use CVE-2011-1087
+> 
+> Thanks.
+> 
+> --
+> JB
