@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/1
-Message-ID: <20111119121858.4d373fa3@laverne>
-Date: Sat, 19 Nov 2011 12:18:58 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/13
+Message-ID: <Pine.GSO.4.64.1103031639370.11138@faron.mitre.org>
+Date: Thu, 3 Mar 2011 16:44:26 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ejabberd before 2.1.9
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-From
-http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_2.1.9
+On Thu, 3 Mar 2011, Kees Cook wrote:
 
-This looks like its security-relevant:
-- Fix Denial of Service when user sends malformed publish stanza
-  (EJAB-1498)
+> This certainly underscores that very few flaws need vendor-sec
+> coordination, but I would suspect that out of those roughly 725 flaws,
+> many of the really critical ones came through vendor-sec.
 
-Upstream bug report:
-https://support.process-one.net/browse/EJAB-1498
+As an outsider with limited visibility into vendor-sec, this would be my 
+impression too.  I would imagine that things like major protocol design 
+flaws or critical, hard-to-fix bugs in popular software would still need 
+coordination across multiple parties with a need for non-disclosure for a 
+relatively long period of time.  Maybe vendor-sec-2 could handle that 
+need.
 
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Steve
