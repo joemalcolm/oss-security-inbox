@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/7
-Message-ID: <20110228203255.GA4669@outflux.net>
-Date: Mon, 28 Feb 2011 12:32:55 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/18
+Message-ID: <AANLkTi=n2oz22_Cnmb9XFH_Jg6qauw=DeLRtjRcHn3cw@mail.gmail.com>
+Date: Thu, 3 Mar 2011 18:59:20 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: OOM-killer via argv expansion
+Cc: Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-I think the flaw[1] with argv-expansion triggering the OOM-killer
-incorrectly needs its own CVE.
+>
+> Then, as I have always said, someone needs to step up and actually do
+> this type of communication work.  I personally don't have the time to, I
+> am swamped with just getting the stable updates out in a semi-timely
+> fashion.  Digging through every patch in these releases and properly
+> conveying the real, or percieved reason why they are needed, is a lot of
+> thankless work.  Jon at lwn.net tried it for just one release, and we
+> are averaging about one a week (total number of kernels released that
+> is).  No one else has yet tried to do that, but if they will, I will be
+> _glad_ to point my release notifications at that summary.
+>
+> So in other words, help is gladly accepted :)
+>
 
-While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-improved things, argv expansion can still be tricked into OOM-killing the
-entire system. Solutions were discussed on the original thread, but
-were not finished. Recently a set of patches[3] has been re-proposed to fix
-this issue. Regardless, it should probably get its own CVE assigned.
+Rather than requiring individuals to perform substantial amounts of
+digging through patches, which I agree is infeasible, perhaps it would
+be more reasonable to establish a general policy that bug reporters
+and maintainers can use to work with distro security teams and the
+rest of the security community.
 
-Thanks,
+For example, a public or private list could be established for all
+*potential* kernel security issues, and just as is the case with
+CC'ing stable, a policy could be developed where maintainers are
+expected to CC this list for fixes that might possibly have security
+relevance, with a tendency towards erring on the safe side if security
+impact is unclear.  I think security communication needs to be
+improved at the commit level (as opposed to the reporting), since
+maintainers are often much more knowledgeable and better able to
+understand security impact than the users who are often presenting
+issues.  Criteria could be set up for what kinds of issues would be
+candidates for being sent to this list.  I don't think this would
+require substantially more work on anyone's part, but by creating a
+culture where potential security issues are treated seriously, it
+would at least stop some of the silent patching that's been going on.
 
--Kees
+Once potential security issues have been submitted to such a list, I'm
+sure there would be no shortage of people willing and able to analyze
+security impact for each issue, including assigning CVEs.  While
+digging through every kernel patch might be too much work, with the
+cooperation of maintainers this can be reduced to a much smaller
+subset that would be easily dealt with.
 
-[1] https://lkml.org/lkml/2010/8/27/429
-[2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-[3] https://lkml.org/lkml/2011/2/25/227
-
--- 
-Kees Cook
-Ubuntu Security Team
+Regards,
+Dan
