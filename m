@@ -1,77 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/10
-Message-ID: <1294090435.10245.133.camel@localhost>
-Date: Mon, 03 Jan 2011 15:33:55 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/15
+Message-ID: <20110303224920.GA22311@openwall.com>
+Date: Fri, 4 Mar 2011 01:49:20 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: John Johansen <john@...x.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Possible CVE Request: improper AppArmor exec transition
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-In AppArmor versions that support unconfined fallback exec transitions
-before r1587 of the 2.6 development branch[1], the apparmor_parser did
-not generate correct policy when mixing exec transitions with and
-without unconfined fallback transitions.
+Hi Marcus, all -
 
-Unconfined fallback exec transitions are specified like:
-  /usr/bin/foo pux,
+Thank you for making this public!
 
-This means if foo has a profile defined, transition to the foo profile
-on exec. If foo does not have a profile defined, transition to the
-unconfined profile.
+On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+> So I would like to open up a discussion with _all_ OSS Security folks present.
+> 
+> - Is a closed vendor coordination like vendor-sec still needed at this time?
 
-The bug[2] is that the first rule specifying a 'p', 'P', 'c' or 'C' type
-exec transition will influence subsequent transitions of the same type
-(eg, 'p' affects other 'p' transitions, but not 'P', 'c', or 'C'). To
-illustrate:
+Yes, there's some need for it.
 
-If the policy is:
-/usr/bin/baz {
-  ...
-  /usr/bin/bar px,
-  /usr/bin/foo pux,
-}
+>   Meaning: does the benefit of a closed group really outweigh the
+>   "left out feeling" of non members and its annoyances?
 
-Then when baz executes /usr/bin/bar, bar will correctly run under the
-'bar' profile if it exists, otherwise baz will receive a failed exec.
-The problem is when baz execs /usr/bin/foo, foo will run under the 'foo'
-profile if it exists (correct), otherwise baz will receive a failed exec
-(incorrect). bar should instead run unconfined. This is a bug, but not
-security relevant as the 'foo pux' rule is treated as a more strict 'foo
-px'.
+In that meaning, I am not sure.  These things are not possible to
+compare, and there are other things to consider as well.
 
-Conversely, if the policy is:
-/usr/bin/baz {
-  ...
-  /usr/bin/foo pux,
-  /usr/bin/bar px,
-}
+> - If yes, would it be an idea to confine or split into lists of focus groups?
+>   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
 
-Then when baz execs /usr/bin/foo, foo will correctly run under the 'foo'
-profile if it exists, otherwise run unconfined. The problem is when baz
-execs /usr/bin/bar, bar will run under the 'bar' profile if it exists
-(correct), otherwise run unconfined (incorrect). baz should instead
-receive a failed exec on bar if the profile does not exist. This is
-security relevant as the 'bar px' rule is treated as a looser 'bar pux'.
+My current proposal is: split into several sub-lists.  I'd start with
+three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+groups would be for externally submitted reports (by non-members) and
+for cross-vendor discussions.
 
-Confined fallback exec transitions (ie, 'pix', 'Pix', 'cix' and 'Cix')
-are not affected by this bug and work as expected.
+The Linux vendors group should include distro vendors.  I am unsure
+whether it should also include Linux kernel-only folks or not.  Maybe we
+should be CC'ing security@k.o on relevant messages instead, or maybe we
+need a separate group for Linux distros+kernel.  It feels wrong to
+expose userland-only issues to the kernel-only folks.
 
-The question is whether or not this is just a normal bug or one
-requiring a CVE. While this bug does allow for an unconfined exec when
-policy states it shouldn't, in order to hit the bug the system requires
-misconfigured policy (ie, a policy author would always write the
-accompanying policy for a 'px' transition since the exec is not expected
-to work without it).
+The researchers group would (probably) rarely receive external reports
+directly, but could be involved in Linux and/or *BSD vendors discussions
+by CC'ing them when their expertise is needed.  Alternatively, the
+researchers may be included on the vendor lists, which will enable and
+encourage them to contribute a lot more, but then we need to define some
+stricter requirements for them (some minimum activity level?)  We don't
+want a lot of inactive members on any of these private lists.
 
-John Johansen (CC'd) discovered the bug and prepared a fix[1] for the
-2.6 branch. Patches for the 2.5 series[3] will be available soon.
+As to projects such as, say, Samba and X.org, I'd exclude them.
+There's no difficulty for a researcher to notify one of these directly,
+and there's not much difficulty in CC'ing the proper one of these on a
+discussion.
 
-[1]http://bazaar.launchpad.net/~apparmor-dev/apparmor/master/revision/1587
-[2]https://launchpad.net/bugs/693082
-[3]https://code.launchpad.net/~apparmor-dev/apparmor/release-2.5
+> - Or of course the old option is open:
+>   Should we proceed with the current state as-is,
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+Probably not, although we could do it temporarily if there's a need -
+such as to continue some discussions that are already started.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+> but throw a bit more GPG encryption on top?
+
+I think we should have the new list(s), if we do set them up,
+GPG-encrypting to the members.  They should also accept encrypted
+messages (to the list's key).
+
+This will reduce the likelihood of leaks somewhat - from the members'
+mail servers, from their unattended mailboxes, etc.
+
+That said, leaks would nevertheless be quite likely - or at least we
+should assume so.  For this reason, I think these lists should be used
+for medium severity issues only, and CRDs should be set not too far into
+the future (say, up to 2 weeks, with an attempt to make embargoes
+shorter than that whenever possible).
+
+Anything low severity is best made public right away - such as via
+oss-security.  Anything high severity may need to be approached more
+carefully, identifying just the affected distro vendors before initial
+notification by the reporter (then these lists won't be needed).
+
+Of course, not everyone is willing to do that...  If we do receive a
+high severity issue notification via one of the "expander" lists, we'd
+need to apply an even shorter embargo period.
+
+I'd appreciate any comments on the above.
+
+Thanks again,
+
+Alexander
