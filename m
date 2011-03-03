@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/5
-Message-ID: <4ECB0DAC.7070207@redhat.com>
-Date: Tue, 22 Nov 2011 10:49:16 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/7
+Message-ID: <1779019949.374858.1299183916473.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Mar 2011 15:25:16 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
+Cc: coley <coley@...re.org>
+Subject: Re: cve request for smoothwall & openfiler
 Content-Type: text/plain; charset=utf-8
 
-On 11/22/2011 05:26 AM, Kurt Seifried wrote:
-> On 11/21/2011 10:51 AM, Petr Matousek wrote:
->> There is a NULL pointer deref in the user-defined key type whereby
->> updating a negative key into a fully instantiated key will cause
->> an oops to occur when the code attempts to free the non-existent
->> old payload.
->>
->> Upstream commit:
->> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
->>
->> References:
->> https://lkml.org/lkml/2011/11/15/363
->> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
->>
->> Thanks,
-> Please use CVE-2011-4331 for this issue.
 
-Kurt, we have assigned this with CVE-2011-4110, please reject
-CVE-2011-4331. Thanks.
 
-Eugene
+----- Original Message -----
+> Hi can someone allocate a cve for smoothwall express 3 regarding the
+> csrf and xss issue raised in [1].
+> Also if someone could allocate a cve for an xss in Openfiler - see
+> [2].
+> 
+> 
+> [1] http://secunia.com/advisories/42897/
+> [2] http://secunia.com/advisories/42507/
+
+Here goes:
+
+http://secunia.com/advisories/42897/
+CVE-2011-1084 smoothwall xss
+CVE-2011-1085 smoothwall csrf
+
+http://secunia.com/advisories/42507/
+CVE-2011-1086 openfilter xss
+
+Thanks.
+
+-- 
+    JB
