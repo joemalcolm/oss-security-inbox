@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/5
-Message-ID: <5E49EEF5B3B23549BAF01B43D0C2BB30176C4DDFB5@EXMB03.eu.tieto.com>
-Date: Thu, 15 Dec 2011 20:31:46 +0200
-From: <Thomas.Rucker@...to.com>
-To: <jamie@...onical.com>, <icecast-dev@...h.org>
-CC: <oss-security@...ts.openwall.com>, <security@...itz-naumann.com>, <security@...ntu.com>
-Subject: RE: [Icecast-dev] Security issue in icecast
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/7
+Message-ID: <1779019949.374858.1299183916473.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Mar 2011 15:25:16 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: cve request for smoothwall & openfiler
 Content-Type: text/plain; charset=utf-8
 
-*snip*
-Sending this to a public mailing list might not have been the smartest idea.
 
-We're already aware of Moritz's finding and are working on a fix.
 
-Expect icecast release 2.3.3 soon.
+----- Original Message -----
+> Hi can someone allocate a cve for smoothwall express 3 regarding the
+> csrf and xss issue raised in [1].
+> Also if someone could allocate a cve for an xss in Openfiler - see
+> [2].
+> 
+> 
+> [1] http://secunia.com/advisories/42897/
+> [2] http://secunia.com/advisories/42507/
 
-Best regards
+Here goes:
 
-Thomas Ruecker
+http://secunia.com/advisories/42897/
+CVE-2011-1084 smoothwall xss
+CVE-2011-1085 smoothwall csrf
+
+http://secunia.com/advisories/42507/
+CVE-2011-1086 openfilter xss
+
+Thanks.
+
+-- 
+    JB
