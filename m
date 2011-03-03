@@ -1,30 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/5
-Message-ID: <20110916205422.GS6573@outflux.net>
-Date: Fri, 16 Sep 2011 13:54:22 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/6
+Message-ID: <1590265071.372210.1299180163068.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Mar 2011 14:22:43 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 16, 2011 at 10:14:42PM +0200, Yves-Alexis Perez wrote:
-> On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
-> > My last day with Canonical is today. Starting on Sep 19th, I will be
-> > working for Google on ChromeOS. I'd like to transition my closed-list
-> > membership based on the fact that ChromeOS is also a distro, and I'll
-> > still have security responsibilities with it. How should this be
-> > handled? 
+----- Original Message -----
+> Hi folks,
 > 
-> I don't have closed-list membership or anything, but I assume you'll
-> keep going on Ubuntu security team anyway, even from Google, so it might
-> make sense that you keep the membership anyway?
+> As moderator of vendor-sec and one of the sysadmins of lst.de I noticed a
+> break-in into the lst.de machine last week, which was likely used to
+> sniff email traffic of vendor-sec. This incident probably happened on Jan
+> 20 as confirmed by timestamp, but might have existed for longer.
 
-I don't mind it, but traditionally, only Canonical employees have had
-access to the embargoed Ubuntu security information (and, as a result,
-access to the closed list).
+Thanks for making this public. I know it can be hard to bring something
+like this up.
 
--Kees
+> I have asked Solar Designer if he could take over hosting, and he was
+> agreeing, including a full GPG crypted setup.
+
+For those of you who don't know Solar Designer hosts oss-security.
+
+> So I would like to open up a discussion with _all_ OSS Security folks
+> present.
+> 
+> - Is a closed vendor coordination like vendor-sec still needed at this
+> time?
+
+I've thought about this a lot. I think the answer is probably. There are
+still reasons to need good cooperation between vendors (this is different
+than coordination, which is what the CERTs do, which generally doesn't
+bring the affected parties together to work on a solution, they generally
+just distribute information).
+
+> 
+> Meaning: does the benefit of a closed group really outweigh the "left out
+> feeling" of non members and its annoyances?
+
+This is a big challenge. It's also really hard to decide who should get to
+be a part of such a group. Historically vendor-sec was only vendors, but
+there are a number researchers who would be useful for example (but again,
+who do you choose).
+
+> - If yes, would it be an idea to confine or split into lists of focus
+> groups?  (like Linux vendors, BSD vendors, all OSS source using vendors,
+> etc?)
+
+My only fear with this is complexity (I'll propse a far more complex
+idea below).
+
+> 
+> - Or of course the old option is open: Should we proceed with the current
+> state as-is, but throw a bit more GPG encryption on top?
+
+I suspect it's fairly well understood that the current vendor-sec model was
+broken. Very few "members" ever contributed, which made the list more of an
+announce venue.
+
+> 
+> - What other options do we have or should we pursue?
+> 
+
+If I had my way (and we had infinite time and resources), I would opt for a
+solution that let the reporter decide who they wanted to inform. Have a
+system in place that could handle properly encrypting the traffic, then
+somehow (web page?) let a reporter decide who to alert. This list of
+potential recipients could include vendors, other upstream projects,
+researchers, CERTs, ... the possibilities are endless.
+
+Such a system would remove the whole group idea, as nobody gets "left out",
+but rather included. Perhaps oCERT would be interested in helping with such
+an idea? They sort of already do this, but we'd want to create more
+cooperation than there previously exists.
+
+Anyhow, thanks for the update.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
