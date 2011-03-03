@@ -1,46 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/8
-Message-ID: <20110407194624.GC3934@redhat.com>
-Date: Thu, 7 Apr 2011 13:46:25 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/5
+Message-ID: <20110303183237.GN2002@redhat.com>
+Date: Thu, 3 Mar 2011 11:32:37 -0700
 From: Vincent Danen <vdanen@...hat.com>
-To: Christos Zoulas <christos@...las.com>
-Cc: oss-security@...ts.openwall.com, file@...gw.com
-Subject: Re: Possible security fixes in 5.05?
+To: oss-security@...ts.openwall.com
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-* [2011-04-07 15:17:37 -0400] Christos Zoulas wrote:
+* [2011-03-01 10:24:48 +0000] Helgi ?ormar ?orbj?rnsson wrote:
 
-Thanks for the quick response, Christos!
-
->On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
->-- Subject: Re: [oss-security] Possible security fixes in 5.05?
+>Hi,
+>On 1 Mar 2011, at 09:11, Pierre Joye wrote:
 >
->| Looks like there are a few issues here:
->|
->| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
->|      * Fix two potential buffer overruns in apprentice_list.
->|
->| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
+>> hi,
+>>
+>> 2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
+>>> I'm not familiar with this code or any of the context surrounding this
+>>> fix, but it appears to be an incomplete fix.  Checking for existence
+>>> of a symlink and then opening the resource leaves open a window during
+>>> which a legitimate file can be replaced with a symlink.
+>>
+>> Not sure it is fixable, or maybe using a lock on the symbolic link
+>> while fetching its target (to be tested to be sure that such locks
+>> cannot be overridden from shell).
 >
->This is an order of evaluation issue, that could read memory over the allocated
->limit. The limit check is done after the read instead of before. The code
->has not been present in any release.
-
-Ok, so it was added post-5.04 and corrected prior to the 5.05 release.
-Thank you for clarifying.
-
->| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
->|      * Minor security fix to softmagic.c (don't use untrusted
->|        string as printf format).
->|
->| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+>I assume you are referring to the parts for REST.php in the patch in question?
+>At a second look, that part could do with improvements; I wrote up a function which takes TOCTOU into consideration.
+>I'll have that patch done by the end of the day.
 >
->The code is present in [5.00-5.04]. It should not be an issue because the desc
->printf formats are checked during parsing. It is mostly to silence a compiler
->warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
->printf(ms->desc, argument) in a ton of other places.
+>For other situations I am using tempnam() (via the System class) as those files are only temporary and were being extracted from compressed archives; The predictability of their end destination where the centre part of the reported security problem.
 
-Ok, great.  Thank you for the explanation.
+I took a quick look at the svn repository and don't see any additional
+fixes.  So this means that 1.9.2 has the original fix (CVE-2011-1072)
+but not the complete fix (to which MITRE has assigned CVE-2011-1144,
+for an incomplete fix of CVE-2011-1072) 
+
+Any word on patches to fully fix the problem yet?  I guess that a 1.9.3
+must be planned to come soon (which would contain the CVE-2011-1144
+fixes)?
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
