@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/3
-Message-ID: <4DE63625.6050700@redhat.com>
-Date: Wed, 01 Jun 2011 14:52:53 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Evgeny Legerov <admin@...evydis.com>
-Subject: CVE Request -- OpenOffice.org -- InteVyDis Demo of OpenOffice 0day. Released with VulnDisco 8.8 pack (release date May,2009)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/5
+Message-ID: <20110303183237.GN2002@redhat.com>
+Date: Thu, 3 Mar 2011 11:32:37 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
+* [2011-03-01 10:24:48 +0000] Helgi ?ormar ?orbj?rnsson wrote:
 
-Hello, Josh, Steve, vendors,
+>Hi,
+>On 1 Mar 2011, at 09:11, Pierre Joye wrote:
+>
+>> hi,
+>>
+>> 2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
+>>> I'm not familiar with this code or any of the context surrounding this
+>>> fix, but it appears to be an incomplete fix.  Checking for existence
+>>> of a symlink and then opening the resource leaves open a window during
+>>> which a legitimate file can be replaced with a symlink.
+>>
+>> Not sure it is fixable, or maybe using a lock on the symbolic link
+>> while fetching its target (to be tested to be sure that such locks
+>> cannot be overridden from shell).
+>
+>I assume you are referring to the parts for REST.php in the patch in question?
+>At a second look, that part could do with improvements; I wrote up a function which takes TOCTOU into consideration.
+>I'll have that patch done by the end of the day.
+>
+>For other situations I am using tempnam() (via the System class) as those files are only temporary and were being extracted from compressed archives; The predictability of their end destination where the centre part of the reported security problem.
 
-   A new security flaw, potentially allowing execution of arbitrary code
-with the privileges of the user running the OpenOffice.org suite tools
-has been reported by the InteVyDis security researchers team:
-[1] http://intevydis.com/oo_0day.html
-[2] http://twitter.com/#!/legerov/status/75482755194032128
+I took a quick look at the svn repository and don't see any additional
+fixes.  So this means that 1.9.2 has the original fix (CVE-2011-1072)
+but not the complete fix (to which MITRE has assigned CVE-2011-1144,
+for an incomplete fix of CVE-2011-1072) 
 
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=709705
+Any word on patches to fully fix the problem yet?  I guess that a 1.9.3
+must be planned to come soon (which would contain the CVE-2011-1144
+fixes)?
 
-Unfortunately there doesn't seem to be further detailed information
-available right now. But from the Twitter post, looks this issue is
-still valid against OpenOffice.org v3.3.
-
-Hopefully Evgeny Legerov of InteVyDis security researchers team (Cc-ed)
-could provide further background information about this issue, i.e.
-if it is an old issue (like date of 2009 would suggest) and thus a CVE
-identifier has been already assigned to this issue or is this completely
-new issue (which did not get fixed from 2009 till now) and thus it 
-requires a new CVE id.
-
-Evgeny, any further information you could provide here, to clear the
-CVE doubt is really appreciated.
-
-Once the CVE doubt cleared, could you allocate a CVE id for this issue?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
