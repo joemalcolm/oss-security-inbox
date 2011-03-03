@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/14
-Message-ID: <CAHmME9qtybOoJgpe_bD179rEOiVuu1kEWFGVmF8jM8RNx--0_g@mail.gmail.com>
-Date: Fri, 4 Nov 2011 16:53:41 -0400
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/4
+Message-ID: <1103031820280.22221@mjc.redhat.com>
+Date: Thu, 3 Mar 2011 18:31:08 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
-current version that has been out for quite some time now. These require a
-CVE. Issues 8 through 14 are ones introduced only during development and
-were not released, and do not need a CVE.
+> Also the usefulness of v-s in general has a bit diminished, especially with
+> oss-sec present and more active and more involved upstream projects doing
+> their own management. Mark J Cox has some stats for Redhat updates showing this.
 
-On Fri, Nov 4, 2011 at 16:51, Steven M. Christey
-<coley@...-smtp.mitre.org>wrote:
+We monitor how we first found out about every issue we eventually fix, and 
+if we found out before or after the issue was public.
 
->
-> All,
->
-> I haven't followed the Calibre saga too closely, barring glancing through
-> the bug report comments.
->
-> If bugs are introduced into a development version but also fixed within
-> that same version, then unless there's some strong evidence that the dev
-> version is extensively used or distributed to the public, then (in general)
-> it would not get a CVE.  (The Linux kernel is a special case depending on
-> what versions you consider to be "development.")
->
-> - Steve
->
+For vendor-sec, during last calendar years
 
+date		# issues in advance		# issues already public
+2008		69				32
+2009		57				17
+2010		29				22
+
+That 29 represents just 4% of the total number of our vulnerabilities 
+fixed in 2010.  The median time of embargo for those 29 issues was 15 days 
+(average 24)
+
+But I think that trend is what was expected, as upstream projects 
+communicate with affected vendors directly, and we use oss-security for 
+issues that don't need embargo or co-ordination.
+
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response
