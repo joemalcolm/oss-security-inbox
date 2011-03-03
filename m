@@ -1,23 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/6
-Message-ID: <20110819170835.GH1360@redhat.com>
-Date: Fri, 19 Aug 2011 11:08:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/11
+Message-ID: <20110303212321.GF372@outflux.net>
+Date: Thu, 3 Mar 2011 13:23:21 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: stunnel 4.4x heap overflow flaw
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-As noted in the stunnel changelog, 4.42 corrects a heap overflow flaw
-that could lead to a DoS or remote execution of arbitrary code.
+Hi,
 
-References:
+On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+> So I would like to open up a discussion with _all_ OSS Security folks present.
+> 
+> - Is a closed vendor coordination like vendor-sec still needed at this time?
+> 
+>   Meaning: does the benefit of a closed group really outweigh the
+>   "left out feeling" of non members and its annoyances?
 
-http://stunnel.org/?page=sdf_ChangeLog
-https://bugzilla.redhat.com/show_bug.cgi?id=732068
+I believe the utility of a closed "vendor coordination" mailing list is
+related to the criticality and time-frame of certain flaws.
 
-Could a CVE be assigned for this?
+The goal of such private coordination is to protect end-users, who are
+generally running a stable release of various packaged pieces of software
+and are not in a position to always use the bleeding-edge. Instead of
+making it a race to see which distro can protect their users faster at
+the cost of making other distro's users vulnerable, private coordination
+has been used to make sure all users of all distros are fixed (or at
+least have the packaged fix available) at the same time. I think this
+approach still has value, but with some caveats.
 
-Thanks.
+Having a single place for vendors to coordinate a fix for critical flaws
+seems like a good idea as long as that time-frame is short. The overhead
+of coordination only has value if the flaw is serious. The risk of leak or
+independent public discovery goes up the longer a fix takes. Therefore,
+fixes must be handled quickly. On the flip side, while it seems like
+sitting on minor issues isn't a problem, since their criticality is
+low so the risk of leak is lower, it actually is a problem because it
+does a disservice to upstreams (and end-users) that may not know about
+the issue yet. (If no one in the private group is acting on the issue,
+it should be made public so more people can see it or work on it.)
+
+Ubuntu's stance on privately reported/discovered flaws has been to choose
+a roughly 1 week Coordinated Release Date, email the details to vendor-sec
+(and upstream's private email when we can find one). If no one responds,
+the CRD expires, and we make the flaw public. So far, this seems to
+naturally select the high criticality flaws for quick coordination and
+fixing and the less critical issues for becoming public quickly.
+
+For public issues, we've tried to have them raised on oss-security@
+or with upstreams directly.
+
+> - If yes, would it be an idea to confine or split into lists of focus groups?
+>   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+
+It seems to me that if you're releasing stable package updates for
+some portion of the Free Software stack, you should be in the short-CRD
+private disclosure fix-coordination mailing list.
+
+> - Or of course the old option is open:
+>   Should we proceed with the current state as-is, but throw a bit more
+>   GPG encryption on top?
+
+Encryption would reduce the scope of potential leaks, but not eliminate it.
+It's not clear to me if the overhead is worth the change in leak risk.
+
+Now, culturally, this has all been about reactive security. It sure
+would be nice to have more cultural movement toward proactive security,
+especially for the Linux kernel. I don't think a mailing list will fix
+that, but I thought I'd bring it up anyway. Proactive security should
+be just as valuable as reactive security...
+
+-Kees
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Kees Cook
+Ubuntu Security Team
