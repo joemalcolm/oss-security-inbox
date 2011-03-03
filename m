@@ -1,34 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/1
-Message-ID: <4E4E0E35.60609@pre-sense.de>
-Date: Fri, 19 Aug 2011 09:18:13 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/9
+Message-ID: <198284865.375307.1299184319905.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 3 Mar 2011 15:31:59 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: VLC bookmark buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel contains a vulnerability in the driver for Be file
-systems that may lead to a kernel oops via a corrupted Be file system.
+Argh, this should have gotten a 2010 ID.
 
-In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
-a long symlink from a data stream of a Be file system.
+Steve, does MITRE want to reassign, or just leave it as is?
 
-    befs_data_stream *data = &befs_ino->i_data.ds;
-    befs_off_t len = data->size;
+Thanks.
 
-The data->size / len value is not validated and can be 0 on a corrupted
-file system.
+-- 
+    JB
 
-befs_follow_link() allocates some memory based on len. Effectively,
-kmalloc returns ZERO_SIZE_PTR in this case.
 
-        link = kmalloc(len, GFP_NOFS);
-
-Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
-oops:
-
-			link[len - 1] = '\0';
-
-A patch is available at
-http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
-
+----- Original Message -----
+> ----- Original Message -----
+> > Can I get CVE-identifier for this issue:
+> >
+> > "VLC media player is vulnerable to a buffer overflow attack when
+> > processing .mp3 file and its metadata. It fails to perform boundry
+> > checks when creating a bookmark from the malicious media file
+> > playing,
+> > resulting in a crash, overwriting ECX register. While the evil .mp3
+> > is
+> > playing, you go Playback > Bookmarks > Manage bookmarks > Create."
+> >
+> > References:
+> > http://osvdb.org/show/osvdb/62728/printer
+> 
+> Please use CVE-2011-1087
+> 
+> Thanks.
+> 
+> --
+> JB
