@@ -1,106 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/5
-Message-ID: <1319991659.6653.8.camel@coquihalla.lan>
-Date: Sun, 30 Oct 2011 17:20:59 +0100
-From: Armin Burgmeier <armin@...ur.net>
-To: Vasiliy Kulikov <segoon@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Armin Burgmeier <armin@...39.de>,  Philipp Kern <phil@...39.de>
-Subject: Re: CVE request: 3 flaws in libobby and libnet6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/2
+Message-ID: <4D6FAA10.6050603@redhat.com>
+Date: Thu, 03 Mar 2011 22:47:44 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1023 kernel: rds: prevent BUG_ON triggering on congestion map updates
 Content-Type: text/plain; charset=utf-8
 
-Hi Vasiliy,
+This was discovered internally when testing CVE-2010-3904.
 
-thanks for your report!
+http://marc.info/?l=linux-netdev&m=129908332903057&w=2
 
-I have fixed the issues 1+3 in git [1,2]. It would be great if you could
-confirm the patches to really fix the issues you raised.
+"Tracked it down to a flaw in the xmit methods for the loop and ib 
+transports. Those two transports, when called with an rds message that 
+has the RDS_FLAG_CONG_BITMAP set, execute a rds_cong_map_updated call 
+and return.  Since the xmit method requires that the number of bytes 
+sent be returned, and a congestion map update doesn't really send any 
+data, it just returns the sizeof an rds_header plus the defined size of 
+the congestion map.  This is problematic because the caller of these 
+methods (rds_send_xmit), validates that we didn't send more data than 
+was available in the passed rds_message.  If the return value from 
+->xmit() is larger than the remaining data in the message, we bug halt, 
+which is exactly what we get above.  We could add a check to skip the 
+bug on check if the RDS_FLAG_CONG_BITMAP flag is set, but I think the 
+check is otherwise valid, so I've fixed it with this patch, which limits 
+the return value in the effected transports to not be more than the 
+remainig space in the rds_message."
 
-As for the second issue, I do not think it is worth the effort to
-implement SSL certificate handling in obby. Both net6 and obby are
-replaced by libinfinity in the current development version of Gobby.
-libinfinity makes use of SSL certificates.
-
-We would be pleased if you could check for similar flaws in libinfinity
-though I admit that it is much more code and probably more complicated
-to analyze.
-
-Cheers,
-Armin
-
- [1]
-http://git.0x539.de/?p=net6.git;a=commitdiff;h=ac61d7fb42a1f977fb527e024bede319c4a9e169;hp=08c8e2261604c6fcbbaf62f9ae9d13f7015fcb9a
- [2]
-http://git.0x539.de/?p=net6.git;a=commitdiff;h=84afca022f063f89bfcd4bb32b1ee911f555abf1;hp=ac61d7fb42a1f977fb527e024bede319c4a9e169
-
-http://git.0x539.de/?p=net6.git;a=commitdiff;h=84afca022f063f89bfcd4bb32b1ee911f555abf1;hp=ac61d7fb42a1f977fb527e024bede319c4a9e169
-
-On Sun, 2011-10-30 at 16:08 +0400, Vasiliy Kulikov wrote:
-> Hi,
-> 
-> 1) the libobby's server checks for users' color collisions before
-> checking users' passwords.  Any user without password authentication
-> may check whether a specific color is used by someone.  With knowledge
-> of person's color preferences he may learn whether a specific person
-> uses the server.  Also, he may enumerate all default colors and learn
-> the number of users.
-> 
->     inc/server_buffer.hpp: 
-> 
->     bool basic_server_buffer<Document, Selector>::on_auth()
->     {
->     ...
->         // Check colour
->         if(!basic_buffer<Document, Selector>::check_colour(colour) )
->         {
->             error = login::ERROR_COLOUR_IN_USE;
->             return false;
->         }
-> 
->         // Check global password
->         if(!m_global_password.empty() )
->         {
->             if(global_password != m_global_password)
->             {
->                 error = login::ERROR_WRONG_GLOBAL_PASSWORD;
->                 return false;
->             }
->         }
->     ...
->     }
-> 
-> 
-> 2) libobby doesn't check server's SSL certificate and passes the
-> password in plain text over SSL channel.  All remote clients are
-> vulnerable to a MITM attack.
-> 
->     • The attacker (A) learns the client's (C) and the server's (S) IP
->         addresses and used ports.
->     • A breaks the established TCP connection between C and S.
->     • A changes the way C's packets with dst = S are routed, resulting
->         in all packets from C to S's IP go to A.  The simplest way is
->         ARP cache poisoning.
->     • A starts listening on the same IP:port as S did.
->     • C notices the connection interruption and tries to reconnect to S.
->         (Note: if the client is gobby, this step needs user's interaction.)
->     • As all C's packets intended for S are routed to A, so, in reality
->         C connects to A, not S.
->     • C starts SSL session and, as C doesn't check SSL certificate, he
->         think it talks to S.
->     • A requests C' password.
->     • C passes the password in plain text over SSL channel.
-> 
-> 
-> 3) libnet6 doesn't check basic_server::id_counter for integer overflow.
-> This number is used to distinguish among different users.  An attacker
-> may open UINT_MAX successive connections and get an identifier of the
-> already established connection, resulting in the connection hijacking.
-> On i686 uint is a 32 bit counter, so an attacker should be able to open
-> 4.000.000.000 connections to complete the attack.  This is a rather big
-> number: if an attacker may create 2000 connections per second, it would
-> took ~24 days of continuous connection attempts.  However, it is a real
-> threat for servers with a huge uptime.
-> 
-> Thanks,
-> 
-
-
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
