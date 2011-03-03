@@ -1,37 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/10
-Message-ID: <20110422171236.GA9751@albatros>
-Date: Fri, 22 Apr 2011 21:12:38 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: akuster <akuster@...sta.com>
-Cc: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/3
+Message-ID: <20110303181224.GB1433@suse.de>
+Date: Thu, 3 Mar 2011 19:12:24 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 22, 2011 at 06:15 -1000, akuster wrote:
-> I am a bit confused.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
-> https://lkml.org/lkml/2011/4/14/294
-> 
->  which is assigned to CVE-2011-1746 not CVE-2011-1747.
-> 
-> is there a patch for CVE-2011-1747?
+Hi folks,
 
-No.  The problem of CVE-2011-1747 is mentioned in the patch fixing
-CVE-2011-1746 because the patch tries to fix a similar problem - OOM.
+As moderator of vendor-sec and one of the sysadmins of lst.de I noticed
+a break-in into the lst.de machine last week, which was likely used to
+sniff email traffic of vendor-sec. This incident probably happened on Jan 20
+as confirmed by timestamp, but might have existed for longer.
 
-CVE-2011-1747 is not fixed yet.
+As the system in use at lst.de is quite old and the admin team and myself
+does not really have the time anymore to keep it on a secure level, we
+would like to move the list to another hosting place.
+
+I have disabled the specific backdoor, but as I am not sure how the
+break-in happened it might reappear. So I recommend not mailing embargoed
+issues to vendor-sec@....de at this time.
 
 
-> >> Please use CVE-2011-1747.
-> > 
-> > In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-> > "Reference and patch:", but there is no patch for the issue (as I said
-> > in the patch description).  I have no agp hardware and I cannot test
-> > whether forcing the requested pid to the current pid is a good idea (it
-> > might not).
+I have asked Solar Designer if he could take over hosting, and he was agreeing,
+including a full GPG crypted setup.
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+
+However we found during this brainstorming that changes in the setup
+of the vendor-sec list likely are good at this point in time.
+
+The number of subscribers is high, and probably 80-100 people get vendor-sec
+emails, making leaks by members always a possbility.
+
+Also the usefulness of v-s in general has a bit diminished, especially with
+oss-sec present and more active and more involved upstream projects doing
+their own management. Mark J Cox has some stats for Redhat updates showing this.
+
+(To use the threadmill metaphor, v-s does not help us vendors as much
+with the speed of the patch threadmill as it did 5 - 10 years ago.)
+
+
+
+So I would like to open up a discussion with _all_ OSS Security folks present.
+
+- Is a closed vendor coordination like vendor-sec still needed at this time?
+
+  Meaning: does the benefit of a closed group really outweigh the
+  "left out feeling" of non members and its annoyances?
+
+- If yes, would it be an idea to confine or split into lists of focus groups?
+  (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+
+- Or of course the old option is open:
+  Should we proceed with the current state as-is, but throw a bit more
+  GPG encryption on top?
+
+- What other options do we have or should we pursue?
+
+At least SUSE, Redhat and Openwall are open for discussion.
+Please discuss :)
+
+Ciao, Marcus (vendor-sec moderator)
+
+Content of type "application/pgp-signature" skipped
