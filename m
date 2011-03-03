@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/12
-Message-ID: <123634419.1821504.1312480424402.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Aug 2011 13:53:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/13
+Message-ID: <Pine.GSO.4.64.1103031639370.11138@faron.mitre.org>
+Date: Thu, 3 Mar 2011 16:44:26 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foomatic-gui
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
 
+On Thu, 3 Mar 2011, Kees Cook wrote:
 
------ Original Message -----
-> On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
-> > So while there aren't that many "users" of the old
-> > system-config-printer - it appears that debian old-stable (lenny)
-> > maybe vulnerable (where python-smbc is not available) ... is it
-> > worth
-> > while giving system-config-printer a 2008 CVE as well (if none
-> > currently exists).
-> 
-> Yes, I think it is worth doing that.
-> 
+> This certainly underscores that very few flaws need vendor-sec
+> coordination, but I would suspect that out of those roughly 725 flaws,
+> many of the really critical ones came through vendor-sec.
 
-This request doesn't really make any sense. It deserves a 2011 ID, that's
-when the flaw was discovered.
+As an outsider with limited visibility into vendor-sec, this would be my 
+impression too.  I would imagine that things like major protocol design 
+flaws or critical, hard-to-fix bugs in popular software would still need 
+coordination across multiple parties with a need for non-disclosure for a 
+relatively long period of time.  Maybe vendor-sec-2 could handle that 
+need.
 
-My impression is that the code is the same, which means they will share the
-same ID. If the code is totally different, we will want to split. Time, you
-know best, is the code in question the same, or is it different?
-
-Thanks.
-
--- 
-    JB
+- Steve
