@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/12
-Message-ID: <20110404085148.GC2053@suse.de>
-Date: Mon, 4 Apr 2011 10:51:48 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/14
+Message-ID: <20110303215345.GB30451@kroah.com>
+Date: Thu, 3 Mar 2011 13:53:45 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
-> >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> >and Josh).
-> 
-> Limiting a distro to two or three representatives is going to make things 
-> tricky for Red Hat; we have a rather large dedicated security response 
-> team (as we publish over 300 advisories a year across 70 product/versions 
-> and have a number of folks dealing with 'incoming' issues spread, and my 
-> team is dispersed across 9 different countries).  If these representatives 
-> have been very active on v-s and oss-security is there a reason to limit?
+On Thu, Mar 03, 2011 at 01:36:40PM -0800, Kees Cook wrote:
+> Several upstreams, though disappointingly not the Linux kernel, are very
+> good about keeping their end-users in mind and providing direct distro
+> coordination for important security updates (MIT Kerberos comes to mind
+> first as a great example).
 
-Similar for SUSE. We currently have 3 engineers rotating through the incident
-manager role (and myself).
+Note, that is just your opinion about the Linux kernel, not all distros
+or developers share that view.
 
-Ciao, Marcus
+thanks,
+
+greg k-h
