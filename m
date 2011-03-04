@@ -1,62 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/8
-Message-ID: <1606538479.1272180.1310495267637.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:27:47 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/5
+Message-Id: <20110303201100.b0ae71a1.michael.s.gilbert@gmail.com>
+Date: Thu, 3 Mar 2011 20:11:00 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Did these ever get IDs? I've been away and don't want to dupe these.
-
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> Vincent Danen wrote:
-> > I see the following changes as fixed in MySQL 5.1.52, but cannot
-> > find
-> > any CVEs for them:
-> >
-> > InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
-> > examining the same table's information in the INFORMATION_SCHEMA
-> > database at the same time could cause a crash in the debug version
-> > of
-> > the server. (Bug #54678)
-> >
-> > Security Fix: The server crashed for assignment of values of types
-> > other
-> > than Geometry to items of type GeometryCollection (MultiPoint,
-> > MultiCurve, MultiSurface). Now the server checks the field type and
-> > fails with bad geometry value if it detects incorrect parameters.
-> > (Bug
-> > #55531)
-> >
-> > Security Fix: EXPLAIN EXTENDED caused a server crash with some
-> > prepared
-> > statements. (Bug #54494)
-> >
-> > Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from
-> > a
-> > derived table caused a server crash. (Bug #54488)
-> >
-> > There are a whole bunch of other crash-type bugs corrected in 5.1.52
-> > that upstream did not explicitly flag as security, which might be
-> > considered security-relevant as well:
-> >
-> > http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+On Thu, 3 Mar 2011 16:41:07 -0800 Greg KH wrote:
+> On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
+> > Of course failing to anticipate security impact is bound to happen in
+> > the kernel; it frequently happens in userland too, and is unavoidable.
+> >  That doesn't mean we can't try, and it doesn't mean we should be
+> > overly paranoid and have security folks manually audit every patch.
+> > Currently, maintainers and bug reporters are expected to ask
+> > themselves a simple question when deciding whether or not to CC
+> > stable: "does this fix a bug or security issue, or is it a new
+> > feature?".  Similarly, I don't think it's too much to ask for people
+> > to consider the question of "does this bug it allow an unprivileged
+> > user to crash the system, gain additional access, or otherwise cross
+> > privilege boundaries?"  And if the answer is "I don't know, maybe?",
+> > then they should CC this list to be safe.  I think this would result
+> > in not nearly as much volume as you're anticipating.
 > 
-> Looks like this CVE request got lost.
-> 
-> cu
-> Ludwig
-> 
-> --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
-> Imendörffer, HRB 16746 (AG Nürnberg)
+> They do this already today, that's what security@...nel.org is for, and
+> it gets a bit of traffic like this every week.
+
+Is this list open to the public?  It doesn't seem to be available on
+http://vger.kernel.org/vger-lists.html.
+
+Best wishes,
+Mike
