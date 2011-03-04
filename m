@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/3
-Message-ID: <4DE8838B.5020401@redhat.com>
-Date: Fri, 03 Jun 2011 14:47:39 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>, coley <coley@...re.org>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/22
+Message-ID: <20110304161640.GA25667@openwall.com>
+Date: Fri, 4 Mar 2011 19:16:40 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Florian Zumbiehl <florz@...rz.de>, oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 04:22 AM, Josh Bressers wrote:
-> 
-> ----- Original Message -----
->> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
->>> On 02/24/2011 03:59 AM, Josh Bressers wrote:
->>>> ----- Original Message -----
->>>>>
->>>>> The kernel automatically evaluates partition tables of storage
->>>>> devices.  The code for evaluating LDM partitions (in
->>>>> fs/partitions/ldm.c) contains a bug that allows to overflow the
->>>>> kernel heap. It may be possible to escalate privileges by exploiting
->>>>> this bug.
-[...]
-> I would still like something along the lines of a proposed patch. I believe
-> you folks (as you're much brighter than me), but I still don't quite grasp
-> the difference. I suspect there is enough public information for MITRE to
-> public a CVE though, so please use CVE-2011-1017.
+Hi Florian -
 
-It was reported that the fix for this is insufficient. I have assigned
-CVE-2011-2182 to this. See https://lkml.org/lkml/2011/5/6/407.
+Thank you for explaining your rationale behind this.  Here's my take on it:
 
-Timo, can you please post the patch here once you have submitted it to
-lkml for review. Thanks.
+On Fri, Mar 04, 2011 at 04:14:00PM +0100, Florian Zumbiehl wrote:
+> In which scenarios exactly logrotate is supposed to be safe to use is
+> mostly undefined.
 
-Eugene
+Maybe.  We just need to (hopefully) agree on what is common, expected,
+correct - and this may be changing over the years.  Apply our common
+sense and experience.
+
+> However, it is currently a common setup (as in: what distributions do out
+> of the box) to have a daily logrotate cron job run as root that rotates
+> the logs of all the services and to have log directories owned by service
+> users
+
+Arguably, these are bugs in those service packages, which I'd call
+vulnerabilities.  At least that's the policy for Owl (our Linux distro)
+so far.  We don't have any service-writable log file directories.
+
+I reported one of those issues against nginx-0.6.39-2.el5 (a Red Hat
+distro package) to the package maintainer a year ago, and was told
+the issue was fixed in response to my report (by chown'ing the nginx
+logs directory).  IMO, such a fix was the only right thing to do.
+
+> (so they can create missing log files, for example).
+
+I think that services should either do that before they drop root at
+startup, or they should not do it at all (leave it to logrotate).
+
+However, if it's somehow desired that a service running as non-root be
+able to create log files (other than just at startup?), then the correct
+approach would be to run a dedicated instance of logrotate for that
+service under the service pseudo-user.  Don't mix the pseudo-user and
+root for the same task (dealing with log files of the same service),
+which creates unnecessary risks.
+
+> In such setups, the service user can elevate its privileges to root
+> or corrupt root-owned files using the various bugs.
+
+Indeed.  A vulnerability in the service package, in my opinion.  Now
+that would require CVE id assignment and a fix to the package, whereas
+logrotate could merely use some hardening with no CVE ids (except for
+issue #8, which was different).
+
+What do you say?
+
+Alexander
