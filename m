@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/1
-Message-Id: <201105190944.01123.ludwig.nussel@suse.de>
-Date: Thu, 19 May 2011 09:44:00 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/11
+Message-ID: <AANLkTin7rEnGm0bhar732k3GG1Q3ARmwzX3ZbrUMSz1Y@mail.gmail.com>
+Date: Thu, 3 Mar 2011 22:46:51 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: viewvc DoS
+Cc: "Dmitry V. Levin" <ldv@...linux.org>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+>
+> One more option is to replace /etc/mtab regular file with a symlink to
+> /proc/mounts, thus making any /etc/mtab editing unneeded.
+>
+>
 
-cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row limit:
-http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
-http://viewvc.tigris.org/issues/show_bug.cgi?id=433
-http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
+This is a very good point.  I'm not sure why /etc/mtab exists anymore
+given /proc/mounts is a more reliable source for this information.
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+-Dan
