@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/6
-Message-ID: <1972953755.897157.1308858678769.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 23 Jun 2011 15:51:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: NLM: Don't hang forever on NLM unlock requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/25
+Message-ID: <Pine.GSO.4.64.1103041200201.3265@faron.mitre.org>
+Date: Fri, 4 Mar 2011 12:05:02 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Solar Designer <solar@...nwall.com>
+cc: Florian Zumbiehl <florz@...rz.de>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
 
+If there's a common usage scenario that doesn't stem from blatant 
+administrator negligence, then a CVE is probably still appropriate. 
+("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
+script setuid, or modifies the perms for an executable or config file to 
+be world-writable.)
 
------ Original Message -----
-> NLM: Don't hang forever on NLM unlock requests
-> 
-> If the NLM daemon is killed on the NFS server, we can currently end up
-> hanging forever on an 'unlock' request, instead of aborting.  Basically,
-> if the rpcbind request fails, or the server keeps returning garbage, we
-> really want to quit instead of retrying.
-> 
-> Tested-by: Vasily Averin <vvs@...ru>
-> Signed-off-by: Trond Myklebust <Trond.Myklebust@...app.com>
-> Cc: stable@...nel.org
-> 
-> In English, it means that a local, unprivileged user could use the flock
-> system call on a NFS share to cause a denial of service.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=709393
-> http://git.kernel.org/linus/0b760113a3a155269a3fba93a409c640031dd68f
-> 
+We will sometimes write the CVE description more as an "adminisrator 
+practice" than as "fault of the software."
 
-Please use CVE-2011-2491.
+For example, default passwords are fair game; arguably, if the admin 
+didn't read page 24 of the documentation that said "change the default 
+password," this is more the admin's fault than the software's fault... BUT 
+the issue has to be dealt with, either way, so a CVE becomes a "signal" 
+for that action to take place, whether it came from the software or from 
+the user.
 
-Thanks.
+Not everything is that clean and straightforward of course, but that's the 
+general thinking.
 
--- 
-    JB
+- Steve
