@@ -1,33 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/2
-Message-ID: <70018822-411e-40dd-9944-59272d6e2850@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 11:34:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/11
+Message-ID: <AANLkTin7rEnGm0bhar732k3GG1Q3ARmwzX3ZbrUMSz1Y@mail.gmail.com>
+Date: Thu, 3 Mar 2011 22:46:51 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- apt
+Cc: "Dmitry V. Levin" <ldv@...linux.org>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3374.
+>
+> One more option is to replace /etc/mtab regular file with a symlink to
+> /proc/mounts, thus making any /etc/mtab editing unneeded.
+>
+>
 
-Thanks.
+This is a very good point.  I'm not sure why /etc/mtab exists anymore
+given /proc/mounts is a more reliable source for this information.
 
--- 
-    JB
-
-
------ Original Message -----
-> apt-key in Ubuntu is not verifying the key correctly when it is
-> fetched
-> via 'apt-key net-update'. This was reported here:
-> 
-> http://seclists.org/fulldisclosure/2011/Sep/221
-> 
-> and tracked here:
-> https://launchpad.net/bugs/856489
-> 
-> Based on the man page, Debian should not be affected. Derivatives of
-> Ubuntu probably are.
-> 
-> --
-> Jamie Strandboge             | http://www.canonical.com
-> 
+-Dan
