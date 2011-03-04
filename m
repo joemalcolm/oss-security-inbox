@@ -1,45 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/1
-Message-ID: <20111009103526.25166a06@laverne>
-Date: Sun, 9 Oct 2011 10:35:26 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/27
+Message-ID: <20110304172749.GA26083@openwall.com>
+Date: Fri, 4 Mar 2011 20:27:49 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: CSRF and file inclusion in usebb before 1.0.12
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-http://www.usebb.net/community/topic-2571.html
+Jan,
 
-Vulnerability "HTB22914: Local File Inclusion in UseBB"
+I think I misread/misunderstood a portion of what you wrote
+(specifically, what you referred to by "the disclination") when I
+replied with the below.  Please disregard this piece.  The rest of my
+response still stands.
 
-Recently, High-Tech Bridge SA discovered a possible issue in UseBB
-1.0.11 and earlier. The issue exists in the fact that admin.php may
-possibly include PHP files not used for the UseBB admin control panel
-(ACP).
+On Fri, Mar 04, 2011 at 08:05:03PM +0300, Solar Designer wrote:
+> On Fri, Mar 04, 2011 at 04:35:03PM +0100, Jan Lieskovsky wrote:
+> > just saying the disclination like the above doesn't help anyone.
+> 
+> I think it does.  But I am willing to shut up. ;-)  I sure am not going
+> to post stuff that people don't want to receive/read. ;-)
 
-The faulty code in question is only executed for logged in
-administrator accounts, and can only include non-relevant PHP files if
-a directory "sources/admin_" exists, which is not the case in UseBB 1.
-Therefore, the issue does not pose a direct threat to an existing UseBB
-set-up, but is classified a security issue anyway and has been fixed in
-UseBB 1.0.12.
-
-Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
-UseBB"
-
-High-Tech Bridge SA also discovered possibilities of executing CSRF
-attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
-malicious URL or visits a web page containing such URL or JavaScript,
-requests may be executed that add, edit or delete data on the forum,
-including topics, posts, account information and settings in the ACP
-(if the user has logged in into the ACP).
-
-As a solution, UseBB 1.0.12 has implemented URL and form tokens for
-sensitive actions. Accessing or executing above URLs or scripts now
-doesn't have an effect on the data.
-
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
