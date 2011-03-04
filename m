@@ -1,31 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/11
-Message-ID: <20110810202646.6702240a@redhat.com>
-Date: Wed, 10 Aug 2011 20:26:46 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/33
+Message-ID: <4D7148F5.2090205@gmail.com>
+Date: Sat, 05 Mar 2011 03:17:57 +0700
+From: Pavel Labushev <p.labushev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 10 Aug 2011 10:27:18 +0200 Thomas Biege wrote:
+04.03.2011 21:52, Solar Designer пишет:
 
-> The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
+> I've just skimmed over the list, and I only see one issue that I'd call
+> a vulnerability in logrotate, issue #8.  And we need more info on #5.
+> 
+> The rest, as described, appear to rely on sysadmin error and to assume
 
-...
-
-> 2) Boundary errors within the "CSoundFile::ReadS3M()" function
-> (src/load_s3m.cpp) when processing S3M files can be exploited to cause
-> stack-based buffer overflows by tricking a user into opening a
-> specially crafted S3M file.
-
-Any specific reason to believe these two are the same?  CVE-2011-1574
-links:
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
-
-while commit related to SA45131/2 seems to be this one:
-
-> [3]
-> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Or on package maintainer error. At least in Gentoo there are packages
+(ebuilds and eclasses) that create user/group-writable directories in
+/var/log and enable logrotate to handle the log files there.
