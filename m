@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/8
-Message-ID: <2002843853.1360816.1310749508345.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Jul 2011 13:05:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- kernel: ext4: kernel panic when writing data to the last block of sparse file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/18
+Message-ID: <20110304151400.GJ24629@florz.florz.dyndns.org>
+Date: Fri, 4 Mar 2011 16:14:00 +0100
+From: Florian Zumbiehl <florz@...rz.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2695.
+Hi,
 
-Thanks.
+> The rest, as described, appear to rely on sysadmin error and to assume
+> security properties that logrotate never advertised it had.  Specifically,
+> logrotate was never declared to be safe to use on untrusted directories,
+> and it was an error for a sysadmin to make such an assumption.
+> 
+> I don't mind logrotate being enhanced/hardened in this respect, but to
+> call these vulnerabilities sounds like a stretch.  Also, even if
+> logrotate is hardened, it should not be declared to be safe to use on
+> untrusted directories.  It'd be better to explicitly state that it is
+> not, to avoid this sort of confusion.
 
--- 
-    JB
+In which scenarios exactly logrotate is supposed to be safe to use is
+mostly undefined.
 
+However, it is currently a common setup (as in: what distributions do out
+of the box) to have a daily logrotate cron job run as root that rotates
+the logs of all the services and to have log directories owned by service
+users (so they can create missing log files, for example).
 
------ Original Message -----
-> If an extent exists which includes the block right before the maximum
-> file offset, and the block for the maximum file offset is written,
-> the kernel panics. For 4KB block size, the problem only occurs on
-> x86_64 architecture. For 1KB or 2KB block size, the problem occurs on
-> both i386 and x86_64.
-> 
-> Local unprivileged users can use this flaw to crash the system when
-> ext4
-> filesystem is in use.
-> 
-> Upstream fix:
-> f17722f917b2f21497deb6edc62fb1683daa08e6
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=722557
-> http://www.spinics.net/lists/linux-ext4/msg25697.html
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+In such setups, the service user can elevate its privileges to root
+or corrupt root-owned files using the various bugs.
+
+Florian
