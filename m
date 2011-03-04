@@ -1,107 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/6
-Message-ID: <AANLkTimZGjkKy2G8pbJGKsq-QCKbxX-EwnJ35AGyMdy8@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:17:16 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: MyBB 1.6 <= SQL Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/22
+Message-ID: <20110304161640.GA25667@openwall.com>
+Date: Fri, 4 Mar 2011 19:16:40 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Florian Zumbiehl <florz@...rz.de>, oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Hi Florian -
 
-Potential SQL Injection vulnerability was detected in MyBB.
+Thank you for explaining your rationale behind this.  Here's my take on it:
 
+On Fri, Mar 04, 2011 at 04:14:00PM +0100, Florian Zumbiehl wrote:
+> In which scenarios exactly logrotate is supposed to be safe to use is
+> mostly undefined.
 
-2. APPLICATION DESCRIPTION
+Maybe.  We just need to (hopefully) agree on what is common, expected,
+correct - and this may be changing over the years.  Apply our common
+sense and experience.
 
-MyBB is a free bulletin board system software package developed by the
-MyBB Group.
-It's supposed to be developed from XMB and DevBB bulletin board applications.
+> However, it is currently a common setup (as in: what distributions do out
+> of the box) to have a daily logrotate cron job run as root that rotates
+> the logs of all the services and to have log directories owned by service
+> users
 
+Arguably, these are bugs in those service packages, which I'd call
+vulnerabilities.  At least that's the policy for Owl (our Linux distro)
+so far.  We don't have any service-writable log file directories.
 
-3. VULNERABILITY DESCRIPTION
+I reported one of those issues against nginx-0.6.39-2.el5 (a Red Hat
+distro package) to the package maintainer a year ago, and was told
+the issue was fixed in response to my report (by chown'ing the nginx
+logs directory).  IMO, such a fix was the only right thing to do.
 
-The "keywords" parameter was not properly sanitized in /private.php
-and /search.php which leads to SQL Injection vulnerability. Full
-exploitation  possibility is probably mitigated by clean_keywords and
-clean_keywords_ft functions in inc/functions_search.php.
+> (so they can create missing log files, for example).
 
+I think that services should either do that before they drop root at
+startup, or they should not do it at all (leave it to logrotate).
 
-4. VERSIONS AFFECTED
+However, if it's somehow desired that a service running as non-root be
+able to create log files (other than just at startup?), then the correct
+approach would be to run a dedicated instance of logrotate for that
+service under the service pseudo-user.  Don't mix the pseudo-user and
+root for the same task (dealing with log files of the same service),
+which creates unnecessary risks.
 
-MyBB 1.6 and lower
+> In such setups, the service user can elevate its privileges to root
+> or corrupt root-owned files using the various bugs.
 
+Indeed.  A vulnerability in the service package, in my opinion.  Now
+that would require CVE id assignment and a fix to the package, whereas
+logrotate could merely use some hardening with no CVE ids (except for
+issue #8, which was different).
 
-5. PROOF-OF-CONCEPT/EXPLOIT
+What do you say?
 
-=> /search.php
-
-POST /mybb/search.php
-
-action=do_search&forums=2&keywords='+or+'a'+'a&postthread=1
-
-
-=> /private.php
-
-POST /mybb/private.php
-
-my_post_key=&keywords='+or+'a'+'a&quick_search=Search+PMs&allbox=Check+All&fromfid=0&fid=4&jumpto=4&action=do_stuff
-
-
-Get nikto check
-http://trac2.assembla.com/Nikto_2/browser/trunk/plugins/db_tests?rev=588
-
-Or try nikto udb_tests
-
-"400000","0","9","/search.php","POST","MyBB has experienced an
-internal SQL error and cannot continue.","","","Sorry, but no results
-were returned","","MyBB 1.6 <= SQL Injection,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection","action=do_search&forums=2&keywords='+or+'a'+'a&postthread=1",""
-
-"400001","0","9","/private.php","POST","MyBB has experienced an
-internal SQL error and cannot continue.","","","Sorry, but no results
-were returned","","MyBBx 1.6 <= SQL Injection,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection","my_post_key=&keywords='+or+'a'+'a&quick_search=Search+PMs&allbox=Check+All&fromfid=0&fid=4&jumpto=4&action=do_stuff",""
-
-
-6. SOLUTION
-
-Upgrade to 1.6.1
-
-
-7. VENDOR
-
-MyBB Development Team
-http://www.mybb.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-09: notified vendor
-2010-12-15: vendor released fixed version
-2010-12-24: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection
-About MyBB: http://www.mybb.com/about/mybb
-
-
-#yehg [2010-12-24]
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+Alexander
