@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/3
-Message-ID: <4E31366F.4010704@redhat.com>
-Date: Thu, 28 Jul 2011 15:44:07 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/21
+Message-ID: <20110304171347.654f8997@orphan>
+Date: Fri, 4 Mar 2011 17:13:47 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
+Subject: Re: Re: CVE request: More Evince overflows
 Content-Type: text/plain; charset=utf-8
 
-On 07/28/2011 03:34 PM, Tavis Ormandy wrote:
+On Fri, 18 Feb 2011 17:57:00 -0600 Raphael Geissert wrote:
 
-> Interesting, I also looked at systemtap and found a local root
-> (CVE-2010-4170), but was under the impression we had agreed it should be
-> restricted to a privileged group?
+> On Friday 18 February 2011 08:41:08 Thomas Biege wrote:
+> > Has someone assigned a CVE-ID for this already?
+> > > https://bugzilla.gnome.org/show_bug.cgi?id=640923
 > 
-> https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
+> Looks like everyone is just waiting for somebody else to assign an id, so 
+> let's just assign one:
 > 
-> I stopped looking because I concluded that had eliminated any security risk,
-> is that no longer the case?
-> 
-I believe this does reduce the risk, but does not totally eliminate it.
+> Please use CVE-2011-0433
 
-
+There's an off-by-one in those fixes, as it's been pointed out to me.
+So if you've not fixed yet, you may want to look at:
+  https://bugzilla.gnome.org/show_bug.cgi?id=643882
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
