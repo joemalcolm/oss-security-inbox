@@ -1,40 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/1
-Message-ID: <20111022005621.GA31654@openwall.com>
-Date: Sat, 22 Oct 2011 04:56:21 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/15
+Message-ID: <1299236473.27796.101.camel@localhost.localdomain>
+Date: Fri, 04 Mar 2011 22:00:56 +1100
+From: David Hicks <hickseydr@...usnet.com.au>
 To: oss-security@...ts.openwall.com
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 21, 2011 at 03:29:41PM +0530, Huzaifa Sidhpurwala wrote:
-> On 10/20/2011 08:27 PM, Josh Bressers wrote:
-> 
-> >>The hardlink(1) program from Fedora is susceptible to buffer overflows of
-> >>fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
-> >>nested directories and/or with long directory or file names.  I was able
-> >>to reproduce the problem (got a segfault) by running the program on a
-> >>directory containing 20 nested directories with 250-character names.
-> >
-> >CVE-2011-3630 hardlink buffer overflows
-> >https://bugzilla.redhat.com/show_bug.cgi?id=746709
-> 
-> FORTIFY_SOURCE should really be able to catch this buffer overflow.
-> The buffer being overflown here in in BSS, But strcat() is used to 
-> append to this buffer and __builtin___strcat_chk catches it, resulting 
-> in the program being terminated.
+On Thu, 2011-03-03 at 13:36 -0800, Kees Cook wrote:
+> Several upstreams, though disappointingly not the Linux kernel, are very
+> good about keeping their end-users in mind and providing direct distro
+> coordination for important security updates (MIT Kerberos comes to mind
+> first as a great example). This number of upstreams has been growing,
+> but it's not nearly large enough to supplant a vendor-sec-like mailing
+> list, IMO.
 
-Besides the strcpy() and strcat() with obviously known target buffer
-size, there are also:
 
-          strcpy (stpcpy (nambuf2, n2), ".$$$___cleanit___$$$");
+CVE number assignment: perspective from a small open source project
 
-and:
+The MantisBT project (open source web based bug tracking) has been
+directly notifying major distributions of bugs which have a notable
+security impact. A project specific announcements mailing list, blog,
+bug tracker, IRC channel, Twitter account and source repository are also
+used to convey information to users about new releases. A number of
+notices were also sent to oss-security late last year in response to
+vulnerabilities being discovered.
 
-      strcpy (p, di->d_name);
+The reason I bring up the long list of notification options is because
+of CVE number assignment. It strikes me that one of the key benefits of
+CVE numbers is to improve the ease at which a security issue can be
+tracked and information gathered via Internet search.
 
-where "p" points somewhere inside nambuf1.
+The time when a CVE number is arguably most useful is during the patch,
+release announcement and notification processes where it can be used to
+tie related information to a single tracking number. From the
+perspective of a small open source project, obtaining CVE numbers via
+oss-security appears to be a relatively slow process that can take a
+number of days to process. Furthermore, oss-security is probably one of
+the fastest methods (if not the only method) small open source projects
+can use to seek CVE numbers.
 
-These will just need different reproducers.
 
-Alexander
+Why can't the project embargo the issue until a CVE number is assigned?
+
+A large number of MantisBT users bypass their distribution packaging
+system to obtain the software directly (commonly the case for web
+applications). Other users do not have packaging systems available on
+their platform of choice (Windows or shared web hosting).
+
+MantisBT has typically taken the full disclosure approach in the
+interests of providing the fastest possible response time to independent
+users. This involves applying a very obvious security patch in the
+repository, creating of a new release and loudly notifying users that
+they need to upgrade to the new minor release without delay for security
+reasons. This process currently occurs prior to a CVE number being
+allocated and as such our announcements, mailing list threads, commit
+messages, bug reports, etc generally miss out on being tagged with a CVE
+reference.
+
+For a smaller niche/boutique distribution which MantisBT does not have
+the resources to contact for every vulnerability, they may hear about
+the issue first on oss-security. Their usual package maintainer
+subscribed to the MantisBT project announcement mailing list may be on
+holiday. That's OK though because the security team of the distribution
+may pick up on the news from oss-security (correct me if this use case
+is incorrect).
+
+I would have thought that it'd be beneficial for the security team (and
+any other interested parties) to take a CVE number from the oss-security
+thread and perform an Internet search to bring up the maximum amount of
+information related to a vulnerability - Internet wide. The most
+important information is likely going to be from the open source project
+itself - announcements, mailing list threads, commit messages, IRC logs
+and bug reports. However blog posts, external mailing list threads, IRC
+logs, etc away from the official project communication channels may also
+be useful.
+
+
+Suggestion
+
+Is there a way open source projects can receive CVE numbers in a more
+timely fashion? Projects may go for entire years without a vulnerability
+and therefore pre-assignment may not be ideal. I suppose that is a
+downside of using an incremental integer numbering system. Perhaps some
+form of provisional CVE request functionality could exist for registered
+open source projects to call upon? Or an increased number of
+staff/volunteers within distributions who can assign CVE numbers via
+oss-security?
+
+
+David Hicks
+MantisBT Developer
+mantisbt.org, #mantishelp freenode
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
