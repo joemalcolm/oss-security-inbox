@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/7
-Message-ID: <20110629173519.GA4831@albatros>
-Date: Wed, 29 Jun 2011 21:35:19 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/31
+Message-ID: <AANLkTikLhWzy7Zoi-qg8OQCY2RD-W8nnHJagcAgVKbJA@mail.gmail.com>
+Date: Fri, 4 Mar 2011 13:14:51 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Florian Zumbiehl <florz@...rz.de>,  Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>,  Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 29, 2011 at 10:32 -0700, Linus Torvalds wrote:
-> On Wed, Jun 29, 2011 at 10:21 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> >
-> > So, with rounded read_characters value it's possible to learn privkey
-> > length.
-> 
-> Umm. You can trivially figure that out from the public key lenth
-> already, can't you?
+>
+>> It felt wrong, say, to blame a text editor for being unsafe to use on
+>> files in untrusted directories when such unsafety was the typical and
+>> expected situation for text editors in general.
+>
+> Some items can be assigned a CVE without deep thought about the larger
+> context.  This may happen due to volume, time constraints, or an
+> under-specified attack scenario by the requester.  That may be the case with
+> the case you're talking about here, but I don't remember it.
+>
 
-No, the attacker here have no information about the key at all.  It
-tries to authorize with a random key and a random password.
+Just to chime in here about parallels to the GNU nano case you're
+referring to.  I agree with you that a CVE for those issues may have
+been unnecessary, but it depends on your expectations of what
+guarantees a text editor provides.  If I try to open an untrusted file
+with a text editor, and an attacker replaces that file before I open
+it, resulting in me making edits to the wrong file, then of course
+that's not a security issue, because the text editor did exactly what
+it was told to do: open the file, which happened to be different by
+the time it got around to opening it.  There would also be visual
+feedback in the text editor to alert the user as to which file was
+being edited.  However, if I open a file to edit, and someone changes
+that file out from under me while I'm making edits, and a resulting
+save overwrites the new underlying file, including following symlinks,
+that's slightly different, since one might argue that some feedback or
+warning from the editor would be expected (this is the case with
+almost all other text editors).  But this is subtle, and I understand
+both sides of the argument - personally, I don't think it's a serious
+enough attack vector to warrant splitting hairs over.
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+The logrotate case is even more subtle, since it's even less clear
+what constitute reasonable expectations with regards to the security
+guarantees of the application.
+
+-Dan
