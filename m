@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/2
-Message-ID: <4EA807BE.5000209@redhat.com>
-Date: Wed, 26 Oct 2011 15:14:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Round Cube Webmail -- DoS (unavailability to access user's INBOX) after receiving an email message with the URL in the Subject
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/28
+Message-ID: <20110304175214.GA26198@openwall.com>
+Date: Fri, 4 Mar 2011 20:52:14 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
+> 
+> If there's a common usage scenario that doesn't stem from blatant 
+> administrator negligence, then a CVE is probably still appropriate. 
+> ("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
+> script setuid, or modifies the perms for an executable or config file to 
+> be world-writable.)
 
-   a security flaw was found in the way Round Cube Webmail,
-a browser-based multilingual IMAP client, processed certail
-email-messages containing URL link in the message Subject,
-when the Suhosin check for dangerous PHP files inclusion
-was enabled. A remote attacker could send a specially-crafted
-email message to the victim, leading to denial of service
-(situation, where victim could not open their mail INBOX
-folder with the crafted email message present).
+I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
+say, "chown nginx /var/log/nginx", it could be negligence or it could be
+lack of familiarity with the risks involved.  So I am willing to admit
+that it's not necessarily negligence that turns those issues into
+vulnerabilities on specific systems.
 
-References:
-[1] http://trac.roundcube.net/ticket/1488086
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=646675
-[3] https://bugs.php.net/bug.php?id=55475
+> We will sometimes write the CVE description more as an "adminisrator 
+> practice" than as "fault of the software."
 
-Note: This is a strange one. The original source of the issue
-       seems to be PHP-Pear is_a() routine autoload bug:
-       https://bugs.php.net/bug.php?id=55475
+Oh, this is something I did not realize.  A lot of people assume that
+CVEs "blame" the software and its authors for having made an error.
 
-       and truly this deficiency might affect another package,
-       than roundcubemail (php-pear-MDB2 in Fedora case).
+It felt wrong, say, to blame a text editor for being unsafe to use on
+files in untrusted directories when such unsafety was the typical and
+expected situation for text editors in general.
 
-       But it is a combination of this php-pear-MDB2 deficiency,
-       roundcube's handling of is_a() routine and Suhosin's
-       check for dangerous *.php files inclusion, which in
-       result might lead into situation, where valid roundcubemail
-       user couldn't access their INBOX just for some email
-       message being present in it.
+Thank you for your responses!
 
-       In short, not sure if the CVE id should be assigned to
-       the PHP PEAR bug or to the roundcubemail package.
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
