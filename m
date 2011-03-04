@@ -1,42 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/8
-Message-ID: <532988263.1022824.1315592574569.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 14:22:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/23
+Message-ID: <Pine.GSO.4.64.1103041157200.3265@faron.mitre.org>
+Date: Fri, 4 Mar 2011 11:59:52 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Matthew Barnes <mbarnes@...hat.com>, Milan Crha <mcrha@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- evolution -- Uses insecure (non-SSL) connection when storing the sent message into the Sent folder
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3355
 
-Thanks.
+As already stated, projects can make requests from the cve@...re address. 
+While we try to respond within 48 business hours, unfortunately that 
+doesn't always happen.  But sometimes you get a response within 2 minutes 
+:-)  This year, I hope to improve our responsiveness with some internal 
+process improvements.
 
--- 
-    JB
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found that Evolution, mail and calendar client, used insecure
-> (non-SSL) connection when attempting to store sent email message into
-> the Sent folder, when the Sent folder was located on the remote
-> server.
-> An attacker on the adjacent network, able to intercept the underlying
-> communication could use this flaw to obtain login credentials of the
-> victim.
-> 
-> References:
-> [1] https://bugzilla.gnome.org/show_bug.cgi?id=648277
-> (upstream bug report)
-> [2]
-> http://git.gnome.org/browse/evolution-data-server/commit/?id=e0ac4d79705c
-> (upstream patch)
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=697904
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=707848
-> 
-> Could you allocate a CVE id for this issue?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+- Steve
