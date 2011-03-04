@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/6
-Message-Id: <201103131933.33082.oeriksson@mandriva.com>
-Date: Sun, 13 Mar 2011 19:33:32 +0100
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/5
+Message-Id: <20110303201100.b0ae71a1.michael.s.gilbert@gmail.com>
+Date: Thu, 3 Mar 2011 20:11:00 -0500
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP substr_replace() use-after-free
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
-> Hi,
+On Thu, 3 Mar 2011 16:41:07 -0800 Greg KH wrote:
+> On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
+> > Of course failing to anticipate security impact is bound to happen in
+> > the kernel; it frequently happens in userland too, and is unavoidable.
+> >  That doesn't mean we can't try, and it doesn't mean we should be
+> > overly paranoid and have security folks manually audit every patch.
+> > Currently, maintainers and bug reporters are expected to ask
+> > themselves a simple question when deciding whether or not to CC
+> > stable: "does this fix a bug or security issue, or is it a new
+> > feature?".  Similarly, I don't think it's too much to ask for people
+> > to consider the question of "does this bug it allow an unprivileged
+> > user to crash the system, gain additional access, or otherwise cross
+> > privilege boundaries?"  And if the answer is "I don't know, maybe?",
+> > then they should CC this list to be safe.  I think this would result
+> > in not nearly as much volume as you're anticipating.
 > 
-> I just found an use-after-free in PHP's substr_replace() function caused by
-> passing the same variable multiple times to the function, which makes the
-> PHP to use the same pointer in three variables inside the function, so when
-> the pointer is changed by a type conversion inside the function, it
-> invalids the other variables.
-> 
-> The PHP security team has seen noticed, and a bug already was filed in the
-> bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
-> 
-> $ sapi/cli/php ../bug.php
-> array(1) {
-> [0]=>
-> string(5) "0Ȅ y"
-> }
-> array(1) {
-> [0]=>
-> string(1) "0"
-> }
-> 
-> 
-> Thanks.
+> They do this already today, that's what security@...nel.org is for, and
+> it gets a bit of traffic like this every week.
 
-It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
+Is this list open to the public?  It doesn't seem to be available on
+http://vger.kernel.org/vger-lists.html.
 
--- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+Best wishes,
+Mike
