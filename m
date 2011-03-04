@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/15
-Message-ID: <20110401183502.GA57923@dojo.mi.org>
-Date: Fri, 1 Apr 2011 14:35:02 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/25
+Message-ID: <Pine.GSO.4.64.1103041200201.3265@faron.mitre.org>
+Date: Fri, 4 Mar 2011 12:05:02 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Solar Designer <solar@...nwall.com>
+cc: Florian Zumbiehl <florz@...rz.de>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-:Hello everyone,
-:
-:This topic has lost focus lately. Rather than let it slip away, I think we
-:should go ahead with the simplest solution right now, we can always do
-:something different at a future date.
-:
-:Openwall has graciously volunteered to run a new list, and they currently
-:have some infrastructure in place to do this. The new list can start up
-:right away. In this instance, I fear perfect is the enemy of the good. I'd
-:rather see something functional in place than nothing.
-:
-:Here is the plan for initial membership (this is also approved by
-:Openwall).
-:
-:Initial members will have had to be a vendor-sec member (no exploders this
-:time around). You must reply to this thread, in public (on oss-security).
-:We want this to be very public, we have nothing to hide. You must have a
-:public gpg key ID included in your reply. The new list will gpg encrypt all
-:mail (it does accept plaintext messages though).
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+If there's a common usage scenario that doesn't stem from blatant 
+administrator negligence, then a CVE is probably still appropriate. 
+("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
+script setuid, or modifies the perms for an executable or config file to 
+be world-writable.)
 
-mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
-mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
-b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
-D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
-8LMz3gjrgSXMOxuep/Ui
-=elKt
------END PGP PUBLIC KEY BLOCK-----
+We will sometimes write the CVE description more as an "adminisrator 
+practice" than as "fault of the software."
 
+For example, default passwords are fair game; arguably, if the admin 
+didn't read page 24 of the documentation that said "change the default 
+password," this is more the admin's fault than the software's fault... BUT 
+the issue has to be dealt with, either way, so a CVE becomes a "signal" 
+for that action to take place, whether it came from the software or from 
+the user.
 
-Content of type "application/pgp-signature" skipped
+Not everything is that clean and straightforward of course, but that's the 
+general thinking.
+
+- Steve
