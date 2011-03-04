@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/01/1
-Message-ID: <4DBCA1BA.2060309@redhat.com>
-Date: Sat, 30 Apr 2011 19:56:42 -0400
-From: William Cohen <wcohen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/2
+Message-ID: <20110304002431.GA20114@suse.de>
+Date: Fri, 4 Mar 2011 01:24:31 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
+On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+> Hi folks,
 > 
-> Hello Josh, Steve, vendors,
+> As moderator of vendor-sec and one of the sysadmins of lst.de I noticed
+> a break-in into the lst.de machine last week, which was likely used to
+> sniff email traffic of vendor-sec. This incident probably happened on Jan 20
+> as confirmed by timestamp, but might have existed for longer.
 > 
->   It was found that oprofile profiling system did not properly sanitize
-> the content of event argument, provided to oprofile profiling control
-> utility (opcontrol). If a local unprivileged user was authorized by
-> sudoers file to run the opcontrol utility, they could use the flaw
-> to escalate their privileges (execute arbitrary code with the privileges
-> of the privileged system user, root). Different vulnerability than
-> CVE-2006-0576.
+> As the system in use at lst.de is quite old and the admin team and myself
+> does not really have the time anymore to keep it on a secure level, we
+> would like to move the list to another hosting place.
 > 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Oprofile is not encouraged to be run under sudo, but still
->       should not allow escalation of privileges.
+> I have disabled the specific backdoor, but as I am not sure how the
+> break-in happened it might reappear. So I recommend not mailing embargoed
+> issues to vendor-sec@....de at this time.
 
+So after I posted this (and went for some beers) the attacker read this
+and reentered the lst.de machine, went amok and destroyed the machine's
+installation. The machine has now been shutdown.
 
-Hi,
+So everyone please consider vendor-sec@....de is dead and gone at this point,
+successors (or not) will hopefully result out of this discussion.
 
-I did a bisection on oprofile git and found the set_event function in opcontrol in:
+Ciao, Marcus (ex-moderator)
 
-http://oprofile.git.sourceforge.net/git/gitweb.cgi?p=oprofile/oprofile;a=commit;h=6b60be5e370aa8d58bd4fbbc39abd51c90509a31
-
-The email thread associated with that patch:
-
-http://marc.info/?l=oprofile-list&m=112293360728638&w=2
-
-Appears that the eval is being used to simulate arrays:
-
-http://marc.info/?l=oprofile-list&m=112297339521850&w=2
-
--Will
+Content of type "application/pgp-signature" skipped
