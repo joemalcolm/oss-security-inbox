@@ -1,165 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/02/3
-Message-ID: <Pine.GSO.4.64.1102021418450.5082@faron.mitre.org>
-Date: Wed, 2 Feb 2011 14:33:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/9
+Message-ID: <AANLkTikcuwsoWPPd3T-BE72X8SjUtbAg6E=D3CjwadqB@mail.gmail.com>
+Date: Thu, 3 Mar 2011 21:42:17 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
 
-I'm not sure about this one.
+This was originally sent to the now-defunct vendor-sec mailing list.
+Seeing how it's a relatively low-severity issue and that we're
+currently lacking a mechanism for coordination among package
+maintainers and vendors, this list seems like a perfectly acceptable
+venue for discussing how to fix it.
 
-My read of the situation is that the attack depends entirely on the 
-successful exploitation of another issue that gives the attacker 
-privileges to modify the database.  This would rarely be a vulnerability 
-to me unless the problem was in some protection mechanism.
+I discovered that essentially every suid mount helper that uses
+addmntent() (or invokes util-linux mount, which in turn calls
+addmntent()) to add entries to /etc/mtab fails to anticipate a low
+value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
+/etc/mtab and possibly manipulate mountpoint options.  Affected
+software includes at least:
 
-It seems likely that phpMyAdmin's "intended" security policy is that 
-anybody with privileges to directly modify the DB (e.g. to create or 
-rename the DB) is a "trusted" user who also has privileges to generate 
-HTML/scripting code.  If that's the case, then this XSS is only available 
-to a privileged user - even if it happens to be someone who got the 
-privileges through some other attack.
+mount.cifs (samba)
+fusermount (FUSE)
+mount (util-linux)
+ncpmount (ncpfs)
+vmware-hgfsmounter (open-vm-tools)
 
-Consequently, the XSS is "resultant" from some other vulnerability, and 
-would not be worthy of a CVE itself.
+Also affected are all their unmount equivalents.
 
-If there's some specific vulnerability that gives someone the 
-privileges to modify the DB when they shouldn't be able to, then a CVE 
-could be assigned for that specific issue.
+This can be exploited by checking the current size of /etc/mtab,
+setting an RLIMIT_FSIZE of some small amount greater than that, and
+invoking a suid mount helper.  The edits to /etc/mtab will be
+truncated to the ulimit and no newline will be appended, so multiple
+invocations allow near-arbitrary appending to /etc/mtab.  addmntent()
+will octal-encode most special characters, which makes exploitation
+beyond simple corruption not quite as straightforward, but I'm
+confident that with some creativity it would be possible to perform
+unauthorized unmounting, for example.
 
-If there's more than one user with privileges to modify the DB, then one 
-user could XSS the other, so I suppose that would get a CVE.
+There are a few possible options   We could patch glibc to try to
+raise the rlimit in addmntent().  Or we could fix every suid mount
+helper to raise the rlimit or have proper error handling for the case
+when addmntent() fails.  This final option requires that mtab editing
+be done in a temporary file and aborted on failure, which isn't the
+case for all helpers.
 
-If I'm mis-understanding the advisory and the attacker (or the XSS victim) 
-does not have privileges to modify DB names or create a DB, then it gets a 
-CVE.
+Of course, once we figure out how to fix this, we can talk about
+assigning CVEs, etc.
 
-If phpMyAdmin's "intended" security policy is that the application should 
-be safe from XSS injected into a compromised DB, then it gets a CVE.
-
-- Steve
-
-
-
-On Thu, 27 Jan 2011, Josh Bressers wrote:
-
-> Steve,
->
-> Can MITRE comment on this? The advisory suggests that in order to exploit
-> this, you already have to have access to the user's account in some way.
-> I'm not sure what the precedent is for such a situation.
->
-> Thanks.
->
-> --
->    JB
->
-> ----- Original Message -----
->> http://seclists.org/fulldisclosure/2011/Jan/486
->>
->>
->> ===================================================================================
->> phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
->> Vulnerability
->> ===================================================================================
->>
->>
->> 1. OVERVIEW
->>
->> The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
->> 3.4.x were vulnerable to Cross Site Scripting.
->>
->>
->> 2. PRODUCT DESCRIPTION
->>
->> phpMyAdmin is a free software tool written in PHP intended to handle
->> the administration of MySQL over the World Wide Web.
->> phpMyAdmin supports a wide range of operations with MySQL.
->> The most frequently used operations are supported by the user
->> interface (managing databases, tables, fields, relations,
->> indexes, users, permissions, etc), while you still have the ability to
->> directly execute any SQL statement.
->>
->>
->> 3. VULNERABILITY DESCRIPTION
->>
->> The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
->> inject XSS string in 'db' field when creating or renaming a database.
->> An attacker can create new database name or rename database name
->> through several means like SQL Injection in user's vulnerable web
->> applications or
->> compromise of user account through brute-force or bypassing CSRF
->> protection.
->> Even though the phpMyAdmin uses httpOnly as a protection against
->> cookie theft via XSS, attacker could use XSS tunneling proxy to
->> manipulate database names and fields. From it, he could execute
->> arbitrary database commands to allow him higher access to the server.
->>
->>
->> 4. VERSIONS AFFECTED
->>
->> phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
->>
->> Vendor confirmed this flaw did not exist before the 3.4 version
->> family.
->> Thus, it is assumed 2.x and 3.3 <= versions are not affected.
->>
->>
->> 5. PROOF-OF-CONCEPT/EXPLOIT
->>
->> http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
->> http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
->>
->>
->> 6. IMPACT
->>
->> Attackers can compromise currently logged-in user session, plant xss
->> backdoors and inject arbitrary SQL statements
->> (CREATE,INSERT,UPDATE,DELETE)
->> via crafted XSS payloads.
->>
->>
->> 7. SOLUTION
->>
->> For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
->> check out the latest commit (git pull).
->>
->>
->> 8. VENDOR
->>
->> phpMyAdmin (http://www.phpmyadmin.net)
->>
->>
->> 9. CREDIT
->>
->> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
->> Ethical Hacker Group, Myanmar.
->>
->>
->> 10. DISCLOSURE TIME-LINE
->>
->> 2011-01-26: notified vendor
->> 2011-01-26: vendor released fix
->> 2011-01-27: vulnerability disclosed
->>
->>
->> 11. REFERENCES
->>
->> Vendor Commit:
->> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
->> Original Advisory URL:
->> http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
->> CWE-79: http://cwe.mitre.org/data/definitions/79.html
->> Previous Releases:
->> http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
->> http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
->> http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
->> http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
->>
->>
->>
->> #yehg [2011-01-27]
->
+Regards,
+Dan
