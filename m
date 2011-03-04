@@ -1,17 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/4
-Message-ID: <20110804141632.GA6443@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 17:16:32 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/27
+Message-ID: <20110304172749.GA26083@openwall.com>
+Date: Fri, 4 Mar 2011 20:27:49 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: CVE request: coppermine gallery < 1.4.26
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-This security issue never got CVE-identifier: http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
+Jan,
 
-Original advisory: http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
-OSVDB: http://osvdb.org/show/osvdb/62261
+I think I misread/misunderstood a portion of what you wrote
+(specifically, what you referred to by "the disclination") when I
+replied with the below.  Please disregard this piece.  The rest of my
+response still stands.
 
-Best regards,
-Henri Salo
+On Fri, Mar 04, 2011 at 08:05:03PM +0300, Solar Designer wrote:
+> On Fri, Mar 04, 2011 at 04:35:03PM +0100, Jan Lieskovsky wrote:
+> > just saying the disclination like the above doesn't help anyone.
+> 
+> I think it does.  But I am willing to shut up. ;-)  I sure am not going
+> to post stuff that people don't want to receive/read. ;-)
+
+Alexander
