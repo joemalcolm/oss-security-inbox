@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/30
-Message-ID: <20110404174540.2e166a47@orphan>
-Date: Mon, 4 Apr 2011 17:45:40 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/14
+Message-ID: <1103040800390.25284@mjc.redhat.com>
+Date: Fri, 4 Mar 2011 08:08:03 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, John Bailey <rekkanoryo@...kanoryo.org>
-Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 21 Mar 2011 12:02:40 -0400 (EDT) Steven M. Christey wrote:
+> This certainly underscores that very few flaws need vendor-sec
+> coordination, but I would suspect that out of those roughly 725 flaws,
+> many of the really critical ones came through vendor-sec.
 
-> Disclosure of "local" memory to another user on the same system could 
-> qualify for CVE inclusion, if the memory can contain something
-> sensitive.
+Actually, not so much.  Of the flaws we rated impact critical or with a 
+CVSS of 'high', only 4 were from that 29 from vendor-sec.
 
-The patches fixes the code that was intended to clean up wipe certain
-buffers that were used to store crypto material before freeing them.
-As the CC on John was dropped, I guess he did not see your follow-up to
-clarify his "local".
+> I'm also curious what "issues already public but found out about it on
+> vendor-sec" means?
 
-My understanding is that this issue may increase impact of some other
-memory disclosure issue (encryption key leaked vs. e.g. a random chat
-message), but requires some other flaw to be an issue.
+It's where the date the issue was public is the same date it was reported 
+to vendor-sec.  This can be because it was brought to the wrong list, the 
+embargo was a day or less, or less often vendors wanted to discuss 
+something about it confidentially (a way to exploit it, etc)
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Mark
