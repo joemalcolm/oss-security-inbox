@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/4
-Message-ID: <1319034455.2700.9.camel@mdlinux>
-Date: Wed, 19 Oct 2011 10:27:35 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com,  team@...urity.debian.org
-Subject: CVE Request: apt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/12
+Message-Id: <201103040735.33312.ludwig.nussel@suse.de>
+Date: Fri, 4 Mar 2011 07:35:33 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Dan Rosenberg wrote:
+> > One more option is to replace /etc/mtab regular file with a symlink to
+> > /proc/mounts, thus making any /etc/mtab editing unneeded.
+> 
+> This is a very good point.  I'm not sure why /etc/mtab exists anymore
+> given /proc/mounts is a more reliable source for this information.
 
-Could a CVE please be assigned to the following issue:
+/proc/mounts doesn't store options like user=. So replacing /etc/mtab
+with a symlink wasn't feasible in general. util-linux recently
+introduced /dev/.mount/utab which stores the missing information.
 
-Apt before 0.8.11 incorrectly handles the Verify-Host configuration
-option, resulting in a successful connection instead of a verification
-failure when the certificate host name doesn't match.
+cu
+Ludwig
 
-See:
-
-http://bazaar.launchpad.net/~donkult/apt/sid/revision/2053.1.28
-https://bugs.launchpad.net/ubuntu/+source/apt/+bug/868353
-
-
-Thanks,
-
-Marc.
-
-
-
-
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
