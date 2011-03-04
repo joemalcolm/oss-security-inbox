@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/4
-Message-ID: <4D94C023.5080604@slackware.com>
-Date: Thu, 31 Mar 2011 12:55:47 -0500
-From: "Patrick J. Volkerding" <security@...ckware.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/10
+Message-ID: <20110304025613.GA22405@altlinux.org>
+Date: Fri, 4 Mar 2011 05:56:13 +0300
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On 03/31/2011 08:43 AM, Dan Rosenberg wrote:
-> I'd also
-> like to see distributions migrating away from /etc/mtab in general,
-> since /proc/mounts seems like a much better replacement.
+On Thu, Mar 03, 2011 at 09:42:17PM -0500, Dan Rosenberg wrote:
+[...]
+> I discovered that essentially every suid mount helper that uses
+> addmntent() (or invokes util-linux mount, which in turn calls
+> addmntent()) to add entries to /etc/mtab fails to anticipate a low
+> value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
+> /etc/mtab and possibly manipulate mountpoint options.  Affected
+> software includes at least:
+[...]
+> There are a few possible options
 
-I imagine that mount's -f (fake mount by editing mtab) and -n (mount 
-without editing mtab) options are not going to work if /etc/mtab becomes 
-a symbolic link to /proc/mounts, so that's liable to break a few things. 
-  In the long run it does seem like a good plan, but there might be a 
-few bumps in the road.  I wonder what the rationale was for faking mtab 
-mounts in the first place?
+One more option is to replace /etc/mtab regular file with a symlink to
+/proc/mounts, thus making any /etc/mtab editing unneeded.
+
+
+-- 
+ldv
+
+Content of type "application/pgp-signature" skipped
