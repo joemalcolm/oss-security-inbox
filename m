@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/14
-Message-ID: <20110303215345.GB30451@kroah.com>
-Date: Thu, 3 Mar 2011 13:53:45 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/12
+Message-Id: <201103040735.33312.ludwig.nussel@suse.de>
+Date: Fri, 4 Mar 2011 07:35:33 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 01:36:40PM -0800, Kees Cook wrote:
-> Several upstreams, though disappointingly not the Linux kernel, are very
-> good about keeping their end-users in mind and providing direct distro
-> coordination for important security updates (MIT Kerberos comes to mind
-> first as a great example).
+Dan Rosenberg wrote:
+> > One more option is to replace /etc/mtab regular file with a symlink to
+> > /proc/mounts, thus making any /etc/mtab editing unneeded.
+> 
+> This is a very good point.  I'm not sure why /etc/mtab exists anymore
+> given /proc/mounts is a more reliable source for this information.
 
-Note, that is just your opinion about the Linux kernel, not all distros
-or developers share that view.
+/proc/mounts doesn't store options like user=. So replacing /etc/mtab
+with a symlink wasn't feasible in general. util-linux recently
+introduced /dev/.mount/utab which stores the missing information.
 
-thanks,
+cu
+Ludwig
 
-greg k-h
+-- 
+ (o_   Ludwig Nussel
+ //\   
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
