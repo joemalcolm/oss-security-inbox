@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/11
-Message-ID: <623047261.146712.1294160312126.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 4 Jan 2011 11:58:32 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/28
+Message-ID: <20110304175214.GA26198@openwall.com>
+Date: Fri, 4 Mar 2011 20:52:14 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>
-Subject: Re: CVE request: silverstripe before 2.4.4
+Cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> http://www.silverstripe.org/security-releases/
+On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
 > 
-> Silverstripe 2.4.4 notes:
-> SQL information disclosure, SQL injection in Translatable extension,
-> Cross Site Request Forgery in various CMS interfaces, XSS in controller
-> action handling
-> 
-> (if someone is motivated one could also assign CVEs to all the old
-> version issues)
-> 
+> If there's a common usage scenario that doesn't stem from blatant 
+> administrator negligence, then a CVE is probably still appropriate. 
+> ("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
+> script setuid, or modifies the perms for an executable or config file to 
+> be world-writable.)
 
-This one is way bigger than I can handle. I shall defer it to MITRE. It's
-going to take a lot of work and CVE ids.
+I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
+say, "chown nginx /var/log/nginx", it could be negligence or it could be
+lack of familiarity with the risks involved.  So I am willing to admit
+that it's not necessarily negligence that turns those issues into
+vulnerabilities on specific systems.
 
-Thanks.
+> We will sometimes write the CVE description more as an "adminisrator 
+> practice" than as "fault of the software."
 
--- 
-    JB
+Oh, this is something I did not realize.  A lot of people assume that
+CVEs "blame" the software and its authors for having made an error.
+
+It felt wrong, say, to blame a text editor for being unsafe to use on
+files in untrusted directories when such unsafety was the typical and
+expected situation for text editors in general.
+
+Thank you for your responses!
+
+Alexander
