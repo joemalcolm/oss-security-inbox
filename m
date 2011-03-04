@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/3
-Message-ID: <20110221183952.GD3901@pisco.westfalen.local>
-Date: Mon, 21 Feb 2011 19:39:52 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/29
+Message-ID: <Pine.GSO.4.64.1103041254480.3265@faron.mitre.org>
+Date: Fri, 4 Mar 2011 13:02:38 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: freebsd kernel/tesseract/xinha/proftpd
+cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Please assign CVE IDs for the following issues from the Debian
-Security Tracker:
 
-1. FreeBSD kernel: local DoS
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
-http://www.exploit-db.com/exploits/16064/
-http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
+On Fri, 4 Mar 2011, Solar Designer wrote:
 
-2. Xinha: Multiple vulnerabilities
-(The code is included in a few web apps, e.g. serendipity, openacs or dotlrn)
-http://secunia.com/advisories/40669/
+> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
+>>
+>> We will sometimes write the CVE description more as an "adminisrator
+>> practice" than as "fault of the software."
+>
+> Oh, this is something I did not realize.  A lot of people assume that
+> CVEs "blame" the software and its authors for having made an error.
 
-3. tesseract: Insecure temp file handling
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
+We do this *if* we are aware of the subtleties.  But this often requires 
+an understanding of the expected software behavior, and CVE covers 
+thousands of different applications each year.  Unfortunately, we can't 
+have that level of understanding about each app.
 
-4. proftpd mod_sftp integer overflow
-http://bugs.proftpd.org/show_bug.cgi?id=3586
-http://www.exploit-db.com/exploits/16129/
+> It felt wrong, say, to blame a text editor for being unsafe to use on 
+> files in untrusted directories when such unsafety was the typical and 
+> expected situation for text editors in general.
 
-Cheers,
-        Moritz
+Some items can be assigned a CVE without deep thought about the larger 
+context.  This may happen due to volume, time constraints, or an 
+under-specified attack scenario by the requester.  That may be the case 
+with the case you're talking about here, but I don't remember it.
+
+- Steve
