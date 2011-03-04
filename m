@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/09/2
-Message-ID: <AANLkTimCAAbLzq53BXvdd6sozMRC_Wns=TnH3inKYJKi@mail.gmail.com>
-Date: Sat, 8 Jan 2011 23:05:17 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: Hyrum K Wright <hyrum@...umwright.org>
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/17
+Message-ID: <20110304145232.GA25390@openwall.com>
+Date: Fri, 4 Mar 2011 17:52:32 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-> Sounds great.
->
-> Should the Subversion project plan to write and publish advisories for
-> these CVEs, or has the requester already done so?
+On Fri, Mar 04, 2011 at 03:08:31PM +0100, Jan Lieskovsky wrote:
+>   we have been contacted by Stefan Fritsch of Debian Security Team
+> about presence of nine security flaws in the logrotate utility
+> (the list is provided below).
 
-I'm not affiliated with subversion so it's up to them (I assume they
-won't since they didn't do so originally).
+I've just skimmed over the list, and I only see one issue that I'd call
+a vulnerability in logrotate, issue #8.  And we need more info on #5.
 
-> -Hyrum
+The rest, as described, appear to rely on sysadmin error and to assume
+security properties that logrotate never advertised it had.  Specifically,
+logrotate was never declared to be safe to use on untrusted directories,
+and it was an error for a sysadmin to make such an assumption.
 
--- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+I don't mind logrotate being enhanced/hardened in this respect, but to
+call these vulnerabilities sounds like a stretch.  Also, even if
+logrotate is hardened, it should not be declared to be safe to use on
+untrusted directories.  It'd be better to explicitly state that it is
+not, to avoid this sort of confusion.
+
+> 5) Issue #5: logrotate: Information disclosure by performing email
+>              notifications
+...
+> 8) Issue #8: logrotate: TOCTOU race condition by creation of new files 
+> (between
+>              opening the file and moment, final permissions have been 
+>              applied)
+>              [information disclosure]
+
+Alexander
