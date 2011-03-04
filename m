@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/6
-Message-ID: <146849069.119412.1304965783884.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 May 2011 14:29:43 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/18
+Message-ID: <20110304151400.GJ24629@florz.florz.dyndns.org>
+Date: Fri, 4 Mar 2011 16:14:00 +0100
+From: Florian Zumbiehl <florz@...rz.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> The bug was opened on January 18 :
-> https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
+Hi,
+
+> The rest, as described, appear to rely on sysadmin error and to assume
+> security properties that logrotate never advertised it had.  Specifically,
+> logrotate was never declared to be safe to use on untrusted directories,
+> and it was an error for a sysadmin to make such an assumption.
 > 
-> A patch is available since February 20 :
-> http://trac.webkit.org/changeset/79159 (public)
-> 
-> Given some recent mail exchanges with Apple, they still not have
-> affected a CVE to this issue. Could you please allocate one, in order
-> for me to have an easier job communicating with the numerous impacted
-> vendors (many Linux distributions, RIM, Maxthon, ...) ?
-> 
+> I don't mind logrotate being enhanced/hardened in this respect, but to
+> call these vulnerabilities sounds like a stretch.  Also, even if
+> logrotate is hardened, it should not be declared to be safe to use on
+> untrusted directories.  It'd be better to explicitly state that it is
+> not, to avoid this sort of confusion.
 
-I don't see a CVE id in the upstream bug, so I'll risk assigning an ID.
+In which scenarios exactly logrotate is supposed to be safe to use is
+mostly undefined.
 
-Use CVE-2011-1774
+However, it is currently a common setup (as in: what distributions do out
+of the box) to have a daily logrotate cron job run as root that rotates
+the logs of all the services and to have log directories owned by service
+users (so they can create missing log files, for example).
 
-Thanks.
+In such setups, the service user can elevate its privileges to root
+or corrupt root-owned files using the various bugs.
 
--- 
-    JB
+Florian
