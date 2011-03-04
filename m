@@ -1,18 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/4
-Message-ID: <CAF6rxgkrHepe2b2J27+LmvJ8QVd_+u0pvzpO36YSjXkHnKT-3g@mail.gmail.com>
-Date: Sun, 6 Nov 2011 23:32:45 -0500
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/19
+Message-ID: <4D7106A7.907@redhat.com>
+Date: Fri, 04 Mar 2011 16:35:03 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: caml-light insecure temporary files
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 6, 2011 at 4:59 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
-> It seems to be part of the FreeBSD ports
-> collection.
+Hi Solar,
 
-I added an alert to our package vulnerability reporting system and
-notified the maintainer of the port in question.
+   thank you for your reaction.
 
--- 
-Eitan Adler
+Solar Designer wrote:
+> On Fri, Mar 04, 2011 at 03:08:31PM +0100, Jan Lieskovsky wrote:
+>>   we have been contacted by Stefan Fritsch of Debian Security Team
+>> about presence of nine security flaws in the logrotate utility
+>> (the list is provided below).
+> 
+> I've just skimmed over the list, and I only see one issue that I'd call
+> a vulnerability in logrotate, issue #8.  And we need more info on #5.
+
+For issue #5:
+
+If the mail configuration directive is used, an attacker can trick
+logrotate into sending arbitrary files by mail, by creating
+appropriate hard or soft links.
+
+Hope that's enough, let me know if not.
+
+For the second part:
+
+> 
+> The rest, as described, appear to rely on sysadmin error and to assume
+> security properties that logrotate never advertised it had.  Specifically,
+> logrotate was never declared to be safe to use on untrusted directories,
+> and it was an error for a sysadmin to make such an assumption.
+
+We don't mind documenting of this behavior in appropriate places.
+
+Wouldn't like to condescend further into particulars, what is and what
+is not a security issue (as this is beyond this post), but according
+to our opinion even non-documented incorrect behavior, allowing
+malicious actions to be performed on the system, should be considered
+a security flaw (regardless if it's advertised or not). Because by applying
+your above approach, most of the open source project could just say
+'this software is not intended to be run like that.'
+
+Not trying to argue, just saying the disclination like the above
+doesn't help anyone.
+
+Either the software has the issues, and they should be fixed,
+or it has the issues, and they can't be fixed. Then the software
+should not be used and an alternative one should be found.
+
+This is not you would shoot yourself into the foot by accident
+(by performing some action). This is about local users', aware
+of the deficiencies, ability to conduct such actions on the system,
+so they would reach some higher privilege, damage or different
+kind of benefit for them.
+
+Hope this helps.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> I don't mind logrotate being enhanced/hardened in this respect, but to
+> call these vulnerabilities sounds like a stretch.  Also, even if
+> logrotate is hardened, it should not be declared to be safe to use on
+> untrusted directories.  It'd be better to explicitly state that it is
+> not, to avoid this sort of confusion.
+> 
+>> 5) Issue #5: logrotate: Information disclosure by performing email
+>>              notifications
+> ...
+>> 8) Issue #8: logrotate: TOCTOU race condition by creation of new files 
+>> (between
+>>              opening the file and moment, final permissions have been 
+>>              applied)
+>>              [information disclosure]
+> 
+> Alexander
+
