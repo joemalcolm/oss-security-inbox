@@ -1,22 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/1
-Message-Id: <201102232317.13530.timb@nth-dimension.org.uk>
-Date: Wed, 23 Feb 2011 23:16:59 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/33
+Message-ID: <4D7148F5.2090205@gmail.com>
+Date: Sat, 05 Mar 2011 03:17:57 +0700
+From: Pavel Labushev <p.labushev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Pattern lock bypass on SE X10 with Android 1.6
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Would something like http://www.nth-dimension.org.uk/blog.php?id=89 qualify 
-for a CVE?  I didn't really consider it when I published it because I was 
-working on the principal that it required physical access and you could 
-therefore argue that all bets are off but I was was wondering in the light of 
-the recent discussions about auto mounting bugs which share a similar quality.
+04.03.2011 21:52, Solar Designer пишет:
 
-Tim
--- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+> I've just skimmed over the list, and I only see one issue that I'd call
+> a vulnerability in logrotate, issue #8.  And we need more info on #5.
+> 
+> The rest, as described, appear to rely on sysadmin error and to assume
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Or on package maintainer error. At least in Gentoo there are packages
+(ebuilds and eclasses) that create user/group-writable directories in
+/var/log and enable logrotate to handle the log files there.
