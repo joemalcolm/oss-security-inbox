@@ -1,33 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/17
-Message-ID: <4D650888.9050604@pre-sense.de>
-Date: Wed, 23 Feb 2011 14:15:52 +0100
-From: Timo Warns <warns@...-sense.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Physical access vulnerabilities and auto-mounting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/7
+Message-ID: <20110304015819.GA16394@kroah.com>
+Date: Thu, 3 Mar 2011 17:58:19 -0800
+From: Greg KH <greg@...ah.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com, Kees Cook <kees@...ntu.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Am 23.02.2011 12:07, schrieb Steve Grubb:
-> On Wednesday, February 23, 2011 12:11:56 am Eugene Teo wrote:
->> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
->>> Should auto-mounting be disabled entirely? 
+First off, we are way off-topic from the original topic here, very sorry
+about that.
+
+On Thu, Mar 03, 2011 at 08:08:23PM -0500, Dan Rosenberg wrote:
+> > I actually use that traffic to watch out for things that need to make
+> > sure they go into the stable releases.  Those patches are then posted to
+> > stable@...nel.org when they are public, so you can watch that list if
+> > you want.
+> >
 > 
-> You should be able to turn it off. You can also block the loading of any kernel modules 
-> for file systems that you know you don't want to load.
+> The difference is that distributions and the security community do not
+> have access to the security@...nel.org list.
 
-To a certain extent, this is what makes the recent issues in partition
-handling special: The current kernels do not allow to turn off the
-evaluation of partition tables.
-(However, some patches allow to do so:
-https://patchwork.kernel.org/patch/47067/)
+That is the point of security@ list.  Many people on this very list
+asked for this type of alias years ago, so don't go and say that now you
+don't want it :)
 
-Best regards, Timo
+> The goal here to is
+> bridge that communication gap - perhaps what's really needed is
+> allowing more representation on the existing list and clarifying and
+> encouraging policies for when CC'ing security@...nel.org is
+> appropriate, especially in regards to on-the-fence issues.  If
+> everyone were a bit more conscientious about e-mailing
+> security@...nel.org when appropriate and that list had better
+> representation from people who can actually coordinate with various
+> downstream vendors, that would be an improvement.
 
--- 
-Dr. Timo Warns                               warns@...-sense.de
-                                  Tel. +49 - 40 - 244 2407 - 16
-                                  Fax  +49 - 40 - 244 2407 - 24
-PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
-                                         USt-IdNr.: DE263765024
-Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
-Till Dörges           Jürgen Sander              Axel Theilmann
+That is what stable@ can be used for, please feel free to do that there
+today.
+
+> >> >> I think security communication needs to be
+> >> >> improved at the commit level (as opposed to the reporting), since
+> >> >> maintainers are often much more knowledgeable and better able to
+> >> >> understand security impact than the users who are often presenting
+> >> >> issues.
+> >> >
+> >> > I don't think you understand the rate of change in the kernel and how
+> >> > trying to do this for every commit is unfeasable and unworkable.  You do
+> >> > know how fast it goes, right?
+> >> >
+> >>
+> >> Why is CC'ing a security list any more difficult than CC'ing stable?
+> >
+> > It's not, but if all you want to do is make sure the patch is applied to
+> > the stable trees as you think it's a potential problem, just copy stable
+> > instead.  That's what happens today.
+> >
+> 
+> It's more about giving distributions the option of prioritizing
+> security patches, and being more transparent about the potential risk
+> introduced by certain issues.  As you've said, even picking security
+> fixes out of the stable queue is a substantial amount of work, and
+> this could be made easier with a bit more openness.
+
+How can we be more open than we are today by showing you _all_ of the
+patches that we are deeming as "fixes"?
+
+You want people to somehow magically categorize patches, and that's not
+going to happen because it's complicated and usually not known until
+after the fact.  Way after the fact.
+
+So again, take a look at stable@...nel.org, it shows you all of these
+patches and you can start classifying them if you wish to.
+
+thanks,
+
+greg k-h
