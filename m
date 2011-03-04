@@ -1,41 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/25/2
-Message-ID: <20110525173329.GA20752@openwall.com>
-Date: Wed, 25 May 2011 21:33:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/9
+Message-ID: <AANLkTikcuwsoWPPd3T-BE72X8SjUtbAg6E=D3CjwadqB@mail.gmail.com>
+Date: Thu, 3 Mar 2011 21:42:17 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: list archive
+Subject: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-abc and I have enhanced the official/local archive of oss-security today
-(as well as of other Openwall-hosted mailing lists):
+This was originally sent to the now-defunct vendor-sec mailing list.
+Seeing how it's a relatively low-severity issue and that we're
+currently lacking a mechanism for coordination among package
+maintainers and vendors, this list seems like a perfectly acceptable
+venue for discussing how to fix it.
 
-http://www.openwall.com/lists/oss-security/
+I discovered that essentially every suid mount helper that uses
+addmntent() (or invokes util-linux mount, which in turn calls
+addmntent()) to add entries to /etc/mtab fails to anticipate a low
+value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
+/etc/mtab and possibly manipulate mountpoint options.  Affected
+software includes at least:
 
-Now these have month and day index pages with message Subjects and Froms
-on them (finally).  For example:
+mount.cifs (samba)
+fusermount (FUSE)
+mount (util-linux)
+ncpmount (ncpfs)
+vmware-hgfsmounter (open-vm-tools)
 
-http://www.openwall.com/lists/oss-security/2011/05/
-http://www.openwall.com/lists/oss-security/2011/05/24/
+Also affected are all their unmount equivalents.
 
-Also, there are "prev month", "next month", "prev day", and "next day"
-links at top.
+This can be exploited by checking the current size of /etc/mtab,
+setting an RLIMIT_FSIZE of some small amount greater than that, and
+invoking a suid mount helper.  The edits to /etc/mtab will be
+truncated to the ulimit and no newline will be appended, so multiple
+invocations allow near-arbitrary appending to /etc/mtab.  addmntent()
+will octal-encode most special characters, which makes exploitation
+beyond simple corruption not quite as straightforward, but I'm
+confident that with some creativity it would be possible to perform
+unauthorized unmounting, for example.
 
-If anyone is interested in the code:
+There are a few possible options   We could patch glibc to try to
+raise the rlimit in addmntent().  Or we could fix every suid mount
+helper to raise the rlimit or have proper error handling for the case
+when addmntent() fails.  This final option requires that mtab editing
+be done in a temporary file and aborted on failure, which isn't the
+case for all helpers.
 
-http://cvsweb.openwall.com/blists
+Of course, once we figure out how to fix this, we can talk about
+assigning CVEs, etc.
 
-Suggestions/votes for further enhancements are welcome (we have a to-do
-list for blists internally, but we're unsure of what to work on next).
-This must not turn into a lengthy discussion thread of its own, which I
-think it won't.
-
-Alexander
-
-P.S. Five years of linux-kernel (almost 5 GB in mbox format) took two
-minutes to re-index, using 25 seconds of CPU time, on a fairly old
-machine and with the file being quite fragmented.  The index file size is
-approx. 3% of the mbox size (before the addition of Subjects and Froms,
-it was approx. 1%).  http://lists.openwall.net/linux-kernel/
+Regards,
+Dan
