@@ -1,34 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/8
-Message-ID: <1301683688.2521.12.camel@mdlinux>
-Date: Fri, 01 Apr 2011 14:48:08 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/17
+Message-ID: <20110304145232.GA25390@openwall.com>
+Date: Fri, 4 Mar 2011 17:52:32 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Mar 04, 2011 at 03:08:31PM +0100, Jan Lieskovsky wrote:
+>   we have been contacted by Stefan Fritsch of Debian Security Team
+> about presence of nine security flaws in the logrotate utility
+> (the list is provided below).
 
-On Fri, 2011-04-01 at 14:03 -0400, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+I've just skimmed over the list, and I only see one issue that I'd call
+a vulnerability in logrotate, issue #8.  And we need more info on #5.
 
-Please subscribe me to the new list. I was a vendor-sec subscriber.
+The rest, as described, appear to rely on sysadmin error and to assume
+security properties that logrotate never advertised it had.  Specifically,
+logrotate was never declared to be safe to use on untrusted directories,
+and it was an error for a sysadmin to make such an assumption.
 
-pub  4096R/A744BE93 2010-09-30
-uid Marc Deslauriers <marc.deslauriers@...onical.com>
-Fingerprint 50C4 A0DD CF31 E452 CEB1 9B51 6569 D855 A744 BE93
+I don't mind logrotate being enhanced/hardened in this respect, but to
+call these vulnerabilities sounds like a stretch.  Also, even if
+logrotate is hardened, it should not be declared to be safe to use on
+untrusted directories.  It'd be better to explicitly state that it is
+not, to avoid this sort of confusion.
 
-Thanks,
+> 5) Issue #5: logrotate: Information disclosure by performing email
+>              notifications
+...
+> 8) Issue #8: logrotate: TOCTOU race condition by creation of new files 
+> (between
+>              opening the file and moment, final permissions have been 
+>              applied)
+>              [information disclosure]
 
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
