@@ -1,55 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/2
-Message-ID: <4D944597.5090303@erix.ericsson.se>
-Date: Thu, 31 Mar 2011 11:12:55 +0200
-From: Sverker Eriksson <sverker@...x.ericsson.se>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/30
+Message-ID: <20110304175817.GL24629@florz.florz.dyndns.org>
+Date: Fri, 4 Mar 2011 18:58:17 +0100
+From: Florian Zumbiehl <florz@...rz.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Steve, vendors,
->
->   based on:
->   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
->
->   and:
->   [2] http://www.erlang.org/download/otp_src_R14B.readme
->   [3] http://www.erlang.org/download/otp_src_R14B01.readme
->   [4] http://www.erlang.org/download/otp_src_R14B02.readme
->
-> performed some initial issues review -- erlang-CVE-request.txt
-> attached. But since not sure, which of those are real security
-> flaws and how many CVE ids will be needed for those, Cc-ing
-> also Erlang upstream developers to shed more light into this.
->
-> The distribution of OTPs is as follows:
-> =======================================
-> Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
-> Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
-> Sverker Eriksson:       OTP-8945, OTP-8716
-> Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
-> Raimo Niskanen:         OTP-8729, OTP-8795
-> Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
-> Niclas Axelsson:        OTP-9101
-> Hans Bolinder:          OTP-8898
->
-> Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
-> could you please have a look at the attached review file
-> and reply which of the #20 OTPs in the list are security flaws
-> (so we would know the count of CVE identifiers needed) and which
-> are just bugs? (since you know the Erlang code better than me)
->
-> Help / guidance from your side is really appreciated to resolve
-> this one.
->
-> Thank you in advance for your time and cooperation.
->
-> Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Hi,
 
-I would consider both OTP-8945 and OTP-8716 to be security flaws.
+> On Fri, Mar 04, 2011 at 04:14:00PM +0100, Florian Zumbiehl wrote:
+> > In which scenarios exactly logrotate is supposed to be safe to use is
+> > mostly undefined.
+> 
+> Maybe.  We just need to (hopefully) agree on what is common, expected,
+> correct - and this may be changing over the years.  Apply our common
+> sense and experience.
 
-/Sverker, Erlang/OTP
+Well, yeah, what other choice do we have? =:-)
 
+> > (so they can create missing log files, for example).
+> 
+> I think that services should either do that before they drop root at
+> startup, or they should not do it at all (leave it to logrotate).
+
+Well, not doing it at all leaves a race condition where the service may
+not be able to start or at least to log, lacking a log file, when
+started while logrotate is running. At least given how logrotate currently
+handles the creation of new log files (rename old file and create new one
+afterwards, potentially even with temporarily restricted permissions,
+which could also prevent an unprivileged process from opening the newly
+created file) ...
+
+Other than that, that doesn't sound unreasonable to me as a design
+principle.
+
+> However, if it's somehow desired that a service running as non-root be
+> able to create log files (other than just at startup?), then the correct
+> approach would be to run a dedicated instance of logrotate for that
+> service under the service pseudo-user.  Don't mix the pseudo-user and
+> root for the same task (dealing with log files of the same service),
+> which creates unnecessary risks.
+
+Which is essentially how I think the fix should work (and it seems
+like all parties involved in the discussion so far have agreed on that
+in principle, even if not necessarily embracing it fully), though the
+current plan is to implement this as a part of logrotate, basically
+accepting the expectation that logrotate can be operated securely in
+a manner similar to what's currently the case. Practically, that means
+that it is planned to add a new config directive that allows to specify
+the credentials to be used for manipulating specific sets of log files,
+thus obviating the need for separate logrotate invocations but still
+letting the kernel take care of separating privileges.
+
+Now, I guess the major motivation for such an approach over executing
+logrotate as the unprivileged user directly is backwards compatibility
+and how much of a nightmare the transition will be, somehow implicitly
+assuming that the similarity with the old mode of operation should
+provide for an easier change.
+
+However, this implicit assumption may actually be just that and nothing
+more. Namely, there are some ideas how logrotate could guess the
+credentials for some common setups when none have been specified in the
+config file so as to avoid having to security-patch dozens of packages,
+at least as a transitional mechanism. But it's rather unclear whether
+any of that will actually work to a sufficient degree to be useful (and
+the security of the heuristics to be used is what most of the remaining
+contention as to how to fix is about).
+
+If that doesn't work out and you have to patch dozens of packages in
+order to change their logrotate configs, you probably may just as well
+patch packages to switch to using their own logrotate instance. Or to a
+different strategy for logfile handling altogether. In particular so,
+given that quite a few of the affected packages in the case of debian
+(and I guess it's similar for other distros) do a chown -R on the log
+dir in their postinst scripts and thus will need a security patch for
+that anyhow.
+
+> > In such setups, the service user can elevate its privileges to root
+> > or corrupt root-owned files using the various bugs.
+> 
+> Indeed.  A vulnerability in the service package, in my opinion.  Now
+> that would require CVE id assignment and a fix to the package, whereas
+> logrotate could merely use some hardening with no CVE ids (except for
+> issue #8, which was different).
+> 
+> What do you say?
+
+I guess I don't really have much of an opinion on that. The vulnerabilities
+should be fixed, and probably in a way that breaks existing setups as
+little as possible, I don't really care which side is declared defective
+and subsequently fixed in order to achieve that ;-)
+
+Florian
