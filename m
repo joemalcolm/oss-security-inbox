@@ -1,41 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/3
-Message-ID: <87pqhq362s.fsf@mid.deneb.enyo.de>
-Date: Fri, 21 Oct 2011 14:03:07 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/13
+Message-ID: <4D708A74.1040807@redhat.com>
+Date: Fri, 04 Mar 2011 14:45:08 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PR attack against XML Encryption
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1076 kernel: DNS: Fix a NULL pointer deref when trying to read an error key
 Content-Type: text/plain; charset=utf-8
 
-* Yves-Alexis Perez:
+http://git.kernel.org/linus/1362fa078dae16776cd439791c6605b224ea6171 has 
+very detailed explanation about the issue.
 
-> On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
->> A German university has released a press release, alleging a
->> vulnerability in the W3C XML Encryption standard.  Apparently, error
->> reporting from existing implementations can be used as an oracle to
->> recover information from messages encrypted in CBC mode.
->> 
->> Details have not been published, as far as I know.  Does anybody know
->> more? 
+net/dns_resolver/dns_key.c was added in 1a4240f4 (v2.6.36-rc1).
 
-> but afaict the paper is not (yet?) available freely.
-
-I took a brief look at the paper, and it's basically rehashing older
-work on decryption error oracles.  Full message recovery is apparently
-possible, but leaves traces in the server log.  It's the standard
-which is at fault: encryption without authentication is just not safe
-in general.
-
-IBM has already changed error reporting in response to this issue:
-
-<http://www-01.ibm.com/support/docview.wss?uid=swg1IC76651>
-
-Of course, without an application-independent way to check the
-integrity of the decrypted message (which would be provided by a
-combiend encryption/authentication mode), this is only a partial
-solution.
-
-The authors also mention a second issue, where implementations confuse
-signed and encrypted parts of a SOAP message, allowing attackers to
-inject unsigned data which is presented as signed to the application.
-This probably needs a separate fix.
+Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
