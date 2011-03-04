@@ -1,19 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/10
-Message-ID: <e21730d7-849d-46db-80c3-373bf2c12b0f@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Fri, 28 Oct 2011 09:07:00 -0400 (EDT)
-From: Ramon de C Valle <rcvalle@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/8
+Message-ID: <20110304015908.GB16394@kroah.com>
+Date: Thu, 3 Mar 2011 17:59:08 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Mar 03, 2011 at 08:11:00PM -0500, Michael Gilbert wrote:
+> On Thu, 3 Mar 2011 16:41:07 -0800 Greg KH wrote:
+> > On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
+> > > Of course failing to anticipate security impact is bound to happen in
+> > > the kernel; it frequently happens in userland too, and is unavoidable.
+> > >  That doesn't mean we can't try, and it doesn't mean we should be
+> > > overly paranoid and have security folks manually audit every patch.
+> > > Currently, maintainers and bug reporters are expected to ask
+> > > themselves a simple question when deciding whether or not to CC
+> > > stable: "does this fix a bug or security issue, or is it a new
+> > > feature?".  Similarly, I don't think it's too much to ask for people
+> > > to consider the question of "does this bug it allow an unprivileged
+> > > user to crash the system, gain additional access, or otherwise cross
+> > > privilege boundaries?"  And if the answer is "I don't know, maybe?",
+> > > then they should CC this list to be safe.  I think this would result
+> > > in not nearly as much volume as you're anticipating.
+> > 
+> > They do this already today, that's what security@...nel.org is for, and
+> > it gets a bit of traffic like this every week.
+> 
+> Is this list open to the public?  It doesn't seem to be available on
+> http://vger.kernel.org/vger-lists.html.
 
-> Have you checked if this also affects gzexe? It is pretty much the
-> same
-> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
-It seems this issue affects only executables compressed by bzexe. The self-uncompressing executable created by gzexe seems to make appropriate use of the /tmp directory uncompressing the executable file to a previously created subdirectory created with mkdir--all with appropriate permissions.
+No, it is closed, as it should be as potential security problems are
+mailed there.  You don't want that to be totally open, right?
 
+thanks,
 
--- 
-Ramon de C Valle / Red Hat Security Response Team
+greg k-h
