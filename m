@@ -1,35 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/12
-Message-ID: <CABqVa38cMq29tXqYnQyYQ4hZsiQ2aqODzCWpyYW_o_a6iFfd3w@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:11:13 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/31
+Message-ID: <AANLkTikLhWzy7Zoi-qg8OQCY2RD-W8nnHJagcAgVKbJA@mail.gmail.com>
+Date: Fri, 4 Mar 2011 13:14:51 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (minor) -- gnash -- Unsafe management of HTTP cookies
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Florian Zumbiehl <florz@...rz.de>,  Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>,  Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 4:37 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> Hello Kurt, Steve, vendors,
 >
->  a security flaw was found in the way Shockwave Flash plug-in of the
-> gnash, a GNU flash movie player, performed management of HTTP cookies
-> (they were stored under /tmp directory with predictable name and world-
-> readable permissions). A local attacker could use this flaw to obtain
-> sensitive information.
+>> It felt wrong, say, to blame a text editor for being unsafe to use on
+>> files in untrusted directories when such unsafety was the typical and
+>> expected situation for text editors in general.
 >
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649384
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=755518
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> Some items can be assigned a CVE without deep thought about the larger
+> context.  This may happen due to volume, time constraints, or an
+> under-specified attack scenario by the requester.  That may be the case with
+> the case you're talking about here, but I don't remember it.
 >
 
-Please use CVE-2011-4328 for this issue.
+Just to chime in here about parallels to the GNU nano case you're
+referring to.  I agree with you that a CVE for those issues may have
+been unnecessary, but it depends on your expectations of what
+guarantees a text editor provides.  If I try to open an untrusted file
+with a text editor, and an attacker replaces that file before I open
+it, resulting in me making edits to the wrong file, then of course
+that's not a security issue, because the text editor did exactly what
+it was told to do: open the file, which happened to be different by
+the time it got around to opening it.  There would also be visual
+feedback in the text editor to alert the user as to which file was
+being edited.  However, if I open a file to edit, and someone changes
+that file out from under me while I'm making edits, and a resulting
+save overwrites the new underlying file, including following symlinks,
+that's slightly different, since one might argue that some feedback or
+warning from the editor would be expected (this is the case with
+almost all other text editors).  But this is subtle, and I understand
+both sides of the argument - personally, I don't think it's a serious
+enough attack vector to warrant splitting hairs over.
 
+The logrotate case is even more subtle, since it's even less clear
+what constitute reasonable expectations with regards to the security
+guarantees of the application.
 
--- 
-Kurt Seifried
-kurt@...fried.org
+-Dan
