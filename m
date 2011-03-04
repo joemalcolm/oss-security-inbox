@@ -1,116 +1,261 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/21
-Message-ID: <1023890783.87472.1300135189975.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:39:49 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/32
+Message-ID: <4D713496.9050708@redhat.com>
+Date: Fri, 04 Mar 2011 19:51:02 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Joomla! 1.6.0 | SQL Injection Vulnerability
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1151
 
-Thanks.
+Hi Solar,
 
--- 
-    JB
+Solar Designer wrote:
+> On Fri, Mar 04, 2011 at 04:35:03PM +0100, Jan Lieskovsky wrote:
+>> For issue #5:
+>>
+>> If the mail configuration directive is used, an attacker can trick
+>> logrotate into sending arbitrary files by mail, by creating
+>> appropriate hard or soft links.
+>>
+>> Hope that's enough, let me know if not.
+> 
+> I can definitely figure this out by looking at the code, but the
+> description alone looks insufficient to me.  It does not say what
+> directory those links would need to be created in.  If it's the log
+> files' directory, which I suspect is the case,
 
 
------ Original Message -----
-> =================================
-> Joomla! 1.6.0 | SQL Injection Vulnerability
-> =================================
+This should describe the case of log directories, writable also
+by other (unprivileged) users and not just by root.
+
+  then this issue falls in
+> the same controversial category as most of the rest.  If it's /tmp, then
+> this is in fact a vulnerability in logrotate, without a doubt.
 > 
+>>> The rest, as described, appear to rely on sysadmin error and to assume
+>>> security properties that logrotate never advertised it had.  Specifically,
+>>> logrotate was never declared to be safe to use on untrusted directories,
+>>> and it was an error for a sysadmin to make such an assumption.
+>> We don't mind documenting of this behavior in appropriate places.
 > 
-> 1. OVERVIEW
+> Do you mean the fact that logrotate is not meant for use on untrusted
+> directories? 
+
+Yes, have meant this. The majority of the reported issues exist
+because logrotate does not have (at least I don't know of, maybe wrong)
+a policy, how to behave when rotating log files in such directories.
+
+Another problem is (as Florian already pointed out) logrotate often
+being run under privileged (root) user account as part of (daily) cron
+job.
+
+  Or, on the contrary, claim that it is safe for that after
+> the hardening changes to be made now?  I prefer the former.
 > 
-> Joomla! 1.6.0 was vulnerable to SQL Injection.
+>> Wouldn't like to condescend further into particulars, what is and what
+>> is not a security issue (as this is beyond this post), but according
+>> to our opinion even non-documented incorrect behavior, allowing
+>> malicious actions to be performed on the system, should be considered
+>> a security flaw (regardless if it's advertised or not). Because by applying
+>> your above approach, most of the open source project could just say
+>> 'this software is not intended to be run like that.'
 > 
+> Like I wrote in my reply to Florian, this is about expectations.  You
+> say "incorrect behavior", which makes sense to me.
+
+This is about absence of 'default user account other than root' to
+run the tasks under, when processing attacker controllable directory.
+
+You already proposed 'another user, less privilege user account' to
+run the tasks under in reply to Florian.
+
+   For example, "cp"
+> is also unsafe in untrusted directories, but its behavior is
+> nevertheless "correct" (because it is documented), so you would not call
+> it a security flaw for that reason.  Fair enough.
+
+I got your point. But still think there is a difference between the
+case privileged system user would use 'cp' by accident in untrusted
+directory and corrupt the system and case, when some utility is
+running under privileged user account on regular basis and not
+taking 'untrusted directories' into account / not having a policy,
+how to behave while processing them.
+
 > 
-> 2. BACKGROUND
+> However, then there are things such as text editors, which are also
+> unsafe for use on files in untrusted directories.  Is it "incorrect
+> behavior" that they are?  To me, this has always been the historically
+> expected unsafety.  However, Dan Rosenberg managed to get a CVE id for
+> such an issue in an editor.  I was surprised.  The issue did not affect
+> us (we were not packaging the editor), but if it did we would not call
+> it a vulnerability.  Just wrong/flawed expectations by the user.
+
+For example CVE-2010-2055 has been assigned to Ghostscript's reading
+of initialization files from $CWD. CVE-2010-3349, 3350, 3355, 3369 and
+many others have been assigned to insecure library loading vulnerabilities.
+
+In comparison with the above, how running of logrotate utlity on untrusted
+directory differs? Even when it is often run regularly and under root
+user account.
+
+How many system users check the directory permissions prior running
+the utility? How many administrators check them regularly?
+
+Agree, the majority of these issue would disappear when logrotate
+would just refuse to process such a directory. But currently it
+doesn't. That CVE request is just attempt to pinpoint the need
+of change.
+
 > 
-> Joomla is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets. It comprises a
-> model–view–controller (MVC) Web application framework that can also be
-> used independently.
-> Joomla is written in PHP, uses object-oriented programming (OOP)
-> techniques and software design patterns, stores data in a MySQL
-> database, and includes features such as page caching, RSS feeds,
-> printable versions of pages, news flashes, blogs, polls, search, and
-> support for language internationalization.
+> Again, as I wrote to Florian, maybe the expectations here are changing
+> over the years.  However, if so, wouldn't it be right to have hardening
+> introduced into the relevant programs first, the expectations
+> "officially" changed (although I'd rather not do that), and only if/when
+> that hardening is later determined to be insufficient start saying
+> "vulnerability" and assigning CVE ids?
+
+Maybe you are correct. And maybe this discussion should happen
+on completely different mailing list. When I was asking Florian,
+when the issues went public, the answer was: "Those are known
+for a long time already and logrotate is known to have such kind
+of defects." This post is nothing else, just to start thinking
+about the change. Enumerate the issues and perform the steps towards
+the change.
+
 > 
+> Speaking of issues where a more or differently privileged process
+> accesses files in a directory writable by another process, these are
+> surprisingly difficult to "fully" deal with, and the majority of
+> programs are "affected".  Of the common Unix commands, only a handful
+> are safe to use in untrusted directories (with possible impact of
+> attacks being a mere DoS against the command itself) - such as "ln".
+> Yes, I actually use "ln" like this:
 > 
-> 3. VULNERABILITY DESCRIPTION
+> # su - user1
+> $ cp some/dir/file . # hopefully the ~/file name was not taken
+> $ exit
+> # ln ~user1/file .
+> # ls -ld file # sanity check that we were not raced
+> # chown user2: file
+> # ln file ~user2/
+> # rm file
+> # su - user2
+> $ mv file target/dir/
+> $ exit
+> # su - user1
+> $ rm file
+
+Agree. But would still mention the difference between binary, which
+is intended to be run by privileged user (aware of the consequences)
+and common tool, dedicated to processing of *.log files everywhere
+(and run under root account).
+
 > 
-> Parameters (filter_order, filer_order_Dir) were not properly sanitized
-> in Joomla! that lead to SQL Injection vulnerability. This could an
-> attacker to inject or manipulate SQL queries in the back-end database,
-> allowing for the manipulation or disclosure of arbitrary data.
+> when I need to copy a file from one untrusted user to another.  Yes,
+> this is complicated and it has limitations (same fs).  Maybe we need a
+> special tool for this task (I had some ideas on this - "give" and "take"
+> commands).  But that's the current situation.
+
+To be honest, we didn't come to solution how to solve this in logrotate
+yet. One of the proposals was logrotate to refuse process *.log files
+in such directories. The CVE request was an attempt to speak publicly
+such issues are there and we need to start thinking about their solution.
+
 > 
+> Almost all other commands and programs are unsafe on untrusted
+> directories.  In my opinion, that's the only correct assumption for a
+> sysadmin to make, and any other assumption is naive.
+
+Agree here. But as stated above, how many sysadmins perform this task
+prior running the tool? How many do it regularly?
+
+
+   Unfortunately,
+> most sysadmins don't fully realize this (in my experience), but that
+> does not make those programs any safer, nor does it prompt us to assign
+> CVE ids against almost all Unix programs.
+
+See above. Ghostscript vs logrotate. How untrusted directory for GS
+differs from untrusted directory for logrotate?
+
 > 
-> 4. VERSION AFFECTED
+>> Not trying to argue,
 > 
-> Joomla! 1.6.0
+> I also primarily mean to share some info/understanding/reasoning rather
+> than to argue.
 > 
+>> just saying the disclination like the above doesn't help anyone.
 > 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
+> I think it does.  But I am willing to shut up. ;-)  I sure am not going
+> to post stuff that people don't want to receive/read. ;-)
+
+In final consequence thinking your post initiated what was intended --
+the communication about those issues.
+
 > 
-> http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=yehg.net.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAA,&filter_order_Dir=2&limit=3&limitstart=4
+>> Either the software has the issues, and they should be fixed,
+>> or it has the issues, and they can't be fixed. Then the software
+>> should not be used and an alternative one should be found.
 > 
+> No software is perfect, and almost any piece of software can be improved
+> endlessly.  But that's mere rhetoric.
+
+Sure. Just wanted to differentiate the 'unsupported functionality'
+from undocumented functionality, which may be harmful.
+
 > 
-> http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=1,&filter_order_Dir=yehg.net.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB,&limit=3&limitstart=4
+> I don't mind logrotate being hardened against these issues.  We do a lot
+> of hardening in other areas, so why not here.  I just don't blame
+> logrotate for the issues. 
+
+See above -- absence of policy how to deal with untrusted directories.
+Absence of privilege delegation.
+
+  I blame improper service packages and
+> insufficient sysadmin education
+
+Agree.
+
+.  Hardening logrotate and not fixing
+> those other truly broken packages sounds plain wrong to me.
+
+How many users check content of their $CWD prior launching gs?
+
+   The latter
+> part of it (not fixing), not the former.  As to CVE ids against
+> logrotate, I don't care much; it's just that we're not going to say our
+> logrotate update fixes 9 vulnerabilities.  We may say it fixes one (the
+> #8 issue).
+
+Ok.
+
 > 
+>> This is not you would shoot yourself into the foot by accident
+>> (by performing some action). This is about local users', aware
+>> of the deficiencies, ability to conduct such actions on the system,
+>> so they would reach some higher privilege, damage or different
+>> kind of benefit for them.
 > 
-> This is the exact same variant as shown in Joomla! 1.5.21:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
+> Sorry, your desired meaning of the above escapes me...  Nevermind.
+
+The purpose of the last paragraph was to distinguish 'admin negligence',
+Steve mentions earlier and actions, which may be performed in the background,
+actions, which logrotate allows (changes to log files in untrusted / writable
+directories) and actions, which users using the utility may not even notice
+until something really bad happens.
+
 > 
-> We thought Joomla! team would fix this issue in 1.6.0 stable release
-> whilst they fixed it in Joomla! 1.5.22!
+> Thank you for your response!
+
+Same from my side. Thanks for the thoughts, which initiated (partial)
+discussion.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
 > 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to Joomla! 1.6.1 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-01-24: notified vendor
-> 2011-03-08: vendor released fix
-> 2011-03-14: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Vendor Advisory URL:
-> http://developer.joomla.org/security/news/328-20110201-core-sql-injection-path-disclosure.html
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_sql_injection
-> OWASP Top 10:
-> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-> CWE-89: http://cwe.mitre.org/data/definitions/89.html
-> 
-> 
-> #yehg [2011-03-14]
-> 
-> 
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+> Alexander
+
