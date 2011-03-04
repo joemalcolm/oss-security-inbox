@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/1
-Message-ID: <4EAF38A9.1010603@redhat.com>
-Date: Tue, 01 Nov 2011 08:09:13 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: oom: fix integer overflow of points in oom_badness
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/2
+Message-ID: <20110304002431.GA20114@suse.de>
+Date: Fri, 4 Mar 2011 01:24:31 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-An integer overflow will happen on 64bit archs if task's sum of rss,
-swapents and nr_ptes exceeds (2^31)/1000 value. This was introduced by
-commit f755a04 oom: use pte pages in OOM score. This can cause a denial
-of service.
+On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+> Hi folks,
+> 
+> As moderator of vendor-sec and one of the sysadmins of lst.de I noticed
+> a break-in into the lst.de machine last week, which was likely used to
+> sniff email traffic of vendor-sec. This incident probably happened on Jan 20
+> as confirmed by timestamp, but might have existed for longer.
+> 
+> As the system in use at lst.de is quite old and the admin team and myself
+> does not really have the time anymore to keep it on a secure level, we
+> would like to move the list to another hosting place.
+> 
+> I have disabled the specific backdoor, but as I am not sure how the
+> break-in happened it might reappear. So I recommend not mailing embargoed
+> issues to vendor-sec@....de at this time.
 
-https://lkml.org/lkml/2011/10/31/138
+So after I posted this (and went for some beers) the attacker read this
+and reentered the lst.de machine, went amok and destroyed the machine's
+installation. The machine has now been shutdown.
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+So everyone please consider vendor-sec@....de is dead and gone at this point,
+successors (or not) will hopefully result out of this discussion.
+
+Ciao, Marcus (ex-moderator)
+
+Content of type "application/pgp-signature" skipped
