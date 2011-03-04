@@ -1,111 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/1
-Message-ID: <AANLkTimYNegPPBoKKyEZEfyPOwTUBi4H4gkmHzV=DvcC@mail.gmail.com>
-Date: Thu, 27 Jan 2011 11:54:04 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/29
+Message-ID: <Pine.GSO.4.64.1103041254480.3265@faron.mitre.org>
+Date: Fri, 4 Mar 2011 13:02:38 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
+cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-http://seclists.org/fulldisclosure/2011/Jan/486
 
+On Fri, 4 Mar 2011, Solar Designer wrote:
 
-===================================================================================
- phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
-Vulnerability
-===================================================================================
+> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
+>>
+>> We will sometimes write the CVE description more as an "adminisrator
+>> practice" than as "fault of the software."
+>
+> Oh, this is something I did not realize.  A lot of people assume that
+> CVEs "blame" the software and its authors for having made an error.
 
+We do this *if* we are aware of the subtleties.  But this often requires 
+an understanding of the expected software behavior, and CVE covers 
+thousands of different applications each year.  Unfortunately, we can't 
+have that level of understanding about each app.
 
-1. OVERVIEW
+> It felt wrong, say, to blame a text editor for being unsafe to use on 
+> files in untrusted directories when such unsafety was the typical and 
+> expected situation for text editors in general.
 
-The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
-3.4.x were vulnerable to Cross Site Scripting.
+Some items can be assigned a CVE without deep thought about the larger 
+context.  This may happen due to volume, time constraints, or an 
+under-specified attack scenario by the requester.  That may be the case 
+with the case you're talking about here, but I don't remember it.
 
-
-2. PRODUCT DESCRIPTION
-
-phpMyAdmin is a free software tool written in PHP intended to handle
-the administration of MySQL over the World Wide Web.
-phpMyAdmin supports a wide range of operations with MySQL.
-The most frequently used operations are supported by the user
-interface (managing databases, tables, fields, relations,
-indexes, users, permissions, etc), while you still have the ability to
-directly execute any SQL statement.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
-inject XSS string in 'db' field when creating or renaming a database.
-An attacker can create new database name or rename database name
-through several means like SQL Injection in user's vulnerable web
-applications or
-compromise of user account through brute-force or bypassing CSRF protection.
-Even though the phpMyAdmin uses httpOnly as a protection against
-cookie theft via XSS, attacker could use XSS tunneling proxy to
-manipulate database names and fields. From it, he could execute
-arbitrary database commands to allow him higher access to the server.
-
-
-4. VERSIONS AFFECTED
-
-phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
-
-Vendor confirmed this flaw did not exist before the 3.4 version family.
-Thus, it is assumed 2.x and 3.3 <= versions are not affected.
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
-http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
-
-
-6. IMPACT
-
-Attackers can compromise currently logged-in user session, plant xss
-backdoors and inject arbitrary SQL statements
-(CREATE,INSERT,UPDATE,DELETE)
-via crafted XSS payloads.
-
-
-7. SOLUTION
-
-For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
-check out the latest commit (git pull).
-
-
-8. VENDOR
-
-phpMyAdmin (http://www.phpmyadmin.net)
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-2011-01-26: notified vendor
-2011-01-26: vendor released fix
-2011-01-27: vulnerability disclosed
-
-
-11. REFERENCES
-
-Vendor Commit:
-http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-Previous Releases:
-http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
-http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
-http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
-http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
-
-
-
-#yehg [2011-01-27]
+- Steve
