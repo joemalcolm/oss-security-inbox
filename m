@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/7
-Message-ID: <cec6ff3d-0bf8-4e07-9baa-0da4e1455238@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 30 Sep 2011 12:04:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/13
+Message-ID: <4D708A74.1040807@redhat.com>
+Date: Fri, 04 Mar 2011 14:45:08 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Plone Security Team <security@...ne.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Zope/Plone -- Unspecified vulnerability in Zope v2.12.x and Zope v2.13.x allowing arbitrary code execution
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1076 kernel: DNS: Fix a NULL pointer deref when trying to read an error key
 Content-Type: text/plain; charset=utf-8
 
+http://git.kernel.org/linus/1362fa078dae16776cd439791c6605b224ea6171 has 
+very detailed explanation about the issue.
 
+net/dns_resolver/dns_key.c was added in 1a4240f4 (v2.6.36-rc1).
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
->    Plone upstream has published a pre-announcement about a security
-> flaw, present in Zope v2.12.x and Zope v2.13.x, which could allow
-> execution of arbitrary code by anonymous users. An authenticated
-> attacker could provide a specially-crafted web page, which once
-> visited by an unsuspecting Zope user would lead to arbitrary commands
-> execution with the privileges of the Zope/Plone service.
-> 
-> References:
-> [1] http://plone.org/products/plone/security/advisories/20110928
-> [2] http://secunia.com/advisories/46221/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=742297
-> 
-> Note: The vendor announced the final version of the advisory and
->        the patch to be available at 2011-10-04 15:00 UTC at the
->        following location:
->        [4]
->        http://plone.org/products/plone/security/advisories/20110928
-> 
-
-Please use CVE-2011-3587 for this.
-
-Thanks.
-
+Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
