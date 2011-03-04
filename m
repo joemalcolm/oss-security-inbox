@@ -1,77 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/15
-Message-ID: <20110318171041.GA24392@albatros>
-Date: Fri, 18 Mar 2011 20:10:41 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/20
+Message-ID: <20110304155228.GB25550@ksplice.com>
+Date: Fri, 4 Mar 2011 10:52:28 -0500
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: netfilter & econet infoleaks
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Per <http://cve.mitre.org/cve/obtain_id.html>, you can contact cve@...re.org to
+obtain a CVE privately prior to a release. As mentioned on that page, they
+specifically want to make it possible for you to obtain a CVE for inclusion with
+the initial announcement of a vulnerability.
 
-"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
-copied from userspace.  Fields of these structs that are
-zero-terminated strings are not checked.  When they are used as argument
-to a format string containing "%s" in request_module(), some sensitive
-information is leaked to userspace via argument of spawned modprobe
-process.
+I've contacted them for exactly the purpose you describe (obtaining a CVE
+identifier for a small open-source project prior to releasing/announcing the
+vulnerability), and I've had a turnaround time of less than a day. Their stated
+policy is "Our typical response time to your initial request is within 2
+business days, usually faster."
 
-The first bug was introduced before the git epoch;  the second is
-introduced by 6b7d31fc (v2.6.15-rc1);  the third is introduced by
-6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
-CAP_NET_ADMIN."
-http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
+So, unless I misunderstand something, there already is a good way for individual
+projects, even small ones, to fairly rapidly obtain CVE numbers prior to
+announcing issues.
+
+- Nelson
+
+On Fri, Mar 04, 2011 at 10:00:56PM +1100, David Hicks wrote:
+> On Thu, 2011-03-03 at 13:36 -0800, Kees Cook wrote:
+> > Several upstreams, though disappointingly not the Linux kernel, are very
+> > good about keeping their end-users in mind and providing direct distro
+> > coordination for important security updates (MIT Kerberos comes to mind
+> > first as a great example). This number of upstreams has been growing,
+> > but it's not nearly large enough to supplant a vendor-sec-like mailing
+> > list, IMO.
+> 
+> 
+> CVE number assignment: perspective from a small open source project
+> 
+> The MantisBT project (open source web based bug tracking) has been
+> directly notifying major distributions of bugs which have a notable
+> security impact. A project specific announcements mailing list, blog,
+> bug tracker, IRC channel, Twitter account and source repository are also
+> used to convey information to users about new releases. A number of
+> notices were also sent to oss-security late last year in response to
+> vulnerabilities being discovered.
+> 
+> The reason I bring up the long list of notification options is because
+> of CVE number assignment. It strikes me that one of the key benefits of
+> CVE numbers is to improve the ease at which a security issue can be
+> tracked and information gathered via Internet search.
+> 
+> The time when a CVE number is arguably most useful is during the patch,
+> release announcement and notification processes where it can be used to
+> tie related information to a single tracking number. From the
+> perspective of a small open source project, obtaining CVE numbers via
+> oss-security appears to be a relatively slow process that can take a
+> number of days to process. Furthermore, oss-security is probably one of
+> the fastest methods (if not the only method) small open source projects
+> can use to seek CVE numbers.
+> 
+> 
+> Why can't the project embargo the issue until a CVE number is assigned?
+> 
+> A large number of MantisBT users bypass their distribution packaging
+> system to obtain the software directly (commonly the case for web
+> applications). Other users do not have packaging systems available on
+> their platform of choice (Windows or shared web hosting).
+> 
+> MantisBT has typically taken the full disclosure approach in the
+> interests of providing the fastest possible response time to independent
+> users. This involves applying a very obvious security patch in the
+> repository, creating of a new release and loudly notifying users that
+> they need to upgrade to the new minor release without delay for security
+> reasons. This process currently occurs prior to a CVE number being
+> allocated and as such our announcements, mailing list threads, commit
+> messages, bug reports, etc generally miss out on being tagged with a CVE
+> reference.
+> 
+> For a smaller niche/boutique distribution which MantisBT does not have
+> the resources to contact for every vulnerability, they may hear about
+> the issue first on oss-security. Their usual package maintainer
+> subscribed to the MantisBT project announcement mailing list may be on
+> holiday. That's OK though because the security team of the distribution
+> may pick up on the news from oss-security (correct me if this use case
+> is incorrect).
+> 
+> I would have thought that it'd be beneficial for the security team (and
+> any other interested parties) to take a CVE number from the oss-security
+> thread and perform an Internet search to bring up the maximum amount of
+> information related to a vulnerability - Internet wide. The most
+> important information is likely going to be from the open source project
+> itself - announcements, mailing list threads, commit messages, IRC logs
+> and bug reports. However blog posts, external mailing list threads, IRC
+> logs, etc away from the official project communication channels may also
+> be useful.
+> 
+> 
+> Suggestion
+> 
+> Is there a way open source projects can receive CVE numbers in a more
+> timely fashion? Projects may go for entire years without a vulnerability
+> and therefore pre-assignment may not be ideal. I suppose that is a
+> downside of using an incremental integer numbering system. Perhaps some
+> form of provisional CVE request functionality could exist for registered
+> open source projects to call upon? Or an increased number of
+> staff/volunteers within distributions who can assign CVE numbers via
+> oss-security?
+> 
+> 
+> David Hicks
+> MantisBT Developer
+> mantisbt.org, #mantishelp freenode
 
 
-"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
-copied from userspace.  Fields of these structs that are
-zero-terminated strings are not checked.  When they are used as argument
-to a format string containing "%s" in request_module(), some sensitive
-information is leaked to userspace via argument of spawned modprobe
-process.
-
-The first and the third bugs were introduced before the git epoch; the
-second was introduced in 2722971c (v2.6.17-rc1).  To trigger the bug
-one should have CAP_NET_ADMIN."
-http://marc.info/?l=linux-kernel&m=129978077609894&w=2
-
-
-"'buffer' string is copied from userspace.  It is not checked whether it is
-zero terminated.  This may lead to overflow inside of simple_strtoul().
-Changli Gao suggested to copy not more than user supplied 'size' bytes.
-
-It was introduced before the git epoch.  Files "ipt_CLUSTERIP/*" are
-root writable only by default, however, on some setups permissions might be
-relaxed to e.g. network admin user."
-http://marc.info/?l=netfilter&m=129978077509888&w=2
-http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
-
-
-"Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
-copied from userspace.  Fields of these structs that are
-zero-terminated strings are not checked.  When they are used as argument
-to a format string containing "%s" in request_module(), some sensitive
-information is leaked to userspace via argument of spawned modprobe
-process.
-
-The first bug was introduced before the git epoch;  the second was
-introduced in 3bc3fe5e (v2.6.25-rc1);  the third is introduced by
-6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
-CAP_NET_ADMIN."
-http://marc.info/?l=linux-kernel&m=129978086410061&w=2
-
-
-"struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
-x86_64.  These bytes are not initialized in the variable 'ah' before
-sending 'ah' to the network.  This leads to 4 bytes kernel stack
-infoleak.
-
-This bug was introduced before the git epoch."
-http://marc.info/?l=linux-netdev&m=130036203528021&w=2
-
-
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
