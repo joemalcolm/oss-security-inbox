@@ -1,41 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/5
-Message-Id: <20110403203844.2e400400.michael.s.gilbert@gmail.com>
-Date: Sun, 3 Apr 2011 20:38:44 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/26
+Message-ID: <Pine.GSO.4.64.1103041208100.3265@faron.mitre.org>
+Date: Fri, 4 Mar 2011 12:22:34 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Solar Designer <solar@...nwall.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
 
-> > 
-> > Benji's trolling does raise a couple real issues. The private keys and
-> > passphrases of those responding here have now become highly lucrative
-> > targets for attackers. Hence, everyone on this new list needs to use good
-> > practices to keep their keys, hard drives, and computers safe.  There
-> > should probably be some common guidelines for key safety for all
-> > participants.
-> > 
-> 
-> I don't buy this. It's really no secret who is involved in open source
-> security, or most any security in general. If you're in this business and
-> don't worry about such threats all the time, you're probably in the wrong
-> field.
-> 
-> I think keeping this wide open will make us better at what we do. This is a
-> bit silly I agree, but it's also brutally honest.
+On Fri, 4 Mar 2011, Solar Designer wrote:
 
-I'm actually not arguing in opposition to participant transparency.  In
-fact I am 100% supportive of that.  Instead, I'm simply stating
-that there is an increased threat to those participating (due to the
-value attackers will find in being able to decrypt your private
-traffic).
+> Again, as I wrote to Florian, maybe the expectations here are changing 
+> over the years.
 
-I was hoping to spur a discussion on some common practices to mitigate
-this bigger threat (perhaps starting with a requirement to use pgp/gpg
-smart cards so that an account compromise only leads to a passphrase
-compromise rather than a key+passphrase compromise).
+In general, that's what happens in CVE.  Part of this may be that as the 
+more obvious/severe issues get eliminated, less-severe issues are then 
+given more attention.  I try to watch out for edge cases that may 
+"snowball" into large numbers of CVEs of limited utility - and you brought 
+up one such example of a snowball issue with the recognition of 
+technically-unsafe-but-commonly-accepted file behaviors of various Unix 
+commands.  However, there is no clearly-defined line (software is too 
+complex and dynamic for that) and risk tolerance differs widely between 
+individuals.  The PHP interpreted gets hit with various issues related to 
+sandbox escaping (or an application attacking itself), but in a hosting 
+scenario (fairly common these days), it's a concern to some consumers.
 
-Best wishes,
-Mike
+As remote code execution vectors dry up (for certain classes of software), 
+people look elsewhere.  As obvious remote vuln types get resolved, people 
+look for other issues of uncertain exploitability that cause a crash. 
+Alexander, you've had a bit of experience in suddenly turning "bugs" into 
+"vulnerabilities" ;-)  The target is shifting over time and, by its 
+nature, spreading a wider net.  As long as prioritization metrics like 
+CVSS follow suit (e.g. more severities of 4 and 5, less 10's), this is a 
+reasonable shift.
+
+For CVE, there is no implied requirement for vendors to post advisories 
+for evey issue that has a CVE assigned.  Vendors decide which issues are 
+severe enough to directly notify their consumers about.  Granted, as the 
+scope of CVE widens, this may increase the vendor workload.
+
+Interesting discussion...
+
+- Steve
