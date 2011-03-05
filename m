@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/13
-Message-ID: <20110104233131.GD28060@kroah.com>
-Date: Tue, 4 Jan 2011 15:31:31 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/1
+Message-ID: <20110305161642.GA2007@albatros>
+Date: Sat, 5 Mar 2011 19:16:43 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
+Subject: kernel: modules_disabled policy
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 04, 2011 at 02:33:04PM +0800, Eugene Teo wrote:
-> http://git.kernel.org/linus/50b5d6ad63821cea324a5a7a19854d4de1a0a819
-> https://bugzilla.redhat.com/CVE-2010-4526
-> 
-> commit 50b5d6ad63821cea324a5a7a19854d4de1a0a819
-> Author: Vlad Yasevich <vladislav.yasevich@...com>
-> Date:   Thu May 6 00:56:07 2010 -0700
-> 
-> sctp: Fix a race between ICMP protocol unreachable and connect()
-> 
->     ICMP protocol unreachable handling completely disregarded
->     the fact that the user may have locked the socket.  It proceeded
->     to destroy the association, even though the user may have
->     held the lock and had a ref on the association.
-> [...]
->     This was because the sctp_wait_for_connect() would aqcure the socket
->     lock and then proceed to release the last reference count on the
->     association, thus cause the fully destruction path to finish freeing
->     the socket.
-> 
-> This affects kernels v2.6.11-rc2 and above.
+Hi,
 
-Not all, it was fixed in the 2.6.34 kernel, which was released back in
-May of 2010.
+I'd like to bring this subject to the list to receive some comments.
+The thing is that there is a sysctl parameter in Linux kernel to control
+whether it is possible to load/unload LKMs, kernel.modules_disabled.  It
+was originally created because since the removal of system global capability
+set there was no way to globally drop CAP_SYS_MODULE.  It was committed
+as 3d43321b by Kees Cook in Apr 2009:
 
-thanks,
+"Implement a sysctl file that disables module-loading system-wide since
+there is no longer a viable way to remove CAP_SYS_MODULE after the system
+bounding capability set was removed in 2.6.25."
 
-greg k-h
+It is one way ticket, there is no defined interface to enable LKM
+loading after disabling it.  The sticking point is that it gives an idea
+that using it prevents loading rootkits to the kernel:
+
+https://wiki.ubuntu.com/Security/Features#block-modules
+
+"This was another layer of protection to stop kernel rootkits from being
+installed." 
+
+But does it really stop rootkits or is it gives a false sence of security?
+There are other ways to write to arbitrary kernel memory location being
+full root, e.g. via hibernation:
+
+http://comments.gmane.org/gmane.linux.kernel/1108853
+
+LKML folks responds that modules_disabled does nothing with protecting
+the kernel from root.
+
+
+So, I'd be happy to hear an answer to the question:
+
+Is it possible to implement strict do-not-touch-the-kernel policy for
+root via disabling LKM loading and _all_ other indirect places with write
+access that allows root to do something, but being too relaxed and
+allows to write to [almost] arbitrary kernel location?  This would make
+root the Boss Of Userland, but as to the kernel it would be but just a
+privileged client.  Or such policy would be incomplete and there is
+almost always a way to by-pass it due to the system design?
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
