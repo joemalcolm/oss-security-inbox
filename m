@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/5
-Message-ID: <20110306122606.GA892@openwall.com>
-Date: Sun, 6 Mar 2011 15:26:06 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/9
+Message-ID: <20110305223002.GC30397@kroah.com>
+Date: Sat, 5 Mar 2011 14:30:02 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Pavel,
-
-On Sun, Mar 06, 2011 at 04:19:04PM +0700, Pavel Labushev wrote:
-> 06.03.2011 02:21, Solar Designer пишет:
+On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
+> Hi,
 > 
-> >> At least in Gentoo there are packages
-> >> (ebuilds and eclasses) that create user/group-writable directories in
-> >> /var/log and enable logrotate to handle the log files there.
+> Thus wrote Solar Designer (solar@...nwall.com):
+> 
+> > > - If yes, would it be an idea to confine or split into lists of focus groups?
+> > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
 > > 
-> > Is this something you can get fixed?
+> > My current proposal is: split into several sub-lists.  I'd start with
+> > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+> > groups would be for externally submitted reports (by non-members) and
+> > for cross-vendor discussions.
 > 
-> I hope it will be fixed soon. Would be nice to have CVEs assigned for these
-> issues anyway, just to make people aware. If even package maintainers got it
-> wrong, I bet there's a legion of users who also did.
+> I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
+> items shared between BSDs, but not commonly seen in Linux distributions),
+> shared/userland (who eg doesn't have OpenSSL?), and researchers
+> (no opinion on the latter).
 
-For this to happen, you need to post info on the specific issues and
-request CVEs for them.  Will you do this, please?  (Perhaps start a new
-thread, or even a thread per package - that's up to you.)
+This means that for a "normal" Linux distribution, someone would have to
+be subscribed to at least 2 lists, and possibly three?
 
-Thanks!
+And where would someone post a problem to?  How would they know if a
+pacakge is shared from BSD and Linux without having to do a lot of
+research first?
 
-Alexander
+I really don't mind seeing all of the traffic for all of the issues, but
+perhaps the BSD developers get tired of seeing all of the Linux kernel
+issues go across their mailbox so they don't want to have to see them
+anymore :)
+
+Either way, I think we still need a vendor-sec-like list for the
+Linux distros, as it is very invaluable and provides a way to coordinate
+things that is needed at times.
+
+thanks,
+
+greg k-h
