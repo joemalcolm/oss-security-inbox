@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/12
-Message-ID: <20110502182235.GA20359@openwall.com>
-Date: Mon, 2 May 2011 22:22:35 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/9
+Message-ID: <20110305223002.GC30397@kroah.com>
+Date: Sat, 5 Mar 2011 14:30:02 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 12:57:16PM -0500, Mark Hatle wrote:
-> While I have not personally applied for the closed vendor list, our current
-> security contact has.  I thought I would attempt to explain briefly what we
-> publicly disclose and what we do not.  If this changes your stance on allowing
-> us into the closed list that is fine, if not then keep this as background
-> information for the future.
+On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
+> Hi,
+> 
+> Thus wrote Solar Designer (solar@...nwall.com):
+> 
+> > > - If yes, would it be an idea to confine or split into lists of focus groups?
+> > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+> > 
+> > My current proposal is: split into several sub-lists.  I'd start with
+> > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+> > groups would be for externally submitted reports (by non-members) and
+> > for cross-vendor discussions.
+> 
+> I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
+> items shared between BSDs, but not commonly seen in Linux distributions),
+> shared/userland (who eg doesn't have OpenSSL?), and researchers
+> (no opinion on the latter).
 
-Thank you!  This is useful info either way, and a positive outcome of
-this discussion thread.  I've just added a link to your posting to:
+This means that for a "normal" Linux distribution, someone would have to
+be subscribed to at least 2 lists, and possibly three?
 
-http://oss-security.openwall.org/wiki/vendors#wind-river
+And where would someone post a problem to?  How would they know if a
+pacakge is shared from BSD and Linux without having to do a lot of
+research first?
 
-Alexander
+I really don't mind seeing all of the traffic for all of the issues, but
+perhaps the BSD developers get tired of seeing all of the Linux kernel
+issues go across their mailbox so they don't want to have to see them
+anymore :)
+
+Either way, I think we still need a vendor-sec-like list for the
+Linux distros, as it is very invaluable and provides a way to coordinate
+things that is needed at times.
+
+thanks,
+
+greg k-h
