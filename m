@@ -1,41 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/6
-Message-ID: <Pine.GSO.4.64.1107131700500.18426@faron.mitre.org>
-Date: Wed, 13 Jul 2011 17:02:29 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: bressers@...hat.com
-Subject: Re: [oCERT-2011-001] Chyrp input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/7
+Message-ID: <20110305212535.GX372@outflux.net>
+Date: Sat, 5 Mar 2011 13:25:36 -0800
+From: Kees Cook <kees@...ntu.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org, secalert@...hat.com, security@...e.de
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
+Hi Dan,
 
-On Wed, 13 Jul 2011, Andrea Barisani wrote:
+On Sat, Mar 05, 2011 at 01:57:41PM -0500, Dan Rosenberg wrote:
+> This is all good to know, but what do we think is the best way to
+> actually fix this specific issue for all the systems supported by
+> distros that are using older versions of util-linux, or for various
+> other reasons can't get rid of /etc/mtab?
+> 
+> Fixing every suid mount helper individually seems a bit tedious, but
+> there might not be a way around it.
+> [...]
+> There are a few possible options   We could patch glibc to try to
+> raise the rlimit in addmntent().  Or we could fix every suid mount
+> helper to raise the rlimit or have proper error handling for the case
+> when addmntent() fails.  This final option requires that mtab editing
+> be done in a temporary file and aborted on failure, which isn't the
+> case for all helpers.
 
-> http://www.justanotherhacker.com/advisories/JAHx113.txt
+It seems like fixing glibc to either raise the rlimit or correctly handle
+the error condition is the way to go (as you already mentioned). I share
+the concern of the helpers maybe not checking addmntent() return codes,
+though. If they all do, I would think that just correct error handling
+in glibc would be accepted upstream. Whatever the fix, it really feels like
+it should be in glibc. It is what is responsible for actually writing to
+the file...
 
-This advisory covers 3 CVEs (but the oCERT advisory only seems to cover 
-the first two):
+-Kees
 
-XSS: CVE-2011-2743
-
-LFI/directory traversal: CVE-2011-2744
-
-file upload: CVE-2011-2745
-
-
-- Steve
-
-
-
->
-> Permalink:
-> http://www.ocert.org/advisories/ocert-2011-001.html
->
-> -- 
-> Andrea Barisani |                Founder & Project Coordinator
->          oCERT | OSS Computer Security Incident Response Team
->
-> <lcars@...rt.org>                         http://www.ocert.org
-> 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
->        "Pluralitas non est ponenda sine necessitate"
->
+-- 
+Kees Cook
+Ubuntu Security Team
