@@ -1,230 +1,197 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/16
-Message-ID: <4D70F25F.6030603@redhat.com>
-Date: Fri, 04 Mar 2011 15:08:31 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/6
+Message-ID: <20110305204807.GC31605@openwall.com>
+Date: Sat, 5 Mar 2011 23:48:07 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Florian Zumbiehl <florz@...rz.de>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
+Hi Florian and all,
 
-Hello Josh, Steve, vendors,
+I'm sorry I ran out of time for this discussion yesterday.
 
-   we have been contacted by Stefan Fritsch of Debian Security Team
-about presence of nine security flaws in the logrotate utility
-(the list is provided below).
+Here's a thought that I did not convey yet:
 
-These issues have been discovered by Florian Zumbiehl, some by
-Paul Martin (the Debian logrotate maintainer) and Stefan Fritsch
-in the subsequent discussion.
+If a log file directory is writable by the service pseudo-user, and you
+make both the service and patched logrotate work with it safely, there's
+still the problem of how the sysadmin can access those logs safely.
 
-Could you allocate CVE ids for these issues?
+Normally, the admin would run a command like "less -n" on one of the log
+files, as root.  However, this may allow for DoS attacks via symlinks or
+hard links to device files.  Say, the compromised service may replace
+its log file with a link to a tape device (rewinds tape on open) or to
+/dev/port (locks up some machines on read).
 
-Note: We would appreciate if it would be possible to allocate nine
-       CVE ids (even the request amount being high) because later
-       merge os some issues into one could bring yet more confusion,
-       what are the issues and what would the the corresponding patches
-      (thus potentially even more CVEs needed later due incomplete
-       patches etc). This way the flaws are separated by impact /
-       relevant code affected part.
+The admin could "su" to the service pseudo-user, but that allows the
+compromised service to attack the admin's terminal, accessing the fd via
+/proc or ptrace of a process such as "less" running under the "su"
+session.  Only "su" itself is immune from such attacks (since it has its
+"dumpable" flag cleared); its child processes are not.  The attacker
+would be able to print control characters directly to the terminal fd,
+and to issue ioctl's on it, changing the terminal mode.  This might have
+a security impact worse than DoS.  Sebastian - you could want to comment
+on this (I recall your research).
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+A solution could be to use group read permissions, and to view logs as
+neither root nor the service pseudo-user.  This is good, but we can
+hardly expect almost all sysadmins to do it in almost all cases,
+although having the group pre-created and group read permissions
+pre-configured in a distro would be of some help.
 
-P.S.: Apologize for such a long post, but there wasn't other way
-       how to share all the information at once.
+A more reliable solution (in terms of being safe from the attacks being
+discussed here even when the sysadmins don't specifically try to access
+log files safely) is simply to have services create log files before
+they drop root (and indeed to have the directory only writable by root).
+This is the case for all services that we currently have in Owl.  By the
+way, our syslogd runs as non-root, but it starts up as root and it
+creates its log files in /var/log if necessary - before dropping to the
+syslogd pseudo-user.  In my opinion, that's how it should be done.
 
-===============================================================================
+If a service starts up as non-root right away (such as via "su" in its
+startup script), then there's also a problem with its pidfile.  It has
+to write the pidfile as non-root, and thus into a directory writable by
+the service pseudo-user (well, or rewrite a file in-place, which has
+its own issues).  However, the pidfile is likely to be accessed by other
+parts of the system - such as by startup scripts that use
+/etc/init.d/functions and by programs invoked from there (such as
+start-stop-daemon).  Such accesses are likely to be made as root, and
+the file contents are parsed by scripts/programs running as root.  If
+such parsing is not robust when faced with incorrectly formatted input,
+we may have a local root vulnerability.  And we almost certainly have
+DoS potential via spoofed PIDs (have another service killed) and via
+links to device files, like what I described above.
 
-1) Issue #1: logrotate: TOCTOU race condition by creating the compressed
-              or copied log file (information disclosure)
+Our policy so far has been to ensure that all pidfiles are only writable
+by root, and are in a directory only writable by root.  This implies
+that services are being started as root, create their pidfiles, and only
+then switch to their proper pseudo-users.
 
-       A file access race condition (time-of-check, time-of-use, TOCTOU
-race condition) was found in the way logrotate determines the permissions
-to newly created files when compression or copying of a log file has been
-requested. If the logrotate utility was run on a log file contained within
-an attacker controllable directory, a local attacker could use this flaw
-to trick the logrotate utility into creating the compressed or copied file
-with user selected permissions, potentially leading to disclosure of
-sensitive information.
+On Fri, Mar 04, 2011 at 06:58:17PM +0100, Florian Zumbiehl wrote:
+[...]
+> it is planned to add a new config directive that allows to specify
+> the credentials to be used for manipulating specific sets of log files,
+> thus obviating the need for separate logrotate invocations but still
+> letting the kernel take care of separating privileges.
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=680787
+This sounds good to me, but it does not solve other problems I pointed
+out above.  Would you also add a similar option to start-stop-daemon and
+to the daemon() function in /etc/init.d/functions (or whatever a given
+distro uses)?  Maybe.  But even if so, the problem with admin's read
+access to the logs remains.  Pre-create a log view group and pre-set
+permissions to 640?  Makes sense.  Yet this is still not as good as
+simply having the service start as root (and deal with log files and
+pidfile as root), whenever possible at all, which I think it is possible
+for system services provided in a distro.
 
-Source code background (issue reason):
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=680787#c4
+As to services that a non-root user may want to run on their own, the
+user would not be able to use the new user-switching feature of logrotate
+anyway (no root access).  So the user will run an instance of logrotate
+under their account, which is already possible.
 
-Note: First CVE required.
+Don't get me wrong, I don't really object to logrotate being enhanced.
+I just want to point out a few things (some of this is my opinion rather
+than "the absolute truth"):
 
------------
+1. Other service packages need to be fixed anyway.  Having logs and
+pidfiles in service pseudo-user writable directories is problematic in
+more ways.  Those packages are the vulnerable/guilty ones.
 
-2) Issue #2: logrotate: Race condition by creation of new files after
-              renaming the previous version if compression or copy
-              creation requested (arbitrary system file integrity corruption)
+2. Such an enhancement to logrotate is not as useful as it might appear
+at first.
 
-       A race condition was found in the way the logrotate utility created
-new files after renaming the previous version if compression or creation
-of a copy was requested in the configuration file. If the logrotate utility
-was run on a log file contained within an attacker controllable directory,
-a local attacker could use this flaw to trick the logrotate utility into
-replacing arbitrary system files (if logrotate was run under privileged
-user account, root) with the copied or compressed contents of a log file.
+3. The current behavior of logrotate is not exactly a vulnerability in
+logrotate.  Lacking a potentially desirable security-relevant feature,
+sure.  Vulnerability in logrotate, no.
 
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=680789
+> Now, I guess the major motivation for such an approach over executing
+> logrotate as the unprivileged user directly is backwards compatibility
+> and how much of a nightmare the transition will be, somehow implicitly
+> assuming that the similarity with the old mode of operation should
+> provide for an easier change.
 
-Source code background (issue reason):
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=680789#c7
+If you compare these two approaches - having logrotate switch
+credentials vs. starting multiple instances of logrotate with proper
+credentials right away - then I agree that the former approach might
+be cleaner (same config file for all, etc.)  However, neither solves
+other issues (admin's access to log files, and system scripts/programs'
+access to and parsing of pidfiles).
 
-Proposed patch:
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=680789#c3
+> However, this implicit assumption may actually be just that and nothing
+> more. Namely, there are some ideas how logrotate could guess the
+> credentials for some common setups when none have been specified in the
+> config file so as to avoid having to security-patch dozens of packages,
+> at least as a transitional mechanism. But it's rather unclear whether
+> any of that will actually work to a sufficient degree to be useful (and
+> the security of the heuristics to be used is what most of the remaining
+> contention as to how to fix is about).
 
-Note: Second CVE required.
+Oh, you do need to patch those dozens of packages for other reasons as
+well.  So a possible change to logrotate is just a hardening measure.
+This may be fine if it's not used as an excuse not to fix those other
+packages at all.  But if we say that we're fixing vulnerabilities in
+logrotate, we're sort of making such an excuse.  It's better to say that
+we're hardening logrotate to be safer when faced with broken service
+packages, which are then to be fixed one by one.
 
-----------
+Yet another issue/risk I did not mention/explain explicitly so far:
 
-3) Issue #3: logrotate: TOCTOU race condition by creation of log files after
-              rotation (ability to change file owner / mode on arbitrary system
-              files)
+I've seen packages where the maintainer made the mistake of making the
+log files directory writable by the service pseudo-user even though the
+service did not depend on that in any way.  That is, the service created
+its log files before dropping root, as it should.  This was the case for
+the nginx package I mentioned in this thread.  A possible logrotate
+"fix" would not solve the problem to a significant degree: similar
+attacks would remain possible against service startup (replace the log
+file with a link, wait for service restart, enjoy the link target being
+written to by the service).  The fix, of course, is to change the log
+files directory ownership in the package.  Not to patch logrotate, which
+is only a workaround for some of the attack vectors.
 
-       A file access race condition (time-of-check, time-of-use, TOCTOU
-race condition) was found in the way logrotate utility created the log
-files after rotation, when their immediate creation ("create"
-configuration option) was requested. A local attacker could use this
-flaw to change file owner or mode on arbitrary system files to the file
-owner and mode specified in logrotate's configuration. (if the logrotate
-utility was run under privileged user, root, and logrotate was run on an
-attacker controllable directory).
+Package maintainers commonly make other mistakes of this nature as well,
+making the service pseudo-user the owner of any/all of the following:
+directory the service chroot's to, program binaries, config files, and
+indeed pidfiles as mentioned above.  Obviously, none of these are
+fixable in logrotate.  In my opinion, log file directories are just a
+special case of this problem, and this special case does not move
+responsibility from service packages to logrotate.
 
-References:
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=680790
+> If that doesn't work out and you have to patch dozens of packages in
+> order to change their logrotate configs, you probably may just as well
+> patch packages to switch to using their own logrotate instance. Or to a
+> different strategy for logfile handling altogether.
 
-Source code background (issue reason):
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=680790#c3
+Right.  The latter.
 
-Note: Third CVE required.
+> In particular so,
+> given that quite a few of the affected packages in the case of debian
+> (and I guess it's similar for other distros) do a chown -R on the log
+> dir in their postinst scripts and thus will need a security patch for
+> that anyhow.
 
-----------
+Right.  They should simply keep that directory owned by root and have
+the service support that (if not already supported or even assumed,
+which is often/usually the case).
 
-4) Issue #4: logrotate: Incorrect flags used for truncating of original log
-              file in copytruncate mode (arbitrary file system truncation via
-              symlink / hardlink attacks)
+> I guess I don't really have much of an opinion on that. The vulnerabilities
+> should be fixed, and probably in a way that breaks existing setups as
+> little as possible, I don't really care which side is declared defective
+> and subsequently fixed in order to achieve that ;-)
 
-       It was found that logrotate utility used incorrect flags for truncation
-of the original log file in place after creating a copy (copytruncate mode).
-A local attacker could use this flaw to truncate arbitrary system file (if
-the logrotate utility was run under privileged user account, root) by
-performing symlink or hardlink attacks.
+I care because, in this case, I think that "which side is declared
+defective" affects whether the vulnerabilities are fixed for real or
+not.  Thus, one side (service packages) needs vulnerability fixes and
+the other (logrotate) may use some hardening (but that's tricky).
 
-References:
-[8] https://bugzilla.redhat.com/show_bug.cgi?id=680792
+Maybe logrotate should simply refuse to run when the target directory is
+writable by other than the user running logrotate (typically root), with
+an option to accept the risk and force logrotate to run anyway.  Sure,
+this would break existing security-broken setups, but it would also
+force package maintainers to fix their packages in this respect. ;-)
 
-Note: Fourth CVE required.
+I am sorry for the length of this message, yet I hope it helps.
 
-------------
+Thanks,
 
-5) Issue #5: logrotate: Information disclosure by performing email
-              notifications
-
-       An information disclosure flaw was found in the way the logrotate
-utility performed email notifications about rotating of out of existence
-log files. A local attacker could use this flaw to conduct symlink or
-hardlink attacks and send arbitrary system files (if the logrotate utility
-was run under privileged system user, root) to the selected email recipient.
-
-References:
-[9] https://bugzilla.redhat.com/show_bug.cgi?id=680795
-
-Note: Fifth CVE required.
-
-----------
-
-6) Issue #6: logrotate: Shell command injection by using the shred
-              configuration directive
-
-       A shell command injection flaw was found in the way the logrotate
-utility handled shred configuration directive (intended to ensure the log
-files are not readable after their scheduled deletion). A local attacker
-could use this flaw to execute arbitrary system commands (if the logrotate
-was run under privileged system user account, root) when the logrotate
-utility was run on a log file, within attacker controllable directory.
-
-References:
-[10] https://bugzilla.redhat.com/show_bug.cgi?id=680796
-
-Proposed patch:
-[11] https://bugzilla.redhat.com/show_bug.cgi?id=680796#c5
-
-Note: Sixth CVE required. The shred option has been introduced in logrotate
-       v3.7.5.
-
-----------
-
-7) Issue #7:  logrotate: DoS due improper escaping of file names
-               within 'write state' action
-
-       A denial of service flaw was found in the way the logrotate utility
-performed arguments sanitization, when performing the 'write state' action.
-A local attacker could use this flaw to cause abort in subsequent logrotate
-runs via a specially-crafted log file name.
-
-References:
-[12] https://bugzilla.redhat.com/show_bug.cgi?id=680797
-
-Proposed patch:
-[13] https://bugzilla.redhat.com/show_bug.cgi?id=680797#c3
-
-Note: Seventh CVE required.
-
-----------
-
-8) Issue #8: logrotate: TOCTOU race condition by creation of new files (between
-              opening the file and moment, final permissions have been applied)
-              [information disclosure]
-
-       It was found that logrotate utility used insecure default permissions,
-when creating of new files (time-of-check, time-of-use, TOCTOU race condition).
-In some specific configurations, a local attacker could use this flaw to open
-the new file before the final permissions have been applied, leading to
-disclosure of sensitive information. A different vulnerability than:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=680787 (Issue #1)
-
-References:
-[14] https://bugzilla.redhat.com/show_bug.cgi?id=680798
-
-Source code background (issue reason):
-[15] https://bugzilla.redhat.com/show_bug.cgi?id=680798#c3
-
-Note: Eight-th CVE required.
-
-----------
-
-9) Issue #9: logrotate: Improper administration of log files located in
-              world-writable directories
-
-       A security flaw was found in the way the logrotate utility performed
-administration of log files, located in group / world writable directories.
-A local attacker could use this flaw to disclose sensitive information,
-execute arbitrary code or cause a denial of service, via unintended /
-unprivileged later modifications of log file directory in question.
-
-Different vulnerability than:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=680787 (Issue #1),
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=680789 (Issue #2),
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=680790 (Issue #3),
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=680792 (Issue #4),
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=680795 (Issue #5),
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=680796 (Issue #6),
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=680797 (Issue #7), and
-[8] https://bugzilla.redhat.com/show_bug.cgi?id=680798 (Issue #8).
-
-References:
-[16] https://bugzilla.redhat.com/show_bug.cgi?id=680799
-
-Note: Nineth CVE required.
-
-===============================================================================
-
-
+Alexander
