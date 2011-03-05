@@ -1,25 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/3
-Message-ID: <4E5D0A8D.4020002@oracle.com>
-Date: Tue, 30 Aug 2011 17:06:37 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/1
+Message-ID: <20110305161642.GA2007@albatros>
+Date: Sat, 5 Mar 2011 19:16:43 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Closed List
+Subject: kernel: modules_disabled policy
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
-actually in the Linux sustaining team, the team actually responsible for
-fixing most of the bugs.
+I'd like to bring this subject to the list to receive some comments.
+The thing is that there is a sysctl parameter in Linux kernel to control
+whether it is possible to load/unload LKMs, kernel.modules_disabled.  It
+was originally created because since the removal of system global capability
+set there was no way to globally drop CAP_SYS_MODULE.  It was committed
+as 3d43321b by Kees Cook in Apr 2009:
 
-Could you please add me to the closed list?   There is one other person
-on the list for Oracle, but none, yet, from the Linux group.
+"Implement a sysctl file that disables module-loading system-wide since
+there is no longer a viable way to remove CAP_SYS_MODULE after the system
+bounding capability set was removed in 2.6.25."
 
-My public key can be found on the keyservers, and this is its fingerprint:
+It is one way ticket, there is no defined interface to enable LKM
+loading after disabling it.  The sticking point is that it gives an idea
+that using it prevents loading rootkits to the kernel:
 
-pub   2048D/942FA3C8 2010-03-31
-      Key fingerprint = FEA7 1BDB D750 8559 490D  48E5 450B BB7E 942F A3C8
-uid                  John Haxby <john.haxby@...cle.com>
-sub   2048R/0F52B75D 2011-06-23
+https://wiki.ubuntu.com/Security/Features#block-modules
 
+"This was another layer of protection to stop kernel rootkits from being
+installed." 
+
+But does it really stop rootkits or is it gives a false sence of security?
+There are other ways to write to arbitrary kernel memory location being
+full root, e.g. via hibernation:
+
+http://comments.gmane.org/gmane.linux.kernel/1108853
+
+LKML folks responds that modules_disabled does nothing with protecting
+the kernel from root.
+
+
+So, I'd be happy to hear an answer to the question:
+
+Is it possible to implement strict do-not-touch-the-kernel policy for
+root via disabling LKM loading and _all_ other indirect places with write
+access that allows root to do something, but being too relaxed and
+allows to write to [almost] arbitrary kernel location?  This would make
+root the Boss Of Userland, but as to the kernel it would be but just a
+privileged client.  Or such policy would be incomplete and there is
+almost always a way to by-pass it due to the system design?
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
