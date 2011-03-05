@@ -1,30 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/5
-Message-ID: <20110321092126.GA5084@albatros>
-Date: Mon, 21 Mar 2011 12:21:26 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/8
+Message-ID: <20110305213552.GA32000@openwall.com>
+Date: Sun, 6 Mar 2011 00:35:52 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 20, 2011 at 15:45 -0400, Dan Rosenberg wrote:
-> I don't mean to create unnecessary work, but have you actually
-> confirmed that exposing each of these files as world-writable actually
-> allows a user to cross privilege boundaries?
+On Fri, Mar 04, 2011 at 07:51:02PM +0100, Jan Lieskovsky wrote:
+> I got your point. But still think there is a difference between the
+> case privileged system user would use 'cp' by accident in untrusted
+> directory and corrupt the system and case, when some utility is
+> running under privileged user account on regular basis and not
+> taking 'untrusted directories' into account / not having a policy,
+> how to behave while processing them.
 
-First 19 bugs allow anybody to interact with hardware on low level -
-write to hw registers, load firmware, etc.
+Definitely.  I fully agree that there's a vulnerability in the system if
+it has a non-root writable log directory yet runs logrotate on that
+directory as root.  The question is what part of the system the
+vulnerability lies in.  I say that it's in the directory permissions,
+which usually come from the service package.  We could harden logrotate
+to deal with such misconfigurations in a safer way (once we figure out
+how), but not blame it.
 
-I'm not sure about ubifs debugfs files - they allow anybody to dump some
-fs related information via printk(KERN_DEBUG, ...);  maybe it is just a
-bit more precise statistics than statvfs(2) without any disclosure, but
-I cannot understand it without understanding UBIFS internals.  Also this
-may be not a bug in default distro setups as KERN_DEBUG messages are not
-usually logged into world-readable log files.
+> For example CVE-2010-2055 has been assigned to Ghostscript's reading
+> of initialization files from $CWD. CVE-2010-3349, 3350, 3355, 3369 and
+> many others have been assigned to insecure library loading vulnerabilities.
+> 
+> In comparison with the above, how running of logrotate utlity on untrusted
+> directory differs? Even when it is often run regularly and under root
+> user account.
+
+Reading files from cwd, unless very explicitly documented, may
+reasonably be an unexpected risk for a knowledgeable user.  In contrast,
+logrotate is being explicitly told to access a certain directory.  It's
+more similar to cp'ing a file, where you give the filename explicitly.
+So neither cp nor logrotate are to blame.
+
+> How many system users check the directory permissions prior running
+> the utility? How many administrators check them regularly?
+
+If properly configured initially, log directory permissions are not to
+change on their own.  Otherwise, your argument could be extended onto
+any other part of the system - "how many administrators check the
+permissions on /, on /bin/sh, and on /etc/passwd regularly?"  This
+becomes a system integrity checking question, which applies or does
+not apply regardless of logrotate.
+
+> Agree, the majority of these issue would disappear when logrotate
+> would just refuse to process such a directory. But currently it
+> doesn't. That CVE request is just attempt to pinpoint the need
+> of change.
+
+OK, the need of change.  Would that change be, as you say, to have
+logrotate refuse to process an unsafe directory?  If so, I support this
+(although calling the lack of this hardening measure a vulnerability in
+logrotate is a stretch).  However, I am concerned that another change
+may go in (fine by itself) and it would be used as an excuse not to fix
+the service packages (not fine).  I am commenting in this thread mostly
+to avoid responsibility being taken off those flawed service packages.
+I really don't mind having logrotate hardened in one way or another as
+long as the service packages are to be fixed as well.
+
+> >Almost all other commands and programs are unsafe on untrusted
+> >directories.  In my opinion, that's the only correct assumption for a
+> >sysadmin to make, and any other assumption is naive.
+> 
+> Agree here. But as stated above, how many sysadmins perform this task
+> prior running the tool? How many do it regularly?
+[...]
+> See above. Ghostscript vs logrotate. How untrusted directory for GS
+> differs from untrusted directory for logrotate?
+
+I think I've addressed these same questions above, so I am not repeating
+the answers here.
+
+> >No software is perfect, and almost any piece of software can be improved
+> >endlessly.  But that's mere rhetoric.
+> 
+> Sure. Just wanted to differentiate the 'unsupported functionality'
+> from undocumented functionality, which may be harmful.
+
+Understood and agreed.  But in this case we're dealing with
+"undocumented functionality" that is expected by anyone familiar
+with Unix.  Much like it is expected that "cp" in an untrusted directory
+may happen to follow a link.  This is different from some program
+checking cwd for its config file, which could not be inferred from
+general Unix experience.
+
+> >I don't mind logrotate being hardened against these issues.  We do a lot
+> >of hardening in other areas, so why not here.  I just don't blame
+> >logrotate for the issues. 
+> 
+> See above -- absence of policy how to deal with untrusted directories.
+
+Yes, but that's the case for almost all other Unix programs, with very
+few exceptions.  So a person familiar with Unix should assume that if no
+policy is stated, the program is unsafe to use on untrusted directories.
+
+> How many users check content of their $CWD prior launching gs?
+
+I agree with you that undocumented reading from cwd is a vulnerability.
+(Also, even if users checked their cwd, there would be a race.)
+
+This is just different from the issue at hand.  I've tried to explain
+(in several paragraphs above) why/how I see it different.
+
+> Same from my side. Thanks for the thoughts, which initiated (partial)
+> discussion.
+
+A "full" discussion of the issues involved can be very time-consuming,
+as evidenced by the length of these messages...  So I think we'll have
+to wrap up soon. ;-)
 
 Thanks,
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Alexander
