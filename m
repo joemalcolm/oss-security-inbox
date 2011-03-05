@@ -1,24 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/2
-Message-ID: <71543c91-47fb-41fb-9af2-7e87261df950@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Sep 2011 08:35:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in status.net before 0.9.9 and 1.0.0beta2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/7
+Message-ID: <20110305212535.GX372@outflux.net>
+Date: Sat, 5 Mar 2011 13:25:36 -0800
+From: Kees Cook <kees@...ntu.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org, secalert@...hat.com, security@...e.de
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> See
-> http://status.net/2011/08/02/security-alert-for-all-versions-of-statusnet
+Hi Dan,
+
+On Sat, Mar 05, 2011 at 01:57:41PM -0500, Dan Rosenberg wrote:
+> This is all good to know, but what do we think is the best way to
+> actually fix this specific issue for all the systems supported by
+> distros that are using older versions of util-linux, or for various
+> other reasons can't get rid of /etc/mtab?
 > 
-> "Incorrectly sanitized input from the URL for "tag stream" pages,
-> combined with incorrect encoding of dynamically-generated JavaScript,
-> allows an attacker to create a carefully-crafted URL that will execute
-> arbitrary JavaScript code on other users' browsers."
+> Fixing every suid mount helper individually seems a bit tedious, but
+> there might not be a way around it.
+> [...]
+> There are a few possible options   We could patch glibc to try to
+> raise the rlimit in addmntent().  Or we could fix every suid mount
+> helper to raise the rlimit or have proper error handling for the case
+> when addmntent() fails.  This final option requires that mtab editing
+> be done in a temporary file and aborted on failure, which isn't the
+> case for all helpers.
 
-Please use CVE-2011-3370.
+It seems like fixing glibc to either raise the rlimit or correctly handle
+the error condition is the way to go (as you already mentioned). I share
+the concern of the helpers maybe not checking addmntent() return codes,
+though. If they all do, I would think that just correct error handling
+in glibc would be accepted upstream. Whatever the fix, it really feels like
+it should be in glibc. It is what is responsible for actually writing to
+the file...
 
-Thanks.
+-Kees
 
 -- 
-    JB
+Kees Cook
+Ubuntu Security Team
