@@ -1,21 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/17
-Message-ID: <Pine.GSO.4.64.1104131631320.6578@faron.mitre.org>
-Date: Wed, 13 Apr 2011 16:33:13 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/3
+Message-ID: <AANLkTim1+iO5Na9mdWrHq6F1Sy9QHGqG9wcD8jJ3Y1Xd@mail.gmail.com>
+Date: Sat, 5 Mar 2011 13:57:41 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org,  secalert@...hat.com, security@...e.de
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
+CC-ing various distros in case they missed the original email, which
+I've included below.
 
-On Wed, 13 Apr 2011, Josh Bressers wrote:
+This is all good to know, but what do we think is the best way to
+actually fix this specific issue for all the systems supported by
+distros that are using older versions of util-linux, or for various
+other reasons can't get rid of /etc/mtab?
 
-> Their advisory seems to suggest a CVE ID has been requested.
+Fixing every suid mount helper individually seems a bit tedious, but
+there might not be a way around it.
+
+-Dan
+
+On Fri, Mar 4, 2011 at 1:35 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+> Dan Rosenberg wrote:
+>> > One more option is to replace /etc/mtab regular file with a symlink to
+>> > /proc/mounts, thus making any /etc/mtab editing unneeded.
+>>
+>> This is a very good point.  I'm not sure why /etc/mtab exists anymore
+>> given /proc/mounts is a more reliable source for this information.
 >
-> Steve, does MITRE have such a request?
+> /proc/mounts doesn't store options like user=. So replacing /etc/mtab
+> with a symlink wasn't feasible in general. util-linux recently
+> introduced /dev/.mount/utab which stores the missing information.
+>
+> cu
+> Ludwig
+>
+> --
+>  (o_   Ludwig Nussel
+>  //\
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>
 
-I don't see any, although they've made requests in the past.
+Original e-mail:
 
-Use CVE-2011-1684
+Hi all,
 
-- Steve
+This was originally sent to the now-defunct vendor-sec mailing list.
+Seeing how it's a relatively low-severity issue and that we're
+currently lacking a mechanism for coordination among package
+maintainers and vendors, this list seems like a perfectly acceptable
+venue for discussing how to fix it.
+
+I discovered that essentially every suid mount helper that uses
+addmntent() (or invokes util-linux mount, which in turn calls
+addmntent()) to add entries to /etc/mtab fails to anticipate a low
+value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
+/etc/mtab and possibly manipulate mountpoint options.  Affected
+software includes at least:
+
+mount.cifs (samba)
+fusermount (FUSE)
+mount (util-linux)
+ncpmount (ncpfs)
+vmware-hgfsmounter (open-vm-tools)
+
+Also affected are all their unmount equivalents.
+
+This can be exploited by checking the current size of /etc/mtab,
+setting an RLIMIT_FSIZE of some small amount greater than that, and
+invoking a suid mount helper.  The edits to /etc/mtab will be
+truncated to the ulimit and no newline will be appended, so multiple
+invocations allow near-arbitrary appending to /etc/mtab.  addmntent()
+will octal-encode most special characters, which makes exploitation
+beyond simple corruption not quite as straightforward, but I'm
+confident that with some creativity it would be possible to perform
+unauthorized unmounting, for example.
+
+There are a few possible options   We could patch glibc to try to
+raise the rlimit in addmntent().  Or we could fix every suid mount
+helper to raise the rlimit or have proper error handling for the case
+when addmntent() fails.  This final option requires that mtab editing
+be done in a temporary file and aborted on failure, which isn't the
+case for all helpers.
+
+Of course, once we figure out how to fix this, we can talk about
+assigning CVEs, etc.
+
+Regards,
+Dan
