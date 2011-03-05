@@ -1,81 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/6
-Message-ID: <1590265071.372210.1299180163068.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 14:22:43 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/2
+Message-ID: <20110305163954.GU372@outflux.net>
+Date: Sat, 5 Mar 2011 08:39:54 -0800
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: kernel: modules_disabled policy
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi folks,
+On Sat, Mar 05, 2011 at 07:16:43PM +0300, Vasiliy Kulikov wrote:
+> It is one way ticket, there is no defined interface to enable LKM
+> loading after disabling it.  The sticking point is that it gives an idea
+> that using it prevents loading rootkits to the kernel:
 > 
-> As moderator of vendor-sec and one of the sysadmins of lst.de I noticed a
-> break-in into the lst.de machine last week, which was likely used to
-> sniff email traffic of vendor-sec. This incident probably happened on Jan
-> 20 as confirmed by timestamp, but might have existed for longer.
-
-Thanks for making this public. I know it can be hard to bring something
-like this up.
-
-> I have asked Solar Designer if he could take over hosting, and he was
-> agreeing, including a full GPG crypted setup.
-
-For those of you who don't know Solar Designer hosts oss-security.
-
-> So I would like to open up a discussion with _all_ OSS Security folks
-> present.
+> https://wiki.ubuntu.com/Security/Features#block-modules
 > 
-> - Is a closed vendor coordination like vendor-sec still needed at this
-> time?
-
-I've thought about this a lot. I think the answer is probably. There are
-still reasons to need good cooperation between vendors (this is different
-than coordination, which is what the CERTs do, which generally doesn't
-bring the affected parties together to work on a solution, they generally
-just distribute information).
-
+> "This was another layer of protection to stop kernel rootkits from being
+> installed." 
 > 
-> Meaning: does the benefit of a closed group really outweigh the "left out
-> feeling" of non members and its annoyances?
+> But does it really stop rootkits or is it gives a false sence of security?
 
-This is a big challenge. It's also really hard to decide who should get to
-be a part of such a group. Historically vendor-sec was only vendors, but
-there are a number researchers who would be useful for example (but again,
-who do you choose).
+It was never my intention to give a false sense of security with the
+option, but I did want to try to continue to block common kernel-rootkit
+vectors. Kernel rootkits are really just a specialized form of arbitrary
+kernel memory writing, so that's what I'd like to see squashed.
 
-> - If yes, would it be an idea to confine or split into lists of focus
-> groups?  (like Linux vendors, BSD vendors, all OSS source using vendors,
-> etc?)
+I think a higher priority goal is protecting the kernel from non-root
+users, but when there are obvious places where it is trivial to protect
+the kernel from root, we should plug those holes.
 
-My only fear with this is complexity (I'll propse a far more complex
-idea below).
-
+> There are other ways to write to arbitrary kernel memory location being
+> full root, e.g. via hibernation:
 > 
-> - Or of course the old option is open: Should we proceed with the current
-> state as-is, but throw a bit more GPG encryption on top?
+> http://comments.gmane.org/gmane.linux.kernel/1108853
 
-I suspect it's fairly well understood that the current vendor-sec model was
-broken. Very few "members" ever contributed, which made the list more of an
-announce venue.
+Right, this is a good fix, but as other people point out, perhaps the
+naming of things needs to be changed.
 
+> LKML folks responds that modules_disabled does nothing with protecting
+> the kernel from root.
+
+There are two schools of thought on security: perfect security and layered
+security. The phrase "does nothing" implies someone is approaching the
+issue from the "perfect security" line of reasoning. In reality, it does do
+something, because certain methods of attack simply do not work any more.
+Of course, the arms race continues, and the skilled attackers will move to
+using /sys/kernel/debug/acpi/custom_method, or the hibernation image
+attacks. Just like they moved away from /dev/mem after it was plugged. The
+point is to try to keep closing dangerous interfaces and holes.
+
+> So, I'd be happy to hear an answer to the question:
 > 
-> - What other options do we have or should we pursue?
-> 
+> Is it possible to implement strict do-not-touch-the-kernel policy for
+> root via disabling LKM loading and _all_ other indirect places with write
+> access that allows root to do something, but being too relaxed and
+> allows to write to [almost] arbitrary kernel location?  This would make
+> root the Boss Of Userland, but as to the kernel it would be but just a
+> privileged client.  Or such policy would be incomplete and there is
+> almost always a way to by-pass it due to the system design?
 
-If I had my way (and we had infinite time and resources), I would opt for a
-solution that let the reporter decide who they wanted to inform. Have a
-system in place that could handle properly encrypting the traffic, then
-somehow (web page?) let a reporter decide who to alert. This list of
-potential recipients could include vendors, other upstream projects,
-researchers, CERTs, ... the possibilities are endless.
+IMO, privileged client is preferred. Of course, if you're running on a
+regular system, the kernel image on disk can be changed, or any of the
+start-up settings, and root can just reboot the system. So, as I said, it's
+not a high priority thing to fix, but when it's easy to do so, I think we
+should try to plug the holes since having ways to modify the running kernel
+(when the system owner doesn't want this to happen) allows for some rather
+nasty and hard-to-discover attacks.
 
-Such a system would remove the whole group idea, as nobody gets "left out",
-but rather included. Perhaps oCERT would be interested in helping with such
-an idea? They sort of already do this, but we'd want to create more
-cooperation than there previously exists.
-
-Anyhow, thanks for the update.
+-Kees
 
 -- 
-    JB
+Kees Cook
+Ubuntu Security Team
