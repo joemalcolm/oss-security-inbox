@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/20
-Message-ID: <1442922131.340102.1301701329967.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 1 Apr 2011 19:42:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/5
+Message-ID: <20110306122606.GA892@openwall.com>
+Date: Sun, 6 Mar 2011 15:26:06 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+Pavel,
+
+On Sun, Mar 06, 2011 at 04:19:04PM +0700, Pavel Labushev wrote:
+> 06.03.2011 02:21, Solar Designer пишет:
 > 
-> I'd prefer if any private replacement for vendor-sec were either:
+> >> At least in Gentoo there are packages
+> >> (ebuilds and eclasses) that create user/group-writable directories in
+> >> /var/log and enable logrotate to handle the log files there.
+> > 
+> > Is this something you can get fixed?
 > 
-> 1. Strictly limited to vendor coordination of embargoed security issues
-> (with membership reflecting this purpose), or
-> 
-> 2. Opened up to researchers who have contributed knowledge and findings
-> in this area, and are deemed trustworthy by other list subscribers or
-> some other community opinion.
-> 
-> In other words, it doesn't make sense to me to use "member of the old
-> vendor-sec" as the only requirement for subscription, as some of the old
-> members may not be eligible depending on the purpose of the new list. I
-> understand that this is just a preliminary solution, but I think the
-> question of membership should be sorted out sooner rather than later.
-> 
+> I hope it will be fixed soon. Would be nice to have CVEs assigned for these
+> issues anyway, just to make people aware. If even package maintainers got it
+> wrong, I bet there's a legion of users who also did.
 
-I agree, the membership requirements are a bit vague. IIRC Chris Evans was
-the only researcher on the list, the rest represented a vendor in some
-manner. Sadly it was about the only thing I could think of that wasn't
-going to piss someone off (which it probably does anyway ) ;)
+For this to happen, you need to post info on the specific issues and
+request CVEs for them.  Will you do this, please?  (Perhaps start a new
+thread, or even a thread per package - that's up to you.)
 
-Long term I'd like to see two lists, one for purpose #1, and another geared
-toward #2. I think having a trusted venue for knowledge sharing would be
-very useful, and we likely don't want the list clogged with coordination
-details. This will of course rely heavily on what Openwall is willing to
-take on. They're already taking on a lot of risk and responsibility, I
-don't want to spoil the good will.
+Thanks!
 
-Now that I see all these requests coming in, I'm quite certain I was too
-vague. All gpg keys should really live on a public server (I've not checked
-to see if this is the case). If someone needs to mail you directly, your
-key should be easy to find.
-
-Should we require members use a mail address from their vendor? Letting
-people use personal addresses creates an opportunity for people to remain
-on a list when they are no longer a part of a given vendor (it also makes
-it quite easy to know who represents a vendor).
-
-Also, for those of you interested, I picked up a couple of OpenPGP cards
-for myself (kernel concepts sells them for a reasonable price). Using gpg
-on a regular basis with keys stored on disk creates an opportunity for key
-theft. If you have a smartcard, this isn't an issue (it's certainly not
-without its own set of potential problems though). As a warning, key
-creation on the gemalto and omnikey usb sim sized readers has been
-problematic. I hear full sized readers work (at least the folks I've
-discussed this with say they do).
-
-Thanks.
-
--- 
-    JB
+Alexander
