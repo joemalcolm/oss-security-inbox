@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/12
-Message-ID: <1279272335.991770.1309277813352.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 28 Jun 2011 12:16:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/1
+Message-ID: <20110306082425.GA16673@bluenote.herrb.net>
+Date: Sun, 6 Mar 2011 09:24:26 +0100
+From: Matthieu Herrb <matthieu.herrb@...s.fr>
 To: oss-security@...ts.openwall.com
-Subject: nspluginwrapper CVE id
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hello all. I've assigned CVE-2011-2486 to a nspluginwrapper flaw where
-flash won't honor the private browsing boolean.
+On Fri, Mar 04, 2011 at 01:49:20AM +0300, Solar Designer wrote:
+> 
+> As to projects such as, say, Samba and X.org, I'd exclude them.
+> There's no difficulty for a researcher to notify one of these directly,
+> and there's not much difficulty in CC'ing the proper one of these on a
+> discussion.
 
-More details are here:
-https://bugzilla.redhat.com/show_bug.cgi?id=715384
-
-Thanks.
+I think that as far as X.Org is concerned, we're ok with that.
+There are already security people from Linux distributions subscribed
+to  the xorg-security@ list and they also have access to restricted
+'security' bugs in bugzilla. 
 
 -- 
-    JB
+Matthieu Herrb
