@@ -1,54 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/3
-Message-ID: <4E2C247C.7040204@redhat.com>
-Date: Sun, 24 Jul 2011 15:56:12 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Lukas Fleischer <cgit@...ptocrack.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/2
+Message-ID: <20110306061624.GA9133@serpens.de>
+Date: Sun, 6 Mar 2011 07:16:25 +0100
+From: "S.P.Zeidler" <spz@...BSD.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Hi Lukas,
+Thus wrote Greg KH (greg@...ah.com):
+> On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
+> > Thus wrote Solar Designer (solar@...nwall.com):
+> > 
+> > > > - If yes, would it be an idea to confine or split into lists of focus groups?
+> > > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+> > > 
+> > > My current proposal is: split into several sub-lists.  I'd start with
+> > > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+> > > groups would be for externally submitted reports (by non-members) and
+> > > for cross-vendor discussions.
+> > 
+> > I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
+> > items shared between BSDs, but not commonly seen in Linux distributions),
+> > shared/userland (who eg doesn't have OpenSSL?), and researchers
+> > (no opinion on the latter).
+> 
+> This means that for a "normal" Linux distribution, someone would have to
+> be subscribed to at least 2 lists, and possibly three?
 
-   thank you for this correction.
+Two, to be made aware of issues (same for BSDs).
 
-On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
-> On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
->> Hello Josh, Steve, vendors,
->>
->>    an cross-site scripting (XSS) flaw was found in the way cgit, a fast
->> web interface for Git, displayed the file name in the rename hint. A
->> remote attacker could provide a specially-crafted web page, which once
->> visited by an authenticated Cgit user, with push access to the
->> repository, would lead to arbitrary web script or HTML code execution.
->
-> I think you are a tad off, here. The vulnerability I discovered actually
-> is only exploitable *by* a user with push access as it requires to push
-> a commit that renames any file to a file with a malicious file name.
+> And where would someone post a problem to?  How would they know if a
+> pacakge is shared from BSD and Linux without having to do a lot of
+> research first?
 
-Have updated issue description in:
-https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
+Assume shared unless you know it's a specific problem. :)
 
-Hoping of it to sound better now.
+> I really don't mind seeing all of the traffic for all of the issues, but
+> perhaps the BSD developers get tired of seeing all of the Linux kernel
+> issues go across their mailbox so they don't want to have to see them
+> anymore :)
 
-Thanks again && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+I wouldn't be on the list but I guess our security-officers coped.
+It's rather that I would like to avoid the BSDs being forgotten.
 
->
-> The description (and the categorization of the vulnerability, which
-> definitely is a low severity one if it counts as a vulnerability at all)
-> should be corrected to reflect that.
->
->>
->> References:
->> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
->> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
->>
->> Could you allocate a CVE id for this?
->>
->> Thank you&&  Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
-
+regards,
+	spz
+-- 
+spz@...pens.de (S.P.Zeidler) spz@...BSD.org
