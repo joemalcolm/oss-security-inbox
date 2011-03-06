@@ -1,48 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/7
-Message-ID: <1057850136.226145.1296509049436.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 31 Jan 2011 16:24:09 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/2
+Message-ID: <20110306061624.GA9133@serpens.de>
+Date: Sun, 6 Mar 2011 07:16:25 +0100
+From: "S.P.Zeidler" <spz@...BSD.org>
 To: oss-security@...ts.openwall.com
-Cc: Wouter Verhelst <wouter@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- NDB: CVE-2005-3534 reintroduced in upstream nbd-v2.9.0 version
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0530.
+Hi,
 
-Thanks.
+Thus wrote Greg KH (greg@...ah.com):
+> On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
+> > Thus wrote Solar Designer (solar@...nwall.com):
+> > 
+> > > > - If yes, would it be an idea to confine or split into lists of focus groups?
+> > > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+> > > 
+> > > My current proposal is: split into several sub-lists.  I'd start with
+> > > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+> > > groups would be for externally submitted reports (by non-members) and
+> > > for cross-vendor discussions.
+> > 
+> > I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
+> > items shared between BSDs, but not commonly seen in Linux distributions),
+> > shared/userland (who eg doesn't have OpenSSL?), and researchers
+> > (no opinion on the latter).
+> 
+> This means that for a "normal" Linux distribution, someone would have to
+> be subscribed to at least 2 lists, and possibly three?
 
+Two, to be made aware of issues (same for BSDs).
+
+> And where would someone post a problem to?  How would they know if a
+> pacakge is shared from BSD and Linux without having to do a lot of
+> research first?
+
+Assume shared unless you know it's a specific problem. :)
+
+> I really don't mind seeing all of the traffic for all of the issues, but
+> perhaps the BSD developers get tired of seeing all of the Linux kernel
+> issues go across their mailbox so they don't want to have to see them
+> anymore :)
+
+I wouldn't be on the list but I guess our security-officers coped.
+It's rather that I would like to avoid the BSDs being forgotten.
+
+regards,
+	spz
 -- 
-    JB
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> Originally, CVE-2005-3534:
-> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3534
-> 
-> has been assigned to NBD and addressed in nbd-v2.8.3 version:
-> [2]
-> http://sourceforge.net/project/shownotes.php?release_id=380202&group_id=13229
-> 
-> via changeset:
-> [3]
-> https://github.com/yoe/nbd/commit/4ed24fe0d64c7cc9963c57b52cad1555ad7c6b60
-> 
-> But nbd-v2.9.0:
-> [4] http://sourceforge.net/projects/nbd/files/nbd/2.9.0/
-> 
-> contains the issue again. This flaw was fixed second time via upstream
-> changeset:
-> [5]
-> https://github.com/yoe/nbd/commit/3ef52043861ab16352d49af89e048ba6339d6df8
-> 
-> References:
-> [6] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611187
-> [7] https://bugzilla.redhat.com/show_bug.cgi?id=673562
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+spz@...pens.de (S.P.Zeidler) spz@...BSD.org
