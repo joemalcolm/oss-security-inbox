@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/3
-Message-ID: <4E7EECDB.6080106@sugarcrm.com>
-Date: Sun, 25 Sep 2011 01:56:59 -0700
-From: Stas Malyshev <smalyshev@...arcrm.com>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/1
+Message-ID: <20110306082425.GA16673@bluenote.herrb.net>
+Date: Sun, 6 Mar 2011 09:24:26 +0100
+From: Matthieu Herrb <matthieu.herrb@...s.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Fri, Mar 04, 2011 at 01:49:20AM +0300, Solar Designer wrote:
+> 
+> As to projects such as, say, Samba and X.org, I'd exclude them.
+> There's no difficulty for a researcher to notify one of these directly,
+> and there's not much difficulty in CC'ing the proper one of these on a
+> discussion.
 
-On 9/25/11 1:28 AM, Pierre Joye wrote:
-> It breaks the checks which leads to autoloader to accept bad input.
-> Yes, the autoloader should have sanity check in place but this BC
-> break changes the behavior and introduced this issue as well on top of
-> it.
->
-> I'm not sure either if we need a CVE as it is not a flaw in php itself
-> per se. However the BC break introduces flaws in working codes, and
-> that's a gray zone now.
+I think that as far as X.Org is concerned, we're ok with that.
+There are already security people from Linux distributions subscribed
+to  the xorg-security@ list and they also have access to restricted
+'security' bugs in bugzilla. 
 
-Yes, it is a behavior change, and it shouldn't have happened in 5.3, the 
-fact that it happened was a bad mistake, it is clear now.
-However, the security flaw is squarely in the code that a) misuses is_a 
-b) doesn't have security checks and c) does not follow recommended best 
-practices about PHP settings.
-As such, telling people that it was a flaw in PHP and that BC break 
-reversal "fixed" it only gives them wrong ideas that their code was just 
-fine. But in fact their code was broken and only by luck (and due to the 
-haphazard way things were done in PHP where nobody bothered correlating 
-function signatures with one another) in might have not been 
-malfunctioning in this specific scenario. They need to fix that code 
-ASAP, as they can not rely on luck anymore and they way is_a was changed 
-is actually they way it should have worked from the start and the way 
-is_subclass_of works right now.
 -- 
-Stanislav Malyshev, Software Architect
-SugarCRM: http://www.sugarcrm.com/
-(408)454-6900 ext. 227
+Matthieu Herrb
