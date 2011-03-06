@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/2
-Message-ID: <BANLkTi=viGP4Jr4reOz4ceS=rtSFuMnw7Q@mail.gmail.com>
-Date: Wed, 27 Apr 2011 11:00:16 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/7
+Message-Id: <201103061614.58209.sgrubb@redhat.com>
+Date: Sun, 6 Mar 2011 16:14:58 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: kernel: modules_disabled policy
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 27, 2011 at 10:56 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
->
->> util-linux mount
->> =============
->> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
->> to glibc addmntent() in terms of return code
->> * Succeeds on partial writes, does not remove temp file on failure
->> (could result in additional corruption of /etc/mtab through multiple
->> invocations), does not remove lock file /etc/mtab~ on failure (also an
->> issue)
->
-> Dan, would you mind clarifying the way to achieve mtab corruption via
-> truncated left-over mtab.tmp file and multiple invocations?  After some
-> discussion with our util-linux maintainer, we fail to see an obvious
-> way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
-> open flag.  So if there's any mtab.tmp file found, it's overwritten and
-> its existence does not block further use of mount / umount as existence
-> of mtab~ lock file does.
->
+On Saturday, March 05, 2011 11:16:43 am Vasiliy Kulikov wrote:
+> Is it possible to implement strict do-not-touch-the-kernel policy for
+> root via disabling LKM loading and _all_ other indirect places with write
+> access that allows root to do something, but being too relaxed and
+> allows to write to [almost] arbitrary kernel location?  This would make
+> root the Boss Of Userland, but as to the kernel it would be but just a
+> privileged client.  Or such policy would be incomplete and there is
+> almost always a way to by-pass it due to the system design?
 
-Ah, quite right.  I missed that since I was just doing a quick survey
-of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
-Thanks for looking into it.
+There's been some discussion on this here:
+http://marc.info/?l=linux-security-module&m=129613936129293&w=2
 
--Dan
+As root, you could modify /etc/modprobe.d/  and add your root kit and issue a system 
+reboot. That might get attention, but its possible to load modules by rebooting. Along 
+the same lines, you could regenerate the initramfs with your module being loaded 
+there.
 
-> Thank you!
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+What was proposed was another kind of deployment module where the initramfs and kernel 
+is on readonly media so any kernel updates have no effect. The initramfs has all the 
+kernel modules that wil ever be loaded and anything that manages to live in 
+/lib/modules will not be used for anything. Since root is in control of user space, he 
+could change any program that the kernel calls out to load modules. So in the 
+initramfs we want to drop 2 capabilities so that all kernel helpers are not able to 
+run with CAP_SYS_MODULE or CAP_SYS_RAWIO.
+
+There are lots of loose ends. I think you found another place where root in the 
+traditional sense was perfectly fine doing a snapshot. But if you want to allow anyone 
+to have root, but not be able to get arbitrary code running at ring0, there will be 
+quite a bit of looking for these uncontrolled places and getting them under some 
+capability check that can be excluded without diminishing roots abilities too much.
+
+-Steve
