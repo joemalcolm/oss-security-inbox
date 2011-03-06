@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/2
-Message-ID: <20111212162444.GD1648@redhat.com>
-Date: Mon, 12 Dec 2011 09:24:56 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/3
+Message-ID: <4D735188.6060300@gmail.com>
+Date: Sun, 06 Mar 2011 16:19:04 +0700
+From: Pavel Labushev <p.labushev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: rocksndiamonds world-writable working/config directory
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-rocksndiamonds creates its ~/.rocksndiamonds/ directory as
-world-writable.  This could allow a local attacker to replace a cache
-file with a symbolic link to a file they would not otherwise have access
-to, and the next time the victim loaded the game, it would be
-overwritten.
+06.03.2011 02:21, Solar Designer пишет:
 
-Could a CVE be assigned to this please?
+>> At least in Gentoo there are packages
+>> (ebuilds and eclasses) that create user/group-writable directories in
+>> /var/log and enable logrotate to handle the log files there.
+> 
+> Is this something you can get fixed?
 
-References:
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651620
-https://bugzilla.redhat.com/show_bug.cgi?id=766805
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+I hope it will be fixed soon. Would be nice to have CVEs assigned for these
+issues anyway, just to make people aware. If even package maintainers got it
+wrong, I bet there's a legion of users who also did.
