@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/4
-Message-ID: <4D3E480D.9090609@redhat.com>
-Date: Tue, 25 Jan 2011 11:48:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/5
+Message-ID: <20110306122606.GA892@openwall.com>
+Date: Sun, 6 Mar 2011 15:26:06 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
-Subject: Re: CVE request: linux kernel heap issues
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 05:46 AM, Kees Cook wrote:
-> Hello,
->
-> I don't think these minor issues I reported to the Linux Kernel have
-> had CVEs assigned to them:
->
-> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+Pavel,
 
-These require CAP_NET_ADMIN.
+On Sun, Mar 06, 2011 at 04:19:04PM +0700, Pavel Labushev wrote:
+> 06.03.2011 02:21, Solar Designer пишет:
+> 
+> >> At least in Gentoo there are packages
+> >> (ebuilds and eclasses) that create user/group-writable directories in
+> >> /var/log and enable logrotate to handle the log files there.
+> > 
+> > Is this something you can get fixed?
+> 
+> I hope it will be fixed soon. Would be nice to have CVEs assigned for these
+> issues anyway, just to make people aware. If even package maintainers got it
+> wrong, I bet there's a legion of users who also did.
 
-CVE-2010-4655.
+For this to happen, you need to post info on the specific issues and
+request CVEs for them.  Will you do this, please?  (Perhaps start a new
+thread, or even a thread per package - that's up to you.)
 
-> iowarrior usb device heap overflow
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+Thanks!
 
-CVE-2010-4656.
-
-Eugene
+Alexander
