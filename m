@@ -1,79 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/13/1
-Message-ID: <4E45D873.2000901@goirand.fr>
-Date: Sat, 13 Aug 2011 09:50:43 +0800
-From: Thomas Goirand <thomas@...rand.fr>
-To: Jonathan Wiltshire <jmw@...ian.org>
-CC: oss-security@...ts.openwall.com,  Debian Security Team <team@...urity.debian.org>
-Subject: Re: CVE request: multiple vulnerabilities in dtc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/6
+Message-ID: <4D739ABD.9040508@gmail.com>
+Date: Sun, 06 Mar 2011 21:31:25 +0700
+From: Pavel Labushev <p.labushev@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-We are discussing the issues with Philippe Kern. While there are issues
-that were discovered, I am claiming that some of what you see below
-shouldn't be in the list.
+06.03.2011 19:26, Solar Designer пишет:
 
-On 08/13/2011 05:26 AM, Jonathan Wiltshire wrote:
-> #566654
-> dtc saves the administrator password in plain text in
-> /var/lib/dtc/saved_install_config under the variable name conf_adm_pass.
-> It remains there even after initial configuration.
+> For this to happen, you need to post info on the specific issues and
+> request CVEs for them.  Will you do this, please?  (Perhaps start a new
+> thread, or even a thread per package - that's up to you.)
 
-That's not more a security vulnerability than /etc/mysql/debian.cnf
-(both file are readable by root only). This has been in the BTS for a
-long time, and it makes no sense to assign a CVE now.
+I mean we shouldn't sweep the logrotate issues under the carpet, even if
+logrotate wasn't suppose to handle such use cases initially. I have an
+impression that's what you suggest. I mean this:
 
-> #611680
-> dtc-xen includes several command executions as root that use unchecked
-> user input in dtc-soap-server.
+> The rest, as described, appear to rely on sysadmin error and to assume
+> security properties that logrotate never advertised it had.
 
-That's not relevant and isn't a vulnerability. I have closed the bug a
-long time ago, writing that I wont fix it, and explaining why. Please
-see the BTS entry for it. dtc-xen isn't supposed to run stand-alone, and
-the only client for dtc-xen is dtc itself. If you gain access to it,
-then there is an issue somewhere else, and "fixing" things here wont
-make things better.
+and
 
-> #614304
-> dtc stores user passwords and passwords for various services in unencrypted
-> form in the database.
+> Indeed.  A vulnerability in the service package, in my opinion.  Now
+> that would require CVE id assignment and a fix to the package, whereas
+> logrotate could merely use some hardening with no CVE ids (except for
+> issue #8, which was different).
 
-This is fixed in the Git, and has already been discussed. While it's a
-serious issue (which has been carefully worked on), it didn't deserve a
-CVE 6 months ago, and it shouldn't right now.
+So I think all the logrotate issues should get their CVEs with an advise to
+work around misuse cases by chowning the log directories root:root.
 
-> #637477
-> Insufficient input checking in /shared/inc/sql/lists.php
->
-> #637485
-> The setup script for dtc writes the password for the MySQL user in the
-> world-readable file /etc/apache2/apache2.conf.
-> 
-> #637487
-> Insufficient input checking leads to a SQL injection vulnerability in
-> shared/inc/forms/domain_info.php.
-> 
-> #637498
-> A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
-> files as the MySQL system user.
-> 
-> #637537
-> dtc passes passwords to htpasswd using command line arguments, which can be
-> read by a local user.
-> 
-> #637584
-> dtc does not escape variables in HTML output in many places; for example
-> in the "Domain root TXT record:" field on the "DNS and MX" page where
-> JavaScript can be injected.
-
-The above should be fixed and are real issues, but what I commented
-don't deserve a CVE.
-
-> Note that these descriptions are mostly taken from the bug reports and may
-> not be suitable for direct publication without editing. I have checked as
-> far as possible that none of these were previously assigned CVEs but they
-> could be duplicates. There are often mitigating factors such as
-> user or administrator authentication.
-
-Absolutely all of them need a user to be logged indeed.
-
-Thomas
+The Gentoo issues, I think they don't need CVEs and will be fixed by the
+Gentoo security team (they are aware). The point was to show the misuse
+cases are common.
