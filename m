@@ -1,198 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/9
-Message-ID: <AANLkTim+=vBiidJMaiQDXVRwAv0pn7BjoABQA-FvX4y4@mail.gmail.com>
-Date: Tue, 8 Mar 2011 14:36:49 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/7
+Message-Id: <201103061614.58209.sgrubb@redhat.com>
+Date: Sun, 6 Mar 2011 16:14:58 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request, php's shm
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: kernel: modules_disabled policy
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On Saturday, March 05, 2011 11:16:43 am Vasiliy Kulikov wrote:
+> Is it possible to implement strict do-not-touch-the-kernel policy for
+> root via disabling LKM loading and _all_ other indirect places with write
+> access that allows root to do something, but being too relaxed and
+> allows to write to [almost] arbitrary kernel location?  This would make
+> root the Boss Of Userland, but as to the kernel it would be but just a
+> privileged client.  Or such policy would be incomplete and there is
+> almost always a way to by-pass it due to the system design?
 
-Can someone request a CVE for this flaw please? It would rock if we
-can get it today as we will package 5.3.6 final.
+There's been some discussion on this here:
+http://marc.info/?l=linux-security-module&m=129613936129293&w=2
 
-This flaw has been discovered by Jose Carlos Norte, already fixed in
-SVN by Felipe Pena (felipe@....net), see
-http://svn.php.net/viewvc/?view=revision&revision=309018
+As root, you could modify /etc/modprobe.d/  and add your root kit and issue a system 
+reboot. That might get attention, but its possible to load modules by rebooting. Along 
+the same lines, you could regenerate the initramfs with your module being loaded 
+there.
 
-Thanks for your work!
+What was proposed was another kind of deployment module where the initramfs and kernel 
+is on readonly media so any kernel updates have no effect. The initramfs has all the 
+kernel modules that wil ever be loaded and anything that manages to live in 
+/lib/modules will not be used for anything. Since root is in control of user space, he 
+could change any program that the kernel calls out to load modules. So in the 
+initramfs we want to drop 2 capabilities so that all kernel helpers are not able to 
+run with CAP_SYS_MODULE or CAP_SYS_RAWIO.
 
-Cheers,
----------- Forwarded message ----------
-From: Jose Carlos Norte <jose@...os.org>
-Date: Tue, Mar 8, 2011 at 10:06 AM
-Subject: Re: about a memory error in php
-To: Scott MacVicar <scott@...vicar.net>
-Cc: security@....net
+There are lots of loose ends. I think you found another place where root in the 
+traditional sense was perfectly fine doing a snapshot. But if you want to allow anyone 
+to have root, but not be able to get arbitrary code running at ring0, there will be 
+quite a bit of looking for these uncontrolled places and getting them under some 
+capability check that can be excluded without diminishing roots abilities too much.
 
-
-Hi,
-
-thanks for your fast reply! following your instructions, I communicate
-the bug directly in this mail:
-
-the problem is in the shmop_read php function, in the file
-ext/shmop/shmop.c. This functions reads a given number of bytes from
-memory, at a given offset starting from a shared memory area.
-
-string shmop_read (int shmid, int start, int count)
-
-Inside the code of the function itself, there are checks in the start
-parameter and in the count parameter, to avoid reading arbitrary
-memory outside the shared memory object:
-
-    if (start < 0 || start > shmop->size) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "start is out of range");
-        RETURN_FALSE;
-    }
-
-    if (start + count > shmop->size || count < 0) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "count is out of range");
-        RETURN_FALSE;
-    }
-
-The first block check if start is lower than 0 or bigger than the size
-of the shared memory area.
-
-The second block checks that the SUM (ADDITION) of "start" and "count"
-is not greater than the shared memory area, and later checks if count
-its not lower than 0.
-
-The problem is that both variables are signed longs, in 32 bits
-architectures this means 2^31 maximum value, after this value, the
-variable becomes negative.
-
-So, if we put exactly 2^31 as a value in count, and 1 as a value in
-start, the first condition: start + count would become negative
-(2^31+1) and will pass the check, and the second condition (count > 0)
-will also pass the check, because count its positive (2^31) and do not
-get negative until the addition of 1.
-
-After this, the code follows:
-
-
-
-    startaddr = shmop->addr + start;
-    bytes = count ? count : shmop->size - start;
-
-    return_string = emalloc(bytes+1);
-    memcpy(return_string, startaddr, bytes);
-    return_string[bytes] = 0;
-
-    RETURN_STRINGL(return_string, bytes, 0);
-
-bytes is again a signed integer.
-
-return_string allocates 2^31+1+1 (+1 from start, +1 directly hardcoded
-in the emalloc call) bytes, this is negative inside bytes, but its not
-a problem, since emalloc uses size_t, so 2^31+1+1 of memory is
-allocated.
-
-After this, there is a call to memcpy, that will exactly copy 2^31+1+1
-bytes of memory inside return_string, far far larger than the shared
-object memory area.
-
-So, in normal situations, this will produce a segmentation fault,
-because of php reading past its own memory.
-
-However, this could be exploitable in scenarios with enough memory,
-because return_string is returned to the php, if there is enough
-allocated memory to not produce a segmentation fault, 2gb of arbitrary
-memory would be leaked.
-
-I have created a little exploit to test the issue:
-
-<?php
-$shm_key = ftok(__FILE__, 't');
-$shm_id = shmop_open($shm_key, "c", 0644, 100);
-$shm_data = shmop_read($shm_id, 1, 2147483647);
-//if there is no segmentation fault past this point, we have 2gb of memory!
-echo $shm_data;
-?>
-
-In this exploit, I use 1 as a value for start, and 2^31 (2147483647) as count.
-
-2147483647+1 = -2147483647.
-
-When executing it:
-
-n00b@...natos:~$ cat lol.php
-<?php
-$shm_key = ftok(__FILE__, 't');
-$shm_id = shmop_open($shm_key, "c", 0644, 100);
-$shm_data = shmop_read($shm_id, 1, 2147483647);
-//if there is no segmentation fault past this point, we have 2gb of memory!
-echo $shm_data;
-?>
-n00b@...natos:~$ php lol.php
-Segmentation fault
-n00b@...natos:~$
-
-A call to ltrace, reveals:
-
-malloc(2147745792)
-
-     = 0x35cbd008
-memcpy(0x35cbd024, "", 2147483647 <unfinished ...>
---- SIGSEGV (Segmentation fault) ---
-+++ killed by SIGSEGV +++
-n00b@...natos:~$
-
-it is the memcpy, trying to read past the memory assigned to php that
-is crashing the application.
-
-If you need any further details, please do not hesitate to ask.
-
-Thanks for your time and your fast response.
-
-Regards,
-
-On Mon, 7 Mar 2011 16:10:21 -0800, Scott MacVicar <scott@...vicar.net> wrote:
-
-You reply to the list, we'll analyse it fix and ask for a CVE to
-represent it. We don't publish to any lists and will fix it as soon as
-we can. Credit are published in the changelog.
-
-- Scott
-
-On 7 March 2011 15:21, Jose Carlos Norte <jose@...os.org> wrote:
->
-> Hi,
->
-> I'm a security enthusiast who likes to audit open source projects
-> source code, I have been working this weekend reading the PHP source
-> code (a really great piece of software) and I have found for the
-> moment 1 vulnerability regarding to memory management, I'm not sure it
-> is exploitable, but at this moment I'm able to create a php file that
-> segfaults the php binary, trying to read/write on incorrect memory
-> adresses.
->
-> I would like to know what are the normal procedure in the php project
-> to proceed with the advisory, regarding to:
->
-> - credits?
-> - timings?
-> - waiting times?
->
-> In fact what I would like to know mostly is what is the most
-> reponsible procedure for me, to allow you to solve the issue, before
-> publishing anything.
->
-> As a security researcher, I would like to publish my findings at least
-> in my blog, and I also want to know if is PHP security team who send
-> the advisory to securityfocus, or the researcher.
->
-> I really want to proceed in the most ethical and polite way with your
-> project and your community.
->
-> Regars,
->
-> Jose Carlos Norte.
-
-
-
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-Steve
