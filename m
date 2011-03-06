@@ -1,19 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/2
-Message-ID: <4D8AE69C.9060404@redhat.com>
-Date: Thu, 24 Mar 2011 14:37:16 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/6
+Message-ID: <4D739ABD.9040508@gmail.com>
+Date: Sun, 06 Mar 2011 21:31:25 +0700
+From: Pavel Labushev <p.labushev@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-Subject: Re: oss-security is on twitter
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On 03/24/2011 02:03 AM, Menkhus, Mark (GSE Security HP SSRT) wrote:
-> Cool! How do you do this?  Part of the mail hosting, or just a filter in
-> your email reader?
+06.03.2011 19:26, Solar Designer пишет:
 
-I used twitterfeed. It's a rss-to-twitter service.
+> For this to happen, you need to post info on the specific issues and
+> request CVEs for them.  Will you do this, please?  (Perhaps start a new
+> thread, or even a thread per package - that's up to you.)
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+I mean we shouldn't sweep the logrotate issues under the carpet, even if
+logrotate wasn't suppose to handle such use cases initially. I have an
+impression that's what you suggest. I mean this:
+
+> The rest, as described, appear to rely on sysadmin error and to assume
+> security properties that logrotate never advertised it had.
+
+and
+
+> Indeed.  A vulnerability in the service package, in my opinion.  Now
+> that would require CVE id assignment and a fix to the package, whereas
+> logrotate could merely use some hardening with no CVE ids (except for
+> issue #8, which was different).
+
+So I think all the logrotate issues should get their CVEs with an advise to
+work around misuse cases by chowning the log directories root:root.
+
+The Gentoo issues, I think they don't need CVEs and will be fixed by the
+Gentoo security team (they are aware). The point was to show the misuse
+cases are common.
