@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/5
-Message-ID: <4D99DEAA.6010905@gmx.de>
-Date: Mon, 04 Apr 2011 17:07:22 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/4
+Message-ID: <20110307080645.GF26611@core.inversepath.com>
+Date: Mon, 7 Mar 2011 09:06:45 +0100
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Am 04.04.2011 01:00, schrieb Solar Designer:
+On Mon, Mar 07, 2011 at 11:08:31AM +0800, Eugene Teo wrote:
+> >On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+> >>So I would like to open up a discussion with _all_ OSS Security folks present.
+> >>
+> >>- Is a closed vendor coordination like vendor-sec still needed at this time?
+> >
+> >Yes, there's some need for it.
+> 
+> I still see some value in having a closed mailing list for vendor
+> co-ordination.
+> 
 
-> Added.  This gives us three contacts for Ubuntu on the list:
+As suggested by Josh Bressers oCERT would be favourable to providing a system
+that would accept user submission and allow selection of security contacts
+from our existing member database as well as other verified contacts.
 
-...
+As Josh pointed out we do this already (even if manually and not with a web
+selection thing or whatever) and I am open to explore ways to create more
+cooperation.
 
-> Maybe this needs to be reduced to two most active ones at a later point.
+We would also be willing to host and maintain a closed vendor-sec style
+mailing list like the previous one with the only condition for member list to
+be public (not necessarily the individual contact names but at least the
+entities represented).
 
-What sense lies in limiting subscribers per distro?
+Cheers
 
-If you want to coordinate and one of the two most active is on vacation
-and the other falls sick, the third one is precluded and so is
-coordination with that particular vendor.
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
