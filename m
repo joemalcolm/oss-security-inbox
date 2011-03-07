@@ -1,90 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/4
-Message-ID: <4EDEA3C9.1000500@redhat.com>
-Date: Tue, 06 Dec 2011 16:22:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: acpid - possible issue in socket handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/6
+Message-ID: <20110307125419.GA12931@nowster.org.uk>
+Date: Mon, 7 Mar 2011 12:54:19 +0000
+From: Paul Martin <pm@...ian.org>
+To: Jan Kaluža <jkaluza@...hat.com>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-While reading the acpid ChangeLog I noticed:
+On Mon, Mar 07, 2011 at 01:21:05PM +0100, Jan Kaluža wrote:
 
-* Tue Nov 15 2011  Ted Felix <http://www.tedfelix.com>
-  - 2.0.13 release
-  - Fix for socket name buffer overflow.  (ud_socket.c)  (Ted Felix)
+> I think logrotate should skip rotation of files in unsafe
+> directories and show error message instead. Logrotate should also
+> contain something like "--force" switch (this name is already used,
+> so we have to find better one, but I don't have anything better in
+> mind just now). With this switch logrotate should *not* skip unsafe
+> directories and rotate them as it currently does, but show the error
+> message. Basically it allows backward compatibility.
 
-This doesn't appear to cross a security boundary without an admin doing
-something intentionally strange. But just in case someone knows a clever
-way to exploit this I thought I'd post to the list and ask (and if so
-I'll assign a CVE).
+"--override-unsafe-directory-check" perhaps?  Make it a long option,
+so that there is no doubt that the user is doing something that's
+potentially dangerous.
 
-Code below:
-
---- acpid-2.0.12/ud_socket.c    2009-04-29 08:36:27.000000000 -0600
-+++ acpid-2.0.13/ud_socket.c    2011-10-17 17:47:16.000000000 -0600
-@@ -15,6 +15,7 @@
- #include <fcntl.h>
- 
- #include "acpid.h"
-+#include "log.h"
- #include "ud_socket.h"
- 
- int
-@@ -24,7 +25,16 @@
-        int r;
-        struct sockaddr_un uds_addr;
- 
--       /* JIC */
-+    if (strnlen(name, sizeof(uds_addr.sun_path)) >
-+        sizeof(uds_addr.sun_path) - 1) {
-+        acpid_log(LOG_ERR, "ud_create_socket(): "
-+            "socket filename longer than %u characters: %s",
-+            sizeof(uds_addr.sun_path) - 1, name);
-+        errno = EINVAL;
-+        return -1;
-+    }
-+
-+    /* JIC */
-        unlink(name);
- 
-        fd = socket(AF_UNIX, SOCK_STREAM, 0);
-@@ -35,7 +45,7 @@
-        /* setup address struct */
-        memset(&uds_addr, 0, sizeof(uds_addr));
-        uds_addr.sun_family = AF_UNIX;
--       strcpy(uds_addr.sun_path, name);
-+    strncpy(uds_addr.sun_path, name, sizeof(uds_addr.sun_path) - 1);
-       
-        /* bind it to the socket */
-        r = bind(fd, (struct sockaddr *)&uds_addr, sizeof(uds_addr));
-@@ -85,6 +95,14 @@
-        int r;
-        struct sockaddr_un addr;
- 
-+    if (strnlen(name, sizeof(addr.sun_path)) > sizeof(addr.sun_path) - 1) {
-+        acpid_log(LOG_ERR, "ud_connect(): "
-+            "socket filename longer than %u characters: %s",
-+            sizeof(addr.sun_path) - 1, name);
-+        errno = EINVAL;
-+        return -1;
-+    }
-+   
-        fd = socket(AF_UNIX, SOCK_STREAM, 0);
-        if (fd < 0) {
-                return fd;
-@@ -93,6 +111,8 @@
-        memset(&addr, 0, sizeof(addr));
-        addr.sun_family = AF_UNIX;
-        sprintf(addr.sun_path, "%s", name);
-+    /* safer: */
-+    /*strncpy(addr.sun_path, name, sizeof(addr.sun_path) - 1);*/
- 
-        r = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
-        if (r < 0) {
-
-
+(I am following this discussion with great interest.)
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Paul Martin <pm@...ian.org>
