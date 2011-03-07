@@ -1,41 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/6
-Message-ID: <20111017131430.GA2241@dhcp-25-225.brq.redhat.com>
-Date: Mon, 17 Oct 2011 15:14:30 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/1
+Message-ID: <4D744C2F.6070507@redhat.com>
+Date: Mon, 07 Mar 2011 11:08:31 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel/AppArmor local denial of service
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 17, 2011 at 02:32:43PM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> A process can cause itself to Ooops by doing an invalid formatted
-> write to the process attr/current when the Apparmor security framework
-> is enabled (even without a apparmor profile).
-> 
-> e.g. by doing "echo 'AAA AAA' > /proc/$$/attr/current"
-> 
-> This will cause a NULL ptr dereference, which oopses the current process and
-> in connection with kdump or panic on oops will halt the machine.
-> 
-> References:
-> https://bugs.launchpad.net/apparmor/+bug/789409
-> https://bugzilla.novell.com/show_bug.cgi?id=717209
-> 
-> Fix is in:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=a5b2c5b2ad5853591a6cac6134cd0f599a720865
-> 
-> This only affected Linux kernel mainline since the introduction of
-> AppArmor up to and including 3.0-rc2
-> 
-> The SUSE patchset used in our older distribution had a additional NULL
-> check avoiding the issue.
-> 
-> Ciao, Marcus
+> On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+>> So I would like to open up a discussion with _all_ OSS Security folks present.
+>>
+>> - Is a closed vendor coordination like vendor-sec still needed at this time?
+>
+> Yes, there's some need for it.
 
-Please use CVE-2011-3619.
+I still see some value in having a closed mailing list for vendor 
+co-ordination.
 
-Thanks,
+>> - If yes, would it be an idea to confine or split into lists of focus groups?
+>>    (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+>
+> My current proposal is: split into several sub-lists.  I'd start with
+> three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+> groups would be for externally submitted reports (by non-members) and
+> for cross-vendor discussions.
+
+Having many sub-lists will make this overly complicated. I think it is 
+more effective to have just one mailing list like before that everyone 
+can remember.
+
+> The Linux vendors group should include distro vendors.  I am unsure
+> whether it should also include Linux kernel-only folks or not.  Maybe we
+> should be CC'ing security@k.o on relevant messages instead, or maybe we
+> need a separate group for Linux distros+kernel.  It feels wrong to
+> expose userland-only issues to the kernel-only folks.
+
+We should just CC security@k.o on relevant messages. Do bear in mind 
+that any information shared with this list will have no CRD, and will be 
+fixed almost immediately (well, most of the time).
+
+>> - Or of course the old option is open:
+>>    Should we proceed with the current state as-is,
+>
+> Probably not, although we could do it temporarily if there's a need -
+> such as to continue some discussions that are already started.
+>
+>> but throw a bit more GPG encryption on top?
+>
+> I think we should have the new list(s), if we do set them up,
+> GPG-encrypting to the members.  They should also accept encrypted
+> messages (to the list's key).
+>
+> This will reduce the likelihood of leaks somewhat - from the members'
+> mail servers, from their unattended mailboxes, etc.
+>
+> That said, leaks would nevertheless be quite likely - or at least we
+> should assume so.  For this reason, I think these lists should be used
+> for medium severity issues only, and CRDs should be set not too far into
+> the future (say, up to 2 weeks, with an attempt to make embargoes
+> shorter than that whenever possible).
+
+Even if we were to use GPG, we should assume that the reports will be 
+leaked anyway. One way as SD has mentioned is to use a short CRD. 
+Another way is to perhaps change our approach of informing issues:-
+
+If there is an issue that we will need to co-ordinate with the rest of 
+the vendors, we will inform everyone with a very brief description of 
+the vulnerability. Just enough to find out if you are affected, but not 
+enough to actually pin-point the exact issue. And if you want to find 
+out more about it, email the vendor directly. This way, we will know who 
+we shared the information to, and if there is a leak, we can narrow it 
+down easily. All email conversations should be encrypted at all times. 
+The only exception to this is when we receive reports from third-party 
+researchers. This is the time we should use a short embargo.
+
+> Anything low severity is best made public right away - such as via
+> oss-security.  Anything high severity may need to be approached more
+> carefully, identifying just the affected distro vendors before initial
+> notification by the reporter (then these lists won't be needed).
+
+Agree. We have been doing that for kernel issues. By making low severity 
+issues public right away makes dealing with updates easier.
+
+Thanks, Eugene
 -- 
-Petr Matousek / Red Hat Security Response Team
+Eugene Teo / Red Hat Security Response Team
