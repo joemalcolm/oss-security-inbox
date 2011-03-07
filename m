@@ -1,31 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/4
-Message-ID: <4EA012AF.2060608@redhat.com>
-Date: Thu, 20 Oct 2011 14:23:11 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Florian Weimer <fw@...eb.enyo.de>
-CC: oss-security@...ts.openwall.com, Juraj Somorovsky <juraj.somorovsky@....de>
-Subject: Re: PR attack against XML Encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/3
+Message-ID: <20110307090738.782d2ac0@orphan>
+Date: Mon, 7 Mar 2011 09:07:38 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: Jim Meyering <meyering@...hat.com>
+Subject: cgit convert_query_hexchar infinite loop (CVE-2011-1027)
 Content-Type: text/plain; charset=utf-8
 
-Hi Florian,
+Hi!
 
-   check with Juraj Somorovsky of the Ruhr University Bochum
-for further details on this flaw.
+Jim Meyering discovered an infinite loop flaw in cgit.  The issue was
+fixed upstream in 0.9 and 0.8.3.5.  Upstream commit has all the details:
 
-Btw., the CVE identifier of CVE-2011-1096 has been already assigned
-to this issue.
+http://hjemli.net/git/cgit/commit/?id=fc384b16fb9787380746000d3cea2d53fccc548e
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 10/20/2011 12:58 PM, Florian Weimer wrote:
-> A German university has released a press release, alleging a
-> vulnerability in the W3C XML Encryption standard.  Apparently, error
-> reporting from existing implementations can be used as an oracle to
-> recover information from messages encrypted in CBC mode.
->
-> Details have not been published, as far as I know.  Does anybody know
-> more?
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
