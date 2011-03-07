@@ -1,30 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/6
-Message-ID: <CAOSRhRMs7p+Q6nA7nRHPiorQ1To4A2Nfyf9FrKTWNkKLE5uDEg@mail.gmail.com>
-Date: Tue, 26 Jul 2011 11:26:29 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/11
+Message-ID: <1805319507.426828.1299529858053.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Mar 2011 15:30:58 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: meskes@...ian.org
-Subject: Re: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
+Cc: Solar Designer <solar@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 26, 2011 at 11:19 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
-> Hi,
-> does anyone have further information on
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
-> and whether if affects the open source version of Virtual Box?
->
+----- Original Message -----
+> On Mon, Mar 07, 2011 at 01:21:05PM +0100, Jan Kaluža wrote:
+> 
+> > I think logrotate should skip rotation of files in unsafe
+> > directories and show error message instead. Logrotate should also
+> > contain something like "--force" switch (this name is already used,
+> > so we have to find better one, but I don't have anything better in
+> > mind just now). With this switch logrotate should *not* skip unsafe
+> > directories and rotate them as it currently does, but show the error
+> > message. Basically it allows backward compatibility.
+> 
+> "--override-unsafe-directory-check" perhaps? Make it a long option,
+> so that there is no doubt that the user is doing something that's
+> potentially dangerous.
+> 
+> (I am following this discussion with great interest.)
+> 
 
-These issues were found by Tarjei Mandt, and are described in this blog post:
-http://mista.nu/blog/author/mista/
+It seems there is now a consensus on this (at least that's how I'm reading
+it). Here is what I plan to do with CVE ids unless someone speaks up.
 
-CVE-2011-2300 allows gaining elevated privileges within a Windows
-guest due to a vulnerability in the Windows Guest Additions.
-CVE-2011-2305 allows executing arbitrary code on the host due to a
-vulnerability in the VirtualBox graphics stack.
+As best as I can tell, logrotate only needs a CVE id for this:
 
-Tarjei found these issues via code auditing, so it follows that they
-affect the open source version of VirtualBox.
+    8) Issue #8: logrotate: TOCTOU race condition by creation of new files
+       (between opening the file and moment, final permissions have been
+       applied) [information disclosure]
 
--Dan
+        It was found that logrotate utility used insecure default
+        permissions, when creating of new files (time-of-check,
+        time-of-use, TOCTOU race condition).  In some specific
+        configurations, a local attacker could use this flaw to open the
+        new file before the final permissions have been applied, leading to
+        disclosure of sensitive information. A different vulnerability
+        than:
+        [1] https://bugzilla.redhat.com/show_bug.cgi?id=680787 (Issue #1)
+
+        References:
+        [14] https://bugzilla.redhat.com/show_bug.cgi?id=680798
+
+        Source code background (issue reason):
+        [15] https://bugzilla.redhat.com/show_bug.cgi?id=680798#c3
+
+We then will need to assign IDs for various broken uses of /var/log (If
+someone has a list of the currently known ones, please pass it along)
+
+What does everyone think?
+
+Thanks.
+
+-- 
+    JB
