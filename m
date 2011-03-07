@@ -1,46 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/11
-Message-ID: <20111026155310.GA14081@albatros>
-Date: Wed, 26 Oct 2011 19:53:10 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/1
+Message-ID: <4D744C2F.6070507@redhat.com>
+Date: Mon, 07 Mar 2011 11:08:31 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+>> So I would like to open up a discussion with _all_ OSS Security folks present.
+>>
+>> - Is a closed vendor coordination like vendor-sec still needed at this time?
+>
+> Yes, there's some need for it.
 
-On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
-> On 10/26/2011 09:16 AM, Petr Matousek wrote:
-> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> > to reset dmesg_restrict to 0.
-> >
-> > This is an issue when e.g.  LXC (Linux Containers) are used and complete
-> > user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
-> > root user can bypass the dmesg_restrict protection.
-> >
-> > Introduced by:
-> > eaf06b241b091357e72b76863ba16e89610d31bd
-> >
-> > Fixed by:
-> > bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
-> >
-> > Thanks,
-> Please use CVE-2011-4080 for this issue.
+I still see some value in having a closed mailing list for vendor 
+co-ordination.
 
-Why does it worth CVE?  Procfs is not ready for containers yet.  You can
-use other sysctls for more harmful things.  E.g. kernel.core_pattern
-allows arbitrary code execution as a full root - does it need a CVE too
-then? :-)
+>> - If yes, would it be an idea to confine or split into lists of focus groups?
+>>    (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+>
+> My current proposal is: split into several sub-lists.  I'd start with
+> three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+> groups would be for externally submitted reports (by non-members) and
+> for cross-vendor discussions.
 
-root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
-root@...-ubuntu:/proc/sys/kernel# cat 
-^\Quit (core dumped)
+Having many sub-lists will make this overly complicated. I think it is 
+more effective to have just one mailing list like before that everyone 
+can remember.
 
-(In the root namespace)
-$ ls /tmp/pwned
-/tmp/pwned
+> The Linux vendors group should include distro vendors.  I am unsure
+> whether it should also include Linux kernel-only folks or not.  Maybe we
+> should be CC'ing security@k.o on relevant messages instead, or maybe we
+> need a separate group for Linux distros+kernel.  It feels wrong to
+> expose userland-only issues to the kernel-only folks.
 
+We should just CC security@k.o on relevant messages. Do bear in mind 
+that any information shared with this list will have no CRD, and will be 
+fixed almost immediately (well, most of the time).
+
+>> - Or of course the old option is open:
+>>    Should we proceed with the current state as-is,
+>
+> Probably not, although we could do it temporarily if there's a need -
+> such as to continue some discussions that are already started.
+>
+>> but throw a bit more GPG encryption on top?
+>
+> I think we should have the new list(s), if we do set them up,
+> GPG-encrypting to the members.  They should also accept encrypted
+> messages (to the list's key).
+>
+> This will reduce the likelihood of leaks somewhat - from the members'
+> mail servers, from their unattended mailboxes, etc.
+>
+> That said, leaks would nevertheless be quite likely - or at least we
+> should assume so.  For this reason, I think these lists should be used
+> for medium severity issues only, and CRDs should be set not too far into
+> the future (say, up to 2 weeks, with an attempt to make embargoes
+> shorter than that whenever possible).
+
+Even if we were to use GPG, we should assume that the reports will be 
+leaked anyway. One way as SD has mentioned is to use a short CRD. 
+Another way is to perhaps change our approach of informing issues:-
+
+If there is an issue that we will need to co-ordinate with the rest of 
+the vendors, we will inform everyone with a very brief description of 
+the vulnerability. Just enough to find out if you are affected, but not 
+enough to actually pin-point the exact issue. And if you want to find 
+out more about it, email the vendor directly. This way, we will know who 
+we shared the information to, and if there is a leak, we can narrow it 
+down easily. All email conversations should be encrypted at all times. 
+The only exception to this is when we receive reports from third-party 
+researchers. This is the time we should use a short embargo.
+
+> Anything low severity is best made public right away - such as via
+> oss-security.  Anything high severity may need to be approached more
+> carefully, identifying just the affected distro vendors before initial
+> notification by the reporter (then these lists won't be needed).
+
+Agree. We have been doing that for kernel issues. By making low severity 
+issues public right away makes dealing with updates easier.
+
+Thanks, Eugene
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Eugene Teo / Red Hat Security Response Team
