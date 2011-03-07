@@ -1,47 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/15
-Message-ID: <1293814125.290376.1304362576922.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 14:56:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/3
+Message-ID: <20110307090738.782d2ac0@orphan>
+Date: Mon, 7 Mar 2011 09:07:38 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: Jim Meyering <meyering@...hat.com>
+Subject: cgit convert_query_hexchar infinite loop (CVE-2011-1027)
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
+Jim Meyering discovered an infinite loop flaw in cgit.  The issue was
+fixed upstream in 0.9 and 0.8.3.5.  Upstream commit has all the details:
 
------ Original Message -----
-> On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
-> > I think this is suitable. The goal here is to ensure that a vendor is
-> > actually producing updates and aren't just a potential leak.
-> 
-> OK, so do you propose that we subscribe Wind River, and wait for
-> MontaVista to setup something similar to these RSS feeds before we also
-> subscribe them?
-
-I'm OK with this action.
-
-> 
-> A secondary goal behind requiring access to advisories and updates (not
-> just metainfo) would be to be able to draw the line between vendors and
-> companies that build their own Linux distros in house. The latter could
-> also publish an RSS feed showing how they update their packages, yet they
-> would not be a vendor to anyone other than themselves... On the other
-> hand, publishing updates without publishing the distro itself doesn't
-> make them more of a vendor to others. So to achieve this goal we'd
-> probably need to require the distro itself to be public (in at least one
-> form - e.g., Red Hat's .src.rpm's are sufficient), not just advisories
-> and updates.
-> 
-> We may choose not to pursue this secondary goal now.
-> 
-
-This one is a bit wonky. I'm not sure what the answer should be. I think we
-should refer to sanity and current list members for advice. I suspect if we
-have rules we try to follow 100%, they will be trivial to work around.
-After all, don't we all make our living making things do things they're not
-supposed to do? :)
-
-Thanks.
+http://hjemli.net/git/cgit/commit/?id=fc384b16fb9787380746000d3cea2d53fccc548e
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
