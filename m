@@ -1,54 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/10
-Message-ID: <da870ab4-5c14-4a75-8001-d46dbdbd1a05@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 04 Oct 2011 14:50:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/8
+Message-ID: <20110307185753.GA13625@1wt.eu>
+Date: Mon, 7 Mar 2011 19:57:53 +0100
+From: Willy Tarreau <w@....eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- phpPgAdmin -- Multiple XSS flaws fixed in v5.0.3
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3598
+Hi Alexander,
 
-Thanks.
+On Fri, Mar 04, 2011 at 01:49:20AM +0300, Solar Designer wrote:
+> On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+> > So I would like to open up a discussion with _all_ OSS Security folks present.
+> > 
+> > - Is a closed vendor coordination like vendor-sec still needed at this time?
+> 
+> Yes, there's some need for it.
 
--- 
-    JB
+Yes i too agree for this, at least just for coordination and for the few
+"this thing smells really bad, can someone have a look".
 
+> >   Meaning: does the benefit of a closed group really outweigh the
+> >   "left out feeling" of non members and its annoyances?
+> 
+> In that meaning, I am not sure.  These things are not possible to
+> compare, and there are other things to consider as well.
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
+I observe very different behaviours between v-sec and sec@.... v-sec is
+much more coordination oriented. sec@k.o is more a switch to quickly get
+the skilled people involved. In fact, the first response to a message posted
+to sec@k.o generally is a CC to a bunch of people supposed to be skilled on
+the subject. CRDs are not accepted and tend to get Linus very nervous. In
+the end, patches get merged very quickly. So that way of working looks very
+efficient to me and the small group as the entry point is a benefit (in my
+opinion).
+
+V-sec on the other hand has to concentrate on coordination because there are
+multiple vendors with different constraints. So there are many readers as
+Marcus said. The risk of leak is much more important, because many of the
+subscribers are not interested in the other ones' issues, so they will
+possibly be less careful.
+
+Also, since the primary goal is to get a CRD, embargoes tend to last longer,
+and issues seem to be mostly handled by the group than by external project
+authors. One of the reasons might simply be that it's less easy to reliably
+get a yet unknown maintainer to cooperate on an issue when he's never been
+involved in the process, than it is in a single project like the linux kernel.
+And there are all the uncontrollable ones who publish the fix before the CRD.
+
+So most likely the first part of the process (switching to the right people)
+is better handled by a small group, but the second part needs larger audience
+(in my opinion).
+
+My observation is that the persons doing the first forwarding of the issue
+to the appropriate people are generally the same on a given list, whether
+it is v-sec or sec@.... Maybe this small group of very active watchers
+should constitute the small group and once a fix gets in sight, then the
+various vendors could be involved for a CRD.
+
+> > - If yes, would it be an idea to confine or split into lists of focus groups?
+> >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
 > 
->    multiple cross-site scripting (XSS) flaws were reported in
->    phpPgAdmin:
+> My current proposal is: split into several sub-lists.  I'd start with
+> three: Linux vendors, *BSD vendors, security "researchers".  The vendor
+> groups would be for externally submitted reports (by non-members) and
+> for cross-vendor discussions.
 > 
-> 1) the 'title' argument of a particular web page was not sanitized
->     properly prior displaying the page header,
+> The Linux vendors group should include distro vendors.  I am unsure
+> whether it should also include Linux kernel-only folks or not.  Maybe we
+> should be CC'ing security@k.o on relevant messages instead, or maybe we
+> need a separate group for Linux distros+kernel.  It feels wrong to
+> expose userland-only issues to the kernel-only folks.
+
+My opinion is that before I was on sec@k.o I was much more interested in
+v-sec than I am now, because it was my only way to get notified of critical
+issues. But most of the discussions on v-sec and even oss-sec concern user
+land programs that sometimes I've never even heard of or at least am not
+using.
+
+My participation to the v-sec list has been somewhat limited, and if it
+was only distro-oriented, I would have nothing to do there (I should not
+even be aware of issues prior to public release).
+
+On the other hand, I find it natural that various distro making use of the
+same package are involved in getting it fixes, whether they're Linux-based,
+BSD-based or even Solaris or whatever. Eg: ghostscript is almost everywhere.
+If it needs to be handled on all distros at once, it makes sense to involve
+more vendors than now.
+
+> The researchers group would (probably) rarely receive external reports
+> directly, but could be involved in Linux and/or *BSD vendors discussions
+> by CC'ing them when their expertise is needed.
+
+My feeling is that some of them as been as much active once out of the list
+as when they were in the list. Granted once out of the list we lacked their
+expertise to solve some issues, but it's the responsibility of the group to
+quickly forward to the skilled people, and researchers may step up
+indicating that they're willing to help when asked.
+
+> Alternatively, the
+> researchers may be included on the vendor lists, which will enable and
+> encourage them to contribute a lot more, but then we need to define some
+> stricter requirements for them (some minimum activity level?)  We don't
+> want a lot of inactive members on any of these private lists.
+
+But maybe most of the discussions there is more like CRD noise than useful
+material.
+
+> As to projects such as, say, Samba and X.org, I'd exclude them.
+> There's no difficulty for a researcher to notify one of these directly,
+> and there's not much difficulty in CC'ing the proper one of these on a
+> discussion.
+
+Agreed, projects are not distros. Ditto for Apache and the Linux kernel,
+or whatever else such autonomous component. They can be CCed at any moment
+by the group. Probably that the rules about disclosure should be relaxed so
+that any member could take the responsibility to CC any relevant people out
+of the group.
+
+> > - Or of course the old option is open:
+> >   Should we proceed with the current state as-is,
+> > but throw a bit more GPG encryption on top?
 > 
-> 2) the return ULR ('return_url') and return link name ('return_desc')
->     were not sanitized properly prior displaying the requested page
->     data.
+> I think we should have the new list(s), if we do set them up,
+> GPG-encrypting to the members.  They should also accept encrypted
+> messages (to the list's key).
 > 
-> A remote attacker could provide a specially-crafted URL, which once
-> visited by an unsuspecting phpPgAdmin user could lead to arbitrary
-> HTML
-> or web script execution.
-> 
-> References:
-> [1] https://secunia.com/advisories/46248/
-> [2] https://bugs.gentoo.org/show_bug.cgi?id=385505
-> [3] http://phppgadmin.sourceforge.net/doku.php?id=download
-> [4]
-> http://sourceforge.net/mailarchive/forum.php?thread_name=4E897F6C.90905%40free.fr&forum_name=phppgadmin-news
-> 
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=743205
-> 
-> Upstream patch:
-> [6]
-> https://github.com/phppgadmin/phppgadmin/commit/1df248203de055f97e092b50b1dd9643ccb73842
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
+> This will reduce the likelihood of leaks somewhat - from the members'
+> mail servers, from their unattended mailboxes, etc.
+
+I'm really not convinced by that. If the end user is compromised, the MUA
+is as much as risk as the MTA, and this trend will probably grow. Also, I
+suspect that some of the leaking is caused by some persons not totally
+involved in certain issues being a bit less careful about the required
+confidentiality. It can be tempting to vaguely discuss the interesting
+technical issues with a coworker or friend, but if done before the CRD,
+even with limited information, that could cause some leakage. And GPG
+will not address this. At least it will clearly indicate what leaks on
+the user-side since the infrastructure will not be presented as a
+possible cause anymore ;-)
+
+> That said, leaks would nevertheless be quite likely - or at least we
+> should assume so.  For this reason, I think these lists should be used
+> for medium severity issues only, and CRDs should be set not too far into
+> the future (say, up to 2 weeks, with an attempt to make embargoes
+> shorter than that whenever possible).
+
+In fact, it would be better to indicate to posters that whatever is
+posted can be immediately released, and that instead of considering
+that there's a default embargo, everyone who wants an embargo quickly
+has to say it (including the poster) and explain why. After a few days
+you have much more reasonable embargoes. All the rest will quickly go
+to the public lists (eg: oss-sec).
+
+Best regards,
+Willy
+
