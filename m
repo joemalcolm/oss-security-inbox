@@ -1,46 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/13
-Message-Id: <201107252301.38073.timb@nth-dimension.org.uk>
-Date: Mon, 25 Jul 2011 23:01:31 +0100
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/10
+Message-ID: <1178433251.426653.1299529537474.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Mar 2011 15:25:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jeff Mitchell <mitchell@....org>, KDE Security Team <security@....org>, security@...nokia.com
-Subject: Re: CVE Request: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Monday 25 Jul 2011 19:51:47 Jeff Mitchell wrote:
-
-> We've been made aware of an input validation failure affecting multiple
-> KDE applications. (The details are not yet public as we're working on
-> the fixes.) We'd like a CVE for this.
+----- Original Message -----
+> On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
+> > On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
+> > > If there's a common usage scenario that doesn't stem from blatant
+> > > administrator negligence, then a CVE is probably still appropriate.
+> > > ("blatant admin negligence" might be, say, if an admin arbitrarily
+> > > makes a script setuid, or modifies the perms for an executable or
+> > > config file to be world-writable.)
+> >
+> > I think that "chmod 777 /var/log" is "blatant admin negligence". As to,
+> > say, "chown nginx /var/log/nginx", it could be negligence or it could
+> > be lack of familiarity with the risks involved. So I am willing to
+> > admit that it's not necessarily negligence that turns those issues into
+> > vulnerabilities on specific systems.
+> >
+> > > We will sometimes write the CVE description more as an "adminisrator
+> > > practice" than as "fault of the software."
+> >
+> > Oh, this is something I did not realize. A lot of people assume that
+> > CVEs "blame" the software and its authors for having made an error.
+> >
+> > It felt wrong, say, to blame a text editor for being unsafe to use on
+> > files in untrusted directories when such unsafety was the typical and
+> > expected situation for text editors in general.
 > 
-> The Arora and Rekonq web browsers are also vulnerable to the same attack
-> vector, and other Qt-based programs may be as well. We're working with
-> the Qt team to help enhance their documentation to warn developers to
-> take care sanitizing their inputs, but it's not actually a Qt flaw. So
-> we're a bit unsure how to proceed here. Do we get separate CVEs for
-> Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
-> applications? I would think the former since other applications may be
-> found to be vulnerable down the line, but wanted to check.
+> So, where does that leave us for things like this? :
 > 
-> (The Rekonq team has been made aware and are currently patching their
-> code; I'm in the process of trying to notify the Arora team.)
+> http://reverse.lostrealm.com/protect/ldd.html
+> http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> 
 
-Without disclosing too much, I'd go for a per module based CVE.  So one per 
-affected KDE module + 1 per affected Qt module, + 1 per app that does its own 
-thing (i.e. Arora, Rekonq and others we've already identified).  I think that's 
-the most intelligent thing to do although I do think that one of the concerns 
-is that more examples will likely come out of the woodwork (it's nothing that 
-can easily be identified programatically) and each edge case is likely to be 
-fairly application unique.  As an analogy, the best I can think of is XSS via 
-PHP_SELF, do we give the CVE to PHP, frameworks that use PHP or individual 
-apps that use it badly?  From what I can tell it seems to be per app/framework 
-module.
+Steve,
 
-Tim
+Can you start a new thread for that issue. This one is already hard enough
+to follow, and I think it deserves attention on its own.
+
+Thanks.
+
 -- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+    JB
