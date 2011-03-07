@@ -1,60 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/1
-Message-ID: <AANLkTi=-1f2wAATTUr=WhzrdnnebqVknJ1hd_OM7t8jE@mail.gmail.com>
-Date: Fri, 1 Apr 2011 20:08:36 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/2
+Message-ID: <4D747186.8050908@redhat.com>
+Date: Mon, 07 Mar 2011 13:47:50 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: nfs4: Ensure that ACL pages sent over NFS were not allocated from the slab
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=e9e3d724e2145f5039b423c290ce2b2c3d8f94bc
 
->
-> Long term I'd like to see two lists, one for purpose #1, and another geared
-> toward #2. I think having a trusted venue for knowledge sharing would be
-> very useful, and we likely don't want the list clogged with coordination
-> details. This will of course rely heavily on what Openwall is willing to
-> take on. They're already taking on a lot of risk and responsibility, I
-> don't want to spoil the good will.
->
+The "bad_page()" page allocator sanity check was reported recently (call
+chain as follows):
 
-I agree that having such a venue for discussion would be valuable, and
-I'd personally like to contribute to such a list.
+   bad_page+0x69/0x91
+   free_hot_cold_page+0x81/0x144
+   skb_release_data+0x5f/0x98
+   __kfree_skb+0x11/0x1a
+   tcp_ack+0x6a3/0x1868
+   tcp_rcv_established+0x7a6/0x8b9
+   tcp_v4_do_rcv+0x2a/0x2fa
+   tcp_v4_rcv+0x9a2/0x9f6
+   do_timer+0x2df/0x52c
+   ip_local_deliver+0x19d/0x263
+   ip_rcv+0x539/0x57c
+   netif_receive_skb+0x470/0x49f
+   :virtio_net:virtnet_poll+0x46b/0x5c5
+   net_rx_action+0xac/0x1b3
+   __do_softirq+0x89/0x133
+   call_softirq+0x1c/0x28
+   do_softirq+0x2c/0x7d
+   do_IRQ+0xec/0xf5
+   default_idle+0x0/0x50
+   ret_from_intr+0x0/0xa
+   default_idle+0x29/0x50
+   cpu_idle+0x95/0xb8
+   start_kernel+0x220/0x225
+   _sinittext+0x22f/0x236
 
->
-> Should we require members use a mail address from their vendor? Letting
-> people use personal addresses creates an opportunity for people to remain
-> on a list when they are no longer a part of a given vendor (it also makes
-> it quite easy to know who represents a vendor).
->
+It occurs because an skb with a fraglist was freed from the tcp
+retransmit queue when it was acked, but a page on that fraglist had
+PG_Slab set (indicating it was allocated from the Slab allocator (which
+means the free path above can't safely free it via put_page.
 
-Yes, I think this should be a requirement for a closed coordination
-list (as opposed to the more relaxed option #2).  In fact, I think
-membership to such a list should be restricted almost exclusively to
-distributions and downstream providers of third-party software.  It
-obviously makes sense to have distro security teams on a list, since a
-vulnerability in project XYZ will need to be coordinated among all of
-the distros.  However, most software projects only need access to
-information concerning their own project.  There's no reason one
-software project should gain access to vulnerability information about
-a completely unrelated project, and restricting membership to achieve
-that will at least help minimize the leakage that went on with the
-previous list.
+We tracked this back to an nfsv4 setacl operation, in which the nfs code
+attempted to fill convert the passed in buffer to an array of pages in
+__nfs4_proc_set_acl, which gets used by the skb->frags list in
+xs_sendpages.  __nfs4_proc_set_acl just converts each page in the buffer
+to a page struct via virt_to_page, but the vfs allocates the buffer via
+kmalloc, meaning the PG_slab bit is set.  We can't create a buffer with
+kmalloc and free it later in the tcp ack path with put_page, so we need
+to either:
 
-In a nutshell, I think this list needs to decide what its purpose is.
-If it's for coordination for vulnerability disclosure, then its
-membership should be kept to those who actually need to do the
-coordination.  If it's for private (or semi-private) discussion of
-potentially sensitive research, knowledge sharing, etc., then its
-membership should be expanded to include representation from software
-vendors and researchers.
+1) ensure that when we create the list of pages, no page struct has
+    PG_Slab set
 
--Dan
+  or
 
->
-> Thanks.
->
-> --
->    JB
->
+2) not use a page list to send this data
+
+Given that these buffers can be multiple pages and arbitrarily sized, I
+think (1) is the right way to go.  I've written the below patch to
+allocate a page from the buddy allocator directly and copy the data over
+to it.  This ensures that we have a put_page free-able page for every
+entry that winds up on an skb frag list, so it can be safely freed when
+the frame is acked.  We do a put page on each entry after the
+rpc_call_sync call so as to drop our own reference count to the page,
+leaving only the ref count taken by tcp_sendpages.  This way the data
+will be properly freed when the ack comes in
+
+Successfully tested by [Neil Horman] to solve the above oops.
+
+Note, as this is the result of a setacl operation that exceeded a page
+of data, I think this amounts to a local DOS trigger-able by an
+privileged user, so [Neil Horman] CCing security on this as well.
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
