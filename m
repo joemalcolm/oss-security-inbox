@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/11
-Message-ID: <20110728183127.GU1476@redhat.com>
-Date: Thu, 28 Jul 2011 12:31:28 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/9
+Message-ID: <224071656.426608.1299529463806.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Mar 2011 15:24:23 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-2524: libsoup's SoupServer directory traversal flaw
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org, security@...e.de, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone.  Just a heads up to advise about a directory traversal
-flaw in libsoup's SoupServer.  This flaw could allow any service linked
-to libsoup and using SoupServer to have a remote user traverse the local
-file system and expose unintended files.
+----- Original Message -----
+> 
+> It seems like fixing glibc to either raise the rlimit or correctly handle
+> the error condition is the way to go (as you already mentioned). I share
+> the concern of the helpers maybe not checking addmntent() return codes,
+> though. If they all do, I would think that just correct error handling in
+> glibc would be accepted upstream. Whatever the fix, it really feels like
+> it should be in glibc. It is what is responsible for actually writing to
+> the file...
+> 
 
-References:
+I'm going to assign CVE-2011-1089 to this, under the assumption the fix
+will go into glibc (it's a bit confusing, but I think I follow from playing
+along at home).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=720509
-https://bugzilla.gnome.org/show_bug.cgi?id=653258
-http://git.gnome.org/browse/libsoup/commit/?id=cbeeb7a0f7f0e8b16f2d382157496f9100218dea
-http://git.gnome.org/browse/libsoup/commit/?h=gnome-3-0&id=51eb8798c3965b49f3010db82009d36429f28514
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
