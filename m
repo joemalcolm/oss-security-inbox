@@ -1,124 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/13
-Message-ID: <f550bba7-8ee9-42e2-84c1-87ab89f77397@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 13:17:48 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/11
+Message-ID: <1805319507.426828.1299529858053.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Mar 2011 15:30:58 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
+Cc: Solar Designer <solar@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+----- Original Message -----
+> On Mon, Mar 07, 2011 at 01:21:05PM +0100, Jan Kaluža wrote:
+> 
+> > I think logrotate should skip rotation of files in unsafe
+> > directories and show error message instead. Logrotate should also
+> > contain something like "--force" switch (this name is already used,
+> > so we have to find better one, but I don't have anything better in
+> > mind just now). With this switch logrotate should *not* skip unsafe
+> > directories and rotate them as it currently does, but show the error
+> > message. Basically it allows backward compatibility.
+> 
+> "--override-unsafe-directory-check" perhaps? Make it a long option,
+> so that there is no doubt that the user is doing something that's
+> potentially dangerous.
+> 
+> (I am following this discussion with great interest.)
+> 
 
-Can MITRE take this one? It's far bigger than I'm able to handle.
+It seems there is now a consensus on this (at least that's how I'm reading
+it). Here is what I plan to do with CVE ids unless someone speaks up.
+
+As best as I can tell, logrotate only needs a CVE id for this:
+
+    8) Issue #8: logrotate: TOCTOU race condition by creation of new files
+       (between opening the file and moment, final permissions have been
+       applied) [information disclosure]
+
+        It was found that logrotate utility used insecure default
+        permissions, when creating of new files (time-of-check,
+        time-of-use, TOCTOU race condition).  In some specific
+        configurations, a local attacker could use this flaw to open the
+        new file before the final permissions have been applied, leading to
+        disclosure of sensitive information. A different vulnerability
+        than:
+        [1] https://bugzilla.redhat.com/show_bug.cgi?id=680787 (Issue #1)
+
+        References:
+        [14] https://bugzilla.redhat.com/show_bug.cgi?id=680798
+
+        Source code background (issue reason):
+        [15] https://bugzilla.redhat.com/show_bug.cgi?id=680798#c3
+
+We then will need to assign IDs for various broken uses of /var/log (If
+someone has a list of the currently known ones, please pass it along)
+
+What does everyone think?
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> There's a whole bunch of fixes in new moodle releases.  The below
-> list
-> summarizes them.  Could CVEs be assigned to these please?
-> 
-> MSA-11-0041: Global search authentication issue
-> Affects: 2.1.x 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=5eb1cec34f013fdcb559b66bc401f2845ce0bbb7
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188323
-> 
-> MSA-11-0040: Potential personal information leak
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix: http://git.moodle.org/gw?p=moodle.git&a=search&s=MDL-28615
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188322
-> 
-> MSA-11-0039: Wiki section vulnerability
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=41017112cff7f5bd7969c72d321320f3090e7c68
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188321
-> 
-> MSA-11-0038: Database injection protection strengthened
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=4a2acd8c7e6c869d5fd5aa686e6e0a3f20c97f15
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188320
-> 
-> MSA-11-0037: Course section editing injection vulnerability
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=4a2acd8c7e6c869d5fd5aa686e6e0a3f20c97f15
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188319
-> 
-> MSA-11-0036: Messaging refresh vulnerability
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=97f258fabb3ebfa7acc7c02cb59de92b01710f99
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188318
-> 
-> MSA-11-0035: Cookie-less session vulnerability
-> Affects: 2.1.x, 2.0.x, (1.9.x if misconfigured)
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=e1e082a809b9a2d3a408cb4d6faa34fdfcf3165c
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188317
-> 
-> MSA-11-0034: Chat module information leak
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=d0157d827bc254ba386a5e5b41b13be2698ee76e
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188316
-> 
-> MSA-11-0033: Site-hub registration identity issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=ca896fdfcfcc87846fa91a297d0aa6999a68c48a
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188315
-> 
-> MSA-11-0032: MNET SSL validation issue
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=54941685e3e86ec085641dcb7ebb1f96f06735b2
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188314
-> 
-> MSA-11-0031: Forms API constant issue
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=f1f70bd4dde6cd1ea4bdb8ab28fa3d36a53b89d8
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188313
-> 
-> MSA-11-0030: Box.net repository integration authentication issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=3deff6c9d2bb4ab3144b3ca7b93d6a2ef6a87af2
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188312
-> 
-> MSA-11-0029: File visibility issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=f6b07c4da54a9db24723beb147e8a19a3d487e00
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188311
-> 
-> MSA-11-0028: Wiki comments XSS issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=a459fd90625ae44d7b3ac10b65da2dc631a418e7
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188310
-> 
-> MSA-11-0027: Wiki pages reference forgery issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=48346fb11f8ced06a05c0618b02a3a925b34ec59
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188309
-> 
-> MSA-11-0026: Fields in user upload CSV not being escaped
-> Affects: 1.9.x
-> Reference: http://moodle.org/mod/forum/discuss.php?d=182743
-> 
-> 
-> Thanks!
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
-> 
