@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/11
-Message-ID: <BANLkTim2D7H17BeFnJdSRZ9UnkU06nxAYg@mail.gmail.com>
-Date: Wed, 13 Apr 2011 12:19:20 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/6
+Message-ID: <20110307125419.GA12931@nowster.org.uk>
+Date: Mon, 7 Mar 2011 12:54:19 +0000
+From: Paul Martin <pm@...ian.org>
+To: Jan Kaluža <jkaluza@...hat.com>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Armin,
+On Mon, Mar 07, 2011 at 01:21:05PM +0100, Jan Kaluža wrote:
 
-> What method of proving this would be acceptable? screen shot, temporary
-> access to our site, public list or other?
->
+> I think logrotate should skip rotation of files in unsafe
+> directories and show error message instead. Logrotate should also
+> contain something like "--force" switch (this name is already used,
+> so we have to find better one, but I don't have anything better in
+> mind just now). With this switch logrotate should *not* skip unsafe
+> directories and rotate them as it currently does, but show the error
+> message. Basically it allows backward compatibility.
 
-I'm confused why you think posting an advisory publicly would somehow
-put your customers in any sort of additional danger.  All of the
-vulnerabilities you would be fixing are certain to have public
-advisories for other distributions, so it seems obvious that your
-customers would be affected also.  It's not as though your advisories
-are the only indication to an attacker that your customers are
-vulnerable.
+"--override-unsafe-directory-check" perhaps?  Make it a long option,
+so that there is no doubt that the user is doing something that's
+potentially dangerous.
 
-Regards,
-Dan
+(I am following this discussion with great interest.)
+
+-- 
+Paul Martin <pm@...ian.org>
