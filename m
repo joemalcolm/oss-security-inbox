@@ -1,42 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/8
-Message-ID: <20110818165844.GA1360@redhat.com>
-Date: Thu, 18 Aug 2011 10:58:44 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/2
+Message-ID: <4D747186.8050908@redhat.com>
+Date: Mon, 07 Mar 2011 13:47:50 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: heap overflow in perl while decoding Unicode string
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: nfs4: Ensure that ACL pages sent over NFS were not allocated from the slab
 Content-Type: text/plain; charset=utf-8
 
-Does anyone know more about this flaw?  It's in perl and the Encode
-module:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=e9e3d724e2145f5039b423c290ce2b2c3d8f94bc
 
-http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
+The "bad_page()" page allocator sanity check was reported recently (call
+chain as follows):
 
-! Unicode/Unicode.xs
-   Addressed the following:
-     Date: Fri, 22 Jul 2011 13:58:43 +0200
-     From: Robert Zacek <zacek@...st.com>
-     To: perl5-security-report@...l.org
-     Subject: Unicode.xs!decode_xs n-byte heap-overflow
+   bad_page+0x69/0x91
+   free_hot_cold_page+0x81/0x144
+   skb_release_data+0x5f/0x98
+   __kfree_skb+0x11/0x1a
+   tcp_ack+0x6a3/0x1868
+   tcp_rcv_established+0x7a6/0x8b9
+   tcp_v4_do_rcv+0x2a/0x2fa
+   tcp_v4_rcv+0x9a2/0x9f6
+   do_timer+0x2df/0x52c
+   ip_local_deliver+0x19d/0x263
+   ip_rcv+0x539/0x57c
+   netif_receive_skb+0x470/0x49f
+   :virtio_net:virtnet_poll+0x46b/0x5c5
+   net_rx_action+0xac/0x1b3
+   __do_softirq+0x89/0x133
+   call_softirq+0x1c/0x28
+   do_softirq+0x2c/0x7d
+   do_IRQ+0xec/0xf5
+   default_idle+0x0/0x50
+   ret_from_intr+0x0/0xa
+   default_idle+0x29/0x50
+   cpu_idle+0x95/0xb8
+   start_kernel+0x220/0x225
+   _sinittext+0x22f/0x236
 
-It's been fixed in perl:
+It occurs because an skb with a fraglist was freed from the tcp
+retransmit queue when it was acked, but a page on that fraglist had
+PG_Slab set (indicating it was allocated from the Slab allocator (which
+means the free path above can't safely free it via put_page.
 
-http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
+We tracked this back to an nfsv4 setacl operation, in which the nfs code
+attempted to fill convert the passed in buffer to an array of pages in
+__nfs4_proc_set_acl, which gets used by the skb->frags list in
+xs_sendpages.  __nfs4_proc_set_acl just converts each page in the buffer
+to a page struct via virt_to_page, but the vfs allocates the buffer via
+kmalloc, meaning the PG_slab bit is set.  We can't create a buffer with
+kmalloc and free it later in the tcp ack path with put_page, so we need
+to either:
 
-Seems to be in all versions of perl since 5.10.0.
+1) ensure that when we create the list of pages, no page struct has
+    PG_Slab set
 
-There isn't really information on the impact of this though.  I don't
-know enough to determine whether this is something that can cause
-arbitrary code execution, whether some gcc/glibc hardening prevents or
-minimizes the impact, whether it's a crash-only, etc.  It has been asked
-on the perl5-porters list, but no response was given:
+  or
 
-http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
+2) not use a page list to send this data
 
-Does anyone know anything more about this flaw?  Could a CVE be assigned
-to it as well?
+Given that these buffers can be multiple pages and arbitrarily sized, I
+think (1) is the right way to go.  I've written the below patch to
+allocate a page from the buddy allocator directly and copy the data over
+to it.  This ensures that we have a put_page free-able page for every
+entry that winds up on an skb frag list, so it can be safely freed when
+the frame is acked.  We do a put page on each entry after the
+rpc_call_sync call so as to drop our own reference count to the page,
+leaving only the ref count taken by tcp_sendpages.  This way the data
+will be properly freed when the ack comes in
 
-Thanks.
+Successfully tested by [Neil Horman] to solve the above oops.
 
+Note, as this is the result of a setacl operation that exceeded a page
+of data, I think this amounts to a local DOS trigger-able by an
+privileged user, so [Neil Horman] CCing security on this as well.
+
+Thanks, Eugene
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Eugene Teo / Red Hat Security Response Team
