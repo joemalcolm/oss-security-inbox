@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/2
-Message-Id: <201101071036.00189.thomas@suse.de>
-Date: Fri, 7 Jan 2011 10:36:00 +0100
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-4225: XSP/mod_mono source code disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/9
+Message-ID: <224071656.426608.1299529463806.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Mar 2011 15:24:23 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org, security@...e.de, Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+----- Original Message -----
+> 
+> It seems like fixing glibc to either raise the rlimit or correctly handle
+> the error condition is the way to go (as you already mentioned). I share
+> the concern of the helpers maybe not checking addmntent() return codes,
+> though. If they all do, I would think that just correct error handling in
+> glibc would be accepted upstream. Whatever the fix, it really feels like
+> it should be in glibc. It is what is responsible for actually writing to
+> the file...
+> 
 
-our Mono team released a security update to fix a source-code disclosure
-bug.
+I'm going to assign CVE-2011-1089 to this, under the assumption the fix
+will go into glibc (it's a bit confusing, but I think I follow from playing
+along at home).
 
-http://www.mono-project.com/Vulnerabilities
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
-
-Cheers,
-Thomas
+Thanks.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+    JB
