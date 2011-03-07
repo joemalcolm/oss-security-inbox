@@ -1,66 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/3
-Message-ID: <20110510073603.GB9917@suse.de>
-Date: Tue, 10 May 2011 09:36:03 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/13
+Message-Id: <201103071827.05353.sgrubb@redhat.com>
+Date: Mon, 7 Mar 2011 18:27:05 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
+Subject: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-All, thanks for the fast replies. I'd appreciate different text or some
-note that its not the same as a recent issue, it would save some work.
+After reading the thread about logrotate and the revelation that sometimes CVEs are 
+assigned because of admin bad practices, I wanted to ask about the ldd program. 
 
-thx,
--s
+What do you do when you find an unexpected app on a system? First you might query your 
+package manager to see what it might be. If that fails, then what do you do? You might 
+run the file program against it to see what kind of file it might be. Then you might run 
+strings to see what kinds of hints you might get based on the strings stored inside 
+it. You might also run ldd to see what kinds of things it links against for more 
+clues. That last step can get you pwned.
 
-On Tue, May 10, 2011 at 03:32:15PM +0800, Eugene Teo wrote:
-> On 05/10/2011 03:18 PM, Sebastian Krahmer wrote:
-> >
-> >Hi,
-> >
-> >Is this really different than what was assigned CVE-2011-1577 to?
-> >See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
-> >on the OSS mail on April 12th which reads exactly the same.
-> 
-> I double-checked, it's different...
-> 
-> Eugene
-> 
-> >Sebastian
-> >
-> >On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
-> >>
-> >>
-> >>----- Original Message -----
-> >>>The kernel automatically evaluates partition tables of storage
-> >>>devices.
-> >>>The code for evaluating GUID partitions (in fs/partitions/efi.c)
-> >>>contains a bug that can cause a kernel heap overflow on certain
-> >>>corrupted GUID partition tables.
-> >>>
-> >>>http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
-> >>>http://bugzilla.redhat.com/show_bug.cgi?id=703026
-> >>>
-> >>
-> >>Please use CVE-2011-1776
-> >>
-> >>Thanks.
-> >>
-> >>--
-> >>     JB
-> >
+ http://reverse.lostrealm.com/protect/ldd.html
+ http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
 
--- 
+Besides telling everyone don't do that. ldd could take the PoV that it should only 
+call runtime linkers in trusted directories like /sbin or /usr/sbin. Or it could 
+simply detect that another linker was requested and make you add a "--force" so that 
+you are fully aware that you just let another linker run. (The suggested patch can 
+certainly be improved. But its here just in case you want it.)
 
---
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+-Steve
 
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
 
+
+test.c:
+#include <stdio.h>
+int main(void)
+{
+        printf("Hello World\n");
+        return 0;
+}
+
+$ gcc -static -static-libgcc -Wl,-static test.c -o testbin
+$ gcc -Wl,-dynamic-linker=$(pwd)/testbin test.c -o testtrap
+$ ldd ./testtrap 
+
+
+
+--- ldd.orig    2010-04-22 10:29:52.000000000 -0400
++++ ldd 2010-04-22 10:32:10.000000000 -0400
+@@ -31,6 +31,7 @@
+ warn=
+ bind_now=
+ verbose=
++force=0
+ 
+ while test $# -gt 0; do
+   case "$1" in
+@@ -49,6 +50,7 @@
+       --help              print this help and exit
+       --version           print version information and exit
+   -d, --data-relocs       process data relocations
++  -f, --force             allow non-standard dynamic linkers
+   -r, --function-relocs   process data and function relocations
+   -u, --unused            print unused direct dependencies
+   -v, --verbose           print all information
+@@ -63,6 +65,10 @@
+     warn=yes
+     shift
+     ;;
++  -f | --f | --fo | --for | --forc | --force )
++    force=1
++    shift
++    ;;
+   -r | --f | --fu | --fun | --func | --funct | --functi | --functio | \
+   --function | --function- | --function-r | --function-re | --function-rel | 
+\
+   --function-relo | --function-reloc | --function-relocs)
+@@ -172,6 +178,13 @@
+       # If the program exits with exit code 5, it means the process has been
+       # invoked with __libc_enable_secure.  Fall back to running it through
+       # the dynamic linker.
++      if [ -x /usr/bin/eu-readelf ] ; then
++        interp="`/usr/bin/eu-readelf -l $file | grep interpreter | tr '[]' ' ' 
+| awk '{ print $4 }'`"
++        if [ "x$interp" != "x" -a $force -eq 0 ] ; then
++          echo "Non-standard dynamic linker is requested: $interp"
++          exit 1
++        fi
++      fi
+       try_trace "$file"
+       rc=$?
+       if [ $rc = 5 ]; then
