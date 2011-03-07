@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/7
-Message-ID: <4EF25B9E.3060606@redhat.com>
-Date: Wed, 21 Dec 2011 15:20:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/4
+Message-ID: <20110307080645.GF26611@core.inversepath.com>
+Date: Mon, 7 Mar 2011 09:06:45 +0100
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On 12/21/2011 03:14 PM, Petr Matousek wrote:
-> Sorry, I forgot to put "CVE Request" into the subject.
->
-> Petr
->
-> On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
->> User space may create the PIT and forget about setting up the irqchips.
->> In that case, firing PIT IRQs will crash the host:
->>
->> BUG: unable to handle kernel NULL pointer dereference at
->> 0000000000000128
->> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
->> ...
->> Call Trace:
->>   [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
->>   [<ffffffff81071431>] process_one_work+0x111/0x4d0
->>   [<ffffffff81071bb2>] worker_thread+0x152/0x340
->>   [<ffffffff81075c8e>] kthread+0x7e/0x90
->>   [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
->>
->> Reference:
->> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
->> https://bugzilla.redhat.com/show_bug.cgi?id=769721
->>
->> Thanks,
->> -- 
->> Petr Matousek / Red Hat Security Response Team
-Please use CVE-2011-4622 for this issue.
+On Mon, Mar 07, 2011 at 11:08:31AM +0800, Eugene Teo wrote:
+> >On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
+> >>So I would like to open up a discussion with _all_ OSS Security folks present.
+> >>
+> >>- Is a closed vendor coordination like vendor-sec still needed at this time?
+> >
+> >Yes, there's some need for it.
+> 
+> I still see some value in having a closed mailing list for vendor
+> co-ordination.
+> 
+
+As suggested by Josh Bressers oCERT would be favourable to providing a system
+that would accept user submission and allow selection of security contacts
+from our existing member database as well as other verified contacts.
+
+As Josh pointed out we do this already (even if manually and not with a web
+selection thing or whatever) and I am open to explore ways to create more
+cooperation.
+
+We would also be willing to host and maintain a closed vendor-sec style
+mailing list like the previous one with the only condition for member list to
+be public (not necessarily the individual contact names but at least the
+entities represented).
+
+Cheers
 
 -- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
--Kurt Seifried / Red Hat Security Response Team
-
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
