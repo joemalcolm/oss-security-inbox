@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/4
-Message-ID: <mpro.lp1gob3w5e11102h5.taviso@cmpxchg8b.com>
-Date: Thu, 28 Jul 2011 12:19:23 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/7
+Message-Id: <201103070905.39966.sgrubb@redhat.com>
+Date: Mon, 7 Mar 2011 09:05:39 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
+Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Huzaifa Sidhpurwala <huzaifas@...hat.com>
-wrote:
-
-> On 07/28/2011 03:34 PM, Tavis Ormandy wrote:
+On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
+> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
+> > If there's a common usage scenario that doesn't stem from blatant
+> > administrator negligence, then a CVE is probably still appropriate.
+> > ("blatant admin negligence" might be, say, if an admin arbitrarily makes
+> > a script setuid, or modifies the perms for an executable or config file
+> > to be world-writable.)
 > 
-> > Interesting, I also looked at systemtap and found a local root
-> > (CVE-2010-4170), but was under the impression we had agreed it should be
-> > restricted to a privileged group?
-> > 
-> > https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
-> > 
-> > I stopped looking because I concluded that had eliminated any security
-> > risk, is that no longer the case?
-> > 
-> I believe this does reduce the risk, but does not totally eliminate it.
+> I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
+> say, "chown nginx /var/log/nginx", it could be negligence or it could be
+> lack of familiarity with the risks involved.  So I am willing to admit
+> that it's not necessarily negligence that turns those issues into
+> vulnerabilities on specific systems.
 > 
+> > We will sometimes write the CVE description more as an "adminisrator
+> > practice" than as "fault of the software."
 > 
+> Oh, this is something I did not realize.  A lot of people assume that
+> CVEs "blame" the software and its authors for having made an error.
+> 
+> It felt wrong, say, to blame a text editor for being unsafe to use on
+> files in untrusted directories when such unsafety was the typical and
+> expected situation for text editors in general.
 
-Oh I see, the group restriction is still in place, but you still support
-adding unprivileged users to the group?
+So, where does that leave us for things like this? :
 
-Understood, I think that sounds reasonable.
+http://reverse.lostrealm.com/protect/ldd.html
+http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
 
-Tavis.
-
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+-Steve
