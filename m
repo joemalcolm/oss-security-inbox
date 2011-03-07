@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/24
-Message-ID: <20110403224959.GA10158@openwall.com>
-Date: Mon, 4 Apr 2011 02:49:59 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/10
+Message-ID: <1178433251.426653.1299529537474.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 7 Mar 2011 15:25:37 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Mike,
+----- Original Message -----
+> On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
+> > On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
+> > > If there's a common usage scenario that doesn't stem from blatant
+> > > administrator negligence, then a CVE is probably still appropriate.
+> > > ("blatant admin negligence" might be, say, if an admin arbitrarily
+> > > makes a script setuid, or modifies the perms for an executable or
+> > > config file to be world-writable.)
+> >
+> > I think that "chmod 777 /var/log" is "blatant admin negligence". As to,
+> > say, "chown nginx /var/log/nginx", it could be negligence or it could
+> > be lack of familiarity with the risks involved. So I am willing to
+> > admit that it's not necessarily negligence that turns those issues into
+> > vulnerabilities on specific systems.
+> >
+> > > We will sometimes write the CVE description more as an "adminisrator
+> > > practice" than as "fault of the software."
+> >
+> > Oh, this is something I did not realize. A lot of people assume that
+> > CVEs "blame" the software and its authors for having made an error.
+> >
+> > It felt wrong, say, to blame a text editor for being unsafe to use on
+> > files in untrusted directories when such unsafety was the typical and
+> > expected situation for text editors in general.
+> 
+> So, where does that leave us for things like this? :
+> 
+> http://reverse.lostrealm.com/protect/ldd.html
+> http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> 
 
-On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
-> pub    512R/205BBF7D 2001-12-30
->       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
->       C1
-> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+Steve,
 
-I've subscribed you with this key for now, but you really ought to
-upgrade to a larger key, and I'd appreciate a statement on what Linux
-distro you represent on the new list.
+Can you start a new thread for that issue. This one is already hard enough
+to follow, and I think it deserves attention on its own.
 
-All: my decision is based on some info known to me, but I'd prefer to
-base it on Mike's posting to oss-security.  I am saying this to explain
-that there's a reason why I subscribed Mike, whereas I would not
-subscribe another "random" person posting the same kind of message from
-a personal address. ;-)
+Thanks.
 
-Alexander
+-- 
+    JB
