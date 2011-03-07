@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/7
-Message-ID: <1785682857.1261431.1316024738643.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:25:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/7
+Message-Id: <201103070905.39966.sgrubb@redhat.com>
+Date: Mon, 7 Mar 2011 09:05:39 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cbarratt@...rs.sourceforge.net, cve-assign@...re.org
-Subject: Re: CVE Request: BackupPC 3.2.1 fixes cross site scripting
+Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3361 for this.
+On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
+> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
+> > If there's a common usage scenario that doesn't stem from blatant
+> > administrator negligence, then a CVE is probably still appropriate.
+> > ("blatant admin negligence" might be, say, if an admin arbitrarily makes
+> > a script setuid, or modifies the perms for an executable or config file
+> > to be world-writable.)
+> 
+> I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
+> say, "chown nginx /var/log/nginx", it could be negligence or it could be
+> lack of familiarity with the risks involved.  So I am willing to admit
+> that it's not necessarily negligence that turns those issues into
+> vulnerabilities on specific systems.
+> 
+> > We will sometimes write the CVE description more as an "adminisrator
+> > practice" than as "fault of the software."
+> 
+> Oh, this is something I did not realize.  A lot of people assume that
+> CVEs "blame" the software and its authors for having made an error.
+> 
+> It felt wrong, say, to blame a text editor for being unsafe to use on
+> files in untrusted directories when such unsafety was the typical and
+> expected situation for text editors in general.
 
-Thanks.
+So, where does that leave us for things like this? :
 
--- 
-    JB
+http://reverse.lostrealm.com/protect/ldd.html
+http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
 
------ Original Message -----
-> Hi,
-> 
-> BackupPC 3.2.1 was released back in April and fixed an XSS problem:
-> 
-> http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
-> 
-> This is upstream's patch:
-> 
-> http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
-> 
-> The same code is present at least since BackupPC 3.1.0, which is the
-> oldest version we support. It seems no CVE id has been issued to date.
-> Can
-> a CVE id please be assigned?
-> 
-> 
-> thanks,
-> Thijs
+-Steve
