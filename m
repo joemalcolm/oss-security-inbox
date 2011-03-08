@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/1
-Message-ID: <20110825081847.0bee10d8@redhat.com>
-Date: Thu, 25 Aug 2011 08:18:47 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libqt4: two memory issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/10
+Message-Id: <201103080843.53492.sgrubb@redhat.com>
+Date: Tue, 8 Mar 2011 08:43:53 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 24 Aug 2011 15:49:17 -0400 (EDT) Josh Bressers wrote:
-
-> > A) buffer overflow (looks only like an off-by-one from a very quick
-> > look)
-> > http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+On Tuesday, March 08, 2011 04:14:39 am Tomas Hoger wrote:
+> > Besides telling everyone don't do that. ldd could take the PoV that
+> > it should only call runtime linkers in trusted directories like /sbin
+> > or /usr/sbin.
 > 
-> Use CVE-2011-3193 for this.
-> 
-> I couldn't find this code in Harfbuzz-ng or pango. Has someone looked
-> into this further?
+> Upstream does not seem to consider this to be an issue:
+>   https://bugzilla.redhat.com/show_bug.cgi?id=531160#c1
 
-In both harfbuzz and pango git, history of the file ends with "Remove
-old code!" removal:
+The DISA STIG now recommends that ldd be disabled, that pretty much means deleted, on 
+any Linux OS that is not patched to protect against it:
 
-http://git.gnome.org/browse/pango/log/pango/opentype/harfbuzz-gpos.c
-http://cgit.freedesktop.org/harfbuzz/log/src/harfbuzz-gpos.c
+  <Rule id="SV-28909r1_rule" severity="medium">
+            <version>GEN007960</version>
+            <title>The 'ldd' command must be disabled unless it protects against the 
+execution of untrusted files.</title>
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+http://iase.disa.mil/stigs/downloads/zip/unclassified_os-srg-unix_v1r1_finalsrg.zip
+
+-Steve
