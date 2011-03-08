@@ -1,22 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/52
-Message-ID: <1301945504.1154.6.camel@hidalgo>
-Date: Mon, 04 Apr 2011 21:31:44 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/14
+Message-ID: <345447294.443665.1299599997224.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Mar 2011 10:59:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On lun., 2011-04-04 at 02:38 +0400, Solar Designer wrote:
-> "Good" employers, let alone non-commercial Open Source projects, don't
-> remove e-mail addresses when a person leaves.  Someone having an
-> @debian.org address does not mean they're currently with Debian. 
+----- Original Message -----
+> 
+> As suggested by Josh Bressers oCERT would be favourable to providing a
+> system that would accept user submission and allow selection of security
+> contacts from our existing member database as well as other verified
+> contacts.
+> 
+> As Josh pointed out we do this already (even if manually and not with a
+> web selection thing or whatever) and I am open to explore ways to create
+> more cooperation.
+> 
+> We would also be willing to host and maintain a closed vendor-sec style
+> mailing list like the previous one with the only condition for member
+> list to be public (not necessarily the individual contact names but at
+> least the entities represented).
+> 
 
-In Debian case, that is wrong, mail redirection to @debian.org address
-is disabled when retiring from the Debian project.
+I've been thinking about this a bit, and here are my thoughts.
 
-Regards,
+I think oCERT could be a good fit here. They already have contacts, and
+such a setup would likely have a formal process of sorts for vetting
+recipients of issues. My current fears are:
+
+1) Is oCERT in a position to increase its current workload by several
+   magnitudes? I suspect you're going to have to expand your team by a fair
+   amount. I also imagine this will result in changes to the way oCERT
+   currently exists, perhaps not though, I can't see behind the curtain.
+2) Will dealing with oCERT in this manner generate extra process?
+   vendor-sec was quite process free, a little doesn't hurt, but a lot can
+   be bad.
+3) Are we going to annoy other CERTs? Will they even care?
+4) oCERT already exists, there are going to be disagreements about how to
+   do things, both sides of all issues will need to be open to ideas and
+   compromise.
+
+
+There is also the option of recreating an old style list. This is a bit
+more ad-hoc and Openwall has already offered to host such a thing (Solar
+has quite a bit already in place). I do favor this a bit, as it would make
+a nice compliment to oss-security. It also puts our destiny squarely in our
+own hands. It is more work for the involved parties though (And a lot more
+work for Openwall)
+
+The disadvantages I recall from the old list are:
+
+1) Membership management is a pain. Adding new people is annoying and
+   nobody ever leaves.
+2) Nobody is in charge, which means sometimes issues can get ignored or
+   forgotten (also see #1)
+3) The potential for leaks is probably a bit higher than using something
+   like oCERT (downstream recipients are monitored a bit more closely I
+   would hope). Perhaps a benevolent dictator type approach could help
+   prevent this.
+
+
+Whatever is decided should be done so by the groups most affected. Here is
+a collection of the top members that have contributed to the old
+vendor-sec since mid 2008 (my historic archive isn't as easy to get at, I
+can crunch it if someone wishes, I don't expect it to change much though)
+
+openwall.com
+mandriva.com
+gentoo.org
+ubuntu.com
+canonical.com
+apple.com
+debian.org
+suse.de
+redhat.com
+
+There were a handful of other people that contributed a fair amount but
+were not list members, or not part of one of the above orgs (Tavis Ormandy,
+Chris Evans, Alan Cox oCERT, and Samba for example).
+
+Once we have a vision for the future, we should try to let various groups
+know who they can contact in the future. I imagine some of them still don't
+know what happened to vendor-sec.
+
+Thanks.
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
