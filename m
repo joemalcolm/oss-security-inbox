@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/8
-Message-ID: <20111007212613.GA12618@radis.liafa.jussieu.fr>
-Date: Fri, 7 Oct 2011 23:26:13 +0200
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/2
+Message-Id: <201103071932.59399.sgrubb@redhat.com>
+Date: Mon, 7 Mar 2011 19:32:59 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Juliusz Chroboczek <jch@....jussieu.fr>
-Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+Cc: "Dmitry V. Levin" <ldv@...linux.org>
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct  7, 2011 at 10:11:10 -0600, Vincent Danen wrote:
+On Monday, March 07, 2011 07:00:11 pm Dmitry V. Levin wrote:
+> On Mon, Mar 07, 2011 at 06:27:05PM -0500, Steve Grubb wrote:
+> [...]
+> 
+> >  http://reverse.lostrealm.com/protect/ldd.html
+> >  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> > 
+> > Besides telling everyone don't do that. ldd could take the PoV that it
+> > should only call runtime linkers in trusted directories like /sbin or
+> > /usr/sbin. Or it could simply detect that another linker was requested
+> > and make you add a "--force" so that you are fully aware that you just
+> > let another linker run. (The suggested patch can certainly be improved.
+> > But its here just in case you want it.)
+> 
+> In June of 2002, I suggested to change ldd to avoid invoking programs
+> directly, even when it seems like that would work, and invoke the dynamic
+> linker as a program instead.
+> This change was implemented at least in Owl and ALT Linux:
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/gli
+> bc-2.3.6-owl-alt-ldd.diff
+> http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=78857
+> 7027d2950e9508a434475e04c3af864d169
 
-> * [2011-10-06 18:37:01 +0200] Juliusz Chroboczek wrote:
-> 
-> >>  a denial of service flaw was found in the way Polipo, a lightweight
-> >>caching web proxy, processed certain HTTP POST / PUT requests. If
-> >>polipo was configured to allow remote client connections and particular
-> >>host was allowed to connect to polipo server instance, a remote
-> >>attacker could use this flaw to cause denial of service (polipo daemon
-> >>abort due to assertion failure) via specially-crafted HTTP POST / PUT
-> >>request.
-> >
-> >Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
-> >it is fixed in the Git trunk, which is unfortunately not ready to be
-> >released (and might never be unless a maintainer is found).
-> 
-> Do you have a link to the commit, or a commit id?  I can't see anything
-> on github that looks relevant or recent.
-> 
-> We do ship this in Fedora, so it would be nice to have the patch that we
-> could apply to what we are already shipping if no releases are
-> forthcoming.
-> 
-git bisect using the PoC from the RH bug suggests that was fixed by
-https://gitweb.torproject.org/chrisd/polipo.git/commitdiff/0e2b44af619e46e365971ea52b97457bc0778cd3
+To be clear, I in no way want credit for this. Its been known for a long time. But if 
+requirements have been loosened for CVEs, this is something people want to know about 
+and probably patch. I strongly believe that it should be fixed.
 
-Cheers,
-Julien
+Any other skeletons in the closet that never got a CVE?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-Steve
