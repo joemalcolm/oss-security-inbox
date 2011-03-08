@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/16
-Message-ID: <4DA4C8F2.5080907@mvista.com>
-Date: Tue, 12 Apr 2011 11:49:38 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/20
+Message-ID: <1802386215.451633.1299619079125.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Mar 2011 16:17:59 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: KDE SSL name check issue
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-1094.
+
+Thanks.
+
+-- 
+    JB
 
 
-On 04/11/2011 09:57 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> Postponed. I'd like to see any support for you getting onto the Linux
->> distros security contacts list, with reasoning, or/and any other
->> suggestions on what to do in this case. Josh - what do you think (as
->> someone who advocated the setup of a vendor-sec replacement)?
->>
+----- Original Message -----
+> Hi!
 > 
-> My initial thought is that a vendor without public advisories is a
-> liability.
-
-Making our Advisories public could put our customers' customers at risk
-depending on when we publish and when our customers can get the fixes
-into their customers hands and so on down the line.
-
-- Armin
-
+> KDE recently fixed an issue in the code checking host names of the
+> server SSL certificates. Previously, it accepted certificate as valid
+> for the site if it was issued for the user-specified host name, or if
+> it was issued for an IP address to which user-specified host name
+> resolved.
+> 
+> An attacker able to get an SSL certificate form a trusted CA issued
+> for
+> an attacker-controlled IP address could perform a MITM attack, if they
+> were also able to hijack victim's DNS to resolve host names to the
+> attacker's IP.
+> 
+> Fixed upstream in:
+> https://projects.kde.org/projects/kde/kdelibs/repository/revisions/76f935197599a335a5fe09b78751ddb455248cf7
+> 
+> Patch is included in kdelibs 4.6.1.
+> 
+> --
+> Tomas Hoger / Red Hat Security Response Team
