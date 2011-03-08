@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/17
-Message-Id: <201103181252.33447.geissert@debian.org>
-Date: Fri, 18 Mar 2011 12:52:32 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com, list@...adns.org, bressers@...hat.com, coley@...re.org
-Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/16
+Message-ID: <4D7661A0.7030807@mvista.com>
+Date: Tue, 08 Mar 2011 07:04:32 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: R P Herrold <herrold@...river.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Friday 18 March 2011 12:11:15 Vincent Danen wrote:
-> * [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
-> >In 2002, when I rewrote the compression code for MaraDNS for the first
-> >time, I made a mistake in allocating an array of integers, allocating
-> >it in bytes instead of sizeof(int) units.  The resulted in a buffer
-> >being too small, allowing it to be overwritten.
-> >
-> >The impact of this programming error is that MaraDNS can be crashed by
-> >sending MaraDNS a single "packet of death".  Since the data placed in
-> >the overwritten array can not be remotely controlled (it is a list of
-> >increasing integers), there is no way to increase privileges
-> >exploiting this bug.
-> >
-> >The attached patch resolves this issue by allocating in sizeof(int)
-> >units instead of byte-sized units for an integer array.  In addition,
-> >it uses a smaller array because a DNS name can only have, at most, 128
-> >labels.
+
+
+On 03/08/2011 06:19 AM, R P Herrold wrote:
+> On Tue, 8 Mar 2011, Josh Bressers wrote:
 > 
-> Was a CVE name ever assigned to this issue?
+<snipped>
+> 
+> These track together -- mailman or such will cull dead email accounts
+> that bounce of course, but that is a pretty mild form of management. 
+> Absent a charter to somehow mandate some 'contribution' to remain on a
+> list, there is not a clear rule to 'weed' the list.  But is this really
+> needed except from some idea of avoiding 'too many eyes'?  Frankly
+> running a distribution is work and for non-commercial distributions,
+> unpaid work
+> 
+> If a criteria for remaining on the list is needed, it is needed to make
+> sure that eyes are still reading the content -- handle that with a
+> periodic 'tracer' piece, and drop non-responders
 
-Yes, Josh assigned CVE-2011-0520.
-(his message is also recorded on the Debian bug you CC'ed)
+This does not work if the responder your are sending to is an internal
+mailman list. I am surprised this is even allowed.  Secondly, If I
+happen to quit, my email gets forwarded to someone else in my company
+(no bounce) and is another reason why encryption should be used.
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- Armin
