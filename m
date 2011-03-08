@@ -1,24 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/4
-Message-ID: <4EB00F35.1090909@redhat.com>
-Date: Tue, 01 Nov 2011 20:54:37 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/5
+Message-Id: <201103080859.03319.ludwig.nussel@suse.de>
+Date: Tue, 8 Mar 2011 08:59:03 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: libcap/capsh: does not chdir after chroot
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Josh Bressers wrote:
+> [...]
+> It seems there is now a consensus on this (at least that's how I'm reading
+> it). Here is what I plan to do with CVE ids unless someone speaks up.
+> 
+> As best as I can tell, logrotate only needs a CVE id for this:
+> 
+>     8) Issue #8: logrotate: TOCTOU race condition by creation of new files
+>        (between opening the file and moment, final permissions have been
+>        applied) [information disclosure]
+> 
 
-It was found that capsh program, usually shipped with the libcap
-package, did not do a chdir("/") after calling chroot, when called with
-a "--chroot" option. This resulted in the current directory being
-outside the chroot.
+Ack.
+ 
+> We then will need to assign IDs for various broken uses of /var/log (If
+> someone has a list of the currently known ones, please pass it along)
 
-This has been assigned CVE-2011-4099
+AFAICS on openSUSE Factory we have
+cobbler
+inn
+safte-monitor
+uucp
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=722694
+service owned log dirs without logrotate:
+cups
+horde
 
+cu
+Ludwig
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
