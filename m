@@ -1,26 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/10
-Message-ID: <1304967809.15178.30.camel@meatpuppet>
-Date: Mon, 09 May 2011 13:03:29 -0600
-From: Deb Mazurek <dmazurek@...urityfocus.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/21
+Message-ID: <1051637035.451757.1299619488131.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Mar 2011 16:24:48 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+Cc: coley <coley@...re.org>
+Subject: Re: glibc locale escaping issue
 Content-Type: text/plain; charset=utf-8
 
-Is this related to CVE-2011-1425 as described in
-http://www.aleksey.com/pipermail/xmlsec/2011/009120.html
 
 
-
-On Mon, 2011-05-09 at 14:59 -0400, Steven M. Christey wrote:
-> All,
+----- Original Message -----
+> Hi!
 > 
-> Note that due to all the Apple/Google confusion, we recently arranged for 
-> Google to become a CVE CNA (i.e. have their own CVEs), and now they are 
-> the primary coordinator for CVE assignment in Webkit issues (specifically, 
-> Chris Evans).  Not sure whether the current issue has CVE coverage or not.
+> Following glibc upstream and gentoo bug reports describe a bug in the
+> way locale command escapes its output.
 > 
-> - Steve
+> http://sources.redhat.com/bugzilla/show_bug.cgi?id=11904
+> http://bugs.gentoo.org/show_bug.cgi?id=330923
+> 
+> Gentoo bug points out possible security implications. I've not managed to
+> find an example where the locale command is used in a problematic way and
+> where this may cross trust boundaries, so I wonder if this is worth
+> handling as security fix vs. security enhancement. Comments are welcome.
+> 
+> The issue was fixed in GLSA 201011-01, but its text really only mentions
+> Tavis' issues.
+> 
 
+I think this deserves an ID: CVE-2011-1095
 
+The documentation clearly states that the output of this command will be
+properly quoted. Even if we can't find a bad usage, there is quite likely a
+shell script doing this in the universe.
+
+I think the line between fix vs enhancement is crossed when we're talking
+about documented behavior.
+
+Thanks.
+
+-- 
+    JB
