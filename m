@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/4
-Message-ID: <20110503172310.GF2160@redhat.com>
-Date: Tue, 3 May 2011 11:23:11 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/16
+Message-ID: <4D7661A0.7030807@mvista.com>
+Date: Tue, 08 Mar 2011 07:04:32 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: openssh
+CC: R P Herrold <herrold@...river.com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
->OpenSSH Security Advisory: portable-keysign-rand-helper.adv
->
->This document may be found at:
->http://www.openssh.com/txt/portable-keysign-rand-helper.adv
->
->1. Vulnerability
->
->        Portable OpenSSH's ssh-keysign utility may allow unauthorised
->        local access to host keys on platforms if ssh-rand-helper is
->        used.
 
-Full details at the URL above.  I don't see a CVE name in the advisory;
-could one be assigned for this flaw?
 
-Note: it only affects 5.6 and 5.7.
+On 03/08/2011 06:19 AM, R P Herrold wrote:
+> On Tue, 8 Mar 2011, Josh Bressers wrote:
+> 
+<snipped>
+> 
+> These track together -- mailman or such will cull dead email accounts
+> that bounce of course, but that is a pretty mild form of management. 
+> Absent a charter to somehow mandate some 'contribution' to remain on a
+> list, there is not a clear rule to 'weed' the list.  But is this really
+> needed except from some idea of avoiding 'too many eyes'?  Frankly
+> running a distribution is work and for non-commercial distributions,
+> unpaid work
+> 
+> If a criteria for remaining on the list is needed, it is needed to make
+> sure that eyes are still reading the content -- handle that with a
+> periodic 'tracer' piece, and drop non-responders
 
-Thanks.
+This does not work if the responder your are sending to is an internal
+mailman list. I am surprised this is even allowed.  Secondly, If I
+happen to quit, my email gets forwarded to someone else in my company
+(no bounce) and is another reason why encryption should be used.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+- Armin
