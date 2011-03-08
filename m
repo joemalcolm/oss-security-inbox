@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/10
-Message-ID: <1309972769.3937.40.camel@mdlinux>
-Date: Wed, 06 Jul 2011 13:19:29 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: foo2zjs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/7
+Message-ID: <20110308101439.0cbe5720@orphan>
+Date: Tue, 8 Mar 2011 10:14:39 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: sgrubb@...hat.com
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Mon, 7 Mar 2011 18:27:05 -0500 Steve Grubb wrote:
 
-A temp file issue was reported in a distro-specific patch to foo2zjs.
-This probably only affects Debian/Ubuntu and derivatives.
+>  http://reverse.lostrealm.com/protect/ldd.html
+>  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> 
+> Besides telling everyone don't do that. ldd could take the PoV that
+> it should only call runtime linkers in trusted directories like /sbin
+> or /usr/sbin.
 
-The original bug report can be found here:
+Upstream does not seem to consider this to be an issue:
+  https://bugzilla.redhat.com/show_bug.cgi?id=531160#c1
 
-https://bugs.launchpad.net/bugs/805370
+Debian also uses the patch similar to what ldv pointed out - it changes
+ldd to always do:
 
-Could a CVE please be assigned to this?
+  LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 /path/to/ELF-lib-or-binary
 
-Thanks,
+rather than:
 
-Marc.
-
+  LD_TRACE_LOADED_OBJECTS=1 /path/to/ELF-lib-or-binary
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+Tomas Hoger / Red Hat Security Response Team
