@@ -1,31 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/1
-Message-ID: <4EACA0B6.6010501@redhat.com>
-Date: Sat, 29 Oct 2011 18:56:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/15
+Message-ID: <alpine.LRH.1.00.1103081107240.6869@bronson.owlriver.com>
+Date: Tue, 8 Mar 2011 11:19:43 -0500 (EST)
+From: R P Herrold <herrold@...river.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
+Subject: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On 10/29/2011 06:37 AM, Hanno Böck wrote:
-> Am Fri, 28 Oct 2011 09:04:43 -0600
-> schrieb Kurt Seifried <kseifried@...hat.com>:
->
->> Can you please send more details, i.e. which file is responsible/or a
->> link to a commit fixing this? Thanks.
-> Commit is here:
-> https://github.com/s9y/Serendipity/commit/a7861fabd328c3c468f0853355686dd7e39cc4ac#plugins/serendipity_event_karma/serendipity_event_karma.php
->
-> Responsible file:
-> plugins/serendipity_event_karma/serendipity_event_karma.php
->
-Ahh our good friend htmlspecialchars().
+On Tue, 8 Mar 2011, Josh Bressers wrote:
 
-Please use CVE-2011-4090 for this issue.
+prior content, not from Josh:
+>> We would also be willing to host and maintain a closed vendor-sec style
+>> mailing list like the previous one with the only condition for member
+>> list to be public (not necessarily the individual contact names but at
+>> least the entities represented).
 
--- 
+I guess I do not see the reason for such a listing.  The list 
+that Josh put together from memory does not include the 
+distributions I represented and coordinated vendor-sec matters 
+for.  Having such a list just offers better target 
+identification of those NOT on the list and thus may lag a 
+CRD, no?  How is this beneficial?
 
--Kurt Seifried / Red Hat Security Response Team
+> There is also the option of recreating an old style list. This is a bit
+> more ad-hoc and Openwall has already offered to host such a thing (Solar
+> has quite a bit already in place). I do favor this a bit, as it would make
+> a nice compliment to oss-security
 
+I favor such as well - I posted an offer to host such pro bono 
+as a neutral vendor (centos inherently trails), but it was 
+caught up in the trashing of the old vendor-sec host and so 
+did not ever pass the old list.  Openwall's offer is fine by 
+me as well.   I mentioned adding opportunistic SSL/TLS 
+transport on the mailserver, to cut out casual MitM 
+eavesdropping
 
+> 1) Membership management is a pain. Adding new people is annoying and
+>   nobody ever leaves.
+> 2) Nobody is in charge, which means sometimes issues can get ignored or
+>   forgotten (also see #1)
+
+These track together -- mailman or such will cull dead email 
+accounts that bounce of course, but that is a pretty mild form 
+of management.  Absent a charter to somehow mandate some 
+'contribution' to remain on a list, there is not a clear rule 
+to 'weed' the list.  But is this really needed except from 
+some idea of avoiding 'too many eyes'?  Frankly running a 
+distribution is work and for non-commercial distributions, 
+unpaid work
+
+If a criteria for remaining on the list is needed, it is 
+needed to make sure that eyes are still reading the content -- 
+handle that with a periodic 'tracer' piece, and drop 
+non-responders
+
+-- Russ herrold
+ 	(centos, cAos)
