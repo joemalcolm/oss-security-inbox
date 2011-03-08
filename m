@@ -1,49 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/5
-Message-ID: <CABqVa3--fZxG+52j7ocmySwCvFzMEOevSp341vOG00BgK0HD7Q@mail.gmail.com>
-Date: Sun, 13 Nov 2011 22:51:57 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/4
+Message-ID: <4D75DFCC.80302@redhat.com>
+Date: Tue, 08 Mar 2011 15:50:36 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Arch Linux Shaman issue
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: dccp: fix oops on Reset after close
 Content-Type: text/plain; charset=utf-8
 
-Did this ever get a CVE #? I can't find one.
+https://bugzilla.redhat.com/682954
+http://git.kernel.org/linus/720dc34bbbe9493c7bd48b2243058b4e447a929d
 
-https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+"This fixes a bug in the order of dccp_rcv_state_process() that still 
+permitted reception even after closing the socket. A Reset after close 
+thus causes a NULL pointer dereference by not preventing operations on 
+an already torn-down socket."
 
-The point of this thread was that you don't need to enter the root
-password at all. Not the first time, not ever.
-
-As far as I understand, it is supposed to work like this: When you
-first use shaman too install anything, it asks for the root password
-You can tick a "Do not ask me again"-box, so you don't have to enter
-the password again. If you tick the box and enter the password, shaman
-add the lines
-[auth]
-askforpwd=false
-to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
-time shaman is run, it checks the config file, and if the askforpwd
-value is set to false, it grants itself root privileges (with some
-nifty setuuid root-thingy, I imagine) This is not the problem - this
-is the feature.
-
-The bug is this:
-the fact that any user can add the lines
-[auth]
-askforpwd=false
-to his own shaman.conf file, without ever entering the root password
-in shaman. The next time shaman is run, it checks the config file, and
-if the askforpwd value is set to false, it grants itself root
-privileges - even though the user has never entered the root password.
-This works for any unprivileged user on the system.
-
-If that is indeed a feature intended by any sane person, then I'm
-Mother Mary. And that can't be, seeing as I don't have breasts.
-
-Appears to never have been fixed, the last release of shaman appears
-to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
-
+Thanks, Eugene
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: (206) 905-9462
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
