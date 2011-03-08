@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/4
-Message-ID: <1987811491.563153.1307562417562.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 8 Jun 2011 15:46:57 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: vlc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/10
+Message-Id: <201103080843.53492.sgrubb@redhat.com>
+Date: Tue, 8 Mar 2011 08:43:53 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> From http://www.videolan.org/vlc/releases/1.1.10.html :
+On Tuesday, March 08, 2011 04:14:39 am Tomas Hoger wrote:
+> > Besides telling everyone don't do that. ldd could take the PoV that
+> > it should only call runtime linkers in trusted directories like /sbin
+> > or /usr/sbin.
 > 
-> "Security update regarding an integer overflow in xspf demuxer"
-> 
-> Looks like it's the following commit:
-> 
-> http://repo.or.cz/w/vlc.git/commitdiff/cd929923ff49175a501bb3e9553a683bc42ff61c
-> 
-> 
+> Upstream does not seem to consider this to be an issue:
+>   https://bugzilla.redhat.com/show_bug.cgi?id=531160#c1
 
-Please use CVE-2011-2194.
+The DISA STIG now recommends that ldd be disabled, that pretty much means deleted, on 
+any Linux OS that is not patched to protect against it:
 
-Thanks.
+  <Rule id="SV-28909r1_rule" severity="medium">
+            <version>GEN007960</version>
+            <title>The 'ldd' command must be disabled unless it protects against the 
+execution of untrusted files.</title>
 
--- 
-    JB
+http://iase.disa.mil/stigs/downloads/zip/unclassified_os-srg-unix_v1r1_finalsrg.zip
+
+-Steve
