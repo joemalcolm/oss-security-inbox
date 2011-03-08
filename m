@@ -1,19 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/16/1
-Message-ID: <20111016132329.GA18644@foo.fgeek.fi>
-Date: Sun, 16 Oct 2011 16:23:29 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: contact@...g.net, Josh Bressers <bressers@...hat.com>
-Subject: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/13
+Message-ID: <20110308153641.33166a46@orphan>
+Date: Tue, 8 Mar 2011 15:36:41 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: KDE SSL name check issue
 Content-Type: text/plain; charset=utf-8
 
-Are these duplicates:
+Hi!
 
-CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
-CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
+KDE recently fixed an issue in the code checking host names of the
+server SSL certificates.  Previously, it accepted certificate as valid
+for the site if it was issued for the user-specified host name, or if
+it was issued for an IP address to which user-specified host name
+resolved.
 
-I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+An attacker able to get an SSL certificate form a trusted CA issued for
+an attacker-controlled IP address could perform a MITM attack, if they
+were also able to hijack victim's DNS to resolve host names to the
+attacker's IP.
 
-Best regards,
-Henri Salo
+Fixed upstream in:
+https://projects.kde.org/projects/kde/kdelibs/repository/revisions/76f935197599a335a5fe09b78751ddb455248cf7
+
+Patch is included in kdelibs 4.6.1.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
