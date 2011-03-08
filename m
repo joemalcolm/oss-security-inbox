@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/6
-Message-ID: <20110706091818.GB797@dojo.mi.org>
-Date: Wed, 6 Jul 2011 05:18:18 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/6
+Message-Id: <201103080933.38597.ludwig.nussel@suse.de>
+Date: Tue, 8 Mar 2011 09:33:38 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Bind incident
+Subject: Buffer overflows in fsck may become security issues
 Content-Type: text/plain; charset=utf-8
 
-:On Tue, Jul 05, 2011 at 07:17:32PM +0800, Eugene Teo wrote:
-:> You might have read about AusCert's accidental disclosure of the ISC
-:> Bind advisories today. If you have more information about this, please
-:> share. AFAICS, the bind source packages are still not available at the
-:> ISC website.
-:> 
-:> https://bugzilla.redhat.com/CVE-2011-2464
-:> https://bugzilla.redhat.com/CVE-2011-2465
-:> http://risky.biz/auscert-bind
-:> http://pastebin.com/9NUt8Pk0
-:
-:Here are the ISC advisories:
-:
-:http://www.isc.org/software/bind/advisories/cve-2011-2464
-:http://www.isc.org/software/bind/advisories/cve-2011-2465
-:
-:The oldest affected version is 9.6'ish, and the advisories explicitly
-:say that "Other versions of BIND 9 not listed in this advisory are not
-:vulnerable to this problem."  So those of us with older BIND 9 appear to
-:have nothing to do on this. ;-)  (Of course, we might have other/older
-:issues to patch.)
+Hi,
 
-Note that the BIND 9.4 ESV formally EOLed just last month:
+A buffer overflow in dosfsck caught my attention recently. Don't
+worry, it's harmless and already fixed upstream¹. However, it turned
+out that udisks has a dbus method that by default allows the user on
+the active console to run fsck on removable media. fsck is run as
+root in this case. I haven't checked whether fsck is run
+automatically in any environment. However, since some desktops
+automatically mount removeable media it seems logical to call fsck
+first. So overflows in the various fsck binaries could allow local
+privilege escalation.
 
-http://www.isc.org/softwaresupportpolicy
+cu
+Ludwig
 
-So, if you are distributing an older rev of BIND and some new security
-issue comes up that you are prone to, it _might_ not be quite as easy to
-backport the fixes.
+[1] http://git.debian-maintainers.org/?p=daniel/dosfstools.git;a=commitdiff;h=a9055613f0d826021db65c79c2df87ac91e89215
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Gravity was invented by Isaac Walton."                    -Anguished English
-
-Content of type "application/pgp-signature" skipped
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
