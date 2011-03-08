@@ -1,51 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/4
-Message-ID: <4EBBF9BB.5080209@redhat.com>
-Date: Thu, 10 Nov 2011 09:20:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/21
+Message-ID: <1051637035.451757.1299619488131.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Mar 2011 16:24:48 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- ProFTPD -- Response pool use-after-free flaw (ZDI-CAN-1420)
+Cc: coley <coley@...re.org>
+Subject: Re: glibc locale escaping issue
 Content-Type: text/plain; charset=utf-8
 
-On 11/10/2011 06:58 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a use-after-free flaw was found in the way ProFTPD, an enhanced FTP
-> server, performed retrieval of the response pool for the old command
-> (when ProFTPD was in the midst of the data transfer, when new command
-> arrived) used by the Response API. A remote attacker could provide a
-> specially-crafted request (resulting in a need the server to handle an
-> exceptional condition), leading to memory corruption and potentially
-> arbitrary code execution, with the privileges of the user running the
-> proftpd server.
->
-> Upstream bug report:
-> [1] http://bugs.proftpd.org/show_bug.cgi?id=3711
->
-> Relevant upstream patch:
-> [2] http://bugs.proftpd.org/show_bug.cgi?id=3711#c1
->
-> References:
-> [3] https://secunia.com/advisories/46811/
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=390075
-> [5] http://www.zerodayinitiative.com/advisories/upcoming/
-> [6] https://bugzilla.redhat.com/show_bug.cgi?id=752812
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: According to the upstream bug report [1], the ZDI-CAN-1420
->       issue has been disclosed 2011-10-28, thus grepped OSS
->       archives for CVE request due this proftpd deficiency,
->       and there doesn't seem to be one yet (also ZDI-CAN-1420
->       doesn't seem to reference a CVE id).
-Please use CVE CVE-2011-4130 for this issue.
+
+
+----- Original Message -----
+> Hi!
+> 
+> Following glibc upstream and gentoo bug reports describe a bug in the
+> way locale command escapes its output.
+> 
+> http://sources.redhat.com/bugzilla/show_bug.cgi?id=11904
+> http://bugs.gentoo.org/show_bug.cgi?id=330923
+> 
+> Gentoo bug points out possible security implications. I've not managed to
+> find an example where the locale command is used in a problematic way and
+> where this may cross trust boundaries, so I wonder if this is worth
+> handling as security fix vs. security enhancement. Comments are welcome.
+> 
+> The issue was fixed in GLSA 201011-01, but its text really only mentions
+> Tavis' issues.
+> 
+
+I think this deserves an ID: CVE-2011-1095
+
+The documentation clearly states that the output of this command will be
+properly quoted. Even if we can't find a bad usage, there is quite likely a
+shell script doing this in the universe.
+
+I think the line between fix vs enhancement is crossed when we're talking
+about documented behavior.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
