@@ -1,18 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/8
-Message-ID: <CAOSRhRPyUj0diDn_93ZVdR2Rco_-wh2dvvs6f6tif+HkeE4pjQ@mail.gmail.com>
-Date: Wed, 20 Jul 2011 08:22:45 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: arbitrary kernel read in xtensa
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/22
+Message-ID: <Pine.GSO.4.64.1103081733440.16895@faron.mitre.org>
+Date: Tue, 8 Mar 2011 17:35:50 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: glibc locale escaping issue
 Content-Type: text/plain; charset=utf-8
 
-Not sure if any distributions support xtensa, but regardless:
 
-Due to a failure to check user pointers passed to a ptrace_setxregs
-request, it is possible for a local unprivileged user to read
-arbitrary kernel memory [1].
+On Tue, 8 Mar 2011, Josh Bressers wrote:
 
--Dan
+> I think the line between fix vs enhancement is crossed when we're talking
+> about documented behavior.
 
-[1] http://marc.info/?l=linux-kernel&m=131008344912672&w=2
+Discrepancy between documented behavior and actual behavior - whether an 
+error in the code or an error in the documentation - plus a clear or 
+likely exploit scenario - *especially* for multi-purpose libraries and 
+interpreters - seems reasonable for assigning a CVE.
+
+- Steve
