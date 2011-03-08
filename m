@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/11
-Message-ID: <405505459.1273108.1310497040397.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:57:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/3
+Message-Id: <201103080046.20318.tmb@65535.com>
+Date: Tue, 8 Mar 2011 00:46:05 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, security@...ian.org, coley@...us.mitre.org
-Subject: Re: CVE Request: reseed
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
-> > A security bug was reported by Jeffrey Walton against reseed in
-> > Ubuntu. You are being emailed as the upstream contact. Please keep
-> > oss-security@...ts.openwall.com[1] CC'd for any updates on this
-> > issue.
-> >
-> > This issue should be considered public. A CVE is being requested;
-> > please mention this in any changelogs.
-> >
-> > Details from the public bug follow:
-> > https://launchpad.net/bugs/804594
-> >
-> > From the reporter:
-> > "reseed(8) performs an insecure HTTP fetch of data from random.org.
-> > The script is automatically executed when installed, and any time the
-> > user chooses to execute. In addition, the reseed man pages do not
-> > mention the data is retrieved over an insecure channel."
-> >
-> > As pointed out by the reporter, from the man page: "It is run once
-> > during the installation of the package only". An attacker could perform
-> > a MITM during package installation or whenever the reseed command is
-> > run to provide predictable data for the random number seed.
-> 
-> While the attack is difficult to achieve (need both MITM at time of
-> package installation AIUI), it seems that this still should get a CVE.
-> 
+On Tuesday 08 March 2011 00:00:11 Dmitry V. Levin wrote:
 
-I'll give the HTTP issue CVE-2011-2683.
+> In June of 2002, I suggested to change ldd to avoid invoking programs
+> directly, even when it seems like that would work, and invoke the dynamic
+> linker as a program instead.
+> This change was implemented at least in Owl and ALT Linux:
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/gli
+> bc-2.3.6-owl-alt-ldd.diff
+> http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=78857
+> 7027d2950e9508a434475e04c3af864d169
 
-In all seriousness though, running this on install should probably get an
-ID as you can't say you have complete trust in whatever the default random
-site is (in this case it's random.org).
+A slight tangent to this but IIRC there was some suggestion that allowing files 
+to be mapped to memory with execute permissions when called in this manner was 
+something that should be considered a bug/feature to be fixed in order to bring 
+ld.so in to line with how execution happens more generally.  I think Tavis or 
+stealth mentioned it to me regarding the suggestion in my paper that an 
+attacker could execute binaries in this manner to bypass situations when the 
+binary didn't, for whatever reason have +x.  I guess it should be possible to 
+fix both cases but it's something that needs to be considered.
 
-It's probably not safe at all honestly. If you don't have entropy, HTTPS
-isn't going to be secure either.
-
-I'd rather not start a fight though by assigning a bunch of IDs for
-something that is insecure by design. If you wish for more IDs, please let
-me know.
-
-Thanks.
-
+Tim
 -- 
-    JB
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
