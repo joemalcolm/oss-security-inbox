@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/2
-Message-ID: <4DF5A1CC.60101@redhat.com>
-Date: Mon, 13 Jun 2011 13:36:12 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/23
+Message-Id: <F9ACDDDF-4F5E-4F23-AF74-FFD938396BFB@gmail.com>
+Date: Tue, 8 Mar 2011 23:20:28 +0000
+From: Helgi Þormar Þorbjörnsson <helgith@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: alpha: fix several security issues
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-https://lkml.org/lkml/2011/6/11/87; from Dan Rosenberg.
+Hi,
 
-1. Signedness issue in osf_getdomainname allows copying out-of-bounds
-kernel memory to userland.
+On 1 Mar 2011, at 12:39, Helgi Þormar Þorbjörnsson wrote:
 
-2. Signedness issue in osf_sysinfo allows copying large amounts of
-kernel memory to userland.
+> 
+> On 1 Mar 2011, at 12:19, Dan Rosenberg wrote:
+> 
+>>> Not sure it is fixable, or maybe using a lock on the symbolic link
+>>> while fetching its target (to be tested to be sure that such locks
+>>> cannot be overridden from shell).
+>>> 
+>> 
+>> The easiest way is to just open the target with the O_NOFOLLOW flag to
+>> avoid following symlinks and abort on failure.  If you need to support
+>> systems that don't have this flag, then perhaps you could consider
+>> using an application-specific temporary directory instead of operating
+>> in the world-writable /tmp.
+> 
+> The PEAR installer does use /tmp (and whatever the Windows equivalent is) by default unless the user opts into a local installation or does indeed change the configuration to use other temp/download/cache directories so users can guard themselves with a good setup.
+> 
+> A flag like that would be handy but doesn't exist (yet) in PHP. 
+> 
+> I moved over to using the O_CREAT|O_EXCL equivalent in PHP when creating new files and lstat + fopen + fstat and comparing mode/ino/dev before writing to an existing file for the cache. I could add an nlink check to that as well.
+> The current version I've been playing around with is located at https://gist.github.com/848371 - It is missing the nlink part but it should be able to deal with TOCTOU problems. That code snippet hasn't been committed as I consider it work-in-progress still.
+> 
+> Any comments / suggestions are welcome, I did write that one quite late last night :-)
 
-3. Typo (?) in osf_getsysinfo bounds minimum instead of maximum copy
-size, allowing copying large amounts of kernel memory to userland.
+Here is the latest fix for the TOCTOU (e.g. time-of-check-time-of-use) problem: http://news.php.net/php.pear.core/9791 - A proper mix of lstat, fopen, fstat (to ensure no one has messed around with the file pointer between the check and getting the handler) as well as adding in a nlink check to make sure it is 1.
 
-4. Usage of user pointer in osf_wait4 while under KERNEL_DS allows
-privilege escalation via writing return value of sys_wait4 to kernel
-memory.
+Hopefully this is enough to fix the problem you had with my earlier fixes and get me the CVE number.
 
-I didn't investigate further.
+- Helgi
 
-Thanks, Eugene
