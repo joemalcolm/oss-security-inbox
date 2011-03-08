@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/12
-Message-ID: <CABqVa38cMq29tXqYnQyYQ4hZsiQ2aqODzCWpyYW_o_a6iFfd3w@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:11:13 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/7
+Message-ID: <20110308101439.0cbe5720@orphan>
+Date: Tue, 8 Mar 2011 10:14:39 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request (minor) -- gnash -- Unsafe management of HTTP cookies
+Cc: sgrubb@...hat.com
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 4:37 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> Hello Kurt, Steve, vendors,
->
->  a security flaw was found in the way Shockwave Flash plug-in of the
-> gnash, a GNU flash movie player, performed management of HTTP cookies
-> (they were stored under /tmp directory with predictable name and world-
-> readable permissions). A local attacker could use this flaw to obtain
-> sensitive information.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649384
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=755518
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+On Mon, 7 Mar 2011 18:27:05 -0500 Steve Grubb wrote:
 
-Please use CVE-2011-4328 for this issue.
+>  http://reverse.lostrealm.com/protect/ldd.html
+>  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> 
+> Besides telling everyone don't do that. ldd could take the PoV that
+> it should only call runtime linkers in trusted directories like /sbin
+> or /usr/sbin.
 
+Upstream does not seem to consider this to be an issue:
+  https://bugzilla.redhat.com/show_bug.cgi?id=531160#c1
+
+Debian also uses the patch similar to what ldv pointed out - it changes
+ldd to always do:
+
+  LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 /path/to/ELF-lib-or-binary
+
+rather than:
+
+  LD_TRACE_LOADED_OBJECTS=1 /path/to/ELF-lib-or-binary
 
 -- 
-Kurt Seifried
-kurt@...fried.org
+Tomas Hoger / Red Hat Security Response Team
