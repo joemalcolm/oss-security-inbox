@@ -1,80 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/4
-Message-ID: <4D99DD87.5010001@gmx.de>
-Date: Mon, 04 Apr 2011 17:02:31 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/17
+Message-ID: <1128362719.334929.1299613285898.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Mar 2011 14:41:25 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley@...us.mitre.org
+Subject: CVE-2011-0714 kernel: deficiency in handling of invalid data packets in lockd
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-Am 02.04.2011 02:08, schrieb Dan Rosenberg:
-> Hi Josh,
-> 
->>
->> Long term I'd like to see two lists, one for purpose #1, and another geared
->> toward #2. I think having a trusted venue for knowledge sharing would be
->> very useful, and we likely don't want the list clogged with coordination
->> details. This will of course rely heavily on what Openwall is willing to
->> take on. They're already taking on a lot of risk and responsibility, I
->> don't want to spoil the good will.
->>
-> 
-> I agree that having such a venue for discussion would be valuable, and
-> I'd personally like to contribute to such a list.
-> 
->>
->> Should we require members use a mail address from their vendor? Letting
->> people use personal addresses creates an opportunity for people to remain
->> on a list when they are no longer a part of a given vendor (it also makes
->> it quite easy to know who represents a vendor).
->>
-> 
-> Yes, I think this should be a requirement for a closed coordination
-> list (as opposed to the more relaxed option #2).  In fact, I think
-> membership to such a list should be restricted almost exclusively to
-> distributions and downstream providers of third-party software.  It
-> obviously makes sense to have distro security teams on a list, since a
-> vulnerability in project XYZ will need to be coordinated among all of
-> the distros.  However, most software projects only need access to
-> information concerning their own project.  There's no reason one
-> software project should gain access to vulnerability information about
-> a completely unrelated project, and restricting membership to achieve
-> that will at least help minimize the leakage that went on with the
-> previous list.
+Josh Bressers has assigned a CVE id CVE-2011-0714 to the following bug:
 
-This raises an interesting point, "downstream providers of third-party
-software".
+"It was found that lockd did not properly handle data packets that contained
+invalid data. This could be possibly exploited by remote user to crash the
+server (DoS)."
 
-In my case, I'd understand that I might want to offer vendors the
-possibility to co-ordinate upgrades for bogofilter, fetchmail, and
-leafnode, in lexicographical order, and possibly for a FreeBSD port --
-although I'm not a representative of FreeBSD's security officer team
-(nor would that team usually deal with third-party software
-vulnerabilities unless it's in the basde system).
+Please note that this issue only affects Red Hat Enterprise Linux 6 as a
+result of an incomplete upstream commit backport.
 
-Questions:
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=678144
 
-#1 would the new private list be allowed to Cc: outside members (for
-instance, FreeBSD's unencrypted internal developers@ list does not allow
-that)?  Who would make sure that no end user agent allows an unencrypted
-Cc: slip?  A major concern IMO.
+Credits:
+Adam Prince
 
-#2 will the subscriber list be public for subscribers that are later
-joining according to a policy that the new subscribers will have voted
-on in the secret list?
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
 
-#3 will the list rules themselves be open to non-members?
-
-Best regards
-Matthias Andree
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk2Z3YAACgkQvmGDOQUufZVOxwCgjB/6LOWr20J8Y8EfzFft3t8p
-f+MAn2/WOCMH38v5Bp0F4ywC6kUnzAfV
-=JEA5
------END PGP SIGNATURE-----
