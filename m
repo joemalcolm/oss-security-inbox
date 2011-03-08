@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/3
-Message-ID: <1259315225.139113.1303741338060.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 25 Apr 2011 10:22:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/1
+Message-ID: <20110308000010.GD11663@altlinux.org>
+Date: Tue, 8 Mar 2011 03:00:11 +0300
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Sun, Apr 24, 2011 at 03:30:29PM +0400, Solar Designer wrote:
-> > Personally, I'd be happy to invite Apple, *BSD's, and Google security
-> > folks to have a sit at the table. Since Google doesn't release a Linux
-> > distro for others to use, ...
+On Mon, Mar 07, 2011 at 06:27:05PM -0500, Steve Grubb wrote:
+[...]
+>  http://reverse.lostrealm.com/protect/ldd.html
+>  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
 > 
-> Oh, I was too quick to say that. Android, Chromium OS, and Chrome OS
-> _might_ qualify once we lift the "was a vendor-sec member" requirement.
-> 
-> These are very different from typical Linux distros, which is why it did
-> not occur to me to consider them in this context.
-> 
+> Besides telling everyone don't do that. ldd could take the PoV that it should only 
+> call runtime linkers in trusted directories like /sbin or /usr/sbin. Or it could 
+> simply detect that another linker was requested and make you add a "--force" so that 
+> you are fully aware that you just let another linker run. (The suggested patch can 
+> certainly be improved. But its here just in case you want it.)
 
-We included Mozilla in vendor-sec due to them being a large distributor of
-open source software. Google certainly fits into this category these days
-with things like Andriod and Chrome (both browser and OS).
+In June of 2002, I suggested to change ldd to avoid invoking programs
+directly, even when it seems like that would work, and invoke the dynamic
+linker as a program instead.
+This change was implemented at least in Owl and ALT Linux:
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/glibc-2.3.6-owl-alt-ldd.diff
+http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=788577027d2950e9508a434475e04c3af864d169
 
-I've been contacted by some Andriod folks in the past. They're keen to
-start doing public advisories, most other Google projects already do this.
-
-I suspect the real problem we'll hit with someone like Google is who to
-subscribe. We could easily end up with hundreds of requests from a company
-that size.
-
-Thanks.
 
 -- 
-    JB
+ldv
+
+Content of type "application/pgp-signature" skipped
