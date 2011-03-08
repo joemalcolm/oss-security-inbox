@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/2
-Message-ID: <4E41D0A6.4000908@redhat.com>
-Date: Wed, 10 Aug 2011 08:28:22 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/22
+Message-ID: <Pine.GSO.4.64.1103081733440.16895@faron.mitre.org>
+Date: Tue, 8 Mar 2011 17:35:50 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: glibc locale escaping issue
 Content-Type: text/plain; charset=utf-8
 
-On 08/10/2011 08:14 AM, Dan Rosenberg wrote:
-> On Tue, Aug 9, 2011 at 6:49 PM, Eugene Teo <eugene@...hat.com> wrote:
->> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:>
->>> 2. [SCSI] pmcraid: reject negative request size
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
->>
->> I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
->> the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
->> CVE-2011-2906 for this issue.
->>
->> Thanks, Eugene
->>
-> 
-> This isn't a security issue because there's a check for CAP_SYS_ADMIN
-> on pmcraid_chr_open(), which is necessary to obtain a file descriptor
-> to the device file in order to call the affected ioctl.  Which is why
-> I didn't bother CC'ing security@...nel.org. ;-)
 
-Awesome. Rejecting CVE. Back to my holidays :)
+On Tue, 8 Mar 2011, Josh Bressers wrote:
 
-Eugene
+> I think the line between fix vs enhancement is crossed when we're talking
+> about documented behavior.
+
+Discrepancy between documented behavior and actual behavior - whether an 
+error in the code or an error in the documentation - plus a clear or 
+likely exploit scenario - *especially* for multi-purpose libraries and 
+interpreters - seems reasonable for assigning a CVE.
+
+- Steve
