@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/4
-Message-ID: <1492152511.248709.1314112876635.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 23 Aug 2011 11:21:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/3
+Message-Id: <201103080046.20318.tmb@65535.com>
+Date: Tue, 8 Mar 2011 00:46:05 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE assignment - PHP salt flaw CVE-2011-3189
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-I'm assigning CVE-2011-3189 to the recent PHP crypt issue in 3.5.7
+On Tuesday 08 March 2011 00:00:11 Dmitry V. Levin wrote:
 
-https://bugs.php.net/bug.php?id=55439
-https://secunia.com/advisories/45678/
-https://bugs.gentoo.org/show_bug.cgi?id=380261
+> In June of 2002, I suggested to change ldd to avoid invoking programs
+> directly, even when it seems like that would work, and invoke the dynamic
+> linker as a program instead.
+> This change was implemented at least in Owl and ALT Linux:
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/gli
+> bc-2.3.6-owl-alt-ldd.diff
+> http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=78857
+> 7027d2950e9508a434475e04c3af864d169
 
-Thanks.
+A slight tangent to this but IIRC there was some suggestion that allowing files 
+to be mapped to memory with execute permissions when called in this manner was 
+something that should be considered a bug/feature to be fixed in order to bring 
+ld.so in to line with how execution happens more generally.  I think Tavis or 
+stealth mentioned it to me regarding the suggestion in my paper that an 
+attacker could execute binaries in this manner to bypass situations when the 
+binary didn't, for whatever reason have +x.  I guess it should be possible to 
+fix both cases but it's something that needs to be considered.
 
+Tim
 -- 
-    JB
+Tim Brown
+<mailto:tmb@...35.com>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
