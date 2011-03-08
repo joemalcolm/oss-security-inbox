@@ -1,66 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/4
-Message-Id: <201108101027.18631.thomas@suse.de>
-Date: Wed, 10 Aug 2011 10:27:18 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/17
+Message-ID: <1128362719.334929.1299613285898.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Mar 2011 14:41:25 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+Cc: coley@...us.mitre.org
+Subject: CVE-2011-0714 kernel: deficiency in handling of invalid data packets in lockd
 Content-Type: text/plain; charset=utf-8
 
-Hi ppl,
+Hello,
 
-from RH bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=728371
+Josh Bressers has assigned a CVE id CVE-2011-0714 to the following bug:
 
-The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
+"It was found that lockd did not properly handle data packets that contained
+invalid data. This could be possibly exploited by remote user to crash the
+server (DoS)."
 
--------------------------------------------------------------------------------
-Vincent Danen 2011-08-04 16:42:51 EDT
+Please note that this issue only affects Red Hat Enterprise Linux 6 as a
+result of an incomplete upstream commit backport.
 
-A number of vulnerabilities were reported in libmodplug, which can be exploited
-to cause a DoS or possibly compromise an application using the library [1]:
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=678144
 
-1) An integer overflow error exists within the "CSoundFile::ReadWav()" function
-(src/load_wav.cpp) when processing certain WAV files. This can be exploited to
-cause a heap-based buffer overflow by tricking a user into opening a specially
-crafted WAV file.
+Credits:
+Adam Prince
 
-2) Boundary errors within the "CSoundFile::ReadS3M()" function
-(src/load_s3m.cpp) when processing S3M files can be exploited to cause
-stack-based buffer overflows by tricking a user into opening a specially
-crafted S3M file.
-
-3) An off-by-one error within the "CSoundFile::ReadAMS()" function
-(src/load_ams.cpp) can be exploited to cause a stack corruption by tricking a
-user into opening a specially crafted AMS file.
-
-4) An off-by-one error within the "CSoundFile::ReadDSM()" function
-(src/load_dms.cpp) can be exploited to cause a memory corruption by tricking a
-user into opening a specially crafted DSM file.
-
-5) An off-by-one error within the "CSoundFile::ReadAMS2()" function
-(src/load_ams.cpp) can be exploited to cause a memory corruption by tricking a
-user into opening a specially crafted AMS file.
-
-Upstream patches are available to correct the flaws [2],[3],[4],[5]
-
-While older gstreamer-plugins contains an embedded copy of libmodplug, it is
-not yet known to what extent it is affected by these flaws.
-
-[1] http://secunia.com/advisories/45131
-[2]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=2d4c56de314ab13e4437bd8b609f0b751066eee8
-[3]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
-[4]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=26243ab9fe1171f70053e9aec4b20e9f7de9e4ef
-[5]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=16d7a78efe14d345a6c5b241f88422ad0ee483ea
--------------------------------------------------------------------------------
-
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+Thanks,
 --
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Petr Matousek / Red Hat Security Response Team
+
