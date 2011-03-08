@@ -1,20 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/17
-Message-ID: <60589402.652548.1307994431175.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:47:11 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/19
+Message-ID: <739815754.450622.1299617404152.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 8 Mar 2011 15:50:04 -0500 (EST)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Ville-Pekka Vainio <vpivaini@...helsinki.fi>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- libvoikko -- DoS of application linked against libvoikko due improper handling of embedded null characters in input strings
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: dccp: fix oops on Reset after close
 Content-Type: text/plain; charset=utf-8
 
-Steve,
-
-Can MITRE comment on this one? I'm not really sure what to do.
-
-The core issue, embedded null characters seems to be the same for both Java and Python, but the fix covers two different bits of code.
-
-My guess is it's just one ID, but I'd like to be certain.
+Please use CVE-2011-1093
 
 Thanks.
 
@@ -22,29 +16,17 @@ Thanks.
     JB
 
 
+
 ----- Original Message -----
-> Hello, Josh, Steve, vendors,
+> https://bugzilla.redhat.com/682954
+> http://git.kernel.org/linus/720dc34bbbe9493c7bd48b2243058b4e447a929d
 > 
-> A denial of service flaw was found in the way Python and Java
-> interfaces of libvoikko, a library for spellcheckers and hyphenators,
-> processed embedded null characters in input strings. If a specially-
-> crafted input string was provided to an application linked against
-> libvoikko, it could lead to that particular application termination.
+> "This fixes a bug in the order of dccp_rcv_state_process() that still
+> permitted reception even after closing the socket. A Reset after close
+> thus causes a NULL pointer dereference by not preventing operations on
+> an already torn-down socket."
 > 
-> References:
-> [1] http://voikko.sourceforge.net/releases.html
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=712863
-> 
-> Upstream patches:
-> [3]
-> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3901
-> [4]
-> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3902
-> [5]
-> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3903
-> 
-> Could you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan.
+> Thanks, Eugene
 > --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
