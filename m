@@ -1,107 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/1
-Message-Id: <20110131121409.ACIBIBQMNSYWFI@hackinthebox.org>
-Date: Mon, 31 Jan 2011 12:14:09 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] Reminder: HITB2011AMS - Call for Papers closes on the 18th of Feb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/1
+Message-ID: <20110308000010.GD11663@altlinux.org>
+Date: Tue, 8 Mar 2011 03:00:11 +0300
+From: "Dmitry V. Levin" <ldv@...linux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-Happy 2011 everyone! Just a reminder that the Call for Papers for the
-second annual HITBSecConf in Europe is closing on the 18TH OF FEBRUARY!
-We've received some awesome submissions so far and the event is really
-shaping up nicely.
+On Mon, Mar 07, 2011 at 06:27:05PM -0500, Steve Grubb wrote:
+[...]
+>  http://reverse.lostrealm.com/protect/ldd.html
+>  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> 
+> Besides telling everyone don't do that. ldd could take the PoV that it should only 
+> call runtime linkers in trusted directories like /sbin or /usr/sbin. Or it could 
+> simply detect that another linker was requested and make you add a "--force" so that 
+> you are fully aware that you just let another linker run. (The suggested patch can 
+> certainly be improved. But its here just in case you want it.)
 
-The event will once again take place at the NH Grand Krasnapolsky in
-Amsterdam from the 17th - 20th of May. HITB2011AMS will be a quad-track
-conference line up featuring keynote speaker Joe Sullivan (Chief
-Security Officer of Facebook) and a special keynote panel discussion on
-'The Economics of Vulnerabilities'
-
-In addition, the event also features a brand new Capture The Flag -
-World Domination competition run by the HITB.nl CTF Crew, an expanded
-Hackerspaces Village (now featuring a Hackerspaces Challenge with LEGO
-MINDSTORMS!) an updated Lock Picking Village run by members from
-TOOOL.nl and of course the HITBSIGINT sessions - 15 minute talks held
-during the coffee and lunch breaks with a focus on highlighting up and
-coming research and researchers.
-
-As always, talks that are more technical or that discuss new and never
-before seen attack methods are of more interest than a subject that has
-been covered several times before.
-
-HITB CFP: http://cfp.hackinthebox.org/
-
-===
-
-Topics of interest include, but are not limited to the following:
-
-# Cloud Security
-# 3G/4G/WIMAX Security
-# File System Security
-# SS7/GSM/VoIP Security
-# Smart Card and Physical Security
-# Network Protocols, Analysis and Attacks
-# Applications of Cryptographic Techniques
-# Side Channel Analysis of Hardware Devices
-# Data Recovery, Forensics and Incident Response
-# Analysis of Malicious Code / Viruses / Malware
-# Windows / Linux / OS X / *NIX Security Vulnerabilities
-# Next Generation Exploit and Exploit Mitigation Techniques
-# WLAN, GPS, HAM Radio, Satellite, RFID and Bluetooth Security
-
-Each non-resident speaker will receive accommodation for 3 nights / 4
-days at the Krasnapolsky. For each non-resident speaker, HITB will cover
-travel expenses up to EUR1200.00.
-
-Your submission will be reviewed by The HITB CFP Review Committee which
-includes:
-
-Charlie Miller	  (Principal Analyst, Independent Security Evaluators)
-Jeremiah Grossman (Founder, Whitehat Security)
-Red Dragon Thanh  (THC, VNSECURITY, Intel Corp)
-Mark Curphey	  (Director, Microsoft Corp)
-Cesar Cerrudo	  (Founder / CEO ArgenISS)
-Saumil Shah	  (Founder CEO Net-Square)
-Shreeraj Shah	  (Founder, BlueInfy)
-Fredric Raynal	  (Sogeti/Cap Gemini)
-Robert Hansen (rsnake) (SecTheory)
-Alexander Kornburst (Red Database)
-Emmanuel Gadaix	  (Founder, TSTF)
-Andrea Barisani	  (Inverse Path)
-Ed Skoudis	  (InGuardians)
-Haroon Meer	  (Sensepost)
-Chris Evans	  (Google)
-Philippe Langlois (TSTF)
-Skyper		  (THC)
+In June of 2002, I suggested to change ldd to avoid invoking programs
+directly, even when it seems like that would work, and invoke the dynamic
+linker as a program instead.
+This change was implemented at least in Owl and ALT Linux:
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/glibc-2.3.6-owl-alt-ldd.diff
+http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=788577027d2950e9508a434475e04c3af864d169
 
 
-PLEASE NOTE:
+-- 
+ldv
 
-We do not accept product or vendor related pitches. If you would like to
-showcase your company's products or technology, please contact us for
-further participation opportunities.
-
-===
-
-Event Website:
-http://conference.hackinthebox.org/hitbsecconf2011ams/
-
-We look forward to receiving your submissions and to seeing you in
-Amsterdam in May!
-
-- The HITB.nl Team
-- http://conference.hitb.nl
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+Content of type "application/pgp-signature" skipped
