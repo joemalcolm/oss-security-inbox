@@ -1,21 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/1
-Message-ID: <Pine.GSO.4.64.1106072223490.25087@faron.mitre.org>
-Date: Tue, 7 Jun 2011 22:26:03 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/2
+Message-Id: <201103071932.59399.sgrubb@redhat.com>
+Date: Mon, 7 Mar 2011 19:32:59 -0500
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
+Cc: "Dmitry V. Levin" <ldv@...linux.org>
+Subject: Re: ldd can execute an app unexpectedly
 Content-Type: text/plain; charset=utf-8
 
+On Monday, March 07, 2011 07:00:11 pm Dmitry V. Levin wrote:
+> On Mon, Mar 07, 2011 at 06:27:05PM -0500, Steve Grubb wrote:
+> [...]
+> 
+> >  http://reverse.lostrealm.com/protect/ldd.html
+> >  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+> > 
+> > Besides telling everyone don't do that. ldd could take the PoV that it
+> > should only call runtime linkers in trusted directories like /sbin or
+> > /usr/sbin. Or it could simply detect that another linker was requested
+> > and make you add a "--force" so that you are fully aware that you just
+> > let another linker run. (The suggested patch can certainly be improved.
+> > But its here just in case you want it.)
+> 
+> In June of 2002, I suggested to change ldd to avoid invoking programs
+> directly, even when it seems like that would work, and invoke the dynamic
+> linker as a program instead.
+> This change was implemented at least in Owl and ALT Linux:
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/gli
+> bc-2.3.6-owl-alt-ldd.diff
+> http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=78857
+> 7027d2950e9508a434475e04c3af864d169
 
-On Thu, 2 Jun 2011, Henri Salo wrote:
+To be clear, I in no way want credit for this. Its been known for a long time. But if 
+requirements have been loosened for CVEs, this is something people want to know about 
+and probably patch. I strongly believe that it should be fixed.
 
-> https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
+Any other skeletons in the closet that never got a CVE?
 
-This vector was apparently discovered by Henri and not HT-Bridge, so this 
-gets a separate identifier than the others.
-
-Use CVE-2011-2470 for the arsc_message parameter to 
-chat/base/admin/login.php.
-
-- Steve
+-Steve
