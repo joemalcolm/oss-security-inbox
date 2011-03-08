@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/26
-Message-ID: <Pine.GSO.4.64.1103041208100.3265@faron.mitre.org>
-Date: Fri, 4 Mar 2011 12:22:34 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Solar Designer <solar@...nwall.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/6
+Message-Id: <201103080933.38597.ludwig.nussel@suse.de>
+Date: Tue, 8 Mar 2011 09:33:38 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Buffer overflows in fsck may become security issues
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Fri, 4 Mar 2011, Solar Designer wrote:
+A buffer overflow in dosfsck caught my attention recently. Don't
+worry, it's harmless and already fixed upstream¹. However, it turned
+out that udisks has a dbus method that by default allows the user on
+the active console to run fsck on removable media. fsck is run as
+root in this case. I haven't checked whether fsck is run
+automatically in any environment. However, since some desktops
+automatically mount removeable media it seems logical to call fsck
+first. So overflows in the various fsck binaries could allow local
+privilege escalation.
 
-> Again, as I wrote to Florian, maybe the expectations here are changing 
-> over the years.
+cu
+Ludwig
 
-In general, that's what happens in CVE.  Part of this may be that as the 
-more obvious/severe issues get eliminated, less-severe issues are then 
-given more attention.  I try to watch out for edge cases that may 
-"snowball" into large numbers of CVEs of limited utility - and you brought 
-up one such example of a snowball issue with the recognition of 
-technically-unsafe-but-commonly-accepted file behaviors of various Unix 
-commands.  However, there is no clearly-defined line (software is too 
-complex and dynamic for that) and risk tolerance differs widely between 
-individuals.  The PHP interpreted gets hit with various issues related to 
-sandbox escaping (or an application attacking itself), but in a hosting 
-scenario (fairly common these days), it's a concern to some consumers.
+[1] http://git.debian-maintainers.org/?p=daniel/dosfstools.git;a=commitdiff;h=a9055613f0d826021db65c79c2df87ac91e89215
 
-As remote code execution vectors dry up (for certain classes of software), 
-people look elsewhere.  As obvious remote vuln types get resolved, people 
-look for other issues of uncertain exploitability that cause a crash. 
-Alexander, you've had a bit of experience in suddenly turning "bugs" into 
-"vulnerabilities" ;-)  The target is shifting over time and, by its 
-nature, spreading a wider net.  As long as prioritization metrics like 
-CVSS follow suit (e.g. more severities of 4 and 5, less 10's), this is a 
-reasonable shift.
-
-For CVE, there is no implied requirement for vendors to post advisories 
-for evey issue that has a CVE assigned.  Vendors decide which issues are 
-severe enough to directly notify their consumers about.  Granted, as the 
-scope of CVE widens, this may increase the vendor workload.
-
-Interesting discussion...
-
-- Steve
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
