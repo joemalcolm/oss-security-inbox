@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/6
-Message-ID: <20110803160324.GA6791@openwall.com>
-Date: Wed, 3 Aug 2011 20:03:24 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/3
+Message-ID: <817711553.357399.1299713822024.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Wed, 9 Mar 2011 18:37:02 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: coley@...us.mitre.org
+Subject: CVE request: libvirt: several API calls do not honour read-only connection
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 17, 2011 at 10:30:33PM +0400, Solar Designer wrote:
-> On Sun, Jul 17, 2011 at 05:48:21PM +0400, Solar Designer wrote:
-> > I've just released crypt_blowfish 1.2:
-> > 
-> > http://www.openwall.com/crypt/
-> > 
-> > All projects using crypt_blowfish should upgrade to this newer code.
-> 
-> Patches for PHP 5.3 and 5.4:
-> 
-> http://news.php.net/php.internals/54000
+"It has been found that several libvirt API calls (virNodeDeviceDettach,
+virNodeDeviceReset, virDomainRevertToSnapshot, virDomainSnapshotDelete) did not
+honour read-only connection. Remote attacker could use this flaw to crash the
+host server (DoS)."
 
-In case anyone is backporting these to PHP 5.3.0 - 5.3.6, you also need
-to apply one of the patches from:
+Reference: 
+https://bugzilla.redhat.com/show_bug.cgi?id=683650
 
-http://news.php.net/php.internals/54098
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
 
-These add support for the new prefixes to crypt.c (initially overlooked)
-and they add more tests.
-
-Alexander
