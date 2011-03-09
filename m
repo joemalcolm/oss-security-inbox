@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/14
-Message-ID: <4E12E78F.3040707@gmx.de>
-Date: Tue, 05 Jul 2011 12:29:35 +0200
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/1
+Message-ID: <1299707834.2978.92.camel@sorbet.thuis.net>
+Date: Wed, 09 Mar 2011 22:57:14 +0100
+From: Arthur de Jong <arthur@...hurdejong.org>
+To: nss-pam-ldapd-announce <nss-pam-ldapd-announce@...ts.arthurdejong.org>
+Cc: oss-security@...ts.openwall.com
+Subject: nss-pam-ldapd security advisory (CVE-2011-0438)
 Content-Type: text/plain; charset=utf-8
 
-Am 05.07.2011 06:39, schrieb Solar Designer:
 
-> More info on what's inside the tarball: user/group "user" (either the
-> intruder's username on his/her computer or --owner and --group options
-> argument to tar), "GCC: (Ubuntu/Linaro 4.5.2-8ubuntu4) 4.5.2" inside the
-> .o files.  This suggests Ubuntu 11.04, right?
+Russell Sim discovered a serious security vulnerability in development
+release 0.8.0 of nss-pam-ldapd that allows authentication with an
+incorrect password for local user accounts.
 
-That's the tagline of "gcc --version" on my Ubuntu 11.04 system.
+The PAM module will erroneously return a success code when the user
+cannot be found in LDAP. Exploitability depends on the details of the
+PAM configuration but on systems that don't use the minimum_uid PAM
+option it may be possible to log in to any local account, including
+root.
 
-> BTW, what if the .o files _don't_ match the source code? ;-)  I think
-> they might be used when one builds vsftpd from this tarball, which means
-> that the build (or run) will fail on some older systems (yet another
-> reason why this would be noticed quickly), but also that the actual
-> backdoor might be different (and more sophisticated) from what we see in
-> the source code.  No, I don't think this is the case, but the
-> possibility is there, and I find it curious.
-> 
-> A trivial way to check for this would be to try compiling the source
-> code on Ubuntu 11.04 and see if the .o files match.  If not, the
-> differences will need to be analyzed manually.  Not that anyone cares...
+This problem only affects the 0.8.0 development release of
+nss-pam-ldapd. Earlier releases are not affected.
 
-And you'd need to know the compiler options, flipping one optimization
-manually is sufficient to make the .o files mismatch.
+This problem has been assigned CVE-2011-0438.
 
-However the backdoored tarball apparently got removed from the listed
-server (404 error), but I'm not interested in hunting one down.
+More details are available at:
+http://arthurdejong.org/nss-pam-ldapd/news.html#20110309
+
+Affected users are advised to apply the attached patch, upgrade to 0.8.1
+(which will be released shortly), downgrade to 0.7.13 or disable
+nss-pam-ldapd's PAM module.
+
+-- 
+-- arthur - arthur@...hurdejong.org - http://arthurdejong.org --
+
+View attachment "nss-pam-ldapd-0.8.0-authentication-bypass-fix.patch" of type "text/x-patch" (424 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
