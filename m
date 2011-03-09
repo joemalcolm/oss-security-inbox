@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/3
-Message-ID: <4EBA98F3.2010706@redhat.com>
-Date: Wed, 09 Nov 2011 16:14:59 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
-Subject: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/2
+Message-ID: <AANLkTikQK8EhgjWK=LD2NPx6MJWa5hkd37ODc2PCX1vH@mail.gmail.com>
+Date: Wed, 9 Mar 2011 14:18:10 -0300
+From: Felipe Pena <felipensp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: buffer overflow in unixODBC's SQLDriverConnect()
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
+Please assign CVE id for a possible buffer overflow in unixODBC's
+SQLDriverConnect() function by specifying a large value for SAVEFILE
+parameter in the connection string.
 
-   a security flaw was found in the way the libsocialweb,
-a social network data aggregator, performed its initialization
-when this service start was initiated by the dbus daemon.
-Due to a deficiency in a way the libsocialweb service was
-initialized, an untrusted (non-SSL) network connection has
-been opened to remote Twitter service servers without explicit
-approval of the user, running the libsocialweb service on the
-local host. A remote attacker could use this flaw to conduct
-various MITM attacks and potentially alter integrity of the user
-account in question.
+A fix has been committed in the SVN addressing the issue:
+http://unixodbc.svn.sourceforge.net/viewvc/unixodbc/trunk/DriverManager/SQLDriverConnect.c?r1=23&r2=27
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
+Thanks.
 
-Could you allocate a CVE id for this?
+-- 
+Regards,
+Felipe Pena
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: This one being on the border a bit (since clear security
-       consequences of this deficiency not completely investigated),
-       but in any case it's a bad programming practice to open
-       untrusted connection to remote servers by default without
-       particular users' approval (trust boundary crossing).
