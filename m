@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/1
-Message-ID: <4DA4F1A0.8000004@redhat.com>
-Date: Wed, 13 Apr 2011 08:43:12 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/1
+Message-ID: <4D76D06E.4030405@redhat.com>
+Date: Wed, 09 Mar 2011 08:57:18 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Timo Warns <warns@...-sense.de>
-Subject: Re: CVE Request: kernel: fs/partitions: Corrupted GUID partition tables can cause kernel oops
+CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
+Subject: Re: CVE-2011-0714 kernel: deficiency in handling of invalid data packets in lockd
 Content-Type: text/plain; charset=utf-8
 
-On 04/13/2011 05:53 AM, Timo Warns wrote:
-> The Linux kernel automatically evaluates partition tables of storage
-> devices. The code for evaluating EFI GUID partitions (in
-> fs/partitions/efi.c) contains a bug that causes a kernel oops on certain
-> corrupted GUID partition tables.
+On 03/09/2011 03:41 AM, Petr Matousek wrote:
+> Hello,
 >
-> A patch is available at
-> http://www.spinics.net/lists/mm-commits/msg83274.html
+> Josh Bressers has assigned a CVE id CVE-2011-0714 to the following bug:
+>
+> "It was found that lockd did not properly handle data packets that contained
+> invalid data. This could be possibly exploited by remote user to crash the
+> server (DoS)."
+>
+> Please note that this issue only affects Red Hat Enterprise Linux 6 as a
+> result of an incomplete upstream commit backport.
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=678144
 
-Please use CVE-2011-1577.
+http://rhn.redhat.com/errata/RHSA-2011-0329.html
 
 Eugene
 -- 
