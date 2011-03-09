@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/8
-Message-ID: <20110929155100.GP4635@cmpxchg8b.com>
-Date: Thu, 29 Sep 2011 17:51:00 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: Joerg Sonnenberger <joerg@...tannica.bec.de>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/3
+Message-ID: <817711553.357399.1299713822024.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Wed, 9 Mar 2011 18:37:02 -0500 (EST)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request: libvirt: several API calls do not honour read-only connection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2011 at 02:50:22PM +0200, Joerg Sonnenberger wrote:
-> On Thu, Sep 29, 2011 at 04:38:08AM +0400, Solar Designer wrote:
-> > Hi Tavis,
-> > 
-> > On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
-> > > I believe I wrote that patch,
-> > 
-> > I believe you wrote a different patch, or two:
-> > 
-> > http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
-> > http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
-> 
-> This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
-> name. The corresponding NetBSD advisory explicitly lists GNU gzip and
-> libarchive as not vulnerable.
-> 
-> Joerg
+"It has been found that several libvirt API calls (virNodeDeviceDettach,
+virNodeDeviceReset, virDomainRevertToSnapshot, virDomainSnapshotDelete) did not
+honour read-only connection. Remote attacker could use this flaw to crash the
+host server (DoS)."
 
-I see, apologies for misunderstanding.
+Reference: 
+https://bugzilla.redhat.com/show_bug.cgi?id=683650
 
-Tavis.
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
