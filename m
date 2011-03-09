@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/1
-Message-ID: <20110306082425.GA16673@bluenote.herrb.net>
-Date: Sun, 6 Mar 2011 09:24:26 +0100
-From: Matthieu Herrb <matthieu.herrb@...s.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/1
+Message-ID: <1299707834.2978.92.camel@sorbet.thuis.net>
+Date: Wed, 09 Mar 2011 22:57:14 +0100
+From: Arthur de Jong <arthur@...hurdejong.org>
+To: nss-pam-ldapd-announce <nss-pam-ldapd-announce@...ts.arthurdejong.org>
+Cc: oss-security@...ts.openwall.com
+Subject: nss-pam-ldapd security advisory (CVE-2011-0438)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2011 at 01:49:20AM +0300, Solar Designer wrote:
-> 
-> As to projects such as, say, Samba and X.org, I'd exclude them.
-> There's no difficulty for a researcher to notify one of these directly,
-> and there's not much difficulty in CC'ing the proper one of these on a
-> discussion.
 
-I think that as far as X.Org is concerned, we're ok with that.
-There are already security people from Linux distributions subscribed
-to  the xorg-security@ list and they also have access to restricted
-'security' bugs in bugzilla. 
+Russell Sim discovered a serious security vulnerability in development
+release 0.8.0 of nss-pam-ldapd that allows authentication with an
+incorrect password for local user accounts.
+
+The PAM module will erroneously return a success code when the user
+cannot be found in LDAP. Exploitability depends on the details of the
+PAM configuration but on systems that don't use the minimum_uid PAM
+option it may be possible to log in to any local account, including
+root.
+
+This problem only affects the 0.8.0 development release of
+nss-pam-ldapd. Earlier releases are not affected.
+
+This problem has been assigned CVE-2011-0438.
+
+More details are available at:
+http://arthurdejong.org/nss-pam-ldapd/news.html#20110309
+
+Affected users are advised to apply the attached patch, upgrade to 0.8.1
+(which will be released shortly), downgrade to 0.7.13 or disable
+nss-pam-ldapd's PAM module.
 
 -- 
-Matthieu Herrb
+-- arthur - arthur@...hurdejong.org - http://arthurdejong.org --
+
+View attachment "nss-pam-ldapd-0.8.0-authentication-bypass-fix.patch" of type "text/x-patch" (424 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
