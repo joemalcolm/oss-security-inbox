@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/3
-Message-ID: <4D22BF20.30401@redhat.com>
-Date: Tue, 04 Jan 2011 14:33:04 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/5
+Message-ID: <226963363.35919.1299787475271.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 10 Mar 2011 15:04:35 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: libvirt: several API calls do not honour read-only connection
 Content-Type: text/plain; charset=utf-8
 
-http://git.kernel.org/linus/50b5d6ad63821cea324a5a7a19854d4de1a0a819
-https://bugzilla.redhat.com/CVE-2010-4526
 
-commit 50b5d6ad63821cea324a5a7a19854d4de1a0a819
-Author: Vlad Yasevich <vladislav.yasevich@...com>
-Date:   Thu May 6 00:56:07 2010 -0700
 
-sctp: Fix a race between ICMP protocol unreachable and connect()
+----- Original Message -----
+> "It has been found that several libvirt API calls
+> (virNodeDeviceDettach,
+> virNodeDeviceReset, virDomainRevertToSnapshot,
+> virDomainSnapshotDelete) did not
+> honour read-only connection. Remote attacker could use this flaw to
+> crash the
+> host server (DoS)."
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=683650
+> 
 
-     ICMP protocol unreachable handling completely disregarded
-     the fact that the user may have locked the socket.  It proceeded
-     to destroy the association, even though the user may have
-     held the lock and had a ref on the association.
-[...]
-     This was because the sctp_wait_for_connect() would aqcure the socket
-     lock and then proceed to release the last reference count on the
-     association, thus cause the fully destruction path to finish freeing
-     the socket.
+This should only need one ID.
 
-This affects kernels v2.6.11-rc2 and above.
+Please use CVE-2011-1146
 
-Thanks, Eugene
+Thanks.
+
+-- 
+    JB
