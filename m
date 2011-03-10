@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/7
-Message-ID: <Pine.GSO.4.64.1103281110380.7261@faron.mitre.org>
-Date: Mon, 28 Mar 2011 11:11:52 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/4
+Message-ID: <292716918.35874.1299787377615.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 10 Mar 2011 15:02:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: VLC bookmark buffer overflow
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: buffer overflow in unixODBC's SQLDriverConnect()
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> Hi,
+> Please assign CVE id for a possible buffer overflow in unixODBC's
+> SQLDriverConnect() function by specifying a large value for SAVEFILE
+> parameter in the connection string.
+> 
+> A fix has been committed in the SVN addressing the issue:
+> http://unixodbc.svn.sourceforge.net/viewvc/unixodbc/trunk/DriverManager/SQLDriverConnect.c?r1=23&r2=27
+> 
 
-Let's leave it as is.  The number is already out there.  While it's rare 
-(and undesired), sometimes the year portion of a CVE number is later than 
-the initial disclosure date.
+Please use CVE-2011-1145.
 
-- Steve
+Thanks.
 
-
-On Thu, 24 Mar 2011, Henri Salo wrote:
-
-> On Thu, Mar 03, 2011 at 03:31:59PM -0500, Josh Bressers wrote:
->> Argh, this should have gotten a 2010 ID.
->>
->> Steve, does MITRE want to reassign, or just leave it as is?
->>
->> Thanks.
->>
->> --
->>     JB
->
-> Any updates in this case?
->
-> Best regards,
-> Henri Salo
->
+-- 
+    JB
