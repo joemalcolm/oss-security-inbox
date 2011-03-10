@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/6
-Message-ID: <1956951432.1535107.1311365646651.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Jul 2011 16:14:06 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Lukas Fleischer <cgit@...ptocrack.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/3
+Message-ID: <20110310180838.GB19262@florz.florz.dyndns.org>
+Date: Thu, 10 Mar 2011 19:08:38 +0100
+From: Florian Zumbiehl <florz@...rz.de>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2711.
+Hi,
 
-Thanks.
-
--- 
-    JB
-
-
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
+> > >     8) Issue #8: logrotate: TOCTOU race condition by creation of new
+> > >     files (between opening the file and moment, final permissions have
+> > >     been applied) [information disclosure]
+> > >
+> > 
 > 
-> an cross-site scripting (XSS) flaw was found in the way cgit, a fast
-> web interface for Git, displayed the file name in the rename hint. A
-> remote attacker could provide a specially-crafted web page, which once
-> visited by an authenticated Cgit user, with push access to the
-> repository, would lead to arbitrary web script or HTML code execution.
-> 
-> References:
-> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> Let' use CVE-2011-1098 for this.
+
+What about these?:
+
+| However, I think that still #6 (shell injection) and #7 (logrotate
+| DoS with strange characters in file names) should be considered
+| vulnerabilities in logrotate: It would be reasonable to assume that you
+| can use user input that's a valid (slash-less) filename as a (part of a)
+| log file name (assuming that the program is running as the same user that
+| inspects and rotates the logs, so the log directory being writable by
+| the program would not be insecure per-se) without that file name being
+| interpreted by a shell or causing logrotate to stop functioning,
+| respectively.
+
+Florian
