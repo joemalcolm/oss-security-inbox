@@ -1,19 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/3
-Message-ID: <4E48BB0D.5020400@redhat.com>
-Date: Mon, 15 Aug 2011 14:22:05 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: kernel: ext3/4: ext3/4_symlink lock oops
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/3
+Message-ID: <20110310180838.GB19262@florz.florz.dyndns.org>
+Date: Thu, 10 Mar 2011 19:08:38 +0100
+From: Florian Zumbiehl <florz@...rz.de>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-Some fun with long symlinks on ext3/4 fs with selinux on. This issue was
-introduced in upstream commits ae54870a and df5e6223 (v3.0-rc1). I'm not
-requesting a CVE name as I don't think anyone is affected by this issue
-(I hope).
+Hi,
 
-Upstream commits:
-ext3: http://git.kernel.org/linus/d2db60df1e7eb39cf0f378dfc4dd8813666d46ef
-ext4: http://git.kernel.org/linus/8c20871998c082f6fbc963f1449a5ba5140ee39a
+> > >     8) Issue #8: logrotate: TOCTOU race condition by creation of new
+> > >     files (between opening the file and moment, final permissions have
+> > >     been applied) [information disclosure]
+> > >
+> > 
+> 
+> Let' use CVE-2011-1098 for this.
 
-Thanks, Eugene
+What about these?:
+
+| However, I think that still #6 (shell injection) and #7 (logrotate
+| DoS with strange characters in file names) should be considered
+| vulnerabilities in logrotate: It would be reasonable to assume that you
+| can use user input that's a valid (slash-less) filename as a (part of a)
+| log file name (assuming that the program is running as the same user that
+| inspects and rotates the logs, so the log directory being writable by
+| the program would not be insecure per-se) without that file name being
+| interpreted by a shell or causing logrotate to stop functioning,
+| respectively.
+
+Florian
