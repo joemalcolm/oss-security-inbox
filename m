@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/4
-Message-ID: <20110717191540.GB18385@openwall.com>
-Date: Sun, 17 Jul 2011 23:15:40 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/7
+Message-ID: <20110310213243.GA3051@florz.florz.dyndns.org>
+Date: Thu, 10 Mar 2011 22:32:43 +0100
+From: Florian Zumbiehl <florz@...rz.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
-> PostgreSQL is affected as well (the pgcrypto module):
-> 
-> % head crypt-blowfish.c 
-> /*
->  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 
->  14:48:52 momjian Exp $
+Hi,
 
-Right.  Luckily, it is well-maintained - Tom Lane committed a fix based
-on crypt_blowfish 1.1's on June 21st:
+> On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
+> > What about these?:
+> > 
+> > | However, I think that still #6 (shell injection) and #7 (logrotate
+> > | DoS with strange characters in file names) should be considered
+> > | vulnerabilities in logrotate: It would be reasonable to assume that you
+> > | can use user input that's a valid (slash-less) filename as a (part of a)
+> > | log file name (assuming that the program is running as the same user that
+> > | inspects and rotates the logs, so the log directory being writable by
+> > | the program would not be insecure per-se) without that file name being
+> > | interpreted by a shell or causing logrotate to stop functioning,
+> > | respectively.
+[...]
+> To summarize, it feels like in theory a privilege boundary could exist
+> here and be crossed on certain systems with extra software, but in
+> practice this is unlikely and it would indicate poor design of another
+> piece of software or/and false sense of security put into that privilege
+> boundary.  I don't know what this means for CVE id assignment per the
+> current "rules".
 
-http://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=ca59dfa6f727fe3bf3a01904ec30e87f7fa5a67e
+I was thinking more in the direction of an existing config that includes
+a wildcard and software that uses user input to construct file names
+that would be matched by that wildcard. An example of such software
+would be samba, which tends to create per-client-host log files named
+after those hosts. I don't have a clue whether samba could be made to
+include any shell meta characters (does it even do reverse lookups for
+that?), but I guess you get the idea.
 
-I've just e-mailed Tom to let him know about crypt_blowfish 1.2 with its
-more elaborate changes, and to try to persuade him to include the runtime
-quick self-test - to catch miscompiles, bugs potentially introduced in
-re-users of the code (such as in a future revision of pgcrypto - who
-knows), and to clean up the stack locations.
-
-Alexander
+Florian
