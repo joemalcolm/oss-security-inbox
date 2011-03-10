@@ -1,57 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/4
-Message-ID: <20110322104849.0b5d5b3d@orphan>
-Date: Tue, 22 Mar 2011 10:48:49 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: dan.j.rosenberg@...il.com
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/4
+Message-ID: <292716918.35874.1299787377615.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 10 Mar 2011 15:02:57 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: buffer overflow in unixODBC's SQLDriverConnect()
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 14 Mar 2011 12:31:18 -0400 Dan Rosenberg wrote:
-
-> I've done some further investigation, and have found one of the
-> underlying problems.  addmntent() will return 0 (success) even if the
-> write was truncated:
+----- Original Message -----
+> Hi,
+> Please assign CVE id for a possible buffer overflow in unixODBC's
+> SQLDriverConnect() function by specifying a large value for SAVEFILE
+> parameter in the connection string.
 > 
->   return (fprintf (stream, "%s %s %s %s %d %d\n",
->                    mntcopy.mnt_fsname,
->                    mntcopy.mnt_dir,
->                    mntcopy.mnt_type,
->                    mntcopy.mnt_opts,
->                    mntcopy.mnt_freq,
->                    mntcopy.mnt_passno)
->           < 0 ? 1 : 0);
-
-I must admit that I fail to see an obvious issue here.  This should do
-the right thing assuming fprintf returns what you expect (which does
-not seem to happen due to stdio buffering).
-
-> Of course, this only matters if the process is catching the SIGXFSZ
-> that gets thrown if the resource limit is exceeded, but nearly all
-> suid mount helpers block or ignore signals (if they don't, that's an
-> additional problem, because the process could be terminated mid-write,
-> corrupting /etc/mtab or leaving a stale lockfile, for example).
+> A fix has been committed in the SVN addressing the issue:
+> http://unixodbc.svn.sourceforge.net/viewvc/unixodbc/trunk/DriverManager/SQLDriverConnect.c?r1=23&r2=27
 > 
-> So, I think the first step is to patch glibc to return success in
-> these functions if and only if the *full* contents have been written.
-> Then, it will be possible to have proper error handling in these
-> helper utilities.  Currently, there's really no way for these programs
-> to know whether or not their calls to addmntent() actually succeeded
-> besides installing a special signal handler for SIGXFSZ (ugly).
 
-Do you have any specific idea for the fix?  It seems following approach
-may work:
+Please use CVE-2011-1145.
 
-  if (fprintf (stream, "%s %s %s %s %d %d\n", ...) < 0)
-    return 1;
-
-  return (fflush(stream) == 0 ? 0 : 1);
-
-Detecting this error in endmntent() seems more problematic API-wise,
-given that endmntent() currently "always returns 1".
-
-Do you plan to open bug in glibc bugzilla for this issue?
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
