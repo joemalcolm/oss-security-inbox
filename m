@@ -1,72 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/7
-Message-ID: <4EA599EC.9080706@REDHAT.COM>
-Date: Mon, 24 Oct 2011 10:01:32 -0700
-From: Robert Relyea <rrelyea@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Reed Loden <reed@...dloden.com>, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/7
+Message-ID: <20110310213243.GA3051@florz.florz.dyndns.org>
+Date: Thu, 10 Mar 2011 22:32:43 +0100
+From: Florian Zumbiehl <florz@...rz.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On 10/24/2011 03:42 AM, Jan Lieskovsky wrote:
->
-> Cc-ing Reed on this post yet, so he could clarify
-> if Mozilla (Security) Team has already assigned a CVE identifier
-> for this one or not.
->
-> Reed?
->
-> Thanks && Regards, Jan.
+Hi,
 
-It's likely the Mozilla security team hasn't assigned a CVE. The issue
-only affects applications initializing NSS with NSS_NoDB_Init(). Usually
-the application specifies the actual path to these files. In particular
-Mozilla apps always specify (though some corner cases it may fall back
-to NSS_NoDB_Init(). I think that's rare at this point because
-NSS_NoDB_Init() does not provide any trust information, which all
-Mozilla apps need.).
+> On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
+> > What about these?:
+> > 
+> > | However, I think that still #6 (shell injection) and #7 (logrotate
+> > | DoS with strange characters in file names) should be considered
+> > | vulnerabilities in logrotate: It would be reasonable to assume that you
+> > | can use user input that's a valid (slash-less) filename as a (part of a)
+> > | log file name (assuming that the program is running as the same user that
+> > | inspects and rotates the logs, so the log directory being writable by
+> > | the program would not be insecure per-se) without that file name being
+> > | interpreted by a shell or causing logrotate to stop functioning,
+> > | respectively.
+[...]
+> To summarize, it feels like in theory a privilege boundary could exist
+> here and be crossed on certain systems with extra software, but in
+> practice this is unlikely and it would indicate poor design of another
+> piece of software or/and false sense of security put into that privilege
+> boundary.  I don't know what this means for CVE id assignment per the
+> current "rules".
 
-In general NSS applications on Linux should be initializing with
-/etc/pki/nssdb.
+I was thinking more in the direction of an existing config that includes
+a wildcard and software that uses user input to construct file names
+that would be matched by that wildcard. An example of such software
+would be samba, which tends to create per-client-host log files named
+after those hosts. I don't have a clue whether samba could be made to
+include any shell meta characters (does it even do reverse lookups for
+that?), but I guess you get the idea.
 
-bob
-
-NOTE: the patch is in FIPS related code.  Elio, please get a 6.2 Bug
-created for this ASAP. The patch is already upstream. Component is
-nss-softokn.
-
-bob
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
->> Hello Josh, Steve, vendors,
->>
->> a security flaw was found in the way nss, the Network Security
->> Services (NSS) set of libraries, performed their initialization (the
->> file path for "pkcs11.txt" configuration file was constructed
->> incorrectly). When that configuration file was loaded from remote WebDAV
->> or Samba CIFS share, it could lead to arbitrary security module
->> load, potentially leading to execution of arbitrary code (execution of
->> code from untrusted security module).
->>
->> Upstream bug report:
->> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
->>
->> Other references:
->> [2] https://secunia.com/advisories/46557/
->> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
->> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
->> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
->>
->> Could you allocate a CVE id for this? (as it looks there isn't one
->> for this deficiency yet)
->>
->> Thank you && Regards, Jan.
->> -- 
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6276 bytes)
+Florian
