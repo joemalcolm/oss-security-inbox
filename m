@@ -1,16 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/14
-Message-ID: <20110403215435.GD9516@openwall.com>
-Date: Mon, 4 Apr 2011 01:54:35 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/8
+Message-ID: <1299877110.4898.96.camel@solo.digium.internal>
+Date: Fri, 11 Mar 2011 14:58:30 -0600
+From: Matthew Nicholson <mnicholson@...ium.com>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 01:28:18PM -0400, R P Herrold wrote:
-> Key fingerprint:	0x9B649644
-> Distribution:		CentOS
+On Fri, 2011-03-11 at 15:46 -0500, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+> > Hello Josh, Steve, vendors,
+> > 
+> > this doesn't seem to have a CVE identifier yet:
+> > [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
+> > [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
+> > 
+> 
+> Please use CVE-2011-1147
+> 
+> Thanks.
+> 
 
-Subscribed.
+The advisory on our website has been updated.
+-- 
+Matthew Nicholson
+Digium, Inc. | Software Developer
 
-Alexander
