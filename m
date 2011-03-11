@@ -1,39 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/7
-Message-ID: <20110617002706.43a3d674@redhat.com>
-Date: Fri, 17 Jun 2011 00:27:06 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: secalert_us@...cle.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/7
+Message-ID: <20110311205432.GA3847@redhat.com>
+Date: Fri, 11 Mar 2011 13:54:33 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 17 May 2011 10:43:10 -0700 Oracle Security Alerts wrote:
+* [2011-03-08 23:20:28 +0000] Helgi ?ormar ?orbj?rnsson wrote:
 
-> On 04/30/11 08:26 AM, Solar Designer wrote:
-> > Does Oracle start to prepare security updates for Oracle Enterprise
-> > Linux before or after Red Hat releases theirs?  If it's after, then
-> > there's too little need for Oracle to have advance notification.
-> 
-> If we know about vulnerabilities in advance, our fixing process
-> starts before Red Hat releases their updates. It starts with
-> assessment of issue, reviewing the fix for completeness and
-> applicability to our kernel and components we maintain or provide in
-> our Linux distribution. See
-> http://www.oracle.com/us/technologies/linux/026042.htm
-> or http://oss.oracle.com/
-> 
-> We do not expect Red Hat or other vendors to evaluate impact of
-> security vulnerabilities on Oracle Linux, nor fix it in a way that
-> is applicable to our releases. Hence the request for subscription.
+>On 1 Mar 2011, at 12:39, Helgi Þormar Þorbjörnsson wrote:
+>
+>>
+>> On 1 Mar 2011, at 12:19, Dan Rosenberg wrote:
+>>
+>>>> Not sure it is fixable, or maybe using a lock on the symbolic link
+>>>> while fetching its target (to be tested to be sure that such locks
+>>>> cannot be overridden from shell).
+>>>>
+>>>
+>>> The easiest way is to just open the target with the O_NOFOLLOW flag to
+>>> avoid following symlinks and abort on failure.  If you need to support
+>>> systems that don't have this flag, then perhaps you could consider
+>>> using an application-specific temporary directory instead of operating
+>>> in the world-writable /tmp.
+>>
+>> The PEAR installer does use /tmp (and whatever the Windows equivalent is) by default unless the user opts into a local installation or does indeed change the configuration to use other temp/download/cache directories so users can guard themselves with a good setup.
+>>
+>> A flag like that would be handy but doesn't exist (yet) in PHP.
+>>
+>> I moved over to using the O_CREAT|O_EXCL equivalent in PHP when creating new files and lstat + fopen + fstat and comparing mode/ino/dev before writing to an existing file for the cache. I could add an nlink check to that as well.
+>> The current version I've been playing around with is located at https://gist.github.com/848371 - It is missing the nlink part but it should be able to deal with TOCTOU problems. That code snippet hasn't been committed as I consider it work-in-progress still.
+>>
+>> Any comments / suggestions are welcome, I did write that one quite late last night :-)
+>
+>Here is the latest fix for the TOCTOU (e.g. time-of-check-time-of-use) problem: http://news.php.net/php.pear.core/9791 - A proper mix of lstat, fopen, fstat (to ensure no one has messed around with the file pointer between the check and getting the handler) as well as adding in a nlink check to make sure it is 1.
+>
+>Hopefully this is enough to fix the problem you had with my earlier fixes and get me the CVE number.
 
-Maybe I'm mis-reading the above statement, but it seems to imply it's
-not uncommon for you to re-do security patches that were applied to
-RHEL packages before building them as OEL updates.  Do you have any
-specific examples to point to (on- or off-list), so we can possibly
-check what mistakes we did?
+Thanks for this.  Is that fix the final fix that will be going into
+PEAR?  Or are you asking for a review of the changes to ensure they are
+sufficient?
 
-Thank you!
+At any rate, MITRE assigned CVE-2011-1144 to the "incomplete fix for
+CVE-2011-1072" for which you would use for this code change.
+
+(CVE-2010-1072 is for the full problem, CVE-2011-1144 is for the last
+fix that claimed to fix CVE-2010-1072 and did not do so fully.)
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
