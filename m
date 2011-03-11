@@ -1,52 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/6
-Message-ID: <4EF3670A.5030007@redhat.com>
-Date: Thu, 22 Dec 2011 18:21:14 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kyle Creyts <kyle.creyts@...il.com>
-Subject: Re: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/3
+Message-ID: <20110311141748.GA14348@openwall.com>
+Date: Fri, 11 Mar 2011 17:17:48 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Florian Zumbiehl <florz@...rz.de>
+Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Mar 10, 2011 at 10:32:43PM +0100, Florian Zumbiehl wrote:
+> > > | However, I think that still #6 (shell injection) and #7 (logrotate
+> > > | DoS with strange characters in file names) should be considered
+> > > | vulnerabilities in logrotate: ...
+[...]
+> I was thinking more in the direction of an existing config that includes
+> a wildcard and software that uses user input to construct file names
+> that would be matched by that wildcard. An example of such software
+> would be samba, which tends to create per-client-host log files named
+> after those hosts. I don't have a clue whether samba could be made to
+> include any shell meta characters (does it even do reverse lookups for
+> that?), but I guess you get the idea.
 
-Hi Kyle,
+This makes sense, and I agree that it's a reason for logrotate to treat
+log filenames as potentially untrusted input.  It's probably also a
+reason to get CVE ids assigned.
 
-On 12/22/2011 05:00 PM, Kyle Creyts wrote:
-> This only applies when imfile is enabled, however, correct?
+Thank you for explaining the attack vector here!
 
-Yes, this issue requires the imfile rsyslog module to be enabled.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> On Dec 22, 2011 7:20 AM, "Jan Lieskovsky"<jlieskov@...hat.com>  wrote:
->
->>
->> An integer signedness error, leading to heap based buffer overflow was
->> found in
->> the way the imfile module of rsyslog, an enhanced system logging and kernel
->> message trapping daemon, processed text files larger than 64 KB. When the
->> imfile rsyslog module was enabled, a local attacker could use this flaw to
->> cause denial of service (rsyslogd daemon hang) via specially-crafted
->> message,
->> to be logged.
->>
->> Upstream bug report:
->> [1] http://bugzilla.adiscon.com/**show_bug.cgi?id=221<http://bugzilla.adiscon.com/show_bug.cgi?id=221>
->>
->> Upstream patch:
->> [2] http://git.adiscon.com/?p=**rsyslog.git;a=commit;h=**
->> 6bad782f154b7f838c7371bf99c13f**6dc4ec4101<http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101>
->>
->> References:
->> [3] https://bugzilla.redhat.com/**show_bug.cgi?id=769822<https://bugzilla.redhat.com/show_bug.cgi?id=769822>
->>
->> Could you allocate a CVE id for this?
->>
->> Thank you&&  Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
->
-
+Alexander
