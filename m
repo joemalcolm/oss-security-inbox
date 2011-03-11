@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/6
-Message-ID: <20110712143945.GA64086@dojo.mi.org>
-Date: Tue, 12 Jul 2011 10:39:46 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/8
+Message-ID: <1299877110.4898.96.camel@solo.digium.internal>
+Date: Fri, 11 Mar 2011 14:58:30 -0600
+From: Matthew Nicholson <mnicholson@...ium.com>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
 Content-Type: text/plain; charset=utf-8
 
-:Hello List,
-:
-:Is it possible to assign a CVE for documented behavior? Communication
+On Fri, 2011-03-11 at 15:46 -0500, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+> > Hello Josh, Steve, vendors,
+> > 
+> > this doesn't seem to have a CVE identifier yet:
+> > [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
+> > [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
+> > 
+> 
+> Please use CVE-2011-1147
+> 
+> Thanks.
+> 
 
-Especially in the early days of CVE, some were assigned for documented
-behavior.  The one I used to hit the most is CVE-1999-0651, a CVE for
-rlogind running (with all sorts of potential for insecurity based on
-how it's deployed, but not necessarily insecure in and of itself).  It
-would give some folks slaved to CVE-based security-scanning tools fits. 
-The scan tool flags a CVE for which nothing can really be done because
-it acts as documented.
-
+The advisory on our website has been updated.
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Security freaks are pretty wierd."                    -Brian Harvey, RFC 686
+Matthew Nicholson
+Digium, Inc. | Software Developer
 
-Content of type "application/pgp-signature" skipped
