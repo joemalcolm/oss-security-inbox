@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/1
-Message-ID: <128863757.71904.1297901372227.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Feb 2011 19:09:32 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/6
+Message-ID: <42390634.57980.1299876372996.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 11 Mar 2011 15:46:12 -0500 (EST)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- kernel: deficiency in processing igmp host membership reports in br_multicast
+Cc: Matthew Nicholson <mnicholson@...ium.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
 Content-Type: text/plain; charset=utf-8
 
-"It was found that executing bridge snooping code triggered by host
-originated IGMP packets could cause corruption in 512-byte slabs,
-most commonly leading to crashes in jbd2. This could be possibly
-exploited by local unprivileged user to crash the host (DoS)."
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=678169
-http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commitdiff;h=6b0d6a9b4296fa16a28d10d416db7a770fc03287
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> this doesn't seem to have a CVE identifier yet:
+> [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
+> 
 
+Please use CVE-2011-1147
+
+Thanks.
+
+-- 
+    JB
