@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/11
-Message-ID: <AANLkTikD+VGvyONLSt8+3RBNKM-GUUczGDfakYtRG-e0@mail.gmail.com>
-Date: Tue, 25 Jan 2011 17:45:48 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libxml2 heap contents leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/2
+Message-ID: <4D7A299A.1060005@redhat.com>
+Date: Fri, 11 Mar 2011 14:54:34 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Matthew Nicholson <mnicholson@...ium.com>
+Subject: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
 Content-Type: text/plain; charset=utf-8
 
-hi,
-
-Btw, I re opened the php one as Daniel seems to think that it is the
-application responsibility and not libxml. I'm not totally convinced
-and I asked Rob to check this problem again.
-
-On Mon, Jan 24, 2011 at 10:41 PM, Kees Cook <kees@...ntu.com> wrote:
-> Hello,
->
-> I'd like to get a CVE assigned for a minor heap contents leak in
-> libxml2. I reported that it is possible to leak heap memory contents
-> from libxml2 (and things linked against it, for example PHP[1], or things
-> written in PHP[2]):
->
-> https://bugzilla.gnome.org/show_bug.cgi?id=631551
->
-> Thanks,
->
-> -Kees
->
-> [1] http://bugs.php.net/bug.php?id=52998
-> [2] http://status.net/open-source/issues/2798
->
-> --
-> Kees Cook
-> Ubuntu Security Team
->
 
 
+Hello Josh, Steve, vendors,
 
--- 
-Pierre
+   this doesn't seem to have a CVE identifier yet:
+   [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
+   [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Could you allocate one?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
