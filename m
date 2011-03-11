@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/2
-Message-ID: <803908496.24193.1299763793117.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 10 Mar 2011 08:29:53 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/4
+Message-ID: <20110311143651.GA13326@albatros>
+Date: Fri, 11 Mar 2011 17:36:51 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Josh Bressers wrote:
-> >
-> > As best as I can tell, logrotate only needs a CVE id for this:
-> >
-> >     8) Issue #8: logrotate: TOCTOU race condition by creation of new
-> >     files (between opening the file and moment, final permissions have
-> >     been applied) [information disclosure]
-> >
-> 
+On Thu, Feb 24, 2011 at 15:54 -0800, Kees Cook wrote:
+> "ifconfig $module" will load any module as long as the process
+> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE)."
 
-Let' use CVE-2011-1098 for this.
+This was fixed in 8909c9ad8ff:
 
-Thanks.
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=8909c9ad8ff03611c9c96c9a92656213e4bb495b
 
 -- 
-    JB
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
