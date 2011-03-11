@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/12/2
-Message-ID: <4EBDF7DC.7020106@redhat.com>
-Date: Fri, 11 Nov 2011 21:36:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/1
+Message-ID: <4D79BC8D.7080004@redhat.com>
+Date: Fri, 11 Mar 2011 14:09:17 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-0695 kernel: panic in ib_cm:cm_work_handler
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/2011 09:48 AM, Petr Matousek wrote:
-> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
-> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
-> request.
->
-> While the NFS client only asks for one attribute (FATTR4_ACL) in the
-> first bitmap word, the NFSv4 protocol allows for the server to return
-> unbounded bitmaps (more than two)."
->
-> Upstream commit:
-> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
-> case when 2 words are expected and 3 are returned
->
-> Proposed complete upstream patch:
-> http://www.spinics.net/lists/linux-nfs/msg25288.html
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=747106
->
-> Credit: Andy Adamson
->
-> Thanks,
-Please use CVE-2011-4132 for this issue.
+This was reported by a customer, Jens Kuehnel.
 
+[PATCH 1/2] rdma/cm: Fix crash in request handlers
+http://www.spinics.net/lists/linux-rdma/msg07447.html
+[PATCH 2/2] ib/cm: Bump reference count on cm_id before invoking callback
+http://www.spinics.net/lists/linux-rdma/msg07448.html
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=653648
+
+Thanks, Eugene
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
