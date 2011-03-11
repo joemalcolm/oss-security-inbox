@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/10
-Message-Id: <201103131455.44998.sgrubb@redhat.com>
-Date: Sun, 13 Mar 2011 14:55:44 -0400
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/3
+Message-ID: <20110311141748.GA14348@openwall.com>
+Date: Fri, 11 Mar 2011 17:17:48 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Florian Zumbiehl <florz@...rz.de>
+Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Saturday, March 12, 2011 12:03:45 pm Vasiliy Kulikov wrote:
-> While POSIX restricts the character set used in filenames, some Linux
-> filesystems (at least ext2) permit reserved filenames ".", ".." and
-> filenames with "/" inside.  I have a crafted flash drive with ext2 that
-> has such files:
+On Thu, Mar 10, 2011 at 10:32:43PM +0100, Florian Zumbiehl wrote:
+> > > | However, I think that still #6 (shell injection) and #7 (logrotate
+> > > | DoS with strange characters in file names) should be considered
+> > > | vulnerabilities in logrotate: ...
+[...]
+> I was thinking more in the direction of an existing config that includes
+> a wildcard and software that uses user input to construct file names
+> that would be matched by that wildcard. An example of such software
+> would be samba, which tends to create per-client-host log files named
+> after those hosts. I don't have a clue whether samba could be made to
+> include any shell meta characters (does it even do reverse lookups for
+> that?), but I guess you get the idea.
 
-I can confirm that ext3/4, xfs, cramfs, and reiserfs also allow these kinds of names. 
-I'm sure that with some patience, there are more.
+This makes sense, and I agree that it's a reason for logrotate to treat
+log filenames as potentially untrusted input.  It's probably also a
+reason to get CVE ids assigned.
 
+Thank you for explaining the attack vector here!
 
-> Guess what does "rm" with such filenames :-)
-
-and tar
-
- 
-> What I suggest is something like "-o untrusted" option to mount.  This
-> would mean that the system considers the input from such fs as a malicious
-> input.  Such mounted fs would try to consider the data on disk as
-> untrusted and to be as robust as possible, e.g. check against
-> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
-> hear opinions about the usefulness of this feature.
-
-Something else I was noticing is that fsck does not also enforce the correct naming 
-constraints. Maybe what can be done is fix fsck and force it to scan the file system 
-before making it accessible.
-
--Steve
+Alexander
