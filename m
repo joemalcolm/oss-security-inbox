@@ -1,34 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/8
-Message-ID: <20110406165749.GA23639@openwall.com>
-Date: Wed, 6 Apr 2011 20:57:49 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/7
+Message-ID: <20110311205432.GA3847@redhat.com>
+Date: Fri, 11 Mar 2011 13:54:33 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
-> Please subscribe me to the new list. I was a vendor-sec subscriber for
-> MontaVista Software.
-> 
-> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
-> uid Armin Kuster <akuster@...sta.com>
-> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
+* [2011-03-08 23:20:28 +0000] Helgi ?ormar ?orbj?rnsson wrote:
 
-Looks like you forgot to make this public key available.  Please provide
-it to me and I'll subscribe you.
+>On 1 Mar 2011, at 12:39, Helgi Þormar Þorbjörnsson wrote:
+>
+>>
+>> On 1 Mar 2011, at 12:19, Dan Rosenberg wrote:
+>>
+>>>> Not sure it is fixable, or maybe using a lock on the symbolic link
+>>>> while fetching its target (to be tested to be sure that such locks
+>>>> cannot be overridden from shell).
+>>>>
+>>>
+>>> The easiest way is to just open the target with the O_NOFOLLOW flag to
+>>> avoid following symlinks and abort on failure.  If you need to support
+>>> systems that don't have this flag, then perhaps you could consider
+>>> using an application-specific temporary directory instead of operating
+>>> in the world-writable /tmp.
+>>
+>> The PEAR installer does use /tmp (and whatever the Windows equivalent is) by default unless the user opts into a local installation or does indeed change the configuration to use other temp/download/cache directories so users can guard themselves with a good setup.
+>>
+>> A flag like that would be handy but doesn't exist (yet) in PHP.
+>>
+>> I moved over to using the O_CREAT|O_EXCL equivalent in PHP when creating new files and lstat + fopen + fstat and comparing mode/ino/dev before writing to an existing file for the cache. I could add an nlink check to that as well.
+>> The current version I've been playing around with is located at https://gist.github.com/848371 - It is missing the nlink part but it should be able to deal with TOCTOU problems. That code snippet hasn't been committed as I consider it work-in-progress still.
+>>
+>> Any comments / suggestions are welcome, I did write that one quite late last night :-)
+>
+>Here is the latest fix for the TOCTOU (e.g. time-of-check-time-of-use) problem: http://news.php.net/php.pear.core/9791 - A proper mix of lstat, fopen, fstat (to ensure no one has messed around with the file pointer between the check and getting the handler) as well as adding in a nlink check to make sure it is 1.
+>
+>Hopefully this is enough to fix the problem you had with my earlier fixes and get me the CVE number.
 
-While we're at it, the MontaVista Software entry at:
+Thanks for this.  Is that fix the final fix that will be going into
+PEAR?  Or are you asking for a review of the changes to ensure they are
+sufficient?
 
-http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
+At any rate, MITRE assigned CVE-2011-1144 to the "incomplete fix for
+CVE-2011-1072" for which you would use for this code change.
 
-says: "The process for distribution of security advisories is currently
-under discussion."  Perhaps this has already been discussed and decided
-upon?  If so, please update the wiki page with specific link(s) to your
-security advisories, updates, relevant mailing list archive - or
-whatever you have.  Without this info, it is unclear whether you would
-be making timely intended use of the advance notifications or not.
+(CVE-2010-1072 is for the full problem, CVE-2011-1144 is for the last
+fix that claimed to fix CVE-2010-1072 and did not do so fully.)
 
-Thanks,
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
