@@ -1,37 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/11
-Message-ID: <20110516222642.GA18032@altlinux.org>
-Date: Tue, 17 May 2011 02:26:42 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/5
+Message-Id: <201103111537.56413.ludwig.nussel@suse.de>
+Date: Fri, 11 Mar 2011 15:37:56 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2011 at 10:56:37PM +0400, Solar Designer wrote:
-> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
-> > Its probably about time to review libraries that are commonly
-> > linked to (formerly-) suid programs, such as
-> > libldap, libssl etc. In near future, in the advent of file caps
-> > they are often lacking proper checks.
+Florian Zumbiehl wrote:
+> > On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
+> > > What about these?:
+> > > 
+> > > | However, I think that still #6 (shell injection) and #7 (logrotate
+> > > | DoS with strange characters in file names) should be considered
+> > > | vulnerabilities in logrotate: It would be reasonable to assume that you
+> > > | can use user input that's a valid (slash-less) filename as a (part of a)
+> > > | log file name (assuming that the program is running as the same user that
+> > > | inspects and rotates the logs, so the log directory being writable by
+> > > | the program would not be insecure per-se) without that file name being
+> > > | interpreted by a shell or causing logrotate to stop functioning,
+> > > | respectively.
+> [...]
+> > To summarize, it feels like in theory a privilege boundary could exist
+> > here and be crossed on certain systems with extra software, but in
+> > practice this is unlikely and it would indicate poor design of another
+> > piece of software or/and false sense of security put into that privilege
+> > boundary.  I don't know what this means for CVE id assignment per the
+> > current "rules".
 > 
-> Good idea.
-> 
-> > They usually just compare uid against euid (not even gid sometimes)
-> > and do not check the dumpable flag or AT_SECURE (dont know whether
-> > glibc exports a proper function to easily check that at all).
-> 
-> glibc exports the __libc_enable_secure variable, which is initialized
-> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
+> I was thinking more in the direction of an existing config that includes
+> a wildcard and software that uses user input to construct file names
+> that would be matched by that wildcard. An example of such software
+> would be samba, which tends to create per-client-host log files named
+> after those hosts. I don't have a clue whether samba could be made to
+> include any shell meta characters (does it even do reverse lookups for
+> that?), but I guess you get the idea.
 
-There is a problem: in upstream glibc, __libc_enable_secure is placed into
-GLIBC_PRIVATE section, thus making it unavailable in most of rpm-based
-distros.  This is surely not the case in Owl and ALT Linux, where
-__libc_enable_secure is legal interface for use in applications,
-and some essential libraries are already patched to use
-__libc_enable_secure instead of uid comparisons.
+libvirt constructs log file names from user input (log file name =
+VM name). The user needs to have the org.libvirt.unix.manage
+privilege which bascially already is full root though.
 
+cu
+Ludwig
 
 -- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
