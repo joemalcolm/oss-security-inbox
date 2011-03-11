@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/1
-Message-ID: <4E9B79CF.4000507@redhat.com>
-Date: Mon, 17 Oct 2011 08:41:51 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/4
+Message-ID: <20110311143651.GA13326@albatros>
+Date: Fri, 11 Mar 2011 17:36:51 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Wrong MLIST link in CVE-2011-3783
+Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
 Content-Type: text/plain; charset=utf-8
 
-On 10/16/2011 09:48 PM, Henri Salo wrote:
-> On Sun, Oct 16, 2011 at 04:40:58PM +0300, Henri Salo wrote:
->> In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
-> 
-> Or did someone start assigning CVE-identifiers for everything what has been found in http://code.google.com/p/inspathx/ and this MLIST-link is referer in all of those issues? :)
-> 
-> Best regards,
-> Henri Salo
+On Thu, Feb 24, 2011 at 15:54 -0800, Kees Cook wrote:
+> "ifconfig $module" will load any module as long as the process
+> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE)."
 
-If it is incorrect, please contact nvd@...t.gov.
+This was fixed in 8909c9ad8ff:
 
-Thanks, Eugene
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=8909c9ad8ff03611c9c96c9a92656213e4bb495b
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
