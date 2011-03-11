@@ -1,60 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/3
-Message-ID: <1314349640.23138.14.camel@scapa>
-Date: Fri, 26 Aug 2011 11:07:20 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/5
+Message-Id: <201103111537.56413.ludwig.nussel@suse.de>
+Date: Fri, 11 Mar 2011 15:37:56 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Sebastian Krahmer <krahmer@...e.de>, 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com
-Subject: Re: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-26 at 10:58 +0200, Yves-Alexis Perez wrote:
-> > However I didnt dig deep enough into it to write an exploit as I dont have
-> > a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
-> > to that of the user if doing anything with his files.
+Florian Zumbiehl wrote:
+> > On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
+> > > What about these?:
+> > > 
+> > > | However, I think that still #6 (shell injection) and #7 (logrotate
+> > > | DoS with strange characters in file names) should be considered
+> > > | vulnerabilities in logrotate: It would be reasonable to assume that you
+> > > | can use user input that's a valid (slash-less) filename as a (part of a)
+> > > | log file name (assuming that the program is running as the same user that
+> > > | inspects and rotates the logs, so the log directory being writable by
+> > > | the program would not be insecure per-se) without that file name being
+> > > | interpreted by a shell or causing logrotate to stop functioning,
+> > > | respectively.
+> [...]
+> > To summarize, it feels like in theory a privilege boundary could exist
+> > here and be crossed on certain systems with extra software, but in
+> > practice this is unlikely and it would indicate poor design of another
+> > piece of software or/and false sense of security put into that privilege
+> > boundary.  I don't know what this means for CVE id assignment per the
+> > current "rules".
 > 
-> Yeah, I'm currently cooking patches doing that, though they'll need
-> review before apply. 
+> I was thinking more in the direction of an existing config that includes
+> a wildcard and software that uses user input to construct file names
+> that would be matched by that wildcard. An example of such software
+> would be samba, which tends to create per-client-host log files named
+> after those hosts. I don't have a clue whether samba could be made to
+> include any shell meta characters (does it even do reverse lookups for
+> that?), but I guess you get the idea.
 
-Would something like:
+libvirt constructs log file names from user input (log file name =
+VM name). The user needs to have the org.libvirt.unix.manage
+privilege which bascially already is full root though.
 
-diff --git a/src/dmrc.c b/src/dmrc.c
-index bff1da8..9f38faf 100644
---- a/src/dmrc.c
-+++ b/src/dmrc.c
-@@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar *username)
-     /* Update the users .dmrc */
-     if (user)
-     {
-+      /* write the file as the user itself */
-+      pid_t pid;
-+      pid = fork();
-+
-+      if (pid == 0)
-+      {
-+        if (setuid (user_get_uid(user)) < 0)
-+        {
-+          g_warning("Error changing uid for %s: %s", username, g_strerror(errno));
-+          _exit(EXIT_FAILURE);
-+        }
-         path = g_build_filename (user_get_home_directory (user), ".dmrc", NULL);
-         g_file_set_contents (path, data, length, NULL);
--        if (getuid () == 0 && chown (path, user_get_uid (user), user_get_gid (user)) < 0)
--            g_warning ("Error setting ownership on %s: %s", path, strerror (errno));
-         g_free (path);
-+        _exit(EXIT_SUCCESS);
-+
-+      }
-+      if (pid > 0)
-+        wait(NULL);
-     }
- 
-     /* Update the .dmrc cache */
+cu
+Ludwig
 
-do the job (untested, it's more like a RFC right now).
-
-Regards,
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
