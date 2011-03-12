@@ -1,88 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/3
-Message-ID: <CAPYM6Vz4ut13bCZU+jEYGFeu6wcf0ThYW6h8hSBUgC2MDxBwBQ@mail.gmail.com>
-Date: Thu, 18 Aug 2011 14:18:27 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/12/1
+Message-ID: <AANLkTi=v+miMDoy3my_MCw8-v=vdNLqx19DBuFMiCHpd@mail.gmail.com>
+Date: Sat, 12 Mar 2011 01:29:13 -0500
+From: Andrew Clausen <clausen@...n.upenn.edu>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Elgg 1.7.10 <= | Multiple Vulnerabilities
+Subject: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Hi all,
 
-The Elgg 1.7.10 and lower versions are vulnerable to Cross Site
-Scripting and SQL Injection.
+I have written a program called "libwipe" for GNU/Linux to wipe memory
+as soon as it is not being used.  I am releasing it under the GPL3
+licence, and you can download it here:
 
+http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
 
-2. BACKGROUND
+Any suggestions are appreciated.  In particular, I would like feedback on
+* which memory mappings should be erased on exit
+* which project this could be included in (secure-delete?)
 
-Elgg is an award-winning social networking engine, delivering the
-building blocks that enable businesses, schools, universities and
-associations to create their own fully-featured social networks and
-applications. Well-known Organizations with networks powered by Elgg
-include: Australian Government, British Government, Federal Canadian
-Government, MITRE, The World Bank, UNESCO, NASA, Stanford University,
-Johns Hopkins University and more (http://elgg.org/powering.php)
+OVERVIEW
 
+This library is designed to make programs respect users' privacy by wiping
+information when it is no longer needed.  It does not require any modifications
+to the original programs.  To use it for all programs in a single shell
+session, set the LD_PRELOAD environment variable with the shell command
 
-3. VULNERABILITY DESCRIPTION
+        export LD_PRELOAD=/usr/local/lib/libwipe.so
 
-The "internalname" parameter is not properly sanitized, which allows
-attacker to conduct Cross Site Scripting attack. This may allow an
-attacker to create a specially crafted URL that would execute
-arbitrary script code in a victim's browser. The "tag_names" is not
-properly sanitized, which allows attacker to conduct SQL Injection
-attack.
+To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
+configure file.
 
+The program uses two mechanisms:
+(1) when memory is deallocated with free(3), it is zeroed out.
+(2) when the process terminates, the entire memory is zeroed out.
 
-4. VERSIONS AFFECTED
-
-Elgg 1.7.10 <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-- Cross Site Scripting
-
-http://localhost/pg/embed/media?internalname=%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
-
-- SQL Injection > Info Disclosure
-
-http://localhost/pg/search/?q=SQLin&search_type=tags&tag_names=location%27
-
-
-6. SOLUTION
-
-Upgrade to 1.7.11 or higher.
-
-
-7. VENDOR
-
-Curverider Ltd
-http://www.curverider.co.uk/
-http://elgg.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-08-01: vulnerability reported
-2011-08-15: vendor released fixed version
-2011-08-18: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[elgg_1710]_xss_sqlin
-Project Home: http://elgg.org/
-Vendor Release Note:
-http://blog.elgg.org/pg/blog/brett/read/189/elgg-1711-released
-
-
-
-#yehg [2011-08-18]
+Cheers,
+Andrew
