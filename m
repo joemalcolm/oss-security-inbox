@@ -1,74 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/18
-Message-ID: <20110531141518.462507cf@angelo.pretender.us>
-Date: Tue, 31 May 2011 14:15:18 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/12/2
+Message-ID: <20110312170344.GA14833@albatros>
+Date: Sat, 12 Mar 2011 20:03:45 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, coley <coley@...re.org>, Dan Veditz <dveditz@...illa.com>
-Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
+Subject: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Mozilla has assigned this CVE-2011-0082.
+This is a resumption of the subject "Physical access vulnerabilities and
+auto-mounting" brought by Dan Rosenberg.  The previous discussion was
+about possible attacks the kernel, now I'd like to talk about attacks
+userland programs.
 
-Thanks all,
-~reed
+While POSIX restricts the character set used in filenames, some Linux
+filesystems (at least ext2) permit reserved filenames ".", ".." and
+filenames with "/" inside.  I have a crafted flash drive with ext2 that
+has such files:
 
-On Tue, 31 May 2011 13:09:59 -0700
-Reed Loden <reed@...dloden.com> wrote:
+root@...atros:/media# ls cdrom/ -la
+итого 28
+drwxr-xr-x 4 root root  4096 2011-03-12 18:55 .
+drwxr-xr-x 3 root root  4096 2011-03-12 18:48 ..
+drwxr-xr-x 3 root root  4096 2011-03-12 18:48 ..
+drwx------ 2 root root 16384 2011-03-12 18:54 lost+found
 
-> Looks like Red Hat reported this upstream to Mozilla late last night...
-> 
-> Mozilla is tracking this as
-> https://bugzilla.mozilla.org/show_bug.cgi?id=660749.
-> 
-> No CVE has been assigned yet (afaict), but I'll see about getting one
-> assigned once this has been confirmed.
-> 
-> ~reed
-> 
-> On Tue, 31 May 2011 15:42:58 -0400 (EDT)
-> Josh Bressers <bressers@...hat.com> wrote:
-> 
-> > I'm going to save this one for upstream. It's possible they've already
-> > assigned something (Mozilla is a CNA).
-> > 
-> > I've CC'd Reed in the rare event he doesn't know about this.
-> > 
-> > Thanks.
-> > 
-> > -- 
-> >     JB
-> > 
-> > ----- Original Message -----
-> > > Hi,
-> > > found this in RH's bugzilla:
-> > > https://bugzilla.redhat.com/show_bug.cgi?id=709165
-> > > 
-> > > Vincent Danen 2011-05-30 18:38:43 EDT
-> > > 
-> > > A Debian bug report [1] indicated that Firefox 4.0.x handled the
-> > > validation/revalidation of SSL certificates improperly. If a user were
-> > > to
-> > > visit a site with an untrusted certificate, Firefox would correctly
-> > > display the
-> > > warning about the untrusted connection. If a user were to confirm the
-> > > security
-> > > exception for a single session (not check off the "permanently store
-> > > this
-> > > exception"), then restart the browser and re-load the page, the
-> > > contents of the
-> > > page would be displayed from the Firefox cache. Upon reloading the
-> > > page, the
-> > > security warning would appear, but incorrectly indicates that the site
-> > > provides
-> > > a valid, verified certificate and there is no way to confirm the
-> > > exception.
-> > > [...]
-> > > 
-> > > --
-> > > Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> > > SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-> > > 21284 (AG Nürnberg
-> > > --
-> > > Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> > > -- Marie von Ebner-Eschenbach
+root@...atros:/media# ls a2f202b6-a3ef-45b5-bce4-01c4d35af4a0/ -la
+итого 28
+drwxr-xr-x 4 root root  4096 2011-03-12 18:55 .
+drwxr-xr-x 4 root root  4096 2011-03-12 19:08 ..
+drwx------ 2 root root 16384 2011-03-12 18:54 lost+found
+-rw-r--r-- 1 root root  3146 2011-03-12 19:07 lost+found/../../../etc/passwd
+
+Guess what does "rm" with such filenames :-)
+
+Another example of crafted fs is ext2 partition with EXT2_ERRORS_PANIC
+option set in superblock and corrupted root directory.  When run "ls" on
+the fs, the kernel would panic.
+
+While it was said that such attacks have low impact, some systems
+already try to protect itself from untrusted external filesystems.
+E.g. automounting of flash drives in Ubuntu is processed with
+"-o nodev,nosuid".  I read this as external flash drives are not fully
+trusted and may contain some dangerous files.  If some automatic file
+processing of files on drives with specially crafted filenames is
+started then it might have a security impact.  I don't know such popular
+apps, though.
+
+What I suggest is something like "-o untrusted" option to mount.  This
+would mean that the system considers the input from such fs as a malicious
+input.  Such mounted fs would try to consider the data on disk as
+untrusted and to be as robust as possible, e.g. check against
+"/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+hear opinions about the usefulness of this feature.
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
