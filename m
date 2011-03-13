@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/5
-Message-ID: <20110516183202.GA30006@openwall.com>
-Date: Mon, 16 May 2011 22:32:02 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/6
+Message-Id: <201103131933.33082.oeriksson@mandriva.com>
+Date: Sun, 13 Mar 2011 19:33:32 +0100
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: PHP substr_replace() use-after-free
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2011 at 07:26:41PM +0200, Jan Lieskovsky wrote:
->   please add me to the list. I was earlier vendor-sec member via
-> Red Hat exploder.
+söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
+> Hi,
+> 
+> I just found an use-after-free in PHP's substr_replace() function caused by
+> passing the same variable multiple times to the function, which makes the
+> PHP to use the same pointer in three variables inside the function, so when
+> the pointer is changed by a type conversion inside the function, it
+> invalids the other variables.
+> 
+> The PHP security team has seen noticed, and a bug already was filed in the
+> bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
+> 
+> $ sapi/cli/php ../bug.php
+> array(1) {
+> [0]=>
+> string(5) "0Ȅ y"
+> }
+> array(1) {
+> [0]=>
+> string(1) "0"
+> }
+> 
+> 
+> Thanks.
 
-Added.
+It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
 
-> P.S.: Was waiting if the discussion regarding limiting a distro to two
->       or three representatives will come to conclusion and intended to
->       post then. But not sure if there was a final decision wrt to this.
-
-The prevailing opinion appeared to be not to impose this limit, so I
-proceeded to add more than 3 representatives when requested.
-
-There are 33 subscribed addresses total, including 7 for Red Hat, 5 for
-Ubuntu, 4 for Debian, 4 for SuSE.  Other distros have 1 or 2 each.
-
-Alexander
+-- 
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
