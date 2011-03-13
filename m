@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/6
-Message-ID: <20110414105709.59c835fe@orphan>
-Date: Thu, 14 Apr 2011 10:57:09 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/3
+Message-ID: <4D7CE261.50002@redhat.com>
+Date: Sun, 13 Mar 2011 23:27:29 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RE: [security-vendor] Closed list
+CC: Felipe Pena <felipensp@...il.com>
+Subject: Re: CVE request: PHP substr_replace() use-after-free
 Content-Type: text/plain; charset=utf-8
 
-Hi Zhenfeng!
+On 03/13/2011 10:00 PM, Felipe Pena wrote:
+> Hi,
+>
+> I just found an use-after-free in PHP's substr_replace() function caused by
+> passing the same variable multiple times to the function, which makes the
+> PHP to use the same pointer in three variables inside the function, so when
+> the pointer is changed by a type conversion inside the function, it invalids
+> the other variables.
+>
+> The PHP security team has seen noticed, and a bug already was filed in the
+> bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
+>
+> $ sapi/cli/php ../bug.php
+> array(1) {
+> [0]=>
+> string(5) "0Ȅ y"
+> }
+> array(1) {
+> [0]=>
+> string(1) "0"
+> }
 
-Now that I'm already known for being corporatishly evil against smaller
-distros... ;)
-
-On Tue, 12 Apr 2011 09:04:05 +0000 Zhao, Zhenfeng wrote:
-
-> uid    Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
-
-My understanding of the membership rules is that the aim is to avoid
-exploders or other mechanisms that may make it easier to change who is
-receiving mails without list admin and members being aware of such
-change.  While this may not be an exploder address now, for addresses
-like security@, they seem to be less likely to be closed once the
-people behind them decide to move on and are replaced by someone else.
-It seems there may be more pressure to hand matching private key over
-during the transition of responsibilities from one person to another.
-
-Just my 2c.
+Please use CVE-2011-1148.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
