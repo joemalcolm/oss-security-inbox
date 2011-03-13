@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/4
-Message-ID: <4DB14E73.40705@redhat.com>
-Date: Fri, 22 Apr 2011 11:46:27 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Matthew Nicholson <mnicholson@...ium.com>, "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Asterisk Security Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/11
+Message-ID: <AANLkTinQqWbtR2L8=nggaNAsVKgT5NZcxFeM2L_-_E-5@mail.gmail.com>
+Date: Sun, 13 Mar 2011 15:18:27 -0500
+From: Eitan Adler <lists@...anadler.com>
+To: oss-security@...ts.openwall.com
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
+On Sat, Mar 12, 2011 at 12:03 PM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> This is a resumption of the subject "Physical access vulnerabilities and
+> auto-mounting" brought by Dan Rosenberg.  The previous discussion was
+> about possible attacks the kernel, now I'd like to talk about attacks
+> userland programs.
+>
 
-Hello Matthew,
+http://www.dwheeler.com/essays/fixing-unix-linux-filenames.html and
+http://www.dwheeler.com/essays/filenames-in-shell.html are relevant
+here.
 
-   thank you for the heads up.
 
-Matthew Nicholson wrote:
-> Hi,
-> 
-> I need a CVE for a new Asterisk security vulnerability.
 
-Was this request intended to be for the following one:
-[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
 
-Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
-       already got an id of CVE-2011-1507.
-
-If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
-to be assigned to this?)
-
-Or was it requested for yet something completely different from above two?
-
-Thank you, Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Eitan Adler
