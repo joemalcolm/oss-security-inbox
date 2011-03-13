@@ -1,40 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/2
-Message-ID: <4E1AD3FC.8060000@redhat.com>
-Date: Mon, 11 Jul 2011 12:44:12 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Drupal 7 -- Access bypass in node listings (SA-CORE-2011-002)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/1
+Message-ID: <AANLkTin_hi_pTCm2qLXCjNGh7rBQfhSxuGSO2j-f2euv@mail.gmail.com>
+Date: Sun, 13 Mar 2011 19:59:49 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: bbPress 1.0.2 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+1. OVERVIEW
 
-   this:
-   [1] http://drupal.org/node/1204582
-
-   From [1]: Access bypass in node listings:
-   =========================================
-
-   Listings showing nodes but not JOINing the node table show all
-   nodes regardless of restrictions imposed by the node_access system.
-   In core, this affects the taxonomy and the forum subsystem.
-
-   ...
-
-   Versions affected:
-   ==================
-
-   Drupal 7.0, 7.1 and 7.2.
+bbPress 1.0.2 and lower versions were vulnerable to Cross Site Scripting.
 
 
-References:
-------------
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=717874
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=633385
+2. APPLICATION DESCRIPTION
 
-doesn't seem to have a CVE identifier allocated yet. Could you allocate one?
+bbPress is plain and simple forum software, plain and simple with a
+twist from the creators of WordPress.
+It is focused on web standards, ease of use, ease of integration, and speed.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+3. VULNERABILITY DESCRIPTION
+
+The "re" parameter was not properly sanitized upon submission to the
+/bb-login.php url, which allows attacker to conduct Cross Site
+Scripting attack.
+This may allow an attacker to create a specially crafted URL that
+would execute arbitrary script code in a victim's browser.
+If a user has already logged in to the application, an XSS attack will
+execute promptly.
+If not, it will execute after the user's successful logging in.
+
+
+4. VERSIONS AFFECTED
+
+bbPress 1.0.2 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/bb-login.php?re=data%3Atext%2Fhtml%3Bbase64%2CPHNjcmlwdD5hbGVydCgiWFNTXG4iK2RvY3VtZW50LmNvb2tpZSk8L3NjcmlwdD4%3D
+
+
+6. SOLUTION
+
+Upgrade to 1.0.3 or higher
+
+
+7. VENDOR
+
+bbPress Development Team
+http://bbpress.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-23: notified vendor
+2011-02-24: vendor released fixed version
+2011-03-13: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[bbpress-1.0.2]_cross_site_scripting
+About bbPress: http://bbpress.org/about/
+
+
+#yehg [2011-03-13]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
