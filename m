@@ -1,60 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/1
-Message-ID: <AANLkTi=-1f2wAATTUr=WhzrdnnebqVknJ1hd_OM7t8jE@mail.gmail.com>
-Date: Fri, 1 Apr 2011 20:08:36 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/12
+Message-ID: <AANLkTi=8+gdQnHW+uP1qRWucveB4gjzXGx2+hvvnrn+f@mail.gmail.com>
+Date: Mon, 14 Mar 2011 00:13:27 +0100
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+Cc: Andrew Clausen <clausen@...n.upenn.edu>
+Subject: Re: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
+hi,
 
+I like this idea, and could be very useful especially in massive
+shared environment (as in lot of users sharing a server, like web
+servers for example).
+
+My only concern right now is the choice of the gplv3, which is a no go
+for many projects, especially for a library. Any chance to release it
+under a more permissive or non viral license like bsd or MIT?
+
+ps: that's not a license FUD, only a question (before I got shot :).
+
+Cheers,
+
+On Sat, Mar 12, 2011 at 7:29 AM, Andrew Clausen <clausen@...n.upenn.edu> wrote:
+> Hi all,
 >
-> Long term I'd like to see two lists, one for purpose #1, and another geared
-> toward #2. I think having a trusted venue for knowledge sharing would be
-> very useful, and we likely don't want the list clogged with coordination
-> details. This will of course rely heavily on what Openwall is willing to
-> take on. They're already taking on a lot of risk and responsibility, I
-> don't want to spoil the good will.
+> I have written a program called "libwipe" for GNU/Linux to wipe memory
+> as soon as it is not being used.  I am releasing it under the GPL3
+> licence, and you can download it here:
+>
+> http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
+>
+> Any suggestions are appreciated.  In particular, I would like feedback on
+> * which memory mappings should be erased on exit
+> * which project this could be included in (secure-delete?)
+>
+> OVERVIEW
+>
+> This library is designed to make programs respect users' privacy by wiping
+> information when it is no longer needed.  It does not require any modifications
+> to the original programs.  To use it for all programs in a single shell
+> session, set the LD_PRELOAD environment variable with the shell command
+>
+>        export LD_PRELOAD=/usr/local/lib/libwipe.so
+>
+> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
+> configure file.
+>
+> The program uses two mechanisms:
+> (1) when memory is deallocated with free(3), it is zeroed out.
+> (2) when the process terminates, the entire memory is zeroed out.
+>
+> Cheers,
+> Andrew
 >
 
-I agree that having such a venue for discussion would be valuable, and
-I'd personally like to contribute to such a list.
 
->
-> Should we require members use a mail address from their vendor? Letting
-> people use personal addresses creates an opportunity for people to remain
-> on a list when they are no longer a part of a given vendor (it also makes
-> it quite easy to know who represents a vendor).
->
 
-Yes, I think this should be a requirement for a closed coordination
-list (as opposed to the more relaxed option #2).  In fact, I think
-membership to such a list should be restricted almost exclusively to
-distributions and downstream providers of third-party software.  It
-obviously makes sense to have distro security teams on a list, since a
-vulnerability in project XYZ will need to be coordinated among all of
-the distros.  However, most software projects only need access to
-information concerning their own project.  There's no reason one
-software project should gain access to vulnerability information about
-a completely unrelated project, and restricting membership to achieve
-that will at least help minimize the leakage that went on with the
-previous list.
+-- 
+Pierre
 
-In a nutshell, I think this list needs to decide what its purpose is.
-If it's for coordination for vulnerability disclosure, then its
-membership should be kept to those who actually need to do the
-coordination.  If it's for private (or semi-private) discussion of
-potentially sensitive research, knowledge sharing, etc., then its
-membership should be expanded to include representation from software
-vendors and researchers.
-
--Dan
-
->
-> Thanks.
->
-> --
->    JB
->
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
