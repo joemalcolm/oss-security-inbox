@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/20
-Message-ID: <BANLkTikdSO8W-zu6OTPeYwCOzR32bBYkLw@mail.gmail.com>
-Date: Tue, 5 Apr 2011 09:46:25 -0500
-From: Tim Zingelman <tez@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/2
+Message-ID: <AANLkTi==q852L4JvSepd4=4zzMwhU8poK_CmoEAM6kqf@mail.gmail.com>
+Date: Sun, 13 Mar 2011 11:00:10 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: PHP substr_replace() use-after-free
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 4, 2011 at 10:02 AM, Matthias Andree <matthias.andree@....de> wrote:
-> Am 02.04.2011 02:08, schrieb Dan Rosenberg:
->
-> This raises an interesting point, "downstream providers of third-party
-> software".
->
-> In my case, I'd understand that I might want to offer vendors the
-> possibility to co-ordinate upgrades for bogofilter, fetchmail, and
-> leafnode, in lexicographical order, and possibly for a FreeBSD port --
-> although I'm not a representative of FreeBSD's security officer team
-> (nor would that team usually deal with third-party software
-> vulnerabilities unless it's in the basde system).
+Hi,
 
-Both FreeBSD and NetBSD have separate security teams that work to keep
-the third-party software provided by the FreeBSD ports system
-http://www.freebsd.org/ports/index.html and NetBSD pkgsrc system
-http://www.netbsd.org/docs/software/packages.html patched for
-vulnerabilities.  (Note that the pkgsrc system is cross platform and
-works on *BSD, Solaris, Linux and many other platforms.)  I'd guess
-other BSD and Solaris distro's have similar teams.  I'd like to either
-see members of these teams included, or a second list created for all
-issues not specific to linux.  (FWIW I am on the pkgsrc security
-team.)
+I just found an use-after-free in PHP's substr_replace() function caused by
+passing the same variable multiple times to the function, which makes the
+PHP to use the same pointer in three variables inside the function, so when
+the pointer is changed by a type conversion inside the function, it invalids
+the other variables.
 
-I'll also second the question someone else posed about how cc'ing
-others off the list could reasonably work if all messages are
-encrypted.
+The PHP security team has seen noticed, and a bug already was filed in the
+bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
 
-Thanks,
+$ sapi/cli/php ../bug.php
+array(1) {
+[0]=>
+string(5) "0Ȅ y"
+}
+array(1) {
+[0]=>
+string(1) "0"
+}
 
- - Tim
+
+Thanks.
+
+-- 
+Regards,
+Felipe Pena
+
