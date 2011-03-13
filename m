@@ -1,31 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/6
-Message-ID: <4DC9A75E.3040201@redhat.com>
-Date: Tue, 10 May 2011 17:00:14 -0400
-From: William Cohen <wcohen@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/7
+Message-ID: <AANLkTikghCt3SurFRM8kWcPnKAAOXH+s5XAJ1ZoW31o5@mail.gmail.com>
+Date: Mon, 14 Mar 2011 01:46:18 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Joomla! 1.6.0 | SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 05/03/2011 05:36 AM, Huzaifa Sidhpurwala wrote:
-> Hi William,
-> On 05/01/2011 07:30 AM, William Cohen wrote:
->>
->> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
->>
-> 
-> It appears from the debian bug, that there may be others way to exploit
-> this issue as well. hence i think we need a revised patch?
-> 
-> 
+=================================
+ Joomla! 1.6.0 | SQL Injection Vulnerability
+=================================
 
-Hi Huzaifa,
 
-I have generated some patches to address the CVE. However, I have not yet address the http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#19 related to the "echo do_jitconv > $SESSION_DIR/opd_pipe"
+1. OVERVIEW
 
-I will send the the patches from my local git branch in a moment.
+Joomla! 1.6.0 was vulnerable to SQL Injection.
 
-Any feedback would be appreciated.
 
--Will
+2. BACKGROUND
+
+Joomla is a free and open source content management system (CMS) for
+publishing content on the World Wide Web and intranets. It comprises a
+model–view–controller (MVC) Web application framework that can also be
+used independently.
+Joomla is written in PHP, uses object-oriented programming (OOP)
+techniques and software design patterns, stores data in a MySQL
+database, and includes features such as page caching, RSS feeds,
+printable versions of pages, news flashes, blogs, polls, search, and
+support for language internationalization.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Parameters (filter_order, filer_order_Dir) were not properly sanitized
+in Joomla! that lead to SQL Injection vulnerability.  This could an
+attacker to inject or manipulate SQL queries in the back-end database,
+allowing for the manipulation or disclosure of arbitrary data.
+
+
+4. VERSION AFFECTED
+
+Joomla! 1.6.0
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=yehg.net.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAA,&filter_order_Dir=2&limit=3&limitstart=4
+
+
+http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=1,&filter_order_Dir=yehg.net.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB,&limit=3&limitstart=4
+
+
+This is the exact same variant as shown in Joomla! 1.5.21:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
+
+We thought Joomla! team would fix this issue in 1.6.0 stable release
+whilst they fixed it in Joomla! 1.5.22!
+
+
+6. SOLUTION
+
+Upgrade to Joomla! 1.6.1 or higher
+
+
+7. VENDOR
+
+Joomla! Developer Team
+http://www.joomla.org
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-01-24: notified vendor
+2011-03-08: vendor released fix
+2011-03-14: vulnerability disclosed
+
+
+10. REFERENCES
+
+Vendor Advisory URL:
+http://developer.joomla.org/security/news/328-20110201-core-sql-injection-path-disclosure.html
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_sql_injection
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-89: http://cwe.mitre.org/data/definitions/89.html
+
+
+#yehg [2011-03-14]
+
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
