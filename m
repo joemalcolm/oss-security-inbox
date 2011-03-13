@@ -1,58 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/1
-Message-ID: <CAEZPtU4PsNUFyHTGkRca9w7H_u-ZiZ0Yi3KKkBKD-t_iGOrOFQ@mail.gmail.com>
-Date: Sun, 25 Sep 2011 10:28:30 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Stas Malyshev <smalyshev@...arcrm.com>
-Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/5
+Message-ID: <20110313162839.GD21770@outflux.net>
+Date: Sun, 13 Mar 2011 09:28:39 -0700
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On Sat, Mar 12, 2011 at 01:29:13AM -0500, Andrew Clausen wrote:
+> to the original programs.  To use it for all programs in a single shell
+> session, set the LD_PRELOAD environment variable with the shell command
+> 
+>         export LD_PRELOAD=/usr/local/lib/libwipe.so
+> 
+> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
+> configure file.
+> 
+> The program uses two mechanisms:
+> (1) when memory is deallocated with free(3), it is zeroed out.
+> (2) when the process terminates, the entire memory is zeroed out.
 
-On Sun, Sep 25, 2011 at 1:22 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
-> Hi!
->
-> On 9/24/11 6:56 AM, Vincent Danen wrote:
->>
->> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
->> function worked, and as a result it could allow for remote arbitrary
->> code execution if certain specific conditions are met (the blog post
->> referenced below has a good writeup of the flaw).
->
-> I don't see what is to assign CVE to. Almost any function dealing with
-> classes as strings (including new $foo operator) can result in autoloader
-> call. If your autoloader is broken and your security practices are
-> non-existant, this can cause remote code execution. Just as if you write in
-> your script eval($_GET['hackme']), it can lead to remote code execution. It
-> is not a flaw in PHP, _GET or eval() function - it is a flaw in how you use
-> them. You should not be using them this way, and if you have autoloader that
-> does includes, you should check what are you including and set
-> allow_url_includes to Off.
->
->>
->> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
->> https://bugs.php.net/bug.php?id=55475
->> https://bugzilla.redhat.com/show_bug.cgi?id=741020
->>
->> It looks like this is the fix:
->>
->> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
->
-> This is not a "fix"  - it is a reversal of BC break because it should not be
-> introduced in 5.3 version.
+Cool, thanks for the announcement.
 
-It breaks the checks which leads to autoloader to accept bad input.
-Yes, the autoloader should have sanity check in place but this BC
-break changes the behavior and introduced this issue as well on top of
-it.
+#1 can also be done using glibc's $MALLOC_PERTURB_ environment variable (it
+initializes memory with new() to its value, and then fills memory with the
+inverse on free(). For example, "export MALLOC_PERTURB_=85" will get you an
+alternating bit pattern.
 
-I'm not sure either if we need a CVE as it is not a flaw in php itself
-per se. However the BC break introduces flaws in working codes, and
-that's a gray zone now.
+Feature #2, however, is not handled by MALLOC_PERTURB_, and there isn't a
+particularly good way I've found to set MALLOC_PERTURB_ globally, unlike
+the /etc/ld.so.preload example for libwipe.
 
-Cheers,
+If libwipe grew similar bit-pattern handling for new(), it could be used
+for similar purposes (trying to ferret out use-after-free or
+use-before-init bugs in general).
+
+Thanks,
+
+-Kees
+
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Kees Cook
+Ubuntu Security Team
