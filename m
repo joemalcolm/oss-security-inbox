@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/17
-Message-ID: <623466df-9449-431b-aa79-789d1a417016@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:38:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/9
+Message-ID: <AANLkTimvQdK0dTDBVowuPo-FtA6mDj=QZ3+45AK7fQ9A@mail.gmail.com>
+Date: Sun, 13 Mar 2011 15:41:55 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MySQL executable comment execution on MySQL slave server (from 2009)
+Cc: Oden Eriksson <oeriksson@...driva.com>
+Subject: Re: CVE request: PHP substr_replace() use-after-free
 Content-Type: text/plain; charset=utf-8
 
+2011/3/13 Oden Eriksson <oeriksson@...driva.com>
 
-
------ Original Message -----
-> This is an old one that slipped through in 2009:
-> 
-> The executable comment capability in MySQL before 5.1.50 and 5.0.93
-> can be used to execute arbitrary SQL commands as a privileged user.
-> This occurs on MySQL servers configured as slaves in a MySQL
-> replication environment where the slave server is running a newer
-> version of MySQL than the server. The attacker would need the ability
-> to add custom comments to a database on the MySQL server.
-> 
-> http://bugs.mysql.com/bug.php?id=49124
-> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-50.html
-> http://dev.mysql.com/doc/refman/5.0/en/news-5-0-93.html
-
-Please use CVE-2009-5026.
-
-Thanks.
+> söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
+> > Hi,
+> >
+> > I just found an use-after-free in PHP's substr_replace() function caused
+> by
+> > passing the same variable multiple times to the function, which makes the
+> > PHP to use the same pointer in three variables inside the function, so
+> when
+> > the pointer is changed by a type conversion inside the function, it
+> > invalids the other variables.
+> >
+> > The PHP security team has seen noticed, and a bug already was filed in
+> the
+> > bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
+> >
+> > $ sapi/cli/php ../bug.php
+> > array(1) {
+> > [0]=>
+> > string(5) "0Ȅ y"
+> > }
+> > array(1) {
+> > [0]=>
+> > string(1) "0"
+> > }
+> >
+> >
+> > Thanks.
+>
+> It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
+>
+>
+It affects 5.2, 5.3 and even trunk. I can reproduce it in all the branches.
 
 -- 
-    JB
+Regards,
+Felipe Pena
+
