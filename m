@@ -1,46 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/2
-Message-ID: <1314349111.23138.13.camel@scapa>
-Date: Fri, 26 Aug 2011 10:58:26 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Sebastian Krahmer <krahmer@...e.de>
-Cc: 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>,  robert.ancell@...onical.com, oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/12
+Message-ID: <AANLkTi=8+gdQnHW+uP1qRWucveB4gjzXGx2+hvvnrn+f@mail.gmail.com>
+Date: Mon, 14 Mar 2011 00:13:27 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Andrew Clausen <clausen@...n.upenn.edu>
+Subject: Re: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-26 at 10:43 +0200, Sebastian Krahmer wrote:
-> Hi,
-> 
-> You probably dont take into account the chown() that happens in lightdm.
-> Just unlink the created ~/.dmrc or ~/.Xauthority files after creation and make a symlink
-> to /etc/passwd to chown it to yourself.
+hi,
 
-The chown will be applied to the symlink, not the target. I've tried to
-make .Xauthority a symlink to a root-owned file and the destination was
-indeed destroyed, but it's still root-owned.
+I like this idea, and could be very useful especially in massive
+shared environment (as in lot of users sharing a server, like web
+servers for example).
 
-> However I didnt dig deep enough into it to write an exploit as I dont have
-> a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
-> to that of the user if doing anything with his files.
+My only concern right now is the choice of the gplv3, which is a no go
+for many projects, especially for a library. Any chance to release it
+under a more permissive or non viral license like bsd or MIT?
 
-Yeah, I'm currently cooking patches doing that, though they'll need
-review before apply.
-> 
-> The PAM issue that I was curious about was that a pam_start() etc is done
-> for the greeter-user (which I expect to be some "lightdm" user)?
+ps: that's not a license FUD, only a question (before I got shot :).
 
-Yes
-> 
-> I would expect all pam_ calls are only done for the user who is actually
-> about to login. The question that came up to me was whether pam_environment
-> from the user would have impact on uid-0 called programs/scripts since
-> you transfer the PAM env to the process env.
+Cheers,
 
-Yeah, that looks fishy, though I have no idea how it's exactly cooked
-that way, we'll have to wait for an answer from Robert.
+On Sat, Mar 12, 2011 at 7:29 AM, Andrew Clausen <clausen@...n.upenn.edu> wrote:
+> Hi all,
+>
+> I have written a program called "libwipe" for GNU/Linux to wipe memory
+> as soon as it is not being used.  I am releasing it under the GPL3
+> licence, and you can download it here:
+>
+> http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
+>
+> Any suggestions are appreciated.  In particular, I would like feedback on
+> * which memory mappings should be erased on exit
+> * which project this could be included in (secure-delete?)
+>
+> OVERVIEW
+>
+> This library is designed to make programs respect users' privacy by wiping
+> information when it is no longer needed.  It does not require any modifications
+> to the original programs.  To use it for all programs in a single shell
+> session, set the LD_PRELOAD environment variable with the shell command
+>
+>        export LD_PRELOAD=/usr/local/lib/libwipe.so
+>
+> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
+> configure file.
+>
+> The program uses two mechanisms:
+> (1) when memory is deallocated with free(3), it is zeroed out.
+> (2) when the process terminates, the entire memory is zeroed out.
+>
+> Cheers,
+> Andrew
+>
 
-Regards,
+
+
 -- 
-Yves-Alexis
+Pierre
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
