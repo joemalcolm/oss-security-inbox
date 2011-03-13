@@ -1,17 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/22
-Message-ID: <20110405152850.GA18354@openwall.com>
-Date: Tue, 5 Apr 2011 19:28:50 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/10
+Message-Id: <201103131455.44998.sgrubb@redhat.com>
+Date: Sun, 13 Mar 2011 14:55:44 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 05, 2011 at 02:05:20PM +0200, Thomas Biege wrote:
-> pub   2048R/558EBF03 2010-10-29
-> uid                  Thomas Biege (SuSE Security-Team) <thomas@...ell.com>
-> uid                  Thomas Biege (SuSE Security-Team) <thomas@...e.de>
+On Saturday, March 12, 2011 12:03:45 pm Vasiliy Kulikov wrote:
+> While POSIX restricts the character set used in filenames, some Linux
+> filesystems (at least ext2) permit reserved filenames ".", ".." and
+> filenames with "/" inside.  I have a crafted flash drive with ext2 that
+> has such files:
 
-Added.
+I can confirm that ext3/4, xfs, cramfs, and reiserfs also allow these kinds of names. 
+I'm sure that with some patience, there are more.
 
-Alexander
+
+> Guess what does "rm" with such filenames :-)
+
+and tar
+
+ 
+> What I suggest is something like "-o untrusted" option to mount.  This
+> would mean that the system considers the input from such fs as a malicious
+> input.  Such mounted fs would try to consider the data on disk as
+> untrusted and to be as robust as possible, e.g. check against
+> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> hear opinions about the usefulness of this feature.
+
+Something else I was noticing is that fsck does not also enforce the correct naming 
+constraints. Maybe what can be done is fix fsck and force it to scan the file system 
+before making it accessible.
+
+-Steve
