@@ -1,60 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/1
-Message-ID: <20110301001348.GE5871@ksplice.com>
-Date: Mon, 28 Feb 2011 19:13:48 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/1
+Message-ID: <AANLkTin_hi_pTCm2qLXCjNGh7rBQfhSxuGSO2j-f2euv@mail.gmail.com>
+Date: Sun, 13 Mar 2011 19:59:49 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: OOM-killer via argv expansion
+Subject: CVE Request: bbPress 1.0.2 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 28, 2011 at 03:28:47PM -0800, Kees Cook wrote:
-> On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
-> > On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
-> > > I think the flaw[1] with argv-expansion triggering the OOM-killer
-> > > incorrectly needs its own CVE.
-> > > 
-> > > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-> > > improved things, argv expansion can still be tricked into OOM-killing the
-> > > entire system. Solutions were discussed on the original thread, but
-> > > were not finished. Recently a set of patches[3] has been re-proposed to fix
-> > > this issue. Regardless, it should probably get its own CVE assigned.
-> > > 
-> > > Thanks,
-> > > 
-> > > -Kees
-> > > 
-> > > [1] https://lkml.org/lkml/2010/8/27/429
-> > > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-> > > [3] https://lkml.org/lkml/2011/2/25/227
-> > 
-> > Sorry, Nelson Elhage pointed out to me that I missed the fix for this
-> > issue. The issue was been fixed with:
-> > http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
-> > 
-> > This was already assigned as CVE-2010-4243
-> > 
-> > Sorry for the noise, and thanks!
-> 
-> Wait, I will continue to make more noise. The upstream commit
-> 3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
-> which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
+1. OVERVIEW
 
-upstream looks to have handled the compat case with:
-http://git.kernel.org/linus/114279be2120a916e8a04feeb2ac976a10016f2f
+bbPress 1.0.2 and lower versions were vulnerable to Cross Site Scripting.
 
->From skimming the LKML thread, I think that upstream believes the issue to be
-fixed, but is trying to clean up the code, since the above two commits were
-considered quick-and-dirty bandaid fixes.
 
-- Nelson
+2. APPLICATION DESCRIPTION
 
-> 
-> Does this need its own CVE?
-> 
-> Thanks,
-> 
-> -Kees
-> 
-> -- 
-> Kees Cook
-> Ubuntu Security Team
+bbPress is plain and simple forum software, plain and simple with a
+twist from the creators of WordPress.
+It is focused on web standards, ease of use, ease of integration, and speed.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The "re" parameter was not properly sanitized upon submission to the
+/bb-login.php url, which allows attacker to conduct Cross Site
+Scripting attack.
+This may allow an attacker to create a specially crafted URL that
+would execute arbitrary script code in a victim's browser.
+If a user has already logged in to the application, an XSS attack will
+execute promptly.
+If not, it will execute after the user's successful logging in.
+
+
+4. VERSIONS AFFECTED
+
+bbPress 1.0.2 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/bb-login.php?re=data%3Atext%2Fhtml%3Bbase64%2CPHNjcmlwdD5hbGVydCgiWFNTXG4iK2RvY3VtZW50LmNvb2tpZSk8L3NjcmlwdD4%3D
+
+
+6. SOLUTION
+
+Upgrade to 1.0.3 or higher
+
+
+7. VENDOR
+
+bbPress Development Team
+http://bbpress.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-23: notified vendor
+2011-02-24: vendor released fixed version
+2011-03-13: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[bbpress-1.0.2]_cross_site_scripting
+About bbPress: http://bbpress.org/about/
+
+
+#yehg [2011-03-13]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
