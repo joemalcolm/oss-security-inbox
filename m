@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/4
-Message-ID: <1302875648.2013.6.camel@oban>
-Date: Fri, 15 Apr 2011 15:54:08 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/10
+Message-Id: <201103131455.44998.sgrubb@redhat.com>
+Date: Sun, 13 Mar 2011 14:55:44 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for Thunar (format string errors)
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Two format string errors were recently fixed in Thunar (file manager for
-Xfce).
+On Saturday, March 12, 2011 12:03:45 pm Vasiliy Kulikov wrote:
+> While POSIX restricts the character set used in filenames, some Linux
+> filesystems (at least ext2) permit reserved filenames ".", ".." and
+> filenames with "/" inside.  I have a crafted flash drive with ext2 that
+> has such files:
 
-The first one is
-http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74 (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in Thunar 1.2.1) and triggers when creating file from templates and calling it with a format string.
+I can confirm that ext3/4, xfs, cramfs, and reiserfs also allow these kinds of names. 
+I'm sure that with some patience, there are more.
 
-The second is
-http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa and is triggered when copy/pasting a file named from a format string. There's no released version including the fix right now.
 
-I've triggered the (second) bug using file named %s or %n but didn't
-really manage to exploit it (it crashes just fine).
+> Guess what does "rm" with such filenames :-)
 
-I'm not so sure it really needs a CVE so it's a request for discussion
-as well :)
+and tar
 
-As a side note, I do use -Wformat -Wformat-security
--Werror=format-security (thanks to hardening-includes) for my Debian
-builds, but as those function are wrappers of wrappers of wrappers to
-printf() and stuff like that, -Wformat-security won't help. Is there a
-way to work around that?
+ 
+> What I suggest is something like "-o untrusted" option to mount.  This
+> would mean that the system considers the input from such fs as a malicious
+> input.  Such mounted fs would try to consider the data on disk as
+> untrusted and to be as robust as possible, e.g. check against
+> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> hear opinions about the usefulness of this feature.
 
-Regards,
--- 
-Yves-Alexis
+Something else I was noticing is that fsck does not also enforce the correct naming 
+constraints. Maybe what can be done is fix fsck and force it to scan the file system 
+before making it accessible.
 
+-Steve
