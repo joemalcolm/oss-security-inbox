@@ -1,100 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/2
-Message-ID: <CAPYM6VyJba-ScKkmxGDD1K_n+gLfYkkrcv_gY2fUoYR6hP4SWw@mail.gmail.com>
-Date: Wed, 5 Oct 2011 18:07:12 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/5
+Message-ID: <20110313162839.GD21770@outflux.net>
+Date: Sun, 13 Mar 2011 09:28:39 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
+Subject: Re: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
+On Sat, Mar 12, 2011 at 01:29:13AM -0500, Andrew Clausen wrote:
+> to the original programs.  To use it for all programs in a single shell
+> session, set the LD_PRELOAD environment variable with the shell command
+> 
+>         export LD_PRELOAD=/usr/local/lib/libwipe.so
+> 
+> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
+> configure file.
+> 
+> The program uses two mechanisms:
+> (1) when memory is deallocated with free(3), it is zeroed out.
+> (2) when the process terminates, the entire memory is zeroed out.
 
+Cool, thanks for the announcement.
 
+#1 can also be done using glibc's $MALLOC_PERTURB_ environment variable (it
+initializes memory with new() to its value, and then fills memory with the
+inverse on free(). For example, "export MALLOC_PERTURB_=85" will get you an
+alternating bit pattern.
 
-1. OVERVIEW
+Feature #2, however, is not handled by MALLOC_PERTURB_, and there isn't a
+particularly good way I've found to set MALLOC_PERTURB_ globally, unlike
+the /etc/ld.so.preload example for libwipe.
 
-The vTiger CRM 5.2.1 and lower versions are vulnerable to Blind SQL
-Injection. No fixed version has been released as of 2011-10-05.
+If libwipe grew similar bit-pattern handling for new(), it could be used
+for similar purposes (trying to ferret out use-after-free or
+use-before-init bugs in general).
 
+Thanks,
 
-2. BACKGROUND
+-Kees
 
-vtiger CRM is a free, full-featured, 100% Open Source CRM software
-ideal for small and medium businesses, with low-cost product support
-available to production users that need reliable support. vtiger CRM
-is a widely used product with thousands of users in dozens of
-countries.  It has a vibrant community of users driving the product
-forward, and contributing to it's development.  Over 2 million copies
-of vtiger CRM have been downloaded so far. It was launched as a fork
-of version 1.0 of the SugarCRM project launched on December 31st,
-2004.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The "onlyforuser" parameter was not properly sanitized, which allows
-attacker to conduct Blind SQL Injection Attack. This could an attacker
-to inject or manipulate SQL queries in the back-end database, allowing
-for the manipulation or disclosure of arbitrary data.
-
-
-4. VERSIONS AFFECTED
-
-Tested on 5.2.1
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-A future calendar event must be created in advance to trigger this
-vulnerability.
-
-Verified with Simple 1=1 Boolean check
------------------------------------------------------
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d1--
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d2--
-
-
-Verified with MySQL @@version  check
------------------------------------------------------
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d5--
-
-/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d4--
-
-
-6. SOLUTION
-
-No patched version is available yet.
-The vendor hasn't attempted to fix the issues though they acknowledged
-the report.
-
-
-7. VENDOR
-
-vTiger Development Team
-http://www.vtiger.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-08: notified vendor
-2011-10-05: no fixed version released yet
-2011-10-05: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_blind_sqlin
-Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
-
-
-#yehg [2011-10-05]
+-- 
+Kees Cook
+Ubuntu Security Team
