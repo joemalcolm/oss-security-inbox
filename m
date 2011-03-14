@@ -1,42 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/8
-Message-ID: <cf622826-4695-4ee2-9a6d-e9ba08523080@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 04 Oct 2011 14:10:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Juliusz Chroboczek <jch@....jussieu.fr>
-Subject: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/3
+Message-ID: <AANLkTintscsOj1Z0RTrCVUhL+bb3HCQxR5Cmkf0oRj-w@mail.gmail.com>
+Date: Mon, 14 Mar 2011 03:56:06 -0400
+From: Andrew Clausen <clausen@...n.upenn.edu>
+To: Pierre Joye <pierre.php@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3596
+Hi Pierre,
 
-Thanks.
+Thanks for your kind email.
 
--- 
-    JB
+My (limited) understanding of GPL3 is that something like LD_PRELOAD
+usage would be more or less unrestricted.
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
->    a denial of service flaw was found in the way Polipo, a
->    lightweight
-> caching web proxy, processed certain HTTP POST / PUT requests. If
-> polipo was configured to allow remote client connections and
-> particular
-> host was allowed to connect to polipo server instance, a remote
-> attacker could use this flaw to cause denial of service (polipo
-> daemon
-> abort due to assertion failure) via specially-crafted HTTP POST / PUT
-> request.
-> 
-> References:
-> [1] http://seclists.org/fulldisclosure/2011/Oct/10
-> [2] https://bugs.gentoo.org/show_bug.cgi?id=385307
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=742891
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
+On the other hand, I guess this is an unclear legal issue, and
+releasing under the LGPL would be adequate for my goal of requiring
+improvements to the library to be free.  How does this sound?
+
+Cheers,
+Andrew
+
+On 13 March 2011 19:13, Pierre Joye <pierre.php@...il.com> wrote:
+> hi,
+>
+> I like this idea, and could be very useful especially in massive
+> shared environment (as in lot of users sharing a server, like web
+> servers for example).
+>
+> My only concern right now is the choice of the gplv3, which is a no go
+> for many projects, especially for a library. Any chance to release it
+> under a more permissive or non viral license like bsd or MIT?
+>
+> ps: that's not a license FUD, only a question (before I got shot :).
+>
+> Cheers,
+>
+> On Sat, Mar 12, 2011 at 7:29 AM, Andrew Clausen <clausen@...n.upenn.edu> wrote:
+>> Hi all,
+>>
+>> I have written a program called "libwipe" for GNU/Linux to wipe memory
+>> as soon as it is not being used.  I am releasing it under the GPL3
+>> licence, and you can download it here:
+>>
+>> http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
+>>
+>> Any suggestions are appreciated.  In particular, I would like feedback on
+>> * which memory mappings should be erased on exit
+>> * which project this could be included in (secure-delete?)
+>>
+>> OVERVIEW
+>>
+>> This library is designed to make programs respect users' privacy by wiping
+>> information when it is no longer needed.  It does not require any modifications
+>> to the original programs.  To use it for all programs in a single shell
+>> session, set the LD_PRELOAD environment variable with the shell command
+>>
+>>        export LD_PRELOAD=/usr/local/lib/libwipe.so
+>>
+>> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
+>> configure file.
+>>
+>> The program uses two mechanisms:
+>> (1) when memory is deallocated with free(3), it is zeroed out.
+>> (2) when the process terminates, the entire memory is zeroed out.
+>>
+>> Cheers,
+>> Andrew
+>>
+>
+>
+>
 > --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
+> Pierre
+>
+> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+>
