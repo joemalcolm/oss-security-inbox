@@ -1,35 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/9
-Message-ID: <20111024181944.GH1540@redhat.com>
-Date: Mon, 24 Oct 2011 12:19:44 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/17
+Message-ID: <20110314164556.GA6772@albatros>
+Date: Mon, 14 Mar 2011 19:45:56 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phpldapadmin <= 1.2.1.1 XSS and and code injection flaws
+Cc: Stephan Mueller <stephan.mueller@...ec.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Two flaws were found in phpldapadmin <= 1.2.1.1 that can lead to an XSS
-or code injection:
+On Mon, Mar 14, 2011 at 08:56 -0400, Dan Rosenberg wrote:
+> 1. An attacker convinces a victim to download an evil filesystem image
+> and manually mount it.
+> 
+> 2. An attacker with physical access leverages automounting features to
+> cause the mounting of evil filesystems residing on external media.
 
-1) Input appended to the URL in cmd.php (when "cmd" is set to "_debug")
-is not properly sanitised before being returned to the user. This can be
-exploited to execute arbitrary HTML and script code in a user's browser
-session in context of an affected site.
+These two scenarios concern me.  But I'd state it another way - it is
+not about an attacker trying to mount the image/flash drive, but a
+legitimate user wants to mount an _untrusted_ image/drive.  He knows
+that it might be (or even _is_) malformed, how can he inspect the image
+securely?
 
-2) Input passed to the "orderby" parameter in cmd.php (when "cmd" is set
-to "query_engine", "query" is set to "none", and "search" is set to e.g.
-"1") is not properly sanitised in lib/functions.php before being used in
-a "create_function()" function call. This can be exploited to inject and
-execute arbitrary PHP code.
+> The second case can be addressed
+> by restricting automounting in circumstances where it is
+> inappropriate, such as when the screen is locked.
 
-Could CVEs be assigned to these please?
+With model of a passive attacker explained above it doesn't help.
 
-References:
+> There have been far too many vulnerabilities in these types
+> of utilities to be worth the risk - I think distros should strip the
+> setuid bits from these helpers when possible, and otherwise ship these
+> helpers with 4750 permissions and restrict their execution to trusted
+> groups.  I understand that FUSE must be an exception on some
+> distributions (such as Ubuntu), but other helpers (cifs, ncpfs, hgfs,
+> etc.) can probably be restricted a bit more.
 
-http://sourceforge.net/tracker/index.php?func=detail&aid=3417184&group_id=61828&atid=498546
-http://www.exploit-db.com/exploits/18021/
-https://secunia.com/advisories/46551/
-http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=htdocs/cmd.php;h=0ddf0044355abc94160be73122eb34f3e48ab2d9;hp=34f3848fe4a6d4c00c7c568afa81f59579f5d724;hb=64668e882b8866fae0fa1b25375d1a2f3b4672e2;hpb=caeba72171ade4f588fef1818aa4f6243a68b85e
-http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=lib/functions.php;h=eb160dc9f7d74e563131e21d4c85d7849a0c6638;hp=19fde9974d4e5eb3bfac04bb223ccbefdb98f9a0;hb=76e6dad13ef77c5448b8dfed1a61e4acc7241165;hpb=5d4245f93ae6f065e7535f268e3cd87a23b07744
+I completely agree here.  But I don't see any limitation of FUSE - I
+don't want e.g. daemons to be able to mount images via FUSE.  I'd like to
+have a group of real users, all other pseudo account must be very
+restricted.  The whole idea of controlling the access to suid binaries
+is already implemented in owl-control - it is a small tool primarily
+targeted to restrict/relax suid/sgid binaries to different user sets
+like root only / special group / everybody; it was also ported to ALT Linux:
+
+http://docs.altlinux.org/manpages/control.8.html
+
+
+I see three potential attack targets:
+
+1) Kernel code that works with partitions.
+
+2) Filesystem code.
+
+3) Userspace applications.
+
+As for (1) and (2) I'd agree with Steve Grubb about hardening fsck.  It
+might be the cheapest way of controlling fs structs, especially taking
+into account that fsck already works with potentially corrupted
+partitions.  The difference that it works with accidently corrupted
+data, we want it to work with malformed data.
+
+(3) includes filenames.  Filenames charset may be filtered both on VFS
+side and application side.  However, hardening every application that we
+would like to work on untrusted fs is unachievable idea, so moving some
+policy about allowable filenames charset to VFS looks reasonable for me.
+Smth like "fully relaxed" (no control at all) / "POSIX" (without ".",
+".." filenames, '/' and '\0' inside) / "No special characters" (globs,
+etc.) / "Fully portable POSIX" (only "A–Za–z0–9._-") / customizable.
+Though, fully portable POSIX is not about security, but about another
+application of the restriction.
+
+
+Thanks,
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
