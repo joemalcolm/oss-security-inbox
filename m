@@ -1,38 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/9
-Message-ID: <CAEZPtU5smwcEAhWaBXx=Za7yJuGpK4gEwvanoC_7uEP7OfOUkw@mail.gmail.com>
-Date: Sun, 25 Sep 2011 16:10:12 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Zeev Suraski <zeev@...d.com>
-Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/20
+Message-ID: <1592273896.87389.1300135013097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Mar 2011 16:36:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: bbPress 1.0.2 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
+Please use CVE-2011-1150
 
-> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
-> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
->
-> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
+Thanks.
 
-The whole point is that some code was not having any issue before this
-change. If the check was done earlier using is_a then this unexpected
-behavior will happen, and that actually causes a security issue in
-existing working code. The example in the blog post is very good one,
-it clearly shows that the impact on existing code is not only about
-wrongly implemented autoloader, or someone not disabling
-allow_url_fopen (I can imagine local file include being an issue as
-well under some circumstances).
-
-All in all, there is no shame or bad image to get a new CVE for
-something like that, I even see it as a good thing as it will:
-
-1. clearly explain the is_a issue and how it can impact existing code
-(with the hope that our users will review/fix their code)
-2. bring to the light again some good practices
-
-Cheers,
 -- 
-Pierre
+    JB
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+
+----- Original Message -----
+> 1. OVERVIEW
+> 
+> bbPress 1.0.2 and lower versions were vulnerable to Cross Site
+> Scripting.
+> 
+> 
+> 2. APPLICATION DESCRIPTION
+> 
+> bbPress is plain and simple forum software, plain and simple with a
+> twist from the creators of WordPress.
+> It is focused on web standards, ease of use, ease of integration, and
+> speed.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The "re" parameter was not properly sanitized upon submission to the
+> /bb-login.php url, which allows attacker to conduct Cross Site
+> Scripting attack.
+> This may allow an attacker to create a specially crafted URL that
+> would execute arbitrary script code in a victim's browser.
+> If a user has already logged in to the application, an XSS attack will
+> execute promptly.
+> If not, it will execute after the user's successful logging in.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> bbPress 1.0.2 and lower
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/bb-login.php?re=data%3Atext%2Fhtml%3Bbase64%2CPHNjcmlwdD5hbGVydCgiWFNTXG4iK2RvY3VtZW50LmNvb2tpZSk8L3NjcmlwdD4%3D
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to 1.0.3 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> bbPress Development Team
+> http://bbpress.org/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-12-23: notified vendor
+> 2011-02-24: vendor released fixed version
+> 2011-03-13: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[bbpress-1.0.2]_cross_site_scripting
+> About bbPress: http://bbpress.org/about/
+> 
+> 
+> #yehg [2011-03-13]
+> 
+> 
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
