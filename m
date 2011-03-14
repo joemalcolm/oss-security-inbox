@@ -1,21 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/8
-Message-ID: <20110811174948.GN1360@redhat.com>
-Date: Thu, 11 Aug 2011 11:49:49 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/23
+Message-ID: <1442939499.87938.1300135991782.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Mar 2011 16:53:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: improper permissions on ~/.qtnx/*.nxml
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel: tpm infoleaks
 Content-Type: text/plain; charset=utf-8
 
-A Debian bug report noted that qtnx stores its configuration file
-insecurely.  If a non-default SSH key is used, the key is stored in this
-world-readable file (~/.qtnx/*.nxml) in a world-readable directory
-(~/.qtnx/).
+I'm not able to properly parse this. Should this get one CVE id or three?
 
-Could a CVE be assigned to this please?
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=637439
-https://bugzilla.redhat.com/show_bug.cgi?id=730081
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- Original Message -----
+> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
+> infoleak
+> 
+> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
+> infoleak
+> 
+> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
+> prevents storing of previous result, leakage to other drivers
+> 
+> Credit to Peter Huewe.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=684671
+> 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
