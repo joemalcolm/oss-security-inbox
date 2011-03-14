@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/3
-Message-ID: <4D52B0C4.901@redhat.com>
-Date: Wed, 09 Feb 2011 23:20:36 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/5
+Message-Id: <201103141314.36806.ludwig.nussel@suse.de>
+Date: Mon, 14 Mar 2011 13:14:36 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+Cc: Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
-> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
-> btrfs_ioctl_space_info() and introduced security issues.  Since they
-> were all introduced at once and fixed at the same time, one CVE should
-> suffice.
->
-> Due to integer truncation or a signedness error in a typecasted
-> comparison, an integer overflow in an allocation size calculation, and
-> a failure to properly check bounds when copying data, it was possible
-> for an unprivileged user to cause a denial-of-service due to writing
-> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
->
-> -Dan
->
-> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+Dan Rosenberg wrote:
+> There are a few possible options   We could patch glibc to try to
+> raise the rlimit in addmntent(). [...]
 
-Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last 
-year. Do we have commercially supported kernels that are affected by this?
+Citing our glibc maintainer Petr Baudis via Bugzilla:
 
-Thanks, Eugene
+| I have been thinking about it and I'm not at all sure the proposed solution
+| makes sense. First, this may also concern the obscure interfaces like
+| putspent() (not sure if anyone uses these, moreover in security relevant
+| contexts). Second, messing with RLIMIT_FSIZE within library routine is just
+| evil. The caller may be multi-threaded or just do something else between
+| setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
+| programs must sanitize things like this, on their own terms.
+
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
