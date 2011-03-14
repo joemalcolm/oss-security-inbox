@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/1
-Message-ID: <4E6A385A.4030904@redhat.com>
-Date: Fri, 09 Sep 2011 18:01:30 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Matthew Barnes <mbarnes@...hat.com>, Milan Crha <mcrha@...hat.com>
-Subject: CVE Request -- evolution -- Uses insecure (non-SSL) connection when storing the sent message into the Sent folder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/2
+Message-ID: <4D7DD02A.2050307@redhat.com>
+Date: Mon, 14 Mar 2011 16:22:02 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE requests - kernel: tpm infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+[PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
+ 
+http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
+infoleak
 
-   it was found that Evolution, mail and calendar client, used insecure
-(non-SSL) connection when attempting to store sent email message into
-the Sent folder, when the Sent folder was located on the remote server.
-An attacker on the adjacent network, able to intercept the underlying
-communication could use this flaw to obtain login credentials of the
-victim.
+[PATCH 2/3] char/tpm: Call tpm_transmit with correct size
+ 
+http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
+infoleak
 
-References:
-[1] https://bugzilla.gnome.org/show_bug.cgi?id=648277
-     (upstream bug report)
-[2] 
-http://git.gnome.org/browse/evolution-data-server/commit/?id=e0ac4d79705c
-     (upstream patch)
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=697904
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=707848
+[PATCH 3/3] char/tpm: zero buffer after copying to userspace
+ 
+http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
+prevents storing of previous result, leakage to other drivers
 
-Could you allocate a CVE id for this issue?
+Credit to Peter Huewe.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+https://bugzilla.redhat.com/show_bug.cgi?id=684671
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
