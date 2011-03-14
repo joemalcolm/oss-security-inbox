@@ -1,88 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/15
-Message-ID: <20110303224920.GA22311@openwall.com>
-Date: Fri, 4 Mar 2011 01:49:20 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/15
+Message-ID: <4D7E2D7E.9080703@redhat.com>
+Date: Mon, 14 Mar 2011 16:00:14 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
+Subject: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus, all -
+Hello Josh, Steve, David, vendors,
 
-Thank you for making this public!
+   this is due the following vino deficiency:
+   [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
 
-On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
-> So I would like to open up a discussion with _all_ OSS Security folks present.
-> 
-> - Is a closed vendor coordination like vendor-sec still needed at this time?
+As noted in [1] Vino may incorrectly report, that relevant user desktop
+is reachable only over local network, when in fact it's reachable from everywhere.
 
-Yes, there's some need for it.
+As this is issue slightly on the border, not sure it should receive a CVE identifier,
+so Cc-ed David Woodhouse to elaborate more on issue impact if necessary.
 
->   Meaning: does the benefit of a closed group really outweigh the
->   "left out feeling" of non members and its annoyances?
+Under my opinion, the trust boundary is crossed (it is wrongly reported to the the user, they
+have a secure setup, when they do not have it and otherwise would perform steps to correct the
+settings). But left the final decision for further discussion.
 
-In that meaning, I am not sure.  These things are not possible to
-compare, and there are other things to consider as well.
+What are the thoughts of the others? Should this one get a CVE identifier or not?
 
-> - If yes, would it be an idea to confine or split into lists of focus groups?
->   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
+Upstream bug report:
+[3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
 
-My current proposal is: split into several sub-lists.  I'd start with
-three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-groups would be for externally submitted reports (by non-members) and
-for cross-vendor discussions.
+Ubuntu bug report (IPv6 specific):
+[4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
 
-The Linux vendors group should include distro vendors.  I am unsure
-whether it should also include Linux kernel-only folks or not.  Maybe we
-should be CC'ing security@k.o on relevant messages instead, or maybe we
-need a separate group for Linux distros+kernel.  It feels wrong to
-expose userland-only issues to the kernel-only folks.
+To David King -- David, what are the upstream plans for this issue? Is there by any
+chance upstream patch for the bug [3] yet?
 
-The researchers group would (probably) rarely receive external reports
-directly, but could be involved in Linux and/or *BSD vendors discussions
-by CC'ing them when their expertise is needed.  Alternatively, the
-researchers may be included on the vendor lists, which will enable and
-encourage them to contribute a lot more, but then we need to define some
-stricter requirements for them (some minimum activity level?)  We don't
-want a lot of inactive members on any of these private lists.
-
-As to projects such as, say, Samba and X.org, I'd exclude them.
-There's no difficulty for a researcher to notify one of these directly,
-and there's not much difficulty in CC'ing the proper one of these on a
-discussion.
-
-> - Or of course the old option is open:
->   Should we proceed with the current state as-is,
-
-Probably not, although we could do it temporarily if there's a need -
-such as to continue some discussions that are already started.
-
-> but throw a bit more GPG encryption on top?
-
-I think we should have the new list(s), if we do set them up,
-GPG-encrypting to the members.  They should also accept encrypted
-messages (to the list's key).
-
-This will reduce the likelihood of leaks somewhat - from the members'
-mail servers, from their unattended mailboxes, etc.
-
-That said, leaks would nevertheless be quite likely - or at least we
-should assume so.  For this reason, I think these lists should be used
-for medium severity issues only, and CRDs should be set not too far into
-the future (say, up to 2 weeks, with an attempt to make embargoes
-shorter than that whenever possible).
-
-Anything low severity is best made public right away - such as via
-oss-security.  Anything high severity may need to be approached more
-carefully, identifying just the affected distro vendors before initial
-notification by the reporter (then these lists won't be needed).
-
-Of course, not everyone is willing to do that...  If we do receive a
-high severity issue notification via one of the "expander" lists, we'd
-need to apply an even shorter embargo period.
-
-I'd appreciate any comments on the above.
-
-Thanks again,
-
-Alexander
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
