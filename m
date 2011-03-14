@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/8
-Message-ID: <BANLkTimQGPhOTOc1DD1dexwyYgk3HuokPw@mail.gmail.com>
-Date: Wed, 18 May 2011 16:13:05 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/12
+Message-Id: <201103140944.11094.sgrubb@redhat.com>
+Date: Mon, 14 Mar 2011 09:44:10 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: klibc@...or.com
-Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Stephan Mueller <stephan.mueller@...ec.com>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Might it be worth fixing the insecure temporary file usage?
+On Monday, March 14, 2011 08:56:45 am Dan Rosenberg wrote:
+>  As I see it, there are
+> four scenarios where this might matter:
 
-122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
-123         f = fopen(fn, "w");
+What about repudiation?
 
-What if someone else has already created that file, or put a symlink
-or hard link there?  What if someone overwrites your string with
-command injection characters despite your stripping?
+5. Attacker constructs drive image such that an unexpected access of a file is made and 
+recorded by the audit system showing someone else doing it. Consider remote logging 
+and the attacker having no way to erase access.
 
--Dan
-
-On Wed, May 18, 2011 at 4:44 AM, maximilian attems <max@...o.at> wrote:
-> Related to CVE-2011-0997
->
-> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
-> used unquoted, than proof of concept involves
-> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
->
-> fix:
-> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
-> will be part of the just to be released klibc-1.5.22
->
->
-> --
-> maks
->
-> _______________________________________________
-> klibc mailing list
-> klibc@...or.com
-> http://www.zytor.com/mailman/listinfo/klibc
->
+-Steve
