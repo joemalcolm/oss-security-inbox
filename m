@@ -1,60 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/3
-Message-ID: <20111227232509.GA832@openwall.com>
-Date: Wed, 28 Dec 2011 03:25:09 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jeff Mitchell <mitchell@....org>
-Cc: oss-security@...ts.openwall.com, cve@...re.org, ossi@....org
-Subject: Re: Disputing CVE-2011-4122
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/28
+Message-ID: <Pine.GSO.4.64.1103141755470.14482@faron.mitre.org>
+Date: Mon, 14 Mar 2011 18:09:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
-> So kcheckpass, at least for the moment, punts all of this down to
-> OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
-> its programming guide to require sanity checking of inputs at a higher
-> level (and then it should still do its own checking anyways).
 
-Sure, but is it valid and not a vulnerability when installing a package
-(containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
-the system invoke any of the configured PAM stacks, some of which may
-have side-effects?
+On Mon, 14 Mar 2011, Jan Lieskovsky wrote:
 
-I think it is not valid, and I think it is a vulnerability on its own,
-albeit a relatively minor one, regardless of PAM's pam_start() service
-name directory traversal possibility or lack thereof.
+>  this is due the following vino deficiency:
+>  [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+>  [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+>
+> As noted in [1] Vino may incorrectly report, that relevant user desktop
+> is reachable only over local network, when in fact it's reachable from 
+> everywhere.
+>
+> As this is issue slightly on the border, not sure it should receive a 
+> CVE identifier,
 
-In other words, I say that kcheckpass is vulnerable (in this different
-way) even on systems that don't use OpenPAM (or that use fixed OpenPAM).
+It should, for the reasons you gave:
 
-> That's the basis for the maintainer wanting to challenge this CVE. Even
-> if everyone agrees that kcheckpass should do some kind of filtering of
-> service names, the fact remains that OpenPAM should have been doing its
-> own sanity checking anyways (since it should never simply trust user
-> input), and OpenPAM wasn't. If it wasn't kcheckpass that exposed this
-> problem, it would eventually have been something else.
+> it is wrongly reported to the user, they have a secure setup, when they 
+> do not have it and otherwise would perform steps to correct the 
+> settings).
 
-Like I said before, this definitely makes some sense to me.  The service
-name was not supposed to be user input, though.  Normally, the same
-application provides the service name and cares about the authentication
-result, so it would not reasonably let the user choose the service name
-arbitrarily (as that would also let the user affect the authentication
-result in possibly unintended ways).  We have a rare exception here,
-where the authentication result actually does not matter to kcheckpass
-itself, but matters to another application - one in control of the
-supplied service name.  OK, that's a peculiar exception and a somewhat
-valid use case, and I fully support the OpenPAM hardening change that
-this prompted.
+There are various precedents in CVE.  For example, when a browser shows a 
+lock icon (or some other indicator of connection 
+confidentiality/integrity) when the connection isn't actually encrypted 
+(e.g. CVE-2010-3312, CVE-2009-1107).
 
-> I'll happily pass your comments along to the kcheckpass maintainer, and
-> he indicated to me during our discussions that some level of filtering
-> would probably be appropriate, but this CVE is due to OpenPAM's lack of
-> sanity checking and blaming the program that exposes it via valid (if
-> ugly) usage scenarios is misguided.
 
-We need two CVE ids then - one for OpenPAM, the other for the kcheckpass
-issue (namely, letting a user run arbitrary PAM stacks, including those
-that a sysadmin may never have intended for the user to be able to run).
+Regarding UPnP warning for vino - it's a little more difficult to clearly 
+define when a product doesn't give "enough warning" to a user, but there 
+are precedents (e.g. CVE-2010-0497, CVE-2008-4234, CVE-2000-0277, 
+CVE-1999-1055).
 
-Makes sense?
+FYI, people interested in security issues related to the UI could look at 
+CWE-445, CWE-357, and CWE-355 for starters.  It doesn't seem like a very 
+well-explored area.
 
-Alexander
+- Steve
+
+
+
+> What are the thoughts of the others? Should this one get a CVE identifier or 
+> not?
+>
+> Upstream bug report:
+> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+>
+> Ubuntu bug report (IPv6 specific):
+> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+>
+> To David King -- David, what are the upstream plans for this issue? Is there 
+> by any
+> chance upstream patch for the bug [3] yet?
+>
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
