@@ -1,51 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/7
-Message-Id: <20110403210622.d7952b28.michael.s.gilbert@gmail.com>
-Date: Sun, 3 Apr 2011 21:06:22 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/16
+Message-ID: <AANLkTi=KyDve19Xu7w1i1kkc7WOSB6U5dzme7rs5tF7T@mail.gmail.com>
+Date: Mon, 14 Mar 2011 12:31:18 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Michael Gilbert wrote:
+I've done some further investigation, and have found one of the
+underlying problems.  addmntent() will return 0 (success) even if the
+write was truncated:
 
-> Solar Designer wrote:
-> 
-> > On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
-> > > Benji's trolling does raise a couple real issues.  The private keys and
-> > > passphrases of those responding here have now become highly lucrative
-> > > targets for attackers.  Hence, everyone on this new list needs to use
-> > > good practices to keep their keys, hard drives, and computers safe.
-> > > There should probably be some common guidelines for key safety for all
-> > > participants.
-> > 
-> > Right.  We're likely to specify some minimum requirements.  For example,
-> > Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
-> > when we use the list for real.  Yet this is an improvement over the
-> > plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
-> > private keys on a server won't be allowed (but we'd have to trust
-> > members on that).
-> > 
-> > > Perhaps all discussions should be published in the open
-> > > something like 2 months after the initial posting?  That would be a
-> > > kind of maximum private coordination period.
-> > 
-> > Yes, we may do this.  Technically, an archive may be implemented as yet
-> > another subscriber with its public key, where the private key
-> > counterpart is not stored on any server and has a passphrase on it.
-> > Thus, a possible compromise of the list server won't reveal past
-> > messages (archived before the compromise, but not yet made public).
-> > 
-> > Pushing the archive public will then be a manual process, but that's OK
-> > if it's only done once a month (omitting the last month's worth of
-> > messages).  In fact, a posting to oss-security will need to be made
-> > whenever the public archive is updated.
-> 
-> Wouldn't the easiest solution be to have a cron job check that the age
-> of the message is greater than X days, decrypt it, and mail it to a
-> different archive/public list?
+  return (fprintf (stream, "%s %s %s %s %d %d\n",
+                   mntcopy.mnt_fsname,
+                   mntcopy.mnt_dir,
+                   mntcopy.mnt_type,
+                   mntcopy.mnt_opts,
+                   mntcopy.mnt_freq,
+                   mntcopy.mnt_passno)
+          < 0 ? 1 : 0);
 
-Actually, the ideal destination would be oss-sec itself.
+Of course, this only matters if the process is catching the SIGXFSZ
+that gets thrown if the resource limit is exceeded, but nearly all
+suid mount helpers block or ignore signals (if they don't, that's an
+additional problem, because the process could be terminated mid-write,
+corrupting /etc/mtab or leaving a stale lockfile, for example).
 
-Best wishes,
-Mike
+So, I think the first step is to patch glibc to return success in
+these functions if and only if the *full* contents have been written.
+Then, it will be possible to have proper error handling in these
+helper utilities.  Currently, there's really no way for these programs
+to know whether or not their calls to addmntent() actually succeeded
+besides installing a special signal handler for SIGXFSZ (ugly).
+
+After some further thinking and discussion, I think what needs to be
+done is ensuring that all helpers make mtab edits to a temporary file,
+and have proper error handling that cleans up correctly without
+copying over to the actual /etc/mtab if anything bad happens.
+Currently, some mount helpers edit /etc/mtab directly, and others use
+a temporary file but don't have the proper error handling.
+
+I think this one's going to fall into the hands of package maintainers
+and distros, I don't have time to fix all of these.
+
+-Dan
+
+On Mon, Mar 14, 2011 at 8:32 AM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> Sigh.  Unfortunately I think this is the truth - I just wish there
+> were an easier way of addressing this besides patching every affected
+> helper individually.  Unless anyone else has any ideas, I'll write up
+> some patches for affected programs later today.
+>
+> -Dan
+>
+> On Mon, Mar 14, 2011 at 8:14 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+>> Dan Rosenberg wrote:
+>>> There are a few possible options   We could patch glibc to try to
+>>> raise the rlimit in addmntent(). [...]
+>>
+>> Citing our glibc maintainer Petr Baudis via Bugzilla:
+>>
+>> | I have been thinking about it and I'm not at all sure the proposed solution
+>> | makes sense. First, this may also concern the obscure interfaces like
+>> | putspent() (not sure if anyone uses these, moreover in security relevant
+>> | contexts). Second, messing with RLIMIT_FSIZE within library routine is just
+>> | evil. The caller may be multi-threaded or just do something else between
+>> | setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
+>> | programs must sanitize things like this, on their own terms.
+>>
+>> cu
+>> Ludwig
+>>
+>> --
+>>  (o_   Ludwig Nussel
+>>  //\
+>>  V_/_  http://www.suse.de/
+>> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>>
+>
