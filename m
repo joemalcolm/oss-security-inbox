@@ -1,48 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/1
-Message-ID: <20110114170158.GB3381@pisco.westfalen.local>
-Date: Fri, 14 Jan 2011 18:01:58 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/4
+Message-ID: <AANLkTin_cxUt+ESYLFxT7W_W+8HukqwoGRPYx7XUKRx9@mail.gmail.com>
+Date: Mon, 14 Mar 2011 04:13:45 -0400
+From: Andrew Clausen <clausen@...n.upenn.edu>
+To: oss-security@...ts.openwall.com
+Cc: Kees Cook <kees@...ntu.com>
+Subject: Re: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 12, 2011 at 10:48:06PM -0600, Raphael Geissert wrote:
-> Hi,
-> 
-> Could CVE ids be assigned for the following issues? Thanks in advance.
-> 
-> There are more issues without ids, will request them later.
+Hi Kees,
 
-We're still missing CVE assignments for several issues from 2009.
-These have been requested on oss-security before, but couldn't be 
-processed by Josh/Red Hat, since RH doesn't have 2009 IDs. As such, 
-they need to be handled by MITRE:
+Thanks for your encouragement!
 
-1. Overkill (this should be a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
+> If libwipe grew similar bit-pattern handling for new(), it could be used
+> for similar purposes (trying to ferret out use-after-free or
+> use-before-init bugs in general).
 
-2. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
-
-3. FireGPG (this should be a CVE-2008 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
-http://securityvulns.com/Udocument757.html
-
-4. Burn (Homepage: http://www.bigpaul.org/burn/) (That's a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542329
-
-5. pdfroff (from GNU groff) (That's a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/groff/groff-1.20.1-owl-tmp.diff
-
-6. Jetty (That's a CVE-2009 ID)
-http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
-
-7. Konversation (That's a CVE-2009 ID)
-http://bugs.kde.org/show_bug.cgi?id=219985
+I'm not sure I understood your proposal.  Are you thinking about the
+C++ new operator?  Is there a problem with MALLOC_PERTURB_?
 
 Cheers,
-        Moritz
-
-
+Andrew
