@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/24
-Message-ID: <21216ad193b639fa0749a251f2d893bc@phocean.net>
-Date: Mon, 04 Apr 2011 16:00:29 +0200
-From: phocean <0x90@...cean.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/8
+Message-ID: <AANLkTindXDTxdQgFUatKbPw2ZFUvQRALS5B4tMXuWQ0Z@mail.gmail.com>
+Date: Mon, 14 Mar 2011 08:56:45 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Stephan Mueller <stephan.mueller@...ec.com>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
- On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
-> On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
->> Please subscribe me to the new list. I was a vendor-sec subscriber.
->>
->> pub   2048R/519FE93C 2011-01-26
->> uid                  ksha <ksha@...m.cl>
+On Mon, Mar 14, 2011 at 4:12 AM, Stephan Mueller
+<stephan.mueller@...ec.com> wrote:
+> Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
 >
-> Are you a security contact for a Linux distro, and for which one?
-> And how do we verify that?
+> Therefore, if you consider a file system untrusted, a simple flag "untrusted"
+> which disables some high-level logic (like symlinks across partitions or funky
+> file names) may just be window-dressing until the entire parsing of the
+> physical data structure layout is hardened.
 >
-> How did you receive vendor-sec mail?
->
-> Alexander
 
- I is work for Alt Linux Russia and is want to subscribe to yor list.
- Is is thank you is advance.
+I'd like to add that while this kind of hardening would be nice in
+theory, there is little urgency in making these improvements since the
+proposed attack vectors are extremely limited.  As I see it, there are
+four scenarios where this might matter:
 
--- 
- phocean
+1. An attacker convinces a victim to download an evil filesystem image
+and manually mount it.
+
+2. An attacker with physical access leverages automounting features to
+cause the mounting of evil filesystems residing on external media.
+
+3. An attacker wishes to escalate from CAP_SYS_ADMIN to full root by
+mounting a malformed an evil filesystem.
+
+4. An attacker leverages a setuid mount helper to mount an evil
+filesystem image.
+
+The first case is clearly unlikely.  The second case can be addressed
+by restricting automounting in circumstances where it is
+inappropriate, such as when the screen is locked.  The third case is
+silly, since being able to mount arbitrary filesystems can easily get
+you root without having to trick someone into doing something
+inappropriate with an evil filesystem (e.g. mount over /etc/pam.d).
+
+The final case is something distros can do something about now.  It
+should be solved by restricting the usage of setuid root mount
+helpers.  There have been far too many vulnerabilities in these types
+of utilities to be worth the risk - I think distros should strip the
+setuid bits from these helpers when possible, and otherwise ship these
+helpers with 4750 permissions and restrict their execution to trusted
+groups.  I understand that FUSE must be an exception on some
+distributions (such as Ubuntu), but other helpers (cifs, ncpfs, hgfs,
+etc.) can probably be restricted a bit more.
+
+So while improving this aspect of the kernel is on my longterm
+wishlist, I think once the actual threat model is considered, these
+kinds of attacks pose little security risk in real life that can't be
+handled by fixing problems outside the kernel.
+
+Regards,
+Dan
