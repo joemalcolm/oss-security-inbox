@@ -1,22 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/2
-Message-ID: <20110717183033.GA17408@openwall.com>
-Date: Sun, 17 Jul 2011 22:30:33 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/26
+Message-ID: <1198312966.88302.1300136762128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Mar 2011 17:06:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 17, 2011 at 05:48:21PM +0400, Solar Designer wrote:
-> I've just released crypt_blowfish 1.2:
 > 
-> http://www.openwall.com/crypt/
+> 6) Issue #6: logrotate: Shell command injection by using the shred
+> configuration directive
 > 
-> All projects using crypt_blowfish should upgrade to this newer code.
+> A shell command injection flaw was found in the way the logrotate utility
+> handled shred configuration directive (intended to ensure the log files
+> are not readable after their scheduled deletion). A local attacker could
+> use this flaw to execute arbitrary system commands (if the logrotate was
+> run under privileged system user account, root) when the logrotate
+> utility was run on a log file, within attacker controllable directory.
+> 
+> References:
+> [10] https://bugzilla.redhat.com/show_bug.cgi?id=680796
+> 
+> Proposed patch:
+> [11] https://bugzilla.redhat.com/show_bug.cgi?id=680796#c5
+> 
+> Note: Sixth CVE required. The shred option has been introduced in
+> logrotate v3.7.5.
 
-Patches for PHP 5.3 and 5.4:
+Please use CVE-2011-1154 for the above issue
 
-http://news.php.net/php.internals/54000
+> ----------
+> 
+> 7) Issue #7: logrotate: DoS due improper escaping of file names
+> within 'write state' action
+> 
+> A denial of service flaw was found in the way the logrotate utility
+> performed arguments sanitization, when performing the 'write state'
+> action.  A local attacker could use this flaw to cause abort in
+> subsequent logrotate runs via a specially-crafted log file name.
+> 
+> References:
+> [12] https://bugzilla.redhat.com/show_bug.cgi?id=680797
+> 
+> Proposed patch:
+> [13] https://bugzilla.redhat.com/show_bug.cgi?id=680797#c3
+> 
 
-Alexander
+Please use CVE-2011-1155 for the above issue
+
+Thanks.
+
+-- 
+    JB
