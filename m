@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/2
-Message-ID: <20111219162106.GA13534@ngolde.de>
-Date: Mon, 19 Dec 2011 17:21:06 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/1
+Message-ID: <4D7D6349.8020004@redhat.com>
+Date: Mon, 14 Mar 2011 08:37:29 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: python-virtualenv
+CC: Michael Gilbert <michael.s.gilbert@...il.com>, mark@...gant.net, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Please REJECT CVE-2008-2956
 Content-Type: text/plain; charset=utf-8
 
-An insecure /tmp file handling was found in python-virtualenv:
-https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
+On 03/14/2011 12:12 AM, Michael Gilbert wrote:
+> According to upstream, this is not a real issue.  See the following for
+> discussion:
+> http://developer.pidgin.im/ticket/11470
+> https://bugzilla.redhat.com/show_bug.cgi?id=453739
+> http://bugs.debian.org/488632
+>
+> Please REJECT this issue.
+>
+> Thanks,
+> Mike
 
-Can someone assign a CVE id for this?
+Cc'ed Steve.
 
-Kind regards
-Nico
+Eugene
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
