@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/4
-Message-ID: <AANLkTin4pfxJma9Ev+ygaZ-ceXcXnCNHdTS7kFr0hG-6@mail.gmail.com>
-Date: Wed, 30 Mar 2011 13:26:43 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/9
+Message-Id: <201103141406.47580.stephan.mueller@atsec.com>
+Date: Mon, 14 Mar 2011 14:06:46 +0100
+From: Stephan Mueller <stephan.mueller@...ec.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Any update on this?
+Am Montag, 14. März 2011, um 13:56:45 schrieb Dan Rosenberg:
 
-Thanks,
-Dan
+Hi Dan,
 
-On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com> wrote:
-> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
->>
->> I sent in a patch [1] resolving two issues in ROSE:
->>
->> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
->> for a remote host to provide more digipeaters than expected, resulting
->> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
->> overflows, and abort facilities parsing on failure.
->>
->> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
->> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
->> length of less than 10, resulting in an underflow in a memcpy size,
->> causing a kernel panic due to massive heap corruption.  A length of
->> greater than 20 results in a stack overflow of the callsign array.
->> Abort facilities parsing on these invalid length values."
->>
->> These issues may both result in code execution.  They may be triggered
->> by a remote attacker if the victim has a listening ROSE socket, or by
->> a local attacker (for privilege escalation) if a ROSE device exists
->> (e.g. rose0).
->>
->> Ben Hutchings followed up with a patch [2] that resolves a number of
->> other ROSE issues related to lack of size field validation, some of
->> which may also result in heap corruption.
->>
->> Not sure about the proper CVE breakdown for all these issues, since
->> the entire protocol was quite broken.  Perhaps one is enough to cover
->> everything.
->
-> I am not sure. I would just assign one for the collection of issues here but
-> I will let Steve decide instead.
->
->> [1] http://marc.info/?l=linux-netdev&m=130060344616926
->> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
->
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
+> 
+> I'd like to add that while this kind of hardening would be nice in
+> theory, there is little urgency in making these improvements since the
+> proposed attack vectors are extremely limited.  As I see it, there are
+> four scenarios where this might matter:
+
+I am not so sure that all the following is unlikely:
+> 
+> 1. An attacker convinces a victim to download an evil filesystem image
+> and manually mount it.
+
+I guess that is the most likely vector - how often did you download ISO images 
+from somewhere - it is often for me?
+
+How often did you get USB drives from somebody - it happens frequently?
+
+How often did you mount them?
+
+I guess, this happened often. The concern here is that most users are very 
+unsuspecting of the discussed issue. Most people think that you should not 
+execute files from unknown media. But hardly anyone thinks that simply 
+mounting the media or listing directory contents would cause problems. At 
+least that is what I have learned.
+
+Ciao
+Stephan
