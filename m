@@ -1,45 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/6
-Message-ID: <CAPXEBz5CVuSeHE1vX3V_Y-Y-KQtaChp8R0LTCq_AZQ5R7AV-Vg@mail.gmail.com>
-Date: Wed, 7 Sep 2011 14:29:24 +0200
-From: Henri Doreau <henri.doreau@...enbone.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/20
+Message-ID: <1592273896.87389.1300135013097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Mar 2011 16:36:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Bugs NotHugs <bugsnothugs@...il.com>,  Stjepan Gros <stjepan.gros@...il.com>
-Subject: Re: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: bbPress 1.0.2 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-2011/9/7 Jan Lieskovsky <jlieskov@...hat.com>:
-> Hello Josh, Steve, vendors,
->
->  it was reported that the scanner module for the Open Vulnerability
-> Assessment System (OpenVAS) used insecure way for creation of a
-> temporary file, when generating OVAL system characteristics document
-> from the knowledge base data available, with the ovaldi integrated tool
-> enabled. A local attacker could use this flaw to conduct symlink
-> attacks to overwrite arbitrary files on the system, accessible with the
-> privileges of the user running the SLAD daemon and / or the ovaldi OVAL
-> interpreter.
->
-> References:
-> [1] http://archives.neohapsis.com/archives/fulldisclosure/2011-09/0057.html
-> [2] http://secunia.com/advisories/45836/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=736317
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
+Please use CVE-2011-1150
 
-Hello,
-
-I am not sure if a CVE would make sense for this issue, according to
-M. Wiegand's analysis posted on the openvas-devel mailing list [1].
-
-Regards.
-
-[1] http://seclists.org/openvas/2011/q3/233
-
+Thanks.
 
 -- 
-Henri Doreau |  Greenbone Networks GmbH  |  http://www.greenbone.net
-Neuer Graben 17, 49074 Osnabrueck, Germany | AG Osnabrueck, HR B 202460
-Executive Directors: Lukas Grunwald, Dr. Jan-Oliver Wagner
+    JB
+
+
+----- Original Message -----
+> 1. OVERVIEW
+> 
+> bbPress 1.0.2 and lower versions were vulnerable to Cross Site
+> Scripting.
+> 
+> 
+> 2. APPLICATION DESCRIPTION
+> 
+> bbPress is plain and simple forum software, plain and simple with a
+> twist from the creators of WordPress.
+> It is focused on web standards, ease of use, ease of integration, and
+> speed.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The "re" parameter was not properly sanitized upon submission to the
+> /bb-login.php url, which allows attacker to conduct Cross Site
+> Scripting attack.
+> This may allow an attacker to create a specially crafted URL that
+> would execute arbitrary script code in a victim's browser.
+> If a user has already logged in to the application, an XSS attack will
+> execute promptly.
+> If not, it will execute after the user's successful logging in.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> bbPress 1.0.2 and lower
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/bb-login.php?re=data%3Atext%2Fhtml%3Bbase64%2CPHNjcmlwdD5hbGVydCgiWFNTXG4iK2RvY3VtZW50LmNvb2tpZSk8L3NjcmlwdD4%3D
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to 1.0.3 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> bbPress Development Team
+> http://bbpress.org/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-12-23: notified vendor
+> 2011-02-24: vendor released fixed version
+> 2011-03-13: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[bbpress-1.0.2]_cross_site_scripting
+> About bbPress: http://bbpress.org/about/
+> 
+> 
+> #yehg [2011-03-13]
+> 
+> 
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
