@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/4
-Message-ID: <1072365723.352933.1297192158428.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Feb 2011 14:09:18 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/6
+Message-Id: <201103140912.35250.stephan.mueller@atsec.com>
+Date: Mon, 14 Mar 2011 09:12:34 +0100
+From: Stephan Mueller <stephan.mueller@...ec.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: fuse
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the dealy, some other things popped up :(
+Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
 
-I'm going to assign 3 IDs. These look like they maybe could be combined,
-but I'd rather not try to just to have a big split later on when we find
-out various versions are affected in different ways.
+Hi Vasiliy,
 
 > 
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
-> 
-> Fuse tries to mount a directory without resolving symlinks, and then
-> tries to update mtab. If it couldn't update mtab, it would unmount the
-> directory while resolving symlinks this time, resulting in a different
-> directory being unmounted.
+> What I suggest is something like "-o untrusted" option to mount.  This
+> would mean that the system considers the input from such fs as a malicious
+> input.  Such mounted fs would try to consider the data on disk as
+> untrusted and to be as robust as possible, e.g. check against
+> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> hear opinions about the usefulness of this feature.
 
-Use CVE-2011-0541
+I completely second your concerns.
 
+However, how do you propose to implement that "untrusted" option? The core 
+problem IMHO is that the physical layout and structure in a file system is 
+assumed to be correct in general by the kernel. The physical file system 
+implementations (including any depending code, like the LSMs for interpreting 
+XATTRs) have some checks for an input validation. But I highly doubt that all 
+checks necessary for an untrusted file system layout are implemented - to have 
+all such checks would cause some speed penalties nobody wants to carry.
 
-> 
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
-> 
-> This prevents local users from changing the location of the current
-> directory from under fuse using a timing attack.
+For example, the more sophisticated physical file systems (ext3/4, btrfs or 
+xfs come to mind) use pointers to the different blocks/extends. Is it really 
+ensured that misalignment of these pointers cannot cause adverse consequences 
+- at least crash the system?
 
-Use CVE-2011-0542
+Therefore, if you consider a file system untrusted, a simple flag "untrusted" 
+which disables some high-level logic (like symlinks across partitions or funky 
+file names) may just be window-dressing until the entire parsing of the 
+physical data structure layout is hardened.
 
-
-> 
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
-> 
-> Fuse uses the --no-canonicalize mount option to prevent a symlink attack
-> on the mount point written to mtab. For backwards compatibility reasons,
-> it would fallback to using mount in an insecure way. This fallback could
-> get triggered by a user when an entry already existed in mtab.
-> 
-
-Use CVE-2011-0543
-
-Thanks.
-
--- 
-    JB
+Ciao
+Stephan
