@@ -1,96 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/2
-Message-ID: <20110620050111.GA28959@openwall.com>
-Date: Mon, 20 Jun 2011 09:01:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/6
+Message-Id: <201103140912.35250.stephan.mueller@atsec.com>
+Date: Mon, 14 Mar 2011 09:12:34 +0100
+From: Stephan Mueller <stephan.mueller@...ec.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
 
-Earlier today, while working on a test suite for John the Ripper, magnum
-discovered and reported what turned out to be a bug in John the Ripper
-and crypt_blowfish:
+Hi Vasiliy,
 
-http://www.openwall.com/lists/john-dev/2011/06/19/2
+> 
+> What I suggest is something like "-o untrusted" option to mount.  This
+> would mean that the system considers the input from such fs as a malicious
+> input.  Such mounted fs would try to consider the data on disk as
+> untrusted and to be as robust as possible, e.g. check against
+> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> hear opinions about the usefulness of this feature.
 
-The bug is inadvertent sign extension, and the fix is trivial:
+I completely second your concerns.
 
-http://www.openwall.com/lists/john-dev/2011/06/19/3
+However, how do you propose to implement that "untrusted" option? The core 
+problem IMHO is that the physical layout and structure in a file system is 
+assumed to be correct in general by the kernel. The physical file system 
+implementations (including any depending code, like the LSMs for interpreting 
+XATTRs) have some checks for an input validation. But I highly doubt that all 
+checks necessary for an untrusted file system layout are implemented - to have 
+all such checks would cause some speed penalties nobody wants to carry.
 
-This bug dates back to 1998 (or maybe even 1997).
+For example, the more sophisticated physical file systems (ext3/4, btrfs or 
+xfs come to mind) use pointers to the different blocks/extends. Is it really 
+ensured that misalignment of these pointers cannot cause adverse consequences 
+- at least crash the system?
 
-Unfortunately, the bug is not only in JtR, but also in crypt_blowfish,
-and thus in plenty of other systems and programs that have integrated
-crypt_blowfish.  Obviously, I am quite embarrassed; I should have
-included 8-bit test vectors or subjected crypt_blowfish to a fuzzer (vs.
-OpenBSD's implementation), or/and used different coding conventions (use
-"unsigned char" almost everywhere, although this has its problems too -
-such as compiler warnings on library calls that expect simple "char *").
+Therefore, if you consider a file system untrusted, a simple flag "untrusted" 
+which disables some high-level logic (like symlinks across partitions or funky 
+file names) may just be window-dressing until the entire parsing of the 
+physical data structure layout is hardened.
 
-Since the code successfully worked in JtR, I thought that it was
-essentially already fuzz-tested.  But apparently passwords with 8-bit
-characters were uncommon enough that no one noticed the bug for years.
-
-I am going to provide an official fix for crypt_blowfish (likely the
-one-liner plus added tests).  I thought I'd bring the issue up on
-oss-security sooner rather than later.
-
-Here's my preliminary analysis of the impact:
-
-http://www.openwall.com/lists/john-dev/2011/06/20/3
-http://www.openwall.com/lists/john-dev/2011/06/20/5
-
-To summarize:
-
-The majority of hashes (but not all of them) for passwords containing
-characters with the 8th bit set are incompatible with OpenBSD's (really
-nasty, but no security impact here).
-
-What's worse, approximately 3 in 16 passwords containing a single
-character with the 8th bit set have 1 to 3 characters immediately
-preceding the 8-bit character ignored.  With more than one character
-with the 8th bit set, things may be even worse.
-
-Thus, those passwords may be much easier to crack than expected.
-
-As to what's affected besides crypt_blowfish itself, I expect it to be
-PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
-crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
-identify them and notify the maintainers).
-
-Sorry about that!
-
-Since this is the second bug with char signedness in crypt_blowfish, it
-looks like I have a lesson to learn here.  The last time, the bug was
-with salt generation for hash types other than bcrypt (that code was
-little used and little tested).  Besides fixing the bug, I responded by
-running extensive tests and making sure the distribution of salts was
-uniform.  Of course, it was better to run those tests before releasing
-the code to the public.  Now we have an issue with the passwords
-themselves.  Obviously, I will be adding more tests, even though it
-would be better done before releasing the code.
-
-No, I don't expect even more sign extension bugs in crypt_blowfish.
-There's not that much code, and we've pretty much tested it by now.
-
-However, I might reconsider my C programming conventions for new code as
-it relates to use of integer types.  I think I'd rather workaround
-meaningless compiler warnings on strlen() and the like (even though
-those extra casts look dirty) than miss real bugs elsewhere.
-
-Perl's Crypt::Eksblowfish turns out to have sufficiently reworked code
-that it's unaffected:
-
-http://www.openwall.com/lists/john-dev/2011/06/20/4
-
-Oh, also some builds of crypt_blowfish (and of affected systems/apps)
-for PowerPC are probably unaffected, because char is typically unsigned
-there (unless overridden in compiler flags for compatibility with more
-typical systems).
-
-Once again, my apologies for the mess.
-
-Alexander
+Ciao
+Stephan
