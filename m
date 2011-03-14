@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/5
-Message-ID: <20111017123243.GG11883@suse.de>
-Date: Mon, 17 Oct 2011 14:32:43 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: kernel/AppArmor local denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/2
+Message-ID: <4D7DD02A.2050307@redhat.com>
+Date: Mon, 14 Mar 2011 16:22:02 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE requests - kernel: tpm infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+[PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
+ 
+http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
+infoleak
 
-A process can cause itself to Ooops by doing an invalid formatted
-write to the process attr/current when the Apparmor security framework
-is enabled (even without a apparmor profile).
+[PATCH 2/3] char/tpm: Call tpm_transmit with correct size
+ 
+http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
+infoleak
 
-e.g. by doing "echo 'AAA AAA' > /proc/$$/attr/current"
+[PATCH 3/3] char/tpm: zero buffer after copying to userspace
+ 
+http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
+prevents storing of previous result, leakage to other drivers
 
-This will cause a NULL ptr dereference, which oopses the current process and
-in connection with kdump or panic on oops will halt the machine.
+Credit to Peter Huewe.
 
-References:
-https://bugs.launchpad.net/apparmor/+bug/789409
-https://bugzilla.novell.com/show_bug.cgi?id=717209
+https://bugzilla.redhat.com/show_bug.cgi?id=684671
 
-Fix is in:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=a5b2c5b2ad5853591a6cac6134cd0f599a720865
-
-This only affected Linux kernel mainline since the introduction of
-AppArmor up to and including 3.0-rc2
-
-The SUSE patchset used in our older distribution had a additional NULL
-check avoiding the issue.
-
-Ciao, Marcus
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
