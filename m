@@ -1,33 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/4
-Message-ID: <4E9C025D.5080601@pre-sense.de>
-Date: Mon, 17 Oct 2011 12:24:29 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/21
+Message-ID: <1023890783.87472.1300135189975.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Mar 2011 16:39:49 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: double-free vulnerability in logsurfer
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Joomla! 1.6.0 | SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Am 17.10.2011 12:07, schrieb Marcus Meissner:
-> On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
->> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
->> Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
->> an insufficient treatment of an error condition that is returned by the
->> function get_word() when it is unable to correctly parse its input.
->>
->> The following versions of logsurfer are affected:
->>
->>  Logsurfer 1.5b and previous versions
->>  Logsurfer+ 1.7 and previous versions
->>
->> A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
-> 
-> How can this be exploited?
-> 
-> It seems to happen in the argument handling and I doubt an attacker can inject arguments?
+Please use CVE-2011-1151
 
-Logsurfer allows to use substrings of log-file entries as arguments for
-calling external commands. An attacker is able to exploit this
-vulnerability by injecting specially crafted strings into a log-file
-that is processed by logsurfer.
+Thanks.
 
-Cheers, Timo
+-- 
+    JB
+
+
+----- Original Message -----
+> =================================
+> Joomla! 1.6.0 | SQL Injection Vulnerability
+> =================================
+> 
+> 
+> 1. OVERVIEW
+> 
+> Joomla! 1.6.0 was vulnerable to SQL Injection.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Joomla is a free and open source content management system (CMS) for
+> publishing content on the World Wide Web and intranets. It comprises a
+> model–view–controller (MVC) Web application framework that can also be
+> used independently.
+> Joomla is written in PHP, uses object-oriented programming (OOP)
+> techniques and software design patterns, stores data in a MySQL
+> database, and includes features such as page caching, RSS feeds,
+> printable versions of pages, news flashes, blogs, polls, search, and
+> support for language internationalization.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Parameters (filter_order, filer_order_Dir) were not properly sanitized
+> in Joomla! that lead to SQL Injection vulnerability. This could an
+> attacker to inject or manipulate SQL queries in the back-end database,
+> allowing for the manipulation or disclosure of arbitrary data.
+> 
+> 
+> 4. VERSION AFFECTED
+> 
+> Joomla! 1.6.0
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=yehg.net.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAA,&filter_order_Dir=2&limit=3&limitstart=4
+> 
+> 
+> http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=1,&filter_order_Dir=yehg.net.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB,&limit=3&limitstart=4
+> 
+> 
+> This is the exact same variant as shown in Joomla! 1.5.21:
+> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
+> 
+> We thought Joomla! team would fix this issue in 1.6.0 stable release
+> whilst they fixed it in Joomla! 1.5.22!
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to Joomla! 1.6.1 or higher
+> 
+> 
+> 7. VENDOR
+> 
+> Joomla! Developer Team
+> http://www.joomla.org
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2011-01-24: notified vendor
+> 2011-03-08: vendor released fix
+> 2011-03-14: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Vendor Advisory URL:
+> http://developer.joomla.org/security/news/328-20110201-core-sql-injection-path-disclosure.html
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_sql_injection
+> OWASP Top 10:
+> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+> CWE-89: http://cwe.mitre.org/data/definitions/89.html
+> 
+> 
+> #yehg [2011-03-14]
+> 
+> 
+> 
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
