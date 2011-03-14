@@ -1,57 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/1
-Message-ID: <4EB74C76.20606@redhat.com>
-Date: Sun, 06 Nov 2011 20:11:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/13
+Message-ID: <AANLkTin4JcpGaePPxs=knr29d5_C=syVCD86-_X+T=OH@mail.gmail.com>
+Date: Mon, 14 Mar 2011 10:50:02 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: Re: CVE request for Calibre
+Subject: CVE request: format-string vulnerability in PHP Phar extension
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2011 02:45 PM, Jason A. Donenfeld wrote:
-> Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
-> current version that has been out for quite some time now. These require a
-> CVE. Issues 8 through 14 are ones introduced only during development and
-So to confirm these issues will be assigned a CVE (double checking since
-this has been quite the mess):
-> were not released, and do not need a CVE.
->
-> So where does that leave us with the CVEs? Well, there are the issues that
-> were "released" with a "version" of Calibre, and then the trove of bugs he
-> introduced in the middle. I'll try to recap and separate which is which:
->
-> 1. Ability to create root owned directory anywhere. The mount helper calls
-> mkdir(argv[3], ...).
->
-> 2. Ability to remove any empty directory on the system.
->
-> 3. Ability to create user_controlled_dir/.created_by_calibre_mount_helper
-> anywhere on the filesystem.
->
-> 4. Ability to delete user_controlled_dir/.created_by_calibre_mount_helper
-> anywhere on the filesystem.
->
-> 5. Ability to inject arguments into 'mount' being exec'd. On lines 78, 81,
-> and 83, the final two arguments to mount are user controlled. On lines
-> 1033, 106, 108, 139, and 141, the last argument to unmount/eject is user
-> controlled. The "exists()" check can be subverted via race condition or by
-> creating an existing file in the working directory with a filename equal to
-> the desired injected argument.
->
-> 6. Ability to execute any program as root. The mount helper makes use of
-> execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the first
-> argument does not start with a / character. Because of this, execlp will
-> search PATH for the executable to run. PATH is user controlled, and thus it
-> is trivial to write a program that spawns a shell and give it "mount" as a
-> filename, and direct PATH to its directory.
->
-> 7. Ability to mount any device to anywhere. This leads to local root, since
-> you can mount over /etc/ or /etc/pam.d/ or choose-your-own-adventure.
->
-> 7.1. Ability to unmount any device.
+Hi,
+I just found several format-string vulnerability in PHP Phar extension, a
+bug has been filed in the PHP bugtracker (private):
+http://bugs.php.net/bug.php?id=54247
+On error several class methods passes the supplied argument to
+zend_throw_exception_ex()
+which prints a formatted error message using such value as the formatter
+string.
 
+$ sapi/cli/php ../bug.php "%08x.%08x.%08x.%08x.%08x"
+PHP Fatal error: Uncaught exception 'PharException' with message 'unable to
+open phar for reading "00000008.00000000.bf95c204.0963e050.00000014"' in
+/home/felipe/dev/bug.php:4
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
+Regards,
+Felipe Pena
 
