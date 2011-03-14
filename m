@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/08/1
-Message-ID: <20111008165504.GA1977@albatros>
-Date: Sat, 8 Oct 2011 20:55:04 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/14
+Message-ID: <AANLkTimHdSVP+bJzJKjG=3=7vOvke1tjvH=CoteXc5Tv@mail.gmail.com>
+Date: Mon, 14 Mar 2011 10:59:04 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Reuben Hawkins <reubenhwk@...il.com>
-Subject: Re: radvd 1.8.2 released with security fixes
+Subject: Re: CVE request: format-string vulnerability in PHP Phar extension
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 07, 2011 at 15:41 +0100, John Haxby wrote:
-> On 07/10/11 14:03, Robert Święcki wrote:
-> > On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
-> > <huzaifas@...hat.com> wrote:
-> >> Shouldnt this be:
-> >>
-> >>        /* No path traversal */
-> >>        if (strstr(iface, "..") || strchr(iface, '/'))
-> >>                return -1;
-> > FWIW, this will reject too much;
-> >
-> > /path/to/sth..jpg
-> >
-> 
-> Indeed, since I don't believe that iface can reasonably include a "/"
-> its sufficient to check for that.   If not then you need to check for
-> "../" at the beginning of iface and "/.." anywhere else in it.   But
-> simply forbidding "/" should be fine.
+2011/3/14 Felipe Pena <felipensp@...il.com>
 
-Crap, thank you for noticing it, guys.  The fix should be:
-
-https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
-
-Now, "", "..", "." and filenames with "/" inside are denied.
-
-
-Thanks,
+> Hi,
+> I just found several format-string vulnerability in PHP Phar extension, a
+> bug has been filed in the PHP bugtracker (private):
+> http://bugs.php.net/bug.php?id=54247
+> On error several class methods passes the supplied argument to  zend_throw_exception_ex()
+> which prints a formatted error message using such value as the formatter
+> string.
+>
+> $ sapi/cli/php ../bug.php "%08x.%08x.%08x.%08x.%08x"
+> PHP Fatal error: Uncaught exception 'PharException' with message 'unable to
+> open phar for reading "00000008.00000000.bf95c204.0963e050.00000014"' in
+> /home/felipe/dev/bug.php:4
+>
+>
+A fix has been committed for this issue:
+http://svn.php.net/viewvc?view=revision&revision=309221
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Regards,
+Felipe Pena
+
