@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/12
-Message-ID: <123634419.1821504.1312480424402.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 4 Aug 2011 13:53:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/7
+Message-ID: <AANLkTi=nWJydC2ZgAc83xmN_L8HMDS3tyw_wSs-niTjy@mail.gmail.com>
+Date: Mon, 14 Mar 2011 08:32:24 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foomatic-gui
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
+Sigh.  Unfortunately I think this is the truth - I just wish there
+were an easier way of addressing this besides patching every affected
+helper individually.  Unless anyone else has any ideas, I'll write up
+some patches for affected programs later today.
 
+-Dan
 
------ Original Message -----
-> On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
-> > So while there aren't that many "users" of the old
-> > system-config-printer - it appears that debian old-stable (lenny)
-> > maybe vulnerable (where python-smbc is not available) ... is it
-> > worth
-> > while giving system-config-printer a 2008 CVE as well (if none
-> > currently exists).
-> 
-> Yes, I think it is worth doing that.
-> 
-
-This request doesn't really make any sense. It deserves a 2011 ID, that's
-when the flaw was discovered.
-
-My impression is that the code is the same, which means they will share the
-same ID. If the code is totally different, we will want to split. Time, you
-know best, is the code in question the same, or is it different?
-
-Thanks.
-
--- 
-    JB
+On Mon, Mar 14, 2011 at 8:14 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+> Dan Rosenberg wrote:
+>> There are a few possible options   We could patch glibc to try to
+>> raise the rlimit in addmntent(). [...]
+>
+> Citing our glibc maintainer Petr Baudis via Bugzilla:
+>
+> | I have been thinking about it and I'm not at all sure the proposed solution
+> | makes sense. First, this may also concern the obscure interfaces like
+> | putspent() (not sure if anyone uses these, moreover in security relevant
+> | contexts). Second, messing with RLIMIT_FSIZE within library routine is just
+> | evil. The caller may be multi-threaded or just do something else between
+> | setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
+> | programs must sanitize things like this, on their own terms.
+>
+> cu
+> Ludwig
+>
+> --
+>  (o_   Ludwig Nussel
+>  //\
+>  V_/_  http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>
