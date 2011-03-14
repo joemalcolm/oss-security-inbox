@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/10
-Message-ID: <20110124215711.GF4979@outflux.net>
-Date: Mon, 24 Jan 2011 13:57:11 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/18
+Message-ID: <20110314171620.GI31820@redhat.com>
+Date: Mon, 14 Mar 2011 11:16:21 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: multiple gypsy vulnerabilities
+Subject: CVE request for python-feedparser
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+python-feedparser 5.0.1 fixes three flaws:
 
-I'd like to get CVEs assigned for two issues in Gypsy[1]:
+https://code.google.com/p/feedparser/
 
-reads arbitrary files as root user on behalf of regular user
-https://bugs.freedesktop.org/show_bug.cgi?id=33431
+* Fix  issue 91  (invalid text in XML declaration causes sanitizer to crash)
+* Fix  issue 254  (sanitization can be bypassed by malformed XML comments)
+* Fix  issue 255  (sanitizer doesn't strip unsafe URI schemes) 
 
-buffer overflow in nmea device input handling
-https://bugs.freedesktop.org/show_bug.cgi?id=33431
+Could CVE names be assigned to these issues?
 
-Thanks,
+It looks like the last two issues were introduced in 5.0, the first
+issue was reported against 4.1.
 
--Kees
-
-[1] http://gypsy.freedesktop.org/wiki/
+Thanks.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Vincent Danen / Red Hat Security Response Team 
