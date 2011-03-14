@@ -1,57 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/12
-Message-ID: <20110303213640.GG372@outflux.net>
-Date: Thu, 3 Mar 2011 13:36:40 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/28
+Message-ID: <Pine.GSO.4.64.1103141755470.14482@faron.mitre.org>
+Date: Mon, 14 Mar 2011 18:09:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 06:31:08PM +0000, Mark J Cox wrote:
-> We monitor how we first found out about every issue we eventually
-> fix, and if we found out before or after the issue was public.
-> 
-> For vendor-sec, during last calendar years
-> 
-> date		# issues in advance		# issues already public
-> 2008		69				32
-> 2009		57				17
-> 2010		29				22
-> 
-> That 29 represents just 4% of the total number of our
-> vulnerabilities fixed in 2010.  The median time of embargo for those
-> 29 issues was 15 days (average 24)
 
-This certainly underscores that very few flaws need vendor-sec
-coordination, but I would suspect that out of those roughly 725 flaws,
-many of the really critical ones came through vendor-sec. Does that match
-your records? (Ubuntu doesn't currently track the origin of flaws beyond
-giving credit, so I'm curious if RH's data matches my sense of critical
-flaw origin.)
+On Mon, 14 Mar 2011, Jan Lieskovsky wrote:
 
-I'm also curious what "issues already public but found out about it on
-vendor-sec" means? Does that mean it was inappropriately brought to
-vendor-sec after it was already public, or that RH found out about it
-after it was public even though it had already been discussed privately
-on vendor-sec?
+>  this is due the following vino deficiency:
+>  [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+>  [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+>
+> As noted in [1] Vino may incorrectly report, that relevant user desktop
+> is reachable only over local network, when in fact it's reachable from 
+> everywhere.
+>
+> As this is issue slightly on the border, not sure it should receive a 
+> CVE identifier,
 
-> But I think that trend is what was expected, as upstream projects
-> communicate with affected vendors directly, and we use oss-security
-> for issues that don't need embargo or co-ordination.
+It should, for the reasons you gave:
 
-Several upstreams, though disappointingly not the Linux kernel, are very
-good about keeping their end-users in mind and providing direct distro
-coordination for important security updates (MIT Kerberos comes to mind
-first as a great example). This number of upstreams has been growing,
-but it's not nearly large enough to supplant a vendor-sec-like mailing
-list, IMO.
+> it is wrongly reported to the user, they have a secure setup, when they 
+> do not have it and otherwise would perform steps to correct the 
+> settings).
 
-I'm all for the public disclosure of things that are low priority. But I
-think it's important to maintain coordination for really nasty flaws,
-otherwise we're in a position to really do a disservice to end-users.
+There are various precedents in CVE.  For example, when a browser shows a 
+lock icon (or some other indicator of connection 
+confidentiality/integrity) when the connection isn't actually encrypted 
+(e.g. CVE-2010-3312, CVE-2009-1107).
 
--Kees
 
--- 
-Kees Cook
-Ubuntu Security Team
+Regarding UPnP warning for vino - it's a little more difficult to clearly 
+define when a product doesn't give "enough warning" to a user, but there 
+are precedents (e.g. CVE-2010-0497, CVE-2008-4234, CVE-2000-0277, 
+CVE-1999-1055).
+
+FYI, people interested in security issues related to the UI could look at 
+CWE-445, CWE-357, and CWE-355 for starters.  It doesn't seem like a very 
+well-explored area.
+
+- Steve
+
+
+
+> What are the thoughts of the others? Should this one get a CVE identifier or 
+> not?
+>
+> Upstream bug report:
+> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+>
+> Ubuntu bug report (IPv6 specific):
+> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+>
+> To David King -- David, what are the upstream plans for this issue? Is there 
+> by any
+> chance upstream patch for the bug [3] yet?
+>
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
