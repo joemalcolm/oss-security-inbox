@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/1
-Message-ID: <1299707834.2978.92.camel@sorbet.thuis.net>
-Date: Wed, 09 Mar 2011 22:57:14 +0100
-From: Arthur de Jong <arthur@...hurdejong.org>
-To: nss-pam-ldapd-announce <nss-pam-ldapd-announce@...ts.arthurdejong.org>
-Cc: oss-security@...ts.openwall.com
-Subject: nss-pam-ldapd security advisory (CVE-2011-0438)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/10
+Message-Id: <201103141428.59764.ludwig.nussel@suse.de>
+Date: Mon, 14 Mar 2011 14:28:59 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
+Stephan Mueller wrote:
+> Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
+> > What I suggest is something like "-o untrusted" option to mount.  This
+> > would mean that the system considers the input from such fs as a malicious
+> > input.  Such mounted fs would try to consider the data on disk as
+> > untrusted and to be as robust as possible, e.g. check against
+> > "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> > hear opinions about the usefulness of this feature.
+> 
+> I completely second your concerns.
+> 
+> However, how do you propose to implement that "untrusted" option? The core 
+> problem IMHO is that the physical layout and structure in a file system is 
+> assumed to be correct in general by the kernel. The physical file system 
+> implementations (including any depending code, like the LSMs for interpreting 
+> XATTRs) have some checks for an input validation. But I highly doubt that all 
+> checks necessary for an untrusted file system layout are implemented - to have 
+> all such checks would cause some speed penalties nobody wants to carry.
 
-Russell Sim discovered a serious security vulnerability in development
-release 0.8.0 of nss-pam-ldapd that allows authentication with an
-incorrect password for local user accounts.
+For the hot plugged USB drive case speed of the file system
+shouldn't be much of a concern. I wonder whether it would be
+possible to create a wrapper API that allow to compile kernel fs
+modules as user space programs for use with e.g. fuse.
 
-The PAM module will erroneously return a success code when the user
-cannot be found in LDAP. Exploitability depends on the details of the
-PAM configuration but on systems that don't use the minimum_uid PAM
-option it may be possible to log in to any local account, including
-root.
-
-This problem only affects the 0.8.0 development release of
-nss-pam-ldapd. Earlier releases are not affected.
-
-This problem has been assigned CVE-2011-0438.
-
-More details are available at:
-http://arthurdejong.org/nss-pam-ldapd/news.html#20110309
-
-Affected users are advised to apply the attached patch, upgrade to 0.8.1
-(which will be released shortly), downgrade to 0.7.13 or disable
-nss-pam-ldapd's PAM module.
+cu
+Ludwig
 
 -- 
--- arthur - arthur@...hurdejong.org - http://arthurdejong.org --
-
-View attachment "nss-pam-ldapd-0.8.0-authentication-bypass-fix.patch" of type "text/x-patch" (424 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
