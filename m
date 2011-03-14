@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/22
-Message-ID: <20110404135615.GA16747@suse.de>
-Date: Mon, 4 Apr 2011 15:56:15 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/11
+Message-Id: <201103140937.51078.sgrubb@redhat.com>
+Date: Mon, 14 Mar 2011 09:37:50 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
-> Dan Rosenberg wrote:
-> 
-> > On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
-> > > This is pathetic. You've all just made your personal and 'work' email
-> > > addresses targets by having a ridiculous public 'signup' system, and
-> > > the fact you all feel the need to hide behind some sort of veil for
-> > > security issues.
-> > >
-> > >
+On Monday, March 14, 2011 09:28:59 am Ludwig Nussel wrote:
+> Stephan Mueller wrote:
+> > Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
+> > > What I suggest is something like "-o untrusted" option to mount.  This
+> > > would mean that the system considers the input from such fs as a
+> > > malicious input.  Such mounted fs would try to consider the data on
+> > > disk as untrusted and to be as robust as possible, e.g. check against
+> > > "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> > > hear opinions about the usefulness of this feature.
 > > 
-> > Do you really think anyone is gaining new information by discovering
-> > that, say, a member of the security team for a major distro will be on
-> > this mailing list?  Such information seems pretty obvious to me.
+> > I completely second your concerns.
+> > 
+> > However, how do you propose to implement that "untrusted" option? The
+> > core problem IMHO is that the physical layout and structure in a file
+> > system is assumed to be correct in general by the kernel. The physical
+> > file system implementations (including any depending code, like the LSMs
+> > for interpreting XATTRs) have some checks for an input validation. But I
+> > highly doubt that all checks necessary for an untrusted file system
+> > layout are implemented - to have all such checks would cause some speed
+> > penalties nobody wants to carry.
 > 
-> Benji's trolling does raise a couple real issues.  The private keys and
-> passphrases of those responding here have now become highly lucrative
-> targets for attackers.  Hence, everyone on this new list needs to use
-> good practices to keep their keys, hard drives, and computers safe.
-> There should probably be some common guidelines for key safety for all
-> participants.
+> For the hot plugged USB drive case speed of the file system
+> shouldn't be much of a concern. I wonder whether it would be
+> possible to create a wrapper API that allow to compile kernel fs
+> modules as user space programs for use with e.g. fuse.
 
-So would be my work mailbox in previous times.
+I think you lose auditing in that case. 
 
-I guess you are overestimating the value of the information that could
-be possibly gained.
+I'm still thinking improving fsck is the best solution. The kernel can be hardened. 
+That is what tools like fsfuzz can help with. But in the case where the drive is 
+otherwise fine, but some unexpected characters are in otherwise legal directory 
+structure is something unexpected. Normally the kernel prevents certain sequences, but 
+if the fs has been modified through a different technique, then the kernel was not able 
+to prevent these modifications. All scripts and programs depend on the kernel making 
+sure this never happened.
 
-Ciao, Marcus
+-Steve
