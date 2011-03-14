@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/2
-Message-ID: <20110315030124.GI6691@dojo.mi.org>
-Date: Mon, 14 Mar 2011 23:01:24 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/14
+Message-ID: <AANLkTimHdSVP+bJzJKjG=3=7vOvke1tjvH=CoteXc5Tv@mail.gmail.com>
+Date: Mon, 14 Mar 2011 10:59:04 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: CVE request: format-string vulnerability in PHP Phar extension
 Content-Type: text/plain; charset=utf-8
 
-[catching up on older emails]
+2011/3/14 Felipe Pena <felipensp@...il.com>
 
-:> > They do this already today, that's what security@...nel.org is for, and
-:> > it gets a bit of traffic like this every week.
-:> 
-:> Is this list open to the public?  It doesn't seem to be available on
-:> http://vger.kernel.org/vger-lists.html.
-:
-:No, it is closed, as it should be as potential security problems are
-:mailed there.  You don't want that to be totally open, right?
-
-One suggestion I've made in the past is to have the list _archives_ be
-open.  So anything older than, say, a month is made public.  That way,
-folks can see how issues were disclosed, how decisions were reached,
-etc.  for old issues that are no longer under embargo.  The way I see
-it, if we don't publish the list archive on our own terms, miscreants
-will get around to publishing it for us.  
+> Hi,
+> I just found several format-string vulnerability in PHP Phar extension, a
+> bug has been filed in the PHP bugtracker (private):
+> http://bugs.php.net/bug.php?id=54247
+> On error several class methods passes the supplied argument to  zend_throw_exception_ex()
+> which prints a formatted error message using such value as the formatter
+> string.
+>
+> $ sapi/cli/php ../bug.php "%08x.%08x.%08x.%08x.%08x"
+> PHP Fatal error: Uncaught exception 'PharException' with message 'unable to
+> open phar for reading "00000008.00000000.bf95c204.0963e050.00000014"' in
+> /home/felipe/dev/bug.php:4
+>
+>
+A fix has been committed for this issue:
+http://svn.php.net/viewvc?view=revision&revision=309221
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Why make trillions when we could make... billions?"                -Dr. Evil
+Regards,
+Felipe Pena
+
