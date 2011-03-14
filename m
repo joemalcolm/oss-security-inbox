@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/15
-Message-ID: <20110726201254.GA28754@pisco.westfalen.local>
-Date: Tue, 26 Jul 2011 22:12:55 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: Re: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/19
+Message-ID: <20110314190345.GA4114@netbookdave>
+Date: Mon, 14 Mar 2011 20:03:45 +0100
+From: David King <amigadave@...gadave.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 26, 2011 at 11:26:29AM -0400, Dan Rosenberg wrote:
-> On Tue, Jul 26, 2011 at 11:19 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
-> > Hi,
-> > does anyone have further information on
-> > http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
-> > http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
-> > and whether if affects the open source version of Virtual Box?
-> >
-> 
-> These issues were found by Tarjei Mandt, and are described in this blog post:
-> http://mista.nu/blog/author/mista/
-> 
-> CVE-2011-2300 allows gaining elevated privileges within a Windows
-> guest due to a vulnerability in the Windows Guest Additions.
-> CVE-2011-2305 allows executing arbitrary code on the host due to a
-> vulnerability in the VirtualBox graphics stack.
-> 
-> Tarjei found these issues via code auditing, so it follows that they
-> affect the open source version of VirtualBox.
+On 2011-03-14 16:00, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+>Hello Josh, Steve, David, vendors,
+>
+>   this is due the following vino deficiency:
+>   [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+>   [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+>
+>As noted in [1] Vino may incorrectly report, that relevant user desktop
+>is reachable only over local network, when in fact it's reachable from everywhere.
 
-Thanks, adding MITRE to CC:, so that they can update the descriptions
-of the entries.
+[snip]
 
-Cheers,
-        Moritz
+>Upstream bug report:
+>[3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+>
+>Ubuntu bug report (IPv6 specific):
+>[4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+>
+>To David King -- David, what are the upstream plans for this issue? Is there by any
+>chance upstream patch for the bug [3] yet?
+
+I only took over the Vino maintainership 10 days ago, so I am not 
+familiar with all parts of the code yet, including this one. Now that I 
+have been notified of the issue, I will work on fixing it, but for the 
+next stable release (GNOME 3.0), due in a few weeks, I think that it 
+will be safest to disable this functionality.
+
+As for the UPnP issue listed at [2], I was planning to fix this during 
+the GNOME 3.2 release cycle, as it will require changing translatable 
+strings, and the project is already in a string freeze. The upstream bug 
+has some more details:
+
+https://bugzilla.gnome.org/show_bug.cgi?id=594521
+
+I could also disable this functionality as a workaround.
+
+>Thanks && Regards, Jan.
+
+-- 
+http://amigadave.com/
