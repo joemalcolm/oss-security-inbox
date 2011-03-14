@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/7
-Message-ID: <20110809204226.GA5178@inutil.org>
-Date: Tue, 9 Aug 2011 22:42:26 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/12
+Message-Id: <201103140944.11094.sgrubb@redhat.com>
+Date: Mon, 14 Mar 2011 09:44:10 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: Two kernel issues
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Stephan Mueller <stephan.mueller@...ec.com>, Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-the following two issues also seem to warrant a CVE assignment:
+On Monday, March 14, 2011 08:56:45 am Dan Rosenberg wrote:
+>  As I see it, there are
+> four scenarios where this might matter:
 
-1. staging: comedi: fix infoleak to userspace
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
+What about repudiation?
 
-(It's a staging driver and I'm unsure whether we have assigned
- CVE IDs for staging drivers in the past. OTOH, this driver
- is enabled in the Debian 6.0 kernel)
- 
-2. [SCSI] pmcraid: reject negative request size
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+5. Attacker constructs drive image such that an unexpected access of a file is made and 
+recorded by the audit system showing someone else doing it. Consider remote logging 
+and the attacker having no way to erase access.
 
-Cheers,
-        Moritz
+-Steve
