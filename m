@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/5
-Message-ID: <20110427202653.0a28aee7@orphan>
-Date: Wed, 27 Apr 2011 20:26:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/4
+Message-ID: <AANLkTin_cxUt+ESYLFxT7W_W+8HukqwoGRPYx7XUKRx9@mail.gmail.com>
+Date: Mon, 14 Mar 2011 04:13:45 -0400
+From: Andrew Clausen <clausen@...n.upenn.edu>
 To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Cc: Kees Cook <kees@...ntu.com>
+Subject: Re: announcing libwipe
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Apr 2011 14:19:43 -0400 Dan Rosenberg wrote:
+Hi Kees,
 
-> > Steve, it seems CVE-2011-1676 should get marked as rejected or
-> > disputed.
-> 
-> I currently only have CVE-2011-1089, which seems to be for glibc not
-> indicating failure of addmntent() calls.  Were additional CVEs
-> assigned to some of the individual issues?  If so, would you mind
-> posting them here to avoid duplicate requests?
+Thanks for your encouragement!
 
-CVE-2011-1675 - CVE-2011-1681 based on your list here:
-http://thread.gmane.org/gmane.comp.security.oss.general/4374/focus=4516
+> If libwipe grew similar bit-pattern handling for new(), it could be used
+> for similar purposes (trying to ferret out use-after-free or
+> use-before-init bugs in general).
 
-CVE-2011-1089 for similar nfs-utils:
-http://thread.gmane.org/gmane.comp.security.oss.general/4954
+I'm not sure I understood your proposal.  Are you thinking about the
+C++ new operator?  Is there a problem with MALLOC_PERTURB_?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Cheers,
+Andrew
