@@ -1,44 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/4
-Message-ID: <20110421140130.GA7825@albatros>
-Date: Thu, 21 Apr 2011 18:01:31 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/16
+Message-ID: <AANLkTi=KyDve19Xu7w1i1kkc7WOSB6U5dzme7rs5tF7T@mail.gmail.com>
+Date: Mon, 14 Mar 2011 12:31:18 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: buffer overflow and DoS issues in agp
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I've done some further investigation, and have found one of the
+underlying problems.  addmntent() will return 0 (success) even if the
+write was truncated:
 
-https://lkml.org/lkml/2011/4/14/293
+  return (fprintf (stream, "%s %s %s %s %d %d\n",
+                   mntcopy.mnt_fsname,
+                   mntcopy.mnt_dir,
+                   mntcopy.mnt_type,
+                   mntcopy.mnt_opts,
+                   mntcopy.mnt_freq,
+                   mntcopy.mnt_passno)
+          < 0 ? 1 : 0);
 
-"pg_start is copied from userspace on AGPIOC_BIND and AGPIOC_UNBIND ioctl
-cmds of agp_ioctl() and passed to agpioc_bind_wrap().  As said in the
-comment, (pg_start + mem->page_count) may wrap in case of AGPIOC_BIND,
-and it is not checked at all in case of AGPIOC_UNBIND.  As a result, user
-with sufficient privileges (usually "video" group) may generate either
-local DoS or privilege escalation."
+Of course, this only matters if the process is catching the SIGXFSZ
+that gets thrown if the resource limit is exceeded, but nearly all
+suid mount helpers block or ignore signals (if they don't, that's an
+additional problem, because the process could be terminated mid-write,
+corrupting /etc/mtab or leaving a stale lockfile, for example).
 
+So, I think the first step is to patch glibc to return success in
+these functions if and only if the *full* contents have been written.
+Then, it will be possible to have proper error handling in these
+helper utilities.  Currently, there's really no way for these programs
+to know whether or not their calls to addmntent() actually succeeded
+besides installing a special signal handler for SIGXFSZ (ugly).
 
-https://lkml.org/lkml/2011/4/14/294
-https://lkml.org/lkml/2011/4/19/400
+After some further thinking and discussion, I think what needs to be
+done is ensuring that all helpers make mtab edits to a temporary file,
+and have proper error handling that cleans up correctly without
+copying over to the actual /etc/mtab if anything bad happens.
+Currently, some mount helpers edit /etc/mtab directly, and others use
+a temporary file but don't have the proper error handling.
 
-"page_count is copied from userspace.  agp_allocate_memory() tries to
-check whether this number is too big, but doesn't take into account the
-wrap case.  Also agp_create_user_memory() doesn't check whether
-alloc_size is calculated from num_agp_pages variable without overflow.
-This may lead to allocation of too small buffer with following buffer
-overflow.
+I think this one's going to fall into the hands of package maintainers
+and distros, I don't have time to fix all of these.
 
-Another problem in agp code is not addressed in the patch - kernel memory
-exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls).  It is not checked
-whether requested pid is a pid of the caller (no check in agpioc_reserve_wrap()).
-Each allocation is limited to 16KB, though, there is no per-process limit.
-This might lead to OOM situation, which is not even solved in case of the
-caller death by OOM killer - the memory is allocated for another (faked)
-process."
+-Dan
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+On Mon, Mar 14, 2011 at 8:32 AM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> Sigh.  Unfortunately I think this is the truth - I just wish there
+> were an easier way of addressing this besides patching every affected
+> helper individually.  Unless anyone else has any ideas, I'll write up
+> some patches for affected programs later today.
+>
+> -Dan
+>
+> On Mon, Mar 14, 2011 at 8:14 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+>> Dan Rosenberg wrote:
+>>> There are a few possible options   We could patch glibc to try to
+>>> raise the rlimit in addmntent(). [...]
+>>
+>> Citing our glibc maintainer Petr Baudis via Bugzilla:
+>>
+>> | I have been thinking about it and I'm not at all sure the proposed solution
+>> | makes sense. First, this may also concern the obscure interfaces like
+>> | putspent() (not sure if anyone uses these, moreover in security relevant
+>> | contexts). Second, messing with RLIMIT_FSIZE within library routine is just
+>> | evil. The caller may be multi-threaded or just do something else between
+>> | setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
+>> | programs must sanitize things like this, on their own terms.
+>>
+>> cu
+>> Ludwig
+>>
+>> --
+>>  (o_   Ludwig Nussel
+>>  //\
+>>  V_/_  http://www.suse.de/
+>> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>>
+>
