@@ -1,27 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/2
-Message-ID: <4DA3BC0B.9030005@redhat.com>
-Date: Tue, 12 Apr 2011 10:42:19 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/23
+Message-ID: <1442939499.87938.1300135991782.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Mar 2011 16:53:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE requests: Three Linux kernel issues
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel: tpm infoleaks
 Content-Type: text/plain; charset=utf-8
 
-> [3] http://permalink.gmane.org/gmane.linux.kernel/1124409 :
->
-> | [PATCH] char: istallion: fix arbitrary kernel memory reads/writes
-> |
-> | stli_brdstats is defined as global variable.  After de-BKL-ization in
-> | the patch b4eda9cb48eac1b7 an access to the variable is not serialized
-> | anymore.  This leads to the TOCTOU in stli_getbrdstats():
-[...]
+I'm not able to properly parse this. Should this get one CVE id or three?
 
-de-BKL-ization patch b4eda9cb48eac1b7 happened in v2.6.36-rc1.
+Thanks.
 
-I don't think this qualifies a CVE as this is a staging driver (not 
-supported, experimental, buggy, use at your own risk).
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+----- Original Message -----
+> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
+> infoleak
+> 
+> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
+> infoleak
+> 
+> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
+> prevents storing of previous result, leakage to other drivers
+> 
+> Credit to Peter Huewe.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=684671
+> 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
