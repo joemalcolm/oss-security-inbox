@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/11
-Message-ID: <CABqVa38sEf_D63MGfBC+woBx_KCWDJfQOUXOpyiPrnoO1mP7zA@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:10:11 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/18
+Message-ID: <20110314171620.GI31820@redhat.com>
+Date: Mon, 14 Mar 2011 11:16:21 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: openssh 5.8p2
+Subject: CVE request for python-feedparser
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 7:44 AM, Marcus Meissner <meissner@...e.de> wrote:
-> Hi,
->
-> http://www.openssh.com/txt/release-5.8p2
-> http://www.openssh.com/txt/portable-keysign-rand-helper.adv
-> http://www.nessus.org/plugins/index.php?view=single&id=53841
->
-> has a security issue listed without a assigned CVE.
->
-> Could someone please assign a CVE id?
->
-> (We are not affected, but as we got customer queries regarding the
-> Nessus check already it should get a CVE id I think.)
->
-> Ciao, Marcus
->
+python-feedparser 5.0.1 fixes three flaws:
 
-Please use CVE-2011-4327 for this issue.
+https://code.google.com/p/feedparser/
+
+* Fix  issue 91  (invalid text in XML declaration causes sanitizer to crash)
+* Fix  issue 254  (sanitization can be bypassed by malformed XML comments)
+* Fix  issue 255  (sanitizer doesn't strip unsafe URI schemes) 
+
+Could CVE names be assigned to these issues?
+
+It looks like the last two issues were introduced in 5.0, the first
+issue was reported against 4.1.
+
+Thanks.
 
 -- 
-Kurt Seifried
-kurt@...fried.org
+Vincent Danen / Red Hat Security Response Team 
