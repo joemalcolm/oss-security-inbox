@@ -1,102 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/3
-Message-ID: <4E1FF96C.3040709@redhat.com>
-Date: Fri, 15 Jul 2011 10:25:16 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Erik de Castro Lopo <erikd@...a-nerd.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/25
+Message-ID: <1053489281.88137.1300136379757.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 14 Mar 2011 16:59:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> Hello Josh, Steve, David, vendors,
+> 
+> this is due the following vino deficiency:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+> 
+> As noted in [1] Vino may incorrectly report, that relevant user
+> desktop
+> is reachable only over local network, when in fact it's reachable from
+> everywhere.
+> 
+> As this is issue slightly on the border, not sure it should receive a
+> CVE identifier,
+> so Cc-ed David Woodhouse to elaborate more on issue impact if
+> necessary.
+> 
+> Under my opinion, the trust boundary is crossed (it is wrongly
+> reported to the the user, they
+> have a secure setup, when they do not have it and otherwise would
+> perform steps to correct the
+> settings). But left the final decision for further discussion.
+> 
+> What are the thoughts of the others? Should this one get a CVE
+> identifier or not?
+> 
+> Upstream bug report:
+> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+> 
+> Ubuntu bug report (IPv6 specific):
+> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+> 
+> To David King -- David, what are the upstream plans for this issue? Is
+> there by any
+> chance upstream patch for the bug [3] yet?
+> 
 
-Hello Erik,
+This strikes me as it should get two CVE ids (if someone more familiar
+could chime in, I would appreciate it).
 
-On 07/15/2011 02:47 AM, Erik de Castro Lopo wrote:
->
-> Please CC me on all mails regarding this bug. I am not on the list
-> where Dan Rosenberg wrote:
+This looks like one id for vino improperly claiming that machine is only
+accessible via the local network.
 
-There was only one reaction from Dan so far:
-[1] http://comments.gmane.org/gmane.comp.security.oss.general/5476
+Another for it using uPnP to open up a router without proper warning.
 
-The oss-security list and it's content / archive are publicly accessible:
-[2] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+Thanks.
 
-You can subscribe there and / or use one of the ways to access the archive:
-[3] http://www.openwall.com/lists/oss-security/
-[4] http://news.gmane.org/gmane.comp.security.oss.general
-(plus others)
-
-No need to be Cc-ed on each particular message, just use the thread view 
-[4], and react to message, where necessary / appropriate.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
->> On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
->> <erikd (AT) mega-nerd (DOT) com>  wrote:
->>> Jan Lieskovsky wrote:
->>>
->>>> * *an integer overflow, leading to heap-based buffer overflow flaw was
->>>> found in the way libsndfile, library for reading and writing of sound
->>>> files, processed certain PARIS Audio Format (PAF) audio files with
->>>> crafted count of channels in the PAF file header. A remote attacker
->>>> could provided a specially-crafted PAF audio file, which once opened by
->>>> a local, unsuspecting user in an application, linked against libsndfile,
->>>> could lead to that particular application crash (denial of service),
->>>
->>> I agree with everything up to here.
->>>
->>>> or, potentially arbitrary code execution with the privileges of the
->>>> user running the application.
->>>
->>> but this is rubbish. The heap gets overwritten with zeros which would
->>> certainly lead to the application segfaulting. However, there is
->>> no way for arbitrary code to be executed on amy sane OS with proper
->>> memory protection.
->>
->> This is not a sound assumption. Any sort of partially controlled heap
->> corruption, even if the data that's being written isn't controllable
->> by an attacker, should be considered potentially exploitable. Modern
->> heap exploitation is alive and well - it's worth pointing out that a
->> recent remote vulnerability in Microsoft IIS FTPD that allowed for a
->> heap overflow of strictly 0xff bytes was shown to be exploitable,
->> contradicting Microsoft's claims that it could only cause denial of
->> service.
->
-> The code which caused the heap overflow was this:
->
->      memset (ppaf24->samples, 0, ppaf24->samplesperblock * ppaf24->channels) ;
->
-> where it was the ppaf24->channels value that was not validated (and
-> ppaf24->samplesperblock is always 10). In future versions of libsndfile
-> ppaf24->samplesperblock will be replaced by a compile time constant
-> value.
->
-> That means that the heap is overwritten in blocks that are a multiple
-> of 10 bytes which makes it significatly more difficult to exploit.
->
->> Think about partially overwriting certain elements of heap
->> metadata, or even heap data, with zeroes. Suppose an application with
->> heavy function pointer usage was linked against libsndfile, and this
->> overflow allowed overwriting the least significant bytes of a function
->> pointer with zeroes and ultimately allowed for controlling execution
->> flow.
->
-> For this instance of heap overflow (overwritten in multiples of 10 bytes
-> with the base being 4 byte aligned), its only possible to zero the lowest
-> 2 bytes of a function pointer (assuming a little endian machine) if it
-> happens to lie in exactly the right place.
->
-> In terms of ease of exploitation, this one has to be in the very difficult
-> basket.
->
->> It's better to be safe than sorry.
->
-> That's why I rushed out a new release. I do take this seriously, but
-> I do not like to see the threat exaggerated beyond reason.
->
-> Erik
-
+-- 
+    JB
