@@ -1,102 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/14
-Message-ID: <1196368402.169410.1298409651973.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 16:20:51 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/10
+Message-Id: <201103141428.59764.ludwig.nussel@suse.de>
+Date: Mon, 14 Mar 2011 14:28:59 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Vanilla Forums 2.0.17.1 ~ 2.0.17.5 <= Cross Site Scripting Vulnerability
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1009.
+Stephan Mueller wrote:
+> Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
+> > What I suggest is something like "-o untrusted" option to mount.  This
+> > would mean that the system considers the input from such fs as a malicious
+> > input.  Such mounted fs would try to consider the data on disk as
+> > untrusted and to be as robust as possible, e.g. check against
+> > "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> > hear opinions about the usefulness of this feature.
+> 
+> I completely second your concerns.
+> 
+> However, how do you propose to implement that "untrusted" option? The core 
+> problem IMHO is that the physical layout and structure in a file system is 
+> assumed to be correct in general by the kernel. The physical file system 
+> implementations (including any depending code, like the LSMs for interpreting 
+> XATTRs) have some checks for an input validation. But I highly doubt that all 
+> checks necessary for an untrusted file system layout are implemented - to have 
+> all such checks would cause some speed penalties nobody wants to carry.
 
-Thanks.
+For the hot plugged USB drive case speed of the file system
+shouldn't be much of a concern. I wonder whether it would be
+possible to create a wrapper API that allow to compile kernel fs
+modules as user space programs for use with e.g. fuse.
+
+cu
+Ludwig
 
 -- 
-    JB
-
-
------ Original Message -----
-> 1. OVERVIEW
-> 
-> The Vanilla Forums 2.0.17.1 till 2.0.17.5 were vulnerable to Cross
-> Site Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Vanilla Forums are open-source, standards-compliant, customizable
-> discussion forums.
-> It is specially made to help small communities grow larger through SEO
-> mojo, totally customizable social tools,
-> and great user experience. Vanilla is also built with integration at
-> the forefront, so it can
-> seamlessly integrate with your existing website, blog, or custom-built
-> application.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The 'p' parameter was not properly sanitized upon submission to the
-> /index.php url, which allows attacker to conduct Cross Site Scripting
-> attack.
-> This may allow an attacker to create a specially crafted URL that
-> would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.0.17.1 ~ 2.0.17.5
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/vanilla/index.php?p=/entry/"><script>alert(/XSS/)</script>
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to Vanilla Forums 2.0.17.6 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> Vanilla Forums Development Team
-> http://vanillaforums.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-01-25: notified vendor
-> 2011-01-27: vendor released fix
-> 2011-02-22: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.17.5]_cross_site_scripting
-> Github Issue Report:
-> https://github.com/vanillaforums/Garden/issuesearch?state=closed&q=xss#issue/750
-> Vendor Commit:
-> https://github.com/vanillaforums/Garden/commit/0a22506c76ac419d390d5d1bde5ec5f48b195358
-> Vendor Release:
-> http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released/
-> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-02-22]
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
