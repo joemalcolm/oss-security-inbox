@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/9
-Message-ID: <706360828.253817.1306237382285.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 May 2011 07:43:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/13
+Message-ID: <AANLkTin4JcpGaePPxs=knr29d5_C=syVCD86-_X+T=OH@mail.gmail.com>
+Date: Mon, 14 Mar 2011 10:50:02 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Pierre Joye <pierre.php@...il.com>, coley <coley@...re.org>
-Subject: Re: CVE request: PHP socket_connect() - stack buffer overflow
+Subject: CVE request: format-string vulnerability in PHP Phar extension
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
-> Could a CVE be assigned to this issue?
-> 
-> PHP - Stack buffer overflow in socket_connect():
-> Fix: http://svn.php.net/viewvc?view=revision&revision=311369
-> 
-> Found by: Mateusz Kocielski, Marek Kroemeke and Filip Palian
-> 
+Hi,
+I just found several format-string vulnerability in PHP Phar extension, a
+bug has been filed in the PHP bugtracker (private):
+http://bugs.php.net/bug.php?id=54247
+On error several class methods passes the supplied argument to
+zend_throw_exception_ex()
+which prints a formatted error message using such value as the formatter
+string.
 
-Please use CVE-2011-1938.
+$ sapi/cli/php ../bug.php "%08x.%08x.%08x.%08x.%08x"
+PHP Fatal error: Uncaught exception 'PharException' with message 'unable to
+open phar for reading "00000008.00000000.bf95c204.0963e050.00000014"' in
+/home/felipe/dev/bug.php:4
 
 Thanks.
 
 -- 
-    JB
+Regards,
+Felipe Pena
+
