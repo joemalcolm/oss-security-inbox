@@ -1,34 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/4
-Message-ID: <1103031820280.22221@mjc.redhat.com>
-Date: Thu, 3 Mar 2011 18:31:08 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/11
+Message-Id: <201103140937.51078.sgrubb@redhat.com>
+Date: Mon, 14 Mar 2011 09:37:50 -0400
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>
+Subject: Re: Untrusted fs and invalid filenames
 Content-Type: text/plain; charset=utf-8
 
-> Also the usefulness of v-s in general has a bit diminished, especially with
-> oss-sec present and more active and more involved upstream projects doing
-> their own management. Mark J Cox has some stats for Redhat updates showing this.
+On Monday, March 14, 2011 09:28:59 am Ludwig Nussel wrote:
+> Stephan Mueller wrote:
+> > Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
+> > > What I suggest is something like "-o untrusted" option to mount.  This
+> > > would mean that the system considers the input from such fs as a
+> > > malicious input.  Such mounted fs would try to consider the data on
+> > > disk as untrusted and to be as robust as possible, e.g. check against
+> > > "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
+> > > hear opinions about the usefulness of this feature.
+> > 
+> > I completely second your concerns.
+> > 
+> > However, how do you propose to implement that "untrusted" option? The
+> > core problem IMHO is that the physical layout and structure in a file
+> > system is assumed to be correct in general by the kernel. The physical
+> > file system implementations (including any depending code, like the LSMs
+> > for interpreting XATTRs) have some checks for an input validation. But I
+> > highly doubt that all checks necessary for an untrusted file system
+> > layout are implemented - to have all such checks would cause some speed
+> > penalties nobody wants to carry.
+> 
+> For the hot plugged USB drive case speed of the file system
+> shouldn't be much of a concern. I wonder whether it would be
+> possible to create a wrapper API that allow to compile kernel fs
+> modules as user space programs for use with e.g. fuse.
 
-We monitor how we first found out about every issue we eventually fix, and 
-if we found out before or after the issue was public.
+I think you lose auditing in that case. 
 
-For vendor-sec, during last calendar years
+I'm still thinking improving fsck is the best solution. The kernel can be hardened. 
+That is what tools like fsfuzz can help with. But in the case where the drive is 
+otherwise fine, but some unexpected characters are in otherwise legal directory 
+structure is something unexpected. Normally the kernel prevents certain sequences, but 
+if the fs has been modified through a different technique, then the kernel was not able 
+to prevent these modifications. All scripts and programs depend on the kernel making 
+sure this never happened.
 
-date		# issues in advance		# issues already public
-2008		69				32
-2009		57				17
-2010		29				22
-
-That 29 represents just 4% of the total number of our vulnerabilities 
-fixed in 2010.  The median time of embargo for those 29 issues was 15 days 
-(average 24)
-
-But I think that trend is what was expected, as upstream projects 
-communicate with affected vendors directly, and we use oss-security for 
-issues that don't need embargo or co-ordination.
-
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response
+-Steve
