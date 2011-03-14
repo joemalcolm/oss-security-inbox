@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/3
-Message-ID: <909072608.466818.1302293821374.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 8 Apr 2011 16:17:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: tinyproxy runs as an open proxy when attempting to restrict allowable IP ranges
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/27
+Message-ID: <1300136870.5865.3.camel@macbook.infradead.org>
+Date: Mon, 14 Mar 2011 21:07:49 +0000
+From: David Woodhouse <dwmw2@...radead.org>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, David King <amigadave@...gadave.com>,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1499
+On Mon, 2011-03-14 at 16:59 -0400, Josh Bressers wrote:
+> This looks like one id for vino improperly claiming that machine is only
+> accessible via the local network.
+> 
+> Another for it using uPnP to open up a router without proper warning.
 
-Thanks.
+I'd concur with the former, but not the latter. Issuing a CVE for that
+kind of thing just encourages the people who mistakenly view NAT as a
+form of security. uPnP is just one of the *many* reasons that viewpoint
+is wrong.
+
+If you wouldn't issue a CVE for vino listening with socket() and bind()
+system calls, then you shouldn't issue a CVE for it using uPnP to listen
+either. uPnP is just the normal way to work around broken networking.
+
+As far as I'm concerned there is only one issue here; the misreporting
+that only local access is possible when in fact it's not.
 
 -- 
-    JB
+David Woodhouse                            Open Source Technology Centre
+David.Woodhouse@...el.com                              Intel Corporation
 
------ Original Message -----
-> A bug in tinyproxy prior to 1.8.3 would turn it into an open proxy if
-> it
-> were defined with an "Allow" statement including an IP address range
-> (i.e. 192.168.0.0/24).
-> 
-> Could a CVE be assigned to this?
-> 
-> References:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=621493
-> https://banu.com/bugzilla/show_bug.cgi?id=90
-> https://banu.com/cgit/tinyproxy/commit/?id=e8426f6662dc467bd1d827100481b95d9a4a23e4
-> https://bugzilla.redhat.com/show_bug.cgi?id=694658
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
