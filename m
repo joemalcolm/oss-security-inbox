@@ -1,43 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/8
-Message-ID: <1001842782.533346.1314733464377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Aug 2011 15:44:24 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/16
+Message-ID: <402506908.19649.1300223422042.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 17:10:22 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-request(?): squid: buffer overflow in Gopher reply parser
+Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-This needs a 2011 CVE id.
+----- Original Message -----
+> Hello Josh, Steve, David, vendors,
+> 
+> this is due the following vino deficiency:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+> 
+> As noted in [1] Vino may incorrectly report, that relevant user desktop
+> is reachable only over local network, when in fact it's reachable from
+> everywhere.
+> 
+> As this is issue slightly on the border, not sure it should receive a CVE
+> identifier, so Cc-ed David Woodhouse to elaborate more on issue impact if
+> necessary.
+> 
+> Under my opinion, the trust boundary is crossed (it is wrongly reported
+> to the the user, they have a secure setup, when they do not have it and
+> otherwise would perform steps to correct the settings). But left the
+> final decision for further discussion.
+> 
+> What are the thoughts of the others? Should this one get a CVE identifier
+> or not?
+> 
+> Upstream bug report:
+> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+> 
+> Ubuntu bug report (IPv6 specific):
+> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+> 
 
-Use CVE-2011-3205.
+The above bugs talk about two flaws. Based on discussions I'm giving them
+both CVE ids.
+
+Issue #1
+
+Vino incorrectly tells users their desktop is only reachable over the local
+network.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=596190
+https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+
+Use CVE-2011-1164
+
+Issue #2
+
+Vino can open ports via uPnP without alerting the user.
+https://bugzilla.redhat.com/show_bug.cgi?id=678846
+
+Use CVE-2011-1165
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> Hi,
-> 
-> squid 3.x seems to have re-introduced a security issue found by Ben
-> Hawkes of
-> the Google Security Team in 2005,
-> 
-> 2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
-> 2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt
-> (CVE-2005-0094)
-> 
-> Will there be a new CVE required? Not quite sure how such "special"
-> cases are
-> handled usually.
-> 
-> Thanks,
-> Matthias
-> 
-> --
-> Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-> Tel: +49-911-74053-0; http://suse.com/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
