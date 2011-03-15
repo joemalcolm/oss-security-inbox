@@ -1,65 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/5
-Message-ID: <Pine.LNX.4.64.1103301936350.10609@arwen.otp.ericsson.se>
-Date: Wed, 30 Mar 2011 19:42:29 +0200
-From: <pan@...ang.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/3
+Message-ID: <20110315032814.GK6691@dojo.mi.org>
+Date: Mon, 14 Mar 2011 23:28:14 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+[catching up on old email]
 
-I can only answer for my fixes, answers for the rest will come from the 
-respective developer (hopefully soon :))
+:> > As suggested by Josh Bressers oCERT would be favourable to providing a
+:> > system that would accept user submission and allow selection of security
+:> > contacts from our existing member database as well as other verified
+:> > contacts.
 
-OTP-7178: Not a security issue, just a "bugfix", the "underflow" is 
-floating point conversion underflow, not buffer related.
-OTP-8827: Definitely a security fix
-OTP-8943: Also a security fix
+...
 
-Cheers,
-/Patrik, OTP
+:It all depends on how this process is going to be handled. I can see oCERT
+:helping in routing reports to the proper contacts via email to our trusted
+:member contacts as well as external ones that we can seek on a report basis.
 
-On Wed, 30 Mar 2011, Jan Lieskovsky wrote:
+What I've observed is that some times, the reporter or coordinator
+doesn't have a good idea of the scope of their issue.  To cite some
+real-world examples involving folks who I thought would know better:
 
-> Hello Steve, vendors,
->
->  based on:
->  [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
->
->  and:
->  [2] http://www.erlang.org/download/otp_src_R14B.readme
->  [3] http://www.erlang.org/download/otp_src_R14B01.readme
->  [4] http://www.erlang.org/download/otp_src_R14B02.readme
->
-> performed some initial issues review -- erlang-CVE-request.txt
-> attached. But since not sure, which of those are real security
-> flaws and how many CVE ids will be needed for those, Cc-ing
-> also Erlang upstream developers to shed more light into this.
->
-> The distribution of OTPs is as follows:
-> =======================================
-> Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
-> Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
-> Sverker Eriksson:       OTP-8945, OTP-8716
-> Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
-> Raimo Niskanen:         OTP-8729, OTP-8795
-> Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
-> Niclas Axelsson:        OTP-9101
-> Hans Bolinder:          OTP-8898
->
-> Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
-> could you please have a look at the attached review file
-> and reply which of the #20 OTPs in the list are security flaws
-> (so we would know the count of CVE identifiers needed) and which
-> are just bugs? (since you know the Erlang code better than me)
->
-> Help / guidance from your side is really appreciated to resolve
-> this one.
->
-> Thank you in advance for your time and cooperation.
->
-> Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+  1) no, BSD networking isn't just in Free/Net/OpenBSD 
+  2) no, ONC RPC just isn't in Sun products
+  3) no, a RH-specific kernel issue is a general Linux kernel issue
+
+Scoping issues isn't always easy.  How do you know whether I backported
+some bleeding-edge fix with broken security implications into one of the
+OSes I care about last week?  Sometimes, I'll need specific info just to
+confirm that I don't care about the issue.  Scoping is one of the things
+that vendor-sec was occasionally quite helpful with.  
+
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"I'd be terrific!  Colossal!  Stupendous!  Mediocre even!"        -Babs Bunny
