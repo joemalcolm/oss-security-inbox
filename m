@@ -1,32 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/10
-Message-ID: <1085482903.28233.1302551871147.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 15:57:51 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/8
+Message-ID: <1776666325.7056.1300196833810.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 09:47:13 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: kov@...ian.org, coley <coley@...re.org>
+Subject: Re: gksu-polkit
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> Postponed. I'd like to see any support for you getting onto the Linux
-> distros security contacts list, with reasoning, or/and any other
-> suggestions on what to do in this case. Josh - what do you think (as
-> someone who advocated the setup of a vendor-sec replacement)?
-> 
-
-My initial thought is that a vendor without public advisories is a
-liability.
-
-I don't want to get into the politics of not publishing your advisories,
-but at the same time, public information such as this is all we have to
-measure if a vendor is using the information at hand.
-
-I'm happy to draw a line in the sand and make public advisories a mandatory
-requirement. If anyone disagrees, please speak up. This is my personal
-opinion, other viewpoints are welcome.
+I assigned this CVE-2011-0703 when you sent it to vendor-sec.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Hi,
+> 
+> I already sent this to vendor-sec a while ago (cant remember
+> whether this already received a CVE and which) as well as to
+> the maintainer (Cc) which did not yield a response.
+> So I send it here again. Merging X cookies is probably not
+> a good idea by itself for sudo like programs but this problem
+> adds more.
+> 
+> Sebastian
+> 
+> -------------------------->8----------------------
+> 
+> While reviewing possible replacements for libgnomesu, I found that
+> the gksu-polkit contains a weird vulnerability that allows
+> to escalate privileges.
+> 
+> Basically the gksu-server is a DBUS activation that runs as root.
+> Users invoke the Spawn method via DBUS and gksu-server components
+> check via polkit whether the user is allowed to run the program.
+> 
+> Despite the "nice" architecture involving dozens of glib, dbus etc.
+> libs for such a simple purpose as well as running Vala generated
+> source code
+> as root, it has an inlining problem.
+> gksu-server tries to merge the X11 cookie credentials via xauth
+> commands.
+> It creates a script file (as root) which it passes to xauth like so:
+> 
+> 
+> gboolean gksu_controller_prepare_xauth()
+> {
+> [...]
+> xauth_display = g_hash_table_lookup(environment, "DISPLAY");
+> [...]
+> xauth_cmd = g_strdup_printf("add %s . %s\n", xauth_display,
+> xauth_token);
+> fwrite(xauth_cmd, sizeof(gchar), strlen(xauth_cmd), file);
+> [...]
+> command = g_strdup_printf("%s -q -f %s source %s", xauth_bin,
+> xauth_file, tmpfilename);
+> 
+> g_spawn_command_line_sync(command, NULL, NULL, &return_code, &error);
+> [...]
+> }
+> 
+> 
+> 
+> while the creation of the tmp file looks safe, the DISPLAY variable
+> might
+> be passed by the user to the Spawn DBUS method. It may contain
+> newlines,
+> spaces etc. since the default common.variables file allows to pass
+> unrestricted data via DISPLAY to it.
+> Therefore the source file for xauth may contain arbitrary commands,
+> e.g. extracting user owned X11 cookies to root's .Xauthority
+> or to /etc/passwd. He may then overtake a administrator X11 session
+> since his cookies have been placed to /root/ or "carefully chooses"
+> a token that matches a /etc/passwd entry.
+> Same maybe applies to xauth_token which might contain newlines etc.
+> 
+> The default config must contain regex that forbid such characters or
+> the token handling inside gksu-server has to be done differently.
+> 
+> 
+> 
+> --
+> ~
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
+> ~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
