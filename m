@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/8
-Message-Id: <201104022051.47567.thijs@debian.org>
-Date: Sat, 2 Apr 2011 20:51:43 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/13
+Message-ID: <1137441234.19166.1300222011542.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 16:46:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel: tpm infoleaks
 Content-Type: text/plain; charset=utf-8
 
-On Friday 01 April 2011 20:03:12 Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+----- Original Message -----
+> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
+> infoleak
 
-I am on the Debian security team and was part of the vendor-sec list through 
-our exploder. Please add me to the new list.
-
-pub   4096R/E1C21845 2007-01-25
-    Empreinte de la clé = E0D3 FAAA 6F50 A5DA 9D5B  2938 3396 1588 E1C2 1845
-uid                  Thijs Kinkhorst <thijs@...khorst.com>
-uid                  Thijs Kinkhorst <kink@...irrelmail.org>
-uid                  Thijs Kinkhorst <thijs@...ian.org>
-uid                  Thijs Kinkhorst <thijs@....nl>
-sub   2048R/B6897E7B 2010-06-15 [expire: 2012-06-14]
-sub   2048R/3861CF70 2010-06-15 [expire: 2012-06-14]
+Please use CVE-2011-1160
 
 
-Thanks,
-Thijs
+> 
+> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
+> infoleak
 
-Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
+Please use CVE-2011-1161
+
+
+> 
+> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
+> prevents storing of previous result, leakage to other drivers
+> 
+
+Please use CVE-2011-1162
+
+Thanks.
+
+-- 
+    JB
