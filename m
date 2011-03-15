@@ -1,51 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/4
-Message-ID: <3cd7f49e-5ae6-4b39-acfc-84d6f830791a@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:26:13 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/14
+Message-ID: <1271379951.19443.1300222715834.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 16:58:35 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: CSRF and file inclusion in usebb before 1.0.12
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: kernel: fs/partitions: Corrupted OSF partition table can cause information disclosure
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> http://www.usebb.net/community/topic-2571.html
-> 
-> Vulnerability "HTB22914: Local File Inclusion in UseBB"
-> 
-> Recently, High-Tech Bridge SA discovered a possible issue in UseBB 1.0.11
-> and earlier. The issue exists in the fact that admin.php may possibly
-> include PHP files not used for the UseBB admin control panel (ACP).
-> 
-> The faulty code in question is only executed for logged in administrator
-> accounts, and can only include non-relevant PHP files if a directory
-> "sources/admin_" exists, which is not the case in UseBB 1.  Therefore,
-> the issue does not pose a direct threat to an existing UseBB set-up, but
-> is classified a security issue anyway and has been fixed in UseBB 1.0.12.
-
-Use CVE-2011-3611 for the above.
-
-
-> 
-> Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
-> UseBB"
-> 
-> High-Tech Bridge SA also discovered possibilities of executing CSRF
-> attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
-> malicious URL or visits a web page containing such URL or JavaScript,
-> requests may be executed that add, edit or delete data on the forum,
-> including topics, posts, account information and settings in the ACP (if
-> the user has logged in into the ACP).
-> 
-> As a solution, UseBB 1.0.12 has implemented URL and form tokens for
-> sensitive actions. Accessing or executing above URLs or scripts now
-> doesn't have an effect on the data.
-> 
-
-Use CVE-2011-3612 for the above.
+Please use CVE-2011-1163.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> The kernel automatically evaluates partition tables of storage
+> devices.
+> The code for evaluating OSF partitions (in fs/partitions/osf.c)
+> contains a bug that leaks data from kernel heap memory to userspace
+> for
+> certain corrupted OSF partitions.
+> 
+> See http://www.spinics.net/lists/mm-commits/msg82737.html for a patch.
+> 
+> Cheers, Timo
+> 
+> --
+> Dr. Timo Warns warns@...-sense.de
+> Tel. +49 - 40 - 244 2407 - 16
+> Fax +49 - 40 - 244 2407 - 24
+> PRESENSE Technologies GmbH Sachsenstr. 5, D-20097 HH
+> USt-IdNr.: DE263765024
+> Geschäftsführer/Managing Directors AG Hamburg, HRB 107844
+> Till Dörges Jürgen Sander Axel Theilmann
