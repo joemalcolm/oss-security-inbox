@@ -1,90 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/8
-Message-ID: <1776666325.7056.1300196833810.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 09:47:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: kov@...ian.org, coley <coley@...re.org>
-Subject: Re: gksu-polkit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/15
+Message-ID: <4D7FD193.5050904@cert.org>
+Date: Tue, 15 Mar 2011 16:52:35 -0400
+From: Art Manion <amanion@...t.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Andrea Barisani <lcars@...rt.org>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-I assigned this CVE-2011-0703 when you sent it to vendor-sec.
+On 2011-03-08 14:56, Andrea Barisani wrote:
+> On Tue, Mar 08, 2011 at 10:59:57AM -0500, Josh Bressers wrote:
+>> 3) Are we going to annoy other CERTs? Will they even care?
+> 
+> I don't think this is an issue. We positively worked with other CERTs when that
+> was applicable anyway.
 
-Thanks.
+Speaking for CERT/CC, we have no problem with oCERT or anyone else
+running a private coordination list/function.  In fact, we have no
+illusion of control over such activity.
 
--- 
-    JB
+I think some sort of private coordination/embargo period capability is
+useful, it seems like the vendor-sec model worked reasonably well for
+the constituency -- low overhead, some leaking, but on the balance
+fairly effective during its lifespan.  My observation is that CERT/CC's
+process is probably too much overhead for typical open source
+vulnerabilities, although we'll still be involved in some cases that
+cross multiple open/closed/commercial/non-commercial vendors.
 
------ Original Message -----
-> Hi,
-> 
-> I already sent this to vendor-sec a while ago (cant remember
-> whether this already received a CVE and which) as well as to
-> the maintainer (Cc) which did not yield a response.
-> So I send it here again. Merging X cookies is probably not
-> a good idea by itself for sudo like programs but this problem
-> adds more.
-> 
-> Sebastian
-> 
-> -------------------------->8----------------------
-> 
-> While reviewing possible replacements for libgnomesu, I found that
-> the gksu-polkit contains a weird vulnerability that allows
-> to escalate privileges.
-> 
-> Basically the gksu-server is a DBUS activation that runs as root.
-> Users invoke the Spawn method via DBUS and gksu-server components
-> check via polkit whether the user is allowed to run the program.
-> 
-> Despite the "nice" architecture involving dozens of glib, dbus etc.
-> libs for such a simple purpose as well as running Vala generated
-> source code
-> as root, it has an inlining problem.
-> gksu-server tries to merge the X11 cookie credentials via xauth
-> commands.
-> It creates a script file (as root) which it passes to xauth like so:
-> 
-> 
-> gboolean gksu_controller_prepare_xauth()
-> {
-> [...]
-> xauth_display = g_hash_table_lookup(environment, "DISPLAY");
-> [...]
-> xauth_cmd = g_strdup_printf("add %s . %s\n", xauth_display,
-> xauth_token);
-> fwrite(xauth_cmd, sizeof(gchar), strlen(xauth_cmd), file);
-> [...]
-> command = g_strdup_printf("%s -q -f %s source %s", xauth_bin,
-> xauth_file, tmpfilename);
-> 
-> g_spawn_command_line_sync(command, NULL, NULL, &return_code, &error);
-> [...]
-> }
-> 
-> 
-> 
-> while the creation of the tmp file looks safe, the DISPLAY variable
-> might
-> be passed by the user to the Spawn DBUS method. It may contain
-> newlines,
-> spaces etc. since the default common.variables file allows to pass
-> unrestricted data via DISPLAY to it.
-> Therefore the source file for xauth may contain arbitrary commands,
-> e.g. extracting user owned X11 cookies to root's .Xauthority
-> or to /etc/passwd. He may then overtake a administrator X11 session
-> since his cookies have been placed to /root/ or "carefully chooses"
-> a token that matches a /etc/passwd entry.
-> Same maybe applies to xauth_token which might contain newlines etc.
-> 
-> The default config must contain regex that forbid such characters or
-> the token handling inside gksu-server has to be done differently.
-> 
-> 
-> 
-> --
-> ~
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@...e.de - SuSE Security Team
-> ~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+CERT/CC could also possibly host a "vendor-sec replacement" mailing
+list, however we'd have to consider (as already noted in this thread)
+how to vet members, encryption (or not), overhead, etc.  I'd think this
+capability would be better provided by oCERT or Openwall or someone
+closer to the community.
+
+
+ - Art
