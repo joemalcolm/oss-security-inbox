@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/13
-Message-ID: <20110308153641.33166a46@orphan>
-Date: Tue, 8 Mar 2011 15:36:41 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: KDE SSL name check issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/2
+Message-ID: <20110315030124.GI6691@dojo.mi.org>
+Date: Mon, 14 Mar 2011 23:01:24 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+[catching up on older emails]
 
-KDE recently fixed an issue in the code checking host names of the
-server SSL certificates.  Previously, it accepted certificate as valid
-for the site if it was issued for the user-specified host name, or if
-it was issued for an IP address to which user-specified host name
-resolved.
+:> > They do this already today, that's what security@...nel.org is for, and
+:> > it gets a bit of traffic like this every week.
+:> 
+:> Is this list open to the public?  It doesn't seem to be available on
+:> http://vger.kernel.org/vger-lists.html.
+:
+:No, it is closed, as it should be as potential security problems are
+:mailed there.  You don't want that to be totally open, right?
 
-An attacker able to get an SSL certificate form a trusted CA issued for
-an attacker-controlled IP address could perform a MITM attack, if they
-were also able to hijack victim's DNS to resolve host names to the
-attacker's IP.
-
-Fixed upstream in:
-https://projects.kde.org/projects/kde/kdelibs/repository/revisions/76f935197599a335a5fe09b78751ddb455248cf7
-
-Patch is included in kdelibs 4.6.1.
+One suggestion I've made in the past is to have the list _archives_ be
+open.  So anything older than, say, a month is made public.  That way,
+folks can see how issues were disclosed, how decisions were reached,
+etc.  for old issues that are no longer under embargo.  The way I see
+it, if we don't publish the list archive on our own terms, miscreants
+will get around to publishing it for us.  
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Why make trillions when we could make... billions?"                -Dr. Evil
