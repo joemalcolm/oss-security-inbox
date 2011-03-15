@@ -1,21 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/1
-Message-ID: <1316093008.17867.139.camel@new-desktop>
-Date: Thu, 15 Sep 2011 15:23:28 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/1
+Message-ID: <4D7EC996.3010306@redhat.com>
+Date: Tue, 15 Mar 2011 10:06:14 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Is there a maintainer for librsvg ?
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel: tpm infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 03/15/2011 04:53 AM, Josh Bressers wrote:
+> I'm not able to properly parse this. Should this get one CVE id or three?
 
-librsvg is a SVG rendering library hosted at librsvg.sourceforge.net. No
-new version was published since 2005, and a (security) bug that I
-reported via bugzilla.gnome.org 6 weeks ago wasn't even triaged.
+Three.
 
-Given that this lib is used by a lot of distros, what can I do in order
-to get this bug (and others) patched ?
-
-Regards,
-Nicolas
-
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
