@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/5
-Message-ID: <20111024034027.278f5144@angelo.pretender.us>
-Date: Mon, 24 Oct 2011 03:40:27 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/4
+Message-ID: <4D7F2AB3.3010007@redhat.com>
+Date: Tue, 15 Mar 2011 17:00:35 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, Dan Veditz <dveditz@...illa.com>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+CC: "Mike O'Connor" <mjo@...o.mi.org>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 24 Oct 2011 12:30:23 +0200
-Jan Lieskovsky <jlieskov@...hat.com> wrote:
+On 03/15/2011 11:01 AM, Mike O'Connor wrote:
+> [catching up on older emails]
+>
+> :>  >  They do this already today, that's what security@...nel.org is for, and
+> :>  >  it gets a bit of traffic like this every week.
+> :>
+> :>  Is this list open to the public?  It doesn't seem to be available on
+> :>  http://vger.kernel.org/vger-lists.html.
+> :
+> :No, it is closed, as it should be as potential security problems are
+> :mailed there.  You don't want that to be totally open, right?
+>
+> One suggestion I've made in the past is to have the list _archives_ be
+> open.  So anything older than, say, a month is made public.  That way,
+> folks can see how issues were disclosed, how decisions were reached,
+> etc.  for old issues that are no longer under embargo.  The way I see
+> it, if we don't publish the list archive on our own terms, miscreants
+> will get around to publishing it for us.
 
->    a security flaw was found in the way nss, the Network Security
-> Services (NSS) set of libraries, performed their initialization (the
-> file path for "pkcs11.txt" configuration file was constructed 
-> incorrectly). When that configuration file was loaded from remote WebDAV 
-> or Samba CIFS share, it could lead to arbitrary security module
-> load, potentially leading to execution of arbitrary code (execution of
-> code from untrusted security module).
-> 
-> Upstream bug report:
-> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+Any fixes for the issues reported in s@k.o will be committed to the 
+upstream kernel immediately. The "disclosures" of those fixes are shared 
+in this list. Keep a look out for my emails.
 
-Mozilla is a CNA. Any reason you aren't requesting the CVE from them
-since NSS is a Mozilla product? Also, the upstream bug isn't tagged as a
-security issue, so Mozilla might not even know about this problem.
-
-cc'ing Dan Veditz of the Mozilla Security Group for CVE assignment and
-notification.
-
-~reed
-
---
-Reed Loden
-reed@...dloden.com
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
