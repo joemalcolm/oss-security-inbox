@@ -1,47 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/2
-Message-ID: <4D86D86C.9060702@redhat.com>
-Date: Mon, 21 Mar 2011 12:47:40 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/6
+Message-ID: <AANLkTikRksmX+y=8zgXzJAfq2mCQHCFhtU3saXEVt+Za@mail.gmail.com>
+Date: Tue, 15 Mar 2011 09:13:00 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
-> I sent in a patch [1] resolving two issues in ROSE:
->
-> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
-> for a remote host to provide more digipeaters than expected, resulting
-> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
-> overflows, and abort facilities parsing on failure.
->
-> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
-> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
-> length of less than 10, resulting in an underflow in a memcpy size,
-> causing a kernel panic due to massive heap corruption.  A length of
-> greater than 20 results in a stack overflow of the callsign array.
-> Abort facilities parsing on these invalid length values."
->
-> These issues may both result in code execution.  They may be triggered
-> by a remote attacker if the victim has a listening ROSE socket, or by
-> a local attacker (for privilege escalation) if a ROSE device exists
-> (e.g. rose0).
->
-> Ben Hutchings followed up with a patch [2] that resolves a number of
-> other ROSE issues related to lack of size field validation, some of
-> which may also result in heap corruption.
->
-> Not sure about the proper CVE breakdown for all these issues, since
-> the entire protocol was quite broken.  Perhaps one is enough to cover
-> everything.
+I did a survey of some suid helpers I'm aware of.  Here's the existing behavior:
 
-I am not sure. I would just assign one for the collection of issues here 
-but I will let Steve decide instead.
+util-linux mount
+=============
+* Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
+to glibc addmntent() in terms of return code
+* Succeeds on partial writes, does not remove temp file on failure
+(could result in additional corruption of /etc/mtab through multiple
+invocations), does not remove lock file /etc/mtab~ on failure (also an
+issue)
 
-> [1] http://marc.info/?l=linux-netdev&m=130060344616926
-> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+fusermount (FUSE)
+================
+* Does not edit mtab directly, calls into util-linux mount/umount, no
+changes needed
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+mount.cifs (samba)
+================
+* mount.cifs edits /etc/mtab directly, no cleanup on addmntent() failure
+* umount.cifs edits /etc/mtab.tmp but does not check return code of addmntent()
+
+ncpmount (ncpfs)
+==============
+* ncpmount edits /etc/mtab directly, no cleanup on failure, does not
+remove lock file /etc/mtab~ on failure
+* ncpumount edits /etc/mtab.tmp but does not check return code of addmntent()
+
+vmware-hgfsmounter (open-vm-tools)
+===============================
+* edits /etc/mtab directly, no cleanup on failure
+
+
+Regards,
+Dan
+
+
+On Mon, Mar 14, 2011 at 12:31 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> I've done some further investigation, and have found one of the
+> underlying problems.  addmntent() will return 0 (success) even if the
+> write was truncated:
+>
+>  return (fprintf (stream, "%s %s %s %s %d %d\n",
+>                   mntcopy.mnt_fsname,
+>                   mntcopy.mnt_dir,
+>                   mntcopy.mnt_type,
+>                   mntcopy.mnt_opts,
+>                   mntcopy.mnt_freq,
+>                   mntcopy.mnt_passno)
+>          < 0 ? 1 : 0);
+>
+> Of course, this only matters if the process is catching the SIGXFSZ
+> that gets thrown if the resource limit is exceeded, but nearly all
+> suid mount helpers block or ignore signals (if they don't, that's an
+> additional problem, because the process could be terminated mid-write,
+> corrupting /etc/mtab or leaving a stale lockfile, for example).
+>
+> So, I think the first step is to patch glibc to return success in
+> these functions if and only if the *full* contents have been written.
+> Then, it will be possible to have proper error handling in these
+> helper utilities.  Currently, there's really no way for these programs
+> to know whether or not their calls to addmntent() actually succeeded
+> besides installing a special signal handler for SIGXFSZ (ugly).
+>
+> After some further thinking and discussion, I think what needs to be
+> done is ensuring that all helpers make mtab edits to a temporary file,
+> and have proper error handling that cleans up correctly without
+> copying over to the actual /etc/mtab if anything bad happens.
+> Currently, some mount helpers edit /etc/mtab directly, and others use
+> a temporary file but don't have the proper error handling.
+>
+> I think this one's going to fall into the hands of package maintainers
+> and distros, I don't have time to fix all of these.
+>
+> -Dan
+>
+> On Mon, Mar 14, 2011 at 8:32 AM, Dan Rosenberg
+> <dan.j.rosenberg@...il.com> wrote:
+>> Sigh.  Unfortunately I think this is the truth - I just wish there
+>> were an easier way of addressing this besides patching every affected
+>> helper individually.  Unless anyone else has any ideas, I'll write up
+>> some patches for affected programs later today.
+>>
+>> -Dan
+>>
+>> On Mon, Mar 14, 2011 at 8:14 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+>>> Dan Rosenberg wrote:
+>>>> There are a few possible options   We could patch glibc to try to
+>>>> raise the rlimit in addmntent(). [...]
+>>>
+>>> Citing our glibc maintainer Petr Baudis via Bugzilla:
+>>>
+>>> | I have been thinking about it and I'm not at all sure the proposed solution
+>>> | makes sense. First, this may also concern the obscure interfaces like
+>>> | putspent() (not sure if anyone uses these, moreover in security relevant
+>>> | contexts). Second, messing with RLIMIT_FSIZE within library routine is just
+>>> | evil. The caller may be multi-threaded or just do something else between
+>>> | setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
+>>> | programs must sanitize things like this, on their own terms.
+>>>
+>>> cu
+>>> Ludwig
+>>>
+>>> --
+>>>  (o_   Ludwig Nussel
+>>>  //\
+>>>  V_/_  http://www.suse.de/
+>>> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>>>
+>>
+>
