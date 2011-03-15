@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/13
-Message-ID: <801301764.218205.1314044786894.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 16:26:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/2
+Message-ID: <20110315030124.GI6691@dojo.mi.org>
+Date: Mon, 14 Mar 2011 23:01:24 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ruby on rails flaws (4)
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
+[catching up on older emails]
 
------ Original Message -----
-> Sorry, there is one more flaw that needs a CVE assignment:
-> 
-> Response splitting flaw in 2.3.x (3.0.0 and later not affected).
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6ffc93bde0298768
-> https://github.com/rails/rails/commit/11dafeaa7533be26441a63618be93a03869c83a9
-> https://bugzilla.redhat.com/show_bug.cgi?id=732156
-> 
+:> > They do this already today, that's what security@...nel.org is for, and
+:> > it gets a bit of traffic like this every week.
+:> 
+:> Is this list open to the public?  It doesn't seem to be available on
+:> http://vger.kernel.org/vger-lists.html.
+:
+:No, it is closed, as it should be as potential security problems are
+:mailed there.  You don't want that to be totally open, right?
 
-Use CVE-2011-3186
-
-Thanks.
+One suggestion I've made in the past is to have the list _archives_ be
+open.  So anything older than, say, a month is made public.  That way,
+folks can see how issues were disclosed, how decisions were reached,
+etc.  for old issues that are no longer under embargo.  The way I see
+it, if we don't publish the list archive on our own terms, miscreants
+will get around to publishing it for us.  
 
 -- 
-    JB
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Why make trillions when we could make... billions?"                -Dr. Evil
