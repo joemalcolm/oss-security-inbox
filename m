@@ -1,22 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/3
-Message-ID: <4EC13E63.709@redhat.com>
-Date: Mon, 14 Nov 2011 09:14:27 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/4
+Message-ID: <4D7F2AB3.3010007@redhat.com>
+Date: Tue, 15 Mar 2011 17:00:35 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: ResourceSpace before 4.2.2833 insufficient access check
+CC: "Mike O'Connor" <mjo@...o.mi.org>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2011 04:15 AM, Hanno Böck wrote:
-> http://www.resourcespace.org/download.php
+On 03/15/2011 11:01 AM, Mike O'Connor wrote:
+> [catching up on older emails]
 >
-> "Security fix for an insufficient check on access keys given for
-> resources"
+> :>  >  They do this already today, that's what security@...nel.org is for, and
+> :>  >  it gets a bit of traffic like this every week.
+> :>
+> :>  Is this list open to the public?  It doesn't seem to be available on
+> :>  http://vger.kernel.org/vger-lists.html.
+> :
+> :No, it is closed, as it should be as potential security problems are
+> :mailed there.  You don't want that to be totally open, right?
 >
-Please use CVE-2011-4311 for this issue.
+> One suggestion I've made in the past is to have the list _archives_ be
+> open.  So anything older than, say, a month is made public.  That way,
+> folks can see how issues were disclosed, how decisions were reached,
+> etc.  for old issues that are no longer under embargo.  The way I see
+> it, if we don't publish the list archive on our own terms, miscreants
+> will get around to publishing it for us.
 
+Any fixes for the issues reported in s@k.o will be committed to the 
+upstream kernel immediately. The "disclosures" of those fixes are shared 
+in this list. Keep a look out for my emails.
+
+Eugene
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
