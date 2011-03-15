@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/1
-Message-ID: <4E217827.8030000@halfdog.net>
-Date: Sat, 16 Jul 2011 11:38:15 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/3
+Message-ID: <20110315032814.GK6691@dojo.mi.org>
+Date: Mon, 14 Mar 2011 23:28:14 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+[catching up on old email]
 
-Steven M. Christey wrote:
-> 
-> Very rarely, we will cover "documented behavior" if there is
-> sufficient evidence of widespread abuse/misuse of that behavior by
-> admins, in which case the CVE description would emphasize the fact
-> that it is the admin's "fault" or "misconception."  I generally try
-> to stay away from edge cases (such as this one) that could have a
-> "snowball effect" of setting a precedent that could ultimately be
-> used to argue for assigning too many low-priority CVEs to many
-> issues.  I would be inclined to avoid assigning a CVE for this issue
-> unless someone can provide a realistic, relatively common scenario
-> under which this would pose a significant security problem.
-> 
-> Speaking of Apache, the well-known double-extension handling issue
-> that enables arbitrary upload/execution of dangerous files like
-> abc.php.gif also doesn't have a CVE [I don't think] for similar
-> reasons, that it is well-documented behavior.
+:> > As suggested by Josh Bressers oCERT would be favourable to providing a
+:> > system that would accept user submission and allow selection of security
+:> > contacts from our existing member database as well as other verified
+:> > contacts.
 
-Understood. I've looked at the issue more closely and found a similar
-DOS-exploitable timerace and a buffer overwrite unrelated to this. Just
-for study, I'm currently trying to combine 3 timeraces + buffer
-overwrite + ROP to get code execution. Since apache will quite likely
-fix the other two issues, they have to touch the code anyway, so the
-symlink issue might be historic soon also.
+...
 
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+:It all depends on how this process is going to be handled. I can see oCERT
+:helping in routing reports to the proper contacts via email to our trusted
+:member contacts as well as external ones that we can seek on a report basis.
 
-iD8DBQFOIXgjxFmThv7tq+4RAsILAJ9PCl87wk/Ii5D3ewVytYa4aDGHWACfc72d
-V/3gP5Ga7RajR681LWs4t/c=
-=/V3r
------END PGP SIGNATURE-----
+What I've observed is that some times, the reporter or coordinator
+doesn't have a good idea of the scope of their issue.  To cite some
+real-world examples involving folks who I thought would know better:
+
+  1) no, BSD networking isn't just in Free/Net/OpenBSD 
+  2) no, ONC RPC just isn't in Sun products
+  3) no, a RH-specific kernel issue is a general Linux kernel issue
+
+Scoping issues isn't always easy.  How do you know whether I backported
+some bleeding-edge fix with broken security implications into one of the
+OSes I care about last week?  Sometimes, I'll need specific info just to
+confirm that I don't care about the issue.  Scoping is one of the things
+that vendor-sec was occasionally quite helpful with.  
+
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"I'd be terrific!  Colossal!  Stupendous!  Mediocre even!"        -Babs Bunny
