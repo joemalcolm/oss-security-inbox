@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/4
-Message-ID: <4DDB5363.8090609@redhat.com>
-Date: Tue, 24 May 2011 08:42:43 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Robert Scheck <robert@...oraproject.org>
-Subject: CVE Request -- phpMyAdmin -- PMASA-2011-3 & PMASA-2011-4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/12
+Message-ID: <1833559043.18998.1300221590506.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 16:39:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: 2 acpid flaws
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> Hi,
+> 
+> Looks like this implicit CVE request got lost:
+> http://www.openwall.com/lists/oss-security/2011/01/19/4
+> 
+> The first issue deserves a CVE I guess as unprivileged users could
+> block acpid.
+> 
 
-Hello, Josh, Steve, vendors,
+Sorry for missing this. I agree, the first issue deserves an ID. I'd rather
+not give the second an ID, since it's not actually a security flaw (it's
+certainly a bug though).
 
-   the following two security flaws have been recently reported against 
-phpMyAdmin:
-[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-3.php
-[2] http://www.phpmyadmin.net/home_page/security/PMASA-2011-4.php
+Use CVE-2011-1159
 
-References:
-[3] http://bugs.gentoo.org/show_bug.cgi?id=368495
+Thanks.
 
-Could you allocate CVE ids for these?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
