@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/4
-Message-ID: <4EDF93A8.2080105@redhat.com>
-Date: Wed, 07 Dec 2011 09:26:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/10
+Message-ID: <20110315143004.GN6691@dojo.mi.org>
+Date: Tue, 15 Mar 2011 10:30:04 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Disputing CVE-2011-4122
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On 12/07/2011 07:26 AM, Jeff Mitchell wrote:
-> Hello,
->
-> I've been asked by the kcheckpass maintainer to lodge a dispute of
-> CVE-2011-4122.
->
-> As explained in the blog entry linked from the CVE[1], the problem is
-> that neither kcheckpass nor OpenPAM validate the 'service_name' input
-> argument of pam_start(). This hole can be used to make PAM load
-> arbitrary shared libraries, which can be used to execute arbitrary code
-> as root, as kcheckpass is setuid root.
->
-> One could assume that kcheckpass should do the validation. However, the
-> PAM documentation makes no mention of what a service name is supposed to
-> look like, and consequently it must be treated as opaque by the
-> application code. Therefore all validation must be expected to be done
-> by the library, and failure to do so must be seen as a bug in the
-> library exclusively.
+:On 03/15/2011 11:01 AM, Mike O'Connor wrote:
+:>[catching up on older emails]
+:>
+:>:>  >  They do this already today, that's what security@...nel.org is for, 
+:>and
+:>:>  >  it gets a bit of traffic like this every week.
+:>:>
+:>:>  Is this list open to the public?  It doesn't seem to be available on
+:>:>  http://vger.kernel.org/vger-lists.html.
+:>:
+:>:No, it is closed, as it should be as potential security problems are
+:>:mailed there.  You don't want that to be totally open, right?
+:>
+:>One suggestion I've made in the past is to have the list _archives_ be
+:>open.  So anything older than, say, a month is made public.  That way,
+:>folks can see how issues were disclosed, how decisions were reached,
+:>etc.  for old issues that are no longer under embargo.  The way I see
+:>it, if we don't publish the list archive on our own terms, miscreants
+:>will get around to publishing it for us.
+:
+:Any fixes for the issues reported in s@k.o will be committed to the 
+:upstream kernel immediately. The "disclosures" of those fixes are shared 
+:in this list. Keep a look out for my emails.
 
-Can you provide a link to the documentation?
-> As a result, it is correct to list kcheckpass as an affected
-> application, but not as the origin of the vulnerability. The linked
-> advisories from ISS and Secunia are clearer about that.
->
-> Thanks,
-> Jeff
->
-> [1]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4122
->
-This is a good point/question. Steve?
+That shows the ultimate results, but not the process.  Sometimes, the
+process is important.  Sometimes you want to know who said what and
+when.  Let people see what's going on for themselves (eventually) and
+draw their own conclusions.
+
+(And yeah, I do keep an eye out for your emails.  Thanks!  :) )
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Hindsight, after all, is caused by lack of foresight."    -Non Campus Mentis
