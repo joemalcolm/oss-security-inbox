@@ -1,35 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/4
-Message-ID: <7ddd8d80-91f0-4203-95de-382c5935c433@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 30 Sep 2011 10:58:42 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/7
+Message-Id: <201103151427.39405.ludwig.nussel@suse.de>
+Date: Tue, 15 Mar 2011 14:27:38 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Typo3
+Subject: Re: 2 acpid flaws
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+Looks like this implicit CVE request got lost:
+http://www.openwall.com/lists/oss-security/2011/01/19/4
 
------ Original Message -----
-> Hi,
-> please assign CVE IDs for two new Typo3 issues:
+The first issue deserves a CVE I guess as unprivileged users could
+block acpid.
+
+cu
+Ludwig
+
+Vasiliy Kulikov wrote:
+> I. Blocking write.
 > 
-> 1. TYPO3-CORE-SA-2011-002: Potential SQL injection vulnerability in TYPO3
-> Core
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-002/
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641682
-
-Use CVE-2011-3583 for this.
-
+> I.1. Description.
 > 
-> 2. TYPO3-CORE-SA-2011-003: Improper error handling could lead to cache
-> flooding in TYPO3 Core
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-003/
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641683
+> acpid informs unprivileged processes about acpi events via UNIX socket.
+> This socket is in blocking mode.  If unprivileged process stops reading
+> data from the socket then, in some time, the socket queue fills up
+> leading to hanging privileged acpid daemon.  The daemon hangs until the
+> socket peer process reads some portion of the queued data or the peer
+> process exits/is killed.
+> [...]
+> II. Incorrect accept(2) error handling.
 > 
-
-Use CVE-2011-3584 for this.
-
-Thanks.
+> II.1. Description.
+> 
+> acpid doesn't gracefully handle client disconnection before the call to
+> accept(2).  If client calls close(2) between acpid calls poll(2) and
+> accept(2), acpid would hang in accept(2) until new client connects to
+> /var/run/acpid.socket.
+> 
+> This is only theoretical flaw as with current Linux kernel
+> implementation accept(2) would return new socket handler even if the
+> peer is closed.  However this behavior is implementation specific and
+> may be changed in future versions of kernels (or custom versions).
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
