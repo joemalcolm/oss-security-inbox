@@ -1,35 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/4
-Message-ID: <7ddd8d80-91f0-4203-95de-382c5935c433@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 30 Sep 2011 10:58:42 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/5
+Message-ID: <20110315111311.GA13957@suse.de>
+Date: Tue, 15 Mar 2011 12:13:11 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Typo3
+Cc: kov@...ian.org
+Subject: gksu-polkit
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+I already sent this to vendor-sec a while ago (cant remember
+whether this already received a CVE and which) as well as to
+the maintainer (Cc) which did not yield a response.
+So I send it here again. Merging X cookies is probably not
+a good idea by itself for sudo like programs but this problem
+adds more.
+
+Sebastian
+
+-------------------------->8----------------------
+
+While reviewing possible replacements for libgnomesu, I found that
+the gksu-polkit contains a weird vulnerability that allows
+to escalate privileges.
+
+Basically the gksu-server is a DBUS activation that runs as root.
+Users invoke the Spawn method via DBUS and gksu-server components
+check via polkit whether the user is allowed to run the program.
+
+Despite the "nice" architecture involving dozens of glib, dbus etc.
+libs for such a simple purpose as well as running Vala generated source code
+as root, it has an inlining problem.
+gksu-server tries to merge the X11 cookie credentials via xauth commands.
+It creates a script file (as root) which it passes to xauth like so:
 
 
------ Original Message -----
-> Hi,
-> please assign CVE IDs for two new Typo3 issues:
-> 
-> 1. TYPO3-CORE-SA-2011-002: Potential SQL injection vulnerability in TYPO3
-> Core
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-002/
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641682
+gboolean gksu_controller_prepare_xauth()
+{
+[...]
+  xauth_display = g_hash_table_lookup(environment, "DISPLAY");
+  [...]
+  xauth_cmd = g_strdup_printf("add %s . %s\n", xauth_display, xauth_token);
+  fwrite(xauth_cmd, sizeof(gchar), strlen(xauth_cmd), file);
+  [...]
+  command = g_strdup_printf("%s -q -f %s source %s", xauth_bin, xauth_file, tmpfilename);
 
-Use CVE-2011-3583 for this.
+  g_spawn_command_line_sync(command, NULL, NULL, &return_code, &error);
+[...]
+}
 
-> 
-> 2. TYPO3-CORE-SA-2011-003: Improper error handling could lead to cache
-> flooding in TYPO3 Core
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-003/
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641683
-> 
 
-Use CVE-2011-3584 for this.
 
-Thanks.
+while the creation of the tmp file looks safe, the DISPLAY variable might
+be passed by the user to the Spawn DBUS method. It may contain newlines,
+spaces etc. since the default common.variables file allows to pass
+unrestricted data via DISPLAY to it.
+Therefore the source file for xauth may contain arbitrary commands,
+e.g. extracting user owned X11 cookies to root's .Xauthority
+or to /etc/passwd. He may then overtake a administrator X11 session
+since his cookies have been placed to /root/ or "carefully chooses"
+a token that matches a /etc/passwd entry.
+Same maybe applies to xauth_token which might contain newlines etc.
+
+The default config must contain regex that forbid such characters or
+the token handling inside gksu-server has to be done differently.
+
+
 
 -- 
-    JB
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
