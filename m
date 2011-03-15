@@ -1,37 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/1
-Message-ID: <4E6EE979.9080200@redhat.com>
-Date: Tue, 13 Sep 2011 10:56:17 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/11
+Message-ID: <876004730.18832.1300220902526.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 16:28:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Gerald Combs <gerald@...eshark.org>
-Subject: CVE Request: Multiple issues fixed in wireshark 1.6.2
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for python-feedparser
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Multiple issues were were fixed in wireshark 1.6.2, out of which 4 of 
-them do not have any CVEs assigned.
 
-1, Wireshark CSN.1 dissector vulnerability
-http://www.wireshark.org/security/wnpa-sec-2011-16.html
-https://bugzilla.redhat.com/show_bug.cgi?id=737783
+----- Original Message -----
+> python-feedparser 5.0.1 fixes three flaws:
+> 
+> https://code.google.com/p/feedparser/
+> 
+> * Fix issue 91 (invalid text in XML declaration causes sanitizer to
+> crash)
 
-2. Wireshark Lua script execution vulnerability
-http://www.wireshark.org/security/wnpa-sec-2011-15.html
-https://bugzilla.redhat.com/show_bug.cgi?id=737784
+https://code.google.com/p/feedparser/issues/detail?id=91
 
-3. Wireshark buffer exception handling vulnerability
-http://www.wireshark.org/security/wnpa-sec-2011-14.html
-https://bugzilla.redhat.com/show_bug.cgi?id=737785
+Use CVE-2011-1156
 
-4. Wireshark OpenSafety dissector vulnerability
-http://www.wireshark.org/security/wnpa-sec-2011-12.html
-https://bugzilla.redhat.com/show_bug.cgi?id=737787
 
-Can CVE be assigned to the above issues please?
+> * Fix issue 254 (sanitization can be bypassed by malformed XML
+> comments)
+
+https://code.google.com/p/feedparser/issues/detail?id=254
+
+Use CVE-2011-1157
+
+
+> * Fix issue 255 (sanitizer doesn't strip unsafe URI schemes)
+
+https://code.google.com/p/feedparser/issues/detail?id=255
+
+Use CVE-2011-1158
 
 Thanks.
 
-
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
