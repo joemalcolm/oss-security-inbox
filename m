@@ -1,63 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/9
-Message-ID: <4E317978.6010709@redhat.com>
-Date: Thu, 28 Jul 2011 17:00:08 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/13
+Message-ID: <1137441234.19166.1300222011542.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 16:46:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel: tpm infoleaks
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+----- Original Message -----
+> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
+> infoleak
 
-   by further investigation of hplip CVE-2011-2722 issue:
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
+Please use CVE-2011-1160
 
-Tim Waugh noticed the similar issue being present also in foomatic-rip
-universal print filter, when debug mode is enabled. Further details:
 
-It was found that foomatic-rip filter used insecurely created temporary
-file for storage of PostScript data by rendering the data, intended to 
-be sent to the PostScript filter, when the debug mode was enabled. A 
-local attacker could use this flaw to conduct symlink attacks (overwrite 
-arbitrary file accessible with the privileges of the user running the 
-foomatic-rip universal print filter).
+> 
+> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
+> infoleak
 
-Relevant source code part (Perl script part / foomatic-rip.in):
-===============================================================
-    100 my $logfile = "/tmp/foomatic-rip";
-   ..
-   3454  # In debug mode save the data supposed to be fed
-           into the
-   3455  # renderer also into a file
-   3456  if ($debug) {
-   3457    $commandline = "tee -a ${logfile}.ps | ( $commandline )";
-   3458  }
+Please use CVE-2011-1161
 
-Note: The $logfile variable declaration (line #100) is not an insecure
-       temporary file use issue itself, since this danger (and its proper
-       usage) is documented in /etc/foomatic/filters.conf file.
 
-Relevant source code part (C script part / renderer.c):
-========================================================
-    436  /* Save the data supposed to be fed into the renderer
-           also int        o a file*/
-    437  dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
-    438  dstrcat(commandline, ")");
-    439  }
+> 
+> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
+> 
+> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
+> prevents storing of previous result, leakage to other drivers
+> 
 
-Note: The LOG_FILE variable declaration by itself is not an insecure
-       temporary file use, since this danger (and its proper usage)
-       is documented in /etc/foomatic/filters.conf file.
+Please use CVE-2011-1162
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
+Thanks.
 
-Credit: Issue discovered by Tim Waugh
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+-- 
+    JB
