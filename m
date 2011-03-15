@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/12
-Message-ID: <2113424705.118408.1300738789414.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 21 Mar 2011 16:19:49 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/14
+Message-ID: <1271379951.19443.1300222715834.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 16:58:35 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request for Asterisk flaws
+Subject: Re: CVE Request: kernel: fs/partitions: Corrupted OSF partition table can cause information disclosure
 Content-Type: text/plain; charset=utf-8
 
-I found some html copies of those (I don't like pdfs for such purposes).
-
------ Original Message -----
-> Two flaws were fixed in Asterisk:
-> 
-> AST-2011-003:
-> http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
-> - resource exhaustion DoS in Asterisk Manager Interface
-
-http://downloads.asterisk.org/pub/security/AST-2011-003.html
-
-Use CVE-2011-1174
-
-> 
-> AST-2011-004:
-> http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
-> - DoS in TCP/TLS server due to NULL ptr deref
-
-http://downloads.asterisk.org/pub/security/AST-2011-004.html
-
-Use CVE-2011-1175
+Please use CVE-2011-1163.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> The kernel automatically evaluates partition tables of storage
+> devices.
+> The code for evaluating OSF partitions (in fs/partitions/osf.c)
+> contains a bug that leaks data from kernel heap memory to userspace
+> for
+> certain corrupted OSF partitions.
+> 
+> See http://www.spinics.net/lists/mm-commits/msg82737.html for a patch.
+> 
+> Cheers, Timo
+> 
+> --
+> Dr. Timo Warns warns@...-sense.de
+> Tel. +49 - 40 - 244 2407 - 16
+> Fax +49 - 40 - 244 2407 - 24
+> PRESENSE Technologies GmbH Sachsenstr. 5, D-20097 HH
+> USt-IdNr.: DE263765024
+> Geschäftsführer/Managing Directors AG Hamburg, HRB 107844
+> Till Dörges Jürgen Sander Axel Theilmann
