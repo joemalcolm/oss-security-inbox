@@ -1,63 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/7
-Message-ID: <4EC68954.4030502@redhat.com>
-Date: Fri, 18 Nov 2011 09:35:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/8
+Message-ID: <1776666325.7056.1300196833810.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 15 Mar 2011 09:47:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Timo Sirainen <tss@....fi>
-Subject: Re: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
+Cc: kov@...ian.org, coley <coley@...re.org>
+Subject: Re: gksu-polkit
 Content-Type: text/plain; charset=utf-8
 
-On 11/18/2011 06:37 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way Dovecot, an IMAP and POP3 email
-> server, performed remote server identity verification (x509
-> certificate's Common Name field was not checked to match provided
-> remote server host name), when Dovecot was configured to proxy IMAP and
-> POP3 connections to remote hosts and TLS/SSL protocols were requested
-> (ssl=yes or starttls=yes) in the configuration to secure these
-> connections to the destination server. A remote attacker could use
-> this flaw to conduct man-in-the-middle (MITM) attacks via specially-
-> crafted x509v3 certificate.
->
-> References:
-> [1] http://www.dovecot.org/list/dovecot-news/2011-November/000200.html
-> [2] https://secunia.com/advisories/46886/
-> [3] https://bugs.gentoo.org/show_bug.cgi?id=390887
-> [4] http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
->
-> Relevant upstream patch:
-> [5] http://hg.dovecot.org/dovecot-2.0/rev/5e9eaf63a6b1
->
-> Could you allocate a CVE id for this?
->
-> Note: This isn't a 'direct security flaw', in the sense it would be
-> discovered / reported at some time point. This behaviour (do not check
-> x509v3 cert CN against remote server hostname), when TLS/SSL protocols
-> are configured, and the danger of MITM is already described
-> on relevant Dovecot's page:
-> http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
->
-> thus one could say, for those administrators, who are aware of [4]
-> page and configured Dovecot in safe way there is no trust boundary
-> crossing and this upstream change is just security hardening.
->
-> But on the other hand, this change is important enough, to be
-> backported to all affected versions, (regardless to the fact if
-> particular administrator has or hasn't read [4]). Thus I would vote
-> for a CVE identifier to be assigned to this issue. But opened for
-> discussion if someone else (MITRE?) thinks this should be dealt
-> with rather as with security hardening, than with a real security
-> flaw.
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+I assigned this CVE-2011-0703 when you sent it to vendor-sec.
 
-Please use CVE-2011-4318  for this issue.
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
+----- Original Message -----
+> Hi,
+> 
+> I already sent this to vendor-sec a while ago (cant remember
+> whether this already received a CVE and which) as well as to
+> the maintainer (Cc) which did not yield a response.
+> So I send it here again. Merging X cookies is probably not
+> a good idea by itself for sudo like programs but this problem
+> adds more.
+> 
+> Sebastian
+> 
+> -------------------------->8----------------------
+> 
+> While reviewing possible replacements for libgnomesu, I found that
+> the gksu-polkit contains a weird vulnerability that allows
+> to escalate privileges.
+> 
+> Basically the gksu-server is a DBUS activation that runs as root.
+> Users invoke the Spawn method via DBUS and gksu-server components
+> check via polkit whether the user is allowed to run the program.
+> 
+> Despite the "nice" architecture involving dozens of glib, dbus etc.
+> libs for such a simple purpose as well as running Vala generated
+> source code
+> as root, it has an inlining problem.
+> gksu-server tries to merge the X11 cookie credentials via xauth
+> commands.
+> It creates a script file (as root) which it passes to xauth like so:
+> 
+> 
+> gboolean gksu_controller_prepare_xauth()
+> {
+> [...]
+> xauth_display = g_hash_table_lookup(environment, "DISPLAY");
+> [...]
+> xauth_cmd = g_strdup_printf("add %s . %s\n", xauth_display,
+> xauth_token);
+> fwrite(xauth_cmd, sizeof(gchar), strlen(xauth_cmd), file);
+> [...]
+> command = g_strdup_printf("%s -q -f %s source %s", xauth_bin,
+> xauth_file, tmpfilename);
+> 
+> g_spawn_command_line_sync(command, NULL, NULL, &return_code, &error);
+> [...]
+> }
+> 
+> 
+> 
+> while the creation of the tmp file looks safe, the DISPLAY variable
+> might
+> be passed by the user to the Spawn DBUS method. It may contain
+> newlines,
+> spaces etc. since the default common.variables file allows to pass
+> unrestricted data via DISPLAY to it.
+> Therefore the source file for xauth may contain arbitrary commands,
+> e.g. extracting user owned X11 cookies to root's .Xauthority
+> or to /etc/passwd. He may then overtake a administrator X11 session
+> since his cookies have been placed to /root/ or "carefully chooses"
+> a token that matches a /etc/passwd entry.
+> Same maybe applies to xauth_token which might contain newlines etc.
+> 
+> The default config must contain regex that forbid such characters or
+> the token handling inside gksu-server has to be done differently.
+> 
+> 
+> 
+> --
+> ~
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
+> ~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
