@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/1
-Message-ID: <4EC9BDF6.9000907@redhat.com>
-Date: Sun, 20 Nov 2011 19:56:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/3
+Message-ID: <1103160827070.15802@mjc.redhat.com>
+Date: Wed, 16 Mar 2011 08:36:17 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On 11/20/2011 04:04 AM, Hanno Böck wrote:
-> http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
->
-> Description
-> Weak random number generation during password reset leads to
-> possibility of changing a user's password.
->
-> Affected Installs
-> Joomla! version 1.5.24 and all earlier 1.5 versions
->
-> Solution
-> Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
->
->
->
-Please use CVE-2011-4321 for this issue.
+> time.  The embargoes in vendor-sec were typically weeks, but I don't recall
+> the longest one.  I too favor opening the vendor-sec archives after a while,
+> maybe quarterly.
 
--- 
+There were some very long embargos when third parties reporting the issues 
+to vendor-sec requested delays (due to issues being actually in firmware 
+in one case, and due to closed-source vendor co-ordination in another). 
+And we did discuss things on the list that were never made public 
+(particular ways to test or exploit vulnerabilities).  Also there were 
+things reported to us by people that wished to get no credit and remain 
+anonymous when the issue was public.
 
--Kurt Seifried / Red Hat Security Response Team
+However all those things are exceptions and I'd support us opening the 
+archives after a while and making it clear to folks reporting to us to 
+expect that to happen.  We'd need to check with common reporters like 
+CERT/CC who may not expect their early drafts to become public.
 
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response
