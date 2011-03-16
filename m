@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/2
-Message-ID: <20111110125714.GA8669@wopr.local.invalid>
-Date: Thu, 10 Nov 2011 13:57:15 +0100
-From: Guido Berhoerster <gber@...nsuse.org>
-To: oss-security@...ts.openwall.com
-Cc: Robert Ancell <robert.ancell@...onical.com>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/8
+Message-ID: <20110316110228.GA4109@netbookdave>
+Date: Wed, 16 Mar 2011 12:02:28 +0100
+From: David King <amigadave@...gadave.com>
+To: David Woodhouse <dwmw2@...radead.org>
+Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-* Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
-> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
-> > On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> > > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> > >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> > >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> > >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
-> > >>>> cause LightDM to set the destination of the link to user ownership.
-> > >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> > >>>>
-> > >>>> Overview of changes in lightdm 1.0.6
-> > >>>>
-> > >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> > >>> Could a CVE be assigned for this?
-> > >>>
-> > >>> Regards,
-> > >> Can you send me the link to this announcement so I can confirm it? Thanks.
-> > >>
-> > > Here's the link to the mailing list mail:
-> > > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
-> > >
-> > > Regards,
-> > Thanks, confirmed (first hand info is much better). Please use
-> > CVE-2011-4105 for this issue.
-> > 
-> 
-> BTW, the fix that is in 1.0.6 is probably not enough for distros that
-> don't implement hard link restrictions, such as the Yama LSM that is
-> used in Ubuntu.
+On 2011-03-16 10:47, David Woodhouse <dwmw2@...radead.org> wrote:
+>On Tue, 2011-03-15 at 17:10 -0400, Josh Bressers wrote:
+>>
+>> Issue #2
+>>
+>> Vino can open ports via uPnP without alerting the user.
+>> https://bugzilla.redhat.com/show_bug.cgi?id=678846
+>>
+>> Use CVE-2011-1165
 
-Does an incomplete fix in a released version warrant a new CVE?
+[snip]
 
-I've attached a suggested fix.
+>There *is* an option to disable this feature, if the user really wants
+>to. And of course it should be clearly indicated that the service is
+>available to the public; but *that* is what CVE-2011-1164 is for.
+
+It should be noted that the UPnP feature is disabled by default, so the 
+user has the option to *enable* it. I concede that the string presented 
+in the UI needs improvement. Of course, I agree that indication of the 
+consequences would be appropriate, and also disallowing the 'none' 
+authentication method if UPnP is enabled.
+
 -- 
-Guido Berhoerster
-
-View attachment "fix-xauthority-ownership-fix.patch" of type "text/x-patch" (1555 bytes)
+http://amigadave.com/
