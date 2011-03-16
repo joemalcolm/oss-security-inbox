@@ -1,24 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/3
-Message-ID: <CAHmME9qHN56w4Dn1wtzau5H1jULPTG2dG=gt0oD7_SGMKC3E+A@mail.gmail.com>
-Date: Sun, 6 Nov 2011 23:27:47 -0500
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/7
+Message-ID: <661055294.29341.1300276718876.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Mar 2011 07:58:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: David Woodhouse <dwmw2@...radead.org>
+Cc: oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>, David King <amigadave@...gadave.com>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 6, 2011 at 22:11, Kurt Seifried <kseifried@...hat.com> wrote:
+----- Original Message -----
+> On Wed, 2011-03-16 at 12:02 +0100, David King wrote:
+> > It should be noted that the UPnP feature is disabled by default, so the
+> > user has the option to *enable* it. I concede that the string presented
+> > in the UI needs improvement.
+> 
+> That isn't CVE-worthy, though, surely?
+> 
+> > Of course, I agree that indication of the consequences would be
+> > appropriate,
+> 
+> That's CVE-2011-1164.
+> 
+> > and also disallowing the 'none' authentication method if UPnP is
+> > enabled.
+> 
+> And that, again, is not at all specific to UPnP.
+> 
+> Disallowing the 'none' authentication method is would be appropriate
+> whenever the machine is accessible from the outside world, whether that's
+> through UPnP or just by listening on a publicly-available IP address.
+> 
 
-> On 11/04/2011 02:45 PM, Jason A. Donenfeld wrote:
-> > Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
-> > current version that has been out for quite some time now. These require
-> a
-> > CVE. Issues 8 through 14 are ones introduced only during development and
-> So to confirm these issues will be assigned a CVE (double checking since
-> this has been quite the mess):
+I probably should have been more clear here. I was under the impression the
+CVE id applied to instances where it would use UPnP and no auth, which is
+dangerous and should probably include a big warning with a button that says
+"I know what I'm doing (but probably not really)".
 
+UPnP by itself is not a security flaw.
 
-Roger that. A CVE or multiple CVEs, depending on however whomever wants to
-do it.
+Sorry for the confusion.
 
+-- 
+    JB
