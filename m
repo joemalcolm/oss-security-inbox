@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/7
-Message-ID: <320759649.178573.1305830835860.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 14:47:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/6
+Message-ID: <20110316094025.GA15861@lupin.home.powdarrmonkey.net>
+Date: Wed, 16 Mar 2011 09:40:25 +0000
+From: Jonathan Wiltshire <jmw@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: klibc@...or.com, coley <coley@...re.org>
-Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP	options
+Subject: Re: CVE request for python-feedparser
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Related to CVE-2011-0997
-> 
-> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
-> used unquoted, than proof of concept involves
-> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
-> 
-> fix:
-> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
-> will be part of the just to be released klibc-1.5.22
-> 
 
-Please use CVE-2011-1930.
+Please allocate a CVE for a further XSS vulnerability:
 
-Thanks.
+http://code.google.com/p/feedparser/issues/detail?id=195
+
+It's an old bug, but I couldn't find any reference of a CVE ID. I'm not
+subscribed so I'd appreciate a CC.
+
+Thanks,
 
 -- 
-    JB
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
+
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
