@@ -1,32 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/5
-Message-ID: <1126598848.703491.1308145575400.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 15 Jun 2011 09:46:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/5
+Message-ID: <20110316100911.GD26611@core.inversepath.com>
+Date: Wed, 16 Mar 2011 11:09:11 +0100
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Cc: Yann Kerherve <yann.kerherve@...il.com>, Matthew Wild <matthew@...sody.im>
-Subject: Re: CVE Request: prosody DoS, djabberd external entity injection
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-
------ Original Message -----
-> Hi,
+On Mon, Mar 14, 2011 at 11:28:14PM -0400, Mike O'Connor wrote:
+> [catching up on old email]
 > 
-> As far as I know, there's no CVE for these ones yet. Could you assign
-> one?
-> * prosody billion laughs DoS:
-> http://blog.prosody.im/prosody-0-8-1-released/
-
-Use CVE-2011-2205 for this.
-
-
-> * djabberd external entity injection:
-> http://groups.google.com/group/djabberd/browse_thread/thread/47974331c37e54c5#
+> :> > As suggested by Josh Bressers oCERT would be favourable to providing a
+> :> > system that would accept user submission and allow selection of security
+> :> > contacts from our existing member database as well as other verified
+> :> > contacts.
+> 
+> ...
+> 
+> :It all depends on how this process is going to be handled. I can see oCERT
+> :helping in routing reports to the proper contacts via email to our trusted
+> :member contacts as well as external ones that we can seek on a report basis.
+> 
+> What I've observed is that some times, the reporter or coordinator
+> doesn't have a good idea of the scope of their issue.  To cite some
+> real-world examples involving folks who I thought would know better:
+> 
+>   1) no, BSD networking isn't just in Free/Net/OpenBSD 
+>   2) no, ONC RPC just isn't in Sun products
+>   3) no, a RH-specific kernel issue is a general Linux kernel issue
+> 
+> Scoping issues isn't always easy.  How do you know whether I backported
+> some bleeding-edge fix with broken security implications into one of the
+> OSes I care about last week?  Sometimes, I'll need specific info just to
+> confirm that I don't care about the issue.  Scoping is one of the things
+> that vendor-sec was occasionally quite helpful with.  
 > 
 
-Use CVE-2011-2206
+Putting reports within the proper context and hunting down all occurrences of
+affected code in other projects has been one of oCERT goals from the
+beginning.
 
-Thanks.
+I agree 100% that reporters often do not have this knowledge or do not care
+about making the effort in scoping things in depth, that's exactly why oCERT
+was created.
+
+> -- 
+>  Michael J. O'Connor                                          mjo@...o.mi.org
+>  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+> "I'd be terrific!  Colossal!  Stupendous!  Mediocre even!"        -Babs Bunny
 
 -- 
-    JB
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
