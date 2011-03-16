@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/16
-Message-ID: <19865.44445.981637.137043@ornendil.otp.ericsson.se>
-Date: Mon, 4 Apr 2011 13:38:05 +0200
-From: Hans Bolinder <hans.bolinder@...csson.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Patrik Nyblom <pan@...ang.org>
-Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/2
+Message-ID: <4D804E52.9030309@redhat.com>
+Date: Wed, 16 Mar 2011 13:44:50 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-[Jan Lieskovsky:]
->    based on:
->    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
-> 
->    and:
->    [2] http://www.erlang.org/download/otp_src_R14B.readme
->    [3] http://www.erlang.org/download/otp_src_R14B01.readme
->    [4] http://www.erlang.org/download/otp_src_R14B02.readme
-> 
-> performed some initial issues review -- erlang-CVE-request.txt
-> attached. But since not sure, which of those are real security
-> flaws and how many CVE ids will be needed for those, Cc-ing
-> also Erlang upstream developers to shed more light into this.
-> ...
-> could you please have a look at the attached review file
-> and reply which of the #20 OTPs in the list are security flaws
-> (so we would know the count of CVE identifiers needed) and which
-> are just bugs? (since you know the Erlang code better than me)
+On 03/16/2011 12:07 PM, Menkhus, Mark (GSE Security HP SSRT) wrote:
+[...]
+> Not being the one fixing the code for our kernel left me with little to
+> immediately contribute, but I requested and coordinated with several folks
+> who got vendor sec for HP.  Likely, we would still want to be part of
+> vendor-sec.new.
 
-> stdlib:
->   - 20), race condition/silent data corruption in dets OTP-8898
->     Patch: https://github.com/erlang/otp/commit/4e79fa3b1b6797f2583848d307d6b85cec94a920
->     Note: Hard to tell if has security implications
+Many of the kernel vulnerabilities I have seen over the past two years 
+at least, were reported and fixed upstream. Only a handful of them were 
+reported privately. I can't remember when was the last time we had a 
+kernel issue reported via vendor-sec. There were, but it must have been 
+quite some time ago. LKML is still one of the better places to find 
+vulnerabilities :) Contributions welcomed.
 
-It's a bug fix, and I believe it has no security implications.
-
-Best regards,
-
-Hans Bolinder, Erlang/OTP team, Ericsson
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
