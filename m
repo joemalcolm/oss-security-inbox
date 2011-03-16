@@ -1,51 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/2
-Message-ID: <20110306061624.GA9133@serpens.de>
-Date: Sun, 6 Mar 2011 07:16:25 +0100
-From: "S.P.Zeidler" <spz@...BSD.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/12
+Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A71185095@GVW0671EXC.americas.hpqcorp.net>
+Date: Wed, 16 Mar 2011 16:26:53 +0000
+From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+To: Eugene Teo <eugene@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Thanks Eugene,
 
-Thus wrote Greg KH (greg@...ah.com):
-> On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
-> > Thus wrote Solar Designer (solar@...nwall.com):
-> > 
-> > > > - If yes, would it be an idea to confine or split into lists of focus groups?
-> > > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-> > > 
-> > > My current proposal is: split into several sub-lists.  I'd start with
-> > > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-> > > groups would be for externally submitted reports (by non-members) and
-> > > for cross-vendor discussions.
-> > 
-> > I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
-> > items shared between BSDs, but not commonly seen in Linux distributions),
-> > shared/userland (who eg doesn't have OpenSSL?), and researchers
-> > (no opinion on the latter).
+I have been looking at how to contribute in FOSS and security, and for me
+it's been in the area of how to understand what vulnerabilities are already
+documented.  I might think about looking more at the kernel changelogs and
+LKML lists.
+
+For sure, I'll look for some bugs while I am at it, tho.
+
+Mark
+> -----Original Message-----
+> From: Eugene Teo [mailto:eugene@...hat.com]
+> Sent: Tuesday, March 15, 2011 11:45 PM
+> To: oss-security@...ts.openwall.com
+> Cc: Menkhus, Mark (GSE Security HP SSRT)
+> Subject: Re: [oss-security] Vendor-sec hosting and future of closed
+> lists
 > 
-> This means that for a "normal" Linux distribution, someone would have to
-> be subscribed to at least 2 lists, and possibly three?
+> On 03/16/2011 12:07 PM, Menkhus, Mark (GSE Security HP SSRT) wrote:
+> [...]
+> > Not being the one fixing the code for our kernel left me with little
+> to
+> > immediately contribute, but I requested and coordinated with several
+> folks
+> > who got vendor sec for HP.  Likely, we would still want to be part of
+> > vendor-sec.new.
+> 
+> Many of the kernel vulnerabilities I have seen over the past two years
+> at least, were reported and fixed upstream. Only a handful of them were
+> reported privately. I can't remember when was the last time we had a
+> kernel issue reported via vendor-sec. There were, but it must have been
+> quite some time ago. LKML is still one of the better places to find
+> vulnerabilities :) Contributions welcomed.
+> 
+> Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
 
-Two, to be made aware of issues (same for BSDs).
-
-> And where would someone post a problem to?  How would they know if a
-> pacakge is shared from BSD and Linux without having to do a lot of
-> research first?
-
-Assume shared unless you know it's a specific problem. :)
-
-> I really don't mind seeing all of the traffic for all of the issues, but
-> perhaps the BSD developers get tired of seeing all of the Linux kernel
-> issues go across their mailbox so they don't want to have to see them
-> anymore :)
-
-I wouldn't be on the list but I guess our security-officers coped.
-It's rather that I would like to avoid the BSDs being forgotten.
-
-regards,
-	spz
--- 
-spz@...pens.de (S.P.Zeidler) spz@...BSD.org
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
