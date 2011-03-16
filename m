@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/4
-Message-ID: <4E9D8B1B.90909@redhat.com>
-Date: Tue, 18 Oct 2011 08:20:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/10
+Message-ID: <1300275632.4549.4.camel@macbook.infradead.org>
+Date: Wed, 16 Mar 2011 11:40:32 +0000
+From: David Woodhouse <dwmw2@...radead.org>
+To: David King <amigadave@...gadave.com>
+Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-Matthias Weckbecker <mweckbecker@...e.de> wrote:
->> https://redmine.ruby-lang.org/issues/5418
->>
->> Can we get a CVE for this please?
->>
-> I think this is already covered by CVE-2011-3187.
+On Wed, 2011-03-16 at 12:02 +0100, David King wrote:
+> It should be noted that the UPnP feature is disabled by default, so the 
+> user has the option to *enable* it. I concede that the string presented 
+> in the UI needs improvement. 
 
-Sort of, similar issue (lack of input verification), but it's in a
-different code base, which traditionally means a different CVE is
-assigned. Also CVE-2011-3187 was fixed in Ruby on Rails 3.0.10, this new
-issue is still unfixed in Ruby.
- 
+That isn't CVE-worthy, though, surely?
+
+> Of course, I agree that indication of the consequences would be
+> appropriate, 
+
+That's CVE-2011-1164.
+
+> and also disallowing the 'none' authentication method if UPnP is enabled. 
+
+And that, again, is not at all specific to UPnP.
+
+Disallowing the 'none' authentication method is would be appropriate
+whenever the machine is accessible from the outside world, whether
+that's through UPnP or just by listening on a publicly-available IP
+address.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
+dwmw2
 
