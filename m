@@ -1,47 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/12
-Message-ID: <4ED54D52.3030303@redhat.com>
-Date: Tue, 29 Nov 2011 14:23:30 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: mediawiki before 1.17.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/7
+Message-ID: <661055294.29341.1300276718876.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Mar 2011 07:58:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: David Woodhouse <dwmw2@...radead.org>
+Cc: oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>, David King <amigadave@...gadave.com>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-On 11/29/2011 03:12 AM, Hanno Böck wrote:
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-November/000104.html
->
-> From announce mail:
->
-> -------------
-> I would like to announce the release of MediaWiki 1.17.1. Two security
-> issues were discovered.
->
-> Alexandre Emsenhuber discovered an issue where page titles on private
-> wikis could be exposed bypassing different page ids to index.php. In the
-> case of the user not having correct permissions, they will now be
-> redirected to Special:BadTitle.
->
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=32276
-Please use CVE-2011-4360 for this issue.
+----- Original Message -----
+> On Wed, 2011-03-16 at 12:02 +0100, David King wrote:
+> > It should be noted that the UPnP feature is disabled by default, so the
+> > user has the option to *enable* it. I concede that the string presented
+> > in the UI needs improvement.
+> 
+> That isn't CVE-worthy, though, surely?
+> 
+> > Of course, I agree that indication of the consequences would be
+> > appropriate,
+> 
+> That's CVE-2011-1164.
+> 
+> > and also disallowing the 'none' authentication method if UPnP is
+> > enabled.
+> 
+> And that, again, is not at all specific to UPnP.
+> 
+> Disallowing the 'none' authentication method is would be appropriate
+> whenever the machine is accessible from the outside world, whether that's
+> through UPnP or just by listening on a publicly-available IP address.
+> 
 
-> The second issue was found by Tim Starling, who discovered that
-> action=ajax requests were dispatched to the relevant function without
-> any read permission checks being done. This could have led to data
-> leakage on private wikis.
->
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=32616
-Please use CVE-2011-4361 for this issue.
+I probably should have been more clear here. I was under the impression the
+CVE id applied to instances where it would use UPnP and no auth, which is
+dangerous and should probably include a big warning with a button that says
+"I know what I'm doing (but probably not really)".
 
-> ------------------------
->
-> Please assign two CVEs.
->
+UPnP by itself is not a security flaw.
 
+Sorry for the confusion.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
