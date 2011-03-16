@@ -1,20 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/6
-Message-ID: <4EB04569.6040902@redhat.com>
-Date: Tue, 01 Nov 2011 13:15:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/11
+Message-ID: <1300279733.4549.8.camel@macbook.infradead.org>
+Date: Wed, 16 Mar 2011 12:48:53 +0000
+From: David Woodhouse <dwmw2@...radead.org>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>,  "Steven M. Christey" <coley@...us.mitre.org>, David King <amigadave@...gadave.com>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-On 11/01/2011 11:11 AM, David Black wrote:
-> y with respect to their de-serialization of YAML post
-> data. Both Piston and Tastypie used the yaml.load method, which is
-> unsafe. In certain
-Can you please send me links for Piston and Tastypie announcements/code
-commits showing the vuln please? Thanks.
+On Wed, 2011-03-16 at 07:58 -0400, Josh Bressers wrote:
+> I probably should have been more clear here. I was under the impression the
+> CVE id applied to instances where it would use UPnP and no auth, which is
+> dangerous and should probably include a big warning with a button that says
+> "I know what I'm doing (but probably not really)". 
+
+
+Right. So that CVE should apply to the case of it listening on a
+publicly available IP address with no auth, whether it uses uPnP or not.
+
+If it just listens on the socket and is usable from the outside world
+without a password, that's the *same* problem.
+
+The CVE really has nothing to do with uPnP; it's about the lack of
+authentication on a publicly-available service.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
+dwmw2
 
