@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/7
-Message-Id: <201107220021.46248.steffen.joeris@skolelinux.de>
-Date: Fri, 22 Jul 2011 00:21:36 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/4
+Message-Id: <201103161044.09804.ludwig.nussel@suse.de>
+Date: Wed, 16 Mar 2011 10:44:09 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Jan Lieskovsky wrote:
+> Hello Josh, Steve, David, vendors,
+> 
+>    this is due the following vino deficiency:
+>    [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+>    [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+> 
+> As noted in [1] Vino may incorrectly report, that relevant user desktop
+> is reachable only over local network, when in fact it's reachable from everywhere.
+> 
+> As this is issue slightly on the border, not sure it should receive a CVE identifier,
+> so Cc-ed David Woodhouse to elaborate more on issue impact if necessary.
+> 
+> Under my opinion, the trust boundary is crossed (it is wrongly reported to the the user, they
+> have a secure setup, when they do not have it and otherwise would perform steps to correct the
+> settings). But left the final decision for further discussion.
+> 
+> What are the thoughts of the others? Should this one get a CVE identifier or not?
 
-Sorry for joining this thread so late.
+Claiming that the system is only reachable via local network while
+it's not doesn't sound correct to me either. However, how would a
+fix look like? A program basically can't know nor reliably determine
+whether it's reachable from outside. Private IP addresses are no
+indication either. So the only sane thing seems to be to not make
+any claims about local networks and just list the IP addresses/host
+names of the system.
 
-Please add me to the new closed list. As a member of the debian security 
-team[0] I was formerly subscribed to the vendor-sec@ list via our team@ 
-address.
+cu
+Ludwig
 
-pub   1024D/893FAD07 2004-07-12
-uid                  Steffen Joeris <white@...ian.org>
-uid                  Steffen Joeris (white) <Steffen.joeris@....de>
-uid                  Steffen Joeris (white) <steffen.joeris@...lelinux.de>
-uid                  Steffen Joeris (white) <white@....snow-crash.org>
-uid                  Steffen Joeris <white@...lelinux.org>
-sub   1024g/6F2AA41F 2004-07-12
-
-Cheers,
-Steffen
-
-[0]: http://www.debian.org/intro/organization
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
