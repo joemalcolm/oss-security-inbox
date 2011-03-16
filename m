@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/14
-Message-ID: <1417239145.1472160.1311189811542.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 15:23:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/4
+Message-Id: <201103161044.09804.ludwig.nussel@suse.de>
+Date: Wed, 16 Mar 2011 10:44:09 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: (e)glibc
+Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Is there already a CVE id assigned to
-> http://www.nodefense.org/eglibc.txt?
+Jan Lieskovsky wrote:
+> Hello Josh, Steve, David, vendors,
 > 
+>    this is due the following vino deficiency:
+>    [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
+>    [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+> 
+> As noted in [1] Vino may incorrectly report, that relevant user desktop
+> is reachable only over local network, when in fact it's reachable from everywhere.
+> 
+> As this is issue slightly on the border, not sure it should receive a CVE identifier,
+> so Cc-ed David Woodhouse to elaborate more on issue impact if necessary.
+> 
+> Under my opinion, the trust boundary is crossed (it is wrongly reported to the the user, they
+> have a secure setup, when they do not have it and otherwise would perform steps to correct the
+> settings). But left the final decision for further discussion.
+> 
+> What are the thoughts of the others? Should this one get a CVE identifier or not?
 
-I can't find an ID for this. Use CVE-2011-2702.
+Claiming that the system is only reachable via local network while
+it's not doesn't sound correct to me either. However, how would a
+fix look like? A program basically can't know nor reliably determine
+whether it's reachable from outside. Private IP addresses are no
+indication either. So the only sane thing seems to be to not make
+any claims about local networks and just list the IP addresses/host
+names of the system.
 
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
