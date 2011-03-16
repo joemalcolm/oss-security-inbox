@@ -1,71 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/5
-Message-ID: <4EE11259.50501@redhat.com>
-Date: Thu, 08 Dec 2011 12:39:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/6
+Message-ID: <20110316094025.GA15861@lupin.home.powdarrmonkey.net>
+Date: Wed, 16 Mar 2011 09:40:25 +0000
+From: Jonathan Wiltshire <jmw@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request WordPress pretty-link plugin 1.5.2 XSS
+Subject: Re: CVE request for python-feedparser
 Content-Type: text/plain; charset=utf-8
 
-On 12/08/2011 03:19 AM, Henri Salo wrote:
-> Can I get CVE-identifier for this issue? I have verified this and reported this to the developer in here: http://wordpress.org/support/topic/plugin-pretty-link-lite-152-xss-vulnerability
 
-Please use CVE-2011-4595 for this issue.
->
-> - Henri Salo
->
-> Original post below:
->
-> ----- Forwarded message from irist.ir@...il.com -----
->
-> Date: Sun, 4 Dec 2011 15:26:35 GMT
-> From: irist.ir@...il.com
-> To: bugtraq@...urityfocus.com
-> Subject: Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting
-> 	Vulnerabilities
-> X-Mailer: MIME-tools 5.420 (Entity 5.420)
->
-> a bug in Wordpress pretty-link plugin that allows to us to occur a Cross-Site Scripting on a Remote machin.
->
->
->
->
->
-> ############################################################################################################################################
-> #                                                                                                                                          #
-> #                           ISlamic Republic Of IRan Security Team                                                                         #
-> #                                                                                                                                          #
-> #                                http://irist.ir/forum/                                                                                    #
-> #                                                                                                                                          #
-> ############################################################################################################################################
-> #                                                                                                                                          #
-> # Wordpress pretty-link.1.5.2 plugin Cross-Site Scripting Vulnerabilities                                                                  #
-> #                                                                                                                                          #
-> # Download......: http://wordpress.org/extend/plugins/pretty-link/                                                                         #
-> #                                                                                                                                          #
-> # Exploit.......: http://www.site.com/[path]/wp-content/plugins/pretty-link/pretty-bar.php?url=[xss]                                       #
-> #                                                                                                                                          #
-> # Google Search.: "Powered by Wordpress"                                                                                                   #
-> #                                                                                                                                          #
-> ############################################################################################################################################
-> #                                                                                                                                          #
-> # Bug Found.....: IrIsT.Ir                                                                                                                 #
-> #                                                                                                                                          #
-> # discovery.....: Am!r (IrIsT?)                                                                                                            #
-> #                                                                                                                                          #
-> # contact.......: Amir[at]IrIsT.ir                                                                                                         #
-> #                                                                                                                                          #
-> # SP TNX........: The-0utl4w & A.u.r.A & B3HZ4D & m3hdi & joker_s & all IrIsT And Aria-security members                                    #
-> #                                                                                                                                          #
-> #   & Mehdi.H4ckcity &  2MzRp & mikili & All H4ckcity Members                                                                              #
-> #                                                                                                                                          #
-> ############################################################################################################################################
->
-> ----- End forwarded message -----
+Please allocate a CVE for a further XSS vulnerability:
 
+http://code.google.com/p/feedparser/issues/detail?id=195
+
+It's an old bug, but I couldn't find any reference of a CVE ID. I'm not
+subscribed so I'd appreciate a CC.
+
+Thanks,
 
 -- 
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
 
--Kurt Seifried / Red Hat Security Response Team
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
