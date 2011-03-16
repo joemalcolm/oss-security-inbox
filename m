@@ -1,40 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/2
-Message-ID: <4E1C2E16.1010708@halfdog.net>
-Date: Tue, 12 Jul 2011 11:20:54 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/5
+Message-ID: <20110316100911.GD26611@core.inversepath.com>
+Date: Wed, 16 Mar 2011 11:09:11 +0100
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Mar 14, 2011 at 11:28:14PM -0400, Mike O'Connor wrote:
+> [catching up on old email]
+> 
+> :> > As suggested by Josh Bressers oCERT would be favourable to providing a
+> :> > system that would accept user submission and allow selection of security
+> :> > contacts from our existing member database as well as other verified
+> :> > contacts.
+> 
+> ...
+> 
+> :It all depends on how this process is going to be handled. I can see oCERT
+> :helping in routing reports to the proper contacts via email to our trusted
+> :member contacts as well as external ones that we can seek on a report basis.
+> 
+> What I've observed is that some times, the reporter or coordinator
+> doesn't have a good idea of the scope of their issue.  To cite some
+> real-world examples involving folks who I thought would know better:
+> 
+>   1) no, BSD networking isn't just in Free/Net/OpenBSD 
+>   2) no, ONC RPC just isn't in Sun products
+>   3) no, a RH-specific kernel issue is a general Linux kernel issue
+> 
+> Scoping issues isn't always easy.  How do you know whether I backported
+> some bleeding-edge fix with broken security implications into one of the
+> OSes I care about last week?  Sometimes, I'll need specific info just to
+> confirm that I don't care about the issue.  Scoping is one of the things
+> that vendor-sec was occasionally quite helpful with.  
+> 
 
-Hello List,
+Putting reports within the proper context and hunting down all occurrences of
+affected code in other projects has been one of oCERT goals from the
+beginning.
 
-Is it possible to assign a CVE for documented behavior? Communication
-with apache security showed, that following symlinks to arbitrary
-locations is a documented feature, even when "-FollowSymLink" option is
-in place. This allows any user with, that can modify some content served
-by apache to access any content accessible by the apache process, also
-content not visible to the user (e.g. outside the ftp-upload directory
-or forbidden like /proc/http-pid/maps). Due to the small window of
-opportunity, this might be relevant mostly when user can already execute
-code on the machine, so it is not a big issue. /proc/<pid>/mem is
-protected, when apache is running with setuid, so key material cannot be
-extracted using range headers. PUT was not tested so far.
+I agree 100% that reporters often do not have this knowledge or do not care
+about making the effort in scoping things in depth, that's exactly why oCERT
+was created.
 
-See also
+> -- 
+>  Michael J. O'Connor                                          mjo@...o.mi.org
+>  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+> "I'd be terrific!  Colossal!  Stupendous!  Mediocre even!"        -Babs Bunny
 
-http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
 
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
-PDcCdoHHWTCHe53U+XTzefY=
-=fVzn
------END PGP SIGNATURE-----
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
