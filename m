@@ -1,39 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/13
-Message-ID: <1487479828.415095.1302112073310.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 6 Apr 2011 13:47:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE for ruby on rails XSS fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/1
+Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A70F4D84C@GVW0671EXC.americas.hpqcorp.net>
+Date: Wed, 16 Mar 2011 04:07:15 +0000
+From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
+Mike has an interesting idea, of opening the archives after a period of
+time.  The embargoes in vendor-sec were typically weeks, but I don't recall
+the longest one.  I too favor opening the vendor-sec archives after a while,
+maybe quarterly.
+
+Not being the one fixing the code for our kernel left me with little to
+immediately contribute, but I requested and coordinated with several folks
+who got vendor sec for HP.  Likely, we would still want to be part of
+vendor-sec.new.
+
+Most importantly, we would be glad to restate our need to continue to
+participate based on the new ground rules of whomever administers the new
+vendor-sec.  FWIW, I understand our largely silent participation in
+vendor-sec was annoying to folks looking at code, assessing risk, and
+suggesting fixes.  If there is something we could contribute, I'll encourage
+us not to be as shy.
+
+-Mark Menkhus
+Hewlett Packard Software Security Response Team
+
+> -----Original Message-----
+> From: Mike O'Connor [mailto:mjo@...o.mi.org]
+> Sent: Monday, March 14, 2011 9:01 PM
+> To: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] Vendor-sec hosting and future of closed
+> lists
 > 
-> Can someone assign a CVE for the XSS issue described in
+> [catching up on older emails]
 > 
-> https://github.com/rails/rails/blob/38df020c95beca7e12f0188cb7e18f3c37789e20/actionpack/CHANGELOG
+> :> > They do this already today, that's what security@...nel.org is
+> for, and
+> :> > it gets a bit of traffic like this every week.
+> :>
+> :> Is this list open to the public?  It doesn't seem to be available on
+> :> http://vger.kernel.org/vger-lists.html.
+> :
+> :No, it is closed, as it should be as potential security problems are
+> :mailed there.  You don't want that to be totally open, right?
 > 
+> One suggestion I've made in the past is to have the list _archives_ be
+> open.  So anything older than, say, a month is made public.  That way,
+> folks can see how issues were disclosed, how decisions were reached,
+> etc.  for old issues that are no longer under embargo.  The way I see
+> it, if we don't publish the list archive on our own terms, miscreants
+> will get around to publishing it for us.
+> 
+> --
+>  Michael J. O'Connor
+> mjo@...o.mi.org
+>  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==-
+> -==--=
+> "Why make trillions when we could make... billions?"                -
+> Dr. Evil
 
-Here is the changelog text:
-
-*Rails 3.0.6 (April 5, 2011)
-
-* Fixed XSS vulnerability in `auto_link`.  `auto_link` no longer marks
-  input as html safe.  Please make sure that calls to auto_link() are
-  wrapped in a sanitize(), or a raw() depending on the type of input passed
-  to auto_link().
-  For example:
-
-    <%= sanitize(auto_link(some_user_input)) %>
-
-  Thanks to Torben Schulz for reporting this.  The fix can be found here:
-  61ee3449674c591747db95f9b3472c5c3bd9e84d
-
-Use CVE-2011-1497
-
-Thanks.
-
--- 
-    JB
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
