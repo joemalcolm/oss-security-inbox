@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/10/1
-Message-ID: <20110710060508.GB8303@openwall.com>
-Date: Sun, 10 Jul 2011 10:05:08 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/11
+Message-ID: <1300279733.4549.8.camel@macbook.infradead.org>
+Date: Wed, 16 Mar 2011 12:48:53 +0000
+From: David Woodhouse <dwmw2@...radead.org>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>,  "Steven M. Christey" <coley@...us.mitre.org>, David King <amigadave@...gadave.com>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 06, 2011 at 12:51:39PM +0200, Tomas Hoger wrote:
-> We have bugzilla (as usual, use CVE as a bug id), but not too useful
-> for other distros, as it only says we're not affected.  All EC crypto is
-> one of the "patent or otherwise encumbered" code pieces that are removed
-> and not compiled in.
-> 
-> http://pkgs.fedoraproject.org/gitweb/?p=openssl.git;a=blob;f=hobble-openssl;h=a8be844f6ba7654b5738ae0e27e192a38797bd74;hb=master
+On Wed, 2011-03-16 at 07:58 -0400, Josh Bressers wrote:
+> I probably should have been more clear here. I was under the impression the
+> CVE id applied to instances where it would use UPnP and no auth, which is
+> dangerous and should probably include a big warning with a button that says
+> "I know what I'm doing (but probably not really)". 
 
-Oh, I did not realize this was the case.  Looks like we don't compile
-this stuff in either - we have "no-idea no-mdc2 no-rc5 no-ec no-ecdh
-no-ecdsa" on the ./Configure line.
 
-Thanks,
+Right. So that CVE should apply to the case of it listening on a
+publicly available IP address with no auth, whether it uses uPnP or not.
 
-Alexander
+If it just listens on the socket and is usable from the outside world
+without a password, that's the *same* problem.
+
+The CVE really has nothing to do with uPnP; it's about the lack of
+authentication on a publicly-available service.
+
+-- 
+dwmw2
+
