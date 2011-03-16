@@ -1,41 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/8
-Message-ID: <20111108155647.GC3561@suse.de>
-Date: Tue, 8 Nov 2011 16:56:47 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: potential OpenPAM vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/9
+Message-ID: <1300272457.17730.19.camel@macbook.infradead.org>
+Date: Wed, 16 Mar 2011 10:47:37 +0000
+From: David Woodhouse <dwmw2@...radead.org>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, David King <amigadave@...gadave.com>,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 2011-03-15 at 17:10 -0400, Josh Bressers wrote:
+> 
+> Issue #2
+> 
+> Vino can open ports via uPnP without alerting the user.
+> https://bugzilla.redhat.com/show_bug.cgi?id=678846
+> 
+> Use CVE-2011-1165 
 
-OpenPAM, until recently, was not filtering the service argument of
-pam_start() invocations. This can lead to a root compromise.
-Note that Linux-PAM is entirely different as forbids anything with '/'
-inside.
+I strongly disagree that this is CVE-worthy, or even a bug.
 
-Please see 
+That's what uPnP is *for*.
 
-http://c-skills.blogspot.com/2011/11/openpam-trickery.html
+Opening a port with uPnP, in a NAT-afflicted situation, is identical to
+binding to and listening on INADDR_ANY when you have real network
+connectivity. It's the moral equivalent to automatically using SOCKS to
+make outbound connections, if you're afflicted with a network that needs
+that.
 
-for more discussion and PoC.
-This most likely affects FreeBSD and Solaris via the kcheckpass
-vector.
+There *is* an option to disable this feature, if the user really wants
+to. And of course it should be clearly indicated that the service is
+available to the public; but *that* is what CVE-2011-1164 is for.
 
-regards,
-Sebastian
-
+There is also some merit in arguing that connections from outside the
+local network should not be permitted without a password. But again,
+there's nothing specific to uPnP in that.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+David Woodhouse                            Open Source Technology Centre
+David.Woodhouse@...el.com                              Intel Corporation
 
