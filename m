@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/4
-Message-ID: <20110114205614.1a941701@laverne>
-Date: Fri, 14 Jan 2011 20:56:14 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: proftpd before 1.3.3d
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/3
+Message-ID: <1103160827070.15802@mjc.redhat.com>
+Date: Wed, 16 Mar 2011 08:36:17 +0000 (GMT)
+From: Mark J Cox <mjc@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-See:
-http://www.securityfocus.com/bid/44933
-http://phrack.org/issues.html?issue=67&id=7#article
-http://bugs.gentoo.org/show_bug.cgi?id=348998
+> time.  The embargoes in vendor-sec were typically weeks, but I don't recall
+> the longest one.  I too favor opening the vendor-sec archives after a while,
+> maybe quarterly.
 
-Quote from securityfocus:
-"ProFTPD is prone to a remote heap-based buffer-overflow vulnerability.
+There were some very long embargos when third parties reporting the issues 
+to vendor-sec requested delays (due to issues being actually in firmware 
+in one case, and due to closed-source vendor co-ordination in another). 
+And we did discuss things on the list that were never made public 
+(particular ways to test or exploit vulnerabilities).  Also there were 
+things reported to us by people that wished to get no credit and remain 
+anonymous when the issue was public.
 
-Attackers can exploit this vulnerability to execute arbitrary code with
-SYSTEM-level privileges. Failed exploit attempts will result in a
-denial-of-service condition."
+However all those things are exceptions and I'd support us opening the 
+archives after a while and making it clear to folks reporting to us to 
+expect that to happen.  We'd need to check with common reporters like 
+CERT/CC who may not expect their early drafts to become public.
 
-Please assign CVE (a 2010 / last year one).
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks, Mark
+--
+Mark J Cox / Red Hat Security Response
