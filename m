@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/3
-Message-ID: <817711553.357399.1299713822024.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Mar 2011 18:37:02 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request: libvirt: several API calls do not honour read-only connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/8
+Message-ID: <20110316110228.GA4109@netbookdave>
+Date: Wed, 16 Mar 2011 12:02:28 +0100
+From: David King <amigadave@...gadave.com>
+To: David Woodhouse <dwmw2@...radead.org>
+Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-"It has been found that several libvirt API calls (virNodeDeviceDettach,
-virNodeDeviceReset, virDomainRevertToSnapshot, virDomainSnapshotDelete) did not
-honour read-only connection. Remote attacker could use this flaw to crash the
-host server (DoS)."
+On 2011-03-16 10:47, David Woodhouse <dwmw2@...radead.org> wrote:
+>On Tue, 2011-03-15 at 17:10 -0400, Josh Bressers wrote:
+>>
+>> Issue #2
+>>
+>> Vino can open ports via uPnP without alerting the user.
+>> https://bugzilla.redhat.com/show_bug.cgi?id=678846
+>>
+>> Use CVE-2011-1165
 
-Reference: 
-https://bugzilla.redhat.com/show_bug.cgi?id=683650
+[snip]
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+>There *is* an option to disable this feature, if the user really wants
+>to. And of course it should be clearly indicated that the service is
+>available to the public; but *that* is what CVE-2011-1164 is for.
 
+It should be noted that the UPnP feature is disabled by default, so the 
+user has the option to *enable* it. I concede that the string presented 
+in the UI needs improvement. Of course, I agree that indication of the 
+consequences would be appropriate, and also disallowing the 'none' 
+authentication method if UPnP is enabled.
+
+-- 
+http://amigadave.com/
