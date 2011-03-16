@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/1
-Message-ID: <4E535B19.9000601@redhat.com>
-Date: Tue, 23 Aug 2011 15:47:37 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: change in how tcp seq numbers are generated
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/10
+Message-ID: <1300275632.4549.4.camel@macbook.infradead.org>
+Date: Wed, 16 Mar 2011 11:40:32 +0000
+From: David Woodhouse <dwmw2@...radead.org>
+To: David King <amigadave@...gadave.com>
+Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
 Content-Type: text/plain; charset=utf-8
 
-http://lwn.net/Articles/455135/
-Dan Kaminsky pointed out that using partial MD4 and using that to
-generate a sequence number, of which only 24-bits are truly unguessable,
-seriously undermine the goals of random sequence number generation.
+On Wed, 2011-03-16 at 12:02 +0100, David King wrote:
+> It should be noted that the UPnP feature is disabled by default, so the 
+> user has the option to *enable* it. I concede that the string presented 
+> in the UI needs improvement. 
 
-In particular, with only 24-bits being truly unguessable, packet
-injection into a session using even something like brute force is a real
-potential possibility.
+That isn't CVE-worthy, though, surely?
 
-We only use 24-bits because we regenerate the random number every 5
-minutes "just in case."  But what does is trade a "we don't know" kind
-of theoretical issue for a provably real one (brute force attack).
+> Of course, I agree that indication of the consequences would be
+> appropriate, 
 
-Therefore [Dave Miller] moving us more in line with RFC1948 (as well as
-OpenBSD and Solaris), to use MD5 and a full 32-bit result in the
-generated sequence number.
+That's CVE-2011-1164.
 
-MD5 was selected as a compromise between performance loss and
-theoretical ability to be compromised.  Willy Tarreau did extensive
-testing and SHA1 was found to harm performance too much to be considered
-seriously at this time.
+> and also disallowing the 'none' authentication method if UPnP is enabled. 
 
-We may later add a sysctl for various modes (ie. a "super secure" mode
-that uses SHA1 if people want that, and an "insecure" mode that doesn't
-use cryptographic hashing at all for people in protected environments
-where that might be safe to do).
+And that, again, is not at all specific to UPnP.
 
-[Dave Miller] also moved the sequence number generators out of random.c
-(they never really belonged there, and are only there due to historical
-artifacts), and fixed a bug in DCCP sequence number generation (on ipv6
-the 43-bit sequence number was truncated to 32-bits).
+Disallowing the 'none' authentication method is would be appropriate
+whenever the machine is accessible from the outside world, whether
+that's through UPnP or just by listening on a publicly-available IP
+address.
 
-Upstream commits:
-crypto: Move md5_transform to lib/md5.c
-http://git.kernel.org/linus/bc0b96b54a21246e377122d54569eef71cec535f
-net: Compute protocol sequence numbers and fragment IDs using MD5
-http://git.kernel.org/linus/6e5714eaf77d79ae1c8b47e3e040ff5411b717ec
+-- 
+dwmw2
 
-Thanks, Eugene
