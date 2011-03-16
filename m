@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/7
-Message-ID: <1281362709.253726.1306236933908.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 May 2011 07:35:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/2
+Message-ID: <4D804E52.9030309@redhat.com>
+Date: Wed, 16 Mar 2011 13:44:50 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Webmin Local Privilege Escalation Vulnerability
+CC: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Could a CVE be assigned to this issue? (It's one month old):
-> http://www.securityfocus.com/bid/47558/info
-> Thanks
+On 03/16/2011 12:07 PM, Menkhus, Mark (GSE Security HP SSRT) wrote:
+[...]
+> Not being the one fixing the code for our kernel left me with little to
+> immediately contribute, but I requested and coordinated with several folks
+> who got vendor sec for HP.  Likely, we would still want to be part of
+> vendor-sec.new.
 
-The best description is here:
-http://www.securityfocus.com/archive/1/517658
+Many of the kernel vulnerabilities I have seen over the past two years 
+at least, were reported and fixed upstream. Only a handful of them were 
+reported privately. I can't remember when was the last time we had a 
+kernel issue reported via vendor-sec. There were, but it must have been 
+quite some time ago. LKML is still one of the better places to find 
+vulnerabilities :) Contributions welcomed.
 
-Use CVE-2011-1937.
-
-Thanks.
-
+Eugene
 -- 
-    JB
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
