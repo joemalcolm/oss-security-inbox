@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/1
-Message-ID: <1322996787.32667.112.camel@mdlinux>
-Date: Sun, 04 Dec 2011 06:06:27 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: ffmpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/12
+Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A71185095@GVW0671EXC.americas.hpqcorp.net>
+Date: Wed, 16 Mar 2011 16:26:53 +0000
+From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+To: Eugene Teo <eugene@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Thanks Eugene,
 
-This doesn't seem to have a CVE:
+I have been looking at how to contribute in FOSS and security, and for me
+it's been in the area of how to understand what vulnerabilities are already
+documented.  I might think about looking more at the kernel changelogs and
+LKML lists.
 
-An error within the "svq1_decode_frame()" function
-(libavcodec/svq1dec.c) can be exploited to corrupt memory.
+For sure, I'll look for some bugs while I am at it, tho.
 
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=4931c8f0f10bf8dedcf626104a6b85bfefadc6f2
+Mark
+> -----Original Message-----
+> From: Eugene Teo [mailto:eugene@...hat.com]
+> Sent: Tuesday, March 15, 2011 11:45 PM
+> To: oss-security@...ts.openwall.com
+> Cc: Menkhus, Mark (GSE Security HP SSRT)
+> Subject: Re: [oss-security] Vendor-sec hosting and future of closed
+> lists
+> 
+> On 03/16/2011 12:07 PM, Menkhus, Mark (GSE Security HP SSRT) wrote:
+> [...]
+> > Not being the one fixing the code for our kernel left me with little
+> to
+> > immediately contribute, but I requested and coordinated with several
+> folks
+> > who got vendor sec for HP.  Likely, we would still want to be part of
+> > vendor-sec.new.
+> 
+> Many of the kernel vulnerabilities I have seen over the past two years
+> at least, were reported and fixed upstream. Only a handful of them were
+> reported privately. I can't remember when was the last time we had a
+> kernel issue reported via vendor-sec. There were, but it must have been
+> quite some time ago. LKML is still one of the better places to find
+> vulnerabilities :) Contributions welcomed.
+> 
+> Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
 
-http://secunia.com/advisories/46888/
-http://archives.neohapsis.com/archives/bugtraq/2011-11/0148.html
-
-
-Thanks,
-
-Marc.
-
-
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
