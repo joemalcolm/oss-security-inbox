@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/16
-Message-ID: <4D66C86A.1000302@redhat.com>
-Date: Thu, 24 Feb 2011 22:06:50 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, monte@...t.com
-Subject: CVE Request -- Smarty -- {smarty.template} && {smarty.currentdir} security bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/2
+Message-ID: <20110317030947.GA46207@dojo.mi.org>
+Date: Wed, 16 Mar 2011 23:09:47 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+:who got vendor sec for HP.  Likely, we would still want to be part of
+:vendor-sec.new.
 
-   Smarty upstream has released v3.0.7 on 11-th of February 2011:
-   [1] http://groups.google.com/group/smarty-announce/browse_thread/thread/18af294596756ac8
+I'd also be interested in participating in a new incarnation of
+vendor-sec on behalf of my employer.
 
-   addressing one security flaw:
-   [2] http://www.smarty.net/forums/viewtopic.php?t=18815
-   [3] http://smarty-php.googlecode.com/svn/trunk/distribution/change_log.txt
-   [4] http://secunia.com/advisories/43284/
-
-Not sure this one got a CVE identifier already. If not, could you allocate one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Once again we find that slime does not pay!"                       -The Tick
