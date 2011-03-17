@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/2
-Message-ID: <4DAF8F40.4050903@redhat.com>
-Date: Thu, 21 Apr 2011 09:58:24 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/1
+Message-ID: <4D815C7D.60900@redhat.com>
+Date: Thu, 17 Mar 2011 08:57:33 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-On 04/21/2011 09:55 AM, Eugene Teo wrote:
-> On 04/21/2011 07:45 AM, Eugene Teo wrote:
->> On 04/21/2011 04:52 AM, Josh Bressers wrote:
->>> Please use CVE-2011-1598
->>
->> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+On 03/17/2011 12:26 AM, Menkhus, Mark (GSE Security HP SSRT) wrote:
+> Thanks Eugene,
 >
-> Correction: s/Updated patch//. This patch is for a similar issue but for
-> can/raw release. I rather group these two patches with CVE-2011-1598
-> than to have another name assigned for it. But I'm fine either way.
+> I have been looking at how to contribute in FOSS and security, and for me
+> it's been in the area of how to understand what vulnerabilities are already
+> documented.  I might think about looking more at the kernel changelogs and
+> LKML lists.
+>
+> For sure, I'll look for some bugs while I am at it, tho.
 
-On second thoughts, let's have another CVE assigned.
+Thanks!
 
-can/bcm release: credit Dave Jones
-can/raw release: credit Oliver Hartkopp
-
-Thanks, Eugene
+Eugene
 -- 
 main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
