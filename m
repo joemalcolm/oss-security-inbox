@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/9
-Message-ID: <198284865.375307.1299184319905.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 15:31:59 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/4
+Message-ID: <4D81EB8F.50605@redhat.com>
+Date: Thu, 17 Mar 2011 19:07:59 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: VLC bookmark buffer overflow
+CC: Ludwig Nussel <ludwig.nussel@...e.de>, Lars Kurth <lars.kurth@....org>
+Subject: Re: CVE Request: xen DoS
 Content-Type: text/plain; charset=utf-8
 
-Argh, this should have gotten a 2010 ID.
+On 03/17/2011 03:09 PM, Ludwig Nussel wrote:
+> Hi,
+>
+> http://xenbits.xen.org/hg/staging/xen-unstable.hg/rev/c79aae866ad8
+>
+> Citing https://bugzilla.novell.com/show_bug.cgi?id=679344:
+> "The problem is that a 64-bit guest can get one of its vcpus into
+> non-kernel mode without first providing a valid non-kernel pagetable.
+> The iret-into-userspace path has the right checks, but just setting the
+> context on a fresh vcpu doesn't. :(  The observed failure mode is
+> usually a hard lockup of the host."
 
-Steve, does MITRE want to reassign, or just leave it as is?
+Please use CVE-2011-1166.
 
-Thanks.
-
+Eugene
 -- 
-    JB
-
-
------ Original Message -----
-> ----- Original Message -----
-> > Can I get CVE-identifier for this issue:
-> >
-> > "VLC media player is vulnerable to a buffer overflow attack when
-> > processing .mp3 file and its metadata. It fails to perform boundry
-> > checks when creating a bookmark from the malicious media file
-> > playing,
-> > resulting in a crash, overwriting ECX register. While the evil .mp3
-> > is
-> > playing, you go Playback > Bookmarks > Manage bookmarks > Create."
-> >
-> > References:
-> > http://osvdb.org/show/osvdb/62728/printer
-> 
-> Please use CVE-2011-1087
-> 
-> Thanks.
-> 
-> --
-> JB
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
