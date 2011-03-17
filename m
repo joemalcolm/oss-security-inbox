@@ -1,96 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/1
-Message-ID: <AANLkTikyPJVo1P1p2NpqAeVB1f6jxsXuuu==tZOyHhrD@mail.gmail.com>
-Date: Tue, 1 Feb 2011 17:03:19 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/2
+Message-ID: <20110317030947.GA46207@dojo.mi.org>
+Date: Wed, 16 Mar 2011 23:09:47 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Zikula CMS 1.2.4 <= Cross Site Request Forgery (CSRF) Vulnerability
+Subject: Re: Vendor-sec hosting and future of closed lists
 Content-Type: text/plain; charset=utf-8
 
-=====================================================================
-Zikula CMS 1.2.4 <= Cross Site Request Forgery (CSRF) Vulnerability
-=====================================================================
+:who got vendor sec for HP.  Likely, we would still want to be part of
+:vendor-sec.new.
 
+I'd also be interested in participating in a new incarnation of
+vendor-sec on behalf of my employer.
 
-1. OVERVIEW
-
-The Zikula 1.2.4 and lower versions were vulnerable to Cross Site
-Request Forgery (CSRF).
-
-
-2. BACKGROUND
-
-Zikula is a Web Application Toolkit, which allows you to run
-impressive websites and build powerful online applications. Zikula has
-received praise for many things, but we belive the highlights are ease
-of use, quick and easy development, security and performance and
-lastly flexibility.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Zikula CMS 1.2.4 and lower versions contain a flaw that allows a
-remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
-exists because the application does not require multiple steps or
-explicit confirmation for sensitive transactions for majority of
-administrator functions such as adding new user, assigning user to
-administrative privilege. By using a crafted URL, an attacker may
-trick the victim into visiting to his web page to take advantage of
-the trust relationship between the authenticated victim and the
-application. Such an attack could trick the victim into executing
-arbitrary commands in the context of their session with the
-application, without further prompting or verification.
-
-
-4. VERSIONS AFFECTED
-
-1.2.4 <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-The following request escalates a normal user to an administrator.
-
-[REQUEST]
-POST /zikula/index.php?module=users&type=admin&func=processusers&op=edit
-HTTP/1.1
-
-authid=&userid=3&do=yes&access_permissions%5B%5D=2&access_permissions%5B%5D=1&uname=tester&email=tester%40yehg.net&pass=&vpass=&activated=1&theme=&submit=
-[/REQUEST]
-
-
-6. SOLUTION
-
-Upgrade to Zikula 1.2.5 or higher
-
-
-7. VENDOR
-
-Zikula Foundation
-http://zikula.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-24: notified vendor
-2011-01-25: vendor released fix
-2011-02-01: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL: http://yehg.net/lab/pr0js/advisories/
-Vendor Released Info:
-http://community.zikula.org/index.php?module=News&func=display&sid=3041&title=zikula-1.2.5-released
-Zikula 1.2.5 Changlog:
-http://code.zikula.org/core12/browser/tags/Zikula-1.2.5/src/docs/CHANGELOG
-CSRF Wiki: https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
-
-
-#yehg [2011-02-01]
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Once again we find that slime does not pay!"                       -The Tick
