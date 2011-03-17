@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/2
-Message-ID: <AANLkTimMxUh-yWhpp=tiEUvMtUw0b=MGTguo8YW-=RM7@mail.gmail.com>
-Date: Wed, 9 Feb 2011 09:27:32 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/6
+Message-ID: <AANLkTikK2KVBKenHmgm8j27=aNmrPVhyQUfH=tz3PUB3@mail.gmail.com>
+Date: Thu, 17 Mar 2011 13:56:45 -0400
 From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: btrfs heap overflow
+Subject: The risks of cleaning /tmp
 Content-Type: text/plain; charset=utf-8
 
-Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
-btrfs_ioctl_space_info() and introduced security issues.  Since they
-were all introduced at once and fixed at the same time, one CVE should
-suffice.
+Hi all,
 
-Due to integer truncation or a signedness error in a typecasted
-comparison, an integer overflow in an allocation size calculation, and
-a failure to properly check bounds when copying data, it was possible
-for an unprivileged user to cause a denial-of-service due to writing
-to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+A number of utilities (notably tmpwatch on Red Hat/Fedora) are
+designed to regularly clean the contents of the /tmp directory.  I
+wanted to draw some attention to the fact that these applications, as
+well as setting up cronjobs to perform the same task, introduce the
+same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
+Namely, they make it such that the stickiness of /tmp can no longer be
+relied on.
 
--Dan
+Consider a setuid application that relies on the fact that users can't
+delete its resources in /tmp because they're root owned.  An attacker
+can simply launch the application and send a SIGSTOP at the right
+moment to cause it to sleep indefinitely, until tmpwatch (or similar)
+removes its /tmp resources, allowing them to be replaced by the
+attacker.  As Tavis pointed out, doing this with ksu could allow
+denial of service, but it may be possible to escalate privileges by
+leveraging other applications.
 
-[1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+It seems like a difficult problem to solve - it's hardly feasible to
+rewrite every suid app that relies on the stickiness of /tmp.
+Hopefully we can generate some useful discussion here.
+
+Regards,
+Dan
+
+[1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
