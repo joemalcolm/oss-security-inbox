@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/5
-Message-ID: <20111026142645.GA13364@suse.de>
-Date: Wed, 26 Oct 2011 16:26:45 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/7
+Message-ID: <AANLkTik4UWPimODT4FNQ6E+yuGZT4eOwnMNK0mD8nKFf@mail.gmail.com>
+Date: Thu, 17 Mar 2011 14:18:11 -0400
+From: Nelson Elhage <nelhage@...lice.com>
+To: oss-security@...ts.openwall.com
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: The risks of cleaning /tmp
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The tmpreaper package (at least in Debian) has a pretty good writeup
+of a lot of the security problems involved in cleaning /tmp, which
+I've copied at <http://nelhage.com/files/README.security>, since I
+can't find another good source online.
 
-From our openldap2 Maintainer Ralf:
-|A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
-|is passed a zero length string. (Can e.g. be triggered by passing a
-|"postalAddressAttribute" with the value "$" (or no value a all). What the code
-|does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
-|least as far as I understand it)
-|
-|Upstream Bug: ITS#7059
-|http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
-|
-|This bug is present in older releases as well.
-|
-|I wonder if this is really security relevant as it seem the worst that might
-|happen is that an authenticated user can crash the daemon. I was not able to do
-|so during a short test but I guess that is just a matter of trying long enough.
+It's probably worth reading that document to get perspective on some
+of the thought that's been put into this problem before.
 
-Ciao, Marcus
+- Nelson
+
+On Thu, Mar 17, 2011 at 1:56 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> Hi all,
+>
+> A number of utilities (notably tmpwatch on Red Hat/Fedora) are
+> designed to regularly clean the contents of the /tmp directory.  I
+> wanted to draw some attention to the fact that these applications, as
+> well as setting up cronjobs to perform the same task, introduce the
+> same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
+> Namely, they make it such that the stickiness of /tmp can no longer be
+> relied on.
+>
+> Consider a setuid application that relies on the fact that users can't
+> delete its resources in /tmp because they're root owned.  An attacker
+> can simply launch the application and send a SIGSTOP at the right
+> moment to cause it to sleep indefinitely, until tmpwatch (or similar)
+> removes its /tmp resources, allowing them to be replaced by the
+> attacker.  As Tavis pointed out, doing this with ksu could allow
+> denial of service, but it may be possible to escalate privileges by
+> leveraging other applications.
+>
+> It seems like a difficult problem to solve - it's hardly feasible to
+> rewrite every suid app that relies on the stickiness of /tmp.
+> Hopefully we can generate some useful discussion here.
+>
+> Regards,
+> Dan
+>
+> [1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
+>
