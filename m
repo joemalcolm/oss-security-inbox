@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/12
-Message-ID: <48b5a66a-edc9-42b0-b1ab-8923e960a798@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:10:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/3
+Message-Id: <201103170809.33580.ludwig.nussel@suse.de>
+Date: Thu, 17 Mar 2011 08:09:33 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mplayer SAMI subtitle parsing buffer overflow
+Cc: Lars Kurth <lars.kurth@....org>
+Subject: CVE Request: xen DoS
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+http://xenbits.xen.org/hg/staging/xen-unstable.hg/rev/c79aae866ad8
 
------ Original Message -----
-> Hi, folks.
-> 
-> Please assign a CVE for the mplayer SAMI subtitle parsing buffer
-> overflow. References:
-> 
-> http://mplayerhq.hu/pipermail/mplayer-cvslog/2011-May/042075.html
-> http://labs.mwrinfosecurity.com/files/Advisories/mwri_mplayer-sami-subtitles_2011-08-12.pdf
-> 
+Citing https://bugzilla.novell.com/show_bug.cgi?id=679344:
+"The problem is that a 64-bit guest can get one of its vcpus into
+non-kernel mode without first providing a valid non-kernel pagetable.
+The iret-into-userspace path has the right checks, but just setting the
+context on a fresh vcpu doesn't. :(  The observed failure mode is
+usually a hard lockup of the host."
 
-Please use CVE-2011-3625.
-
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
