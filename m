@@ -1,31 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/4
-Message-ID: <handler.629511.B629511.130789018424564.ackinfo@bugs.debian.org>
-Date: Sun, 12 Jun 2011 14:51:06 +0000
-From: owner@...s.debian.org (Debian Bug Tracking System)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/7
+Message-ID: <AANLkTik4UWPimODT4FNQ6E+yuGZT4eOwnMNK0mD8nKFf@mail.gmail.com>
+Date: Thu, 17 Mar 2011 14:18:11 -0400
+From: Nelson Elhage <nelhage@...lice.com>
 To: oss-security@...ts.openwall.com
-Subject: Bug#629511: Info received (CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used)
+Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: The risks of cleaning /tmp
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the additional information you have supplied regarding
-this Bug report.
+The tmpreaper package (at least in Debian) has a pretty good writeup
+of a lot of the security problems involved in cleaning /tmp, which
+I've copied at <http://nelhage.com/files/README.security>, since I
+can't find another good source online.
 
-This is an automatically generated reply to let you know your message
-has been received.
+It's probably worth reading that document to get perspective on some
+of the thought that's been put into this problem before.
 
-Your message is being forwarded to the package maintainers and other
-interested parties for their attention; they will reply in due course.
+- Nelson
 
-Your message has been sent to the package maintainer(s):
- Debian Perl Group <pkg-perl-maintainers@...ts.alioth.debian.org>
-
-If you wish to submit further information on this problem, please
-send it to 629511@...s.debian.org.
-
-Please do not send mail to owner@...s.debian.org unless you wish
-to report a problem with the Bug-tracking system.
-
--- 
-629511: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
-Debian Bug Tracking System
-Contact owner@...s.debian.org with problems
+On Thu, Mar 17, 2011 at 1:56 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> Hi all,
+>
+> A number of utilities (notably tmpwatch on Red Hat/Fedora) are
+> designed to regularly clean the contents of the /tmp directory.  I
+> wanted to draw some attention to the fact that these applications, as
+> well as setting up cronjobs to perform the same task, introduce the
+> same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
+> Namely, they make it such that the stickiness of /tmp can no longer be
+> relied on.
+>
+> Consider a setuid application that relies on the fact that users can't
+> delete its resources in /tmp because they're root owned.  An attacker
+> can simply launch the application and send a SIGSTOP at the right
+> moment to cause it to sleep indefinitely, until tmpwatch (or similar)
+> removes its /tmp resources, allowing them to be replaced by the
+> attacker.  As Tavis pointed out, doing this with ksu could allow
+> denial of service, but it may be possible to escalate privileges by
+> leveraging other applications.
+>
+> It seems like a difficult problem to solve - it's hardly feasible to
+> rewrite every suid app that relies on the stickiness of /tmp.
+> Hopefully we can generate some useful discussion here.
+>
+> Regards,
+> Dan
+>
+> [1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
+>
