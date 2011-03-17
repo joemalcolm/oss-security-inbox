@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/13
-Message-ID: <1601135524.1024438.1309377311109.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:55:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/4
+Message-ID: <4D81EB8F.50605@redhat.com>
+Date: Thu, 17 Mar 2011 19:07:59 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Luciano Bello <luciano@...ian.org>
-Subject: Re: CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism
+CC: Ludwig Nussel <ludwig.nussel@...e.de>, Lars Kurth <lars.kurth@....org>
+Subject: Re: CVE Request: xen DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2510.
+On 03/17/2011 03:09 PM, Ludwig Nussel wrote:
+> Hi,
+>
+> http://xenbits.xen.org/hg/staging/xen-unstable.hg/rev/c79aae866ad8
+>
+> Citing https://bugzilla.novell.com/show_bug.cgi?id=679344:
+> "The problem is that a 64-bit guest can get one of its vcpus into
+> non-kernel mode without first providing a valid non-kernel pagetable.
+> The iret-into-userspace path has the right checks, but just setting the
+> context on a fresh vcpu doesn't. :(  The observed failure mode is
+> usually a hard lockup of the host."
 
-Thanks.
+Please use CVE-2011-1166.
 
+Eugene
 -- 
-    JB
-
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found that DokuWiki's RSS embedding mechanism did not properly
-> escape user-provided links. An attacker could use this flaw to conduct
-> cross-site scripting (XSS) attacks, potentially leading to arbitrary
-> JavaScript code execution.
-> 
-> References:
-> -----------
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
-> [2]
-> http://www.certa.ssi.gouv.fr/site/CERTA-2011-AVI-366/CERTA-2011-AVI-366.html
-> [3]
-> http://www.freelists.org/post/dokuwiki/Hotfix-Release-20110525a-Rincewind
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=717146
-> 
-> Solution:
-> ---------
-> This issue has been addressed in upstream "2011-05-25 Rincewind"
-> release:
-> [5] http://www.dokuwiki.org/changes
-> 
-> This issue doesn't seem to have a CVE identifier yet. Could you
-> allocate
-> one?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
