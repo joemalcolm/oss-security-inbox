@@ -1,50 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/31/1
-Message-ID: <Pine.GSO.4.64.1108311823180.26123@faron.mitre.org>
-Date: Wed, 31 Aug 2011 18:35:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/6
+Message-ID: <AANLkTikK2KVBKenHmgm8j27=aNmrPVhyQUfH=tz3PUB3@mail.gmail.com>
+Date: Thu, 17 Mar 2011 13:56:45 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap overflow in tcptrack < 1.4.2
+Subject: The risks of cleaning /tmp
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
 
-I'm wondering if this should have received a CVE.
+A number of utilities (notably tmpwatch on Red Hat/Fedora) are
+designed to regularly clean the contents of the /tmp directory.  I
+wanted to draw some attention to the fact that these applications, as
+well as setting up cronjobs to perform the same task, introduce the
+same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
+Namely, they make it such that the stickiness of /tmp can no longer be
+relied on.
 
-https://bugs.gentoo.org/show_bug.cgi?id=377917 quotes upstream:
+Consider a setuid application that relies on the fact that users can't
+delete its resources in /tmp because they're root owned.  An attacker
+can simply launch the application and send a SIGSTOP at the right
+moment to cause it to sleep indefinitely, until tmpwatch (or similar)
+removes its /tmp resources, allowing them to be replaced by the
+attacker.  As Tavis pointed out, doing this with ksu could allow
+denial of service, but it may be possible to escalate privileges by
+leveraging other applications.
 
-    "This fixes a heap overflow in the parsing of the command line...
-     this may have security repercussions if
-     tcptrack is configured as a handler for other applications that can
-     pass user-supplied command line input to tcptrack."
+It seems like a difficult problem to solve - it's hardly feasible to
+rewrite every suid app that relies on the stickiness of /tmp.
+Hopefully we can generate some useful discussion here.
 
-The "attack" is through a command line argument.  While it's listed as a 
-sniffer, the above text suggests that tcptrack might not be 
-setuid/privileged, since the only given scenario is "as a handler for 
-other applications."  Unless this is a typical/known scenario, this seems 
-like just another unprivileged application, in which case the control over 
-a command line argument would not directly cross privilege boundaries, 
-thus falling into the realm of "bug" and not "vulnerability."
+Regards,
+Dan
 
-- Steve
-
-
-On Tue, 9 Aug 2011, Josh Bressers wrote:
-
->
->
-> ----- Original Message -----
->> A heap overflow in the parsing of tcptrack's command line was found.
->> The details are pretty sparse, but here are some references:
->>
->> http://www.rhythm.cx/~steve/devel/tcptrack/#news
->> https://bugs.gentoo.org/show_bug.cgi?id=377917
->> https://bugzilla.redhat.com/show_bug.cgi?id=729096
->>
->
-> Please use CVE-2011-2903.
->
-> Thanks.
->
-> --
->    JB
->
+[1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
