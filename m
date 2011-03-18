@@ -1,42 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/5
-Message-ID: <1320230242.13156.161.camel@spiral.ashpool.org>
-Date: Wed, 02 Nov 2011 10:37:22 +0000
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/9
+Message-ID: <AANLkTinnHDO2DZ4T332DRsCyYVE7JukizE_BGTvTELyL@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:32:55 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: kiwi shell meta char injection
+Subject: CVE Request: TinyBrowser (TinyMCE Editor File browser) 1.41.6 - Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Advisory URL:
+http://yehg.net/lab/pr0js/advisories/tinybrowser_1416_multiple_vulnerabilities
+Date published: 2009-07-27
+Severity: High
+Vulnerability Class: Abuse of Functionality
+Affected Products:
+- TinyMCE editor with TinyBrowser plugin
+- Any web sites/web applications that use TinyMCE editor with TinyBrowser plugin
+- Known Vulnerable CMSes
+	- Joomla Joomla 1.5.12
+	- CompactCMS CompactCMS 1.4
+	- B-hind CMS B-hind CMS 0
 
-This email was sent a bit too early.
+Author: Bryn Jones (http://www.lunarvis.com)
 
-On Mi, 2011-11-02 at 10:03 +0000, Thomas Biege wrote:
-> Hi,
-> my colleagues found the following:
-> https://github.com/openSUSE/kiwi/commit/f0f74b3f6ac6d47f7919aa9db380c0ad41ffe55f
-> 
-> CVE-2011-3180: The path of overlay files was not escaped which allowed
-> shell meta character injection via the chown(1) command-line.
-> 
-> https://github.com/openSUSE/kiwi/commit/88bf491d16942766016c606e4210b4e072c1019f
-> CVE-2011-4195: The image name was not escaped properly and can be used
-> in conjunction with other applications to execute arbitrary shell
-> commands.
 
-In the master branch the following commits are interesting:
-  14881958878d54e6ed0c5153a1915891d94d1622
-  8ada4156a781e799b84ad9b0a1f4fffb2d0250e8
-  88bf491d16942766016c606e4210b4e072c1019f
-  a9433189740fc71b0156103c0a3c01d873b04dfd
+Product Overview
+================
 
-> Cheers,
-> Thomas
+TinyBrowser is a plugin of TinyMCE JavaScript editor that acts as
+file browser to view, upload, delete, rename files and folders on the
+web servers.
 
--- 
-Thomas Biege <thomas@...e.de>, Project Manager IT-Security
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-21284 (AG Nürnberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
 
+Vulnerabilities
+==================
+
+#1. Default Insecure Configurations
+
+Configuration settings shipped with tinybrowser are relatively insecure by
+default. They allow attackers to view, upload, delete, rename files and folders
+under its predefined upload directory.
+
+Casual web developers or users might just upload the TinyMCE browser without
+doing any configurations or they might do it later.
+Meanwhile, if an attacker luckily finds the tinybrowser directory,
+which is by default
+jscripts/tiny_mce/plugins/tinybrowser, he can do harm or abuse because of
+insecure default configurations.
+
+This was once a vulnerability of fckeditor (http://fckeditor.net)
+which has fixed
+its hole - if you run fckeditor's file upload page the first time, you'll see
+"This connector is disabled. Please check the ....". Tinybrowser should imitate
+like this.
+
+
+#2. Arbitrary Folder Creation
+
+Requesting the url [PATH]/tinybrowser.php?type=image&folder=hacked will
+create a folder named "hacked" in /useruploads/images/ directory if that
+folder does not exist.
+
+
+#3. Arbitrary File Hosting
+
+File: config_tinybrowser.php
+Code:
+// File upload size limit (0 is unlimited)
+$tinybrowser['maxsize']['image'] = 0; // Image file maximum size
+$tinybrowser['maxsize']['media'] = 0; // Media file maximum size
+$tinybrowser['maxsize']['file']  = 0; // Other file maximum size
+$tinybrowser['prohibited'] =
+array('php','php3','php4','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi',
+'sh', 'py','asa','asax','config','com','inc');
+// Prohibited file extensions
+
+The max allowable upload is not restricted. So it will depend only on
+web server's default setting or
+PHP timeout value. There are not many restricted file types. Here's a
+way to abuse:
+- Create a hidden directory by requesting
+[PATH]/upload.php?type=file&folder=.hostmyfiles
+- Then go to /upload.php?type=file&folder=.hostmyfiles
+- Host your sound, movie, pictures, zipped archives or even your
+sample HTML web sites for FREE!
+
+An evil trick to create seemingly interesting folder such as secret and host a
+browser-exploit html page that triggers drive-by-download trojan.
+When web master browses that folder and clicks the exploit file, then
+he gets owned.
+
+#4. Cross-site Scripting
+
+Most GET/POST variables are not sanitized.
+
+File: upload.php
+Code:
+$goodqty = (isset($_GET['goodfiles']) ? $_GET['goodfiles'] : 0);
+$badqty = (isset($_GET['badfiles']) ? $_GET['badfiles'] : 0);
+$dupqty = (isset($_GET['dupfiles']) ? $_GET['dupfiles'] : 0);
+
+Exploit: upload.php?badfiles=1"><script>alert(/XSS/)</script>
+
+#5. Cross-site Request Forgeries
+
+All major actions such as create, delete, rename files/folders are
+GET/POST XSRF-able.
+
+#########################################################################################
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
