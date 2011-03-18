@@ -1,28 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/6
-Message-ID: <20110307125419.GA12931@nowster.org.uk>
-Date: Mon, 7 Mar 2011 12:54:19 +0000
-From: Paul Martin <pm@...ian.org>
-To: Jan Kaluža <jkaluza@...hat.com>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/8
+Message-ID: <AANLkTi=EauEYOCbf3V4inrR4ReWdDZ-T6sxXhP2ucC1Q@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:22:54 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Geeklog 1.7.1 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 07, 2011 at 01:21:05PM +0100, Jan Kaluža wrote:
+1. OVERVIEW
 
-> I think logrotate should skip rotation of files in unsafe
-> directories and show error message instead. Logrotate should also
-> contain something like "--force" switch (this name is already used,
-> so we have to find better one, but I don't have anything better in
-> mind just now). With this switch logrotate should *not* skip unsafe
-> directories and rotate them as it currently does, but show the error
-> message. Basically it allows backward compatibility.
+The Geeklog was vulnerable to Cross Site Scripting in its
+administration backend.
 
-"--override-unsafe-directory-check" perhaps?  Make it a long option,
-so that there is no doubt that the user is doing something that's
-potentially dangerous.
 
-(I am following this discussion with great interest.)
+2. BACKGROUND
 
--- 
-Paul Martin <pm@...ian.org>
+Geeklog is a PHP/MySQL based application for managing dynamic web content.
+"Out of the box", it is a blog engine, or a CMS with support for
+comments, trackbacks,
+multiple syndication formats, spam protection, and all the other vital
+features of such a system.
+
+
+3. VULNERABILITY DESCRIPTION
+
+User supplied input is not probably sanitized in the "subgroup" and "conf_group"
+parameters when the configuration settings are saved in
+/admin/configuration.php.
+Attackers who manage to get/bypass anti-csrf token (_glsectoken) via
+other means can effectively perform XSS against admin users.
+
+
+4. VERSIONS AFFECTED
+
+1.7.1 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+[Request]
+
+POST /geeklog/admin/configuration.php HTTP/1.1
+
+_glsectoken=&conf_group=Core'"--></script><script>alert(/XSS/)</script>&subgroup='"--></script><script>alert(/XSS/)</script>
+
+[/Request]
+
+
+6. SOLUTION
+
+Upgrade to 1.7.1sr1
+
+
+7. VENDOR
+
+Geeklog Development Team
+http://www.geeklog.net/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-31: notified vendor
+2011-01-02: vendor released fixed version
+2011-01-04: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[geeklog1.7.1]_cross_site_scripting
+Vendor Advisory: http://www.geeklog.net/article.php/geeklog-1.7.1sr1
+About Geeklog: http://www.geeklog.net/docs/english/#introduction
+http://stephensclafani.com/2009/05/26/exploiting-unexploitable-xss/
+http://kuza55.blogspot.com/2008/02/exploiting-csrf-protected-xss.html
+
+#yehg [2011-01-04]
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
