@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/13
-Message-ID: <20110627224349.GH1944@redhat.com>
-Date: Mon, 27 Jun 2011 16:43:49 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for libpng regression (CVE-2004-0421)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/17
+Message-Id: <201103181252.33447.geissert@debian.org>
+Date: Fri, 18 Mar 2011 12:52:32 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com, list@...adns.org, bressers@...hat.com, coley@...re.org
+Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-It looks like CVE-2004-0421 was regressed upstream a few years ago and
-was not noticed.
+On Friday 18 March 2011 12:11:15 Vincent Danen wrote:
+> * [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
+> >In 2002, when I rewrote the compression code for MaraDNS for the first
+> >time, I made a mistake in allocating an array of integers, allocating
+> >it in bytes instead of sizeof(int) units.  The resulted in a buffer
+> >being too small, allowing it to be overwritten.
+> >
+> >The impact of this programming error is that MaraDNS can be crashed by
+> >sending MaraDNS a single "packet of death".  Since the data placed in
+> >the overwritten array can not be remotely controlled (it is a list of
+> >increasing integers), there is no way to increase privileges
+> >exploiting this bug.
+> >
+> >The attached patch resolves this issue by allocating in sizeof(int)
+> >units instead of byte-sized units for an integer array.  In addition,
+> >it uses a smaller array because a DNS name can only have, at most, 128
+> >labels.
+> 
+> Was a CVE name ever assigned to this issue?
 
-References:
-http://sourceforge.net/mailarchive/forum.php?thread_name=BANLkTikrnU6FJNQYFvwmt78hwpgKPVRd1Q%40mail.gmail.com&forum_name=png-mng-implement
-https://bugzilla.redhat.com/show_bug.cgi?id=717084
-http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=65e6d5a34f49acdb362a0625a706c6b914e670af
+Yes, Josh assigned CVE-2011-0520.
+(his message is also recorded on the Debian bug you CC'ed)
 
-Could a CVE name be supplied?  I don't know if upstream has requested
-one independently or not.
-
+Regards,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
