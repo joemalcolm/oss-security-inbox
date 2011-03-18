@@ -1,45 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/9
-Message-ID: <4EC28C7E.3050405@redhat.com>
-Date: Tue, 15 Nov 2011 08:59:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/14
+Message-ID: <20110318162816.GO5174@redhat.com>
+Date: Fri, 18 Mar 2011 10:28:17 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Christian Hammond <chipx86@...px86.com>
-Subject: Re: CVE Request -- ReviewBoard v1.5.7 && v1.6.3 -- XSS in the commenting system (diff viewer and screenshot pages components)
+Cc: Oden Eriksson <oeriksson@...driva.com>
+Subject: Re: CVE request: PHP substr_replace() use-after-free
 Content-Type: text/plain; charset=utf-8
 
-On 11/15/2011 06:51 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a cross-site scripting (XSS) flaw was found in the way the commenting
-> system of the ReviewBoard, a web-based code review tool, sanitized user
-> input (new comments to be loaded). A remote attacker could provide a
-> specially-crafted URL, which once visited by valid ReviewBoard user
-> could lead to arbitrary HTML or web script execution in the 'diff
-> viewer' or 'screenshot pages' components.
->
-> References:
-> [1] http://www.reviewboard.org/news/
-> [2] http://www.reviewboard.org/docs/releasenotes/dev/reviewboard/1.6.3/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=754126
->
-> Relevant upstream patch:
-> [4]
-> https://github.com/reviewboard/reviewboard/commit/7a0a9d94555502278534dedcf2d75e9fccce8c3d
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Cc-ed Christian Hammond, who committed change [4] to the
->       upstream Git repository too, so they could update CVE id
->       in their advisory, if / where needed.
+* [2011-03-13 15:41:55 -0300] Felipe Pena wrote:
 
-Please use CVE-2011-4312 for this issue.
+>2011/3/13 Oden Eriksson <oeriksson@...driva.com>
+>
+>> söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
+>> > Hi,
+>> >
+>> > I just found an use-after-free in PHP's substr_replace() function caused
+>> by
+>> > passing the same variable multiple times to the function, which makes the
+>> > PHP to use the same pointer in three variables inside the function, so
+>> when
+>> > the pointer is changed by a type conversion inside the function, it
+>> > invalids the other variables.
+>> >
+>> > The PHP security team has seen noticed, and a bug already was filed in
+>> the
+>> > bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
+>> >
+>> > $ sapi/cli/php ../bug.php
+>> > array(1) {
+>> > [0]=>
+>> > string(5) "0?? y"
+>> > }
+>> > array(1) {
+>> > [0]=>
+>> > string(1) "0"
+>> > }
+>> >
+>> >
+>> > Thanks.
+>>
+>> It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
+>>
+>>
+>It affects 5.2, 5.3 and even trunk. I can reproduce it in all the branches.
+
+Do you have a reproducer for this issue that you could share?  The bug
+is still private.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
