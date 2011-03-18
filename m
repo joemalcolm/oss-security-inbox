@@ -1,50 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/7
-Message-ID: <AANLkTik4UWPimODT4FNQ6E+yuGZT4eOwnMNK0mD8nKFf@mail.gmail.com>
-Date: Thu, 17 Mar 2011 14:18:11 -0400
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/14
+Message-ID: <20110318162816.GO5174@redhat.com>
+Date: Fri, 18 Mar 2011 10:28:17 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: The risks of cleaning /tmp
+Cc: Oden Eriksson <oeriksson@...driva.com>
+Subject: Re: CVE request: PHP substr_replace() use-after-free
 Content-Type: text/plain; charset=utf-8
 
-The tmpreaper package (at least in Debian) has a pretty good writeup
-of a lot of the security problems involved in cleaning /tmp, which
-I've copied at <http://nelhage.com/files/README.security>, since I
-can't find another good source online.
+* [2011-03-13 15:41:55 -0300] Felipe Pena wrote:
 
-It's probably worth reading that document to get perspective on some
-of the thought that's been put into this problem before.
+>2011/3/13 Oden Eriksson <oeriksson@...driva.com>
+>
+>> söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
+>> > Hi,
+>> >
+>> > I just found an use-after-free in PHP's substr_replace() function caused
+>> by
+>> > passing the same variable multiple times to the function, which makes the
+>> > PHP to use the same pointer in three variables inside the function, so
+>> when
+>> > the pointer is changed by a type conversion inside the function, it
+>> > invalids the other variables.
+>> >
+>> > The PHP security team has seen noticed, and a bug already was filed in
+>> the
+>> > bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
+>> >
+>> > $ sapi/cli/php ../bug.php
+>> > array(1) {
+>> > [0]=>
+>> > string(5) "0?? y"
+>> > }
+>> > array(1) {
+>> > [0]=>
+>> > string(1) "0"
+>> > }
+>> >
+>> >
+>> > Thanks.
+>>
+>> It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
+>>
+>>
+>It affects 5.2, 5.3 and even trunk. I can reproduce it in all the branches.
 
-- Nelson
+Do you have a reproducer for this issue that you could share?  The bug
+is still private.
 
-On Thu, Mar 17, 2011 at 1:56 PM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> Hi all,
->
-> A number of utilities (notably tmpwatch on Red Hat/Fedora) are
-> designed to regularly clean the contents of the /tmp directory.  I
-> wanted to draw some attention to the fact that these applications, as
-> well as setting up cronjobs to perform the same task, introduce the
-> same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
-> Namely, they make it such that the stickiness of /tmp can no longer be
-> relied on.
->
-> Consider a setuid application that relies on the fact that users can't
-> delete its resources in /tmp because they're root owned.  An attacker
-> can simply launch the application and send a SIGSTOP at the right
-> moment to cause it to sleep indefinitely, until tmpwatch (or similar)
-> removes its /tmp resources, allowing them to be replaced by the
-> attacker.  As Tavis pointed out, doing this with ksu could allow
-> denial of service, but it may be possible to escalate privileges by
-> leveraging other applications.
->
-> It seems like a difficult problem to solve - it's hardly feasible to
-> rewrite every suid app that relies on the stickiness of /tmp.
-> Hopefully we can generate some useful discussion here.
->
-> Regards,
-> Dan
->
-> [1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
->
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
