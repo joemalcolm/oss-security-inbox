@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/14
-Message-ID: <20110216183742.GB11446@inutil.org>
-Date: Wed, 16 Feb 2011 19:37:42 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/1
+Message-ID: <AANLkTi=YzqfJGbHzjCPaqGEw7mFF6mFV8bf9q5H+dE7+@mail.gmail.com>
+Date: Fri, 18 Mar 2011 07:18:30 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: bridge br_multicast NULL pointer dereference
+Subject: CVE request: kernel: AudioScience HPI driver
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 16, 2011 at 08:44:08AM -0500, Josh Bressers wrote:
+"The user-supplied index into the adapters array needs to be checked, or
+an out-of-bounds kernel pointer could be accessed and used, leading to
+potentially exploitable memory corruption."
 
-> > (2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and
-> > subsequently restored in 7f285fa78d (v2.6.35-rc5).
-> > 
-> 
-> Please use CVE-2011-0709.
+This may be triggered by a user with access to an appropriate device
+file, which I'd expect would be restricted to group 'audio'.  And
+you'd need to have this particular driver loaded, either by using the
+appropriate hardware or finding a new way to force it to be loaded in
+violation of security policy.
 
-I don't think it makes sense to assign CVE IDs to issues, which only
-occured in development snapshots?
+Regards,
+Dan
 
-This wasn't done in the past and it creates needless overhead.
-
-Cheers,
-        Moritz
+[1] http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=4a122c10fbfe9020df469f0f669da129c5757671
