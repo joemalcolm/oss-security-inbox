@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/3
-Message-ID: <4EEF6776.7010900@redhat.com>
-Date: Mon, 19 Dec 2011 09:33:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/19
+Message-ID: <20110318190514.GN37813@dojo.mi.org>
+Date: Fri, 18 Mar 2011 15:05:14 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: python-virtualenv
+Subject: Re: CVE Request: HP System Management Homepage(SMH) | Open URL Redirection
 Content-Type: text/plain; charset=utf-8
 
+:Discovered by
+:Aung Khant (aungkhant<@>yehg.net)
+:YGN Ethical Hacker Group, Myanmar
+:http://yehg.net/
+:
+:Product:
+:HP System Management Homepage
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Is this open source software?  
 
-On 12/19/2011 09:21 AM, Nico Golde wrote:
-> An insecure /tmp file handling was found in python-virtualenv:
-> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
->
-> Can someone assign a CVE id for this?
->
-> Kind regards
-> Nico
-Link is 404
-
-- -- 
-
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJO72d1AAoJEBYNRVNeJnmTpNAQAINiKQVnIoi+jHQ7Mlb+nCUz
-6dbHgJnM9aQ9hhq0YbSDb7g8uYJxcbtehXQ6MYyv6mSH+utq6ynQEdZi/RzizYIR
-NC4tD/+7jOiHubX/NKVDwVMkKEM/xObrUrkCtM5icnj9K5hkyxbji/TmmYc0mYBH
-7eeg3g6CsAkPHbfmhZz40LHh50yuWIn99LUOcgs7mGs9xsei/d1/PSNOONCMDpma
-LHLyjNQwekiEt3r3ERHwSiUJKYGn5i065W0UpDuL9NU2E/LsnESQtgniOCjNj524
-s7VYDgR9WVZKXX7BHkcDOWYTewI69Sz7gnNiJLhrFMYSCXLzK7CAoaqho6hEKnRV
-4GF+cfMtbTBn84c/Iiu8Oq4afPQo9Z7lAqK7vRvZrzib4lXrU4XUogWE57sHTmaD
-uSjHH0DYOH7ZDgWIRHUGFprxPb+vc8POWS2zkZ7M6F7Id+h/t/Omhom6qhs+LTOD
-LRmGwtP1put+NZB+Jxgm1NPJdwISxRWWw6VUWXDxPdw6zN8uteVOdZE5ZLtjEHNS
-hXQpgkAYCxtnU9sSAQ5ZseIVmv009T5+nuGj8nlhaKf7+snAyBmLB0EnO0Ly6RnS
-pZu17TnN7xo+RhN3ESL4Znu3lSPKEQtcy58fkP9tqBzptzT7W6khQ3hJ6Gu43X26
-2kfsHlqO6fTtfL8zvOn2
-=mNKu
------END PGP SIGNATURE-----
-
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Nothing in fine print is ever good news.                        -Andy Rooney
