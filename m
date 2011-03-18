@@ -1,73 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/2
-Message-ID: <4D8941F5.8000203@redhat.com>
-Date: Wed, 23 Mar 2011 08:42:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/15
+Message-ID: <20110318171041.GA24392@albatros>
+Date: Fri, 18 Mar 2011 20:10:41 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Julien Tinnes <jt@....org>
-Subject: Re: Linux kernel signal spoofing vulnerability (CVE request)
+Subject: CVE request: kernel: netfilter & econet infoleaks
 Content-Type: text/plain; charset=utf-8
 
-On 03/23/2011 06:56 AM, Julien Tinnes wrote:
-> The libc' sigqueue() function allows to queue a signal, as well as some
-> accompanying data to a process.
->
-> The kernel's interface that is used to implement this function is known
-> as rt_sigqueueinfo(). It has been added in Linux 2.2.
->
-> This system call is interesting from a security perspective, because it
-> allows userland to compeletely specify the siginfo_t structure. This
-> structure is normally typically almost entirely written by the kernel
-> when a signal is delivered.
->
-> Since at least Linux 2.4.0, most abuses of the kernel interface have
-> been prevented with a simple check:
->
-> 	/* Not even root can pretend to send signals from the kernel.
-> 	   Nor can they impersonate a kill(), which adds source info.  */
-> 	if (info.si_code>= 0)
-> 		return -EPERM;
->
-> This check made sure that rt_sigqueueinfo() could not spoof a signal
-> whose SI_CODE would be SI_KERNEL or SI_USER. As the comment indicates, a
-> process receiving a signal should be able to trust its source pid or uid
-> if its si_code matches SI_USER.
->
-> Unfortunately, a couple of years later, when tgkill() and tkill() were
-> added, this check was forgotten and was not updated to prevent the
-> spoofing of a TGKILL si_code.  Because of this, userland is unable to
-> trust the pid and uid information of a TKILL signal.
->
-> This is bad, because it is a useful feature in a scenario where a
-> process which cannot ptrace you can send you signals. This includes at
-> least the startup code of setuid binaries.
->
-> Meanwhile, userland and libc writers still assumed that they could trust
-> the origin of a SI_TKILL signal. Glibc authors too [1]. Worse: they
-> even silently patched SI_TKILL with SI_USER [2], [3]. So even a userland
-> application that (righfully so) only trusts SI_USER signals will be
-> vulnerable.
->
-> A tentative patch for this vulnerability has been committed to Linus'
-> kernel tree [4].
->
-> In this patch, we prevent rt_sigqueueinfo() from specifying any si_code
-> != SI_QUEUE. While we believe it to be very unlikley, this could in
-> theory break userland in some older Linux distributions, so we may
-> have to revert to a more concervative patch and prevent ( (si_code ==
-> SI_TKILL) || (si_code>= SI_QUEUE) ) instead.
->
-> Please credit "Julien Tinnes, Google security team" in any related advisory.
->
-> Julien
->
-> [1]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/nptl/init.c&l=175
-> [2]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/sysdeps/unix/sysv/linux/sigwaitinfo.c&l=63
-> [3]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/sysdeps/unix/sysv/linux/sigtimedwait.c&l=62
-> [4]: http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=da48524eb20662618854bb3df2db01fc65f3070c
+Hi,
 
-Please use CVE-2011-1182.
+"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+copied from userspace.  Fields of these structs that are
+zero-terminated strings are not checked.  When they are used as argument
+to a format string containing "%s" in request_module(), some sensitive
+information is leaked to userspace via argument of spawned modprobe
+process.
 
-Thanks, Eugene
+The first bug was introduced before the git epoch;  the second is
+introduced by 6b7d31fc (v2.6.15-rc1);  the third is introduced by
+6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+CAP_NET_ADMIN."
+http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
+
+
+"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+copied from userspace.  Fields of these structs that are
+zero-terminated strings are not checked.  When they are used as argument
+to a format string containing "%s" in request_module(), some sensitive
+information is leaked to userspace via argument of spawned modprobe
+process.
+
+The first and the third bugs were introduced before the git epoch; the
+second was introduced in 2722971c (v2.6.17-rc1).  To trigger the bug
+one should have CAP_NET_ADMIN."
+http://marc.info/?l=linux-kernel&m=129978077609894&w=2
+
+
+"'buffer' string is copied from userspace.  It is not checked whether it is
+zero terminated.  This may lead to overflow inside of simple_strtoul().
+Changli Gao suggested to copy not more than user supplied 'size' bytes.
+
+It was introduced before the git epoch.  Files "ipt_CLUSTERIP/*" are
+root writable only by default, however, on some setups permissions might be
+relaxed to e.g. network admin user."
+http://marc.info/?l=netfilter&m=129978077509888&w=2
+http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
+
+
+"Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
+copied from userspace.  Fields of these structs that are
+zero-terminated strings are not checked.  When they are used as argument
+to a format string containing "%s" in request_module(), some sensitive
+information is leaked to userspace via argument of spawned modprobe
+process.
+
+The first bug was introduced before the git epoch;  the second was
+introduced in 3bc3fe5e (v2.6.25-rc1);  the third is introduced by
+6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+CAP_NET_ADMIN."
+http://marc.info/?l=linux-kernel&m=129978086410061&w=2
+
+
+"struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
+x86_64.  These bytes are not initialized in the variable 'ah' before
+sending 'ah' to the network.  This leads to 4 bytes kernel stack
+infoleak.
+
+This bug was introduced before the git epoch."
+http://marc.info/?l=linux-netdev&m=130036203528021&w=2
+
+
+Thanks,
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
