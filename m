@@ -1,31 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/10
-Message-ID: <191850871.375534.1299184712420.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 15:38:32 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/12
+Message-ID: <AANLkTikG8gao+r1aTkz-WAjhOE41YgFpVBAf62Ca4sMN@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:42:08 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
+Subject: CVE Request: HP System Management Homepage(SMH) | Open URL Redirection
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Can I get CVE-identifier for this vulnerability? It's old one :)
-> 
-> Software gri is vulnerable to insecure temp file generation.
-> 
-> References:
-> http://gri.sourceforge.net/gridoc/html/Version_2_12.html
-> http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
-> note that this URL is not meant for public use as it is temporary)
-> 
+Discovered by
+Aung Khant (aungkhant<@>yehg.net)
+YGN Ethical Hacker Group, Myanmar
+http://yehg.net/
 
-Steve,
+Product:
+HP System Management Homepage
 
-Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
-is here:
-https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
+Description:
+Consolidated system management information helps IT Administrators predict,
+diagnose, and rapidly respond to potential and actual system failures
+for a single server.
 
-Thanks.
+Vendor: HP Inc (http://www.hp.com)
 
--- 
-    JB
+Vulnerability Affected:
+URL Redirection Abuse
+
+Versions tested:
+2.x.x.x
+
+Versions affected:
+2.x.x.x
+
+
+Date published: 04-25-2010
+
+Severity: Medium
+
+Vulnerability Detail:
+Attacker can lure victim to redirect to his choice of malicious site via the
+trusted vulnerable SMH url. From there, serious attacks such as
+browser exploits can be performed
+to compromise victim's OS.
+
+POC URL:
+http://x.x.x.x:2301/red2301.html?RedirectUrl=evil@...acker.com
+
+Solution:
+ - Remove red3201.html under hpsmh\data\htdocs\ directory OR
+ - sanitize RedirectUrl variable OR
+ - Wait for Vendor's fix in next 4-6 months
+
+X-Ref:
+OWASP-TOP10-2010: A8 - Unvalidated Redirects and Forwards
+WASC-38 URL Redirector Abuse
+CWE-601: URL Redirection to Untrusted Site ('Open Redirect')
+
+Advisory URL:
+http://yehg.net/lab/pr0js/advisories/hp_system_management_homepage_url_redirection_abuse
+
+X-Advisory URL:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-1586
+http://osvdb.org/show/osvdb/64146
+http://xforce.iss.net/xforce/xfdb/58107
+http://seclists.org/fulldisclosure/2010/Apr/335
+http://www.juniper.net/security/auto/vulnerabilities/vuln39676.html
+
+Disclosure Timeline:
+03-10-2010: found vulnerability
+04-12-2010: contacted vendor @
+http://welcome.hp.com/country/us/en/sftware_security.html
+04-12-2010: vendor responded
+04-14-2010: vendor confirmed and would release fix within 4 to 6 months.
+04-25-2010: disclosed
+
+Vendor Response (HP Software Security Response Team):
+>We are able to duplicate the vulnerability.
+>I expect we can resolve the vulnerability in the next SMH patch.
+>Because regularly scheduled patches are easier for customers to incorporate
+>we prefer to resolve vulnerabilities in those patches rather than in special hotfixes.
+>I don't have a patch schedule, but normally SMH is patched every four to six months.
+
+----------------
+# yehg [04-25-2010]
+last updated: 05-06-2010
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
