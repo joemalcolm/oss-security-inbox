@@ -1,49 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/1
-Message-Id: <20110718211319.0c06099ac63b110ec5d31e21@gmail.com>
-Date: Mon, 18 Jul 2011 21:13:19 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/1
+Message-ID: <AANLkTi=YzqfJGbHzjCPaqGEw7mFF6mFV8bf9q5H+dE7+@mail.gmail.com>
+Date: Fri, 18 Mar 2011 07:18:30 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...-smtp.mitre.org
-Subject: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
+Subject: CVE request: kernel: AudioScience HPI driver
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+"The user-supplied index into the adapters array needs to be checked, or
+an out-of-bounds kernel pointer could be accessed and used, leading to
+potentially exploitable memory corruption."
 
-This may be an odd request.  The proprietary fglrx driver has an
-info disclosure flaw in one of it's shell scripts [0].  It passes the
-xauth secret cookie in an insecure manner (such that it's exposed to
-prying eyes in the output of ps for example).
+This may be triggered by a user with access to an appropriate device
+file, which I'd expect would be restricted to group 'audio'.  And
+you'd need to have this particular driver loaded, either by using the
+appropriate hardware or finding a new way to force it to be loaded in
+violation of security policy.
 
-The oddness in this request is that the driver is proprietary; but
-then again it is also included in most linux distributions in one form
-or another, so I think oss-sec is an appropriate forum.  There is also
-a specific additional right granted in the script's header: "Distro
-maintainers may modify this reference script as necessary to conform
-to their distribution policies."
+Regards,
+Dan
 
-This is debian bug #625868 [1], and I've commited an untested fix
-(I don't use authatieventsd myself) to our svn repo [2].
-
-Note that there is discussion in the bug report claiming the
-debian-specific patch is to blame, but that conclusion is incorrect.
-The same flaw is also present in the upstream ati code as well.
-The debian code is only different in that it was made to handle a
-slightly different use case, but the underlying flaw is indeed
-present in both, so other distros are very likely affected as well.
-
-Note also that xauth's design makes this insecure usage seem like
-an obvious solution for the cookie handling problem, so there are
-probably many other flawed implementations like this, which could
-be found by grepping for xauth and auditing those cases handling
-the secret cookie.  This may be something worth calling out as a
-CWE.
-
-Credit goes to Vincent Zweije who submitted the debian bug report.
-
-Best wishes,
-Mike
-
-[0] common/etc/ati/authatieventsd.sh
-[1] http://bugs.debian.org/625868
-[2] svn://svn.debian.org/svn/pkg-fglrx/fglrx-driver/trunk
+[1] http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=4a122c10fbfe9020df469f0f669da129c5757671
