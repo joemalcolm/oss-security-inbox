@@ -1,40 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/4
-Message-ID: <mpro.lv6ar0065ew5s081n.taviso@cmpxchg8b.com>
-Date: Thu, 24 Nov 2011 17:21:01 +0100
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/8
+Message-ID: <AANLkTi=EauEYOCbf3V4inrR4ReWdDZ-T6sxXhP2ucC1Q@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:22:54 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Please REJECT CVE-2011-4112
+Subject: CVE Request: Geeklog 1.7.1 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Petr Matousek <pmatouse@...hat.com> wrote:
+1. OVERVIEW
 
-> Hi,
-> 
-> could you please reject CVE-2011-4112 as it is not a security bug.
-> 
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
-> 
-> Thank you,
+The Geeklog was vulnerable to Cross Site Scripting in its
+administration backend.
 
-Unrelated, but if it did not require CAP_NET_ADMIN, would you have
-considered it a security bug?
 
-I was under the impression that there was general agreement that NULL derefs
-that are handled gracefully are not security bugs any more.
+2. BACKGROUND
 
-Is this because you're setting panic_on_oops?
+Geeklog is a PHP/MySQL based application for managing dynamic web content.
+"Out of the box", it is a blog engine, or a CMS with support for
+comments, trackbacks,
+multiple syndication formats, spam protection, and all the other vital
+features of such a system.
 
-I wonder if we should create a separate panic_on_null, as I agree
-panic_on_oops is probably the correct default so as to avoid transitioning
-into a potentially exploitable state. I think I'm reasonably confident in
-the handling of NULL derefs (or am I deluded? I havn't thought about it a
-great deal).
 
-Tavis.
+3. VULNERABILITY DESCRIPTION
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+User supplied input is not probably sanitized in the "subgroup" and "conf_group"
+parameters when the configuration settings are saved in
+/admin/configuration.php.
+Attackers who manage to get/bypass anti-csrf token (_glsectoken) via
+other means can effectively perform XSS against admin users.
 
+
+4. VERSIONS AFFECTED
+
+1.7.1 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+[Request]
+
+POST /geeklog/admin/configuration.php HTTP/1.1
+
+_glsectoken=&conf_group=Core'"--></script><script>alert(/XSS/)</script>&subgroup='"--></script><script>alert(/XSS/)</script>
+
+[/Request]
+
+
+6. SOLUTION
+
+Upgrade to 1.7.1sr1
+
+
+7. VENDOR
+
+Geeklog Development Team
+http://www.geeklog.net/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-31: notified vendor
+2011-01-02: vendor released fixed version
+2011-01-04: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[geeklog1.7.1]_cross_site_scripting
+Vendor Advisory: http://www.geeklog.net/article.php/geeklog-1.7.1sr1
+About Geeklog: http://www.geeklog.net/docs/english/#introduction
+http://stephensclafani.com/2009/05/26/exploiting-unexploitable-xss/
+http://kuza55.blogspot.com/2008/02/exploiting-csrf-protected-xss.html
+
+#yehg [2011-01-04]
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
