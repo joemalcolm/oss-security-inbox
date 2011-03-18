@@ -1,34 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/7
-Message-ID: <1798935709.450084.1307045614547.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Jun 2011 16:13:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/15
+Message-ID: <20110318171041.GA24392@albatros>
+Date: Fri, 18 Mar 2011 20:10:41 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
+Subject: CVE request: kernel: netfilter & econet infoleaks
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+copied from userspace.  Fields of these structs that are
+zero-terminated strings are not checked.  When they are used as argument
+to a format string containing "%s" in request_module(), some sensitive
+information is leaked to userspace via argument of spawned modprobe
+process.
+
+The first bug was introduced before the git epoch;  the second is
+introduced by 6b7d31fc (v2.6.15-rc1);  the third is introduced by
+6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+CAP_NET_ADMIN."
+http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
 
 
------ Original Message -----
-> Could you assign CVE-identifiers for following security
-> vulnerabilities?
-> 
-> https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
-> http://www.htbridge.ch/advisory/xss_in_a_really_simple_chat_arsc.html
-> http://www.htbridge.ch/advisory/multiple_sql_injections_in_a_really_simple_chat_arsc.html
-> 
-> ARSC seems to be a bit of a sinking boat. I still wonder why htbridge
-> does not request CVE-identifiers at all.
-> 
+"Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+copied from userspace.  Fields of these structs that are
+zero-terminated strings are not checked.  When they are used as argument
+to a format string containing "%s" in request_module(), some sensitive
+information is leaked to userspace via argument of spawned modprobe
+process.
+
+The first and the third bugs were introduced before the git epoch; the
+second was introduced in 2722971c (v2.6.17-rc1).  To trigger the bug
+one should have CAP_NET_ADMIN."
+http://marc.info/?l=linux-kernel&m=129978077609894&w=2
 
 
-This needs two IDs:
+"'buffer' string is copied from userspace.  It is not checked whether it is
+zero terminated.  This may lead to overflow inside of simple_strtoul().
+Changli Gao suggested to copy not more than user supplied 'size' bytes.
 
-CVE-2011-2180 ARSC XSS
-CVE-2011-2181 ARSC SQL injection
+It was introduced before the git epoch.  Files "ipt_CLUSTERIP/*" are
+root writable only by default, however, on some setups permissions might be
+relaxed to e.g. network admin user."
+http://marc.info/?l=netfilter&m=129978077509888&w=2
+http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
 
-Thanks.
+
+"Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
+copied from userspace.  Fields of these structs that are
+zero-terminated strings are not checked.  When they are used as argument
+to a format string containing "%s" in request_module(), some sensitive
+information is leaked to userspace via argument of spawned modprobe
+process.
+
+The first bug was introduced before the git epoch;  the second was
+introduced in 3bc3fe5e (v2.6.25-rc1);  the third is introduced by
+6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+CAP_NET_ADMIN."
+http://marc.info/?l=linux-kernel&m=129978086410061&w=2
+
+
+"struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
+x86_64.  These bytes are not initialized in the variable 'ah' before
+sending 'ah' to the network.  This leads to 4 bytes kernel stack
+infoleak.
+
+This bug was introduced before the git epoch."
+http://marc.info/?l=linux-netdev&m=130036203528021&w=2
+
+
+Thanks,
 
 -- 
-    JB
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
