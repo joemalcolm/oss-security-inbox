@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/9
-Message-ID: <20111028142213.52f499e8@laverne>
-Date: Fri, 28 Oct 2011 14:22:13 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/2
+Message-ID: <4D8348ED.6080800@redhat.com>
+Date: Fri, 18 Mar 2011 19:58:37 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: rcvalle@...hat.com
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+Subject: Re: CVE request: kernel: AudioScience HPI driver
 Content-Type: text/plain; charset=utf-8
 
-Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
-schrieb Ramon de C Valle <rcvalle@...hat.com>:
+On 03/18/2011 07:18 PM, Dan Rosenberg wrote:
+> "The user-supplied index into the adapters array needs to be checked, or
+> an out-of-bounds kernel pointer could be accessed and used, leading to
+> potentially exploitable memory corruption."
+>
+> This may be triggered by a user with access to an appropriate device
+> file, which I'd expect would be restricted to group 'audio'.  And
+> you'd need to have this particular driver loaded, either by using the
+> appropriate hardware or finding a new way to force it to be loaded in
+> violation of security policy.
+>
+> Regards,
+> Dan
+>
+> [1] http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=4a122c10fbfe9020df469f0f669da129c5757671
 
-> This is a security issue reported by vladz in bzexe. This is a low
-> impact security issue, since bzexe is rarely used and the race
-> condition window is very narrow, but still exploitable.
+Please use CVE-2011-1169.
 
-Have you checked if this also affects gzexe? It is pretty much the same
-as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
-
+Eugene
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
