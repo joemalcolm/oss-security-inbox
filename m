@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/9
-Message-ID: <4ECBFD76.5050908@redhat.com>
-Date: Tue, 22 Nov 2011 12:52:22 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/16
+Message-ID: <20110318181115.GS5174@redhat.com>
+Date: Fri, 18 Mar 2011 12:11:15 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
-Subject: Re: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
+Cc: list@...adns.org, 610834@...s.debian.org, geissert@...ian.org, atomo64@...il.com, bressers@...hat.com, coley@...re.org
+Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-On 11/22/2011 04:09 AM, Henri Salo wrote:
-> Can we assign CVE-identifiers for these three issues, thank you?
+* [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
+
+>In 2002, when I rewrote the compression code for MaraDNS for the first
+>time, I made a mistake in allocating an array of integers, allocating
+>it in bytes instead of sizeof(int) units.  The resulted in a buffer
+>being too small, allowing it to be overwritten.
 >
-> Found from: 2.2.3
-> Fixed in: 2.2.4
+>The impact of this programming error is that MaraDNS can be crashed by
+>sending MaraDNS a single "packet of death".  Since the data placed in
+>the overwritten array can not be remotely controlled (it is a list of
+>increasing integers), there is no way to increase privileges
+>exploiting this bug.
 >
-> 1. http://osvdb.org/show/osvdb/76882 / SA46663
-> extensions/profiledevkit/content/content.profile.php profile-parameter XSS
->
-> 2. http://osvdb.org/show/osvdb/76883 / SA46663
-> symphony/lib/core/class.symphony.php filter-parameter XSS
+>The attached patch resolves this issue by allocating in sizeof(int)
+>units instead of byte-sized units for an integer array.  In addition,
+>it uses a smaller array because a DNS name can only have, at most, 128
+>labels.
 
-Ok merging these two issues (as per ADT4 specification)  please use
-CVE-2011-4340 for this issue.
-
-
-> 3. http://osvdb.org/show/osvdb/76884 / SA46663
-> symphony/content/content.publish.ph filter-parameter SQL injection
-> (Different than CVE-2010-3458)
-
-Please use CVE-2011-4341 for this issue.
-> References:
-> http://seclists.org/bugtraq/2011/Nov/8
-> http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
-> http://secunia.com/advisories/46663/
-> Advisory Reference: NS-11-008
->
-> - Henri Salo
-
+Was a CVE name ever assigned to this issue?
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
