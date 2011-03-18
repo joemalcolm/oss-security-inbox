@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/1
-Message-ID: <20110114170158.GB3381@pisco.westfalen.local>
-Date: Fri, 14 Jan 2011 18:01:58 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com, coley@...re.org
-Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/18
+Message-ID: <20110318190538.GU5174@redhat.com>
+Date: Fri, 18 Mar 2011 13:05:38 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: oss-security@...ts.openwall.com, list@...adns.org, bressers@...hat.com, coley@...re.org
+Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 12, 2011 at 10:48:06PM -0600, Raphael Geissert wrote:
-> Hi,
-> 
-> Could CVE ids be assigned for the following issues? Thanks in advance.
-> 
-> There are more issues without ids, will request them later.
+* [2011-03-18 12:52:32 -0600] Raphael Geissert wrote:
 
-We're still missing CVE assignments for several issues from 2009.
-These have been requested on oss-security before, but couldn't be 
-processed by Josh/Red Hat, since RH doesn't have 2009 IDs. As such, 
-they need to be handled by MITRE:
+>On Friday 18 March 2011 12:11:15 Vincent Danen wrote:
+>> * [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
+>> >In 2002, when I rewrote the compression code for MaraDNS for the first
+>> >time, I made a mistake in allocating an array of integers, allocating
+>> >it in bytes instead of sizeof(int) units.  The resulted in a buffer
+>> >being too small, allowing it to be overwritten.
+>> >
+>> >The impact of this programming error is that MaraDNS can be crashed by
+>> >sending MaraDNS a single "packet of death".  Since the data placed in
+>> >the overwritten array can not be remotely controlled (it is a list of
+>> >increasing integers), there is no way to increase privileges
+>> >exploiting this bug.
+>> >
+>> >The attached patch resolves this issue by allocating in sizeof(int)
+>> >units instead of byte-sized units for an integer array.  In addition,
+>> >it uses a smaller array because a DNS name can only have, at most, 128
+>> >labels.
+>>
+>> Was a CVE name ever assigned to this issue?
+>
+>Yes, Josh assigned CVE-2011-0520.
+>(his message is also recorded on the Debian bug you CC'ed)
 
-1. Overkill (this should be a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
+Sorry, I should have looked at the Debian bug.  I was looking at the
+GMANE archive and only saw Tomas' reply the next day, but no further
+followups.
 
-2. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
+Thanks!
 
-3. FireGPG (this should be a CVE-2008 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
-http://securityvulns.com/Udocument757.html
-
-4. Burn (Homepage: http://www.bigpaul.org/burn/) (That's a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542329
-
-5. pdfroff (from GNU groff) (That's a CVE-2009 ID)
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/groff/groff-1.20.1-owl-tmp.diff
-
-6. Jetty (That's a CVE-2009 ID)
-http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
-
-7. Konversation (That's a CVE-2009 ID)
-http://bugs.kde.org/show_bug.cgi?id=219985
-
-Cheers,
-        Moritz
-
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
