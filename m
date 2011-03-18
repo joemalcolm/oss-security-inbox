@@ -1,85 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/1
-Message-ID: <4ECAF5B0.5070807@redhat.com>
-Date: Mon, 21 Nov 2011 18:06:56 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, sschurtz@...nline.de
-Subject: Re: CVE-request: Contao 2.10.1 Cross-site scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/18
+Message-ID: <20110318190538.GU5174@redhat.com>
+Date: Fri, 18 Mar 2011 13:05:38 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: oss-security@...ts.openwall.com, list@...adns.org, bressers@...hat.com, coley@...re.org
+Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 03:41 PM, Henri Salo wrote:
-> ----- Forwarded message from sschurtz@...nline.de -----
+* [2011-03-18 12:52:32 -0600] Raphael Geissert wrote:
+
+>On Friday 18 March 2011 12:11:15 Vincent Danen wrote:
+>> * [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
+>> >In 2002, when I rewrote the compression code for MaraDNS for the first
+>> >time, I made a mistake in allocating an array of integers, allocating
+>> >it in bytes instead of sizeof(int) units.  The resulted in a buffer
+>> >being too small, allowing it to be overwritten.
+>> >
+>> >The impact of this programming error is that MaraDNS can be crashed by
+>> >sending MaraDNS a single "packet of death".  Since the data placed in
+>> >the overwritten array can not be remotely controlled (it is a list of
+>> >increasing integers), there is no way to increase privileges
+>> >exploiting this bug.
+>> >
+>> >The attached patch resolves this issue by allocating in sizeof(int)
+>> >units instead of byte-sized units for an integer array.  In addition,
+>> >it uses a smaller array because a DNS name can only have, at most, 128
+>> >labels.
+>>
+>> Was a CVE name ever assigned to this issue?
 >
-> Date: Sat, 8 Oct 2011 07:59:27 GMT
-> From: sschurtz@...nline.de
-> To: bugtraq@...urityfocus.com
-> Subject: Contao 2.10.1 Cross-site scripting vulnerability
-> X-Mailer: MIME-tools 5.420 (Entity 5.420)
->
-> Advisory:              	Contao 2.10.1 Cross-site scripting vulnerability
-> Advisory ID:           	SSCHADV2011-025
-> Author:                	Stefan Schurtz
-> Affected Software:  	Successfully tested on Contao 2.10.1
-> Vendor URL:          	http://www.contao.org/
-> Vendor Status:       	fixed
-> CVE-ID:                	-
->
-> ==========================
-> Vulnerability Description:
-> ==========================
->
-> Contao 2.10 is prone to multiple Cross-site scripting vulnerability
->
-> ==================
-> Technical Details:
-> ==================
->
-> http://<target>/contao-2.10.1/index.php/teachers.html?"/><script>alert('xss')</script>
-> http://<target>/contao-2.10.1/index.php/teachers/'"</style></script><script>alert(document.cookie)</script>
->
-> =========
-> Solution:
-> =========
->
-> - Vendor patch available - http://dev.contao.org/projects/typolight/repository/revisions/1041
-> - Release of a new version 2.10.2 next week
->
-> ====================
-> Disclosure Timeline:
-> ====================
->
-> 07-Oct-2011 - informed developers (contao@...trobots.com)
-> 07-Oct-2011 - vendor fix
-> 08-Oct-2011 - release date of this security advisory
->
-> ========
-> Credits:
-> ========
->
-> Vulnerability found and advisory written by Stefan Schurtz.
->
-> ===========
-> U
-> References:
-> ===========
->
-> http://www.contao.org/
-> http://dev.contao.org/projects/typolight/repository/revisions/1041
-> http://www.rul3z.de/advisories/SSCHADV2011-025.txt
->
-> ----- End forwarded message -----
->
-> Can you assign CVE-identifier for this vulnerability?
->
-> http://dev.contao.org/projects/typolight/repository/revisions/8de5b536973a38ba75ebebfff16a5f0f29d99671 (reported 10/10/2011 03:09 pm)
-> http://dev.contao.org/projects/typolight/repository/revisions/b7b2c2281227ad9c1647bf1f03e6d663b8387959 (reported 10/07/2011 01:33 pm)
->
-> Best regards,
-> Henri Salo
-Please use CVE-2011-4335 for this issue.
+>Yes, Josh assigned CVE-2011-0520.
+>(his message is also recorded on the Debian bug you CC'ed)
+
+Sorry, I should have looked at the Debian bug.  I was looking at the
+GMANE archive and only saw Tomas' reply the next day, but no further
+followups.
+
+Thanks!
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
