@@ -1,36 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/4
-Message-ID: <250031570.149827.1303760258713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 25 Apr 2011 15:37:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/4
+Message-ID: <AANLkTimvizFt4PJE+RfG9xP0mxVEMgXDcZAtvc7UqW5v@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:15:25 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Joomla! 1.5.21 <= SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 04/21/2011 09:55 AM, Eugene Teo wrote:
-> > On 04/21/2011 07:45 AM, Eugene Teo wrote:
-> >> On 04/21/2011 04:52 AM, Josh Bressers wrote:
-> >>> Please use CVE-2011-1598
-> >>
-> >> Updated patch:
-> >> http://permalink.gmane.org/gmane.linux.network/192974
-> >
-> > Correction: s/Updated patch//. This patch is for a similar issue but
-> > for can/raw release. I rather group these two patches with
-> > CVE-2011-1598 than to have another name assigned for it. But I'm fine
-> > either way.
-> 
-> On second thoughts, let's have another CVE assigned.
-> 
-> can/bcm release: credit Dave Jones
-        This one is already CVE-2011-1598
+1. OVERVIEW
 
-> can/raw release: credit Oliver Hartkopp
-        This one is now CVE-2011-1748
+Potential SQL Injection Flaws were detected Joomla! CMS version 1.5.20.
 
-Thanks.
 
--- 
-    JB
+2. PRODUCT DESCRIPTION
+
+Joomla is a free and open source content management system (CMS) for
+publishing content on the World Wide Web and intranets. It comprises a
+model–view–controller (MVC) Web application framework that can also be
+used independently.
+Joomla is written in PHP, uses object-oriented programming (OOP)
+techniques and software design patterns, stores data in a MySQL
+database, and includes features such as page caching, RSS feeds,
+printable versions of pages, news flashes, blogs, polls, search, and
+support for language internationalization.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Parameters (filter_order, filer_order_Dir) were not properly sanitized
+in Joomla! that lead to SQL Injection vulnerability.
+
+
+4. VERSIONS AFFECTED
+
+Joomla! 1.5.21  and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+Exploits:
+/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir=&filter_order=%00'
+/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir='&filter_order=asc
+
+Screenshots:
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_(filter_order)_front.jpg
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_front.jpg
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_back.jpg
+
+
+6. IMPACT
+
+Attackers could successfully execution malicious sql command injection
+in Joomla! CMS by bypassing filers in place.
+
+
+7. SOLUTION
+
+Upgrade to Joomla! 1.5.22
+
+
+8. VENDOR
+
+Joomla! Developer Team
+http://www.joomla.org
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+2010-10-06  : Notified Joomla! Security Strike Team
+2010-11-01  : Vulnerability disclosed
+2010-11-05  : Patched version (1.5.22) released
+
+
+11. REFERENCES
+
+Vendor Advisory URL:
+http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
+Assigned CVE: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-4166
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-89: http://cwe.mitre.org/data/definitions/89.html
+
+
+#yehg [2010-11-05]
+
+last updated: 2010-12-24
