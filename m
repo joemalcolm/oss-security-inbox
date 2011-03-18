@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/3
-Message-ID: <20111221221041.GB7178@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Dec 2011 23:10:42 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: tight loop and no preemption can cause system stall
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/17
+Message-Id: <201103181252.33447.geissert@debian.org>
+Date: Fri, 18 Mar 2011 12:52:32 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com, list@...adns.org, bressers@...hat.com, coley@...re.org
+Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
 Content-Type: text/plain; charset=utf-8
 
-A tight loop in user level process isn't preempted unless a realtime
-process is woken up on the cpu.  Some important kernel threads such as
-events/*, kblockd/* can be blocked by the process, and the machine
-stalls.
+On Friday 18 March 2011 12:11:15 Vincent Danen wrote:
+> * [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
+> >In 2002, when I rewrote the compression code for MaraDNS for the first
+> >time, I made a mistake in allocating an array of integers, allocating
+> >it in bytes instead of sizeof(int) units.  The resulted in a buffer
+> >being too small, allowing it to be overwritten.
+> >
+> >The impact of this programming error is that MaraDNS can be crashed by
+> >sending MaraDNS a single "packet of death".  Since the data placed in
+> >the overwritten array can not be remotely controlled (it is a list of
+> >increasing integers), there is no way to increase privileges
+> >exploiting this bug.
+> >
+> >The attached patch resolves this issue by allocating in sizeof(int)
+> >units instead of byte-sized units for an integer array.  In addition,
+> >it uses a smaller array because a DNS name can only have, at most, 128
+> >labels.
+> 
+> Was a CVE name ever assigned to this issue?
 
-Unprivileged local user could use this flaw to DoS the system.
+Yes, Josh assigned CVE-2011-0520.
+(his message is also recorded on the Debian bug you CC'ed)
 
-Upstream commit:
-f26f9aff6aaf67e9a430d16c266f91b13a5bff64
-
-Reference:
-https://lkml.org/lkml/2010/11/20/212
-https://bugzilla.redhat.com/show_bug.cgi?id=769711
-
-Thanks,
+Regards,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
