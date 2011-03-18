@@ -1,31 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/8
-Message-ID: <4D668F0E.3020106@freenet.de>
-Date: Thu, 24 Feb 2011 18:02:06 +0100
-From: Ralf Corsepius <rc040203@...enet.de>
-To: Vincent Danen <vdanen@...hat.com>
-CC: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, security@...tpractical.com,  Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/10
+Message-ID: <AANLkTi=KiLQp=BR1Y7Nm8XU7u73TuJsNonQJ5PJPLB-D@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:40:59 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: 2Wire Broadband Router Session Hijacking Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/2011 05:45 PM, Vincent Danen wrote:
-> * [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
->
->>> Is Redhat packaging RT now, or are you just handling the CVEs?
->>
->> I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
->> public issues.
->
-Folks, my feel is you all are picking on words and details.
+1. OVERVIEW
 
-> RT3 is packaged in Fedora and EPEL.
->
-Correct. rt3 is community maintained in Fedora and RHEL. I am doing so 
-for Fedora and other people do for RHEL.
-So, strictly speaking it's not "Red Hat packaged", but 
-community-contributed to "Red Hat owned products" (Fedora rsp. Fedora 
-EPEL) and some folks @RH are filing CVS against it, for reasons I don't 
-know.
+The 2Wire Broadband Router is vulnerable to Session Hijacking flaw
+which attackers can compromise the router administrator session.
 
-Ralf
 
+2. PRODUCT DESCRIPTION
+
+2Wire routers, product of 2Wire, are widely-used Broadband routers in
+SOHO environment.
+They are distributed through most famous ISPs (see -
+http://2wire.com/?p=383) with ready-to-use pre-configured settings.
+Their Wireless SSIDs are well-known as "2WIRE" prefix.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The web-based management interface of 2Wire Broadband router does not
+generate truely unique random session IDs for a logged-in
+administrator user.
+This allows attackers to brute-force guess a valid session ID to
+compromise the administrator session.
+For more information about this kind of weekness,
+refer to CWE-330: Use of Insufficiently Random Values and CWE-331:
+Insufficient Entropy.
+
+
+4. VERSIONS AFFECTED
+
+Tested against:
+Model: 2700HGV-2 Gateway
+Hardware Version: 2700-100657-005
+Software Version: 5.29.117.3
+
+Other versions might be affected as well.
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_tokens_captured_webscarab
+http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_tokens_captured_burp
+http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp.jpg
+http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-02.jpg
+http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-03.jpg
+http://yehg.net/lab/pr0js/advisories/2wire/session_analysis/session_analysis_with_burp-04.jpg
+
+
+6. IMPACT
+
+Attackers can compromise 2wire administrator session through automated
+tools and modify any settings they want.
+
+
+7. SOLUTION [from 2wire]
+
+2wire has already investigated and provided a fix for this issue.
+These fixes have been implemented in the 6.x series of software and
+are available to our partners.
+Since 2wire does not provide software releases to end-users, it is up
+to the partner ISP to
+adopt new versions and provide them to their customers.
+
+
+8. VENDOR
+
+2Wire Inc
+http://www.2wire.com
+About 2Wire - http://www.2wire.com/index.php?p=486
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+07-25-2010: vulnerability discovered
+07-29-2010: notified vendor
+08-02-2010: vendor responded/verified
+08-09-2010: vendor did not respond when fix/upgrade would be available
+08-09-2010: vulnerability disclosed
+08-21-2010: vendor released fix
+
+
+11. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/2wire/[2wire]_session_hijacking_vulnerability
+Other unfixed 2Wire Vulnerabilities: http://www.hakim.ws/
+2Wire Routers WorldWide: http://www.shodanhq.com/?q=2Wire
+Related WebGoat Lesson:
+http://yehg.net/lab/pr0js/training/view/owasp/webgoat/WebGoat_SessionMan_SessionHijackingWithJHijack/
+Related: http://jeremiahgrossman.blogspot.com/2008/04/intranet-hack-targeting-at-2wire-dsl.html
+Related: http://www.routerzone.eu/wiki/index.php/Hacking_the_2Wire_1800
+
+
+#yehg [08-09-2010]
+
+updated: 2010-10-24
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
