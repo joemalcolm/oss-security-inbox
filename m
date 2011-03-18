@@ -1,32 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/5
-Message-ID: <4D969F68.7050301@xiscosoft.es>
-Date: Sat, 02 Apr 2011 06:00:40 +0200
-From: klondike <klondike@...cosoft.es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/4
+Message-ID: <AANLkTimvizFt4PJE+RfG9xP0mxVEMgXDcZAtvc7UqW5v@mail.gmail.com>
+Date: Fri, 18 Mar 2011 14:15:25 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE Request: Joomla! 1.5.21 <= SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-El 01/04/11 20:03, Josh Bressers escribió:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though)
-Will the list provide protection against rubber-hose cryptanalisys?, if
-so, how? GPG as most other cryptographic software is vulnerable to it.
-What about black-bag cryptanalysis?
+1. OVERVIEW
 
-Sometime ago I was taught that the best way to be sure a secret was not
-known was not saying it, so if you, researchers, want to make sure your
-PoC aren't abused do things properly, warn the vendors to upgrade the
-product because of your security finding and avoid providing PoCs until
-enough time has passed for you to be sure everybody has had a chance to
-upgrade.
-
-Any other solution can be easily flawed since you can't make sure I
-won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
-such a private list.
+Potential SQL Injection Flaws were detected Joomla! CMS version 1.5.20.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+2. PRODUCT DESCRIPTION
+
+Joomla is a free and open source content management system (CMS) for
+publishing content on the World Wide Web and intranets. It comprises a
+model–view–controller (MVC) Web application framework that can also be
+used independently.
+Joomla is written in PHP, uses object-oriented programming (OOP)
+techniques and software design patterns, stores data in a MySQL
+database, and includes features such as page caching, RSS feeds,
+printable versions of pages, news flashes, blogs, polls, search, and
+support for language internationalization.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Parameters (filter_order, filer_order_Dir) were not properly sanitized
+in Joomla! that lead to SQL Injection vulnerability.
+
+
+4. VERSIONS AFFECTED
+
+Joomla! 1.5.21  and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+Exploits:
+/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir=&filter_order=%00'
+/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir='&filter_order=asc
+
+Screenshots:
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_(filter_order)_front.jpg
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_front.jpg
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_back.jpg
+
+
+6. IMPACT
+
+Attackers could successfully execution malicious sql command injection
+in Joomla! CMS by bypassing filers in place.
+
+
+7. SOLUTION
+
+Upgrade to Joomla! 1.5.22
+
+
+8. VENDOR
+
+Joomla! Developer Team
+http://www.joomla.org
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+2010-10-06  : Notified Joomla! Security Strike Team
+2010-11-01  : Vulnerability disclosed
+2010-11-05  : Patched version (1.5.22) released
+
+
+11. REFERENCES
+
+Vendor Advisory URL:
+http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
+Assigned CVE: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-4166
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-89: http://cwe.mitre.org/data/definitions/89.html
+
+
+#yehg [2010-11-05]
+
+last updated: 2010-12-24
