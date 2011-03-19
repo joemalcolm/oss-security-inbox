@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/3
-Message-ID: <20110801153130.3f1df34a@redhat.com>
-Date: Mon, 1 Aug 2011 15:31:30 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: hplip/foomatic-filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/19/1
+Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A712334A7@GVW0671EXC.americas.hpqcorp.net>
+Date: Sat, 19 Mar 2011 18:45:57 +0000
+From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "aungkhant@...g.net" <aungkhant@...g.net>
+Subject: RE: CVE Request: HP System Management Homepage(SMH) | Open URL Redirection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 28 Jul 2011 11:21:15 +0200 Tomas Hoger wrote:
+Hi,
 
-> > > https://bugzilla.novell.com/show_bug.cgi?id=698451
-> > 
-> > Please use CVE-2011-2697 for this.
+SMH is not FOSS. The CVE assigned to this issue is CVE-2010-1586, and the
+security bulletin is at
+http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?objectID=c0251
+8794 which was published a while back  
+
+Something fell through the cracks and we did not notify the reporter.
+Apologies to Aung Khant.
+
+Thanks,
+Mark Menkhus
+Hewlett Packard Software Security Response Team
+> -----Original Message-----
+> From: Mike O'Connor [mailto:mjo@...o.mi.org]
+> Sent: Friday, March 18, 2011 1:05 PM
+> To: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] CVE Request: HP System Management
+> Homepage(SMH) | Open URL Redirection
 > 
-> According to SUSE bug, there are two different implementations of the
-> filter - one in perl and one in c - in different foomatic versions.
-> Both are affected by the same kind of problem, even though they don't
-> share vulnerable code.  Is one CVE sufficient here, or is Mitre likely
-> to split and assign another when this is processed? Steven?
+> :Discovered by
+> :Aung Khant (aungkhant<@>yehg.net)
+> :YGN Ethical Hacker Group, Myanmar
+> :http://yehg.net/
+> :
+> :Product:
+> :HP System Management Homepage
+> 
+> Is this open source software?
+> 
+> --
+>  Michael J. O'Connor
+> mjo@...o.mi.org
+>  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==-
+> -==--=
+> "Nothing in fine print is ever good news.                        -Andy
+> Rooney
 
-For posterity: there are 2 CVEs now - CVE-2011-2697 for perl-based
-filter in foomatic 3.x, and CVE-2011-2964 for C-based filter in
-foomatic 4.x.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
