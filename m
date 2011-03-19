@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/3
-Message-ID: <20111208191547.GQ12087@dhcp-25-225.brq.redhat.com>
-Date: Thu, 8 Dec 2011 20:15:48 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: send(m)msg: user pointer dereferences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/19/1
+Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A712334A7@GVW0671EXC.americas.hpqcorp.net>
+Date: Sat, 19 Mar 2011 18:45:57 +0000
+From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "aungkhant@...g.net" <aungkhant@...g.net>
+Subject: RE: CVE Request: HP System Management Homepage(SMH) | Open URL Redirection
 Content-Type: text/plain; charset=utf-8
 
-Dereferencing a user pointer directly from kernel-space without going
-through the copy_from_user family of functions is a bad idea. Two of
-such usages can be found in the sendmsg code path called from
-sendmmsg, added by upstream commit
-c71d8ebe7a4496fb7231151cb70a6baa0cb56f9a. Usages are performed through
-memcmp() and memcpy() directly. 
+Hi,
 
-Upstream commit:
-bc909d9ddbf7778371e36a651d6e4194b1cc7d4c
+SMH is not FOSS. The CVE assigned to this issue is CVE-2010-1586, and the
+security bulletin is at
+http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?objectID=c0251
+8794 which was published a while back  
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=761646
+Something fell through the cracks and we did not notify the reporter.
+Apologies to Aung Khant.
 
 Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Mark Menkhus
+Hewlett Packard Software Security Response Team
+> -----Original Message-----
+> From: Mike O'Connor [mailto:mjo@...o.mi.org]
+> Sent: Friday, March 18, 2011 1:05 PM
+> To: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] CVE Request: HP System Management
+> Homepage(SMH) | Open URL Redirection
+> 
+> :Discovered by
+> :Aung Khant (aungkhant<@>yehg.net)
+> :YGN Ethical Hacker Group, Myanmar
+> :http://yehg.net/
+> :
+> :Product:
+> :HP System Management Homepage
+> 
+> Is this open source software?
+> 
+> --
+>  Michael J. O'Connor
+> mjo@...o.mi.org
+>  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==-
+> -==--=
+> "Nothing in fine print is ever good news.                        -Andy
+> Rooney
+
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
