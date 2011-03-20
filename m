@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/4
-Message-ID: <20110724145033.GA18483@blizzard>
-Date: Sun, 24 Jul 2011 16:50:33 +0200
-From: Lukas Fleischer <cgit@...ptocrack.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/2
+Message-ID: <20110320134340.GA10106@albatros>
+Date: Sun, 20 Mar 2011 16:43:40 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 24, 2011 at 03:56:12PM +0200, Jan Lieskovsky wrote:
-> 
-> Hi Lukas,
-> 
->   thank you for this correction.
-> 
-> On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
-> >On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
-> >>Hello Josh, Steve, vendors,
-> >>
-> >>   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
-> >>web interface for Git, displayed the file name in the rename hint. A
-> >>remote attacker could provide a specially-crafted web page, which once
-> >>visited by an authenticated Cgit user, with push access to the
-> >>repository, would lead to arbitrary web script or HTML code execution.
-> >
-> >I think you are a tad off, here. The vulnerability I discovered actually
-> >is only exploitable *by* a user with push access as it requires to push
-> >a commit that renames any file to a file with a malicious file name.
-> 
-> Have updated issue description in:
-> https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
-> 
-> Hoping of it to sound better now.
+Steven,
 
-Better now. This is how I'd phrase it:
+On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
+> Thanks for the list. I don't have enough CVE ids for this, I've grouped
+> them by type and version for MITRE to assign IDs.
 
-----
-A cross-site scripting (XSS) vulnerability was found in cgit, a fast web
-interface for Git, allowing a remote attacker with push access to a
-repository to inject arbitrary HTML code. The new file name in rename
-hints is not escaped and can be exploited by renaming some file to a
-file with specially-crafted file name, thus leading to a permanent XSS.
-----
+Any update on this?
 
-By the way, this is already fixed in current stable [1] (just because
-nobody mentioned it yet).
 
-[1] http://hjemli.net/git/cgit/commit/?id=bebe89d7
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
