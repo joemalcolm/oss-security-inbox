@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/7
-Message-ID: <1785682857.1261431.1316024738643.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:25:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/4
+Message-ID: <AANLkTik1O_p5NSOnfwLAY50k06CWt+xx8GzkuuY0wvR0@mail.gmail.com>
+Date: Sun, 20 Mar 2011 15:40:27 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cbarratt@...rs.sourceforge.net, cve-assign@...re.org
-Subject: Re: CVE Request: BackupPC 3.2.1 fixes cross site scripting
+Subject: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3361 for this.
+I sent in a patch [1] resolving two issues in ROSE:
 
-Thanks.
+"When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
+for a remote host to provide more digipeaters than expected, resulting
+in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
+overflows, and abort facilities parsing on failure.
 
--- 
-    JB
+Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
+length of less than 10, resulting in an underflow in a memcpy size,
+causing a kernel panic due to massive heap corruption.  A length of
+greater than 20 results in a stack overflow of the callsign array.
+Abort facilities parsing on these invalid length values."
 
------ Original Message -----
-> Hi,
-> 
-> BackupPC 3.2.1 was released back in April and fixed an XSS problem:
-> 
-> http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
-> 
-> This is upstream's patch:
-> 
-> http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
-> 
-> The same code is present at least since BackupPC 3.1.0, which is the
-> oldest version we support. It seems no CVE id has been issued to date.
-> Can
-> a CVE id please be assigned?
-> 
-> 
-> thanks,
-> Thijs
+These issues may both result in code execution.  They may be triggered
+by a remote attacker if the victim has a listening ROSE socket, or by
+a local attacker (for privilege escalation) if a ROSE device exists
+(e.g. rose0).
+
+Ben Hutchings followed up with a patch [2] that resolves a number of
+other ROSE issues related to lack of size field validation, some of
+which may also result in heap corruption.
+
+Not sure about the proper CVE breakdown for all these issues, since
+the entire protocol was quite broken.  Perhaps one is enough to cover
+everything.
+
+Regards,
+Dan
+
+[1] http://marc.info/?l=linux-netdev&m=130060344616926
+[2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
