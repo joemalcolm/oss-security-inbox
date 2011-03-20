@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/5
-Message-ID: <1321036033.22556.12.camel@mdlinux>
-Date: Fri, 11 Nov 2011 13:27:13 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/4
+Message-ID: <AANLkTik1O_p5NSOnfwLAY50k06CWt+xx8GzkuuY0wvR0@mail.gmail.com>
+Date: Sun, 20 Mar 2011 15:40:27 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Subject: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
-> On 11/11/11 08:06, Guido Berhoerster wrote:
-> > Replacing the file between the lstat and the open would change
-> > its inode and then be caught by the check before the fchown, no?
-> 
-> Nope.   There is no reason why the same inode should not be reused.
-> 
-> On ext4 (btrfs seems to be different):
-> 
-> $ touch test; ls -i test; rm test; touch test; ls -i test
-> 656078 test
-> 656078 test
-> 
-> jch
+I sent in a patch [1] resolving two issues in ROSE:
 
-How about the attached patch?
+"When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
+for a remote host to provide more digipeaters than expected, resulting
+in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
+overflows, and abort facilities parsing on failure.
 
-Marc.
+Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
+length of less than 10, resulting in an underflow in a memcpy size,
+causing a kernel panic due to massive heap corruption.  A length of
+greater than 20 results in a stack overflow of the callsign array.
+Abort facilities parsing on these invalid length values."
 
+These issues may both result in code execution.  They may be triggered
+by a remote attacker if the victim has a listening ROSE socket, or by
+a local attacker (for privilege escalation) if a ROSE device exists
+(e.g. rose0).
 
+Ben Hutchings followed up with a patch [2] that resolves a number of
+other ROSE issues related to lack of size field validation, some of
+which may also result in heap corruption.
 
+Not sure about the proper CVE breakdown for all these issues, since
+the entire protocol was quite broken.  Perhaps one is enough to cover
+everything.
 
-View attachment "04_CVE-2011-4105.patch" of type "text/x-patch" (1512 bytes)
+Regards,
+Dan
+
+[1] http://marc.info/?l=linux-netdev&m=130060344616926
+[2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
