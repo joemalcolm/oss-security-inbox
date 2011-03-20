@@ -1,17 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/2
-Message-ID: <4D98B090.1050709@gmail.com>
-Date: Sun, 03 Apr 2011 20:38:24 +0300
-From: AK <platsakos@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/5
+Message-ID: <AANLkTi==6UuJeuCUYeTY_vC+vFM4baMko0p4m+8+zncT@mail.gmail.com>
+Date: Sun, 20 Mar 2011 15:45:25 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Vasiliy Kulikov <segoon@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I don't mean to create unnecessary work, but have you actually
+confirmed that exposing each of these files as world-writable actually
+allows a user to cross privilege boundaries?  It seems to me that
+while it's bad practice to create these interfaces as world-writable
+and should be fixed regardless, unless being able to write to one of
+these interfaces actually allows a user to do something he shouldn't
+be able to, it's not a security bug by itself.  For example, I've
+noticed interfaces that are created with world-writable file
+permissions that don't actually do anything useful when you write to
+them.
 
-Please subscribe me to the new list. I was a vendor-sec subscriber.
+Regards,
+Dan
 
-Thanks,
-
-
-Download attachment "0x10411D84.asc" of type "application/pgp-keys" (1724 bytes)
+On Sun, Mar 20, 2011 at 9:43 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> Steven,
+>
+> On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
+>> Thanks for the list. I don't have enough CVE ids for this, I've grouped
+>> them by type and version for MITRE to assign IDs.
+>
+> Any update on this?
+>
+>
+> Thanks,
+>
+> --
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing environments
+>
