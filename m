@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/2
-Message-ID: <4EE30776.9040301@redhat.com>
-Date: Sat, 10 Dec 2011 00:17:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/2
+Message-ID: <20110320134340.GA10106@albatros>
+Date: Sun, 20 Mar 2011 16:43:40 +0300
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Mark Doliner <mark@...gant.net>
-Subject: Re: CVE request: Pidgin crash
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-On 12/09/2011 07:08 PM, Mark Doliner wrote:
-> Hi!  Would it be possible to issue a CVE for a newish crash in Pidgin?
->  This is a remotely-triggerable crash in the oscar protocol (used by
-> the AIM and ICQ plugins) when handling incoming buddy list-related
-> SNACs.  I do not believe remote-code execution is possible.  It was
-> discovered by Evgeny Boger and reported on our public issue tracker at
-> http://developer.pidgin.im/ticket/14682  I do not believe a CVE exists
-> for this yet.
->
-> The Pidgin project will be releasing version 2.10.1 tomorrow and it
-> will include a fix for this issue.
->
-> Thanks (and sorry for sending this at the beginning of your weekends!),
-> Mark
-What is "weekends"? =)
+Steven,
 
-Please use CVE-2011-4601 for this issue.
+On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
+> Thanks for the list. I don't have enough CVE ids for this, I've grouped
+> them by type and version for MITRE to assign IDs.
+
+Any update on this?
+
+
+Thanks,
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
