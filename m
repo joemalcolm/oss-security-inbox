@@ -1,22 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/10
-Message-ID: <20110105215457.GL15891@redhat.com>
-Date: Wed, 5 Jan 2011 14:54:57 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/3
+Message-ID: <AANLkTi=kEpzBU4YCVj+vMGrj4tdf3KFA8uGZaQO3zYU9@mail.gmail.com>
+Date: Sun, 20 Mar 2011 15:26:53 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: patch directory traversal flaw
+Subject: CVE request: kernel: heap corruption in IrDA
 Content-Type: text/plain; charset=utf-8
 
-We got a heads up on a directory traversal flaw in patch.  I don't think
-a CVE name has been assigned to it; could we get one?  It allows for the
-creation of arbitrary files in unexpected places due to the use of '..'.
+When providing an invalid IrDA nickname for an IrNET peer, a local
+attacker can cause a kernel panic due to an underflow in a memcpy()
+size calculation or cause a controllable heap overflow that may lead
+to privilege escalation.  Write access to the /dev/irnet device file
+is required to trigger the vulnerability.
 
-References:
+Reference:
+http://marc.info/?l=linux-netdev&m=130060169116047&w=2
 
-https://bugzilla.redhat.com/show_bug.cgi?id=667529
-http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Regards,
+Dan
