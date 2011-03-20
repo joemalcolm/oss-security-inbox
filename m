@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/15
-Message-ID: <20110706224848.GA3766@localhost>
-Date: Thu, 7 Jul 2011 00:48:48 +0200
-From: Markus Friedl <mfriedl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/1
+Message-ID: <alpine.DEB.1.10.1103201427440.16909@eru.sfritsch.de>
+Date: Sun, 20 Mar 2011 14:37:09 +0100 (CET)
+From: Stefan Fritsch <sf@...itsch.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
+cc: sgunderson@...foot.com, team@...urity.debian.org
+Subject: CVE request: MPM-ITK module for Apache HTTPD
 Content-Type: text/plain; charset=utf-8
 
-Yes, it's last years libopie bug CVE-2010-1938, even
-if the exploit author does not think so.
+Hi,
 
-http://twitter.com/msfriedl/status/87114829789278208
-http://twitter.com/msfriedl/status/87910449634476033
+please assign a CVE id for this issue:
 
-On Mon, Jul 04, 2011 at 03:07:45PM +0000, Solar Designer wrote:
-> On Mon, Jul 04, 2011 at 09:24:45PM -0700, Colin Percival wrote:
-> > I haven't had time to investigate, in part because I don't have any systems
-> > running that ancient openssh any more.  I'm interested to hear if anyone has
-> > tracked down exactly where the bug was, though.
-> 
-> Thanks for your reply.
-> 
-> Since I also have other uses for my time, would anyone else investigate,
-> please?  I'd appreciate it.  Perhaps install FreeBSD 4.x into a VM.
-> Sounds like fun for someone who has time.
-> 
-> I don't think the bug is in OpenSSH per se, nor in FreeBSD 4's PAM (my
-> understanding is that it was cut-down Linux-PAM at the time, which was
-> replaced with OpenPAM in 5.x), nor in pam_opie.  libopie sounds more
-> plausible.  But I could be wrong.
-> 
-> Alexander
+In certain configurations, the MPM-ITK module for Apache HTTPD serves a 
+request as root user instead of the run user configured in the HTTPD 
+configuration:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
+
+Cheers,
+Stefan
