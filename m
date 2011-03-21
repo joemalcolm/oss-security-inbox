@@ -1,50 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/3
-Message-ID: <4EFAAAE9.3030907@redhat.com>
-Date: Tue, 27 Dec 2011 22:36:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/1
+Message-ID: <4D86D588.8020302@redhat.com>
+Date: Mon, 21 Mar 2011 12:35:20 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eteo@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+CC: Vasiliy Kulikov <segoon@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: netfilter & econet infoleaks
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 02:53 PM, Eugene Teo wrote:
->>> 2: /proc/$PID/{sched,schedstat} information leak
->>> Vasiliy Kulikov of OpenWall posted a demo exploit.
->>> http://openwall.com/lists/oss-security/2011/11/05/3
->>>
->>> AFAICS no CVE ID was assigned to this?
->> I believe we are not assigning CVE's for these types of proc related
->> issues, some discussion was had:
->>
->> https://lkml.org/lkml/2011/2/7/368
->>
->> http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
->>
->> but I'm not sure what the outcome is. CC'ing Eugene Teo.
-===========
-> IIRC, it's an issue but there's no resolution as existing code may break.
+> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+> copied from userspace.  Fields of these structs that are
+> zero-terminated strings are not checked.  When they are used as argument
+> to a format string containing "%s" in request_module(), some sensitive
+> information is leaked to userspace via argument of spawned modprobe
+> process.
 >
-> There are also,
-> /proc/{interrupts, stat}
-> https://lkml.org/lkml/2011/11/7/340
-Please use CVE-2011-4915 for this issue.
->
-> /dev/pts/, /dev/tty*
-> https://lkml.org/lkml/2011/11/7/355
-Please use CVE-2011-4916 for this issue.
+> The first bug was introduced before the git epoch;  the second is
+> introduced by 6b7d31fc (v2.6.15-rc1);  the third is introduced by
+> 6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+> CAP_NET_ADMIN."
+> http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
 
+[PATCH] ipv4: netfilter: arp_tables: fix infoleak to userspace
+CVE-2011-1170
 
+> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+> copied from userspace.  Fields of these structs that are
+> zero-terminated strings are not checked.  When they are used as argument
+> to a format string containing "%s" in request_module(), some sensitive
+> information is leaked to userspace via argument of spawned modprobe
+> process.
 >
-> I have not checked the status of these issues. Vasiliy, kindly shed some
-> light.
->
-> Happy holidays.
->
-> Eugene
+> The first and the third bugs were introduced before the git epoch; the
+> second was introduced in 2722971c (v2.6.17-rc1).  To trigger the bug
+> one should have CAP_NET_ADMIN."
+> http://marc.info/?l=linux-kernel&m=129978077609894&w=2
 
+[PATCH] ipv4: netfilter: ip_tables: fix infoleak to userspace
+CVE-2011-1171
 
+> "'buffer' string is copied from userspace.  It is not checked whether it is
+> zero terminated.  This may lead to overflow inside of simple_strtoul().
+> Changli Gao suggested to copy not more than user supplied 'size' bytes.
+>
+> It was introduced before the git epoch.  Files "ipt_CLUSTERIP/*" are
+> root writable only by default, however, on some setups permissions might be
+> relaxed to e.g. network admin user."
+> http://marc.info/?l=netfilter&m=129978077509888&w=2
+> http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
+
+I'm reluctant to assign a CVE name for this one. The default perms for 
+this is S_IWUSR|S_IRUSR. I will let Steve decide for this one.
+
+> "Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
+> copied from userspace.  Fields of these structs that are
+> zero-terminated strings are not checked.  When they are used as argument
+> to a format string containing "%s" in request_module(), some sensitive
+> information is leaked to userspace via argument of spawned modprobe
+> process.
+>
+> The first bug was introduced before the git epoch;  the second was
+> introduced in 3bc3fe5e (v2.6.25-rc1);  the third is introduced by
+> 6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+> CAP_NET_ADMIN."
+> http://marc.info/?l=linux-kernel&m=129978086410061&w=2
+
+[PATCH] ipv6: netfilter: ip6_tables: fix infoleak to userspace
+CVE-2011-1172
+
+> "struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
+> x86_64.  These bytes are not initialized in the variable 'ah' before
+> sending 'ah' to the network.  This leads to 4 bytes kernel stack
+> infoleak.
+>
+> This bug was introduced before the git epoch."
+> http://marc.info/?l=linux-netdev&m=130036203528021&w=2
+
+[PATCH] econet: 4 byte infoleak to the network
+CVE-2011-1173
+
+Thanks, Eugene
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
