@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/4
-Message-ID: <4EA012AF.2060608@redhat.com>
-Date: Thu, 20 Oct 2011 14:23:11 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Florian Weimer <fw@...eb.enyo.de>
-CC: oss-security@...ts.openwall.com, Juraj Somorovsky <juraj.somorovsky@....de>
-Subject: Re: PR attack against XML Encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/3
+Message-ID: <4D86DB49.4010009@redhat.com>
+Date: Mon, 21 Mar 2011 12:59:53 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: heap corruption in IrDA
 Content-Type: text/plain; charset=utf-8
 
-Hi Florian,
-
-   check with Juraj Somorovsky of the Ruhr University Bochum
-for further details on this flaw.
-
-Btw., the CVE identifier of CVE-2011-1096 has been already assigned
-to this issue.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 10/20/2011 12:58 PM, Florian Weimer wrote:
-> A German university has released a press release, alleging a
-> vulnerability in the W3C XML Encryption standard.  Apparently, error
-> reporting from existing implementations can be used as an oracle to
-> recover information from messages encrypted in CBC mode.
+On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
+> When providing an invalid IrDA nickname for an IrNET peer, a local
+> attacker can cause a kernel panic due to an underflow in a memcpy()
+> size calculation or cause a controllable heap overflow that may lead
+> to privilege escalation.  Write access to the /dev/irnet device file
+> is required to trigger the vulnerability.
 >
-> Details have not been published, as far as I know.  Does anybody know
-> more?
+> Reference:
+> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
 
+The default permissions for /dev/irnet is root-read/write only. In the 
+past I have ignored such issues that can only be triggered by root, even 
+though the permissions can be changed. I wouldn't assign a CVE name for 
+this. CC'ed Steve.
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
