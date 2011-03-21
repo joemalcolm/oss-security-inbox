@@ -1,41 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/9
-Message-ID: <1300272457.17730.19.camel@macbook.infradead.org>
-Date: Wed, 16 Mar 2011 10:47:37 +0000
-From: David Woodhouse <dwmw2@...radead.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, David King <amigadave@...gadave.com>,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/3
+Message-ID: <4D86DB49.4010009@redhat.com>
+Date: Mon, 21 Mar 2011 12:59:53 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: heap corruption in IrDA
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2011-03-15 at 17:10 -0400, Josh Bressers wrote:
-> 
-> Issue #2
-> 
-> Vino can open ports via uPnP without alerting the user.
-> https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> Use CVE-2011-1165 
+On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
+> When providing an invalid IrDA nickname for an IrNET peer, a local
+> attacker can cause a kernel panic due to an underflow in a memcpy()
+> size calculation or cause a controllable heap overflow that may lead
+> to privilege escalation.  Write access to the /dev/irnet device file
+> is required to trigger the vulnerability.
+>
+> Reference:
+> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
 
-I strongly disagree that this is CVE-worthy, or even a bug.
+The default permissions for /dev/irnet is root-read/write only. In the 
+past I have ignored such issues that can only be triggered by root, even 
+though the permissions can be changed. I wouldn't assign a CVE name for 
+this. CC'ed Steve.
 
-That's what uPnP is *for*.
-
-Opening a port with uPnP, in a NAT-afflicted situation, is identical to
-binding to and listening on INADDR_ANY when you have real network
-connectivity. It's the moral equivalent to automatically using SOCKS to
-make outbound connections, if you're afflicted with a network that needs
-that.
-
-There *is* an option to disable this feature, if the user really wants
-to. And of course it should be clearly indicated that the service is
-available to the public; but *that* is what CVE-2011-1164 is for.
-
-There is also some merit in arguing that connections from outside the
-local network should not be permitted without a password. But again,
-there's nothing specific to uPnP in that.
-
+Thanks, Eugene
 -- 
-David Woodhouse                            Open Source Technology Centre
-David.Woodhouse@...el.com                              Intel Corporation
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
