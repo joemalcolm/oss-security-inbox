@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/2
-Message-ID: <4EE0C595.5020000@kde.org>
-Date: Thu, 08 Dec 2011 09:11:33 -0500
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/10
+Message-Id: <201103211255.25451.sgrubb@redhat.com>
+Date: Mon, 21 Mar 2011 12:55:25 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Disputing CVE-2011-4122
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
 Content-Type: text/plain; charset=utf-8
 
-On 12/07/2011 11:26 AM, Kurt Seifried wrote:
->> One could assume that kcheckpass should do the validation. However, the
->> PAM documentation makes no mention of what a service name is supposed to
->> look like, and consequently it must be treated as opaque by the
->> application code. Therefore all validation must be expected to be done
->> by the library, and failure to do so must be seen as a bug in the
->> library exclusively.
+On Monday, March 21, 2011 12:02:40 pm Steven M. Christey wrote:
+> Doesn't memory "belong" to one process (assuming it's not shared), even in 
+> heap management?  So another user couldn't access the memory while it's 
+> used in the process, and (I guess?) if it's free'd, it's still only 
+> accessible to that process (or, alternately, is the region cleared before 
+> another program can access it?)  If this is the case, then the question 
+> becomes what happens to the memory when the vulnerable process exits - is 
+> the memory cleared by the kernel, or is it otherwise left alone?  What 
+> happens if the memory is cached on disk?
 > 
-> Can you provide a link to the documentation?
+> I did extremely limited experiments in this area a couple years ago, and 
+> for the limited set of OSes I tried this on (no idea what libraries), I 
+> always got "clean" memory when I ran initial malloc's from a fresh process 
+> (later malloc's could contain contents of memory that was previously freed 
+> in the same session).  That doesn't prove anything, of course...
 
-http://pubs.opengroup.org/onlinepubs/8329799/pam_start.htm
+Any OS that passes common criteria (Linux for example) has to meet certain 
+requirements for object reuse. This is FDP_RIP in case anyone is interested. The 
+granularity is at the process level. The clearing action is required at allocation 
+rather than release of the object. Calls to brk() and sbrk() should show cleared 
+memory when address space is increased.
 
-Thanks,
-Jeff
+So, if it were found that there is an unintended interprocess memory leak, that is a 
+big problem. Within one process, there are no common criteria claims.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
+-Steve
