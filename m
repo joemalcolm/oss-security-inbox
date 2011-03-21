@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/11
-Message-ID: <2135733167.299402.1298926534401.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 15:55:34 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/13
+Message-ID: <957492588.118513.1300739078366.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Mar 2011 16:24:38 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: cve request: eglibc memory corruption
+Cc: sgunderson@...foot.com, team@...urity.debian.org
+Subject: Re: CVE request: MPM-ITK module for Apache HTTPD
 Content-Type: text/plain; charset=utf-8
+
+
 
 ----- Original Message -----
 > Hi,
 > 
-> An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
-> it.
+> please assign a CVE id for this issue:
 > 
-> Thanks,
-> Mike
+> In certain configurations, the MPM-ITK module for Apache HTTPD serves
+> a
+> request as root user instead of the run user configured in the HTTPD
+> configuration:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
 > 
-> [0] http://seclists.org/fulldisclosure/2011/Feb/635
-> [1] http://bugs.debian.org/615120
 
-It should be noted this also affects glibc.
-Does anyone know when this was fixed in glibc by chance? The bug has no details.
-
-Use CVE-2011-1071
+Please use CVE-2011-1176
 
 Thanks.
 
