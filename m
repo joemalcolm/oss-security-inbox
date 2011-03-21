@@ -1,53 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/6
-Message-Id: <20110403205213.08090070.michael.s.gilbert@gmail.com>
-Date: Sun, 3 Apr 2011 20:52:13 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/15
+Message-ID: <4D87CF23.3010709@xiscosoft.es>
+Date: Mon, 21 Mar 2011 23:20:19 +0100
+From: klondike <klondike@...cosoft.es>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Security advisory: local DOS attack affecting non updated PaX patched kernels.
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
+Linux Security Advisory
+=======================
 
-> On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
-> > Benji's trolling does raise a couple real issues.  The private keys and
-> > passphrases of those responding here have now become highly lucrative
-> > targets for attackers.  Hence, everyone on this new list needs to use
-> > good practices to keep their keys, hard drives, and computers safe.
-> > There should probably be some common guidelines for key safety for all
-> > participants.
-> 
-> Right.  We're likely to specify some minimum requirements.  For example,
-> Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
-> when we use the list for real.  Yet this is an improvement over the
-> plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
-> private keys on a server won't be allowed (but we'd have to trust
-> members on that).
-> 
-> > Perhaps all discussions should be published in the open
-> > something like 2 months after the initial posting?  That would be a
-> > kind of maximum private coordination period.
-> 
-> Yes, we may do this.  Technically, an archive may be implemented as yet
-> another subscriber with its public key, where the private key
-> counterpart is not stored on any server and has a passphrase on it.
-> Thus, a possible compromise of the list server won't reveal past
-> messages (archived before the compromise, but not yet made public).
-> 
-> Pushing the archive public will then be a manual process, but that's OK
-> if it's only done once a month (omitting the last month's worth of
-> messages).  In fact, a posting to oss-security will need to be made
-> whenever the public archive is updated.
+Discoverer: Francisco Blas Izquierdo Riera (klondike)
+Kudos: The PaX Team for his help tracking and fixing the issue.
+Description: Infinite loop when looking for free memory space when doing an
+             mmap after a grows down mmap in PaX patched kernels.
+CVE-id: A CVE id was requested to MITRE one day before exposing this
+advisory,
+        we are not Microsoft, and we can't afford waiting one more month
+on an
+        exploitable issue that has been out there for so long.
+Latest version: the latest version of this Advisory will be on
+                http://klondike.xiscosoft.es/security/lsa1.txt
 
-Wouldn't the easiest solution be to have a cron job check that the age
-of the message is greater than X days, decrypt it, and mail it to a
-different archive/public list?
+Abstract
+--------
+We have discovered a locally exploitable DOS vulnerability which can be
+triggered by programs doing an mmap after a MAP_GROWSDOWN mmap.
 
-I think automatic publishing is the only way this is going to work.
-No one is going to want to manually do the work.  Plus an automatically
-enforced maximum time frame will force issues to get fixed.  Automation
-also means that nothing is being veiled.  Computers don't discriminate,
-humans do.
+The problem is triggered by a bad bounds check in
+arch_get_unmapped_area_topdown
+that will make the loop to run forever without releasing the VM semaphore
+eventually hanging up the whole system.
 
-Best wishes,
-Mike
+Summing it up, this vulnerability somehow is like a Zombie it is slow but it
+will get you in the end, as said by blueness, since it will just make the VM
+system unusable and keep locking processes as they try to access it while
+wasting CPU in the infinite loop.
+
+Solved in
+---------
+This has been solved in the latest set of PaX patches.
+
+Affected versions
+-----------------
+pax-linux-2.6.37.4-test14.patch
+pax-linux-2.6.38-test3.patch
+pax-linux-2.6.32.33-test79.patch
+
+And basically any one including the PaX Team new heap/stack gap check code
+(published on summer).
+
+Solution
+--------
+Since the bug has been around for some time this is not actually made by
+most
+normal applications (the one triggering it and making us realize of the
+problem
+was pin http://www.pintool.org/) so, at most, this bug can be avoided
+disabling
+arbitrary code execution to untrusted users (as made by TPE for example).
+
+Also a kernel with full preemption will preempt the process and make the
+rest of
+the system work with increased load. Care must be taken, though, since
+killing
+the process won't make the infinite loop end (as the signal won't ever
+get to
+it).
+
+PoC
+---
+A PoC will be released on an update to this advisory once enough time
+has passed
+for the patches to be installed by the sysadmins, this will be at least one
+week.
+
+Salutations
+-----------
+Salutations and Kudos go specially to the PaX Team for all his work in
+finding
+and making this problem and for the PoC.
+
+Salutations go too to Rubén González García, Julio Sahuquillo Borrás and Per
+Stenström as they are responsible of me using pin and detecting this issue.
+
+Salutations also go for all the people currently working with me in the
+Gentoo
+Hardened project and to all those in the project who made me use Gentoo
+Hardened. Also to Mr. X from daboweb since he was the initiator of
+everything :D
+
+Salutations also go for whats of the Spaheads team and to the people at
+Sofistic
+for encouraging me to be a security researcher.
+
+Also salutations to spender from Grsecurity for the excellent piece of
+software
+he did.
+
+Finally salutations to Juan Vicente Oltra Gutiérrez for teaching me why
+ethics
+were so important in hacking.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
