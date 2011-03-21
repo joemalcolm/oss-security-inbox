@@ -1,35 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/8
-Message-ID: <4E41B997.5080506@redhat.com>
-Date: Wed, 10 Aug 2011 06:49:59 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/8
+Message-ID: <Pine.GSO.4.64.1103211139070.29617@faron.mitre.org>
+Date: Mon, 21 Mar 2011 12:02:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+Subject: Local memory disclosure (was: libpurple CVE UnRequest)
 Content-Type: text/plain; charset=utf-8
 
-On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> the following two issues also seem to warrant a CVE assignment:
-> 
-> 1. staging: comedi: fix infoleak to userspace
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
-> 
-> (It's a staging driver and I'm unsure whether we have assigned
->  CVE IDs for staging drivers in the past. OTOH, this driver
->  is enabled in the Debian 6.0 kernel)
 
-We don't as code from the staging drivers are usually are substandard
-and usually not supported.
+All,
 
-Btw, can you please mail me a copy of the /boot/config of the most
-recent Debian kernel for my reference?
+Disclosure of "local" memory to another user on the same system could 
+qualify for CVE inclusion, if the memory can contain something sensitive.
 
-> 2. [SCSI] pmcraid: reject negative request size
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+However, I'm not completely clear on how memory management works at this 
+level, and when this behavior becomes a vulnerability.
 
-I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
-the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
-CVE-2011-2906 for this issue.
+Note - I'm only talking about local memory disclosure.  Remote disclosure
+is more clear.
 
-Thanks, Eugene
+Doesn't memory "belong" to one process (assuming it's not shared), even in 
+heap management?  So another user couldn't access the memory while it's 
+used in the process, and (I guess?) if it's free'd, it's still only 
+accessible to that process (or, alternately, is the region cleared before 
+another program can access it?)  If this is the case, then the question 
+becomes what happens to the memory when the vulnerable process exits - is 
+the memory cleared by the kernel, or is it otherwise left alone?  What 
+happens if the memory is cached on disk?
+
+I did extremely limited experiments in this area a couple years ago, and 
+for the limited set of OSes I tried this on (no idea what libraries), I 
+always got "clean" memory when I ran initial malloc's from a fresh process 
+(later malloc's could contain contents of memory that was previously freed 
+in the same session).  That doesn't prove anything, of course...
+
+
+Thanks,
+Steve
+
+
+On Mon, 21 Mar 2011, Jan Lieskovsky wrote:
+
+>
+> Hello vendors,
+>
+> Jan Lieskovsky wrote:
+>> 
+>> Hello Josh, Steve, vendors,
+>>
+>>   the following:
+>>   [1] http://pidgin.im/news/security/?id=50
+>>
+>>   Upstream patch:
+>>   [2] 
+>> http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471 
+>> 
+>> Doesn't seem to have a CVE identifier yet.
+>> 
+>> Could you allocate one?
+>
+> John clarified in a reply to my post:
+>
+>> Jan,
+>> 
+>> FYI, we didn't request one because we believed it did not meet the 
+>> guidelines
+>> for assignment of a CVE identifier.  It's a local-only information 
+>> disclosure
+>> and can't be remotely exploited.
+>> 
+>> John
+>
+> So ignore my earlier post / request.
+>
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>
+>
+>
