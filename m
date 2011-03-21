@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/1
-Message-ID: <4D215E0B.9050703@redhat.com>
-Date: Mon, 03 Jan 2011 10:56:35 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: irda: prevent integer underflow in IRLMP_ENUMDEVICES
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/14
+Message-ID: <20110321214927.GF11269@uio.no>
+Date: Mon, 21 Mar 2011 22:49:27 +0100
+From: "Steinar H. Gunderson" <sgunderson@...foot.com>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, team@...urity.debian.org
+Subject: Re: CVE request: MPM-ITK module for Apache HTTPD
 Content-Type: text/plain; charset=utf-8
 
-On 12/23/2010 08:53 AM, Eugene Teo wrote:
-> From Dan Rosenbugs :>, "If the user-provided len is less than the
-> expected offset, the IRLMP_ENUMDEVICES getsockopt will do a
-> copy_to_user() with a very large size value.  While this isn't be a
-> security issue on x86 because it will get caught by the access_ok()
-> check, it may leak large amounts of kernel heap on other architectures.
->  In any event, this patch fixes it."
+On Mon, Mar 21, 2011 at 04:24:38PM -0400, Josh Bressers wrote:
+>> In certain configurations, the MPM-ITK module for Apache HTTPD serves
+>> a
+>> request as root user instead of the run user configured in the HTTPD
+>> configuration:
+>> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
+> Please use CVE-2011-1176
 
-Assigned CVE-2010-4529 to this one.
+Thanks. Here are the relevant announcements (with patches):
 
+http://lists.err.no/pipermail/mpm-itk/2011-March/000393.html
+http://lists.err.no/pipermail/mpm-itk/2011-March/000394.html
 
+/* Steinar */
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Homepage: http://www.sesse.net/
