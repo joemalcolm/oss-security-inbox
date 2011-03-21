@@ -1,82 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/45
-Message-ID: <20110404185427.GB14209@openwall.com>
-Date: Mon, 4 Apr 2011 22:54:27 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/1
+Message-ID: <4D86D588.8020302@redhat.com>
+Date: Mon, 21 Mar 2011 12:35:20 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Vasiliy Kulikov <segoon@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: netfilter & econet infoleaks
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 07:32:12AM +0100, Benji wrote:
-> Can I not be part of the group that thinks a public signup system for a
-> mailing list that previously had the mail server owned due to the fact it
-> was secret (showing interest in possibly owning users now that emails like
-> mjo@...o.mi.org have been confirmed on the list) for a mailing list that is
-> 'embargoed' when really it shouldn't be.
+> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+> copied from userspace.  Fields of these structs that are
+> zero-terminated strings are not checked.  When they are used as argument
+> to a format string containing "%s" in request_module(), some sensitive
+> information is leaked to userspace via argument of spawned modprobe
+> process.
+>
+> The first bug was introduced before the git epoch;  the second is
+> introduced by 6b7d31fc (v2.6.15-rc1);  the third is introduced by
+> 6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+> CAP_NET_ADMIN."
+> http://marc.info/?l=netfilter-devel&m=129978081009955&w=2
 
-What do you mean by: "a mailing list that is 'embargoed' when really it
-shouldn't be"?  Does this mean that you're actually against the very
-existence of such a list?  I think it is important to know your opinion
-on the main issues when we consider your opinion on the detail.
+[PATCH] ipv4: netfilter: arp_tables: fix infoleak to userspace
+CVE-2011-1170
 
-> >>What is your opinion on making the list's archive public with a delay (when  the corresponding security issues are already public)?
-> 
-> It would be better. In my opinion, delay would be 1-2 days.
+> "Structures ipt_replace, compat_ipt_replace, and xt_get_revision are
+> copied from userspace.  Fields of these structs that are
+> zero-terminated strings are not checked.  When they are used as argument
+> to a format string containing "%s" in request_module(), some sensitive
+> information is leaked to userspace via argument of spawned modprobe
+> process.
+>
+> The first and the third bugs were introduced before the git epoch; the
+> second was introduced in 2722971c (v2.6.17-rc1).  To trigger the bug
+> one should have CAP_NET_ADMIN."
+> http://marc.info/?l=linux-kernel&m=129978077609894&w=2
 
-What use is a delay of 1-2 days for members of such a list?  I mean, it
-is of some use for high severity issues where the vendors would need to
-throw whatever resources they can at resolving the issues ASAP, at
-expense of slowing down work on other tasks (including other security
-related tasks) and likely arriving at and releasing non-final fixes
-(more like workarounds).
+[PATCH] ipv4: netfilter: ip_tables: fix infoleak to userspace
+CVE-2011-1171
 
-However, my proposal, which I am going to try to enforce, is to only
-discuss medium-severity issues on this new list.  I think that an
-embargo period of 1-2 days does not make sense for those; if that's all
-we can afford, we can as well make them public right away.
+> "'buffer' string is copied from userspace.  It is not checked whether it is
+> zero terminated.  This may lead to overflow inside of simple_strtoul().
+> Changli Gao suggested to copy not more than user supplied 'size' bytes.
+>
+> It was introduced before the git epoch.  Files "ipt_CLUSTERIP/*" are
+> root writable only by default, however, on some setups permissions might be
+> relaxed to e.g. network admin user."
+> http://marc.info/?l=netfilter&m=129978077509888&w=2
+> http://marc.info/?l=netfilter-devel&m=130036157327564&w=2
 
-> Vendor-sec
-> (alternatives) should be a last resort in publishing issues, other projects
-> don't get the same "privileges", and have to "make do" with oss-sec. If you
-> really need such help 'co-ordinating' and fixing things, maybe you should
-> have a policy to, release advisory/info first, then have a 'co-ordination'
-> list.
+I'm reluctant to assign a CVE name for this one. The default perms for 
+this is S_IWUSR|S_IRUSR. I will let Steve decide for this one.
 
-No offense intended, but it sounds like you did not give the above much
-thought, or maybe you did not explain it fully.
+> "Structures ip6t_replace, compat_ip6t_replace, and xt_get_revision are
+> copied from userspace.  Fields of these structs that are
+> zero-terminated strings are not checked.  When they are used as argument
+> to a format string containing "%s" in request_module(), some sensitive
+> information is leaked to userspace via argument of spawned modprobe
+> process.
+>
+> The first bug was introduced before the git epoch;  the second was
+> introduced in 3bc3fe5e (v2.6.25-rc1);  the third is introduced by
+> 6b7d31fc (v2.6.15-rc1).  To trigger the bug one should have
+> CAP_NET_ADMIN."
+> http://marc.info/?l=linux-kernel&m=129978086410061&w=2
 
-That said, I agree that a closed list should be a last resort, to be
-used whenever other options are determined to be less appropriate for a
-particular security issue.  Unfortunately, this determination is usually
-made by just one person (whoever brings the issue to the list), so it is
-likely to sometimes be "wrong".
+[PATCH] ipv6: netfilter: ip6_tables: fix infoleak to userspace
+CVE-2011-1172
 
-> >>Do you really think anyone is gaining new information by discovering
-> >>that, say, a member of the security team for a major distro will be on
-> >>this mailing list?  Such information seems pretty obvious to me.
-> 
-> Yes Dan, but now we have private email accounts as well (by people who
-> apparently don't like to use vendor email addresses) that are also signed up
-> to this, allowing targeting and easy identification
+> "struct aunhdr has 4 padding bytes between 'pad' and 'handle' fields on
+> x86_64.  These bytes are not initialized in the variable 'ah' before
+> sending 'ah' to the network.  This leads to 4 bytes kernel stack
+> infoleak.
+>
+> This bug was introduced before the git epoch."
+> http://marc.info/?l=linux-netdev&m=130036203528021&w=2
 
-Yes, we lost a security through obscurity layer here, which was
-arguably nice to have.  I don't have strong feelings either way
-(public subscriber info or not-right-away).
+[PATCH] econet: 4 byte infoleak to the network
+CVE-2011-1173
 
-BTW, most of those same e-mail addresses were already exposed to whoever
-broke into the vendor-sec machine.
-
-> of probably less secure infrastructure.
-
-My guess (based on partial knowledge) is that Mike's personal e-mail
-infrastructure is actually more secure than his employer's.  You have a
-valid point in general, though.
-
-> Excuse my "trolling" if some of this has already been covered, I'm up early
-> (for me) and thus can be slightly unintelligible.
-
-It's OK.  In fact, comments/criticism such as yours is one of the
-reasons why we're handling this discussion in public.  This might enable
-us to arrive at something slightly better "next time".
-
-Alexander
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
