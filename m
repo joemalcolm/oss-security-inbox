@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/02/2
-Message-ID: <1296619942.3497.18.camel@localhost>
-Date: Tue, 01 Feb 2011 23:12:22 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/7
+Message-ID: <4D8767D2.7090606@redhat.com>
+Date: Mon, 21 Mar 2011 15:59:30 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: fuse
+CC: "Steven M. Christey" <coley@...us.mitre.org>, John Bailey <rekkanoryo@...kanoryo.org>
+Subject: Re: CVE UnRequest (minor) -- Pidgin / libpurple -- Cipher API information disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-A few more fixes have made their way to FUSE to prevent TOCTTOU symlink
-attacks. An unprivileged user was able to unmount arbitrary mounts:
+Hello vendors,
 
-http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
-http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
-http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
+Jan Lieskovsky wrote:
+> 
+> Hello Josh, Steve, vendors,
+> 
+>   the following:
+>   [1] http://pidgin.im/news/security/?id=50
+> 
+>   Upstream patch:
+>   [2] 
+> http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471 
+> 
+> 
+> Doesn't seem to have a CVE identifier yet.
+> 
+> Could you allocate one?
 
-Could we please get one or more CVE numbers for them?
+John clarified in a reply to my post:
 
-Thanks,
+> Jan,
+> 
+> FYI, we didn't request one because we believed it did not meet the guidelines
+> for assignment of a CVE identifier.  It's a local-only information disclosure
+> and can't be remotely exploited.
+> 
+> John
 
-Marc.
+So ignore my earlier post / request.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
 
