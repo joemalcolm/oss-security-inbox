@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/5
-Message-ID: <4E257B68.6040106@redhat.com>
-Date: Tue, 19 Jul 2011 14:41:12 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>
-Subject: CVE Request -- Wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/13
+Message-ID: <957492588.118513.1300739078366.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Mar 2011 16:24:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: sgunderson@...foot.com, team@...urity.debian.org
+Subject: Re: CVE request: MPM-ITK module for Apache HTTPD
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
 
-   an infinite loop was found in the way ANSI A Interface (IS-634/IOS)
-dissector of the Wireshark network traffic analyzer processed certain
-ANSI A MAP capture files. If Wireshark read a malformed packet off a
-network or opened a malicious packet capture file, it could lead to 
-denial of service (Wireshark hang).
 
-Upstream bug:
-[1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6044
+----- Original Message -----
+> Hi,
+> 
+> please assign a CVE id for this issue:
+> 
+> In certain configurations, the MPM-ITK module for Apache HTTPD serves
+> a
+> request as root user instead of the run user configured in the HTTPD
+> configuration:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
+> 
 
-Public PoC:
-[2]
-http://www.wireshark.org/download/automated/captures/fuzz-2011-06-20-22762.pcap
+Please use CVE-2011-1176
 
-Relevant upstream patch:
-[3] http://anonsvn.wireshark.org/viewvc?view=revision&revision=37930
+Thanks.
 
-References:
-[4] http://www.wireshark.org/security/
-[5] http://www.wireshark.org/security/wnpa-sec-2011-11.html
-[6] http://www.wireshark.org/security/wnpa-sec-2011-10.html
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=723215
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
