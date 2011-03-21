@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/10
-Message-ID: <CAF6rxg=cdFBEpXvRQ5MjJBEdKoxMG0YhMz_o89u5k=ar8H77Qg@mail.gmail.com>
-Date: Mon, 24 Oct 2011 15:12:53 -0400
-From: Eitan Adler <eadler@...ebsd.org>
-To: oss-security@...ts.openwall.com
-Cc: secteam@...ebsd.org, security@...ian.org
-Subject: Re: CVE Request: FreeBSD kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/6
+Message-ID: <4D875F90.7020905@redhat.com>
+Date: Mon, 21 Mar 2011 15:24:16 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, John Bailey <rekkanoryo@...kanoryo.org>
+Subject: CVE Request (minor) -- Pidgin / libpurple -- Cipher API information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2011 at 12:26 PM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
->> >    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
-> This has been assigned CVE-2011-4062 by MITRE in the mean time.
 
-Something is odd with the MITRE CVE:
+Hello Josh, Steve, vendors,
 
-According to http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-4062
-the bug is in the Linux emulation code. However the bug is really in
-the bind(2) system call. There was a different bug in the emulation
-code exposed by fixing the bind vulnerability but the system is
-vulnerable even without linux emulation turned on.
+   the following:
+   [1] http://pidgin.im/news/security/?id=50
 
-Additionally Debian appears to have copied the incorrect data from the
-MITRE cve (http://www.debian.org/security/2011/dsa-2325)/
+   Upstream patch:
+   [2] http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471
+
+Doesn't seem to have a CVE identifier yet.
+
+Could you allocate one?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
-
--- 
-Eitan Adler
-Ports committer
-X11, Bugbusting teams
