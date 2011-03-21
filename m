@@ -1,40 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/5
-Message-ID: <1305039325.4942.14.camel@oban>
-Date: Tue, 10 May 2011 16:55:25 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/11
+Message-ID: <474027225.118091.1300738565939.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Mar 2011 16:16:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org
-Subject: CVE request: keepalived pid file permissions issue
+Cc: coley <coley@...re.org>
+Subject: Re: Re: CVE request for python-feedparser
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Steve,
 
-it was reported that keepalived (and some other daemons) store their pid
-file with permission 666. A bug was opened for keepalived in Debian,
-could a CVE be assigned to the issue?
+This one will need a 2009 ID.
 
-Bug text was:
+Thanks.
 
-On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
-> Package: keepalived
-> Version: 1.1.12-1
-> Severity: grave
-> Tags: security
-> 
-> Hi,
-> 
-> keepalive writes a public writeable pid file to /var/run
-> 
-> -rw-rw-rw-  1 root     root        5 2011-02-08 13:00 keepalived.pid
-> 
-> Cheers,
-> Martin
-> 
-> 
-> reference: http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
-
-Thanks,
 -- 
-Yves-Alexis
+    JB
 
+----- Original Message -----
+> Please allocate a CVE for a further XSS vulnerability:
+> 
+> http://code.google.com/p/feedparser/issues/detail?id=195
+> 
+> It's an old bug, but I couldn't find any reference of a CVE ID. I'm
+> not
+> subscribed so I'd appreciate a CC.
+> 
+> Thanks,
+> 
+> --
+> Jonathan Wiltshire jmw@...ian.org
+> Debian Developer http://people.debian.org/~jmw
+> 
+> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
