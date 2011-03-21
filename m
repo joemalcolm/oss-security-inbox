@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/25
-Message-ID: <Pine.GSO.4.64.1102231505040.25301@faron.mitre.org>
-Date: Wed, 23 Feb 2011 15:17:32 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/12
+Message-ID: <2113424705.118408.1300738789414.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Mar 2011 16:19:49 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Eugene Teo <eugene@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for Asterisk flaws
 Content-Type: text/plain; charset=utf-8
 
+I found some html copies of those (I don't like pdfs for such purposes).
 
-On Wed, 23 Feb 2011, Steve Grubb wrote:
+----- Original Message -----
+> Two flaws were fixed in Asterisk:
+> 
+> AST-2011-003:
+> http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
+> - resource exhaustion DoS in Asterisk Manager Interface
 
-> However, this doesn't help in the scenario where you have a kiosk or 
-> internet cafe and untrusted people walk up to machines.
+http://downloads.asterisk.org/pub/security/AST-2011-003.html
 
-I used to be reluctant to use this kind of scenario, but times have 
-changed and kiosks/cafes are a rather common environment.  It seems 
-reasonable for a system owner to expect that the simple insertion of a USB 
-stick is not going to interfere with the operation of the host computer. 
-The presence of auto-mounting doesn't seem to require "user-assistance" 
-(i.e. careful social engineering) in the kiosk exploit scenario.  The 
-attacker is the person with physical access trying to DoS the given 
-machine in a less-detectable fashion than the "defenestration exploit," 
-i.e., throwing the target computer out the window for a literal denial of 
-service (crash).
+Use CVE-2011-1174
 
-Now, if you have to social-engineer some admin into running "mount" for 
-you, then maybe that's a little too dependent on admin carelessness to get 
-a CVE (might as well tell them to run "rm -rf" or "download and execute 
-this program").
+> 
+> AST-2011-004:
+> http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
+> - DoS in TCP/TLS server due to NULL ptr deref
 
-These bugs might have a very low impact due to attack complexity, but 
-there is still a reasonable/realistic attack scenario, so technically it 
-can be given a CVE.
+http://downloads.asterisk.org/pub/security/AST-2011-004.html
 
-- Steve
+Use CVE-2011-1175
+
+Thanks.
+
+-- 
+    JB
