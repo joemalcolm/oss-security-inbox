@@ -1,27 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/4
-Message-ID: <4E242D66.7080606@suse.de>
-Date: Mon, 18 Jul 2011 14:56:06 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: dfncert@...-cert.de
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/9
+Message-ID: <1284923594-1300724316-cardhu_decombobulator_blackberry.rim.net-1951094357-@bda2061.bisx.prod.on.blackberry>
+Date: Mon, 21 Mar 2011 16:18:35 +0000
+From: dan.j.rosenberg@...il.com
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection ofworld-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-dfncert@...-cert.de wrote:
-> There is a vulnerability in the recently introduced OCSP feature in
-> FreeRADIUS version 2.1.11.
-> 
-> A patch was proposed to the packet maintainer.
+That's more than enough to convince me.  Thanks Vasiliy.
 
-Would you mind sharing that patch with us?
-
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
-
+Regards,
+Dan
