@@ -1,49 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/14/3
-Message-ID: <20111014081339.GA3598@albatros>
-Date: Fri, 14 Oct 2011 12:13:39 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/11
+Message-ID: <474027225.118091.1300738565939.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 21 Mar 2011 16:16:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+Cc: coley <coley@...re.org>
+Subject: Re: Re: CVE request for python-feedparser
 Content-Type: text/plain; charset=utf-8
 
-Hi Huzaifa,
+Steve,
 
-On Fri, Oct 14, 2011 at 10:15 +0530, Huzaifa Sidhpurwala wrote:
-> I dont think so. From the code i have read so far, here is what
-> seems to happen.
-> 
-> - radvd starts as root
-> - reads the configs
-> - if a username is specified (user=radvd in most cases):
-> 	- if "--singleprocess" is not specified:
-> 		- run privsep_init(): This forks another process which
-> 		  runs as root. So after this point we have two
-> 		  processes both running as root
-> 		- If privsep_init() fails, we have just one process
-> 		  running as root
-> 	- run drop_root_privileges():
-> 		If this succedes, we have two processes one running as
-> 		root and another as radvd user, or if privsep_init()
-> 		failed earlier, we have one process running as radvd
-> 		user.
-> 		If this fails, application quits
-> - If username was not specified radvd continues to run as a single
-> process as root.
-> 
-> 
-> So failure in privsep_init() results in just one process running as
-> radvd user. If it did not fail it would result in one process
-> running as root and another as radvd user.
-> 
-> I dont think this would be a security issue in my opinion.
+This one will need a 2009 ID.
 
-Indeed, if privsep_init() fails the only visible change would be no
-future changes to interface settings.  I was misled by the option name -
-it looks like privsep disabling (opposition to --username), but in
-reality it totally disables privileged operations.
-
-Thanks for spotting it, I think CVE-2011-3603 should be rejected.
+Thanks.
 
 -- 
-Vasiliy
+    JB
+
+----- Original Message -----
+> Please allocate a CVE for a further XSS vulnerability:
+> 
+> http://code.google.com/p/feedparser/issues/detail?id=195
+> 
+> It's an old bug, but I couldn't find any reference of a CVE ID. I'm
+> not
+> subscribed so I'd appreciate a CC.
+> 
+> Thanks,
+> 
+> --
+> Jonathan Wiltshire jmw@...ian.org
+> Debian Developer http://people.debian.org/~jmw
+> 
+> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
