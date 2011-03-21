@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/21
-Message-ID: <1468293795.510191.1307388979417.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 15:36:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/10
+Message-Id: <201103211255.25451.sgrubb@redhat.com>
+Date: Mon, 21 Mar 2011 12:55:25 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request -- Cherokee -- server admin vulnerable to csrf
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Can a CVE be assigned to
-> http://code.google.com/p/cherokee/issues/detail?id=1212 regarding weak
-> admin password generation ?
+On Monday, March 21, 2011 12:02:40 pm Steven M. Christey wrote:
+> Doesn't memory "belong" to one process (assuming it's not shared), even in 
+> heap management?  So another user couldn't access the memory while it's 
+> used in the process, and (I guess?) if it's free'd, it's still only 
+> accessible to that process (or, alternately, is the region cleared before 
+> another program can access it?)  If this is the case, then the question 
+> becomes what happens to the memory when the vulnerable process exits - is 
+> the memory cleared by the kernel, or is it otherwise left alone?  What 
+> happens if the memory is cached on disk?
 > 
+> I did extremely limited experiments in this area a couple years ago, and 
+> for the limited set of OSes I tried this on (no idea what libraries), I 
+> always got "clean" memory when I ran initial malloc's from a fresh process 
+> (later malloc's could contain contents of memory that was previously freed 
+> in the same session).  That doesn't prove anything, of course...
 
-Please use CVE-2011-2190.
+Any OS that passes common criteria (Linux for example) has to meet certain 
+requirements for object reuse. This is FDP_RIP in case anyone is interested. The 
+granularity is at the process level. The clearing action is required at allocation 
+rather than release of the object. Calls to brk() and sbrk() should show cleared 
+memory when address space is increased.
 
-Thanks.
+So, if it were found that there is an unintended interprocess memory leak, that is a 
+big problem. Within one process, there are no common criteria claims.
 
--- 
-    JB
+-Steve
