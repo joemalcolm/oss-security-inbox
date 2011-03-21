@@ -1,52 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/17
-Message-ID: <20110303231601.GA32736@kroah.com>
-Date: Thu, 3 Mar 2011 15:16:01 -0800
-From: Greg KH <greg@...ah.com>
-To: Kees Cook <kees@...ntu.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/2
+Message-ID: <4D86D86C.9060702@redhat.com>
+Date: Mon, 21 Mar 2011 12:47:40 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 03:09:55PM -0800, Kees Cook wrote:
+On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
+> I sent in a patch [1] resolving two issues in ROSE:
+>
+> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
+> for a remote host to provide more digipeaters than expected, resulting
+> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
+> overflows, and abort facilities parsing on failure.
+>
+> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
+> length of less than 10, resulting in an underflow in a memcpy size,
+> causing a kernel panic due to massive heap corruption.  A length of
+> greater than 20 results in a stack overflow of the callsign array.
+> Abort facilities parsing on these invalid length values."
+>
+> These issues may both result in code execution.  They may be triggered
+> by a remote attacker if the victim has a listening ROSE socket, or by
+> a local attacker (for privilege escalation) if a ROSE device exists
+> (e.g. rose0).
+>
+> Ben Hutchings followed up with a patch [2] that resolves a number of
+> other ROSE issues related to lack of size field validation, some of
+> which may also result in heap corruption.
+>
+> Not sure about the proper CVE breakdown for all these issues, since
+> the entire protocol was quite broken.  Perhaps one is enough to cover
+> everything.
 
-<good stuff snipped>
+I am not sure. I would just assign one for the collection of issues here 
+but I will let Steve decide instead.
 
-> As I see it, the upstream Linux kernel certainly fixes most flaws
-> discovered, and almost gets to fix level 4 (there are so many variations
-> of the Linux kernel running on end-user's systems, I can't blame the
-> Linux kernel upstream for not offering a patch for every version the
-> majority of their end-users use). Where I am disappointed is in the
-> communication.
+> [1] http://marc.info/?l=linux-netdev&m=130060344616926
+> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
 
-Ok, that's fair enough, I will not disagree with that.
-
-> It's generally somewhere between communication style
-> 1 and 2. There is no central list of fixed flaws (style 3, see almost
-> every major upstream's website and append some variation "/security"
-> to the url, etc), and certainly no central list of fixes. There is
-> frequently no mention of the implication of a flaw in commits (style 2),
-> and nothing like style 4, 5, or 6 happening. The only place these things
-> happen are in each distro's bug trackers, or scattered in the Mitre CVE
-> links (which almost invalidates anything above fix level 2 since there is
-> no certain way to find a flaw's fix in an upstream stable kernel update).
-> 
-> So yes, I'm disappointed in the upstream Linux kernel's security flaw
-> fix communications. And while I'm sure some people may not agree with me,
-> I know many do.
-
-Then, as I have always said, someone needs to step up and actually do
-this type of communication work.  I personally don't have the time to, I
-am swamped with just getting the stable updates out in a semi-timely
-fashion.  Digging through every patch in these releases and properly
-conveying the real, or percieved reason why they are needed, is a lot of
-thankless work.  Jon at lwn.net tried it for just one release, and we
-are averaging about one a week (total number of kernels released that
-is).  No one else has yet tried to do that, but if they will, I will be
-_glad_ to point my release notifications at that summary.
-
-So in other words, help is gladly accepted :)
-
-thanks,
-
-greg k-h
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
