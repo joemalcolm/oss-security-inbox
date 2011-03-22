@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/10/2
-message-id: <5d43-4df1f880-27-199e2240@89295843>
-date: Fri, 10 Jun 2011 12:56:58 +0200
-from: "Bernhard Rosenkraenzer" <bero@...linux.ch>
-to: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/9
+Message-ID: <4D8859F9.3090605@xiscosoft.es>
+Date: Tue, 22 Mar 2011 09:12:41 +0100
+From: klondike <klondike@...cosoft.es>
+To: Eugene Teo <eugene@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Security advisory: local DOS attack affecting non updated PaX patched kernels.
 Content-Type: text/plain; charset=utf-8
 
-On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
- 
-> The issue also reminds me that there are several su implemenations.
-> On Fedora and SUSE we have a patched coreutils version, Debian uses
-> the one from shadow-utils and then there's also a su from
-> SimplePAMApps, used by e.g. Owl. Of course each one has it's own
-> quirks and weird features. Does anyone still remember why a
-> particular implementation was chosen? :-)
+El 22/03/11 08:17, Eugene Teo escribió:
+> Nice find Francisco.
+>
+> Is this only affecting the PaX patchset?
+Seems so since the changes were added by The PaX Team (according to them).
+> Do you have the patches that addressed the issue?
+The last version patches addressed the issue, we coordinated so the
+advisory was out once patches were published:
+http://www.grsecurity.net/~paxguy1/
+Look at the ones for 2.6.38, 2.6.37 and 2.6.32
+> And will you be able to share with me the poc to reproduce this issue?
+You have another private mail.
 
 
-In Ark Linux, we switched from the coreutils one to the shadow-utils one about 2 years ago because the shadow-utils one does what we need (incl. PAM support) without having to port the PAM patch on every new coreutils release.
-
-ttyl
-bero
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
