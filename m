@@ -1,19 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/8
-Message-ID: <Pine.GSO.4.64.1105091456400.1528@faron.mitre.org>
-Date: Mon, 9 May 2011 14:59:19 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/7
+Message-Id: <201103221429.23048.ludwig.nussel@suse.de>
+Date: Tue, 22 Mar 2011 14:29:22 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...re.org>
+Subject: CVE Request: libpng memory leak
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-All,
+libpng has this in it's changelog¹:
+version 1.2.39beta05 [August 1, 2009]
+  Reject attempt to write iCCP chunk with negative embedded profile length
+    (JD Chen)
 
-Note that due to all the Apple/Google confusion, we recently arranged for 
-Google to become a CVE CNA (i.e. have their own CVEs), and now they are 
-the primary coordinator for CVE assignment in Webkit issues (specifically, 
-Chris Evans).  Not sure whether the current issue has CVE coverage or not.
+As it turned out this fixes a DoS (memory consumption on x86_64 and
+a segfault on i386) if e.g. GraphicsMagick is used to convert certain
+jpeg files to png.
+The bug was introduced in 1.2.13beta1:
+http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=0ff85c6923d2c4fca4ac0bad28e387e3b1777d7a#patch19
+Then an incomplete attempt to fix it in 1.2.15beta3, due to http://bugs.gentoo.org/159216:
+http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=948ee23a2a400672b1751cfc646a7467741e9b2e#patch18
+And finally fixed in 1.2.39beta5:
+http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=9e88fcd58c8ce7f2183bc2045e5180cba0043f09#patch19
 
-- Steve
+The Gentoo bug is from 2006 and the final fix from 2009 so this needs either a
+2006 or 2009 id I guess.
+
+cu
+Ludwig
+
+[1] http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=9e88fcd58c8ce7f2183bc2045e5180cba0043f09#patch2
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
