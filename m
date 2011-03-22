@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/2
-Message-ID: <20111012075823.GA4747@albatros>
-Date: Wed, 12 Oct 2011 11:58:23 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Reuben Hawkins <reubenhwk@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/9
+Message-ID: <4D8859F9.3090605@xiscosoft.es>
+Date: Tue, 22 Mar 2011 09:12:41 +0100
+From: klondike <klondike@...cosoft.es>
+To: Eugene Teo <eugene@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Security advisory: local DOS attack affecting non updated PaX patched kernels.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 11, 2011 at 23:26 -0700, Reuben Hawkins wrote:
-> On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> > On Fri, Oct 07, 2011 at 15:41 +0100, John Haxby wrote:
-> >> On 07/10/11 14:03, Robert Święcki wrote:
-> >> > On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
-> >> > <huzaifas@...hat.com> wrote:
-> >> >> Shouldnt this be:
-> >> >>
-> >> >>        /* No path traversal */
-> >> >>        if (strstr(iface, "..") || strchr(iface, '/'))
-> >> >>                return -1;
-> >> > FWIW, this will reject too much;
-> >> >
-> >> > /path/to/sth..jpg
-> >> >
-> >>
-> >> Indeed, since I don't believe that iface can reasonably include a "/"
-> >> its sufficient to check for that.   If not then you need to check for
-> >> "../" at the beginning of iface and "/.." anywhere else in it.   But
-> >> simply forbidding "/" should be fine.
-> >
-> > Crap, thank you for noticing it, guys.  The fix should be:
-> >
-> > https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
-> >
-> > Now, "", "..", "." and filenames with "/" inside are denied.
-> >
-> >
-> > Thanks,
-> >
-> > --
-> > Vasiliy Kulikov
-> > http://www.openwall.com - bringing security into open computing environments
-> >
-> 
-> Are y'all waiting on me to release 1.8.3 with the latest fix?
+El 22/03/11 08:17, Eugene Teo escribió:
+> Nice find Francisco.
+>
+> Is this only affecting the PaX patchset?
+Seems so since the changes were added by The PaX Team (according to them).
+> Do you have the patches that addressed the issue?
+The last version patches addressed the issue, we coordinated so the
+advisory was out once patches were published:
+http://www.grsecurity.net/~paxguy1/
+Look at the ones for 2.6.38, 2.6.37 and 2.6.32
+> And will you be able to share with me the poc to reproduce this issue?
+You have another private mail.
 
-If nobody has any complains about the fix, I think it's the right
-thing to do - the bug greatly weakens the role of privsep.  It's a good
-reason for the release.
 
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
