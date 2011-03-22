@@ -1,25 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/2
-Message-ID: <20110506143928.GA9170@redhat.com>
-Date: Fri, 6 May 2011 08:39:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/13
+Message-ID: <AANLkTinwuK7UuzhwG2KGGyRE2TGSFEjDHcCQyZVhH=xB@mail.gmail.com>
+Date: Tue, 22 Mar 2011 15:56:40 -0700
+From: Julien Tinnes <jt@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: tigervnc
+Subject: Linux kernel signal spoofing vulnerability (CVE request)
 Content-Type: text/plain; charset=utf-8
 
-The vncviewer in tigervnc had X.509 certificate support added in svn
-r4200 (currently beta, slated for the 1.1.0 release).  It would prompt
-for and send authentication credentials before properly validating the
-X.509 certificate, which makes it susceptible to a man-in-the-middle
-attack.
+The libc' sigqueue() function allows to queue a signal, as well as some
+accompanying data to a process.
 
-References:
+The kernel's interface that is used to implement this function is known
+as rt_sigqueueinfo(). It has been added in Linux 2.2.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=702470
-http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01342.html
-http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01347.html
+This system call is interesting from a security perspective, because it
+allows userland to compeletely specify the siginfo_t structure. This
+structure is normally typically almost entirely written by the kernel
+when a signal is delivered.
 
-Could a CVE be assigned to this please?  Thanks.
+Since at least Linux 2.4.0, most abuses of the kernel interface have
+been prevented with a simple check:
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+	/* Not even root can pretend to send signals from the kernel.
+	   Nor can they impersonate a kill(), which adds source info.  */
+	if (info.si_code >= 0)
+		return -EPERM;
+
+This check made sure that rt_sigqueueinfo() could not spoof a signal
+whose SI_CODE would be SI_KERNEL or SI_USER. As the comment indicates, a
+process receiving a signal should be able to trust its source pid or uid
+if its si_code matches SI_USER.
+
+Unfortunately, a couple of years later, when tgkill() and tkill() were
+added, this check was forgotten and was not updated to prevent the
+spoofing of a TGKILL si_code.  Because of this, userland is unable to
+trust the pid and uid information of a TKILL signal.
+
+This is bad, because it is a useful feature in a scenario where a
+process which cannot ptrace you can send you signals. This includes at
+least the startup code of setuid binaries.
+
+Meanwhile, userland and libc writers still assumed that they could trust
+the origin of a SI_TKILL signal. Glibc authors too [1]. Worse: they
+even silently patched SI_TKILL with SI_USER [2], [3]. So even a userland
+application that (righfully so) only trusts SI_USER signals will be
+vulnerable.
+
+A tentative patch for this vulnerability has been committed to Linus'
+kernel tree [4].
+
+In this patch, we prevent rt_sigqueueinfo() from specifying any si_code
+!= SI_QUEUE. While we believe it to be very unlikley, this could in
+theory break userland in some older Linux distributions, so we may
+have to revert to a more concervative patch and prevent ( (si_code ==
+SI_TKILL) || (si_code >= SI_QUEUE) ) instead.
+
+Please credit "Julien Tinnes, Google security team" in any related advisory.
+
+Julien
+
+[1]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/nptl/init.c&l=175
+[2]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/sysdeps/unix/sysv/linux/sigwaitinfo.c&l=63
+[3]: http://codesearch.google.com/codesearch/p?hl=en#xy1xtVWIKOQ/pub/glibc/snapshots/glibc-latest.tar.bz2%7CXP6Z3zoy3dk/glibc-20090518/sysdeps/unix/sysv/linux/sigtimedwait.c&l=62
+[4]: http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=da48524eb20662618854bb3df2db01fc65f3070c
