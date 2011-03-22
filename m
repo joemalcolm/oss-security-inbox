@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/6
-Message-ID: <4E8C8834.5050900@mvista.com>
-Date: Wed, 05 Oct 2011 06:39:16 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/5
+Message-ID: <AANLkTimYJ2WO0ukQcAqZMqBAOb8u95KDbYcks_V9b38m@mail.gmail.com>
+Date: Tue, 22 Mar 2011 06:55:48 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Subject: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
+Subject: Re: CVE requests - kernel: irda/decnet issues
 Content-Type: text/plain; charset=utf-8
 
-What version does this affect ?
+On Tue, Mar 22, 2011 at 3:27 AM, Eugene Teo <eugene@...hat.com> wrote:
+> Both are reported by Dan Rosenberg. Description of the issues can be found
+> in the following links:-
+>
+> irda: validate peer name and attribute lengths
+> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
+>
+> DECnet: need to validate user data and access data?
+> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
+>
 
-- Armin
+Steve Whitehouse provided some clarification on DECnet, which not an
+actual security issue (thus the question mark in the thread title):
+http://marc.info/?l=linux-netdev&m=130078511604840&w=2
 
-On 10/04/2011 04:34 PM, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> Kevan Carstensen reported multiple security flaws in kexec-tools,
-> details are as follows:
-> 
-> 1. CVE-2011-3588:
-> 
-> The default value of "StrictHostKeyChecking=no" has been used for kdump/
-> mkdumprd openssh integration. A remote malicious kdump server could use
-> this flaw to impersonate the intended, correct kdump server to obtain
-> security sensitive information (kdump core files).
-> 
-> 2. CVE-2011-3589
-> 
-> mkdumprd utility copied content of certain directories into newly
-> created initial ramdisk images, potentially leading to information leak.
-> 
-> 3. CVE-2011-2390
-> 
-> mkdumprd utility created the final initial ramdisk image with
-> world-readable permissions, possibly leading to information leak.
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=716439
-> 
-> 
+IrDA seems to be valid though.
+
+-Dan
+
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+>
