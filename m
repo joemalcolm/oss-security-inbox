@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/6
-Message-ID: <Pine.GSO.4.64.1103281054270.7261@faron.mitre.org>
-Date: Mon, 28 Mar 2011 11:00:00 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/3
+Message-ID: <4D884F5C.8080508@redhat.com>
+Date: Tue, 22 Mar 2011 15:27:24 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libpng memory leak
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE requests - kernel: irda/decnet issues
 Content-Type: text/plain; charset=utf-8
 
+Both are reported by Dan Rosenberg. Description of the issues can be 
+found in the following links:-
 
-On Tue, 22 Mar 2011, Ludwig Nussel wrote:
+irda: validate peer name and attribute lengths
+http://marc.info/?l=linux-netdev&m=130067113628164&w=2
 
-> libpng has this in it's changelog¹:
-> version 1.2.39beta05 [August 1, 2009]
->  Reject attempt to write iCCP chunk with negative embedded profile length
->    (JD Chen)
->
-> As it turned out this fixes a DoS (memory consumption on x86_64 and
-> a segfault on i386) if e.g. GraphicsMagick is used to convert certain
-> jpeg files to png.
-> The bug was introduced in 1.2.13beta1:
-> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=0ff85c6923d2c4fca4ac0bad28e387e3b1777d7a#patch19
+DECnet: need to validate user data and access data?
+http://marc.info/?l=linux-netdev&m=130075091711143&w=2
 
-> Then an incomplete attempt to fix it in 1.2.15beta3, due to 
-> http://bugs.gentoo.org/159216:
-
-> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=948ee23a2a400672b1751cfc646a7467741e9b2e#patch18
-
-This gets CVE-2006-7244
-
-> And finally fixed in 1.2.39beta5:
-> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=9e88fcd58c8ce7f2183bc2045e5180cba0043f09#patch19
-
-Since CVE-2006-7244 was a partial fix, this final fix should probably get 
-its own ID.
-
-So, use CVE-2009-5063.
-
-- Steve
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
