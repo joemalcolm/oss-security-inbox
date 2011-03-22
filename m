@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/21/1
-Message-ID: <20110521094334.GA5112@pisco.westfalen.local>
-Date: Sat, 21 May 2011 11:43:34 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/12
+Message-ID: <AANLkTinVt1yLTS5UpiJwDXZoV6CmFn3atJZtgiV9OCAd@mail.gmail.com>
+Date: Tue, 22 Mar 2011 16:29:10 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel: irda/decnet issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 20, 2011 at 08:55:25AM +0200, Ludwig Nussel wrote:
-> Josh Bressers wrote:
-> > > 5. libpcap packet truncation
-> > > 
-> > > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
-> > > http://thread.gmane.org/gmane.network.tcpdump.devel/5018
-> > 
-> > Use CVE-2011-1935
-> 
-> Does that really qualify as security issue? Just a bug IMO.
+On Tue, Mar 22, 2011 at 4:03 PM, Josh Bressers <bressers@...hat.com> wrote:
+>
+>
+> ----- Original Message -----
+>> Both are reported by Dan Rosenberg. Description of the issues can be
+>> found in the following links:-
+>>
+>> irda: validate peer name and attribute lengths
+>> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
+>
+> Use CVE-2011-1180
+>
+>
+>>
+>> DECnet: need to validate user data and access data?
+>> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
+>>
+>
+> Use CVE-2011-1181
+>
 
-I can lead to insufficient network monitoring.
+There is no DECnet security issue:
+http://marc.info/?l=linux-netdev&m=130078511604840&w=2
 
-Cheers,
-        Moritz
+> Thanks.
+>
+> --
+>    JB
+>
