@@ -1,64 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/5
-Message-ID: <Pine.GSO.4.64.1108151359420.4004@faron.mitre.org>
-Date: Mon, 15 Aug 2011 14:02:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/6
+Message-ID: <AANLkTimYFS4ZR3umoPuRX=_S=DTDrc271h2y5LosS82-@mail.gmail.com>
+Date: Tue, 22 Mar 2011 07:52:02 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Mar 22, 2011 at 5:48 AM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Mon, 14 Mar 2011 12:31:18 -0400 Dan Rosenberg wrote:
+>
+>> I've done some further investigation, and have found one of the
+>> underlying problems.  addmntent() will return 0 (success) even if the
+>> write was truncated:
+>>
+>>   return (fprintf (stream, "%s %s %s %s %d %d\n",
+>>                    mntcopy.mnt_fsname,
+>>                    mntcopy.mnt_dir,
+>>                    mntcopy.mnt_type,
+>>                    mntcopy.mnt_opts,
+>>                    mntcopy.mnt_freq,
+>>                    mntcopy.mnt_passno)
+>>           < 0 ? 1 : 0);
+>
+> I must admit that I fail to see an obvious issue here.  This should do
+> the right thing assuming fprintf returns what you expect (which does
+> not seem to happen due to stdio buffering).
+>
 
-This was a strange one.  Since it's pretty clear there are two 
-implementations (due to 2 different languages, and 2 upstream 
-maintainers), we treated these as separate codebases and went with two 
-separate CVEs.  (You could argue this was the same core design problem, 
-but this issue wasn't due to a protocol that required such behavior.)
+You're right, I neglected to consider stdio buffering, so the
+fprintf() return code will always be the full number of characters
+written, even if they weren't actually written yet.
 
-See below.
+>> Of course, this only matters if the process is catching the SIGXFSZ
+>> that gets thrown if the resource limit is exceeded, but nearly all
+>> suid mount helpers block or ignore signals (if they don't, that's an
+>> additional problem, because the process could be terminated mid-write,
+>> corrupting /etc/mtab or leaving a stale lockfile, for example).
+>>
+>> So, I think the first step is to patch glibc to return success in
+>> these functions if and only if the *full* contents have been written.
+>> Then, it will be possible to have proper error handling in these
+>> helper utilities.  Currently, there's really no way for these programs
+>> to know whether or not their calls to addmntent() actually succeeded
+>> besides installing a special signal handler for SIGXFSZ (ugly).
+>
+> Do you have any specific idea for the fix?  It seems following approach
+> may work:
+>
+>  if (fprintf (stream, "%s %s %s %s %d %d\n", ...) < 0)
+>    return 1;
+>
+>  return (fflush(stream) == 0 ? 0 : 1);
+>
 
-- Steve
+This may work.  I'll do some testing later today.
 
+> Detecting this error in endmntent() seems more problematic API-wise,
+> given that endmntent() currently "always returns 1".
+>
+> Do you plan to open bug in glibc bugzilla for this issue?
+>
 
-======================================================
-Name: CVE-2011-2697
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2697
-Reference: MLIST:[oss-security] 20110713 CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/13/3
-Reference: MLIST:[oss-security] 20110718 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/18/3
-Reference: MLIST:[oss-security] 20110728 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/28/1
-Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=698451
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=721001
-Reference: XF:hplinuxprinting-foomaticriphplip-code-exec(68993)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/68993
+Sure, I'll open one today.
 
-foomatic-rip-hplip in HP Linux Imaging and Printing (HPLIP) 3.11.5
-allows remote attackers to execute arbitrary code via a crafted
-*FoomaticRIPCommandLine field in a .ppd file.
+Thanks,
+Dan
 
-
-======================================================
-Name: CVE-2011-2964
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2964
-Reference: MLIST:[oss-security] 20110713 CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/13/3
-Reference: MLIST:[oss-security] 20110718 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/18/3
-Reference: MLIST:[oss-security] 20110728 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/28/1
-Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=698451
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=721001
-Reference: REDHAT:RHSA-2011:1110
-Reference: URL:http://www.redhat.com/support/errata/RHSA-2011-1110.html
-Reference: XF:foomatic-foomatic-code-execution(68994)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/68994
-
-foomaticrip.c in foomatic-rip in foomatic-filters in Foomatic 4.0.6
-allows remote attackers to execute arbitrary code via a crafted
-*FoomaticRIPCommandLine field in a .ppd file, a different
-vulnerability than CVE-2011-2697.
-
-
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
