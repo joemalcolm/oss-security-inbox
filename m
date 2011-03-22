@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/8
-Message-ID: <4EF7769B.5010906@redhat.com>
-Date: Sun, 25 Dec 2011 12:16:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE-request for three 2009 Joomla issues (second part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/1
+Message-Id: <201103212316.19715.geissert@debian.org>
+Date: Mon, 21 Mar 2011 23:16:15 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: file@...gw.com
+Cc: oss-security@...ts.openwall.com
+Subject: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
-On 12/25/2011 07:37 AM, Henri Salo wrote:
-> Can I get three CVEs assigned for these issues:
->
-> 1) "Input passed via the "HTTP_REFERER" is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-> http://developer.joomla.org/security/news/298-20090604-core-frontend-xss-httpreferer-not-properly-filtered.html
-> http://osvdb.org/show/osvdb/55589
-Please use CVE-2011-4909 for this issue.
->
-> 2) "Input passed via the URL is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-> http://developer.joomla.org/security/news/299-20090605-core-frontend-xss-phpself-not-properly-filtered.html
-> http://osvdb.org/show/osvdb/55590
-Please use CVE-2011-4910 for this issue.
->
-> 3) "A security issue exists due to certain files missing the check for JEXEC, which can lead to the disclosure of path information."
-> http://developer.joomla.org/security/news/300-20090606-core-missing-jexec-check.html (different than 302-20090722-core-missing-jexec-check.html)
-> http://osvdb.org/show/osvdb/55591
-Please use CVE-2011-4911 for this issue.
+Hi,
 
-> Secunia advisory: http://secunia.com/advisories/35668/
->
-> - Henri Salo
+From file's 5.05 changelog[1] it seems like some security-relevant changes were 
+made, but I'm unable to find further information. I saw a git repository being 
+mentioned in a message but I can't find it either.
 
+Can anyone please shed some light to the security-related changes?
 
+I would like to encourage developers to communicate such kind of issues openly 
+in this list, as it helps getting them fixed in distributions.
+
+Thanks in advance.
+
+[1]http://mx.gw.com/pipermail/file/2011/000690.html
+
+Sincerely,
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
