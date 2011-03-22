@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/8
-Message-ID: <20110714153118.GA30247@openwall.com>
-Date: Thu, 14 Jul 2011 19:31:18 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/2
+Message-ID: <4D884EA7.7060400@redhat.com>
+Date: Tue, 22 Mar 2011 15:24:23 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: heap corruption in IrDA
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 14, 2011 at 04:37:36PM +0200, Ludwig Nussel wrote:
-> Well, you need to modify that in %post to automatically get 2y for
-> new passwords then.
+On 03/22/2011 07:18 AM, Dan Rosenberg wrote:
+> On Mon, Mar 21, 2011 at 12:59 AM, Eugene Teo<eugene@...hat.com>  wrote:
+>> On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
+>>>
+>>> When providing an invalid IrDA nickname for an IrNET peer, a local
+>>> attacker can cause a kernel panic due to an underflow in a memcpy()
+>>> size calculation or cause a controllable heap overflow that may lead
+>>> to privilege escalation.  Write access to the /dev/irnet device file
+>>> is required to trigger the vulnerability.
+>>>
+>>> Reference:
+>>> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
+>>
+>> The default permissions for /dev/irnet is root-read/write only. In the past
+>> I have ignored such issues that can only be triggered by root, even though
+>> the permissions can be changed. I wouldn't assign a CVE name for this. CC'ed
+>> Steve.
+>
+> Fair enough, I should probably have been more clear about the exact
+> impact of the flaw.  But given recent discussions about hardening the
+> kernel even against the root user, it seems like reliably triggered
 
-Not in %post - we'll just provide the new file, which is marked
-%config(noreplace).  Yes, it does mean that if there were any local
-changes, the admin will need to merge the changes and/or rename the file
-from *.rpmnew manually.
+wrt to capabilities.
 
-> Which is kind of ugly as that's a file the admin may have modified.
+> kernel memory corruption of any kind enables crossing some security
+> boundary, so this may still deserve a CVE - just one with a
+> description that accurately reflects the relatively less common attack
+> scenario.
 
-You're right.  In a sense, having the change in code only would have
-been better.
+Yes, but it can't be triggered by a local, unprivileged user.
 
-Alexander
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
