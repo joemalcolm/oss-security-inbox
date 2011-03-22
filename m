@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/10
-Message-ID: <Pine.LNX.4.64.1106281357430.17115@wotan.suse.de>
-Date: Tue, 28 Jun 2011 14:05:35 +0200 (CEST)
-From: Michael Matz <matz@...e.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/12
+Message-ID: <AANLkTinVt1yLTS5UpiJwDXZoV6CmFn3atJZtgiV9OCAd@mail.gmail.com>
+Date: Tue, 22 Mar 2011 16:29:10 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel: irda/decnet issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Mar 22, 2011 at 4:03 PM, Josh Bressers <bressers@...hat.com> wrote:
+>
+>
+> ----- Original Message -----
+>> Both are reported by Dan Rosenberg. Description of the issues can be
+>> found in the following links:-
+>>
+>> irda: validate peer name and attribute lengths
+>> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
+>
+> Use CVE-2011-1180
+>
+>
+>>
+>> DECnet: need to validate user data and access data?
+>> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
+>>
+>
+> Use CVE-2011-1181
+>
 
-On Mon, 27 Jun 2011, Solar Designer wrote:
+There is no DECnet security issue:
+http://marc.info/?l=linux-netdev&m=130078511604840&w=2
 
-> > What's this 0xff business that crept up recently?  It's all characters 
-> > with the high bit set, not just 0xff, that pose problems.  Let's be 
-> > precise with these issues.
-> 
-> We're considering the state we'll be in after upgrade to fixed code. 
-> 0xff is the only known practical way to have a correctly computed hash 
-> match one computed by the buggy code in cases where the latter was in 
-> fact computed incorrectly.  Since a large subset of such incorrectly 
-> computed hashes had some of the original passwords' characters ignored, 
-> some working passwords for them are too easy to find, including in some 
-> cases passwords that will work even after the bug in the code is fixed. 
-> Those passwords will contain specifically the 0xff character.  This is 
-> why we may want to treat the 0xff character specially.
-
-Thanks, so, let me see if I got this: the original password contained some 
-8bit chars (0xff or not doesn't matter), the buggy hashes lead to easily 
-finding passwords with the same hash, some of those conflicting passwords 
-might have 0xff chars in them, and _those_ then will sometimes still 
-produce a hash conflict even with the fixed blowfish code.
-
-If so, treating passwords containing 0xff special seems sensible.
-
-
-Ciao,
-Michael.
+> Thanks.
+>
+> --
+>    JB
+>
