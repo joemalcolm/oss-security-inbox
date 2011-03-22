@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/9
-Message-ID: <20110407211446.GE3934@redhat.com>
-Date: Thu, 7 Apr 2011 15:14:47 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/5
+Message-ID: <AANLkTimYJ2WO0ukQcAqZMqBAOb8u95KDbYcks_V9b38m@mail.gmail.com>
+Date: Tue, 22 Mar 2011 06:55:48 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: tinyproxy runs as an open proxy when attempting to restrict allowable IP ranges
+Subject: Re: CVE requests - kernel: irda/decnet issues
 Content-Type: text/plain; charset=utf-8
 
-A bug in tinyproxy prior to 1.8.3 would turn it into an open proxy if it
-were defined with an "Allow" statement including an IP address range
-(i.e. 192.168.0.0/24).
+On Tue, Mar 22, 2011 at 3:27 AM, Eugene Teo <eugene@...hat.com> wrote:
+> Both are reported by Dan Rosenberg. Description of the issues can be found
+> in the following links:-
+>
+> irda: validate peer name and attribute lengths
+> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
+>
+> DECnet: need to validate user data and access data?
+> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
+>
 
-Could a CVE be assigned to this?
+Steve Whitehouse provided some clarification on DECnet, which not an
+actual security issue (thus the question mark in the thread title):
+http://marc.info/?l=linux-netdev&m=130078511604840&w=2
 
-References:
+IrDA seems to be valid though.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=621493
-https://banu.com/bugzilla/show_bug.cgi?id=90
-https://banu.com/cgit/tinyproxy/commit/?id=e8426f6662dc467bd1d827100481b95d9a4a23e4
-https://bugzilla.redhat.com/show_bug.cgi?id=694658
+-Dan
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+>
