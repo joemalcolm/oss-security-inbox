@@ -1,106 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/3
-Message-ID: <4D647E5A.1090004@redhat.com>
-Date: Wed, 23 Feb 2011 11:26:18 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/4
+Message-ID: <20110322104849.0b5d5b3d@orphan>
+Date: Tue, 22 Mar 2011 10:48:49 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: dan.j.rosenberg@...il.com
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On 02/22/2011 09:01 PM, Josh Bressers wrote:
-> Do we know the affected versions? This probably won't be 20 IDs,
-> but I suspect it won't be one either.
+On Mon, 14 Mar 2011 12:31:18 -0400 Dan Rosenberg wrote:
 
-Just some, not all, since not all the patches listed here affect Red Hat 
-and I do not think I want to go through them again. Other vendors 
-affected by these can provide their inputs.
+> I've done some further investigation, and have found one of the
+> underlying problems.  addmntent() will return 0 (success) even if the
+> write was truncated:
+> 
+>   return (fprintf (stream, "%s %s %s %s %d %d\n",
+>                    mntcopy.mnt_fsname,
+>                    mntcopy.mnt_dir,
+>                    mntcopy.mnt_type,
+>                    mntcopy.mnt_opts,
+>                    mntcopy.mnt_freq,
+>                    mntcopy.mnt_passno)
+>           < 0 ? 1 : 0);
 
-I read some interesting discussions on LKML. These require debugfs to be 
-mounted on a local system. It is usually not mounted by default, and you 
-would not want to mount it on a production system unless you really have 
-to use the kernel tracer, etc.
+I must admit that I fail to see an obvious issue here.  This should do
+the right thing assuming fprintf returns what you expect (which does
+not seem to happen due to stdio buffering).
 
------ Original Message -----
- > > There are 20 patches here - some are accepted, some are probably
- > > pending. All from Vasiliy Kulikov.
- > >
- > > [PATCH 01/20] mach-omap2: mux: world-writable debugfs files
- > > https://lkml.org/lkml/2011/2/4/66 arm arch
- > >
- > > [PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
- > > https://lkml.org/lkml/2011/2/4/67 arm arch
- > >
- > > [PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage
- > > files
- > > https://lkml.org/lkml/2011/2/4/68 arm arch
- > >
- > > [PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
- > > https://lkml.org/lkml/2011/2/4/69 arm arch
- > >
- > > [PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
- > > https://lkml.org/lkml/2011/2/4/70
- > >
- > > [PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
- > > https://lkml.org/lkml/2011/2/4/81
- > >
- > > [PATCH 07/20] video: sn9c102: world-wirtable sysfs files
- > > https://lkml.org/lkml/2011/2/4/85
- > >
- > > [PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
- > > https://lkml.org/lkml/2011/2/4/82
- > >
- > > [PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
- > > https://lkml.org/lkml/2011/2/4/84
+> Of course, this only matters if the process is catching the SIGXFSZ
+> that gets thrown if the resource limit is exceeded, but nearly all
+> suid mount helpers block or ignore signals (if they don't, that's an
+> additional problem, because the process could be terminated mid-write,
+> corrupting /etc/mtab or leaving a stale lockfile, for example).
+> 
+> So, I think the first step is to patch glibc to return success in
+> these functions if and only if the *full* contents have been written.
+> Then, it will be possible to have proper error handling in these
+> helper utilities.  Currently, there's really no way for these programs
+> to know whether or not their calls to addmntent() actually succeeded
+> besides installing a special signal handler for SIGXFSZ (ugly).
 
-introduced in 09bcb3f3 v2.6.35-rc1
+Do you have any specific idea for the fix?  It seems following approach
+may work:
 
- > > [PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
- > > https://lkml.org/lkml/2011/2/4/71
+  if (fprintf (stream, "%s %s %s %s %d %d\n", ...) < 0)
+    return 1;
 
-introduced in 5814fc35 v2.6.37-rc1
+  return (fflush(stream) == 0 ? 0 : 1);
 
- > > [PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
- > > https://lkml.org/lkml/2011/2/4/83
- > >
- > > [PATCH 12/20] net: can: at91_can: world-writable sysfs files
- > > https://lkml.org/lkml/2011/2/4/80
- > > fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
+Detecting this error in endmntent() seems more problematic API-wise,
+given that endmntent() currently "always returns 1".
 
-introduced in 3a5655a5 v2.6.38-rc3
-
- > > [PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination
- > > file
- > > https://lkml.org/lkml/2011/2/4/72
- > > 1e6d93e45b231b3ae87c01902ede2315aacfe976
- > >
- > > [PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg
- > > file
- > > https://lkml.org/lkml/2011/2/4/79
- > > b80b168f918bba4b847e884492415546b340e19d
- > >
- > > [PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
- > > https://lkml.org/lkml/2011/2/4/73
- > > 8040835760adf0ef66876c063d47f79f015fb55d
- > >
- > > [PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless
- > > and jogdial files
- > > https://lkml.org/lkml/2011/2/4/78
- > > 8a6a142c1286797978e4db266d22875a5f424897
- > >
- > > [PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
- > > https://lkml.org/lkml/2011/2/4/74
- > >
- > > [PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
- > > https://lkml.org/lkml/2011/2/4/75
- > >
- > > [PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
- > > https://lkml.org/lkml/2011/2/4/76
-
-introduced in fe4f0bde v2.6.36-rc1
-
- > > [PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
- > > https://lkml.org/lkml/2011/2/4/77
+Do you plan to open bug in glibc bugzilla for this issue?
 
 -- 
-Eugene Teo / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
