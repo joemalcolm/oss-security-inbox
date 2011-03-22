@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/6
-Message-ID: <4EC6711F.5070608@redhat.com>
-Date: Fri, 18 Nov 2011 15:52:15 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Ruby on Rails / rubygem-actionpack -- XSS in the 'translate' helper method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/1
+Message-Id: <201103212316.19715.geissert@debian.org>
+Date: Mon, 21 Mar 2011 23:16:15 -0600
+From: Raphael Geissert <geissert@...ian.org>
+To: file@...gw.com
+Cc: oss-security@...ts.openwall.com
+Subject: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
 
-   a cross-site scripting (XSS) flaw was found in the way the
-'translate' helper method of the Ruby on Rails performed HTML
-escaping of interpolated user input, when interpolation in
-combination with HTML-safe translations were used. A remote
-attacker could use this flaw to execute arbitrary HTML or web
-script by providing a specially-crafted input to Ruby on Rails
-application, using the ActionPack module and its 'translate'
-helper method without explicit (application specific) sanitization
-of user provided input.
+From file's 5.05 changelog[1] it seems like some security-relevant changes were 
+made, but I'm unable to find further information. I saw a git repository being 
+mentioned in a message but I can't find it either.
 
-References:
-[1] http://weblog.rubyonrails.org/2011/11/18/rails-3-1-2-has-been-released
-[2] http://weblog.rubyonrails.org/2011/11/18/rails-3-0-11-has-been-released
-[3] https://secunia.com/advisories/46877/
-[4] https://bugs.gentoo.org/show_bug.cgi?id=390915
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=755004
+Can anyone please shed some light to the security-related changes?
 
-Relevant upstream patches:
-[6] 
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b61d70fb73c7cc5
+I would like to encourage developers to communicate such kind of issues openly 
+in this list, as it helps getting them fixed in distributions.
 
-Could you allocate a CVE id for this?
+Thanks in advance.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[1]http://mx.gw.com/pipermail/file/2011/000690.html
+
+Sincerely,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
