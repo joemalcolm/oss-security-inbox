@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/27
-Message-ID: <20110304172749.GA26083@openwall.com>
-Date: Fri, 4 Mar 2011 20:27:49 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/2
+Message-ID: <4D884EA7.7060400@redhat.com>
+Date: Tue, 22 Mar 2011 15:24:23 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: heap corruption in IrDA
 Content-Type: text/plain; charset=utf-8
 
-Jan,
+On 03/22/2011 07:18 AM, Dan Rosenberg wrote:
+> On Mon, Mar 21, 2011 at 12:59 AM, Eugene Teo<eugene@...hat.com>  wrote:
+>> On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
+>>>
+>>> When providing an invalid IrDA nickname for an IrNET peer, a local
+>>> attacker can cause a kernel panic due to an underflow in a memcpy()
+>>> size calculation or cause a controllable heap overflow that may lead
+>>> to privilege escalation.  Write access to the /dev/irnet device file
+>>> is required to trigger the vulnerability.
+>>>
+>>> Reference:
+>>> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
+>>
+>> The default permissions for /dev/irnet is root-read/write only. In the past
+>> I have ignored such issues that can only be triggered by root, even though
+>> the permissions can be changed. I wouldn't assign a CVE name for this. CC'ed
+>> Steve.
+>
+> Fair enough, I should probably have been more clear about the exact
+> impact of the flaw.  But given recent discussions about hardening the
+> kernel even against the root user, it seems like reliably triggered
 
-I think I misread/misunderstood a portion of what you wrote
-(specifically, what you referred to by "the disclination") when I
-replied with the below.  Please disregard this piece.  The rest of my
-response still stands.
+wrt to capabilities.
 
-On Fri, Mar 04, 2011 at 08:05:03PM +0300, Solar Designer wrote:
-> On Fri, Mar 04, 2011 at 04:35:03PM +0100, Jan Lieskovsky wrote:
-> > just saying the disclination like the above doesn't help anyone.
-> 
-> I think it does.  But I am willing to shut up. ;-)  I sure am not going
-> to post stuff that people don't want to receive/read. ;-)
+> kernel memory corruption of any kind enables crossing some security
+> boundary, so this may still deserve a CVE - just one with a
+> description that accurately reflects the relatively less common attack
+> scenario.
 
-Alexander
+Yes, but it can't be triggered by a local, unprivileged user.
+
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
