@@ -1,23 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/2
-Message-ID: <1319896259.21316.19.camel@scapa>
-Date: Sat, 29 Oct 2011 15:50:59 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/10
+Message-ID: <4D88DC09.5010309@xiscosoft.es>
+Date: Tue, 22 Mar 2011 18:27:37 +0100
+From: klondike <klondike@...cosoft.es>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
+Subject: Re: Security advisory: local DOS attack affecting non updated PaX patched kernels.
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
-> Please use CVE-2011-3362.
-> 
-> Thanks.
-> 
+El 22/03/11 17:50, Steven M. Christey escribió:
+>
+> CVE-2011-1474 was assigned to this issue.
+Thanks, the advisory on the web page has been updated with it.
 
-It seems that CVE-2011-3973 has been assigned as a duplicate to this
-issue. Is there a way to know who assigned it and have it rejected?
 
-Regards
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
