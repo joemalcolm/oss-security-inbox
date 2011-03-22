@@ -1,28 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/9
-Message-ID: <20110621175526.GA7482@openwall.com>
-Date: Tue, 21 Jun 2011 21:55:26 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/8
+Message-ID: <Pine.GSO.4.64.1103221249480.7299@faron.mitre.org>
+Date: Tue, 22 Mar 2011 12:50:18 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: Security advisory: local DOS attack affecting non updated PaX patched kernels.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
-> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
-> know why that is?
 
-It is based on the same code, but the author made changes when merging
-the code.  Specifically, he switched to using "unsigned char *".
+CVE-2011-1474 was assigned to this issue.
 
-> I can't promise I will have time to look at it, but I will try if I can
-> find the time.
-
-Thanks!
-
-Meanwhile, I've released crypt_blowfish 1.1 with the fixes I had
-mentioned in here.
-
-http://www.openwall.com/crypt/
-
-Alexander
+- Steve
