@@ -1,39 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/3
-Message-ID: <20111019151912.28c895d0@laverne>
-Date: Wed, 19 Oct 2011 15:19:12 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: piwik before 1.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/4
+Message-ID: <20110322104849.0b5d5b3d@orphan>
+Date: Tue, 22 Mar 2011 10:48:49 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: dan.j.rosenberg@...il.com
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Okay, this one is a bit more complicated.
+On Mon, 14 Mar 2011 12:31:18 -0400 Dan Rosenberg wrote:
 
-Seems piwik decided to jump in to the projects that try to hide
-security issues instead of being transparent. The Changelog for piwik
-1.6 lists the names of people disclosing security issues, but it
-doesn't give any hint of the issues itself.
+> I've done some further investigation, and have found one of the
+> underlying problems.  addmntent() will return 0 (success) even if the
+> write was truncated:
+> 
+>   return (fprintf (stream, "%s %s %s %s %d %d\n",
+>                    mntcopy.mnt_fsname,
+>                    mntcopy.mnt_dir,
+>                    mntcopy.mnt_type,
+>                    mntcopy.mnt_opts,
+>                    mntcopy.mnt_freq,
+>                    mntcopy.mnt_passno)
+>           < 0 ? 1 : 0);
 
-Cite from http://piwik.org/blog/2011/10/piwik-1-6/:
-"Security: we would like to thank the following people for their
-responsible disclosure: Alexandru Pitis, Alexander Schmid, Secure
-Business Austria, Krzysztof Kotowicz, David Vieira-Kurz, Szymon
-Gruszecki, Mateusz Goik, Mauro Gentile."
+I must admit that I fail to see an obvious issue here.  This should do
+the right thing assuming fprintf returns what you expect (which does
+not seem to happen due to stdio buffering).
 
-Although they have a section on their webpage with security advisories,
-there's none for 1.6. (reminds me of clamav, they've been doing that
-for years)
+> Of course, this only matters if the process is catching the SIGXFSZ
+> that gets thrown if the resource limit is exceeded, but nearly all
+> suid mount helpers block or ignore signals (if they don't, that's an
+> additional problem, because the process could be terminated mid-write,
+> corrupting /etc/mtab or leaving a stale lockfile, for example).
+> 
+> So, I think the first step is to patch glibc to return success in
+> these functions if and only if the *full* contents have been written.
+> Then, it will be possible to have proper error handling in these
+> helper utilities.  Currently, there's really no way for these programs
+> to know whether or not their calls to addmntent() actually succeeded
+> besides installing a special signal handler for SIGXFSZ (ugly).
 
-Regarding CVEs, i suggest adding one for every name, e.g.
-"Unknown security vulnerability in piwik before 1.6 discovered by
-Alexandru Pitis" etc., until we know more about it.
+Do you have any specific idea for the fix?  It seems following approach
+may work:
 
+  if (fprintf (stream, "%s %s %s %s %d %d\n", ...) < 0)
+    return 1;
 
-If anyone knows any piwik devs, please tell them that it'd be a good
-idea to get back to a transparent handling of security issues.
+  return (fflush(stream) == 0 ? 0 : 1);
+
+Detecting this error in endmntent() seems more problematic API-wise,
+given that endmntent() currently "always returns 1".
+
+Do you plan to open bug in glibc bugzilla for this issue?
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Tomas Hoger / Red Hat Security Response Team
