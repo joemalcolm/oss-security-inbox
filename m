@@ -1,18 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/4
-Message-ID: <CAF6rxgkrHepe2b2J27+LmvJ8QVd_+u0pvzpO36YSjXkHnKT-3g@mail.gmail.com>
-Date: Sun, 6 Nov 2011 23:32:45 -0500
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/3
+Message-ID: <4D898855.3090505@redhat.com>
+Date: Wed, 23 Mar 2011 13:42:45 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: caml-light insecure temporary files
+Subject: oss-security is on twitter
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 6, 2011 at 4:59 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
-> It seems to be part of the FreeBSD ports
-> collection.
+Just in case you do not know, oss-security is on twitter.
 
-I added an alert to our package vulnerability reporting system and
-notified the maintainer of the port in question.
+Follow @oss_security :)
 
+Eugene
 -- 
-Eitan Adler
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
