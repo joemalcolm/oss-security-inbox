@@ -1,80 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/40
-Message-ID: <20110403235710.GB10724@openwall.com>
-Date: Mon, 4 Apr 2011 03:57:10 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/10
+Message-ID: <AANLkTinLh8s4Eg0oMids_JxQpwK8TUzEp4k2XmeiiYm1@mail.gmail.com>
+Date: Wed, 23 Mar 2011 11:56:05 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: kernel: two OSS fixes
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 11:58:21PM +0100, Benji wrote:
-> This is pathetic.
+For both issues, access to /dev/sequencer is required, which is
+typically reserved for group audio.  Additionally, these only affect
+systems that use OSS (not to be confused with the OSS emulation layer
+provided by ALSA).
 
-It is, in certain ways, and I think some folks are amused by this
-discussion thread (I sort of am) - but the issues leading to this, or to
-possible alternatives which would be no better, are rather fundamental.
-You see, this topic was brought up in here a month ago, and no one has
-proposed anything obviously better.
+1. Specially crafted requests may be written to /dev/sequencer
+resulting in an underflow when calculating a size for a
+copy_from_user() operation in the driver for MIDI interfaces.  On x86,
+this just returns an error, but it may cause memory corruption on
+other architectures.  Other malformed requests may result in the use
+of uninitialized variables.  [1]
 
-> You've all just made your personal and 'work' email addresses targets
+2. Due to a failure to validate user-supplied indexes in the driver
+for Yamaha YM3812 and OPL-3 chips, a specially crafted ioctl request
+may be sent to /dev/sequencer, resulting in reading and writing beyond
+the bounds of heap buffers, and potentially allowing privilege
+escalation.  [2]
 
-Right.  If Josh did not propose this public signup procedure, I probably
-would not go for it, in part for that reason and in part just to avoid
-the noise.  But when he did, I agreed.  It does not matter all that much
-for security (it's not hard to figure out with good reliability who are
-the security contacts for a certain Linux distro), but it partially
-deals with the criticism towards vendor-sec (the "secrecy" around its
-membership, which was not really secret anyway).
-
-Besides, mail from the new list is sent encrypted.  Of course, it is
-likely that some members are reading mail right on their SMTP servers
-(so they have their PGP keys stored there), and attacks on their
-computers are possible.  Yes, we could use some "security through
-obscurity" by not revealing the initial subscriber list... but then we'd
-be criticized for that.  You see, there's always someone complaining:
-"hey, you could have done better by not revealing your e-mail addresses"
-vs. "hey, you're relying on security through obscurity!"
-
-BTW, I do not have my PGP private key on any server.  So breaking into
-the @openwall.com mail server won't leak the new list's encrypted
-messages (and all of them are encrypted).  However, it would possibly
-leak this discussion (on list subscription) if it were private.  Would
-that be any better?  Ditto for other members' e-mail addresses, who
-would also have copies of the signup discussion messages.  For our
-reputation, if that's what you care about (why?), I guess it's better to
-have this discussion public right away.
-
-> by having a ridiculous public 'signup' system,
-
-Ridiculous, yes.  Yet indirectly demanded by those criticizing
-vendor-sec's "secrecy".  Were their demands ridiculous?  No more than
-your observation on this discussion thread, I guess.  Both are
-"somewhat reasonable".
-
-> and the fact you all feel the need to hide behind some sort of veil for
-> security issues.
-
-Huh?  Now you're with "the other" group that accuses "us" of "hiding"?
-
-Oh, you mean discussions of the security issues themselves.  Obviously,
-you do understand that we intend to discuss some of those in private for
-reasons other than "hiding" ourselves from "responsibility" or whatever,
-don't you?  This ridiculous public signup procedure was precisely a step
-to make it easier to convince observers-who-care that the new list would
-not be to discuss stuff we're ashamed of, but just for coordination on
-not-yet-public security issues.
-
-What is your opinion on making the list's archive public with a delay
-(when the corresponding security issues are already public)?  Would you
-call this ridiculous as well, because it is sort of a counterpart to the
-public signup procedure, or would you consider it the proper "fix" to
-whatever "hiding" issue you're seeing?
-
-I don't mean to start a lengthy discussion thread with this (I won't
-have time for it), let alone a flamewar, but I am trying to communicate
-to you a few things that you might be missing, and I want to see if you
-have something to propose.
-
-Thanks,
-
-Alexander
+[1] http://marc.info/?l=linux-kernel&m=130089204124354&w=2
+[2] http://marc.info/?l=linux-kernel&m=130089499728386&w=2
