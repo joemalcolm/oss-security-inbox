@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/6
-Message-ID: <4E268A67.9070707@redhat.com>
-Date: Wed, 20 Jul 2011 13:27:27 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/11
+Message-Id: <201103231725.35626.ludwig.nussel@suse.de>
+Date: Wed, 23 Mar 2011 17:25:35 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: si4713-i2c: avoid potential buffer overflow on si4713
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-On 07/20/2011 12:52 PM, Eugene Teo wrote:
-> "While compiling it with Fedora 15, [Mauro Carvalho Chehab] noticed this
-> issue:
+Ludwig Nussel wrote:
+> Josh Bressers wrote:
+> > We then will need to assign IDs for various broken uses of /var/log (If
+> > someone has a list of the currently known ones, please pass it along)
 > 
-> inlined from ‘si4713_write_econtrol_string’ at
-> drivers/media/radio/si4713-i2c.c:1065:24:
-> /home/v4l/work_trees/linus/arch/x86/include/asm/uaccess_32.h:211:26:
-> error: call to ‘copy_from_user_overflow’ declared with attribute error:
-> copy_from_user() buffer size is not provably correct"
-> 
-> http://git.kernel.org/?p=linux/kernel/git/longterm/longterm-queue-2.6.33.git;a=blob;f=queue-2.6.33/si4713-i2c-avoid-potential-buffer-overflow-on-si4713.patch;h=d99c471980a074cf4ef55fb4428d5f2fec66bffb;hb=29be9ef5e43df840fb19af1d4b3dfa51b3a956c8
-> 
-> AFAIK, only N900 uses this.
-> 
-> Thanks, Eugene
+> AFAICS on openSUSE Factory we have
+> cobbler
 
-Please use CVE-2011-2700
+The cobbler daemon actually runs as root so having
+/var/log/cobbler/* owned by the web service user is likely not only a
+problem for logrote but also for cobbler itself when it opens files
+there.
+
+cu
+Ludwig
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
