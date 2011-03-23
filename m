@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/6
-Message-ID: <20110712143945.GA64086@dojo.mi.org>
-Date: Tue, 12 Jul 2011 10:39:46 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/11
+Message-Id: <201103231725.35626.ludwig.nussel@suse.de>
+Date: Wed, 23 Mar 2011 17:25:35 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+Subject: Re: CVE Request -- logrotate -- nine issues
 Content-Type: text/plain; charset=utf-8
 
-:Hello List,
-:
-:Is it possible to assign a CVE for documented behavior? Communication
+Ludwig Nussel wrote:
+> Josh Bressers wrote:
+> > We then will need to assign IDs for various broken uses of /var/log (If
+> > someone has a list of the currently known ones, please pass it along)
+> 
+> AFAICS on openSUSE Factory we have
+> cobbler
 
-Especially in the early days of CVE, some were assigned for documented
-behavior.  The one I used to hit the most is CVE-1999-0651, a CVE for
-rlogind running (with all sorts of potential for insecurity based on
-how it's deployed, but not necessarily insecure in and of itself).  It
-would give some folks slaved to CVE-based security-scanning tools fits. 
-The scan tool flags a CVE for which nothing can really be done because
-it acts as documented.
+The cobbler daemon actually runs as root so having
+/var/log/cobbler/* owned by the web service user is likely not only a
+problem for logrote but also for cobbler itself when it opens files
+there.
+
+cu
+Ludwig
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Security freaks are pretty wierd."                    -Brian Harvey, RFC 686
-
-Content of type "application/pgp-signature" skipped
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
