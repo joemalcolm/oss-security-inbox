@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/9
-Message-ID: <20110812212750.GP4930@lupin.home.powdarrmonkey.net>
-Date: Fri, 12 Aug 2011 22:27:50 +0100
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/4
+Message-Id: <201103230930.25261.ludwig.nussel@suse.de>
+Date: Wed, 23 Mar 2011 09:30:24 +0100
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org, zigo@...ian.org
-Subject: Re: CVE request: multiple vulnerabilities in dtc
+Subject: CVE  Request: perl: regex causes assertion fail
 Content-Type: text/plain; charset=utf-8
 
-I should have added: please keep me in CC, I am not subscribed to the list
-(although I do receive mail at the team@ address).
+Hi,
 
-Thanks,
+Certain regular expressions cause perl to abort():
+http://rt.perl.org/rt3/Public/Bug/Display.html?id=76538
+
+That's an issue e.g. for spamassassin:
+https://listi.jpberlin.de/pipermail/postfixbuch-users/2011-February/055885.html
+
+cu
+Ludwig
 
 -- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
-
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
