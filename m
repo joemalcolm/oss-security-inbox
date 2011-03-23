@@ -1,111 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/2
-Message-ID: <4EFAA673.9040404@redhat.com>
-Date: Tue, 27 Dec 2011 22:17:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/3
+Message-ID: <4D898855.3090505@redhat.com>
+Date: Wed, 23 Mar 2011 13:42:45 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+Subject: oss-security is on twitter
 Content-Type: text/plain; charset=utf-8
 
+Just in case you do not know, oss-security is on twitter.
 
-Ok finally got this ironed out:
+Follow @oss_security :)
 
->
-> -------- Original Message --------
-> Subject: Re: [oss-security] CVE request: kernel: multiple issues in ROSE
-> Date: Tue, 5 Apr 2011 11:37:37 -0400
-> From: Dan Rosenberg<dan.j.rosenberg@...il.com>
-> Reply-To: oss-security@...ts.openwall.com
-> To: oss-security@...ts.openwall.com
-> CC: Steven M. Christey<coley@...us.mitre.org>,        Josh Bressers
-> <bressers@...hat.com>, Eugene Teo<eugene@...hat.com>
->
-> Hi,
->
-> This breakdown seems to make sense.  I'll do my best to break up the
-> issues below.
->
->> Dan, could you confirm that this breakdown makes sense?
->>
->> 1) buffer overflows (not validating length is<= the maximum)
->>
-> 1) When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
-> for a remote host to provide more digipeaters than expected, resulting
-> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
-> overflows, and abort facilities parsing on failure.  It looks like
-> this will be CVE-2011-1493.
-This was assigned CVE-2011-1493, please continue to use.
-
-============================
->
-> 2) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
-> facilities fields, a remote host can provide a length of greater than
-> 20, resulting in a stack overflow of the callsign array.
->> 2) use of negative signed integers in memcpy() and other operations 
->> where
->>    conversion creates a large unsigned integer, referred to as
->>    "underflow"
->>
-> 3) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
-> facilities fields, a remote host can provide a length
-> of less than 10, resulting in an underflow in a memcpy size, causing a
-> kernel panic due to massive heap corruption.
->
-> Note that 2) and 3) are solved by validating a single length field, so
-> maybe they should be grouped together?  The above three issues were
-> all found by me.
-
-For the issues 2) and 3) in FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP 
-please use CVE-2011-4913
-
-============================
->
->> 3) any other types of problems that aren't covered by those two?  (The
->>    length validation checks don't always have enough context in the 
->> source
->>    code).
->>
-> 4) Ben Hutchings' fixes addressed multiple cases where the ROSE
-> protocol did not ensure that socket data being parsed wasn't being
-> read in from beyond the boundaries of the incoming socket buffer.  For
-> example, a received packet might provide a length field longer than
-> the amount of remaining data in the socket buffer.
->
-> Looking at the patch, it doesn't appear that any memory corruption
-> would be caused by this, since the out-of-bounds data is still
-> validated by the parsing code.  I'd say the impact is likely limited
-> to possible information disclosure, if the contents of the
-> out-of-bounds memory could be inferred by the behavior of the protocol
-> during parsing.  It's theoretically possible (but very unlikely) that
-> this could cause read accesses to unmapped memory, which would cause a
-> DOS.
->
-> -Dan
-
-For this please use CVE-2011-4914
-
-============================
-
->
->> We would need separate CVE's for the issues found by Dan versus the 
->> issues
->> found by Ben Hutchings.
->>
->> Arguably, #2 could probably be broken down further, but without enough
->> source code context in the patches, it's not immediately clear.
->>
->> - Steve
->>
-
-
+Eugene
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
