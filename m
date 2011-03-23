@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/3
-Message-ID: <4E242890.9050101@redhat.com>
-Date: Mon, 18 Jul 2011 14:35:28 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: hplip/foomatic-filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/6
+Message-ID: <Pine.GSO.4.64.1103231044570.12348@faron.mitre.org>
+Date: Wed, 23 Mar 2011 10:45:42 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 07/13/2011 12:53 PM, Sebastian Krahmer wrote:
-> Hi
->
-> The foomatic filters of the hplip package allow remote users
-> to execute arbitrary commands as the lp user. The flaw allows
-> hosts which are listed in the printing ACL or local users to
-> pass PPD file arguments to the foomatic filters. A PoC was
-> demonstrated using the CUPS server.
->
-> More info and patches are here:
->
-> https://bugzilla.novell.com/show_bug.cgi?id=698451
 
-Please use CVE-2011-2697 for this.
+On Wed, 23 Mar 2011, Matthew Nicholson wrote:
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> I need a CVE for a new Asterisk security vulnerability.
 
->
->
-> Sebastian
->
+CVE reservation requests for non-public issues are probably best sent 
+privately, instead of to a public list...
 
+That said, I've reserved a CVE and sent it back to you privately.
+
+- Steve
