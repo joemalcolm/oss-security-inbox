@@ -1,59 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/5
-Message-ID: <20110713201730.GJ8259@core.inversepath.com>
-Date: Wed, 13 Jul 2011 22:17:30 +0200
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2011-001] Chyrp input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/10
+Message-ID: <AANLkTinLh8s4Eg0oMids_JxQpwK8TUzEp4k2XmeiiYm1@mail.gmail.com>
+Date: Wed, 23 Mar 2011 11:56:05 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: two OSS fixes
 Content-Type: text/plain; charset=utf-8
 
+For both issues, access to /dev/sequencer is required, which is
+typically reserved for group audio.  Additionally, these only affect
+systems that use OSS (not to be confused with the OSS emulation layer
+provided by ALSA).
 
-#2011-001 Chyrp input sanitization errors
+1. Specially crafted requests may be written to /dev/sequencer
+resulting in an underflow when calculating a size for a
+copy_from_user() operation in the driver for MIDI interfaces.  On x86,
+this just returns an error, but it may cause memory corruption on
+other architectures.  Other malformed requests may result in the use
+of uninitialized variables.  [1]
 
-Description:
+2. Due to a failure to validate user-supplied indexes in the driver
+for Yamaha YM3812 and OPL-3 chips, a specially crafted ioctl request
+may be sent to /dev/sequencer, resulting in reading and writing beyond
+the bounds of heap buffers, and potentially allowing privilege
+escalation.  [2]
 
-The Chyrp framework, an open source blogging engine, suffers from cross-site
-scripting (XSS) and local file inclusion (LFI) vulnerabilities.
-
-Insufficient input sanitization on the parameters passed to pages related to
-administration settings, the javascript handler and the index handler leads to
-arbitrary javascript injection in the context of the user session. This could
-be potentially exploited to hijack the session of the administrator.
-
-Insufficient path sanitization on the root 'action' query string parameter
-leads to inclusion of arbitrary files from local sources, this could be
-exploited to read arbitrary accessible files on the hosting server filesystem
-and potentially execute arbitrary commands or code.
-
-Affected version:
-
-Chyrp <= 2.1
-
-Fixed version:
-
-Chyrp, N/A
-
-Credit: vulnerability report and PoC code received from Eldar Marcussen
-<wireghoul [at] justanotherhacker [dot] com>.
-
-CVE: N/A
-
-Timeline:
-
-2011-05-17: vulnerability report received
-2010-05-17: contacted chyrp maintainers
-2010-07-13: oCERT advisory published jointly with reporter advisory
-
-References:
-http://www.justanotherhacker.com/advisories/JAHx113.txt
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2011-001.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+[1] http://marc.info/?l=linux-kernel&m=130089204124354&w=2
+[2] http://marc.info/?l=linux-kernel&m=130089499728386&w=2
