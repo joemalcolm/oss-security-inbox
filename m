@@ -1,19 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/10
-Message-ID: <e21730d7-849d-46db-80c3-373bf2c12b0f@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Fri, 28 Oct 2011 09:07:00 -0400 (EDT)
-From: Ramon de C Valle <rcvalle@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/5
+Message-ID: <1300890470.4898.133.camel@solo.digium.internal>
+Date: Wed, 23 Mar 2011 09:27:50 -0500
+From: Matthew Nicholson <mnicholson@...ium.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-> Have you checked if this also affects gzexe? It is pretty much the
-> same
-> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
-It seems this issue affects only executables compressed by bzexe. The self-uncompressing executable created by gzexe seems to make appropriate use of the /tmp directory uncompressing the executable file to a previously created subdirectory created with mkdir--all with appropriate permissions.
-
-
+I need a CVE for a new Asterisk security vulnerability.
 -- 
-Ramon de C Valle / Red Hat Security Response Team
+Matthew Nicholson
+Digium, Inc. | Software Developer
+
