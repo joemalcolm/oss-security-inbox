@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/5
-Message-ID: <4DE8DFEF.5070407@redhat.com>
-Date: Fri, 03 Jun 2011 15:21:51 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>
-Subject: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/1
+Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A712D0030@GVW0671EXC.americas.hpqcorp.net>
+Date: Wed, 23 Mar 2011 18:03:42 +0000
+From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: oss-security is on twitter
 Content-Type: text/plain; charset=utf-8
 
+Cool! How do you do this?  Part of the mail hosting, or just a filter in
+your email reader?
 
-Hello, Josh, Steve, vendors,
+Mark Menkhus
+Hewlett Packard Software Security Response Team
+> -----Original Message-----
+> From: Eugene Teo [mailto:eugene@...hat.com]
+> Sent: Tuesday, March 22, 2011 11:43 PM
+> To: oss-security@...ts.openwall.com
+> Subject: [oss-security] oss-security is on twitter
+> 
+> Just in case you do not know, oss-security is on twitter.
+> 
+> Follow @oss_security :)
+> 
+> Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
 
-   It was found that fabric, a simple Pythonic remote deployment tool,
-used insecure way for creation of temporary files, when uploading
-template text files and project files to a remote system. A local
-attacker could use this flaw to conduct symlink attacks to upload
-sensitive information to remote host or to overwrite certain local
-system files.
-
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
-
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
