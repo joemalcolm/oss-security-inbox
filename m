@@ -1,165 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/02/3
-Message-ID: <Pine.GSO.4.64.1102021418450.5082@faron.mitre.org>
-Date: Wed, 2 Feb 2011 14:33:44 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/1
+Message-ID: <20110323003509.GA4595@openwall.com>
+Date: Wed, 23 Mar 2011 03:35:09 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
+Hi all -
 
-I'm not sure about this one.
+On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
+> A push has started to try to get as much as possible upstream into the
+> Linux kernel from the various hardening patches that exist in PaX,
+> grsecurity, OpenWall, etc. I've got some details here:
+> 
+> http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
+> 
+> And there's a sign-up list here, for people interested in helping out:
+> 
+> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+> 
+> We could use the help. :)
 
-My read of the situation is that the attack depends entirely on the 
-successful exploitation of another issue that gives the attacker 
-privileges to modify the database.  This would rarely be a vulnerability 
-to me unless the problem was in some protection mechanism.
+Here's another way to help out: Openwall is a mentoring organization for
+Google Summer of Code 2011 (GSoC), and one of our "ideas" is this:
 
-It seems likely that phpMyAdmin's "intended" security policy is that 
-anybody with privileges to directly modify the DB (e.g. to create or 
-rename the DB) is a "trusted" user who also has privileges to generate 
-HTML/scripting code.  If that's the case, then this XSS is only available 
-to a privileged user - even if it happens to be someone who got the 
-privileges through some other attack.
+http://openwall.info/wiki/ideas
 
-Consequently, the XSS is "resultant" from some other vulnerability, and 
-would not be worthy of a CVE itself.
+"Linux kernel hardening - extract security hardening changes from various
+patches (which the mentor will point out), forward-port them to the
+latest mainstream kernels, make it easy to enable/disable the hardening
+measures (both compile- and runtime), add documentation, properly submit
+to and work with LKML (make proposals and own discussions to completion:
+either rejection or acceptance).  This is a noble but thankless job to
+do, so be prepared!  The authors of those changes did not submit them
+"properly" and did not "own discussions to completion" precisely because
+the job is so thankless. ;-)
 
-If there's some specific vulnerability that gives someone the 
-privileges to modify the DB when they shouldn't be able to, then a CVE 
-could be assigned for that specific issue.
+This may optionally involve work with other kernel branches and other
+upstreams as well (OpenVZ, Red Hat, Ubuntu)."
 
-If there's more than one user with privileges to modify the DB, then one 
-user could XSS the other, so I suppose that would get a CVE.
+Under Owl tasks, we also have:
 
-If I'm mis-understanding the advisory and the attacker (or the XSS victim) 
-does not have privileges to modify DB names or create a DB, then it gets a 
-CVE.
+"The rhel6 branch OpenVZ kernel that we'd update to will need to be
+security-hardened, in part by reviewing, extracting, cleaning up,
+porting, and documenting/commenting individual changes from grsecurity
+and PaX (some of which have originated from Openwall's patches for older
+kernels), and in part by implementing new security-related
+changes/features, some of those specific to container-based
+virtualization (purpose-specific restrictions to be applied on
+per-container basis).  We expect help/consulting/mentoring from the
+author of PaX on portions that are PaX (some of these are difficult to
+understand from the code alone, especially the rationale behind things
+being done in a certain way), whereas the rest are not too complicated
+for a capable person to fully figure out on their own.
 
-If phpMyAdmin's "intended" security policy is that the application should 
-be safe from XSS injected into a compromised DB, then it gets a CVE.
+We should work with upstreams - OpenVZ and Red Hat - to try and get some
+of these enhancements accepted."
 
-- Steve
+Students wishing to spend their summer like that, be paid by Google, and
+get more involved in the relevant communities - please apply.
 
+We'd like to hear from prospective (co-)mentors too since our mentoring
+capacity is limited (and may affect the number of slots we request).
 
+Here's our GSoC 2011 organization profile:
 
-On Thu, 27 Jan 2011, Josh Bressers wrote:
+http://www.google-melange.com/gsoc/org/show/google/gsoc2011/openwall
 
-> Steve,
->
-> Can MITRE comment on this? The advisory suggests that in order to exploit
-> this, you already have to have access to the user's account in some way.
-> I'm not sure what the precedent is for such a situation.
->
-> Thanks.
->
-> --
->    JB
->
-> ----- Original Message -----
->> http://seclists.org/fulldisclosure/2011/Jan/486
->>
->>
->> ===================================================================================
->> phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
->> Vulnerability
->> ===================================================================================
->>
->>
->> 1. OVERVIEW
->>
->> The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
->> 3.4.x were vulnerable to Cross Site Scripting.
->>
->>
->> 2. PRODUCT DESCRIPTION
->>
->> phpMyAdmin is a free software tool written in PHP intended to handle
->> the administration of MySQL over the World Wide Web.
->> phpMyAdmin supports a wide range of operations with MySQL.
->> The most frequently used operations are supported by the user
->> interface (managing databases, tables, fields, relations,
->> indexes, users, permissions, etc), while you still have the ability to
->> directly execute any SQL statement.
->>
->>
->> 3. VULNERABILITY DESCRIPTION
->>
->> The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
->> inject XSS string in 'db' field when creating or renaming a database.
->> An attacker can create new database name or rename database name
->> through several means like SQL Injection in user's vulnerable web
->> applications or
->> compromise of user account through brute-force or bypassing CSRF
->> protection.
->> Even though the phpMyAdmin uses httpOnly as a protection against
->> cookie theft via XSS, attacker could use XSS tunneling proxy to
->> manipulate database names and fields. From it, he could execute
->> arbitrary database commands to allow him higher access to the server.
->>
->>
->> 4. VERSIONS AFFECTED
->>
->> phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
->>
->> Vendor confirmed this flaw did not exist before the 3.4 version
->> family.
->> Thus, it is assumed 2.x and 3.3 <= versions are not affected.
->>
->>
->> 5. PROOF-OF-CONCEPT/EXPLOIT
->>
->> http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
->> http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
->>
->>
->> 6. IMPACT
->>
->> Attackers can compromise currently logged-in user session, plant xss
->> backdoors and inject arbitrary SQL statements
->> (CREATE,INSERT,UPDATE,DELETE)
->> via crafted XSS payloads.
->>
->>
->> 7. SOLUTION
->>
->> For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
->> check out the latest commit (git pull).
->>
->>
->> 8. VENDOR
->>
->> phpMyAdmin (http://www.phpmyadmin.net)
->>
->>
->> 9. CREDIT
->>
->> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
->> Ethical Hacker Group, Myanmar.
->>
->>
->> 10. DISCLOSURE TIME-LINE
->>
->> 2011-01-26: notified vendor
->> 2011-01-26: vendor released fix
->> 2011-01-27: vulnerability disclosed
->>
->>
->> 11. REFERENCES
->>
->> Vendor Commit:
->> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
->> Original Advisory URL:
->> http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
->> CWE-79: http://cwe.mitre.org/data/definitions/79.html
->> Previous Releases:
->> http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
->> http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
->> http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
->> http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
->>
->>
->>
->> #yehg [2011-01-27]
->
+For those not familiar with Google Summer of Code:
+
+http://en.wikipedia.org/wiki/Google_Summer_of_Code
+http://code.google.com/soc/
+http://socghop.appspot.com
+
+Nmap project (http://nmap.org/soc/) summarizes GSoC as follows:
+"This innovative and extraordinarily generous program provides $5,000
+stipends to 1,000+ college and graduate students to create and enhance
+open source software during their summer break.  Students gain valuable
+experience, get paid, strengthen their resume, and write code which will
+be distributed freely and used by millions of people!"
+
+http://www.google-melange.com/document/show/gsoc_program/google/gsoc2011/timeline
+
+March 18-27:
+Would-be student participants discuss application ideas with mentoring
+organizations.
+
+March 28:
+Student application period opens.
+
+Alexander
