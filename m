@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/6
-Message-ID: <1797174353.449927.1307045180893.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Jun 2011 16:06:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: XSS in nagios
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/1
+Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A712D0030@GVW0671EXC.americas.hpqcorp.net>
+Date: Wed, 23 Mar 2011 18:03:42 +0000
+From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: oss-security is on twitter
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> An XSS was reported in Nagios today. Could a CVE be assigned to this
-> issue? Thanks.
-> 
-> References:
-> 
-> http://tracker.nagios.org/view.php?id=224
-> http://seclists.org/bugtraq/2011/Jun/17
-> https://bugzilla.redhat.com/show_bug.cgi?id=709871
-> 
+Cool! How do you do this?  Part of the mail hosting, or just a filter in
+your email reader?
 
-Please use CVE-2011-2179.
+Mark Menkhus
+Hewlett Packard Software Security Response Team
+> -----Original Message-----
+> From: Eugene Teo [mailto:eugene@...hat.com]
+> Sent: Tuesday, March 22, 2011 11:43 PM
+> To: oss-security@...ts.openwall.com
+> Subject: [oss-security] oss-security is on twitter
+> 
+> Just in case you do not know, oss-security is on twitter.
+> 
+> Follow @oss_security :)
+> 
+> Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
 
-Thanks.
-
--- 
-    JB
+Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
