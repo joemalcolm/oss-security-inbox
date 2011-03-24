@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/1
-Message-Id: <201103212316.19715.geissert@debian.org>
-Date: Mon, 21 Mar 2011 23:16:15 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: file@...gw.com
-Cc: oss-security@...ts.openwall.com
-Subject: Possible security fixes in 5.05?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/3
+Message-ID: <20110324102431.50e9aba2@laverne>
+Date: Thu, 24 Mar 2011 10:24:31 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: roundcube < 0.5.1 CSRF
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+http://trac.roundcube.net/wiki/Changelog
 
-From file's 5.05 changelog[1] it seems like some security-relevant changes were 
-made, but I'm unable to find further information. I saw a git repository being 
-mentioned in a message but I can't find it either.
+two cross site request forgery, one additional issue fixed in 0.5.1:
 
-Can anyone please shed some light to the security-related changes?
+"Security: add optional referer check to prevent CSRF in GET requests
+Security: protect login form submission from CSRF
+Security: prevent from relaying malicious requests through modcss.inc"
 
-I would like to encourage developers to communicate such kind of issues openly 
-in this list, as it helps getting them fixed in distributions.
-
-Thanks in advance.
-
-[1]http://mx.gw.com/pipermail/file/2011/000690.html
-
-Sincerely,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
