@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/2
-Message-ID: <20110724115108.GA23390@foo.fgeek.fi>
-Date: Sun, 24 Jul 2011 14:51:08 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, coley@...re.org, hanno@...eck.de
-Subject: Re: CVE request: silverstripe before 2.4.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/4
+Message-ID: <4D8B3492.6020108@redhat.com>
+Date: Thu, 24 Mar 2011 13:09:54 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: roundcube < 0.5.1 CSRF
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 04, 2011 at 11:58:32AM -0500, Josh Bressers wrote:
-> ----- Original Message -----
-> > http://www.silverstripe.org/security-releases/
-> > 
-> > Silverstripe 2.4.4 notes:
-> > SQL information disclosure, SQL injection in Translatable extension,
-> > Cross Site Request Forgery in various CMS interfaces, XSS in controller
-> > action handling
-> > 
-> > (if someone is motivated one could also assign CVEs to all the old
-> > version issues)
-> > 
-> 
-> This one is way bigger than I can handle. I shall defer it to MITRE. It's
-> going to take a lot of work and CVE ids.
-> 
-> Thanks.
-> 
-> -- 
->     JB
 
-Did this got responded? At least there is no replies in this thread:
+Thanks, Hanno.
 
-http://seclists.org/oss-sec/2011/q1/23
+Hanno Böck wrote:
+> http://trac.roundcube.net/wiki/Changelog
+> 
+> two cross site request forgery, one additional issue fixed in 0.5.1:
+> 
+> "Security: add optional referer check to prevent CSRF in GET requests
 
-Best regards,
-Henri Salo
+Looks this one being just security hardening with the patches:
+[1] http://trac.roundcube.net/changeset/4503
+[2] http://trac.roundcube.net/changeset/4504
+
+For the CSRF flaws:
+
+> Security: protect login form submission from CSRF
+Patch: [3] http://trac.roundcube.net/changeset/4490
+
+> Security: prevent from relaying malicious requests through modcss.inc"
+Patch: [4] http://trac.roundcube.net/changeset/4488
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
