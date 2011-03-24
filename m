@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/8
-Message-ID: <4EF7769B.5010906@redhat.com>
-Date: Sun, 25 Dec 2011 12:16:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE-request for three 2009 Joomla issues (second part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/5
+Message-ID: <4D8B7875.6060606@redhat.com>
+Date: Thu, 24 Mar 2011 17:59:33 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, David Malcolm <dmalcolm@...hat.com>
+Subject: CVE Request -- Python (urllib, urllib2): Improper management of ftp:// and file:// URL schemes
 Content-Type: text/plain; charset=utf-8
 
-On 12/25/2011 07:37 AM, Henri Salo wrote:
-> Can I get three CVEs assigned for these issues:
->
-> 1) "Input passed via the "HTTP_REFERER" is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-> http://developer.joomla.org/security/news/298-20090604-core-frontend-xss-httpreferer-not-properly-filtered.html
-> http://osvdb.org/show/osvdb/55589
-Please use CVE-2011-4909 for this issue.
->
-> 2) "Input passed via the URL is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-> http://developer.joomla.org/security/news/299-20090605-core-frontend-xss-phpself-not-properly-filtered.html
-> http://osvdb.org/show/osvdb/55590
-Please use CVE-2011-4910 for this issue.
->
-> 3) "A security issue exists due to certain files missing the check for JEXEC, which can lead to the disclosure of path information."
-> http://developer.joomla.org/security/news/300-20090606-core-missing-jexec-check.html (different than 302-20090722-core-missing-jexec-check.html)
-> http://osvdb.org/show/osvdb/55591
-Please use CVE-2011-4911 for this issue.
 
-> Secunia advisory: http://secunia.com/advisories/35668/
->
-> - Henri Salo
+Hello Steve, vendors,
 
+   A security flaw was found in the way handlers for ftp:// and
+file:// URL schemes in the Python urllib and urllib2 extensible
+libraries processed the urllib open URL request. A remote attacker
+could use this flaw to access sensitive information or cause
+a denial of service (excessive CPU and memory use) of a Python
+web application, processing URLs, via a specially-crafted urllib
+open URL request.
 
--- 
+References:
+[1] http://bugs.python.org/issue11662
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=690560
 
--Kurt Seifried / Red Hat Security Response Team
+Could you allocate a CVE id for this?
 
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
