@@ -1,67 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/18
-Message-ID: <1961486340.193615.1294341196350.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 14:13:16 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/3
+Message-ID: <20110324102431.50e9aba2@laverne>
+Date: Thu, 24 Mar 2011 10:24:31 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Debian kernel maintainers <debian-kernel@...ts.debian.org>, stable-review@...nel.org, Ben Hutchings <ben@...adent.org.uk>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: kernel [Re: Security review of 2.6.32.28]
+Subject: CVE request: roundcube < 0.5.1 CSRF
 Content-Type: text/plain; charset=utf-8
 
-> 
-> > [03/49] fuse: verify ioctl retries
-> > Kernel buffer overflow, but only CUSE servers could exploit it and
-> > /dev/cuse is normally restricted to root.
-> 
-> Upstream fix:
-> http://git.kernel.org/linus/7572777eef78ebdee1ecb7c258c0ef94d35bad16
-> Introduced in 2.6.29.
+http://trac.roundcube.net/wiki/Changelog
 
-Please use CVE-2010-4650
+two cross site request forgery, one additional issue fixed in 0.5.1:
 
-
-> > [16/49] IB/uverbs: Handle large number of entries in poll CQ
-> > Fixes integer overflow and information leak which I assume can be
-> > triggered by unprivileged local users.
-> 
-> Sounds like it - Documentation/infiniband/user_verbs.txt says:
-> 
-> "Since the InfiniBand userspace verbs should be safe for use by
-> non-privileged processes, it may be useful to add an appropriate MODE
-> or GROUP to the udev rule."
-> 
-> Upstream fix:
-> http://git.kernel.org/linus/7182afea8d1afd432a17c18162cc3fd441d0da93
-> Introduced in 2.6.15.
-> 
-
-Please use CVE-2010-4649
-
-
-> > [20/49] orinoco: fix TKIP countermeasure behaviour
-> > Fixes cryptographic weakness potentially leaking information to remote
-> > (but physically nearby) users.
-> 
-> Upstream fix:
-> http://git.kernel.org/linus/0a54917c3fc295cb61f3fb52373c173fd3b69f48
-> Introduced in 2.6.28.
-> 
-
-Please use CVE-2010-4648.
-
-
-> > [44/49] ima: fix add LSM rule bug
-> > Allows subversion of IMA. Not relevant to Debian kernel images since
-> > we
-> > don't build IMA.
-> 
-> Upstream fix:
-> http://git.kernel.org/linus/867c20265459d30a01b021a9c1e81fb4c5832aa9
-> Introoduced in 2.6.30.
-
-Please use CVE-2011-0006
-
-Thanks.
+"Security: add optional referer check to prevent CSRF in GET requests
+Security: protect login form submission from CSRF
+Security: prevent from relaying malicious requests through modcss.inc"
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
