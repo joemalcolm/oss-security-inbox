@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/13
-Message-ID: <4D708A74.1040807@redhat.com>
-Date: Fri, 04 Mar 2011 14:45:08 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/7
+Message-ID: <4D8BD876.6090507@canonical.com>
+Date: Fri, 25 Mar 2011 10:49:10 +1100
+From: William Grant <william.grant@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1076 kernel: DNS: Fix a NULL pointer deref when trying to read an error key
+Subject: CVE-2011-0728: Loggerhead 1.18.1 security release
 Content-Type: text/plain; charset=utf-8
 
-http://git.kernel.org/linus/1362fa078dae16776cd439791c6605b224ea6171 has 
-very detailed explanation about the issue.
+Hi,
 
-net/dns_resolver/dns_key.c was added in 1a4240f4 (v2.6.36-rc1).
+Loggerhead 1.18.1 has just been released, fixing an XSS vulnerability
+when displaying filenames in revision views (CVE-2011-0728).
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Upstream bug (with patches against 1.17 and 1.18):
+ https://bugs.launchpad.net/loggerhead/+bug/740142
+
+Release details:
+ https://launchpad.net/loggerhead/1.18/1.18.1
+
+William.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
