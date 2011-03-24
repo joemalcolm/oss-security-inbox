@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/2
-Message-ID: <4E1E9ADD.7060400@redhat.com>
-Date: Thu, 14 Jul 2011 09:29:33 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Erik de Castro Lopo <erikd@...a-nerd.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/7
+Message-ID: <4D8BD876.6090507@canonical.com>
+Date: Fri, 25 Mar 2011 10:49:10 +1100
+From: William Grant <william.grant@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2011-0728: Loggerhead 1.18.1 security release
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Hello Erik,
+Loggerhead 1.18.1 has just been released, fixing an XSS vulnerability
+when displaying filenames in revision views (CVE-2011-0728).
 
-On 07/14/2011 08:49 AM, Erik de Castro Lopo wrote:
-> Jan Lieskovsky wrote:
->
->>     an integer overflow, leading to heap-based buffer overflow flaw was
->> found in the way libsndfile, library for reading and writing of sound
->> files, processed certain PARIS Audio Format (PAF) audio files with
->> crafted count of channels in the PAF file header. A remote attacker
->> could provided a specially-crafted PAF audio file, which once opened by
->> a local, unsuspecting user in an application, linked against libsndfile,
->> could lead to that particular application crash (denial of service),
->
-> I agree with everything up to here.
->
->> or, potentially arbitrary code execution with the privileges of the
->> user running the application.
->
-> but this is rubbish. The heap gets overwritten with zeros which would
-> certainly lead to the application segfaulting. However, there is
-> no way for arbitrary code to be executed on amy sane OS with proper
-> memory protection.
+Upstream bug (with patches against 1.17 and 1.18):
+ https://bugs.launchpad.net/loggerhead/+bug/740142
 
-Thank you for the clarification regarding this. To be honest didn't have
-chance to prepare reproducer for this issue yet, thus the initial 
-description was based only on information from those references and 
-upstream Bzr Changelog message.
+Release details:
+ https://launchpad.net/loggerhead/1.18/1.18.1
 
-Thanks for that correction, it's appreciated.
+William.
 
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
->
-> Furthermore, Secunia when they contacted me about this said they would
-> release information about this vulernability on the 18th and then ended
-> up releasing it on the 12th instead which means I had to rush out the
-> release I was working on (and would have easily had ready for the
-> 18th). That is not the way to win friends and influence people.
->
-> Regards,
-> Erik
-
+Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
