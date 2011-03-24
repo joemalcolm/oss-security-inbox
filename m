@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/5
-Message-ID: <4E31578B.2080804@kde.org>
-Date: Thu, 28 Jul 2011 08:35:23 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: "Steven M. Christey" <coley@...-smtp.mitre.org>
-CC: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
-Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/6
+Message-ID: <20110324200652.GA2320@foo.fgeek.fi>
+Date: Thu, 24 Mar 2011 22:06:52 +0200
+From: Henri Salo <fgeek@....fgeek.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: VLC bookmark buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 07/27/2011 04:57 PM, Steven M. Christey wrote:
+On Thu, Mar 03, 2011 at 03:31:59PM -0500, Josh Bressers wrote:
+> Argh, this should have gotten a 2010 ID.
 > 
-> On Mon, 25 Jul 2011, Jeff Mitchell wrote:
+> Steve, does MITRE want to reassign, or just leave it as is?
 > 
->> The Arora and Rekonq web browsers are also vulnerable to the same attack
->> vector, and other Qt-based programs may be as well. We're working with
->> the Qt team to help enhance their documentation to warn developers to
->> take care sanitizing their inputs, but it's not actually a Qt flaw. So
->> we're a bit unsure how to proceed here.
+> Thanks.
 > 
-> This sounds like a limitation of the Qt API, which can be avoided by
-> programmers who are aware of the limitation.  Kind of like how strcpy()
-> can be subject to buffer overflows, *if* the programmer isn't careful.
-> Also happened with confusing return values from certain OpenSSL API
-> functions a couple years ago.  (The PHP_SELF example is similar.)  So,
-> this should probably get separate CVEs for each application/library that
-> misuses the relevant function(s).
+> -- 
+>     JB
 
-That sounds good. On the KDE side, this is kdelibs, Kleopatra, and
-Konqueror.
+Any updates in this case?
 
-> If Qt itself contains misuse of its own functions - which happens
-> sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE,
-> too.
-
-As far as I'm aware Qt itself is not affected, but we've not done an
-exhaustive analysis.
-
-Thanks,
-Jeff
+Best regards,
+Henri Salo
