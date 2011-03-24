@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/36
-Message-ID: <20110404175333.GA13733@openwall.com>
-Date: Mon, 4 Apr 2011 21:53:33 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/4
+Message-ID: <4D8B3492.6020108@redhat.com>
+Date: Thu, 24 Mar 2011 13:09:54 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: roundcube < 0.5.1 CSRF
 Content-Type: text/plain; charset=utf-8
 
-Russ, Tomas -
 
-On Mon, Apr 04, 2011 at 01:26:50PM -0400, R P Herrold wrote:
-> On Mon, 4 Apr 2011, Tomas Hoger wrote:
+Thanks, Hanno.
+
+Hanno Böck wrote:
+> http://trac.roundcube.net/wiki/Changelog
 > 
-> >Given the aim to keep the subscriber list very limited, this probably
-> >falls into a tentatively subscribed category too.  AFAIK, CentOS has
-> >rather few components that are not rebuilds of the RHEL SRPMs, the
-> >question is how often a v-s info was useful in the past in providing
-> >security updates for those extra packages.
+> two cross site request forgery, one additional issue fixed in 0.5.1:
 > 
-> Thanks for the post furthering the marketing goals of your 
-> corporate master; ...
+> "Security: add optional referer check to prevent CSRF in GET requests
 
-FWIW, I found Tomas' posting appropriate and his question desirable,
-which is confirmed by your helpful response (starting with the second
-paragraph).  If not Tomas, others would (hopefully) have the same
-question, which was reasonable and it needed to be addressed in here.
+Looks this one being just security hardening with the patches:
+[1] http://trac.roundcube.net/changeset/4503
+[2] http://trac.roundcube.net/changeset/4504
 
-So I'd like to thank both of you.  I only wish this did not result in
-that tone of Russ' response, but we can live with that.
+For the CSRF flaws:
 
-Alexander
+> Security: protect login form submission from CSRF
+Patch: [3] http://trac.roundcube.net/changeset/4490
+
+> Security: prevent from relaying malicious requests through modcss.inc"
+Patch: [4] http://trac.roundcube.net/changeset/4488
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
