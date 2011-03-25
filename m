@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/2
-Message-Id: <201106091301.36138.ludwig.nussel@suse.de>
-Date: Thu, 9 Jun 2011 13:01:35 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: Ruby on Rails 3/rails_xss XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/25/3
+Message-ID: <4D8CCB99.4060104@redhat.com>
+Date: Fri, 25 Mar 2011 18:06:33 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Nagios -- XSS in the network status map CGI script
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-http://weblog.rubyonrails.org/2011/6/8/potential-xss-vulnerability-in-ruby-on-rails-applications
+Hello Steve, vendors,
 
-cu
-Ludwig
+   Cross-site scripting (XSS) vulnerability in Nagios allows remote
+attackers to inject arbitrary web script or HTML via specially-crafted
+'layer' parameter passed to the Nagios network status map CGI script
+(statusmap.cgi).
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+References:
+[1] http://tracker.nagios.org/view.php?id=207
+[2] http://www.rul3z.de/advisories/SSCHADV2011-002.txt
+[3] http://secunia.com/advisories/43287/
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=690877
+
+Public PoC (from [2):
+=====================
+http://site/nagios/cgi-bin/statusmap.cgi?layer=' onmouseover="alert('XSS')" '
+
+This doesn't seem to have a CVE id yet, so could you allocate one?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
