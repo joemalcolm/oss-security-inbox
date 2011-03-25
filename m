@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/4
-Message-ID: <20110824111313.GW25099@lupin.home.powdarrmonkey.net>
-Date: Wed, 24 Aug 2011 12:13:13 +0100
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/25/1
+Message-ID: <4D8C3121.7090907@redhat.com>
+Date: Fri, 25 Mar 2011 14:07:29 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple vulnerabilities in dtc
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: two OSS fixes
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
-> Hi,
-> 
-> A number of problems have been found recently in dtc (Domain Technologie
-> Control) and reported to the Debian BTS. These are the bugs that affect
-> upstream code; please assign CVEs as you feel appropriate:
+On 03/23/2011 11:56 PM, Dan Rosenberg wrote:
+> For both issues, access to /dev/sequencer is required, which is
+> typically reserved for group audio.  Additionally, these only affect
+> systems that use OSS (not to be confused with the OSS emulation layer
+> provided by ALSA).
+>
+> 1. Specially crafted requests may be written to /dev/sequencer
+> resulting in an underflow when calculating a size for a
+> copy_from_user() operation in the driver for MIDI interfaces.  On x86,
+> this just returns an error, but it may cause memory corruption on
+> other architectures.  Other malformed requests may result in the use
+> of uninitialized variables.  [1]
 
-any updates here?
+CVE-2011-1476
 
-Thanks,
+> 2. Due to a failure to validate user-supplied indexes in the driver
+> for Yamaha YM3812 and OPL-3 chips, a specially crafted ioctl request
+> may be sent to /dev/sequencer, resulting in reading and writing beyond
+> the bounds of heap buffers, and potentially allowing privilege
+> escalation.  [2]
 
+CVE-2011-1477
 
+> [1] http://marc.info/?l=linux-kernel&m=130089204124354&w=2
+> [2] http://marc.info/?l=linux-kernel&m=130089499728386&w=2
+
+Thanks, Eugene
 -- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
-
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
