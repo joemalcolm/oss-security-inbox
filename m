@@ -1,96 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/2
-Message-ID: <20110620050111.GA28959@openwall.com>
-Date: Mon, 20 Jun 2011 09:01:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/25/1
+Message-ID: <4D8C3121.7090907@redhat.com>
+Date: Fri, 25 Mar 2011 14:07:29 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: two OSS fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 03/23/2011 11:56 PM, Dan Rosenberg wrote:
+> For both issues, access to /dev/sequencer is required, which is
+> typically reserved for group audio.  Additionally, these only affect
+> systems that use OSS (not to be confused with the OSS emulation layer
+> provided by ALSA).
+>
+> 1. Specially crafted requests may be written to /dev/sequencer
+> resulting in an underflow when calculating a size for a
+> copy_from_user() operation in the driver for MIDI interfaces.  On x86,
+> this just returns an error, but it may cause memory corruption on
+> other architectures.  Other malformed requests may result in the use
+> of uninitialized variables.  [1]
 
-Earlier today, while working on a test suite for John the Ripper, magnum
-discovered and reported what turned out to be a bug in John the Ripper
-and crypt_blowfish:
+CVE-2011-1476
 
-http://www.openwall.com/lists/john-dev/2011/06/19/2
+> 2. Due to a failure to validate user-supplied indexes in the driver
+> for Yamaha YM3812 and OPL-3 chips, a specially crafted ioctl request
+> may be sent to /dev/sequencer, resulting in reading and writing beyond
+> the bounds of heap buffers, and potentially allowing privilege
+> escalation.  [2]
 
-The bug is inadvertent sign extension, and the fix is trivial:
+CVE-2011-1477
 
-http://www.openwall.com/lists/john-dev/2011/06/19/3
+> [1] http://marc.info/?l=linux-kernel&m=130089204124354&w=2
+> [2] http://marc.info/?l=linux-kernel&m=130089499728386&w=2
 
-This bug dates back to 1998 (or maybe even 1997).
-
-Unfortunately, the bug is not only in JtR, but also in crypt_blowfish,
-and thus in plenty of other systems and programs that have integrated
-crypt_blowfish.  Obviously, I am quite embarrassed; I should have
-included 8-bit test vectors or subjected crypt_blowfish to a fuzzer (vs.
-OpenBSD's implementation), or/and used different coding conventions (use
-"unsigned char" almost everywhere, although this has its problems too -
-such as compiler warnings on library calls that expect simple "char *").
-
-Since the code successfully worked in JtR, I thought that it was
-essentially already fuzz-tested.  But apparently passwords with 8-bit
-characters were uncommon enough that no one noticed the bug for years.
-
-I am going to provide an official fix for crypt_blowfish (likely the
-one-liner plus added tests).  I thought I'd bring the issue up on
-oss-security sooner rather than later.
-
-Here's my preliminary analysis of the impact:
-
-http://www.openwall.com/lists/john-dev/2011/06/20/3
-http://www.openwall.com/lists/john-dev/2011/06/20/5
-
-To summarize:
-
-The majority of hashes (but not all of them) for passwords containing
-characters with the 8th bit set are incompatible with OpenBSD's (really
-nasty, but no security impact here).
-
-What's worse, approximately 3 in 16 passwords containing a single
-character with the 8th bit set have 1 to 3 characters immediately
-preceding the 8-bit character ignored.  With more than one character
-with the 8th bit set, things may be even worse.
-
-Thus, those passwords may be much easier to crack than expected.
-
-As to what's affected besides crypt_blowfish itself, I expect it to be
-PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
-crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
-identify them and notify the maintainers).
-
-Sorry about that!
-
-Since this is the second bug with char signedness in crypt_blowfish, it
-looks like I have a lesson to learn here.  The last time, the bug was
-with salt generation for hash types other than bcrypt (that code was
-little used and little tested).  Besides fixing the bug, I responded by
-running extensive tests and making sure the distribution of salts was
-uniform.  Of course, it was better to run those tests before releasing
-the code to the public.  Now we have an issue with the passwords
-themselves.  Obviously, I will be adding more tests, even though it
-would be better done before releasing the code.
-
-No, I don't expect even more sign extension bugs in crypt_blowfish.
-There's not that much code, and we've pretty much tested it by now.
-
-However, I might reconsider my C programming conventions for new code as
-it relates to use of integer types.  I think I'd rather workaround
-meaningless compiler warnings on strlen() and the like (even though
-those extra casts look dirty) than miss real bugs elsewhere.
-
-Perl's Crypt::Eksblowfish turns out to have sufficiently reworked code
-that it's unaffected:
-
-http://www.openwall.com/lists/john-dev/2011/06/20/4
-
-Oh, also some builds of crypt_blowfish (and of affected systems/apps)
-for PowerPC are probably unaffected, because char is typically unsigned
-there (unless overridden in compiler flags for compatibility with more
-typical systems).
-
-Once again, my apologies for the mess.
-
-Alexander
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
