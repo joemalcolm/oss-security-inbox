@@ -1,16 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/36
-Message-ID: <20110403231756.GA10724@openwall.com>
-Date: Mon, 4 Apr 2011 03:17:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/7
+Message-ID: <Pine.GSO.4.64.1103281110380.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 11:11:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: VLC bookmark buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 02:46:34AM +0400, ArkanoiD wrote:
-> Well, i have at least one active opensource project that is closely related to vulnerabilities and preventive countermeasures, openfwtk.sourceforge.net, doesn't it qualify?
 
-No.  That's not a Linux distro.  Like I said, we might setup more lists
-later, but for now it's just Linux distros.
+Let's leave it as is.  The number is already out there.  While it's rare 
+(and undesired), sometimes the year portion of a CVE number is later than 
+the initial disclosure date.
 
-Alexander
+- Steve
+
+
+On Thu, 24 Mar 2011, Henri Salo wrote:
+
+> On Thu, Mar 03, 2011 at 03:31:59PM -0500, Josh Bressers wrote:
+>> Argh, this should have gotten a 2010 ID.
+>>
+>> Steve, does MITRE want to reassign, or just leave it as is?
+>>
+>> Thanks.
+>>
+>> --
+>>     JB
+>
+> Any updates in this case?
+>
+> Best regards,
+> Henri Salo
+>
