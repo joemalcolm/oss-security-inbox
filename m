@@ -1,25 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/4
-Message-ID: <4D6480DC.7090600@redhat.com>
-Date: Wed, 23 Feb 2011 11:37:00 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/5
+Message-ID: <Pine.GSO.4.64.1103281040050.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 10:40:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: Corrupted LDM partition table issues
+Subject: Re: CVE  Request: perl: regex causes assertion fail
 Content-Type: text/plain; charset=utf-8
 
-Reported by Timo Warns, "The kernel automatically evaluates partition 
-tables of storage devices. The code for evaluating LDM partitions (in 
-fs/partitions/ldm.c) contains a bug that causes a kernel oops on certain 
-corrupted LDM partitions.  A kernel subsystem seems to crash, because, 
-after the oops, the kernel no longer recognizes newly connected storage 
-devices."
 
-http://www.spinics.net/lists/mm-commits/msg82429.html
+On Wed, 23 Mar 2011, Ludwig Nussel wrote:
 
-This should affect kernels version v2.6.27-rc1 and above. Of course, 
-CONFIG_LDM_PARTITION needs to be set.
+> Certain regular expressions cause perl to abort():
+> http://rt.perl.org/rt3/Public/Bug/Display.html?id=76538
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Use CVE-2010-4777
+
+- Steve
