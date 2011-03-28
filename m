@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/12
-Message-ID: <1001446510.28719.1302552993447.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 16:16:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: sctp: fix to calc the INIT/INIT-ACK chunk length correctly to set
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/2
+Message-ID: <Pine.GSO.4.64.1103281027270.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 10:27:49 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, David Malcolm <dmalcolm@...hat.com>
+Subject: Re: CVE Request -- Python (urllib, urllib2): Improper management of ftp:// and file:// URL schemes
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1573
 
-Thanks.
+On Thu, 24 Mar 2011, Jan Lieskovsky wrote:
 
--- 
-    JB
+>  A security flaw was found in the way handlers for ftp:// and
+> file:// URL schemes in the Python urllib and urllib2 extensible
+> libraries processed the urllib open URL request.
+>
+>...
+>
+> References:
+> [1] http://bugs.python.org/issue11662
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=690560
 
 
------ Original Message -----
-> When calculating the INIT/INIT-ACK chunk length, we should not only
-> account the length of parameters, but also the parameters zero padding
-> length, such as AUTH HMACS parameter and CHUNKS parameter. Without the
-> parameters zero padding length we may get oops.
-> 
-> Commit:
-> http://git.kernel.org/linus/a8170c35e738d62e9919ce5b109cf4ed66e9
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=695383
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Use CVE-2011-1521
+
+- Steve
