@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/2
-Message-ID: <20110320134340.GA10106@albatros>
-Date: Sun, 20 Mar 2011 16:43:40 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/7
+Message-ID: <Pine.GSO.4.64.1103281110380.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 11:11:52 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: Re: CVE request: VLC bookmark buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Steven,
 
-On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
-> Thanks for the list. I don't have enough CVE ids for this, I've grouped
-> them by type and version for MITRE to assign IDs.
+Let's leave it as is.  The number is already out there.  While it's rare 
+(and undesired), sometimes the year portion of a CVE number is later than 
+the initial disclosure date.
 
-Any update on this?
+- Steve
 
 
-Thanks,
+On Thu, 24 Mar 2011, Henri Salo wrote:
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+> On Thu, Mar 03, 2011 at 03:31:59PM -0500, Josh Bressers wrote:
+>> Argh, this should have gotten a 2010 ID.
+>>
+>> Steve, does MITRE want to reassign, or just leave it as is?
+>>
+>> Thanks.
+>>
+>> --
+>>     JB
+>
+> Any updates in this case?
+>
+> Best regards,
+> Henri Salo
+>
