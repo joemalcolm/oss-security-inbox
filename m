@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/8
-Message-ID: <2144421900.298976.1298925561507.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 15:39:21 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/1
+Message-ID: <4D8FF689.5050502@redhat.com>
+Date: Mon, 28 Mar 2011 10:46:33 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: monte@...t.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Smarty -- {smarty.template} && {smarty.currentdir} security bypass
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1478 kernel: gro: reset dev and skb_iff on skb reuse
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1028.
+https://bugzilla.redhat.com/CVE-2011-1478
 
-Thanks.
+There is an issue in the core GRO code where an skb belonging to an 
+unknown VLAN is reused as we don't reset skb->dev in the reuse case. 
+This could result in a NULL pointer dereference.
 
+6d152e23ad1a7a5b40fef1f42e017d66e6115159 gro: reset skb_iif on reuse
+66c46d741e2e60f0e8b625b80edb0ab820c46d7a gro: Reset dev pointer on reuse
+
+Thanks, Eugene
 -- 
-    JB
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> Smarty upstream has released v3.0.7 on 11-th of February 2011:
-> [1]
-> http://groups.google.com/group/smarty-announce/browse_thread/thread/18af294596756ac8
-> 
-> addressing one security flaw:
-> [2] http://www.smarty.net/forums/viewtopic.php?t=18815
-> [3]
-> http://smarty-php.googlecode.com/svn/trunk/distribution/change_log.txt
-> [4] http://secunia.com/advisories/43284/
-> 
-> Not sure this one got a CVE identifier already. If not, could you
-> allocate one?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
