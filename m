@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/6
-Message-ID: <20110701173720.059b9ce6@redhat.com>
-Date: Fri, 1 Jul 2011 17:37:20 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: cxib@...urityreason.com
-Subject: php ZipArchive::addGlob() crashes on invalid flags
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/4
+Message-ID: <Pine.GSO.4.64.1103281036230.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 10:36:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: CVE Request -- Nagios -- XSS in the network status map CGI script
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-Following PHP bug is marked as security and lists CVE-2011-1657:
+On Fri, 25 Mar 2011, Jan Lieskovsky wrote:
 
-https://bugs.php.net/bug.php?id=54681
-http://svn.php.net/viewvc/?view=revision&revision=310814
+>  Cross-site scripting (XSS) vulnerability in Nagios allows remote
+> attackers to inject arbitrary web script or HTML via specially-crafted
+> 'layer' parameter passed to the Nagios network status map CGI script
+> (statusmap.cgi).
+>
+> References:
+> [1] http://tracker.nagios.org/view.php?id=207
+> [2] http://www.rul3z.de/advisories/SSCHADV2011-002.txt
+> [3] http://secunia.com/advisories/43287/
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=690877
 
-The fix is committed, hence should be released with 5.3.7.
 
-Reporter mentions this really was an underlying glob() implementation
-flaw, but that's not entirely true.  Maybe there are some flags that
-are not recognized by glob() and still cause it to crash, but the
-crashes I've been able to reproduce were due to the use of flags
-supported by glob() that require some glob_t struct setup before
-calling glob() (such as GLOB_ALTDIRFUNC).
+Use CVE-2011-1523
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+- Steve
