@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/23
-Message-ID: <4ECAC205.4040906@redhat.com>
-Date: Mon, 21 Nov 2011 14:26:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/1
+Message-ID: <4D8FF689.5050502@redhat.com>
+Date: Mon, 28 Mar 2011 10:46:33 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1478 kernel: gro: reset dev and skb_iff on skb reuse
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 10:51 AM, Petr Matousek wrote:
-> There is a NULL pointer deref in the user-defined key type whereby
-> updating a negative key into a fully instantiated key will cause
-> an oops to occur when the code attempts to free the non-existent
-> old payload.
->
-> Upstream commit:
-> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
->
-> References:
-> https://lkml.org/lkml/2011/11/15/363
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
->
-> Thanks,
-Please use CVE-2011-4331 for this issue.
+https://bugzilla.redhat.com/CVE-2011-1478
 
+There is an issue in the core GRO code where an skb belonging to an 
+unknown VLAN is reused as we don't reset skb->dev in the reuse case. 
+This could result in a NULL pointer dereference.
+
+6d152e23ad1a7a5b40fef1f42e017d66e6115159 gro: reset skb_iif on reuse
+66c46d741e2e60f0e8b625b80edb0ab820c46d7a gro: Reset dev pointer on reuse
+
+Thanks, Eugene
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
