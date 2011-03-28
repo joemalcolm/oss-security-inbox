@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/1
-Message-ID: <4EAF38A9.1010603@redhat.com>
-Date: Tue, 01 Nov 2011 08:09:13 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: oom: fix integer overflow of points in oom_badness
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/4
+Message-ID: <Pine.GSO.4.64.1103281036230.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 10:36:39 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: CVE Request -- Nagios -- XSS in the network status map CGI script
 Content-Type: text/plain; charset=utf-8
 
-An integer overflow will happen on 64bit archs if task's sum of rss,
-swapents and nr_ptes exceeds (2^31)/1000 value. This was introduced by
-commit f755a04 oom: use pte pages in OOM score. This can cause a denial
-of service.
 
-https://lkml.org/lkml/2011/10/31/138
+On Fri, 25 Mar 2011, Jan Lieskovsky wrote:
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+>  Cross-site scripting (XSS) vulnerability in Nagios allows remote
+> attackers to inject arbitrary web script or HTML via specially-crafted
+> 'layer' parameter passed to the Nagios network status map CGI script
+> (statusmap.cgi).
+>
+> References:
+> [1] http://tracker.nagios.org/view.php?id=207
+> [2] http://www.rul3z.de/advisories/SSCHADV2011-002.txt
+> [3] http://secunia.com/advisories/43287/
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=690877
+
+
+Use CVE-2011-1523
+
+- Steve
