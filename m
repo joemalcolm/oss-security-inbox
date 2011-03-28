@@ -1,61 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/11
-Message-ID: <1805319507.426828.1299529858053.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Mar 2011 15:30:58 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/3
+Message-ID: <Pine.GSO.4.64.1103281029530.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 10:30:02 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: CVE Request -- php-doctrine-Doctrine -- SQL injection flaw
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Mon, Mar 07, 2011 at 01:21:05PM +0100, Jan Kaluža wrote:
-> 
-> > I think logrotate should skip rotation of files in unsafe
-> > directories and show error message instead. Logrotate should also
-> > contain something like "--force" switch (this name is already used,
-> > so we have to find better one, but I don't have anything better in
-> > mind just now). With this switch logrotate should *not* skip unsafe
-> > directories and rotate them as it currently does, but show the error
-> > message. Basically it allows backward compatibility.
-> 
-> "--override-unsafe-directory-check" perhaps? Make it a long option,
-> so that there is no doubt that the user is doing something that's
-> potentially dangerous.
-> 
-> (I am following this discussion with great interest.)
-> 
 
-It seems there is now a consensus on this (at least that's how I'm reading
-it). Here is what I plan to do with CVE ids unless someone speaks up.
+On Fri, 25 Mar 2011, Jan Lieskovsky wrote:
 
-As best as I can tell, logrotate only needs a CVE id for this:
+>  a SQL injection flaw has been reported against Doctrine, the PHP Object 
+> Relational Mapper:
+>  [1] http://www.doctrine-project.org/blog/doctrine-security-fix
+>  [2] https://bugzilla.redhat.com/show_bug.cgi?id=689396
 
-    8) Issue #8: logrotate: TOCTOU race condition by creation of new files
-       (between opening the file and moment, final permissions have been
-       applied) [information disclosure]
+Use CVE-2011-1522
 
-        It was found that logrotate utility used insecure default
-        permissions, when creating of new files (time-of-check,
-        time-of-use, TOCTOU race condition).  In some specific
-        configurations, a local attacker could use this flaw to open the
-        new file before the final permissions have been applied, leading to
-        disclosure of sensitive information. A different vulnerability
-        than:
-        [1] https://bugzilla.redhat.com/show_bug.cgi?id=680787 (Issue #1)
-
-        References:
-        [14] https://bugzilla.redhat.com/show_bug.cgi?id=680798
-
-        Source code background (issue reason):
-        [15] https://bugzilla.redhat.com/show_bug.cgi?id=680798#c3
-
-We then will need to assign IDs for various broken uses of /var/log (If
-someone has a list of the currently known ones, please pass it along)
-
-What does everyone think?
-
-Thanks.
-
--- 
-    JB
+- Steve
