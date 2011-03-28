@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/16
-Message-ID: <4DA4C8F2.5080907@mvista.com>
-Date: Tue, 12 Apr 2011 11:49:38 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/6
+Message-ID: <Pine.GSO.4.64.1103281054270.7261@faron.mitre.org>
+Date: Mon, 28 Mar 2011 11:00:00 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request: libpng memory leak
 Content-Type: text/plain; charset=utf-8
 
 
+On Tue, 22 Mar 2011, Ludwig Nussel wrote:
 
-On 04/11/2011 09:57 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> Postponed. I'd like to see any support for you getting onto the Linux
->> distros security contacts list, with reasoning, or/and any other
->> suggestions on what to do in this case. Josh - what do you think (as
->> someone who advocated the setup of a vendor-sec replacement)?
->>
-> 
-> My initial thought is that a vendor without public advisories is a
-> liability.
+> libpng has this in it's changelog¹:
+> version 1.2.39beta05 [August 1, 2009]
+>  Reject attempt to write iCCP chunk with negative embedded profile length
+>    (JD Chen)
+>
+> As it turned out this fixes a DoS (memory consumption on x86_64 and
+> a segfault on i386) if e.g. GraphicsMagick is used to convert certain
+> jpeg files to png.
+> The bug was introduced in 1.2.13beta1:
+> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=0ff85c6923d2c4fca4ac0bad28e387e3b1777d7a#patch19
 
-Making our Advisories public could put our customers' customers at risk
-depending on when we publish and when our customers can get the fixes
-into their customers hands and so on down the line.
+> Then an incomplete attempt to fix it in 1.2.15beta3, due to 
+> http://bugs.gentoo.org/159216:
 
-- Armin
+> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=948ee23a2a400672b1751cfc646a7467741e9b2e#patch18
 
+This gets CVE-2006-7244
+
+> And finally fixed in 1.2.39beta5:
+> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=9e88fcd58c8ce7f2183bc2045e5180cba0043f09#patch19
+
+Since CVE-2006-7244 was a partial fix, this final fix should probably get 
+its own ID.
+
+So, use CVE-2009-5063.
+
+- Steve
