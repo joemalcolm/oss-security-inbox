@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/4
-Message-ID: <20111123132301.6db67d53@laverne>
-Date: Wed, 23 Nov 2011 13:23:01 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/3
+Message-Id: <201103291638.44993.ludwig.nussel@suse.de>
+Date: Tue, 29 Mar 2011 16:38:44 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
+Subject: CVE Request: rsyslogd memory leaks
 Content-Type: text/plain; charset=utf-8
 
-New ffmpeg releases contain a couple of security fixes:
-http://secunia.com/advisories/46888/
+Hi,
 
-1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
-exploited to cause a buffer overflow.
+The $RepeatedMsgReduction option could cause a memory leak:
+http://bugzilla.adiscon.com/show_bug.cgi?id=225
+http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=8083bd1433449fd2b1b79bf759f782e0f64c0cd2
 
-2) An integer overflow error within the "vp3_dequant()" function
-(libavcodec/vp3.c) can be exploited to cause a buffer overflow.
-
-3) Errors within the "av_image_fill_pointers()", the
-"vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
-exploited to trigger out-of-bounds reads.
-
-
-Please assign CVEs.
+Multiple rulesets that are used by multiple inputs could cause a
+memory leak or crash:
+http://bugzilla.adiscon.com/show_bug.cgi?id=226
+http://bugzilla.adiscon.com/show_bug.cgi?id=218
+http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=1ef709cc97d54f74d3fdeb83788cc4b01f4c6a2a
 
 
-Maybe someone wants to have a look if other issues in those releases are
-security relevant:
-http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
+cu
+Ludwig
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
