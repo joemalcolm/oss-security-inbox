@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/13
-Message-ID: <20110628185341.GA18560@dhcp-25-225.brq.redhat.com>
-Date: Tue, 28 Jun 2011 20:53:41 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/1
+Message-ID: <1301384153.3849.159.camel@new-desktop>
+Date: Tue, 29 Mar 2011 09:35:53 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: qemu-kvm: OOB memory access caused by negative vq notifies
+Subject: CVE requests : Liferay 6.0.6
 Content-Type: text/plain; charset=utf-8
 
-The virtio_queue_notify() function checks that the virtqueue number is
-less than the maximum number of virtqueues.  A signed comparison is
-used but the virtqueue number could be negative if a buggy or malicious
-guest is run. This results in memory accesses outside of the virtqueue
-array. 
+Hello,
 
-To trigger this issue the attacker needs to issue 32bit write to Queue
-Notify field of Virtio Header in the virtio pci config space even though
-the field is 16bit only by specs. Qemu-kvm allows that for the moment
-and provides whole 32bit value to the underlying functions.
+version 6.0.6 of Liferay correct 3 security vulnerabilities related to
+the processing of XSLT content and 2 XSS.
 
-Unprivileged guest user could use this flaw to crash the guest (denial
-of service) or, possibly, escalate their privileges on the host.
+The full 6.0.6 Changelog :
+http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
 
-Upstream patch:
-http://patchwork.ozlabs.org/patch/94604/
+Remote command execution :
+http://issues.liferay.com/browse/LPS-14726
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=717399
-http://patchwork.ozlabs.org/patch/94604/
+Arbitrary file disclosure via XXE :
+http://issues.liferay.com/browse/LPS-14927
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+XSL/XML file disclosure via file:// :
+http://issues.liferay.com/browse/LPS-13762
+
+XSS vulnerability :
+http://issues.liferay.com/browse/LPS-11506
+
+XSS in message boards :
+http://issues.liferay.com/browse/LPS-12628
+
+Regards,
+Nicolas Grégoire
+
