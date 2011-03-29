@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/15
-Message-ID: <346627832.815232.1308597155134.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Jun 2011 15:12:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/3
+Message-Id: <201103291638.44993.ludwig.nussel@suse.de>
+Date: Tue, 29 Mar 2011 16:38:44 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+Subject: CVE Request: rsyslogd memory leaks
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+The $RepeatedMsgReduction option could cause a memory leak:
+http://bugzilla.adiscon.com/show_bug.cgi?id=225
+http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=8083bd1433449fd2b1b79bf759f782e0f64c0cd2
+
+Multiple rulesets that are used by multiple inputs could cause a
+memory leak or crash:
+http://bugzilla.adiscon.com/show_bug.cgi?id=226
+http://bugzilla.adiscon.com/show_bug.cgi?id=218
+http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=1ef709cc97d54f74d3fdeb83788cc4b01f4c6a2a
 
 
------ Original Message -----
-> On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com>
-> wrote:
-> >
-> >
-> > ----- Original Message -----
-> >> NetBSD has committed a fix for an issue in the 802.11 stack [1].
-> >> FreeBSD is also affected and should release a fix shortly. Due to a
-> >> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
-> >> unprivileged user could cause the kernel to copy large amounts of
-> >> kernel memory back to the user, disclosing potentially sensitive
-> >> information. The issue only affects certain non-x86 architectures,
-> >> such as SPARC.
-> >>
-> >> -Dan
-> >>
-> >> [1]
-> >> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
-> >
-> > I'm not entirely sure how to assign CVE ids for this. Is the code in
-> > question shared between FreeBSD and NetBSD, or is it different
-> > codebases
-> > but the same flaw?
-> >
-> 
-> Most of the 802.11 code, including the vulnerable code, is shared
-> between FreeBSD and NetBSD.
-> 
-
-One ID will work then.
-
-Please use CVE-2011-2480.
-
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
