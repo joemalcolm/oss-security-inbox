@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/3
-Message-ID: <Pine.GSO.4.64.1103301314540.20552@faron.mitre.org>
-Date: Wed, 30 Mar 2011 13:19:58 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Rickard Green <rickard@...ang.org>, Bjorn-Egil Dahlberg <psyeugenic@...il.com>, Sverker Eriksson <sverker@...ang.org>, Patrik Nyblom <pan@...ang.org>, Raimo Niskanen <raimo@...ang.org>, Bjorn Gustavsson <bjorn@...ang.org>, Niclas Axelsson <burbas@...ang.org>, Hans Bolinder <hasse@...ang.org>
-Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/1
+Message-ID: <1301384153.3849.159.camel@new-desktop>
+Date: Tue, 29 Mar 2011 09:35:53 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests : Liferay 6.0.6
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-Some informal guidance on vulnerabilities in language 
-interpreters/compilers: if there's a reasonable chance that an API 
-function's correctness is affected, and that API function could be used by 
-an application to process untrusted data (and/or affect the application's 
-control flow), then it is generally treated as a security concern.  When 
-API correctness is *not* affected - but applications could just use it in 
-an insecure way - then the applications are "blamed" for the issue (the 
-classic example is C's strcpy() function, which has a significant design 
-limitation that many application programmers don't take into account, 
-leading to buffer overflows.)
+version 6.0.6 of Liferay correct 3 security vulnerabilities related to
+the processing of XSLT content and 2 XSS.
 
-So for issues like "inexact comparisons" (whatever those are ;-) there is 
-the consideration of whether such functionality is likely to be used when 
-implementing security-related functionality.  For issues like incorrectly 
-reporting error status from an API function, that may be a candidate for a 
-CVE if the incorrect status report could have downstream effects on an 
-application's correctness.
+The full 6.0.6 Changelog :
+http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
 
-- Steve
+Remote command execution :
+http://issues.liferay.com/browse/LPS-14726
+
+Arbitrary file disclosure via XXE :
+http://issues.liferay.com/browse/LPS-14927
+
+XSL/XML file disclosure via file:// :
+http://issues.liferay.com/browse/LPS-13762
+
+XSS vulnerability :
+http://issues.liferay.com/browse/LPS-11506
+
+XSS in message boards :
+http://issues.liferay.com/browse/LPS-12628
+
+Regards,
+Nicolas Grégoire
+
