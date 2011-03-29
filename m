@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/6
-Message-ID: <4D24B97D.3000801@summersault.com>
-Date: Wed, 05 Jan 2011 13:33:33 -0500
-From: Mark Stosberg <mark@...mersault.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>, Max Kanat-Alexander <mkanat@...zilla.org>
-Subject: CGI.pm 3.51 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/2
+Message-ID: <20110329161709.4823ed45@laverne>
+Date: Tue, 29 Mar 2011 16:17:09 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: cmsmadesimple before 1.9.1
 Content-Type: text/plain; charset=utf-8
 
+See:
+http://forum.cmsmadesimple.org/viewtopic.php?t=49245
 
-As discussed, CGI.pm 3.51 was released today, including the related
-security fix. It is available here:
+"    * A security issue was fixed in the News module, upgrading ASAP is
+recommended"
 
-http://cpan.cpantesters.org/authors/id/M/MA/MARKSTOS/CGI.pm-3.51.tar.gz
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-CGI.pm has had a backlog of bug fixes that were pending release, so it
-includes a number of other improvements as well.
+JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
 
-Thanks to the related security teams and other contributors for the help.
-
-   Mark
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
