@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/16
-Message-ID: <20111020181827.GB3779@pisco.westfalen.local>
-Date: Thu, 20 Oct 2011 20:18:27 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/1
+Message-Id: <201103301346.37802.ludwig.nussel@suse.de>
+Date: Wed, 30 Mar 2011 13:46:37 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
+Subject: tiff CVE-2011-0192 patch broken
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2011 at 01:17:48PM -0400, Josh Bressers wrote:
-> Steve,
-> 
-> Can MITRE take this one? It's far bigger than I'm able to handle.
+Hi,
 
-Steve,
-As a reminder, my previous CVE request for Moodle is still open:
-http://www.openwall.com/lists/oss-security/2011/05/18/12
+JFYI, the tiff CVE-2011-0192 patch causes regressions:
+http://bugzilla.maptools.org/show_bug.cgi?id=2297
 
-Cheers,
-        Moritz
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
