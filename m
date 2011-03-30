@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/9
-Message-ID: <2003613449.141475.1313779943068.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:52:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/3
+Message-ID: <Pine.GSO.4.64.1103301314540.20552@faron.mitre.org>
+Date: Wed, 30 Mar 2011 13:19:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Rickard Green <rickard@...ang.org>, Bjorn-Egil Dahlberg <psyeugenic@...il.com>, Sverker Eriksson <sverker@...ang.org>, Patrik Nyblom <pan@...ang.org>, Raimo Niskanen <raimo@...ang.org>, Bjorn Gustavsson <bjorn@...ang.org>, Niclas Axelsson <burbas@...ang.org>, Hans Bolinder <hasse@...ang.org>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Can I get 2010 CVE-ID for this issue? I am not sure if other
-> distributions/operating systems need their own IDs. If I am correct
-> one ID should be enough.
-> 
-> Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
-> Bug report to FreeBSD:
-> http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
-> NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
-> Reported to OpenBSD (and patched), but can't find references.
-> Does not affect Debian:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572813
-> Not listed in OSVDB, but I can handle it.
-> 
 
-Please use CVE-2010-4816. It appears these are all the same codebase, so
-one ID will do.
+Some informal guidance on vulnerabilities in language 
+interpreters/compilers: if there's a reasonable chance that an API 
+function's correctness is affected, and that API function could be used by 
+an application to process untrusted data (and/or affect the application's 
+control flow), then it is generally treated as a security concern.  When 
+API correctness is *not* affected - but applications could just use it in 
+an insecure way - then the applications are "blamed" for the issue (the 
+classic example is C's strcpy() function, which has a significant design 
+limitation that many application programmers don't take into account, 
+leading to buffer overflows.)
 
-Thanks.
+So for issues like "inexact comparisons" (whatever those are ;-) there is 
+the consideration of whether such functionality is likely to be used when 
+implementing security-related functionality.  For issues like incorrectly 
+reporting error status from an API function, that may be a candidate for a 
+CVE if the incorrect status report could have downstream effects on an 
+application's correctness.
 
--- 
-    JB
+- Steve
