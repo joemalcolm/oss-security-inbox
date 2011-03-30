@@ -1,16 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/27
-Message-ID: <20110403225916.GD10158@openwall.com>
-Date: Mon, 4 Apr 2011 02:59:16 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/9
+Message-ID: <1962085347.287615.1301518253253.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Mar 2011 16:50:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: cmsmadesimple before 1.9.1
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 01:49:24AM +0400, Dmitry V. Levin wrote:
-> I was a vendor-sec member representing ALT Linux.  My gpg key ID for
-> email conversations is FE4C93ABE19A2E4CCB5D3E4E7CABE6AC9E35361E.
+Sadly I can't figure this one out, but it does need a 2010 ID.
 
-Added.
+Use CVE-2010-4663
 
-Alexander
+It'll just have to be one of those general "unknown flaw ..." types.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> See:
+> http://forum.cmsmadesimple.org/viewtopic.php?t=49245
+> 
+> " * A security issue was fixed in the News module, upgrading ASAP is
+> recommended"
+> 
+> --
+> Hanno Böck mail/jabber: hanno@...eck.de
+> GPG: BBB51E42 http://www.hboeck.de/
+> 
+> JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
