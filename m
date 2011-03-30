@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/4
-Message-ID: <4EA97604.8020404@redhat.com>
-Date: Thu, 27 Oct 2011 09:17:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/1
+Message-Id: <201103301346.37802.ludwig.nussel@suse.de>
+Date: Wed, 30 Mar 2011 13:46:37 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Dmitry Butskoy <buc@...sz.so-cdu.ru>
-Subject: Re: CVE Request -- phpLDAPadmin -- Local file inclusion flaw in "common.php" via "Accept-Language" HTTP header leading to DoS
+Subject: tiff CVE-2011-0192 patch broken
 Content-Type: text/plain; charset=utf-8
 
-On 10/27/2011 06:07 AM, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
->
->   a local file inclusion flaw was found in the way the phpLDAPadmin,
-> a web based LDAP client for managing LDAP servers, processed certain
-> values of the "Accept-Language" HTTP header. A remote attacker could
-> use this flaw to cause a denial of service (generate recursive
-> inclusions leading to resource exhaustion) via specially-crafted request.
->
-> Note: A different issue than CVE-2011-4075 (due the different
+Hi,
 
-Confirmed, vulnerable in 0.9.7 and before, fixed in 0.9.8, so it's a
-much older issue.
+JFYI, the tiff CVE-2011-0192 patch causes regressions:
+http://bugzilla.maptools.org/show_bug.cgi?id=2297
 
-Please use CVE-2011-4082 for this issue.
-
->       attack vector and different source code file in question).
->
-> References:
-> [1] http://www.securityfocus.com/bid/50328/info
->
-> Relevant exploit:
-> [2] http://www.securityfocus.com/data/vulnerabilities/exploits/50328.java
->
-> According to Dmitry, this issue should be fixed in upstream v0.9.8.5
-> version too.
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
+cu
+Ludwig
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
