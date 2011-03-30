@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/2
-Message-ID: <BANLkTikAA7W8mTk-qxDgAmejATby_Lq7Pg@mail.gmail.com>
-Date: Wed, 15 Jun 2011 11:14:39 +0200
-From: Luka Marinko <luka.marinko@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/9
+Message-ID: <1962085347.287615.1301518253253.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Mar 2011 16:50:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Nicolas François <nekral.lists@...il.com>,  Ondřej Vašík <ovasik@...hat.com>
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: cmsmadesimple before 1.9.1
 Content-Type: text/plain; charset=utf-8
 
-2011/6/15 Ludwig Nussel <ludwig.nussel@...e.de>:
-> Bernhard Rosenkraenzer wrote:
->> On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
->>
->> > The issue also reminds me that there are several su implemenations.
->> > On Fedora and SUSE we have a patched coreutils version, Debian uses
->> > the one from shadow-utils and then there's also a su from
->> > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
->> > quirks and weird features. Does anyone still remember why a
->> > particular implementation was chosen? :-)
->>
->>
->> In Ark Linux, we switched from the coreutils one to the shadow-utils one
->> about 2 years ago because the shadow-utils one does what we need (incl. PAM
->> support) without having to port the PAM patch on every new coreutils release.
->
-> Upstream coreutils indicated that they consider su in coreutils kind
-> of deprecated, basically only kept for legacy reasons on non-Linux
-> OSes. They would accept the PAM patch though so distros don't need
-> to maintain it.
->
-> Is there actually any serious distro that doesn't use PAM though?
-> Those #ifdefs to keep old shadow compatibility makes the code rather
-> ugly and hard to read. Maybe it's time to just rip out the old code
-> and submit a clean, PAM only su to util-linux.
->
+Sadly I can't figure this one out, but it does need a 2010 ID.
 
-Slackware does not use PAM by default and it uses coreutils su (at
-least it did in 12)
+Use CVE-2010-4663
 
-Luka Marinko
+It'll just have to be one of those general "unknown flaw ..." types.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> See:
+> http://forum.cmsmadesimple.org/viewtopic.php?t=49245
+> 
+> " * A security issue was fixed in the News module, upgrading ASAP is
+> recommended"
+> 
+> --
+> Hanno Böck mail/jabber: hanno@...eck.de
+> GPG: BBB51E42 http://www.hboeck.de/
+> 
+> JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
