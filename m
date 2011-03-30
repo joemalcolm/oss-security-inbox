@@ -1,42 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/16
-Message-ID: <AANLkTimn6nZpt8tT-O=c9D=sPSR8VuUkkdFMuu8BEqNT@mail.gmail.com>
-Date: Mon, 21 Mar 2011 19:18:58 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: heap corruption in IrDA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/7
+Message-ID: <1604144792.286199.1301514089217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 30 Mar 2011 15:41:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: PHP-Nuke 8.x <= Cross Site Scripting Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 21, 2011 at 12:59 AM, Eugene Teo <eugene@...hat.com> wrote:
-> On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
->>
->> When providing an invalid IrDA nickname for an IrNET peer, a local
->> attacker can cause a kernel panic due to an underflow in a memcpy()
->> size calculation or cause a controllable heap overflow that may lead
->> to privilege escalation.  Write access to the /dev/irnet device file
->> is required to trigger the vulnerability.
->>
->> Reference:
->> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
->
-> The default permissions for /dev/irnet is root-read/write only. In the past
-> I have ignored such issues that can only be triggered by root, even though
-> the permissions can be changed. I wouldn't assign a CVE name for this. CC'ed
-> Steve.
->
+Please use CVE-2011-1481.
 
-Fair enough, I should probably have been more clear about the exact
-impact of the flaw.  But given recent discussions about hardening the
-kernel even against the root user, it seems like reliably triggered
-kernel memory corruption of any kind enables crossing some security
-boundary, so this may still deserve a CVE - just one with a
-description that accurately reflects the relatively less common attack
-scenario.
+Thanks.
 
--Dan
+-- 
+    JB
 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
+----- Original Message -----
+> PHP-Nuke 8.x <= Cross Site Scripting Vulnerability
+> 
+> 
+> 
+> 1. OVERVIEW
+> 
+> The PHP-Nuke version 8.x and lower are vulnerable to Cross Site
+> Scrtipting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> PHP-Nuke is a Web Portal System or content management system. The goal
+> of PHP-Nuke is to have an automated web site to distribute news and
+> articles with users system. Each user can submit comments to discuss
+> the articles. Main features include: web based admin, surveys, top
+> page, access stats page with counter, user customizable box, themes
+> manager for registered users, friendly administration GUI with graphic
+> topic manager, option to edit or delete stories, option to delete
+> comments, moderation system, Referrers page to know who link us,
+> sections manager, customizable HTML blocks, user and authors edit, an
+> integrated Banners Ads system, search engine, backend/headlines
+> generation (RSS/RDF format), and many, many more friendly functions.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The "sender_name" and the "sender_email" parameter are not properly
+> sanitized upon submission to the /modules.php?name=Feedback, which
+> allows attacker to conduct Cross Site Scripting attack. This may allow
+> an attacker to create a specially crafted URL that would execute
+> arbitrary script code in a victim's browser.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 8.0 and lower
+> 
+> Tested version: 8.0
+> The paid versions, 8.1 and 9.0, of PHP-Nuke may be vulnerable as well.
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> Parameter: sender_name
+> 
+> [REQUEST]
+> POST /phpnuke/modules.php?name=Feedback HTTP/1.1
+> Host: attacker.in
+> Referer: http://attacker.in/phpnuke/modules.php?name=Feedback
+> 
+> sender_name=%22%3E%3Cimg+src%3Dx+onerror%3Dalert%28%2FXSS%2F%29%3E&sender_email=&message=&opi=ds&submit=Send
+> [/REQUEST]
+> 
+> ---------------------------------------------------------
+> Parameter: sender_email
+> 
+> [REQUEST]
+> POST /phpnuke/modules.php?name=Feedback HTTP/1.1
+> Host: attacker.in
+> Referer: http://attacker.in/phpnuke/modules.php?name=Feedback
+> 
+> sender_email=%22%3E%3Cimg+src%3Dx+onerror%3Dalert%28%2FXSS%2F%29%3E&sender_name=&message=&opi=ds&submit=Send
+> [/REQUEST]
+> 
+> 
+> 6. SOLUTION
+> 
+> Not Available.
+> Use of this product is NOT recommended because of long lack of update
+> and vendor negligence about security reports.
+> 
+> 
+> 7. VENDOR
+> 
+> PHP-Nuke Developers
+> http://phpnuke.org/
+> 
+> 
+> 8. CREDIT
+> 
+> Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2011-01-01: contacted author through emails
+> 2011-01-25: contacted author through web site contact form
+> 2010-03-23: no replies from author
+> 2010-03-23: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[phpnuke-8.x]_cross_site_scripting
+> About PHP-Nuke: http://en.wikipedia.org/wiki/PHP-Nuke
+> php-Nuke 8.0:
+> http://phpnuke.org/modules.php?name=Downloads&d_op=getit&lid=658
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> 
+> #yehg [2010-03-23]
+> 
+> keywords: php nuke, php-nuke, phpnuke, 8.0, 8.1, xss
+> 
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
