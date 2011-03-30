@@ -1,43 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/6
-Message-ID: <20110601163410.GA15759@openwall.com>
-Date: Wed, 1 Jun 2011 20:34:10 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/2
+Message-ID: <4D9364C1.2070008@redhat.com>
+Date: Wed, 30 Mar 2011 19:13:37 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Rickard Green <rickard@...ang.org>, Bjorn-Egil Dahlberg <psyeugenic@...il.com>, Sverker Eriksson <sverker@...ang.org>, Patrik Nyblom <pan@...ang.org>, Raimo Niskanen <raimo@...ang.org>, Bjorn Gustavsson <bjorn@...ang.org>, Niclas Axelsson <burbas@...ang.org>, Hans Bolinder <hasse@...ang.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi Armin,
+Hello Steve, vendors,
 
-On Thu, May 26, 2011 at 05:42:00AM -1000, akuster wrote:
-> You can find our security Advisories at:
-> http://www.mvista.com/cve_vulnerabilities.php
-> 
-> I have updated
-> http://oss-security.openwall.org/wiki/vendors
-> http://oss-security.openwall.org/wiki/distro-patches
+   based on:
+   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
 
-Thanks.  I've just reviewed the above and subscribed you to the list.
+   and:
+   [2] http://www.erlang.org/download/otp_src_R14B.readme
+   [3] http://www.erlang.org/download/otp_src_R14B01.readme
+   [4] http://www.erlang.org/download/otp_src_R14B02.readme
 
-I have some "complaints", though:
+performed some initial issues review -- erlang-CVE-request.txt
+attached. But since not sure, which of those are real security
+flaws and how many CVE ids will be needed for those, Cc-ing
+also Erlang upstream developers to shed more light into this.
 
-http://www.mvista.com/cve_vulnerabilities.php gives a mapping of CVE IDs
-to affected MontaVista products.  That's great.  However, fix
-information is missing.  Does having a CVE ID listed there imply that
-you have fixed the issue for those affected products or not (e.g.,
-perhaps not for EOL'ed products, or are you not listing those as
-affected at all)?  Specifically relevant to this discussion would be the
-dates on which you're getting issues fixed (such that those could be
-compared to CRDs to see if you likely made use of the advance
-notifications or not).  Right now, you have "Published" and "Modified"
-dates, but no fix dates (which would be per product?)
+The distribution of OTPs is as follows:
+=======================================
+Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
+Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
+Sverker Eriksson:       OTP-8945, OTP-8716
+Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
+Raimo Niskanen:         OTP-8729, OTP-8795
+Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
+Niclas Axelsson:        OTP-9101
+Hans Bolinder:          OTP-8898
 
-Also, no info on 2011's CVEs yet.  Does this mean we'd have to wait
-until 2012 to get an idea on how you're handling 2011's security issues?
+Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
+could you please have a look at the attached review file
+and reply which of the #20 OTPs in the list are security flaws
+(so we would know the count of CVE identifiers needed) and which
+are just bugs? (since you know the Erlang code better than me)
 
-That said, you do look like a security-conscious Linux distro vendor
-now (and you meet some other requirements), so you're on the list.
+Help / guidance from your side is really appreciated to resolve
+this one.
 
-Thanks again,
+Thank you in advance for your time and cooperation.
 
-Alexander
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+View attachment "erlang-CVE-request.txt" of type "text/plain" (4938 bytes)
