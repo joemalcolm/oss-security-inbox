@@ -1,86 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/19
-Message-ID: <4D7106A7.907@redhat.com>
-Date: Fri, 04 Mar 2011 16:35:03 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/3
+Message-ID: <Pine.GSO.4.64.1103301314540.20552@faron.mitre.org>
+Date: Wed, 30 Mar 2011 13:19:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security <oss-security@...ts.openwall.com>
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Rickard Green <rickard@...ang.org>, Bjorn-Egil Dahlberg <psyeugenic@...il.com>, Sverker Eriksson <sverker@...ang.org>, Patrik Nyblom <pan@...ang.org>, Raimo Niskanen <raimo@...ang.org>, Bjorn Gustavsson <bjorn@...ang.org>, Niclas Axelsson <burbas@...ang.org>, Hans Bolinder <hasse@...ang.org>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi Solar,
 
-   thank you for your reaction.
+Some informal guidance on vulnerabilities in language 
+interpreters/compilers: if there's a reasonable chance that an API 
+function's correctness is affected, and that API function could be used by 
+an application to process untrusted data (and/or affect the application's 
+control flow), then it is generally treated as a security concern.  When 
+API correctness is *not* affected - but applications could just use it in 
+an insecure way - then the applications are "blamed" for the issue (the 
+classic example is C's strcpy() function, which has a significant design 
+limitation that many application programmers don't take into account, 
+leading to buffer overflows.)
 
-Solar Designer wrote:
-> On Fri, Mar 04, 2011 at 03:08:31PM +0100, Jan Lieskovsky wrote:
->>   we have been contacted by Stefan Fritsch of Debian Security Team
->> about presence of nine security flaws in the logrotate utility
->> (the list is provided below).
-> 
-> I've just skimmed over the list, and I only see one issue that I'd call
-> a vulnerability in logrotate, issue #8.  And we need more info on #5.
+So for issues like "inexact comparisons" (whatever those are ;-) there is 
+the consideration of whether such functionality is likely to be used when 
+implementing security-related functionality.  For issues like incorrectly 
+reporting error status from an API function, that may be a candidate for a 
+CVE if the incorrect status report could have downstream effects on an 
+application's correctness.
 
-For issue #5:
-
-If the mail configuration directive is used, an attacker can trick
-logrotate into sending arbitrary files by mail, by creating
-appropriate hard or soft links.
-
-Hope that's enough, let me know if not.
-
-For the second part:
-
-> 
-> The rest, as described, appear to rely on sysadmin error and to assume
-> security properties that logrotate never advertised it had.  Specifically,
-> logrotate was never declared to be safe to use on untrusted directories,
-> and it was an error for a sysadmin to make such an assumption.
-
-We don't mind documenting of this behavior in appropriate places.
-
-Wouldn't like to condescend further into particulars, what is and what
-is not a security issue (as this is beyond this post), but according
-to our opinion even non-documented incorrect behavior, allowing
-malicious actions to be performed on the system, should be considered
-a security flaw (regardless if it's advertised or not). Because by applying
-your above approach, most of the open source project could just say
-'this software is not intended to be run like that.'
-
-Not trying to argue, just saying the disclination like the above
-doesn't help anyone.
-
-Either the software has the issues, and they should be fixed,
-or it has the issues, and they can't be fixed. Then the software
-should not be used and an alternative one should be found.
-
-This is not you would shoot yourself into the foot by accident
-(by performing some action). This is about local users', aware
-of the deficiencies, ability to conduct such actions on the system,
-so they would reach some higher privilege, damage or different
-kind of benefit for them.
-
-Hope this helps.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> I don't mind logrotate being enhanced/hardened in this respect, but to
-> call these vulnerabilities sounds like a stretch.  Also, even if
-> logrotate is hardened, it should not be declared to be safe to use on
-> untrusted directories.  It'd be better to explicitly state that it is
-> not, to avoid this sort of confusion.
-> 
->> 5) Issue #5: logrotate: Information disclosure by performing email
->>              notifications
-> ...
->> 8) Issue #8: logrotate: TOCTOU race condition by creation of new files 
->> (between
->>              opening the file and moment, final permissions have been 
->>              applied)
->>              [information disclosure]
-> 
-> Alexander
-
+- Steve
