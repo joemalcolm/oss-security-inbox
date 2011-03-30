@@ -1,106 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/15
-Message-Id: <201102230607.20216.sgrubb@redhat.com>
-Date: Wed, 23 Feb 2011 06:07:19 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/5
+Message-ID: <Pine.LNX.4.64.1103301936350.10609@arwen.otp.ericsson.se>
+Date: Wed, 30 Mar 2011 19:42:29 +0200
+From: <pan@...ang.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, February 23, 2011 12:11:56 am Eugene Teo wrote:
-> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
-> > I originally started writing this as a response to the recent CVE
-> > requests for issues in partition handling, but thought it might be a
-> > useful discussion on its own.  I was wondering if there are any
-> > clear-cut policies on issues involving physical access, since these
-> > can be very difficult in terms of assigning blame.
+Hi!
 
-This all sounds like a replay of the month of kernel bugs from back in 2006. I had 
-this new tool that fuzzed file systems. (latest public release is here: 
-http://people.redhat.com/sgrubb/files/fsfuzzer-0.7.tar.gz) The discussion at the time 
-went something like this...in order to exploit it, you have to have physical access. 
-If you have physical access, why not put a live CD in and reboot the system? If DoS is 
-what you are after, why not unplug the machine?
+I can only answer for my fixes, answers for the rest will come from the 
+respective developer (hopefully soon :))
 
-As far as I know, automounting is not a problem you have to worry about at run level 
-which is most servers. Desktops are different. In run level5, you have the gnome-
-volume-manager which may want to be overly helpful. If you are at your machine, you 
-should be able to smack anyone hand trying to put something in your USB slot. So, the 
-problem comes when you are away from your desk. I opened this bz in attempt to have 
-that addressed:  https://bugzilla.redhat.com/show_bug.cgi?id=215057  Not a lot in 
-details, but supposed there is a new setting.
+OTP-7178: Not a security issue, just a "bugfix", the "underflow" is 
+floating point conversion underflow, not buffer related.
+OTP-8827: Definitely a security fix
+OTP-8943: Also a security fix
 
-However, this doesn't help in the scenario where you have a kiosk or internet cafe and 
-untrusted people walk up to machines. It was also pointed out at the time that perhaps 
-iSCSI was another attack vector.
+Cheers,
+/Patrik, OTP
 
- 
-> > For example, many Linux distributions will auto-mount filesystems on
-> > removable storage, often going so far as to load corresponding kernel
-> > modules for filesystems that aren't compiled in or don't already have
-> > an LKM loaded.  Sometimes, this will happen even if the screen is
-> > locked.
-> > 
-> > Incidentally, many Linux filesystem implementations don't have
-> > especially robust error handling for failures during attempts to mount
-> > corrupt filesystems.
+On Wed, 30 Mar 2011, Jan Lieskovsky wrote:
 
-The handling _was_ good until sometime last summer. I found that I could kill just 
-about any file system
-
-https://bugzilla.redhat.com/show_bug.cgi?id=513624
-https://bugzilla.redhat.com/show_bug.cgi?id=513635
-
-I think there were others, but can't find them.
-
-
-> > As an example, I have a deliberately corrupted
-> > btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
-> > formatted a USB stick with this filesystem, so now I have a USB stick
-> > that will panic the kernels of distributions that support
-> > auto-mounting, in some cases even when the screen is locked.
-> > 
-> > Should this be considered a vulnerability?  Probably.  But what should
-> > be fixed?  Should auto-mounting be disabled entirely? 
-
-You should be able to turn it off. You can also block the loading of any kernel modules 
-for file systems that you know you don't want to load. If you have a bug that alters 
-function pointers or the kernel stack, you have a real vulnerability. I found a couple 
-of those back in 2006. If it simply hits a BUG() or crashes in a way that is not 
-exploitable, you have the same effect as having pulled the power cord. Yes, its a 
-robustness error, but not a security error.
-
-
-> > Is it no longer a vulnerability if auto-mounting is disabled only when the 
-> > screen is
-> > locked?  Should all filesystems have graceful error handling for every
-> > possible edge case that can occur when dealing with corruption?
-> > 
-> > I'd be interested to hear opinions on this.  And depending on how the
-> > discussion goes, I'd be happy to provide more details on specific
-> > cases, such as the btrfs example.
-> 
->  From the security response perspective, I will likely classify them as
-> security bugs but with a /very/ low impact. The attacking party must
-> already have some form of physical access to the affected system, or the
-> attack must require some social engineering to trick the user to mount a
-> corrupted file system using a portable media.
-> 
-> It will be hard to break existing user experience if we were to disable
-> auto-mounting entirely, but it makes sense to disable it if the screen
-> is locked.
-
-This feature was added a long time ago. (But how does anyone know all the things you 
-can configure in a gnome desktop?)
-
-
-> I'm not sure if this will affect how we classify such bugs.
-> I'm happy to hear more thoughts on this.
-
-MOKB 2006. Not to say that people shouldn't fuzz the file systems and fix all these 
-things. I think I have fuzzing for all major file systems in the fsfuzzer if anyone 
-wanted to go bug hunting. I recently added LVM support, but have not released this 
-newer, more evil fuzzer.
-
--Steve
+> Hello Steve, vendors,
+>
+>  based on:
+>  [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
+>
+>  and:
+>  [2] http://www.erlang.org/download/otp_src_R14B.readme
+>  [3] http://www.erlang.org/download/otp_src_R14B01.readme
+>  [4] http://www.erlang.org/download/otp_src_R14B02.readme
+>
+> performed some initial issues review -- erlang-CVE-request.txt
+> attached. But since not sure, which of those are real security
+> flaws and how many CVE ids will be needed for those, Cc-ing
+> also Erlang upstream developers to shed more light into this.
+>
+> The distribution of OTPs is as follows:
+> =======================================
+> Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
+> Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
+> Sverker Eriksson:       OTP-8945, OTP-8716
+> Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
+> Raimo Niskanen:         OTP-8729, OTP-8795
+> Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
+> Niclas Axelsson:        OTP-9101
+> Hans Bolinder:          OTP-8898
+>
+> Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
+> could you please have a look at the attached review file
+> and reply which of the #20 OTPs in the list are security flaws
+> (so we would know the count of CVE identifiers needed) and which
+> are just bugs? (since you know the Erlang code better than me)
+>
+> Help / guidance from your side is really appreciated to resolve
+> this one.
+>
+> Thank you in advance for your time and cooperation.
+>
+> Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
