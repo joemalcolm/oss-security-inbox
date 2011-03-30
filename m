@@ -1,28 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/29/2
-Message-Id: <201108291348.18241.mweckbecker@suse.de>
-Date: Mon, 29 Aug 2011 13:48:17 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request(?): squid: buffer overflow in Gopher reply parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/30/2
+Message-ID: <4D9364C1.2070008@redhat.com>
+Date: Wed, 30 Mar 2011 19:13:37 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Rickard Green <rickard@...ang.org>, Bjorn-Egil Dahlberg <psyeugenic@...il.com>, Sverker Eriksson <sverker@...ang.org>, Patrik Nyblom <pan@...ang.org>, Raimo Niskanen <raimo@...ang.org>, Bjorn Gustavsson <bjorn@...ang.org>, Niclas Axelsson <burbas@...ang.org>, Hans Bolinder <hasse@...ang.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Steve, vendors,
 
-squid 3.x seems to have re-introduced a security issue found by Ben Hawkes of 
-the Google Security Team in 2005,
+   based on:
+   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
 
-  2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
-  2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt (CVE-2005-0094)
+   and:
+   [2] http://www.erlang.org/download/otp_src_R14B.readme
+   [3] http://www.erlang.org/download/otp_src_R14B01.readme
+   [4] http://www.erlang.org/download/otp_src_R14B02.readme
 
-Will there be a new CVE required? Not quite sure how such "special" cases are 
-handled usually.
+performed some initial issues review -- erlang-CVE-request.txt
+attached. But since not sure, which of those are real security
+flaws and how many CVE ids will be needed for those, Cc-ing
+also Erlang upstream developers to shed more light into this.
 
-Thanks,
-Matthias
+The distribution of OTPs is as follows:
+=======================================
+Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
+Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
+Sverker Eriksson:       OTP-8945, OTP-8716
+Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
+Raimo Niskanen:         OTP-8729, OTP-8795
+Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
+Niclas Axelsson:        OTP-9101
+Hans Bolinder:          OTP-8898
 
--- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
+could you please have a look at the attached review file
+and reply which of the #20 OTPs in the list are security flaws
+(so we would know the count of CVE identifiers needed) and which
+are just bugs? (since you know the Erlang code better than me)
+
+Help / guidance from your side is really appreciated to resolve
+this one.
+
+Thank you in advance for your time and cooperation.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+View attachment "erlang-CVE-request.txt" of type "text/plain" (4938 bytes)
