@@ -1,57 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/13
-Message-ID: <1139942889.379029.1297288704824.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Feb 2011 16:58:24 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: wordpress before 3.0.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/2
+Message-ID: <4D944597.5090303@erix.ericsson.se>
+Date: Thu, 31 Mar 2011 11:12:55 +0200
+From: Sverker Eriksson <sverker@...x.ericsson.se>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
+>
+>   based on:
+>   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
+>
+>   and:
+>   [2] http://www.erlang.org/download/otp_src_R14B.readme
+>   [3] http://www.erlang.org/download/otp_src_R14B01.readme
+>   [4] http://www.erlang.org/download/otp_src_R14B02.readme
+>
+> performed some initial issues review -- erlang-CVE-request.txt
+> attached. But since not sure, which of those are real security
+> flaws and how many CVE ids will be needed for those, Cc-ing
+> also Erlang upstream developers to shed more light into this.
+>
+> The distribution of OTPs is as follows:
+> =======================================
+> Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
+> Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
+> Sverker Eriksson:       OTP-8945, OTP-8716
+> Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
+> Raimo Niskanen:         OTP-8729, OTP-8795
+> Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
+> Niclas Axelsson:        OTP-9101
+> Hans Bolinder:          OTP-8898
+>
+> Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
+> could you please have a look at the attached review file
+> and reply which of the #20 OTPs in the list are security flaws
+> (so we would know the count of CVE identifiers needed) and which
+> are just bugs? (since you know the Erlang code better than me)
+>
+> Help / guidance from your side is really appreciated to resolve
+> this one.
+>
+> Thank you in advance for your time and cooperation.
+>
+> Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
+I would consider both OTP-8945 and OTP-8716 to be security flaws.
 
------ Original Message -----
-> http://wordpress.org/news/2011/02/wordpress-3-0-5/
-> 
-> From release announcement, I'm unsure which of them deserves CVEs:
-> 
-> "Two moderate security issues were fixed that could have allowed a
-> Contributor- or Author-level user to gain further access to the site.
-> 
-> One information disclosure issue was addressed that could have allowed
-> an Author-level user to view contents of posts they should not be able
-> to see, such as draft or private posts.
-> 
-> Two security enhancements were added. One improved the security of any
-> plugins which were not properly leveraging our security API. The other
-> offers additional defense in depth against a vulnerability that was
-> fixed in previous release."
-> 
-> 
-> 
+/Sverker, Erlang/OTP
 
-I'm not going to assign anything to the "enhancements" unless someone wants
-me to. They don't sound like security flaws.
-
-There is more information on these here:
-http://codex.wordpress.org/Version_3.0.5
-
-
-# Fix XSS bug: Properly encode title used in Quick/Bulk Edit, and offer
-  additional sanitization to various fields. Affects users of the Author or
-  Contributor role. (r17397, r17406, r17412)
-# Fix XSS bug: Preserve tag escaping in the tags meta box. Affects users of
-  the Author or Contributor role. (r17401)
-
-Use CVE-2011-0700 for the XSS flaws.
-
-
-# Fix potential information disclosure of posts through the media uploader.
-  Affects users of the Author role. (r17393)
-
-Use CVE-2011-0701 for the information disclosure.
-
-Thanks.
-
--- 
-    JB
