@@ -1,41 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/3
-Message-ID: <BANLkTimEAmBgCqBygygJCO3RicO3_4Un-Q@mail.gmail.com>
-Date: Tue, 12 Apr 2011 23:51:14 -0600
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mediawiki 1.16.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/2
+Message-ID: <4D944597.5090303@erix.ericsson.se>
+Date: Thu, 31 Mar 2011 11:12:55 +0200
+From: Sverker Eriksson <sverker@...x.ericsson.se>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-BTW I submitted this as a bug for fedora:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=695577
-
-My evil(ish) plan is to take over the mediawiki package for fedora and
-then EPEL and then all the plugins. muahahaha! =).
-
--Kurt
-
-
-On Tue, Apr 12, 2011 at 11:21 PM, Vincent Danen <vdanen@...hat.com> wrote:
-> Mediawiki 1.16.3 has been released with three noted flaws:
+Jan Lieskovsky wrote:
+> Hello Steve, vendors,
 >
-> 1) XSS with IE <= 6 due to improper handling of uploaded file names
-> 2) CSS validation error in wikitext parser
-> 3) transwiki import neglects to perform access control checks
+>   based on:
+>   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
 >
-> Can CVE names be assigned to these issues?
+>   and:
+>   [2] http://www.erlang.org/download/otp_src_R14B.readme
+>   [3] http://www.erlang.org/download/otp_src_R14B01.readme
+>   [4] http://www.erlang.org/download/otp_src_R14B02.readme
 >
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
+> performed some initial issues review -- erlang-CVE-request.txt
+> attached. But since not sure, which of those are real security
+> flaws and how many CVE ids will be needed for those, Cc-ing
+> also Erlang upstream developers to shed more light into this.
 >
-> Thanks.
+> The distribution of OTPs is as follows:
+> =======================================
+> Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
+> Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
+> Sverker Eriksson:       OTP-8945, OTP-8716
+> Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
+> Raimo Niskanen:         OTP-8729, OTP-8795
+> Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
+> Niclas Axelsson:        OTP-9101
+> Hans Bolinder:          OTP-8898
 >
-> --
-> Vincent Danen / Red Hat Security Response Team
+> Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
+> could you please have a look at the attached review file
+> and reply which of the #20 OTPs in the list are security flaws
+> (so we would know the count of CVE identifiers needed) and which
+> are just bugs? (since you know the Erlang code better than me)
+>
+> Help / guidance from your side is really appreciated to resolve
+> this one.
+>
+> Thank you in advance for your time and cooperation.
+>
+> Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
+I would consider both OTP-8945 and OTP-8716 to be security flaws.
 
+/Sverker, Erlang/OTP
 
--- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
