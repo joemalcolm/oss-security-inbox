@@ -1,36 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/7
-Message-ID: <20110704230906.GA11990@openwall.com>
-Date: Tue, 5 Jul 2011 03:09:06 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com, cperciva@...ebsd.org
-Subject: FreeBSD 4.x OpenSSH/libopie remote root hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/3
+Message-ID: <AANLkTikYP58xWQwjZtVxcYFSxpSiruKo1qQnm7WyYcOG@mail.gmail.com>
+Date: Thu, 31 Mar 2011 09:43:29 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+>> Do you plan to open bug in glibc bugzilla for this issue?
+>>
+>
+> Sure, I'll open one today.
+>
 
-I'd be interested in more detail on this bug.  So far, the closest to a
-description of the bug that I saw is this:
+"Today" ended up meaning "next week", but there's now a glibc bugzilla
+entry for this:
+http://sourceware.org/bugzilla/show_bug.cgi?id=12625
 
-http://lists.openwall.net/full-disclosure/2011/07/01/4
+As indicated in my previous email, some of the helpers will need fixes
+to completely resolve this issue.  In particular:
 
-but it's not enough.
+* util-linux mount should modify its custom addmntent function to
+behave as suggested in the glibc bug report, and should improve its
+error handling on addmntent failure to remove lockfiles and temporary
+files.
 
-I'd like to learn not only on my own, but also on others' mistakes. ;-)
-And for this purpose it does not matter how old the software is and
-whether it is still supported or not.
+* If mount.cifs is still shipped by anyone as setuid (I know there was
+discussion of removing its suid bit), then it will need to be altered
+to edit a temp file instead of /etc/mtab directly and clean up on
+addmntent failure.
 
-Colin - any comments from you?  I realize the bug is not yours, but
-perhaps you're one of the few people who have figured it out now, for a
-reason similar to mine.
+* If ncpfs is still supported by anyone (it's orphaned in a number of
+distributions), it should be fixed to have ncpmount edit a temp file
+instead of /etc/mtab directly and have both ncpmount and ncpumount
+clean up properly on addmntent failure.
 
-Red Hat - a lesson for you might be to stop linking sshd against so
-many libraries (over 20 last time I checked).  Don't wait until your
-remote root, really. ;-)  Yes, this means dropping some functionality,
-or maybe moving it to extra builds of sshd that only a small subset of
-systems will choose to run (e.g., configurable via /etc/sysconfig/sshd).
-Just an idea.
 
-Thanks,
+Alternatively, I'd be happy to see mount.cifs and the ncpfs utils no
+longer ship with a suid bit, since they've had security issues in the
+past and I don't think there's many situations where unprivileged
+users need the ability to mount filesystems other than FUSE.  I'd also
+like to see distributions migrating away from /etc/mtab in general,
+since /proc/mounts seems like a much better replacement.
 
-Alexander
+The above issues will probably need CVE identifiers of their own, but
+I'd hold off on assigning them until it's clear that glibc is amicable
+to the proposed solution.  Otherwise, there may need to be other fixes
+involving raising resource limits (I hope not).
+
+-Dan
