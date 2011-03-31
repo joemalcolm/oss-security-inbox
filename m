@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/4
-Message-ID: <4DB14E73.40705@redhat.com>
-Date: Fri, 22 Apr 2011 11:46:27 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Matthew Nicholson <mnicholson@...ium.com>, "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Asterisk Security Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/3
+Message-ID: <AANLkTikYP58xWQwjZtVxcYFSxpSiruKo1qQnm7WyYcOG@mail.gmail.com>
+Date: Thu, 31 Mar 2011 09:43:29 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
+>> Do you plan to open bug in glibc bugzilla for this issue?
+>>
+>
+> Sure, I'll open one today.
+>
 
-Hello Matthew,
+"Today" ended up meaning "next week", but there's now a glibc bugzilla
+entry for this:
+http://sourceware.org/bugzilla/show_bug.cgi?id=12625
 
-   thank you for the heads up.
+As indicated in my previous email, some of the helpers will need fixes
+to completely resolve this issue.  In particular:
 
-Matthew Nicholson wrote:
-> Hi,
-> 
-> I need a CVE for a new Asterisk security vulnerability.
+* util-linux mount should modify its custom addmntent function to
+behave as suggested in the glibc bug report, and should improve its
+error handling on addmntent failure to remove lockfiles and temporary
+files.
 
-Was this request intended to be for the following one:
-[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
+* If mount.cifs is still shipped by anyone as setuid (I know there was
+discussion of removing its suid bit), then it will need to be altered
+to edit a temp file instead of /etc/mtab directly and clean up on
+addmntent failure.
 
-Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
-       already got an id of CVE-2011-1507.
+* If ncpfs is still supported by anyone (it's orphaned in a number of
+distributions), it should be fixed to have ncpmount edit a temp file
+instead of /etc/mtab directly and have both ncpmount and ncpumount
+clean up properly on addmntent failure.
 
-If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
-to be assigned to this?)
 
-Or was it requested for yet something completely different from above two?
+Alternatively, I'd be happy to see mount.cifs and the ncpfs utils no
+longer ship with a suid bit, since they've had security issues in the
+past and I don't think there's many situations where unprivileged
+users need the ability to mount filesystems other than FUSE.  I'd also
+like to see distributions migrating away from /etc/mtab in general,
+since /proc/mounts seems like a much better replacement.
 
-Thank you, Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+The above issues will probably need CVE identifiers of their own, but
+I'd hold off on assigning them until it's clear that glibc is amicable
+to the proposed solution.  Otherwise, there may need to be other fixes
+involving raising resource limits (I hope not).
+
+-Dan
