@@ -1,90 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/17
-Message-ID: <BANLkTik9TYa56_ayi7JX2AaZzc286qvSJg@mail.gmail.com>
-Date: Mon, 4 Apr 2011 07:32:12 +0100
-From: Benji <me@...ji.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/2
+Message-Id: <201104011437.24983.ludwig.nussel@suse.de>
+Date: Fri, 1 Apr 2011 14:37:24 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Michael Gilbert <michael.s.gilbert@...il.com>
-Subject: Re: Closed list
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
->>Benji's trolling does raise a couple real issues
+Patrick J. Volkerding wrote:
+> On 03/31/2011 08:43 AM, Dan Rosenberg wrote:
+> > I'd also
+> > like to see distributions migrating away from /etc/mtab in general,
+> > since /proc/mounts seems like a much better replacement.
+> 
+> I imagine that mount's -f (fake mount by editing mtab) and -n (mount 
+> without editing mtab) options are not going to work if /etc/mtab becomes 
+> a symbolic link to /proc/mounts, so that's liable to break a few things. 
+>   In the long run it does seem like a good plan, but there might be a 
+> few bumps in the road.  I wonder what the rationale was for faking mtab 
+> mounts in the first place?
 
-I'm not trolling.
+Our system boot scripts used -n as long as / was mounted read only
+and -f to update mtab once / was remounted rw.
+Since openSUSE 11.4 /etc/mtab is a symlink to /proc/self/mounts
+which works fine so far AFAIK.
 
-I think your argument for this mailing list is that vulnerabilities need to
-be fixed before they're released to the greater public. While I can
-understand that, it seems ridiculous to parade yourselves around in public
-with a signup system that is akin to
+cu
+Ludwig
 
-
->>Huh?  Now you're with "the other" group that accuses "us" of "hiding"?
-
-Can I not be part of the group that thinks a public signup system for a
-mailing list that previously had the mail server owned due to the fact it
-was secret (showing interest in possibly owning users now that emails like
-mjo@...o.mi.org have been confirmed on the list) for a mailing list that is
-'embargoed' when really it shouldn't be.
-
->>What is your opinion on making the list's archive public with a delay(when
-the corresponding security issues are already public)?
-
-It would be better. In my opinion, delay would be 1-2 days. Vendor-sec
-(alternatives) should be a last resort in publishing issues, other projects
-don't get the same "privileges", and have to "make do" with oss-sec. If you
-really need such help 'co-ordinating' and fixing things, maybe you should
-have a policy to, release advisory/info first, then have a 'co-ordination'
-list.
-
-
->>Do you really think anyone is gaining new information by discovering
->>that, say, a member of the security team for a major distro will be on
->>this mailing list?  Such information seems pretty obvious to me.
-
-Yes Dan, but now we have private email accounts as well (by people who
-apparently don't like to use vendor email addresses) that are also signed up
-to this, allowing targeting and easy identification of probably less secure
-infrastructure.
-
-
-Excuse my "trolling" if some of this has already been covered, I'm up early
-(for me) and thus can be slightly unintelligible.
-
-
-On Mon, Apr 4, 2011 at 1:11 AM, Michael Gilbert <michael.s.gilbert@...il.com
-> wrote:
-
-> Dan Rosenberg wrote:
->
-> > On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
-> > > This is pathetic. You've all just made your personal and 'work' email
-> > > addresses targets by having a ridiculous public 'signup' system, and
-> > > the fact you all feel the need to hide behind some sort of veil for
-> > > security issues.
-> > >
-> > >
-> >
-> > Do you really think anyone is gaining new information by discovering
-> > that, say, a member of the security team for a major distro will be on
-> > this mailing list?  Such information seems pretty obvious to me.
->
-> Benji's trolling does raise a couple real issues.  The private keys and
-> passphrases of those responding here have now become highly lucrative
-> targets for attackers.  Hence, everyone on this new list needs to use
-> good practices to keep their keys, hard drives, and computers safe.
-> There should probably be some common guidelines for key safety for all
-> participants.
->
-> A private period is rather unfortunate, and hopefully it hasn't been and
-> isn't being used as a veil.  I for one am for full transparency
-> (especially given Mark Cox's statistic that vendor-sec was only relevant
-> for 29 out of over 700 open source issues last year).  However, I
-> recognize that there seems to be a need for some private coordination
-> at present. Perhaps all discussions should be published in the open
-> something like 2 months after the initial posting?  That would be a
-> kind of maximum private coordination period.
->
-> Best wishes,
-> Mike
->
-
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
