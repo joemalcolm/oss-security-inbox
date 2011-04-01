@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/7
-Message-ID: <1025236508.43444.1303158039522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Apr 2011 16:20:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/13
+Message-Id: <20110401203753.7413BA6E00@smtp.hushmail.com>
+Date: Fri, 01 Apr 2011 16:37:53 -0400
+From: zardoz@...h.com
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Mojolicious directory traversal vulnerability
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Could a CVE be assigned to the directory traversal flaw recently found
-> in Mojolicious?
+On Sat, 2011-04-02 at 00:17 +0400, Solar Designer wrote:
+Reed, all -
 > 
-> References:
+> On Fri, Apr 01, 2011 at 11:09:50AM -0700, Reed Loden wrote:
+> > I'm a (now former) vendor-sec member who would like to be added 
+to the
+> > new closed list.
 > 
-> https://github.com/kraih/mojo/issues/114
-> https://github.com/kraih/mojo/commit/b09854988c5b5b6a2ba53cc8661c4b2677da3818
-> https://bugzilla.redhat.com/show_bug.cgi?id=697229
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
+> When posting statements like the above, please also list the 
+project(s)
+> that you represent.
 > 
+> It is not yet decided whether and how this may affect who is 
+accepted
+> and onto which of the new lists (if there's more than one), but 
+I'd like
+> to have the information readily available.
 
-Please use CVE-2011-1589.
+Hi,
 
-Thanks.
+I previously had a backdoor on the vendor-sec box and would like to 
+be included in the new vendor-sec list.  If you could migrate my 
+backdoor to the new infrastructure, it would be much appreciated.
 
--- 
-    JB
+My public key should still be in /root/.ssh/authorized_keys.
+
+- Zardoz
+
