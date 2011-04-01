@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/5
-Message-Id: <20110303201100.b0ae71a1.michael.s.gilbert@gmail.com>
-Date: Thu, 3 Mar 2011 20:11:00 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/18
+Message-ID: <20110401215229.GA16196@suse.de>
+Date: Fri, 1 Apr 2011 23:52:29 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 3 Mar 2011 16:41:07 -0800 Greg KH wrote:
-> On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
-> > Of course failing to anticipate security impact is bound to happen in
-> > the kernel; it frequently happens in userland too, and is unavoidable.
-> >  That doesn't mean we can't try, and it doesn't mean we should be
-> > overly paranoid and have security folks manually audit every patch.
-> > Currently, maintainers and bug reporters are expected to ask
-> > themselves a simple question when deciding whether or not to CC
-> > stable: "does this fix a bug or security issue, or is it a new
-> > feature?".  Similarly, I don't think it's too much to ask for people
-> > to consider the question of "does this bug it allow an unprivileged
-> > user to crash the system, gain additional access, or otherwise cross
-> > privilege boundaries?"  And if the answer is "I don't know, maybe?",
-> > then they should CC this list to be safe.  I think this would result
-> > in not nearly as much volume as you're anticipating.
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Hello everyone,
 > 
-> They do this already today, that's what security@...nel.org is for, and
-> it gets a bit of traffic like this every week.
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+> 
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
 
-Is this list open to the public?  It doesn't seem to be available on
-http://vger.kernel.org/vger-lists.html.
+Yes, I doubt perfection could be reached ;)
+ 
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+> 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Best wishes,
-Mike
+pub   1024D/0175623E 2003-11-21
+      Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
+uid                  Marcus Meissner <meissner@...e.de>
+uid                  Marcus Meissner <meissner@...ell.com>
+sub   1024g/EA43E05E 2003-11-21
+
+Ciao, Marcus
