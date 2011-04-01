@@ -1,37 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/14
-Message-Id: <201102251150.33261.sgrubb@redhat.com>
-Date: Fri, 25 Feb 2011 11:50:33 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: Nelson Elhage <nelhage@...lice.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/20
+Message-ID: <1442922131.340102.1301701329967.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 1 Apr 2011 19:42:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Friday, February 25, 2011 10:43:20 am Nelson Elhage wrote:
-> On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
-> > The current patch does not check if (from_nla_len != sizeof(from_nla))
-> > before making decisions based on the header. I contacted upstream about
-> > this.
+----- Original Message -----
 > 
-> From my reading of the netlink code, recvmsg() / recvfrom() on a netlink
-> socket will never return a from_nla_len != sizeof(struct sockaddaddr_nl).
-> Am I missing something, did this change at some point, or are you just
-> suggesting general paranoid good practice? It's probably good advice in
-> any case, I'm just curious whether you're aware of cases where this can
-> actually be a problem.
+> I'd prefer if any private replacement for vendor-sec were either:
+> 
+> 1. Strictly limited to vendor coordination of embargoed security issues
+> (with membership reflecting this purpose), or
+> 
+> 2. Opened up to researchers who have contributed knowledge and findings
+> in this area, and are deemed trustworthy by other list subscribers or
+> some other community opinion.
+> 
+> In other words, it doesn't make sense to me to use "member of the old
+> vendor-sec" as the only requirement for subscription, as some of the old
+> members may not be eligible depending on the purpose of the new list. I
+> understand that this is just a preliminary solution, but I think the
+> question of membership should be sorted out sooner rather than later.
+> 
 
+I agree, the membership requirements are a bit vague. IIRC Chris Evans was
+the only researcher on the list, the rest represented a vendor in some
+manner. Sadly it was about the only thing I could think of that wasn't
+going to piss someone off (which it probably does anyway ) ;)
 
-I don't know what is considered the ultimate authority on this. You can look at libnl 
-in lib/nl.c you find this:
+Long term I'd like to see two lists, one for purpose #1, and another geared
+toward #2. I think having a trusted venue for knowledge sharing would be
+very useful, and we likely don't want the list clogged with coordination
+details. This will of course rely heavily on what Openwall is willing to
+take on. They're already taking on a lot of risk and responsibility, I
+don't want to spoil the good will.
 
-466         if (msg.msg_namelen != sizeof(struct sockaddr_nl)) {
-467                 free(msg.msg_control);
-468                 free(*buf);
-469                 return -NLE_NOADDR;
-470         }
+Now that I see all these requests coming in, I'm quite certain I was too
+vague. All gpg keys should really live on a public server (I've not checked
+to see if this is the case). If someone needs to mail you directly, your
+key should be easy to find.
 
-There are many projects that do something similar. However, looking at glibc, they do 
-other kinds of validation like the sequence number.
+Should we require members use a mail address from their vendor? Letting
+people use personal addresses creates an opportunity for people to remain
+on a list when they are no longer a part of a given vendor (it also makes
+it quite easy to know who represents a vendor).
 
--Steve
+Also, for those of you interested, I picked up a couple of OpenPGP cards
+for myself (kernel concepts sells them for a reasonable price). Using gpg
+on a regular basis with keys stored on disk creates an opportunity for key
+theft. If you have a smartcard, this isn't an issue (it's certainly not
+without its own set of potential problems though). As a warning, key
+creation on the gemalto and omnikey usb sim sized readers has been
+problematic. I hear full sized readers work (at least the folks I've
+discussed this with say they do).
+
+Thanks.
+
+-- 
+    JB
