@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/14/2
-Message-ID: <4E97BE87.80608@redhat.com>
-Date: Fri, 14 Oct 2011 10:15:59 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/19
+Message-ID: <20110401225852.GA62551@dojo.mi.org>
+Date: Fri, 1 Apr 2011 18:58:52 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 10/14/2011 12:21 AM, Solar Designer wrote:
-> I am an outside observer here (I haven't reviewed the code myself), but
-> doesn't the above amount to admin-configured privilege separation not
-> actually being enabled?  If so, this sounds like a security issue to me.
->
+::Hello everyone,
+::
+::This topic has lost focus lately. Rather than let it slip away, I think we
+::should go ahead with the simplest solution right now, we can always do
+::something different at a future date.
+::
+::Openwall has graciously volunteered to run a new list, and they currently
+::have some infrastructure in place to do this. The new list can start up
+::right away. In this instance, I fear perfect is the enemy of the good. I'd
+::rather see something functional in place than nothing.
+::
+::Here is the plan for initial membership (this is also approved by
+::Openwall).
+::
+::Initial members will have had to be a vendor-sec member (no exploders this
+::time around). You must reply to this thread, in public (on oss-security).
+::We want this to be very public, we have nothing to hide. You must have a
+::public gpg key ID included in your reply. The new list will gpg encrypt all
+::mail (it does accept plaintext messages though).
+:
+:-----BEGIN PGP PUBLIC KEY BLOCK-----
+:
+:mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
+:mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
+:b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
+:D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
+:8LMz3gjrgSXMOxuep/Ui
+:=elKt
+:-----END PGP PUBLIC KEY BLOCK-----
 
-I dont think so. From the code i have read so far, here is what seems to 
-happen.
+pub    512R/205BBF7D 2001-12-30
+      Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+      C1
+uid                  Michael J. O'Connor <mjo@...o.mi.org>
 
-- radvd starts as root
-- reads the configs
-- if a username is specified (user=radvd in most cases):
-	- if "--singleprocess" is not specified:
-		- run privsep_init(): This forks another process which
-		  runs as root. So after this point we have two
-		  processes both running as root
-		- If privsep_init() fails, we have just one process
-		  running as root
-	- run drop_root_privileges():
-		If this succedes, we have two processes one running as
-		root and another as radvd user, or if privsep_init()
-		failed earlier, we have one process running as radvd
-		user.
-		If this fails, application quits
-- If username was not specified radvd continues to run as a single 
-process as root.
-
-
-So failure in privsep_init() results in just one process running as 
-radvd user. If it did not fail it would result in one process running as 
-root and another as radvd user.
-
-I dont think this would be a security issue in my opinion.
-
-
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Content of type "application/pgp-signature" skipped
