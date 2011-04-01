@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/6
-Message-ID: <4ED6C0AC.8060601@lordepsylon.net>
-Date: Thu, 01 Dec 2011 00:47:56 +0100
-From: psy <root@...depsylon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/19
+Message-ID: <20110401225852.GA62551@dojo.mi.org>
+Date: Fri, 1 Apr 2011 18:58:52 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: XSSer v1.6 -beta- aka "Grey Swarm!" released.
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+::Hello everyone,
+::
+::This topic has lost focus lately. Rather than let it slip away, I think we
+::should go ahead with the simplest solution right now, we can always do
+::something different at a future date.
+::
+::Openwall has graciously volunteered to run a new list, and they currently
+::have some infrastructure in place to do this. The new list can start up
+::right away. In this instance, I fear perfect is the enemy of the good. I'd
+::rather see something functional in place than nothing.
+::
+::Here is the plan for initial membership (this is also approved by
+::Openwall).
+::
+::Initial members will have had to be a vendor-sec member (no exploders this
+::time around). You must reply to this thread, in public (on oss-security).
+::We want this to be very public, we have nothing to hide. You must have a
+::public gpg key ID included in your reply. The new list will gpg encrypt all
+::mail (it does accept plaintext messages though).
+:
+:-----BEGIN PGP PUBLIC KEY BLOCK-----
+:
+:mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
+:mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
+:b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
+:D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
+:8LMz3gjrgSXMOxuep/Ui
+:=elKt
+:-----END PGP PUBLIC KEY BLOCK-----
 
-There is released a new version of *XSSer* (v1.6-beta-) - the cross site
-scripter framework.
+pub    512R/205BBF7D 2001-12-30
+      Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+      C1
+uid                  Michael J. O'Connor <mjo@...o.mi.org>
 
-Take a look to the XSSer website to see new features implemented,
-screenshots, documentation, etc...
-
-http://xsser.sf.net
-
-You can download original code directly from here:
-
-http://sourceforge.net/projects/xsser/files/xsser_1.6-1.tar.gz/download
-
-Or update your copy from the XSSer svn repository:
-
-$ svn co https://xsser.svn.sourceforge.net/svnroot/xsser xsser
-
-Also, you have on the main website some pre-compiled packages
-(ArchLinux, Debian/Ubuntu, Gentoo, etc..)
-
-"Are you ready for the Grey Swarm!?"
-
-Happy cross hacking.
-
-psy.
-
-
+Content of type "application/pgp-signature" skipped
