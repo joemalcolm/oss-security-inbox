@@ -1,36 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/7
-Message-ID: <20110706125139.3e4b6d0f@redhat.com>
-Date: Wed, 6 Jul 2011 12:51:39 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/18
+Message-ID: <20110401215229.GA16196@suse.de>
+Date: Fri, 1 Apr 2011 23:52:29 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 6 Jul 2011 10:56:46 +0400 Solar Designer wrote:
-
-> > The fix from the paper was committed in openssl CVS within about a
-> > week from public disclosure:
-> > 
-> > http://cvs.openssl.org/chngview?cn=20892
-> > 
-> > However, there were some concerns raised regarding the extra #ifdef
-> > wrapping added as part of the commit, which disable the fix by
-> > default, and the name suggests #ifndef was probably intended:
-> > 
-> > http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Hello everyone,
 > 
-> This helps.
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
 > 
-> Are you dealing with the issue for Red Hat products?  Perhaps you
-> have a Bugzilla entry?
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
 
-We have bugzilla (as usual, use CVE as a bug id), but not too useful
-for other distros, as it only says we're not affected.  All EC crypto is
-one of the "patent or otherwise encumbered" code pieces that are removed
-and not compiled in.
+Yes, I doubt perfection could be reached ;)
+ 
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+> 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-http://pkgs.fedoraproject.org/gitweb/?p=openssl.git;a=blob;f=hobble-openssl;h=a8be844f6ba7654b5738ae0e27e192a38797bd74;hb=master
+pub   1024D/0175623E 2003-11-21
+      Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
+uid                  Marcus Meissner <meissner@...e.de>
+uid                  Marcus Meissner <meissner@...ell.com>
+sub   1024g/EA43E05E 2003-11-21
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Ciao, Marcus
