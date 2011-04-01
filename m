@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/2
-Message-ID: <1319896259.21316.19.camel@scapa>
-Date: Sat, 29 Oct 2011 15:50:59 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/5
+Message-ID: <665786895.334902.1301680992935.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
+Subject: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
-> Please use CVE-2011-3362.
-> 
-> Thanks.
-> 
+Hello everyone,
 
-It seems that CVE-2011-3973 has been assigned as a duplicate to this
-issue. Is there a way to know who assigned it and have it rejected?
+This topic has lost focus lately. Rather than let it slip away, I think we
+should go ahead with the simplest solution right now, we can always do
+something different at a future date.
 
-Regards
+Openwall has graciously volunteered to run a new list, and they currently
+have some infrastructure in place to do this. The new list can start up
+right away. In this instance, I fear perfect is the enemy of the good. I'd
+rather see something functional in place than nothing.
+
+Here is the plan for initial membership (this is also approved by
+Openwall).
+
+Initial members will have had to be a vendor-sec member (no exploders this
+time around). You must reply to this thread, in public (on oss-security).
+We want this to be very public, we have nothing to hide. You must have a
+public gpg key ID included in your reply. The new list will gpg encrypt all
+mail (it does accept plaintext messages though).
+
+Once we have an initial seed group, we can focus on future membership
+ideas.
+
+Thanks.
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
