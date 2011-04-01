@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/14
-Message-ID: <870485390.28797.1302553207639.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 16:20:07 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/12
+Message-ID: <20110401202235.GA9674@nxnw.org>
+Date: Fri, 1 Apr 2011 13:22:36 -0700
+From: Steve Beattie <sbeattie@...ntu.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi Josh,
 
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
------ Original Message -----
-> Hi,
-> 
-> http://www.pureftpd.org/project/pure-ftpd/news
-> 
-> states that pure-ftpd is affected by the same STARTTLS
-> injection bug as postifx's CVE-2011-0411.
-> 
-> Is this CVE postfix-specific or can it be used for
-> pure-ftpd as well? If needed, can someone assign a new CVE?
-> 
+I was a subscriber of vender-sec, please add me to the new list.
 
-Use CVE-2011-1575 for this.
+gpg information:
+
+pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
+      Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
+uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
 
 Thanks.
 
 -- 
-    JB
+Steve Beattie
+<sbeattie@...ntu.com>
+http://NxNW.org/~steve/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
