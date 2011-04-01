@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/7
-Message-ID: <1862529808.141315.1313779628800.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:47:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/2
+Message-Id: <201104011437.24983.ludwig.nussel@suse.de>
+Date: Fri, 1 Apr 2011 14:37:24 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>, coley <coley@...re.org>
-Subject: Re: CVE request: coppermine gallery < 1.4.26
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> This security issue never got CVE-identifier:
-> http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
+Patrick J. Volkerding wrote:
+> On 03/31/2011 08:43 AM, Dan Rosenberg wrote:
+> > I'd also
+> > like to see distributions migrating away from /etc/mtab in general,
+> > since /proc/mounts seems like a much better replacement.
 > 
-> Original advisory:
-> http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
-> OSVDB: http://osvdb.org/show/osvdb/62261
-> 
+> I imagine that mount's -f (fake mount by editing mtab) and -n (mount 
+> without editing mtab) options are not going to work if /etc/mtab becomes 
+> a symbolic link to /proc/mounts, so that's liable to break a few things. 
+>   In the long run it does seem like a good plan, but there might be a 
+> few bumps in the road.  I wonder what the rationale was for faking mtab 
+> mounts in the first place?
 
-Please use CVE-2010-4815 for this.
+Our system boot scripts used -n as long as / was mounted read only
+and -f to update mtab once / was remounted rw.
+Since openSUSE 11.4 /etc/mtab is a symlink to /proc/self/mounts
+which works fine so far AFAIK.
 
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
