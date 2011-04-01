@@ -1,60 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/12/2
-Message-ID: <20110312170344.GA14833@albatros>
-Date: Sat, 12 Mar 2011 20:03:45 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/10
+Message-ID: <20110401201710.GA30886@openwall.com>
+Date: Sat, 2 Apr 2011 00:17:10 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Untrusted fs and invalid filenames
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-This is a resumption of the subject "Physical access vulnerabilities and
-auto-mounting" brought by Dan Rosenberg.  The previous discussion was
-about possible attacks the kernel, now I'd like to talk about attacks
-userland programs.
+Reed, all -
 
-While POSIX restricts the character set used in filenames, some Linux
-filesystems (at least ext2) permit reserved filenames ".", ".." and
-filenames with "/" inside.  I have a crafted flash drive with ext2 that
-has such files:
+On Fri, Apr 01, 2011 at 11:09:50AM -0700, Reed Loden wrote:
+> I'm a (now former) vendor-sec member who would like to be added to the
+> new closed list.
 
-root@...atros:/media# ls cdrom/ -la
-итого 28
-drwxr-xr-x 4 root root  4096 2011-03-12 18:55 .
-drwxr-xr-x 3 root root  4096 2011-03-12 18:48 ..
-drwxr-xr-x 3 root root  4096 2011-03-12 18:48 ..
-drwx------ 2 root root 16384 2011-03-12 18:54 lost+found
+When posting statements like the above, please also list the project(s)
+that you represent.
 
-root@...atros:/media# ls a2f202b6-a3ef-45b5-bce4-01c4d35af4a0/ -la
-итого 28
-drwxr-xr-x 4 root root  4096 2011-03-12 18:55 .
-drwxr-xr-x 4 root root  4096 2011-03-12 19:08 ..
-drwx------ 2 root root 16384 2011-03-12 18:54 lost+found
--rw-r--r-- 1 root root  3146 2011-03-12 19:07 lost+found/../../../etc/passwd
-
-Guess what does "rm" with such filenames :-)
-
-Another example of crafted fs is ext2 partition with EXT2_ERRORS_PANIC
-option set in superblock and corrupted root directory.  When run "ls" on
-the fs, the kernel would panic.
-
-While it was said that such attacks have low impact, some systems
-already try to protect itself from untrusted external filesystems.
-E.g. automounting of flash drives in Ubuntu is processed with
-"-o nodev,nosuid".  I read this as external flash drives are not fully
-trusted and may contain some dangerous files.  If some automatic file
-processing of files on drives with specially crafted filenames is
-started then it might have a security impact.  I don't know such popular
-apps, though.
-
-What I suggest is something like "-o untrusted" option to mount.  This
-would mean that the system considers the input from such fs as a malicious
-input.  Such mounted fs would try to consider the data on disk as
-untrusted and to be as robust as possible, e.g. check against
-"/"-filenames, against corrupted fs structures, etc.  I'd be happy to
-hear opinions about the usefulness of this feature.
+It is not yet decided whether and how this may affect who is accepted
+and onto which of the new lists (if there's more than one), but I'd like
+to have the information readily available.
 
 Thanks,
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Alexander
