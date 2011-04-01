@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/8
-Message-ID: <4DDB99A7.9090108@msgid.tls.msk.ru>
-Date: Tue, 24 May 2011 15:42:31 +0400
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/16
+Message-ID: <20110401210823.GR4050@outflux.net>
+Date: Fri, 1 Apr 2011 14:08:23 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE Request: exim STARTTLS fix
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-24.05.2011 15:24, Josh Bressers wrote:
-> ----- Original Message -----
->> Hi,
->>
->> while reviewing EXIM git for the last security issues, I also found the
->> STARTTLS fix:
->>
->> http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
->>
->> Is fixed with exim 4.76 apparently.
->>
-> 
-> That commit suggests it's not an issue, but rather some extra paranoid
-> buffer wiping. Is there a reason to believe this is a problem?
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Isn't it CVE-2011-0411 attack ?
+Hi, please add me to the list. I was a member via the Ubuntu exploder.
 
-/mjt
+pub   4096R/DC6DC026 2010-09-27
+      Key fingerprint = A5C3 F68F 229D D60F 723E  6E13 8972 F4DF DC6D C026
+uid                  Kees Cook <kees@...ntu.com>
+sub   4096R/650DE414 2010-09-27
+
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
