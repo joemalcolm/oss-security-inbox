@@ -1,45 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/1
-Message-ID: <CAD_8n+QMfYXNrxzGHhfA35trvjoCsPYNws+Q9xx_UyDzSw2r6w@mail.gmail.com>
-Date: Tue, 11 Oct 2011 23:26:55 -0700
-From: Reuben Hawkins <reubenhwk@...il.com>
-To: Vasiliy Kulikov <segoon@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/7
+Message-ID: <4D96176E.8090905@slackware.com>
+Date: Fri, 01 Apr 2011 13:20:30 -0500
+From: "Patrick J. Volkerding" <security@...ckware.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> On Fri, Oct 07, 2011 at 15:41 +0100, John Haxby wrote:
->> On 07/10/11 14:03, Robert Święcki wrote:
->> > On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
->> > <huzaifas@...hat.com> wrote:
->> >> Shouldnt this be:
->> >>
->> >>        /* No path traversal */
->> >>        if (strstr(iface, "..") || strchr(iface, '/'))
->> >>                return -1;
->> > FWIW, this will reject too much;
->> >
->> > /path/to/sth..jpg
->> >
->>
->> Indeed, since I don't believe that iface can reasonably include a "/"
->> its sufficient to check for that.   If not then you need to check for
->> "../" at the beginning of iface and "/.." anywhere else in it.   But
->> simply forbidding "/" should be fine.
->
-> Crap, thank you for noticing it, guys.  The fix should be:
->
-> https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
->
-> Now, "", "..", "." and filenames with "/" inside are denied.
->
->
-> Thanks,
->
-> --
-> Vasiliy Kulikov
-> http://www.openwall.com - bringing security into open computing environments
->
+On 04/01/2011 01:03 PM, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Are y'all waiting on me to release 1.8.3 with the latest fix?
+Good hello,
+
+I've been on board since close to the beginning, and would be pleased to 
+participate again.  Here's the public GPG key for this address.  It 
+expires on 2012-12-21, but presumably that won't be a problem.  ;-)
+
+Take care,
+
+Pat
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.2.1 (GNU/Linux)
+
+mQGiBD5dIFQRBADB31WinbXdaGk/8RNkpnZclu1w3Xmd5ItACDLB2FhOhArw35EA
+MOYzxI0gRtDNWN4pn9n74q4HbFzyRWElThWRtBTYLEpImzrk7HYVCjMxjw5A0fTr
+88aiHOth5aS0vPAoq+3TYn6JDSipf2bR03G2JVwgj3Iu066pX4naivNm8wCgldHG
+F3y9vT3UPYh3QFgEUlCalt0D/3n6NopRYy0hMN6BPu+NarXwv6NQ9g0GV5FNjEEr
+igkrD/htqCyWAUl8zyCKKUFZZx4UGBRZ5guCdNzwgYH3yn3aVMhJYQ6tcSlLsj3f
+JIz4LAZ3+rI77rbn7gHHdp7CSAuV+QHv3aNanUD/KGz5SPSvF4w+5qRM4PfPNT1h
+LMV8BACzxiyX7vzeE4ZxNYvcuCtv0mvEHl9yD66NFA35RvXaO0QiRVYeoUa5JOQZ
+gwq+fIB0zgsEYDhXFkC1hM/QL4NccMRk8C09nFn4eiz4dAEnwKt4rLCJKhkLl1DW
+TSoXHe/dOXaLnFyLzB1J8hEYmUvw3SwPt//wMqDiVBLeZfFcdLQwU2xhY2t3YXJl
+IExpbnV4IFByb2plY3QgPHNlY3VyaXR5QHNsYWNrd2FyZS5jb20+iF8EExECAB8F
+Aj5dIFQFCRJ3owAECwcDAgMVAgMDFgIBAh4BAheAAAoJEGpEY8BAECIzee0An3My
+boalJ5nLePD0HCzMuf8Ix8gPAJ9lnU1wqNVGza0t89ACTurDoppQ2rkBDQQ+XSBV
+EAQA3VYlpPyRKdOKoM6t1SwNG0YgVFSvxy/eiratBf7misDBsJeH86Pf8H9OfVHO
+cqscLiC+iqvDgqeTUX9vASjlnvcoS/3H5TDPlxiifIDggqd2euNtJ8+lyXRBV6yP
+sBIA6zki9cR4zphe48hKpSsDfj7uL5sfyc2UmKKboSu3x7cAAwUD/1jmoLQs9bIt
+bTosoy+5+Uzrl0ShRlv+iZV8RPzAMFuRJNxUJkUmmThowtXRaPKFI9AVd+pP44aA
+J+zxCPtS2isiW20AxubJoBPpXcVatJWi4sG+TM5Z5VRoLg7tIDNVWsyHGXPAhIG2
+Y8Z1kyWwb4P8A/W2b1ZCqS7Fx4yEhTikiEwEGBECAAwFAj5dIFUFCRJ3owAACgkQ
+akRjwEAQIjM1uwCdE7V4mPCqdby/nV699NxKX0iW/OsAniaVhEip8Ptff74Sv4JV
+tb+Sth2l
+=H5uu
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+
