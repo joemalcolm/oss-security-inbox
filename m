@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/13/2
-Message-ID: <igm068$vv0$1@dough.gmane.org>
-Date: Wed, 12 Jan 2011 22:48:06 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/8
+Message-ID: <1301683688.2521.12.camel@mdlinux>
+Date: Fri, 01 Apr 2011 14:48:08 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-Could CVE ids be assigned for the following issues? Thanks in advance.
+On Fri, 2011-04-01 at 14:03 -0400, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-ftpls: XSS in directory listing
-http://bugs.debian.org/607494
+Please subscribe me to the new list. I was a vendor-sec subscriber.
 
-xdigger: buffer overflow when parsing CLI arguments
-(it is SGID, at least in Debian)
-http://bugs.debian.org/609096
+pub  4096R/A744BE93 2010-09-30
+uid Marc Deslauriers <marc.deslauriers@...onical.com>
+Fingerprint 50C4 A0DD CF31 E452 CEB1 9B51 6569 D855 A744 BE93
 
-lbreakout2: buffer overflow with overly long HOME env var
-(it is SGID, at least in Debian)
-http://bugs.debian.org/608980
+Thanks,
 
-calibre: XSS and file disclosure
-http://www.waraxe.us/advisory-77.html
-http://bugs.debian.org/608822
+Marc.
 
-typo3: 8 vulnerabilities
-http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-022/
-http://seclists.org/fulldisclosure/2010/Dec/690
-http://bugs.debian.org/607286
-
-
-There are more issues without ids, will request them later.
-
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
