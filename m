@@ -1,53 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/10
-Message-ID: <441323329.125085.1305660435298.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 15:27:15 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/20
+Message-ID: <1442922131.340102.1301701329967.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 1 Apr 2011 19:42:09 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+----- Original Message -----
+> 
+> I'd prefer if any private replacement for vendor-sec were either:
+> 
+> 1. Strictly limited to vendor coordination of embargoed security issues
+> (with membership reflecting this purpose), or
+> 
+> 2. Opened up to researchers who have contributed knowledge and findings
+> in this area, and are deemed trustworthy by other list subscribers or
+> some other community opinion.
+> 
+> In other words, it doesn't make sense to me to use "member of the old
+> vendor-sec" as the only requirement for subscription, as some of the old
+> members may not be eligible depending on the purpose of the new list. I
+> understand that this is just a preliminary solution, but I think the
+> question of membership should be sorted out sooner rather than later.
+> 
 
-Can MITRE deal with this one (also, have you folks assigned this yet?).
+I agree, the membership requirements are a bit vague. IIRC Chris Evans was
+the only researcher on the list, the rest represented a vendor in some
+manner. Sadly it was about the only thing I could think of that wasn't
+going to piss someone off (which it probably does anyway ) ;)
 
-I'm not sure how you've handled the crashes historically.
+Long term I'd like to see two lists, one for purpose #1, and another geared
+toward #2. I think having a trusted venue for knowledge sharing would be
+very useful, and we likely don't want the list clogged with coordination
+details. This will of course rely heavily on what Openwall is willing to
+take on. They're already taking on a lot of risk and responsibility, I
+don't want to spoil the good will.
+
+Now that I see all these requests coming in, I'm quite certain I was too
+vague. All gpg keys should really live on a public server (I've not checked
+to see if this is the case). If someone needs to mail you directly, your
+key should be easy to find.
+
+Should we require members use a mail address from their vendor? Letting
+people use personal addresses creates an opportunity for people to remain
+on a list when they are no longer a part of a given vendor (it also makes
+it quite easy to know who represents a vendor).
+
+Also, for those of you interested, I picked up a couple of OpenPGP cards
+for myself (kernel concepts sells them for a reasonable price). Using gpg
+on a regular basis with keys stored on disk creates an opportunity for key
+theft. If you have a smartcard, this isn't an issue (it's certainly not
+without its own set of potential problems though). As a warning, key
+creation on the gemalto and omnikey usb sim sized readers has been
+problematic. I hear full sized readers work (at least the folks I've
+discussed this with say they do).
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> I see the following changes as fixed in MySQL 5.1.52, but cannot find
-> any CVEs for them:
-> 
-> InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
-> examining the same table's information in the INFORMATION_SCHEMA
-> database at the same time could cause a crash in the debug version of
-> the server. (Bug #54678)
-> 
-> Security Fix: The server crashed for assignment of values of types
-> other
-> than Geometry to items of type GeometryCollection (MultiPoint,
-> MultiCurve, MultiSurface). Now the server checks the field type and
-> fails with bad geometry value if it detects incorrect parameters. (Bug
-> #55531)
-> 
-> Security Fix: EXPLAIN EXTENDED caused a server crash with some
-> prepared
-> statements. (Bug #54494)
-> 
-> Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
-> derived table caused a server crash. (Bug #54488)
-> 
-> There are a whole bunch of other crash-type bugs corrected in 5.1.52
-> that upstream did not explicitly flag as security, which might be
-> considered security-relevant as well:
-> 
-> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
