@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/3
-Message-ID: <20110908122634.GK11236@ngolde.de>
-Date: Thu, 8 Sep 2011 14:26:34 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/15
+Message-ID: <20110401183502.GA57923@dojo.mi.org>
+Date: Fri, 1 Apr 2011 14:35:02 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* David Hicks <d@...id.au> [2011-09-04 16:11]:
-> On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
-> > Request #2: LFI and XSS via bug_actiongroup_ext_page.php
-> 
-> I don't think my earlier message conveyed the severity of this bug well
-> enough.
-> 
-> MantisBT allows users to upload attachments to bug reports. These
-> attachments are commonly stored on the disk in an 'attachments'
-> directory that should be stored outside the web root (but are still
-> accessible to MantisBT for retrieval).
-[...]
-In case this slipped through the cracks... Can someone assign ids to these 
-issues?
+:Hello everyone,
+:
+:This topic has lost focus lately. Rather than let it slip away, I think we
+:should go ahead with the simplest solution right now, we can always do
+:something different at a future date.
+:
+:Openwall has graciously volunteered to run a new list, and they currently
+:have some infrastructure in place to do this. The new list can start up
+:right away. In this instance, I fear perfect is the enemy of the good. I'd
+:rather see something functional in place than nothing.
+:
+:Here is the plan for initial membership (this is also approved by
+:Openwall).
+:
+:Initial members will have had to be a vendor-sec member (no exploders this
+:time around). You must reply to this thread, in public (on oss-security).
+:We want this to be very public, we have nothing to hide. You must have a
+:public gpg key ID included in your reply. The new list will gpg encrypt all
+:mail (it does accept plaintext messages though).
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
+mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
+b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
+D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
+8LMz3gjrgSXMOxuep/Ui
+=elKt
+-----END PGP PUBLIC KEY BLOCK-----
+
 
 Content of type "application/pgp-signature" skipped
