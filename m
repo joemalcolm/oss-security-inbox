@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/5
-Message-ID: <4D969F68.7050301@xiscosoft.es>
-Date: Sat, 02 Apr 2011 06:00:40 +0200
-From: klondike <klondike@...cosoft.es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/11
+Message-ID: <AANLkTimSfNQvob8xSkFtnHZ7reykFdefj=UMJ7vv+iVN@mail.gmail.com>
+Date: Fri, 1 Apr 2011 16:17:32 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
+Cc: Josh Bressers <bressers@...hat.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-El 01/04/11 20:03, Josh Bressers escribió:
+Hi,
+
+>
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+>
 > Initial members will have had to be a vendor-sec member (no exploders this
 > time around). You must reply to this thread, in public (on oss-security).
 > We want this to be very public, we have nothing to hide. You must have a
 > public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though)
-Will the list provide protection against rubber-hose cryptanalisys?, if
-so, how? GPG as most other cryptographic software is vulnerable to it.
-What about black-bag cryptanalysis?
+> mail (it does accept plaintext messages though).
+>
 
-Sometime ago I was taught that the best way to be sure a secret was not
-known was not saying it, so if you, researchers, want to make sure your
-PoC aren't abused do things properly, warn the vendors to upgrade the
-product because of your security finding and avoid providing PoCs until
-enough time has passed for you to be sure everybody has had a chance to
-upgrade.
+I'd prefer if any private replacement for vendor-sec were either:
 
-Any other solution can be easily flawed since you can't make sure I
-won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
-such a private list.
+1. Strictly limited to vendor coordination of embargoed security
+issues (with membership reflecting this purpose), or
 
+2. Opened up to researchers who have contributed knowledge and
+findings in this area, and are deemed trustworthy by other list
+subscribers or some other community opinion.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+In other words, it doesn't make sense to me to use "member of the old
+vendor-sec" as the only requirement for subscription, as some of the
+old members may not be eligible depending on the purpose of the new
+list.  I understand that this is just a preliminary solution, but I
+think the question of membership should be sorted out sooner rather
+than later.
+
+Thanks,
+Dan
+
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+>
+> Thanks.
+>
+> --
+>    JB
+>
