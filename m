@@ -1,103 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/3
-Message-ID: <4ECCDCC4.4090700@redhat.com>
-Date: Wed, 23 Nov 2011 12:45:08 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-CC: Kurt Seifried <kseifried@...hat.com>, Henri Salo <henri@...v.fi>, cve@...re.org
-Subject: Typo in description of CVE-2011-2708 and CVE-2011-4331? [was: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/16
+Message-ID: <20110401210823.GR4050@outflux.net>
+Date: Fri, 1 Apr 2011 14:08:23 -0700
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve,
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-   thank you for the clarification due this.
+Hi, please add me to the list. I was a member via the Ubuntu exploder.
 
-But according to latest CVE-2011-2708 and CVE-2011-4331 description 
-assignment, there seems to be a type (rounded / cycled definition of both):
+pub   4096R/DC6DC026 2010-09-27
+      Key fingerprint = A5C3 F68F 229D D60F 723E  6E13 8972 F4DF DC6D C026
+uid                  Kees Cook <kees@...ntu.com>
+sub   4096R/650DE414 2010-09-27
 
-======================================================
-Name: CVE-2011-2708
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2708 [Open URL]
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20110711
-Category:
+-Kees
 
-** REJECT **
-
-DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2011-2708. Reason:
-This candidate is a duplicate of CVE-2011-2708. Notes: All CVE users
-should reference CVE-2011-2708 instead of this candidate. All
-references and descriptions in this candidate have been removed to
-prevent accidental usage.
-
-This one should mention 'CVE-2011-2710' in the body (based on the
-reply below).
-
-======================================================
-Name: CVE-2011-4331
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4331 [Open URL]
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20111104
-Category:
-
-** REJECT **
-
-DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2011-4331. Reason:
-This candidate is a duplicate of CVE-2011-4331. Notes: All CVE users
-should reference CVE-2011-4331 instead of this candidate. All
-references and descriptions in this candidate have been removed to
-prevent accidental usage.
-
-This one should use "CVE-2011-4110" in the body, based on:
-http://seclists.org/oss-sec/2011/q4/378
-
-Could you correct these two yet? (not a big deal, just wanted to
-point this out those two to be described correctly, even when being
-duplicates).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-On 11/23/2011 04:30 AM, Steven M. Christey wrote:
->
-> Let's keep CVE-2011-2710 and we will reject CVE-2011-2708. Henri, I'm
-> sorry about the lack of response :-(
->
-> - Steve
->
->
-> On Mon, 21 Nov 2011, Kurt Seifried wrote:
->
->>
->>> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS
->>> vulnerability:
->>> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html
->>> and I have already contacted MITRE twice to get another one marked as
->>> obsolete.
->>>
->>>
->>> Best regards,
->>> Henri Salo
->>
->> Ok CVE-2011-2710 is public in CVE and NVD:
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
->> CVE-2011-2708 is still marked as reserved so we should probably quietly
->> take CVE-2011-2708 out back and shoot it.
->>
->> CC'ing mitre.
->>
->> --
->>
->> -Kurt Seifried / Red Hat Security Response Team
->>
->>
-
+-- 
+Kees Cook
+Ubuntu Security Team
