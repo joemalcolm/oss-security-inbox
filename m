@@ -1,42 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/5
-Message-ID: <4E68C0D1.8070206@redhat.com>
-Date: Thu, 08 Sep 2011 15:19:13 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/6
+Message-ID: <20110401110950.3a211ee3@angelo.pretender.us>
+Date: Fri, 1 Apr 2011 11:09:50 -0700
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   it was found that the Zikula web application framework did not
-properly sanitize the 'themename' parameter, while setting particular
-theme as a default one, modifying the theme or deleting it. A remote
-attacker, with Zikula administrator privilege, could use this flaw to
-execute arbitrary HTML or web script code in the context of the
-affected website.
+On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
 
-References:
-[1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
-[2] https://www.htbridge.ch/advisory/xss_in_zikula.html
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Relevant upstream patch:
-[4] 
-https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
+I'm a (now former) vendor-sec member who would like to be added to the
+new closed list.
 
-Vulnerable Zikula versions: Development versions prior to patch [4].
-Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
-                          code in question yet.
+My GPG key:
+ pub 1024D/F3C33D5A 2008-11-19
+ Key fingerprint = 6B56 F9AC 07B6 85D7 DC45 60DA 6BA2 2226 F3C3 3D5A
+ uid Reed Loden
+ sub 4096g/C0B72052 2008-11-19
 
-Provided PoC (from [1], [2]):
-=============================
-http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu 
-ment.cookie%29%3C/script%3E
+Thanks,
+~reed
 
-Could you allocate a CVE id for this?
+- -- 
+Reed Loden
+reed@...dloden.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iEYEARECAAYFAk2WFO4ACgkQa6IiJvPDPVqpTwCg3O5e+uTYtDcLCxHCJ8EF+zYD
+fTsAnjv8NnRnsQRFHswnj5IvASxpj7A+
+=pBPQ
+-----END PGP SIGNATURE-----
