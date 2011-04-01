@@ -1,74 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/7
-Message-ID: <1320763429.6018.83@d.hx.id.au>
-Date: Wed, 09 Nov 2011 01:43:49 +1100
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/6
+Message-ID: <20110401110950.3a211ee3@angelo.pretender.us>
+Date: Fri, 1 Apr 2011 11:09:50 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: /proc/interrupts PoC: spy-interrupts
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-11-07 at 21:41 +0400, Vasiliy Kulikov wrote:
-> /*
->  * A PoC for spying for keystrokes in gksu via /proc/interrupts in Linux <= 3.1.
->  * 
->  * The file /proc/interrupts is world readable.  It contains information
->  * about how many interrupts were emitted since the system boot.  We may loop
->  * on one CPU core while the victim is executed on another, and learn the length
->  * of victim's passord via monitoring emitted interrupts' counters of the keyboard
->  * interrupt.  The PoC counts only keystrokes number, but it can be easily extended
->  * to note the delays between the keystrokes and do the statistical analysis to
->  * learn the precise input characters.
->  *
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If you're after another idea[1], you could also try writing some code to
-analyse context switch counters:
+On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
 
-1. Wait for a user to spawn an instance of gnome-terminal[2].
-2. Monitor the value of nonvoluntary_ctxt_switches in /proc/{pid of
-gnome-terminal instance}/status.
-3. Wait for the user to spawn an instance of su/sudo.
-4. Analyse timing of changes to nonvoluntary_ctxt_switches as context
-switches to gnome-terminal on each key press at the password prompt.
-5. Stop monitoring once the su/sudo process indicates a successful login
-(there are various ways of doing this including waiting for a pause in
-key presses). You should now have the length of the password and an idea
-of timing between key presses.
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Mouse movements over the gnome-terminal window can be separated out
-easily. You'll see 100's of context switches in a short time frame,
-followed by a pause as the user moves their hands to the keyboard and
-then a few context switches as keyboard events are received. You would
-also need to subtract context switches due to the blinking cursor
-(periodic screen redraw).
+I'm a (now former) vendor-sec member who would like to be added to the
+new closed list.
 
-Taking this to another extreme you could also watch
-nonvoluntary_ctxt_switches before and after su/sudo is called, coupled
-with knowledge of processes that have been spawned as a result of
-keystrokes, to develop a statistical model for timings between
-keystrokes (assuming you can get enough resolution or samples of typing
-patterns).
+My GPG key:
+ pub 1024D/F3C33D5A 2008-11-19
+ Key fingerprint = 6B56 F9AC 07B6 85D7 DC45 60DA 6BA2 2226 F3C3 3D5A
+ uid Reed Loden
+ sub 4096g/C0B72052 2008-11-19
 
-There was a relevant thread of discussion on LKML, 7 Feb 2011[3],
-discussing information leakage of ASLR offsets from /proc/$pid/. The
-issue, considerations and solutions are likely similar. Prior
-discussions about loose HPET/high resolution counter access vs. crypto
-implementations, detecting "Blue Pill rootkits" via timing analysis[4]
-and so forth are also relevant reading.
+Thanks,
+~reed
 
+- -- 
+Reed Loden
+reed@...dloden.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-
-[1] At the moment this is just an unproven/unimplemented idea (according
-to a quick search). However, similar research indicates that it is
-highly likely that root passwords could be recovered using this
-approach. Unless you're an OpenBSD developer, don't be too concerned :)
-
-[2] This idea may work against other UI terminal software/desktop
-environments or poorly implemented authentication daemons where key
-presses are sent individually over a network or socket.
-
-[3] https://lkml.org/lkml/2011/2/7/368
-
-[4] First example I found,
-http://www.matasano.com/research/bh-usa-07-ptacek_goldsmith_and_lawson.pdf
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iEYEARECAAYFAk2WFO4ACgkQa6IiJvPDPVqpTwCg3O5e+uTYtDcLCxHCJ8EF+zYD
+fTsAnjv8NnRnsQRFHswnj5IvASxpj7A+
+=pBPQ
+-----END PGP SIGNATURE-----
