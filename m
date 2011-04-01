@@ -1,81 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/6
-Message-ID: <1590265071.372210.1299180163068.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 14:22:43 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/17
+Message-ID: <20110401214923.GC22286@altlinux.org>
+Date: Sat, 2 Apr 2011 01:49:24 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi folks,
-> 
-> As moderator of vendor-sec and one of the sysadmins of lst.de I noticed a
-> break-in into the lst.de machine last week, which was likely used to
-> sniff email traffic of vendor-sec. This incident probably happened on Jan
-> 20 as confirmed by timestamp, but might have existed for longer.
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Thanks for making this public. I know it can be hard to bring something
-like this up.
+I was a vendor-sec member representing ALT Linux.  My gpg key ID for
+email conversations is FE4C93ABE19A2E4CCB5D3E4E7CABE6AC9E35361E.
 
-> I have asked Solar Designer if he could take over hosting, and he was
-> agreeing, including a full GPG crypted setup.
-
-For those of you who don't know Solar Designer hosts oss-security.
-
-> So I would like to open up a discussion with _all_ OSS Security folks
-> present.
-> 
-> - Is a closed vendor coordination like vendor-sec still needed at this
-> time?
-
-I've thought about this a lot. I think the answer is probably. There are
-still reasons to need good cooperation between vendors (this is different
-than coordination, which is what the CERTs do, which generally doesn't
-bring the affected parties together to work on a solution, they generally
-just distribute information).
-
-> 
-> Meaning: does the benefit of a closed group really outweigh the "left out
-> feeling" of non members and its annoyances?
-
-This is a big challenge. It's also really hard to decide who should get to
-be a part of such a group. Historically vendor-sec was only vendors, but
-there are a number researchers who would be useful for example (but again,
-who do you choose).
-
-> - If yes, would it be an idea to confine or split into lists of focus
-> groups?  (like Linux vendors, BSD vendors, all OSS source using vendors,
-> etc?)
-
-My only fear with this is complexity (I'll propse a far more complex
-idea below).
-
-> 
-> - Or of course the old option is open: Should we proceed with the current
-> state as-is, but throw a bit more GPG encryption on top?
-
-I suspect it's fairly well understood that the current vendor-sec model was
-broken. Very few "members" ever contributed, which made the list more of an
-announce venue.
-
-> 
-> - What other options do we have or should we pursue?
-> 
-
-If I had my way (and we had infinite time and resources), I would opt for a
-solution that let the reporter decide who they wanted to inform. Have a
-system in place that could handle properly encrypting the traffic, then
-somehow (web page?) let a reporter decide who to alert. This list of
-potential recipients could include vendors, other upstream projects,
-researchers, CERTs, ... the possibilities are endless.
-
-Such a system would remove the whole group idea, as nobody gets "left out",
-but rather included. Perhaps oCERT would be interested in helping with such
-an idea? They sort of already do this, but we'd want to create more
-cooperation than there previously exists.
-
-Anyhow, thanks for the update.
 
 -- 
-    JB
+ldv
+
+Content of type "application/pgp-signature" skipped
