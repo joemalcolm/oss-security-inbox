@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/20
-Message-ID: <4ECABEC4.9040808@redhat.com>
-Date: Mon, 21 Nov 2011 14:12:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, cve@...re.org
-Subject: Re: CVE request: drupal before 7.5 access bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/12
+Message-ID: <20110401202235.GA9674@nxnw.org>
+Date: Fri, 1 Apr 2011 13:22:36 -0700
+From: Steve Beattie <sbeattie@...ntu.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 10:55 AM, Moritz Muehlenhoff wrote:
-> On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
->> On 11/20/2011 04:14 AM, Hanno Böck wrote:
->>> http://drupal.org/node/1231510
->>>
->>> If a Drupal site is using these features on comments, and the parent
->>> node is denied access (either by a node access module or by being
->>> unpublished), the file attached to the comment can still be downloaded
->>> by non-privileged users if they know or guess its direct URL.
->>>
->>>
->>>
->> Please use CVE-2011-4323 for this issue.
-> This has already been assigned CVE-2011-2726, see 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
->
-> Cheers,
->         Moritz
-Correct. CVE-2011-4323 is a duplicate of CVE-2011-2726. My bad.
+Hi Josh,
+
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+
+I was a subscriber of vender-sec, please add me to the new list.
+
+gpg information:
+
+pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
+      Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
+uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
+
+Thanks.
 
 -- 
+Steve Beattie
+<sbeattie@...ntu.com>
+http://NxNW.org/~steve/
 
--Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
