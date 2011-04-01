@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/6
-Message-ID: <4EF775BC.2010201@redhat.com>
-Date: Sun, 25 Dec 2011 12:13:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/15
+Message-ID: <20110401183502.GA57923@dojo.mi.org>
+Date: Fri, 1 Apr 2011 14:35:02 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE Request for Apache ActiveMQ DoS
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 05:37 PM, David Jorm wrote:
-> A flaw in Apache ActiveMQ before 5.6.0 could allow a remote unauthenticated
-> attacker to abuse the 'failover' feature, allowing them to trigger a denial of
-> service against the broker service.  An attacker can issue multiple ActiveMQ
-> openwire connection requests using the string 'failover:tcp://[IP]:61616', and
-> due to the 'failure' mechanism, all TCP connections remain active even if a
-> valid session is not created.  After a few thousand requests, a
-> 'java.net.SocketException: Too many open files' exception is triggered, leading
-> to a freeze or crash of the broker (and possibly connected systems as well).
->
-> Upstream bug:
-> https://issues.apache.org/jira/browse/AMQ-3294
->
-> Secunia advisory:
-> http://secunia.com/advisories/47112
->
-> Patch commits:
-> http://svn.apache.org/viewvc?view=revision&revision=1209700
-> http://svn.apache.org/viewvc?view=revision&revision=1211844
->
-Please use CVE-2011-4905 for this issue.
+:Hello everyone,
+:
+:This topic has lost focus lately. Rather than let it slip away, I think we
+:should go ahead with the simplest solution right now, we can always do
+:something different at a future date.
+:
+:Openwall has graciously volunteered to run a new list, and they currently
+:have some infrastructure in place to do this. The new list can start up
+:right away. In this instance, I fear perfect is the enemy of the good. I'd
+:rather see something functional in place than nothing.
+:
+:Here is the plan for initial membership (this is also approved by
+:Openwall).
+:
+:Initial members will have had to be a vendor-sec member (no exploders this
+:time around). You must reply to this thread, in public (on oss-security).
+:We want this to be very public, we have nothing to hide. You must have a
+:public gpg key ID included in your reply. The new list will gpg encrypt all
+:mail (it does accept plaintext messages though).
 
--- 
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
--Kurt Seifried / Red Hat Security Response Team
+mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
+mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
+b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
+D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
+8LMz3gjrgSXMOxuep/Ui
+=elKt
+-----END PGP PUBLIC KEY BLOCK-----
 
+
+Content of type "application/pgp-signature" skipped
