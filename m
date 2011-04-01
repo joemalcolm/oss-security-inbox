@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/10
-Message-ID: <4EF78A61.3000604@redhat.com>
-Date: Sun, 25 Dec 2011 13:41:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/17
+Message-ID: <20110401214923.GC22286@altlinux.org>
+Date: Sat, 2 Apr 2011 01:49:24 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: CVE-2011-4862 is not BSD-specific
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/25/2011 10:14 AM, Florian Weimer wrote:
-> This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
-> overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
-> seems to have been added at MIT when the BSD telnetd was Kerberized,
-> and it ended up in the Heimdal recryptofication of Kerberos (from
-> where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
-> pre-authentication segfault with both versions (as shipped by Debian).
->
-> The telnetd from netkit does not appear to be affected.
-Good write up at:
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-http://thexploit.com/secdev/a-textbook-buffer-overflow-a-look-at-the-freebsd-telnetd-code/
+I was a vendor-sec member representing ALT Linux.  My gpg key ID for
+email conversations is FE4C93ABE19A2E4CCB5D3E4E7CABE6AC9E35361E.
+
 
 -- 
+ldv
 
--Kurt Seifried / Red Hat Security Response Team
-
+Content of type "application/pgp-signature" skipped
