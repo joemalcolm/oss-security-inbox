@@ -1,16 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/5
-Message-ID: <1300890470.4898.133.camel@solo.digium.internal>
-Date: Wed, 23 Mar 2011 09:27:50 -0500
-From: Matthew Nicholson <mnicholson@...ium.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- Asterisk Security Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/3
+Message-ID: <4D95E5ED.1050903@redhat.com>
+Date: Fri, 01 Apr 2011 16:49:17 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- perl -- lc(), uc() routines are laundering tainted data
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I need a CVE for a new Asterisk security vulnerability.
--- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
+Hello Josh, Steve, vendors,
 
+   A security flaw was found in the way Perl performed
+laundering of tainted data. A remote attacker could
+use this flaw to bypass Perl TAINT mode protection
+mechanism (leading to commands execution on dirty
+arguments or file system access via contaminated
+variables) via specially-crafted input provided
+to the web application / CGI script.
+
+Upstream bug report:
+http://rt.perl.org/rt3/Public/Bug/Display.html?id=87336
+
+Relevant patch:
+http://perl5.git.perl.org/perl.git/commitdiff/539689e74a3bcb04d29e4cd9396de91a81045b99
+(contains also information when the issue was introduced)
+
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=692844
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
