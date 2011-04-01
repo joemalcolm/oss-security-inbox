@@ -1,30 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/4
-Message-ID: <4EA71BCC.2040907@redhat.com>
-Date: Tue, 25 Oct 2011 14:27:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/11
+Message-ID: <AANLkTimSfNQvob8xSkFtnHZ7reykFdefj=UMJ7vv+iVN@mail.gmail.com>
+Date: Fri, 1 Apr 2011 16:17:32 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Jamie Strandboge <jamie@...onical.com>, thierry@...nstack.org, security <security@...ntu.com>
-Subject: Re: CVE request: nova
+Cc: Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 10/25/2011 11:11 AM, Jamie Strandboge wrote:
-> A flaw was discovered in OpenStack nova[1] which allows someone with
-> access to an EC2_ACCESS_KEY (equivalent to a username) to obtain the
-> EC2_SECRET_KEY (equivalent to a password). While the EC2_ACCESS_KEY is
-> typically not public, if the user exposes it via http or tools that
-> allow MITM over https, then an attacker could obtain the EC2_SECRET_KEY
-> easily. An attacker could also presumably brute force values for
-> EC2_ACCESS_KEY.
->
-> Fix:
-> https://review.openstack.org/#change,794
->
-> [1]https://launchpad.net/bugs/868360
->
-Please use CVE-2011-4076 for this issue
+Hi,
 
--- 
+>
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+>
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+>
 
--Kurt Seifried / Red Hat Security Response Team
+I'd prefer if any private replacement for vendor-sec were either:
 
+1. Strictly limited to vendor coordination of embargoed security
+issues (with membership reflecting this purpose), or
+
+2. Opened up to researchers who have contributed knowledge and
+findings in this area, and are deemed trustworthy by other list
+subscribers or some other community opinion.
+
+In other words, it doesn't make sense to me to use "member of the old
+vendor-sec" as the only requirement for subscription, as some of the
+old members may not be eligible depending on the purpose of the new
+list.  I understand that this is just a preliminary solution, but I
+think the question of membership should be sorted out sooner rather
+than later.
+
+Thanks,
+Dan
+
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+>
+> Thanks.
+>
+> --
+>    JB
+>
