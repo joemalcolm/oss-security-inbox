@@ -1,31 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/7
-Message-ID: <20110228203255.GA4669@outflux.net>
-Date: Mon, 28 Feb 2011 12:32:55 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/6
+Message-ID: <4D96FDEF.5010909@gmail.com>
+Date: Sat, 02 Apr 2011 12:43:59 +0200
+From: Es gibt immer etwas zu tratschen <tratschen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: OOM-killer via argv expansion
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I think the flaw[1] with argv-expansion triggering the OOM-killer
-incorrectly needs its own CVE.
+Am 01.04.2011 20:03, schrieb Josh Bressers:
+> Hello everyone,
+> 
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+> 
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
+> 
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+> 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+> 
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+> 
+> Thanks.
+> 
+I also want to stay with you!
 
-While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-improved things, argv expansion can still be tricked into OOM-killing the
-entire system. Solutions were discussed on the original thread, but
-were not finished. Recently a set of patches[3] has been re-proposed to fix
-this issue. Regardless, it should probably get its own CVE assigned.
 
-Thanks,
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
--Kees
-
-[1] https://lkml.org/lkml/2010/8/27/429
-[2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-[3] https://lkml.org/lkml/2011/2/25/227
-
--- 
-Kees Cook
-Ubuntu Security Team
+iQEcBAEBAgAGBQJNlv3uAAoJEPdDX1Kv1dVM/SIIAJLANpa+u1STvVU7nKkZSR+P
+vQLCaSHfMilpgD7SUJ65PZ3iU+xOwPQGFeEMygE25gpm2YXnXKJbxSeY+3dx/5f6
+xLFzDSu6QWBzZOIzyvg1eUcOZzDxnv6ce+Xn86tQ9zsLgwxRXfCZeZvB3LSCmQhJ
+BIUTq8GZkB8p8U6x/tVDlzpEl5LqECP1Yrl9lLwY5Fe4O56ESq7AmtH+N1STPr9+
+NNvLccEb4IKWT3oA9Zr1nyMfAN0g7g0cskx8YyvMXccj1fOyB6wwKuxuEXefFWbE
++KH9vv+iz9t+CDjI3QkLFLXQciA0r1rd0KmnJQNtDrrMoPZPceAaEsOQReL/amo=
+=xrlm
+-----END PGP SIGNATURE-----
