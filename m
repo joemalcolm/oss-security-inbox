@@ -1,30 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/3
-Message-ID: <20110701084857.GA31716@dhcp-25-225.brq.redhat.com>
-Date: Fri, 1 Jul 2011 10:48:58 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/1
+Message-ID: <AANLkTi=-1f2wAATTUr=WhzrdnnebqVknJ1hd_OM7t8jE@mail.gmail.com>
+Date: Fri, 1 Apr 2011 20:08:36 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: nl80211: missing check for valid SSID size in scan operations
+Cc: Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-In both trigger_scan and sched_scan operations, we were checking for the
-SSID length before assigning the value correctly.  Since the memory was
-just kzalloc'ed, the check was always failing and SSID with over 32
-characters were allowed to go through.
+Hi Josh,
 
-This is causing a buffer overflow when copying the actual SSID to the
-proper place.
+>
+> Long term I'd like to see two lists, one for purpose #1, and another geared
+> toward #2. I think having a trusted venue for knowledge sharing would be
+> very useful, and we likely don't want the list clogged with coordination
+> details. This will of course rely heavily on what Openwall is willing to
+> take on. They're already taking on a lot of risk and responsibility, I
+> don't want to spoil the good will.
+>
 
-Please note that it needs CAP_NET_ADMIN privileges.
+I agree that having such a venue for discussion would be valuable, and
+I'd personally like to contribute to such a list.
 
-Upstream commits:
-208c72f4fe44fe09577e7975ba0e7fa0278f3d03
-57a27e1d6a3bb9ad4efeebd3a8c71156d6207536
+>
+> Should we require members use a mail address from their vendor? Letting
+> people use personal addresses creates an opportunity for people to remain
+> on a list when they are no longer a part of a given vendor (it also makes
+> it quite easy to know who represents a vendor).
+>
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=718152
+Yes, I think this should be a requirement for a closed coordination
+list (as opposed to the more relaxed option #2).  In fact, I think
+membership to such a list should be restricted almost exclusively to
+distributions and downstream providers of third-party software.  It
+obviously makes sense to have distro security teams on a list, since a
+vulnerability in project XYZ will need to be coordinated among all of
+the distros.  However, most software projects only need access to
+information concerning their own project.  There's no reason one
+software project should gain access to vulnerability information about
+a completely unrelated project, and restricting membership to achieve
+that will at least help minimize the leakage that went on with the
+previous list.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+In a nutshell, I think this list needs to decide what its purpose is.
+If it's for coordination for vulnerability disclosure, then its
+membership should be kept to those who actually need to do the
+coordination.  If it's for private (or semi-private) discussion of
+potentially sensitive research, knowledge sharing, etc., then its
+membership should be expanded to include representation from software
+vendors and researchers.
+
+-Dan
+
+>
+> Thanks.
+>
+> --
+>    JB
+>
