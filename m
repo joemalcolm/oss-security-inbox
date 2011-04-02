@@ -1,31 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/5
-Message-ID: <4EDFB572.2070100@redhat.com>
-Date: Wed, 07 Dec 2011 11:50:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/4
+Message-ID: <20110402021305.GA62692@dojo.mi.org>
+Date: Fri, 1 Apr 2011 22:13:05 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: CVE request: glibc: timezone integer overflow
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/05/2011 03:14 AM, Matthias Weckbecker wrote:
-> Hi,
->
-> looks like this has never got a CVE so far or at least I couldn't find one,
->
-> http://dividead.wordpress.com/tag/heap-overflow/
-> http://lists.grok.org.uk/pipermail/full-disclosure/2011-December/084452.html
->  
-> Could there possibly be a CVE assigned, please? Thanks in advance.
->
-> Matthias
->
-Ok it appears although this is difficult to exploit, it can be triggered
-potentially allowing a security boundary to be crossed in some
-situations. Please use CVE-2009-5029 for this glibc timezone integer
-overflow issue.
+:> Should we require members use a mail address from their vendor? Letting
+:> people use personal addresses creates an opportunity for people to remain
+:> on a list when they are no longer a part of a given vendor (it also makes
+:> it quite easy to know who represents a vendor).
+:>
+:
+:Yes, I think this should be a requirement for a closed coordination
+:list (as opposed to the more relaxed option #2).  In fact, I think
+
+I use my personal address rather than my work address for handling
+vendor security matters because:
+
+a) My personal address is more secure and auditable by me.  I control
+   my encrypted filesystems, the SMTP and primary DNS servers, Internet
+   connectivity up to an IXP, AS route announcements of IP space I
+   control, etc.  When there were leaks with vendor-sec, I could
+   readily validate that I wasn't leaking.  I'd be far less able to
+   do so if mails were routed through my employer's infrastructure.  
+
+   -and-
+
+b) My personal address has infrastructure that doesn't suck.  It's 
+   much better able to cope with virus and spam outbreaks, without 
+   silently stripping out emails because some attachment contain the
+   wrong file extension for the spam firewall that day.  Being behind
+   some god-awful Exchange server, because it's how the IT folks tie
+   corporate-issue email to corporate-issue smart phones...  BARF!
+
+Also, the "no longer part of a given vendor" threat assumes that the
+vendor won't keep the email address active after the person associated
+with it has left.  I know of one case where that wasn't true, where the
+address was tied to "outside world" security stuff since the employee
+wouldn't/couldn't/didn't use a "role account" consistently.  (And yeah, 
+I was given his PGP pass phrase for his work email, too...  <groan>)
+
+The vetting should be about more than email domains.  There should be
+periodic maintenance of who's on the list to cull out those who aren't
+involved.  Marcus did that to some degree with the vendor-sec of old.
+I think the biggest problems there were the exploders and the lack of
+encryption, and both of those are being addressed with this new list
+as I understand things.
+
+:In a nutshell, I think this list needs to decide what its purpose is.
+:If it's for coordination for vulnerability disclosure, then its
+:membership should be kept to those who actually need to do the
+:coordination.  If it's for private (or semi-private) discussion of
+:potentially sensitive research, knowledge sharing, etc., then its
+:membership should be expanded to include representation from software
+:vendors and researchers.
+
+I think that having a couple lists, one for "tactical" issues (e.g.
+embargoes and CVE assignment) and another for "strategic" discussions
+(e.g. "how to deal with vagaries in gcc vs. C standards with general
+security impact") may be appropriate.  I'm part of another security
+community which has such a notion, and it seems to help in keeping
+things focused, FWIW.
+
+Thanks,
+-Mike
 
 -- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"A bachelor's life is no life for a single man."              -Samuel Goldwyn
 
--Kurt Seifried / Red Hat Security Response Team
-
+Content of type "application/pgp-signature" skipped
