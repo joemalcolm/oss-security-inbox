@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/11
-Message-ID: <AANLkTinQqWbtR2L8=nggaNAsVKgT5NZcxFeM2L_-_E-5@mail.gmail.com>
-Date: Sun, 13 Mar 2011 15:18:27 -0500
-From: Eitan Adler <lists@...anadler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/8
+Message-Id: <201104022051.47567.thijs@debian.org>
+Date: Sat, 2 Apr 2011 20:51:43 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 12, 2011 at 12:03 PM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> This is a resumption of the subject "Physical access vulnerabilities and
-> auto-mounting" brought by Dan Rosenberg.  The previous discussion was
-> about possible attacks the kernel, now I'd like to talk about attacks
-> userland programs.
->
+On Friday 01 April 2011 20:03:12 Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-http://www.dwheeler.com/essays/fixing-unix-linux-filenames.html and
-http://www.dwheeler.com/essays/filenames-in-shell.html are relevant
-here.
+I am on the Debian security team and was part of the vendor-sec list through 
+our exploder. Please add me to the new list.
+
+pub   4096R/E1C21845 2007-01-25
+    Empreinte de la clé = E0D3 FAAA 6F50 A5DA 9D5B  2938 3396 1588 E1C2 1845
+uid                  Thijs Kinkhorst <thijs@...khorst.com>
+uid                  Thijs Kinkhorst <kink@...irrelmail.org>
+uid                  Thijs Kinkhorst <thijs@...ian.org>
+uid                  Thijs Kinkhorst <thijs@....nl>
+sub   2048R/B6897E7B 2010-06-15 [expire: 2012-06-14]
+sub   2048R/3861CF70 2010-06-15 [expire: 2012-06-14]
 
 
+Thanks,
+Thijs
 
-
--- 
-Eitan Adler
+Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
