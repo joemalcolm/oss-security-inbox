@@ -1,29 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/3
-Message-Id: <201103170809.33580.ludwig.nussel@suse.de>
-Date: Thu, 17 Mar 2011 08:09:33 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/6
+Message-ID: <4D96FDEF.5010909@gmail.com>
+Date: Sat, 02 Apr 2011 12:43:59 +0200
+From: Es gibt immer etwas zu tratschen <tratschen@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Lars Kurth <lars.kurth@....org>
-Subject: CVE Request: xen DoS
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://xenbits.xen.org/hg/staging/xen-unstable.hg/rev/c79aae866ad8
+Am 01.04.2011 20:03, schrieb Josh Bressers:
+> Hello everyone,
+> 
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+> 
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
+> 
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+> 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+> 
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+> 
+> Thanks.
+> 
+I also want to stay with you!
 
-Citing https://bugzilla.novell.com/show_bug.cgi?id=679344:
-"The problem is that a 64-bit guest can get one of its vcpus into
-non-kernel mode without first providing a valid non-kernel pagetable.
-The iret-into-userspace path has the right checks, but just setting the
-context on a fresh vcpu doesn't. :(  The observed failure mode is
-usually a hard lockup of the host."
 
-cu
-Ludwig
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+iQEcBAEBAgAGBQJNlv3uAAoJEPdDX1Kv1dVM/SIIAJLANpa+u1STvVU7nKkZSR+P
+vQLCaSHfMilpgD7SUJ65PZ3iU+xOwPQGFeEMygE25gpm2YXnXKJbxSeY+3dx/5f6
+xLFzDSu6QWBzZOIzyvg1eUcOZzDxnv6ce+Xn86tQ9zsLgwxRXfCZeZvB3LSCmQhJ
+BIUTq8GZkB8p8U6x/tVDlzpEl5LqECP1Yrl9lLwY5Fe4O56ESq7AmtH+N1STPr9+
+NNvLccEb4IKWT3oA9Zr1nyMfAN0g7g0cskx8YyvMXccj1fOyB6wwKuxuEXefFWbE
++KH9vv+iz9t+CDjI3QkLFLXQciA0r1rd0KmnJQNtDrrMoPZPceAaEsOQReL/amo=
+=xrlm
+-----END PGP SIGNATURE-----
