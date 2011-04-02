@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/7
-Message-ID: <4ED4E78C.8070907@slackware.com>
-Date: Tue, 29 Nov 2011 08:09:16 -0600
-From: "Patrick J. Volkerding" <security@...ckware.com>
-To: Raphael Bastos <tecnologia@...tosservice.com.br>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/2
+Message-ID: <20110402104937.57fb5bf4@mail.a3li.li>
+Date: Sat, 2 Apr 2011 10:49:37 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-While I'm sure there are a number of bugs in the crufty old installer 
-scripts, I'll need to know how there's a security impact before 
-notifying everyone that the sky has fallen.  I'd also like to note that 
-if running the installer requires physical access to the machine I'm 
-liable to consider security to already be non-existent at that time.
+On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
 
-Please clarify what is wrong with examples of how to reproduce the 
-issue, and I'll look into it.
+> 
+> Initial members will have had to be a vendor-sec member (no exploders
+> this time around). You must reply to this thread, in public (on
+> oss-security). We want this to be very public, we have nothing to
+> hide. You must have a public gpg key ID included in your reply. The
+> new list will gpg encrypt all mail (it does accept plaintext messages
+> though).
 
-Thanks.
+please add me as a representative for Gentoo. We were members of v-s.
 
-On 11/28/2011 05:18 PM, Raphael Bastos wrote:
-> ---------- Forwarded message ----------
-> From: Raphael Bastos<tecnologia@...tosservice.com.br>
-> Date: 2011/10/28
-> Subject: Bug script install slackware
-> To: volkerdi@...ckware.com
->
->
-> Take a look.... this is the correction sugest to script "SeTpartitions".
->
-> EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
->
-> livecd setup # cat -n  SeTpartitions |grep T_PX
->    10  T_PX=/mnt
->   374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1>  $REDIR 2>  $REDIR
->   495        if [ ! -d $T_PX/$MTPT ]; then
->   496           mkdir -p $T_PX/$MTPT
->   503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
-> $REDIR 2>  $REDIR
->
->
-> Att,
-> Raphael Bastos aka chemonz
->
-> ===============================================
-> Bastos Service Manutenção Industrial Ltda.
-> www.bastosservice.com.br
-> Linux Reg. User: 388431  //  LPI ID: LPI000214711
-> email:~>  $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
-> 's/(.)/chr(ord($1)-2)/ge'
-> ===============================================
+pub   1024D/F3C06469 2008-06-12
+Key fingerprint = F898 3D19 6A52 0EF1 7451  C534 93EA 2A85 F3C0 6469
 
+Thanks for your efforts,
+Alex
+
+-- 
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
