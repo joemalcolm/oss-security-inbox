@@ -1,65 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/21
-Message-ID: <20110403223856.GJ9516@openwall.com>
-Date: Mon, 4 Apr 2011 02:38:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/7
+Message-ID: <alpine.LRH.1.00.1104021322310.19200@bronson.owlriver.com>
+Date: Sat, 2 Apr 2011 13:28:18 -0400 (EDT)
+From: R P Herrold <herrold@...river.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Dan,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank you for your comments!  I had them in mind when I made the final
-determination on the list that I've setup.
+On Fri, 1 Apr 2011, Josh Bressers wrote:
 
-Josh wrote:
-> > Should we require members use a mail address from their vendor? Letting
-> > people use personal addresses creates an opportunity for people to remain
-> > on a list when they are no longer a part of a given vendor (it also makes
-> > it quite easy to know who represents a vendor).
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-"Good" employers, let alone non-commercial Open Source projects, don't
-remove e-mail addresses when a person leaves.  Someone having an
-@debian.org address does not mean they're currently with Debian.
+Key fingerprint:	0x9B649644
+Distribution:		CentOS
 
-On Fri, Apr 01, 2011 at 08:08:36PM -0400, Dan Rosenberg wrote:
-> Yes, I think this should be a requirement for a closed coordination
-> list
+- -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: SKS 1.1.0
 
-Yet I decided to allow some personal e-mail addresses for now, for the
-reasons Mike has explained.  It takes me extra time to verify that a
-person's non-vendor e-mail address is really "theirs", though.
+mQGiBD5F2FQRBAChJ4+VS1v9ON/cuJ74QnymaLetj8r1l9G7v9WkE/ET7cg16z3+SPkF9hbQ
+G0vJqJea19FRT8/e1tu3GTEUAaxSoY63zyjAzF9wmOg/FmNWTmj0Ovwzq4HTN3FF/GeLNZQU
+NkAFO5lPPV739L4LIY5GZwbr8bUtslLyoKvf7JGwZwCgxwe41qBc1T3eCrmUg0bFQRc9pzED
+/1j/kbs38I98YTJWs7Mxljhl4cZRCxL28INzinfTsUvrudrfqSvqTMWOqkApLzPFXBxv+C3S
+QOY8cRusSbNzOvadEMlpZYtSiNC+ZTZxqz4tpSQmNbb0LPHrCpu7FyCsq2jRfDHjJ3ruYPNo
+gxo+47z8DfdGxW6tMZfnEB6jhOEEBACL4yivnd5lBOY1z0f9EohD5UWC5HyCFZ0UK/NDxdE9
+yhSQSg4kGY92sadew3K6W35IYKYkqD+GTZiIn3jXcu8slrwcJRRyIEZGiCg4DAK1TG27eH/K
+BuRkK8hNn/cmDoskoS9J+bSf7kv7Nuf4JGIVhTsIR6pYAwMD5n8goxK8DbQiUiBQIEhlcnJv
+bGQgPGhlcnJvbGRAb3dscml2ZXIuY29tPohGBBMRAgAGBQJAVnRRAAoJEH/ADgRm3IARtc8A
+oJOGMYpDaVxl5fmsIYPMDW2OGqoGAJ9YZ5TCzlh9/ZovD9FFD3mi29MHrYhXBBMRAgAXBQI+
+RdhUBQsHCgMEAxUDAgMWAgECF4AACgkQMRh1QZtklkQlkACdFHDBgFj56ylAQWWvLKQPl1wz
+ygAAniaW1hXO2cppXK2V9G3XHDBkiIBfuQENBD5F2GQQBADxEsiE+x499BrU8z3wfGYL4/Qz
+cLaXF+QnQp7suBnNmgl3vBzifUD+FPIRScCapFmeg7OA+H+htbNN7fNqRfg0aa9az2c+km0v
+ieqDFkrJ8H5ktDo69MjyQAbMyapRYKCv52/K66Gs/mvO9zdSrlI0yXsBTAXmHrAXgq80v8m1
+RwAEDQP/a+N7t/smT1kpXW5l5FhhVkgrAhjZpbfp4weItHyUWclzSTIlXDOO93BEbZjVoiDI
+CY1yoy8iJkXRKch2X3gvqWx/Q/DjVzD8CdVJGOUhpD7JQxsK0A7PbCA54JqZi+4AOhnbRlQM
+Srm4w6qMzfzdKJpIaSOhxgd64+Zfn5zJuJCIRgQYEQIABgUCPkXYZAAKCRAxGHVBm2SWROxG
+AKC4WpQYmqVO06HxjXAR9EC28AguQACfeLiDsch7DJPKjMit20aQNwt7bDU=
+=1PUi
+- -----END PGP PUBLIC KEY BLOCK-----
 
-> (as opposed to the more relaxed option #2).  In fact, I think
-> membership to such a list should be restricted almost exclusively to
-> distributions and downstream providers of third-party software.  It
-> obviously makes sense to have distro security teams on a list, since a
-> vulnerability in project XYZ will need to be coordinated among all of
-> the distros.  However, most software projects only need access to
-> information concerning their own project.  There's no reason one
-> software project should gain access to vulnerability information about
-> a completely unrelated project, and restricting membership to achieve
-> that will at least help minimize the leakage that went on with the
-> previous list.
-> 
-> In a nutshell, I think this list needs to decide what its purpose is.
-> If it's for coordination for vulnerability disclosure, then its
-> membership should be kept to those who actually need to do the
-> coordination.
+- - Russ herrold
 
-Right.  So for now I setup a Linux distro security contacts list only,
-as a hopefully better alternative to the long yet incomplete CC lists
-that started to appear when vendor-sec ceased to exist.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-> If it's for private (or semi-private) discussion of
-> potentially sensitive research, knowledge sharing, etc., then its
-> membership should be expanded to include representation from software
-> vendors and researchers.
-
-Right, although I'm not sure about software vendors.  I think there's
-usually just one non-distro software vendor for whom a given issue is
-relevant (the upstream), so it can simply be CC'ed.  For example, on the
-old vendor-sec we had X and Samba, and I don't recall any discussion in
-which both participated at once.
-
-Alexander
+iD8DBQFNl1y3MRh1QZtklkQRAsHqAJ9vmeGcaqY9aNdd+osprKN6s6fYKgCgiYdI
+bhGkA/+Lay4+19yw/OstIvY=
+=IdKx
+-----END PGP SIGNATURE-----
