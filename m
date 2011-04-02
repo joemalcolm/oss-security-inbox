@@ -1,42 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/6
-Message-ID: <CABeokRdp3LAkfrHhbDfQeGdLgiMEqu8DXrMn1o6b2nneyfqyZQ@mail.gmail.com>
-Date: Thu, 18 Aug 2011 10:15:08 -0400
-From: Sergey Chernyshev <sergey.chernyshev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/7
+Message-ID: <alpine.LRH.1.00.1104021322310.19200@bronson.owlriver.com>
+Date: Sat, 2 Apr 2011 13:28:18 -0400 (EDT)
+From: R P Herrold <herrold@...river.com>
 To: oss-security@...ts.openwall.com
-Subject: Start(up) API project security
+Subject: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello from fellow Open Sourcerer.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm working on a project to help people build web apps, called Startup API
-(thinking of renaming it to Start API to make it less cool, but more
-useful).
+On Fri, 1 Apr 2011, Josh Bressers wrote:
 
-Having seen too many startups keeping the passwords in clear
-and committing many similar security "crimes", I'm very much concerned about
-it and want to establish some security process around building the apps.
-I've started gathering information about security-related issues on the
-project's wiki (not only for Startup API software itself, but for best
-practice collection in general):
-http://startupapi.org/Security
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Right now, I'm trying to understand what are the most common and / or most
-dangerous security issues surrounding web apps.
-I feel that this group should have a pretty good experience tracking those
-down and I'd love any thoughts you might want to share.
+Key fingerprint:	0x9B649644
+Distribution:		CentOS
 
-If you have any links to good articles or videos about web app security, I'd
-really appreciate that too.
+- -----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: SKS 1.1.0
 
-Thank you,
+mQGiBD5F2FQRBAChJ4+VS1v9ON/cuJ74QnymaLetj8r1l9G7v9WkE/ET7cg16z3+SPkF9hbQ
+G0vJqJea19FRT8/e1tu3GTEUAaxSoY63zyjAzF9wmOg/FmNWTmj0Ovwzq4HTN3FF/GeLNZQU
+NkAFO5lPPV739L4LIY5GZwbr8bUtslLyoKvf7JGwZwCgxwe41qBc1T3eCrmUg0bFQRc9pzED
+/1j/kbs38I98YTJWs7Mxljhl4cZRCxL28INzinfTsUvrudrfqSvqTMWOqkApLzPFXBxv+C3S
+QOY8cRusSbNzOvadEMlpZYtSiNC+ZTZxqz4tpSQmNbb0LPHrCpu7FyCsq2jRfDHjJ3ruYPNo
+gxo+47z8DfdGxW6tMZfnEB6jhOEEBACL4yivnd5lBOY1z0f9EohD5UWC5HyCFZ0UK/NDxdE9
+yhSQSg4kGY92sadew3K6W35IYKYkqD+GTZiIn3jXcu8slrwcJRRyIEZGiCg4DAK1TG27eH/K
+BuRkK8hNn/cmDoskoS9J+bSf7kv7Nuf4JGIVhTsIR6pYAwMD5n8goxK8DbQiUiBQIEhlcnJv
+bGQgPGhlcnJvbGRAb3dscml2ZXIuY29tPohGBBMRAgAGBQJAVnRRAAoJEH/ADgRm3IARtc8A
+oJOGMYpDaVxl5fmsIYPMDW2OGqoGAJ9YZ5TCzlh9/ZovD9FFD3mi29MHrYhXBBMRAgAXBQI+
+RdhUBQsHCgMEAxUDAgMWAgECF4AACgkQMRh1QZtklkQlkACdFHDBgFj56ylAQWWvLKQPl1wz
+ygAAniaW1hXO2cppXK2V9G3XHDBkiIBfuQENBD5F2GQQBADxEsiE+x499BrU8z3wfGYL4/Qz
+cLaXF+QnQp7suBnNmgl3vBzifUD+FPIRScCapFmeg7OA+H+htbNN7fNqRfg0aa9az2c+km0v
+ieqDFkrJ8H5ktDo69MjyQAbMyapRYKCv52/K66Gs/mvO9zdSrlI0yXsBTAXmHrAXgq80v8m1
+RwAEDQP/a+N7t/smT1kpXW5l5FhhVkgrAhjZpbfp4weItHyUWclzSTIlXDOO93BEbZjVoiDI
+CY1yoy8iJkXRKch2X3gvqWx/Q/DjVzD8CdVJGOUhpD7JQxsK0A7PbCA54JqZi+4AOhnbRlQM
+Srm4w6qMzfzdKJpIaSOhxgd64+Zfn5zJuJCIRgQYEQIABgUCPkXYZAAKCRAxGHVBm2SWROxG
+AKC4WpQYmqVO06HxjXAR9EC28AguQACfeLiDsch7DJPKjMit20aQNwt7bDU=
+=1PUi
+- -----END PGP PUBLIC KEY BLOCK-----
 
-         Sergey
+- - Russ herrold
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
---
-Sergey Chernyshev
-http://www.sergeychernyshev.com/
-http://www.meetup.com/Web-Performance-NY/
-http://www.showslow.com/
-
+iD8DBQFNl1y3MRh1QZtklkQRAsHqAJ9vmeGcaqY9aNdd+osprKN6s6fYKgCgiYdI
+bhGkA/+Lay4+19yw/OstIvY=
+=IdKx
+-----END PGP SIGNATURE-----
