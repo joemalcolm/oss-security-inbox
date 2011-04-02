@@ -1,26 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/3
-Message-ID: <4D9DD506.4090801@mvista.com>
-Date: Thu, 07 Apr 2011 05:15:18 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/1
+Message-ID: <AANLkTi=-1f2wAATTUr=WhzrdnnebqVknJ1hd_OM7t8jE@mail.gmail.com>
+Date: Fri, 1 Apr 2011 20:08:36 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <michael.s.gilbert@...il.com>
+Cc: Josh Bressers <bressers@...hat.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi Josh,
 
+>
+> Long term I'd like to see two lists, one for purpose #1, and another geared
+> toward #2. I think having a trusted venue for knowledge sharing would be
+> very useful, and we likely don't want the list clogged with coordination
+> details. This will of course rely heavily on what Openwall is willing to
+> take on. They're already taking on a lot of risk and responsibility, I
+> don't want to spoil the good will.
+>
 
-On 04/06/2011 11:53 AM, Michael Gilbert wrote:
-> akuster wrote:
+I agree that having such a venue for discussion would be valuable, and
+I'd personally like to contribute to such a list.
 
-> I'm not if sure anything has come of this request, but I hope closed
-> vendors like this get rejected. Non-public advisories are anathema to
-> the open source philosophy.  You have to ask the question: what is the
-> point of their participation in an oss list if they don't intend to
-> disclose anything?
-> 
+>
+> Should we require members use a mail address from their vendor? Letting
+> people use personal addresses creates an opportunity for people to remain
+> on a list when they are no longer a part of a given vendor (it also makes
+> it quite easy to know who represents a vendor).
+>
 
-What do you mean by advisories? this list or a list a vendor publishes
-for what they are affected by and fixed.
+Yes, I think this should be a requirement for a closed coordination
+list (as opposed to the more relaxed option #2).  In fact, I think
+membership to such a list should be restricted almost exclusively to
+distributions and downstream providers of third-party software.  It
+obviously makes sense to have distro security teams on a list, since a
+vulnerability in project XYZ will need to be coordinated among all of
+the distros.  However, most software projects only need access to
+information concerning their own project.  There's no reason one
+software project should gain access to vulnerability information about
+a completely unrelated project, and restricting membership to achieve
+that will at least help minimize the leakage that went on with the
+previous list.
 
- -Armin
+In a nutshell, I think this list needs to decide what its purpose is.
+If it's for coordination for vulnerability disclosure, then its
+membership should be kept to those who actually need to do the
+coordination.  If it's for private (or semi-private) discussion of
+potentially sensitive research, knowledge sharing, etc., then its
+membership should be expanded to include representation from software
+vendors and researchers.
+
+-Dan
+
+>
+> Thanks.
+>
+> --
+>    JB
+>
