@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/9
-Message-ID: <390097197.45735.1302640078516.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Apr 2011 16:27:58 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/2
+Message-ID: <20110402104937.57fb5bf4@mail.a3li.li>
+Date: Sat, 2 Apr 2011 10:49:37 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: solar@...nwall.com, Josh Bressers <bressers@...hat.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello everyone,
+Hi,
+
+On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
+
 > 
-> This topic has lost focus lately. Rather than let it slip away, I
-> think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
+> Initial members will have had to be a vendor-sec member (no exploders
+> this time around). You must reply to this thread, in public (on
+> oss-security). We want this to be very public, we have nothing to
+> hide. You must have a public gpg key ID included in your reply. The
+> new list will gpg encrypt all mail (it does accept plaintext messages
+> though).
 
-pub   4096R/C44977CA 2011-04-12
-      Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
-uid                  Petr Matousek <pmatouse@...hat.com>
-uid                  Petr Matousek <pm@...p.org>
+please add me as a representative for Gentoo. We were members of v-s.
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+pub   1024D/F3C06469 2008-06-12
+Key fingerprint = F898 3D19 6A52 0EF1 7451  C534 93EA 2A85 F3C0 6469
+
+Thanks for your efforts,
+Alex
+
+-- 
+Alex Legler <a3li@...too.org>
+Gentoo Security/Ruby
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
