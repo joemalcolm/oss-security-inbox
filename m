@@ -1,19 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/1
-Message-ID: <4ECDA09A.1060200@redhat.com>
-Date: Thu, 24 Nov 2011 09:40:42 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/5
+Message-ID: <4D969F68.7050301@xiscosoft.es>
+Date: Sat, 02 Apr 2011 06:00:40 +0200
+From: klondike <klondike@...cosoft.es>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-4324 kernel: nfsv4: mknod(2) DoS
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-This only affects the Linux kernel as shipped with Red Hat Enterprise
-Linux 5. It is possible to trigger the BUG() in fs/nfs/nfs4xdr.c on a
-NFSv4 mount. This patch fixed the problem, although we only backported
-the relevant parts of the patch,
-http://git.kernel.org/linus/dc0b027dfadfcb8a5504f7d8052754bf8d501ab9.
+El 01/04/11 20:03, Josh Bressers escribió:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though)
+Will the list provide protection against rubber-hose cryptanalisys?, if
+so, how? GPG as most other cryptographic software is vulnerable to it.
+What about black-bag cryptanalysis?
 
-https://bugzilla.redhat.com/CVE-2011-4324
+Sometime ago I was taught that the best way to be sure a secret was not
+known was not saying it, so if you, researchers, want to make sure your
+PoC aren't abused do things properly, warn the vendors to upgrade the
+product because of your security finding and avoid providing PoCs until
+enough time has passed for you to be sure everybody has had a chance to
+upgrade.
 
-Thanks, Eugene
+Any other solution can be easily flawed since you can't make sure I
+won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
+such a private list.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
