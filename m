@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/4
-Message-ID: <20110201153625.7fdd2ca9@angelo.pretender.us>
-Date: Tue, 1 Feb 2011 15:36:25 -0800
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/5
+Message-ID: <4D969F68.7050301@xiscosoft.es>
+Date: Sat, 02 Apr 2011 06:00:40 +0200
+From: klondike <klondike@...cosoft.es>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Server-side arbitrary script inclusion vulnerability in MediaWiki <=1.16.1
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+El 01/04/11 20:03, Josh Bressers escribió:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though)
+Will the list provide protection against rubber-hose cryptanalisys?, if
+so, how? GPG as most other cryptographic software is vulnerable to it.
+What about black-bag cryptanalysis?
 
-MediaWiki 1.16.2 was just released as a security update for two
-vulnerabilities. One already has a CVE, but this one still needs one:
+Sometime ago I was taught that the best way to be sure a secret was not
+known was not saying it, so if you, researchers, want to make sure your
+PoC aren't abused do things properly, warn the vendors to upgrade the
+product because of your security finding and avoid providing PoCs until
+enough time has passed for you to be sure everybody has had a chance to
+upgrade.
 
-"An arbitrary script inclusion vulnerability was discovered. The
-vulnerability only allows execution of files with names ending in
-".php" which are already present in the local filesystem. Only servers
-running Microsoft Windows and possibly Novell Netware are affected.
-Despite these mitigating factors, all users are advised to upgrade,
-since there is a risk of complete server compromise. MediaWiki 1.8.0
-and later is affected. For more details, see bug 27094"
+Any other solution can be easily flawed since you can't make sure I
+won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
+such a private list.
 
-https://bugzilla.wikimedia.org/show_bug.cgi?id=27094
 
-Thanks,
-~reed
-
--- 
-Reed Loden
-reed@...dloden.com
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
