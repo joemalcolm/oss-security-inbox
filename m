@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/27
-Message-ID: <20110405180652.694a643b@orphan>
-Date: Tue, 5 Apr 2011 18:06:52 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/3
+Message-ID: <20110402093107.GA2769@pisco.westfalen.local>
+Date: Sat, 2 Apr 2011 11:31:07 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Apr 2011 13:26:50 -0400 (EDT) R P Herrold wrote:
-
-> > Given the aim to keep the subscriber list very limited, this
-> > probably falls into a tentatively subscribed category too.  AFAIK,
-> > CentOS has rather few components that are not rebuilds of the RHEL
-> > SRPMs, the question is how often a v-s info was useful in the past
-> > in providing security updates for those extra packages.
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
 > 
-> Thanks for the post furthering the marketing goals of your 
-> corporate master; perhaps the security goal of making sure the 
-> Linux server space is well-secured in a timely fashion was 
-> overlooked by you as you framed your thought
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Damn, my corporatish evilness unveiled after all... ;)
+I was subscribed through the team@...urity.debian.org exploder. My key:
 
-The request was meant to be in the same spirit as Alexander's questions
-to rPath or Frugalware folks to see if the membership provides the
-expected benefits, and seemed natural given the specific development
-mode used by CentOS.  You're free to view it however you want, of
-course.
+pub   1024D/4E2ECA5A 2004-09-08
+uid                  Moritz Muehlenhoff <jmm@...ian.org>
+uid                  Moritz Muehlenhoff <jmm@...til.org>
+sub   2048g/8D1BA24D 2004-09-08
 
-> Seemingly (you mention 'AFAIK'), you do not follow the 
-> 'extras' archive, nor the 'testing' where extensions are 
-> found, past what Red Hat ships by default in its enterprise 
-> product
+Cheers,
+        Moritz
 
-I certainly do not follow.  I did check extras and centosplus though
-and referred to them as those components that are not rebuilds.  Not
-many components there seemed to be an obvious candidates that can
-benefit from v-s info, imo.
-
-EOF
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
