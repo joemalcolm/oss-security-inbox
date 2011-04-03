@@ -1,79 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/4
-Message-ID: <20110622134109.GA19180@suse.de>
-Date: Wed, 22 Jun 2011 15:41:09 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/12
+Message-ID: <20110403214928.GB9516@openwall.com>
+Date: Mon, 4 Apr 2011 01:49:28 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
->----- Original Message -----
->> Jan Lieskovsky wrote:
->> > Hello Josh, Steve, vendors,
->> >
->> >    based on Debian BTS report:
->> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
->> >        (first CVE-2011-XXYY required for Debian case)
->> >
->> > looked more into original report:
->> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
->> >
->> > and the first paragraph of [2] suggests:
->> > "When starting a program via "su - user -c program" the user session
->> > can escape to the parent session by using the TIOCSTI ioctl to push
->> > characters into the input buffer. This allows for example a non-root
->> > session to push "chmod 666 /etc/shadow" or similarly bad commands
->> > into
->> > the input buffer such that after the end of the session they are
->> > executed."
->> >
->> > this should get a CVE-2005-YYZZ CVE id.
->> >
->> > Could you allocate these?
->>
->> ping! :-)
->>
->
->I'm not sure if this should get two IDs. It's really one issue, which isn't
->actually fixed in su.
->
->The fundamental issue is that tools like su and sudo keep the tty open.
->The patch in question closes the tty for the case of su -c, but not for
->just running su by itself. It is incomplete.
+ArkanoiD,
 
-I'm not worried too much about the interactive su case really. The 
-usual direction there is user->root, not the other way around I 
-suppose. "su -c" might be used by (%post) scripts though as seen 
-with ikiwiki.
-Wrt non-interactive sudo I'm not sure. It's less likely to be used 
-by sane packages at least as it's behavior is rather unpredictable 
-due to it's many configuration options.
+On Sun, Apr 03, 2011 at 01:10:08AM +0400, ArkanoiD wrote:
+> -----BEGIN PGP PUBLIC KEY BLOCK-----
 
->It should get a 2005 ID at the very least, MITRE will have to do that.
->Perhaps two 2005 IDs? One for the issue, the second for the incomplete fix
->(which is still not fixed)?
->
->I think the bigger issue is it needs to be decided what is proper behavior
->and document that. I'm not smart enough to know if this can be fixed
->properly without crippling these tools.
+Thanks for the key, but as far as I am aware you do not currently
+qualify for the Linux distros list (even though you did some security
+work on Owl, thanks), nor were you on vendor-sec (Josh's suggested
+requirement for the seed membership of the new list).  You might qualify
+for a separate security researchers list if/once we set one up (or for a
+combined distros+researchers list, but I doubt that we'd set one up).
 
-Newer sudo actually have a use_pty option that fixes the problem. 
-It's not enabled by default though.
-As I just found out there's also code missing to make sudo actually 
-honor the option in the config (patch attached, CC'd upstream).
-Introducing similar code in su would be possible but requires some 
-programming effort. sudo has a liberal licence though so the code 
-could probably be reused.
-
-cu
-Ludwig
-
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
-
-View attachment "sudo-1.8.1p2-use_pty.diff" of type "text/x-patch" (617 bytes)
+Alexander
