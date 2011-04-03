@@ -1,53 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/9
-Message-ID: <1333010105.397553.1306870978932.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 15:42:58 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/27
+Message-ID: <20110403225916.GD10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:59:16 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Reed Loden <reed@...dloden.com>, coley <coley@...re.org>
-Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-I'm going to save this one for upstream. It's possible they've already
-assigned something (Mozilla is a CNA).
+On Sat, Apr 02, 2011 at 01:49:24AM +0400, Dmitry V. Levin wrote:
+> I was a vendor-sec member representing ALT Linux.  My gpg key ID for
+> email conversations is FE4C93ABE19A2E4CCB5D3E4E7CABE6AC9E35361E.
 
-I've CC'd Reed in the rare event he doesn't know about this.
+Added.
 
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> Hi,
-> found this in RH's bugzilla:
-> https://bugzilla.redhat.com/show_bug.cgi?id=709165
-> 
-> Vincent Danen 2011-05-30 18:38:43 EDT
-> 
-> A Debian bug report [1] indicated that Firefox 4.0.x handled the
-> validation/revalidation of SSL certificates improperly. If a user were
-> to
-> visit a site with an untrusted certificate, Firefox would correctly
-> display the
-> warning about the untrusted connection. If a user were to confirm the
-> security
-> exception for a single session (not check off the "permanently store
-> this
-> exception"), then restart the browser and re-load the page, the
-> contents of the
-> page would be displayed from the Firefox cache. Upon reloading the
-> page, the
-> security warning would appear, but incorrectly indicates that the site
-> provides
-> a valid, verified certificate and there is no way to confirm the
-> exception.
-> [...]
-> 
-> --
-> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-> 21284 (AG Nürnberg
-> --
-> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> -- Marie von Ebner-Eschenbach
+Alexander
