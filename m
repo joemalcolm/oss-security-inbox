@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/17
-Message-ID: <1128362719.334929.1299613285898.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 14:41:25 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/22
+Message-ID: <20110403224634.GA31184@eltex.net>
+Date: Mon, 4 Apr 2011 02:46:34 +0400
+From: ArkanoiD <ark@...ex.net>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE-2011-0714 kernel: deficiency in handling of invalid data packets in lockd
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Well, i have at least one active opensource project that is closely related to vulnerabilities and preventive countermeasures, openfwtk.sourceforge.net, doesn't it qualify?
 
-Josh Bressers has assigned a CVE id CVE-2011-0714 to the following bug:
-
-"It was found that lockd did not properly handle data packets that contained
-invalid data. This could be possibly exploited by remote user to crash the
-server (DoS)."
-
-Please note that this issue only affects Red Hat Enterprise Linux 6 as a
-result of an incomplete upstream commit backport.
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=678144
-
-Credits:
-Adam Prince
-
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+On Mon, Apr 04, 2011 at 01:49:28AM +0400, Solar Designer wrote:
+> ArkanoiD,
+> 
+> On Sun, Apr 03, 2011 at 01:10:08AM +0400, ArkanoiD wrote:
+> > -----BEGIN PGP PUBLIC KEY BLOCK-----
+> 
+> Thanks for the key, but as far as I am aware you do not currently
+> qualify for the Linux distros list (even though you did some security
+> work on Owl, thanks), nor were you on vendor-sec (Josh's suggested
+> requirement for the seed membership of the new list).  You might qualify
+> for a separate security researchers list if/once we set one up (or for a
+> combined distros+researchers list, but I doubt that we'd set one up).
+> 
+> Alexander
+> 
+> email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
+> 
+> 
 
