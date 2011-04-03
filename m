@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/1
-Message-ID: <4E9E439A.70007@gentoo.org>
-Date: Tue, 18 Oct 2011 20:27:22 -0700
-From: Tim Sammut <underling@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/8
+Message-ID: <20110403205955.GA8811@openwall.com>
+Date: Mon, 4 Apr 2011 00:59:55 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: mplayer RDT parsing integer underlow
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sat, Apr 02, 2011 at 05:25:11PM -0400, Elliot Peele wrote:
+> I was on vendor-sec via the security@...th.com exploder as a representative of rPath and rPath Linux.
+> 
+> pub   1024D/05C54D73 2002-07-02 Elliot Peele <elliot@...th.com>
+>  Primary key fingerprint: 00F5 0BEE 168B C07E C49E  AEC8 992A A820 05C5 4D73
 
-Please assign a CVE for this issue from 2009. From [1]:
+Tentatively subscribed (although Elliot reported an issue with list
+messages arriving to him, which we'll try to figure out off-list).
 
-"Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
-(Real Data Transport) chunks headers from the network and after that it
-will parse them. A controled variable is used to allocate a buffer and
-later passed on to the rtsp_read_data() function in order to specify the
-length of an RDT chunk data to read from the network. An integer
-underflow can be triggered when parsing a malformed RDT header chunk,
-a remote attacker can exploit it to execute arbitrary code in the
-context of the application."
+Elliot - can you please post an URL with info on rPath Linux security
+response?  I went to http://www.rpath.com but could not easily find
+anything relevant.  There's an entry for rPath on the oss-security wiki:
 
-[1] http://seclists.org/fulldisclosure/2009/Jul/418
-[2] https://secunia.com/advisories/36041/3/
+http://oss-security.openwall.org/wiki/vendors#rpath-inc
 
-thank you
-tim
+It has a link to the security-announce mailing list.  The archive has a
+message in Feb 2011 ("kernel" update on 2011-02-07) and a message in Dec
+2010 ("gnupg" update on 2010-12-06).  Nothing in Nov (but a bunch of
+updates in Oct).  This gives us two security updates in 5 most recent
+months.  Naturally, I am not convinced that you should be on the list,
+but I'd be happy to be convinced once we start using the list.
 
--- 
-Tim Sammut ~ Gentoo Security Team
-underling@...too.org ~ C2375493
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
+Alexander
