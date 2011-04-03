@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/12
-Message-ID: <822bd361-ca1c-484e-bfa9-f1bcadd16760@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 13:09:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/28
+Message-ID: <20110403230039.GE10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:00:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, team@...urity.debian.org
-Subject: Re: CVE Request: apt
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3634
+On Fri, Apr 01, 2011 at 02:08:23PM -0700, Kees Cook wrote:
+> Hi, please add me to the list. I was a member via the Ubuntu exploder.
+> 
+> pub   4096R/DC6DC026 2010-09-27
+>       Key fingerprint = A5C3 F68F 229D D60F 723E  6E13 8972 F4DF DC6D C026
+> uid                  Kees Cook <kees@...ntu.com>
+> sub   4096R/650DE414 2010-09-27
 
-Thanks.
+Added.  This gives us three contacts for Ubuntu on the list:
 
--- 
-    JB
+marc.deslauriers@...onical.com
+sbeattie@...ntu.com
+kees@...ntu.com
 
------ Original Message -----
-> Hello,
-> 
-> Could a CVE please be assigned to the following issue:
-> 
-> Apt before 0.8.11 incorrectly handles the Verify-Host configuration
-> option, resulting in a successful connection instead of a
-> verification
-> failure when the certificate host name doesn't match.
-> 
-> See:
-> 
-> http://bazaar.launchpad.net/~donkult/apt/sid/revision/2053.1.28
-> https://bugs.launchpad.net/ubuntu/+source/apt/+bug/868353
-> 
-> 
-> Thanks,
-> 
-> Marc.
-> 
-> 
-> 
-> 
-> 
+Maybe this needs to be reduced to two most active ones at a later point.
+
+Alexander
