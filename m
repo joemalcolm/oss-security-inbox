@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/3
-Message-ID: <CAAsmaPa1AEmhRT=UsEZDJH61f0NYj8qEMT2=xNt+uL4=wjVPGg@mail.gmail.com>
-Date: Fri, 18 Nov 2011 07:20:14 -0600
-From: Tim Zingelman <tez@...src.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/39
+Message-ID: <4D990505.2050307@slackware.com>
+Date: Sun, 03 Apr 2011 18:38:45 -0500
+From: "Patrick J. Volkerding" <security@...ckware.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
+On 04/03/2011 06:15 PM, Solar Designer wrote:
+> On Fri, Apr 01, 2011 at 01:20:30PM -0500, Patrick J. Volkerding wrote:
+>> I've been on board since close to the beginning, and would be pleased to
+>> participate again.  Here's the public GPG key for this address.
+>
+> I assume that security@...ckware delivers mail just to you, correct?
 
-> I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
-> specific people that they're interested.  So please reply to this
-> message to indicate your interest and we'll proceed.
+Yes.
 
-I am interested.  Thanks for doing this.
+>> It expires on 2012-12-21, but presumably that won't be a problem.  ;-)
+>
+> You will need to provide a new key (or expand this one's expiration
+> date and provide it again) in time.  If the list is still around by
+> then, that is. ;-)
 
- - Tim
+We'll see what happens then.  ;-)
+
+Thanks!  The effort is very much appreciated.  While I'm here, I'd like 
+to make a motion that requests for list membership continue to be made 
+in oss-security (or some other venue open to all).
+
+Take care,
+
+Pat
