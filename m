@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/1
-Message-ID: <4D215E0B.9050703@redhat.com>
-Date: Mon, 03 Jan 2011 10:56:35 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/12
+Message-ID: <20110403214928.GB9516@openwall.com>
+Date: Mon, 4 Apr 2011 01:49:28 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: irda: prevent integer underflow in IRLMP_ENUMDEVICES
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/23/2010 08:53 AM, Eugene Teo wrote:
-> From Dan Rosenbugs :>, "If the user-provided len is less than the
-> expected offset, the IRLMP_ENUMDEVICES getsockopt will do a
-> copy_to_user() with a very large size value.  While this isn't be a
-> security issue on x86 because it will get caught by the access_ok()
-> check, it may leak large amounts of kernel heap on other architectures.
->  In any event, this patch fixes it."
+ArkanoiD,
 
-Assigned CVE-2010-4529 to this one.
+On Sun, Apr 03, 2011 at 01:10:08AM +0400, ArkanoiD wrote:
+> -----BEGIN PGP PUBLIC KEY BLOCK-----
 
+Thanks for the key, but as far as I am aware you do not currently
+qualify for the Linux distros list (even though you did some security
+work on Owl, thanks), nor were you on vendor-sec (Josh's suggested
+requirement for the seed membership of the new list).  You might qualify
+for a separate security researchers list if/once we set one up (or for a
+combined distros+researchers list, but I doubt that we'd set one up).
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Alexander
