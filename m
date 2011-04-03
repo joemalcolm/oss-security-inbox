@@ -1,18 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/14
-Message-ID: <20110725230142.GK1476@redhat.com>
-Date: Mon, 25 Jul 2011 17:01:42 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/29
+Message-ID: <20110403230223.GF10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:02:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-This is just a heads up to notify those who are shipping systemtap that
-two flaws were found that could allow members of group stapusr to
-elevate their privileges:
+On Fri, Apr 01, 2011 at 01:22:36PM -0700, Steve Beattie wrote:
+> I was a subscriber of vender-sec, please add me to the new list.
+> 
+> gpg information:
+> 
+> pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
+>       Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
+> uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2502
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2503
+Added.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Alexander
