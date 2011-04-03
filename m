@@ -1,27 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/1
-Message-ID: <4E546390.9030503@redhat.com>
-Date: Wed, 24 Aug 2011 10:36:00 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/25
+Message-ID: <20110403225754.GB10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:57:54 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-The name_len variable in CIFSFindNext is a signed int that gets set to
-the resume_name_len in the cifs_search_info. The resume_name_len however
-is unsigned and for some infolevels is populated directly from a 32 bit
-value sent by the server.
+On Fri, Apr 01, 2011 at 10:13:05PM -0400, Mike O'Connor wrote:
+> I use my personal address rather than my work address for handling
+> vendor security matters because:
 
-If the server sends a very large value for this, then that value could
-look negative when converted to a signed int. That would make that value
-pass the PATH_MAX check later in CIFSFindNext. The name_len would then
-be used as a length value for a memcpy. It would then be treated as
-unsigned again, and the memcpy scribbles over a ton of memory.
+Thank you for explaining this in here.
 
-Fix this by making the name_len an unsigned value in CIFSFindNext.
+> The vetting should be about more than email domains.  There should be
+> periodic maintenance of who's on the list to cull out those who aren't
+> involved.  Marcus did that to some degree with the vendor-sec of old.
 
-http://www.spinics.net/lists/linux-cifs/msg03950.html
-https://bugzilla.redhat.com/show_bug.cgi?id=732869
+Right.
 
-Thanks, Eugene
+> I think the biggest problems there were the exploders and the lack of
+> encryption,
+
+Maybe (re: "biggest").
+
+> and both of those are being addressed with this new list
+> as I understand things.
+
+Yes, they are.
+
+> I think that having a couple lists, one for "tactical" issues (e.g.
+> embargoes and CVE assignment) and another for "strategic" discussions
+> (e.g. "how to deal with vagaries in gcc vs. C standards with general
+> security impact") may be appropriate.  I'm part of another security
+> community which has such a notion, and it seems to help in keeping
+> things focused, FWIW.
+
+It appears that this is what we will have, but I am starting with one
+list that is more obviously needed (alternative to CC lists).
+
+Your specific example re: "how to deal with vagaries in gcc vs. C
+standards with general security impact" would be best discussed on
+oss-security (that is, on a public list), though.  It does not benefit
+from a short embargo, and long embargoes are inappropriate.
+
+Alexander
