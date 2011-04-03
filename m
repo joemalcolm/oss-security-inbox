@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/3
-Message-ID: <271749804.1926232.1312919290718.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 9 Aug 2011 15:48:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/15
+Message-ID: <20110403215454.GA10880@steve.org.uk>
+Date: Sun, 3 Apr 2011 22:54:54 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: cve request: xpdf: insecure tempfile usage in zxpdf script
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2902.
 
-Thanks.
+I too was subscribed through the team@...urity.debian.org exploder. My key:
 
--- 
-    JB
+pub   1024D/CD4C0D9D 2002-05-29
+uid                  Steve Kemp <steve@...ve.org.uk>
+uid                  Steve Kemp <skx@...ian.org>
+sub   2048g/AC995563 2002-05-29
 
------ Original Message -----
-> Hi,
-> 
-> It was recently discovered that the compressed pdf handler script
-> (zxpdf) that shipped in the Debian xpdf package handles tempfiles
-> insecurely. Due to this flaw, a specifically-crafted pdf file name can
-> be used to delete files from the user's system (by taking advantage of
-> the tempfile cleanup trap; i.e. "rm -f <part of crafted file name>").
-> 
-> Note that as of version 3.02-13 (uploaded to Debian unstable on March
-> 4th, 2011), the zxpdf became the default xpdf pdf file handler. With
-> this being a default, the problem was promulgated to a much wider user
-> base; thus precipitating discovery of the flaw. I've now fixed the
-> problem in version 3.02-19 (uploaded to unstable on July 29th, 2011,
-> and
-> entered testing on July 31st).
-> 
-> Credit goes to Chung-chieh Shan from Harvard for discovering the
-> issue.
-> See his bug report for more background and details:
-> http://bugs.debian.org/635849.
-> 
-> Please assign an id.
-> 
-> Thanks,
-> Mike
+  Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
+
+Steve
+--
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
