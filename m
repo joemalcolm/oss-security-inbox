@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/6
-Message-ID: <20110104122018.GA1795@lupin.powdarrmonkey.net>
-Date: Tue, 4 Jan 2011 12:20:18 +0000
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/30
+Message-ID: <20110403230631.GG10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:06:31 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: (possible) CVE request: Clickjacking in Mediawiki
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Apr 01, 2011 at 04:17:32PM -0400, Dan Rosenberg wrote:
+> I'd prefer if any private replacement for vendor-sec were either:
+> 
+> 1. Strictly limited to vendor coordination of embargoed security
+> issues (with membership reflecting this purpose), or
 
-Mediawiki <= 1.16 is vulnerable to clickjacking when showing iframes in a
-wiki:
+This is what we have with the list I've setup today.
 
-https://bugzilla.wikimedia.org/show_bug.cgi?id=26561
+> 2. Opened up to researchers who have contributed knowledge and
+> findings in this area, and are deemed trustworthy by other list
+> subscribers or some other community opinion.
 
-I don't know if this warrants a CVE ID, but if so please assign one.
+We may setup a separate list for this later.
 
-(please CC me on replies, TIA)
+> In other words, it doesn't make sense to me to use "member of the old
+> vendor-sec" as the only requirement for subscription, as some of the
+> old members may not be eligible depending on the purpose of the new
+> list.
 
-Thanks,
+Right.  There will be a lot fewer people on the new list now.  This
+requirement is mostly just to start with what's obviously a subset of
+the old vendor-sec's members.
 
--- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
+> I understand that this is just a preliminary solution, but I
+> think the question of membership should be sorted out sooner rather
+> than later.
 
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+Indeed.  I think my decision to limit this to Linux distro security
+contacts takes care of that for this one list.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
