@@ -1,41 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/6
-Message-ID: <20111017131430.GA2241@dhcp-25-225.brq.redhat.com>
-Date: Mon, 17 Oct 2011 15:14:30 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/18
+Message-ID: <20110403221434.GH9516@openwall.com>
+Date: Mon, 4 Apr 2011 02:14:34 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel/AppArmor local denial of service
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 17, 2011 at 02:32:43PM +0200, Marcus Meissner wrote:
-> Hi,
+On Sat, Apr 02, 2011 at 10:49:37AM +0200, Alex Legler wrote:
+> please add me as a representative for Gentoo. We were members of v-s.
 > 
-> A process can cause itself to Ooops by doing an invalid formatted
-> write to the process attr/current when the Apparmor security framework
-> is enabled (even without a apparmor profile).
-> 
-> e.g. by doing "echo 'AAA AAA' > /proc/$$/attr/current"
-> 
-> This will cause a NULL ptr dereference, which oopses the current process and
-> in connection with kdump or panic on oops will halt the machine.
-> 
-> References:
-> https://bugs.launchpad.net/apparmor/+bug/789409
-> https://bugzilla.novell.com/show_bug.cgi?id=717209
-> 
-> Fix is in:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=a5b2c5b2ad5853591a6cac6134cd0f599a720865
-> 
-> This only affected Linux kernel mainline since the introduction of
-> AppArmor up to and including 3.0-rc2
-> 
-> The SUSE patchset used in our older distribution had a additional NULL
-> check avoiding the issue.
-> 
-> Ciao, Marcus
+> pub   1024D/F3C06469 2008-06-12
+> Key fingerprint = F898 3D19 6A52 0EF1 7451  C534 93EA 2A85 F3C0 6469
 
-Please use CVE-2011-3619.
+Added.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Alexander
