@@ -1,19 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/2
-Message-ID: <20111113121527.2a809ab3@laverne>
-Date: Sun, 13 Nov 2011 12:15:27 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/13
+Message-ID: <20110403215128.GC9516@openwall.com>
+Date: Mon, 4 Apr 2011 01:51:28 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ResourceSpace before 4.2.2833 insufficient access check
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-http://www.resourcespace.org/download.php
+On Sat, Apr 02, 2011 at 08:51:43PM +0200, Thijs Kinkhorst wrote:
+> I am on the Debian security team and was part of the vendor-sec list through 
+> our exploder. Please add me to the new list.
 
-"Security fix for an insufficient check on access keys given for
-resources"
+Added.  You're one of two contacts for Debian currently on the new list.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
