@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/6
-Message-ID: <AANLkTikv-wp3eViKJk1wLk1WJHS0=09PRNA7SV4uTSP=@mail.gmail.com>
-Date: Mon, 28 Feb 2011 15:26:41 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/32
+Message-ID: <20110403230951.GI10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:09:51 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: FreeBSD/OS X crontab information leakage
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Details here:
-http://marc.info/?l=full-disclosure&m=129891323028897&w=2
+On Fri, Apr 01, 2011 at 02:48:08PM -0400, Marc Deslauriers wrote:
+> Please subscribe me to the new list. I was a vendor-sec subscriber.
+> 
+> pub  4096R/A744BE93 2010-09-30
+> uid Marc Deslauriers <marc.deslauriers@...onical.com>
+> Fingerprint 50C4 A0DD CF31 E452 CEB1 9B51 6569 D855 A744 BE93
 
-There are three leaks, each of which amounts to a minor DAC bypass.
+Subscribed.
 
-1. Leakage of file/directory existence via stat() calls (e.g.
-determining if a file exists regardless of search permissions on
-directories)
-
-2. Leakage of directory existence via realpath()
-
-3. Arbitrary MD5 comparison (e.g. ability to determine if any two
-files have identical MD5 hashes, regardless of read permissions on
-those files)
-
-No preference for single vs. multiple CVEs.
-
--Dan
+Alexander
