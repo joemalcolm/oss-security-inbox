@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/4
-Message-ID: <20110517121201.0b40eda4@redhat.com>
-Date: Tue, 17 May 2011 12:12:01 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/24
+Message-ID: <20110403224959.GA10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:49:59 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2 May 2011 22:40:46 +0400 Solar Designer wrote:
+Mike,
 
-> A secondary goal behind requiring access to advisories and updates
-> (not just metainfo) would be to be able to draw the line between
-> vendors and companies that build their own Linux distros in house.
-> The latter could also publish an RSS feed showing how they update
-> their packages, yet they would not be a vendor to anyone other than
-> themselves...  On the other hand, publishing updates without
-> publishing the distro itself doesn't make them more of a vendor to
-> others.  So to achieve this goal we'd probably need to require the
-> distro itself to be public (in at least one form - e.g., Red
-> Hat's .src.rpm's are sufficient), not just advisories and updates.
+On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+> pub    512R/205BBF7D 2001-12-30
+>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>       C1
+> uid                  Michael J. O'Connor <mjo@...o.mi.org>
 
-I think we are likely to need exceptions to the "open as RHEL srpms"
-requirement.  It seems SUSE's SLE would not satisfy it (see
-distro-patches wiki), and I'm pretty sure we'd not benefit from not
-allowing SUSE folks, or asking them use the list info for OpenSUSE, but
-not for SLE.
+I've subscribed you with this key for now, but you really ought to
+upgrade to a larger key, and I'd appreciate a statement on what Linux
+distro you represent on the new list.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+All: my decision is based on some info known to me, but I'd prefer to
+base it on Mike's posting to oss-security.  I am saying this to explain
+that there's a reason why I subscribed Mike, whereas I would not
+subscribe another "random" person posting the same kind of message from
+a personal address. ;-)
+
+Alexander
