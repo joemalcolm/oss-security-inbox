@@ -1,29 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/06/1
-Message-ID: <7ihb3mt6tu.fsf@lanthane.pps.jussieu.fr>
-Date: Thu, 06 Oct 2011 18:37:01 +0200
-From: Juliusz Chroboczek <jch@....jussieu.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/37
+Message-ID: <BANLkTi=DjKb69mUQ_=H7_Wcfye2MnCnmAQ@mail.gmail.com>
+Date: Sun, 3 Apr 2011 19:32:52 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+Cc: Benji <me@...ji.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
->   a denial of service flaw was found in the way Polipo, a lightweight
-> caching web proxy, processed certain HTTP POST / PUT requests. If
-> polipo was configured to allow remote client connections and particular
-> host was allowed to connect to polipo server instance, a remote
-> attacker could use this flaw to cause denial of service (polipo daemon
-> abort due to assertion failure) via specially-crafted HTTP POST / PUT
-> request.
+On Sun, Apr 3, 2011 at 6:58 PM, Benji <me@...ji.com> wrote:
+> This is pathetic. You've all just made your personal and 'work' email
+> addresses targets by having a ridiculous public 'signup' system, and
+> the fact you all feel the need to hide behind some sort of veil for
+> security issues.
+>
+>
 
-Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
-it is fixed in the Git trunk, which is unfortunately not ready to be
-released (and might never be unless a maintainer is found).
+Do you really think anyone is gaining new information by discovering
+that, say, a member of the security team for a major distro will be on
+this mailing list?  Such information seems pretty obvious to me.
 
-At any rate, I do not recommend running Polipo as a publicly accessible
-proxy.  While I have made reasonable efforts to ensure that this is
-safe, Polipo was not designed for that.
+I think this thread is useful in the interest of transparency, which
+was sorely lacking with the previous incarnation of vendor-sec.  And
+with regards to enforcing embargoes for security issues, I'd think you
+would have better people to complain to a security community that
+tends to only enforce embargoes for days or occasionally weeks, and
+only for more serious issues, as opposed to the months or years that
+issues may go unfixed in the commercial software world.  While
+delaying security fixes unnecessarily is harmful to users,
+coordinating fixing over a short timeframe such that major
+distributions can release updates simultaneously seems like common
+sense, not "hiding being some sort of veil".
 
-Regards,
+-Dan
 
--- Juliusz
+>
+> On 4/3/11, Solar Designer <solar@...nwall.com> wrote:
+>> Mike,
+>>
+>> On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+>>> pub    512R/205BBF7D 2001-12-30
+>>>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>>>       C1
+>>> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+>>
+>> I've subscribed you with this key for now, but you really ought to
+>> upgrade to a larger key, and I'd appreciate a statement on what Linux
+>> distro you represent on the new list.
+>>
+>> All: my decision is based on some info known to me, but I'd prefer to
+>> base it on Mike's posting to oss-security.  I am saying this to explain
+>> that there's a reason why I subscribed Mike, whereas I would not
+>> subscribe another "random" person posting the same kind of message from
+>> a personal address. ;-)
+>>
+>> Alexander
+>>
+>
