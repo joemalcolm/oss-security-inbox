@@ -1,29 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/17
-Message-ID: <20111121175556.GD3573@pisco.westfalen.local>
-Date: Mon, 21 Nov 2011 18:55:56 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: drupal before 7.5 access bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/14
+Message-ID: <20110403215435.GD9516@openwall.com>
+Date: Mon, 4 Apr 2011 01:54:35 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
-> On 11/20/2011 04:14 AM, Hanno Böck wrote:
-> > http://drupal.org/node/1231510
-> >
-> > If a Drupal site is using these features on comments, and the parent
-> > node is denied access (either by a node access module or by being
-> > unpublished), the file attached to the comment can still be downloaded
-> > by non-privileged users if they know or guess its direct URL.
-> >
-> >
-> >
-> 
-> Please use CVE-2011-4323 for this issue.
+On Sat, Apr 02, 2011 at 01:28:18PM -0400, R P Herrold wrote:
+> Key fingerprint:	0x9B649644
+> Distribution:		CentOS
 
-This has already been assigned CVE-2011-2726, see 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
+Subscribed.
 
-Cheers,
-        Moritz
+Alexander
