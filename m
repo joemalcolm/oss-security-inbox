@@ -1,96 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/3
-Message-ID: <CAPYM6Vz6jQ5Nt6ymzjZ59C68NYGrZTaDC48_UujNFFkg71zruA@mail.gmail.com>
-Date: Wed, 5 Oct 2011 18:07:59 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/5
+Message-ID: <20110403201801.GA8505@openwall.com>
+Date: Mon, 4 Apr 2011 00:18:01 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
 
+I've just setup a new list, GPG-re-encrypting as promised.  It's running
+on a dedicated machine, no swap, temporary files on tmpfs.  (Yet this is
+not any kind of "perfect security", indeed.  Various risks do apply.)
 
-1. OVERVIEW
+I'd like the list members to start using the list for discussions on
+medium severity issues (and only those!) already known to at least one
+of the members (reported to or discovered by one of them).  Please keep
+any embargo periods as short as reasonably possible (I suggest a maximum
+of two weeks, but let's try to make it shorter whenever possible).
+Please assume that discussions on the list may be made public at a later
+time; don't post anything that you would not say in public when the
+corresponding security issues are already public knowledge.
 
-The vTiger CRM 5.2.1 and lower versions are vulnerable to Remote Code
-Execution. No fixed version has been released as of 2011-10-05.
+Once we're comfortable with the list for this purpose, we may start to
+"open it up" for external postings (such as by security researchers).
+Please contact me about this first (as the list admin); I will likely
+want to setup a different e-mail address for that (primarily for
+anti-spam reasons).
 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-2. BACKGROUND
+Right, but I've added to Josh's requirements as described above,
+essentially making this a Linux distributions security contacts list
+(not exactly what vendor-sec was).  Thus, to be subscribed to the list
+now, one has to meet at least all of the following criteria:
 
-vtiger CRM is a free, full-featured, 100% Open Source CRM software
-ideal for small and medium businesses, with low-cost product support
-available to production users that need reliable support. vtiger CRM
-is a widely used product with thousands of users in dozens of
-countries.  It has a vibrant community of users driving the product
-forward, and contributing to it's development.  Over 2 million copies
-of vtiger CRM have been downloaded so far. It was launched as a fork
-of version 1.0 of the SugarCRM project launched on December 31st,
-2004.
+1. Be a vendor-sec member (as of the time it ceased to exist).
 
+2. Be on oss-security by the time Josh posted the above (if you did not
+care to join oss-security until now, you hardly have a legitimate need
+to be on the closed list now).
 
-3. VULNERABILITY DESCRIPTION
+3. Be a security contact for a Linux distribution.
 
-vTiger uses the vulnerable version of phpmailer class file located at
-/cron/class.phpmailer.php .
+1 and 2 above are for the initial seed membership only.  These criteria
+will become outdated in some months from now.  On the other hand, there
+may be additional requirements, such as:
 
+4. For more than two persons per distro, the need has to be explained
+(or maybe we should not allow more than two at all).  (We're already at
+three persons per distro for some, which bothers me.)
 
-4. VERSIONS AFFECTED
+5. The Linux distro should be issuing timely security updates.  This was
+a requirement for vendor-sec membership as well (for distros), but I
+guess some distros who qualified some time ago (or were otherwise
+accepted) no longer qualify now.  We'll need to double-check all.
 
-Tested on 5.2.1
+6. The person(s) subscribed should be active on oss-security and/or on
+the new list (if already subscribed).  We may choose to unsubscribe
+silent members (of course, we'll notify them first), assuming that they
+are either not paying attention to discussions (and thus the risk
+associated with them is unjustified) or they're not really into security
+(which is why they have nothing to add to discussions).  Of course, such
+assumptions may be wrong.  Yet this "cleanup" approach was (lightly)
+applied on vendor-sec on some occasions.
 
+I do recall that a NetBSD person mentioned that *BSD's should not be
+left out, and I agree, yet based on what I saw during the month without
+vendor-sec, only the Linux distros really cared for such a list.  This
+lack of vendor-sec resulted in some ad-hoc long CC: lists on some
+security issues.  So I am trying to improve upon what we had with
+vendor-sec, as well as upon what we had during the month without
+vendor-sec.  Starting a new vendor-sec equivalent (with *BSDs, some
+non-distro folks, etc.) as the only new list would not obviously be an
+improvement over having no such list at all, so I am not doing it yet.
 
-5. PROOF-OF-CONCEPT/EXPLOIT
+I have no problem setting up a BSD distros list if there's demand.
+CC'ing a discussion to two lists when appropriate isn't that hard.  For
+now, I think we can be CC'ing the major BSD's security contacts when we
+determine that they need to be aware of an issue discussed on the Linux
+distros list.
 
-File: /cron/class.phpmailer.php
-[code]
+Ditto for a researchers list and/or for inviting individual researchers
+to discussions.
 
-391:    function SendmailSend($header, $body) {
-392:    if ($this->Sender != "")
-393:       $sendmail = sprintf("%s -oi -f %s -t", $this->Sendmail,
-$this->Sender);
-394:    else
-395:       $sendmail = sprintf("%s -oi -t", $this->Sendmail);
+Josh - I subscribed you to the new list per your off-list request (with
+info on your new PGP key), but I think you should follow your own rule
+and post such a request to the list. ;-)
 
-[/code]
+As to me, I'd like to be on the list representing Openwall and also as
+the list admin (maybe we need more admins, to be discussed soon).  I'm
+already subscribed. ;-)
 
-
-6. SOLUTION
-
-The vendor hasn't attempted to incorporate the latest version of
-phpMailer class in their vTigerCRM as of version 5.2.1.
-
-The flawed code portion can be patched with:
-
-393: $sendmail = sprintf("%s -oi -f %s -t",
-escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
-395: $sendmail = sprintf("%s -oi -t", escapeshellcmd($this->Sendmail));
-
-
-7. VENDOR
-
-vTiger Development Team
-http://www.vtiger.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-08: notified vendor
-2011-10-05: no fixed version released yet
-2011-10-05: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_rce
-Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
-
-#yehg [2011-10-05]
+Alexander
