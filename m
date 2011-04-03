@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/8
-Message-ID: <20111229230026.GT27039@core.inversepath.com>
-Date: Fri, 30 Dec 2011 00:00:26 +0100
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/39
+Message-ID: <4D990505.2050307@slackware.com>
+Date: Sun, 03 Apr 2011 18:38:45 -0500
+From: "Patrick J. Volkerding" <security@...ckware.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 29, 2011 at 05:55:43PM -0500, David Jorm wrote:
-> 
-> > Kurt or other CVE assigners, can you please assign a bunch for
-> > python,
-> > java, tomcat etc. pp.
-> 
-> Tomcat has been assigned CVE-2011-4084.
+On 04/03/2011 06:15 PM, Solar Designer wrote:
+> On Fri, Apr 01, 2011 at 01:20:30PM -0500, Patrick J. Volkerding wrote:
+>> I've been on board since close to the beginning, and would be pleased to
+>> participate again.  Here's the public GPG key for this address.
 >
+> I assume that security@...ckware delivers mail just to you, correct?
 
-Indeed, this was referenced in our advisory Timeline but missing in the CVE
-list. I just fixed that, sorry for that.
+Yes.
 
-Cheers
+>> It expires on 2012-12-21, but presumably that won't be a problem.  ;-)
+>
+> You will need to provide a new key (or expand this one's expiration
+> date and provide it again) in time.  If the list is still around by
+> then, that is. ;-)
 
-> Thanks
-> --
-> David Jorm / Red Hat Security Response Team
+We'll see what happens then.  ;-)
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
+Thanks!  The effort is very much appreciated.  While I'm here, I'd like 
+to make a motion that requests for list membership continue to be made 
+in oss-security (or some other venue open to all).
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Take care,
+
+Pat
