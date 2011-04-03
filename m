@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/2
-Message-ID: <20110226073038.GP4669@outflux.net>
-Date: Fri, 25 Feb 2011 23:30:38 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/19
+Message-ID: <20110403222237.GI9516@openwall.com>
+Date: Mon, 4 Apr 2011 02:22:37 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 25, 2011 at 03:10:10PM +0300, Vasiliy Kulikov wrote:
-> UID 0 without capabilities has not been made really unprivileged yet.
-> It makes sense only within namespace container without any virtual
-> filesystem which handles permissions with uid/gid checks (not CAP_*).
-> But this is rather strange.
+On Sun, Apr 03, 2011 at 10:54:54PM +0100, Steve Kemp wrote:
+> I too was subscribed through the team@...urity.debian.org exploder. My key:
+> 
+> pub   1024D/CD4C0D9D 2002-05-29
+> uid                  Steve Kemp <steve@...ve.org.uk>
+> uid                  Steve Kemp <skx@...ian.org>
+> sub   2048g/AC995563 2002-05-29
+> 
+>   Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
 
-True, but I was just trying to show some examples. The case I'm most
-concerned about is the case where modules_disable has been set. It
-is possible to use acpi/custom_method to unset this and then load
-kernel rootkit modules, etc.
+Added.  This gives us three representatives from Debian, which feels
+like a bit too many.
 
-I know it's a special case, but it still provides arbitrary kernel
-memory writes which is not an intended ability for any user to
-have, even root.
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+Alexander
