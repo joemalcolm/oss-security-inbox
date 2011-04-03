@@ -1,28 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/16
-Message-ID: <20110401210823.GR4050@outflux.net>
-Date: Fri, 1 Apr 2011 14:08:23 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/37
+Message-ID: <BANLkTi=DjKb69mUQ_=H7_Wcfye2MnCnmAQ@mail.gmail.com>
+Date: Sun, 3 Apr 2011 19:32:52 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
+Cc: Benji <me@...ji.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+On Sun, Apr 3, 2011 at 6:58 PM, Benji <me@...ji.com> wrote:
+> This is pathetic. You've all just made your personal and 'work' email
+> addresses targets by having a ridiculous public 'signup' system, and
+> the fact you all feel the need to hide behind some sort of veil for
+> security issues.
+>
+>
 
-Hi, please add me to the list. I was a member via the Ubuntu exploder.
+Do you really think anyone is gaining new information by discovering
+that, say, a member of the security team for a major distro will be on
+this mailing list?  Such information seems pretty obvious to me.
 
-pub   4096R/DC6DC026 2010-09-27
-      Key fingerprint = A5C3 F68F 229D D60F 723E  6E13 8972 F4DF DC6D C026
-uid                  Kees Cook <kees@...ntu.com>
-sub   4096R/650DE414 2010-09-27
+I think this thread is useful in the interest of transparency, which
+was sorely lacking with the previous incarnation of vendor-sec.  And
+with regards to enforcing embargoes for security issues, I'd think you
+would have better people to complain to a security community that
+tends to only enforce embargoes for days or occasionally weeks, and
+only for more serious issues, as opposed to the months or years that
+issues may go unfixed in the commercial software world.  While
+delaying security fixes unnecessarily is harmful to users,
+coordinating fixing over a short timeframe such that major
+distributions can release updates simultaneously seems like common
+sense, not "hiding being some sort of veil".
 
--Kees
+-Dan
 
--- 
-Kees Cook
-Ubuntu Security Team
+>
+> On 4/3/11, Solar Designer <solar@...nwall.com> wrote:
+>> Mike,
+>>
+>> On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+>>> pub    512R/205BBF7D 2001-12-30
+>>>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>>>       C1
+>>> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+>>
+>> I've subscribed you with this key for now, but you really ought to
+>> upgrade to a larger key, and I'd appreciate a statement on what Linux
+>> distro you represent on the new list.
+>>
+>> All: my decision is based on some info known to me, but I'd prefer to
+>> base it on Mike's posting to oss-security.  I am saying this to explain
+>> that there's a reason why I subscribed Mike, whereas I would not
+>> subscribe another "random" person posting the same kind of message from
+>> a personal address. ;-)
+>>
+>> Alexander
+>>
+>
