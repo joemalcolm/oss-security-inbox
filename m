@@ -1,28 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/12
-Message-ID: <456517594.1604694.1311710321865.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 15:58:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/2
+Message-ID: <4D98B090.1050709@gmail.com>
+Date: Sun, 03 Apr 2011 20:38:24 +0300
+From: AK <platsakos@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Tim Brown <timb@...-dimension.org.uk>, KDE Security Team <security@....org>
-Subject: Re: CVE Request: Ark path traversal
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+Please subscribe me to the new list. I was a vendor-sec subscriber.
+
+Thanks,
 
 
------ Original Message -----
-> Hello,
-> 
-> Ark contains a path traversal vulnerability allowing a
-> maliciously-crafted zip file to allow for an arbitrary file to be
-> displayed and, if the user has appropriate credentials, removed.
-> 
-> Can we please get a CVE for this?
-> 
-
-Do you have a URL or some other public information about this flaw?
-
-Thanks.
-
--- 
-    JB
+Download attachment "0x10411D84.asc" of type "application/pgp-keys" (1724 bytes)
