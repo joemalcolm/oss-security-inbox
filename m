@@ -1,40 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/1
-Message-Id: <201105061437.54933.thomas@suse.de>
-Date: Fri, 6 May 2011 14:37:54 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/7
+Message-ID: <20110403204433.GB8721@openwall.com>
+Date: Mon, 4 Apr 2011 00:44:33 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libarchive, multiple overflows
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-our maintainer found the following patches:
------------
-I was doing some maintainance on bsdtar package and noticed that there was a
-buffer overflow fix upstream, see
-http://code.google.com/p/libarchive/source/detail?r=3158&path=/trunk/libarchive/archive_read_support_format_iso9660.c
+On Sun, Apr 03, 2011 at 01:23:26PM +0200, Miklos Vajna wrote:
+> Please subscribe me to the new list. I was a vendor-sec subscriber.
 
-Also SUSE package does not include the
-http://pkgs.fedoraproject.org/gitweb/?p=libarchive.git;a=blob_plain;f=libarchive-2.8.4-iso9660-data-types.patch;hb=HEAD
-patch which seems to be security sensitive also.
-----------
-More overflow fixes:
+I've tentatively subscribed you, for Frugalware.  However, I am not
+convinced that you are / will be making sufficiently good use of the
+advance notifications on medium-severity security issues.  I went to
+http://frugalware.org and here's what I saw:
 
-http://code.google.com/p/libarchive/source/detail?r=2842
-http://code.google.com/p/libarchive/source/detail?r=3160
+1. There are recent non-security package updates (such as yesterday's).
+Great.
 
-Use-after-free fix (not sure if exploitable):
+2. The latest "security announcement" is dated 2011-02-13, and it is for
+"opera".  Slightly older ones are for "drupal6-mollom", "wireshark",
+"horde-webmail", "wordpress", and even more web apps stuff.  Then we
+finally see an update to "kernel" on 2010-12-12.  Surely a distro that
+supports running and even includes a web browser and popular web apps
+also includes lots of other stuff, common to other distros, however
+where are the security updates to those components for the last 3-4
+months?  There have been some security bugs in them, including many more
+in the kernel since 2010-12-12.  I understand that it's hard to find
+time for all of the low and medium severity updates when you're just one
+person doing security response for a non-tiny distro, and I understand
+that you have a legitimate need for the info.  I am just not convinced
+that the risk of "one more person" is justified when you haven't issued
+an update for 48 days (or so) whereas the suggested embargo period on
+the new list is up to 14 days.
 
-http://code.google.com/p/libarchive/source/detail?r=3038
-----------
+Yet you're on the list for now.  Perhaps try to evaluate your use of the
+info that will be arriving to you through the list and ask to be
+unsubscribed if you determine that you're not making timely use of the
+info anyway.
 
-Cheers,
-Thomas
+I must admit that we sometimes have the same problem at Openwall -
+non-critical security issues are sometimes not patched for a while, and
+we tended not to start preparing security updates for issues discussed
+on vendor-sec until the CRD was very close.  We did the latter in part
+not to add to the risk of inadvertently disclosing the issue.  This
+suggests that the embargoes were unnecessarily too long, though (for us
+at least).
 
-
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Alexander
