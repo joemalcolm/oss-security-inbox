@@ -1,47 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/7
-Message-ID: <4D8767D2.7090606@redhat.com>
-Date: Mon, 21 Mar 2011 15:59:30 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/15
+Message-ID: <20110403215454.GA10880@steve.org.uk>
+Date: Sun, 3 Apr 2011 22:54:54 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, John Bailey <rekkanoryo@...kanoryo.org>
-Subject: Re: CVE UnRequest (minor) -- Pidgin / libpurple -- Cipher API information disclosure
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
 
-Hello vendors,
+I too was subscribed through the team@...urity.debian.org exploder. My key:
 
-Jan Lieskovsky wrote:
-> 
-> Hello Josh, Steve, vendors,
-> 
->   the following:
->   [1] http://pidgin.im/news/security/?id=50
-> 
->   Upstream patch:
->   [2] 
-> http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471 
-> 
-> 
-> Doesn't seem to have a CVE identifier yet.
-> 
-> Could you allocate one?
+pub   1024D/CD4C0D9D 2002-05-29
+uid                  Steve Kemp <steve@...ve.org.uk>
+uid                  Steve Kemp <skx@...ian.org>
+sub   2048g/AC995563 2002-05-29
 
-John clarified in a reply to my post:
+  Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
 
-> Jan,
-> 
-> FYI, we didn't request one because we believed it did not meet the guidelines
-> for assignment of a CVE identifier.  It's a local-only information disclosure
-> and can't be remotely exploited.
-> 
-> John
-
-So ignore my earlier post / request.
-
-Thanks && Regards, Jan.
+Steve
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
