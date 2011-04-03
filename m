@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/8
-Message-ID: <4495cba8-d6d6-4878-ae5f-950730497b58@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:41:15 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/38
+Message-ID: <1337719293.350430.1301873888561.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Sun, 3 Apr 2011 19:38:08 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Conky 1.8.1 "/tmp/.cesf" Insecure Temporary File Security Issue
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3616
+> 
+> Josh - I subscribed you to the new list per your off-list request (with
+> info on your new PGP key), but I think you should follow your own rule
+> and post such a request to the list. ;-)
+> 
+
+Yes certainly.
+
+pub   2048R/BBE09A0F 2011-04-02
+      Key fingerprint = CFB1 136C 6DD0 5BB9 D798  A78E 1CD8 ACDD BBE0 9A0F
+uid                  Josh Bressers <bressers@...hat.com>
+uid                  Josh Bressers <josh@...ss.net>
+sub   2048R/2D54149F 2011-04-02
+sub   2048R/55215DC1 2011-04-02
+
+
+I generated new keys this weekend which live on an OpenPGP smart card. I
+worry about the security of my key when I'll be using it multiple times a
+day with the new list.
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> Hello,
-> 
-> Can a CVE be assigned for the below issue?
-> 
-> Conky 1.8.1 contains a vulnerability that allows malicious, local
-> users
-> to perform certain actions with escalated privileges.
-> 
-> https://bugs.launchpad.net/ubuntu/+source/conky/+bug/607309
-> http://secunia.com/advisories/43225/
-> 
-> 
-> Thanks,
-> 
-> --
-> Sean Amoss
-> 
