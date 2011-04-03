@@ -1,21 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/5
-Message-ID: <4D5B8E30.6010604@redhat.com>
-Date: Wed, 16 Feb 2011 16:43:28 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/4
+Message-ID: <1104032000550.22564@mjc.redhat.com>
+Date: Sun, 3 Apr 2011 20:06:37 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: ALSA: caiaq - Fix possible string-buffer overflow
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to 
-overflow the string array sizes by too long USB device name string."
+> You must reply to this thread, in public (on oss-security).
 
-http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
+Long time v-s member through RH exploder:
 
-Just FYI, I'm not requesting a CVE name for this as it only affects 
-Native Instruments USB audio devices with very long device name which I 
-think is unlikely.
+pub   1024R/49A563D9 1997-02-24
+uid                  Mark Cox <mjc@...hat.com>
 
-https://bugzilla.redhat.com/show_bug.cgi?id=677881
+https://www.apache.org/dist/httpd/KEYS
 
-Thanks, Eugene
+Mark
