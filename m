@@ -1,47 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/4
-Message-ID: <Pine.GSO.4.64.1103021752050.24409@faron.mitre.org>
-Date: Wed, 2 Mar 2011 17:55:17 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/24
+Message-ID: <20110403224959.GA10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:49:59 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: simple machines forum before 1.1.13
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Mike,
 
-On Wed, 23 Feb 2011, Josh Bressers wrote:
+On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+> pub    512R/205BBF7D 2001-12-30
+>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>       C1
+> uid                  Michael J. O'Connor <mjo@...o.mi.org>
 
-> ----- Original Message -----
->> http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
->>
->> No useful info on the kind of vulnerability, just states "Several
->> security-related fixes"
->>
->
-> Steve,
->
-> Can MITRE take this one.
+I've subscribed you with this key for now, but you really ought to
+upgrade to a larger key, and I'd appreciate a statement on what Linux
+distro you represent on the new list.
 
-I almost gave this a single CVE for "multiple unspecified" but there's a 
-readable patch file that gives more hints:
-http://custom.simplemachines.org/mods/downloads/smf_patch_2.0-RC4_security.zip
+All: my decision is based on some info known to me, but I'd prefer to
+base it on Mike's posting to oss-security.  I am saying this to explain
+that there's a reason why I subscribed Mike, whereas I would not
+subscribe another "random" person posting the same kind of message from
+a personal address. ;-)
 
-
-Reversing the patches suggests the following (assuming that ONLY security 
-patches are included in the ZIP, as stated in the initial post).
-
-
-CVE-2011-1127 - guest access to SSI.php
-
-CVE-2011-1128 - "brute force" on Load.php
-
-CVE-2011-1129 - ManageNews.php, probably XSS
-
-CVE-2011-1130 - improper input validation for a number in
-   $_REQUEST['start'] in QueryString.php, and also $start variable in
-   Subs.php
-
-CVE-2011-1131 - unspecified query issues in Search.php, related to 
-$createTemporary variable.
-
-
-- Steve
+Alexander
