@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/9
-Message-ID: <1317405384.2907.11.camel@mdlinux>
-Date: Fri, 30 Sep 2011 13:56:24 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/25
+Message-ID: <20110403225754.GB10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:57:54 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: ffmpeg/libav
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2011-09-30 at 11:55 -0400, Josh Bressers wrote:
-> 
-> ----- Original Message -----
-> > Hello,
-> > 
-> > I can't seem to find a CVE for the following:
-> > 
-> > http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
-> > 
-> > "Fix several security issues in matroskadec.c (MSVR-11-0080)."
-> > 
-> 
-> I can't figure these out, so let's use CVE-2011-3586 as one of those
-> "unknown security issues" catchall IDs.
+On Fri, Apr 01, 2011 at 10:13:05PM -0400, Mike O'Connor wrote:
+> I use my personal address rather than my work address for handling
+> vendor security matters because:
 
-My apologies, it seems that it's a dupe of CVE-2011-3504...
+Thank you for explaining this in here.
 
-The MSVR reference in the commit is wrong.
+> The vetting should be about more than email domains.  There should be
+> periodic maintenance of who's on the list to cull out those who aren't
+> involved.  Marcus did that to some degree with the vendor-sec of old.
 
-Marc.
+Right.
 
+> I think the biggest problems there were the exploders and the lack of
+> encryption,
 
+Maybe (re: "biggest").
+
+> and both of those are being addressed with this new list
+> as I understand things.
+
+Yes, they are.
+
+> I think that having a couple lists, one for "tactical" issues (e.g.
+> embargoes and CVE assignment) and another for "strategic" discussions
+> (e.g. "how to deal with vagaries in gcc vs. C standards with general
+> security impact") may be appropriate.  I'm part of another security
+> community which has such a notion, and it seems to help in keeping
+> things focused, FWIW.
+
+It appears that this is what we will have, but I am starting with one
+list that is more obviously needed (alternative to CC lists).
+
+Your specific example re: "how to deal with vagaries in gcc vs. C
+standards with general security impact" would be best discussed on
+oss-security (that is, on a public list), though.  It does not benefit
+from a short embargo, and long embargoes are inappropriate.
+
+Alexander
