@@ -1,21 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/7
-Message-ID: <20110224164530.GH30355@redhat.com>
-Date: Thu, 24 Feb 2011 09:45:30 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/17
+Message-ID: <20110403221354.GG9516@openwall.com>
+Date: Mon, 4 Apr 2011 02:13:54 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, Ralf Cors?pius <rc040203@...enet.de>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
+On Sat, Apr 02, 2011 at 11:31:07AM +0200, Moritz Muehlenhoff wrote:
+> I was subscribed through the team@...urity.debian.org exploder. My key:
+> 
+> pub   1024D/4E2ECA5A 2004-09-08
+> uid                  Moritz Muehlenhoff <jmm@...ian.org>
+> uid                  Moritz Muehlenhoff <jmm@...til.org>
+> sub   2048g/8D1BA24D 2004-09-08
 
->> Is Redhat packaging RT now, or are you just handling the CVEs?
->
->I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
->public issues.
+Subscribed.
 
-RT3 is packaged in Fedora and EPEL.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Alexander
