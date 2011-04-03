@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/3
-Message-ID: <4DD15E51.6080300@redhat.com>
-Date: Mon, 16 May 2011 19:26:41 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/33
+Message-ID: <BANLkTikN_qR0cHiRWRuxLrZGMw6FPHG-BA@mail.gmail.com>
+Date: Sun, 3 Apr 2011 23:58:21 +0100
+From: Benji <me@...ji.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 04/01/2011 08:03 PM, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
-
-Hi Solar,
-
-   please add me to the list. I was earlier vendor-sec member via
-Red Hat exploder.
-
-pub   2048R/9D465824 2011-05-16
-       Key fingerprint = 905D D296 41F5 33CD D76F  25AD 24CE 3A4D 9D46 5824
-uid                  Jan Lieskovsky (iankko) <jlieskov@...hat.com>
-sub   2048R/4F954334 2011-05-16
-
-http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x24CE3A4D9D465824
+This is pathetic. You've all just made your personal and 'work' email
+addresses targets by having a ridiculous public 'signup' system, and
+the fact you all feel the need to hide behind some sort of veil for
+security issues.
 
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
-P.S.: Was waiting if the discussion regarding limiting a distro to two
-       or three representatives will come to conclusion and intended to
-       post then. But not sure if there was a final decision wrt to this.
-       Thank you, Jan.
+On 4/3/11, Solar Designer <solar@...nwall.com> wrote:
+> Mike,
+>
+> On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+>> pub    512R/205BBF7D 2001-12-30
+>>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>>       C1
+>> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+>
+> I've subscribed you with this key for now, but you really ought to
+> upgrade to a larger key, and I'd appreciate a statement on what Linux
+> distro you represent on the new list.
+>
+> All: my decision is based on some info known to me, but I'd prefer to
+> base it on Mike's posting to oss-security.  I am saying this to explain
+> that there's a reason why I subscribed Mike, whereas I would not
+> subscribe another "random" person posting the same kind of message from
+> a personal address. ;-)
+>
+> Alexander
+>
