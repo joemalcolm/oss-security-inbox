@@ -1,51 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/5
-Message-ID: <20110407173728.GA3934@redhat.com>
-Date: Thu, 7 Apr 2011 11:37:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com, file@...gw.com
-Cc: christos@...las.com
-Subject: Re: Possible security fixes in 5.05?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/32
+Message-ID: <20110403230951.GI10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:09:51 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-21 23:16:15 -0600] Raphael Geissert wrote:
+On Fri, Apr 01, 2011 at 02:48:08PM -0400, Marc Deslauriers wrote:
+> Please subscribe me to the new list. I was a vendor-sec subscriber.
+> 
+> pub  4096R/A744BE93 2010-09-30
+> uid Marc Deslauriers <marc.deslauriers@...onical.com>
+> Fingerprint 50C4 A0DD CF31 E452 CEB1 9B51 6569 D855 A744 BE93
 
->Hi,
->
->>From file's 5.05 changelog[1] it seems like some security-relevant changes were
->made, but I'm unable to find further information. I saw a git repository being
->mentioned in a message but I can't find it either.
->
->Can anyone please shed some light to the security-related changes?
->
->I would like to encourage developers to communicate such kind of issues openly
->in this list, as it helps getting them fixed in distributions.
->
->Thanks in advance.
->
->[1]http://mx.gw.com/pipermail/file/2011/000690.html
+Subscribed.
 
-Looks like there are a few issues here:
-
-
-2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
-     * Fix two potential buffer overruns in apprentice_list.
-
-https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
-
-
-2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
-     * Minor security fix to softmagic.c (don't use untrusted
-       string as printf format).
-
-https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
-
-
-I have not looked at them in more depth to see how much of a problem they are,
-or when they were introduced (in order to know which versions are affected),
-etc.
-
-I'm cc'ing Christos to see if he can perhaps enlighten us.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Alexander
