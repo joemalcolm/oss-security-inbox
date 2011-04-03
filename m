@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/1
-Message-ID: <4DBC02E1.2070901@kde.org>
-Date: Sat, 30 Apr 2011 08:38:57 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/35
+Message-ID: <20110403231636.GK10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:16:36 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 04/26/2011 12:02 PM, Jeff Mitchell wrote:
-> On 4/12/2011 4:58 PM, Solar Designer wrote:
->> On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
->>> pub   4096R/C44977CA 2011-04-12
->>>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
->>> uid                  Petr Matousek <pmatouse@...hat.com>
->>> uid                  Petr Matousek <pm@...p.org>
->>
->> Added.
->>
->> Alexander
+On Fri, Apr 01, 2011 at 11:09:50AM -0700, Reed Loden wrote:
+> I'm a (now former) vendor-sec member who would like to be added to the
+> new closed list.
 > 
-> Hi there,
-> 
-> Please add me as a KDE security contact.
-> 
-> sec   1024D/D0AE1825 2009-01-19
-> Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
-> uid                  Jeff Mitchell <mitchell@....org>
-> 
-> Thanks,
-> Jeff
+> My GPG key:
+>  pub 1024D/F3C33D5A 2008-11-19
+>  Key fingerprint = 6B56 F9AC 07B6 85D7 DC45 60DA 6BA2 2226 F3C3 3D5A
+>  uid Reed Loden
+>  sub 4096g/C0B72052 2008-11-19
 
-Hi,
+Are you a security contact for a Linux distro, and for which one?
+And how do we verify that?
 
-I didn't hear back about this -- can someone confirm?
-
-Thanks,
-Jeff
+Alexander
