@@ -1,23 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/3
-Message-ID: <20110916175340.GR6573@outflux.net>
-Date: Fri, 16 Sep 2011 10:53:40 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/26
+Message-ID: <20110403225847.GC10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:58:47 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: closed-list membership transition
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Apr 01, 2011 at 11:52:29PM +0200, Marcus Meissner wrote:
+> pub   1024D/0175623E 2003-11-21
+>       Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
+> uid                  Marcus Meissner <meissner@...e.de>
+> uid                  Marcus Meissner <meissner@...ell.com>
+> sub   1024g/EA43E05E 2003-11-21
 
-My last day with Canonical is today. Starting on Sep 19th, I will be
-working for Google on ChromeOS. I'd like to transition my closed-list
-membership based on the fact that ChromeOS is also a distro, and I'll
-still have security responsibilities with it. How should this be handled?
+Added.
 
-Thanks,
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+Alexander
