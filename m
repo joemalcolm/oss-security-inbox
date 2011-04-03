@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/5
-Message-Id: <201108111413.27056.thomas@osterried.de>
-Date: Thu, 11 Aug 2011 14:13:23 +0200
-From: Thomas Osterried <thomas@...erried.de>
-To: Eren Türkay <eren@...dus.org.tr>
-Cc: oss-security@...ts.openwall.com, Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <ax25@...erg.in-berlin.de>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/23
+Message-ID: <20110403224821.GB31184@eltex.net>
+Date: Mon, 4 Apr 2011 02:48:21 +0400
+From: ArkanoiD <ark@...ex.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Ah, ok, i might be missing the whole idea, sorry.
 
-Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
-> On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
-> > The AX.25 daemon (ax25d), typically provided in the ax25-tools
-> > package, allows administrators to associate incoming AX.25, NET/ROM,
-> > and ROSE traffic with the execution of an endpoint program (most
-> > commonly "node"), which is run under a specified user account.
-> > Because ax25d is missing a check on the return code for a setuid call
-> > responsible for dropping privileges to the specified user, it may be
-> > possible to cause setuid to fail, after which the chosen program will
-> > be executed with root privileges.  In other words, if you're in the
-> > business of handing out unprivileged shells over amateur radio (don't
-> > we all? :p ), this would allow for remote compromise.
+On Mon, Apr 04, 2011 at 01:33:01AM +0400, Solar Designer wrote:
 > 
-> Hello,
+> As you can see from another message I posted, I've only setup a
+> Linux distros list for now, which lets us side-step the issue of
+> comparing one security researcher vs. another for membership of that
+> list.  I'd be happy to setup a separate list with only security
+> researchers on it, and we can ask folks to CC that list whenever a
+> discussion on the Linux distros list is expected to significantly
+> benefit from participation of the researchers.
 > 
-> Thank you for your investigation on the topic. Although this issue seems
-> to be low-priority, it's good to let the maintainers know.
-> 
-> I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
-> linux-ac25 site, are the maintainers of ax25 utilities.
-
-thank you for your information.
-
-I know that code fragment, but I never imagined that if root calls setuid/setgid that this could fail, because root has by definition enough rights.
-
-We'l corect lines 617-619 asap.
-
-Kind regards,
-	- Thomas  dl9sau
