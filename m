@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/10
-Message-ID: <125247b8-3bac-4c37-ad22-bfb5196ecc77@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 05 Oct 2011 15:26:17 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Ramon de C Valle <rcvalle@...hat.com>
-Subject: Re: Request for a CVE identifier: XML-RPC SAX Parser Information Exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/22
+Message-ID: <20110403224634.GA31184@eltex.net>
+Date: Mon, 4 Apr 2011 02:46:34 +0400
+From: ArkanoiD <ark@...ex.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Well, i have at least one active opensource project that is closely related to vulnerabilities and preventive countermeasures, openfwtk.sourceforge.net, doesn't it qualify?
 
-
------ Original Message -----
-> I'd like to request a CVE identifier for the following issue:
+On Mon, Apr 04, 2011 at 01:49:28AM +0400, Solar Designer wrote:
+> ArkanoiD,
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=705869
-> http://old.nabble.com/-PATCH--Setting-SAX-features-for-XML-RPC-td27435656.html
+> On Sun, Apr 03, 2011 at 01:10:08AM +0400, ArkanoiD wrote:
+> > -----BEGIN PGP PUBLIC KEY BLOCK-----
+> 
+> Thanks for the key, but as far as I am aware you do not currently
+> qualify for the Linux distros list (even though you did some security
+> work on Owl, thanks), nor were you on vendor-sec (Josh's suggested
+> requirement for the seed membership of the new list).  You might qualify
+> for a separate security researchers list if/once we set one up (or for a
+> combined distros+researchers list, but I doubt that we'd set one up).
+> 
+> Alexander
+> 
+> email protected and scanned by AdvascanTM - keeping email useful - www.advascan.com 
+> 
 > 
 
-Please use CVE-2011-3600 for this.
-
-Thanks.
-
--- 
-    JB
