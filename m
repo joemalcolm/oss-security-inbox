@@ -1,59 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/8
-Message-ID: <4DD2B3AE.1090503@oracle.com>
-Date: Tue, 17 May 2011 10:43:10 -0700
-From: Oracle Security Alerts <secalert_us@...cle.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, "secalert_us@...cle.com" <secalert_us@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/10
+Message-ID: <20110403213301.GA9234@openwall.com>
+Date: Mon, 4 Apr 2011 01:33:01 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 04/30/11 08:26 AM, Solar Designer wrote:
-> Does Oracle start to prepare security updates for Oracle Enterprise
-> Linux before or after Red Hat releases theirs?  If it's after, then
-> there's too little need for Oracle to have advance notification.
+Ben,
 
-If we know about vulnerabilities in advance, our fixing process
-starts before Red Hat releases their updates. It starts with
-assessment of issue, reviewing the fix for completeness and
-applicability to our kernel and components we maintain or provide in
-our Linux distribution. See
-http://www.oracle.com/us/technologies/linux/026042.htm
-or http://oss.oracle.com/
+On Sun, Apr 03, 2011 at 10:06:03PM +0100, Ben Laurie wrote:
+> OK, but ... I wasn't on vendor-sec, but (IMO) am at least as qualified
+> as most of the people who were. Now what?
 
-We do not expect Red Hat or other vendors to evaluate impact of
-security vulnerabilities on Oracle Linux, nor fix it in a way that
-is applicable to our releases. Hence the request for subscription.
+What do you propose?
 
-We have a large user base to protect. We do get reports of
-vulnerabilities in our Linux distribution which we may want to fix
-in collaboration with rest of the community.
+In what capacity do you feel you're qualified?
 
-> Oracle was never actually accepted to vendor-sec for Oracle Enterprise Linux.
+Don't get me wrong, I have a lot of respect for you - in fact, in my
+sysadmin role, I am flattered that you'd want to be on a list I setup.
+I just think that you providing answers to the questions above will help
+the discussion.  I don't know what your answers would be (I can try to
+guess, but I might be wrong).  I do think that you might propose
+something we have not yet thought of.
 
-Not correct. From archives of vendor-sec I see there had been at
-least two representatives from Oracle Linux at vendor-sec and we had
-membership ever since Oracle started distributing Linux.
+The vendor-sec membership requirement was just for the initial seed
+membership of the new list.  Its purpose is to ensure we're not making
+things worse in terms of pre-CRD leaks, at least not right away. ;-)
 
-This discussion was held whenever they requested to subscribe to
-vendor-sec and it was concluded that while we may be redistributing
-some packages, Oracle Linux is a distro in its own right.
+As you can see from another message I posted, I've only setup a
+Linux distros list for now, which lets us side-step the issue of
+comparing one security researcher vs. another for membership of that
+list.  I'd be happy to setup a separate list with only security
+researchers on it, and we can ask folks to CC that list whenever a
+discussion on the Linux distros list is expected to significantly
+benefit from participation of the researchers.
 
-> Then, the only @oracle.com person currently on oss-security (judging by
-> the e-mail addresses) appears not to be involved with Oracle Enterprise
-> Linux specifically.
-
-There are other ways to subscribe to this list than email. See:
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security
-
-> Can you please add your info to the following wiki pages?
-> http://oss-security.openwall.org/wiki/vendors
-
-Done,
+I'd be happy if you have a better proposal.
 
 Thanks,
--Chandan
---
-Oracle Security Alerts
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (250 bytes)
+Alexander
