@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/9
-Message-ID: <1772343402.302040.1314217408278.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Aug 2011 16:23:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/9
+Message-ID: <BANLkTimxAVkw0Zsu2Rd=1uj15bGHvKL7DA@mail.gmail.com>
+Date: Sun, 3 Apr 2011 22:06:03 +0100
+From: Ben Laurie <benl@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+OK, but ... I wasn't on vendor-sec, but (IMO) am at least as qualified
+as most of the people who were. Now what?
 
-
------ Original Message -----
-> On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
-> > Hi,
-> >
-> > A number of problems have been found recently in dtc (Domain
-> > Technologie Control) and reported to the Debian BTS. These are the bugs
-> > that affect upstream code; please assign CVEs as you feel appropriate:
-> 
-> any updates here?
-> 
-
-I hope to have this sorted out shortly. It's a big report.
-
-Do you know if these are fixed in an upstream version?
-
-Thanks.
-
--- 
-    JB
+On 3 April 2011 18:50, Solar Designer <solar@...nwall.com> wrote:
+> On Sat, Apr 02, 2011 at 12:43:59PM +0200, Es gibt immer etwas zu tratschen wrote:
+>> I also want to stay with you!
+>
+> Nice try, and it sort of proves a point (let's say, that attacks on a
+> closed list may start as early as during its discussion and initial
+> member subscription, and that we can't fully trust anyone), but I think
+> that's enough, thanks.  No need to post more of these (unreasonable
+> subscription requests).
+>
+> Alexander
+>
