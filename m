@@ -1,95 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/2
-Message-ID: <Pine.GSO.4.64.1101141235400.17455@faron.mitre.org>
-Date: Fri, 14 Jan 2011 12:47:59 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Moritz Mühlenhoff <jmm@...til.org>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/2
+Message-ID: <4D98B090.1050709@gmail.com>
+Date: Sun, 03 Apr 2011 20:38:24 +0300
+From: AK <platsakos@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Fri, 14 Jan 2011, Moritz Mühlenhoff wrote:
+Please subscribe me to the new list. I was a vendor-sec subscriber.
 
-> We're still missing CVE assignments for several issues from 2009.
-> These have been requested on oss-security before, but couldn't be
-> processed by Josh/Red Hat, since RH doesn't have 2009 IDs. As such,
-> they need to be handled by MITRE:
->
-> 1. Overkill (this should be a CVE-2009 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=549310
-
-Use CVE-2009-5041
-
-> 2. Emacs mode for reStructuredText (from DocUtils) (this should be a CVE-2009 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560755
-
-Use CVE-2009-5042
-
-> 3. FireGPG (this should be a CVE-2008 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514386
-> http://securityvulns.com/Udocument757.html
-
-There are 2 CVEs needed:
-
-CVE-2008-7272 - storage of cleartext/passphrase on disk
-CVE-2008-7273 - symlink following
-
-> 4. Burn (Homepage: http://www.bigpaul.org/burn/) (That's a CVE-2009 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=542329
-
-CVE-2009-5043
-
-> 5. pdfroff (from GNU groff) (That's a CVE-2009 ID)
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=538330
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/groff/groff-1.20.1-owl-tmp.diff
-
-CVE-2009-5044
-
-> 6. Jetty (That's a CVE-2009 ID)
-> http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
-
-There are a number of CVEs to assign here.
-
->A) "Dump Servlet" information leak
->   (Affected versions: Any)
-
-CVE-2009-5045
-
->B) "FORM Authentication demo" information leak
->   (Affected versions: Any)
-
-No CVE assigned - ability to detect presence of a particular
-application is not CVE-worthy unless the app's design intends to allow
-it to be hidden.
-
->C) "JSP Dump" reflected XSS
->    (Affected versions: Any)
->D) "Session Dump Servlet" stored XSS
->   (Affected versions: Any)
-
-CVE-2009-5046
-
->E) "Cookie Dump Servlet" escape sequence injection
-     (Affected versions: Any)
->F) Http Content-Length header escape sequence injection
->   (Affected versions: Any)
-
-CVE-2009-5047
+Thanks,
 
 
->G) "Cookie Dump Servlet" stored XSS
->   (Affected versions: =<6.1.20)
-
-CVE-2009-5048
-
->H) WebApp JSP Snoop page XSS
->(Affected versions: =<6.1.21)
-
-CVE-2009-5049
-
-
-> 7. Konversation (That's a CVE-2009 ID)
-> http://bugs.kde.org/show_bug.cgi?id=219985
-
-CVE-2009-5050
+Download attachment "0x10411D84.asc" of type "application/pgp-keys" (1724 bytes)
