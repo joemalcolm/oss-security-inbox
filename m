@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/3
-Message-ID: <4E0ABF68.6070906@kernel.org>
-Date: Wed, 29 Jun 2011 14:00:08 +0800
-From: Eugene Teo <eugeneteo@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/8
+Message-ID: <20110403205955.GA8811@openwall.com>
+Date: Mon, 4 Apr 2011 00:59:55 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 06/29/2011 04:22 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> It can be used to learn ssh and ftp password length. If privsep is
->> enabled in openssh and vsftpd, the unprivileged process' activity very
->> precisely shows password information.
->>
->> For vsftpd read characters count is strlen("USER username\r\n") +
->> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
->> related to a privileged parent. If measure statistics between user and
->> passwords commands, actual password length and username length can be
->> gathered.
->>
->> For ssh, vice versa, networking activity is constant in packets length,
->> but interprocess communications, specifically passwords, depend on user
->> input.
->>
->> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
->> CONST.
->>
->> Another daemons with more or less constant io activity might be
->> vulnerable too. PAM greatly complicates precise measurements.
->>
->>
->> I think it needs 2 CVE, one for /proc/PID/io and another for
->> taskstats.
->>
->> https://lkml.org/lkml/2011/6/24/88
->>
+On Sat, Apr 02, 2011 at 05:25:11PM -0400, Elliot Peele wrote:
+> I was on vendor-sec via the security@...th.com exploder as a representative of rPath and rPath Linux.
 > 
-> I can't find a nice description of both issues. Can you give me one or two
-> sentence explanations with a few references for the CVE database?
-> 
-> Once I have those I'll give it two IDs.
+> pub   1024D/05C54D73 2002-07-02 Elliot Peele <elliot@...th.com>
+>  Primary key fingerprint: 00F5 0BEE 168B C07E C49E  AEC8 992A A820 05C5 4D73
 
-I have assigned the CVE names for these two issues.
+Tentatively subscribed (although Elliot reported an issue with list
+messages arriving to him, which we'll try to figure out off-list).
 
-Thanks, Eugene
+Elliot - can you please post an URL with info on rPath Linux security
+response?  I went to http://www.rpath.com but could not easily find
+anything relevant.  There's an entry for rPath on the oss-security wiki:
+
+http://oss-security.openwall.org/wiki/vendors#rpath-inc
+
+It has a link to the security-announce mailing list.  The archive has a
+message in Feb 2011 ("kernel" update on 2011-02-07) and a message in Dec
+2010 ("gnupg" update on 2010-12-06).  Nothing in Nov (but a bunch of
+updates in Oct).  This gives us two security updates in 5 most recent
+months.  Naturally, I am not convinced that you should be on the list,
+but I'd be happy to be convinced once we start using the list.
+
+Alexander
