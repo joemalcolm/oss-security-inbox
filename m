@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/23
-Message-ID: <4ECAC205.4040906@redhat.com>
-Date: Mon, 21 Nov 2011 14:26:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/6
+Message-ID: <20110403202434.GA8721@openwall.com>
+Date: Mon, 4 Apr 2011 00:24:34 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 10:51 AM, Petr Matousek wrote:
-> There is a NULL pointer deref in the user-defined key type whereby
-> updating a negative key into a fully instantiated key will cause
-> an oops to occur when the code attempts to free the non-existent
-> old payload.
->
-> Upstream commit:
-> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
->
-> References:
-> https://lkml.org/lkml/2011/11/15/363
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
->
-> Thanks,
-Please use CVE-2011-4331 for this issue.
+On Sun, Apr 03, 2011 at 08:06:37PM +0100, Mark J Cox wrote:
+> >You must reply to this thread, in public (on oss-security).
+> 
+> Long time v-s member through RH exploder:
+> 
+> pub   1024R/49A563D9 1997-02-24
+> uid                  Mark Cox <mjc@...hat.com>
+> 
+> https://www.apache.org/dist/httpd/KEYS
 
--- 
+I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+and Josh).
 
--Kurt Seifried / Red Hat Security Response Team
-
+Alexander
