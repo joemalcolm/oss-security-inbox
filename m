@@ -1,42 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/10/1
-Message-Id: <201106101155.11837.ludwig.nussel@suse.de>
-Date: Fri, 10 Jun 2011 11:55:11 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/16
+Message-ID: <20110403220938.GE9516@openwall.com>
+Date: Mon, 4 Apr 2011 02:09:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
-> 
->    based on Debian BTS report:
->    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
->        (first CVE-2011-XXYY required for Debian case)
-> 
-> looked more into original report:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
-> 
-> and the first paragraph of [2] suggests:
-> "When starting a program via "su - user -c program" the user session
-> can escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the input buffer.  This allows for example a non-root
-> session to push "chmod 666 /etc/shadow" or similarly bad commands into
-> the input buffer such  that after the end of the session they are
-> executed."
+On Sat, Apr 02, 2011 at 06:00:40AM +0200, klondike wrote:
+> Will the list provide protection against rubber-hose cryptanalisys?,
 
-The issue also reminds me that there are several su implemenations.
-On Fedora and SUSE we have a patched coreutils version, Debian uses
-the one from shadow-utils and then there's also a su from
-SimplePAMApps, used by e.g. Owl. Of course each one has it's own
-quirks and weird features. Does anyone still remember why a
-particular implementation was chosen? :-)
+No, it won't.  Worse, people will also have the temptation to make use
+of the information at their other jobs, etc.  For example, a security
+contact for a distro might not only prepare updated packages, but also
+patch their personal server early... which adds to the risk.
 
-cu
-Ludwig
+I see no way to deal with this technically, other than by keeping the
+number of subscribers relatively low (only those who "need to know") and
+by only discussing medium-severity issues on the list (thus high
+severity ones will have even more focused distribution).
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Arguably, medium-severity issues are not worth rubber-hose cryptanalysis
+and are not as tempting to patch, yet their handling may benefit from
+some coordination between distro vendors.
+
+> Sometime ago I was taught that the best way to be sure a secret was not
+> known was not saying it, so if you, researchers, want to make sure your
+> PoC aren't abused do things properly, warn the vendors to upgrade the
+> product because of your security finding and avoid providing PoCs until
+> enough time has passed for you to be sure everybody has had a chance to
+> upgrade.
+
+This makes sense to me.  No need to provide vendors with more info than
+they need to properly patch the issue and verify the fix.  The latter
+will sometimes require access to a PoC, though, but I'd prefer such PoCs
+to be sent directly to vendors who express interest in testing their
+fixes rather than posted to a multi-vendor exploder list.
+
+> Any other solution can be easily flawed since you can't make sure I
+> won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
+> such a private list.
+
+Sure, but it's always a tradeoff, and the risk is there even if you
+share a vulnerability report without a PoC.
+
+Alexander
