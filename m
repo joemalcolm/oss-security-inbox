@@ -1,47 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/7
-Message-ID: <4D8767D2.7090606@redhat.com>
-Date: Mon, 21 Mar 2011 15:59:30 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/17
+Message-ID: <20110403221354.GG9516@openwall.com>
+Date: Mon, 4 Apr 2011 02:13:54 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, John Bailey <rekkanoryo@...kanoryo.org>
-Subject: Re: CVE UnRequest (minor) -- Pidgin / libpurple -- Cipher API information disclosure
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-
-Hello vendors,
-
-Jan Lieskovsky wrote:
+On Sat, Apr 02, 2011 at 11:31:07AM +0200, Moritz Muehlenhoff wrote:
+> I was subscribed through the team@...urity.debian.org exploder. My key:
 > 
-> Hello Josh, Steve, vendors,
-> 
->   the following:
->   [1] http://pidgin.im/news/security/?id=50
-> 
->   Upstream patch:
->   [2] 
-> http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471 
-> 
-> 
-> Doesn't seem to have a CVE identifier yet.
-> 
-> Could you allocate one?
+> pub   1024D/4E2ECA5A 2004-09-08
+> uid                  Moritz Muehlenhoff <jmm@...ian.org>
+> uid                  Moritz Muehlenhoff <jmm@...til.org>
+> sub   2048g/8D1BA24D 2004-09-08
 
-John clarified in a reply to my post:
+Subscribed.
 
-> Jan,
-> 
-> FYI, we didn't request one because we believed it did not meet the guidelines
-> for assignment of a CVE identifier.  It's a local-only information disclosure
-> and can't be remotely exploited.
-> 
-> John
-
-So ignore my earlier post / request.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
-
+Alexander
