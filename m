@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/3
-Message-ID: <4EB2ACC6.5030306@redhat.com>
-Date: Thu, 03 Nov 2011 16:01:26 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, phpMyAdmin Security Team <security@...myadmin.net>
-Subject: CVE Request -- phpMyAdmin -- Arbitrary local file read flaw by loading XML strings / importing XML files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/16
+Message-ID: <20110403220938.GE9516@openwall.com>
+Date: Mon, 4 Apr 2011 02:09:38 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors, phpMyAdmin Security Team,
+On Sat, Apr 02, 2011 at 06:00:40AM +0200, klondike wrote:
+> Will the list provide protection against rubber-hose cryptanalisys?,
 
-   a local file inclusion flaw was found in the way XML import plug-in of
-phpMyAdmin, a tool written in PHP intended to handle the administration
-of MySQL over the World Wide Web, performed import of malformed XML
-files. A remote attacker could provide a specially-crafted XML file,
-which once imported into the phpMyAdmin service instance would lead to
-arbitrary local file (accessible with the privileges of the phpMyAdmin 
-user) read / retrieval.
+No, it won't.  Worse, people will also have the temptation to make use
+of the information at their other jobs, etc.  For example, a security
+contact for a distro might not only prepare updated packages, but also
+patch their personal server early... which adds to the risk.
 
-References:
-[1] http://seclists.org/fulldisclosure/2011/Nov/21
-[2] http://www.wooyun.org/bugs/wooyun-2010-03185
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=751112
+I see no way to deal with this technically, other than by keeping the
+number of subscribers relatively low (only those who "need to know") and
+by only discussing medium-severity issues on the list (thus high
+severity ones will have even more focused distribution).
 
-Could you allocate a CVE id for this?
+Arguably, medium-severity issues are not worth rubber-hose cryptanalysis
+and are not as tempting to patch, yet their handling may benefit from
+some coordination between distro vendors.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> Sometime ago I was taught that the best way to be sure a secret was not
+> known was not saying it, so if you, researchers, want to make sure your
+> PoC aren't abused do things properly, warn the vendors to upgrade the
+> product because of your security finding and avoid providing PoCs until
+> enough time has passed for you to be sure everybody has had a chance to
+> upgrade.
 
-P.S.: Cc-ed phpMyAdmin security team to clarify upstream patch status.
+This makes sense to me.  No need to provide vendors with more info than
+they need to properly patch the issue and verify the fix.  The latter
+will sometimes require access to a PoC, though, but I'd prefer such PoCs
+to be sent directly to vendors who express interest in testing their
+fixes rather than posted to a multi-vendor exploder list.
 
+> Any other solution can be easily flawed since you can't make sure I
+> won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
+> such a private list.
+
+Sure, but it's always a tradeoff, and the risk is there even if you
+share a vulnerability report without a PoC.
+
+Alexander
