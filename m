@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/3
-Message-ID: <20110701084857.GA31716@dhcp-25-225.brq.redhat.com>
-Date: Fri, 1 Jul 2011 10:48:58 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/26
+Message-ID: <20110403225847.GC10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:58:47 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: nl80211: missing check for valid SSID size in scan operations
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-In both trigger_scan and sched_scan operations, we were checking for the
-SSID length before assigning the value correctly.  Since the memory was
-just kzalloc'ed, the check was always failing and SSID with over 32
-characters were allowed to go through.
+On Fri, Apr 01, 2011 at 11:52:29PM +0200, Marcus Meissner wrote:
+> pub   1024D/0175623E 2003-11-21
+>       Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
+> uid                  Marcus Meissner <meissner@...e.de>
+> uid                  Marcus Meissner <meissner@...ell.com>
+> sub   1024g/EA43E05E 2003-11-21
 
-This is causing a buffer overflow when copying the actual SSID to the
-proper place.
+Added.
 
-Please note that it needs CAP_NET_ADMIN privileges.
-
-Upstream commits:
-208c72f4fe44fe09577e7975ba0e7fa0278f3d03
-57a27e1d6a3bb9ad4efeebd3a8c71156d6207536
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=718152
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Alexander
