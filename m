@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/6
-Message-ID: <20110601163410.GA15759@openwall.com>
-Date: Wed, 1 Jun 2011 20:34:10 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/38
+Message-ID: <1337719293.350430.1301873888561.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Sun, 3 Apr 2011 19:38:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi Armin,
-
-On Thu, May 26, 2011 at 05:42:00AM -1000, akuster wrote:
-> You can find our security Advisories at:
-> http://www.mvista.com/cve_vulnerabilities.php
 > 
-> I have updated
-> http://oss-security.openwall.org/wiki/vendors
-> http://oss-security.openwall.org/wiki/distro-patches
+> Josh - I subscribed you to the new list per your off-list request (with
+> info on your new PGP key), but I think you should follow your own rule
+> and post such a request to the list. ;-)
+> 
 
-Thanks.  I've just reviewed the above and subscribed you to the list.
+Yes certainly.
 
-I have some "complaints", though:
+pub   2048R/BBE09A0F 2011-04-02
+      Key fingerprint = CFB1 136C 6DD0 5BB9 D798  A78E 1CD8 ACDD BBE0 9A0F
+uid                  Josh Bressers <bressers@...hat.com>
+uid                  Josh Bressers <josh@...ss.net>
+sub   2048R/2D54149F 2011-04-02
+sub   2048R/55215DC1 2011-04-02
 
-http://www.mvista.com/cve_vulnerabilities.php gives a mapping of CVE IDs
-to affected MontaVista products.  That's great.  However, fix
-information is missing.  Does having a CVE ID listed there imply that
-you have fixed the issue for those affected products or not (e.g.,
-perhaps not for EOL'ed products, or are you not listing those as
-affected at all)?  Specifically relevant to this discussion would be the
-dates on which you're getting issues fixed (such that those could be
-compared to CRDs to see if you likely made use of the advance
-notifications or not).  Right now, you have "Published" and "Modified"
-dates, but no fix dates (which would be per product?)
 
-Also, no info on 2011's CVEs yet.  Does this mean we'd have to wait
-until 2012 to get an idea on how you're handling 2011's security issues?
+I generated new keys this weekend which live on an OpenPGP smart card. I
+worry about the security of my key when I'll be using it multiple times a
+day with the new list.
 
-That said, you do look like a security-conscious Linux distro vendor
-now (and you meet some other requirements), so you're on the list.
+Thanks.
 
-Thanks again,
-
-Alexander
+-- 
+    JB
