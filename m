@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/3
-Message-ID: <20110924140819.GR1502@redhat.com>
-Date: Sat, 24 Sep 2011 08:08:19 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/33
+Message-ID: <BANLkTikN_qR0cHiRWRuxLrZGMw6FPHG-BA@mail.gmail.com>
+Date: Sun, 3 Apr 2011 23:58:21 +0100
+From: Benji <me@...ji.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: heap-based buffer overflow in ldns
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this flaw?  A boundary error in
-ldns_rr_new_frm_str_internal() could lead to a heap-based buffer overfow
-when processing RR records.
+This is pathetic. You've all just made your personal and 'work' email
+addresses targets by having a ridiculous public 'signup' system, and
+the fact you all feel the need to hide behind some sort of veil for
+security issues.
 
-http://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=403
-https://secunia.com/advisories/46153/
-https://bugzilla.redhat.com/show_bug.cgi?id=741024
 
-Thanks.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+On 4/3/11, Solar Designer <solar@...nwall.com> wrote:
+> Mike,
+>
+> On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+>> pub    512R/205BBF7D 2001-12-30
+>>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>>       C1
+>> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+>
+> I've subscribed you with this key for now, but you really ought to
+> upgrade to a larger key, and I'd appreciate a statement on what Linux
+> distro you represent on the new list.
+>
+> All: my decision is based on some info known to me, but I'd prefer to
+> base it on Mike's posting to oss-security.  I am saying this to explain
+> that there's a reason why I subscribed Mike, whereas I would not
+> subscribe another "random" person posting the same kind of message from
+> a personal address. ;-)
+>
+> Alexander
+>
