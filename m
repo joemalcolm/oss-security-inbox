@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/2
-Message-ID: <20111111080607.GA2585@wopr.local.invalid>
-Date: Fri, 11 Nov 2011 09:06:08 +0100
-From: Guido Berhoerster <gber@...nsuse.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/28
+Message-ID: <20110403230039.GE10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:00:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* Robert Ancell <robert.ancell@...onical.com> [2011-11-11 07:21]:
-> On 10/11/11 23:57, Guido Berhoerster wrote:
-> > * Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
-> >> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
-> >>> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> >>>> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> >>>>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> >>>>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> >>>>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
-> >>>>>>> cause LightDM to set the destination of the link to user ownership.
-> >>>>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> >>>>>>>
-> >>>>>>> Overview of changes in lightdm 1.0.6
-> >>>>>>>
-> >>>>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> >>>>>> Could a CVE be assigned for this?
-> >>>>>>
-> >>>>>> Regards,
-> >>>>> Can you send me the link to this announcement so I can confirm it? Thanks.
-> >>>>>
-> >>>> Here's the link to the mailing list mail:
-> >>>> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
-> >>>>
-> >>>> Regards,
-> >>> Thanks, confirmed (first hand info is much better). Please use
-> >>> CVE-2011-4105 for this issue.
-> >>>
-> >> BTW, the fix that is in 1.0.6 is probably not enough for distros that
-> >> don't implement hard link restrictions, such as the Yama LSM that is
-> >> used in Ubuntu.
-> > Does an incomplete fix in a released version warrant a new CVE?
-> >
-> > I've attached a suggested fix.
-> Note the attached patch can still be exploited; if the file changes from
-> a standard file to a hard link / symlink between the lstat and the
-> fchown then lightdm can be fooled into thinking it's safe when it's
+On Fri, Apr 01, 2011 at 02:08:23PM -0700, Kees Cook wrote:
+> Hi, please add me to the list. I was a member via the Ubuntu exploder.
+> 
+> pub   4096R/DC6DC026 2010-09-27
+>       Key fingerprint = A5C3 F68F 229D D60F 723E  6E13 8972 F4DF DC6D C026
+> uid                  Kees Cook <kees@...ntu.com>
+> sub   4096R/650DE414 2010-09-27
 
-Replacing the file between the lstat and the open would change
-its inode and then be caught by the check before the fchown, no?
+Added.  This gives us three contacts for Ubuntu on the list:
 
--- 
-Guido Berhoerster
+marc.deslauriers@...onical.com
+sbeattie@...ntu.com
+kees@...ntu.com
+
+Maybe this needs to be reduced to two most active ones at a later point.
+
+Alexander
