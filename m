@@ -1,55 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/26
-Message-ID: <1198312966.88302.1300136762128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 17:06:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/34
+Message-ID: <20110403231523.GJ10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:15:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-> 
-> 6) Issue #6: logrotate: Shell command injection by using the shred
-> configuration directive
-> 
-> A shell command injection flaw was found in the way the logrotate utility
-> handled shred configuration directive (intended to ensure the log files
-> are not readable after their scheduled deletion). A local attacker could
-> use this flaw to execute arbitrary system commands (if the logrotate was
-> run under privileged system user account, root) when the logrotate
-> utility was run on a log file, within attacker controllable directory.
-> 
-> References:
-> [10] https://bugzilla.redhat.com/show_bug.cgi?id=680796
-> 
-> Proposed patch:
-> [11] https://bugzilla.redhat.com/show_bug.cgi?id=680796#c5
-> 
-> Note: Sixth CVE required. The shred option has been introduced in
-> logrotate v3.7.5.
+On Fri, Apr 01, 2011 at 01:20:30PM -0500, Patrick J. Volkerding wrote:
+> I've been on board since close to the beginning, and would be pleased to 
+> participate again.  Here's the public GPG key for this address.
 
-Please use CVE-2011-1154 for the above issue
+I assume that security@...ckware delivers mail just to you, correct?
 
-> ----------
-> 
-> 7) Issue #7: logrotate: DoS due improper escaping of file names
-> within 'write state' action
-> 
-> A denial of service flaw was found in the way the logrotate utility
-> performed arguments sanitization, when performing the 'write state'
-> action.  A local attacker could use this flaw to cause abort in
-> subsequent logrotate runs via a specially-crafted log file name.
-> 
-> References:
-> [12] https://bugzilla.redhat.com/show_bug.cgi?id=680797
-> 
-> Proposed patch:
-> [13] https://bugzilla.redhat.com/show_bug.cgi?id=680797#c3
-> 
+> It expires on 2012-12-21, but presumably that won't be a problem.  ;-)
 
-Please use CVE-2011-1155 for the above issue
+You will need to provide a new key (or expand this one's expiration
+date and provide it again) in time.  If the list is still around by
+then, that is. ;-)
 
-Thanks.
-
--- 
-    JB
+Alexander
