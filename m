@@ -1,42 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/5
-Message-ID: <17328238.1261288.1316024384673.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:19:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/3
+Message-ID: <20110403175045.GA7431@openwall.com>
+Date: Sun, 3 Apr 2011 21:50:45 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+On Sat, Apr 02, 2011 at 12:43:59PM +0200, Es gibt immer etwas zu tratschen wrote:
+> I also want to stay with you!
 
-> 2. Wireshark Lua script execution vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-15.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737784
+Nice try, and it sort of proves a point (let's say, that attacks on a
+closed list may start as early as during its discussion and initial
+member subscription, and that we can't fully trust anyone), but I think
+that's enough, thanks.  No need to post more of these (unreasonable
+subscription requests).
 
-Use CVE-2011-3360 for the above.
-
-
-Are the below worth assigning CVE ids to? The advisory seems to suggest
-they are crash only fixes. Do those deserve CVE IDs? I know we've been
-fairly generous with wireshark in the past, but I'm wondering if we need to
-draw a line somewhere.
-
-> 
-> 1, Wireshark CSN.1 dissector vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-16.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737783
-> 
-> 3. Wireshark buffer exception handling vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-14.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737785
-> 
-> 4. Wireshark OpenSafety dissector vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-12.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737787
-> 
-
-Thanks.
-
--- 
-    JB
+Alexander
