@@ -1,61 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/9
-Message-ID: <4EB06CB5.50807@redhat.com>
-Date: Tue, 01 Nov 2011 16:03:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/30
+Message-ID: <20110403230631.GG10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:06:31 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request for wireshark flaws
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-For the record: this is a *perfect* CVE request =). It's descriptive, it
-has versions, it has all the links to verify it with the original
-sources, all that good stuff.
+On Fri, Apr 01, 2011 at 04:17:32PM -0400, Dan Rosenberg wrote:
+> I'd prefer if any private replacement for vendor-sec were either:
+> 
+> 1. Strictly limited to vendor coordination of embargoed security
+> issues (with membership reflecting this purpose), or
 
-On 11/01/2011 03:51 PM, Vincent Danen wrote:
-> Can I get CVEs assigned to the following wireshark flaws?
->
->
-> 1) An uninitialized variable in the CSN.1 dissector could cause a crash.
->
-> Affects: 1.6.0 to 1.6.2, fixed in 1.6.3
->
-> References:
-> http://www.wireshark.org/security/wnpa-sec-2011-17.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6351
-> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39140
-> https://bugzilla.redhat.com/show_bug.cgi?id=750643
->
-Please use CVE-2011-4100 for this.
+This is what we have with the list I've setup today.
 
->
-> 2) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered that
-> the Infiniband dissector could dereference a NULL pointer.
->
-> Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
->
-> References:
-> http://www.wireshark.org/security/wnpa-sec-2011-18.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6476
-> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39500
-> https://bugzilla.redhat.com/show_bug.cgi?id=750645
->
-Please use CVE-2011-4101 for this.
->
-> 3) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered a
-> buffer overflow in the ERF file reader.
->
-> Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
->
-> References:
-> http://www.wireshark.org/security/wnpa-sec-2011-19.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6479
-> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39508
-> https://bugzilla.redhat.com/show_bug.cgi?id=750648
->
-Please use CVE-2011-4102 for this.
+> 2. Opened up to researchers who have contributed knowledge and
+> findings in this area, and are deemed trustworthy by other list
+> subscribers or some other community opinion.
 
--- 
+We may setup a separate list for this later.
 
--Kurt Seifried / Red Hat Security Response Team
+> In other words, it doesn't make sense to me to use "member of the old
+> vendor-sec" as the only requirement for subscription, as some of the
+> old members may not be eligible depending on the purpose of the new
+> list.
 
+Right.  There will be a lot fewer people on the new list now.  This
+requirement is mostly just to start with what's obviously a subset of
+the old vendor-sec's members.
+
+> I understand that this is just a preliminary solution, but I
+> think the question of membership should be sorted out sooner rather
+> than later.
+
+Indeed.  I think my decision to limit this to Linux distro security
+contacts takes care of that for this one list.
+
+Alexander
