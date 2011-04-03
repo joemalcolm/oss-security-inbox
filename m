@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/1
-Message-ID: <20111120120457.7c413ff2@laverne>
-Date: Sun, 20 Nov 2011 12:04:57 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/35
+Message-ID: <20110403231636.GK10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:16:36 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Apr 01, 2011 at 11:09:50AM -0700, Reed Loden wrote:
+> I'm a (now former) vendor-sec member who would like to be added to the
+> new closed list.
+> 
+> My GPG key:
+>  pub 1024D/F3C33D5A 2008-11-19
+>  Key fingerprint = 6B56 F9AC 07B6 85D7 DC45 60DA 6BA2 2226 F3C3 3D5A
+>  uid Reed Loden
+>  sub 4096g/C0B72052 2008-11-19
 
-http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
+Are you a security contact for a Linux distro, and for which one?
+And how do we verify that?
 
-Description
-Weak random number generation during password reset leads to
-possibility of changing a user's password.
-
-Affected Installs
-Joomla! version 1.5.24 and all earlier 1.5 versions
-
-Solution
-Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
-
-
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
