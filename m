@@ -1,18 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/26
-Message-ID: <20110403225847.GC10158@openwall.com>
-Date: Mon, 4 Apr 2011 02:58:47 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/27
+Message-ID: <20110403225916.GD10158@openwall.com>
+Date: Mon, 4 Apr 2011 02:59:16 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 11:52:29PM +0200, Marcus Meissner wrote:
-> pub   1024D/0175623E 2003-11-21
->       Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
-> uid                  Marcus Meissner <meissner@...e.de>
-> uid                  Marcus Meissner <meissner@...ell.com>
-> sub   1024g/EA43E05E 2003-11-21
+On Sat, Apr 02, 2011 at 01:49:24AM +0400, Dmitry V. Levin wrote:
+> I was a vendor-sec member representing ALT Linux.  My gpg key ID for
+> email conversations is FE4C93ABE19A2E4CCB5D3E4E7CABE6AC9E35361E.
 
 Added.
 
