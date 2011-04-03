@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/5
-Message-ID: <AANLkTi=uho=v_qMRFC+geM=9eV4CcZgF9bNNLohhwSVm@mail.gmail.com>
-Date: Mon, 28 Feb 2011 14:40:36 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/29
+Message-ID: <20110403230223.GF10158@openwall.com>
+Date: Mon, 4 Apr 2011 03:02:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Helgi Þormar Þorbjörnsson <helgi@....net>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-I'm not familiar with this code or any of the context surrounding this
-fix, but it appears to be an incomplete fix.  Checking for existence
-of a symlink and then opening the resource leaves open a window during
-which a legitimate file can be replaced with a symlink.  Also, I don't
-see a reason why a hard link couldn't be used for exploitation
-instead.
+On Fri, Apr 01, 2011 at 01:22:36PM -0700, Steve Beattie wrote:
+> I was a subscriber of vender-sec, please add me to the new list.
+> 
+> gpg information:
+> 
+> pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
+>       Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
+> uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
 
--Dan
+Added.
 
-2011/2/28 Helgi Þormar Þorbjörnsson <helgi@....net>:
-> The lack of symlink checks in the PEAR installer 1.9.1 <= while doing
-> installation and upgrades, which initiate various system write
-> operations, can cause privileged users unknowingly to overwrite
-> critical system files.
->
-> Further information can be found in this temporary advisory
-> http://pear.php.net/advisory-20110228.txt and the
->
-> Fixes can be found at http://news.php.net/php.pear.cvs/61264
->
-> - Helgi
->
+Alexander
