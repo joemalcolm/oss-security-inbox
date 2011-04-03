@@ -1,34 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/8
-Message-ID: <20110406165749.GA23639@openwall.com>
-Date: Wed, 6 Apr 2011 20:57:49 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/4
+Message-ID: <1104032000550.22564@mjc.redhat.com>
+Date: Sun, 3 Apr 2011 20:06:37 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
-> Please subscribe me to the new list. I was a vendor-sec subscriber for
-> MontaVista Software.
-> 
-> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
-> uid Armin Kuster <akuster@...sta.com>
-> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
+> You must reply to this thread, in public (on oss-security).
 
-Looks like you forgot to make this public key available.  Please provide
-it to me and I'll subscribe you.
+Long time v-s member through RH exploder:
 
-While we're at it, the MontaVista Software entry at:
+pub   1024R/49A563D9 1997-02-24
+uid                  Mark Cox <mjc@...hat.com>
 
-http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
+https://www.apache.org/dist/httpd/KEYS
 
-says: "The process for distribution of security advisories is currently
-under discussion."  Perhaps this has already been discussed and decided
-upon?  If so, please update the wiki page with specific link(s) to your
-security advisories, updates, relevant mailing list archive - or
-whatever you have.  Without this info, it is unclear whether you would
-be making timely intended use of the advance notifications or not.
-
-Thanks,
-
-Alexander
+Mark
