@@ -1,34 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/14
-Message-ID: <298752811.815199.1308597087807.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Jun 2011 15:11:27 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/21
+Message-ID: <20110403223856.GJ9516@openwall.com>
+Date: Mon, 4 Apr 2011 02:38:56 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: thp: madvise on top of /dev/zero private mapping can lead to panic
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Description of problem:
-> The huge_memory.c THP page fault was allowed to run if vm_ops was null
-> (which would succeed for /dev/zero MAP_PRIVATE, as the f_op->mmap
-> wouldn't setup a special vma->vm_ops and it would fallback to regular
-> anonymous memory) but other THP logics weren't fully activated for
-> vmas with vm_file not NULL (/dev/zero has a not NULL vma->vm_file).
-> 
-> Unprivileged local user could use this flaw to crash the server.
-> 
-> Upstream patch: 78f11a255749d09025f54d4e2df4fbcb031530e2
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=714761
-> https://bugzilla.kernel.org/show_bug.cgi?id=33682
-> http://www.spinics.net/lists/stable-commits/msg11762.html
-> 
+Dan,
 
-Please use CVE-2011-2479.
+Thank you for your comments!  I had them in mind when I made the final
+determination on the list that I've setup.
 
-Thanks.
+Josh wrote:
+> > Should we require members use a mail address from their vendor? Letting
+> > people use personal addresses creates an opportunity for people to remain
+> > on a list when they are no longer a part of a given vendor (it also makes
+> > it quite easy to know who represents a vendor).
 
--- 
-    JB
+"Good" employers, let alone non-commercial Open Source projects, don't
+remove e-mail addresses when a person leaves.  Someone having an
+@debian.org address does not mean they're currently with Debian.
+
+On Fri, Apr 01, 2011 at 08:08:36PM -0400, Dan Rosenberg wrote:
+> Yes, I think this should be a requirement for a closed coordination
+> list
+
+Yet I decided to allow some personal e-mail addresses for now, for the
+reasons Mike has explained.  It takes me extra time to verify that a
+person's non-vendor e-mail address is really "theirs", though.
+
+> (as opposed to the more relaxed option #2).  In fact, I think
+> membership to such a list should be restricted almost exclusively to
+> distributions and downstream providers of third-party software.  It
+> obviously makes sense to have distro security teams on a list, since a
+> vulnerability in project XYZ will need to be coordinated among all of
+> the distros.  However, most software projects only need access to
+> information concerning their own project.  There's no reason one
+> software project should gain access to vulnerability information about
+> a completely unrelated project, and restricting membership to achieve
+> that will at least help minimize the leakage that went on with the
+> previous list.
+> 
+> In a nutshell, I think this list needs to decide what its purpose is.
+> If it's for coordination for vulnerability disclosure, then its
+> membership should be kept to those who actually need to do the
+> coordination.
+
+Right.  So for now I setup a Linux distro security contacts list only,
+as a hopefully better alternative to the long yet incomplete CC lists
+that started to appear when vendor-sec ceased to exist.
+
+> If it's for private (or semi-private) discussion of
+> potentially sensitive research, knowledge sharing, etc., then its
+> membership should be expanded to include representation from software
+> vendors and researchers.
+
+Right, although I'm not sure about software vendors.  I think there's
+usually just one non-distro software vendor for whom a given issue is
+relevant (the upstream), so it can simply be CC'ed.  For example, on the
+old vendor-sec we had X and Samba, and I don't recall any discussion in
+which both participated at once.
+
+Alexander
