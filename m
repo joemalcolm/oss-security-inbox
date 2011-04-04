@@ -1,40 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/5
-Message-ID: <4E4E811F.3060307@redhat.com>
-Date: Fri, 19 Aug 2011 23:28:31 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/32
+Message-ID: <20110404171359.GB5146@genesis.frugalware.org>
+Date: Mon, 4 Apr 2011 19:13:59 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-CC: Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 08/19/2011 03:18 PM, Timo Warns wrote:
-> The Linux kernel contains a vulnerability in the driver for Be file
-> systems that may lead to a kernel oops via a corrupted Be file system.
-> 
-> In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
-> a long symlink from a data stream of a Be file system.
-> 
->     befs_data_stream *data = &befs_ino->i_data.ds;
->     befs_off_t len = data->size;
-> 
-> The data->size / len value is not validated and can be 0 on a corrupted
-> file system.
-> 
-> befs_follow_link() allocates some memory based on len. Effectively,
-> kmalloc returns ZERO_SIZE_PTR in this case.
-> 
->         link = kmalloc(len, GFP_NOFS);
-> 
-> Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
-> oops:
-> 
-> 			link[len - 1] = '\0';
-> 
-> A patch is available at
-> http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
+On Mon, Apr 04, 2011 at 12:44:33AM +0400, Solar Designer <solar@...nwall.com> wrote:
+> Yet you're on the list for now.  Perhaps try to evaluate your use of the
+> info that will be arriving to you through the list and ask to be
+> unsubscribed if you determine that you're not making timely use of the
+> info anyway.
 
-Please use CVE-2011-2928.
+That's exactly what I will do.
 
-Eugene
+Thanks.
 
+Content of type "application/pgp-signature" skipped
