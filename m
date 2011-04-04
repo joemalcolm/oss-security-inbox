@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/3
-Message-ID: <20111230134735.4fb54a91@1xb2q6w3yp>
-Date: Fri, 30 Dec 2011 13:47:35 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/9
+Message-ID: <4D993F7C.1080001@redhat.com>
+Date: Mon, 04 Apr 2011 09:18:12 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am Fri, 30 Dec 2011 11:26:56 +0100
-schrieb Tomas Hoger <thoger@...hat.com>:
+On 04/01/2011 11:33 PM, Josh Bressers wrote:
+> Hello everyone,
+> 
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+> 
 
-> ASP.NET
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3414
-> 
-> Apache Geronimo
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5034
-> 
-> Oracle Glassfish
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5035
-> 
-> Rack
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5036
-> 
-> Google V8
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5037
+Please subscribe me as well:
 
+pub  1024D/DA5BDAE5 2006-08-25
+Huzaifa S. Sidhpurwala <huzaifas@...hat.com>
 
-I was especially looking for python, any CVE there yet?
+key: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCC70DCF2DA5BDAE5
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
