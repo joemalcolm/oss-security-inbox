@@ -1,65 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/8
-Message-ID: <4DE68A5E.9080106@mvista.com>
-Date: Wed, 01 Jun 2011 08:52:14 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/45
+Message-ID: <20110404185427.GB14209@openwall.com>
+Date: Mon, 4 Apr 2011 22:54:27 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Apr 04, 2011 at 07:32:12AM +0100, Benji wrote:
+> Can I not be part of the group that thinks a public signup system for a
+> mailing list that previously had the mail server owned due to the fact it
+> was secret (showing interest in possibly owning users now that emails like
+> mjo@...o.mi.org have been confirmed on the list) for a mailing list that is
+> 'embargoed' when really it shouldn't be.
 
+What do you mean by: "a mailing list that is 'embargoed' when really it
+shouldn't be"?  Does this mean that you're actually against the very
+existence of such a list?  I think it is important to know your opinion
+on the main issues when we consider your opinion on the detail.
 
-On 06/01/2011 06:34 AM, Solar Designer wrote:
-> Hi Armin,
+> >>What is your opinion on making the list's archive public with a delay (when  the corresponding security issues are already public)?
 > 
-> On Thu, May 26, 2011 at 05:42:00AM -1000, akuster wrote:
->> You can find our security Advisories at:
->> http://www.mvista.com/cve_vulnerabilities.php
->>
->> I have updated
->> http://oss-security.openwall.org/wiki/vendors
->> http://oss-security.openwall.org/wiki/distro-patches
+> It would be better. In my opinion, delay would be 1-2 days.
+
+What use is a delay of 1-2 days for members of such a list?  I mean, it
+is of some use for high severity issues where the vendors would need to
+throw whatever resources they can at resolving the issues ASAP, at
+expense of slowing down work on other tasks (including other security
+related tasks) and likely arriving at and releasing non-final fixes
+(more like workarounds).
+
+However, my proposal, which I am going to try to enforce, is to only
+discuss medium-severity issues on this new list.  I think that an
+embargo period of 1-2 days does not make sense for those; if that's all
+we can afford, we can as well make them public right away.
+
+> Vendor-sec
+> (alternatives) should be a last resort in publishing issues, other projects
+> don't get the same "privileges", and have to "make do" with oss-sec. If you
+> really need such help 'co-ordinating' and fixing things, maybe you should
+> have a policy to, release advisory/info first, then have a 'co-ordination'
+> list.
+
+No offense intended, but it sounds like you did not give the above much
+thought, or maybe you did not explain it fully.
+
+That said, I agree that a closed list should be a last resort, to be
+used whenever other options are determined to be less appropriate for a
+particular security issue.  Unfortunately, this determination is usually
+made by just one person (whoever brings the issue to the list), so it is
+likely to sometimes be "wrong".
+
+> >>Do you really think anyone is gaining new information by discovering
+> >>that, say, a member of the security team for a major distro will be on
+> >>this mailing list?  Such information seems pretty obvious to me.
 > 
-> Thanks.  I've just reviewed the above and subscribed you to the list.
-> 
-> I have some "complaints", though:
+> Yes Dan, but now we have private email accounts as well (by people who
+> apparently don't like to use vendor email addresses) that are also signed up
+> to this, allowing targeting and easy identification
 
-No worries.
+Yes, we lost a security through obscurity layer here, which was
+arguably nice to have.  I don't have strong feelings either way
+(public subscriber info or not-right-away).
 
-> 
-> http://www.mvista.com/cve_vulnerabilities.php gives a mapping of CVE IDs
-> to affected MontaVista products.  That's great.  However, fix
-> information is missing.  Does having a CVE ID listed there imply that
-> you have fixed the issue for those affected products or not (e.g.,
-> perhaps not for EOL'ed products, or are you not listing those as
-> affected at all)?  
+BTW, most of those same e-mail addresses were already exposed to whoever
+broke into the vendor-sec machine.
 
-Yes, having the cve listed means it is fixed.
+> of probably less secure infrastructure.
 
-Specifically relevant to this discussion would be the
-> dates on which you're getting issues fixed (such that those could be
-> compared to CRDs to see if you likely made use of the advance
-> notifications or not).  Right now, you have "Published" and "Modified"
-> dates, but no fix dates (which would be per product?)
+My guess (based on partial knowledge) is that Mike's personal e-mail
+infrastructure is actually more secure than his employer's.  You have a
+valid point in general, though.
 
-Good input. I will put that on my list for version 2 requirements.
+> Excuse my "trolling" if some of this has already been covered, I'm up early
+> (for me) and thus can be slightly unintelligible.
 
-> 
-> Also, no info on 2011's CVEs yet.  Does this mean we'd have to wait
-> until 2012 to get an idea on how you're handling 2011's security issues?
+It's OK.  In fact, comments/criticism such as yours is one of the
+reasons why we're handling this discussion in public.  This might enable
+us to arrive at something slightly better "next time".
 
-Correct. I have an internal business requirement to delay public
-notifications for 6 months in order to give our customers time to
-propagate our fixes to their customers. If our internal processes are
-working, then 2011 CVE's should start showing up sometime this month.
-
-> 
-> That said, you do look like a security-conscious Linux distro vendor
-> now (and you meet some other requirements), so you're on the list.
-> 
-Many thanks.
-
-Armin
-
-
+Alexander
