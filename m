@@ -1,51 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/7
-Message-Id: <201103151427.39405.ludwig.nussel@suse.de>
-Date: Tue, 15 Mar 2011 14:27:38 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/11
+Message-ID: <1104040934450.26429@mjc.redhat.com>
+Date: Mon, 4 Apr 2011 09:42:37 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: 2 acpid flaws
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> and Josh).
 
-Looks like this implicit CVE request got lost:
-http://www.openwall.com/lists/oss-security/2011/01/19/4
+Limiting a distro to two or three representatives is going to make things 
+tricky for Red Hat; we have a rather large dedicated security response 
+team (as we publish over 300 advisories a year across 70 product/versions 
+and have a number of folks dealing with 'incoming' issues spread, and my 
+team is dispersed across 9 different countries).  If these representatives 
+have been very active on v-s and oss-security is there a reason to limit?
 
-The first issue deserves a CVE I guess as unprivileged users could
-block acpid.
-
-cu
-Ludwig
-
-Vasiliy Kulikov wrote:
-> I. Blocking write.
-> 
-> I.1. Description.
-> 
-> acpid informs unprivileged processes about acpi events via UNIX socket.
-> This socket is in blocking mode.  If unprivileged process stops reading
-> data from the socket then, in some time, the socket queue fills up
-> leading to hanging privileged acpid daemon.  The daemon hangs until the
-> socket peer process reads some portion of the queued data or the peer
-> process exits/is killed.
-> [...]
-> II. Incorrect accept(2) error handling.
-> 
-> II.1. Description.
-> 
-> acpid doesn't gracefully handle client disconnection before the call to
-> accept(2).  If client calls close(2) between acpid calls poll(2) and
-> accept(2), acpid would hang in accept(2) until new client connects to
-> /var/run/acpid.socket.
-> 
-> This is only theoretical flaw as with current Linux kernel
-> implementation accept(2) would return new socket handler even if the
-> peer is closed.  However this behavior is implementation specific and
-> may be changed in future versions of kernels (or custom versions).
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Mark
