@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/7
-Message-Id: <201106271110.11382.ludwig.nussel@suse.de>
-Date: Mon, 27 Jun 2011 11:10:10 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/38
+Message-ID: <20110404180521.GB13884@openwall.com>
+Date: Mon, 4 Apr 2011 22:05:21 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Neil F Brown <nfbrown@...e.de>, Jeff Layton <jlayton@...hat.com>
-Subject: CVE Request: nfs-utils
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Apr 04, 2011 at 04:38:32PM +0200, Ludwig Nussel wrote:
+> I've created a dedicated key for this purpose:
+> 
+> pub   2048R/1F334FA6 2011-04-04 [expires: 2012-04-03]
+> uid                  Ludwig Nussel (vendor-sec) <ludwig.nussel@...e.de>
+> sub   2048R/4F5FEB97 2011-04-04 [expires: 2012-04-03]
 
-An attacker could gain unauthorized access to an nfs exported
-filesystem by creating a DNS record that resolves to the attacker's
-IP as well as to a trusted IP:
-http://marc.info/?l=linux-nfs&m=130875695821953&w=2
-https://bugzilla.novell.com/show_bug.cgi?id=701702
+Added.
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Alexander
