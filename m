@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/3
-Message-ID: <4E1B0B0C.1080308@suse.de>
-Date: Mon, 11 Jul 2011 16:39:08 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/53
+Message-ID: <20110404194016.GA14684@openwall.com>
+Date: Mon, 4 Apr 2011 23:40:16 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> [...]
-> Also, it brings up the question: why merely use $2a$ running the new
-> code rather than fully emulate the bug even for newly set passwords,
-> which would make all passwords work, even on other networked machines?
-> Sure, that would be even nastier for security, so maybe you managed to
-> strike a balance well.  But nevertheless the question is there.  One of
-> your options results in full backwards compatibility at a security cost
-> (for the local system), but the other somehow chooses to strike a
-> balance between compatibility and security without achieving either of
-> these fully (for a network of systems).
->
-> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
-> I imagine that people won't know to enable this option unless/until they
-> have already run into an issue anyway (that is, someone is already
-> unable to log in).  At this point, they could likely upgrade the rest of
-> their networked systems as well... or downgrade this one. ;-(
+On Mon, Apr 04, 2011 at 09:31:44PM +0200, Yves-Alexis Perez wrote:
+> On lun., 2011-04-04 at 02:38 +0400, Solar Designer wrote:
+> > "Good" employers, let alone non-commercial Open Source projects, don't
+> > remove e-mail addresses when a person leaves.  Someone having an
+> > @debian.org address does not mean they're currently with Debian. 
+> 
+> In Debian case, that is wrong, mail redirection to @debian.org address
+> is disabled when retiring from the Debian project.
 
-I'm not sure I understand what you are suggesting. Keep using the buggy
-algorithm for new passwords and keep storing them as 2a as long as
-BLOWFISH_2a2x is turned on?
+Oh, I was wrong, then.  I made my assumption thinking that @debian.org
+addresses are typically used in changelogs and the like, so it felt
+weird to disable those.
 
-cu
-Ludwig
-
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
-Imendörffer, HRB 16746 (AG Nürnberg)
+Alexander
