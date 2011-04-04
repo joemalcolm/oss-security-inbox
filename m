@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/5
-Message-ID: <20110913193647.GB17038@inutil.org>
-Date: Tue, 13 Sep 2011 21:36:47 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/5
+Message-ID: <4D99DEAA.6010905@gmx.de>
+Date: Mon, 04 Apr 2011 17:07:22 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap overflow in tcptrack < 1.4.2
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 31, 2011 at 06:35:45PM -0400, Steven M. Christey wrote:
->
-> I'm wondering if this should have received a CVE.
->
-> https://bugs.gentoo.org/show_bug.cgi?id=377917 quotes upstream:
->
->    "This fixes a heap overflow in the parsing of the command line...
->     this may have security repercussions if
->     tcptrack is configured as a handler for other applications that can
->     pass user-supplied command line input to tcptrack."
->
-> The "attack" is through a command line argument.  While it's listed as a  
-> sniffer, the above text suggests that tcptrack might not be  
-> setuid/privileged, since the only given scenario is "as a handler for  
-> other applications."  Unless this is a typical/known scenario, this seems 
-> like just another unprivileged application, in which case the control 
-> over a command line argument would not directly cross privilege 
-> boundaries, thus falling into the realm of "bug" and not "vulnerability."
+Am 04.04.2011 01:00, schrieb Solar Designer:
 
-FWIW, we're treating it as a non-security issue in Debian.
+> Added.  This gives us three contacts for Ubuntu on the list:
 
-Cheers,
-        Moritz
+...
+
+> Maybe this needs to be reduced to two most active ones at a later point.
+
+What sense lies in limiting subscribers per distro?
+
+If you want to coordinate and one of the two most active is on vacation
+and the other falls sick, the third one is precluded and so is
+coordination with that particular vendor.
