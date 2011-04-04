@@ -1,49 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/7
-Message-ID: <1672938819.396907.1306869466564.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 15:17:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/31
+Message-ID: <20110404175934.3541eb88@orphan>
+Date: Mon, 4 Apr 2011 17:59:34 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: NetworkManager-openvpn logs cert password
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1943 for this.
+On Mon, 4 Apr 2011 01:54:35 +0400 Solar Designer wrote:
 
-Thanks.
+> On Sat, Apr 02, 2011 at 01:28:18PM -0400, R P Herrold wrote:
+> > Key fingerprint:	0x9B649644
+> > Distribution:		CentOS
+> 
+> Subscribed.
+
+Given the aim to keep the subscriber list very limited, this probably
+falls into a tentatively subscribed category too.  AFAIK, CentOS has
+rather few components that are not rebuilds of the RHEL SRPMs, the
+question is how often a v-s info was useful in the past in providing
+security updates for those extra packages.
 
 -- 
-    JB
-
------ Original Message -----
-> and another one from RH bz:
-> https://bugzilla.redhat.com/show_bug.cgi?id=708876
-> 
-> Robert Marcano 2011-05-29 20:28:01 EDT
-> 
-> Description of problem:
-> 
-> Password to unlock certificate is logged to /var/log/messages
-> 
-> May 29 19:46:42 localhost NetworkManager[4791]: destroy_one_secret:
-> destroying
-> ********
-> 
-> Version-Release number of selected component (if applicable):
-> 
-> NetworkManager-openvpn-0.8.999-1.fc15.x86_64
-> 
-> 
-> Additional info:
-> 
-> I would love to have the option to type the password at connection
-> time instead
-> of it being stored, but adding the password to the system log is wrong
-> 
-> --
-> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-> 21284 (AG Nürnberg
-> --
-> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> -- Marie von Ebner-Eschenbach
+Tomas Hoger / Red Hat Security Response Team
