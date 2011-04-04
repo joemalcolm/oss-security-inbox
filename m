@@ -1,44 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/10
-Message-ID: <20110315143004.GN6691@dojo.mi.org>
-Date: Tue, 15 Mar 2011 10:30:04 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/1
+Message-Id: <20110403201111.06034772.michael.s.gilbert@gmail.com>
+Date: Sun, 3 Apr 2011 20:11:11 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-:On 03/15/2011 11:01 AM, Mike O'Connor wrote:
-:>[catching up on older emails]
-:>
-:>:>  >  They do this already today, that's what security@...nel.org is for, 
-:>and
-:>:>  >  it gets a bit of traffic like this every week.
-:>:>
-:>:>  Is this list open to the public?  It doesn't seem to be available on
-:>:>  http://vger.kernel.org/vger-lists.html.
-:>:
-:>:No, it is closed, as it should be as potential security problems are
-:>:mailed there.  You don't want that to be totally open, right?
-:>
-:>One suggestion I've made in the past is to have the list _archives_ be
-:>open.  So anything older than, say, a month is made public.  That way,
-:>folks can see how issues were disclosed, how decisions were reached,
-:>etc.  for old issues that are no longer under embargo.  The way I see
-:>it, if we don't publish the list archive on our own terms, miscreants
-:>will get around to publishing it for us.
-:
-:Any fixes for the issues reported in s@k.o will be committed to the 
-:upstream kernel immediately. The "disclosures" of those fixes are shared 
-:in this list. Keep a look out for my emails.
+Dan Rosenberg wrote:
 
-That shows the ultimate results, but not the process.  Sometimes, the
-process is important.  Sometimes you want to know who said what and
-when.  Let people see what's going on for themselves (eventually) and
-draw their own conclusions.
+> On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
+> > This is pathetic. You've all just made your personal and 'work' email
+> > addresses targets by having a ridiculous public 'signup' system, and
+> > the fact you all feel the need to hide behind some sort of veil for
+> > security issues.
+> >
+> >
+> 
+> Do you really think anyone is gaining new information by discovering
+> that, say, a member of the security team for a major distro will be on
+> this mailing list?  Such information seems pretty obvious to me.
 
-(And yeah, I do keep an eye out for your emails.  Thanks!  :) )
+Benji's trolling does raise a couple real issues.  The private keys and
+passphrases of those responding here have now become highly lucrative
+targets for attackers.  Hence, everyone on this new list needs to use
+good practices to keep their keys, hard drives, and computers safe.
+There should probably be some common guidelines for key safety for all
+participants.
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Hindsight, after all, is caused by lack of foresight."    -Non Campus Mentis
+A private period is rather unfortunate, and hopefully it hasn't been and
+isn't being used as a veil.  I for one am for full transparency
+(especially given Mark Cox's statistic that vendor-sec was only relevant
+for 29 out of over 700 open source issues last year).  However, I
+recognize that there seems to be a need for some private coordination
+at present. Perhaps all discussions should be published in the open
+something like 2 months after the initial posting?  That would be a
+kind of maximum private coordination period.
+
+Best wishes,
+Mike
