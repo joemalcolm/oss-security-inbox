@@ -1,16 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/3
-Message-ID: <87k4800w1o.fsf@mid.deneb.enyo.de>
-Date: Thu, 20 Oct 2011 12:58:11 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/42
+Message-ID: <20110404183229.GA14209@openwall.com>
+Date: Mon, 4 Apr 2011 22:32:29 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: PR attack against XML Encryption
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-A German university has released a press release, alleging a
-vulnerability in the W3C XML Encryption standard.  Apparently, error
-reporting from existing implementations can be used as an oracle to
-recover information from messages encrypted in CBC mode.
+On Mon, Apr 04, 2011 at 03:56:15PM +0200, Marcus Meissner wrote:
+> On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> > Benji's trolling does raise a couple real issues.  The private keys and
+> > passphrases of those responding here have now become highly lucrative
+> > targets for attackers.  Hence, everyone on this new list needs to use
+> > good practices to keep their keys, hard drives, and computers safe.
+> > There should probably be some common guidelines for key safety for all
+> > participants.
+> 
+> So would be my work mailbox in previous times.
+> 
+> I guess you are overestimating the value of the information that could
+> be possibly gained.
 
-Details have not been published, as far as I know.  Does anybody know
-more?
+Yes, I think folks are overestimating the value of the information that
+was on vendor-sec, and I am going to try to reduce that value even
+further for the new Linux distros list (such as by pushing discussions
+on non-medium severity issues elsewhere, and by limiting the embargo
+periods).  I think vendor-sec was primarily a target of attacks as a
+challenge, not so much for the value of the information that it actually
+carried.
+
+Alexander
