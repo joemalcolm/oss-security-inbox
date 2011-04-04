@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/2
-Message-ID: <4EC13E0C.4010402@redhat.com>
-Date: Mon, 14 Nov 2011 09:13:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/40
+Message-ID: <20110404182134.GC13884@openwall.com>
+Date: Mon, 4 Apr 2011 22:21:34 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
+Subject: Re: my key
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2011 04:12 AM, Hanno Böck wrote:
-> http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
->
-> "Today we have released CMSMS 1.9.4.3, a minor release that fixes a
-> single security issue in the news module. Essentially, a malicious
-> person could via accessing a sincle URL corrupt your news articles."
->
-Please use CVE-2011-4310 for this issue.
+On Mon, Apr 04, 2011 at 04:26:35PM +0200, Sebastian Krahmer wrote:
+> "we have nothing to hide", thats why we use GPG keys and force
+> the whole Open Source security community to run naked on
+> the grass with a unique (key-) ID on the back.
+> Someone got "transparency" wrong.
 
--- 
+Perhaps, but how do we get transparency right?  There's no single
+correct opinion on that.  The "discussion" we're having is similar to
+what we could have in private otherwise, and quite possibly it would
+eventually leak anyway.  In fact, there's all this talk on making the
+private list's archive public with a delay - which means that info on
+new members joining, etc. would be public with a delay as well.  Then
+why the delay (for this info)?
 
--Kurt Seifried / Red Hat Security Response Team
+That said, I agree that having specific e-mail addresses and key IDs
+posted to a public list is excessive.  If anyone else wishes to join
+(and qualifies), please state so in the "Closed list" thread and justify
+your request (currently that would mean info on the Linux distro you're
+a security contact for), then e-mail the specific e-mail address and PGP
+key info to me off-list.  I'll continue to reply on the list, but the
+specific e-mail addresses and keys will be exposed a little bit less.
 
+... now I expect to hear some objections to that change.  Anyone? ;-)
+
+> Nevertheless, I generated a fresh key for that purpose,
+> signed with our security@...e.de key (3D25D3D9).
+
+Added.
+
+Alexander
