@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/4
-Message-ID: <4EE10DC1.9010001@redhat.com>
-Date: Thu, 08 Dec 2011 12:19:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/39
+Message-ID: <20110404181420.GB32295@altlinux.org>
+Date: Mon, 4 Apr 2011 22:14:20 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: send(m)msg: user pointer dereferences
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/08/2011 12:15 PM, Petr Matousek wrote:
-> Dereferencing a user pointer directly from kernel-space without going
-> through the copy_from_user family of functions is a bad idea. Two of
-> such usages can be found in the sendmsg code path called from
-> sendmmsg, added by upstream commit
-> c71d8ebe7a4496fb7231151cb70a6baa0cb56f9a. Usages are performed through
-> memcmp() and memcpy() directly. 
->
-> Upstream commit:
-> bc909d9ddbf7778371e36a651d6e4194b1cc7d4c
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=761646
->
-> Thanks,
-Please use CVE-2011-4594 for this issue.
+On Mon, Apr 04, 2011 at 04:00:29PM +0200, phocean wrote:
+> On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
+> >On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
+> >>Please subscribe me to the new list. I was a vendor-sec subscriber.
+> >>
+> >>pub   2048R/519FE93C 2011-01-26
+> >>uid                  ksha <ksha@...m.cl>
+> >
+> >Are you a security contact for a Linux distro, and for which one?
+> >And how do we verify that?
+> >
+> >How did you receive vendor-sec mail?
+> >
+> >Alexander
+> 
+> I is work for Alt Linux Russia and is want to subscribe to yor list.
+
+I cannot confirm this statement. ;)
+
 
 -- 
+ldv
 
--Kurt Seifried / Red Hat Security Response Team
-
+Content of type "application/pgp-signature" skipped
