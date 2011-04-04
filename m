@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/5
-Message-ID: <BANLkTi=khwAhieJwxwRzvQ25qv8Cfhchqg@mail.gmail.com>
-Date: Mon, 27 Jun 2011 15:45:06 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/58
+Message-ID: <20110404232756.GB15833@openwall.com>
+Date: Tue, 5 Apr 2011 03:27:56 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Mambo CMS 4.6.x | Multiple Cross Site Scripting Vulnerabilities
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Jeffrey,
 
-Mambo CMS 4.6.5 and lower versions are vulnerable to Cross Site Scripting.
+On Mon, Apr 04, 2011 at 01:03:31PM -0700, Jeffrey Czerniak wrote:
+> I'm Jeffrey Czerniak, a member of Apple's Product Security team.  I was a member of vendor-sec via the Apple exploder.   Please subscribe me to the new list.
+> 
+> My PGP public key can be found at https://www.apple.com/support/security/pgp/   I have also pasted it below for convenience:
 
+Thanks, and sorry for the confusion caused by my last minute
+determination to start with a Linux distros list only.
 
-2. BACKGROUND
+Obviously, I won't add Apple to a Linux distro security contacts list
+(well, unless you start a Linux distro).
 
-Mambo is a full-featured, award-winning content management system that
-can be used for everything from simple websites to complex corporate
-applications. It is used all over the world to power government
-portals, corporate intranets and extranets, ecommerce sites, nonprofit
-outreach, schools, church, and community sites. Mambo's "power in
-simplicity" also makes it the CMS of choice for many small businesses
-and personal sites.
+Yet I recognize that Apple has been contributing to vendor-sec, so I'd
+be happy to add you to a suitable list if one is setup.  Perhaps a BSD
+distros list, which would generally be CC'ed on issues that are expected
+to be shared between Linux and *BSD userlands and thus likely also with
+Mac OS X?  Do you and other vendors feel that such a list is needed?
 
+So far, yours is the only non-Linux vendor request.  For just one
+vendor, we can be CC'ing you whenever appropriate, with no list needed.
 
-3. VULNERABILITY DESCRIPTION
+One of my reasons to go with a Linux-only list for now was that during
+the month without vendor-sec only Linux distro folks approached me
+asking for the setup of such a list.  Others did not appear to need it.
+The attitude from security researchers and non-Linux projects appeared
+to be like "we don't need this list, but if one exists, we want to be on
+it".  This made some sense to me, but not enough to setup a list shared
+by both those who say they need it (Linux distros) and those who want to
+be on it just not to be left out.
 
-Multiple parameters are not properly sanitized, which allows attacker
-to conduct Cross Site Scripting attack.
-This may allow an attacker to create a specially crafted URL that
-would execute arbitrary script code in a victim's browser.
-If a user has already logged in to the application, an XSS attack will
-execute promptly.
-If not, it will execute after the user's successful logging in.
+I'd appreciate any proposals from prospective non-Linux-distro members
+of private list(s) to be setup (if any are needed).
 
+Thanks,
 
-4. VERSIONS AFFECTED
-
-Tested on Mambo CMS 4.6.5 (current as of 2011-06-27)
+Alexander
