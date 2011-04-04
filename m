@@ -1,25 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/12
-Message-ID: <20110412210137.GB16400@openwall.com>
-Date: Wed, 13 Apr 2011 01:01:37 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/20
+Message-ID: <20110404134024.GC12101@openwall.com>
+Date: Mon, 4 Apr 2011 17:40:24 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 12, 2011 at 09:04:05AM +0000, Zhao, Zhenfeng wrote:
-> Sorry for the late response. Please add me with the mail address as the member of the vendor-sec . Thanks.
+On Mon, Apr 04, 2011 at 02:07:16PM +0200, Nico Golde wrote:
+> I can understand that you want to keep the list of subscribers low in order to 
+> prevent leaks. But from a practical point of view I see really no difference 
+> if a mail is passed to a team exploder of a distro by one of the allowed 
+> subscribers or directly sent to these members, at least in terms of attack 
+> surface/leaking risks.
+
+I was thinking that only a subset of issues discussed on the list will
+be relevant to a given distro, and only a subset of those will need to
+be communicated to the distro's entire security team right away.  Maybe
+this is not true for large distros, which package almost all software
+that Linux distros package at all.
+
+> That being said, my key data (I was added as part of Debian):
+> pub   1024D/73647CFF 2003-11-15
+>       Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
+> uid                  Nico Golde <nion@...ian.org>
+> uid                  Nico Golde <nico@...lde.de>
+> uid                  Nico Golde <nion@....net>
+> uid                  Nico Golde <nion@...tu-berlin.de>
+> sub   2048g/F774030E 2003-11-15
 > 
-> pub   2048R/66FBA52A 2011-04-12
->       Key fingerprint = BF45 878D 7941 567D 732C  D153 F997 3E81 66FB A52A
-> uid                  Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
-> sub   2048R/BD99FF83 2011-04-12
+> or alternatively a stronger key:
+> pub   4096R/A0A0AAAA 2009-06-01
+>       Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
+> uid                  Nico Golde <nion@...ian.org>
+> uid                  Nico Golde <nico@...lde.de>
+> uid                  Nico Golde <nion@...tu-berlin.de>
+> uid                  Nico Golde <nion@....net>
+> sub   4096R/E89CCA30 2009-06-02
 
-Given the discussion around MontaVista, can you please start by adding
-Wind River info to:
-
-http://oss-security.openwall.org/wiki/vendors
-http://oss-security.openwall.org/wiki/distro-patches
+Please suggest a specific e-mail address and key combination.  And if
+you suggest other than your @debian.org address, please suggest a way to
+verify that the address is really "yours" (the Debian security person's).
 
 Thanks,
 
