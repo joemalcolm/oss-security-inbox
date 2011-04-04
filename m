@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/3
-Message-ID: <4EF84066.3060805@redhat.com>
-Date: Mon, 26 Dec 2011 15:07:42 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/2
+Message-ID: <1195949274.350777.1301876578359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Sun, 3 Apr 2011 20:22:58 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4862 is not BSD-specific
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/26/2011 03:04 PM, Florian Weimer wrote:
-> * Huzaifa Sidhpurwala:
->
->>> The telnetd from netkit does not appear to be affected.
->>
->> The patch seems to be applicable though, probably you need to do
->> something else to make it segfault?
->
-> Our version of netkit (which we once got from
-> <ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/>) lacks Kerberos
-> support entirely.
+> 
+> Benji's trolling does raise a couple real issues. The private keys and
+> passphrases of those responding here have now become highly lucrative
+> targets for attackers. Hence, everyone on this new list needs to use good
+> practices to keep their keys, hard drives, and computers safe.  There
+> should probably be some common guidelines for key safety for all
+> participants.
+> 
 
- From what i see, if your telnetd can do encrypted connections, then it 
-is affected.
+I don't buy this. It's really no secret who is involved in open source
+security, or most any security in general. If you're in this business and
+don't worry about such threats all the time, you're probably in the wrong
+field.
 
-However netkit telnet clients dont have support for encryption, so using 
-the telnet client out of box is not going to work.
+I think keeping this wide open will make us better at what we do. This is a
+bit silly I agree, but it's also brutally honest.
+
+I've often found that if nobody is complaining about what you're doing,
+you're not doing anything interesting.
+
+At least I can keep telling myself this is interesting ;)
+
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
