@@ -1,47 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/16
-Message-ID: <83248561.77842.1302723474926.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Apr 2011 15:37:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/37
+Message-ID: <20110404180059.GA13884@openwall.com>
+Date: Mon, 4 Apr 2011 22:00:59 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: bonding: Incorrect TX queue offset
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1581
+On Mon, Apr 04, 2011 at 04:41:31PM +0200, Nico Golde wrote:
+> Ok please use nion@...ian.org with E1AB DE0E FFCA AEF3 9494 7592 CD4B 2AF3 A0A0 AAAA.
 
-Thanks.
+Added.
 
--- 
-    JB
-
-
------ Original Message -----
-> Backport of upstream commit:
-> fd0e435b0fe85622f167b84432552885a4856ac8 bonding: Incorrect TX queue
-> offset
-> 
-> By default bonding only allocates 16 queues. Devices that have more
-> than
-> 16 receive queues will exceed the tx queue index for the bonding
-> device,
-> resulting in at least a denial of service (BUG: unable to handle
-> kernel
-> paging request at...).
-> 
-> For proper queue allocation, in the bonding driver and down to the
-> devices, they should probably add the following line to one of the
-> files
-> in /etc/modprobe.d/
-> 
-> options bonding tx_queues=N
-> 
-> where N>= number of processors that show up in /proc/cpuinfo.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=696029
-> http://git.kernel.org/linus/fd0e435b0fe85622f167b84432552885a4856ac8
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Alexander
