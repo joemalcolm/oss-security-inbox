@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/1
-Message-ID: <Pine.GSO.4.64.1101062115160.25420@faron.mitre.org>
-Date: Thu, 6 Jan 2011 21:26:26 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/4
+Message-ID: <20110404003336.GB10983@openwall.com>
+Date: Mon, 4 Apr 2011 04:33:36 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Apr 03, 2011 at 11:34:28PM +0100, Steve Kemp wrote:
+> On Mon Apr 04, 2011 at 02:22:37 +0400, Solar Designer wrote:
+> > Added.  This gives us three representatives from Debian, which feels
+> > like a bit too many.
+> 
+>   Since I came last feel free to remove me, I won't take it personally
+>   :)
 
-On Thu, 6 Jan 2011, Michael Gilbert wrote:
+Thanks, but I'd rather let you (the Debian folks) see which two of you
+make the most use of the list membership and/or contribute the most.
 
-> On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
->> re: http://seclists.org/fulldisclosure/2011/Jan/39
->>
->> Just in case someone tries to request a CVE name for this, I'm not
->> requesting for one because if you need CAP_SYS_ADMIN capability to
->> exploit this, you are already privileged.
->
-> Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
-> mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
-> exist. There is an exposure here, and for that it deserves a CVE
-> identifier (of course in my opinion).  See Brad Spengler's recent
-> write-up [0]. There should be some effort toward making those 21 root
-> equivalent capabilities discussed there non-equivalent.
+Ditto re: Ubuntu.
 
-Unless/until there's some formal/semi-formal statement that "CAP_SYS_ADMIN 
-is equivalent to root in all cases," then these kinds of 
-privileged-to-privileged issues are within the scope of CVE since they 
-violate the security model; now, they might receive very low risk scores 
-because the attacker is already privileged, and I could see how vendors 
-might reasonably avoid publishing advisories for them, but that doesn't 
-mean there shouldn't be a CVE assigned to it.  Personally I agree with 
-Michael that if two cap's/privileges have both "A implies B" and "B 
-implies A," then one of them doesn't need to exist, but that's irrelevant.
-
-It would be interesting (though I suspect controversial) for someone in 
-the Linux kernel world to take a stab at more closely defining/defining a 
-"security policy" regarding capability-to-capability transitions.  (Or 
-could someone point me to one?)  As a Linux outsider, I like seeing these 
-kinds of discussions.
-
-- Steve
+Alexander
