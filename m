@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/23
-Message-Id: <F9ACDDDF-4F5E-4F23-AF74-FFD938396BFB@gmail.com>
-Date: Tue, 8 Mar 2011 23:20:28 +0000
-From: Helgi Þormar Þorbjörnsson <helgith@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/22
+Message-ID: <20110404135615.GA16747@suse.de>
+Date: Mon, 4 Apr 2011 15:56:15 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On 1 Mar 2011, at 12:39, Helgi Þormar Þorbjörnsson wrote:
-
+On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> Dan Rosenberg wrote:
 > 
-> On 1 Mar 2011, at 12:19, Dan Rosenberg wrote:
+> > On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
+> > > This is pathetic. You've all just made your personal and 'work' email
+> > > addresses targets by having a ridiculous public 'signup' system, and
+> > > the fact you all feel the need to hide behind some sort of veil for
+> > > security issues.
+> > >
+> > >
+> > 
+> > Do you really think anyone is gaining new information by discovering
+> > that, say, a member of the security team for a major distro will be on
+> > this mailing list?  Such information seems pretty obvious to me.
 > 
->>> Not sure it is fixable, or maybe using a lock on the symbolic link
->>> while fetching its target (to be tested to be sure that such locks
->>> cannot be overridden from shell).
->>> 
->> 
->> The easiest way is to just open the target with the O_NOFOLLOW flag to
->> avoid following symlinks and abort on failure.  If you need to support
->> systems that don't have this flag, then perhaps you could consider
->> using an application-specific temporary directory instead of operating
->> in the world-writable /tmp.
-> 
-> The PEAR installer does use /tmp (and whatever the Windows equivalent is) by default unless the user opts into a local installation or does indeed change the configuration to use other temp/download/cache directories so users can guard themselves with a good setup.
-> 
-> A flag like that would be handy but doesn't exist (yet) in PHP. 
-> 
-> I moved over to using the O_CREAT|O_EXCL equivalent in PHP when creating new files and lstat + fopen + fstat and comparing mode/ino/dev before writing to an existing file for the cache. I could add an nlink check to that as well.
-> The current version I've been playing around with is located at https://gist.github.com/848371 - It is missing the nlink part but it should be able to deal with TOCTOU problems. That code snippet hasn't been committed as I consider it work-in-progress still.
-> 
-> Any comments / suggestions are welcome, I did write that one quite late last night :-)
+> Benji's trolling does raise a couple real issues.  The private keys and
+> passphrases of those responding here have now become highly lucrative
+> targets for attackers.  Hence, everyone on this new list needs to use
+> good practices to keep their keys, hard drives, and computers safe.
+> There should probably be some common guidelines for key safety for all
+> participants.
 
-Here is the latest fix for the TOCTOU (e.g. time-of-check-time-of-use) problem: http://news.php.net/php.pear.core/9791 - A proper mix of lstat, fopen, fstat (to ensure no one has messed around with the file pointer between the check and getting the handler) as well as adding in a nlink check to make sure it is 1.
+So would be my work mailbox in previous times.
 
-Hopefully this is enough to fix the problem you had with my earlier fixes and get me the CVE number.
+I guess you are overestimating the value of the information that could
+be possibly gained.
 
-- Helgi
-
+Ciao, Marcus
