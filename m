@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/1
-Message-ID: <4E76F739.9030709@suse.de>
-Date: Mon, 19 Sep 2011 10:03:05 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/3
+Message-ID: <20110404002552.GA10924@openwall.com>
+Date: Mon, 4 Apr 2011 04:25:52 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> [...]
-> I think that Chrome OS qualifies.  As far as I can see, it's generally
-> available now: http://getchrome.eu/download.php
+On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> Benji's trolling does raise a couple real issues.  The private keys and
+> passphrases of those responding here have now become highly lucrative
+> targets for attackers.  Hence, everyone on this new list needs to use
+> good practices to keep their keys, hard drives, and computers safe.
+> There should probably be some common guidelines for key safety for all
+> participants.
 
-That's something different. Apparently just some guy who used SUSE
-Studio to create a live CD based on openSUSE. Anyone could do that
-with a few mouse clicks.
+Right.  We're likely to specify some minimum requirements.  For example,
+Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
+when we use the list for real.  Yet this is an improvement over the
+plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
+private keys on a server won't be allowed (but we'd have to trust
+members on that).
 
-cu
-Ludwig
+> Perhaps all discussions should be published in the open
+> something like 2 months after the initial posting?  That would be a
+> kind of maximum private coordination period.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Yes, we may do this.  Technically, an archive may be implemented as yet
+another subscriber with its public key, where the private key
+counterpart is not stored on any server and has a passphrase on it.
+Thus, a possible compromise of the list server won't reveal past
+messages (archived before the compromise, but not yet made public).
+
+Pushing the archive public will then be a manual process, but that's OK
+if it's only done once a month (omitting the last month's worth of
+messages).  In fact, a posting to oss-security will need to be made
+whenever the public archive is updated.
+
+Comments on this are welcome.
+
+Alexander
