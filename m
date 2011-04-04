@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/5
-Message-ID: <1592608722.126042.1294081074377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 13:57:54 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/34
+Message-ID: <27335096.369043.1301938468030.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 13:34:28 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Luke Macken <lmacken@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1 -- addressing two security flaws
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request: libvirt: error reporting in libvirtd is not thread safe
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> Hello Steve, vendors,
+> "It has been found that when several libvirtd threads are
+> reporting errors at the same time, the errors can get mixed
+> or corrupted, potentially leading to a libvirtd crash (DoS)."
 > 
-> Django upstream recently released Django 1.2.4, Django 1.1.3 and
-> Django 1.3 beta 1
-> versions of Django addressing two security flaws:
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=693391
+> https://www.redhat.com/archives/libvir-list/2011-March/msg01087.html
 > 
-> I), Information leakage in Django administrative interface
 
-Use CVE-2010-4534
-
-> II), Denial-of-service attack in password-reset mechanism
-
-Use CVE-2010-4535
-
-> 
-> References:
-> [1] http://www.djangoproject.com/weblog/2010/dec/22/security/
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=665373
-> 
+Please use CVE-2011-1486.
 
 Thanks.
 
