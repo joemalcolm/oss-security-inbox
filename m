@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/4
-Message-ID: <a9fa49fc-b7fc-4182-ac6e-913a15637aab@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 14:00:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/30
+Message-ID: <20110404174540.2e166a47@orphan>
+Date: Mon, 4 Apr 2011 17:45:40 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Missing input sanitation in various X GLX calls
+Cc: coley@...us.mitre.org, John Bailey <rekkanoryo@...kanoryo.org>
+Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
 Content-Type: text/plain; charset=utf-8
 
-I'm assign this as "X.org multiple input sanitization flaws"
+On Mon, 21 Mar 2011 12:02:40 -0400 (EDT) Steven M. Christey wrote:
 
-Use CVE-2010-4818
+> Disclosure of "local" memory to another user on the same system could 
+> qualify for CVE inclusion, if the memory can contain something
+> sensitive.
 
-Thanks.
+The patches fixes the code that was intended to clean up wipe certain
+buffers that were used to store crypto material before freeing them.
+As the CC on John was dropped, I guess he did not see your follow-up to
+clarify his "local".
+
+My understanding is that this issue may increase impact of some other
+memory disclosure issue (encryption key leaked vs. e.g. a random chat
+message), but requires some other flaw to be an issue.
 
 -- 
-    JB
-
------ Original Message -----
-> Hi,
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=28823
-> is a tracker bug for input sanitation lacking in various GLX X calls.
-> 
-> Reporter is me@...fdog.net
-> 
-> These can probably allow a attacker with access to the GLX calls
-> (typically just the logged in user) to crash the X server or execute
-> code within it.
-> 
-> (Not thought about WebGL introduced crash potential here.)
-> 
-> The lacking checks were reported and fixed in x.org git in 2010, so
-> they
-> probably need a 2010 CVE id. (Single one should be sufficient I
-> guess.)
-> 
-> Ciao, Marcus
-> 
+Tomas Hoger / Red Hat Security Response Team
