@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/7
-Message-ID: <4E2D671A.9030603@redhat.com>
-Date: Mon, 25 Jul 2011 14:52:42 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- GLPI -- Properly blacklist some sensitive fields
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/24
+Message-ID: <21216ad193b639fa0749a251f2d893bc@phocean.net>
+Date: Mon, 04 Apr 2011 16:00:29 +0200
+From: phocean <0x90@...cean.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+ On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
+> On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
+>> Please subscribe me to the new list. I was a vendor-sec subscriber.
+>>
+>> pub   2048R/519FE93C 2011-01-26
+>> uid                  ksha <ksha@...m.cl>
+>
+> Are you a security contact for a Linux distro, and for which one?
+> And how do we verify that?
+>
+> How did you receive vendor-sec mail?
+>
+> Alexander
 
-   it was found that GLPI, the Information Resource-Manager with an 
-additional Administration-Interface, did not properly blacklist certain 
-sensitive variables (like GLPI username and password). A remote attacker 
-could use this flaw to obtain access to plaintext form of these values 
-via specially-crafted HTTP POST request.
+ I is work for Alt Linux Russia and is want to subscribe to yor list.
+ Is is thank you is advance.
 
-References:
-[1] http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
-[2] https://forge.indepnet.net/projects/glpi/versions/605
-[3] https://forge.indepnet.net/issues/3017
-
-Relevant patches:
-[4]  https://forge.indepnet.net/projects/glpi/repository/revisions/14951
-[5]  https://forge.indepnet.net/projects/glpi/repository/revisions/14952
-[6]  https://forge.indepnet.net/projects/glpi/repository/revisions/14954
-[7]  https://forge.indepnet.net/projects/glpi/repository/revisions/14955
-[8]  https://forge.indepnet.net/projects/glpi/repository/revisions/14956
-[9]  https://forge.indepnet.net/projects/glpi/repository/revisions/14957
-[10] https://forge.indepnet.net/projects/glpi/repository/revisions/14958
-[11] https://forge.indepnet.net/projects/glpi/repository/revisions/14960
-[12] https://forge.indepnet.net/projects/glpi/repository/revisions/14966
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+ phocean
