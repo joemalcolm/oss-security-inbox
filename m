@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/17
-Message-ID: <20110620194911.GM11550@foo.fgeek.fi>
-Date: Mon, 20 Jun 2011 22:49:11 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/5
+Message-ID: <4D99DEAA.6010905@gmx.de>
+Date: Mon, 04 Apr 2011 17:07:22 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, incidents@...rt.org
-Subject: CVE request: Joomla unspecified information disclosure vulnerability
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Couldn't find a CVE-identifier for this issue. Joomla does have too many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may lead to an unauthorized information disclosure. Should this one get a 2010 or 2011 identifier?
+Am 04.04.2011 01:00, schrieb Solar Designer:
 
-Reported: 2010-12-08
-Joomla advisory: 2011-04-01
-Release with a fix (version 1.5.23): 2011-04-04
+> Added.  This gives us three contacts for Ubuntu on the list:
 
-References:
-http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
-http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
-http://osvdb.org/show/osvdb/71587
-http://secunia.com/advisories/44028/
+...
 
-I hope this request isn't duplicate. I included oCERT to this email as Joomla is part of that group. Please notify me and mailing-list if this issue already has a CVE-identifier.
+> Maybe this needs to be reduced to two most active ones at a later point.
 
-Best regards,
-Henri Salo
+What sense lies in limiting subscribers per distro?
+
+If you want to coordinate and one of the two most active is on vacation
+and the other falls sick, the third one is precluded and so is
+coordination with that particular vendor.
