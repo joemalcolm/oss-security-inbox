@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/4
-Message-ID: <20110616173820.GA4176@pisco.westfalen.local>
-Date: Thu, 16 Jun 2011 19:38:20 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/21
+Message-ID: <20110404135224.GD12101@openwall.com>
+Date: Mon, 4 Apr 2011 17:52:24 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: Re: CVE request: Several Moodle issues
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 18, 2011 at 11:48:05PM +0200, Moritz Muehlenhoff wrote:
-> Hi Steve,
-> (since I assume Josh will pass this on to you :-) )
+On Sun, Apr 03, 2011 at 08:52:13PM -0400, Michael Gilbert wrote:
+> Solar Designer wrote:
 > 
-> http://www.moodle.org/security/ lists more than a dozen
-> vulnerabilities requiring a CVE assignment:
-> MSA-11-0002 to MSA-11-0017 require CVE assignments.
+> > Yes, we may do this.  Technically, an archive may be implemented as yet
+> > another subscriber with its public key, where the private key
+> > counterpart is not stored on any server and has a passphrase on it.
+> > Thus, a possible compromise of the list server won't reveal past
+> > messages (archived before the compromise, but not yet made public).
+> > 
+> > Pushing the archive public will then be a manual process, but that's OK
+> > if it's only done once a month (omitting the last month's worth of
+> > messages).  In fact, a posting to oss-security will need to be made
+> > whenever the public archive is updated.
 > 
-> (Some issues might be amalgamated to a single CVE)
+> Wouldn't the easiest solution be to have a cron job check that the age
+> of the message is greater than X days, decrypt it, and mail it to a
+> different archive/public list?
 
-*ping*
+This would require that the private key (to decrypt the archive) be
+stored on a server.  Then if the server is compromised, the intruder
+will gain access not only to new list traffic, but also to archived but
+not yet published postings.  Since the compromise _might_ be detected as
+soon as on the same day (it depends), this might make a lot of a
+difference (like, one day vs. one month worth of list traffic leaked).
 
-Cheers,
-        Moritz
+> I think automatic publishing is the only way this is going to work.
+> No one is going to want to manually do the work.
+
+I wouldn't mind running a script manually and entering a passphrase once
+a month.  Of course, the script would need to be prepared first, which I
+am not going to work on yet.  At this time, we're just discussing.
+
+> Plus an automatically
+> enforced maximum time frame will force issues to get fixed.
+
+Hopefully, yes.
+
+> Automation
+> also means that nothing is being veiled.  Computers don't discriminate,
+> humans do.
+
+Computers are managed by humans anyway.
+
+Alexander
