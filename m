@@ -1,44 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/6
-Message-Id: <201103140912.35250.stephan.mueller@atsec.com>
-Date: Mon, 14 Mar 2011 09:12:34 +0100
-From: Stephan Mueller <stephan.mueller@...ec.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/14
+Message-ID: <20110404120716.GK543@ngolde.de>
+Date: Mon, 4 Apr 2011 14:07:16 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
-
-Hi Vasiliy,
-
+Hi,
+* Marcus Meissner <meissner@...e.de> [2011-04-04 13:24]:
+> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
+> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> > >and Josh).
+> > 
+> > Limiting a distro to two or three representatives is going to make things 
+> > tricky for Red Hat; we have a rather large dedicated security response 
+> > team (as we publish over 300 advisories a year across 70 product/versions 
+> > and have a number of folks dealing with 'incoming' issues spread, and my 
+> > team is dispersed across 9 different countries).  If these representatives 
+> > have been very active on v-s and oss-security is there a reason to limit?
 > 
-> What I suggest is something like "-o untrusted" option to mount.  This
-> would mean that the system considers the input from such fs as a malicious
-> input.  Such mounted fs would try to consider the data on disk as
-> untrusted and to be as robust as possible, e.g. check against
-> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
-> hear opinions about the usefulness of this feature.
+> Similar for SUSE. We currently have 3 engineers rotating through the incident
+> manager role (and myself).
 
-I completely second your concerns.
+Same for Debian. We are currently cycling through a one week "front desk" 
+period. Limiting that access to 2-3 people of the team would make that 
+approach a bit unpractical for us in terms of handling undisclosed issues.
+I also would welcome it if people who have been active on oss-sec and v-sec 
+before should be allowed back to this list.
 
-However, how do you propose to implement that "untrusted" option? The core 
-problem IMHO is that the physical layout and structure in a file system is 
-assumed to be correct in general by the kernel. The physical file system 
-implementations (including any depending code, like the LSMs for interpreting 
-XATTRs) have some checks for an input validation. But I highly doubt that all 
-checks necessary for an untrusted file system layout are implemented - to have 
-all such checks would cause some speed penalties nobody wants to carry.
+I can understand that you want to keep the list of subscribers low in order to 
+prevent leaks. But from a practical point of view I see really no difference 
+if a mail is passed to a team exploder of a distro by one of the allowed 
+subscribers or directly sent to these members, at least in terms of attack 
+surface/leaking risks. The only practical difference I see is who would be responsible
+for such an incident. But if it's just about moving the responsibility out of
+the list itself to the vendor while keeping the number of subscribers low you could as
+well subscribe our team@ alias and encrypt mails with the team key.
 
-For example, the more sophisticated physical file systems (ext3/4, btrfs or 
-xfs come to mind) use pointers to the different blocks/extends. Is it really 
-ensured that misalignment of these pointers cannot cause adverse consequences 
-- at least crash the system?
+That being said, my key data (I was added as part of Debian):
+pub   1024D/73647CFF 2003-11-15
+      Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
+uid                  Nico Golde <nion@...ian.org>
+uid                  Nico Golde <nico@...lde.de>
+uid                  Nico Golde <nion@....net>
+uid                  Nico Golde <nion@...tu-berlin.de>
+sub   2048g/F774030E 2003-11-15
 
-Therefore, if you consider a file system untrusted, a simple flag "untrusted" 
-which disables some high-level logic (like symlinks across partitions or funky 
-file names) may just be window-dressing until the entire parsing of the 
-physical data structure layout is hardened.
+or alternatively a stronger key:
+pub   4096R/A0A0AAAA 2009-06-01
+      Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
+uid                  Nico Golde <nion@...ian.org>
+uid                  Nico Golde <nico@...lde.de>
+uid                  Nico Golde <nion@...tu-berlin.de>
+uid                  Nico Golde <nion@....net>
+sub   4096R/E89CCA30 2009-06-02
 
-Ciao
-Stephan
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
