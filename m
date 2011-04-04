@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/3
-Message-ID: <87pqhq362s.fsf@mid.deneb.enyo.de>
-Date: Fri, 21 Oct 2011 14:03:07 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/53
+Message-ID: <20110404194016.GA14684@openwall.com>
+Date: Mon, 4 Apr 2011 23:40:16 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PR attack against XML Encryption
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* Yves-Alexis Perez:
+On Mon, Apr 04, 2011 at 09:31:44PM +0200, Yves-Alexis Perez wrote:
+> On lun., 2011-04-04 at 02:38 +0400, Solar Designer wrote:
+> > "Good" employers, let alone non-commercial Open Source projects, don't
+> > remove e-mail addresses when a person leaves.  Someone having an
+> > @debian.org address does not mean they're currently with Debian. 
+> 
+> In Debian case, that is wrong, mail redirection to @debian.org address
+> is disabled when retiring from the Debian project.
 
-> On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
->> A German university has released a press release, alleging a
->> vulnerability in the W3C XML Encryption standard.  Apparently, error
->> reporting from existing implementations can be used as an oracle to
->> recover information from messages encrypted in CBC mode.
->> 
->> Details have not been published, as far as I know.  Does anybody know
->> more? 
+Oh, I was wrong, then.  I made my assumption thinking that @debian.org
+addresses are typically used in changelogs and the like, so it felt
+weird to disable those.
 
-> but afaict the paper is not (yet?) available freely.
-
-I took a brief look at the paper, and it's basically rehashing older
-work on decryption error oracles.  Full message recovery is apparently
-possible, but leaves traces in the server log.  It's the standard
-which is at fault: encryption without authentication is just not safe
-in general.
-
-IBM has already changed error reporting in response to this issue:
-
-<http://www-01.ibm.com/support/docview.wss?uid=swg1IC76651>
-
-Of course, without an application-independent way to check the
-integrity of the decrypted message (which would be provided by a
-combiend encryption/authentication mode), this is only a partial
-solution.
-
-The authors also mention a second issue, where implementations confuse
-signed and encrypted parts of a SOAP message, allowing attackers to
-inject unsigned data which is presented as signed to the application.
-This probably needs a separate fix.
+Alexander
