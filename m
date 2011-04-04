@@ -1,55 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/01/1
-Message-ID: <20111001204800.GC30933@colt>
-Date: Sat, 1 Oct 2011 16:48:00 -0400
-From: Ethan Blanton <elb@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/25
+Message-ID: <20110404142635.GA24248@suse.de>
+Date: Mon, 4 Apr 2011 16:26:35 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: security@...gin.im
-Subject: libpurple vulnerability disclosure and fix
+Subject: my key
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hi,
 
-A libpurple vulnerability was made known to the Pidgin developers via
-our public bug tracker which affects the SILC protocol plugin and all
-software which uses SILC via libpurple.  The original identification
-of the vulnerability and bug report was made by Diego Bauche Madero
-from IOActive <diego.madero@...ctive.com>, and can be seen on the
-Pidgin bug tracker as Bug #14636:
+"we have nothing to hide", thats why we use GPG keys and force
+the whole Open Source security community to run naked on
+the grass with a unique (key-) ID on the back.
+Someone got "transparency" wrong.
 
-    http://developer.pidgin.im/ticket/14636
+Nevertheless, I generated a fresh key for that purpose,
+signed with our security@...e.de key (3D25D3D9).
 
-The vulnerability lies in calling g_markup_escape_text() on strings
-which have not been verified as valid UTF-8.  This function is not
-required to do anything reasonable with invalid UTF-8, and indeed
-reads past the end of the string and will eventually segfault for
-certain sequences in some versions of Glib 2.  Because the behavior of
-this function is undefined, and depends on the particular version of
-Glib 2 in use, the complete ramifications of this bug are unknown.
-Remote crashing of a libpurple client by untrusted users via
-specifically crafted SILC messages is a verified vulnerability.
+I am not sure whether this fits in the "2" which was required.
 
-This bug is believed to affect all releases of libpurple up to and
-including version 2.10.0.
+Please use this key:
 
-The correct fix for this bug is UTF-8 validation (and correction if
-necessary) of the incoming string before passing it to Glib.  A patch
-which provides this fix has been applied to the Pidgin sources in
-revision 7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8 and will appear in
-all future Pidgin releases.  For reference, it is:
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.2 (GNU/Linux)
 
-    http://developer.pidgin.im/viewmtn/revision/diff/be5e66abad2af29604bc794cc4c6600ab12751f3/with/7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8
+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
+Ubt/OMPw
+=g6bi
+-----END PGP PUBLIC KEY BLOCK-----
 
-All packagers of libpurple (including monolithic Pidgin and/or finch
-packages) who have not already done so are encouraged to apply this
-change to their packages immediately.
 
-We would also like to request a CVE number for this issue.
 
-Any sensitive follow-ups to this issue, or any other Pidgin, finch, or
-libpurple issue, may be directed to security@...gin.im.
+-- 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
-Thank you,
-Ethan
-
-Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
