@@ -1,20 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/2
-Message-ID: <20111017100229.GA27461@vermeer.pre-sense.de>
-Date: Mon, 17 Oct 2011 12:02:29 +0200
-From: Timo Warns <Warns@...-Sense.DE>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/57
+Message-ID: <20110404231212.GA15833@openwall.com>
+Date: Tue, 5 Apr 2011 03:12:12 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: double-free vulnerability in logsurfer
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
-Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
-an insufficient treatment of an error condition that is returned by the
-function get_word() when it is unable to correctly parse its input.
+On Tue, Apr 05, 2011 at 12:21:18AM +0200, klondike wrote:
+> I thought Apple didn't made a Linux distro. Has that changed?
 
-The following versions of logsurfer are affected:
+I think not, but Josh's message did not require that only Linux distros
+request to be subscribed, so Jeffrey's request is reasonable in that
+context.
 
- Logsurfer 1.5b and previous versions
- Logsurfer+ 1.7 and previous versions
+I made the final determination to start with a Linux distros list only a
+bit later.  Of course, it's wrong that Josh and I did not coordinate
+this better off-list, which is a result of my lack of time during March.
 
-A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
+Alexander
