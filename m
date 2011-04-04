@@ -1,51 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/5
-Message-ID: <462508465.25588.1295039113480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 14 Jan 2011 16:05:13 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/47
+Message-ID: <20110404190319.GD14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:03:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+On Mon, Apr 04, 2011 at 08:14:30AM +0200, Oden Eriksson wrote:
+> Hello, please subscibe me as well. I'm the Mandriva Linux security team 
+> manager and was on vendor-sec.
+> 
+> pub   4096R/EF5A2947 2009-12-17
+>       Key fingerprint = CACF 1B05 DBE9 1B83 243A  AF73 C7B2 9DA0 EF5A 2947
+> uid                  Oden Eriksson <oeriksson@...driva.com>
 
-Can MITRE take these. I'm having trouble finding time for them this week :(
+Added.
 
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> Hi,
-> 
-> Could CVE ids be assigned for the following issues? Thanks in advance.
-> 
-> ftpls: XSS in directory listing
-> http://bugs.debian.org/607494
-> 
-> xdigger: buffer overflow when parsing CLI arguments
-> (it is SGID, at least in Debian)
-> http://bugs.debian.org/609096
-> 
-> lbreakout2: buffer overflow with overly long HOME env var
-> (it is SGID, at least in Debian)
-> http://bugs.debian.org/608980
-> 
-> calibre: XSS and file disclosure
-> http://www.waraxe.us/advisory-77.html
-> http://bugs.debian.org/608822
-> 
-> typo3: 8 vulnerabilities
-> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-022/
-> http://seclists.org/fulldisclosure/2010/Dec/690
-> http://bugs.debian.org/607286
-> 
-> 
-> There are more issues without ids, will request them later.
-> 
-> Regards,
-> --
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+Alexander
