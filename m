@@ -1,39 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/13/2
-Message-ID: <20111213131649.GA24611@openwall.com>
-Date: Tue, 13 Dec 2011 17:16:49 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/49
+Message-ID: <20110404190632.GF14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:06:32 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list setup update
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Apr 04, 2011 at 10:40:57AM +0800, Eugene Teo wrote:
+> pub   4096R/51BF6EF3 2011-04-04
+>     Key fingerprint = 7664 496C 62A9 7BC2 7229  B654 FF73 C155 51BF 6EF3
+> uid                  Eugene Teo <eugene[0x40]redhat.com>
+> uid                  Eugene Teo <eteo[0x40]redhat.com>
 
-On Fri, Nov 18, 2011 at 06:36:57AM +0400, Solar Designer wrote:
-> Not surprisingly, we started receiving spam to the linux-distros list.
-> PGP-encrypted spam is fun, yet I decided to introduce an anti-spam
-> measure, now documented on this new wiki page:
-> 
-> http://oss-security.openwall.org/wiki/mailing-lists/linux-distros
-
-This is now moved to:
-
-http://oss-security.openwall.org/wiki/mailing-lists/distros
-
-describing both "distros" and "linux-distros" lists at once.
-
-Also, I've just subscribed Nick Kralevich from Android Security Team to
-linux-distros (and thus to distros as well) based on Nick's off-list
-request.  We can see Nick doing relevant work e.g. here:
-http://www.openwall.com/lists/oss-security/2011/11/10/1
-
-> "Be sure to include [vs] (four characters) in the Subject line, or your
-> message will most likely be rejected by the mail server."
-> 
-> Some kinds of messages should pass despite of lacking [vs] in the
-> Subject - for example, this should be the case for most PGP-encrypted or
-> PGP-signed messages - but to be safe, please use the [vs] thing even if
-> you encrypt and/or sign.  The rejected messages are rejected at SMTP
-> level, so senders should receive bounces from their own mail relays.
+Added.
 
 Alexander
