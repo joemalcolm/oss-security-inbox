@@ -1,59 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/11
-Message-ID: <1048604435.1604666.1311710254688.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 15:57:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/45
+Message-ID: <20110404185427.GB14209@openwall.com>
+Date: Mon, 4 Apr 2011 22:54:27 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- GLPI -- Properly blacklist some sensitive fields
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Plese use CVE-2011-2720.
+On Mon, Apr 04, 2011 at 07:32:12AM +0100, Benji wrote:
+> Can I not be part of the group that thinks a public signup system for a
+> mailing list that previously had the mail server owned due to the fact it
+> was secret (showing interest in possibly owning users now that emails like
+> mjo@...o.mi.org have been confirmed on the list) for a mailing list that is
+> 'embargoed' when really it shouldn't be.
 
-Thanks.
+What do you mean by: "a mailing list that is 'embargoed' when really it
+shouldn't be"?  Does this mean that you're actually against the very
+existence of such a list?  I think it is important to know your opinion
+on the main issues when we consider your opinion on the detail.
 
--- 
-    JB
+> >>What is your opinion on making the list's archive public with a delay (when  the corresponding security issues are already public)?
+> 
+> It would be better. In my opinion, delay would be 1-2 days.
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
+What use is a delay of 1-2 days for members of such a list?  I mean, it
+is of some use for high severity issues where the vendors would need to
+throw whatever resources they can at resolving the issues ASAP, at
+expense of slowing down work on other tasks (including other security
+related tasks) and likely arriving at and releasing non-final fixes
+(more like workarounds).
+
+However, my proposal, which I am going to try to enforce, is to only
+discuss medium-severity issues on this new list.  I think that an
+embargo period of 1-2 days does not make sense for those; if that's all
+we can afford, we can as well make them public right away.
+
+> Vendor-sec
+> (alternatives) should be a last resort in publishing issues, other projects
+> don't get the same "privileges", and have to "make do" with oss-sec. If you
+> really need such help 'co-ordinating' and fixing things, maybe you should
+> have a policy to, release advisory/info first, then have a 'co-ordination'
+> list.
+
+No offense intended, but it sounds like you did not give the above much
+thought, or maybe you did not explain it fully.
+
+That said, I agree that a closed list should be a last resort, to be
+used whenever other options are determined to be less appropriate for a
+particular security issue.  Unfortunately, this determination is usually
+made by just one person (whoever brings the issue to the list), so it is
+likely to sometimes be "wrong".
+
+> >>Do you really think anyone is gaining new information by discovering
+> >>that, say, a member of the security team for a major distro will be on
+> >>this mailing list?  Such information seems pretty obvious to me.
 > 
-> it was found that GLPI, the Information Resource-Manager with an
-> additional Administration-Interface, did not properly blacklist
-> certain
-> sensitive variables (like GLPI username and password). A remote
-> attacker
-> could use this flaw to obtain access to plaintext form of these values
-> via specially-crafted HTTP POST request.
-> 
-> References:
-> [1]
-> http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
-> [2] https://forge.indepnet.net/projects/glpi/versions/605
-> [3] https://forge.indepnet.net/issues/3017
-> 
-> Relevant patches:
-> [4]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14951
-> [5]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14952
-> [6]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14954
-> [7]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14955
-> [8]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14956
-> [9]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14957
-> [10]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14958
-> [11]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14960
-> [12]
-> https://forge.indepnet.net/projects/glpi/repository/revisions/14966
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> Yes Dan, but now we have private email accounts as well (by people who
+> apparently don't like to use vendor email addresses) that are also signed up
+> to this, allowing targeting and easy identification
+
+Yes, we lost a security through obscurity layer here, which was
+arguably nice to have.  I don't have strong feelings either way
+(public subscriber info or not-right-away).
+
+BTW, most of those same e-mail addresses were already exposed to whoever
+broke into the vendor-sec machine.
+
+> of probably less secure infrastructure.
+
+My guess (based on partial knowledge) is that Mike's personal e-mail
+infrastructure is actually more secure than his employer's.  You have a
+valid point in general, though.
+
+> Excuse my "trolling" if some of this has already been covered, I'm up early
+> (for me) and thus can be slightly unintelligible.
+
+It's OK.  In fact, comments/criticism such as yours is one of the
+reasons why we're handling this discussion in public.  This might enable
+us to arrive at something slightly better "next time".
+
+Alexander
