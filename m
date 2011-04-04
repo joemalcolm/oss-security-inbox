@@ -1,23 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/17/1
-Message-ID: <20110417023501.GH2125@redhat.com>
-Date: Sat, 16 Apr 2011 20:35:04 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/48
+Message-ID: <20110404190448.GE14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:04:48 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mojolicious directory traversal vulnerability
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to the directory traversal flaw recently found
-in Mojolicious?
+On Mon, Apr 04, 2011 at 09:18:12AM +0530, Huzaifa Sidhpurwala wrote:
+> Please subscribe me as well:
+> 
+> pub  1024D/DA5BDAE5 2006-08-25
+> Huzaifa S. Sidhpurwala <huzaifas@...hat.com>
+> 
+> key: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCC70DCF2DA5BDAE5
 
-References:
+Added.
 
-https://github.com/kraih/mojo/issues/114
-https://github.com/kraih/mojo/commit/b09854988c5b5b6a2ba53cc8661c4b2677da3818
-https://bugzilla.redhat.com/show_bug.cgi?id=697229
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Alexander
