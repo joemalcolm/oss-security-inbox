@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/7
-Message-ID: <4D8BD876.6090507@canonical.com>
-Date: Fri, 25 Mar 2011 10:49:10 +1100
-From: William Grant <william.grant@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/39
+Message-ID: <20110404181420.GB32295@altlinux.org>
+Date: Mon, 4 Apr 2011 22:14:20 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-0728: Loggerhead 1.18.1 security release
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Apr 04, 2011 at 04:00:29PM +0200, phocean wrote:
+> On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
+> >On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
+> >>Please subscribe me to the new list. I was a vendor-sec subscriber.
+> >>
+> >>pub   2048R/519FE93C 2011-01-26
+> >>uid                  ksha <ksha@...m.cl>
+> >
+> >Are you a security contact for a Linux distro, and for which one?
+> >And how do we verify that?
+> >
+> >How did you receive vendor-sec mail?
+> >
+> >Alexander
+> 
+> I is work for Alt Linux Russia and is want to subscribe to yor list.
 
-Loggerhead 1.18.1 has just been released, fixing an XSS vulnerability
-when displaying filenames in revision views (CVE-2011-0728).
-
-Upstream bug (with patches against 1.17 and 1.18):
- https://bugs.launchpad.net/loggerhead/+bug/740142
-
-Release details:
- https://launchpad.net/loggerhead/1.18/1.18.1
-
-William.
+I cannot confirm this statement. ;)
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (901 bytes)
+-- 
+ldv
+
+Content of type "application/pgp-signature" skipped
