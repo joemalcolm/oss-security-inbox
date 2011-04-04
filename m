@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/14
-Message-Id: <201102251150.33261.sgrubb@redhat.com>
-Date: Fri, 25 Feb 2011 11:50:33 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: Nelson Elhage <nelhage@...lice.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/27
+Message-ID: <925919548.144219.1301928036464.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 10:40:36 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org, Josh Bressers <bressers@...hat.com>
+Subject: CVE request: libvirt: error reporting in libvirtd is not thread safe
 Content-Type: text/plain; charset=utf-8
 
-On Friday, February 25, 2011 10:43:20 am Nelson Elhage wrote:
-> On Fri, Feb 25, 2011 at 10:20:02AM -0500, Steve Grubb wrote:
-> > The current patch does not check if (from_nla_len != sizeof(from_nla))
-> > before making decisions based on the header. I contacted upstream about
-> > this.
-> 
-> From my reading of the netlink code, recvmsg() / recvfrom() on a netlink
-> socket will never return a from_nla_len != sizeof(struct sockaddaddr_nl).
-> Am I missing something, did this change at some point, or are you just
-> suggesting general paranoid good practice? It's probably good advice in
-> any case, I'm just curious whether you're aware of cases where this can
-> actually be a problem.
+"It has been found that when several libvirtd threads are
+reporting errors at the same time, the errors can get mixed
+or corrupted, potentially leading to a libvirtd crash (DoS)."
 
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=693391
+https://www.redhat.com/archives/libvir-list/2011-March/msg01087.html
 
-I don't know what is considered the ultimate authority on this. You can look at libnl 
-in lib/nl.c you find this:
-
-466         if (msg.msg_namelen != sizeof(struct sockaddr_nl)) {
-467                 free(msg.msg_control);
-468                 free(*buf);
-469                 return -NLE_NOADDR;
-470         }
-
-There are many projects that do something similar. However, looking at glibc, they do 
-other kinds of validation like the sequence number.
-
--Steve
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
