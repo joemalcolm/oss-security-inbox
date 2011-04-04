@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/3
-Message-ID: <20111225143751.GA571@foo.fgeek.fi>
-Date: Sun, 25 Dec 2011 16:37:51 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/12
+Message-ID: <20110404085148.GC2053@suse.de>
+Date: Mon, 4 Apr 2011 10:51:48 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: CVE-request for three 2009 Joomla issues (second part)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Can I get three CVEs assigned for these issues:
+On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
+> >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> >and Josh).
+> 
+> Limiting a distro to two or three representatives is going to make things 
+> tricky for Red Hat; we have a rather large dedicated security response 
+> team (as we publish over 300 advisories a year across 70 product/versions 
+> and have a number of folks dealing with 'incoming' issues spread, and my 
+> team is dispersed across 9 different countries).  If these representatives 
+> have been very active on v-s and oss-security is there a reason to limit?
 
-1) "Input passed via the "HTTP_REFERER" is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-http://developer.joomla.org/security/news/298-20090604-core-frontend-xss-httpreferer-not-properly-filtered.html
-http://osvdb.org/show/osvdb/55589
+Similar for SUSE. We currently have 3 engineers rotating through the incident
+manager role (and myself).
 
-2) "Input passed via the URL is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-http://developer.joomla.org/security/news/299-20090605-core-frontend-xss-phpself-not-properly-filtered.html
-http://osvdb.org/show/osvdb/55590
-
-3) "A security issue exists due to certain files missing the check for JEXEC, which can lead to the disclosure of path information."
-http://developer.joomla.org/security/news/300-20090606-core-missing-jexec-check.html (different than 302-20090722-core-missing-jexec-check.html)
-http://osvdb.org/show/osvdb/55591
-
-Secunia advisory: http://secunia.com/advisories/35668/
-
-- Henri Salo
+Ciao, Marcus
