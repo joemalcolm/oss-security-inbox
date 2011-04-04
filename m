@@ -1,20 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/5
-Message-ID: <20110724152327.GA25309@foo.fgeek.fi>
-Date: Sun, 24 Jul 2011 18:23:27 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/15
+Message-ID: <4D99518E.5020505@ubuntu.com>
+Date: Mon, 04 Apr 2011 00:05:18 -0500
+From: Micah Gersten <micah@...ntu.com>
 To: oss-security@...ts.openwall.com
-Cc: justin@...irish.net
-Subject: CVE request: Drupal Data-module multiple vulnerabilities
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-These issues does not have CVE-identifiers. Could we get one?
+On 04/01/2011 01:03 PM, Josh Bressers wrote:
+> Hello everyone,
+>
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+>
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
+>
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+>
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+>
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+>
+> Thanks.
+>
+Please add me to the new list, I was a member through the Ubuntu exploder:
+pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
+      Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
+uid                  Micah Gersten <micah@...ntu.com>
+sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
 
-http://seclists.org/fulldisclosure/2011/Feb/219
+Thanks.
 
-I asked from Justin Klein Keane and he wasn't aware of CVE-identifier. I think this needs identifier even this is an alpha release as this module is used by some production instances. If I am correct two identifiers should be enough. One for XSS and another for SQL injections.
+-- 
+Micah Gersten
+Ubuntu Security Team
 
-Discussion about the issue: http://drupal.org/node/1056470
 
-Best regards,
-Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
