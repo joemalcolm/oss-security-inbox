@@ -1,44 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/2
-Message-ID: <4EF3506B.2090707@redhat.com>
-Date: Thu, 22 Dec 2011 08:44:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/7
+Message-Id: <20110403210622.d7952b28.michael.s.gilbert@gmail.com>
+Date: Sun, 3 Apr 2011 21:06:22 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Rainer Gerhards <rgerhards@...scon.com>, Tomas Heinrich <theinric@...hat.com>
-Subject: Re: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/22/2011 05:19 AM, Jan Lieskovsky wrote:
->
-> An integer signedness error, leading to heap based buffer overflow was 
-> found in
-> the way the imfile module of rsyslog, an enhanced system logging and 
-> kernel
-> message trapping daemon, processed text files larger than 64 KB. When the
-> imfile rsyslog module was enabled, a local attacker could use this 
-> flaw to
-> cause denial of service (rsyslogd daemon hang) via specially-crafted 
-> message,
-> to be logged.
->
-> Upstream bug report:
-> [1] http://bugzilla.adiscon.com/show_bug.cgi?id=221
->
-> Upstream patch:
-> [2] 
-> http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101
->
-> References:
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=769822
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2011-4623 for this issue.
+Michael Gilbert wrote:
 
--- 
+> Solar Designer wrote:
+> 
+> > On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> > > Benji's trolling does raise a couple real issues.  The private keys and
+> > > passphrases of those responding here have now become highly lucrative
+> > > targets for attackers.  Hence, everyone on this new list needs to use
+> > > good practices to keep their keys, hard drives, and computers safe.
+> > > There should probably be some common guidelines for key safety for all
+> > > participants.
+> > 
+> > Right.  We're likely to specify some minimum requirements.  For example,
+> > Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
+> > when we use the list for real.  Yet this is an improvement over the
+> > plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
+> > private keys on a server won't be allowed (but we'd have to trust
+> > members on that).
+> > 
+> > > Perhaps all discussions should be published in the open
+> > > something like 2 months after the initial posting?  That would be a
+> > > kind of maximum private coordination period.
+> > 
+> > Yes, we may do this.  Technically, an archive may be implemented as yet
+> > another subscriber with its public key, where the private key
+> > counterpart is not stored on any server and has a passphrase on it.
+> > Thus, a possible compromise of the list server won't reveal past
+> > messages (archived before the compromise, but not yet made public).
+> > 
+> > Pushing the archive public will then be a manual process, but that's OK
+> > if it's only done once a month (omitting the last month's worth of
+> > messages).  In fact, a posting to oss-security will need to be made
+> > whenever the public archive is updated.
+> 
+> Wouldn't the easiest solution be to have a cron job check that the age
+> of the message is greater than X days, decrypt it, and mail it to a
+> different archive/public list?
 
--Kurt Seifried / Red Hat Security Response Team
+Actually, the ideal destination would be oss-sec itself.
 
+Best wishes,
+Mike
