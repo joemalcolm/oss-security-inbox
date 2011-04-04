@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/4
-Message-ID: <4ECAFBD3.8040104@redhat.com>
-Date: Mon, 21 Nov 2011 18:33:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Did this ArchLinux/shaman thing ever get a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/16
+Message-ID: <19865.44445.981637.137043@ornendil.otp.ericsson.se>
+Date: Mon, 4 Apr 2011 13:38:05 +0200
+From: Hans Bolinder <hans.bolinder@...csson.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Patrik Nyblom <pan@...ang.org>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 11/14/2011 09:15 AM, Kurt Seifried wrote:
-> Did this ever get a CVE #? I can't find one.
->
-> https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
->
-> ====================
-> The point of this thread was that you don't need to enter the root
-> password at all. Not the first time, not ever.
->
-> As far as I understand, it is supposed to work like this: When you
-> first use shaman too install anything, it asks for the root password
-> You can tick a "Do not ask me again"-box, so you don't have to enter
-> the password again. If you tick the box and enter the password, shaman
-> add the lines
-> [auth]
-> askforpwd=false
-> to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
-> time shaman is run, it checks the config file, and if the askforpwd
-> value is set to false, it grants itself root privileges (with some
-> nifty setuuid root-thingy, I imagine) This is not the problem - this
-> is the feature.
->
-> The bug is this:
-> the fact that any user can add the lines
-> [auth]
-> askforpwd=false
-> to his own shaman.conf file, without ever entering the root password
-> in shaman. The next time shaman is run, it checks the config file, and
-> if the askforpwd value is set to false, it grants itself root
-> privileges - even though the user has never entered the root password.
-> This works for any unprivileged user on the system.
->
-> If that is indeed a feature intended by any sane person, then I'm
-> Mother Mary. And that can't be, seeing as I don't have breasts.
-> ====================
->
->
-> Appears to never have been fixed, the last release of shaman appears
-> to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
->
-Please use CVE-2011-4338 for this issue.
+[Jan Lieskovsky:]
+>    based on:
+>    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
+> 
+>    and:
+>    [2] http://www.erlang.org/download/otp_src_R14B.readme
+>    [3] http://www.erlang.org/download/otp_src_R14B01.readme
+>    [4] http://www.erlang.org/download/otp_src_R14B02.readme
+> 
+> performed some initial issues review -- erlang-CVE-request.txt
+> attached. But since not sure, which of those are real security
+> flaws and how many CVE ids will be needed for those, Cc-ing
+> also Erlang upstream developers to shed more light into this.
+> ...
+> could you please have a look at the attached review file
+> and reply which of the #20 OTPs in the list are security flaws
+> (so we would know the count of CVE identifiers needed) and which
+> are just bugs? (since you know the Erlang code better than me)
 
--- 
+> stdlib:
+>   - 20), race condition/silent data corruption in dets OTP-8898
+>     Patch: https://github.com/erlang/otp/commit/4e79fa3b1b6797f2583848d307d6b85cec94a920
+>     Note: Hard to tell if has security implications
 
--Kurt Seifried / Red Hat Security Response Team
+It's a bug fix, and I believe it has no security implications.
 
+Best regards,
+
+Hans Bolinder, Erlang/OTP team, Ericsson
