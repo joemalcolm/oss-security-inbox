@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/11
-Message-ID: <376087124.58391.1297864103780.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Feb 2011 08:48:23 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/36
+Message-ID: <20110404175333.GA13733@openwall.com>
+Date: Mon, 4 Apr 2011 21:53:33 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: kernel: ALSA: caiaq - Fix possible string-buffer overflow
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Russ, Tomas -
 
------ Original Message -----
-> Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to
-> overflow the string array sizes by too long USB device name string."
+On Mon, Apr 04, 2011 at 01:26:50PM -0400, R P Herrold wrote:
+> On Mon, 4 Apr 2011, Tomas Hoger wrote:
 > 
-> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
+> >Given the aim to keep the subscriber list very limited, this probably
+> >falls into a tentatively subscribed category too.  AFAIK, CentOS has
+> >rather few components that are not rebuilds of the RHEL SRPMs, the
+> >question is how often a v-s info was useful in the past in providing
+> >security updates for those extra packages.
 > 
-> Just FYI, I'm not requesting a CVE name for this as it only affects
-> Native Instruments USB audio devices with very long device name which I
-> think is unlikely.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=677881
-> 
+> Thanks for the post furthering the marketing goals of your 
+> corporate master; ...
 
-I'm assigning this CVE-2011-0712.
+FWIW, I found Tomas' posting appropriate and his question desirable,
+which is confirmed by your helpful response (starting with the second
+paragraph).  If not Tomas, others would (hopefully) have the same
+question, which was reasonable and it needed to be addressed in here.
 
-With the recent research about having a smartphone impersonate various USB
-devices, I think this attack is now more plausible than in previous years.
+So I'd like to thank both of you.  I only wish this did not result in
+that tone of Russ' response, but we can live with that.
 
-Thanks.
-
--- 
-    JB
+Alexander
