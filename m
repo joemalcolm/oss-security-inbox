@@ -1,111 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/26
-Message-ID: <20110405160254.GC8639@core.inversepath.com>
-Date: Tue, 5 Apr 2011 18:02:54 +0200
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/11
+Message-ID: <1104040934450.26429@mjc.redhat.com>
+Date: Mon, 4 Apr 2011 09:42:37 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
-> * [2011-04-05 08:43:29 -0400] Josh Bressers wrote:
-> 
-> >
-> >----- Original Message -----
-> >>On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
-> >>> Not adding Apple to any coordination list would be plain silly. They
-> >>> were far more active than most of the distributions.
-> >>
-> >>Yes. But why do they need to be aware, say, of glibc vulnerabilities
-> >>(ones that are in fact believed to be glibc-specific)?
-> >
-> >This is an excellent point. It's a hard problem to solve honestly. I guess
-> >the question really comes down to this. Do the disadvantages of one list
-> >outweigh the benefits? I'm not sure what the answer is. There probably
-> >isn't an "answer" though, just lots of opinions.
-> 
-> Just throwing this out there (I've read the thread but haven't
-> contributed at all yet).
-> 
-> A lot of userland stuff is shared between BSD and Linux, and probably
-> some other operating systems.  About the only things that differ between
-> a lot of these are the Linux kernel, and the *libc.  There is a lot of
-> cross-over with other stuff, which means there will likely be a lot of
-> cc'ing going on (which I imagine might be complicated due to encryption
-> requirements).
-> 
-> Where does the line get drawn?  If vendor A ships with exim, and another
-> with postfix, which one belongs on the "Linux list"?  Obviously
-> discussions of exim don't matter to the postfix shipper, and vice versa.
-> Pick any other software that has a competing open source alternative.
-> Does Debian not get on the list because they don't technically ship
-> firefox?
-> 
-> I think if the disqualifier to Apple is that they don't ship a Linux
-> kernel and glibc, then we're doing them (and ourselves) a disservice.
-> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
-> here, just stating a fact).
-> 
-> I think it would be reasonable to s/Linux list/open source vendor list/,
-> like vendor-sec used to be.  Yes, Apple will see some glibc stuff and
-> some Linux kernel stuff.  So what?  They may also see some exim stuff
-> that doesn't apply to them, and (hopefully!) the Linux vendors may seem
-> some stuff that isn't applicable to them, but it is useful for the *BSD
-> vendors who would (hopefully!) be on the list and feel welcome enough to
-> use it.  Who knows, it might even be beneficial to have a glibc issue
-> and someone from Apple or FreeBSD or whatever pipes up and indicates
-> that the BSD libc once had a similar problem and tells us how they fixed
-> it.
-> 
-> I think getting hung up on "Linux vendors only" and "BSD vendors can
-> have their own list" and we end up cross-posting 90% of the issues is
-> going to be an exercise in frustration.
-> 
-> Either that, or we start to work more closely with a *CERT and deal with
-> their process for passing along information to other vendors for
-> userland things that are shared; no offence to oCERT or anyone else, but
-> that seems like more of a headache than just letting
-> Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
-> 
-> Just my $0.02.
-> 
+> I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> and Josh).
 
-None taken :)
+Limiting a distro to two or three representatives is going to make things 
+tricky for Red Hat; we have a rather large dedicated security response 
+team (as we publish over 300 advisories a year across 70 product/versions 
+and have a number of folks dealing with 'incoming' issues spread, and my 
+team is dispersed across 9 different countries).  If these representatives 
+have been very active on v-s and oss-security is there a reason to limit?
 
-Some random reasons about why we value coordination over a "catch all" list
-(which was considered at oCERT beginning):
-
-- some vendors/projects got annoyed by reports not relevant to them, in the
-  long run it tends to lower the "attention level" when some matters are
-  really meaningful to them, that's why having a trusted purposed channel
-  often worked
-
-- it is not feasible to have every single OSS project on such a list and at
-  some point there is the need to address individual maintainers in a timely
-  fashion along with the affected parties, using a list + cc for that often
-  doesn't work as the communication level greatly differs most of the times
-  (unfortunately).
-
-  We found out the hard way that the usual level of technicality that was
-  happening with most vendors or lists like vendor-sec was perceived as
-  "threatening" or absolutely obscure to some developers/maintainers.
-
-I am not suggesting that coordination ala oCERT is the only true way of
-course, and I am not trying to pitch our project here, just wanted to give
-some elements for the discussion.
-
-I personally think that we need a blend of both approaches in the long term,
-it is just a matter of using the right tool for the job.
-
-Cheers
-
-> -- 
-> Vincent Danen / Red Hat Security Response Team
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Mark
