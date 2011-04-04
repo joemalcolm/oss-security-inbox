@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/8
-Message-ID: <20111007212613.GA12618@radis.liafa.jussieu.fr>
-Date: Fri, 7 Oct 2011 23:26:13 +0200
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/22
+Message-ID: <20110404135615.GA16747@suse.de>
+Date: Mon, 4 Apr 2011 15:56:15 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Juliusz Chroboczek <jch@....jussieu.fr>
-Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct  7, 2011 at 10:11:10 -0600, Vincent Danen wrote:
+On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> Dan Rosenberg wrote:
+> 
+> > On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
+> > > This is pathetic. You've all just made your personal and 'work' email
+> > > addresses targets by having a ridiculous public 'signup' system, and
+> > > the fact you all feel the need to hide behind some sort of veil for
+> > > security issues.
+> > >
+> > >
+> > 
+> > Do you really think anyone is gaining new information by discovering
+> > that, say, a member of the security team for a major distro will be on
+> > this mailing list?  Such information seems pretty obvious to me.
+> 
+> Benji's trolling does raise a couple real issues.  The private keys and
+> passphrases of those responding here have now become highly lucrative
+> targets for attackers.  Hence, everyone on this new list needs to use
+> good practices to keep their keys, hard drives, and computers safe.
+> There should probably be some common guidelines for key safety for all
+> participants.
 
-> * [2011-10-06 18:37:01 +0200] Juliusz Chroboczek wrote:
-> 
-> >>  a denial of service flaw was found in the way Polipo, a lightweight
-> >>caching web proxy, processed certain HTTP POST / PUT requests. If
-> >>polipo was configured to allow remote client connections and particular
-> >>host was allowed to connect to polipo server instance, a remote
-> >>attacker could use this flaw to cause denial of service (polipo daemon
-> >>abort due to assertion failure) via specially-crafted HTTP POST / PUT
-> >>request.
-> >
-> >Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
-> >it is fixed in the Git trunk, which is unfortunately not ready to be
-> >released (and might never be unless a maintainer is found).
-> 
-> Do you have a link to the commit, or a commit id?  I can't see anything
-> on github that looks relevant or recent.
-> 
-> We do ship this in Fedora, so it would be nice to have the patch that we
-> could apply to what we are already shipping if no releases are
-> forthcoming.
-> 
-git bisect using the PoC from the RH bug suggests that was fixed by
-https://gitweb.torproject.org/chrisd/polipo.git/commitdiff/0e2b44af619e46e365971ea52b97457bc0778cd3
+So would be my work mailbox in previous times.
 
-Cheers,
-Julien
+I guess you are overestimating the value of the information that could
+be possibly gained.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Ciao, Marcus
