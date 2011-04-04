@@ -1,41 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/10
-Message-ID: <439581293.232576.1298994372734.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Mar 2011 10:46:12 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/6
+Message-Id: <20110403205213.08090070.michael.s.gilbert@gmail.com>
+Date: Sun, 3 Apr 2011 20:52:13 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-> "struct sco_conninfo has one padding byte in the end. Local variable
-> cinfo of type sco_conninfo is copied to userspace with this
-> uninizialized one byte, leading to old stack contents leak."
+Solar Designer wrote:
+
+> On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> > Benji's trolling does raise a couple real issues.  The private keys and
+> > passphrases of those responding here have now become highly lucrative
+> > targets for attackers.  Hence, everyone on this new list needs to use
+> > good practices to keep their keys, hard drives, and computers safe.
+> > There should probably be some common guidelines for key safety for all
+> > participants.
 > 
-> https://lkml.org/lkml/2011/2/14/49
-
-Please use CVE-2011-1078.
-
-> "Struct ca is copied from userspace. It is not checked whether the
-> "device" field is NULL terminated. This potentially leads to BUG()
-> inside of alloc_netdev_mqs() and/or information leak by creating a
-> device with a name made of contents of kernel stack."
+> Right.  We're likely to specify some minimum requirements.  For example,
+> Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
+> when we use the list for real.  Yet this is an improvement over the
+> plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
+> private keys on a server won't be allowed (but we'd have to trust
+> members on that).
 > 
-> https://lkml.org/lkml/2011/2/14/50
-
-Please use CVE-2011-1079.
-
-> "Struct tmp is copied from userspace. It is not checked whether the
-> "name" field is NULL terminated. This may lead to buffer overflow and
-> passing contents of kernel stack as a module name to
-> try_then_request_module() and, consequently, to modprobe commandline.
-> It would be seen by all userspace processes."
+> > Perhaps all discussions should be published in the open
+> > something like 2 months after the initial posting?  That would be a
+> > kind of maximum private coordination period.
 > 
-> https://lkml.org/lkml/2011/2/14/51
+> Yes, we may do this.  Technically, an archive may be implemented as yet
+> another subscriber with its public key, where the private key
+> counterpart is not stored on any server and has a passphrase on it.
+> Thus, a possible compromise of the list server won't reveal past
+> messages (archived before the compromise, but not yet made public).
+> 
+> Pushing the archive public will then be a manual process, but that's OK
+> if it's only done once a month (omitting the last month's worth of
+> messages).  In fact, a posting to oss-security will need to be made
+> whenever the public archive is updated.
 
-Please use CVE-2011-1080.
+Wouldn't the easiest solution be to have a cron job check that the age
+of the message is greater than X days, decrypt it, and mail it to a
+different archive/public list?
 
-Thanks you,
---
-Petr Matousek / Red Hat Security Response Team
+I think automatic publishing is the only way this is going to work.
+No one is going to want to manually do the work.  Plus an automatically
+enforced maximum time frame will force issues to get fixed.  Automation
+also means that nothing is being veiled.  Computers don't discriminate,
+humans do.
 
+Best wishes,
+Mike
