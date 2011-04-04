@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/9
-Message-ID: <20110628114608.GA7525@dhcp-25-225.brq.redhat.com>
-Date: Tue, 28 Jun 2011 13:46:09 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/54
+Message-ID: <1301950842.1154.14.camel@hidalgo>
+Date: Mon, 04 Apr 2011 23:00:42 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>
-Subject: CVE request: libvirt: integer overflow in VirDomainGetVcpus
+Subject: Re: Web of trust
 Content-Type: text/plain; charset=utf-8
 
-It has been found that calling VirDomainGetVcpus with bogus parameters
-can lead to integer overflow and subsequent heap corruption. A remote
-attacker could use this flaw to crash libvirtd (DoS).
+On lun., 2011-04-04 at 16:41 +0200, Nico Golde wrote:
+> Ok please use nion@...ian.org with E1AB DE0E FFCA AEF3 9494 7592 CD4B 2AF3 A0A0 AAAA.
+> This key is signed by 73647CFF which is in the Debian keyring and a transition 
+> statement signed by 73647CFF as well is online at http://nion.modprobe.de/key-transition-2008-06-01.txt.asc 
 
-Upstream patch:
-https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
+Sorry for diverting the thread. I'm not intending to request
+subscription to vendor-sec (I'm not yet really active in Debian security
+team) but considering the use of GPG, would it make sense to have at
+least some kind of “web of trust” thing on the involved keys? That plus
+subscribing the project address when possible could help maintaining
+some confidence about where the mail really ends (though that doesn't
+mean it can't be leaked later).
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=717199
-https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
+I'm not sure the procedure Debian use for cross-signing would fit
+because it involves physical meeting (and usually beer signing too) and
+it might not be practical, but it's still an idea.
 
-Thanks,
+Regards,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
