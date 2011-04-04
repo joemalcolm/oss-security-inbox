@@ -1,21 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/29
-Message-ID: <20110403230223.GF10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:02:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/29
+Message-ID: <4D99D975.5080700@redhat.com>
+Date: Mon, 04 Apr 2011 22:45:09 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
+CC: Ludwig Nussel <ludwig.nussel@...e.de>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 01:22:36PM -0700, Steve Beattie wrote:
-> I was a subscriber of vender-sec, please add me to the new list.
-> 
-> gpg information:
-> 
-> pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
->       Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
-> uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
+On 04/04/2011 10:38 PM, Ludwig Nussel wrote:
+> Josh Bressers wrote:
+>> Initial members will have had to be a vendor-sec member (no exploders this
+>> time around). You must reply to this thread, in public (on oss-security).
+>> We want this to be very public, we have nothing to hide. You must have a
+>> public gpg key ID included in your reply. The new list will gpg encrypt all
+>> mail (it does accept plaintext messages though).
+>
+> I've created a dedicated key for this purpose:
+>
+> pub   2048R/1F334FA6 2011-04-04 [expires: 2012-04-03]
+> uid                  Ludwig Nussel (vendor-sec)<ludwig.nussel@...e.de>
+> sub   2048R/4F5FEB97 2011-04-04 [expires: 2012-04-03]
 
-Added.
+Maybe once we have a list of initial members, we should start using a 
+vouching system, that the applicant must be referred by someone from the 
+list, and we only accept members whom we met and trust. Just a suggestion.
 
-Alexander
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
