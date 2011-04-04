@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/16
-Message-ID: <f1249141-c9e0-435b-bb9c-f5c10983e3fb@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:31:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/52
+Message-ID: <1301945504.1154.6.camel@hidalgo>
+Date: Mon, 04 Apr 2011 21:31:44 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: Re: CVE-request: Joomla 20111001 Core - Information Disclosure
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On lun., 2011-04-04 at 02:38 +0400, Solar Designer wrote:
+> "Good" employers, let alone non-commercial Open Source projects, don't
+> remove e-mail addresses when a person leaves.  Someone having an
+> @debian.org address does not mean they're currently with Debian. 
 
+In Debian case, that is wrong, mail redirection to @debian.org address
+is disabled when retiring from the Debian project.
 
------ Original Message -----
-> Can I get CVE-identifier for this issue?
-> http://developer.joomla.org/security/news/370-20111001-core-information-disclosure.html
-> 
-
-Please use CVE-2011-3629.
-
-Thanks.
-
+Regards,
 -- 
-    JB
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
