@@ -1,21 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/6
-Message-ID: <20110225043240.GA20649@ksplice.com>
-Date: Thu, 24 Feb 2011 23:32:40 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/56
+Message-ID: <4D9A445E.6090503@xiscosoft.es>
+Date: Tue, 05 Apr 2011 00:21:18 +0200
+From: klondike <klondike@...cosoft.es>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libcgroup: Failure to verify netlink messages
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-The cgrulesengd program from libcgroup failed to properly verify the
-sender of netlink messages, allowing arbitrary users to spoof events
-to the daemon, causing it to place processes into incorrect cgroups.
+El 04/04/11 22:03, Jeffrey Czerniak escribió:
+> I'm Jeffrey Czerniak, a member of Apple's Product Security team.  I was a member of vendor-sec via the Apple exploder.   Please subscribe me to the new list.
+>
+> My PGP public key can be found at https://www.apple.com/support/security/pgp/   I have also pasted it below for convenience:
+I thought Apple didn't made a Linux distro. Has that changed?
 
-Note that the default configuration of cgrulesengd does not contain
-any any rules, so this is probably only usefully exploitable if an
-admin have specifically configured cgrulesengd to enforce some policy.
 
-References:
-http://sourceforge.net/mailarchive/message.php?msg_id=27102603
-
-- Nelson
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
