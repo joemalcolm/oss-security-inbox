@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/7
-Message-ID: <20110623213845.GP25507@outflux.net>
-Date: Thu, 23 Jun 2011 14:38:45 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/46
+Message-ID: <20110404190008.GC14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:00:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: ext4: init timer earlier to avoid a kernel panic in __save_error_info
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-This came to our attention:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0449641130f5
-by way of https://bugs.launchpad.net/ubuntu/+source/linux/+bug/801087 and
-https://bugzilla.kernel.org/show_bug.cgi?id=32082
+On Mon, Apr 04, 2011 at 12:05:18AM -0500, Micah Gersten wrote:
+> Please add me to the new list, I was a member through the Ubuntu exploder:
+> pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
+>       Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
+> uid                  Micah Gersten <micah@...ntu.com>
+> sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
 
-"During mount, when we fail to open journal inode or root inode, the
-__save_error_info will mod_timer. But actually s_err_report isn't
-initialized yet and the kernel oops."
+Added.
 
-Thanks,
+(We'll need to revisit the member list for Ubuntu later.)
 
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+Alexander
