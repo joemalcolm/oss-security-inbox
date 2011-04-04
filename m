@@ -1,38 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/12
-Message-Id: <201102231001.08004.thomas@suse.de>
-Date: Wed, 23 Feb 2011 10:01:07 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/49
+Message-ID: <20110404190632.GF14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:06:32 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: gdm PostLogin script executes scripts as user gdm
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 22 Februar 2011 21:54:11 schrieb Josh Bressers:
-> 
-> ----- Original Message -----
-> > Hello oss-security,
-> > 
-> > should we consider this as a vulnerability?
-> > https://bugzilla.gnome.org/show_bug.cgi?id=602403
-> > 
-> 
-> I'm not sure this is a security flaw. It's not running user controlled
-> scripts (at least not by default). In order for it to run a user controlled
-> script, the admin would have to modify the Default script. Is this normal?
-> 
-> I'm not all that familiar with expected use of gdm, perhaps someone who
-> knows more can chime in?
+On Mon, Apr 04, 2011 at 10:40:57AM +0800, Eugene Teo wrote:
+> pub   4096R/51BF6EF3 2011-04-04
+>     Key fingerprint = 7664 496C 62A9 7BC2 7229  B654 FF73 C155 51BF 6EF3
+> uid                  Eugene Teo <eugene[0x40]redhat.com>
+> uid                  Eugene Teo <eteo[0x40]redhat.com>
 
-I am not familiar with this functionality too. The bug reporter states that
-the handling was differently in the past. This different behaviour may
-lead to security problems for the deployed systems... hmmm.
+Added.
 
-
-Thomas
-
--- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Alexander
