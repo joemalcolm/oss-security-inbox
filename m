@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/8
-Message-ID: <loom.20110414T095606-853@post.gmane.org>
-Date: Thu, 14 Apr 2011 07:56:54 +0000 (UTC)
-From: Franck Paul <carnet.franck.paul@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/26
+Message-Id: <201104041638.32909.ludwig.nussel@suse.de>
+Date: Mon, 4 Apr 2011 16:38:32 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dotclear before 2.2.3
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hanno Böck <hanno@...> writes:
+Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-> 
-> My french isn't that good:
-> http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
-> 
-> But that sounds like a security issue:
-> "Pour en revenir à cette version, signalons qu'elle contient la
-> correction d'une faille de sécurité signalée il y a quelque temps par
-> Raphaël — que nous remercions au passage —, ainsi qu'une correction
-> attendue pour la génération manuelle des miniatures."
-> 
+I've created a dedicated key for this purpose:
 
+pub   2048R/1F334FA6 2011-04-04 [expires: 2012-04-03]
+uid                  Ludwig Nussel (vendor-sec) <ludwig.nussel@...e.de>
+sub   2048R/4F5FEB97 2011-04-04 [expires: 2012-04-03]
 
-Hi,
+cu
+Ludwig
 
-Yes it's a minor security issue fixed by this new release.
-
-Regards
-Franck
-
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
