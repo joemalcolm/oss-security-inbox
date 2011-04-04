@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/16
-Message-ID: <20110403220938.GE9516@openwall.com>
-Date: Mon, 4 Apr 2011 02:09:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/8
+Message-ID: <4D992FB9.3080908@redhat.com>
+Date: Mon, 04 Apr 2011 10:40:57 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 06:00:40AM +0200, klondike wrote:
-> Will the list provide protection against rubber-hose cryptanalisys?,
+On 04/02/2011 02:03 AM, Josh Bressers wrote:
+> Hello everyone,
+>
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
 
-No, it won't.  Worse, people will also have the temptation to make use
-of the information at their other jobs, etc.  For example, a security
-contact for a distro might not only prepare updated packages, but also
-patch their personal server early... which adds to the risk.
+pub   4096R/51BF6EF3 2011-04-04
+     Key fingerprint = 7664 496C 62A9 7BC2 7229  B654 FF73 C155 51BF 6EF3
+uid                  Eugene Teo <eugene[0x40]redhat.com>
+uid                  Eugene Teo <eteo[0x40]redhat.com>
 
-I see no way to deal with this technically, other than by keeping the
-number of subscribers relatively low (only those who "need to know") and
-by only discussing medium-severity issues on the list (thus high
-severity ones will have even more focused distribution).
-
-Arguably, medium-severity issues are not worth rubber-hose cryptanalysis
-and are not as tempting to patch, yet their handling may benefit from
-some coordination between distro vendors.
-
-> Sometime ago I was taught that the best way to be sure a secret was not
-> known was not saying it, so if you, researchers, want to make sure your
-> PoC aren't abused do things properly, warn the vendors to upgrade the
-> product because of your security finding and avoid providing PoCs until
-> enough time has passed for you to be sure everybody has had a chance to
-> upgrade.
-
-This makes sense to me.  No need to provide vendors with more info than
-they need to properly patch the issue and verify the fix.  The latter
-will sometimes require access to a PoC, though, but I'd prefer such PoCs
-to be sent directly to vendors who express interest in testing their
-fixes rather than posted to a multi-vendor exploder list.
-
-> Any other solution can be easily flawed since you can't make sure I
-> won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
-> such a private list.
-
-Sure, but it's always a tradeoff, and the risk is there even if you
-share a vulnerability report without a PoC.
-
-Alexander
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
