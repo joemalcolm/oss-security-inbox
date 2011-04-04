@@ -1,20 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/2
-Message-ID: <20111230114950.GC20236@foo.fgeek.fi>
-Date: Fri, 30 Dec 2011 13:49:50 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/4
+Message-ID: <4D99DD87.5010001@gmx.de>
+Date: Mon, 04 Apr 2011 17:02:31 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Elxis CMS two XSS-vulnerabilities
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-http://osvdb.org/show/osvdb/77563
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-http://osvdb.org/show/osvdb/77564
+Am 02.04.2011 02:08, schrieb Dan Rosenberg:
+> Hi Josh,
+> 
+>>
+>> Long term I'd like to see two lists, one for purpose #1, and another geared
+>> toward #2. I think having a trusted venue for knowledge sharing would be
+>> very useful, and we likely don't want the list clogged with coordination
+>> details. This will of course rely heavily on what Openwall is willing to
+>> take on. They're already taking on a lot of risk and responsibility, I
+>> don't want to spoil the good will.
+>>
+> 
+> I agree that having such a venue for discussion would be valuable, and
+> I'd personally like to contribute to such a list.
+> 
+>>
+>> Should we require members use a mail address from their vendor? Letting
+>> people use personal addresses creates an opportunity for people to remain
+>> on a list when they are no longer a part of a given vendor (it also makes
+>> it quite easy to know who represents a vendor).
+>>
+> 
+> Yes, I think this should be a requirement for a closed coordination
+> list (as opposed to the more relaxed option #2).  In fact, I think
+> membership to such a list should be restricted almost exclusively to
+> distributions and downstream providers of third-party software.  It
+> obviously makes sense to have distro security teams on a list, since a
+> vulnerability in project XYZ will need to be coordinated among all of
+> the distros.  However, most software projects only need access to
+> information concerning their own project.  There's no reason one
+> software project should gain access to vulnerability information about
+> a completely unrelated project, and restricting membership to achieve
+> that will at least help minimize the leakage that went on with the
+> previous list.
 
-http://secunia.com/advisories/47073/
+This raises an interesting point, "downstream providers of third-party
+software".
 
-Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
+In my case, I'd understand that I might want to offer vendors the
+possibility to co-ordinate upgrades for bogofilter, fetchmail, and
+leafnode, in lexicographical order, and possibly for a FreeBSD port --
+although I'm not a representative of FreeBSD's security officer team
+(nor would that team usually deal with third-party software
+vulnerabilities unless it's in the basde system).
 
-- Henri Salo
+Questions:
+
+#1 would the new private list be allowed to Cc: outside members (for
+instance, FreeBSD's unencrypted internal developers@ list does not allow
+that)?  Who would make sure that no end user agent allows an unencrypted
+Cc: slip?  A major concern IMO.
+
+#2 will the subscriber list be public for subscribers that are later
+joining according to a policy that the new subscribers will have voted
+on in the secret list?
+
+#3 will the list rules themselves be open to non-members?
+
+Best regards
+Matthias Andree
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk2Z3YAACgkQvmGDOQUufZVOxwCgjB/6LOWr20J8Y8EfzFft3t8p
+f+MAn2/WOCMH38v5Bp0F4ywC6kUnzAfV
+=JEA5
+-----END PGP SIGNATURE-----
