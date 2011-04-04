@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/11
-Message-ID: <1970627865.28695.1302552925416.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 16:15:25 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/48
+Message-ID: <20110404190448.GE14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:04:48 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: gitolite
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> https://github.com/sitaramc/gitolite/commit/4ce00aef84d1ff7c35f7adbbb99a6241cfda00cc
-> http://groups.google.com/group/gitolite/browse_thread/thread/797a93ec26e1dcbc?pli=1
+On Mon, Apr 04, 2011 at 09:18:12AM +0530, Huzaifa Sidhpurwala wrote:
+> Please subscribe me as well:
 > 
-> I didn't find a CVE id for this, could I get one?
+> pub  1024D/DA5BDAE5 2006-08-25
+> Huzaifa S. Sidhpurwala <huzaifas@...hat.com>
 > 
+> key: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCC70DCF2DA5BDAE5
 
-This appears to be an arbitrary command execution flaw (the patch appears
-to limit the commands that can be run).
+Added.
 
-Use CVE-2011-1572
-
-Thanks.
-
--- 
-    JB
+Alexander
