@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/7
-Message-ID: <20110617002706.43a3d674@redhat.com>
-Date: Fri, 17 Jun 2011 00:27:06 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: secalert_us@...cle.com
-Cc: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/24
+Message-ID: <21216ad193b639fa0749a251f2d893bc@phocean.net>
+Date: Mon, 04 Apr 2011 16:00:29 +0200
+From: phocean <0x90@...cean.net>
+To: <oss-security@...ts.openwall.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 17 May 2011 10:43:10 -0700 Oracle Security Alerts wrote:
+ On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
+> On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
+>> Please subscribe me to the new list. I was a vendor-sec subscriber.
+>>
+>> pub   2048R/519FE93C 2011-01-26
+>> uid                  ksha <ksha@...m.cl>
+>
+> Are you a security contact for a Linux distro, and for which one?
+> And how do we verify that?
+>
+> How did you receive vendor-sec mail?
+>
+> Alexander
 
-> On 04/30/11 08:26 AM, Solar Designer wrote:
-> > Does Oracle start to prepare security updates for Oracle Enterprise
-> > Linux before or after Red Hat releases theirs?  If it's after, then
-> > there's too little need for Oracle to have advance notification.
-> 
-> If we know about vulnerabilities in advance, our fixing process
-> starts before Red Hat releases their updates. It starts with
-> assessment of issue, reviewing the fix for completeness and
-> applicability to our kernel and components we maintain or provide in
-> our Linux distribution. See
-> http://www.oracle.com/us/technologies/linux/026042.htm
-> or http://oss.oracle.com/
-> 
-> We do not expect Red Hat or other vendors to evaluate impact of
-> security vulnerabilities on Oracle Linux, nor fix it in a way that
-> is applicable to our releases. Hence the request for subscription.
-
-Maybe I'm mis-reading the above statement, but it seems to imply it's
-not uncommon for you to re-do security patches that were applied to
-RHEL packages before building them as OEL updates.  Do you have any
-specific examples to point to (on- or off-list), so we can possibly
-check what mistakes we did?
-
-Thank you!
+ I is work for Alt Linux Russia and is want to subscribe to yor list.
+ Is is thank you is advance.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ phocean
