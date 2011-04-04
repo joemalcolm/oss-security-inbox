@@ -1,65 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/9
-Message-ID: <Pine.GSO.4.64.1109141428170.18631@faron.mitre.org>
-Date: Wed, 14 Sep 2011 14:35:54 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/42
+Message-ID: <20110404183229.GA14209@openwall.com>
+Date: Mon, 4 Apr 2011 22:32:29 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Apr 04, 2011 at 03:56:15PM +0200, Marcus Meissner wrote:
+> On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> > Benji's trolling does raise a couple real issues.  The private keys and
+> > passphrases of those responding here have now become highly lucrative
+> > targets for attackers.  Hence, everyone on this new list needs to use
+> > good practices to keep their keys, hard drives, and computers safe.
+> > There should probably be some common guidelines for key safety for all
+> > participants.
+> 
+> So would be my work mailbox in previous times.
+> 
+> I guess you are overestimating the value of the information that could
+> be possibly gained.
 
-> Are the below worth assigning CVE ids to? The advisory seems to suggest 
-> they are crash only fixes. Do those deserve CVE IDs? I know we've been 
-> fairly generous with wireshark in the past, but I'm wondering if we need 
-> to draw a line somewhere.
+Yes, I think folks are overestimating the value of the information that
+was on vendor-sec, and I am going to try to reduce that value even
+further for the new Linux distros list (such as by pushing discussions
+on non-medium severity issues elsewhere, and by limiting the embargo
+periods).  I think vendor-sec was primarily a target of attacks as a
+challenge, not so much for the value of the information that it actually
+carried.
 
-Crash-only issues are always/typically worth a CVE when it can prevent a 
-product from working in a security context.  Wireshark monitors network 
-traffic, sometimes live; therefore, in some reasonable/common usage 
-scenarios, attackers can cause a crash and prevent network activities from 
-being detected.
-
-We apply similar logic in forensics and other scenarios.  Therefore a CVE 
-is needed for both wnpa-sec-2011-12 (crash reading live packets) as well 
-as wnpa-sec-2011-14 (by only reading a packet trace file) - in the latter, 
-analysis of a packet trace could be hampered/delayed because the 
-investigator can't use the product without it crashing.
-
-Wireshark does not get any more "preference" than any other tool, except 
-indirectly because it gets more attention.
-
-- Steve
-
-
-
-On Wed, 14 Sep 2011, Josh Bressers wrote:
-
-> ----- Original Message -----
->
->> 2. Wireshark Lua script execution vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-15.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737784
->
-> Use CVE-2011-3360 for the above.
->
->
->>
->> 1, Wireshark CSN.1 dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-16.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737783
->>
->> 3. Wireshark buffer exception handling vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-14.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737785
->>
->> 4. Wireshark OpenSafety dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-12.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737787
->>
->
-> Thanks.
->
-> --
->    JB
->
+Alexander
