@@ -1,49 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/1
-Message-ID: <4E48A8B2.90600@redhat.com>
-Date: Mon, 15 Aug 2011 13:03:46 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: Yves-Alexis Perez <corsac@...ian.org>
-CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/35
+Message-ID: <944211187.369459.1301939335237.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 13:48:55 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- perl -- lc(), uc() routines are laundering tainted data
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Please use CVE-2011-1487
 
-On 08/13/2011 06:12 AM, Yves-Alexis Perez wrote:
-> On ven., 2011-08-12 at 13:31 +0800, Eugene Teo wrote:
->>>> Btw, can you please mail me a copy of the /boot/config of the
->>>> most recent Debian kernel for my reference?
->>> 
->>> Please let me know if you need anything in addition to the files 
->>> Yves-Alexis sent you.
->> 
->> I didn't receive his mail.
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> For some reason Evolution “reply-all” stripped you from the
-> recipients (maybe because of the reply-to header). I've bounced you
-> the mail I sent before (it didn't reach the list either because it
-> was too large, sorry for that).
-
-No problem. Thanks.
-
-Eugene
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBCAAGBQJOSKisAAoJEP9zwVVRv27zTfUP/jp6SMU7MsEgGXHx/IBY0bOo
-P0Q105rLPp+//WT69Lj3Mt58K2TheTTOgHh4fOGkEtFDC3Gueo8TZPe8/qothfXA
-TtSLFxCVZ3M3ZIYYPE/bG/8isZm5LmrnDSn8AasEzTusv4RC+Ly8XFkiYIKoN5VE
-PbDTfqXhVJJ8K4+ZtCQ+MbvjQAOS/LPBjaH4HzyBqFZXvDZIa6utrBZbvWiX3wdc
-0OphiaTBNcnK7L+iBrmkpx3AR4MDFYJl9phVWPoAqdlxQkTXB8/X867+Xjrk7NFj
-1693uDiQufCVK1jjMSpT7d0Dm7InCdBjAq5MO9z4xRoWagMGlOSrALVRp0Br0w+z
-suML7F/kQxEjS1rVYCbWmsuGt5afC7J87AC6miAx6wHdm9iuEERXgKbL9txhQv45
-tg+nNzb4GRiw/9zsdu1VqvitaGmDgjkjJsDj91vnq9gCd3aTXjJRd8ONvC0mB/eZ
-/SoCXEAQ91c6ImOkPN20MEzVk4Cui1+T0DTz1mzqindISpJU5ae6c7MIIk0dnRPh
-ofoQE/dgae5fPqr7w/WyhzR+gDlWb4Bf8iwUzh0InU6Hn76PbUrmtYndCpwQA9iD
-USNheyIoB/0Y03de1PrDZtUrXOrEKQbJsQELf7CXbrEkB66GFkoXGquIBYLYj6LY
-gtQnZrIudyyG9Y30bSUu
-=cTUV
------END PGP SIGNATURE-----
+> A security flaw was found in the way Perl performed
+> laundering of tainted data. A remote attacker could
+> use this flaw to bypass Perl TAINT mode protection
+> mechanism (leading to commands execution on dirty
+> arguments or file system access via contaminated
+> variables) via specially-crafted input provided
+> to the web application / CGI script.
+> 
+> Upstream bug report:
+> http://rt.perl.org/rt3/Public/Bug/Display.html?id=87336
+> 
+> Relevant patch:
+> http://perl5.git.perl.org/perl.git/commitdiff/539689e74a3bcb04d29e4cd9396de91a81045b99
+> (contains also information when the issue was introduced)
+> 
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=692844
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
