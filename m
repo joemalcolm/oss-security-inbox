@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/13
-Message-ID: <20110706201406.GD26418@ngolde.de>
-Date: Wed, 6 Jul 2011 22:14:06 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/20
+Message-ID: <20110404134024.GC12101@openwall.com>
+Date: Mon, 4 Apr 2011 17:40:24 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: libreoffice/openoffice.org CVE id request
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can someone assign a CVE id (or multiple) to:
-http://www.kb.cert.org/vuls/id/953183?
+On Mon, Apr 04, 2011 at 02:07:16PM +0200, Nico Golde wrote:
+> I can understand that you want to keep the list of subscribers low in order to 
+> prevent leaks. But from a practical point of view I see really no difference 
+> if a mail is passed to a team exploder of a distro by one of the allowed 
+> subscribers or directly sent to these members, at least in terms of attack 
+> surface/leaking risks.
 
-Kind regards
-Nico
+I was thinking that only a subset of issues discussed on the list will
+be relevant to a given distro, and only a subset of those will need to
+be communicated to the distro's entire security team right away.  Maybe
+this is not true for large distros, which package almost all software
+that Linux distros package at all.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+> That being said, my key data (I was added as part of Debian):
+> pub   1024D/73647CFF 2003-11-15
+>       Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
+> uid                  Nico Golde <nion@...ian.org>
+> uid                  Nico Golde <nico@...lde.de>
+> uid                  Nico Golde <nion@....net>
+> uid                  Nico Golde <nion@...tu-berlin.de>
+> sub   2048g/F774030E 2003-11-15
+> 
+> or alternatively a stronger key:
+> pub   4096R/A0A0AAAA 2009-06-01
+>       Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
+> uid                  Nico Golde <nion@...ian.org>
+> uid                  Nico Golde <nico@...lde.de>
+> uid                  Nico Golde <nion@...tu-berlin.de>
+> uid                  Nico Golde <nion@....net>
+> sub   4096R/E89CCA30 2009-06-02
 
-Content of type "application/pgp-signature" skipped
+Please suggest a specific e-mail address and key combination.  And if
+you suggest other than your @debian.org address, please suggest a way to
+verify that the address is really "yours" (the Debian security person's).
+
+Thanks,
+
+Alexander
