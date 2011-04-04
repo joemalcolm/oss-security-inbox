@@ -1,50 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/16
-Message-ID: <840953282.1275100.1310501229264.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 16:07:09 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/43
+Message-ID: <1323474278.371247.1301942509559.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 14:41:49 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Drupal 7 -- Access bypass in node listings (SA-CORE-2011-002)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2687.
+How do we want this broken down? If nobody complains, I'll just give it one.
 
 Thanks.
 
 -- 
     JB
 
-
 ----- Original Message -----
-> Hello Josh, Steve, vendors,
+> Any update on this?
 > 
-> this:
-> [1] http://drupal.org/node/1204582
+> Thanks,
+> Dan
 > 
-> From [1]: Access bypass in node listings:
-> =========================================
-> 
-> Listings showing nodes but not JOINing the node table show all
-> nodes regardless of restrictions imposed by the node_access system.
-> In core, this affects the taxonomy and the forum subsystem.
-> 
-> ...
-> 
-> Versions affected:
-> ==================
-> 
-> Drupal 7.0, 7.1 and 7.2.
-> 
-> 
-> References:
-> ------------
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=717874
-> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=633385
-> 
-> doesn't seem to have a CVE identifier allocated yet. Could you
-> allocate one?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
+> wrote:
+> > On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
+> >>
+> >> I sent in a patch [1] resolving two issues in ROSE:
+> >>
+> >> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
+> >> possible
+> >> for a remote host to provide more digipeaters than expected,
+> >> resulting
+> >> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
+> >> overflows, and abort facilities parsing on failure.
+> >>
+> >> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+> >> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
+> >> length of less than 10, resulting in an underflow in a memcpy size,
+> >> causing a kernel panic due to massive heap corruption. A length of
+> >> greater than 20 results in a stack overflow of the callsign array.
+> >> Abort facilities parsing on these invalid length values."
+> >>
+> >> These issues may both result in code execution. They may be
+> >> triggered
+> >> by a remote attacker if the victim has a listening ROSE socket, or
+> >> by
+> >> a local attacker (for privilege escalation) if a ROSE device exists
+> >> (e.g. rose0).
+> >>
+> >> Ben Hutchings followed up with a patch [2] that resolves a number
+> >> of
+> >> other ROSE issues related to lack of size field validation, some of
+> >> which may also result in heap corruption.
+> >>
+> >> Not sure about the proper CVE breakdown for all these issues, since
+> >> the entire protocol was quite broken. Perhaps one is enough to
+> >> cover
+> >> everything.
+> >
+> > I am not sure. I would just assign one for the collection of issues
+> > here but
+> > I will let Steve decide instead.
+> >
+> >> [1] http://marc.info/?l=linux-netdev&m=130060344616926
+> >> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+> >
+> > Thanks, Eugene
+> > --
+> > main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
+> > main(++i); }
+> >
