@@ -1,20 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/1
-Message-ID: <20111113121234.0603015c@laverne>
-Date: Sun, 13 Nov 2011 12:12:34 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/47
+Message-ID: <20110404190319.GD14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:03:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
+On Mon, Apr 04, 2011 at 08:14:30AM +0200, Oden Eriksson wrote:
+> Hello, please subscibe me as well. I'm the Mandriva Linux security team 
+> manager and was on vendor-sec.
+> 
+> pub   4096R/EF5A2947 2009-12-17
+>       Key fingerprint = CACF 1B05 DBE9 1B83 243A  AF73 C7B2 9DA0 EF5A 2947
+> uid                  Oden Eriksson <oeriksson@...driva.com>
 
-"Today we have released CMSMS 1.9.4.3, a minor release that fixes a
-single security issue in the news module. Essentially, a malicious
-person could via accessing a sincle URL corrupt your news articles."
+Added.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
