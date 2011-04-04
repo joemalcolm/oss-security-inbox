@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/15
-Message-ID: <4DA4C644.10001@mvista.com>
-Date: Tue, 12 Apr 2011 11:38:12 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/12
+Message-ID: <20110404085148.GC2053@suse.de>
+Date: Mon, 4 Apr 2011 10:51:48 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-
-
-On 04/09/2011 10:39 AM, Solar Designer wrote:
-> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
->> Can I get a status on this? (+, -, Ack, Nack)
+On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
+> >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> >and Josh).
 > 
-> Postponed.  I'd like to see any support for you getting onto the Linux
-> distros security contacts list, with reasoning, or/and any other
-> suggestions on what to do in this case.  Josh - what do you think (as
-> someone who advocated the setup of a vendor-sec replacement)?
-> 
+> Limiting a distro to two or three representatives is going to make things 
+> tricky for Red Hat; we have a rather large dedicated security response 
+> team (as we publish over 300 advisories a year across 70 product/versions 
+> and have a number of folks dealing with 'incoming' issues spread, and my 
+> team is dispersed across 9 different countries).  If these representatives 
+> have been very active on v-s and oss-security is there a reason to limit?
 
-> Since you pinged me about the status on your subscription, let me ping
-> you about the status on the wiki updates as well. ;-)  Any progress?
-> The pages to update with your info are:
-> 
-> http://oss-security.openwall.org/wiki/vendors
-> http://oss-security.openwall.org/wiki/distro-patches
-> 
+Similar for SUSE. We currently have 3 engineers rotating through the incident
+manager role (and myself).
 
-Updated for MontaVista.
+Ciao, Marcus
