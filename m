@@ -1,49 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/1
-Message-ID: <4EF12420.6070605@redhat.com>
-Date: Tue, 20 Dec 2011 17:11:12 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/17
+Message-ID: <BANLkTik9TYa56_ayi7JX2AaZzc286qvSJg@mail.gmail.com>
+Date: Mon, 4 Apr 2011 07:32:12 +0100
+From: Benji <me@...ji.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment from previous years
+Cc: Michael Gilbert <michael.s.gilbert@...il.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/20/2011 11:07 AM, Steven M. Christey wrote:
->
-> Note that the year does NOT include when the vuln was found (and if it 
-> was silently fixed, that's not a factor either).
->
-> The year is almost always obtained from either:
->
-> 1) When the CVE was first privately reserved.  We already have more than
->    two hundred CVE-2012-XXXX numbers reserved for various CNAs who are
->    using them to coordinate disclosures that are scheduled to
->    happen in 2012.  This date often correlates with the year that the 
-> vuln
->    was found, but not always.
->
-> 2) When the issue was first made public.  There can be some disagreement
->    about when a vuln is first published (e.g. a bug report may lie
->    unresolved, technically viewable by anybody, for a few years before it
->    reaches general awareness, or something might be published on December
->    31 in one part of the world when it is January 1 in another part of 
-> the
->    world.)
->
-> Some CNAs who have a pool of CVEs from one year, will continue to use 
-> that pool in the next year if there are any CVEs left over, though I 
-> generally discourage it.
->
-> In January and February 2012, you will probably still see a fairly 
-> large number of new CVE-2011-xxxx identifiers released, as MITRE/etc. 
-> assign CVEs to issues that were first published in 2011.
->
-> - Steve
->
+>>Benji's trolling does raise a couple real issues
 
-Steven is correct and I was wrong (as usual =)  Please ignore what I 
-said previously.
+I'm not trolling.
 
--- 
+I think your argument for this mailing list is that vulnerabilities need to
+be fixed before they're released to the greater public. While I can
+understand that, it seems ridiculous to parade yourselves around in public
+with a signup system that is akin to
 
--Kurt Seifried / Red Hat Security Response Team
+
+>>Huh?  Now you're with "the other" group that accuses "us" of "hiding"?
+
+Can I not be part of the group that thinks a public signup system for a
+mailing list that previously had the mail server owned due to the fact it
+was secret (showing interest in possibly owning users now that emails like
+mjo@...o.mi.org have been confirmed on the list) for a mailing list that is
+'embargoed' when really it shouldn't be.
+
+>>What is your opinion on making the list's archive public with a delay(when
+the corresponding security issues are already public)?
+
+It would be better. In my opinion, delay would be 1-2 days. Vendor-sec
+(alternatives) should be a last resort in publishing issues, other projects
+don't get the same "privileges", and have to "make do" with oss-sec. If you
+really need such help 'co-ordinating' and fixing things, maybe you should
+have a policy to, release advisory/info first, then have a 'co-ordination'
+list.
+
+
+>>Do you really think anyone is gaining new information by discovering
+>>that, say, a member of the security team for a major distro will be on
+>>this mailing list?  Such information seems pretty obvious to me.
+
+Yes Dan, but now we have private email accounts as well (by people who
+apparently don't like to use vendor email addresses) that are also signed up
+to this, allowing targeting and easy identification of probably less secure
+infrastructure.
+
+
+Excuse my "trolling" if some of this has already been covered, I'm up early
+(for me) and thus can be slightly unintelligible.
+
+
+On Mon, Apr 4, 2011 at 1:11 AM, Michael Gilbert <michael.s.gilbert@...il.com
+> wrote:
+
+> Dan Rosenberg wrote:
+>
+> > On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
+> > > This is pathetic. You've all just made your personal and 'work' email
+> > > addresses targets by having a ridiculous public 'signup' system, and
+> > > the fact you all feel the need to hide behind some sort of veil for
+> > > security issues.
+> > >
+> > >
+> >
+> > Do you really think anyone is gaining new information by discovering
+> > that, say, a member of the security team for a major distro will be on
+> > this mailing list?  Such information seems pretty obvious to me.
+>
+> Benji's trolling does raise a couple real issues.  The private keys and
+> passphrases of those responding here have now become highly lucrative
+> targets for attackers.  Hence, everyone on this new list needs to use
+> good practices to keep their keys, hard drives, and computers safe.
+> There should probably be some common guidelines for key safety for all
+> participants.
+>
+> A private period is rather unfortunate, and hopefully it hasn't been and
+> isn't being used as a veil.  I for one am for full transparency
+> (especially given Mark Cox's statistic that vendor-sec was only relevant
+> for 29 out of over 700 open source issues last year).  However, I
+> recognize that there seems to be a need for some private coordination
+> at present. Perhaps all discussions should be published in the open
+> something like 2 months after the initial posting?  That would be a
+> kind of maximum private coordination period.
+>
+> Best wishes,
+> Mike
+>
 
