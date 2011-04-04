@@ -1,56 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/1
-Message-Id: <20110406175350.e4c07a53.michael.s.gilbert@gmail.com>
-Date: Wed, 6 Apr 2011 17:53:50 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/15
+Message-ID: <4D99518E.5020505@ubuntu.com>
+Date: Mon, 04 Apr 2011 00:05:18 -0500
+From: Micah Gersten <micah@...ntu.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-akuster wrote:
+On 04/01/2011 01:03 PM, Josh Bressers wrote:
+> Hello everyone,
+>
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+>
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
+>
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+>
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+>
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+>
+> Thanks.
+>
+Please add me to the new list, I was a member through the Ubuntu exploder:
+pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
+      Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
+uid                  Micah Gersten <micah@...ntu.com>
+sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
 
-> 
-> 
-> On 04/06/2011 06:57 AM, Solar Designer wrote:
-> > On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
-> >> Please subscribe me to the new list. I was a vendor-sec subscriber for
-> >> MontaVista Software.
-> >>
-> >> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
-> >> uid Armin Kuster <akuster@...sta.com>
-> >> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
-> > 
-> > Looks like you forgot to make this public key available.  Please provide
-> > it to me and I'll subscribe you.
-> 
-> I hit one server, guess I need to hit them all. Please try again with
-> same key.
-> 
-> > 
-> > While we're at it, the MontaVista Software entry at:
-> > 
-> > http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
-> > 
-> > says: "The process for distribution of security advisories is currently
-> > under discussion."  Perhaps this has already been discussed and decided
-> > upon?  If so, please update the wiki page with specific link(s) to your
-> > security advisories, updates, relevant mailing list archive - or
-> > whatever you have.  
-> 
-> Our advisories are via a paid subscription service so they are not public.
-> 
-> Without this info, it is unclear whether you would
-> > be making timely intended use of the advance notifications or not.
-> 
-> Our customers require vulnerabilities to be addressed in a timely manner.
-> 
-> will revisit the wiki issue soon.
+Thanks.
 
-I'm not if sure anything has come of this request, but I hope closed
-vendors like this get rejected. Non-public advisories are anathema to
-the open source philosophy.  You have to ask the question: what is the
-point of their participation in an oss list if they don't intend to
-disclose anything?
+-- 
+Micah Gersten
+Ubuntu Security Team
 
-Best wishes,
-Mike
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
