@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/9
-Message-ID: <4D7F23F0.2050409@pre-sense.de>
-Date: Tue, 15 Mar 2011 09:31:44 +0100
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/4
+Message-ID: <20110404003336.GB10983@openwall.com>
+Date: Mon, 4 Apr 2011 04:33:36 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: kernel: fs/partitions: Corrupted OSF partition table can cause information disclosure
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-The kernel automatically evaluates partition tables of storage devices.
-The code for evaluating OSF partitions (in fs/partitions/osf.c)
-contains a bug that leaks data from kernel heap memory to userspace for
-certain corrupted OSF partitions.
+On Sun, Apr 03, 2011 at 11:34:28PM +0100, Steve Kemp wrote:
+> On Mon Apr 04, 2011 at 02:22:37 +0400, Solar Designer wrote:
+> > Added.  This gives us three representatives from Debian, which feels
+> > like a bit too many.
+> 
+>   Since I came last feel free to remove me, I won't take it personally
+>   :)
 
-See http://www.spinics.net/lists/mm-commits/msg82737.html for a patch.
+Thanks, but I'd rather let you (the Debian folks) see which two of you
+make the most use of the list membership and/or contribute the most.
 
-Cheers, Timo
+Ditto re: Ubuntu.
 
--- 
-Dr. Timo Warns                               warns@...-sense.de
-                                  Tel. +49 - 40 - 244 2407 - 16
-                                  Fax  +49 - 40 - 244 2407 - 24
-PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
-                                         USt-IdNr.: DE263765024
-Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
-Till Dörges           Jürgen Sander              Axel Theilmann
+Alexander
