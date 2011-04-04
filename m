@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/1
-Message-ID: <20110427165643.0542b1a8@orphan>
-Date: Wed, 27 Apr 2011 16:56:43 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: dan.j.rosenberg@...il.com
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/41
+Message-ID: <597164508.370300.1301941390217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 14:23:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: rsyslogd memory leaks
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
+It would seem this needs three IDs (due to version differences).
 
-> util-linux mount
-> =============
-> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
-> to glibc addmntent() in terms of return code
-> * Succeeds on partial writes, does not remove temp file on failure
-> (could result in additional corruption of /etc/mtab through multiple
-> invocations), does not remove lock file /etc/mtab~ on failure (also an
-> issue)
+> 
+> The $RepeatedMsgReduction option could cause a memory leak:
+> http://bugzilla.adiscon.com/show_bug.cgi?id=225
+> http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=8083bd1433449fd2b1b79bf759f782e0f64c0cd2
 
-Dan, would you mind clarifying the way to achieve mtab corruption via
-truncated left-over mtab.tmp file and multiple invocations?  After some
-discussion with our util-linux maintainer, we fail to see an obvious
-way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
-open flag.  So if there's any mtab.tmp file found, it's overwritten and
-its existence does not block further use of mount / umount as existence
-of mtab~ lock file does.
+The above is fixed in versions 5.6.4 ad 5.7.6
+CVE-2011-1488
 
-Thank you!
+> 
+> Multiple rulesets that are used by multiple inputs could cause a
+> memory leak or crash:
+> http://bugzilla.adiscon.com/show_bug.cgi?id=226
+
+The above bug claims it's fixed in versions 5.6.3 and 5.7.6
+CVE-2011-1489
+
+> http://bugzilla.adiscon.com/show_bug.cgi?id=218
+> http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=1ef709cc97d54f74d3fdeb83788cc4b01f4c6a2a
+
+The above bug is fixed in versions 5.6.4, 5.7.6, and 6.1.5
+CVE-2011-1490
+
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
