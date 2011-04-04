@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/2
-Message-Id: <201101281125.22255.tiposchi@tiscali.it>
-Date: Fri, 28 Jan 2011 11:25:21 +0100
-From: Salvo Tomaselli <tiposchi@...cali.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/10
+Message-Id: <201104040814.30976.oeriksson@mandriva.com>
+Date: Mon, 4 Apr 2011 08:14:30 +0200
+From: Oden Eriksson <oeriksson@...driva.com>
 To: oss-security@...ts.openwall.com
-Subject: request CVE for weborf
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+fredag 01 april 2011 20:03:12 skrev  Josh Bressers:
+> Hello everyone,
 
-i am requesting a CVE for weborf http://galileo.dmi.unict.it/wiki/weborf/
+[...]
 
-weborf 0.12.5 fixes a DoS occurring with malformed fields in HTTP request.
+Hello, please subscibe me as well. I'm the Mandriva Linux security team 
+manager and was on vendor-sec.
 
-Diff from previous version 0.12.4:
+pub   4096R/EF5A2947 2009-12-17
+      Key fingerprint = CACF 1B05 DBE9 1B83 243A  AF73 C7B2 9DA0 EF5A 2947
+uid                  Oden Eriksson <oeriksson@...driva.com>
 
-$ diff 0.12.4/utils.c 0.12.5/utils.c 
-270a271,272
->     val += param_len + 2; //Moves the begin of the string to exclude the 
-name of the field
-> 
-276d277
-<     val += param_len + 2; //Moves the begin of the string to exclude the 
-name of the field
 
-Regards
+Cheers.
+
 -- 
-Salvo Tomaselli
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Regards // Oden Eriksson
+Security team manager - Mandriva
+CEO NUX AB
