@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/4
-Message-ID: <20111021132429.GB10069@dhcp-25-225.brq.redhat.com>
-Date: Fri, 21 Oct 2011 15:24:30 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/30
+Message-ID: <20110404174540.2e166a47@orphan>
+Date: Mon, 4 Apr 2011 17:45:40 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: ext4: ext4_ext_insert_extent() kernel oops
+Cc: coley@...us.mitre.org, John Bailey <rekkanoryo@...kanoryo.org>
+Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way splitting two extents in
-ext4_ext_convert_to_initialized() worked. Althrough ex has been updated
-in memory, it is not dirtied both in ext4_ext_convert_to_initialized()
-and ext4_ext_insert_extent(). The disk layout is corrupted. Then it
-will meet with a BUG_ON() when writting at the start of that extent
-again.
+On Mon, 21 Mar 2011 12:02:40 -0400 (EDT) Steven M. Christey wrote:
 
-Local unprivileged users can use this flaw to crash the system when ext4
-filesystem is in use.
+> Disclosure of "local" memory to another user on the same system could 
+> qualify for CVE inclusion, if the memory can contain something
+> sensitive.
 
-Introduced in:
-56055d3ae4cc7fa6d2b10885f20269de8a989ed7
+The patches fixes the code that was intended to clean up wipe certain
+buffers that were used to store crypto material before freeing them.
+As the CC on John was dropped, I guess he did not see your follow-up to
+clarify his "local".
 
-Upstream fix:
-667eff35a1f56fa74ce98a0c7c29a40adc1ba4e3
+My understanding is that this issue may increase impact of some other
+memory disclosure issue (encryption key leaked vs. e.g. a random chat
+message), but requires some other flaw to be an issue.
 
-Credits:
-Zheng Liu
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=747942
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
