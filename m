@@ -1,122 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/9
-Message-ID: <2002809257.1023596.1315593855267.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 14:44:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/44
+Message-ID: <BANLkTinii6GHnL0h2Jx6ZP13F2MhcKp81Q@mail.gmail.com>
+Date: Mon, 4 Apr 2011 14:45:03 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: calderon@...sec.mx, advisory@...ridge.ch, developer discussions <mantisbt-dev@...ts.sourceforge.net>, coley <coley@...re.org>
-Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-Sorry this took so long.
+On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com> wrote:
+> How do we want this broken down? If nobody complains, I'll just give it one.
+>
 
------ Original Message -----
-> Request #1: XSS injection via PHP_SELF
-> 
-> Paulino Calderon from Websec reported an issue [2] against MantisBT 1.2.6
-> whereby an attacker could craft URLs such that arbitrary HTML could be
-> inserted into page output. Users running MantisBT on a vanilla nginx
-> installation are unaffected because nginx will check to see whether the
-> full URL path exists and is valid (with an XSS injection string, it won't
-> be). Other web servers such as Apache won't perform these stringent
-> checks and are therefore MantisBT is vulnerable to this attack when
-> running on an Apache server. This attack does not require users to be
-> authenticated or logged into a MantisBT installation to be impacted by
-> this vulnerability.
-> 
-> The same issue was identified by High-Tech Bridge Security Research Lab
-> with their advisory #HTB23045 available at [1]. Paul Richards (MantisBT
-> developer) also discovered this issue during a routine audit.
-> 
-> MantisBT bug reports with full details (including patches) are available
-> at [2] and [3].
-> 
+I think one makes sense, since all the problems were in a single
+protocol and were addressed at the same time.
 
-Please use CVE-2011-3356 for the above.
+-Dan
 
-
-> 
-> Request #2: LFI and XSS via bug_actiongroup_ext_page.php
-> 
-> High-Tech Bridge Security Research Lab reported an issue against MantisBT
-> 1.2.7 whereby an attacker could include local system files via a
-> directory traversal/local file inclusion vulnerability in
-> bug_actiongroup_ext_page.php.
-> 
-> Web server and/or PHP and/or operating system configuration will dictate
-> whether this vulnerability can be exploited. MantisBT will prepend
-> "bug_actiongroup_" prior to the attacker-supplied path. A suffix is
-> appended, but can be stripped off using a null character (%00). Some
-> environments (at least nginx and php-fpm 5.3) do not allow directory
-> traversal from a file or invalid path/file. Other environments do allow
-> directory traversal from file names (even invalid ones), for instance:
-> "bug_actiongroup_page.php/../private_file" or
-> "bug_actiongroup_/../private_file".
-> 
-> This vulnerability can also allow an attacker to perform an XSS attack
-> (no login/session required with the MantisBT attacker) if PHP is
-> configured to display error messages. The error message from the
-> require_once() call is not sanitised by PHP prior to displaying it to the
-> user. Best (and therefore common) practice is to not display PHP error
-> messages to the end user, severely limiting the applicability of this
-> attack.
-> 
-> Full details and patches are available at [3].
-
-Please use CVE-2011-3357 for the above.
-
-> 
-> Request #3: XSS issues with unescaped os, os_build and platform
-> parameters on bug_report_page.php and bug_update_advanced_page.php
-> 
-> High-Tech Bridge Security Research Lab reported an issue against MantisBT
-> 1.2.7 whereby an attacker could perform an XSS attack on users with
-> access to either bug_report_page.php or bug_update_advanced_page.php. In
-> default and typical MantisBT installations, this is limited to users that
-> are currently logged in.
-> 
-> The cause of this problem is with the use of the ancient Projax library
-> (available at [4]) in the 1.2.x branch of MantisBT. Projax does not
-> escape value attributes when printing input form elements. In some
-> respects, this issue is also a bug with Projax however it may be a case
-> that users of this library are expected to provide values that are
-> already sanitised. MantisBT 1.3.x (master branch) uses jQuery instead of
-> Projax and is therefore not impacted by this vulnerability.
-> 
-> Full details and patches are available at [3].
-> 
-
-Please use CVE-2011-3358 for the above.
-
-
-> 
-> 
-> 
-> Additional information:
-> 
-> A new release (mantisbt-1.2.8) is being put together and will be
-> available shortly to download from mantisbt.org to resolve these 3
-> vulnerabilities. Announcements will be made to
-> mantisbt-announce@...ts.sourceforge.net, mantisbt.org/blog,
-> #mantishelp
-> on irc.freenode.net and other usual channels. Major Linux
-> distributions
-> shipping mantisbt-1.2.x will also be informed.
-> 
-> With thanks to: Paulino Calderon (Websec), High-Tech Bridge Security
-> Research Lab, Paul Richards (MantisBT)
-> 
-> 
-> 
-> 
-> References:
-> 
-> [1]
-> https://www.htbridge.ch/advisory/multiple_vulnerabilities_in_mantisbt.html
-> 
-> [2] http://www.mantisbt.org/bugs/view.php?id=13191
-> 
-> [3] http://www.mantisbt.org/bugs/view.php?id=13281
-> 
-> [4] http://www.ngcoders.com/projax/
-> 
+> Thanks.
+>
+> --
+>    JB
+>
+> ----- Original Message -----
+>> Any update on this?
+>>
+>> Thanks,
+>> Dan
+>>
+>> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
+>> wrote:
+>> > On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
+>> >>
+>> >> I sent in a patch [1] resolving two issues in ROSE:
+>> >>
+>> >> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
+>> >> possible
+>> >> for a remote host to provide more digipeaters than expected,
+>> >> resulting
+>> >> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
+>> >> overflows, and abort facilities parsing on failure.
+>> >>
+>> >> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+>> >> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
+>> >> length of less than 10, resulting in an underflow in a memcpy size,
+>> >> causing a kernel panic due to massive heap corruption. A length of
+>> >> greater than 20 results in a stack overflow of the callsign array.
+>> >> Abort facilities parsing on these invalid length values."
+>> >>
+>> >> These issues may both result in code execution. They may be
+>> >> triggered
+>> >> by a remote attacker if the victim has a listening ROSE socket, or
+>> >> by
+>> >> a local attacker (for privilege escalation) if a ROSE device exists
+>> >> (e.g. rose0).
+>> >>
+>> >> Ben Hutchings followed up with a patch [2] that resolves a number
+>> >> of
+>> >> other ROSE issues related to lack of size field validation, some of
+>> >> which may also result in heap corruption.
+>> >>
+>> >> Not sure about the proper CVE breakdown for all these issues, since
+>> >> the entire protocol was quite broken. Perhaps one is enough to
+>> >> cover
+>> >> everything.
+>> >
+>> > I am not sure. I would just assign one for the collection of issues
+>> > here but
+>> > I will let Steve decide instead.
+>> >
+>> >> [1] http://marc.info/?l=linux-netdev&m=130060344616926
+>> >> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+>> >
+>> > Thanks, Eugene
+>> > --
+>> > main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
+>> > main(++i); }
+>> >
+>
