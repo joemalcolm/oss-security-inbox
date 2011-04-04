@@ -1,118 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/9
-Message-ID: <AANLkTinnHDO2DZ4T332DRsCyYVE7JukizE_BGTvTELyL@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:32:55 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/23
+Message-ID: <BANLkTin0XNE-Uv8fMdt25FPe9CtbDVhKnA@mail.gmail.com>
+Date: Mon, 4 Apr 2011 14:35:30 +0100
+From: Ben Laurie <benl@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: TinyBrowser (TinyMCE Editor File browser) 1.41.6 - Multiple Vulnerabilities
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Advisory URL:
-http://yehg.net/lab/pr0js/advisories/tinybrowser_1416_multiple_vulnerabilities
-Date published: 2009-07-27
-Severity: High
-Vulnerability Class: Abuse of Functionality
-Affected Products:
-- TinyMCE editor with TinyBrowser plugin
-- Any web sites/web applications that use TinyMCE editor with TinyBrowser plugin
-- Known Vulnerable CMSes
-	- Joomla Joomla 1.5.12
-	- CompactCMS CompactCMS 1.4
-	- B-hind CMS B-hind CMS 0
+On 3 April 2011 22:33, Solar Designer <solar@...nwall.com> wrote:
+> Ben,
+>
+> On Sun, Apr 03, 2011 at 10:06:03PM +0100, Ben Laurie wrote:
+>> OK, but ... I wasn't on vendor-sec, but (IMO) am at least as qualified
+>> as most of the people who were. Now what?
+>
+> What do you propose?
+>
+> In what capacity do you feel you're qualified?
 
-Author: Bryn Jones (http://www.lunarvis.com)
+FreeBSD committer, core contributor to various "OpenSource projects
+with a large user base and/or high security exposure"
 
+> Don't get me wrong, I have a lot of respect for you - in fact, in my
+> sysadmin role, I am flattered that you'd want to be on a list I setup.
+> I just think that you providing answers to the questions above will help
+> the discussion.  I don't know what your answers would be (I can try to
+> guess, but I might be wrong).  I do think that you might propose
+> something we have not yet thought of.
 
-Product Overview
-================
+I'm not sure I have a helpful proposal, but closed security lists have
+always made me somewhat grumpy. Basically, it seems to me that there
+are two major problems with them:
 
-TinyBrowser is a plugin of TinyMCE JavaScript editor that acts as
-file browser to view, upload, delete, rename files and folders on the
-web servers.
+1. People who "ought" to have the information don't, because they're
+not on the list.
 
+2. People who "ought not" to have the information do, because they are
+on the list.
 
-Vulnerabilities
-==================
+So my general inclination is to at least fix this problem for myself,
+by being on all the lists :-)
 
-#1. Default Insecure Configurations
+Yes, this doesn't fix problem 2 - so sorry: my general stance on this
+is that it is really impossible to say who "ought" and "ought not" to
+have security info. I hear all sorts of noises about vendors being in
+the "ought" camp and end users in the "ought not", but that makes no
+sense to me: vendors only "need" to be on the "ought" list because
+they're a roadblock between the software authors and the end user.
+They should just fix that problem. In any case, who is a "vendor". I
+build all my s/w from source, pretty much. Am I therefore a vendor (to
+myself)?
 
-Configuration settings shipped with tinybrowser are relatively insecure by
-default. They allow attackers to view, upload, delete, rename files and folders
-under its predefined upload directory.
+Alternatively, I "ought" to be on the list because history has shown
+that a) I can sometimes do something useful about the problem and b) I
+can be trusted with the information. Maybe that's a better way to run
+a list, I don't know.
 
-Casual web developers or users might just upload the TinyMCE browser without
-doing any configurations or they might do it later.
-Meanwhile, if an attacker luckily finds the tinybrowser directory,
-which is by default
-jscripts/tiny_mce/plugins/tinybrowser, he can do harm or abuse because of
-insecure default configurations.
-
-This was once a vulnerability of fckeditor (http://fckeditor.net)
-which has fixed
-its hole - if you run fckeditor's file upload page the first time, you'll see
-"This connector is disabled. Please check the ....". Tinybrowser should imitate
-like this.
-
-
-#2. Arbitrary Folder Creation
-
-Requesting the url [PATH]/tinybrowser.php?type=image&folder=hacked will
-create a folder named "hacked" in /useruploads/images/ directory if that
-folder does not exist.
-
-
-#3. Arbitrary File Hosting
-
-File: config_tinybrowser.php
-Code:
-// File upload size limit (0 is unlimited)
-$tinybrowser['maxsize']['image'] = 0; // Image file maximum size
-$tinybrowser['maxsize']['media'] = 0; // Media file maximum size
-$tinybrowser['maxsize']['file']  = 0; // Other file maximum size
-$tinybrowser['prohibited'] =
-array('php','php3','php4','php5','phtml','asp','aspx','ascx','jsp','cfm','cfc','pl','bat','exe','dll','reg','cgi',
-'sh', 'py','asa','asax','config','com','inc');
-// Prohibited file extensions
-
-The max allowable upload is not restricted. So it will depend only on
-web server's default setting or
-PHP timeout value. There are not many restricted file types. Here's a
-way to abuse:
-- Create a hidden directory by requesting
-[PATH]/upload.php?type=file&folder=.hostmyfiles
-- Then go to /upload.php?type=file&folder=.hostmyfiles
-- Host your sound, movie, pictures, zipped archives or even your
-sample HTML web sites for FREE!
-
-An evil trick to create seemingly interesting folder such as secret and host a
-browser-exploit html page that triggers drive-by-download trojan.
-When web master browses that folder and clicks the exploit file, then
-he gets owned.
-
-#4. Cross-site Scripting
-
-Most GET/POST variables are not sanitized.
-
-File: upload.php
-Code:
-$goodqty = (isset($_GET['goodfiles']) ? $_GET['goodfiles'] : 0);
-$badqty = (isset($_GET['badfiles']) ? $_GET['badfiles'] : 0);
-$dupqty = (isset($_GET['dupfiles']) ? $_GET['dupfiles'] : 0);
-
-Exploit: upload.php?badfiles=1"><script>alert(/XSS/)</script>
-
-#5. Cross-site Request Forgeries
-
-All major actions such as create, delete, rename files/folders are
-GET/POST XSRF-able.
-
-#########################################################################################
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+>
+> The vendor-sec membership requirement was just for the initial seed
+> membership of the new list.  Its purpose is to ensure we're not making
+> things worse in terms of pre-CRD leaks, at least not right away. ;-)
+>
+> As you can see from another message I posted, I've only setup a
+> Linux distros list for now, which lets us side-step the issue of
+> comparing one security researcher vs. another for membership of that
+> list.  I'd be happy to setup a separate list with only security
+> researchers on it, and we can ask folks to CC that list whenever a
+> discussion on the Linux distros list is expected to significantly
+> benefit from participation of the researchers.
+>
+> I'd be happy if you have a better proposal.
+>
+> Thanks,
+>
+> Alexander
+>
