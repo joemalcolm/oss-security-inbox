@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/3
-Message-Id: <201101181654.02556.timb@nth-dimension.org.uk>
-Date: Tue, 18 Jan 2011 16:53:51 +0000
-From: Tim Brown <timb@...-dimension.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/36
+Message-ID: <20110404175333.GA13733@openwall.com>
+Date: Mon, 4 Apr 2011 21:53:33 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Gilbert <michael.s.gilbert@...il.com>
-Subject: Re: CVE request
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
-> On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
-> > Guys,
-> > 
-> > What's the best way for an open source project to request a CVE prior to
-> > disclosure?  I'm more that happy to coordinate the disclosure with
-> > distributions where appropriate if that makes a difference.
+Russ, Tomas -
+
+On Mon, Apr 04, 2011 at 01:26:50PM -0400, R P Herrold wrote:
+> On Mon, 4 Apr 2011, Tomas Hoger wrote:
 > 
-> You're looking for vendor-sec:
-> http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+> >Given the aim to keep the subscriber list very limited, this probably
+> >falls into a tentatively subscribed category too.  AFAIK, CentOS has
+> >rather few components that are not rebuilds of the RHEL SRPMs, the
+> >question is how often a v-s info was useful in the past in providing
+> >security updates for those extra packages.
+> 
+> Thanks for the post furthering the marketing goals of your 
+> corporate master; ...
 
-That's a closed list though isn't it?  If anyone wants to sponsor me on to it, 
-I'm willing to put my OpenVAS hat on and jump through the necessary hoops :)
+FWIW, I found Tomas' posting appropriate and his question desirable,
+which is confirmed by your helpful response (starting with the second
+paragraph).  If not Tomas, others would (hopefully) have the same
+question, which was reasonable and it needed to be addressed in here.
 
-Tim
--- 
-Tim Brown
-<mailto:timb@...-dimension.org.uk>
-<http://www.nth-dimension.org.uk/>
+So I'd like to thank both of you.  I only wish this did not result in
+that tone of Russ' response, but we can live with that.
 
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Alexander
