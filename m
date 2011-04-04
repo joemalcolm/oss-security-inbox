@@ -1,18 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/1
-Message-ID: <4D7EC996.3010306@redhat.com>
-Date: Tue, 15 Mar 2011 10:06:14 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/35
+Message-ID: <944211187.369459.1301939335237.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 13:48:55 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: tpm infoleaks
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- perl -- lc(), uc() routines are laundering tainted data
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2011 04:53 AM, Josh Bressers wrote:
-> I'm not able to properly parse this. Should this get one CVE id or three?
+Please use CVE-2011-1487
 
-Three.
+Thanks.
 
-Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> A security flaw was found in the way Perl performed
+> laundering of tainted data. A remote attacker could
+> use this flaw to bypass Perl TAINT mode protection
+> mechanism (leading to commands execution on dirty
+> arguments or file system access via contaminated
+> variables) via specially-crafted input provided
+> to the web application / CGI script.
+> 
+> Upstream bug report:
+> http://rt.perl.org/rt3/Public/Bug/Display.html?id=87336
+> 
+> Relevant patch:
+> http://perl5.git.perl.org/perl.git/commitdiff/539689e74a3bcb04d29e4cd9396de91a81045b99
+> (contains also information when the issue was introduced)
+> 
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=692844
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
