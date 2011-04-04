@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/7
-Message-Id: <1307983372.28614@webmin.com>
-Date: Mon, 13 Jun 2011 09:42:52 -0700 (PDT)
-From: "Jamie Cameron" <jcameron@...min.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com, webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com
-Subject: Re: CVE-request: XSS in Webmin 1.540
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/57
+Message-ID: <20110404231212.GA15833@openwall.com>
+Date: Tue, 5 Apr 2011 03:12:12 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 13/Jun/2011 06:40 Henri Salo <henri@...v.fi> wrote ..
-> Hi,
-> 
-> I would like to receive CVE-identifier for this issue in Webmin. References:
-> 
-> http://seclists.org/fulldisclosure/2011/Apr/393
-> 
-> Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB.
-> Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881
-> which is included to Webmin 1.550 release.
-> 
-> Should be 2011 identifier.
+On Tue, Apr 05, 2011 at 12:21:18AM +0200, klondike wrote:
+> I thought Apple didn't made a Linux distro. Has that changed?
 
-There is no CVE for this - the original submitter Javier had trouble obtaining one.
+I think not, but Josh's message did not require that only Linux distros
+request to be subscribed, so Jeffrey's request is reasonable in that
+context.
 
-Actually, I have no idea where CVEs come from either!
+I made the final determination to start with a Linux distros list only a
+bit later.  Of course, it's wrong that Josh and I did not coordinate
+this better off-list, which is a result of my lack of time during March.
 
- - Jamie
+Alexander
