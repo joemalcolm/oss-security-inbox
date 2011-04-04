@@ -1,30 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/4
-Message-ID: <4EE10DC1.9010001@redhat.com>
-Date: Thu, 08 Dec 2011 12:19:29 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/37
+Message-ID: <20110404180059.GA13884@openwall.com>
+Date: Mon, 4 Apr 2011 22:00:59 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: send(m)msg: user pointer dereferences
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/08/2011 12:15 PM, Petr Matousek wrote:
-> Dereferencing a user pointer directly from kernel-space without going
-> through the copy_from_user family of functions is a bad idea. Two of
-> such usages can be found in the sendmsg code path called from
-> sendmmsg, added by upstream commit
-> c71d8ebe7a4496fb7231151cb70a6baa0cb56f9a. Usages are performed through
-> memcmp() and memcpy() directly. 
->
-> Upstream commit:
-> bc909d9ddbf7778371e36a651d6e4194b1cc7d4c
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=761646
->
-> Thanks,
-Please use CVE-2011-4594 for this issue.
+On Mon, Apr 04, 2011 at 04:41:31PM +0200, Nico Golde wrote:
+> Ok please use nion@...ian.org with E1AB DE0E FFCA AEF3 9494 7592 CD4B 2AF3 A0A0 AAAA.
 
--- 
+Added.
 
--Kurt Seifried / Red Hat Security Response Team
-
+Alexander
