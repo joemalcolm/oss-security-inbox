@@ -1,64 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/5
-Message-ID: <20110810131939.GC23625@core.inversepath.com>
-Date: Wed, 10 Aug 2011 15:19:39 +0200
-From: Daniele Bianco <danbia@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2011-002] libavcodec insufficient boundary check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/7
+Message-Id: <20110403210622.d7952b28.michael.s.gilbert@gmail.com>
+Date: Sun, 3 Apr 2011 21:06:22 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Michael Gilbert wrote:
 
-#2011-002 libavcodec insufficient boundary check
+> Solar Designer wrote:
+> 
+> > On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
+> > > Benji's trolling does raise a couple real issues.  The private keys and
+> > > passphrases of those responding here have now become highly lucrative
+> > > targets for attackers.  Hence, everyone on this new list needs to use
+> > > good practices to keep their keys, hard drives, and computers safe.
+> > > There should probably be some common guidelines for key safety for all
+> > > participants.
+> > 
+> > Right.  We're likely to specify some minimum requirements.  For example,
+> > Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
+> > when we use the list for real.  Yet this is an improvement over the
+> > plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
+> > private keys on a server won't be allowed (but we'd have to trust
+> > members on that).
+> > 
+> > > Perhaps all discussions should be published in the open
+> > > something like 2 months after the initial posting?  That would be a
+> > > kind of maximum private coordination period.
+> > 
+> > Yes, we may do this.  Technically, an archive may be implemented as yet
+> > another subscriber with its public key, where the private key
+> > counterpart is not stored on any server and has a passphrase on it.
+> > Thus, a possible compromise of the list server won't reveal past
+> > messages (archived before the compromise, but not yet made public).
+> > 
+> > Pushing the archive public will then be a manual process, but that's OK
+> > if it's only done once a month (omitting the last month's worth of
+> > messages).  In fact, a posting to oss-security will need to be made
+> > whenever the public archive is updated.
+> 
+> Wouldn't the easiest solution be to have a cron job check that the age
+> of the message is greater than X days, decrypt it, and mail it to a
+> different archive/public list?
 
-Description:
+Actually, the ideal destination would be oss-sec itself.
 
-The libavcodec library, an open source video encoding/decoding library part
-of the FFmpeg and Libav projects, performs insufficient boundary check
-against a buffer index. The missing check can result in arbitrary read/write
-of data outside a destination buffer boundaries.
-
-The vulnerability affects the Chinese AVS video (CAVS) file format decoder,
-specially crafted CAVS files may lead to arbitrary code execution during
-decoding.
-
-Affected version:
-
-FFmpeg <= 0.7.2, <= 0.8.1
-
-Libav <= 0.7.1
-
-The following packages were identified as affected as they statically
-include libavcodec in their own packages.
-
-MPlayer <= 1.0_rc4
-
-Fixed version:
-
-FFmpeg >= 0.7.3, >= 0.8.2
-
-Libav, N/A
-
-MPlayer, N/A
-
-Credit: vulnerability report received from Emmanouel Kellinis.
-
-CVE: N/A
-
-Timeline:
-2011-07-14: vulnerability report received
-2011-07-15: contacted ffmpeg maintainers
-2011-07-15: ffmpeg maintainer confirms the issue, preliminary patch is
-            provided
-2011-07-21: patch approved by reporter
-2011-07-23: contacted affected vendors
-2011-08-10: advisory release
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2011-002.html
-
---
-  Daniele Bianco      Open Source Computer Security Incident Response Team
-  <danbia@...rt.org>                                  http://www.ocert.org
-
-  GPG Key 0x9544A497
-  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
+Best wishes,
+Mike
