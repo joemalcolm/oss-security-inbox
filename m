@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/5
-Message-ID: <20110427202653.0a28aee7@orphan>
-Date: Wed, 27 Apr 2011 20:26:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/13
+Message-ID: <1301917705.2521.113.camel@mdlinux>
+Date: Mon, 04 Apr 2011 07:48:25 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Apr 2011 14:19:43 -0400 Dan Rosenberg wrote:
-
-> > Steve, it seems CVE-2011-1676 should get marked as rejected or
-> > disputed.
+On Mon, 2011-04-04 at 10:51 +0200, Marcus Meissner wrote:
+> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
+> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> > >and Josh).
+> > 
+> > Limiting a distro to two or three representatives is going to make things 
+> > tricky for Red Hat; we have a rather large dedicated security response 
+> > team (as we publish over 300 advisories a year across 70 product/versions 
+> > and have a number of folks dealing with 'incoming' issues spread, and my 
+> > team is dispersed across 9 different countries).  If these representatives 
+> > have been very active on v-s and oss-security is there a reason to limit?
 > 
-> I currently only have CVE-2011-1089, which seems to be for glibc not
-> indicating failure of addmntent() calls.  Were additional CVEs
-> assigned to some of the individual issues?  If so, would you mind
-> posting them here to avoid duplicate requests?
+> Similar for SUSE. We currently have 3 engineers rotating through the incident
+> manager role (and myself).
 
-CVE-2011-1675 - CVE-2011-1681 based on your list here:
-http://thread.gmane.org/gmane.comp.security.oss.general/4374/focus=4516
+Same for Ubuntu. Limiting membership to two representatives would mean a
+lot of email from the list is going to be forwarded to the other members
+of our security team. Although limiting membership may seem like a good
+idea to contain leaks, having to forward email to non-members because of
+an arbitrary limitation would surely defeat that goal.
 
-CVE-2011-1089 for similar nfs-utils:
-http://thread.gmane.org/gmane.comp.security.oss.general/4954
+Marc.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
