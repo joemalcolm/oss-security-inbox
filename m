@@ -1,33 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/1
-Message-ID: <4D421F73.1010901@redhat.com>
-Date: Fri, 28 Jan 2011 09:44:19 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/51
+Message-ID: <22823352.372690.1301945640254.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 15:34:00 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
-Subject: Re: CVE request: linux kernel heap issues
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 01:08 PM, Eugene Teo wrote:
-> On 01/25/2011 11:48 AM, Eugene Teo wrote:
->> On 01/25/2011 05:46 AM, Kees Cook wrote:
->>> Hello,
->>>
->>> I don't think these minor issues I reported to the Linux Kernel have
->>> had CVEs assigned to them:
->>>
->>> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
->>>
->>>
->>
->> These require CAP_NET_ADMIN.
->>
->> CVE-2010-4655.
->
-> Take note that you will need this too:
-> http://marc.info/?l=linux-kernel&m=129593098003553&w=2
+One it is then. Thanks.
 
-http://git.kernel.org/linus/b7c7d01aaed1f71d9afe815a569f0a81465a1744
+Use CVE-2011-1493.
 
-Eugene
+-- 
+    JB
+
+----- Original Message -----
+> On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com>
+> wrote:
+> > How do we want this broken down? If nobody complains, I'll just give
+> > it one.
+> >
+> 
+> I think one makes sense, since all the problems were in a single
+> protocol and were addressed at the same time.
+> 
+> -Dan
+> 
+> > Thanks.
+> >
+> > --
+> >    JB
+> >
+> > ----- Original Message -----
+> >> Any update on this?
+> >>
+> >> Thanks,
+> >> Dan
+> >>
+> >> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
+> >> wrote:
+> >> > On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
+> >> >>
+> >> >> I sent in a patch [1] resolving two issues in ROSE:
+> >> >>
+> >> >> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
+> >> >> possible
+> >> >> for a remote host to provide more digipeaters than expected,
+> >> >> resulting
+> >> >> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
+> >> >> overflows, and abort facilities parsing on failure.
+> >> >>
+> >> >> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+> >> >> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide
+> >> >> a
+> >> >> length of less than 10, resulting in an underflow in a memcpy
+> >> >> size,
+> >> >> causing a kernel panic due to massive heap corruption. A length
+> >> >> of
+> >> >> greater than 20 results in a stack overflow of the callsign
+> >> >> array.
+> >> >> Abort facilities parsing on these invalid length values."
+> >> >>
+> >> >> These issues may both result in code execution. They may be
+> >> >> triggered
+> >> >> by a remote attacker if the victim has a listening ROSE socket,
+> >> >> or
+> >> >> by
+> >> >> a local attacker (for privilege escalation) if a ROSE device
+> >> >> exists
+> >> >> (e.g. rose0).
+> >> >>
+> >> >> Ben Hutchings followed up with a patch [2] that resolves a
+> >> >> number
+> >> >> of
+> >> >> other ROSE issues related to lack of size field validation, some
+> >> >> of
+> >> >> which may also result in heap corruption.
+> >> >>
+> >> >> Not sure about the proper CVE breakdown for all these issues,
+> >> >> since
+> >> >> the entire protocol was quite broken. Perhaps one is enough to
+> >> >> cover
+> >> >> everything.
+> >> >
+> >> > I am not sure. I would just assign one for the collection of
+> >> > issues
+> >> > here but
+> >> > I will let Steve decide instead.
+> >> >
+> >> >> [1] http://marc.info/?l=linux-netdev&m=130060344616926
+> >> >> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+> >> >
+> >> > Thanks, Eugene
+> >> > --
+> >> > main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
+> >> > main(++i); }
+> >> >
+> >
