@@ -1,59 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/2
-Message-ID: <1401696469.859521.1315341953859.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Sep 2011 16:45:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/33
+Message-ID: <alpine.LRH.1.00.1104041311380.31509@bronson.owlriver.com>
+Date: Mon, 4 Apr 2011 13:26:50 -0400 (EDT)
+From: R P Herrold <herrold@...river.com>
 To: oss-security@...ts.openwall.com
-Cc: rubidium@...nttd.org, Michael Lutz <michi+openttd@...sahedron.de>, coley <coley@...re.org>
-Subject: Re: CVE request for OpenTTD
+Subject: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello folks,
-> 
-> the OpenTTD team and contributors have discovered several security
-> vulnerabilities in OpenTTD. Please be so kind to allocate a CVE id for
-> each of the issues detailed below:
-> 
-> 1.) Denial of service via improperly validated commands
-> 
-> In multiple places in-game commands are not properly validated that allow
-> remote attackers to cause a denial of service (crash) and possibly
-> execute arbitrary code via unspecified vectors.
-> 
-> Vulnerability is present since 0.3.5 and will be fixed in the upcoming
-> 1.1.3 release. Issue report at http://bugs.openttd.org/task/4745
+On Mon, 4 Apr 2011, Tomas Hoger wrote:
 
-Use CVE-2011-3341 for the above.
+> Given the aim to keep the subscriber list very limited, this probably
+> falls into a tentatively subscribed category too.  AFAIK, CentOS has
+> rather few components that are not rebuilds of the RHEL SRPMs, the
+> question is how often a v-s info was useful in the past in providing
+> security updates for those extra packages.
 
-> 
-> 2.) Buffer overflows in savegame loading
-> 
-> In multiple places indices in savegames are not properly validated that
-> allow (remote) attackers to cause a denial of service (crash) and
-> possibly execute arbitrary code via unspecified vectors.
-> 
-> Vulnerability is present since 0.1.0 and will be fixed in the upcoming
-> 1.1.3 release. Issue reports at http://bugs.openttd.org/task/4717 and
-> http://bugs.openttd.org/task/4748
+Thanks for the post furthering the marketing goals of your 
+corporate master; perhaps the security goal of making sure the 
+Linux server space is well-secured in a timely fashion was 
+overlooked by you as you framed your thought
 
-Use CVE-2011-3342 for the above.
+Seemingly (you mention 'AFAIK'), you do not follow the 
+'extras' archive, nor the 'testing' where extensions are 
+found, past what Red Hat ships by default in its enterprise 
+product
 
-> 
-> 3.) Multiple buffer overflows in validation of external data
-> 
-> In multiple places external data from the local file system isn't
-> properly checked before allocating memory, which could lead to buffer
-> overflows and arbitrary code execution.
-> 
-> Vulnerability is present since 0.3.4 and will be fixed in the upcoming
-> 1.1.3 release. Issue reports at http://bugs.openttd.org/task/4746 and
-> http://bugs.openttd.org/task/4747
-> 
+I have regularly flagged to our updates builder sub-group, for 
+slotting in updates to push out vulnerable content in those 
+side archives, based on vendor-sec notes; further, in ranking 
+the 'urgency' of a push, I posted a rather detailed package by 
+package analysis of un-pushed updates, in the last month or 
+so, as to matters pending during the intersticial 'solve the 
+rebuild' delay as to some updates issued upstream but not yet 
+pushed by the CentOS team, in part based upon tracking 
+vendor-sec
 
-Use CVE-2011-3343 for the above.
-
-Thanks.
-
--- 
-    JB
+-- Russ herrold
+ 	herrold@...tos.org
