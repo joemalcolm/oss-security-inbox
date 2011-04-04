@@ -1,44 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/3
-Message-Id: <201108111026.36876.thomas@suse.de>
-Date: Thu, 11 Aug 2011 10:26:36 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/17
+Message-ID: <BANLkTik9TYa56_ayi7JX2AaZzc286qvSJg@mail.gmail.com>
+Date: Mon, 4 Apr 2011 07:32:12 +0100
+From: Benji <me@...ji.com>
 To: oss-security@...ts.openwall.com
-Cc: Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+Cc: Michael Gilbert <michael.s.gilbert@...il.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am Mittwoch, 10. August 2011, 20:26:46 schrieb Tomas Hoger:
-> On Wed, 10 Aug 2011 10:27:18 +0200 Thomas Biege wrote:
-> 
-> > The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
-> 
-> ...
-> 
-> > 2) Boundary errors within the "CSoundFile::ReadS3M()" function
-> > (src/load_s3m.cpp) when processing S3M files can be exploited to cause
-> > stack-based buffer overflows by tricking a user into opening a
-> > specially crafted S3M file.
-> 
-> Any specific reason to believe these two are the same?  CVE-2011-1574
-> links:
-> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
-> 
-> while commit related to SA45131/2 seems to be this one:
-> 
-> > [3]
-> > http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
+>>Benji's trolling does raise a couple real issues
 
-Then this one also needs a new CVE-ID.
+I'm not trolling.
+
+I think your argument for this mailing list is that vulnerabilities need to
+be fixed before they're released to the greater public. While I can
+understand that, it seems ridiculous to parade yourselves around in public
+with a signup system that is akin to
 
 
-Thanks for clarifying this,
-Thomas
+>>Huh?  Now you're with "the other" group that accuses "us" of "hiding"?
+
+Can I not be part of the group that thinks a public signup system for a
+mailing list that previously had the mail server owned due to the fact it
+was secret (showing interest in possibly owning users now that emails like
+mjo@...o.mi.org have been confirmed on the list) for a mailing list that is
+'embargoed' when really it shouldn't be.
+
+>>What is your opinion on making the list's archive public with a delay(when
+the corresponding security issues are already public)?
+
+It would be better. In my opinion, delay would be 1-2 days. Vendor-sec
+(alternatives) should be a last resort in publishing issues, other projects
+don't get the same "privileges", and have to "make do" with oss-sec. If you
+really need such help 'co-ordinating' and fixing things, maybe you should
+have a policy to, release advisory/info first, then have a 'co-ordination'
+list.
 
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+>>Do you really think anyone is gaining new information by discovering
+>>that, say, a member of the security team for a major distro will be on
+>>this mailing list?  Such information seems pretty obvious to me.
+
+Yes Dan, but now we have private email accounts as well (by people who
+apparently don't like to use vendor email addresses) that are also signed up
+to this, allowing targeting and easy identification of probably less secure
+infrastructure.
+
+
+Excuse my "trolling" if some of this has already been covered, I'm up early
+(for me) and thus can be slightly unintelligible.
+
+
+On Mon, Apr 4, 2011 at 1:11 AM, Michael Gilbert <michael.s.gilbert@...il.com
+> wrote:
+
+> Dan Rosenberg wrote:
+>
+> > On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
+> > > This is pathetic. You've all just made your personal and 'work' email
+> > > addresses targets by having a ridiculous public 'signup' system, and
+> > > the fact you all feel the need to hide behind some sort of veil for
+> > > security issues.
+> > >
+> > >
+> >
+> > Do you really think anyone is gaining new information by discovering
+> > that, say, a member of the security team for a major distro will be on
+> > this mailing list?  Such information seems pretty obvious to me.
+>
+> Benji's trolling does raise a couple real issues.  The private keys and
+> passphrases of those responding here have now become highly lucrative
+> targets for attackers.  Hence, everyone on this new list needs to use
+> good practices to keep their keys, hard drives, and computers safe.
+> There should probably be some common guidelines for key safety for all
+> participants.
+>
+> A private period is rather unfortunate, and hopefully it hasn't been and
+> isn't being used as a veil.  I for one am for full transparency
+> (especially given Mark Cox's statistic that vendor-sec was only relevant
+> for 29 out of over 700 open source issues last year).  However, I
+> recognize that there seems to be a need for some private coordination
+> at present. Perhaps all discussions should be published in the open
+> something like 2 months after the initial posting?  That would be a
+> kind of maximum private coordination period.
+>
+> Best wishes,
+> Mike
+>
+
