@@ -1,148 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/11
-Message-ID: <00b201cc8543$ed5d27b0$9b7a6fd5@ml>
-Date: Sat, 8 Oct 2011 01:53:08 +0300
-From: "MustLive" <mustlive@...security.com.ua>
-To: <jlieskov@...hat.com>
-Cc: <oss-security@...ts.openwall.com>, <plautrba@...hat.com>
-Subject: Re: CVE Request -- Multiple security issues in various versions of AWStats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/14
+Message-ID: <20110404120716.GK543@ngolde.de>
+Date: Mon, 4 Apr 2011 14:07:16 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Jan!
+Hi,
+* Marcus Meissner <meissner@...e.de> [2011-04-04 13:24]:
+> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
+> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> > >and Josh).
+> > 
+> > Limiting a distro to two or three representatives is going to make things 
+> > tricky for Red Hat; we have a rather large dedicated security response 
+> > team (as we publish over 300 advisories a year across 70 product/versions 
+> > and have a number of folks dealing with 'incoming' issues spread, and my 
+> > team is dispersed across 9 different countries).  If these representatives 
+> > have been very active on v-s and oss-security is there a reason to limit?
+> 
+> Similar for SUSE. We currently have 3 engineers rotating through the incident
+> manager role (and myself).
 
-Petr was not right :-). And I CCed this letter, to let him know about it.
+Same for Debian. We are currently cycling through a one week "front desk" 
+period. Limiting that access to 2-3 people of the team would make that 
+approach a bit unpractical for us in terms of handling undisclosed issues.
+I also would welcome it if people who have been active on oss-sec and v-sec 
+before should be allowed back to this list.
 
-1. As I wrote in my previous letter there is CVE entry already for
-Redirector vulnerability - Open redirect vulnerability
-(http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-5020). And as I
-showed in my advisory in case of #2, this fix can be bypassed, so there can
-be made update for this CVE entry or made new entry.
+I can understand that you want to keep the list of subscribers low in order to 
+prevent leaks. But from a practical point of view I see really no difference 
+if a mail is passed to a team exploder of a distro by one of the allowed 
+subscribers or directly sent to these members, at least in terms of attack 
+surface/leaking risks. The only practical difference I see is who would be responsible
+for such an incident. But if it's just about moving the responsibility out of
+the list itself to the vendor while keeping the number of subscribers low you could as
+well subscribe our team@ alias and encrypt mails with the team key.
 
-So CVE, Mitre and all others, who made such entries in their vulnerability
-databases (including developer, who tried to fix it, but incorrectly and it
-can be bypassed) already recognized it as vulnerability.
+That being said, my key data (I was added as part of Debian):
+pub   1024D/73647CFF 2003-11-15
+      Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
+uid                  Nico Golde <nion@...ian.org>
+uid                  Nico Golde <nico@...lde.de>
+uid                  Nico Golde <nion@....net>
+uid                  Nico Golde <nion@...tu-berlin.de>
+sub   2048g/F774030E 2003-11-15
 
-2. Yes, awredir.pl is url redirector and it's only one thing that it should
-do, but in result we have 7 holes: 3 XSS, 1 SQLi, 1 HTTPRS, 1 CLRFi and one
-Redirector hole (even redirecting should be done flawless). To which holes
-redirectors can lead I wrote in my article Redirectors: the phantom menace.
+or alternatively a stronger key:
+pub   4096R/A0A0AAAA 2009-06-01
+      Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
+uid                  Nico Golde <nion@...ian.org>
+uid                  Nico Golde <nico@...lde.de>
+uid                  Nico Golde <nion@...tu-berlin.de>
+uid                  Nico Golde <nion@....net>
+sub   4096R/E89CCA30 2009-06-02
 
-3. Petr and everyone who don't know about Redirector vulnerabilities should
-read articles about this type of holes:
+Cheers
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-URL Redirector Abuse (WASC-38) in WASC 2.0
-http://projects.webappsec.org/w/page/13246981/URL%20Redirector%20Abuse
-
-And my articles (first one on Ukrainian and others are on English):
-
-Redirectors (I wrote this article, with few examples of redirectors, before
-I posted multiple redirector vulnerabilities in search engines in my 2007's
-project Month of Search Engines Bugs)
-http://websecurity.com.ua/987/
-
-Redirectors: the phantom menace
-http://websecurity.com.ua/3495/
-
-Attacks via closed redirectors
-http://websecurity.com.ua/3531/
-
-P.S.
-
-Since you wrote me, then you can listen my music.
-
-In September I've released my first commercial album Originality 
-(http://soundcloud.com/mustlive/sets/originality). And soon I'll release my 
-new single. So you can listen these and other my compositions ;-). I hope 
-you'll enjoy my music.
-
-Best wishes & regards,
-Eugene Dokukin aka MustLive
-Administrator of Websecurity web site
-http://websecurity.com.ua
-
------ Original Message ----- 
-From: "Jan Lieskovsky" <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>; "Petr Lautrbach"
-<plautrba@...hat.com>
-Cc: <oss-security@...ts.openwall.com>; "MustLive"
-<mustlive@...security.com.ua>
-Sent: Friday, October 07, 2011 12:33 PM
-Subject: Re: [oss-security] CVE Request -- Multiple security issues in
-various versions of AWStats
-
-
->
-> And one correction yet.
->
-> Petr Lautrbach (Cc-ed) commented on Red Hat Bugzilla
-> bug [1], that:
->
-> <quote>
-> > URL redirection abuse:
-> >
-> >
-> http://site/awredir.pl?key=0f3830803a70cc1636af3548b66ed978&url=http://websecurity.com.ua
->
-> awredir.pl is url redirector so this is its main/only feature and it
-> is/can be secured by $KEYFORMD5. So I don't think this is flaw.
-> </quote>
->
-> Thus explicitly mentioning it here too, so this would not fall out
-> of the radar and just five CVE ids would be assigned.
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Petr, if you have more comments on the rest of the issues,
->       feel free to do so in order to proper set of CVE ids would
->       be assigned to these. Thanks, Jan.
->
-> On 10/07/2011 10:17 AM, Jan Lieskovsky wrote:
->> Hello Josh, Steve, vendors,
->>
->> these doesn't look like CVE ids have been already assigned for:
->> [1] https://bugzilla.redhat.com/show_bug.cgi?id=740926#c0
->> [2] http://secunia.com/advisories/46160/
->> [3] http://seclists.org/fulldisclosure/2011/Sep/234
->> [4] http://websecurity.com.ua/5380/
->>
->> If I counted correctly, six CVE ids should be assigned for these
->> (since different versions are listed as vulnerable):
->>
->> 1) XSS (WASC-08) (in versions <=1.1):
->> http://site/awredir.pl?url=javascript:alert(document.cookie)
->>
->> 2) Redirector (URL Redirector Abuse in WASC 2.0) (WASC-38):
->> http://site/awredir.pl?url=http://websecurity.com.ua
->>
->> 3) SQL Injection (WASC-19): (version 1.2)
->> http://site/awredir.pl?url='%20and%20benchmark(10000,md5(now()))/*
->>
->> 4) XSS (WASC-08) (in version 1.2):
->>
->> http://site/awredir.pl?url=%3Cscript%3Ealert(document.cookie)%3C
->> /script%3E
->>
->> http://site/awredir.pl?key=%3Cscript%3Ealert(document.cookie)%3C
->> /script%3E
->>
->> 5) HTTP Response Splitting (WASC-25):
->>
->> http://site/awredir.pl?key=04ed5362e853c72ca275818a7c0c5857&
->> url=%0AHeader:1
->>
->> 6) CRLF Injection (Improper Input Handling in WASC 2.0) (WASC-20):
->>
->> http://site/awredir.pl?key=4b9faa91e2529400c4f3c70833b4e4a5&
->> url=%0AText
->>
->> Could you allocate CVE identifiers for these? (let me know
->> if further description of each of the issues is necessary prior
->> assignment).
->>
->> Thank you && Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Content of type "application/pgp-signature" skipped
