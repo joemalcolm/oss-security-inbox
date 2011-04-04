@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/1
-Message-Id: <201108021058.31390.thomas@suse.de>
-Date: Tue, 2 Aug 2011 10:58:31 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/18
+Message-ID: <4D99BF5D.80805@mitm.cl>
+Date: Mon, 04 Apr 2011 08:53:49 -0400
+From: ksha <ksha@...m.cl>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: webkit ZDI-11-138 and ZDI-11-139
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am Donnerstag, 14. Juli 2011, 17:02:10 schrieb Thomas Biege:
-> Looks like the following two issus have no CVE-ID assigned:
-> 
-> 
-> http://www.zerodayinitiative.com/advisories/ZDI-11-138/
-> Webkit Undefined DOM Prototype Attach Remote Code Execution Vulnerability
-> ZDI-11-138: April 19th, 2011 
 
-CVE-2011-0234
- 
-> http://www.zerodayinitiative.com/advisories/ZDI-11-139/
-> Webkit Anonymous Frame Remote Code Execution Vulnerability
-> ZDI-11-139: April 19th, 2011 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-none yet...
+Please subscribe me to the new list. I was a vendor-sec subscriber.
+
+pub   2048R/519FE93C 2011-01-26
+uid                  ksha <ksha@...m.cl>
 
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+- -- 
+
+
+Ninja Coder
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQEcBAEBAgAGBQJNmb9cAAoJEP64MfdRn+k8jGsH/jo1YOLNFuKR/wu4k6FOnwmX
+J4IfAvUQDnSMdpHdBbshvL4tmVKpbToahsaZvDIvhYtDfn/JnAdZRQeVDuOppwWI
+e/ygo2mkjFFDx9U6OCK4LLl5Kj/cFtR9mi3v6RkEnfxng2GPHF+2WwFgcuG1KKBn
+aXIVQ6iiTj/lFZMFLYltV67F6pjAMhAwc9E7+tfFW7pvi6h+Hwyoe/dI6lzeEnRE
+lhYjw2ZTYwyWzRzXrGOZk7Bf578skP6zc7Qv2DAJ6xuURdKl09m7EYHJz19Qomhs
+8va2COvDwplcZ4n1bR+V6JvzHzehGpB+fq1wm+cGU6KTwGXy5XodTOCrNpyDZUg=
+=s3FQ
+-----END PGP SIGNATURE-----
+
