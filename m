@@ -1,55 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/6
-Message-ID: <4D64971C.8030208@redhat.com>
-Date: Wed, 23 Feb 2011 13:11:56 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/56
+Message-ID: <4D9A445E.6090503@xiscosoft.es>
+Date: Tue, 05 Apr 2011 00:21:18 +0200
+From: klondike <klondike@...cosoft.es>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
-> I originally started writing this as a response to the recent CVE
-> requests for issues in partition handling, but thought it might be a
-> useful discussion on its own.  I was wondering if there are any
-> clear-cut policies on issues involving physical access, since these
-> can be very difficult in terms of assigning blame.
+El 04/04/11 22:03, Jeffrey Czerniak escribió:
+> I'm Jeffrey Czerniak, a member of Apple's Product Security team.  I was a member of vendor-sec via the Apple exploder.   Please subscribe me to the new list.
 >
-> For example, many Linux distributions will auto-mount filesystems on
-> removable storage, often going so far as to load corresponding kernel
-> modules for filesystems that aren't compiled in or don't already have
-> an LKM loaded.  Sometimes, this will happen even if the screen is
-> locked.
->
-> Incidentally, many Linux filesystem implementations don't have
-> especially robust error handling for failures during attempts to mount
-> corrupt filesystems.  As an example, I have a deliberately corrupted
-> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
-> formatted a USB stick with this filesystem, so now I have a USB stick
-> that will panic the kernels of distributions that support
-> auto-mounting, in some cases even when the screen is locked.
->
-> Should this be considered a vulnerability?  Probably.  But what should
-> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-> a vulnerability if auto-mounting is disabled only when the screen is
-> locked?  Should all filesystems have graceful error handling for every
-> possible edge case that can occur when dealing with corruption?
->
-> I'd be interested to hear opinions on this.  And depending on how the
-> discussion goes, I'd be happy to provide more details on specific
-> cases, such as the btrfs example.
+> My PGP public key can be found at https://www.apple.com/support/security/pgp/   I have also pasted it below for convenience:
+I thought Apple didn't made a Linux distro. Has that changed?
 
- From the security response perspective, I will likely classify them as 
-security bugs but with a /very/ low impact. The attacking party must 
-already have some form of physical access to the affected system, or the 
-attack must require some social engineering to trick the user to mount a 
-corrupted file system using a portable media.
 
-It will be hard to break existing user experience if we were to disable 
-auto-mounting entirely, but it makes sense to disable it if the screen 
-is locked. I'm not sure if this will affect how we classify such bugs. 
-I'm happy to hear more thoughts on this.
-
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
