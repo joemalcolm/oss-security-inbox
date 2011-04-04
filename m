@@ -1,88 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/3
-Message-ID: <CAPYM6Vz4ut13bCZU+jEYGFeu6wcf0ThYW6h8hSBUgC2MDxBwBQ@mail.gmail.com>
-Date: Thu, 18 Aug 2011 14:18:27 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/13
+Message-ID: <1301917705.2521.113.camel@mdlinux>
+Date: Mon, 04 Apr 2011 07:48:25 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Elgg 1.7.10 <= | Multiple Vulnerabilities
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On Mon, 2011-04-04 at 10:51 +0200, Marcus Meissner wrote:
+> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
+> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> > >and Josh).
+> > 
+> > Limiting a distro to two or three representatives is going to make things 
+> > tricky for Red Hat; we have a rather large dedicated security response 
+> > team (as we publish over 300 advisories a year across 70 product/versions 
+> > and have a number of folks dealing with 'incoming' issues spread, and my 
+> > team is dispersed across 9 different countries).  If these representatives 
+> > have been very active on v-s and oss-security is there a reason to limit?
+> 
+> Similar for SUSE. We currently have 3 engineers rotating through the incident
+> manager role (and myself).
 
-The Elgg 1.7.10 and lower versions are vulnerable to Cross Site
-Scripting and SQL Injection.
+Same for Ubuntu. Limiting membership to two representatives would mean a
+lot of email from the list is going to be forwarded to the other members
+of our security team. Although limiting membership may seem like a good
+idea to contain leaks, having to forward email to non-members because of
+an arbitrary limitation would surely defeat that goal.
 
+Marc.
 
-2. BACKGROUND
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-Elgg is an award-winning social networking engine, delivering the
-building blocks that enable businesses, schools, universities and
-associations to create their own fully-featured social networks and
-applications. Well-known Organizations with networks powered by Elgg
-include: Australian Government, British Government, Federal Canadian
-Government, MITRE, The World Bank, UNESCO, NASA, Stanford University,
-Johns Hopkins University and more (http://elgg.org/powering.php)
-
-
-3. VULNERABILITY DESCRIPTION
-
-The "internalname" parameter is not properly sanitized, which allows
-attacker to conduct Cross Site Scripting attack. This may allow an
-attacker to create a specially crafted URL that would execute
-arbitrary script code in a victim's browser. The "tag_names" is not
-properly sanitized, which allows attacker to conduct SQL Injection
-attack.
-
-
-4. VERSIONS AFFECTED
-
-Elgg 1.7.10 <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-- Cross Site Scripting
-
-http://localhost/pg/embed/media?internalname=%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
-
-- SQL Injection > Info Disclosure
-
-http://localhost/pg/search/?q=SQLin&search_type=tags&tag_names=location%27
-
-
-6. SOLUTION
-
-Upgrade to 1.7.11 or higher.
-
-
-7. VENDOR
-
-Curverider Ltd
-http://www.curverider.co.uk/
-http://elgg.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-08-01: vulnerability reported
-2011-08-15: vendor released fixed version
-2011-08-18: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[elgg_1710]_xss_sqlin
-Project Home: http://elgg.org/
-Vendor Release Note:
-http://blog.elgg.org/pg/blog/brett/read/189/elgg-1711-released
-
-
-
-#yehg [2011-08-18]
