@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/8
-Message-ID: <1309956456.2993.66.camel@localhost>
-Date: Wed, 06 Jul 2011 07:47:36 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Simon Dobson <simon.dobson@...tcd.ie>
-Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org,  Jeffrey Walton <noloader@...il.com>
-Subject: Security issue in reseed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/50
+Message-ID: <1489200095.372119.1301944143949.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 4 Apr 2011 15:09:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Hanno Böck <hanno@...eck.de>, coley <coley@...re.org>
+Subject: Re: CVE request: roundcube < 0.5.1 CSRF
 Content-Type: text/plain; charset=utf-8
 
-A security bug was reported by Jeffrey Walton against reseed in
-Ubuntu. You are being emailed as the upstream contact. Please keep
-oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+Thanks for sorting this Jan.
 
-This issue should be considered public. A CVE is being requested; please
-mention this in any changelogs.
+> > http://trac.roundcube.net/wiki/Changelog
+> >
+> > two cross site request forgery, one additional issue fixed in 0.5.1:
+> >
+> > "Security: add optional referer check to prevent CSRF in GET
+> > requests
+> 
+> Looks this one being just security hardening with the patches:
+> [1] http://trac.roundcube.net/changeset/4503
+> [2] http://trac.roundcube.net/changeset/4504
+> 
+> For the CSRF flaws:
+> 
+> > Security: protect login form submission from CSRF
+> Patch: [3] http://trac.roundcube.net/changeset/4490
 
-Details from the public bug follow:
-https://launchpad.net/bugs/804594
+Use CVE-2011-1491 for the above.
 
-From the reporter:
-"reseed(8) performs an insecure HTTP fetch of data from random.org. The
-script is automatically executed when installed, and any time the user
-chooses to execute. In addition, the reseed man pages do not mention the
-data is retrieved over an insecure channel."
+> 
+> > Security: prevent from relaying malicious requests through
+> > modcss.inc"
+> Patch: [4] http://trac.roundcube.net/changeset/4488
+> 
 
-As pointed out by the reporter, from the man page: "It is run once
-during the installation of the package only". An attacker could perform
-a MITM during package installation or whenever the reseed command is run
-to provide predictable data for the random number seed.
+Use CVE-2011-1492 for the above.
 
-Thanks in advance for your cooperation in coordinating a fix for this
-issue,
-
-Jamie Strandboge
-
-[1] oss-security@...ts.openwall.com is a public mailing list for
-    people to collaborate on security vulnerabilities and coordinate
-    security updates.
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
