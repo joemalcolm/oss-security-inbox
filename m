@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/29
-Message-ID: <20110403230223.GF10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:02:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/9
+Message-ID: <4D993F7C.1080001@redhat.com>
+Date: Mon, 04 Apr 2011 09:18:12 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 01:22:36PM -0700, Steve Beattie wrote:
-> I was a subscriber of vender-sec, please add me to the new list.
+On 04/01/2011 11:33 PM, Josh Bressers wrote:
+> Hello everyone,
 > 
-> gpg information:
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
 > 
-> pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
->       Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
-> uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
 
-Added.
+Please subscribe me as well:
 
-Alexander
+pub  1024D/DA5BDAE5 2006-08-25
+Huzaifa S. Sidhpurwala <huzaifas@...hat.com>
+
+key: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCC70DCF2DA5BDAE5
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
