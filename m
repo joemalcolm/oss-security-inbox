@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/6
-Message-ID: <1869784473.178456.1305830631453.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 14:43:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/28
+Message-ID: <20110404144131.GM543@ngolde.de>
+Date: Mon, 4 Apr 2011 16:41:31 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Dovecot releases
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Henri Salo wrote:
-> > Should these two get CVE-identifier(s)?
-> >
-> > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
-> > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
+Hi,
+* Solar Designer <solar@...nwall.com> [2011-04-04 15:41]:
+> On Mon, Apr 04, 2011 at 02:07:16PM +0200, Nico Golde wrote:
+[...] 
+> > or alternatively a stronger key:
+> > pub   4096R/A0A0AAAA 2009-06-01
+> >       Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
+> > uid                  Nico Golde <nion@...ian.org>
+> > uid                  Nico Golde <nico@...lde.de>
+> > uid                  Nico Golde <nion@...tu-berlin.de>
+> > uid                  Nico Golde <nion@....net>
+> > sub   4096R/E89CCA30 2009-06-02
 > 
-> http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
-> 
+> Please suggest a specific e-mail address and key combination.  And if
+> you suggest other than your @debian.org address, please suggest a way to
+> verify that the address is really "yours" (the Debian security person's).
 
-As best as I can tell, just the header NULL issue deserves a CVE id.
-CVE-2011-1929
+Ok please use nion@...ian.org with E1AB DE0E FFCA AEF3 9494 7592 CD4B 2AF3 A0A0 AAAA.
+This key is signed by 73647CFF which is in the Debian keyring and a transition 
+statement signed by 73647CFF as well is online at http://nion.modprobe.de/key-transition-2008-06-01.txt.asc
 
-Thanks.
-
+Cheers
+Nico
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
