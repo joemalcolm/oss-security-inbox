@@ -1,37 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/5
-Message-ID: <1321627655.11489.11.camel@hurina>
-Date: Fri, 18 Nov 2011 16:47:35 +0200
-From: Timo Sirainen <tss@....fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/58
+Message-ID: <20110404232756.GB15833@openwall.com>
+Date: Tue, 5 Apr 2011 03:27:56 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2011-11-18 at 14:37 +0100, Jan Lieskovsky wrote:
+Jeffrey,
 
->    a security flaw was found in the way Dovecot, an IMAP and POP3 email
-> server, performed remote server identity verification (x509
-> certificate's Common Name field was not checked to match provided
-> remote server host name), when Dovecot was configured to proxy IMAP and
-> POP3 connections to remote hosts and TLS/SSL protocols were requested
-> (ssl=yes or starttls=yes) in the configuration to secure these
-> connections to the destination server. A remote attacker could use
-> this flaw to conduct man-in-the-middle (MITM) attacks via specially-
-> crafted x509v3 certificate.
-..
-> But on the other hand, this change is important enough, to be
-> backported to all affected versions,
+On Mon, Apr 04, 2011 at 01:03:31PM -0700, Jeffrey Czerniak wrote:
+> I'm Jeffrey Czerniak, a member of Apple's Product Security team.  I was a member of vendor-sec via the Apple exploder.   Please subscribe me to the new list.
+> 
+> My PGP public key can be found at https://www.apple.com/support/security/pgp/   I have also pasted it below for convenience:
 
-SSL proxy connections were added in some Dovecot v1.x version, but v1.x
-doesn't support giving hostname as proxy destination, only IP address.
-So this can't really be backported to v1.x.
+Thanks, and sorry for the confusion caused by my last minute
+determination to start with a Linux distros list only.
 
-My v2.0 change keeps this backwards compatible with existing setups that
-use IP addresses, so that the hostname check is skipped when connecting
-with IP.
+Obviously, I won't add Apple to a Linux distro security contacts list
+(well, unless you start a Linux distro).
 
-Upcoming v2.1 is stricter and doesn't skip the check, which basically
-means that ssl=yes with IP address as destination always fails.
+Yet I recognize that Apple has been contributing to vendor-sec, so I'd
+be happy to add you to a suitable list if one is setup.  Perhaps a BSD
+distros list, which would generally be CC'ed on issues that are expected
+to be shared between Linux and *BSD userlands and thus likely also with
+Mac OS X?  Do you and other vendors feel that such a list is needed?
 
+So far, yours is the only non-Linux vendor request.  For just one
+vendor, we can be CC'ing you whenever appropriate, with no list needed.
 
+One of my reasons to go with a Linux-only list for now was that during
+the month without vendor-sec only Linux distro folks approached me
+asking for the setup of such a list.  Others did not appear to need it.
+The attitude from security researchers and non-Linux projects appeared
+to be like "we don't need this list, but if one exists, we want to be on
+it".  This made some sense to me, but not enough to setup a list shared
+by both those who say they need it (Linux distros) and those who want to
+be on it just not to be left out.
+
+I'd appreciate any proposals from prospective non-Linux-distro members
+of private list(s) to be setup (if any are needed).
+
+Thanks,
+
+Alexander
