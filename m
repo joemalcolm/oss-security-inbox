@@ -1,65 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/6
-Message-ID: <2f641b9d-06a4-463d-8a27-117f9c354051@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 04 Oct 2011 14:02:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...gin.im
-Subject: Re: libpurple vulnerability disclosure and fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/16
+Message-ID: <19865.44445.981637.137043@ornendil.otp.ericsson.se>
+Date: Mon, 4 Apr 2011 13:38:05 +0200
+From: Hans Bolinder <hans.bolinder@...csson.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Patrik Nyblom <pan@...ang.org>
+Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3594.
+[Jan Lieskovsky:]
+>    based on:
+>    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
+> 
+>    and:
+>    [2] http://www.erlang.org/download/otp_src_R14B.readme
+>    [3] http://www.erlang.org/download/otp_src_R14B01.readme
+>    [4] http://www.erlang.org/download/otp_src_R14B02.readme
+> 
+> performed some initial issues review -- erlang-CVE-request.txt
+> attached. But since not sure, which of those are real security
+> flaws and how many CVE ids will be needed for those, Cc-ing
+> also Erlang upstream developers to shed more light into this.
+> ...
+> could you please have a look at the attached review file
+> and reply which of the #20 OTPs in the list are security flaws
+> (so we would know the count of CVE identifiers needed) and which
+> are just bugs? (since you know the Erlang code better than me)
 
-Thanks.
+> stdlib:
+>   - 20), race condition/silent data corruption in dets OTP-8898
+>     Patch: https://github.com/erlang/otp/commit/4e79fa3b1b6797f2583848d307d6b85cec94a920
+>     Note: Hard to tell if has security implications
 
--- 
-    JB
+It's a bug fix, and I believe it has no security implications.
 
+Best regards,
 
------ Original Message -----
-> Hello all,
-> 
-> A libpurple vulnerability was made known to the Pidgin developers via
-> our public bug tracker which affects the SILC protocol plugin and all
-> software which uses SILC via libpurple.  The original identification
-> of the vulnerability and bug report was made by Diego Bauche Madero
-> from IOActive <diego.madero@...ctive.com>, and can be seen on the
-> Pidgin bug tracker as Bug #14636:
-> 
->     http://developer.pidgin.im/ticket/14636
-> 
-> The vulnerability lies in calling g_markup_escape_text() on strings
-> which have not been verified as valid UTF-8.  This function is not
-> required to do anything reasonable with invalid UTF-8, and indeed
-> reads past the end of the string and will eventually segfault for
-> certain sequences in some versions of Glib 2.  Because the behavior
-> of
-> this function is undefined, and depends on the particular version of
-> Glib 2 in use, the complete ramifications of this bug are unknown.
-> Remote crashing of a libpurple client by untrusted users via
-> specifically crafted SILC messages is a verified vulnerability.
-> 
-> This bug is believed to affect all releases of libpurple up to and
-> including version 2.10.0.
-> 
-> The correct fix for this bug is UTF-8 validation (and correction if
-> necessary) of the incoming string before passing it to Glib.  A patch
-> which provides this fix has been applied to the Pidgin sources in
-> revision 7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8 and will appear in
-> all future Pidgin releases.  For reference, it is:
-> 
->     http://developer.pidgin.im/viewmtn/revision/diff/be5e66abad2af29604bc794cc4c6600ab12751f3/with/7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8
-> 
-> All packagers of libpurple (including monolithic Pidgin and/or finch
-> packages) who have not already done so are encouraged to apply this
-> change to their packages immediately.
-> 
-> We would also like to request a CVE number for this issue.
-> 
-> Any sensitive follow-ups to this issue, or any other Pidgin, finch,
-> or
-> libpurple issue, may be directed to security@...gin.im.
-> 
-> Thank you,
-> Ethan
-> 
+Hans Bolinder, Erlang/OTP team, Ericsson
