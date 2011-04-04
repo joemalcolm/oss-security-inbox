@@ -1,71 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/16
-Message-ID: <4D642BE8.9070600@bestpractical.com>
-Date: Tue, 22 Feb 2011 16:34:32 -0500
-From: Thomas Sibley <trs@...tpractical.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>,  Shawn M Moore <sartak@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>,  security@...tpractical.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/19
+Message-ID: <20110404133151.GA12101@openwall.com>
+Date: Mon, 4 Apr 2011 17:31:51 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
-
-Is Redhat packaging RT now, or are you just handling the CVEs?
-
-In all future security mail, please use our security contact address
-security@...tpractical.com, not developer email addresses pulled from
-commits.  Details for our security contact are at:
-http://bestpractical.com/security/
-
-We have no context for Redhat's (and Debian's?) involvement here.  Can
-you bring us up to speed on your plans regarding CVEs and/or security
-releases in your distributions?
-
-On 22 Feb 2011 09:37, Jan Lieskovsky wrote:
->   2) * Redirect users to their desired pages after login.
-[snip]
->      Upstream bug report:
->      [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
+On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
+> Please subscribe me to the new list. I was a vendor-sec subscriber.
 > 
->      Upstream changeset:
->      [d]
-> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
-> 
-> 
->      Thomas, could you please confirm [d] is the proper fix for 2)
-> issue? Thank you.
->      (* Redirect users to their desired pages after login.)
+> pub   2048R/519FE93C 2011-01-26
+> uid                  ksha <ksha@...m.cl>
 
-The commit you linked to is not the full fix.  As noted in our own bug
-report you also link to above, the fix was merged into 3.8-trunk with
-commit 057552287159e801535e59b8fbd5bd98d1322069.
+Are you a security contact for a Linux distro, and for which one?
+And how do we verify that?
 
-That said, what are your plans for the diffset?  The commit itself can't
-be used as a standalone patch for the issue.  It introduced a few other
-bugs in core RT and broke the current stable versions of
-RT-Authen-ExternalAuth (a very popular, critical extension).  The bugs
-have been fixed by other commits and there are development releases of a
-fixed ExternalAuth.
+How did you receive vendor-sec mail?
 
-Are you trying to package a patch in a security update?
-
->   3) * Clone Scrip's TicketObj since we change the CurrentUser and it
-> can leak
->      information (Custom field values, etc)
-> 
-[snip]
->      Upstream changeset (needs confirmation from upstream if it's
->      real fix for the issue yet):
->      [iii]
-> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
-> 
-> 
->      Shawn, could you please confirm [iii] is the proper fix for 3) issue?
->      (* Clone Scrip's TicketObj since we change the CurrentUser and it
-> can leak)
-
-The above commit is an unrelated bug fix.  The correct commit is
-2338cd19ed7a7f4c1e94f639ab2789d6586d01f3, however we've never tested it
-as a standalone fix.  Again, what are your plans?
-
-Thomas, for Best Practical
+Alexander
