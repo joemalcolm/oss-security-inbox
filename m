@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/11
-Message-ID: <4EAAA0C4.7030704@tokidev.fr>
-Date: Fri, 28 Oct 2011 14:32:04 +0200
-From: Benjamin Renaut <benml@...idev.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/46
+Message-ID: <20110404190008.GC14209@openwall.com>
+Date: Mon, 4 Apr 2011 23:00:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Apr 04, 2011 at 12:05:18AM -0500, Micah Gersten wrote:
+> Please add me to the new list, I was a member through the Ubuntu exploder:
+> pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
+>       Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
+> uid                  Micah Gersten <micah@...ntu.com>
+> sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
 
-I do not believe gzexe is affected, as it doesn't use ln but instead 
-create a temporary directory with umask 77 - preventing any race condition.
+Added.
 
-Best regards,
-Benjamin Renaut.
+(We'll need to revisit the member list for Ubuntu later.)
 
-On 28/10/11 14:22, Hanno Böck wrote:
-> Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
-> schrieb Ramon de C Valle<rcvalle@...hat.com>:
->
->> This is a security issue reported by vladz in bzexe. This is a low
->> impact security issue, since bzexe is rarely used and the race
->> condition window is very narrow, but still exploitable.
-> Have you checked if this also affects gzexe? It is pretty much the same
-> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
->
-
+Alexander
