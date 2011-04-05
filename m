@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/1
-Message-ID: <20110516142741.GA24816@suse.de>
-Date: Mon, 16 May 2011 16:27:41 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/9
+Message-ID: <20110405115951.GB11119@suse.de>
+Date: Tue, 5 Apr 2011 13:59:51 +0200
 From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Multiple libraries privilege checking
+Subject: CVE re-request
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Its probably about time to review libraries that are commonly
-linked to (formerly-) suid programs, such as
-libldap, libssl etc. In near future, in the advent of file caps
-they are often lacking proper checks.
-They usually just compare uid against euid (not even gid sometimes)
-and do not check the dumpable flag or AT_SECURE (dont know whether
-glibc exports a proper function to easily check that at all).
+Some issues have been fixed in python-feedparser. One of them
+did not get a CVE yet?
 
-The libraries that I had a quick look at and which were found
-"vulnerable" are:
+This one:
 
-- openssl-1.0.0c
-- openldap-2.4.23
-- cyrus-sasl-2.1.23
+http://code.google.com/p/feedparser/issues/detail?id=195
 
-which is probably far from complete. Even if not linked directly to
-a privileged running program, these libraries may be introduced by
-plugins or frameworks (pam etc).
-As a result, attackers may specify plugin directories or rouge directory
-services for authentication as these libraries think they are
-running unprivileged.
-So better to fix them now than to be sorry in one year when they are going
-to be used the fscaps-way.
+Can someone assign one or tell me the id if already assigned?
 
+thx,
 Sebastian
 
--- 
 
+-- 
+~
 ~ perl self.pl
 ~ $_='print"\$_=\47$_\47;eval"';eval
 ~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
