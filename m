@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/6
-Message-ID: <20110715131302.GB20116@flens.dfn-cert.de>
-Date: Fri, 15 Jul 2011 15:13:02 +0200
-From: dfncert@...-cert.de
-To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de
-Subject: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/17
+Message-ID: <Pine.GSO.4.64.1104051014001.20885@faron.mitre.org>
+Date: Tue, 5 Apr 2011 10:28:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-There is a vulnerability in the recently introduced OCSP feature in
-FreeRADIUS version 2.1.11.
+Given the complexity/number of patches, one could arguably call it "lack 
+of length validation" entirely, but I think it's reasonable to give it a 
+few CVE's.  Note - we need different CVE's for the issues found by Dan 
+Hutchings versus those found by Dan Rosenberg.
 
-A patch was proposed to the packet maintainer.
+Dan, could you confirm that this breakdown makes sense?
 
-Thanks.
+1) buffer overflows (not validating length is <= the maximum)
 
-- -- 
-DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
-Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
-Sachsenstrasse 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
------BEGIN PGP SIGNATURE-----
+2) use of negative signed integers in memcpy() and other operations where
+    conversion creates a large unsigned integer, referred to as
+    "underflow"
 
-iQEVAwUBTiA83fNu3tfxLoPHAQJ4SAf/UVCeXlAojFxccVgLygyZFRboX2hPjeOF
-b5OAyUWSi7Uh9O/NFpyUi/JErQI6Z2QYHnp0gnEWLMN/q3SJe6nnrH7EunNexUvx
-cNAwASJoZS+JXpG9Q33oSLPeAkZ3jO6VgAy5dMQVFLDR0KV7y+1BW93v2yazzeXP
-7vj7+umns4n5mr6/xEi4LXWTuVMvY0WEe3DFvZ21Sj3mxz07VvKp2/NU+LKOGVzT
-76Zt2oJYb5bq3f8HP6Rrg62wY8bQPS2tNBj6MWieWh7Zf7GrwdmdaX4dqwk7Q+X/
-OMN0+NYJLEGVlVayDcV6Dj/hDOQW2m2LRf7uwm//6qj0cwqqoZkyCw==
-=o4QW
------END PGP SIGNATURE-----
+3) any other types of problems that aren't covered by those two?  (The
+    length validation checks don't always have enough context in the source
+    code).
+
+We would need separate CVE's for the issues found by Dan versus the issues 
+found by Ben Hutchings.
+
+Arguably, #2 could probably be broken down further, but without enough 
+source code context in the patches, it's not immediately clear.
+
+- Steve
