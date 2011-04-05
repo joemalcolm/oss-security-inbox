@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/11/1
-Message-ID: <20111011192311.GA2277@dhcp-25-225.brq.redhat.com>
-Date: Tue, 11 Oct 2011 21:23:11 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/13
+Message-ID: <367877627.382904.1302006490370.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 5 Apr 2011 08:28:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, Peter.Huewe@...ineon.com, srajiv@...ux.vnet.ibm.com, eteo@...hat.com
-Subject: Please REJECT CVE-2011-1161
+Cc: coley <coley@...re.org>
+Subject: Re: CVE re-request
 Content-Type: text/plain; charset=utf-8
 
-Patch for this CVE in its original form tried to limit TPM_PARAMSIZE to
-the userspace buffer size. While this is still an unsolved problem
-(because of the patch changes), with patches for CVE-2011-1160 and
-CVE-2011-1162 applied this is a security hardening not a security flaw.
-Please reject this as a dupe of CVE-2011-1160 and/or CVE-2011-1162.
+That one needs a 2009 ID. I asked mitre in a previous mail,
+let's use this to pester them again.
 
-References: 
-https://github.com/torvalds/linux/commit/6b07d30a
-https://bugzilla.redhat.com/show_bug.cgi?id=732629#c13
-http://sourceforge.net/mailarchive/forum.php?thread_name=CAGyNYUPLbujZm0hq9rfBgXk-xw_xm1ofhe59yNkqEupdt5fUrg%40mail.gmail.com&forum_name=tpmdd-devel
+Thanks.
 
-Thank you,
 -- 
-Petr Matousek / Red Hat Security Response Team
+    JB
+
+----- Original Message -----
+> Hi,
+> 
+> Some issues have been fixed in python-feedparser. One of them
+> did not get a CVE yet?
+> 
+> This one:
+> 
+> http://code.google.com/p/feedparser/issues/detail?id=195
+> 
+> Can someone assign one or tell me the id if already assigned?
+> 
+> thx,
+> Sebastian
+> 
+> 
+> --
+> ~
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
+> ~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
