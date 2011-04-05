@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/42
-Message-ID: <20110404183229.GA14209@openwall.com>
-Date: Mon, 4 Apr 2011 22:32:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/37
+Message-ID: <20110405230056.GU543@ngolde.de>
+Date: Wed, 6 Apr 2011 01:00:56 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE id request: tmux (debian specific)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 03:56:15PM +0200, Marcus Meissner wrote:
-> On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
-> > Benji's trolling does raise a couple real issues.  The private keys and
-> > passphrases of those responding here have now become highly lucrative
-> > targets for attackers.  Hence, everyone on this new list needs to use
-> > good practices to keep their keys, hard drives, and computers safe.
-> > There should probably be some common guidelines for key safety for all
-> > participants.
-> 
-> So would be my work mailbox in previous times.
-> 
-> I guess you are overestimating the value of the information that could
-> be possibly gained.
+Hey,
+due to a patch that was introduced to our tmux package, tmux is not properly 
+dropping group privileges anymore when invoked with -S (tmux is installed 
+setgid).
 
-Yes, I think folks are overestimating the value of the information that
-was on vendor-sec, and I am going to try to reduce that value even
-further for the new Linux distros list (such as by pushing discussions
-on non-medium severity issues elsewhere, and by limiting the embargo
-periods).  I think vendor-sec was primarily a target of attacks as a
-challenge, not so much for the value of the information that it actually
-carried.
+Bug report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=620304
+Can I get a CVE id for this?
 
-Alexander
+Cheers
+Nico
+
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
