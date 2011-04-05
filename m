@@ -1,70 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/11
-Message-ID: <87zkkrp6cc.fsf@mid.deneb.enyo.de>
-Date: Wed, 06 Jul 2011 21:16:51 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/28
+Message-ID: <20110405161838.GA18574@openwall.com>
+Date: Tue, 5 Apr 2011 20:18:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Bind incident
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* Mike O'Connor:
+I wish we had this discussion for real a month ago, but apparently most
+folks won't comment until the setup of a closed list becomes a reality.
+So I think there was some use in setting it up even if we end up re-doing
+or removing it, which is within consideration. ;-)
 
-> Note that the BIND 9.4 ESV formally EOLed just last month:
->
-> http://www.isc.org/softwaresupportpolicy
->
-> So, if you are distributing an older rev of BIND and some new security
-> issue comes up that you are prone to, it _might_ not be quite as easy to
-> backport the fixes.
+On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
+> A lot of userland stuff is shared between BSD and Linux, and probably
+> some other operating systems.  About the only things that differ between
+> a lot of these are the Linux kernel, and the *libc.
 
-If you move from 9.4 or 9.5 to 9.6, your users might hit an issue in
-the OpenSSL initialization function:
+There are also userland tools specific to the Linux kernel, there's
+Linux-PAM, there are package managers that are rarely used on non-Linux.
 
-<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=584911>
+I mostly agree with you, though.
 
-We've applied the kludge below to our 9.6 version, which seems to
-address the most common cause of a silently dying named process.
-(There are others, but those are more difficult to check.)
+> I think if the disqualifier to Apple is that they don't ship a Linux
+> kernel and glibc, then we're doing them (and ourselves) a disservice.
+> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+> here, just stating a fact).
 
-diff --git a/lib/dns/openssl_link.c b/lib/dns/openssl_link.c
-index 2dc7d7e..80e6e00 100644
---- a/lib/dns/openssl_link.c
-+++ b/lib/dns/openssl_link.c
-@@ -48,12 +48,16 @@
- #include "dst_internal.h"
- #include "dst_openssl.h"
- 
-+#include <dns/log.h>
-+
- #include <openssl/err.h>
- #include <openssl/rand.h>
- #include <openssl/evp.h>
- #include <openssl/conf.h>
- #include <openssl/crypto.h>
- 
-+#include <unistd.h>
-+
- #if defined(CRYPTO_LOCK_ENGINE) && (OPENSSL_VERSION_NUMBER >= 0x0090707f)
- #define USE_ENGINE 1
- #endif
-@@ -188,7 +192,19 @@ dst__openssl_init() {
- 	rm->pseudorand = entropy_getpseudo;
- 	rm->status = entropy_status;
- #ifdef USE_ENGINE
-+	const char *cnf_path = "/usr/lib/ssl/openssl.cnf";
-+	if (access(cnf_path, R_OK) == -1 && errno != ENOENT) {
-+		isc_log_write(dns_lctx, DNS_LOGCATEGORY_GENERAL,
-+			      DNS_LOGMODULE_CONFIG, ISC_LOG_CRITICAL,
-+			      "The OpenSSL configuration file %s exists, "
-+			      "but it is not readable.", cnf_path);
-+		isc_log_write(dns_lctx, DNS_LOGCATEGORY_GENERAL,
-+			      DNS_LOGMODULE_CONFIG, ISC_LOG_CRITICAL,
-+			      "The process may terminate without further "
-+			      "notice.");
-+	}
- 	OPENSSL_config(NULL);
-+
- #ifdef USE_PKCS11
- #ifndef PKCS11_SO_PATH
- #define PKCS11_SO_PATH		"/usr/local/lib/engines/engine_pkcs11.so"
+Yes.
 
+> I think it would be reasonable to s/Linux list/open source vendor list/,
+> like vendor-sec used to be.
+
+If it's not just Linux, then where do we draw the line?  Do we accept
+Solaris distros (of which there are several), Haiku, ReactOS, Cygwin,
+and who knows what else (no offense intended to any of these fine
+projects)?  I think this would make leaks and misuse of the information
+significantly more likely, and make some members and reporters
+uncomfortable about posting to the list.  So we'll be back to CC lists.
+
+> ... letting Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+
+I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+so we'd be forced to introduce a vouching system (well, maybe we'd be
+forced to do that for Linux distros as well...)
+
+Alexander
