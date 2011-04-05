@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/5
-Message-ID: <1464523319.203145.1298555817595.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 08:56:57 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/24
+Message-ID: <20110405153904.GA18405@openwall.com>
+Date: Tue, 5 Apr 2011 19:39:04 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Pattern lock bypass on SE X10 with Android 1.6
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+> pub    512R/205BBF7D 2001-12-30
+>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>       C1
+> uid                  Michael J. O'Connor <mjo@...o.mi.org>
 
+As discussed with Mike off-list, he does not currently qualify for the
+Linux distros list (he posted the subscription request above before I
+added that requirement), and a new PGP key would be needed anyway.  So
+I've just unsubscribed Mike.  He may qualify for a non-Linux list if we
+set one up.
 
------ Original Message -----
-> Would something like http://www.nth-dimension.org.uk/blog.php?id=89
-> qualify for a CVE? I didn't really consider it when I published it
-> because I was working on the principal that it required physical access
-> and you could therefore argue that all bets are off but I was was
-> wondering in the light of the recent discussions about auto mounting bugs
-> which share a similar quality.
-> 
-
-I'll leave this up to MITRE, but in my opinion, phones are a different
-story. The whole reason I lock my phone is because it's so easy for an
-attacker to get access to it. The thoughts of someone grabbing your desktop
-and running down the street with it is laughable, but I suspect this
-happens with phones many times every single day.
-
-I'm expecting the whole mobile security paradigm to change quite a lot in
-the near future as people start to focus there. There's a lot of low
-hanging fruit.
-
-Thanks.
-
--- 
-    JB
+Alexander
