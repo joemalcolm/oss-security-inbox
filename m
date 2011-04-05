@@ -1,51 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/4
-Message-ID: <1072365723.352933.1297192158428.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Feb 2011 14:09:18 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/6
+Message-ID: <69692494.381930.1302002348960.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 5 Apr 2011 07:19:08 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: fuse
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the dealy, some other things popped up :(
-
-I'm going to assign 3 IDs. These look like they maybe could be combined,
-but I'd rather not try to just to have a big split later on when we find
-out various versions are affected in different ways.
-
 > 
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
+> We found the vendor-sec email list useful not just for reporting issues
+> in open-source projects, but also for receiving advance notification
+> about issues that affect the various open-source libraries and
+> applications that Apple ships. (More details can be found at
+> http://www.opensource.apple.com/)
 > 
-> Fuse tries to mount a directory without resolving symlinks, and then
-> tries to update mtab. If it couldn't update mtab, it would unmount the
-> directory while resolving symlinks this time, resulting in a different
-> directory being unmounted.
-
-Use CVE-2011-0541
-
-
-> 
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
-> 
-> This prevents local users from changing the location of the current
-> directory from under fuse using a timing attack.
-
-Use CVE-2011-0542
-
-
-> 
-> http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
-> 
-> Fuse uses the --no-canonicalize mount option to prevent a symlink attack
-> on the mount point written to mtab. For backwards compatibility reasons,
-> it would fallback to using mount in an insecure way. This fallback could
-> get triggered by a user when an entry already existed in mtab.
+> If you are not willing to grant us full membership to the new list, we at
+> least hope we can be cc-ed on all userland issues reported to the list.
 > 
 
-Use CVE-2011-0543
+Not adding Apple to any coordination list would be plain silly. They were
+far more active than most of the distributions.
 
-Thanks.
+I'm starting to worry we've created rules for the sake of rules, which
+almost never has a net positive outcome.
 
 -- 
     JB
