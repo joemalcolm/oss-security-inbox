@@ -1,84 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/18
-Message-ID: <C9CBD61C.80B79%oss-security@securityview.nl>
-Date: Wed, 13 Apr 2011 22:42:43 +0200
-From: Ronald van den Blink <oss-security@...urityview.nl>
-To: <oss-security@...ts.openwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/27
+Message-ID: <20110405180652.694a643b@orphan>
+Date: Tue, 5 Apr 2011 18:06:52 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 4 Apr 2011 13:26:50 -0400 (EDT) R P Herrold wrote:
 
+> > Given the aim to keep the subscriber list very limited, this
+> > probably falls into a tentatively subscribed category too.  AFAIK,
+> > CentOS has rather few components that are not rebuilds of the RHEL
+> > SRPMs, the question is how often a v-s info was useful in the past
+> > in providing security updates for those extra packages.
+> 
+> Thanks for the post furthering the marketing goals of your 
+> corporate master; perhaps the security goal of making sure the 
+> Linux server space is well-secured in a timely fashion was 
+> overlooked by you as you framed your thought
 
-On 4/13/11 5:17 PM, "akuster" <akuster@...sta.com> wrote:
+Damn, my corporatish evilness unveiled after all... ;)
 
->
->
->On 04/12/2011 11:25 PM, Ronald van den Blink wrote:
->> On 4/12/11 11:49 PM, "akuster" <akuster@...sta.com> wrote:
->> 
->>>
->>>
->>> On 04/11/2011 09:57 AM, Josh Bressers wrote:
->>>> ----- Original Message -----
->>>>>
->>>>> Postponed. I'd like to see any support for you getting onto the Linux
->>>>> distros security contacts list, with reasoning, or/and any other
->>>>> suggestions on what to do in this case. Josh - what do you think (as
->>>>> someone who advocated the setup of a vendor-sec replacement)?
->>>>>
->>>>
->>>> My initial thought is that a vendor without public advisories is a
->>>> liability.
->>>
->>> Making our Advisories public could put our customers' customers at risk
->>> depending on when we publish and when our customers can get the fixes
->>> into their customers hands and so on down the line.
->>>
->>> - Armin
->> Hi Armin,
->> 
->> Sorry for putting my $0.02 in the bucket here as well, but the whole
->> purpose of a closed list is that you can fix them before releasing a
->> public advisory. When you fixed it, the customers can (just like other
->> dist's do, just get it patched before you publish it.
->
->Are you joking? I was told Embargoes could not be released to our
->customers until the agreed to release date. That would change some
->things and would be more like .02 euros.
->
->- Armin
-The specifics for this list are not clear to me, but fixing a security
-issue/bug can be done before the public release of the advisory. The
-second the advisory hits "the news" you have the patches ready for you
-customers. That's what I was trying to say. What Dan is pointing out as
-well is important here, I'm sure that only advisories for your own
-specific distri's and keeping those "in house" are providing your
-customers with a false sense of security. A clever sysadmin will be aware
-that a security fix for $distri will also mean that your software is
-affected. And an evil hacker will know this as well.
+The request was meant to be in the same spirit as Alexander's questions
+to rPath or Frugalware folks to see if the membership provides the
+expected benefits, and seemed natural given the specific development
+mode used by CentOS.  You're free to view it however you want, of
+course.
 
-But I'm taking my ass out of this discussion. I'm not providing a Linux
-distribution, only part of the development team of an open source
-e-commerce solution with the luck of only having one security bug / CVE in
-the last 4 releases :P
+> Seemingly (you mention 'AFAIK'), you do not follow the 
+> 'extras' archive, nor the 'testing' where extensions are 
+> found, past what Red Hat ships by default in its enterprise 
+> product
 
-Cheers,
+I certainly do not follow.  I did check extras and centosplus though
+and referred to them as those components that are not rebuilds.  Not
+many components there seemed to be an obvious candidates that can
+benefit from v-s info, imo.
 
-Ronald 
-Batavi.org
+EOF
 
->
->It's not that this
->> is so strange, as closed source OS makers are doing the same (remember
->> Black Tuesday's at MS and Apple's releases).
->> 
->> Just my 2 cents.
->> 
->> Ronald 
->> Batavi.org
->> 
->>>
->> 
->> 
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
