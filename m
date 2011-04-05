@@ -1,61 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/3
-Message-ID: <4E1C6102.9050706@suse.de>
-Date: Tue, 12 Jul 2011 16:58:10 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/17
+Message-ID: <Pine.GSO.4.64.1104051014001.20885@faron.mitre.org>
+Date: Tue, 5 Apr 2011 10:28:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
->> Solar Designer wrote:
->>> [...]
->>> Also, it brings up the question: why merely use $2a$ running the new
->>> code rather than fully emulate the bug even for newly set passwords,
->>> which would make all passwords work, even on other networked machines?
->>> Sure, that would be even nastier for security, so maybe you managed to
->>> strike a balance well.  But nevertheless the question is there.  One of
->>> your options results in full backwards compatibility at a security cost
->>> (for the local system), but the other somehow chooses to strike a
->>> balance between compatibility and security without achieving either of
->>> these fully (for a network of systems).
->>>
->>> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
->>> I imagine that people won't know to enable this option unless/until they
->>> have already run into an issue anyway (that is, someone is already
->>> unable to log in).  At this point, they could likely upgrade the rest of
->>> their networked systems as well... or downgrade this one. ;-(
->>
->> I'm not sure I understand what you are suggesting.
->
-> I am not exactly suggesting anything specific as I don't know your
-> priorities, but I point out the inconsistency.
->
-> My preference would be that you don't implement that BLOWFISH_2y option -
-> always have new hashes generated as 2y, even though this means that
-> networked systems need to be upgraded to new package versions in sync.
 
-The default would be to use 2y by default. The option would be there
-as last resort only.
+Given the complexity/number of patches, one could arguably call it "lack 
+of length validation" entirely, but I think it's reasonable to give it a 
+few CVE's.  Note - we need different CVE's for the issues found by Dan 
+Hutchings versus those found by Dan Rosenberg.
 
->> Keep using the buggy
->> algorithm for new passwords and keep storing them as 2a
->
-> I'd be unhappy about that, but it's a valid option to provide if you
-> want to minimize user annoyance, including for networked systems that
-> are not upgraded in sync (but are manually configured for this...)
+Dan, could you confirm that this breakdown makes sense?
 
-The fourth possibility would be to use the 2y algorithm and store as
-2a. That would be the better option if non-ASCII passwords are
-unlikely.
+1) buffer overflows (not validating length is <= the maximum)
 
-cu
-Ludwig
+2) use of negative signed integers in memcpy() and other operations where
+    conversion creates a large unsigned integer, referred to as
+    "underflow"
 
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
-Imendörffer, HRB 16746 (AG Nürnberg)
+3) any other types of problems that aren't covered by those two?  (The
+    length validation checks don't always have enough context in the source
+    code).
+
+We would need separate CVE's for the issues found by Dan versus the issues 
+found by Ben Hutchings.
+
+Arguably, #2 could probably be broken down further, but without enough 
+source code context in the patches, it's not immediately clear.
+
+- Steve
