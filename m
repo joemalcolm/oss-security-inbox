@@ -1,81 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/8
-Message-ID: <20110106161811.GE12671@dannf.org>
-Date: Thu, 6 Jan 2011 09:18:11 -0700
-From: dann frazier <dannf@...nf.org>
-To: Ben Hutchings <ben@...adent.org.uk>, "Steven M. Christey" <coley@...us.mitre.org>
-Cc: Debian kernel maintainers <debian-kernel@...ts.debian.org>, stable-review@...nel.org, oss-security@...ts.openwall.com
-Subject: CVE Request: kernel [Re: Security review of 2.6.32.28]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/21
+Message-ID: <Pine.GSO.4.64.1104051054300.20885@faron.mitre.org>
+Date: Tue, 5 Apr 2011 10:54:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE re-request
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 06, 2011 at 01:05:47AM +0000, Ben Hutchings wrote:
-> These are the patches that looked security-relevant, from a fairly quick
-> review:
 
-Thanks for the review Ben! Steve, can you assign CVEs for the
-following issues?
+On Tue, 5 Apr 2011, Josh Bressers wrote:
 
-> [03/49] fuse: verify ioctl retries
-> Kernel buffer overflow, but only CUSE servers could exploit it and
-> /dev/cuse is normally restricted to root.
+> That one needs a 2009 ID. I asked mitre in a previous mail,
+> let's use this to pester them again.
 
-Upstream fix:
-  http://git.kernel.org/linus/7572777eef78ebdee1ecb7c258c0ef94d35bad16
-Introduced in 2.6.29.
+Use CVE-2009-5065
 
-> [16/49] IB/uverbs: Handle large number of entries in poll CQ
-> Fixes integer overflow and information leak which I assume can be triggered
-> by unprivileged local users.
-
-Sounds like it - Documentation/infiniband/user_verbs.txt says:
-
- "Since the InfiniBand userspace verbs should be safe for use by
- non-privileged processes, it may be useful to add an appropriate MODE
- or GROUP to the udev rule."
-
-Upstream fix:
-  http://git.kernel.org/linus/7182afea8d1afd432a17c18162cc3fd441d0da93
-Introduced in 2.6.15.
-
-> [20/49] orinoco: fix TKIP countermeasure behaviour
-> Fixes cryptographic weakness potentially leaking information to remote
-> (but physically nearby) users.
-
-Upstream fix:
-  http://git.kernel.org/linus/0a54917c3fc295cb61f3fb52373c173fd3b69f48
-Introduced in 2.6.28.
-
-> [24/49] tracing: Fix panic when lseek() called on "trace" opened for writing
-> File is normally only writable by root, so not a security issue.
-
-ack
-
-> [33/49] [SCSI] bfa: fix system crash when reading sysfs fc_host statistics
-> Local denial-of-service.
-> CVE-2010-4343
-> 
-> [36/49] install_special_mapping skips security_file_mmap check.
-> May enable privilege escalation through null pointer bugs that would
-> otherwise only cause denial-of-service.
-> CVE-2010-4346
-> 
-> [42/49] sound: Prevent buffer overflow in OSS load_mixer_volumes
-> Not relevant to Debian kernel images since we don't build OSS.
-> CVE-2010-4257
-> 
-> [44/49] ima: fix add LSM rule bug
-> Allows subversion of IMA.  Not relevant to Debian kernel images since we
-> don't build IMA.
-
-Upstream fix:
-  http://git.kernel.org/linus/867c20265459d30a01b021a9c1e81fb4c5832aa9
-Introoduced in 2.6.30.
-
-> [48/49] sctp: Fix a race between ICMP protocol unreachable and connect()
-> Remote denial-of-service.
-> CVE-2010-4526
-> 
-> Ben.
-> 
-
-
+- Steve
