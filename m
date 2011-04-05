@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/1
-Message-ID: <4DBFCC85.8060600@redhat.com>
-Date: Tue, 03 May 2011 15:06:05 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/34
+Message-ID: <1302035514.1154.25.camel@hidalgo>
+Date: Tue, 05 Apr 2011 22:31:54 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: William Cohen <wcohen@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+Subject: Re: A new way of writing secure data backups, combining RAID and one time pads.
 Content-Type: text/plain; charset=utf-8
 
-Hi William,
-On 05/01/2011 07:30 AM, William Cohen wrote:
-> 
-> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
-> 
+On mar., 2011-04-05 at 19:13 +0200, klondike wrote:
+> El 05/04/11 07:17, Gareth Randall escribió:
+> > Hi,
+> >
+> > I have published a free software project called "Triplyx", which
+> > writes data to a set of three storage devices in such a way that if
+> > any one of them is lost or stolen, it cannot be used to recover the
+> > data. Any two storage devices can be brought together to recover the
+> > data. It was created for use with offsite data backups.
+> >
+> > The concept is simple, although I have never seen it done in a
+> > commercial or open source product.
+> Well long ago I tried to make a similar thing to divide a private key so
+> a x out of the n people allowed to see the document could recover the
+> data, the problem is that although the solution was trivial for small
+> numbers it started getting complex as the n increased. 
 
-It appears from the debian bug, that there may be others way to exploit
-this issue as well. hence i think we need a revised patch?
+That looks just like Secret Sharing, for which there exist
+implementations, like Sham's Secret Sharing Scheme
+http://point-at-infinity.org/ssss/ which you might find helpful.
 
-
-
+Regards,
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
