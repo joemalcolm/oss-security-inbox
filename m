@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/1
-Message-ID: <20111105102754.GA11970@openwall.com>
-Date: Sat, 5 Nov 2011 14:27:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/15
+Message-ID: <1427368006.383179.1302007409505.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 5 Apr 2011 08:43:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 04, 2011 at 02:32:50PM -0500, John Lightsey wrote:
-> Symlink A points to foo/bar
-> Symlink B points to /some/real/directory
+
+----- Original Message -----
+> On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
+> > Not adding Apple to any coordination list would be plain silly. They
+> > were far more active than most of the distributions.
 > 
-> Code asks for /tmp/parent/childXXXX
+> Yes. But why do they need to be aware, say, of glibc vulnerabilities
+> (ones that are in fact believed to be glibc-specific)?
+
+This is an excellent point. It's a hard problem to solve honestly. I guess
+the question really comes down to this. Do the disadvantages of one list
+outweigh the benefits? I'm not sure what the answer is. There probably
+isn't an "answer" though, just lots of opinions.
+
 > 
-> Attacker hardlinks symlink A to /tmp/parent
-> Attacker creates /tmp/foo directory
-> Attacker hardlinks symlink B to /tmp/foo/bar
+> > I'm starting to worry we've created rules for the sake of rules, which
+> > almost never has a net positive outcome.
 > 
-> Now everything looks safe, but it relies on the attacker controled
-> /tmp/foo directory.
+> What do you propose? Go back to a vendor-sec style list, open to anyone
+> who is approved by other list members, and accept the accusations of
+> being subjective in who we subscribe? I can set one up alongside the
+> Linux distros list... then let the senders decide which list they want.
+> 
 
-Yes, in the above scenario everything would look safe to the current
-code with your symlink-safety.patch.  We could enhance the patch to also
-check parent directories of each symlink, but even then an attack would
-remain possible:
+I don't have a proposal right now, which is why I'm glad we're having this
+discussion.
 
-Attacker hardlinks symlink B to /tmp/parent
+I guess at the end of the day it comes down to the projects and reporters.
+Thinking in this regard, I think there could be advantages to having
+multiple lists with people subscribed to the various groups they belong,
+then the projects and researchers decide how they want their information
+distributed.
 
-Then depending on what /some/real/directory actually is, this may be a
-security problem - e.g., if /some/real/directory is /etc/cron.d or /bin.
-And even for most other directories, there's likely a DoS and quota
-bypass possibility here.
+This is why I like the idea of the membership list being public, it's makes
+it quite clear who would be receiving the information in question. We're
+really talking about a group that's a service to reporters, not the
+distributions or vendors. We want to make it easy for researchers and
+projects who approve of embargoes to work with us, and allow us to work
+with them in return.
 
-> It'd probably be simplest if File::Temp::_is_safe() didn't allow any
-> symlinks at all.
+Thanks.
 
-Many systems have /tmp itself as a symlink.
-
-Alexander
+-- 
+    JB
