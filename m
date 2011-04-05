@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/9
-Message-ID: <20110810172320.GA8187@inutil.org>
-Date: Wed, 10 Aug 2011 19:23:20 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/15
+Message-ID: <1427368006.383179.1302007409505.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 5 Apr 2011 08:43:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 10, 2011 at 06:49:59AM +0800, Eugene Teo wrote:
-> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
-> > Hi,
-> > the following two issues also seem to warrant a CVE assignment:
-> > 
-> > 1. staging: comedi: fix infoleak to userspace
-> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
-> > 
-> > (It's a staging driver and I'm unsure whether we have assigned
-> >  CVE IDs for staging drivers in the past. OTOH, this driver
-> >  is enabled in the Debian 6.0 kernel)
+
+----- Original Message -----
+> On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
+> > Not adding Apple to any coordination list would be plain silly. They
+> > were far more active than most of the distributions.
 > 
-> We don't as code from the staging drivers are usually are substandard
-> and usually not supported.
+> Yes. But why do they need to be aware, say, of glibc vulnerabilities
+> (ones that are in fact believed to be glibc-specific)?
 
-I agree on that approach for new drivers in the works (e.g. gma500), but
-the Comedi driver is quite old and in use outside the kernel/staging
-version as well. (Debian is providing a separate comedi source package 
-since 2002.).
+This is an excellent point. It's a hard problem to solve honestly. I guess
+the question really comes down to this. Do the disadvantages of one list
+outweigh the benefits? I'm not sure what the answer is. There probably
+isn't an "answer" though, just lots of opinions.
 
-> Btw, can you please mail me a copy of the /boot/config of the most
-> recent Debian kernel for my reference?
+> 
+> > I'm starting to worry we've created rules for the sake of rules, which
+> > almost never has a net positive outcome.
+> 
+> What do you propose? Go back to a vendor-sec style list, open to anyone
+> who is approved by other list members, and accept the accusations of
+> being subjective in who we subscribe? I can set one up alongside the
+> Linux distros list... then let the senders decide which list they want.
+> 
 
-Please let me know if you need anything in addition to the files
-Yves-Alexis sent you.
+I don't have a proposal right now, which is why I'm glad we're having this
+discussion.
 
-Cheers,
-        Moritz
+I guess at the end of the day it comes down to the projects and reporters.
+Thinking in this regard, I think there could be advantages to having
+multiple lists with people subscribed to the various groups they belong,
+then the projects and researchers decide how they want their information
+distributed.
+
+This is why I like the idea of the membership list being public, it's makes
+it quite clear who would be receiving the information in question. We're
+really talking about a group that's a service to reporters, not the
+distributions or vendors. We want to make it easy for researchers and
+projects who approve of embargoes to work with us, and allow us to work
+with them in return.
+
+Thanks.
+
+-- 
+    JB
