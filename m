@@ -1,42 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/8
-Message-ID: <20110818165844.GA1360@redhat.com>
-Date: Thu, 18 Aug 2011 10:58:44 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/3
+Message-ID: <4D9ADF9C.809@redhat.com>
+Date: Tue, 05 Apr 2011 17:23:40 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: heap overflow in perl while decoding Unicode string
+Subject: Vouching system (was Re: Closed list)
 Content-Type: text/plain; charset=utf-8
 
-Does anyone know more about this flaw?  It's in perl and the Encode
-module:
+> Maybe once we have a list of initial members, we should start using a
+> vouching system, that the applicant must be referred by someone from the
+> list, and we only accept members whom we met and trust. Just a suggestion.
 
-http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
+A repost.
 
-! Unicode/Unicode.xs
-   Addressed the following:
-     Date: Fri, 22 Jul 2011 13:58:43 +0200
-     From: Robert Zacek <zacek@...st.com>
-     To: perl5-security-report@...l.org
-     Subject: Unicode.xs!decode_xs n-byte heap-overflow
-
-It's been fixed in perl:
-
-http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
-
-Seems to be in all versions of perl since 5.10.0.
-
-There isn't really information on the impact of this though.  I don't
-know enough to determine whether this is something that can cause
-arbitrary code execution, whether some gcc/glibc hardening prevents or
-minimizes the impact, whether it's a crash-only, etc.  It has been asked
-on the perl5-porters list, but no response was given:
-
-http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
-
-Does anyone know anything more about this flaw?  Could a CVE be assigned
-to it as well?
-
-Thanks.
-
+Eugene
 -- 
-Vincent Danen / Red Hat Security Response Team 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
