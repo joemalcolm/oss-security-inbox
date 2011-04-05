@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/7
-Message-ID: <20110620145622.GF1293@yuggoth.org>
-Date: Mon, 20 Jun 2011 14:56:28 +0000
-From: The Fungi <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/10
+Message-Id: <201104051405.20760.thomas@suse.de>
+Date: Tue, 5 Apr 2011 14:05:20 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 20, 2011 at 06:05:54PM +0400, Solar Designer wrote:
+Am Freitag, 1. April 2011, 20:03:12 schrieb Josh Bressers:
 [...]
-> Does anyone need this? Or do we just assume that passwords with
-> non-ASCII characters are uncommon enough that we can bite the
-> bullet (of fixing the bug) without providing any backwards
-> compatibility workaround?
-[...]
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Would it make sense to include transitional compatability calls
-which preserve the original behavior? Then applications using the
-library can be adjusted to fall back on the buggy version if the
-supplied data has 8-bit characters and the corrected calls don't
-result in a match. This would allow tools to regenerate and replace
-non-conforming hashes if they were the result of this bug, and might
-make it easier to audit existing lists for them as well.
+
+pub   2048R/558EBF03 2010-10-29
+uid                  Thomas Biege (SuSE Security-Team) <thomas@...ell.com>
+uid                  Thomas Biege (SuSE Security-Team) <thomas@...e.de>
+
+Well.. you know me.
+
+
+Cheers,
+Thomas
+
 -- 
-{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
-WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
-MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
-ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+
+Download attachment "thomas_suse.asc" of type "application/pgp-keys" (2244 bytes)
