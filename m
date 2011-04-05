@@ -1,88 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/1
-Message-ID: <20110907073920.GB17727@dhcp-25-225.brq.redhat.com>
-Date: Wed, 7 Sep 2011 09:39:21 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/8
+Message-ID: <4D9AA5E8.5000805@virgin.net>
+Date: Tue, 05 Apr 2011 06:17:28 +0100
+From: Gareth Randall <gareth.randall@...gin.net>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
+Subject: A new way of writing secure data backups, combining RAID and one time pads.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 06, 2011 at 11:40:43PM +0200, Marcus Meissner wrote:
-> One of our customers reported an issue in the "ib_sdp" module in the
-> ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
-> 1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
-> does not have it).
-> 
-> Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
-> 
-> /proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
-> triggered by users on machines with infiniband stack.
-> 
-> While there is report of stack corruption and overflow on process (cat
-> /proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
-> I can't see where it actually comes from but perhaps the per_cpu vs
-> single variable printing does something to the stack and not just reads
-> over arrays.
+Hi,
 
-#define __sdpstats_seq_hist_pcpu(seq, msg, hist) ({             \
-        u32 h[NR_CPUS];                                         \
-        unsigned int __i;                                       \
-        memset(h, 0, sizeof(h));                                \
+I have published a free software project called "Triplyx", which writes 
+data to a set of three storage devices in such a way that if any one of 
+them is lost or stolen, it cannot be used to recover the data. Any two 
+storage devices can be brought together to recover the data. It was 
+created for use with offsite data backups.
 
-NR_CPUS can be big (4096 on RHEL6@..._64) and the array is located on
-the stack.
- 
-> ofed 1.5.3.2 has a different stat printing algorith according to our developer,
-> so it no longer is affected.
+The concept is simple, although I have never seen it done in a 
+commercial or open source product.
 
-The array ^^^ is no longer allocated from the stack but via vmalloc().
+Triplyx writes three copies of the data input D to separate storage 
+devices. Each copy is exclusive-OR encrypted with a random "one time 
+pad", and one of the other one time pads is written alongside it in the 
+same "volume" (file). In my code, the output can be any file or a Unix 
+device.
 
-> Patch below. Please assign a CVE.
+In the following example, the one time pad (random) data streams are A, 
+B and C.
 
-Please use CVE-2011-3345.
+D^A means that each byte of D is XOR'd with the corresponding byte of A.
 
-Thanks,
+Volume 1 contains:  D^A and B
+Volume 2 contains:  D^B and C
+Volume 3 contains:  D^C and A
+
+So, for example, storing a 100kbyte file (D) would result in the 
+following being written to the volumes:
+
+Volume 1:  100k of D^A, along with 100k of B.
+Volume 2:  100k of D^B, along with 100k of C.
+Volume 3:  100k of D^C, along with 100k of A.
+
+Note: The D^A and B streams are actually "striped" so that they can both 
+be read and written at the same time without needing to keep copies of 
+large amounts of data. This is designed especially to support tape as a 
+backup medium.
+
+
+Restoring the data simply requires any two volumes. So, for example, 
+volumes 2 and 3 contain C and D^C, allowing the original D to be 
+reconstructed.
+
+See:
+http://www.triplyx.com/
+https://sourceforge.net/projects/triplyx/
+
+
+
+I've also written a paper describing it.
+
+URL of the paper is:
+http://sourceforge.net/projects/triplyx/files/Triplyx/doc/A%20Backup%20Method%20Providing%20Media%20Redundancy%20and%20One%20Time%20Pad%20Encryption%20v1.1.pdf
+
+
+The paper also documents a similar method which allows more data to be 
+stored but with some implications for security. That is, write the data 
+three times, encrypted with different symmetric keys, and then store the 
+other two keys not used for the current data on each storage medium.
+
+I.e.
+Volume 1:  (D enc with J), K, L
+Volume 2:  (D enc with K), J, L
+Volume 3:  (D enc with L), J, K
+
+where J, K and L are encryption keys.
+
+This allows more data to be stored because it does not need to store an 
+entire one time pad, but contains risks of attacks on either the 
+encryption algorithm or the means of choosing the keys.
+
+
+
+Coming from an "enterprise" point of view, offsite backups could now be 
+stored for long periods of time without having to worry about encryption 
+passwords being lost due to staff turnover. Also, compliance with data 
+protection legislation should be easier to demonstrate.
+
+For the one time pad method, if the random number generator is good 
+enough then a single lost backup device can never result in exposure of 
+confidential data.
+
+
+Yours,
 -- 
-Petr Matousek / Red Hat Security Response Team
-
-> 
-> Ciao, Marcus
-> 
-> From: Goldwyn Rodrigues <rgoldwyn@...e.de>
-> Subject: [PATCH] Correct /proc/net/sdpstats variables
-> 
-> A couple of variables are treated as arrays while printing 
-> /proc/net/sdpstats, while they are actually single variables.
-> This leads to stack/memory corruption and a kernel crash.
-> Correct dealing of these variables in sdpstats_seq_show()
-> 
-> ---
->  drivers/infiniband/ulp/sdp/sdp_proc.c |    7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
-> 
-> Index: ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c
-> ===================================================================
-> --- ofa_kernel-1.5.2.orig/drivers/infiniband/ulp/sdp/sdp_proc.c	2010-09-21 17:51:32.000000000 +0200
-> +++ ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c	2011-07-22 15:09:14.000000000 +0200
-> @@ -341,6 +341,7 @@ static int sdpstats_seq_show(struct seq_
->  	seq_printf(seq, "- RX int queue  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_queue));
->  	seq_printf(seq, "- RX int no op  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_no_op));
->  	seq_printf(seq, "- RX cq modified\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_cq_modified));
-> +	seq_printf(seq, "- RX wq\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_wq));
->  
->  	seq_printf(seq, "- TX irq armed\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_arm));
->  	seq_printf(seq, "- TX interrupts\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_count));
-> @@ -352,12 +353,6 @@ static int sdpstats_seq_show(struct seq_
->  	seq_printf(seq, "- TX error\t\t: %d\n", SDPSTATS_COUNTER_GET(zcopy_tx_error));
->  	seq_printf(seq, "- FMR alloc error\t: %d\n", SDPSTATS_COUNTER_GET(fmr_alloc_error));
->  
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU sendmsg", sendmsg);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU recvmsg", recvmsg);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU rx_irq", rx_int_count);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU rx_wq", rx_wq);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU tx_irq", tx_int_count);
-> -
->  	return 0;
->  }
->  
+======= Gareth Randall =======
