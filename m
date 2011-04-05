@@ -1,113 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/7
-Message-ID: <AANLkTikGHZ1z8w4b=dw0Wf5DSU8iUDWL6y=ZBh=G87YL@mail.gmail.com>
-Date: Thu, 6 Jan 2011 17:14:30 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/23
+Message-ID: <BANLkTimkv0n5sTqZrH3m71JvD1XdRYfZzA@mail.gmail.com>
+Date: Tue, 5 Apr 2011 11:37:37 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Eclipse IDE Version: 3.6.1 | Help Server Local Cross Site Scripting (XSS)
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <bressers@...hat.com>,  Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-==============================================================================
- Eclipse IDE | Help Server Local Cross Site Scripting (XSS) Vulnerability
-==============================================================================
+Hi,
 
+This breakdown seems to make sense.  I'll do my best to break up the
+issues below.
 
-1. OVERVIEW
+>
+> Dan, could you confirm that this breakdown makes sense?
+>
+> 1) buffer overflows (not validating length is <= the maximum)
+>
 
-The Help Content web application of Eclipse IDE was vulnerable to
-Cross Site Scripting (XSS) Vulnerability.
+1) When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
+for a remote host to provide more digipeaters than expected, resulting
+in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
+overflows, and abort facilities parsing on failure.  It looks like
+this will be CVE-2011-1493.
 
+2) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+facilities fields, a remote host can provide a length of greater than
+20, resulting in a stack overflow of the callsign array.
 
-2. PRODUCT DESCRIPTION
+> 2) use of negative signed integers in memcpy() and other operations where
+>   conversion creates a large unsigned integer, referred to as
+>   "underflow"
+>
 
-Eclipse is a multi-language software development environment
-comprising an integrated development environment (IDE) and an
-extensible plug-in system. It is written mostly in Java and can be
-used to develop applications in Java and, by means of various
-plug-ins, other programming languages including Ada, C, C++, COBOL,
-Perl, PHP, Python, Ruby (including Ruby on Rails framework), Scala,
-and Scheme. The IDE is often called Eclipse ADT for Ada, Eclipse CDT
-for C/C++, Eclipse JDT for Java, and Eclipse PDT for PHP.
+3) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+facilities fields, a remote host can provide a length
+of less than 10, resulting in an underflow in a memcpy size, causing a
+kernel panic due to massive heap corruption.
 
+Note that 2) and 3) are solved by validating a single length field, so
+maybe they should be grouped together?  The above three issues were
+all found by me.
 
-3. VULNERABILITY DESCRIPTION
+> 3) any other types of problems that aren't covered by those two?  (The
+>   length validation checks don't always have enough context in the source
+>   code).
+>
 
-Eclipse Help Contents are served as a web application via the built-in
-Jetty Web Server plugin. Cross Site Scripting vulnerabilities were
-found in  /help/index.jsp and /help/advanced/content.jsp URLs. XSS on
-/help/advanced/content.jsp url makes the browser hang
-but even after clicking "Stop Executing" button, users can still get XSS.
+4) Ben Hutchings' fixes addressed multiple cases where the ROSE
+protocol did not ensure that socket data being parsed wasn't being
+read in from beyond the boundaries of the incoming socket buffer.  For
+example, a received packet might provide a length field longer than
+the amount of remaining data in the socket buffer.
 
+Looking at the patch, it doesn't appear that any memory corruption
+would be caused by this, since the out-of-bounds data is still
+validated by the parsing code.  I'd say the impact is likely limited
+to possible information disclosure, if the contents of the
+out-of-bounds memory could be inferred by the behavior of the protocol
+during parsing.  It's theoretically possible (but very unlikely) that
+this could cause read accesses to unmapped memory, which would cause a
+DOS.
 
-4. VERSIONS AFFECTED
+-Dan
 
-Eclipse IDE Version: 3.6.1 <=
-
-Tested Editions(SDK, Java, J2EE)
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost:[REPLACE]/help/index.jsp?'onload='alert(0)
-http://localhost:[REPLACE]/help/advanced/content.jsp?'onload='alert(0)
-
-Script-Check:
-Request: /advanced/content.jsp?'onload='alert(0)	
-Response: src='contentToolbar.jsp?'onload='alert(0)'
-
-
-6. IMPACT
-
-In a situation where users' browser security settings are weak, the
-localized XSS vector could enable attackers to perform a number of
-black acts including cross site content access, smb shares
-enumeration, remote code execution, malicious trojan downloading and
-execution ...etc.
-
-
-7. SOLUTION
-
-Apply the recent error-free nightly builds (ie.
-http://download.eclipse.org/eclipse/downloads/drops/N20101110-2000/index.php)
-.
-According to the developer, "Chris Goldthorpe", the fix is in the
-nightly build, http://download.eclipse.org/eclipse/downloads/drops/N20101108-2000/index.php
-, it will also be in 3.6.2 (February 2011) and 3.7 (June 2011).
-
-
-8. VENDOR
-
-Eclipse Developers Team
-http://www.eclipse.org/
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-2010-11-04 : vulnerability discovered
-2010-11-05 : notified vendor
-2010-11-08 : patch released and applied to svn
-2010-11-16 : vulnerability disclosed
-
-
-11. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/eclipse/[eclipse_help_server]_cross_site_scripting
-Eclipse Bug Tracker: https://bugs.eclipse.org/bugs/show_bug.cgi?id=329582
-Previous XSS Flaws:
-http://r00tin.blogspot.com/2008/04/eclipse-local-web-server-exploitation.html
-(searchView.jsp, workingSetManager.jsp)
-Cross Environment Hopping:
-http://blog.watchfire.com/wfblog/2008/06/cross-environ-1.html
-About Eclipse IDE:
-https://secure.wikimedia.org/wikipedia/en/wiki/Eclipse_%28software%29
-
-#yehg [2010-11-16]
-
-last updated: 2010-12-24
+> We would need separate CVE's for the issues found by Dan versus the issues
+> found by Ben Hutchings.
+>
+> Arguably, #2 could probably be broken down further, but without enough
+> source code context in the patches, it's not immediately clear.
+>
+> - Steve
+>
