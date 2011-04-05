@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/3
-Message-Id: <201105191306.08348.ludwig.nussel@suse.de>
-Date: Thu, 19 May 2011 13:06:08 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/14
+Message-ID: <20110405123037.GA17570@openwall.com>
+Date: Tue, 5 Apr 2011 16:30:37 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Dovecot releases
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Henri Salo wrote:
-> Should these two get CVE-identifier(s)?
-> 
-> http://dovecot.org/pipermail/dovecot/2011-May/059085.html
-> http://dovecot.org/pipermail/dovecot/2011-May/059086.html
+On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
+> Not adding Apple to any coordination list would be plain silly. They were
+> far more active than most of the distributions.
 
-http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
+Yes.  But why do they need to be aware, say, of glibc vulnerabilities
+(ones that are in fact believed to be glibc-specific)?
 
-cu
-Ludwig
+> I'm starting to worry we've created rules for the sake of rules, which
+> almost never has a net positive outcome.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+What do you propose?  Go back to a vendor-sec style list, open to
+anyone who is approved by other list members, and accept the accusations
+of being subjective in who we subscribe?  I can set one up alongside the
+Linux distros list... then let the senders decide which list they want.
+
+Alexander
