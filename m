@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/2
-Message-ID: <4D6327D8.2030609@redhat.com>
-Date: Tue, 22 Feb 2011 11:04:56 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/20
+Message-ID: <BANLkTikdSO8W-zu6OTPeYwCOzR32bBYkLw@mail.gmail.com>
+Date: Tue, 5 Apr 2011 09:46:25 -0500
+From: Tim Zingelman <tez@...bsd.org>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
-> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
-> btrfs_ioctl_space_info() and introduced security issues.  Since they
-> were all introduced at once and fixed at the same time, one CVE should
-> suffice.
+On Mon, Apr 4, 2011 at 10:02 AM, Matthias Andree <matthias.andree@....de> wrote:
+> Am 02.04.2011 02:08, schrieb Dan Rosenberg:
 >
-> Due to integer truncation or a signedness error in a typecasted
-> comparison, an integer overflow in an allocation size calculation, and
-> a failure to properly check bounds when copying data, it was possible
-> for an unprivileged user to cause a denial-of-service due to writing
-> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
+> This raises an interesting point, "downstream providers of third-party
+> software".
 >
-> -Dan
->
-> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
+> In my case, I'd understand that I might want to offer vendors the
+> possibility to co-ordinate upgrades for bogofilter, fetchmail, and
+> leafnode, in lexicographical order, and possibly for a FreeBSD port --
+> although I'm not a representative of FreeBSD's security officer team
+> (nor would that team usually deal with third-party software
+> vulnerabilities unless it's in the basde system).
 
-http://git.kernel.org/linus/51788b1bdd0d68345bab0af4301e7fa429277228
+Both FreeBSD and NetBSD have separate security teams that work to keep
+the third-party software provided by the FreeBSD ports system
+http://www.freebsd.org/ports/index.html and NetBSD pkgsrc system
+http://www.netbsd.org/docs/software/packages.html patched for
+vulnerabilities.  (Note that the pkgsrc system is cross platform and
+works on *BSD, Solaris, Linux and many other platforms.)  I'd guess
+other BSD and Solaris distro's have similar teams.  I'd like to either
+see members of these teams included, or a second list created for all
+issues not specific to linux.  (FWIW I am on the pkgsrc security
+team.)
 
-Eugene
+I'll also second the question someone else posed about how cc'ing
+others off the list could reasonably work if all messages are
+encrypted.
+
+Thanks,
+
+ - Tim
