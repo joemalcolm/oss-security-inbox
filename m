@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/20
-Message-ID: <BANLkTi=rVaiWh_oBXiB8ZLks441+-ynuAw@mail.gmail.com>
-Date: Tue, 31 May 2011 17:54:16 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/11
+Message-Id: <201104051411.49402.thomas@suse.de>
+Date: Tue, 5 Apr 2011 14:11:49 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-I didn't see any CVE's in the Wireshark Bug tracking/advisory nor
-could I find these in the Red Hat Bugzilla (but I'm guessing as a CNA
-they have CVE #'s assigned?)
+Am Montag, 4. April 2011, 17:07:22 schrieb Matthias Andree:
+> Am 04.04.2011 01:00, schrieb Solar Designer:
+> 
+> > Added.  This gives us three contacts for Ubuntu on the list:
+> 
+> ...
+> 
+> > Maybe this needs to be reduced to two most active ones at a later point.
+> 
+> What sense lies in limiting subscribers per distro?
+> 
+> If you want to coordinate and one of the two most active is on vacation
+> and the other falls sick, the third one is precluded and so is
+> coordination with that particular vendor.
 
-Wireshark 1.2.17 fixes the following vulnerabilities:
++1 limiting subscribers makes no sense
 
-Large/infinite loop in the DICOM dissector. (Bug 5876)
-Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+Cheerio,
+Thomas
 
-Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-that a corrupted Diameter dictionary file could crash Wireshark.
-Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-
-Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-that a corrupted snoop file could crash Wireshark. (Bug 5912)
-Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-
-David Maciejak of Fortinet's FortiGuard Labs discovered that malformed
-compressed capture data could crash Wireshark. (Bug 5908)
-Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-
-Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-that a corrupted Visual Networks file could crash Wireshark. (Bug
-5934)
-Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-
-
-http://www.wireshark.org/security/wnpa-sec-2011-07.html
-http://www.wireshark.org/security/wnpa-sec-2011-08.html
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: (206) 905-9462
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
