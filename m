@@ -1,34 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/5
-Message-ID: <20111017123243.GG11883@suse.de>
-Date: Mon, 17 Oct 2011 14:32:43 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: kernel/AppArmor local denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/25
+Message-ID: <20110405154012.GC3934@redhat.com>
+Date: Tue, 5 Apr 2011 09:40:13 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2011-04-05 08:43:29 -0400] Josh Bressers wrote:
 
-A process can cause itself to Ooops by doing an invalid formatted
-write to the process attr/current when the Apparmor security framework
-is enabled (even without a apparmor profile).
+>
+>----- Original Message -----
+>> On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
+>> > Not adding Apple to any coordination list would be plain silly. They
+>> > were far more active than most of the distributions.
+>>
+>> Yes. But why do they need to be aware, say, of glibc vulnerabilities
+>> (ones that are in fact believed to be glibc-specific)?
+>
+>This is an excellent point. It's a hard problem to solve honestly. I guess
+>the question really comes down to this. Do the disadvantages of one list
+>outweigh the benefits? I'm not sure what the answer is. There probably
+>isn't an "answer" though, just lots of opinions.
 
-e.g. by doing "echo 'AAA AAA' > /proc/$$/attr/current"
+Just throwing this out there (I've read the thread but haven't
+contributed at all yet).
 
-This will cause a NULL ptr dereference, which oopses the current process and
-in connection with kdump or panic on oops will halt the machine.
+A lot of userland stuff is shared between BSD and Linux, and probably
+some other operating systems.  About the only things that differ between
+a lot of these are the Linux kernel, and the *libc.  There is a lot of
+cross-over with other stuff, which means there will likely be a lot of
+cc'ing going on (which I imagine might be complicated due to encryption
+requirements).
 
-References:
-https://bugs.launchpad.net/apparmor/+bug/789409
-https://bugzilla.novell.com/show_bug.cgi?id=717209
+Where does the line get drawn?  If vendor A ships with exim, and another
+with postfix, which one belongs on the "Linux list"?  Obviously
+discussions of exim don't matter to the postfix shipper, and vice versa.
+Pick any other software that has a competing open source alternative.
+Does Debian not get on the list because they don't technically ship
+firefox?
 
-Fix is in:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=a5b2c5b2ad5853591a6cac6134cd0f599a720865
+I think if the disqualifier to Apple is that they don't ship a Linux
+kernel and glibc, then we're doing them (and ourselves) a disservice.
+Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+here, just stating a fact).
 
-This only affected Linux kernel mainline since the introduction of
-AppArmor up to and including 3.0-rc2
+I think it would be reasonable to s/Linux list/open source vendor list/,
+like vendor-sec used to be.  Yes, Apple will see some glibc stuff and
+some Linux kernel stuff.  So what?  They may also see some exim stuff
+that doesn't apply to them, and (hopefully!) the Linux vendors may seem
+some stuff that isn't applicable to them, but it is useful for the *BSD
+vendors who would (hopefully!) be on the list and feel welcome enough to
+use it.  Who knows, it might even be beneficial to have a glibc issue
+and someone from Apple or FreeBSD or whatever pipes up and indicates
+that the BSD libc once had a similar problem and tells us how they fixed
+it.
 
-The SUSE patchset used in our older distribution had a additional NULL
-check avoiding the issue.
+I think getting hung up on "Linux vendors only" and "BSD vendors can
+have their own list" and we end up cross-posting 90% of the issues is
+going to be an exercise in frustration.
 
-Ciao, Marcus
+Either that, or we start to work more closely with a *CERT and deal with
+their process for passing along information to other vendors for
+userland things that are shared; no offence to oCERT or anyone else, but
+that seems like more of a headache than just letting
+Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+
+Just my $0.02.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
