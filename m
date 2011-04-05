@@ -1,64 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/10
-Message-ID: <BANLkTim0-LZPLp6AiQAFyuWvOiKs0B4fpi_e=s=KR4KMwXNdAg@mail.gmail.com>
-Date: Mon, 6 Jun 2011 10:14:13 -0700
-From: Chris Evans <scarybeasts@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
-Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/12
+Message-ID: <20110405121852.GA17504@openwall.com>
+Date: Tue, 5 Apr 2011 16:18:52 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vouching system (was Re: Closed list)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 6, 2011 at 9:19 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+Eugene,
 
-> Hello, Josh, Steve, vendors,
->
->  It was found that vsftpd, Very Secure FTP daemon, when the network
-> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
-> create a new network namespace per connection. A remote attacker could
-> use this flaw to cause a memory pressure and denial of the vsftpd
-> service.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
-> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
->
-> This one being a bit tricky one -- from my understanding of the issue,
-> vsftpd doesn't necessarily have a security flaw on its side. It's
-> kernel issue / bug, which allows this to be used for vsftpd DoS:
->
+On Tue, Apr 05, 2011 at 05:23:40PM +0800, Eugene Teo wrote:
+> Maybe once we have a list of initial members, we should start using a
+> vouching system, that the applicant must be referred by someone from the
+> list, and we only accept members whom we met and trust. Just a suggestion.
 
-Yes, I will be considering this a kernel issue.
-vsftpd also uses one (or more!) process per connection. I'd have though that
-a process structure plus stack etc. would be a lot more heavyweight than an
-empty network namespace, but obviously not :)
+I'm afraid that we'll have to introduce something like this if/when we
+create a list not limited to Linux distros (and maybe sooner), but then
+we'll have the problem of it being an el8 list.  I think it will be an
+improvement over CC lists anyway, but many others appear to disagree.
 
-[4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
-> [5]
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
->
-> Short-term solution would be probably to address this on the vsftpd
-> side, the long-term one then being to get this fixed in kernel.
->
-
-It's actually configurable in vsftpd.conf:
-isolate_network=NO
-
-So for a short term fix, all you need is to deploy that config change.
-Looking at the Changelog, network isolation was added in vsftpd-2.2.0, and
-the config setting has been there from v2.2.0 as well.
-
-
-Cheers
-Chris
-
-
-> Though not sure, how it would be wrt to CVE identifier(s) assignment.
->
-> Steve, could you advice here?
->
-> Thank you & Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-
+Alexander
