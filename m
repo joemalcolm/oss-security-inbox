@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/1
-Message-ID: <4DA27647.3010400@redhat.com>
-Date: Mon, 11 Apr 2011 11:32:23 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/24
+Message-ID: <20110405153904.GA18405@openwall.com>
+Date: Tue, 5 Apr 2011 19:39:04 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inotify memory leak
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/24/2010 09:17 PM, Josh Bressers wrote:
->
-> ----- "Eugene Teo"<eugene@...hat.com>  wrote:
->
->> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
->>
->> file for the new inotify group we leak the new group.
->>
->> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
->> only
->> relevant if c44dcc56 (v2.6.34-rc1) is backported)
->>
->> Issue was introduced in 63c882a0 (v2.6.31-rc1).
->>
->> https://bugzilla.redhat.com/656830
->
-> Please use CVE-2010-4250
+On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
+> pub    512R/205BBF7D 2001-12-30
+>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
+>       C1
+> uid                  Michael J. O'Connor <mjo@...o.mi.org>
 
-A regression was found. We assigned it with CVE-2011-1479. Fix for it 
-can be found at: http://git.kernel.org/linus/d0de4dc5. More info here: 
-https://bugzilla.redhat.com/CVE-2011-1479.
+As discussed with Mike off-list, he does not currently qualify for the
+Linux distros list (he posted the subscription request above before I
+added that requirement), and a new PGP key would be needed anyway.  So
+I've just unsubscribed Mike.  He may qualify for a non-Linux list if we
+set one up.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Alexander
