@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/9
-Message-Id: <20110209232644.TCSNYOGJPRBGPJ@hackinthebox.org>
-Date: Wed, 9 Feb 2011 23:26:44 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB Magazine Issue 005 Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/2
+Message-id: <5E1237E8-121D-46DD-B38D-33A741841801@apple.com>
+Date: Mon, 04 Apr 2011 19:54:30 -0700
+From: Jeffrey Czerniak <jeffcz@...le.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-We are proud to announce the immediate availability of HITB Magazine
-Issue 005 - The first HITB Magazine release for 2011!
+On Apr 4, 2011, at 4:27 PM, Solar Designer wrote:
+> 
+> Yet I recognize that Apple has been contributing to vendor-sec, so I'd
+> be happy to add you to a suitable list if one is setup.  Perhaps a BSD
+> distros list, which would generally be CC'ed on issues that are expected
+> to be shared between Linux and *BSD userlands and thus likely also with
+> Mac OS X?  Do you and other vendors feel that such a list is needed?
+> 
+> So far, yours is the only non-Linux vendor request.  For just one
+> vendor, we can be CC'ing you whenever appropriate, with no list needed.
 
-HITB Magazine
-=============
-http://magazine.hackinthebox.org/
+Hello Solar Designer,
 
-Direct Link
-===========
-http://magazine.hackinthebox.org/issues/HITB-Ezine-Issue-005.pdf
+We found the vendor-sec email list useful not just for reporting issues in open-source projects, but also for receiving advance notification about issues that affect the various open-source libraries and applications that Apple ships.  (More details can be found at http://www.opensource.apple.com/)
 
-Just over a year has passed since Issue 001 and 2010 was definitely a
-great year for our humble magazine with over a 100,000 downloads of the
-4 issues released which included 24 unique technical articles authored
-or co-authored by over 30 security experts from around the world! Since
-April 2010, readers have also had an opportunity to get familiar with
-prominent figures from the IT security industry thanks to the new
-"Interviews" section.
+If you are not willing to grant us full membership to the new list, we at least hope we can be cc-ed on all userland issues reported to the list.
 
-As always, feedback of any kind is greatly appreciated so don't hesitate
-to drop us a line if you have any suggestions or comments on the issue.
+Best regards,
 
-Stay tuned for Issue 006 which will be released in May 2011 in
-conjunction with our 2nd annual HITB Security Conference in Europe,
-HITB2011 - Amsterdam!
+----------------
+Jeffrey Czerniak
+Apple Product Security Response
+jeffcz@...le.com
+----------------
 
-See you there and in the meantime, enjoy the issue!
-
-- The HITB Editorial Team
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
 
