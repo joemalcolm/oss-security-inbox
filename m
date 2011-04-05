@@ -1,17 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/7
-Message-ID: <20110720103525.GA8295@foo.fgeek.fi>
-Date: Wed, 20 Jul 2011 13:35:25 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/32
+Message-ID: <BANLkTin90UYuUuGFuB3eUNbeaZC740p72w@mail.gmail.com>
+Date: Tue, 5 Apr 2011 13:00:28 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: minhbq@...v.com.vn
-Subject: CVE request: sNews 1.7.1 XSS in reorder
+Subject: CVE request: kernel: two issues in mpt2sas
 Content-Type: text/plain; charset=utf-8
 
-This vulnerability does not seem to have CVE-identifier assigned. Can I get one? :)
+"At two points in handling device ioctls via /dev/mpt2ctl,
+user-supplied length values are used to copy data from userspace into
+heap buffers without bounds checking, allowing controllable heap
+corruption and subsequently privilege escalation.
 
-Bkis page: http://security.bkis.com/snews-1-7-1-xss-vulnerability/
-Original report: http://seclists.org/fulldisclosure/2011/May/300
+Additionally, user-supplied values are used to determine the size of a
+copy_to_user() as well as the offset into the buffer to be read, with
+no bounds checking, allowing users to read arbitrary kernel memory."
+[1]
 
-Best regards,
-Henri Salo
+These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
+SAS 2.0).  While the kernel creates this device file root-root 660 by
+default, I've seen it with more open permissions on live systems, so
+perhaps there's some common use case that requires modifying these
+default permissions.
+
+-Dan
+
+[1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
