@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/1
-Message-ID: <4DABB470.7060407@redhat.com>
-Date: Mon, 18 Apr 2011 11:48:00 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/1
+Message-ID: <20110405232557.GB714@dojo.mi.org>
+Date: Tue, 5 Apr 2011 19:25:57 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 04/16/2011 03:51 AM, akuster wrote:
->
-> Does affected code have to be in the main K.O repo or can it be in any
-> of the other git kernel repos to get a CVE #?
->
-> We have least one product possible affected in
-> arch/arm/mach-omap2/debobs.c but this file does not exist in K.O, maybe
-> somewhere else (our paper trail on this is coming up cold so I don't
-> know where is came from).
+:There are also userland tools specific to the Linux kernel, there's
+:Linux-PAM, there are package managers that are rarely used on non-Linux.
 
-The affected code need not be in the mainline kernel. You may request a 
-name even if it only affects the version of kernel as shipped by mvista.
+Linux-PAM (well, a fair subset of it from several years back) was ported
+to IRIX.  In most notable cases, it's bug-for-bug compatible.  
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Villains always have antidotes.  They're funny that way."          -The Tick
+
+Content of type "application/pgp-signature" skipped
