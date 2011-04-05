@@ -1,37 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/10
-Message-Id: <201104051405.20760.thomas@suse.de>
-Date: Tue, 5 Apr 2011 14:05:20 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/8
+Message-ID: <4D9AA5E8.5000805@virgin.net>
+Date: Tue, 05 Apr 2011 06:17:28 +0100
+From: Gareth Randall <gareth.randall@...gin.net>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+Subject: A new way of writing secure data backups, combining RAID and one time pads.
 Content-Type: text/plain; charset=utf-8
 
-Am Freitag, 1. April 2011, 20:03:12 schrieb Josh Bressers:
-[...]
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+Hi,
+
+I have published a free software project called "Triplyx", which writes 
+data to a set of three storage devices in such a way that if any one of 
+them is lost or stolen, it cannot be used to recover the data. Any two 
+storage devices can be brought together to recover the data. It was 
+created for use with offsite data backups.
+
+The concept is simple, although I have never seen it done in a 
+commercial or open source product.
+
+Triplyx writes three copies of the data input D to separate storage 
+devices. Each copy is exclusive-OR encrypted with a random "one time 
+pad", and one of the other one time pads is written alongside it in the 
+same "volume" (file). In my code, the output can be any file or a Unix 
+device.
+
+In the following example, the one time pad (random) data streams are A, 
+B and C.
+
+D^A means that each byte of D is XOR'd with the corresponding byte of A.
+
+Volume 1 contains:  D^A and B
+Volume 2 contains:  D^B and C
+Volume 3 contains:  D^C and A
+
+So, for example, storing a 100kbyte file (D) would result in the 
+following being written to the volumes:
+
+Volume 1:  100k of D^A, along with 100k of B.
+Volume 2:  100k of D^B, along with 100k of C.
+Volume 3:  100k of D^C, along with 100k of A.
+
+Note: The D^A and B streams are actually "striped" so that they can both 
+be read and written at the same time without needing to keep copies of 
+large amounts of data. This is designed especially to support tape as a 
+backup medium.
 
 
-pub   2048R/558EBF03 2010-10-29
-uid                  Thomas Biege (SuSE Security-Team) <thomas@...ell.com>
-uid                  Thomas Biege (SuSE Security-Team) <thomas@...e.de>
+Restoring the data simply requires any two volumes. So, for example, 
+volumes 2 and 3 contain C and D^C, allowing the original D to be 
+reconstructed.
 
-Well.. you know me.
+See:
+http://www.triplyx.com/
+https://sourceforge.net/projects/triplyx/
 
 
-Cheers,
-Thomas
 
+I've also written a paper describing it.
+
+URL of the paper is:
+http://sourceforge.net/projects/triplyx/files/Triplyx/doc/A%20Backup%20Method%20Providing%20Media%20Redundancy%20and%20One%20Time%20Pad%20Encryption%20v1.1.pdf
+
+
+The paper also documents a similar method which allows more data to be 
+stored but with some implications for security. That is, write the data 
+three times, encrypted with different symmetric keys, and then store the 
+other two keys not used for the current data on each storage medium.
+
+I.e.
+Volume 1:  (D enc with J), K, L
+Volume 2:  (D enc with K), J, L
+Volume 3:  (D enc with L), J, K
+
+where J, K and L are encryption keys.
+
+This allows more data to be stored because it does not need to store an 
+entire one time pad, but contains risks of attacks on either the 
+encryption algorithm or the means of choosing the keys.
+
+
+
+Coming from an "enterprise" point of view, offsite backups could now be 
+stored for long periods of time without having to worry about encryption 
+passwords being lost due to staff turnover. Also, compliance with data 
+protection legislation should be easier to demonstrate.
+
+For the one time pad method, if the random number generator is good 
+enough then a single lost backup device can never result in exposure of 
+confidential data.
+
+
+Yours,
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
-
-Download attachment "thomas_suse.asc" of type "application/pgp-keys" (2244 bytes)
+======= Gareth Randall =======
