@@ -1,24 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/16
-Message-ID: <CAOSRhRMYs921N+a5zJAv7sqGkr2C5tka7-PdaKJXt62rBJfnyA@mail.gmail.com>
-Date: Wed, 26 Oct 2011 13:43:16 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/3
+Message-ID: <4D9ADF9C.809@redhat.com>
+Date: Tue, 05 Apr 2011 17:23:40 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Subject: Vouching system (was Re: Closed list)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
-> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> to reset dmesg_restrict to 0.
->
+> Maybe once we have a list of initial members, we should start using a
+> vouching system, that the applicant must be referred by someone from the
+> list, and we only accept members whom we met and trust. Just a suggestion.
 
-Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
-with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
-correct that CAP_SYS_ADMIN is now required to modify the sysctl.
+A repost.
 
-I also agree with Vasiliy's point that LXC security boundaries in the
-mainline kernel are not well defined at this point, so the whole thing
-is a bit silly.
-
--Dan
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
