@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/4
-Message-ID: <237823109.466832.1302293950604.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 8 Apr 2011 16:19:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/2
+Message-id: <5E1237E8-121D-46DD-B38D-33A741841801@apple.com>
+Date: Mon, 04 Apr 2011 19:54:30 -0700
+From: Jeffrey Czerniak <jeffcz@...le.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for pithos information disclosure
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Ian Daniher discovered that 'pithos' stores the username and password
-> for external services in plain text in a configuration file. This
-> configuration file is world-readable by defualt, resulting in a loss
-> of
-> user privacy.
+On Apr 4, 2011, at 4:27 PM, Solar Designer wrote:
 > 
-> Reference: http://pad.lv/733307
+> Yet I recognize that Apple has been contributing to vendor-sec, so I'd
+> be happy to add you to a suitable list if one is setup.  Perhaps a BSD
+> distros list, which would generally be CC'ed on issues that are expected
+> to be shared between Linux and *BSD userlands and thus likely also with
+> Mac OS X?  Do you and other vendors feel that such a list is needed?
 > 
-> Can I get a CVE identifier for this flaw?
-> 
+> So far, yours is the only non-Linux vendor request.  For just one
+> vendor, we can be CC'ing you whenever appropriate, with no list needed.
 
-The real URL is:
-https://bugs.launchpad.net/pithos/+bug/733307
+Hello Solar Designer,
 
-Please use CVE-2011-1500.
+We found the vendor-sec email list useful not just for reporting issues in open-source projects, but also for receiving advance notification about issues that affect the various open-source libraries and applications that Apple ships.  (More details can be found at http://www.opensource.apple.com/)
 
-Thanks.
+If you are not willing to grant us full membership to the new list, we at least hope we can be cc-ed on all userland issues reported to the list.
 
--- 
-    JB
+Best regards,
+
+----------------
+Jeffrey Czerniak
+Apple Product Security Response
+jeffcz@...le.com
+----------------
+
+
