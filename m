@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/11/1
-Message-ID: <4E6CC128.7070302@redhat.com>
-Date: Sun, 11 Sep 2011 16:09:44 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Django project security team <security@...ngoproject.com>
-Subject: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/29
+Message-ID: <20110405163619.GA18727@openwall.com>
+Date: Tue, 5 Apr 2011 20:36:19 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Tue, Apr 05, 2011 at 09:46:25AM -0500, Tim Zingelman wrote:
+> I'll also second the question someone else posed about how cc'ing
+> others off the list could reasonably work if all messages are
+> encrypted.
 
-   multiple security flaws have been recently addressed in the v1.3.1
-and v1.2.7 versions of the Django Python Web framework (from [1]):
-1, Session manipulation,
-2, Denial of service attack via URLField,
-3, URLField redirection,
-4, Host header cache poisoning,
-5, Host header and CSRF,
-6, Cross-subdomain CSRF attacks,
-7, DEBUG pages and sensitive POST data
+Messages from the list to members are always encrypted.  Messages to the
+list are preferably encrypted, but this is not enforced.  (If a message
+arrives to the list unencrypted, it is flagged as such in the encrypted
+copies that are sent to members, so they're aware that the information
+contained in the message is more likely to leak.)
 
-References:
-[1] https://www.djangoproject.com/weblog/2011/sep/09/
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=737366
+So there are two ways to CC someone external:
 
-Could you allocate a CVE ids for these flaws?
+1. Send the message to the list and to them unencrypted.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+2. Send the message to both the list and the external address encrypted,
+to their respective keys - e.g., GnuPG and Mutt support this just fine
+(messages encrypted to more than one key).
+
+The list currently does not propagate the To/CC headers to messages
+arriving to members, though.  Maybe this is something to improve such
+that discussions CC'ing someone external can be maintained.
+
+Alexander
