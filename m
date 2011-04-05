@@ -1,19 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/2
-Message-ID: <4DB126BA.2050209@redhat.com>
-Date: Fri, 22 Apr 2011 14:56:58 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/28
+Message-ID: <20110405161838.GA18574@openwall.com>
+Date: Tue, 5 Apr 2011 20:18:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 04/22/2011 04:01 AM, akuster wrote:
-> So this would affect kernels 2.6.25-rc1 and above? (if I figured it out
-> correctly)
+I wish we had this discussion for real a month ago, but apparently most
+folks won't comment until the setup of a closed list becomes a reality.
+So I think there was some use in setting it up even if we end up re-doing
+or removing it, which is within consideration. ;-)
 
-Yes, introduced in ffd980f9.
+On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
+> A lot of userland stuff is shared between BSD and Linux, and probably
+> some other operating systems.  About the only things that differ between
+> a lot of these are the Linux kernel, and the *libc.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+There are also userland tools specific to the Linux kernel, there's
+Linux-PAM, there are package managers that are rarely used on non-Linux.
+
+I mostly agree with you, though.
+
+> I think if the disqualifier to Apple is that they don't ship a Linux
+> kernel and glibc, then we're doing them (and ourselves) a disservice.
+> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+> here, just stating a fact).
+
+Yes.
+
+> I think it would be reasonable to s/Linux list/open source vendor list/,
+> like vendor-sec used to be.
+
+If it's not just Linux, then where do we draw the line?  Do we accept
+Solaris distros (of which there are several), Haiku, ReactOS, Cygwin,
+and who knows what else (no offense intended to any of these fine
+projects)?  I think this would make leaks and misuse of the information
+significantly more likely, and make some members and reporters
+uncomfortable about posting to the list.  So we'll be back to CC lists.
+
+> ... letting Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+
+I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+so we'd be forced to introduce a vouching system (well, maybe we'd be
+forced to do that for Linux distros as well...)
+
+Alexander
