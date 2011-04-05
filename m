@@ -1,31 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/4
-Message-ID: <4DECA2C9.6050402@redhat.com>
-Date: Mon, 06 Jun 2011 11:50:01 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- LuaExpat -- Prone to XML "billion laughs attack"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/35
+Message-ID: <1302036752.3924.77.camel@localhost>
+Date: Tue, 05 Apr 2011 15:52:32 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+On Mon, 2011-04-04 at 07:48 -0400, Marc Deslauriers wrote:
+> On Mon, 2011-04-04 at 10:51 +0200, Marcus Meissner wrote:
+> > On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
+> > > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
+> > > >and Josh).
+> > > 
+> > > Limiting a distro to two or three representatives is going to make things 
+> > > tricky for Red Hat; we have a rather large dedicated security response 
+> > > team (as we publish over 300 advisories a year across 70 product/versions 
+> > > and have a number of folks dealing with 'incoming' issues spread, and my 
+> > > team is dispersed across 9 different countries).  If these representatives 
+> > > have been very active on v-s and oss-security is there a reason to limit?
+> > 
+> > Similar for SUSE. We currently have 3 engineers rotating through the incident
+> > manager role (and myself).
+> 
+> Same for Ubuntu. Limiting membership to two representatives would mean a
+> lot of email from the list is going to be forwarded to the other members
+> of our security team. Although limiting membership may seem like a good
+> idea to contain leaks, having to forward email to non-members because of
+> an arbitrary limitation would surely defeat that goal.
 
-   It was found that LuaExpat, a SAX XML parser based on the Expat
-library, is prone to XML "billion laughs attack", as described in:
-[1] 
-http://www.ibm.com/developerworks/xml/library/x-tipcfsx/index.html#N100F1
+I agree with Marc (and Marcus, Nico, et al). I was lucky enough to be on
+vacation starting last Friday and 'missed my chance' to get signed up
+before the others on my team.
 
-A remote attacker could provide a specially-crafted XML file, which
-once opened in an application, linked against LuaExpat, could cause
-that application to crash.
+While I'm not opposed to an initial stated limitation of 2 people per
+vendor, I think perhaps the answer is simply what was initially stated
+by Alexander: "For more than two persons per distro, the need has to be
+explained". IMHO, I don't think that the vendors who have larger
+security teams (and by extension larger software archives/numbers of
+products) should necessarily have to arbitrarily limit their membership
+to the new closed list.
 
-References:
-[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629225
-[3] http://matthewwild.co.uk/projects/luaexpat/luaexpat-1.2.0.tar.gz
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=711027
+While it would be possible for us to change our workflow to have only
+two members on the list, in our case that:
+ * would create extra work for those two people
+ * would create opportunities for the non-members on our team to miss
+important and time-sensitive emails in updates they are preparing (and
+participating in the discussion). Eg, aforementioned vacation/sick or
+being accidentally left out of a CC.
+ * wouldn't (ultimately) limit access to the information to the other
+members of the team
 
-Could you allocate a CVE id for this?
+In that spirit, I am a member of the Ubuntu security team and was a
+vendor-sec member via the Ubuntu exploder. In Ubuntu, the security team
+rotates triage of new issues on a weekly basis and internally discusses
+and assigns open issues to the different members of the team (I imagine
+other vendors operate similarly). For me to adequately participate in
+this triage and actively participate in discussions around embargoed
+issues that I am tasked with fixing, I am requesting membership to the
+new list.
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+pub   4096R/CC559573 2010-09-30
+      Key fingerprint = 4C20 C06B 5D8B DE68 8854  D28A 51DB DC58 CC55 9573
+uid                  Jamie Strandboge (Canonical Ltd) <jamie@...onical.com>
+sub   4096R/4C8A9DA4 2010-09-30
+
+Thank you for your consideration. :)
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
