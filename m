@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/4
-Message-ID: <20110908130146.GF25304@foo.fgeek.fi>
-Date: Thu, 8 Sep 2011 16:01:46 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/9
+Message-ID: <20110405115951.GB11119@suse.de>
+Date: Tue, 5 Apr 2011 13:59:51 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
+Subject: CVE re-request
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 08, 2011 at 02:26:34PM +0200, Nico Golde wrote:
-> Hi,
-> * David Hicks <d@...id.au> [2011-09-04 16:11]:
-> > On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
-> > > Request #2: LFI and XSS via bug_actiongroup_ext_page.php
-> > 
-> > I don't think my earlier message conveyed the severity of this bug well
-> > enough.
-> > 
-> > MantisBT allows users to upload attachments to bug reports. These
-> > attachments are commonly stored on the disk in an 'attachments'
-> > directory that should be stored outside the web root (but are still
-> > accessible to MantisBT for retrieval).
-> [...]
-> In case this slipped through the cracks... Can someone assign ids to these 
-> issues?
-> 
-> Kind regards
-> Nico
-> -- 
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+Hi,
 
-Related information about this issue:
+Some issues have been fixed in python-feedparser. One of them
+did not get a CVE yet?
 
-http://lists.debian.org/debian-security-tracker/2011/09/msg00012.html
-https://www.htbridge.ch/advisory/multiple_vulnerabilities_in_mantisbt.html
+This one:
 
-Best regards,
-Henri Salo
+http://code.google.com/p/feedparser/issues/detail?id=195
+
+Can someone assign one or tell me the id if already assigned?
+
+thx,
+Sebastian
+
+
+-- 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
