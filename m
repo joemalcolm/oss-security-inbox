@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/11
-Message-ID: <4E25A123.8010302@redhat.com>
-Date: Tue, 19 Jul 2011 17:22:11 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Even Rouault <even.rouault@...es-paris.org>, Pavel Lisý <pavel.lisy@...il.com>
-Subject: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/36
+Message-ID: <20110405210351.GA20599@openwall.com>
+Date: Wed, 6 Apr 2011 01:03:51 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Tue, Apr 05, 2011 at 03:52:32PM -0500, Jamie Strandboge wrote:
+> In that spirit, I am a member of the Ubuntu security team and was a
+> vendor-sec member via the Ubuntu exploder. In Ubuntu, the security team
+> rotates triage of new issues on a weekly basis and internally discusses
+> and assigns open issues to the different members of the team (I imagine
+> other vendors operate similarly). For me to adequately participate in
+> this triage and actively participate in discussions around embargoed
+> issues that I am tasked with fixing, I am requesting membership to the
+> new list.
+> 
+> pub   4096R/CC559573 2010-09-30
+>       Key fingerprint = 4C20 C06B 5D8B DE68 8854  D28A 51DB DC58 CC55 9573
+> uid                  Jamie Strandboge (Canonical Ltd) <jamie@...onical.com>
+> sub   4096R/4C8A9DA4 2010-09-30
 
-   the following has been brought to our attention:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
-   [2] http://trac.osgeo.org/mapserver/ticket/3903
+Added.
 
-More from [2]:
-
-This ticket is to track fixes to prevent SQL injections through OGC 
-filter encoding (in WMS, WFS and SOS), as well as a potential SQL 
-injection in WMS time support.
-
-Your system may be vulnerable if it has MapServer with OGC protocols 
-enabled, with layers connecting to an SQL RDBMS backend, either natively 
-or via OGR.
-
-All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable. 
-All users are ** strongly encouraged ** to upgrade to one of the latest 
-releases with the fixes.
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
