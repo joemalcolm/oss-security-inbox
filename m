@@ -1,44 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/3
-Message-ID: <20110730172731.GA17353@openwall.com>
-Date: Sat, 30 Jul 2011 21:27:31 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/34
+Message-ID: <1302035514.1154.25.camel@hidalgo>
+Date: Tue, 05 Apr 2011 22:31:54 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Abhijeet Patil <getabhijeetpatil@...il.com>
-Subject: Re: CFP open for ClubHack2011
+Subject: Re: A new way of writing secure data backups, combining RAID and one time pads.
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On mar., 2011-04-05 at 19:13 +0200, klondike wrote:
+> El 05/04/11 07:17, Gareth Randall escribió:
+> > Hi,
+> >
+> > I have published a free software project called "Triplyx", which
+> > writes data to a set of three storage devices in such a way that if
+> > any one of them is lost or stolen, it cannot be used to recover the
+> > data. Any two storage devices can be brought together to recover the
+> > data. It was created for use with offsite data backups.
+> >
+> > The concept is simple, although I have never seen it done in a
+> > commercial or open source product.
+> Well long ago I tried to make a similar thing to divide a private key so
+> a x out of the n people allowed to see the document could recover the
+> data, the problem is that although the solution was trivial for small
+> numbers it started getting complex as the n increased. 
 
-I made an exception and approved this one CFP for the following reasons:
+That looks just like Secret Sharing, for which there exist
+implementations, like Sham's Secret Sharing Scheme
+http://point-at-infinity.org/ssss/ which you might find helpful.
 
-1. To show what's coming to the list, and to make sure everyone in here
-approves that we reject these things unconditionally going forward.
+Regards,
+-- 
+Yves-Alexis
 
-If anyone in here wants to see these on the list, please let me know.
-Otherwise, I'll assume that we've voted unanimously to have them rejected.
-
-Ditto for e-magazine issue announcements - that is, unless anyone tells
-me they want to see those in here, I'll be rejecting any and all of them
-without having to analyze them for content relevant to both security and
-Open Source at once.
-
-2. Not to give the other Indian conference a competitive advantage,
-since I had similarly approved their CFP:
-
-http://www.openwall.com/lists/oss-security/2011/07/27/2
-
-No one appeared to care about the issues I raised when approving that
-previous CFP, which to me means that no one cared to see the CFP itself
-as well - so we got very close to the decision to be rejecting these
-unconditionally, which would make things easy for me as a moderator. :-)
-
-Thanks,
-
-Alexander
-
-On Sat, Jul 30, 2011 at 10:06:17PM +0530, Abhijeet Patil wrote:
-> Its time for hackers across the globe to gather in India.
-> ClubHack announces its CFP open for ClubHack2011. See
-> http://clubhack.com/2011/cfp
-...
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
