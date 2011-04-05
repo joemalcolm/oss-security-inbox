@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/13
-Message-ID: <AANLkTin4JcpGaePPxs=knr29d5_C=syVCD86-_X+T=OH@mail.gmail.com>
-Date: Mon, 14 Mar 2011 10:50:02 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/32
+Message-ID: <BANLkTin90UYuUuGFuB3eUNbeaZC740p72w@mail.gmail.com>
+Date: Tue, 5 Apr 2011 13:00:28 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: format-string vulnerability in PHP Phar extension
+Subject: CVE request: kernel: two issues in mpt2sas
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I just found several format-string vulnerability in PHP Phar extension, a
-bug has been filed in the PHP bugtracker (private):
-http://bugs.php.net/bug.php?id=54247
-On error several class methods passes the supplied argument to
-zend_throw_exception_ex()
-which prints a formatted error message using such value as the formatter
-string.
+"At two points in handling device ioctls via /dev/mpt2ctl,
+user-supplied length values are used to copy data from userspace into
+heap buffers without bounds checking, allowing controllable heap
+corruption and subsequently privilege escalation.
 
-$ sapi/cli/php ../bug.php "%08x.%08x.%08x.%08x.%08x"
-PHP Fatal error: Uncaught exception 'PharException' with message 'unable to
-open phar for reading "00000008.00000000.bf95c204.0963e050.00000014"' in
-/home/felipe/dev/bug.php:4
+Additionally, user-supplied values are used to determine the size of a
+copy_to_user() as well as the offset into the buffer to be read, with
+no bounds checking, allowing users to read arbitrary kernel memory."
+[1]
 
-Thanks.
+These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
+SAS 2.0).  While the kernel creates this device file root-root 660 by
+default, I've seen it with more open permissions on live systems, so
+perhaps there's some common use case that requires modifying these
+default permissions.
 
--- 
-Regards,
-Felipe Pena
+-Dan
 
+[1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
