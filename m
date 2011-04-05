@@ -1,57 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/4
-Message-ID: <20110601140708.GA15031@openwall.com>
-Date: Wed, 1 Jun 2011 18:07:08 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/30
+Message-ID: <20110405165358.GD3934@redhat.com>
+Date: Tue, 5 Apr 2011 10:53:58 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-CERT, Thomas, Josh, all -
+* [2011-04-05 20:18:38 +0400] Solar Designer wrote:
 
-On Tue, May 31, 2011 at 03:44:40PM -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > looks like this following has not CVE-ID assigned yet:
-> > http://www.kb.cert.org/vuls/id/536044
-> 
-> Please use CVE-2011-1945.
+>I wish we had this discussion for real a month ago, but apparently most
+>folks won't comment until the setup of a closed list becomes a reality.
+>So I think there was some use in setting it up even if we end up re-doing
+>or removing it, which is within consideration. ;-)
 
-Thanks!
+That's usually how it works though, isn't it?  =)
 
-The CERT Vulnerability Note says: "Date Public:	2011-05-17", yet this
-was only brought to oss-security on the 31st.  According to the
-Vulnerability Note, CERT notified a handful of distros, but definitely
-by far not all those shipping OpenSSL (which would be unrealistic) and
-not all those CERT had been notifying of similar issues before (which
-was realistic).  I am not too concerned about the issue itself and about
-the more restricted advance notification, but I am concerned about the
-delay between CERT making a Vulnerability Note public and us (as well as
-many others) learning of it (via oss-security in this case).  Maybe
-there's something to improve in this area.
+>On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
+>> A lot of userland stuff is shared between BSD and Linux, and probably
+>> some other operating systems.  About the only things that differ between
+>> a lot of these are the Linux kernel, and the *libc.
+>
+>There are also userland tools specific to the Linux kernel, there's
+>Linux-PAM, there are package managers that are rarely used on non-Linux.
 
-I went to http://www.us-cert.gov/cas/signup.html to see if there's a
-public CERT mailing list I should be on in order to receive new
-Vulnerability Notes (that are being made public) with no delay (or at
-least with less delay).  Unfortunately, for Vulnerability Notes there
-appears to be an Atom feed only, no mailing list (which I'd prefer).
-Perhaps set one up?
+Yes, of course.  There's SELinux, there's AppArmor, there's a whole mess
+more, but there is still quite a bit of overlap.
 
-Also, do we possibly want all Open Source software security issues to be
-brought to oss-security, even if they already have CVE IDs assigned?
-For example, don't we want all issues discussed on the Linux distros
-closed list to eventually be mentioned in here (in addition to the
-distro vendor advisories)?  I think we do.  Ditto for stuff handled via
-US-CERT and other CERTs.
+>I mostly agree with you, though.
+>
+>> I think if the disqualifier to Apple is that they don't ship a Linux
+>> kernel and glibc, then we're doing them (and ourselves) a disservice.
+>> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+>> here, just stating a fact).
+>
+>Yes.
+>
+>> I think it would be reasonable to s/Linux list/open source vendor list/,
+>> like vendor-sec used to be.
+>
+>If it's not just Linux, then where do we draw the line?  Do we accept
+>Solaris distros (of which there are several), Haiku, ReactOS, Cygwin,
+>and who knows what else (no offense intended to any of these fine
+>projects)?  I think this would make leaks and misuse of the information
+>significantly more likely, and make some members and reporters
+>uncomfortable about posting to the list.  So we'll be back to CC lists.
 
-Once again, I am not too concerned about the specific OpenSSL issue,
-which even the OpenSSL team does not find important enough to warrant a
-security fix release (according to their vendor statement to CERT),
-although I like the research behind it.  I just think that it's an
-opportunity for us to learn to avoid such two-week post-disclosure
-delays in the future, potentially for more severe issues.
+I don't know.  Did we have them on vendor-sec in the past?  Not to say
+that we want to setup a vendor-sec clone, but there obviously needs to
+be some criteria for acceptance beyond whether they are a Linux distro.
+I believe vendor-sec had a criteria list, and we could borrow from that
+(activity from the project; a project that doesn't do security updates
+or does them slowly/infrequently probably doesn't have a need for
+vendor-sec).  Chances are if they weren't on the list before, they don't
+need it either.
 
-I'd appreciate any comments.
+I think no matter how we define the line, someone is going to be
+annoyed, and someone will think it's a "big boys club".  That's
+unavoidable.  Maybe we need to worry less about individual project's
+feelings and just state our criteria.  If they meet it, great.  If they
+don't, then they need to work on it to get to a point where they meet
+it.
 
-Thanks,
+I don't think that's unreasonable either.  My wife takes care of little
+kids and she wouldn't have her job very long if she didn't take the
+mandated first aid course.  As a parent, I wouldn't want her to have
+that job if she didn't fit the pre-requisites (having first aid is
+more than just useful/optional).  That doesn't make the job more
+"elite".
 
-Alexander
+Maybe if we think about things in these terms, and disclose the
+requirements completely, then there is nothing for anyone to be upset
+about.
+
+Having said that, I do think trust is part of the equation.  I wouldn't
+want Joe Distro on the list because they've existed for 2mos and have
+put out a bunch of "security updates" without vetting their
+trustworthiness.
+
+>> ... letting Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+>
+>I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+>so we'd be forced to introduce a vouching system (well, maybe we'd be
+>forced to do that for Linux distros as well...)
+
+"etc" more or less meant the other *BSDs, but I was being lazy.  =)
+Maybe just NetBSD there.
+
+I'm deliberately excluding Solaris because I have no idea how the whole
+openSolaris thing works, but I imagine if they met the criteria (and
+that would mean that Linux itself is _not_ one of the criteria), and
+were vetted, then I wouldn't have a problem with it.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
