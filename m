@@ -1,44 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/2
-Message-ID: <4E267BD0.5090100@redhat.com>
-Date: Wed, 20 Jul 2011 12:25:12 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/30
+Message-ID: <20110405165358.GD3934@redhat.com>
+Date: Tue, 5 Apr 2011 10:53:58 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Gerald Combs <gerald@...eshark.org>
-Subject: Re: CVE Request -- Wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 07/19/2011 06:11 PM, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
-> 
->   an infinite loop was found in the way ANSI A Interface (IS-634/IOS)
-> dissector of the Wireshark network traffic analyzer processed certain
-> ANSI A MAP capture files. If Wireshark read a malformed packet off a
-> network or opened a malicious packet capture file, it could lead to
-> denial of service (Wireshark hang).
-> 
-> Upstream bug:
-> [1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6044
-> 
-> Public PoC:
-> [2]
-> http://www.wireshark.org/download/automated/captures/fuzz-2011-06-20-22762.pcap
-> 
-> 
-> Relevant upstream patch:
-> [3] http://anonsvn.wireshark.org/viewvc?view=revision&revision=37930
-> 
-> References:
-> [4] http://www.wireshark.org/security/
-> [5] http://www.wireshark.org/security/wnpa-sec-2011-11.html
-> [6] http://www.wireshark.org/security/wnpa-sec-2011-10.html
-> [7] https://bugzilla.redhat.com/show_bug.cgi?id=723215
-> 
-> Could you allocate a CVE id for this?
-> 
+* [2011-04-05 20:18:38 +0400] Solar Designer wrote:
 
-This has been assigned CVE-2011-2698
+>I wish we had this discussion for real a month ago, but apparently most
+>folks won't comment until the setup of a closed list becomes a reality.
+>So I think there was some use in setting it up even if we end up re-doing
+>or removing it, which is within consideration. ;-)
 
+That's usually how it works though, isn't it?  =)
+
+>On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
+>> A lot of userland stuff is shared between BSD and Linux, and probably
+>> some other operating systems.  About the only things that differ between
+>> a lot of these are the Linux kernel, and the *libc.
+>
+>There are also userland tools specific to the Linux kernel, there's
+>Linux-PAM, there are package managers that are rarely used on non-Linux.
+
+Yes, of course.  There's SELinux, there's AppArmor, there's a whole mess
+more, but there is still quite a bit of overlap.
+
+>I mostly agree with you, though.
+>
+>> I think if the disqualifier to Apple is that they don't ship a Linux
+>> kernel and glibc, then we're doing them (and ourselves) a disservice.
+>> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+>> here, just stating a fact).
+>
+>Yes.
+>
+>> I think it would be reasonable to s/Linux list/open source vendor list/,
+>> like vendor-sec used to be.
+>
+>If it's not just Linux, then where do we draw the line?  Do we accept
+>Solaris distros (of which there are several), Haiku, ReactOS, Cygwin,
+>and who knows what else (no offense intended to any of these fine
+>projects)?  I think this would make leaks and misuse of the information
+>significantly more likely, and make some members and reporters
+>uncomfortable about posting to the list.  So we'll be back to CC lists.
+
+I don't know.  Did we have them on vendor-sec in the past?  Not to say
+that we want to setup a vendor-sec clone, but there obviously needs to
+be some criteria for acceptance beyond whether they are a Linux distro.
+I believe vendor-sec had a criteria list, and we could borrow from that
+(activity from the project; a project that doesn't do security updates
+or does them slowly/infrequently probably doesn't have a need for
+vendor-sec).  Chances are if they weren't on the list before, they don't
+need it either.
+
+I think no matter how we define the line, someone is going to be
+annoyed, and someone will think it's a "big boys club".  That's
+unavoidable.  Maybe we need to worry less about individual project's
+feelings and just state our criteria.  If they meet it, great.  If they
+don't, then they need to work on it to get to a point where they meet
+it.
+
+I don't think that's unreasonable either.  My wife takes care of little
+kids and she wouldn't have her job very long if she didn't take the
+mandated first aid course.  As a parent, I wouldn't want her to have
+that job if she didn't fit the pre-requisites (having first aid is
+more than just useful/optional).  That doesn't make the job more
+"elite".
+
+Maybe if we think about things in these terms, and disclose the
+requirements completely, then there is nothing for anyone to be upset
+about.
+
+Having said that, I do think trust is part of the equation.  I wouldn't
+want Joe Distro on the list because they've existed for 2mos and have
+put out a bunch of "security updates" without vetting their
+trustworthiness.
+
+>> ... letting Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+>
+>I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+>so we'd be forced to introduce a vouching system (well, maybe we'd be
+>forced to do that for Linux distros as well...)
+
+"etc" more or less meant the other *BSDs, but I was being lazy.  =)
+Maybe just NetBSD there.
+
+I'm deliberately excluding Solaris because I have no idea how the whole
+openSolaris thing works, but I imagine if they met the criteria (and
+that would mean that Linux itself is _not_ one of the criteria), and
+were vetted, then I wouldn't have a problem with it.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
