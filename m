@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/7
-Message-ID: <1295971348.3101.180.camel@localhost>
-Date: Tue, 25 Jan 2011 11:02:27 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/37
+Message-ID: <20110405230056.GU543@ngolde.de>
+Date: Wed, 6 Apr 2011 01:00:56 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: VLC Subtitle StripTags heap corruption
+Subject: CVE id request: tmux (debian specific)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hey,
+due to a patch that was introduced to our tmux package, tmux is not properly 
+dropping group privileges anymore when invoked with -S (tmux is installed 
+setgid).
 
-I couldn't find a CVE for this one:
+Bug report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=620304
+Can I get a CVE id for this?
 
-"Subtitle StripTags heap corruption, potentially exploitable."
+Cheers
+Nico
 
-http://mailman.videolan.org/pipermail/vlc-devel/2011-January/078607.html
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-http://git.videolan.org/gitweb.cgi?p=vlc/vlc-1.1.git;a=commit;h=dc14617f39c03bbe80c3cc4f92799dca840966eb
-
-Thanks,
-
-Marc.
-
-
+Content of type "application/pgp-signature" skipped
