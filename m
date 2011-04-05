@@ -1,40 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/8
-Message-ID: <358182854.11430.1302892361483.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Apr 2011 14:32:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/19
+Message-ID: <Pine.GSO.4.64.1104051036410.20885@faron.mitre.org>
+Date: Tue, 5 Apr 2011 10:37:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Jeff Layton <jlayton@...hat.com>, Steve French <sfrench@...ibm.com>, Suresh Jayaraman <sjayaraman@...ell.com>, coley <coley@...re.org>
-Subject: Re: CVE Request: cifs session reuse
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1585
 
-Thanks.
+Pending Dan's followup to my post, we can make CVE-2011-1493 specific to 
+Dan's FAC_NATIONAL_DIGIS overflow.
 
--- 
-    JB
+- Steve
 
 
------ Original Message -----
-> Hi,
-> 
-> When one user has mounted a cifs share that requires authentication,
-> another user could mount the same share without knowing the
-> correct password. The following kernel commits fix that:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4ff67b720c02c36e54d55b88c2931879b7db1cd2
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=fc87a40677bbe0937e2ff0642c7e83c9a4813f3d
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=24e6cf92fde1f140d8eb0bf7cd24c2c78149b6b2
-> 
-> A way to exploit this would be through mount.cifs if it's
-> installed setuid root.
-> 
-> cu
-> Ludwig
-> 
+On Mon, 4 Apr 2011, Josh Bressers wrote:
+
+> One it is then. Thanks.
+>
+> Use CVE-2011-1493.
+>
 > --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+>    JB
+>
+> ----- Original Message -----
+>> On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com>
+>> wrote:
+>>> How do we want this broken down? If nobody complains, I'll just give
+>>> it one.
+>>>
+>>
+>> I think one makes sense, since all the problems were in a single
+>> protocol and were addressed at the same time.
+>>
+>> -Dan
+>>
+>>> Thanks.
+>>>
+>>> --
+>>>    JB
+>>>
+>>> ----- Original Message -----
+>>>> Any update on this?
+>>>>
+>>>> Thanks,
+>>>> Dan
+>>>>
+>>>> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
+>>>> wrote:
+>>>>> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
+>>>>>>
+>>>>>> I sent in a patch [1] resolving two issues in ROSE:
+>>>>>>
+>>>>>> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
+>>>>>> possible
+>>>>>> for a remote host to provide more digipeaters than expected,
+>>>>>> resulting
+>>>>>> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
+>>>>>> overflows, and abort facilities parsing on failure.
+>>>>>>
+>>>>>> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+>>>>>> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide
+>>>>>> a
+>>>>>> length of less than 10, resulting in an underflow in a memcpy
+>>>>>> size,
+>>>>>> causing a kernel panic due to massive heap corruption. A length
+>>>>>> of
+>>>>>> greater than 20 results in a stack overflow of the callsign
+>>>>>> array.
+>>>>>> Abort facilities parsing on these invalid length values."
+>>>>>>
+>>>>>> These issues may both result in code execution. They may be
+>>>>>> triggered
+>>>>>> by a remote attacker if the victim has a listening ROSE socket,
+>>>>>> or
+>>>>>> by
+>>>>>> a local attacker (for privilege escalation) if a ROSE device
+>>>>>> exists
+>>>>>> (e.g. rose0).
+>>>>>>
+>>>>>> Ben Hutchings followed up with a patch [2] that resolves a
+>>>>>> number
+>>>>>> of
+>>>>>> other ROSE issues related to lack of size field validation, some
+>>>>>> of
+>>>>>> which may also result in heap corruption.
+>>>>>>
+>>>>>> Not sure about the proper CVE breakdown for all these issues,
+>>>>>> since
+>>>>>> the entire protocol was quite broken. Perhaps one is enough to
+>>>>>> cover
+>>>>>> everything.
+>>>>>
+>>>>> I am not sure. I would just assign one for the collection of
+>>>>> issues
+>>>>> here but
+>>>>> I will let Steve decide instead.
+>>>>>
+>>>>>> [1] http://marc.info/?l=linux-netdev&m=130060344616926
+>>>>>> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+>>>>>
+>>>>> Thanks, Eugene
+>>>>> --
+>>>>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
+>>>>> main(++i); }
+>>>>>
+>>>
+>
+>
