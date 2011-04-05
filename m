@@ -1,20 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/06/2
-Message-Id: <201110062259.51947.remi@remlab.net>
-Date: Thu, 6 Oct 2011 22:59:51 +0300
-From: "Rémi Denis-Courmont" <remi@...lab.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/27
+Message-ID: <20110405180652.694a643b@orphan>
+Date: Tue, 5 Apr 2011 18:06:52 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE REQUEST] VLC media player: NULL dereference in HTTP server
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-        Hello all,
+On Mon, 4 Apr 2011 13:26:50 -0400 (EDT) R P Herrold wrote:
 
-Can a CVE ID be reserved for this:
-http://www.videolan.org/security/sa1107.html
+> > Given the aim to keep the subscriber list very limited, this
+> > probably falls into a tentatively subscribed category too.  AFAIK,
+> > CentOS has rather few components that are not rebuilds of the RHEL
+> > SRPMs, the question is how often a v-s info was useful in the past
+> > in providing security updates for those extra packages.
+> 
+> Thanks for the post furthering the marketing goals of your 
+> corporate master; perhaps the security goal of making sure the 
+> Linux server space is well-secured in a timely fashion was 
+> overlooked by you as you framed your thought
 
-Thanks in advance,
+Damn, my corporatish evilness unveiled after all... ;)
+
+The request was meant to be in the same spirit as Alexander's questions
+to rPath or Frugalware folks to see if the membership provides the
+expected benefits, and seemed natural given the specific development
+mode used by CentOS.  You're free to view it however you want, of
+course.
+
+> Seemingly (you mention 'AFAIK'), you do not follow the 
+> 'extras' archive, nor the 'testing' where extensions are 
+> found, past what Red Hat ships by default in its enterprise 
+> product
+
+I certainly do not follow.  I did check extras and centosplus though
+and referred to them as those components that are not rebuilds.  Not
+many components there seemed to be an obvious candidates that can
+benefit from v-s info, imo.
+
+EOF
 
 -- 
-Rémi Denis-Courmont
-http://www.remlab.net/
-http://fi.linkedin.com/in/remidenis
+Tomas Hoger / Red Hat Security Response Team
