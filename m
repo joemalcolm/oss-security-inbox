@@ -1,91 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/26
-Message-ID: <20111121213919.GD23629@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 23:39:19 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: advisories@...itunasecurity.com
-Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/19
+Message-ID: <Pine.GSO.4.64.1104051036410.20885@faron.mitre.org>
+Date: Tue, 5 Apr 2011 10:37:48 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 02:20:00PM -0700, Kurt Seifried wrote:
-> On 11/21/2011 11:01 AM, Henri Salo wrote:
-> > Can we get CVE-identifier assigned for this issue, thank you?
-> >
-> > Best regards,
-> > Henri Salo
-> >
-> > ----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
-> >
-> > Date: Thu, 10 Nov 2011 16:32:12 +0200
-> > From: Netsparker Advisories <advisories@...itunasecurity.com>
-> > To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
-> > Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
-> >
-> > Information
-> > --------------------
-> > Name :  XSS vulnerability in Joomla 1.6.3.
-> > Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
-> > Vendor Hompeage :  http://www.joomla.org
-> > Vulnerability Type :  Cross-Site Scripting
-> > Severity :  High
-> > Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
-> > Advisory Reference :  NS-11-009
-> >
-> > Description
-> > ------------------
-> > Joomla is an award-winning content management system (CMS), which
-> > enables you to build Web sites and powerful online applications. Many
-> > aspects, including its ease-of-use and extensibility, have made Joomla
-> > the most popular Web site software available. Best of all, Joomla is
-> > an open source solution that is freely available to everyone.
-> >
-> > Details
-> > -------------------
-> > Joomla is affected by a XSS vulnerability in various administrator
-> > screens. All 1.6.x installs prior to and including 1.6.3 are affected.
-> > You can read the full article about Cross-Site Scripting
-> > vulnerabilities from here :
-> > http://www.mavitunasecurity.com/crosssite-scripting-xss/
-> >
-> > Solution
-> > -------------------
-> > Upgrade to the latest Joomla! version (1.6.4 or later).
-> >
-> > Credits
-> > -------------------
-> > It has been discovered on testing of Netsparker, Web Application
-> > Security Scanner - http://www.mavitunasecurity.com/netsparker/
-> >
-> > References
-> > -------------------
-> > 1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
-> > 2. MSL Advisory Link :
-> > http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
-> > 3. Netsparker Advisories :
-> > http://www.mavitunasecurity.com/netsparker-advisories/
-> >
-> > About Netsparker
-> > -------------------
-> > Netsparker® can find and report security issues such as SQL Injection
-> > and Cross-site Scripting (XSS) in all web applications regardless of
-> > the platform and the technology they are built on. Netsparker's unique
-> > detection and exploitation techniques allows it to be dead accurate in
-> > reporting hence it's the first and the only False Positive Free web
-> > application security scanner.
-> >
-> Can you confirm that this is a different issue from CVE-2011-2708 and
-> CVE-2011-3595?
-> 
-> -- 
-> 
-> -Kurt Seifried / Red Hat Security Response Team
 
-CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
+Pending Dan's followup to my post, we can make CVE-2011-1493 specific to 
+Dan's FAC_NATIONAL_DIGIS overflow.
 
-This new is about: 20110601 XSS Vulnerabilities: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+- Steve
 
-Sorry, but I don't know where to find SVN/GIT/CVS logs.
 
-Best regards,
-Henri Salo
+On Mon, 4 Apr 2011, Josh Bressers wrote:
+
+> One it is then. Thanks.
+>
+> Use CVE-2011-1493.
+>
+> --
+>    JB
+>
+> ----- Original Message -----
+>> On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com>
+>> wrote:
+>>> How do we want this broken down? If nobody complains, I'll just give
+>>> it one.
+>>>
+>>
+>> I think one makes sense, since all the problems were in a single
+>> protocol and were addressed at the same time.
+>>
+>> -Dan
+>>
+>>> Thanks.
+>>>
+>>> --
+>>>    JB
+>>>
+>>> ----- Original Message -----
+>>>> Any update on this?
+>>>>
+>>>> Thanks,
+>>>> Dan
+>>>>
+>>>> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
+>>>> wrote:
+>>>>> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
+>>>>>>
+>>>>>> I sent in a patch [1] resolving two issues in ROSE:
+>>>>>>
+>>>>>> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
+>>>>>> possible
+>>>>>> for a remote host to provide more digipeaters than expected,
+>>>>>> resulting
+>>>>>> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
+>>>>>> overflows, and abort facilities parsing on failure.
+>>>>>>
+>>>>>> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
+>>>>>> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide
+>>>>>> a
+>>>>>> length of less than 10, resulting in an underflow in a memcpy
+>>>>>> size,
+>>>>>> causing a kernel panic due to massive heap corruption. A length
+>>>>>> of
+>>>>>> greater than 20 results in a stack overflow of the callsign
+>>>>>> array.
+>>>>>> Abort facilities parsing on these invalid length values."
+>>>>>>
+>>>>>> These issues may both result in code execution. They may be
+>>>>>> triggered
+>>>>>> by a remote attacker if the victim has a listening ROSE socket,
+>>>>>> or
+>>>>>> by
+>>>>>> a local attacker (for privilege escalation) if a ROSE device
+>>>>>> exists
+>>>>>> (e.g. rose0).
+>>>>>>
+>>>>>> Ben Hutchings followed up with a patch [2] that resolves a
+>>>>>> number
+>>>>>> of
+>>>>>> other ROSE issues related to lack of size field validation, some
+>>>>>> of
+>>>>>> which may also result in heap corruption.
+>>>>>>
+>>>>>> Not sure about the proper CVE breakdown for all these issues,
+>>>>>> since
+>>>>>> the entire protocol was quite broken. Perhaps one is enough to
+>>>>>> cover
+>>>>>> everything.
+>>>>>
+>>>>> I am not sure. I would just assign one for the collection of
+>>>>> issues
+>>>>> here but
+>>>>> I will let Steve decide instead.
+>>>>>
+>>>>>> [1] http://marc.info/?l=linux-netdev&m=130060344616926
+>>>>>> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+>>>>>
+>>>>> Thanks, Eugene
+>>>>> --
+>>>>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
+>>>>> main(++i); }
+>>>>>
+>>>
+>
+>
