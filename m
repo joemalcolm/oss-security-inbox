@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/2
-Message-ID: <1312377180.2576.3.camel@mdlinux>
-Date: Wed, 03 Aug 2011 09:13:00 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: foomatic-gui
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/20
+Message-ID: <BANLkTikdSO8W-zu6OTPeYwCOzR32bBYkLw@mail.gmail.com>
+Date: Tue, 5 Apr 2011 09:46:25 -0500
+From: Tim Zingelman <tez@...bsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Mon, Apr 4, 2011 at 10:02 AM, Matthias Andree <matthias.andree@....de> wrote:
+> Am 02.04.2011 02:08, schrieb Dan Rosenberg:
+>
+> This raises an interesting point, "downstream providers of third-party
+> software".
+>
+> In my case, I'd understand that I might want to offer vendors the
+> possibility to co-ordinate upgrades for bogofilter, fetchmail, and
+> leafnode, in lexicographical order, and possibly for a FreeBSD port --
+> although I'm not a representative of FreeBSD's security officer team
+> (nor would that team usually deal with third-party software
+> vulnerabilities unless it's in the basde system).
 
-foomatic-gui improperly escapes certain hostnames, resulting in a remote
-arbitrary command execution vulnerability.
+Both FreeBSD and NetBSD have separate security teams that work to keep
+the third-party software provided by the FreeBSD ports system
+http://www.freebsd.org/ports/index.html and NetBSD pkgsrc system
+http://www.netbsd.org/docs/software/packages.html patched for
+vulnerabilities.  (Note that the pkgsrc system is cross platform and
+works on *BSD, Solaris, Linux and many other platforms.)  I'd guess
+other BSD and Solaris distro's have similar teams.  I'd like to either
+see members of these teams included, or a second list created for all
+issues not specific to linux.  (FWIW I am on the pkgsrc security
+team.)
 
-Ref.:
-https://bugs.launchpad.net/ubuntu/+source/foomatic-gui/+bug/811119
-http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
-http://packages.debian.org/changelogs/pool/main/f/foomatic-gui/foomatic-gui_0.7.9.5/changelog
-
-Could a CVE please be assigned to this issue?
+I'll also second the question someone else posed about how cc'ing
+others off the list could reasonably work if all messages are
+encrypted.
 
 Thanks,
 
-Marc.
-
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+ - Tim
