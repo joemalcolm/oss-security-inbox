@@ -1,88 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/3
-Message-ID: <AANLkTi=gYYZNKAp-EiQR6kFixmLJs9C6Wm4j3=W-d9YL@mail.gmail.com>
-Date: Thu, 3 Mar 2011 19:26:21 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com, Kees Cook <kees@...ntu.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/36
+Message-ID: <20110405210351.GA20599@openwall.com>
+Date: Wed, 6 Apr 2011 01:03:51 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
->>
->> Rather than requiring individuals to perform substantial amounts of
->> digging through patches, which I agree is infeasible, perhaps it would
->> be more reasonable to establish a general policy that bug reporters
->> and maintainers can use to work with distro security teams and the
->> rest of the security community.
->>
->> For example, a public or private list could be established for all
->> *potential* kernel security issues, and just as is the case with
->> CC'ing stable, a policy could be developed where maintainers are
->> expected to CC this list for fixes that might possibly have security
->> relevance, with a tendency towards erring on the safe side if security
->> impact is unclear.
->
-> This proposal just fell down right there, as it has been rightly pointed
-> out that numerous bug fixes in the kernel in the past have later been
-> deemed "security fixes".  So what you are asking for is for _all_
-> bugfixes to be sent to such a list.
->
-> Well, we have that already, we have mailing lists that get every single
-> patch that is merged into the kernel, and there's the big lkml list as
-> well with hundreds of fixes posted every week.
->
+On Tue, Apr 05, 2011 at 03:52:32PM -0500, Jamie Strandboge wrote:
+> In that spirit, I am a member of the Ubuntu security team and was a
+> vendor-sec member via the Ubuntu exploder. In Ubuntu, the security team
+> rotates triage of new issues on a weekly basis and internally discusses
+> and assigns open issues to the different members of the team (I imagine
+> other vendors operate similarly). For me to adequately participate in
+> this triage and actively participate in discussions around embargoed
+> issues that I am tasked with fixing, I am requesting membership to the
+> new list.
+> 
+> pub   4096R/CC559573 2010-09-30
+>       Key fingerprint = 4C20 C06B 5D8B DE68 8854  D28A 51DB DC58 CC55 9573
+> uid                  Jamie Strandboge (Canonical Ltd) <jamie@...onical.com>
+> sub   4096R/4C8A9DA4 2010-09-30
 
-Of course failing to anticipate security impact is bound to happen in
-the kernel; it frequently happens in userland too, and is unavoidable.
- That doesn't mean we can't try, and it doesn't mean we should be
-overly paranoid and have security folks manually audit every patch.
-Currently, maintainers and bug reporters are expected to ask
-themselves a simple question when deciding whether or not to CC
-stable: "does this fix a bug or security issue, or is it a new
-feature?".  Similarly, I don't think it's too much to ask for people
-to consider the question of "does this bug it allow an unprivileged
-user to crash the system, gain additional access, or otherwise cross
-privilege boundaries?"  And if the answer is "I don't know, maybe?",
-then they should CC this list to be safe.  I think this would result
-in not nearly as much volume as you're anticipating.
+Added.
 
->> I think security communication needs to be
->> improved at the commit level (as opposed to the reporting), since
->> maintainers are often much more knowledgeable and better able to
->> understand security impact than the users who are often presenting
->> issues.
->
-> I don't think you understand the rate of change in the kernel and how
-> trying to do this for every commit is unfeasable and unworkable.  You do
-> know how fast it goes, right?
->
-
-Why is CC'ing a security list any more difficult than CC'ing stable?
-
->> Criteria could be set up for what kinds of issues would be
->> candidates for being sent to this list.  I don't think this would
->> require substantially more work on anyone's part, but by creating a
->> culture where potential security issues are treated seriously, it
->> would at least stop some of the silent patching that's been going on.
->>
->> Once potential security issues have been submitted to such a list, I'm
->> sure there would be no shortage of people willing and able to analyze
->> security impact for each issue, including assigning CVEs.  While
->> digging through every kernel patch might be too much work, with the
->> cooperation of maintainers this can be reduced to a much smaller
->> subset that would be easily dealt with.
->
-> I would be happy if someone could just document the patches that _are_
-> applied to stable kernel releases.  I bet you can't keep up with that,
-> they are moving so fast.
->
-> Sorry, I don't think this is workable as you are proposing, but feel
-> free to prove me wrong :)
->
-
-Perhaps you're right, but maybe we can generate some discussion to
-come up with a solution that improves upstream security communication
-and IS workable.
-
-Thanks,
-Dan
+Alexander
