@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/3
-Message-ID: <4E267FCF.6030003@redhat.com>
-Date: Wed, 20 Jul 2011 15:12:15 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/11
+Message-Id: <201104051411.49402.thomas@suse.de>
+Date: Tue, 5 Apr 2011 14:11:49 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: ipv6: make fragment identifications less predictable
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-IPv6 fragment identification generation is way beyond what we use for
-IPv4 : It uses a single generator. Its not scalable and allows DoS attacks.
+Am Montag, 4. April 2011, 17:07:22 schrieb Matthias Andree:
+> Am 04.04.2011 01:00, schrieb Solar Designer:
+> 
+> > Added.  This gives us three contacts for Ubuntu on the list:
+> 
+> ...
+> 
+> > Maybe this needs to be reduced to two most active ones at a later point.
+> 
+> What sense lies in limiting subscribers per distro?
+> 
+> If you want to coordinate and one of the two most active is on vacation
+> and the other falls sick, the third one is precluded and so is
+> coordination with that particular vendor.
 
-Now inetpeer is IPv6 aware, we can use it to provide a more secure and
-scalable frag ident generator (per destination, instead of system wide)
++1 limiting subscribers makes no sense
 
-This patch :
-1) defines a new secure_ipv6_id() helper
-2) extends inet_getid() to provide 32bit results
-3) extends ipv6_select_ident() with a new dest parameter
+Cheerio,
+Thomas
 
-http://thread.gmane.org/gmane.linux.network/201773/focus=201776
-https://bugzilla.redhat.com/show_bug.cgi?id=723429
 
-Thanks, Eugene
+-- 
+ Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
