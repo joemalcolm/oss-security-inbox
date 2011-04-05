@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/12
-Message-ID: <20110308150730.66b2591c@orphan>
-Date: Tue, 8 Mar 2011 15:07:30 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/29
+Message-ID: <20110405163619.GA18727@openwall.com>
+Date: Tue, 5 Apr 2011 20:36:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request, php's shm
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 8 Mar 2011 14:36:49 +0100 Pierre Joye wrote:
+On Tue, Apr 05, 2011 at 09:46:25AM -0500, Tim Zingelman wrote:
+> I'll also second the question someone else posed about how cc'ing
+> others off the list could reasonably work if all messages are
+> encrypted.
 
-> This flaw has been discovered by Jose Carlos Norte, already fixed in
-> SVN by Felipe Pena (felipe@....net), see
-> http://svn.php.net/viewvc/?view=revision&revision=309018
+Messages from the list to members are always encrypted.  Messages to the
+list are preferably encrypted, but this is not enforced.  (If a message
+arrives to the list unencrypted, it is flagged as such in the encrypted
+copies that are sent to members, so they're aware that the information
+contained in the message is more likely to leak.)
 
-It may be more readable to use the check as:
+So there are two ways to CC someone external:
 
-  if (count < 0 || count > shmop->size - size)
+1. Send the message to the list and to them unencrypted.
 
-Previous size check gives you guarantees regarding shmop->size - size
-result.
+2. Send the message to both the list and the external address encrypted,
+to their respective keys - e.g., GnuPG and Mutt support this just fine
+(messages encrypted to more than one key).
 
-Just my 2c.
+The list currently does not propagate the To/CC headers to messages
+arriving to members, though.  Maybe this is something to improve such
+that discussions CC'ing someone external can be maintained.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Alexander
