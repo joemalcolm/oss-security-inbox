@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/9
-Message-ID: <4E0E4A07.1070408@oracle.com>
-Date: Fri, 01 Jul 2011 15:28:23 -0700
-From: Oracle Security Alerts <secalert_us@...cle.com>
-To: Tomas Hoger <thoger@...hat.com>
-CC: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/6
+Message-ID: <69692494.381930.1302002348960.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 5 Apr 2011 07:19:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> 
+> We found the vendor-sec email list useful not just for reporting issues
+> in open-source projects, but also for receiving advance notification
+> about issues that affect the various open-source libraries and
+> applications that Apple ships. (More details can be found at
+> http://www.opensource.apple.com/)
+> 
+> If you are not willing to grant us full membership to the new list, we at
+> least hope we can be cc-ed on all userland issues reported to the list.
+> 
 
+Not adding Apple to any coordination list would be plain silly. They were
+far more active than most of the distributions.
 
->> We do not expect Red Hat or other vendors to evaluate impact of
->> security vulnerabilities on Oracle Linux, 
+I'm starting to worry we've created rules for the sake of rules, which
+almost never has a net positive outcome.
 
-> Maybe I'm mis-reading the above statement, but it seems to imply it's
-> not uncommon for you to re-do security patches that were applied to
-> RHEL packages before building them as OEL updates.  Do you have any
-> specific examples to point to (on- or off-list), so we can possibly
-> check what mistakes we did?
-
-We are not saying that your security fixes can be incomplete or have mistakes. 
-Oracle Linux is different from RHEL.
-Issues that do not affect RHEL may affect Oracle Linux or vice versa.
-We may also choose to fix an issue in a different way.
-
-- -Chandan
-- --
-Best Regards,
-Oracle Security Alerts
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (Darwin)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk4OSgcACgkQf36Vx1dNy5oq2ACaAuGEGcPxQdBxIomp0DCpK7TW
-wKAAnjNAx4mksMPpWGCsGCZSaGPK2UL7
-=fo+5
------END PGP SIGNATURE-----
+-- 
+    JB
