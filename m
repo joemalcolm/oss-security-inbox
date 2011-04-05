@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/1
-Message-ID: <4ED34FAD.4040501@redhat.com>
-Date: Mon, 28 Nov 2011 10:09:01 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/13
+Message-ID: <367877627.382904.1302006490370.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 5 Apr 2011 08:28:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE re-request
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+That one needs a 2009 ID. I asked mitre in a previous mail,
+let's use this to pester them again.
 
-   a privilege escalation flaw was found in the way 'celeryd-multi',
-'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
-an asynchronous task queue based on distributed message passing,
-performed sanitization of --uid and --gid arguments, provided to
-the tools on the command line (only effective user id was changed,
-with the real one remaining unchanged). A local attacker could use
-this flaw to send messages via the message broker or use the Pickle
-serializer to load and execute arbitrary code with elevated privileges.
+Thanks.
 
-References:
-[1] http://www.celeryproject.org/news/celery-24-released/
-[2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
-[3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
-[4] https://github.com/ask/celery/pull/544
+-- 
+    JB
 
-Relevant upstream patch:
-[5] 
-https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
-
-Could you allocate a CVE id for this issue?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Original Message -----
+> Hi,
+> 
+> Some issues have been fixed in python-feedparser. One of them
+> did not get a CVE yet?
+> 
+> This one:
+> 
+> http://code.google.com/p/feedparser/issues/detail?id=195
+> 
+> Can someone assign one or tell me the id if already assigned?
+> 
+> thx,
+> Sebastian
+> 
+> 
+> --
+> ~
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
+> ~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
