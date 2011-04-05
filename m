@@ -1,18 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/9
-Message-ID: <BANLkTik1ZsRT69dyrFCLkOYRGKC=r7uSzA@mail.gmail.com>
-Date: Fri, 24 Jun 2011 19:15:05 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/1
+Message-ID: <20110405232557.GB714@dojo.mi.org>
+Date: Tue, 5 Apr 2011 19:25:57 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: remote buffer overflow in bluetooth
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-A remote user can provide a small value for the command size field in
-the command header of an l2cap configuration request, resulting in an
-integer underflow when subtracting the size of the configuration request
-header.  This results in copying a very large amount of data via
-memcpy() and destroying the kernel heap. [1]
+:There are also userland tools specific to the Linux kernel, there's
+:Linux-PAM, there are package managers that are rarely used on non-Linux.
 
--Dan
+Linux-PAM (well, a fair subset of it from several years back) was ported
+to IRIX.  In most notable cases, it's bug-for-bug compatible.  
 
-[1] http://marc.info/?l=linux-kernel&m=130891911909436&w=2
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Villains always have antidotes.  They're funny that way."          -The Tick
+
+Content of type "application/pgp-signature" skipped
