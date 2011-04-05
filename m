@@ -1,20 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/48
-Message-ID: <20110404190448.GE14209@openwall.com>
-Date: Mon, 4 Apr 2011 23:04:48 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/21
+Message-ID: <Pine.GSO.4.64.1104051054300.20885@faron.mitre.org>
+Date: Tue, 5 Apr 2011 10:54:38 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE re-request
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 09:18:12AM +0530, Huzaifa Sidhpurwala wrote:
-> Please subscribe me as well:
-> 
-> pub  1024D/DA5BDAE5 2006-08-25
-> Huzaifa S. Sidhpurwala <huzaifas@...hat.com>
-> 
-> key: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCC70DCF2DA5BDAE5
 
-Added.
+On Tue, 5 Apr 2011, Josh Bressers wrote:
 
-Alexander
+> That one needs a 2009 ID. I asked mitre in a previous mail,
+> let's use this to pester them again.
+
+Use CVE-2009-5065
+
+- Steve
