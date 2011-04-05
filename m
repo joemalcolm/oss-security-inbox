@@ -1,73 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/8
-Message-ID: <4EA59F39.7060707@redhat.com>
-Date: Mon, 24 Oct 2011 10:24:09 -0700
-From: Elio Maldonado <emaldona@...hat.com>
-To: Robert Relyea <rrelyea@...hat.com>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Reed Loden <reed@...dloden.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/26
+Message-ID: <20110405160254.GC8639@core.inversepath.com>
+Date: Tue, 5 Apr 2011 18:02:54 +0200
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 10/24/2011 10:01 AM, Robert Relyea wrote:
-> On 10/24/2011 03:42 AM, Jan Lieskovsky wrote:
->> Cc-ing Reed on this post yet, so he could clarify
->> if Mozilla (Security) Team has already assigned a CVE identifier
->> for this one or not.
->>
->> Reed?
->>
->> Thanks&&  Regards, Jan.
-> It's likely the Mozilla security team hasn't assigned a CVE. The issue
-> only affects applications initializing NSS with NSS_NoDB_Init(). Usually
-> the application specifies the actual path to these files. In particular
-> Mozilla apps always specify (though some corner cases it may fall back
-> to NSS_NoDB_Init(). I think that's rare at this point because
-> NSS_NoDB_Init() does not provide any trust information, which all
-> Mozilla apps need.).
->
-> In general NSS applications on Linux should be initializing with
-> /etc/pki/nssdb.
->
-> bob
->
-> NOTE: the patch is in FIPS related code.  Elio, please get a 6.2 Bug
-> created for this ASAP. The patch is already upstream. Component is
-> nss-softokn.
-Done, https://bugzilla.redhat.com/show_bug.cgi?id=748524 and set various 
-flags.
-Will start back-porting the patch to our 3.12.9 softoken right away.
+On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
+> * [2011-04-05 08:43:29 -0400] Josh Bressers wrote:
+> 
+> >
+> >----- Original Message -----
+> >>On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
+> >>> Not adding Apple to any coordination list would be plain silly. They
+> >>> were far more active than most of the distributions.
+> >>
+> >>Yes. But why do they need to be aware, say, of glibc vulnerabilities
+> >>(ones that are in fact believed to be glibc-specific)?
+> >
+> >This is an excellent point. It's a hard problem to solve honestly. I guess
+> >the question really comes down to this. Do the disadvantages of one list
+> >outweigh the benefits? I'm not sure what the answer is. There probably
+> >isn't an "answer" though, just lots of opinions.
+> 
+> Just throwing this out there (I've read the thread but haven't
+> contributed at all yet).
+> 
+> A lot of userland stuff is shared between BSD and Linux, and probably
+> some other operating systems.  About the only things that differ between
+> a lot of these are the Linux kernel, and the *libc.  There is a lot of
+> cross-over with other stuff, which means there will likely be a lot of
+> cc'ing going on (which I imagine might be complicated due to encryption
+> requirements).
+> 
+> Where does the line get drawn?  If vendor A ships with exim, and another
+> with postfix, which one belongs on the "Linux list"?  Obviously
+> discussions of exim don't matter to the postfix shipper, and vice versa.
+> Pick any other software that has a competing open source alternative.
+> Does Debian not get on the list because they don't technically ship
+> firefox?
+> 
+> I think if the disqualifier to Apple is that they don't ship a Linux
+> kernel and glibc, then we're doing them (and ourselves) a disservice.
+> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+> here, just stating a fact).
+> 
+> I think it would be reasonable to s/Linux list/open source vendor list/,
+> like vendor-sec used to be.  Yes, Apple will see some glibc stuff and
+> some Linux kernel stuff.  So what?  They may also see some exim stuff
+> that doesn't apply to them, and (hopefully!) the Linux vendors may seem
+> some stuff that isn't applicable to them, but it is useful for the *BSD
+> vendors who would (hopefully!) be on the list and feel welcome enough to
+> use it.  Who knows, it might even be beneficial to have a glibc issue
+> and someone from Apple or FreeBSD or whatever pipes up and indicates
+> that the BSD libc once had a similar problem and tells us how they fixed
+> it.
+> 
+> I think getting hung up on "Linux vendors only" and "BSD vendors can
+> have their own list" and we end up cross-posting 90% of the issues is
+> going to be an exercise in frustration.
+> 
+> Either that, or we start to work more closely with a *CERT and deal with
+> their process for passing along information to other vendors for
+> userland things that are shared; no offence to oCERT or anyone else, but
+> that seems like more of a headache than just letting
+> Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+> 
+> Just my $0.02.
+> 
 
-Elio
->
-> bob
->> -- 
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
->> On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
->>> Hello Josh, Steve, vendors,
->>>
->>> a security flaw was found in the way nss, the Network Security
->>> Services (NSS) set of libraries, performed their initialization (the
->>> file path for "pkcs11.txt" configuration file was constructed
->>> incorrectly). When that configuration file was loaded from remote WebDAV
->>> or Samba CIFS share, it could lead to arbitrary security module
->>> load, potentially leading to execution of arbitrary code (execution of
->>> code from untrusted security module).
->>>
->>> Upstream bug report:
->>> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
->>>
->>> Other references:
->>> [2] https://secunia.com/advisories/46557/
->>> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
->>> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
->>> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
->>>
->>> Could you allocate a CVE id for this? (as it looks there isn't one
->>> for this deficiency yet)
->>>
->>> Thank you&&  Regards, Jan.
->>> -- 
->>> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+None taken :)
 
+Some random reasons about why we value coordination over a "catch all" list
+(which was considered at oCERT beginning):
+
+- some vendors/projects got annoyed by reports not relevant to them, in the
+  long run it tends to lower the "attention level" when some matters are
+  really meaningful to them, that's why having a trusted purposed channel
+  often worked
+
+- it is not feasible to have every single OSS project on such a list and at
+  some point there is the need to address individual maintainers in a timely
+  fashion along with the affected parties, using a list + cc for that often
+  doesn't work as the communication level greatly differs most of the times
+  (unfortunately).
+
+  We found out the hard way that the usual level of technicality that was
+  happening with most vendors or lists like vendor-sec was perceived as
+  "threatening" or absolutely obscure to some developers/maintainers.
+
+I am not suggesting that coordination ala oCERT is the only true way of
+course, and I am not trying to pitch our project here, just wanted to give
+some elements for the discussion.
+
+I personally think that we need a blend of both approaches in the long term,
+it is just a matter of using the right tool for the job.
+
+Cheers
+
+> -- 
+> Vincent Danen / Red Hat Security Response Team
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | Open Source Computer Emergency Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
