@@ -1,20 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/3
-Message-ID: <20110418171614.GA16021@inutil.org>
-Date: Mon, 18 Apr 2011 19:16:15 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/22
+Message-ID: <20110405152850.GA18354@openwall.com>
+Date: Tue, 5 Apr 2011 19:28:50 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mojolicious
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Apr 05, 2011 at 02:05:20PM +0200, Thomas Biege wrote:
+> pub   2048R/558EBF03 2010-10-29
+> uid                  Thomas Biege (SuSE Security-Team) <thomas@...ell.com>
+> uid                  Thomas Biege (SuSE Security-Team) <thomas@...e.de>
 
-Please assign a CVE ID for this Mojolicious issue:
+Added.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
-http://perlninja.posterous.com/sharks-in-the-water
-http://cpansearch.perl.org/src/KRAIH/Mojolicious-1.16/Changes
-https://github.com/kraih/mojo/issues/114
-
-Cheers,
-        Moritz
+Alexander
