@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/14
-Message-ID: <CABqVa3-YDpT4-BWCrt5Zo3qu4_o=XBhQn=5eWBM=zomUoFW-rg@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:15:42 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/5
+Message-ID: <20110406133016.GX1293@yuggoth.org>
+Date: Wed, 6 Apr 2011 13:30:24 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: hfs: add sanity check for file name length
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 20, 2011 at 11:04 PM, Eugene Teo <eugene@...hat.com> wrote:
-> https://lkml.org/lkml/2011/11/9/303
-> https://bugzilla.redhat.com/show_bug.cgi?id=755431
-> http://git.kernel.org/linus/bc5b8a9003132ae44559edd63a1623
->
-> On a corrupted file system the ->len field could be wrong leading to a
-> buffer overflow.
->
-> Thanks, Eugene
->
+On Tue, Apr 05, 2011 at 10:53:58AM -0600, Vincent Danen wrote:
+> * [2011-04-05 20:18:38 +0400] Solar Designer wrote:
+[...]
+> >I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+> >so we'd be forced to introduce a vouching system (well, maybe we'd be
+> >forced to do that for Linux distros as well...)
+> 
+> "etc" more or less meant the other *BSDs, but I was being lazy.  =)
+> Maybe just NetBSD there.
+[...]
 
-Please use CVE-2011-4330 for this issue.
+Probably worth pointing out, since I didn't see it mentioned
+elsewhere, that these distinctions are not so cut-and-dried as that.
+Debian, for example, is not only a GNU/Linux distribution but also a
+GNU/BSD distribution:
 
+http://www.debian.org/ports/kfreebsd-gnu/
+
+(...and a GNU/Hurd distribution, though perpetually short of release
+status, and it's not like there are likely enough of those to
+warrant a separate ML of this nature anyway.)
 -- 
-Kurt Seifried
-kurt@...fried.org
+{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
+WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
+MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
+ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
