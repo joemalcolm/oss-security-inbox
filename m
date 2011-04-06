@@ -1,25 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/3
-Message-ID: <20111106215755.GB29061@suse.de>
-Date: Sun, 6 Nov 2011 22:57:55 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/15
+Message-ID: <4D9CAE64.7040103@redhat.com>
+Date: Wed, 06 Apr 2011 20:18:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Jiri Popelka <jpopelka@...hat.com>
+Subject: Re: CVE Request -- dhcp: DoS (excessive CPU use) by opening an OMAPI connection
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
-> On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
-> > Are these duplicates:
-> > 
-> > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
-> > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
-> > 
-> > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+Jan Lieskovsky wrote:
 > 
-> This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
+> Hello Josh, Steve, vendors,
 > 
-> I am really sorry about duplicate CVEs. :(
+>   A security flaw was found in the way DHCP (Dynamic Host Configuration 
+> Protocol)
+> server processed remote connections when the dhcpd was configured to 
+> provide
+> Object Management API (OMAPI) capability. A remote attacker could use 
+> this flaw
+> to cause denial of service (excessive CPU use and dhcpd daemon 
+> unreachability).
+> 
+> References:
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=680298
+> [2] https://lists.isc.org/pipermail/dhcp-users/2011-February/012780.html
+> [3] https://lists.isc.org/pipermail/dhcp-users/2011-February/012781.html
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=666441
+> [5] http://www.mentby.com/Group/dhcp-users/omapi-not-working-in-420.html
+> 
+> Note: Though looks as minor / low severity issue, under proper 
+> configuration
+>       looks to be a way, how to get dhcpd completely unresponsive for 
+> further
+>       requests.
+> 
+> Could you allocate a CVE id for this? (though opened for discussion if this
+> being more to be a bug, than a real security issue).
 
-Did you mail the new cve-assign alias they have?
+The dhcpd(8) manual page:
+[6] http://linux.die.net/man/8/dhcpd
 
-Ciao, Marcus
+suggests it's possible to "The control object allows you to shut the server down."
+[the Control Object section], but it also states:
+
+"OMAPI clients connect to the server using TCP/IP, authenticate, and can then
+examine the server's current status and make changes to it."
+
+and
+
+"The DHCP server exports the following objects: lease, host, failover-state and group."
+
+so not sure, if any (unprivileged) OMAPI client could shut down the server.
+
+Hopefully Jiri / someone else more familiar with OMAPI feature could shed more
+light into this (if each OMAPI client is able to shut down the dhcpd server => just bug
+or just privileged / authenticated one => potential DoS).
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
