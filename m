@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/1
-Message-ID: <4E49C306.6000202@redhat.com>
-Date: Tue, 16 Aug 2011 09:08:22 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/2
+Message-ID: <4D9C2766.7050004@redhat.com>
+Date: Wed, 06 Apr 2011 16:42:14 +0800
 From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: CVE request -- kernel: perf: fix software event overflow
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: two issues in mpt2sas
 Content-Type: text/plain; charset=utf-8
 
-On 08/15/2011 09:43 PM, Petr Matousek wrote:
-> Hello Steve, vendors.
-> 
-> Description:
-> Under certain circumstances software event overflows go wrong and
-> deadlock. Avoid trying to delete a timer from the timer callback.
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=730706
-> https://lkml.org/lkml/2011/7/27/337 (reproducer)
-> https://lkml.org/lkml/2011/7/28/284 (fix)
-> 
-> Upstream fix:
-> a8b0ca17b80e92faab46ee7179ba9e99ccb61233 (much larger patch that
-> contains the hunk referenced above)
+On 04/06/2011 01:00 AM, Dan Rosenberg wrote:
+> "At two points in handling device ioctls via /dev/mpt2ctl,
+> user-supplied length values are used to copy data from userspace into
+> heap buffers without bounds checking, allowing controllable heap
+> corruption and subsequently privilege escalation.
 
-Use CVE-2011-2918.
+CVE-2011-1494
+
+> Additionally, user-supplied values are used to determine the size of a
+> copy_to_user() as well as the offset into the buffer to be read, with
+> no bounds checking, allowing users to read arbitrary kernel memory."
+> [1]
+
+CVE-2011-1495
+
+> These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
+> SAS 2.0).  While the kernel creates this device file root-root 660 by
+> default, I've seen it with more open permissions on live systems, so
+> perhaps there's some common use case that requires modifying these
+> default permissions.
+>
+> -Dan
+>
+> [1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
 
 Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
