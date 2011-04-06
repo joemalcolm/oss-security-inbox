@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/2
-Message-ID: <4DDB512A.5040301@redhat.com>
-Date: Tue, 24 May 2011 08:33:14 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Zend Framework -- SQL injection when using PDO_MySql
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/2
+Message-ID: <4D9C2766.7050004@redhat.com>
+Date: Wed, 06 Apr 2011 16:42:14 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: two issues in mpt2sas
 Content-Type: text/plain; charset=utf-8
 
+On 04/06/2011 01:00 AM, Dan Rosenberg wrote:
+> "At two points in handling device ioctls via /dev/mpt2ctl,
+> user-supplied length values are used to copy data from userspace into
+> heap buffers without bounds checking, allowing controllable heap
+> corruption and subsequently privilege escalation.
 
-Hello, Josh, Steve, vendors,
+CVE-2011-1494
 
-   a possibility of SQL injection flaw has been reported in Zend 
-Framework, when MySQL PDO driver was used:
-[1] http://framework.zend.com/security/advisory/ZF2011-02
+> Additionally, user-supplied values are used to determine the size of a
+> copy_to_user() as well as the offset into the buffer to be read, with
+> no bounds checking, allowing users to read arbitrary kernel memory."
+> [1]
 
-Could you allocate a CVE id for this?
+CVE-2011-1495
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
+> SAS 2.0).  While the kernel creates this device file root-root 660 by
+> default, I've seen it with more open permissions on live systems, so
+> perhaps there's some common use case that requires modifying these
+> default permissions.
+>
+> -Dan
+>
+> [1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
