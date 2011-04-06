@@ -1,37 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/2
-Message-ID: <20110724115108.GA23390@foo.fgeek.fi>
-Date: Sun, 24 Jul 2011 14:51:08 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/1
+Message-Id: <20110406175350.e4c07a53.michael.s.gilbert@gmail.com>
+Date: Wed, 6 Apr 2011 17:53:50 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, coley@...re.org, hanno@...eck.de
-Subject: Re: CVE request: silverstripe before 2.4.4
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 04, 2011 at 11:58:32AM -0500, Josh Bressers wrote:
-> ----- Original Message -----
-> > http://www.silverstripe.org/security-releases/
-> > 
-> > Silverstripe 2.4.4 notes:
-> > SQL information disclosure, SQL injection in Translatable extension,
-> > Cross Site Request Forgery in various CMS interfaces, XSS in controller
-> > action handling
-> > 
-> > (if someone is motivated one could also assign CVEs to all the old
-> > version issues)
-> > 
-> 
-> This one is way bigger than I can handle. I shall defer it to MITRE. It's
-> going to take a lot of work and CVE ids.
-> 
-> Thanks.
-> 
-> -- 
->     JB
+akuster wrote:
 
-Did this got responded? At least there is no replies in this thread:
+> 
+> 
+> On 04/06/2011 06:57 AM, Solar Designer wrote:
+> > On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
+> >> Please subscribe me to the new list. I was a vendor-sec subscriber for
+> >> MontaVista Software.
+> >>
+> >> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
+> >> uid Armin Kuster <akuster@...sta.com>
+> >> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
+> > 
+> > Looks like you forgot to make this public key available.  Please provide
+> > it to me and I'll subscribe you.
+> 
+> I hit one server, guess I need to hit them all. Please try again with
+> same key.
+> 
+> > 
+> > While we're at it, the MontaVista Software entry at:
+> > 
+> > http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
+> > 
+> > says: "The process for distribution of security advisories is currently
+> > under discussion."  Perhaps this has already been discussed and decided
+> > upon?  If so, please update the wiki page with specific link(s) to your
+> > security advisories, updates, relevant mailing list archive - or
+> > whatever you have.  
+> 
+> Our advisories are via a paid subscription service so they are not public.
+> 
+> Without this info, it is unclear whether you would
+> > be making timely intended use of the advance notifications or not.
+> 
+> Our customers require vulnerabilities to be addressed in a timely manner.
+> 
+> will revisit the wiki issue soon.
 
-http://seclists.org/oss-sec/2011/q1/23
+I'm not if sure anything has come of this request, but I hope closed
+vendors like this get rejected. Non-public advisories are anathema to
+the open source philosophy.  You have to ask the question: what is the
+point of their participation in an oss list if they don't intend to
+disclose anything?
 
-Best regards,
-Henri Salo
+Best wishes,
+Mike
