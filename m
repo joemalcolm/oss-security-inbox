@@ -1,52 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/17
-Message-ID: <20110303231601.GA32736@kroah.com>
-Date: Thu, 3 Mar 2011 15:16:01 -0800
-From: Greg KH <greg@...ah.com>
-To: Kees Cook <kees@...ntu.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/13
+Message-ID: <1487479828.415095.1302112073310.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 6 Apr 2011 13:47:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE for ruby on rails XSS fixes
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 03:09:55PM -0800, Kees Cook wrote:
-
-<good stuff snipped>
-
-> As I see it, the upstream Linux kernel certainly fixes most flaws
-> discovered, and almost gets to fix level 4 (there are so many variations
-> of the Linux kernel running on end-user's systems, I can't blame the
-> Linux kernel upstream for not offering a patch for every version the
-> majority of their end-users use). Where I am disappointed is in the
-> communication.
-
-Ok, that's fair enough, I will not disagree with that.
-
-> It's generally somewhere between communication style
-> 1 and 2. There is no central list of fixed flaws (style 3, see almost
-> every major upstream's website and append some variation "/security"
-> to the url, etc), and certainly no central list of fixes. There is
-> frequently no mention of the implication of a flaw in commits (style 2),
-> and nothing like style 4, 5, or 6 happening. The only place these things
-> happen are in each distro's bug trackers, or scattered in the Mitre CVE
-> links (which almost invalidates anything above fix level 2 since there is
-> no certain way to find a flaw's fix in an upstream stable kernel update).
+----- Original Message -----
+> Hi,
 > 
-> So yes, I'm disappointed in the upstream Linux kernel's security flaw
-> fix communications. And while I'm sure some people may not agree with me,
-> I know many do.
+> Can someone assign a CVE for the XSS issue described in
+> 
+> https://github.com/rails/rails/blob/38df020c95beca7e12f0188cb7e18f3c37789e20/actionpack/CHANGELOG
+> 
 
-Then, as I have always said, someone needs to step up and actually do
-this type of communication work.  I personally don't have the time to, I
-am swamped with just getting the stable updates out in a semi-timely
-fashion.  Digging through every patch in these releases and properly
-conveying the real, or percieved reason why they are needed, is a lot of
-thankless work.  Jon at lwn.net tried it for just one release, and we
-are averaging about one a week (total number of kernels released that
-is).  No one else has yet tried to do that, but if they will, I will be
-_glad_ to point my release notifications at that summary.
+Here is the changelog text:
 
-So in other words, help is gladly accepted :)
+*Rails 3.0.6 (April 5, 2011)
 
-thanks,
+* Fixed XSS vulnerability in `auto_link`.  `auto_link` no longer marks
+  input as html safe.  Please make sure that calls to auto_link() are
+  wrapped in a sanitize(), or a raw() depending on the type of input passed
+  to auto_link().
+  For example:
 
-greg k-h
+    <%= sanitize(auto_link(some_user_input)) %>
+
+  Thanks to Torben Schulz for reporting this.  The fix can be found here:
+  61ee3449674c591747db95f9b3472c5c3bd9e84d
+
+Use CVE-2011-1497
+
+Thanks.
+
+-- 
+    JB
