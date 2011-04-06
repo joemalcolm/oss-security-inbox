@@ -1,53 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/4
-Message-ID: <Pine.GSO.4.64.1109151042530.22571@faron.mitre.org>
-Date: Thu, 15 Sep 2011 10:43:57 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/12
+Message-ID: <452032790.415058.1302111849489.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 6 Apr 2011 13:44:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: tmux (debian specific)
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-1496
 
-Josh,
+Thanks.
 
-This actually requires two different CVEs because there are different 
-researchers for each one.
-
-- Steve
-
+-- 
+    JB
 
 
-
-
-
-
-
-On Thu, 15 Sep 2011, Jan Lieskovsky wrote:
-
-> Hello Josh, Steve, vendors,
->
->  multiple XSS flaws have been recently reported in the v3.4.4
-> (and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
->
-> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
->
-> 1) An XSS flaw was found in the way phpMyAdmin processed row content,
->   containing JavaScript code, after its inline editing and saving,
->
-> 2) It was found that phpMyAdmin did not properly sanitize the content
->   of db, table, and column names prior use of their values.
->
-> A remote attacker could use these flaws to conduct XSS attacks (execute
-> arbitrary HTML or web script) by tricking authenticated phpMyAdmin user into 
-> visiting of a specially-crafted URL.
->
-> References:
-> [2] http://secunia.com/advisories/45991/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
->
-> Could you allocate a CVE id for these?
->
-> Thank you && Regards, Jan.
+----- Original Message -----
+> Hey,
+> due to a patch that was introduced to our tmux package, tmux is not
+> properly
+> dropping group privileges anymore when invoked with -S (tmux is
+> installed
+> setgid).
+> 
+> Bug report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=620304
+> Can I get a CVE id for this?
+> 
+> Cheers
+> Nico
+> 
 > --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
+> 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
