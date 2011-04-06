@@ -1,58 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/11
-Message-ID: <652254890.179837.1305833444194.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 15:30:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/7
+Message-ID: <4D9C9419.3020908@mvista.com>
+Date: Wed, 06 Apr 2011 06:26:01 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+
+
+On 04/01/2011 08:03 AM, Josh Bressers wrote:
+> Hello everyone,
 > 
-> 1. ffmpeg/libav out of array write in AMV parsing
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
 > 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
-> http://seclists.org/bugtraq/2011/Apr/257
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
-
-Use CVE-2011-1931
-
-
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
 > 
-> 2. widelands directory traversal
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
 > 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
-> http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
-
-Use CVE-2011-1932
-
-
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 > 
-> 3. SQL injection in Jifty::DBI
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
 > 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
-> http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
-
-Use CVE-2011-1933
-
-
+> Thanks.
 > 
-> 4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
+Please subscribe me to the new list. I was a vendor-sec subscriber for
+MontaVista Software.
 
-Use CVE-2011-1934
-
-
-> 
-> 5. libpcap packet truncation
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
-> http://thread.gmane.org/gmane.network.tcpdump.devel/5018
-
-Use CVE-2011-1935
-
-Thanks.
-
--- 
-    JB
+pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
+uid Armin Kuster <akuster@...sta.com>
+Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
