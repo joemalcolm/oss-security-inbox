@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/9
-Message-ID: <1320251483.8441.27.camel@scapa>
-Date: Wed, 02 Nov 2011 17:31:23 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/16
+Message-ID: <4D9CA711.8090108@mvista.com>
+Date: Wed, 06 Apr 2011 07:46:57 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> > On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> >> Fixes a security issue where using ~/.Xauthority as a symlink would
-> >> cause LightDM to set the destination of the link to user ownership.
-> >> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> >>
-> >> Overview of changes in lightdm 1.0.6
-> >>
-> >>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> >
-> > Could a CVE be assigned for this?
-> >
-> > Regards,
-> Can you send me the link to this announcement so I can confirm it? Thanks.
+
+
+On 04/06/2011 06:57 AM, Solar Designer wrote:
+> On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
+>> Please subscribe me to the new list. I was a vendor-sec subscriber for
+>> MontaVista Software.
+>>
+>> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
+>> uid Armin Kuster <akuster@...sta.com>
+>> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
 > 
+> Looks like you forgot to make this public key available.  Please provide
+> it to me and I'll subscribe you.
 
-Here's the link to the mailing list mail:
-http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+I hit one server, guess I need to hit them all. Please try again with
+same key.
 
-Regards,
--- 
-Yves-Alexis
+> 
+> While we're at it, the MontaVista Software entry at:
+> 
+> http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
+> 
+> says: "The process for distribution of security advisories is currently
+> under discussion."  Perhaps this has already been discussed and decided
+> upon?  If so, please update the wiki page with specific link(s) to your
+> security advisories, updates, relevant mailing list archive - or
+> whatever you have.  
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Our advisories are via a paid subscription service so they are not public.
+
+Without this info, it is unclear whether you would
+> be making timely intended use of the advance notifications or not.
+
+Our customers require vulnerabilities to be addressed in a timely manner.
+
+will revisit the wiki issue soon.
+
+- Armin
+
