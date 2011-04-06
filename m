@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/6
-Message-ID: <4DA41D15.5020300@pre-sense.de>
-Date: Tue, 12 Apr 2011 11:36:21 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/9
+Message-ID: <20110406170403.GB23639@openwall.com>
+Date: Wed, 6 Apr 2011 21:04:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am 24.02.2011 02:25, schrieb Eugene Teo:
-> On 02/24/2011 03:59 AM, Josh Bressers wrote:
->> ----- Original Message -----
->>>
->>> The kernel automatically evaluates partition tables of storage devices.
->>> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
->>> a bug that allows to overflow the kernel heap. It may be possible to
->>> escalate privileges by exploiting this bug.
->>>
->>> (This bug is distinct from the LDM bug reported by Eugene Teo on
->>> 2011-02-23.)
->>>
->>> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
->>> CONFIG_LDM_PARTITION needs to be set.
->>>
->>
->> Can you point to a commit message or something else that is public? It's
->> not clear how this differs from Eugene's request.
-> 
-> As far as I can tell, it's not public yet. Timo will follow-up once his
-> patch is accepted.
+On Wed, Apr 06, 2011 at 09:33:21AM +0200, Milan Berger wrote:
+> I want to subscribe for Project-Mindstorm
 
-A patch is now available at
-http://www.spinics.net/lists/mm-commits/msg83181.html
+I went to http://www.project-mindstorm.net and I also did a Google
+search on "Project-Mindstorm".  You do not appear to be a Linux distro
+(nor any other distro, for that matter), so there's no reason for you to
+be on the list that is being setup.  (Besides, we're initially
+subscribing ex-vendor-sec members only, although this should change.)
 
-Best regards, Timo
+Alexander
