@@ -1,59 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/4
-Message-ID: <1298515589.25507.9.camel@apollo>
-Date: Wed, 23 Feb 2011 21:46:29 -0500
-From: Jon Oberheide <jon@...rheide.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/15
+Message-ID: <4D9CAE64.7040103@redhat.com>
+Date: Wed, 06 Apr 2011 20:18:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Jiri Popelka <jpopelka@...hat.com>
+Subject: Re: CVE Request -- dhcp: DoS (excessive CPU use) by opening an OMAPI connection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
-> On 02/24/2011 03:59 AM, Josh Bressers wrote:
-> > ----- Original Message -----
-> >>
-> >> The kernel automatically evaluates partition tables of storage devices.
-> >> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
-> >> a bug that allows to overflow the kernel heap. It may be possible to
-> >> escalate privileges by exploiting this bug.
-> >>
-> >> (This bug is distinct from the LDM bug reported by Eugene Teo on
-> >> 2011-02-23.)
-> >>
-> >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-> >> CONFIG_LDM_PARTITION needs to be set.
-> >>
-> >
-> > Can you point to a commit message or something else that is public? It's
-> > not clear how this differs from Eugene's request.
+Jan Lieskovsky wrote:
 > 
-> As far as I can tell, it's not public yet. Timo will follow-up once his 
-> patch is accepted.
+> Hello Josh, Steve, vendors,
+> 
+>   A security flaw was found in the way DHCP (Dynamic Host Configuration 
+> Protocol)
+> server processed remote connections when the dhcpd was configured to 
+> provide
+> Object Management API (OMAPI) capability. A remote attacker could use 
+> this flaw
+> to cause denial of service (excessive CPU use and dhcpd daemon 
+> unreachability).
+> 
+> References:
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=680298
+> [2] https://lists.isc.org/pipermail/dhcp-users/2011-February/012780.html
+> [3] https://lists.isc.org/pipermail/dhcp-users/2011-February/012781.html
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=666441
+> [5] http://www.mentby.com/Group/dhcp-users/omapi-not-working-in-420.html
+> 
+> Note: Though looks as minor / low severity issue, under proper 
+> configuration
+>       looks to be a way, how to get dhcpd completely unresponsive for 
+> further
+>       requests.
+> 
+> Could you allocate a CVE id for this? (though opened for discussion if this
+> being more to be a bug, than a real security issue).
 
-The advisory Timo posted mentioned ldm_frag_add() so it's public for all
-practical purposes at this point:
+The dhcpd(8) manual page:
+[6] http://linux.die.net/man/8/dhcpd
 
-static bool ldm_frag_add (const u8 *data, int size, struct list_head
-*frags)
-{
-...
-        f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
-        if (!f) {
-                ldm_crit ("Out of memory.");
-                return false;
-        }
-...
-        memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
-size);
-        return true;
-}
+suggests it's possible to "The control object allows you to shut the server down."
+[the Control Object section], but it also states:
 
-Regards,
-Jon Oberheide
+"OMAPI clients connect to the server using TCP/IP, authenticate, and can then
+examine the server's current status and make changes to it."
 
--- 
-Jon Oberheide <jon@...rheide.org>
-GnuPG Key: 1024D/F47C17FE
-Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+and
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+"The DHCP server exports the following objects: lease, host, failover-state and group."
+
+so not sure, if any (unprivileged) OMAPI client could shut down the server.
+
+Hopefully Jiri / someone else more familiar with OMAPI feature could shed more
+light into this (if each OMAPI client is able to shut down the dhcpd server => just bug
+or just privileged / authenticated one => potential DoS).
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
