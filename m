@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/25
-Message-ID: <20110403225754.GB10158@openwall.com>
-Date: Mon, 4 Apr 2011 02:57:54 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/8
+Message-ID: <20110406165749.GA23639@openwall.com>
+Date: Wed, 6 Apr 2011 20:57:49 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 10:13:05PM -0400, Mike O'Connor wrote:
-> I use my personal address rather than my work address for handling
-> vendor security matters because:
+On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
+> Please subscribe me to the new list. I was a vendor-sec subscriber for
+> MontaVista Software.
+> 
+> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
+> uid Armin Kuster <akuster@...sta.com>
+> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
 
-Thank you for explaining this in here.
+Looks like you forgot to make this public key available.  Please provide
+it to me and I'll subscribe you.
 
-> The vetting should be about more than email domains.  There should be
-> periodic maintenance of who's on the list to cull out those who aren't
-> involved.  Marcus did that to some degree with the vendor-sec of old.
+While we're at it, the MontaVista Software entry at:
 
-Right.
+http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
 
-> I think the biggest problems there were the exploders and the lack of
-> encryption,
+says: "The process for distribution of security advisories is currently
+under discussion."  Perhaps this has already been discussed and decided
+upon?  If so, please update the wiki page with specific link(s) to your
+security advisories, updates, relevant mailing list archive - or
+whatever you have.  Without this info, it is unclear whether you would
+be making timely intended use of the advance notifications or not.
 
-Maybe (re: "biggest").
-
-> and both of those are being addressed with this new list
-> as I understand things.
-
-Yes, they are.
-
-> I think that having a couple lists, one for "tactical" issues (e.g.
-> embargoes and CVE assignment) and another for "strategic" discussions
-> (e.g. "how to deal with vagaries in gcc vs. C standards with general
-> security impact") may be appropriate.  I'm part of another security
-> community which has such a notion, and it seems to help in keeping
-> things focused, FWIW.
-
-It appears that this is what we will have, but I am starting with one
-list that is more obviously needed (alternative to CC lists).
-
-Your specific example re: "how to deal with vagaries in gcc vs. C
-standards with general security impact" would be best discussed on
-oss-security (that is, on a public list), though.  It does not benefit
-from a short embargo, and long embargoes are inappropriate.
+Thanks,
 
 Alexander
