@@ -1,45 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/1
-Message-ID: <CAAsmaPZoaGNmQgcnNsVV6ZhZMK-oPp6Udxm57gz_Zub-eXKCUw@mail.gmail.com>
-Date: Thu, 21 Jul 2011 10:25:07 -0500
-From: Tim Zingelman <tez@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/7
+Message-ID: <4D9C9419.3020908@mvista.com>
+Date: Wed, 06 Apr 2011 06:26:01 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 9:55 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
->> Do you think we should combine the entries, or just make sure they
->> both contain all the information?
->
-> Please combine them.
 
-Done.  I kept the old one, but added a mention of it's existence in
-the regular NetBSD entry.
 
->> p.s. I at least would be very much in support of a bsd distro's
->> restricted security mailing list if you were to create one.
->
-> Sounds good.  Is anyone else interested in that as well?  Also, not
-> being involved with a *BSD, perhaps I should not be on that list, but
-> this brings up the issue of resolving administrative issues (e.g., not
-> being on the list I would not notice spam getting through to it).
+On 04/01/2011 08:03 AM, Josh Bressers wrote:
+> Hello everyone,
+> 
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+> 
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
+> 
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+> 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+> 
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+> 
+> Thanks.
+> 
+Please subscribe me to the new list. I was a vendor-sec subscriber for
+MontaVista Software.
 
-I'm afraid I don't know about interest.  I had hoped others would have
-jumped in earlier... but they have not...
-
-In the end did the opensolaris based distributions get into the closed
-linux list?  If not, I wonder if a list for everyone who
-repackages/distributes free/open source software (other than linux
-distro's) would make more sense than a BSD specific one?
-
-As far as you being on the list... I at least have no problem with it.
- In fact I would be surprised to find much if anything on such a list
-that was not also on the linux list.
-(My personal preference would be to have the BSD folks on the linux
-list and trust us to just ignore the kernel issues that are not
-relevant to us :)
-
-Thanks for all your work to provide good communication options!
-
- - Tim
+pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
+uid Armin Kuster <akuster@...sta.com>
+Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
