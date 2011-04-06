@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/1
-Message-ID: <4E12725C.2000100@redhat.com>
-Date: Tue, 05 Jul 2011 10:09:32 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/4
+Message-ID: <20110406093321.13e480ef@0xC0FF33>
+Date: Wed, 6 Apr 2011 09:33:21 +0200
+From: Milan Berger <m.berger@...ject-mindstorm.net>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: vsftpd download backdoored
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 07/05/2011 01:25 AM, Solar Designer wrote:
-> On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
->> IIRC for such backdoored downloads CVE IDs were assigned in the past
->> to properly track the status of distributions providing the affected 
->> piece of code.
-> 
-> I suspect that no distributions provide the affected code this time.
-> So if affected distributions is the only reason for CVE ID assignment in
-> this case, it might make sense to postpone CVE ID allocation until we
-> learn of an affected distribution (which we probably won't).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I did not verify.
+Hello,
 
-(09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
-http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
-15th -> July 3rd (via mc)
+I want to subscribe for Project-Mindstorm
+Please add:
 
-Eugene
+pub   1024D/E1EFD422 2010-01-18
+uid   Milan Berger <m.berger@...ject-mindstorm.net>
+sub   2048g/A7C4369B 2010-01-18
+
+
+
+
+- -- 
+Kind Regards
+
+Milan Berger
+Project-Mindstorm Technical Engineer
+
+- --
+project-mindstorm.net
+Fruehlingstrasse 4 
+90537 Feucht
+Germany
+
+Mob.: +49 176 22 98 76 02
+
+http://www.androcom.net
+http://www.project-mindstorm.net
+
+twitter: http://twitter.com/twit4c
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+
+iEYEARECAAYFAk2cF0kACgkQUKNzQuHv1CIP6wCgiQvRKZzmbHkcMHwxlwuwOgNf
+KwcAoJj4pKtwiI8HA+8nAZR3atEl2pFx
+=eZJZ
+-----END PGP SIGNATURE-----
