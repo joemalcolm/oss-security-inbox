@@ -1,51 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/12
-Message-ID: <52972005.217119.1314043426149.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 16:03:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/3
+Message-ID: <20110406094738.GA3124@suse.de>
+Date: Wed, 6 Apr 2011 11:47:38 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Mühlenhoff <jmm@...til.org>, coley <coley@...re.org>
-Subject: Re: CVE request: Pidgin crash
+Subject: CVE for ruby on rails XSS fixes
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+Can someone assign a CVE for the XSS issue described in
 
------ Original Message -----
-> 2011/8/22 Moritz Mühlenhoff <jmm@...til.org>:
-> > On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
-> >> Hi Mark,
-> >>
-> >> >Hi! Would it be possible to issue a CVE for a new crash in Pidgin?
-> >>
-> >> >http://pidgin.im/news/security/?id=53
-> >>
-> >> Please use CVE-2011-2942 for this issue.
-> >>
-> >> Also looking at http://pidgin.im/news/security it seems two other
-> >> security issues were also fixed in 2.10.0, do you want CVEs to be
-> >> assigned for them as well?
-> >
-> > Please do. Since they're published in the form of upstream advisories
-> > we'd like to properly track them in the Debian Security Tracker.
-> 
-> That's fine by me. As an upstream developer I don't feel like I have a
-> strong incentive to obtain a CVE. But if it's helpful to packagers, than
-> sure.
-> 
-> The two issues in question are discussed here:
-> http://pidgin.im/news/security/?id=54
+https://github.com/rails/rails/blob/38df020c95beca7e12f0188cb7e18f3c37789e20/actionpack/CHANGELOG
 
-This is a MSN crash. Use CVE-2011-3184
+?
+thx,
+-s
 
-
-> http://pidgin.im/news/security/?id=55
-> 
-> The second one only affects Pidgin on Microsoft Windows.
-> 
-
-Use CVE-2011-3185 for this.
-
-Thanks.
 
 -- 
-    JB
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
