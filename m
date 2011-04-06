@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/2
-Message-ID: <1315116323.9806.72@d.hx.id.au>
-Date: Sun, 04 Sep 2011 16:05:20 +1000
-From: David Hicks <d@...id.au>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/17
+Message-ID: <4D9CC951.5000000@gentoo.org>
+Date: Wed, 06 Apr 2011 22:13:05 +0200
+From: Stefan Behte <craig@...too.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
-> Request #2: LFI and XSS via bug_actiongroup_ext_page.php
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I don't think my earlier message conveyed the severity of this bug well
-enough.
+Hi,
 
-MantisBT allows users to upload attachments to bug reports. These
-attachments are commonly stored on the disk in an 'attachments'
-directory that should be stored outside the web root (but are still
-accessible to MantisBT for retrieval).
+please add me as gentoo linux security contact:
 
-This LFI vulnerbility therefore allows arbitrary remote code execution
-on a target server (as the web user ID). This level of access could be
-used to connect to the MantisBT database and access files and
-configuration of other web applications operating under the same uid/gid
-as the MantisBT installation.
+pub  1024D/E28C7BB4 2009-01-26 Stefan Behte <craig@...too.org>
+Fingerprint: 0F01 31A6 BD64 8C4C A187 6253 BA27 33A7 E28C 7BB4
 
-For example, this LFI vulnerability may allow an attacker to call:
-require_once('../var/www/example.com/data/mantisbt/attachments/123456-malicious_attachment.php')
+Best regards,
 
-Note that as per the earlier notice, some users (such as those using
-nginx) may not be impacted at all.
+Stefan Behte
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-release-1.2.8 has been tagged at
-https://github.com/mantisbt/mantisbt/tree/release-1.2.8 and should be
-packaged and distributed via usual channels shortly. Distributors and
-users are advised not to wait - patch ASAP or put workarounds in place
-such as disallowing attachment uploads ($g_allow_file_upload = OFF in
-config_inc.php) if you're using $g_file_upload_method = DISK.
-
-Thanks,
-
-David Hicks
-MantisBT Developer
-mantisbt.org, #mantishelp irc.freenode.net
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iEYEARECAAYFAk2cyVEACgkQuiczp+KMe7TmjgCdFMjxRyX6g0nCc5Gyitl3Oa2W
+7FYAn2qVgTkYhiZiWkrDdYPZWnR55/oF
+=hmea
+-----END PGP SIGNATURE-----
