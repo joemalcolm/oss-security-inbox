@@ -1,17 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/2
-Message-ID: <Pine.GSO.4.64.1101101924100.8774@faron.mitre.org>
-Date: Mon, 10 Jan 2011 19:27:28 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/9
+Message-ID: <20110406170403.GB23639@openwall.com>
+Date: Wed, 6 Apr 2011 21:04:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Apr 06, 2011 at 09:33:21AM +0200, Milan Berger wrote:
+> I want to subscribe for Project-Mindstorm
 
-Since this problem stems from a single codebase, strtod.c, so it gets a 
-single CVE identifier (already assigned CVE-2010-4645).  The CVE 
-description will "blame" strtod.c and mention PHP, and any other 
-high-profile software that is discovered to use the same vulnerable, 
-shared code.
+I went to http://www.project-mindstorm.net and I also did a Google
+search on "Project-Mindstorm".  You do not appear to be a Linux distro
+(nor any other distro, for that matter), so there's no reason for you to
+be on the list that is being setup.  (Besides, we're initially
+subscribing ex-vendor-sec members only, although this should change.)
 
-- Steve
+Alexander
