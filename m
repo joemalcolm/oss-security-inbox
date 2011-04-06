@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/9
-Message-ID: <4E8495EA.4010803@redhat.com>
-Date: Thu, 29 Sep 2011 17:59:38 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/10
+Message-ID: <4D9C9E63.5060007@redhat.com>
+Date: Wed, 06 Apr 2011 19:09:55 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Plone Security Team <security@...ne.org>
-Subject: CVE Request -- Zope/Plone -- Unspecified vulnerability in Zope v2.12.x and Zope v2.13.x allowing arbitrary code execution
+CC: oss-security <oss-security@...ts.openwall.com>, Jiri Popelka <jpopelka@...hat.com>
+Subject: CVE Request -- dhcp: DoS (excessive CPU use) by opening an OMAPI connection
 Content-Type: text/plain; charset=utf-8
+
 
 Hello Josh, Steve, vendors,
 
-   Plone upstream has published a pre-announcement about a security
-flaw, present in Zope v2.12.x and Zope v2.13.x, which could allow
-execution of arbitrary code by anonymous users. An authenticated
-attacker could provide a specially-crafted web page, which once
-visited by an unsuspecting Zope user would lead to arbitrary commands
-execution with the privileges of the Zope/Plone service.
+   A security flaw was found in the way DHCP (Dynamic Host Configuration Protocol)
+server processed remote connections when the dhcpd was configured to provide
+Object Management API (OMAPI) capability. A remote attacker could use this flaw
+to cause denial of service (excessive CPU use and dhcpd daemon unreachability).
 
 References:
-[1] http://plone.org/products/plone/security/advisories/20110928
-[2] http://secunia.com/advisories/46221/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=742297
+[1] https://bugzilla.novell.com/show_bug.cgi?id=680298
+[2] https://lists.isc.org/pipermail/dhcp-users/2011-February/012780.html
+[3] https://lists.isc.org/pipermail/dhcp-users/2011-February/012781.html
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=666441
+[5] http://www.mentby.com/Group/dhcp-users/omapi-not-working-in-420.html
 
-Note: The vendor announced the final version of the advisory and
-       the patch to be available at 2011-10-04 15:00 UTC at the
-       following location:
-       [4] http://plone.org/products/plone/security/advisories/20110928
+Note: Though looks as minor / low severity issue, under proper configuration
+       looks to be a way, how to get dhcpd completely unresponsive for further
+       requests.
 
-Could you allocate a CVE id for this?
+Could you allocate a CVE id for this? (though opened for discussion if this
+being more to be a bug, than a real security issue).
 
-Thank you && Regards, Jan.
+Thanks && Regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
+
