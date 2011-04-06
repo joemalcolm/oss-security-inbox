@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/1
-Message-ID: <20110924074749.GA17242@foo.fgeek.fi>
-Date: Sat, 24 Sep 2011 10:47:49 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/16
+Message-ID: <4D9CA711.8090108@mvista.com>
+Date: Wed, 06 Apr 2011 07:46:57 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, coley@...re.org, jmm@...til.org
-Subject: Re: CVE-request: clamav floating point exception in OLE2 scanner DoS
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 04, 2011 at 09:59:03AM +0300, Henri Salo wrote:
-> Can I get CVE-2007-* identifier for ScanOLE2 issue? RFC2397-issue is CVE-2007-4510. I don't know if there are CVEs for other fixed issues, but I will try to find out.
-> 
-> """
-> clamav (0.91.2-1) unstable; urgency=low
-> 
->   * New upstream version
->     - fix call to tolower() which led to a crash in libclamav
->     - fix possible NULL dereference, e.g. when parsing email with RFC2397
->       URI
->     - fix floating point exception when using ScanOLE2
->     - fix possible NULL dereference in rtf.c
-> 
->  -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
-> """
-> 
-> Related information:
-> - Temporary ID: http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
-> - http://www.debian.org/security/2007/dsa-1366
 
-Never got assigned. Is it possible to get 2007 ID for this?
 
-Best regards,
-Henri Salo
+On 04/06/2011 06:57 AM, Solar Designer wrote:
+> On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
+>> Please subscribe me to the new list. I was a vendor-sec subscriber for
+>> MontaVista Software.
+>>
+>> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
+>> uid Armin Kuster <akuster@...sta.com>
+>> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
+> 
+> Looks like you forgot to make this public key available.  Please provide
+> it to me and I'll subscribe you.
+
+I hit one server, guess I need to hit them all. Please try again with
+same key.
+
+> 
+> While we're at it, the MontaVista Software entry at:
+> 
+> http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
+> 
+> says: "The process for distribution of security advisories is currently
+> under discussion."  Perhaps this has already been discussed and decided
+> upon?  If so, please update the wiki page with specific link(s) to your
+> security advisories, updates, relevant mailing list archive - or
+> whatever you have.  
+
+Our advisories are via a paid subscription service so they are not public.
+
+Without this info, it is unclear whether you would
+> be making timely intended use of the advance notifications or not.
+
+Our customers require vulnerabilities to be addressed in a timely manner.
+
+will revisit the wiki issue soon.
+
+- Armin
+
