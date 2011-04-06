@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/2
-Message-ID: <20110924135634.GQ1502@redhat.com>
-Date: Sat, 24 Sep 2011 07:56:34 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/3
+Message-ID: <20110406094738.GA3124@suse.de>
+Date: Wed, 6 Apr 2011 11:47:38 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: security@....net
-Subject: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+Subject: CVE for ruby on rails XSS fixes
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
-function worked, and as a result it could allow for remote arbitrary
-code execution if certain specific conditions are met (the blog post
-referenced below has a good writeup of the flaw).
+Hi,
 
-http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
-https://bugs.php.net/bug.php?id=55475
-https://bugzilla.redhat.com/show_bug.cgi?id=741020
+Can someone assign a CVE for the XSS issue described in
 
-It looks like this is the fix:
+https://github.com/rails/rails/blob/38df020c95beca7e12f0188cb7e18f3c37789e20/actionpack/CHANGELOG
 
-http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+?
+thx,
+-s
 
-Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
