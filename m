@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/42
-Message-ID: <20110404183229.GA14209@openwall.com>
-Date: Mon, 4 Apr 2011 22:32:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/4
+Message-ID: <1334634401.439720.1302196350623.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 7 Apr 2011 13:12:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: consolekit security flaw heads up
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 03:56:15PM +0200, Marcus Meissner wrote:
-> On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
-> > Benji's trolling does raise a couple real issues.  The private keys and
-> > passphrases of those responding here have now become highly lucrative
-> > targets for attackers.  Hence, everyone on this new list needs to use
-> > good practices to keep their keys, hard drives, and computers safe.
-> > There should probably be some common guidelines for key safety for all
-> > participants.
-> 
-> So would be my work mailbox in previous times.
-> 
-> I guess you are overestimating the value of the information that could
-> be possibly gained.
+I've assigned this CVE-2010-4664.
 
-Yes, I think folks are overestimating the value of the information that
-was on vendor-sec, and I am going to try to reduce that value even
-further for the new Linux distros list (such as by pushing discussions
-on non-medium severity issues elsewhere, and by limiting the embargo
-periods).  I think vendor-sec was primarily a target of attacks as a
-challenge, not so much for the value of the information that it actually
-carried.
+It's not terribly serious. The short story is that local users have some
+special treatment with consolekit, and it's easy to become a "local user".
 
-Alexander
+https://bugzilla.redhat.com/show_bug.cgi?id=585952
+https://bugzilla.redhat.com/show_bug.cgi?id=600455
+https://bugs.freedesktop.org/show_bug.cgi?id=28377
+
+The upstream bug has a patch.
+
+Thanks.
+
+-- 
+    JB
