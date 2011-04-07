@@ -1,106 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/15
-Message-ID: <4D87CF23.3010709@xiscosoft.es>
-Date: Mon, 21 Mar 2011 23:20:19 +0100
-From: klondike <klondike@...cosoft.es>
-To: oss-security@...ts.openwall.com
-Subject: Security advisory: local DOS attack affecting non updated PaX patched kernels.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/5
+Message-ID: <20110407173728.GA3934@redhat.com>
+Date: Thu, 7 Apr 2011 11:37:29 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com, file@...gw.com
+Cc: christos@...las.com
+Subject: Re: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
-Linux Security Advisory
-=======================
+* [2011-03-21 23:16:15 -0600] Raphael Geissert wrote:
 
-Discoverer: Francisco Blas Izquierdo Riera (klondike)
-Kudos: The PaX Team for his help tracking and fixing the issue.
-Description: Infinite loop when looking for free memory space when doing an
-             mmap after a grows down mmap in PaX patched kernels.
-CVE-id: A CVE id was requested to MITRE one day before exposing this
-advisory,
-        we are not Microsoft, and we can't afford waiting one more month
-on an
-        exploitable issue that has been out there for so long.
-Latest version: the latest version of this Advisory will be on
-                http://klondike.xiscosoft.es/security/lsa1.txt
+>Hi,
+>
+>>From file's 5.05 changelog[1] it seems like some security-relevant changes were
+>made, but I'm unable to find further information. I saw a git repository being
+>mentioned in a message but I can't find it either.
+>
+>Can anyone please shed some light to the security-related changes?
+>
+>I would like to encourage developers to communicate such kind of issues openly
+>in this list, as it helps getting them fixed in distributions.
+>
+>Thanks in advance.
+>
+>[1]http://mx.gw.com/pipermail/file/2011/000690.html
 
-Abstract
---------
-We have discovered a locally exploitable DOS vulnerability which can be
-triggered by programs doing an mmap after a MAP_GROWSDOWN mmap.
-
-The problem is triggered by a bad bounds check in
-arch_get_unmapped_area_topdown
-that will make the loop to run forever without releasing the VM semaphore
-eventually hanging up the whole system.
-
-Summing it up, this vulnerability somehow is like a Zombie it is slow but it
-will get you in the end, as said by blueness, since it will just make the VM
-system unusable and keep locking processes as they try to access it while
-wasting CPU in the infinite loop.
-
-Solved in
----------
-This has been solved in the latest set of PaX patches.
-
-Affected versions
------------------
-pax-linux-2.6.37.4-test14.patch
-pax-linux-2.6.38-test3.patch
-pax-linux-2.6.32.33-test79.patch
-
-And basically any one including the PaX Team new heap/stack gap check code
-(published on summer).
-
-Solution
---------
-Since the bug has been around for some time this is not actually made by
-most
-normal applications (the one triggering it and making us realize of the
-problem
-was pin http://www.pintool.org/) so, at most, this bug can be avoided
-disabling
-arbitrary code execution to untrusted users (as made by TPE for example).
-
-Also a kernel with full preemption will preempt the process and make the
-rest of
-the system work with increased load. Care must be taken, though, since
-killing
-the process won't make the infinite loop end (as the signal won't ever
-get to
-it).
-
-PoC
----
-A PoC will be released on an update to this advisory once enough time
-has passed
-for the patches to be installed by the sysadmins, this will be at least one
-week.
-
-Salutations
------------
-Salutations and Kudos go specially to the PaX Team for all his work in
-finding
-and making this problem and for the PoC.
-
-Salutations go too to Rubén González García, Julio Sahuquillo Borrás and Per
-Stenström as they are responsible of me using pin and detecting this issue.
-
-Salutations also go for all the people currently working with me in the
-Gentoo
-Hardened project and to all those in the project who made me use Gentoo
-Hardened. Also to Mr. X from daboweb since he was the initiator of
-everything :D
-
-Salutations also go for whats of the Spaheads team and to the people at
-Sofistic
-for encouraging me to be a security researcher.
-
-Also salutations to spender from Grsecurity for the excellent piece of
-software
-he did.
-
-Finally salutations to Juan Vicente Oltra Gutiérrez for teaching me why
-ethics
-were so important in hacking.
+Looks like there are a few issues here:
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
+     * Fix two potential buffer overruns in apprentice_list.
+
+https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
+
+
+2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
+     * Minor security fix to softmagic.c (don't use untrusted
+       string as printf format).
+
+https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+
+
+I have not looked at them in more depth to see how much of a problem they are,
+or when they were introduced (in order to know which versions are affected),
+etc.
+
+I'm cc'ing Christos to see if he can perhaps enlighten us.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
