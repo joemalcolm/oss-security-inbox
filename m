@@ -1,53 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/1
-Message-ID: <20110510071821.GA9917@suse.de>
-Date: Tue, 10 May 2011 09:18:21 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/8
+Message-ID: <20110407194624.GC3934@redhat.com>
+Date: Thu, 7 Apr 2011 13:46:25 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Christos Zoulas <christos@...las.com>
+Cc: oss-security@...ts.openwall.com, file@...gw.com
+Subject: Re: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
+* [2011-04-07 15:17:37 -0400] Christos Zoulas wrote:
 
-Hi,
+Thanks for the quick response, Christos!
 
-Is this really different than what was assigned CVE-2011-1577 to?
-See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
-on the OSS mail on April 12th which reads exactly the same.
+>On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
+>-- Subject: Re: [oss-security] Possible security fixes in 5.05?
+>
+>| Looks like there are a few issues here:
+>|
+>| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
+>|      * Fix two potential buffer overruns in apprentice_list.
+>|
+>| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
+>
+>This is an order of evaluation issue, that could read memory over the allocated
+>limit. The limit check is done after the read instead of before. The code
+>has not been present in any release.
 
-Sebastian
+Ok, so it was added post-5.04 and corrected prior to the 5.05 release.
+Thank you for clarifying.
 
-On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
-> 
-> 
-> ----- Original Message -----
-> > The kernel automatically evaluates partition tables of storage
-> > devices.
-> > The code for evaluating GUID partitions (in fs/partitions/efi.c)
-> > contains a bug that can cause a kernel heap overflow on certain
-> > corrupted GUID partition tables.
-> > 
-> > http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
-> > http://bugzilla.redhat.com/show_bug.cgi?id=703026
-> > 
-> 
-> Please use CVE-2011-1776
-> 
-> Thanks.
-> 
-> -- 
->     JB
+>| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
+>|      * Minor security fix to softmagic.c (don't use untrusted
+>|        string as printf format).
+>|
+>| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+>
+>The code is present in [5.00-5.04]. It should not be an issue because the desc
+>printf formats are checked during parsing. It is mostly to silence a compiler
+>warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
+>printf(ms->desc, argument) in a ton of other places.
+
+Ok, great.  Thank you for the explanation.
 
 -- 
-
---
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Vincent Danen / Red Hat Security Response Team 
