@@ -1,140 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/7
-Message-ID: <BANLkTinfax597+_E-RjOB_4dY304KPHpxA@mail.gmail.com>
-Date: Tue, 5 Apr 2011 09:52:10 +0100
-From: Benji <me@...ji.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/6
+Message-Id: <20110407191737.B31D25653E@rebar.astron.com>
+Date: Thu, 7 Apr 2011 15:17:37 -0400
+From: christos@...las.com (Christos Zoulas)
+To: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com,  file@...gw.com
+Subject: Re: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
->>What do you mean by: "a mailing list that is 'embargoed' when really it
->>shouldn't be"?  Does this mean that you're actually against the very
->>existence of such a list?  I think it is important to know your opinion
->>on the main issues when we consider your opinion on the detail.
+On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
+-- Subject: Re: [oss-security] Possible security fixes in 5.05?
 
-Fixing issues secretly is definitely a no-go in my book. It will and clearly
-has, created hostility between different developer groups and those that are
-allowed in and those that aren't.
+| Looks like there are a few issues here:
+| 
+| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
+|      * Fix two potential buffer overruns in apprentice_list.
+| 
+| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
 
->>However, my proposal, which I am going to try to enforce, is to only
->>discuss medium-severity issues on this new list.  I think that an
->>embargo period of 1-2 days does not make sense for those; if that's all
->>we can afford, we can as well make them public right away.
+This is an order of evaluation issue, that could read memory over the allocated
+limit. The limit check is done after the read instead of before. The code
+has not been present in any release.
 
-So.... if this list isnt for high-severity issues what is the point of it?
-Why not use OSS-Sec. I thought the only way this el8 mailing list was even
-justified was the fact that the vulnerabilities were mission-critical and
-the POCs for these vulnerabilities would potentially lead to throwing us
-back into the ice-ages.
+| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
+|      * Minor security fix to softmagic.c (don't use untrusted
+|        string as printf format).
+| 
+| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
 
-
->>That said, I agree that a closed list should be a last resort, to be
->>used whenever other options are determined to be less appropriate for a
->>particular security issue.  Unfortunately, this determination is usually
->>made by just one person (whoever brings the issue to the list), so it is
->>likely to sometimes be "wrong".
-
-So why are you using a last resort for 'medium-severity issues'?
-Currently, from what you've said, it seems like you're trying to, as some
-people apparently correctly feared, an elite mailing list where you can all
-boost your egos and, excuse the term for lack of a better one, 'circlejerk'.
+The code is present in [5.00-5.04]. It should not be an issue because the desc
+printf formats are checked during parsing. It is mostly to silence a compiler
+warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
+printf(ms->desc, argument) in a ton of other places.
 
 
->>BTW, most of those same e-mail addresses were already exposed to whoever
->>broke into the vendor-sec machine.
-
-Well pfft, if someone already has it we may aswell just give everything
-away!
-
-Question; now that vendor-sec has been compromised, I suppose we can expect
-a full public archive of all the emails?
-
-
-
-
-On Mon, Apr 4, 2011 at 7:54 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Mon, Apr 04, 2011 at 07:32:12AM +0100, Benji wrote:
-> > Can I not be part of the group that thinks a public signup system for a
-> > mailing list that previously had the mail server owned due to the fact it
-> > was secret (showing interest in possibly owning users now that emails
-> like
-> > mjo@...o.mi.org have been confirmed on the list) for a mailing list that
-> is
-> > 'embargoed' when really it shouldn't be.
->
-> What do you mean by: "a mailing list that is 'embargoed' when really it
-> shouldn't be"?  Does this mean that you're actually against the very
-> existence of such a list?  I think it is important to know your opinion
-> on the main issues when we consider your opinion on the detail.
->
-> > >>What is your opinion on making the list's archive public with a delay
-> (when  the corresponding security issues are already public)?
-> >
-> > It would be better. In my opinion, delay would be 1-2 days.
->
-> What use is a delay of 1-2 days for members of such a list?  I mean, it
-> is of some use for high severity issues where the vendors would need to
-> throw whatever resources they can at resolving the issues ASAP, at
-> expense of slowing down work on other tasks (including other security
-> related tasks) and likely arriving at and releasing non-final fixes
-> (more like workarounds).
->
-> However, my proposal, which I am going to try to enforce, is to only
-> discuss medium-severity issues on this new list.  I think that an
-> embargo period of 1-2 days does not make sense for those; if that's all
-> we can afford, we can as well make them public right away.
->
-> > Vendor-sec
-> > (alternatives) should be a last resort in publishing issues, other
-> projects
-> > don't get the same "privileges", and have to "make do" with oss-sec. If
-> you
-> > really need such help 'co-ordinating' and fixing things, maybe you should
-> > have a policy to, release advisory/info first, then have a
-> 'co-ordination'
-> > list.
->
-> No offense intended, but it sounds like you did not give the above much
-> thought, or maybe you did not explain it fully.
->
-> That said, I agree that a closed list should be a last resort, to be
-> used whenever other options are determined to be less appropriate for a
-> particular security issue.  Unfortunately, this determination is usually
-> made by just one person (whoever brings the issue to the list), so it is
-> likely to sometimes be "wrong".
->
-> > >>Do you really think anyone is gaining new information by discovering
-> > >>that, say, a member of the security team for a major distro will be on
-> > >>this mailing list?  Such information seems pretty obvious to me.
-> >
-> > Yes Dan, but now we have private email accounts as well (by people who
-> > apparently don't like to use vendor email addresses) that are also signed
-> up
-> > to this, allowing targeting and easy identification
->
-> Yes, we lost a security through obscurity layer here, which was
-> arguably nice to have.  I don't have strong feelings either way
-> (public subscriber info or not-right-away).
->
-> BTW, most of those same e-mail addresses were already exposed to whoever
-> broke into the vendor-sec machine.
->
-> > of probably less secure infrastructure.
->
-> My guess (based on partial knowledge) is that Mike's personal e-mail
-> infrastructure is actually more secure than his employer's.  You have a
-> valid point in general, though.
->
-> > Excuse my "trolling" if some of this has already been covered, I'm up
-> early
-> > (for me) and thus can be slightly unintelligible.
->
-> It's OK.  In fact, comments/criticism such as yours is one of the
-> reasons why we're handling this discussion in public.  This might enable
-> us to arrive at something slightly better "next time".
->
-> Alexander
->
-
+christos
