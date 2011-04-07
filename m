@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/1
-Message-ID: <20110924074749.GA17242@foo.fgeek.fi>
-Date: Sat, 24 Sep 2011 10:47:49 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, coley@...re.org, jmm@...til.org
-Subject: Re: CVE-request: clamav floating point exception in OLE2 scanner DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/8
+Message-ID: <20110407194624.GC3934@redhat.com>
+Date: Thu, 7 Apr 2011 13:46:25 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Christos Zoulas <christos@...las.com>
+Cc: oss-security@...ts.openwall.com, file@...gw.com
+Subject: Re: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 04, 2011 at 09:59:03AM +0300, Henri Salo wrote:
-> Can I get CVE-2007-* identifier for ScanOLE2 issue? RFC2397-issue is CVE-2007-4510. I don't know if there are CVEs for other fixed issues, but I will try to find out.
-> 
-> """
-> clamav (0.91.2-1) unstable; urgency=low
-> 
->   * New upstream version
->     - fix call to tolower() which led to a crash in libclamav
->     - fix possible NULL dereference, e.g. when parsing email with RFC2397
->       URI
->     - fix floating point exception when using ScanOLE2
->     - fix possible NULL dereference in rtf.c
-> 
->  -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
-> """
-> 
-> Related information:
-> - Temporary ID: http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
-> - http://www.debian.org/security/2007/dsa-1366
+* [2011-04-07 15:17:37 -0400] Christos Zoulas wrote:
 
-Never got assigned. Is it possible to get 2007 ID for this?
+Thanks for the quick response, Christos!
 
-Best regards,
-Henri Salo
+>On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
+>-- Subject: Re: [oss-security] Possible security fixes in 5.05?
+>
+>| Looks like there are a few issues here:
+>|
+>| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
+>|      * Fix two potential buffer overruns in apprentice_list.
+>|
+>| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
+>
+>This is an order of evaluation issue, that could read memory over the allocated
+>limit. The limit check is done after the read instead of before. The code
+>has not been present in any release.
+
+Ok, so it was added post-5.04 and corrected prior to the 5.05 release.
+Thank you for clarifying.
+
+>| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
+>|      * Minor security fix to softmagic.c (don't use untrusted
+>|        string as printf format).
+>|
+>| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+>
+>The code is present in [5.00-5.04]. It should not be an issue because the desc
+>printf formats are checked during parsing. It is mostly to silence a compiler
+>warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
+>printf(ms->desc, argument) in a ton of other places.
+
+Ok, great.  Thank you for the explanation.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
