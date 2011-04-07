@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/4
-Message-ID: <20110503172310.GF2160@redhat.com>
-Date: Tue, 3 May 2011 11:23:11 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/7
+Message-ID: <4D9E05DE.1010507@cert.org>
+Date: Thu, 07 Apr 2011 14:43:42 -0400
+From: Chad Dougherty <crd@...t.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: openssh
+CC: CERT Coordination Center <cert@...t.org>
+Subject: Apache HttpClient CVE request  [VU#153049]
 Content-Type: text/plain; charset=utf-8
 
->OpenSSH Security Advisory: portable-keysign-rand-helper.adv
->
->This document may be found at:
->http://www.openssh.com/txt/portable-keysign-rand-helper.adv
->
->1. Vulnerability
->
->        Portable OpenSSH's ssh-keysign utility may allow unauthorised
->        local access to host keys on platforms if ssh-rand-helper is
->        used.
+Hello all,
 
-Full details at the URL above.  I don't see a CVE name in the advisory;
-could one be assigned for this flaw?
+Per the Apache HttpClient 4.1.1 release notes:
 
-Note: it only affects 5.6 and 5.7.
+<http://www.apache.org/dist/httpcomponents/httpclient/RELEASE_NOTES-4.1.x.txt>
 
-Thanks.
+"The HttpClient 4.1.1 is a bug fix release that addresses a number of 
+issues reported since release 4.1, including one critical security issue 
+(HTTPCLIENT-1061). All users of HttpClient 4.0.x and 4.1 are strongly 
+encouraged to upgrade.
+[...]
+* [HTTPCLIENT-1061] Fixed critical bug causing Proxy-Authorization 
+header to be sent to the target host when tunneling requests through a 
+proxy server that requires authentication.
+   Contributed by Oleg Kalnichevski <olegk at apache.org>"
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+It doesn't look like this has received a CVE identifier and I didn't 
+want to duplicate anyone by assigning one from our pool.  Could someone 
+please assign one?
+
+Thanks...
+
+	-Chad
