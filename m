@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/11
-Message-ID: <20110729153634.GA11615@openwall.com>
-Date: Fri, 29 Jul 2011 19:36:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/3
+Message-ID: <4D9DD506.4090801@mvista.com>
+Date: Thu, 07 Apr 2011 05:15:18 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
+CC: Michael Gilbert <michael.s.gilbert@...il.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 29, 2011 at 05:28:44PM +0200, Tomas Hoger wrote:
-> Can you add me to the list?  I've been on the vendor-sec@ via Red Hat
-> expander.
+
+
+On 04/06/2011 11:53 AM, Michael Gilbert wrote:
+> akuster wrote:
+
+> I'm not if sure anything has come of this request, but I hope closed
+> vendors like this get rejected. Non-public advisories are anathema to
+> the open source philosophy.  You have to ask the question: what is the
+> point of their participation in an oss list if they don't intend to
+> disclose anything?
 > 
-> key id: 7BF4A180
-> fingerprint: E0B1 2194 B60C 4DD5 77DA  59A8 C0A3 D1DC 7BF4 A180
 
-Added.
+What do you mean by advisories? this list or a list a vendor publishes
+for what they are affected by and fixed.
 
-Alexander
+ -Armin
