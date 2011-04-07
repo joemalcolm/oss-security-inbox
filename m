@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/10
-Message-ID: <1309972769.3937.40.camel@mdlinux>
-Date: Wed, 06 Jul 2011 13:19:29 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: foo2zjs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/5
+Message-ID: <20110407173728.GA3934@redhat.com>
+Date: Thu, 7 Apr 2011 11:37:29 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com, file@...gw.com
+Cc: christos@...las.com
+Subject: Re: Possible security fixes in 5.05?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+* [2011-03-21 23:16:15 -0600] Raphael Geissert wrote:
 
-A temp file issue was reported in a distro-specific patch to foo2zjs.
-This probably only affects Debian/Ubuntu and derivatives.
+>Hi,
+>
+>>From file's 5.05 changelog[1] it seems like some security-relevant changes were
+>made, but I'm unable to find further information. I saw a git repository being
+>mentioned in a message but I can't find it either.
+>
+>Can anyone please shed some light to the security-related changes?
+>
+>I would like to encourage developers to communicate such kind of issues openly
+>in this list, as it helps getting them fixed in distributions.
+>
+>Thanks in advance.
+>
+>[1]http://mx.gw.com/pipermail/file/2011/000690.html
 
-The original bug report can be found here:
+Looks like there are a few issues here:
 
-https://bugs.launchpad.net/bugs/805370
 
-Could a CVE please be assigned to this?
+2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
+     * Fix two potential buffer overruns in apprentice_list.
 
-Thanks,
+https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
 
-Marc.
 
+2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
+     * Minor security fix to softmagic.c (don't use untrusted
+       string as printf format).
+
+https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+
+
+I have not looked at them in more depth to see how much of a problem they are,
+or when they were introduced (in order to know which versions are affected),
+etc.
+
+I'm cc'ing Christos to see if he can perhaps enlighten us.
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+Vincent Danen / Red Hat Security Response Team 
