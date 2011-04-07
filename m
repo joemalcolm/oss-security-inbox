@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/7
-Message-ID: <4E9DCFF3.8060804@redhat.com>
-Date: Tue, 18 Oct 2011 13:13:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/9
+Message-ID: <20110407211446.GE3934@redhat.com>
+Date: Thu, 7 Apr 2011 15:14:47 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: MySQL executable comment execution on MySQL slave server (from 2009)
+Subject: CVE request: tinyproxy runs as an open proxy when attempting to restrict allowable IP ranges
 Content-Type: text/plain; charset=utf-8
 
-This is an old one that slipped through in 2009:
+A bug in tinyproxy prior to 1.8.3 would turn it into an open proxy if it
+were defined with an "Allow" statement including an IP address range
+(i.e. 192.168.0.0/24).
 
-The executable comment capability in MySQL before 5.1.50 and 5.0.93
-can be used to execute arbitrary SQL commands as a privileged user.
-This occurs on MySQL servers configured as slaves in a MySQL
-replication environment where the slave server is running a newer
-version of MySQL than the server. The attacker would need the ability
-to add custom comments to a database on the MySQL server.
+Could a CVE be assigned to this?
 
-http://bugs.mysql.com/bug.php?id=49124
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-50.html
-http://dev.mysql.com/doc/refman/5.0/en/news-5-0-93.html
+References:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=621493
+https://banu.com/bugzilla/show_bug.cgi?id=90
+https://banu.com/cgit/tinyproxy/commit/?id=e8426f6662dc467bd1d827100481b95d9a4a23e4
+https://bugzilla.redhat.com/show_bug.cgi?id=694658
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
