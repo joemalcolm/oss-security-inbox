@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/3
-Message-ID: <20110615214906.GB25196@nekral.nekral.homelinux.net>
-Date: Wed, 15 Jun 2011 23:49:06 +0200
-From: Nicolas François <nicolas.francois@...traliens.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/9
+Message-ID: <20110407211446.GE3934@redhat.com>
+Date: Thu, 7 Apr 2011 15:14:47 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondřej Vašík <ovasik@...hat.com>
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+Subject: CVE request: tinyproxy runs as an open proxy when attempting to restrict allowable IP ranges
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+A bug in tinyproxy prior to 1.8.3 would turn it into an open proxy if it
+were defined with an "Allow" statement including an IP address range
+(i.e. 192.168.0.0/24).
 
-On Wed, Jun 15, 2011 at 09:49:20AM +0200, Ludwig Nussel wrote:
-> 
-> Is there actually any serious distro that doesn't use PAM though?
-> Those #ifdefs to keep old shadow compatibility makes the code rather
-> ugly and hard to read. Maybe it's time to just rip out the old code
-> and submit a clean, PAM only su to util-linux.
+Could a CVE be assigned to this?
 
-I still receive bug reports for shadow-utils for the non-PAM variant.
-(bug I don't remember if these bugs were reported for su).
-In my case, I would prefer to keep the su non-PAM variant as long as I
-would support non-PAM variants for the other tools (or as long as I
-support su).
+References:
 
-Regarding distros without PAM, there might be gentoo to be counted in the
-list (although PAM is enabled by default).
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=621493
+https://banu.com/bugzilla/show_bug.cgi?id=90
+https://banu.com/cgit/tinyproxy/commit/?id=e8426f6662dc467bd1d827100481b95d9a4a23e4
+https://bugzilla.redhat.com/show_bug.cgi?id=694658
 
-Kind Regards,
 -- 
-Nekral
+Vincent Danen / Red Hat Security Response Team 
