@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/31
-Message-ID: <20110403230836.GH10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:08:36 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/3
+Message-ID: <909072608.466818.1302293821374.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 8 Apr 2011 16:17:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: tinyproxy runs as an open proxy when attempting to restrict allowable IP ranges
 Content-Type: text/plain; charset=utf-8
 
-Charles,
+Please use CVE-2011-1499
 
-On Fri, Apr 01, 2011 at 12:30:17PM -0700, Charles Blas wrote:
-> Hello, please subscribe me also, was on vendor-sec.  Thanks!
-> Charles Blas, CISSP-ISSAP <cblas@....org>
+Thanks.
 
-Are you a security contact for a Linux distro, and for which one?
+-- 
+    JB
 
-How did you receive vendor-sec mail?
-
-Alexander
+----- Original Message -----
+> A bug in tinyproxy prior to 1.8.3 would turn it into an open proxy if
+> it
+> were defined with an "Allow" statement including an IP address range
+> (i.e. 192.168.0.0/24).
+> 
+> Could a CVE be assigned to this?
+> 
+> References:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=621493
+> https://banu.com/bugzilla/show_bug.cgi?id=90
+> https://banu.com/cgit/tinyproxy/commit/?id=e8426f6662dc467bd1d827100481b95d9a4a23e4
+> https://bugzilla.redhat.com/show_bug.cgi?id=694658
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
