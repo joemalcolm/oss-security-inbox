@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/4
-Message-ID: <20110307080645.GF26611@core.inversepath.com>
-Date: Mon, 7 Mar 2011 09:06:45 +0100
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/3
+Message-ID: <909072608.466818.1302293821374.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 8 Apr 2011 16:17:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: tinyproxy runs as an open proxy when attempting to restrict allowable IP ranges
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 07, 2011 at 11:08:31AM +0800, Eugene Teo wrote:
-> >On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
-> >>So I would like to open up a discussion with _all_ OSS Security folks present.
-> >>
-> >>- Is a closed vendor coordination like vendor-sec still needed at this time?
-> >
-> >Yes, there's some need for it.
-> 
-> I still see some value in having a closed mailing list for vendor
-> co-ordination.
-> 
+Please use CVE-2011-1499
 
-As suggested by Josh Bressers oCERT would be favourable to providing a system
-that would accept user submission and allow selection of security contacts
-from our existing member database as well as other verified contacts.
-
-As Josh pointed out we do this already (even if manually and not with a web
-selection thing or whatever) and I am open to explore ways to create more
-cooperation.
-
-We would also be willing to host and maintain a closed vendor-sec style
-mailing list like the previous one with the only condition for member list to
-be public (not necessarily the individual contact names but at least the
-entities represented).
-
-Cheers
+Thanks.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
+    JB
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+----- Original Message -----
+> A bug in tinyproxy prior to 1.8.3 would turn it into an open proxy if
+> it
+> were defined with an "Allow" statement including an IP address range
+> (i.e. 192.168.0.0/24).
+> 
+> Could a CVE be assigned to this?
+> 
+> References:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=621493
+> https://banu.com/bugzilla/show_bug.cgi?id=90
+> https://banu.com/cgit/tinyproxy/commit/?id=e8426f6662dc467bd1d827100481b95d9a4a23e4
+> https://bugzilla.redhat.com/show_bug.cgi?id=694658
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
