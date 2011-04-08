@@ -1,28 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/2
-Message-ID: <4E02E8E2.2040106@redhat.com>
-Date: Thu, 23 Jun 2011 15:18:58 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/1
+Message-ID: <1104080808070.9792@mjc.redhat.com>
+Date: Fri, 8 Apr 2011 08:08:31 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: NLM: Don't hang forever on NLM unlock requests
+cc: CERT Coordination Center <cert@...t.org>
+Subject: Re: Apache HttpClient CVE request  [VU#153049]
 Content-Type: text/plain; charset=utf-8
 
-NLM: Don't hang forever on NLM unlock requests
+> * [HTTPCLIENT-1061] Fixed critical bug causing Proxy-Authorization header to 
+> be sent to the target host when tunneling requests through a proxy server 
+> that requires authentication.
 
-If the NLM daemon is killed on the NFS server, we can currently end up
-hanging forever on an 'unlock' request, instead of aborting. Basically,
-if the rpcbind request fails, or the server keeps returning garbage, we
-really want to quit instead of retrying.
+Use CVE-2011-1498 for this issue
 
-    Tested-by: Vasily Averin <vvs@...ru>
-    Signed-off-by: Trond Myklebust <Trond.Myklebust@...app.com>
-    Cc: stable@...nel.org
-
-In English, it means that a local, unprivileged user could use the flock
-system call on a NFS share to cause a denial of service.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=709393
-http://git.kernel.org/linus/0b760113a3a155269a3fba93a409c640031dd68f
-
-Thanks, Eugene
+Thanks, Mark
