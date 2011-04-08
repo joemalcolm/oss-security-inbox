@@ -1,15 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/3
-Message-ID: <20110302211129.GA22334@nashi.nerv.fi>
-Date: Wed, 2 Mar 2011 23:11:29 +0200
-From: henri@...v.fi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/5
+Message-ID: <222873656.467105.1302295052562.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 8 Apr 2011 16:37:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: VLC bookmark buffer overflow
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests : Liferay 6.0.6
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue:
+Sorry for the delay, this one was bigger than a breadbox so I needed to
+find a block of time to handle it.
 
-"VLC media player is vulnerable to a buffer overflow attack when processing .mp3 file and its metadata. It fails to perform boundry checks when creating a bookmark from the malicious media file playing, resulting in a crash, overwriting ECX register. While the evil .mp3 is playing, you go Playback > Bookmarks > Manage bookmarks > Create."
+----- Original Message -----
+> Hello,
+> 
+> version 6.0.6 of Liferay correct 3 security vulnerabilities related to
+> the processing of XSLT content and 2 XSS.
+> 
+> The full 6.0.6 Changelog :
+> http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
+> 
+> Remote command execution :
+> http://issues.liferay.com/browse/LPS-14726
 
-References:
-http://osvdb.org/show/osvdb/62728/printer
+Use CVE-2011-1501
+
+
+> Arbitrary file disclosure via XXE :
+> http://issues.liferay.com/browse/LPS-14927
+
+Use CVE-2011-1502
+
+
+> XSL/XML file disclosure via file:// :
+> http://issues.liferay.com/browse/LPS-13762
+
+Use CVE-2011-1503
+
+
+> XSS vulnerability :
+> http://issues.liferay.com/browse/LPS-11506
+
+Use CVE-2011-1504
+
+
+> XSS in message boards :
+> http://issues.liferay.com/browse/LPS-12628
+
+Use CVE-2011-1570
+
+
+Thanks
+
+-- 
+    JB
