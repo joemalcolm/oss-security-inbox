@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/10/1
-Message-ID: <20110710060508.GB8303@openwall.com>
-Date: Sun, 10 Jul 2011 10:05:08 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/6
+Message-ID: <4D9F80DD.80509@mvista.com>
+Date: Fri, 08 Apr 2011 11:40:45 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 06, 2011 at 12:51:39PM +0200, Tomas Hoger wrote:
-> We have bugzilla (as usual, use CVE as a bug id), but not too useful
-> for other distros, as it only says we're not affected.  All EC crypto is
-> one of the "patent or otherwise encumbered" code pieces that are removed
-> and not compiled in.
+Can I get a status on this? (+, -, Ack, Nack)
+
+- Armin
+
+On 04/06/2011 06:57 AM, Solar Designer wrote:
+> On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
+>> Please subscribe me to the new list. I was a vendor-sec subscriber for
+>> MontaVista Software.
+>>
+>> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
+>> uid Armin Kuster <akuster@...sta.com>
+>> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
 > 
-> http://pkgs.fedoraproject.org/gitweb/?p=openssl.git;a=blob;f=hobble-openssl;h=a8be844f6ba7654b5738ae0e27e192a38797bd74;hb=master
-
-Oh, I did not realize this was the case.  Looks like we don't compile
-this stuff in either - we have "no-idea no-mdc2 no-rc5 no-ec no-ecdh
-no-ecdsa" on the ./Configure line.
-
-Thanks,
-
-Alexander
+> Looks like you forgot to make this public key available.  Please provide
+> it to me and I'll subscribe you.
+> 
+> While we're at it, the MontaVista Software entry at:
+> 
+> http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
+> 
+> says: "The process for distribution of security advisories is currently
+> under discussion."  Perhaps this has already been discussed and decided
+> upon?  If so, please update the wiki page with specific link(s) to your
+> security advisories, updates, relevant mailing list archive - or
+> whatever you have.  Without this info, it is unclear whether you would
+> be making timely intended use of the advance notifications or not.
+> 
+> Thanks,
+> 
+> Alexander
