@@ -1,36 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/10
-Message-ID: <4D9C9E63.5060007@redhat.com>
-Date: Wed, 06 Apr 2011 19:09:55 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Jiri Popelka <jpopelka@...hat.com>
-Subject: CVE Request -- dhcp: DoS (excessive CPU use) by opening an OMAPI connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/5
+Message-ID: <222873656.467105.1302295052562.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 8 Apr 2011 16:37:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests : Liferay 6.0.6
 Content-Type: text/plain; charset=utf-8
 
+Sorry for the delay, this one was bigger than a breadbox so I needed to
+find a block of time to handle it.
 
-Hello Josh, Steve, vendors,
+----- Original Message -----
+> Hello,
+> 
+> version 6.0.6 of Liferay correct 3 security vulnerabilities related to
+> the processing of XSLT content and 2 XSS.
+> 
+> The full 6.0.6 Changelog :
+> http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
+> 
+> Remote command execution :
+> http://issues.liferay.com/browse/LPS-14726
 
-   A security flaw was found in the way DHCP (Dynamic Host Configuration Protocol)
-server processed remote connections when the dhcpd was configured to provide
-Object Management API (OMAPI) capability. A remote attacker could use this flaw
-to cause denial of service (excessive CPU use and dhcpd daemon unreachability).
+Use CVE-2011-1501
 
-References:
-[1] https://bugzilla.novell.com/show_bug.cgi?id=680298
-[2] https://lists.isc.org/pipermail/dhcp-users/2011-February/012780.html
-[3] https://lists.isc.org/pipermail/dhcp-users/2011-February/012781.html
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=666441
-[5] http://www.mentby.com/Group/dhcp-users/omapi-not-working-in-420.html
 
-Note: Though looks as minor / low severity issue, under proper configuration
-       looks to be a way, how to get dhcpd completely unresponsive for further
-       requests.
+> Arbitrary file disclosure via XXE :
+> http://issues.liferay.com/browse/LPS-14927
 
-Could you allocate a CVE id for this? (though opened for discussion if this
-being more to be a bug, than a real security issue).
+Use CVE-2011-1502
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
+> XSL/XML file disclosure via file:// :
+> http://issues.liferay.com/browse/LPS-13762
+
+Use CVE-2011-1503
+
+
+> XSS vulnerability :
+> http://issues.liferay.com/browse/LPS-11506
+
+Use CVE-2011-1504
+
+
+> XSS in message boards :
+> http://issues.liferay.com/browse/LPS-12628
+
+Use CVE-2011-1570
+
+
+Thanks
+
+-- 
+    JB
