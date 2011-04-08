@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/16
-Message-ID: <599679687.290447.1304362741031.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 14:59:01 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/4
+Message-ID: <237823109.466832.1302293950604.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 8 Apr 2011 16:19:10 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel (ARM): heap corruption in OABI semtimedop
+Subject: Re: CVE request for pithos information disclosure
 Content-Type: text/plain; charset=utf-8
 
 
 
 ----- Original Message -----
-> The OABI wrapper for semtimedop does not bound the nsops argument. A
-> sufficiently large value will cause an integer overflow in allocation
-> size, followed by copying too much data into the allocated buffer.
-> This only affects ARM systems with CONFIG_OABI_COMPAT set.
+> Ian Daniher discovered that 'pithos' stores the username and password
+> for external services in plain text in a configuration file. This
+> configuration file is world-readable by defualt, resulting in a loss
+> of
+> user privacy.
 > 
-> This is exploitable for local privilege escalation, but successful
-> exploitation requires winning a race. Because user-to-kernel copy
-> functions on ARM zero the destination buffer even on failure to access
-> the provided user pointer, the copy loop in the vulnerable function
-> that causes the overflow will zero out large amounts of kernel heap if
-> not interrupted, crashing the system. This should be possible to work
-> around though.
+> Reference: http://pad.lv/733307
 > 
-> -Dan
+> Can I get a CVE identifier for this flaw?
 > 
-> [1] http://marc.info/?l=linux-kernel&m=130408851326428&w=2
 
-Please use CVE-2011-1759.
+The real URL is:
+https://bugs.launchpad.net/pithos/+bug/733307
+
+Please use CVE-2011-1500.
 
 Thanks.
 
