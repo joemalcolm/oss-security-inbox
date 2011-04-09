@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/2
-Message-ID: <4EDEEAA3.3070104@redhat.com>
-Date: Tue, 06 Dec 2011 21:25:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/09/1
+Message-ID: <20110409174458.GA26418@ngolde.de>
+Date: Sat, 9 Apr 2011 19:44:58 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: cve@...re.org
-Subject: Re: CVE request: includeViewParameters re-evaluates param/model values as EL expressions on Mojarra/MyFaces
+Subject: CVE id request: gitolite
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2011 10:21 PM, Kurt Seifried wrote:
-> On 11/28/2011 10:16 PM, David Jorm wrote:
->> It has been found that when includeViewParameters is set to true, JSF 2 as implemented by Mojarra and MyFaces will re-evaluate parameter/model values as EL expressions.
->>
->> Original bug:
->> http://java.net/jira/browse/JAVASERVERFACES-2247
->>
->> MyFaces bug:
->> https://issues.apache.org/jira/browse/MYFACES-3405
->>
->> Write-up/reproducer:
->> http://www.jakobk.com/2011/11/jsf-value-expression-injection-vulnerability/
->>
->> Thanks
-> Please use CVE-2011-4358  for the Mojarra instance of this vulnerable.
->
-> Please use CVE-2011-4359  for the MyFaces instance of this vulnerable.
->
-And I have been informed that CVE-2011-4343 was previously assigned for
-the Apache MyFaces issue, so CVE-2011-4359 is a duplicate and should be
-rejected.
+https://github.com/sitaramc/gitolite/commit/4ce00aef84d1ff7c35f7adbbb99a6241cfda00cc
+http://groups.google.com/group/gitolite/browse_thread/thread/797a93ec26e1dcbc?pli=1
 
+I didn't find a CVE id for this, could I get one?
+
+Kind regards
+Nico
 -- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
--Kurt Seifried / Red Hat Security Response Team
-
+Content of type "application/pgp-signature" skipped
