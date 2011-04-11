@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/8
-Message-ID: <1309956456.2993.66.camel@localhost>
-Date: Wed, 06 Jul 2011 07:47:36 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Simon Dobson <simon.dobson@...tcd.ie>
-Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org,  Jeffrey Walton <noloader@...il.com>
-Subject: Security issue in reseed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/7
+Message-ID: <20110411171917.GL714@dojo.mi.org>
+Date: Mon, 11 Apr 2011 13:19:17 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
-A security bug was reported by Jeffrey Walton against reseed in
-Ubuntu. You are being emailed as the upstream contact. Please keep
-oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+:http://www.pureftpd.org/project/pure-ftpd/news
+:
+:states that pure-ftpd is affected by the same STARTTLS
+:injection bug as postifx's CVE-2011-0411.
+:
+:Is this CVE postfix-specific or can it be used for
+:pure-ftpd as well? If needed, can someone assign a new CVE?
 
-This issue should be considered public. A CVE is being requested; please
-mention this in any changelogs.
-
-Details from the public bug follow:
-https://launchpad.net/bugs/804594
-
-From the reporter:
-"reseed(8) performs an insecure HTTP fetch of data from random.org. The
-script is automatically executed when installed, and any time the user
-chooses to execute. In addition, the reseed man pages do not mention the
-data is retrieved over an insecure channel."
-
-As pointed out by the reporter, from the man page: "It is run once
-during the installation of the package only". An attacker could perform
-a MITM during package installation or whenever the reseed command is run
-to provide predictable data for the random number seed.
-
-Thanks in advance for your cooperation in coordinating a fix for this
-issue,
-
-Jamie Strandboge
-
-[1] oss-security@...ts.openwall.com is a public mailing list for
-    people to collaborate on security vulnerabilities and coordinate
-    security updates.
+It should get its own CVE assignment.  Other products with the
+same STARTTLS issue have gotten unique CVE assignments for them
+-- see CVE-2011-143[012].
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"You can't destroy everything.  Where would you sit?"               -The Tick
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Content of type "application/pgp-signature" skipped
