@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/2
-Message-ID: <4EC8050B.1060005@redhat.com>
-Date: Sat, 19 Nov 2011 12:35:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/10
+Message-ID: <1085482903.28233.1302551871147.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 15:57:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: ejabberd before 2.1.9
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/19/2011 04:18 AM, Hanno Böck wrote:
-> Hi,
->
-> From
-> http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_2.1.9
->
-> This looks like its security-relevant:
-> - Fix Denial of Service when user sends malformed publish stanza
->   (EJAB-1498)
->
-> Upstream bug report:
-> https://support.process-one.net/browse/EJAB-1498
->
->
-Please use CVE-2011-4320  for this issue.
+----- Original Message -----
+> 
+> Postponed. I'd like to see any support for you getting onto the Linux
+> distros security contacts list, with reasoning, or/and any other
+> suggestions on what to do in this case. Josh - what do you think (as
+> someone who advocated the setup of a vendor-sec replacement)?
+> 
+
+My initial thought is that a vendor without public advisories is a
+liability.
+
+I don't want to get into the politics of not publishing your advisories,
+but at the same time, public information such as this is all we have to
+measure if a vendor is using the information at hand.
+
+I'm happy to draw a line in the sand and make public advisories a mandatory
+requirement. If anyone disagrees, please speak up. This is my personal
+opinion, other viewpoints are welcome.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
