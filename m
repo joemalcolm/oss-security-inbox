@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/7
-Message-ID: <4EF25B9E.3060606@redhat.com>
-Date: Wed, 21 Dec 2011 15:20:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/8
+Message-ID: <Pine.GSO.4.64.1104111431270.4424@faron.mitre.org>
+Date: Mon, 11 Apr 2011 14:36:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
+Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
-On 12/21/2011 03:14 PM, Petr Matousek wrote:
-> Sorry, I forgot to put "CVE Request" into the subject.
+
+CVE's rationale here is that Wietse Venema discovered a class of 
+implementation bugs against the same prototol - it's not a vulnerability 
+in the protocol itself.  CVE-wise, this situation is not fundamentally 
+different from 20+ FTP server implementations that have had buffer 
+overflows in the username, or lots of web server directory traversals 
+through GET requests (not joking here).  The original publication and CVE 
+usage seemed to imply that the CVE would be the same for all 
+implementations, but we don't do that except in really really high-volume, 
+low-detail situations (e.g. PROTOS SNMP 2002).
+
+- Steve
+
+
+On Mon, 11 Apr 2011, Mike O'Connor wrote:
+
+> :http://www.pureftpd.org/project/pure-ftpd/news
+> :
+> :states that pure-ftpd is affected by the same STARTTLS
+> :injection bug as postifx's CVE-2011-0411.
+> :
+> :Is this CVE postfix-specific or can it be used for
+> :pure-ftpd as well? If needed, can someone assign a new CVE?
 >
-> Petr
+> It should get its own CVE assignment.  Other products with the
+> same STARTTLS issue have gotten unique CVE assignments for them
+> -- see CVE-2011-143[012].
 >
-> On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
->> User space may create the PIT and forget about setting up the irqchips.
->> In that case, firing PIT IRQs will crash the host:
->>
->> BUG: unable to handle kernel NULL pointer dereference at
->> 0000000000000128
->> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
->> ...
->> Call Trace:
->>   [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
->>   [<ffffffff81071431>] process_one_work+0x111/0x4d0
->>   [<ffffffff81071bb2>] worker_thread+0x152/0x340
->>   [<ffffffff81075c8e>] kthread+0x7e/0x90
->>   [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
->>
->> Reference:
->> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
->> https://bugzilla.redhat.com/show_bug.cgi?id=769721
->>
->> Thanks,
->> -- 
->> Petr Matousek / Red Hat Security Response Team
-Please use CVE-2011-4622 for this issue.
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+> -- 
+> Michael J. O'Connor                                          mjo@...o.mi.org
+> =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+> "You can't destroy everything.  Where would you sit?"               -The Tick
+>
