@@ -1,28 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/29/2
-Message-Id: <201108291348.18241.mweckbecker@suse.de>
-Date: Mon, 29 Aug 2011 13:48:17 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/18
+Message-ID: <BANLkTimHFG4vSbr_RXtmwDraLzERHJzTfQ@mail.gmail.com>
+Date: Mon, 11 Apr 2011 18:54:15 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request(?): squid: buffer overflow in Gopher reply parser
+Cc: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests: Three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+This made me chuckle.
 
-squid 3.x seems to have re-introduced a security issue found by Ben Hawkes of 
-the Google Security Team in 2005,
+>
+> [1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
+>
+> | PATCH] char: briq_panel: fix TOCTOU bug
+> |
+> | There is a TOCTOU bug in briq_panel_write() code:
+> |
+> |     if (vfd_cursor > 39)   <<<
+> |             scroll_vfd();
+> |     vfd[vfd_cursor++] = c; <<<
+> |
+> | It's possible to write to arbitrary memory location in case of more than
+> | one process tries to call write() simultaneously.
+>
 
-  2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
-  2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt (CVE-2005-0094)
+Firstly, this driver has locking that only allows one open file
+descriptor at once.
 
-Will there be a new CVE required? Not quite sure how such "special" cases are 
-handled usually.
+Even if you can work around this, you'd have a race window of about
+two instructions, with basically no possibility of being preempted
+since there's no blocking or potentially faulting operation.  And
+that's assuming it's even possible, since it may be the case that this
+index is in a register, which would render this completely
+unexploitable.
 
-Thanks,
-Matthias
+Assuming this isn't the case, and you're running an SMP system and
+spent countless hours (days? weeks?) spinning to hit this extremely
+narrow race, you then get to write a single byte past the end of this
+array, into the vfd_is_open integer, which is already set to 1 (it's
+treated as a boolean value).  Even if due to magical powers you manage
+to hit the race window simultaneously on four cores (and the assembly
+works perfectly in your favor), you still don't achieve anything. :p
 
--- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+But it'll get a CVE anyways, so I'm not sure what my point is. :)
+
+-Dan
