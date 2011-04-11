@@ -1,51 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/01/1
-Message-ID: <4DBCA1BA.2060309@redhat.com>
-Date: Sat, 30 Apr 2011 19:56:42 -0400
-From: William Cohen <wcohen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/14
+Message-ID: <870485390.28797.1302553207639.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 16:20:07 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
-On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
+
+
+----- Original Message -----
+> Hi,
 > 
-> Hello Josh, Steve, vendors,
+> http://www.pureftpd.org/project/pure-ftpd/news
 > 
->   It was found that oprofile profiling system did not properly sanitize
-> the content of event argument, provided to oprofile profiling control
-> utility (opcontrol). If a local unprivileged user was authorized by
-> sudoers file to run the opcontrol utility, they could use the flaw
-> to escalate their privileges (execute arbitrary code with the privileges
-> of the privileged system user, root). Different vulnerability than
-> CVE-2006-0576.
+> states that pure-ftpd is affected by the same STARTTLS
+> injection bug as postifx's CVE-2011-0411.
 > 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
+> Is this CVE postfix-specific or can it be used for
+> pure-ftpd as well? If needed, can someone assign a new CVE?
 > 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Oprofile is not encouraged to be run under sudo, but still
->       should not allow escalation of privileges.
 
+Use CVE-2011-1575 for this.
 
-Hi,
+Thanks.
 
-I did a bisection on oprofile git and found the set_event function in opcontrol in:
-
-http://oprofile.git.sourceforge.net/git/gitweb.cgi?p=oprofile/oprofile;a=commit;h=6b60be5e370aa8d58bd4fbbc39abd51c90509a31
-
-The email thread associated with that patch:
-
-http://marc.info/?l=oprofile-list&m=112293360728638&w=2
-
-Appears that the eval is being used to simulate arrays:
-
-http://marc.info/?l=oprofile-list&m=112297339521850&w=2
-
--Will
+-- 
+    JB
