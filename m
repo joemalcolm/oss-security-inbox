@@ -1,21 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/2
-Message-Id: <20110118114042.f13f5cd7.michael.s.gilbert@gmail.com>
-Date: Tue, 18 Jan 2011 11:40:42 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/8
+Message-ID: <Pine.GSO.4.64.1104111431270.4424@faron.mitre.org>
+Date: Mon, 11 Apr 2011 14:36:51 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request
+Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
-> Guys,
-> 
-> What's the best way for an open source project to request a CVE prior to 
-> disclosure?  I'm more that happy to coordinate the disclosure with 
-> distributions where appropriate if that makes a difference.
 
-You're looking for vendor-sec:
-http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+CVE's rationale here is that Wietse Venema discovered a class of 
+implementation bugs against the same prototol - it's not a vulnerability 
+in the protocol itself.  CVE-wise, this situation is not fundamentally 
+different from 20+ FTP server implementations that have had buffer 
+overflows in the username, or lots of web server directory traversals 
+through GET requests (not joking here).  The original publication and CVE 
+usage seemed to imply that the CVE would be the same for all 
+implementations, but we don't do that except in really really high-volume, 
+low-detail situations (e.g. PROTOS SNMP 2002).
 
-Best wishes,
-Mike
+- Steve
+
+
+On Mon, 11 Apr 2011, Mike O'Connor wrote:
+
+> :http://www.pureftpd.org/project/pure-ftpd/news
+> :
+> :states that pure-ftpd is affected by the same STARTTLS
+> :injection bug as postifx's CVE-2011-0411.
+> :
+> :Is this CVE postfix-specific or can it be used for
+> :pure-ftpd as well? If needed, can someone assign a new CVE?
+>
+> It should get its own CVE assignment.  Other products with the
+> same STARTTLS issue have gotten unique CVE assignments for them
+> -- see CVE-2011-143[012].
+>
+> -- 
+> Michael J. O'Connor                                          mjo@...o.mi.org
+> =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+> "You can't destroy everything.  Where would you sit?"               -The Tick
+>
