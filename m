@@ -1,61 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/9
-Message-ID: <4EB43DE2.6030001@nixnuts.net>
-Date: Fri, 04 Nov 2011 14:32:50 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/5
+Message-ID: <4DA32F9C.2060607@mvista.com>
+Date: Mon, 11 Apr 2011 06:43:08 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Alexander,
 
-On 11/04/2011 01:14 PM, John Lightsey wrote:
-> On 11/04/2011 11:36 AM, Solar Designer wrote:
->> On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
->>> File::Temp - _is_safe() allows unsafe traversal of symlinks
->>>
->>> https://rt.cpan.org/Public/Bug/Display.html?id=69106
->>
+Thank you for taking the time to reply.
+
+I can assure you that none of our customers ever got any advanced notice
+of Embargoed issues. It would have been easier for me to just publicly
+expose those issues internally than take the constant beating over not
+disclosing Embargo information.
+
+I do hope I did not "tax" any of the vendors or participants on the old
+vendor sec list. My apologies if I did.
+
+Mahalo,
+
+Armin
+
+On 04/09/2011 10:39 AM, Solar Designer wrote:
+> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
+>> Can I get a status on this? (+, -, Ack, Nack)
 > 
->> As to the proposed fix (symlink-safety.patch), it partially helps in
->> certain special misuse cases.  Namely, when the pathname is not
->> untrusted/malicious, but is poorly chosen, yet it contains just one
->> unsafe component.  However, even in that case this fix doesn't protect
->> from hard-linking of an existing suitable symlink (of a trusted user)
->> into /tmp (possibly under a different name, although the symlink target
->> name remains that of the original symlink).  And the limitation of
->> working for just one unsafe path component is no good; perhaps HIGH's
->> checks of parent directories would be better enabled unconditionally,
->> and even then this stuff is highly questionable.
+> Postponed.  I'd like to see any support for you getting onto the Linux
+> distros security contacts list, with reasoning, or/and any other
+> suggestions on what to do in this case.  Josh - what do you think (as
+> someone who advocated the setup of a vendor-sec replacement)?
 > 
-> I'm not sure I follow how that would work as an attack vector. If I
-> hardlink a symlink of another user into /tmp, I can't easily remove the
-> symlink afterwards to point it somewhere else. If _is_safe() checks the
-> ownership of the symlink and the ownership of the symlink target it
-> would be very difficult to misuse a symlink in this fashion.
-
-I see the problem now.
-
-Symlink A points to foo/bar
-Symlink B points to /some/real/directory
-
-Code asks for /tmp/parent/childXXXX
-
-Attacker hardlinks symlink A to /tmp/parent
-Attacker creates /tmp/foo directory
-Attacker hardlinks symlink B to /tmp/foo/bar
-
-Now everything looks safe, but it relies on the attacker controled
-/tmp/foo directory.
-
-It'd probably be simplest if File::Temp::_is_safe() didn't allow any
-symlinks at all.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk60PdEACgkQBYeybkXz+/lTBQCfVSkNh3Rx//dXID4/EdZek2Oe
-qI8AoNAmriAsRNAl9E1ji/aEb49Pj/8X
-=B77I
------END PGP SIGNATURE-----
+> Formally, you sort of qualify (you were on vendor-sec and presumably you
+> have a Linux distro, although I failed to quickly find a way to see what
+> kind of software your distro contains).  However, from your own
+> statement (quoted below), it appears that we're not going to be able to
+> see whether and how you make intended use of the advance notifications:
+> 
+>> Our advisories are via a paid subscription service so they are not public.
+> 
+> Obviously, this goes against the attempt at transparency, and also it
+> means that we won't be able to evaluate your need to be on the list in
+> the same way that we do/should/will for other vendors - e.g., we may
+> re-check Frugalware and rPath in a few months from now to see if their
+> security response has sufficiently improved to warrant the advance
+> notifications to them or not, but what do we do for MontaVista? grant
+> you an unconditional exception?
+> 
+> You also wrote:
+> 
+>> Our customers require vulnerabilities to be addressed in a timely manner.
+> 
+> So you have contractual relationships with your customers and you're
+> going to use the advance notifications in your business.  Well, many of
+> the more open Linux distros also have paying customers, but in your case
+> this is all you have (if I understood you correctly).
+> 
+> For both kinds of distros, it is possible that the vendor will misuse
+> the advance notifications to notify their customers before the issue is
+> disclosed publicly (which normally happens on the CRD).  We ask and hope
+> that vendors won't do this, but the risk is there.  Arguably, for a
+> vendor that is not making their advisories and updates public, this
+> temptation and thus the risk are higher.
+> 
+> Then, a closed Linux vendor like MontaVista, working for their paying
+> customers only, is somewhat similar to an end-user of Linux who
+> maintains their own Linux distro in-house.  Where do we draw the line?
+> Many legal entities vs. one?  I doubt that this is going to work as
+> desired (and I imagine that different people in here would want it to
+> work differently anyway).  For example, a large enterprise is likely to
+> use multiple legal entities.  Substantially same ownership?  This gets
+> too tricky, non-technical, non-specific, and subject to change.
+> 
+> Clearly, we can't reasonably start to accept end-users of Linux merely
+> because they build their own distro... or just claim to.
+> 
+> I understand that generalization and reductio ad absurdum may lead to a
+> logical fallacy, however unfortunately we're setting a precedent here
+> (one way or the other), so we may need to generalize and consider likely
+> consequences of the precedent... unless we're happy to drop the list
+> when it grows too large and maybe start anew, with stricter rules.
+> 
+> Finally, here's an additional aspect/concern.  The list is being setup
+> as a hopefully better alternative to explicit CC lists.  "Members" of
+> those lists are picked by whoever reports the issue - this person
+> could be from one of the distros or it could be an external reporter.
+> Would many (or any) of those people want to report to MontaVista
+> specifically (along with other distros) or to closed Linux vendors in
+> general?  I think not.  I think that having such vendors on the list
+> would feel like a tax to many reporters, who would have to weigh the
+> pros and cons of using the exploder (ease of use, an up-to-date list of
+> contact persons, encryption, but extra vendors notified) vs. direct e-mail
+> (excluding those who they don't want to or don't care to notify).
+> I think that many would choose the latter (and end up excluding some of
+> the open distros as well, even though they would not mind notifying
+> them), thereby reducing the usefulness of the list.
+> 
+> And you also wrote:
+> 
+>> will revisit the wiki issue soon.
+> 
+> Since you pinged me about the status on your subscription, let me ping
+> you about the status on the wiki updates as well. ;-)  Any progress?
+> The pages to update with your info are:
+> 
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
+> 
+> Please don't take any of the above personal.  I am just trying to
+> provide a useful service to the community.  This is a thankless job, and
+> I'd be happy if someone else does it - and does it better, or just
+> differently to provide an alternative.  I'd be happy if the alternative
+> wins, letting me happily shutdown the list.  (I've been privately asked
+> to provide a hopefully more secure alternative to vendor-sec long before
+> vendor-sec ceased to exist, but I really did not want to get Openwall
+> into the mess, nor did I have time for it.  I only felt like I had to do
+> it when it became clear that the lst.de folks would not host something
+> like this anymore.)
+> 
+> In fact, MontaVista may host such a list as well, which would include
+> MontaVista and more... but I would not expect many (maybe even most?)
+> other distros and reporters to want to write to that list, which would
+> kind of confirm the problem with having MontaVista on the list.
+> 
+> Please let me know if I misunderstood anything or if you have any
+> suggestions.
+> 
+> Thanks,
+> 
+> Alexander
