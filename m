@@ -1,78 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/17
-Message-ID: <20110314164556.GA6772@albatros>
-Date: Mon, 14 Mar 2011 19:45:56 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/2
+Message-ID: <4DA27B9F.8010605@redhat.com>
+Date: Mon, 11 Apr 2011 11:55:11 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Stephan Mueller <stephan.mueller@...ec.com>
-Subject: Re: Untrusted fs and invalid filenames
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1479 (was Re: CVE request: kernel: inotify memory leak)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 14, 2011 at 08:56 -0400, Dan Rosenberg wrote:
-> 1. An attacker convinces a victim to download an evil filesystem image
-> and manually mount it.
-> 
-> 2. An attacker with physical access leverages automounting features to
-> cause the mounting of evil filesystems residing on external media.
+On 04/11/2011 11:32 AM, Eugene Teo wrote:
+> On 11/24/2010 09:17 PM, Josh Bressers wrote:
+>>
+>> ----- "Eugene Teo"<eugene@...hat.com> wrote:
+>>
+>>> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
+>>>
+>>> file for the new inotify group we leak the new group.
+>>>
+>>> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
+>>> only
+>>> relevant if c44dcc56 (v2.6.34-rc1) is backported)
+>>>
+>>> Issue was introduced in 63c882a0 (v2.6.31-rc1).
+>>>
+>>> https://bugzilla.redhat.com/656830
+>>
+>> Please use CVE-2010-4250
+>
+> A regression was found. We assigned it with CVE-2011-1479. Fix for it
+> can be found at: http://git.kernel.org/linus/d0de4dc5. More info here:
+> https://bugzilla.redhat.com/CVE-2011-1479.
 
-These two scenarios concern me.  But I'd state it another way - it is
-not about an attacker trying to mount the image/flash drive, but a
-legitimate user wants to mount an _untrusted_ image/drive.  He knows
-that it might be (or even _is_) malformed, how can he inspect the image
-securely?
+Repost just to make the subject clearer.
 
-> The second case can be addressed
-> by restricting automounting in circumstances where it is
-> inappropriate, such as when the screen is locked.
-
-With model of a passive attacker explained above it doesn't help.
-
-> There have been far too many vulnerabilities in these types
-> of utilities to be worth the risk - I think distros should strip the
-> setuid bits from these helpers when possible, and otherwise ship these
-> helpers with 4750 permissions and restrict their execution to trusted
-> groups.  I understand that FUSE must be an exception on some
-> distributions (such as Ubuntu), but other helpers (cifs, ncpfs, hgfs,
-> etc.) can probably be restricted a bit more.
-
-I completely agree here.  But I don't see any limitation of FUSE - I
-don't want e.g. daemons to be able to mount images via FUSE.  I'd like to
-have a group of real users, all other pseudo account must be very
-restricted.  The whole idea of controlling the access to suid binaries
-is already implemented in owl-control - it is a small tool primarily
-targeted to restrict/relax suid/sgid binaries to different user sets
-like root only / special group / everybody; it was also ported to ALT Linux:
-
-http://docs.altlinux.org/manpages/control.8.html
-
-
-I see three potential attack targets:
-
-1) Kernel code that works with partitions.
-
-2) Filesystem code.
-
-3) Userspace applications.
-
-As for (1) and (2) I'd agree with Steve Grubb about hardening fsck.  It
-might be the cheapest way of controlling fs structs, especially taking
-into account that fsck already works with potentially corrupted
-partitions.  The difference that it works with accidently corrupted
-data, we want it to work with malformed data.
-
-(3) includes filenames.  Filenames charset may be filtered both on VFS
-side and application side.  However, hardening every application that we
-would like to work on untrusted fs is unachievable idea, so moving some
-policy about allowable filenames charset to VFS looks reasonable for me.
-Smth like "fully relaxed" (no control at all) / "POSIX" (without ".",
-".." filenames, '/' and '\0' inside) / "No special characters" (globs,
-etc.) / "Fully portable POSIX" (only "A–Za–z0–9._-") / customizable.
-Though, fully portable POSIX is not about security, but about another
-application of the restriction.
-
-
-Thanks,
-
+Eugene
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
