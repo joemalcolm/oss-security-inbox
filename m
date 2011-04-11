@@ -1,16 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/5
-Message-ID: <1300890470.4898.133.camel@solo.digium.internal>
-Date: Wed, 23 Mar 2011 09:27:50 -0500
-From: Matthew Nicholson <mnicholson@...ium.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/14
+Message-ID: <870485390.28797.1302553207639.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 16:20:07 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- Asterisk Security Vulnerability
+Cc: coley <coley@...re.org>
+Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I need a CVE for a new Asterisk security vulnerability.
+
+----- Original Message -----
+> Hi,
+> 
+> http://www.pureftpd.org/project/pure-ftpd/news
+> 
+> states that pure-ftpd is affected by the same STARTTLS
+> injection bug as postifx's CVE-2011-0411.
+> 
+> Is this CVE postfix-specific or can it be used for
+> pure-ftpd as well? If needed, can someone assign a new CVE?
+> 
+
+Use CVE-2011-1575 for this.
+
+Thanks.
+
 -- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
-
+    JB
