@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/2
-Message-ID: <1195949274.350777.1301876578359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Sun, 3 Apr 2011 20:22:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/11
+Message-ID: <1970627865.28695.1302552925416.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 16:15:25 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: gitolite
 Content-Type: text/plain; charset=utf-8
 
+
+
+----- Original Message -----
+> https://github.com/sitaramc/gitolite/commit/4ce00aef84d1ff7c35f7adbbb99a6241cfda00cc
+> http://groups.google.com/group/gitolite/browse_thread/thread/797a93ec26e1dcbc?pli=1
 > 
-> Benji's trolling does raise a couple real issues. The private keys and
-> passphrases of those responding here have now become highly lucrative
-> targets for attackers. Hence, everyone on this new list needs to use good
-> practices to keep their keys, hard drives, and computers safe.  There
-> should probably be some common guidelines for key safety for all
-> participants.
+> I didn't find a CVE id for this, could I get one?
 > 
 
-I don't buy this. It's really no secret who is involved in open source
-security, or most any security in general. If you're in this business and
-don't worry about such threats all the time, you're probably in the wrong
-field.
+This appears to be an arbitrary command execution flaw (the patch appears
+to limit the commands that can be run).
 
-I think keeping this wide open will make us better at what we do. This is a
-bit silly I agree, but it's also brutally honest.
-
-I've often found that if nobody is complaining about what you're doing,
-you're not doing anything interesting.
-
-At least I can keep telling myself this is interesting ;)
+Use CVE-2011-1572
 
 Thanks.
 
