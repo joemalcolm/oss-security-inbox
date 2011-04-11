@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/7
-Message-ID: <20110718212447.GF29529@ngolde.de>
-Date: Mon, 18 Jul 2011 23:24:47 +0200
-From: Nico Golde <nico@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/6
+Message-ID: <20110411171430.GM3934@redhat.com>
+Date: Mon, 11 Apr 2011 11:14:30 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: (e)glibc
+Subject: CVE request for libmodplug
 Content-Type: text/plain; charset=utf-8
 
-Is there already a CVE id assigned to http://www.nodefense.org/eglibc.txt?
+A stack-based buffer overflow vulnerability was found in libmodplug when
+handling S3M media files.  Could we get a CVE name for this?
 
-Kind regards
-Nico
+References:
+
+https://www.sec-consult.com/files/20110407-0_libmodplug_stackoverflow.txt
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
+https://bugzilla.redhat.com/show_bug.cgi?id=695420
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622091
+
+Thanks.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team 
