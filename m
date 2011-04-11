@@ -1,17 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/08/3
-Message-ID: <20110807173438.GA14534@dannf.org>
-Date: Sun, 7 Aug 2011 11:34:38 -0600
-From: dann frazier <dannf@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/13
+Message-ID: <1874329756.28758.1302553105518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 16:18:25 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
-Subject: CVE request: perf: may parse user-controlled config file
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for libmodplug
 Content-Type: text/plain; charset=utf-8
 
-This was reported by Christian Ohm at:
-  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
+Please use CVE-2011-1574
 
-The perf command, provided as part of the Linux kernel source, looks
-for and honors configuration settings in ./config. A local user could
-obtain elevated privileges by convincing a superuser to run the perf
-command from a directory the user controls.
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> A stack-based buffer overflow vulnerability was found in libmodplug
+> when
+> handling S3M media files. Could we get a CVE name for this?
+> 
+> References:
+> 
+> https://www.sec-consult.com/files/20110407-0_libmodplug_stackoverflow.txt
+> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
+> https://bugzilla.redhat.com/show_bug.cgi?id=695420
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622091
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
