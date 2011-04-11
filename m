@@ -1,27 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/1
-Message-ID: <4E546390.9030503@redhat.com>
-Date: Wed, 24 Aug 2011 10:36:00 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/16
+Message-ID: <20110411213813.GA2919@pisco.westfalen.local>
+Date: Mon, 11 Apr 2011 23:38:13 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
+Subject: CVE requests: Three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-The name_len variable in CIFSFindNext is a signed int that gets set to
-the resume_name_len in the cifs_search_info. The resume_name_len however
-is unsigned and for some infolevels is populated directly from a 32 bit
-value sent by the server.
+Hi,
+I noticed the following reports by Vasiliy Kulikov on on linux-kernel. 
 
-If the server sends a very large value for this, then that value could
-look negative when converted to a signed int. That would make that value
-pass the PATH_MAX check later in CIFSFindNext. The name_len would then
-be used as a length value for a memcpy. It would then be treated as
-unsigned again, and the memcpy scribbles over a ton of memory.
+Josh/Eugene, please assign CVE IDs:
 
-Fix this by making the name_len an unsigned value in CIFSFindNext.
+[1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
 
-http://www.spinics.net/lists/linux-cifs/msg03950.html
-https://bugzilla.redhat.com/show_bug.cgi?id=732869
+| PATCH] char: briq_panel: fix TOCTOU bug
+|
+| There is a TOCTOU bug in briq_panel_write() code:
+|
+|     if (vfd_cursor > 39)   <<<
+|             scroll_vfd();
+|     vfd[vfd_cursor++] = c; <<<
+|
+| It's possible to write to arbitrary memory location in case of more than
+| one process tries to call write() simultaneously.
 
-Thanks, Eugene
+[2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
+
+| [PATCH] char: genrtc: fix infoleak to userspace
+|
+| struct pll is copied to userspace.  It is filled in "multiplexing" function
+| get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
+| fill .pll_ctrl field.  It's hard to understand whether either the caller
+| or the callee must zero the unused struct fields, however, on another
+| ioctl commands the caller already zeroes the structure.  So, let's the
+| caller use memset().
+
+[3] http://permalink.gmane.org/gmane.linux.kernel/1124409 :
+
+| [PATCH] char: istallion: fix arbitrary kernel memory reads/writes
+|
+| stli_brdstats is defined as global variable.  After de-BKL-ization in
+| the patch b4eda9cb48eac1b7 an access to the variable is not serialized
+| anymore.  This leads to the TOCTOU in stli_getbrdstats():
+|
+|        if (copy_from_user(&stli_brdstats, bp, sizeof(combrd_t)))
+|                return -EFAULT;
+|        if (stli_brdstats.brd >= STL_MAXBRDS)  <<<<
+|                return -ENODEV;
+|        brdp = stli_brds[stli_brdstats.brd];   <<<<
+|
+| If one process calls COM_GETBRDSTATS ioctl() with sane .brd, second
+| process calls COM_GETBRDSTATS ioctl() with invalid .brd, and the
+| second process' copy_from_user() executes exactly between the check and
+| stli_brds[] indexation of the first process, then the first process gets
+| contents of memory at *stli_brds[stli_brdstats.brd] address.  Also
+| the resulting .nrpanels field may be too big, in this case
+| stli_brdstats.panels array overflows.
+
+Cheers,
+        Moritz
