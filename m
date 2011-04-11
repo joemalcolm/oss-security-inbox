@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/6
-Message-ID: <20110624123406.GA3106@albatros>
-Date: Fri, 24 Jun 2011 16:34:06 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/1
+Message-ID: <4DA27647.3010400@redhat.com>
+Date: Mon, 11 Apr 2011 11:32:23 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org
-Subject: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: inotify memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 11/24/2010 09:17 PM, Josh Bressers wrote:
+>
+> ----- "Eugene Teo"<eugene@...hat.com>  wrote:
+>
+>> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
+>>
+>> file for the new inotify group we leak the new group.
+>>
+>> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
+>> only
+>> relevant if c44dcc56 (v2.6.34-rc1) is backported)
+>>
+>> Issue was introduced in 63c882a0 (v2.6.31-rc1).
+>>
+>> https://bugzilla.redhat.com/656830
+>
+> Please use CVE-2010-4250
 
-On Tue, Jun 21, 2011 at 15:24 -0400, Josh Bressers wrote:
-> > /*
-> > * This program tries to learn whether ~user/.ssh/authorized_keys exists
-> > * and is nonempty for any user on local machine. It uses world-readable
-> > * taskstats' nature to get somewhat private io statistics information.  If
-> > * implant taskstats or /proc//io polling into ssh client, it would be
-> > * possible to learn precise authorized_keys' size (and estimate private
-> > * key's(s') size).
-> 
-> Are you considering this a flaw, or just an interesting security exercise?
-> Nothing currently comes to mind, but it's possible there could be other
-> data where knowing it exists and the size would be useful.
+A regression was found. We assigned it with CVE-2011-1479. Fix for it 
+can be found at: http://git.kernel.org/linus/d0de4dc5. More info here: 
+https://bugzilla.redhat.com/CVE-2011-1479.
 
-It can be used to learn ssh and ftp password length.  If privsep is
-enabled in openssh and vsftpd, the unprivileged process' activity very
-precisely shows password information.
-
-For vsftpd read characters count is strlen("USER username\r\n") +
-strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
-related to a privileged parent.  If measure statistics between user and
-passwords commands, actual password length and username length can be
-gathered.
-
-For ssh, vice versa, networking activity is constant in packets length,
-but interprocess communications, specifically passwords, depend on
-user input.
-
-For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars - CONST.
-
-Another daemons with more or less constant io activity might be
-vulnerable too.  PAM greatly complicates precise measurements.
-
-
-I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
-
-https://lkml.org/lkml/2011/6/24/88
-
-
-Thanks,
-
+Thanks, Eugene
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
