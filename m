@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/4
-Message-ID: <87vcqwewu1.fsf@mid.deneb.enyo.de>
-Date: Sun, 06 Nov 2011 22:59:34 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/6
+Message-ID: <20110411171430.GM3934@redhat.com>
+Date: Mon, 11 Apr 2011 11:14:30 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: caml-light insecure temporary files
+Subject: CVE request for libmodplug
 Content-Type: text/plain; charset=utf-8
 
-* David Holland:
+A stack-based buffer overflow vulnerability was found in libmodplug when
+handling S3M media files.  Could we get a CVE name for this?
 
-> I don't know if anyone besides us still ships caml-light; it is long
-> dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
-> Hat does. But just in case: it uses mktemp() insecurely, and also does
-> unsafe things in /tmp during make install.
+References:
 
-Moscow ML includes a copy of the affected code, and it's perhaps less
-obsolete than caml-light.  It seems to be part of the FreeBSD ports
-collection.
+https://www.sec-consult.com/files/20110407-0_libmodplug_stackoverflow.txt
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
+https://bugzilla.redhat.com/show_bug.cgi?id=695420
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622091
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
