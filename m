@@ -1,59 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/25
-Message-ID: <1053489281.88137.1300136379757.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:59:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/3
+Message-ID: <20110411132621.GA8822@suse.de>
+Date: Mon, 11 Apr 2011 15:26:21 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+Subject: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, David, vendors,
-> 
-> this is due the following vino deficiency:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> As noted in [1] Vino may incorrectly report, that relevant user
-> desktop
-> is reachable only over local network, when in fact it's reachable from
-> everywhere.
-> 
-> As this is issue slightly on the border, not sure it should receive a
-> CVE identifier,
-> so Cc-ed David Woodhouse to elaborate more on issue impact if
-> necessary.
-> 
-> Under my opinion, the trust boundary is crossed (it is wrongly
-> reported to the the user, they
-> have a secure setup, when they do not have it and otherwise would
-> perform steps to correct the
-> settings). But left the final decision for further discussion.
-> 
-> What are the thoughts of the others? Should this one get a CVE
-> identifier or not?
-> 
-> Upstream bug report:
-> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
-> 
-> Ubuntu bug report (IPv6 specific):
-> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
-> 
-> To David King -- David, what are the upstream plans for this issue? Is
-> there by any
-> chance upstream patch for the bug [3] yet?
-> 
 
-This strikes me as it should get two CVE ids (if someone more familiar
-could chime in, I would appreciate it).
+Hi,
 
-This looks like one id for vino improperly claiming that machine is only
-accessible via the local network.
+http://www.pureftpd.org/project/pure-ftpd/news
 
-Another for it using uPnP to open up a router without proper warning.
+states that pure-ftpd is affected by the same STARTTLS
+injection bug as postifx's CVE-2011-0411.
 
-Thanks.
+Is this CVE postfix-specific or can it be used for
+pure-ftpd as well? If needed, can someone assign a new CVE?
+
+thx,
+Sebastian
 
 -- 
-    JB
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
