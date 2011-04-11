@@ -1,17 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/3
-Message-ID: <7fc68295-e0c9-40e5-afee-8382797bb978@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Thu, 01 Dec 2011 23:17:05 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/12
+Message-ID: <1001446510.28719.1302552993447.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 16:16:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CSRF in the JBoss AS 7 administration console & HTTP management API - CVE-2011-3609
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: sctp: fix to calc the INIT/INIT-ACK chunk length correctly to set
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-3609 has been assigned to a CSRF flaw in the JBoss AS 7 administration console & HTTP management API. A fix for this issue is now available in the latest release of AS 7. Details are in Red Hat Bugzilla:
+Please use CVE-2011-1573
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3609
-
-Thanks to David Black for reporting this flaw.
+Thanks.
 
 -- 
-David Jorm / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> When calculating the INIT/INIT-ACK chunk length, we should not only
+> account the length of parameters, but also the parameters zero padding
+> length, such as AUTH HMACS parameter and CHUNKS parameter. Without the
+> parameters zero padding length we may get oops.
+> 
+> Commit:
+> http://git.kernel.org/linus/a8170c35e738d62e9919ce5b109cf4ed66e9
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=695383
+> 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
