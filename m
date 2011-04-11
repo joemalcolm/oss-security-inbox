@@ -1,54 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/6
-Message-ID: <4DBEE3FB.1000207@mvista.com>
-Date: Mon, 02 May 2011 07:03:55 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/10
+Message-ID: <1085482903.28233.1302551871147.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 15:57:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-
-
-On 05/02/2011 06:12 AM, Solar Designer wrote:
-> On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
->> On 04/30/2011 04:51 AM, Solar Designer wrote:
->> <snipped>
->>
->>> Hence, I've saved your subscription request to a separate folder, to
->>> revisit it if a decision is made to start adding "closed" vendors to the
->>> list, if Wind River starts to publish advisories and updates (in other
->>> words, if it becomes no more closed than Red Hat), or if a suitable
->>> separate list is setup.
->>
->> Can you clarify what is meant by updates?
+----- Original Message -----
 > 
-> RHEL-like .src.rpm's or equivalent will do.  Something else might do.
-
-Ok.. but do they need to be publicly available ( ie no service or
-maintenance contract to get)?
-
+> Postponed. I'd like to see any support for you getting onto the Linux
+> distros security contacts list, with reasoning, or/and any other
+> suggestions on what to do in this case. Josh - what do you think (as
+> someone who advocated the setup of a vendor-sec replacement)?
 > 
-> While we're at it, just what software do MontaVista and Wind River ship?
 
-MontaVista ships Linux, apps, toolchains and misc cross development
-tools. The number of applications vary depending on the product version.
+My initial thought is that a vendor without public advisories is a
+liability.
 
-MVL6 and CGE 6 both use bitbake (ie receipt sytle) and older products
-use RPM.
+I don't want to get into the politics of not publishing your advisories,
+but at the same time, public information such as this is all we have to
+measure if a vendor is using the information at hand.
 
+I'm happy to draw a line in the sand and make public advisories a mandatory
+requirement. If anyone disagrees, please speak up. This is my personal
+opinion, other viewpoints are welcome.
 
-> My guess is that embedded Linux distro vendors would not care about
-> vulnerabilities in desktop-specific apps (e.g., the X server), but I
-> could be wrong.  
+Thanks.
 
-We do supply X server.
-
-And there are other software categories, which may or
-> may not be relevant.  It'd be nice for potential reporters of security
-> issues to know which vendors might be affected.
-
-yes it would be nice. I will add it to my list of things todo.
-
-- Armin
-
+-- 
+    JB
