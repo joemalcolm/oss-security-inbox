@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/2
-Message-ID: <4E720B41.2090806@redhat.com>
-Date: Thu, 15 Sep 2011 16:27:13 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/13
+Message-ID: <1874329756.28758.1302553105518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Apr 2011 16:18:25 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for libmodplug
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+Please use CVE-2011-1574
 
-   multiple XSS flaws have been recently reported in the v3.4.4
-(and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
+Thanks.
 
-[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
+-- 
+    JB
 
-1) An XSS flaw was found in the way phpMyAdmin processed row content,
-    containing JavaScript code, after its inline editing and saving,
 
-2) It was found that phpMyAdmin did not properly sanitize the content
-    of db, table, and column names prior use of their values.
-
-A remote attacker could use these flaws to conduct XSS attacks (execute
-arbitrary HTML or web script) by tricking authenticated phpMyAdmin user 
-into visiting of a specially-crafted URL.
-
-References:
-[2] http://secunia.com/advisories/45991/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
-
-Could you allocate a CVE id for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Original Message -----
+> A stack-based buffer overflow vulnerability was found in libmodplug
+> when
+> handling S3M media files. Could we get a CVE name for this?
+> 
+> References:
+> 
+> https://www.sec-consult.com/files/20110407-0_libmodplug_stackoverflow.txt
+> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
+> https://bugzilla.redhat.com/show_bug.cgi?id=695420
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622091
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
