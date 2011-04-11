@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/2
-Message-ID: <4EE1C74A.5060501@suse.de>
-Date: Fri, 09 Dec 2011 09:31:06 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/15
+Message-ID: <20110411212449.GA2641@pisco.westfalen.local>
+Date: Mon, 11 Apr 2011 23:24:49 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: icu out of bounds access
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Josh Bressers wrote:
 
-An of bounds access was reported in icu:
-http://bugs.icu-project.org/trac/ticket/8984
+> I'm happy to draw a line in the sand and make public advisories a mandatory
+> requirement. If anyone disagrees, please speak up. This is my personal
+> opinion, other viewpoints are welcome.
 
-Unfortunately the chrome bug is private but the commit says "buffer
-overflow":
-http://codereview.chromium.org/8822005/patch/6001/7002
+I fully agree with public advisories being a requirement.
 
-I suppose a negative len could end up in the strncpy at the end of the
-function causing a buffer overflow.
+Cheers,
+        Moritz
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
