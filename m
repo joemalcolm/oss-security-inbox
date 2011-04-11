@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/3
-Message-ID: <20110804065903.GA23489@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 09:59:03 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/7
+Message-ID: <20110411171917.GL714@dojo.mi.org>
+Date: Mon, 11 Apr 2011 13:19:17 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, Coley <coley@...re.org>, Moritz Mühlenhoff <jmm@...til.org>
-Subject: CVE-request: clamav floating point exception in OLE2 scanner DoS
+Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-2007-* identifier for ScanOLE2 issue? RFC2397-issue is CVE-2007-4510. I don't know if there are CVEs for other fixed issues, but I will try to find out.
+:http://www.pureftpd.org/project/pure-ftpd/news
+:
+:states that pure-ftpd is affected by the same STARTTLS
+:injection bug as postifx's CVE-2011-0411.
+:
+:Is this CVE postfix-specific or can it be used for
+:pure-ftpd as well? If needed, can someone assign a new CVE?
 
-"""
-clamav (0.91.2-1) unstable; urgency=low
+It should get its own CVE assignment.  Other products with the
+same STARTTLS issue have gotten unique CVE assignments for them
+-- see CVE-2011-143[012].
 
-  * New upstream version
-    - fix call to tolower() which led to a crash in libclamav
-    - fix possible NULL dereference, e.g. when parsing email with RFC2397
-      URI
-    - fix floating point exception when using ScanOLE2
-    - fix possible NULL dereference in rtf.c
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"You can't destroy everything.  Where would you sit?"               -The Tick
 
- -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
-"""
-
-Related information:
-- Temporary ID: http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
-- http://www.debian.org/security/2007/dsa-1366
-
-Best regards,
-Henri Salo
+Content of type "application/pgp-signature" skipped
