@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/5
-Message-ID: <20110519183523.GA2430@redhat.com>
-Date: Thu, 19 May 2011 12:35:24 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/4
+Message-ID: <4DA31678.1020108@redhat.com>
+Date: Mon, 11 Apr 2011 22:55:52 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS in apr due to CVE-2011-0419 fix
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: sctp: fix to calc the INIT/INIT-ACK chunk length correctly to set
 Content-Type: text/plain; charset=utf-8
 
-This was posted today:
+When calculating the INIT/INIT-ACK chunk length, we should not only 
+account the length of parameters, but also the parameters zero padding 
+length, such as AUTH HMACS parameter and CHUNKS parameter. Without the 
+parameters zero padding length we may get oops.
 
-http://mail-archives.apache.org/mod_mbox/httpd-announce/201105.mbox/%3C4DD55092.3030403@apache.org%3E
+Commit: http://git.kernel.org/linus/a8170c35e738d62e9919ce5b109cf4ed66e9
 
-Essentially the fix for CVE-2011-0419 in apr caused another security
-flaw.
+https://bugzilla.redhat.com/show_bug.cgi?id=695383
 
-Could a CVE be assigned to this?
-
-Thanks.
-
+Thanks, Eugene
 -- 
-Vincent Danen / Red Hat Security Response Team 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
