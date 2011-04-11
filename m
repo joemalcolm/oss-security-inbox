@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/13
-Message-ID: <4EAAC48B.4000300@redhat.com>
-Date: Fri, 28 Oct 2011 09:04:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/3
+Message-ID: <20110411132621.GA8822@suse.de>
+Date: Mon, 11 Apr 2011 15:26:21 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
+Subject: pure-ftpd STARTTLS command injection / new CVE?
 Content-Type: text/plain; charset=utf-8
 
-On 10/28/2011 02:02 AM, Hanno Böck wrote:
-> http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
->
-> "Fixes a backend XSS issue in the karma plugin and media database
-> filtering, thanks to Stefan Schurtz!"
->
-> If anyone asks: Backend XSS are a security issue in multiuser webapps,
-> one less priviliged user can use them to gain more privilege.
->
-> Please assign CVE.
->
-Can you please send more details, i.e. which file is responsible/or a
-link to a commit fixing this? Thanks.
+
+Hi,
+
+http://www.pureftpd.org/project/pure-ftpd/news
+
+states that pure-ftpd is affected by the same STARTTLS
+injection bug as postifx's CVE-2011-0411.
+
+Is this CVE postfix-specific or can it be used for
+pure-ftpd as well? If needed, can someone assign a new CVE?
+
+thx,
+Sebastian
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
+~
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
 
