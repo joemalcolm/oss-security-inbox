@@ -1,55 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/4
-Message-ID: <4EC65F80.1020005@redhat.com>
-Date: Fri, 18 Nov 2011 14:37:04 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Timo Sirainen <tss@....fi>
-Subject: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/16
+Message-ID: <20110411213813.GA2919@pisco.westfalen.local>
+Date: Mon, 11 Apr 2011 23:38:13 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: Three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
+I noticed the following reports by Vasiliy Kulikov on on linux-kernel. 
 
-   a security flaw was found in the way Dovecot, an IMAP and POP3 email
-server, performed remote server identity verification (x509
-certificate's Common Name field was not checked to match provided
-remote server host name), when Dovecot was configured to proxy IMAP and
-POP3 connections to remote hosts and TLS/SSL protocols were requested
-(ssl=yes or starttls=yes) in the configuration to secure these
-connections to the destination server. A remote attacker could use
-this flaw to conduct man-in-the-middle (MITM) attacks via specially-
-crafted x509v3 certificate.
+Josh/Eugene, please assign CVE IDs:
 
-References:
-[1] http://www.dovecot.org/list/dovecot-news/2011-November/000200.html
-[2] https://secunia.com/advisories/46886/
-[3] https://bugs.gentoo.org/show_bug.cgi?id=390887
-[4] http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
+[1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
 
-Relevant upstream patch:
-[5] http://hg.dovecot.org/dovecot-2.0/rev/5e9eaf63a6b1
+| PATCH] char: briq_panel: fix TOCTOU bug
+|
+| There is a TOCTOU bug in briq_panel_write() code:
+|
+|     if (vfd_cursor > 39)   <<<
+|             scroll_vfd();
+|     vfd[vfd_cursor++] = c; <<<
+|
+| It's possible to write to arbitrary memory location in case of more than
+| one process tries to call write() simultaneously.
 
-Could you allocate a CVE id for this?
+[2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
 
-Note: This isn't a 'direct security flaw', in the sense it would be
-discovered / reported at some time point. This behaviour (do not check
-x509v3 cert CN against remote server hostname), when TLS/SSL protocols
-are configured, and the danger of MITM is already described
-on relevant Dovecot's page:
-http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
+| [PATCH] char: genrtc: fix infoleak to userspace
+|
+| struct pll is copied to userspace.  It is filled in "multiplexing" function
+| get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
+| fill .pll_ctrl field.  It's hard to understand whether either the caller
+| or the callee must zero the unused struct fields, however, on another
+| ioctl commands the caller already zeroes the structure.  So, let's the
+| caller use memset().
 
-thus one could say, for those administrators, who are aware of [4]
-page and configured Dovecot in safe way there is no trust boundary
-crossing and this upstream change is just security hardening.
+[3] http://permalink.gmane.org/gmane.linux.kernel/1124409 :
 
-But on the other hand, this change is important enough, to be
-backported to all affected versions, (regardless to the fact if
-particular administrator has or hasn't read [4]). Thus I would vote
-for a CVE identifier to be assigned to this issue. But opened for
-discussion if someone else (MITRE?) thinks this should be dealt
-with rather as with security hardening, than with a real security
-flaw.
+| [PATCH] char: istallion: fix arbitrary kernel memory reads/writes
+|
+| stli_brdstats is defined as global variable.  After de-BKL-ization in
+| the patch b4eda9cb48eac1b7 an access to the variable is not serialized
+| anymore.  This leads to the TOCTOU in stli_getbrdstats():
+|
+|        if (copy_from_user(&stli_brdstats, bp, sizeof(combrd_t)))
+|                return -EFAULT;
+|        if (stli_brdstats.brd >= STL_MAXBRDS)  <<<<
+|                return -ENODEV;
+|        brdp = stli_brds[stli_brdstats.brd];   <<<<
+|
+| If one process calls COM_GETBRDSTATS ioctl() with sane .brd, second
+| process calls COM_GETBRDSTATS ioctl() with invalid .brd, and the
+| second process' copy_from_user() executes exactly between the check and
+| stli_brds[] indexation of the first process, then the first process gets
+| contents of memory at *stli_brds[stli_brdstats.brd] address.  Also
+| the resulting .nrpanels field may be too big, in this case
+| stli_brdstats.panels array overflows.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Cheers,
+        Moritz
