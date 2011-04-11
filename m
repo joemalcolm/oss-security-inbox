@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/1
-Message-ID: <4D5B8B61.5020602@redhat.com>
-Date: Wed, 16 Feb 2011 16:31:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/17
+Message-ID: <20110411220903.GE25772@ngolde.de>
+Date: Tue, 12 Apr 2011 00:09:03 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: bridge br_multicast NULL pointer dereference
+Subject: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-"Somewhere along the line the NULL check in br_mdb_ip_get went AWOL, 
-causing crashes when we receive an IGMP packet with no multicast table 
-allocated.
+http://www.videolan.org/security/sa1103.html
+has no CVE id yet.
+Can I get one please?
 
-This patch restores it and ensures all br_mdb_*_get functions use it."
+Cheers
+Nico
 
-http://git.kernel.org/linus/7f285fa78d4b81b8458f05e77fb6b46245121b4e
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Did a quick check: net/bridge/br_multicast.c was introduced in eb1d1641 
-(2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and 
-subsequently restored in 7f285fa78d (v2.6.35-rc5).
-
-Thanks, Eugene
+Content of type "application/pgp-signature" skipped
