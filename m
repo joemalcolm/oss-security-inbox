@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/4
-Message-ID: <4E242D66.7080606@suse.de>
-Date: Mon, 18 Jul 2011 14:56:06 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: dfncert@...-cert.de
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/16
+Message-ID: <4DA4C8F2.5080907@mvista.com>
+Date: Tue, 12 Apr 2011 11:49:38 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-dfncert@...-cert.de wrote:
-> There is a vulnerability in the recently introduced OCSP feature in
-> FreeRADIUS version 2.1.11.
+
+
+On 04/11/2011 09:57 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>>
+>> Postponed. I'd like to see any support for you getting onto the Linux
+>> distros security contacts list, with reasoning, or/and any other
+>> suggestions on what to do in this case. Josh - what do you think (as
+>> someone who advocated the setup of a vendor-sec replacement)?
+>>
 > 
-> A patch was proposed to the packet maintainer.
+> My initial thought is that a vendor without public advisories is a
+> liability.
 
-Would you mind sharing that patch with us?
+Making our Advisories public could put our customers' customers at risk
+depending on when we publish and when our customers can get the fixes
+into their customers hands and so on down the line.
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+- Armin
 
