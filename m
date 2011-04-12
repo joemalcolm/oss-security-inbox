@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/19
-Message-ID: <20111121175119.GB7800@dhcp-25-225.brq.redhat.com>
-Date: Mon, 21 Nov 2011 18:51:19 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/16
+Message-ID: <4DA4C8F2.5080907@mvista.com>
+Date: Tue, 12 Apr 2011 11:49:38 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-There is a NULL pointer deref in the user-defined key type whereby
-updating a negative key into a fully instantiated key will cause
-an oops to occur when the code attempts to free the non-existent
-old payload.
 
-Upstream commit:
-9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
 
-References:
-https://lkml.org/lkml/2011/11/15/363
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
+On 04/11/2011 09:57 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>>
+>> Postponed. I'd like to see any support for you getting onto the Linux
+>> distros security contacts list, with reasoning, or/and any other
+>> suggestions on what to do in this case. Josh - what do you think (as
+>> someone who advocated the setup of a vendor-sec replacement)?
+>>
+> 
+> My initial thought is that a vendor without public advisories is a
+> liability.
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Making our Advisories public could put our customers' customers at risk
+depending on when we publish and when our customers can get the fixes
+into their customers hands and so on down the line.
+
+- Armin
+
