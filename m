@@ -1,20 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/11
-Message-ID: <1104040934450.26429@mjc.redhat.com>
-Date: Mon, 4 Apr 2011 09:42:37 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/7
+Message-ID: <4DA47197.7070809@mvista.com>
+Date: Tue, 12 Apr 2011 05:36:55 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-> I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> and Josh).
 
-Limiting a distro to two or three representatives is going to make things 
-tricky for Red Hat; we have a rather large dedicated security response 
-team (as we publish over 300 advisories a year across 70 product/versions 
-and have a number of folks dealing with 'incoming' issues spread, and my 
-team is dispersed across 9 different countries).  If these representatives 
-have been very active on v-s and oss-security is there a reason to limit?
 
-Mark
+On 04/11/2011 09:57 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>>
+>> Postponed. I'd like to see any support for you getting onto the Linux
+>> distros security contacts list, with reasoning, or/and any other
+>> suggestions on what to do in this case. Josh - what do you think (as
+>> someone who advocated the setup of a vendor-sec replacement)?
+>>
+> 
+> My initial thought is that a vendor without public advisories is a
+> liability.
+
+Then we has been a liability to vendor-sec ever since we first got
+accepted way-back-when. My apologies.
+
+> 
+> I don't want to get into the politics of not publishing your advisories,
+
+(I don't either)
+
+> but at the same time, public information such as this is all we have to
+> measure if a vendor is using the information at hand.
+
+Agreed.
+
+> I'm happy to draw a line in the sand and make public advisories a mandatory
+> requirement. If anyone disagrees, please speak up. This is my personal
+> opinion, other viewpoints are welcome.
+
+So publicly available advisories are a requirement.  What about access
+to the patches?
+
+Is there somewhere I can point my management to that defines these new
+requirements or is this too soon?
+
+Mahalo,
+Armin
+
