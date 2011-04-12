@@ -1,26 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/1
-Message-ID: <20110717134821.GA15527@openwall.com>
-Date: Sun, 17 Jul 2011 17:48:21 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/11
+Message-ID: <20110412205856.GA16400@openwall.com>
+Date: Wed, 13 Apr 2011 00:58:56 +0400
 From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 14, 2011 at 04:37:36PM +0200, Ludwig Nussel wrote:
-> Solar Designer wrote:
-> >I am tempted to just release the current code as 1.2 now.  We won't
-> >arrive at a perfect solution anyway, because it doesn't exist.  And we
-> >need to let other projects upgrade to better/safer code (dealing with
-> >one-correct to many-buggy collisions) sooner rather than later.
-> 
-> Indeed.
+On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
+> pub   4096R/C44977CA 2011-04-12
+>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+> uid                  Petr Matousek <pmatouse@...hat.com>
+> uid                  Petr Matousek <pm@...p.org>
 
-I've just released crypt_blowfish 1.2:
-
-http://www.openwall.com/crypt/
-
-All projects using crypt_blowfish should upgrade to this newer code.
+Added.
 
 Alexander
