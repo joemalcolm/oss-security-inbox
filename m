@@ -1,17 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/5
-Message-ID: <20111004151657.GA29894@openwall.com>
-Date: Tue, 4 Oct 2011 19:16:57 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/9
+Message-ID: <390097197.45735.1302640078516.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Apr 2011 16:27:58 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros list membership
+Cc: solar@...nwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 04, 2011 at 09:24:29AM -0500, Tyler Hicks wrote:
-> Hello - I recently joined the Ubuntu Security team and request
-> membership to the closed linux-distros list so that I may participate
-> fully in reporting and fixing vulnerabilities in Ubuntu and FOSS.
+----- Original Message -----
+> Hello everyone,
+> 
+> This topic has lost focus lately. Rather than let it slip away, I
+> think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
 
-I've just subscribed Tyler.
+pub   4096R/C44977CA 2011-04-12
+      Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+uid                  Petr Matousek <pmatouse@...hat.com>
+uid                  Petr Matousek <pm@...p.org>
 
-Alexander
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
