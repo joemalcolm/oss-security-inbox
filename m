@@ -1,41 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/11
-Message-ID: <4EA5C0B1.6080008@freebsd.org>
-Date: Mon, 24 Oct 2011 12:46:57 -0700
-From: Colin Percival <cperciva@...ebsd.org>
-To: Eitan Adler <eadler@...ebsd.org>
-CC: oss-security@...ts.openwall.com, security@...ian.org,  secteam@...ebsd.org
-Subject: Re: CVE Request: FreeBSD kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/1
+Message-ID: <BANLkTima_p-WEHFTcwska46CzmCaqrWGTg@mail.gmail.com>
+Date: Mon, 11 Apr 2011 22:19:11 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <bressers@...hat.com>,  Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
-On 10/24/11 12:12, Eitan Adler wrote:
-> On Thu, Oct 20, 2011 at 12:26 PM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
->>>>    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
->> This has been assigned CVE-2011-4062 by MITRE in the mean time.
-> 
-> Something is odd with the MITRE CVE:
-> 
-> According to http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-4062
-> the bug is in the Linux emulation code. However the bug is really in
-> the bind(2) system call. There was a different bug in the emulation
-> code exposed by fixing the bind vulnerability but the system is
-> vulnerable even without linux emulation turned on.
+Any update on this?
 
-Indeed, the text on the CVE page is entirely bogus.  I'd recommend using this
-text, from our advisory:
-> When a UNIX-domain socket is attached to a location using the bind(2)
-> system call, the length of the provided path is not validated.  Later,
-> when this address was returned via other system calls, it is copied into
-> a fixed-length buffer.
+-Dan
 
-The places where the FreeBSD advisory mentions linux emulation relate only to
-the non-security bugfix which we rolled into the patch for the sake of avoiding
-breakage.
-
-(Is there anyone on the list who can fix the CVE description?  If not, I'll
-poke the CVE folks directly.)
-
--- 
-Colin Percival
-Security Officer, FreeBSD | freebsd.org | The power to serve
-Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
+On Tue, Apr 5, 2011 at 11:37 AM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> Hi,
+>
+> This breakdown seems to make sense.  I'll do my best to break up the
+> issues below.
+>
+>>
+>> Dan, could you confirm that this breakdown makes sense?
+>>
+>> 1) buffer overflows (not validating length is <= the maximum)
+>>
+>
+> 1) When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
+> for a remote host to provide more digipeaters than expected, resulting
+> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
+> overflows, and abort facilities parsing on failure.  It looks like
+> this will be CVE-2011-1493.
+>
+> 2) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+> facilities fields, a remote host can provide a length of greater than
+> 20, resulting in a stack overflow of the callsign array.
+>
+>> 2) use of negative signed integers in memcpy() and other operations where
+>>   conversion creates a large unsigned integer, referred to as
+>>   "underflow"
+>>
+>
+> 3) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+> facilities fields, a remote host can provide a length
+> of less than 10, resulting in an underflow in a memcpy size, causing a
+> kernel panic due to massive heap corruption.
+>
+> Note that 2) and 3) are solved by validating a single length field, so
+> maybe they should be grouped together?  The above three issues were
+> all found by me.
+>
+>> 3) any other types of problems that aren't covered by those two?  (The
+>>   length validation checks don't always have enough context in the source
+>>   code).
+>>
+>
+> 4) Ben Hutchings' fixes addressed multiple cases where the ROSE
+> protocol did not ensure that socket data being parsed wasn't being
+> read in from beyond the boundaries of the incoming socket buffer.  For
+> example, a received packet might provide a length field longer than
+> the amount of remaining data in the socket buffer.
+>
+> Looking at the patch, it doesn't appear that any memory corruption
+> would be caused by this, since the out-of-bounds data is still
+> validated by the parsing code.  I'd say the impact is likely limited
+> to possible information disclosure, if the contents of the
+> out-of-bounds memory could be inferred by the behavior of the protocol
+> during parsing.  It's theoretically possible (but very unlikely) that
+> this could cause read accesses to unmapped memory, which would cause a
+> DOS.
+>
+> -Dan
+>
+>> We would need separate CVE's for the issues found by Dan versus the issues
+>> found by Ben Hutchings.
+>>
+>> Arguably, #2 could probably be broken down further, but without enough
+>> source code context in the patches, it's not immediately clear.
+>>
+>> - Steve
+>>
+>
