@@ -1,17 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/56
-Message-ID: <4D9A445E.6090503@xiscosoft.es>
-Date: Tue, 05 Apr 2011 00:21:18 +0200
-From: klondike <klondike@...cosoft.es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/13
+Message-ID: <20110412210319.GC16400@openwall.com>
+Date: Wed, 13 Apr 2011 01:03:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
+Cc: a3li@...too.org
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-El 04/04/11 22:03, Jeffrey Czerniak escribió:
-> I'm Jeffrey Czerniak, a member of Apple's Product Security team.  I was a member of vendor-sec via the Apple exploder.   Please subscribe me to the new list.
->
-> My PGP public key can be found at https://www.apple.com/support/security/pgp/   I have also pasted it below for convenience:
-I thought Apple didn't made a Linux distro. Has that changed?
+On Wed, Apr 06, 2011 at 10:13:05PM +0200, Stefan Behte wrote:
+> please add me as gentoo linux security contact:
+> 
+> pub  1024D/E28C7BB4 2009-01-26 Stefan Behte <craig@...too.org>
+> Fingerprint: 0F01 31A6 BD64 8C4C A187 6253 BA27 33A7 E28C 7BB4
 
+Added.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+Alexander
