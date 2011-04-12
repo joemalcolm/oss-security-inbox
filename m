@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/14
-Message-ID: <20110406180648.GA3660@suse.de>
-Date: Wed, 6 Apr 2011 20:06:51 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Moonlight release 2.4.1 with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/2
+Message-ID: <4DA3BC0B.9030005@redhat.com>
+Date: Tue, 12 Apr 2011 10:42:19 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests: Three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> [3] http://permalink.gmane.org/gmane.linux.kernel/1124409 :
+>
+> | [PATCH] char: istallion: fix arbitrary kernel memory reads/writes
+> |
+> | stli_brdstats is defined as global variable.  After de-BKL-ization in
+> | the patch b4eda9cb48eac1b7 an access to the variable is not serialized
+> | anymore.  This leads to the TOCTOU in stli_getbrdstats():
+[...]
 
-The Novell Mono developers are just releasing Moonlight (the Mono
-Silverlight equivalent) security updates for several critical issues.
+de-BKL-ization patch b4eda9cb48eac1b7 happened in v2.6.36-rc1.
 
-The first 3 issues were reported to the Mono team by Jeroen Frijters
-(http://www.ikvm.net/).
+I don't think this qualifies a CVE as this is a staging driver (not 
+supported, experimental, buggy, use at your own risk).
 
-The fixed versions is 2.4.1 for the 2.4 branch and 3.99.3 for the 3.99
-(Moonlight 4 preview) branch.
-
-The main Novell tracker bug for this update:
-https://bugzilla.novell.com/show_bug.cgi?id=667077
-
-
-CVE-2011-0989: modification of read-only values via
-RuntimeHelpers.InitializeArray
-https://github.com/mono/mono/commit/035c8587c0d8d307e45f1b7171a0d337bb451f1e
-
-The modification of read-only variables (e.g. from outside the sandbox)
-could be used for breaking out of the moonlight sandboxing.
-
-
-CVE-2011-0990: buffer overflow due to race condition in in Array.FastCopy
-https://github.com/mono/mono/commit/2f00e4bbb2137130845afb1b2a1e678552fc8e5c
-
-Similar to the above, an array element could be changed to a privileged
-read-only element which would then be overwritten.
-(So not a lowlevel buffer overflow, but a sandboxing violation/break out.)
-
-
-
-CVE-2011-0991: use-after-free due to DynamicMethod resurrection
-https://github.com/mono/mono/commit/8eb1189099e02372fd45ca1c67230eccf1edddc0
-https://github.com/mono/mono/commit/89d1455a80ef13cddee5d79ec00c06055da3085c
-
-
-Also fixed in this update:
-CVE-2011-0992: information leak due to improper thread finalization
-https://bugzilla.novell.com/show_bug.cgi?id=678515
-https://github.com/mono/mono/commit/722f9890f09aadfc37ae479e7d946d5fc5ef7b91
-
-Ciao, Marcus
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
