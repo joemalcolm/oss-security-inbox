@@ -1,20 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/15
-Message-ID: <4E12F2CC.4060307@redhat.com>
-Date: Tue, 05 Jul 2011 19:17:32 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/17
+Message-ID: <4DA4C9C5.7020806@pre-sense.de>
+Date: Tue, 12 Apr 2011 23:53:09 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: The Bind incident
+Subject: CVE Request: kernel: fs/partitions: Corrupted GUID partition tables can cause kernel oops
 Content-Type: text/plain; charset=utf-8
 
-You might have read about AusCert's accidental disclosure of the ISC
-Bind advisories today. If you have more information about this, please
-share. AFAICS, the bind source packages are still not available at the
-ISC website.
+The Linux kernel automatically evaluates partition tables of storage
+devices. The code for evaluating EFI GUID partitions (in
+fs/partitions/efi.c) contains a bug that causes a kernel oops on certain
+corrupted GUID partition tables.
 
-https://bugzilla.redhat.com/CVE-2011-2464
-https://bugzilla.redhat.com/CVE-2011-2465
-http://risky.biz/auscert-bind
-http://pastebin.com/9NUt8Pk0
+A patch is available at
+http://www.spinics.net/lists/mm-commits/msg83274.html
 
-Thanks, Eugene
+Cheers, Timo
