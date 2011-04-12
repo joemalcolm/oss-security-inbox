@@ -1,45 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/6
-Message-ID: <20110706091818.GB797@dojo.mi.org>
-Date: Wed, 6 Jul 2011 05:18:18 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/3
+Message-ID: <4DA3C023.3030900@redhat.com>
+Date: Tue, 12 Apr 2011 10:59:47 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Bind incident
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests: Three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-:On Tue, Jul 05, 2011 at 07:17:32PM +0800, Eugene Teo wrote:
-:> You might have read about AusCert's accidental disclosure of the ISC
-:> Bind advisories today. If you have more information about this, please
-:> share. AFAICS, the bind source packages are still not available at the
-:> ISC website.
-:> 
-:> https://bugzilla.redhat.com/CVE-2011-2464
-:> https://bugzilla.redhat.com/CVE-2011-2465
-:> http://risky.biz/auscert-bind
-:> http://pastebin.com/9NUt8Pk0
-:
-:Here are the ISC advisories:
-:
-:http://www.isc.org/software/bind/advisories/cve-2011-2464
-:http://www.isc.org/software/bind/advisories/cve-2011-2465
-:
-:The oldest affected version is 9.6'ish, and the advisories explicitly
-:say that "Other versions of BIND 9 not listed in this advisory are not
-:vulnerable to this problem."  So those of us with older BIND 9 appear to
-:have nothing to do on this. ;-)  (Of course, we might have other/older
-:issues to patch.)
+> [1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
+>
+> | PATCH] char: briq_panel: fix TOCTOU bug
+> |
+> | There is a TOCTOU bug in briq_panel_write() code:
+> |
+> |     if (vfd_cursor>  39)<<<
+> |             scroll_vfd();
+> |     vfd[vfd_cursor++] = c;<<<
+> |
+> | It's possible to write to arbitrary memory location in case of more than
+> | one process tries to call write() simultaneously.
 
-Note that the BIND 9.4 ESV formally EOLed just last month:
+This shouldn't happen as this is protected using tty_lock to only allow 
+single access to it at any one time. So having more than one processes 
+writing to it is unlikely. No CVE for this one.
 
-http://www.isc.org/softwaresupportpolicy
+> [2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
+>
+> | [PATCH] char: genrtc: fix infoleak to userspace
+> |
+> | struct pll is copied to userspace.  It is filled in "multiplexing" function
+> | get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
+> | fill .pll_ctrl field.  It's hard to understand whether either the caller
+> | or the callee must zero the unused struct fields, however, on another
+> | ioctl commands the caller already zeroes the structure.  So, let's the
+> | caller use memset().
 
-So, if you are distributing an older rev of BIND and some new security
-issue comes up that you are prone to, it _might_ not be quite as easy to
-backport the fixes.
+No CVE for this one too; /dev/rtc is root read/write only.
 
+Thanks.
+
+Eugene
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Gravity was invented by Isaac Walton."                    -Anguished English
-
-Content of type "application/pgp-signature" skipped
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
