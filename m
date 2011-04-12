@@ -1,54 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/11
-Message-ID: <1089658792.289286.1304359748240.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 14:09:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/14
+Message-ID: <20110412213344.GA16664@openwall.com>
+Date: Wed, 13 Apr 2011 01:33:44 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [security-vendor] Re: Closed list
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> > Hi Hui,
-> >
-> > On Thu, Apr 28, 2011 at 02:24:58PM +0800, Hui Zhu wrote:
-> >> > Please add me to the new maillist. I am from Wind River.
-> > Wind River is not yet being added to the new list:
-> >
-> > http://www.openwall.com/lists/oss-security/2011/04/24/6
-> >
-> > Hence, I've saved your subscription request to a separate folder, to
-> > revisit it if a decision is made to start adding "closed" vendors to
-> > the list, if Wind River starts to publish advisories and updates (in
-> > other words, if it becomes no more closed than Red Hat), or if a
-> > suitable separate list is setup.
-> >
+On Tue, Apr 12, 2011 at 07:58:18PM +0300, Onur K??????k wrote:
+>  Sorry for the late reply, we had to resolve some issues on our side
+> about who should join. I was a subscriber of vendor-sec as a
+> representitive of Pardus, please add me to the new list(s).
 > 
-> While I have not personally applied for the closed vendor list, our
-> current security contact has. I thought I would attempt to explain
-> briefly what we publicly disclose and what we do not. If this changes
-> your stance on allowing us into the closed list that is fine, if not then
-> keep this as background information for the future.
 > 
-> Wind River provides a public RSS feed with the advisories for our
-> currently supported products. However, to get to the download you need to
-> be a customer.  The information in the RSS feed is accurate as to the
-> description of the issue, the only thing not published is the fixes
-> themselves (note, these fixes don't make sense if you are not a Wind
-> River customer) along with installation notes.
-> 
-> The RSS feeds for our three currently support product versions are:
-> 
-> Wind River Linux 2.x : http://www.windriver.com/feeds/wrlinux_200.xml
-> 
-> Wind River Linux 3.x : http://www.windriver.com/feeds/wrlinux_300.xml
-> 
-> Wind River Linux 4.x : http://www.windriver.com/feeds/wrlinux_400.xml
-> 
+> pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
+>      Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
+> uid                  Onur K??????k <onur@...dus.org.tr>
+> sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
 
-I think this is suitable. The goal here is to ensure that a vendor is
-actually producing updates and aren't just a potential leak.
+Added.
 
-Thanks.
+BTW, I am applying this restriction:
 
--- 
-    JB
+| 2. Be on oss-security by the time Josh posted the above (if you did not
+| care to join oss-security until now, you hardly have a legitimate need
+| to be on the closed list now).
+
+per-distro rather than per-person.  (And it will become obsolete in some
+months anyway since new distros are appearing, etc.)
+
+Alexander
