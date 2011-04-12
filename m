@@ -1,31 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/8
-Message-ID: <887FE7CFF6F8DE4BB3A9535F53AFD06A6F670AB2@il-ex2.zend.net>
-Date: Sun, 25 Sep 2011 13:47:29 +0000
-From: Zeev Suraski <zeev@...d.com>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Vincent Danen <vdanen@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>, Stas Malyshev <smalyshev@...arcrm.com>
-Subject: RE: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/1
+Message-ID: <BANLkTima_p-WEHFTcwska46CzmCaqrWGTg@mail.gmail.com>
+Date: Mon, 11 Apr 2011 22:19:11 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <bressers@...hat.com>,  Eugene Teo <eugene@...hat.com>
+Subject: Re: CVE request: kernel: multiple issues in ROSE
 Content-Type: text/plain; charset=utf-8
 
+Any update on this?
 
+-Dan
 
-> -----Original Message-----
-> From: Pierre Joye [mailto:pierre.php@...il.com]
-> Sent: Sunday, September 25, 2011 12:02 PM
-> To: Stas Malyshev
-> Cc: Vincent Danen; oss-security@...ts.openwall.com; security@....net
-> Subject: Re: CVE request: is_a() function may allow arbitrary code execution
-> in PHP 5.3.7/5.3.8
-> 
-> hi Stas,
-> 
-> I tend to disagree here. One of the CVE goal is not about declaring one or the
-> other guilty of bad practice(s) but about informing users about security issues
-> in the software they use and how to act correctly to fix these issues.
-
-There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
-It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
-So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
-
-Zeev
+On Tue, Apr 5, 2011 at 11:37 AM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> Hi,
+>
+> This breakdown seems to make sense.  I'll do my best to break up the
+> issues below.
+>
+>>
+>> Dan, could you confirm that this breakdown makes sense?
+>>
+>> 1) buffer overflows (not validating length is <= the maximum)
+>>
+>
+> 1) When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
+> for a remote host to provide more digipeaters than expected, resulting
+> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
+> overflows, and abort facilities parsing on failure.  It looks like
+> this will be CVE-2011-1493.
+>
+> 2) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+> facilities fields, a remote host can provide a length of greater than
+> 20, resulting in a stack overflow of the callsign array.
+>
+>> 2) use of negative signed integers in memcpy() and other operations where
+>>   conversion creates a large unsigned integer, referred to as
+>>   "underflow"
+>>
+>
+> 3) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
+> facilities fields, a remote host can provide a length
+> of less than 10, resulting in an underflow in a memcpy size, causing a
+> kernel panic due to massive heap corruption.
+>
+> Note that 2) and 3) are solved by validating a single length field, so
+> maybe they should be grouped together?  The above three issues were
+> all found by me.
+>
+>> 3) any other types of problems that aren't covered by those two?  (The
+>>   length validation checks don't always have enough context in the source
+>>   code).
+>>
+>
+> 4) Ben Hutchings' fixes addressed multiple cases where the ROSE
+> protocol did not ensure that socket data being parsed wasn't being
+> read in from beyond the boundaries of the incoming socket buffer.  For
+> example, a received packet might provide a length field longer than
+> the amount of remaining data in the socket buffer.
+>
+> Looking at the patch, it doesn't appear that any memory corruption
+> would be caused by this, since the out-of-bounds data is still
+> validated by the parsing code.  I'd say the impact is likely limited
+> to possible information disclosure, if the contents of the
+> out-of-bounds memory could be inferred by the behavior of the protocol
+> during parsing.  It's theoretically possible (but very unlikely) that
+> this could cause read accesses to unmapped memory, which would cause a
+> DOS.
+>
+> -Dan
+>
+>> We would need separate CVE's for the issues found by Dan versus the issues
+>> found by Ben Hutchings.
+>>
+>> Arguably, #2 could probably be broken down further, but without enough
+>> source code context in the patches, it's not immediately clear.
+>>
+>> - Steve
+>>
+>
