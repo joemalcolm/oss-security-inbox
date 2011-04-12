@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/11
-Message-ID: <20111117171341.GM1686@redhat.com>
-Date: Thu, 17 Nov 2011 10:13:41 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/8
+Message-Id: <20110412195818.0fcf0534.onur@pardus.org.tr>
+Date: Tue, 12 Apr 2011 19:58:18 +0300
+From: Onur Küçük <onur@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* [2011-11-17 02:40:28 +0000] The Fungi wrote:
 
->On 2011-11-16 23:43:25 +0400 (+0400), Solar Designer wrote:
->[...]
->> Does anyone readily know if BIND 9.3.x is affected as well?
->[...]
->
->While obviously not conclusive, I can say that our 9.3.4-P1.2
->resolvers were not impacted and ran clean through while our 9.5.1-P3
->and 9.6-ESV-R4 resolvers crashed and had to be restarted several
->times overnight.
+On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
+...
+> Initial members will have had to be a vendor-sec member (no exploders
+> this time around). You must reply to this thread, in public (on
+> oss-security). We want this to be very public, we have nothing to
+> hide. You must have a public gpg key ID included in your reply. The
+> new list will gpg encrypt all mail (it does accept plaintext messages
+> though).
 
-Our bind maintainer believes that 9.3.6 is affected (but possibly harder
-to exploit or via a different vector).
+ Sorry for the late reply, we had to resolve some issues on our side
+about who should join. I was a subscriber of vendor-sec as a
+representitive of Pardus, please add me to the new list(s).
 
-However, he does not believe that 9.2.x and earlier are affected due to
-the old DNSSEC implementation (so 9.2.x wouldn't understand current
-DNSSEC signatures so would not cache them).
 
-Some further details can be found in our bug:
+pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
+     Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
+uid                  Onur Küçük <onur@...dus.org.tr>
+sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4313
 
---
-Vincent Danen / Red Hat Security Response Team
+-- 
+ Onur Küçük                                      Knowledge speaks,
+ <onur.--.-.pardus.org.tr>                       but wisdom listens
+
