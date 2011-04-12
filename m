@@ -1,16 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/6
-Message-ID: <20110127220336.GA4069@pisco.westfalen.local>
-Date: Thu, 27 Jan 2011 23:03:36 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/13
+Message-ID: <20110412210319.GC16400@openwall.com>
+Date: Wed, 13 Apr 2011 01:03:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: puppet
+Cc: a3li@...too.org
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this vulnerability in the Puppet configuration
-management system:
-http://www.mail-archive.com/puppet-users@googlegroups.com/msg16429.html
+On Wed, Apr 06, 2011 at 10:13:05PM +0200, Stefan Behte wrote:
+> please add me as gentoo linux security contact:
+> 
+> pub  1024D/E28C7BB4 2009-01-26 Stefan Behte <craig@...too.org>
+> Fingerprint: 0F01 31A6 BD64 8C4C A187 6253 BA27 33A7 E28C 7BB4
 
-Cheers,
-        Moritz
+Added.
+
+Alexander
