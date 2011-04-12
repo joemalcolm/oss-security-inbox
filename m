@@ -1,66 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/18
-Message-Id: <20110628155319.93c9cace.akpm@linux-foundation.org>
-Date: Tue, 28 Jun 2011 15:53:19 -0700
-From: Andrew Morton <akpm@...ux-foundation.org>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/7
+Message-ID: <4DA47197.7070809@mvista.com>
+Date: Tue, 12 Apr 2011 05:36:55 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 26 Jun 2011 19:57:23 -0700 Linus Torvalds <torvalds@...ux-foundation.org> wrote:
 
-> On Fri, Jun 24, 2011 at 5:34 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> >
-> > I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
+
+On 04/11/2011 09:57 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>>
+>> Postponed. I'd like to see any support for you getting onto the Linux
+>> distros security contacts list, with reasoning, or/and any other
+>> suggestions on what to do in this case. Josh - what do you think (as
+>> someone who advocated the setup of a vendor-sec replacement)?
+>>
 > 
-> Hmm. Should we just round them down to 1kB boundaries or something?
-> People *do* want to know about IO accounting, but I agree that giving
-> things at a byte granularity ends up giving way too much information.
-> When you can see how many bytes something read off a tty, that's a
-> problem.
+> My initial thought is that a vendor without public advisories is a
+> liability.
+
+Then we has been a liability to vendor-sec ever since we first got
+accepted way-back-when. My apologies.
+
 > 
-> Returning accounting information at a 1k granularity should make it
-> impractical to use that to guess keys etc. It still gives *some*
-> information (and enough for rough statistics), but it doesn't give the
-> level of detail required for any simple attack.
-> 
-> Sometimes excessive precision isn't a good thing.
-> 
-> Andrew - the IO_ACCT stuff went through you (back in 2006), the
-> taskstats did too, methinks. Comments?
-> 
+> I don't want to get into the politics of not publishing your advisories,
 
-Random thoughts:
+(I don't either)
 
-a) I haven't thought very hard about it, but isn't it the case that
-   fuzzifying the byte counts in this manner will still permit the
-   length of these things to be determined, albeit with a larger data
-   set?
+> but at the same time, public information such as this is all we have to
+> measure if a vendor is using the information at hand.
 
-b) Where does the problem lie?  Is it with the kernel, which exposes
-   accurate accounting?  Or is it with userspace, which accidentally
-   exposes sensitive information by failing to account for the kernel's
-   exposure of accurate accounting information?  
+Agreed.
 
-   - Assumes that userspace can be changed to obscure this
-     information.  Erroneously, I think ;)
+> I'm happy to draw a line in the sand and make public advisories a mandatory
+> requirement. If anyone disagrees, please speak up. This is my personal
+> opinion, other viewpoints are welcome.
 
-c) Should this information be world-readable?  Perhaps we should add
-   more rational privileges here.  Back-compatibility issues.
+So publicly available advisories are a requirement.  What about access
+to the patches?
 
+Is there somewhere I can point my management to that defines these new
+requirements or is this too soon?
 
+Mahalo,
+Armin
 
-If rounding the counts to a 1k granularity will indeed defeat the
-attack (I'm unsure) then I'd suggest that a fix would be to perform
-that fuzzification if the receiving process doesn't have suitable
-permissions.  So if the user is reading his own stats or is root, he
-still gets byte-resolution results.  This keeps the stats as useful as
-we can make them and reduces the back-compatibility damage.
-
-What might be the extent of the back-compatibility damage?  It's hard
-to believe that anyone would care about a 1k error in bulk IO stats. 
-But if there's someone out there who uses these interfaces to detect
-whether the monitored task is doing *anything* then we'll break them. 
-eg, "did my data logging task just receive a packet from my
-scintillator experiment".  
