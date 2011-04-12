@@ -1,102 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/14
-Message-ID: <1196368402.169410.1298409651973.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 16:20:51 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/14
+Message-ID: <20110412213344.GA16664@openwall.com>
+Date: Wed, 13 Apr 2011 01:33:44 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Vanilla Forums 2.0.17.1 ~ 2.0.17.5 <= Cross Site Scripting Vulnerability
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1009.
+On Tue, Apr 12, 2011 at 07:58:18PM +0300, Onur K??????k wrote:
+>  Sorry for the late reply, we had to resolve some issues on our side
+> about who should join. I was a subscriber of vendor-sec as a
+> representitive of Pardus, please add me to the new list(s).
+> 
+> 
+> pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
+>      Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
+> uid                  Onur K??????k <onur@...dus.org.tr>
+> sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
 
-Thanks.
+Added.
 
--- 
-    JB
+BTW, I am applying this restriction:
 
+| 2. Be on oss-security by the time Josh posted the above (if you did not
+| care to join oss-security until now, you hardly have a legitimate need
+| to be on the closed list now).
 
------ Original Message -----
-> 1. OVERVIEW
-> 
-> The Vanilla Forums 2.0.17.1 till 2.0.17.5 were vulnerable to Cross
-> Site Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Vanilla Forums are open-source, standards-compliant, customizable
-> discussion forums.
-> It is specially made to help small communities grow larger through SEO
-> mojo, totally customizable social tools,
-> and great user experience. Vanilla is also built with integration at
-> the forefront, so it can
-> seamlessly integrate with your existing website, blog, or custom-built
-> application.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The 'p' parameter was not properly sanitized upon submission to the
-> /index.php url, which allows attacker to conduct Cross Site Scripting
-> attack.
-> This may allow an attacker to create a specially crafted URL that
-> would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.0.17.1 ~ 2.0.17.5
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/vanilla/index.php?p=/entry/"><script>alert(/XSS/)</script>
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to Vanilla Forums 2.0.17.6 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> Vanilla Forums Development Team
-> http://vanillaforums.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-01-25: notified vendor
-> 2011-01-27: vendor released fix
-> 2011-02-22: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.17.5]_cross_site_scripting
-> Github Issue Report:
-> https://github.com/vanillaforums/Garden/issuesearch?state=closed&q=xss#issue/750
-> Vendor Commit:
-> https://github.com/vanillaforums/Garden/commit/0a22506c76ac419d390d5d1bde5ec5f48b195358
-> Vendor Release:
-> http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released/
-> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-02-22]
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+per-distro rather than per-person.  (And it will become obsolete in some
+months anyway since new distros are appearing, etc.)
+
+Alexander
