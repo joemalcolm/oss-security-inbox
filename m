@@ -1,75 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/10
-Message-ID: <AANLkTi=3tF6zHvTRy-fVSKHE6sbEXJYeq1MrJD7ntdPH@mail.gmail.com>
-Date: Tue, 4 Jan 2011 10:19:39 -0500
-From: Hyrum Wright <hwright@...che.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Kurt Seifried <kurt@...fried.org>, Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/10
+Message-ID: <1962168437.55225.1302641231065.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Apr 2011 16:47:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: libtiff CVE assignments
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 4, 2011 at 10:02 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> Hello Kurt, Josh, vendors,
->
-> Josh Bressers wrote:
->>
->> ----- Original Message -----
->>>
->>> Unspecified vulnerability in the server component in Apache Subversion
->>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
->>> service via unknown vectors, related to a "several bug fixes,
->>> including two which can cause client-initiated crashes on the server."
->>>
->>> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
->
->  Cc-ed Hyrum to shed more light into this one. [1] mentions two issues:
-> <begin quote>
-> ...
-> several bug fixes, including two which can cause client-initiated
-> crashes on the server.
-> </end quote>
->
-> Further look at:
-> [2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
->
-> suggest:
->
-> A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
-> being the first one.
->   Upstream changeset:
->   http://svn.apache.org/viewvc?view=revision&revision=1033166
->
-> and after discussion with Joe Orton, Joe suggested:
->
-> B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
->   References:
->   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
->   Upstream changeset:
->   http://svn.apache.org/viewvc?view=revision&revision=1032808
->
->   being the second one as denial of service attack (by memory consumption)
-> against
->   svnserve.
->
-> Questions:
-> ----------
-> Hyrum, could you confirm A, and B, issues are those two, mentioned in [2]
-> to be able to cause client-initiated crashes on the server?
+I've assigned two CVE ids for some things fixed in the 3.9.5 libtiff release.
 
-I can confirm that A and B are the two issues mentioned in [2].
+        http://www.remotesensing.org/libtiff/v3.9.5.html
 
->> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
->> We can split it if needed once more information is known.
->
-> Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
-> we consider CVE-2010-4539 to be a CVE identifier for A, issue
-> and request yet another / second one for B, issue?
+        libtiff/tif_ojpeg.c: fix buffer overflow on problem data
+        http://bugzilla.maptools.org/show_bug.cgi?id=1999
+        CVE-2009-5022
 
-We didn't initially reserve CVEs for these vulnerabilities, but will
-be happy to update our documentation to reflect them.  (See
-http://subversion.apache.org/security/ )   The two issues really are
-orthogonal, so B should probably  not be included in a CVE for A.
+        tools/tiffdump.c: Avoid integer overflows computing the buffer size
+        for large directories. As per bug
+        http://bugzilla.maptools.org/show_bug.cgi?id=2218
+        CVE-2010-4665
 
-I've CC'd dev@...version.apache.org to help coordinate advisory authoring.
+Thanks.
 
--Hyrum
+-- 
+    JB
