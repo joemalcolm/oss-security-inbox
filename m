@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/7
-Message-ID: <alpine.DEB.2.00.1101141348250.3549@familiar.castaglia.org>
-Date: Fri, 14 Jan 2011 13:50:02 -0800 (PST)
-From: "TJ Saunders" <tj@...taglia.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/18
+Message-ID: <4DA4CCD6.4060006@mvista.com>
+Date: Tue, 12 Apr 2011 12:06:14 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-cc: coley <coley@...re.org>
-Subject: Re: CVE request: proftpd before 1.3.3d
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Josh,
 
-> I could have swore this flaw got an ID, but I can't find it.
+Your initial e-mail indicated we would be part of this new group since
+we where a vendor-sec member. Now there are new requirements we have to
+meet. Is there a possibility of a probationary period so we can try to
+comply to these new requirements and still be on the closed list?
 
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4221
+Mahalo,
+Armin
 
-Was the one assigned for the Telnet IAC issue:
-
-  http://bugs.proftpd.org/show_bug.cgi?id=3521
-
-The issue from the Phrack article did not have a CVE assigned, to my 
-knowledge; it was related to code in ProFTPD's mod_sql module:
-
-  http://bugs.proftpd.org/show_bug.cgi?id=3536
-
-Cheers,
-TJ
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-   He who has never hoped can never despair.
-
-   	-George Bernard Shaw
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+On 04/01/2011 08:03 AM, Josh Bressers wrote:
+> Hello everyone,
+> 
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+> 
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
+> 
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+> 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+> 
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+> 
+> Thanks.
+> 
