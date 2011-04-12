@@ -1,26 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/2
-Message-ID: <20111022011903.GA31685@openwall.com>
-Date: Sat, 22 Oct 2011 05:19:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/5
+Message-ID: <20110412112221.GA3480@albatros>
+Date: Tue, 12 Apr 2011 15:22:22 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Cc: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests: Three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 22, 2011 at 04:56:21AM +0400, Solar Designer wrote:
->       strcpy (p, di->d_name);
-> 
-> where "p" points somewhere inside nambuf1.
-> 
-> These will just need different reproducers.
+On Mon, Apr 11, 2011 at 18:54 -0400, Dan Rosenberg wrote:
+> Firstly, this driver has locking that only allows one open file
+> descriptor at once.
 
-Actually, I think my proposed reproducer (many nested 250-char dirs)
-triggers this one and not the strcat().  On one build, hardlink then
-crashes after dereferencing the "dirs" pointer, which happens to be
-overwritten with a directory name.  On another build (different gcc
-version and arch), hardlink does not crash (although I think it would on
-even more nested directories), but reports a ridiculous directory count
-(so "ndirs" is overwritten).  -D_FORTIFY_SOURCE=2 didn't make a
-difference here (different program binary, same observed behavior).
+Yes, but the process that opened the file may:
 
-Alexander
+1) give fd to another process.
+2) call fork().
+
+And since de-BLK-ization 2+ processes may run read()/write()
+simultaneously.
+
+> Even if you can work around this, you'd have a race window of about
+> two instructions, with basically no possibility of being preempted
+> since there's no blocking or potentially faulting operation.  And
+> that's assuming it's even possible, since it may be the case that this
+> index is in a register, which would render this completely
+> unexploitable.
+> 
+> Assuming this isn't the case, and you're running an SMP system and
+> spent countless hours (days? weeks?) spinning to hit this extremely
+> narrow race, you then get to write a single byte past the end of this
+> array, into the vfd_is_open integer, which is already set to 1 (it's
+> treated as a boolean value).
+
+Agreed, I thought about it too :-)
+
+
+AFAIU, all these 3 drivers are not available to non-root users.
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
