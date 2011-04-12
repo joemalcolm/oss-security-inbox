@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/5
-Message-ID: <20110617000422.541ea4f3@redhat.com>
-Date: Fri, 17 Jun 2011 00:04:22 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/3
+Message-ID: <4DA3C023.3030900@redhat.com>
+Date: Tue, 12 Apr 2011 10:59:47 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE requests: Three Linux kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander!
+> [1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
+>
+> | PATCH] char: briq_panel: fix TOCTOU bug
+> |
+> | There is a TOCTOU bug in briq_panel_write() code:
+> |
+> |     if (vfd_cursor>  39)<<<
+> |             scroll_vfd();
+> |     vfd[vfd_cursor++] = c;<<<
+> |
+> | It's possible to write to arbitrary memory location in case of more than
+> | one process tries to call write() simultaneously.
 
-On Wed, 25 May 2011 21:33:29 +0400 Solar Designer wrote:
+This shouldn't happen as this is protected using tty_lock to only allow 
+single access to it at any one time. So having more than one processes 
+writing to it is unlikely. No CVE for this one.
 
-> abc and I have enhanced the official/local archive of oss-security
-> today (as well as of other Openwall-hosted mailing lists):
-> 
-> http://www.openwall.com/lists/oss-security/
-> 
-> Now these have month and day index pages with message Subjects and
-> Froms on them (finally).
+> [2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
+>
+> | [PATCH] char: genrtc: fix infoleak to userspace
+> |
+> | struct pll is copied to userspace.  It is filled in "multiplexing" function
+> | get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
+> | fill .pll_ctrl field.  It's hard to understand whether either the caller
+> | or the callee must zero the unused struct fields, however, on another
+> | ioctl commands the caller already zeroes the structure.  So, let's the
+> | caller use memset().
 
-This certainly is a nice enhancement, that makes it a lot easier to find
-specific mail in the web archive.
+No CVE for this one too; /dev/rtc is root read/write only.
 
-> Suggestions/votes for further enhancements are welcome (we have a
-> to-do list for blists internally, but we're unsure of what to work on
-> next).
+Thanks.
 
-Thread view is what other archive managers tend to provide.  It's
-usually more convenient for navigating through longer / more complex
-threads than only thread-prev / thread-next.  Most archive managers
-split archive on the month boundary, which breaks threads view, but,
-guessing from what you've written, it seems blists should not suffer
-form such problem.
-
-For oss-security, there's also a gmane hosted archive which already
-offers a rather nice thread view.  It also provides short links to
-views that only show specific thread, with option to focus on a
-particular post. I'd expect you don't plan to compete with gmane
-feature set, but there surely is some inspiration to be found there if
-you're after ideas.
-
+Eugene
 -- 
-Tomas Hoger
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
