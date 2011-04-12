@@ -1,70 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/14
-Message-ID: <4E25B0C5.5010306@redhat.com>
-Date: Tue, 19 Jul 2011 18:28:53 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Alan Boudreault <aboudreault@...gears.com>, Even Rouault <even.rouault@...es-paris.org>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Pavel Lisý <pavel.lisy@...il.com>
-Subject: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/15
+Message-ID: <4DA4C644.10001@mvista.com>
+Date: Tue, 12 Apr 2011 11:38:12 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Alan, Even, thanks for your replies.
 
-Just to clarify this one a bit yet. Two CVE identifiers (one for the
-multiple SQL injection flaws, the other for the stack based buffer 
-overflow issue) seem to be necessary in this case (due different
-versions affected):
 
-[1] http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
+On 04/09/2011 10:39 AM, Solar Designer wrote:
+> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
+>> Can I get a status on this? (+, -, Ack, Nack)
+> 
+> Postponed.  I'd like to see any support for you getting onto the Linux
+> distros security contacts list, with reasoning, or/and any other
+> suggestions on what to do in this case.  Josh - what do you think (as
+> someone who advocated the setup of a vendor-sec replacement)?
+> 
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+> Since you pinged me about the status on your subscription, let me ping
+> you about the status on the wiki updates as well. ;-)  Any progress?
+> The pages to update with your info are:
+> 
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
+> 
 
-On 07/19/2011 05:32 PM, Alan Boudreault wrote:
-> I got new from the debian security guy yesterday. I should get the CVE id
-> soon.
->
-> Thanks,
-> Alan
->
-> On July 19, 2011 11:28:29 am Even Rouault wrote:
->> Selon Jan Lieskovsky<jlieskov@...hat.com>:
->>
->> Jan,
->>
->> I believe Alan Boudreault (MapServer team member that I've added to the CC
->> list) has already asked the Debian security team to request for a CVE
->> number, but without any result for now. Maybe he can confirm.
->>
->> Best regards,
->>
->> Even
->>
->>> Hello Josh, Steve, vendors,
->>>
->>>     the following has been brought to our attention:
->>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
->>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
->>>
->>> More from [2]:
->>>
->>> This ticket is to track fixes to prevent SQL injections through OGC
->>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
->>> injection in WMS time support.
->>>
->>> Your system may be vulnerable if it has MapServer with OGC protocols
->>> enabled, with layers connecting to an SQL RDBMS backend, either natively
->>> or via OGR.
->>>
->>> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
->>> All users are ** strongly encouraged ** to upgrade to one of the latest
->>> releases with the fixes.
->>>
->>> Could you allocate a CVE id for this?
->>>
->>> Thank you&&  Regards, Jan.
->>> --
->>> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-
+Updated for MontaVista.
