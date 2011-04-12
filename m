@@ -1,63 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/10
-Message-ID: <20110812214302.GA28654@suse.de>
-Date: Fri, 12 Aug 2011 23:43:03 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/6
+Message-ID: <4DA41D15.5020300@pre-sense.de>
+Date: Tue, 12 Apr 2011 11:36:21 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 12, 2011 at 09:37:19PM +0200, Tomas Hoger wrote:
-> On Mon, 25 Jul 2011 08:57:10 +0200 Sebastian Krahmer wrote:
+Am 24.02.2011 02:25, schrieb Eugene Teo:
+> On 02/24/2011 03:59 AM, Josh Bressers wrote:
+>> ----- Original Message -----
+>>>
+>>> The kernel automatically evaluates partition tables of storage devices.
+>>> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+>>> a bug that allows to overflow the kernel heap. It may be possible to
+>>> escalate privileges by exploiting this bug.
+>>>
+>>> (This bug is distinct from the LDM bug reported by Eugene Teo on
+>>> 2011-02-23.)
+>>>
+>>> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+>>> CONFIG_LDM_PARTITION needs to be set.
+>>>
+>>
+>> Can you point to a commit message or something else that is public? It's
+>> not clear how this differs from Eugene's request.
 > 
-> > On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
-> > > I presume this only needs one ID
-> > > 
-> > > Use CVE-2011-2709
-> > 
-> > You probably speak about:
-> > 
-> > http://www.suse.de/~krahmer/libs-vs-fscaps/
-> 
-> I believe Josh was referring to libgssapi and libgssglue mentioned in
-> the subject.  It's the same code in both, libgssglue is libgssapi
-> renamed.
-> 
-> Would you mind sharing the patch you used in SLE packages?  It does not
-> seem to have been fixed in OpenSUSE yet.  Thanks!
+> As far as I can tell, it's not public yet. Timo will follow-up once his
+> patch is accepted.
 
-I just did a basic uid check.
+A patch is now available at
+http://www.spinics.net/lists/mm-commits/msg83181.html
 
-Index: libgssglue-0.1/src/g_initialize.c
-===================================================================
---- libgssglue-0.1.orig/src/g_initialize.c
-+++ libgssglue-0.1/src/g_initialize.c
-@@ -34,6 +34,8 @@
- #include <ctype.h>
- #include <errno.h>
- #include <syslog.h>
-+#include <unistd.h>
-+#include <sys/types.h>
- 
- #ifdef USE_SOLARIS_SHARED_LIBRARIES
- #include <dlfcn.h>
-@@ -195,7 +197,8 @@ static void solaris_initialize ()
-     void *dl;
-     gss_mechanism (*sym)(void), mech;
- 
--    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
-+    if ((getuid() != geteuid()) ||
-+        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
- 	filename = MECH_CONF;
- 
-     if ((conffile = fopen(filename, "r")) == NULL) {
-@@ -270,7 +273,8 @@ static void linux_initialize ()
-     void *dl;
-     gss_mechanism (*sym)(void), mech;
- 
--    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
-+    if ((getuid() != geteuid()) ||
-+        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
- 	filename = MECH_CONF;
- 
-     if ((conffile = fopen(filename, "r")) == NULL) {
+Best regards, Timo
