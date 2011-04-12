@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/13
-Message-ID: <1301917705.2521.113.camel@mdlinux>
-Date: Mon, 04 Apr 2011 07:48:25 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/6
+Message-ID: <4DA41D15.5020300@pre-sense.de>
+Date: Tue, 12 Apr 2011 11:36:21 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-04-04 at 10:51 +0200, Marcus Meissner wrote:
-> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
-> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> > >and Josh).
-> > 
-> > Limiting a distro to two or three representatives is going to make things 
-> > tricky for Red Hat; we have a rather large dedicated security response 
-> > team (as we publish over 300 advisories a year across 70 product/versions 
-> > and have a number of folks dealing with 'incoming' issues spread, and my 
-> > team is dispersed across 9 different countries).  If these representatives 
-> > have been very active on v-s and oss-security is there a reason to limit?
+Am 24.02.2011 02:25, schrieb Eugene Teo:
+> On 02/24/2011 03:59 AM, Josh Bressers wrote:
+>> ----- Original Message -----
+>>>
+>>> The kernel automatically evaluates partition tables of storage devices.
+>>> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
+>>> a bug that allows to overflow the kernel heap. It may be possible to
+>>> escalate privileges by exploiting this bug.
+>>>
+>>> (This bug is distinct from the LDM bug reported by Eugene Teo on
+>>> 2011-02-23.)
+>>>
+>>> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
+>>> CONFIG_LDM_PARTITION needs to be set.
+>>>
+>>
+>> Can you point to a commit message or something else that is public? It's
+>> not clear how this differs from Eugene's request.
 > 
-> Similar for SUSE. We currently have 3 engineers rotating through the incident
-> manager role (and myself).
+> As far as I can tell, it's not public yet. Timo will follow-up once his
+> patch is accepted.
 
-Same for Ubuntu. Limiting membership to two representatives would mean a
-lot of email from the list is going to be forwarded to the other members
-of our security team. Although limiting membership may seem like a good
-idea to contain leaks, having to forward email to non-members because of
-an arbitrary limitation would surely defeat that goal.
+A patch is now available at
+http://www.spinics.net/lists/mm-commits/msg83181.html
 
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+Best regards, Timo
