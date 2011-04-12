@@ -1,23 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/15
-Message-ID: <20110403215454.GA10880@steve.org.uk>
-Date: Sun, 3 Apr 2011 22:54:54 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/17
+Message-ID: <4DA4C9C5.7020806@pre-sense.de>
+Date: Tue, 12 Apr 2011 23:53:09 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE Request: kernel: fs/partitions: Corrupted GUID partition tables can cause kernel oops
 Content-Type: text/plain; charset=utf-8
 
+The Linux kernel automatically evaluates partition tables of storage
+devices. The code for evaluating EFI GUID partitions (in
+fs/partitions/efi.c) contains a bug that causes a kernel oops on certain
+corrupted GUID partition tables.
 
-I too was subscribed through the team@...urity.debian.org exploder. My key:
+A patch is available at
+http://www.spinics.net/lists/mm-commits/msg83274.html
 
-pub   1024D/CD4C0D9D 2002-05-29
-uid                  Steve Kemp <steve@...ve.org.uk>
-uid                  Steve Kemp <skx@...ian.org>
-sub   2048g/AC995563 2002-05-29
-
-  Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
-
-Steve
---
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Cheers, Timo
