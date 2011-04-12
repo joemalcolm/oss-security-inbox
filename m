@@ -1,46 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/11
-Message-ID: <20111026155310.GA14081@albatros>
-Date: Wed, 26 Oct 2011 19:53:10 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/8
+Message-Id: <20110412195818.0fcf0534.onur@pardus.org.tr>
+Date: Tue, 12 Apr 2011 19:58:18 +0300
+From: Onur Küçük <onur@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
-> On 10/26/2011 09:16 AM, Petr Matousek wrote:
-> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> > to reset dmesg_restrict to 0.
-> >
-> > This is an issue when e.g.  LXC (Linux Containers) are used and complete
-> > user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
-> > root user can bypass the dmesg_restrict protection.
-> >
-> > Introduced by:
-> > eaf06b241b091357e72b76863ba16e89610d31bd
-> >
-> > Fixed by:
-> > bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
-> >
-> > Thanks,
-> Please use CVE-2011-4080 for this issue.
+On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
+...
+> Initial members will have had to be a vendor-sec member (no exploders
+> this time around). You must reply to this thread, in public (on
+> oss-security). We want this to be very public, we have nothing to
+> hide. You must have a public gpg key ID included in your reply. The
+> new list will gpg encrypt all mail (it does accept plaintext messages
+> though).
 
-Why does it worth CVE?  Procfs is not ready for containers yet.  You can
-use other sysctls for more harmful things.  E.g. kernel.core_pattern
-allows arbitrary code execution as a full root - does it need a CVE too
-then? :-)
+ Sorry for the late reply, we had to resolve some issues on our side
+about who should join. I was a subscriber of vendor-sec as a
+representitive of Pardus, please add me to the new list(s).
 
-root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
-root@...-ubuntu:/proc/sys/kernel# cat 
-^\Quit (core dumped)
 
-(In the root namespace)
-$ ls /tmp/pwned
-/tmp/pwned
+pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
+     Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
+uid                  Onur Küçük <onur@...dus.org.tr>
+sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
+
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+ Onur Küçük                                      Knowledge speaks,
+ <onur.--.-.pardus.org.tr>                       but wisdom listens
+
