@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/19
-Message-ID: <ig57re$eb8$1@dough.gmane.org>
-Date: Thu, 06 Jan 2011 14:14:38 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/6
+Message-ID: <479180174.64225.1302695479209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Apr 2011 07:51:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Steve Beattie wrote:
-
-> On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
->> We got a heads up on a directory traversal flaw in patch.  I don't think
->> a CVE name has been assigned to it; could we get one?  It allows for the
->> creation of arbitrary files in unexpected places due to the use of '..'.
->> 
->> References:
->> 
->> https://bugzilla.redhat.com/show_bug.cgi?id=667529
->> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
->> 
->> Thanks.
+----- Original Message -----
 > 
-> I believe the Debian security team assigned CVE-2010-1679 for this
-> issue.
+> Your initial e-mail indicated we would be part of this new group since we
+> where a vendor-sec member. Now there are new requirements we have to
+> meet. Is there a possibility of a probationary period so we can try to
+> comply to these new requirements and still be on the closed list?
+> 
 
+I don't want to start arguing technicalities, semantics, or politics. Here
+is my current view, I'm going to leave the final decision up to Solar
+Designer, I view this as Openwall's list.
 
-That CVE is for dpkg (same principle, different code).
-My opinion is that patch should be fixed too and it would require another 
-CVE (we've run out of them atm.)
+We have rejected certain membership requests because they are not currently
+releasing security updates. I agree with this policy, I would say my
+initial mail was too vague. This instance is no different. It's clear that
+one of the membership requirements is now producing security updates.  If
+you can show you're doing this, that's grounds for membership in my
+opinion.
 
-Cheers,
+Thanks.
+
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+    JB
