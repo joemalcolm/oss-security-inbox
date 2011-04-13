@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/15
-Message-ID: <05281b73-1904-47da-bf14-4794d660b2f4@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:24:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/11
+Message-ID: <BANLkTim2D7H17BeFnJdSRZ9UnkU06nxAYg@mail.gmail.com>
+Date: Wed, 13 Apr 2011 12:19:20 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: Re: CVE Request: pam
+Cc: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi Armin,
 
+> What method of proving this would be acceptable? screen shot, temporary
+> access to our site, public list or other?
+>
 
------ Original Message -----
-> Hello,
-> 
-> Could a CVE please be assigned to the following issue:
-> 
-> A Debian/Ubuntu specific patch in pam, update-motd, calls the scripts
-> in /etc/update-motd.d as root without sanitizing the environment.
-> 
-> See:
-> 
-> https://bugs.launchpad.net/ubuntu/+source/pam/+bug/610125
-> 
+I'm confused why you think posting an advisory publicly would somehow
+put your customers in any sort of additional danger.  All of the
+vulnerabilities you would be fixing are certain to have public
+advisories for other distributions, so it seems obvious that your
+customers would be affected also.  It's not as though your advisories
+are the only indication to an attacker that your customers are
+vulnerable.
 
-Please use CVE-2011-3628.
-
-Thanks.
-
--- 
-    JB
+Regards,
+Dan
