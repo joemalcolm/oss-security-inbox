@@ -1,20 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/14
-Message-ID: <4DA72D10.2030508@slackware.com>
-Date: Thu, 14 Apr 2011 12:21:20 -0500
-From: "Patrick J. Volkerding" <security@...ckware.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/6
+Message-ID: <479180174.64225.1302695479209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Apr 2011 07:51:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 04/14/2011 11:24 AM, akuster wrote:
-> Where would one draw the line? If one is truly worried about security
-> the units running the software need to validated (no suggesting this at
-> all, completely impractical).  Anyone up for going to Iraq to check our
-> customer's units? How about Bob's house, Jill's car or outer-space?
+----- Original Message -----
+> 
+> Your initial e-mail indicated we would be part of this new group since we
+> where a vendor-sec member. Now there are new requirements we have to
+> meet. Is there a possibility of a probationary period so we can try to
+> comply to these new requirements and still be on the closed list?
+> 
 
-I'll volunteer for the space mission.
+I don't want to start arguing technicalities, semantics, or politics. Here
+is my current view, I'm going to leave the final decision up to Solar
+Designer, I view this as Openwall's list.
 
-Thanks,
+We have rejected certain membership requests because they are not currently
+releasing security updates. I agree with this policy, I would say my
+initial mail was too vague. This instance is no different. It's clear that
+one of the membership requirements is now producing security updates.  If
+you can show you're doing this, that's grounds for membership in my
+opinion.
 
-Pat
+Thanks.
+
+-- 
+    JB
