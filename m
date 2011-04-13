@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/1
-Message-ID: <20111026110536.GE28067@dhcp-25-225.brq.redhat.com>
-Date: Wed, 26 Oct 2011 13:05:37 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/17
+Message-ID: <Pine.GSO.4.64.1104131631320.6578@faron.mitre.org>
+Date: Wed, 13 Apr 2011 16:33:13 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: xfs: potential buffer overflow in xfs_readlink()
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Linux kernel's XFS filesystem implementation
-handled links with pathname larger than MAXPATHLEN. When
-CONFIG_XFS_DEBUG configuration option was not enabled when compiling
-Linux kernel, an attacker able to mount malicious XFS image could use
-this flaw to crash the system, or potentially, elevate his privileges
-on that system.
 
-Proposed upstream patch:
-http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+On Wed, 13 Apr 2011, Josh Bressers wrote:
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=749156
-http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+> Their advisory seems to suggest a CVE ID has been requested.
+>
+> Steve, does MITRE have such a request?
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+I don't see any, although they've made requests in the past.
+
+Use CVE-2011-1684
+
+- Steve
