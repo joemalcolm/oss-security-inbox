@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/6
-Message-ID: <Pine.GSO.4.64.1111141737030.17128@faron.mitre.org>
-Date: Mon, 14 Nov 2011 17:42:24 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/5
+Message-ID: <4DA54204.1000308@redhat.com>
+Date: Wed, 13 Apr 2011 14:26:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
+CC: Kurt Seifried <kurt@...fried.org>
+Subject: Re: CVE request: mediawiki 1.16.3
 Content-Type: text/plain; charset=utf-8
 
-
-In general, an attacker-triggered crash in any type of product that acts 
-as an "intermediary" between two parties - such as a proxy, firewall, mail 
-server, anti-virus, etc. - is typically counted as a vulnerability for 
-CVE, since the crash of the intermediary may cause many active sessions to 
-be lost, not just the session for the attacker.  Add repeated crashes and 
-you can have a substantive DoS on your hands.
-
-For "passive" intermediaries like IDS and sniffers that just monitor 
-traffic, a crash/DoS can lead to loss of visibility/awareness (passing 
-traffic doesn't get captured), which can allow an attacker to hide 
-activities.
-
-- Steve
-
-
-On Mon, 31 Oct 2011, Henrik Nordstr�m wrote:
-
-> mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
+On 04/13/2011 01:51 PM, Kurt Seifried wrote:
+> BTW I submitted this as a bug for fedora:
 >
->>> Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
->>> for their opinion / comments too, if this should be considered
->>> a security issue or not)
+> https://bugzilla.redhat.com/show_bug.cgi?id=695577
+>
+> My evil(ish) plan is to take over the mediawiki package for fedora and
+> then EPEL and then all the plugins. muahahaha! =).
+
+Now I know what you are up to ;)
+
+Eugene
+
+> On Tue, Apr 12, 2011 at 11:21 PM, Vincent Danen<vdanen@...hat.com>  wrote:
+>> Mediawiki 1.16.3 has been released with three noted flaws:
 >>
->> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
->> CVE-2009-3700, etc. Lots of similar ones.
+>> 1) XSS with IE<= 6 due to improper handling of uploaded file names
+>> 2) CSS validation error in wikitext parser
+>> 3) transwiki import neglects to perform access control checks
+>>
+>> Can CVE names be assigned to these issues?
+>>
+>> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
+>>
+>> Thanks.
+>>
+>> --
+>> Vincent Danen / Red Hat Security Response Team
 >
-> Agreed.
->
-> Regards
-> Henrik
 >
 >
+
+
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
