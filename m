@@ -1,41 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/4
-Message-ID: <20110705035839.GA13674@openwall.com>
-Date: Tue, 5 Jul 2011 07:58:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/16
+Message-ID: <83248561.77842.1302723474926.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Apr 2011 15:37:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: bonding: Incorrect TX queue offset
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 10:31:07PM -0500, HD Moore wrote:
-> Thanks for the CC -- as a guess as to what happened; was this particular
-> mirror compromised
+Please use CVE-2011-1581
 
-What mirror?  As far as I'm aware, from the announcement by Chris, only
-the official distribution site for vsftpd was compromised.
+Thanks.
 
-> and the original tarball modified (along with its
-> mtime) to match the original Feb 15th date?
+-- 
+    JB
 
-Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
-one on forums where I saw this discussed appears to have it (which
-confirms that it existed for a very short period of time only).
 
-> Does anyone have a "we noticed it first" flag that is before July 3rd?
-
-Not that I know of.
-
-> Debian (and most other repos) are storing the SHA-256/SHA1/MD5 of each
-> source package, so a Feb 15 date does seem incredible, but so does the
-> complete pwnage of a non-official mirror with the original mtime, at the
-> same moment as an official dist server compromise. A nightly rsync would
-> account for this, but we would need to know more about the mirror
-> structure from Chris.
-
-Are you trying to say that Debian got the backdoored copy?  This is news
-to me.
-
-Thanks,
-
-Alexander
+----- Original Message -----
+> Backport of upstream commit:
+> fd0e435b0fe85622f167b84432552885a4856ac8 bonding: Incorrect TX queue
+> offset
+> 
+> By default bonding only allocates 16 queues. Devices that have more
+> than
+> 16 receive queues will exceed the tx queue index for the bonding
+> device,
+> resulting in at least a denial of service (BUG: unable to handle
+> kernel
+> paging request at...).
+> 
+> For proper queue allocation, in the bonding driver and down to the
+> devices, they should probably add the following line to one of the
+> files
+> in /etc/modprobe.d/
+> 
+> options bonding tx_queues=N
+> 
+> where N>= number of processors that show up in /proc/cpuinfo.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=696029
+> http://git.kernel.org/linus/fd0e435b0fe85622f167b84432552885a4856ac8
+> 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
