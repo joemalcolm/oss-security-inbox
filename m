@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/5
-Message-ID: <20110414103852.6ff74d3e@orphan>
-Date: Thu, 14 Apr 2011 10:38:52 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/19
+Message-ID: <20110413232307.4141e56e@laverne>
+Date: Wed, 13 Apr 2011 23:23:07 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: dotclear before 2.2.3
 Content-Type: text/plain; charset=utf-8
 
-Hi Armin!
+My french isn't that good:
+http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
 
-On Wed, 13 Apr 2011 05:59:20 -1000 akuster wrote:
-
-> > It's clear that one of the membership requirements is now producing
-> > security updates. 
-> 
-> What method of proving this would be acceptable? screen shot,
-> temporary access to our site, public list or other?
-
-A quick idea, rather than a real guidance:  Several vendors offer some
-sort of public CVE database that can be used to search for vendor's
-updates to address particular flaw.  If you're already tagging your
-updates with CVE ids, this may not be hard to provide.  Not because
-folks on this list ask you to do so, but because it's likely to provide
-a significant benefit to your customers with little extra cost/effort on
-top of what you already do.
-
-SUSE's database is probably closest to what may work for you as well.
-CVE info is split by a patched product+version, with links to
-customer-only download site for the enterprise products.
-
-http://support.novell.com/security/cve/
+But that sounds like a security issue:
+"Pour en revenir à cette version, signalons qu'elle contient la
+correction d'une faille de sécurité signalée il y a quelque temps par
+Raphaël — que nous remercions au passage —, ainsi qu'une correction
+attendue pour la génération manuelle des miniatures."
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
