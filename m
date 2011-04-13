@@ -1,25 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/4
-Message-ID: <4DBEC61E.8090308@mvista.com>
-Date: Mon, 02 May 2011 04:56:30 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/20
+Message-ID: <20110413230205.GF1252@dojo.mi.org>
+Date: Wed, 13 Apr 2011 19:02:05 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+:----- Original Message -----
+:>
+:> Your initial e-mail indicated we would be part of this new group since we
+:> where a vendor-sec member. Now there are new requirements we have to
+:> meet. Is there a possibility of a probationary period so we can try to
+:> comply to these new requirements and still be on the closed list?
+:>
+:
+:I don't want to start arguing technicalities, semantics, or politics. Here
+:is my current view, I'm going to leave the final decision up to Solar
+:Designer, I view this as Openwall's list.
+:
+:We have rejected certain membership requests because they are not currently
+:releasing security updates. I agree with this policy, I would say my
+:initial mail was too vague. This instance is no different. It's clear that
+:one of the membership requirements is now producing security updates.  If
+:you can show you're doing this, that's grounds for membership in my
+:opinion.
 
+Josh, I think in your quest to make things less vague, you may have
+actually made them more vague.
 
-On 04/30/2011 04:51 AM, Solar Designer wrote:
-<snipped>
+"security updates" and "public advisories" aren't the same thing,
+That's not just a semantic distinction.  There's many s vendors who
+release security updates, but not necessarily public advisories on
+them.  They may have constituencies that would simply get confused 
+by advisories, or they have auto-update mechanisms, or part of their
+support model involves pushing their customers to keep up with all
+fixes, security or otherwise.  They may simply thing that advisories
+are a waste of time because customers don't read.  
 
-> Hence, I've saved your subscription request to a separate folder, to
-> revisit it if a decision is made to start adding "closed" vendors to the
-> list, if Wind River starts to publish advisories and updates (in other
-> words, if it becomes no more closed than Red Hat), or if a suitable
-> separate list is setup.
+For linux-distros, I think what you really want to go for here are
+*timely* updates.  If a distro isn't generally capable of producing a
+security update within, say, a month of when the issue was released,
+then their getting the issue in advance through linux-distros isn't
+going to do them or their distro community a lot of good because they
+have other constraints in getting fixes out the door.  Focusing on how
+you think an update ought to *look* (e.g. should the advisories be
+public?) isn't as important as the update getting *out*.  Especially
+since you're dealing with GPL'ed code, I think that's something you
+can measure.  Just ask the constituency a month or so after some major
+kernel issue who has released updates/fixes and who hasn't, show the
+relevant source, and take it from there.
 
-Can you clarify what is meant by updates?
+Take it for what it's worth...
+-Mike
 
-- Armin
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"I'd give my right arm to be ambidextrous."                -Anguished English
 
+Content of type "application/pgp-signature" skipped
