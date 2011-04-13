@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/10
-Message-ID: <4EB95D1B.5080508@redhat.com>
-Date: Tue, 08 Nov 2011 09:47:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/3
+Message-ID: <BANLkTimEAmBgCqBygygJCO3RicO3_4Un-Q@mail.gmail.com>
+Date: Tue, 12 Apr 2011 23:51:14 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: CVE request: Android: vold stack buffer overflow
+Subject: Re: CVE request: mediawiki 1.16.3
 Content-Type: text/plain; charset=utf-8
 
-On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
-> On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
->> A local user with group "log" on Android may send a malformed message
->> to vold ("volume daemon"), causing a stack buffer overflow.  This has
->> been demonstrated to be exploitable to escalate privileges to root on
->> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
->> arbitrary heap object and triggering a use-after-free condition [1].
->> It appears the bug was silently patched in Honeycomb (3.x), but note
->> that since Honeycomb is not open source, it does not fall within the
->> scope of this list.  Bug discovered and exploited by the Revolutionary
->> team [2].
->>
-> Oops, a few minor corrections.
+BTW I submitted this as a bug for fedora:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=695577
+
+My evil(ish) plan is to take over the mediawiki package for fedora and
+then EPEL and then all the plugins. muahahaha! =).
+
+-Kurt
+
+
+On Tue, Apr 12, 2011 at 11:21 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> Mediawiki 1.16.3 has been released with three noted flaws:
 >
-> Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
-> the libsysutils library, and was demonstrated to be exploitable via
-> vold, which makes use of the affected library function.  Sorry for the
-> noise.
+> 1) XSS with IE <= 6 due to improper handling of uploaded file names
+> 2) CSS validation error in wikitext parser
+> 3) transwiki import neglects to perform access control checks
 >
->> -Dan
->>
->> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
->> [2] http://revolutionary.io/
->>
-Please use CVE-2011-4123 for this issue.
+> Can CVE names be assigned to these issues?
+>
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
+>
+> Thanks.
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
+
+
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
