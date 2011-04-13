@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/4
-Message-ID: <20110811064811.GG32249@dannf.org>
-Date: Thu, 11 Aug 2011 00:48:11 -0600
-From: dann frazier <dannf@...nf.org>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
-Subject: Re: CVE request: perf: may parse user-controlled config file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/7
+Message-ID: <20110413132625.GA3964@finlandia.home.infodrom.org>
+Date: Wed, 13 Apr 2011 15:26:25 +0200
+From: Joey Schulze <joey@...odrom.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: mahara / HTML Purifier
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 09, 2011 at 09:18:07AM -0400, Steve Grubb wrote:
-> On Sunday, August 07, 2011 01:34:38 PM dann frazier wrote:
-> > This was reported by Christian Ohm at:
-> >   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
-> > 
-> > The perf command, provided as part of the Linux kernel source, looks
-> > for and honors configuration settings in ./config. A local user could
-> > obtain elevated privileges by convincing a superuser to run the perf
-> > command from a directory the user controls.
-> 
-> And in recent kernels has an executable stack:
-> https://bugzilla.redhat.com/show_bug.cgi?id=704296
+Could we get CVE id(s) for these security problems discovered in
+HTML Purifier (emedded in older versions of mahara as well).
 
-fyi, that bug appears to be locked
+Patches are attached.
+
+They originate from HTML Purifier
+
+http://htmlpurifier.org/news/2011/0327-4.3.0-released
+
+Regards,
+
+	Joey
+
+-- 
+Experience is something you don't get until just after you need it.
+
+View attachment "css_url_escaping.dpatch" of type "text/plain" (1146 bytes)
+
+View attachment "font_family_attacks.dpatch" of type "text/plain" (8737 bytes)
+
+View attachment "ie_innerhtml_backticks.dpatch" of type "text/plain" (2168 bytes)
