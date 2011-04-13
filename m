@@ -1,54 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/14
-Message-ID: <20110318162816.GO5174@redhat.com>
-Date: Fri, 18 Mar 2011 10:28:17 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Oden Eriksson <oeriksson@...driva.com>
-Subject: Re: CVE request: PHP substr_replace() use-after-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/12
+Message-ID: <4DA5D476.9070609@mvista.com>
+Date: Wed, 13 Apr 2011 06:51:02 -1000
+From: akuster <akuster@...sta.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-13 15:41:55 -0300] Felipe Pena wrote:
 
->2011/3/13 Oden Eriksson <oeriksson@...driva.com>
->
->> söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
->> > Hi,
->> >
->> > I just found an use-after-free in PHP's substr_replace() function caused
->> by
->> > passing the same variable multiple times to the function, which makes the
->> > PHP to use the same pointer in three variables inside the function, so
->> when
->> > the pointer is changed by a type conversion inside the function, it
->> > invalids the other variables.
->> >
->> > The PHP security team has seen noticed, and a bug already was filed in
->> the
->> > bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
->> >
->> > $ sapi/cli/php ../bug.php
->> > array(1) {
->> > [0]=>
->> > string(5) "0?? y"
->> > }
->> > array(1) {
->> > [0]=>
->> > string(1) "0"
->> > }
->> >
->> >
->> > Thanks.
+Dan,
+
+I personally want a public list but its more of an internal Company
+philosophy / process issue and more importantly what our customers
+think. There could even be contractual issues involved.
+
+If one would look at our customer list, I think one could indirectly
+determine that we would have to provide security fixes (
+http://mvista.com/customers.php ).
+
+How do I meet the requirement of "Proof"?
+
+- Armin
+
+
+On 04/13/2011 06:19 AM, Dan Rosenberg wrote:
+> Hi Armin,
+> 
+>> What method of proving this would be acceptable? screen shot, temporary
+>> access to our site, public list or other?
 >>
->> It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
->>
->>
->It affects 5.2, 5.3 and even trunk. I can reproduce it in all the branches.
-
-Do you have a reproducer for this issue that you could share?  The bug
-is still private.
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+> 
+> I'm confused why you think posting an advisory publicly would somehow
+> put your customers in any sort of additional danger.  All of the
+> vulnerabilities you would be fixing are certain to have public
+> advisories for other distributions, so it seems obvious that your
+> customers would be affected also.  It's not as though your advisories
+> are the only indication to an attacker that your customers are
+> vulnerable.
+> 
+> Regards,
+> Dan
