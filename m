@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/11
-Message-ID: <20110621181525.GA7762@openwall.com>
-Date: Tue, 21 Jun 2011 22:15:25 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/1
+Message-ID: <4DA4F1A0.8000004@redhat.com>
+Date: Wed, 13 Apr 2011 08:43:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Timo Warns <warns@...-sense.de>
+Subject: Re: CVE Request: kernel: fs/partitions: Corrupted GUID partition tables can cause kernel oops
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
-> Ok, so taking a quick look at php-suhosin, we have:
-> 
-> ...
->  61 typedef unsigned int BF_word;
-> ...
-> 558     BF_word tmp;
-> 559 
-> 560     for (i = 0; i < BF_N + 2; i++) {
-> 561         tmp = 0;
-> 562         for (j = 0; j < 4; j++) {
-> 563             tmp <<= 8;
-> 564             tmp |= *ptr;
-> 
-> I'm assuming the above means it is vulnerable (unsigned int vs unsigned
-> char).
+On 04/13/2011 05:53 AM, Timo Warns wrote:
+> The Linux kernel automatically evaluates partition tables of storage
+> devices. The code for evaluating EFI GUID partitions (in
+> fs/partitions/efi.c) contains a bug that causes a kernel oops on certain
+> corrupted GUID partition tables.
+>
+> A patch is available at
+> http://www.spinics.net/lists/mm-commits/msg83274.html
 
-No, we can't conclude anything from just the excerpt you quoted above.
-If *ptr is signed char, then we have the bug.  If it's unsigned char,
-then we don't.  If it's just char, which it was in my original code,
-then we have the bug on most platforms, but not on those few where char
-defaults to unsigned.  Or rather, the bug is mitigated on those.
+Please use CVE-2011-1577.
 
-Alexander
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
