@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/17
-Message-ID: <1080704289.507550.1307382689277.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:51:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/17
+Message-ID: <Pine.GSO.4.64.1104131631320.6578@faron.mitre.org>
+Date: Wed, 13 Apr 2011 16:33:13 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- xscreensaver -- exits when activated
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
 
+On Wed, 13 Apr 2011, Josh Bressers wrote:
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> it was found that xscreensaver terminated, when it was activated upon
-> launch. A local proximate attacker could use this deficiency to access
-> resources, which should be otherwise protected by authentication.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627382
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=703483
-> 
+> Their advisory seems to suggest a CVE ID has been requested.
+>
+> Steve, does MITRE have such a request?
 
-Please use CVE-2011-2187.
+I don't see any, although they've made requests in the past.
 
-This deserves an ID as the error probably won't happen until a few minutes
-afer a user leaves the keyboard.
+Use CVE-2011-1684
 
-Thanks.
-
--- 
-    JB
+- Steve
