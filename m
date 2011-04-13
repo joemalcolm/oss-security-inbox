@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/19
-Message-ID: <20110413232307.4141e56e@laverne>
-Date: Wed, 13 Apr 2011 23:23:07 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/2
+Message-ID: <20110413052128.GF3934@redhat.com>
+Date: Tue, 12 Apr 2011 23:21:28 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: dotclear before 2.2.3
+Subject: CVE request: mediawiki 1.16.3
 Content-Type: text/plain; charset=utf-8
 
-My french isn't that good:
-http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
+Mediawiki 1.16.3 has been released with three noted flaws:
 
-But that sounds like a security issue:
-"Pour en revenir à cette version, signalons qu'elle contient la
-correction d'une faille de sécurité signalée il y a quelque temps par
-Raphaël — que nous remercions au passage —, ainsi qu'une correction
-attendue pour la génération manuelle des miniatures."
+1) XSS with IE <= 6 due to improper handling of uploaded file names
+2) CSS validation error in wikitext parser
+3) transwiki import neglects to perform access control checks
+
+Can CVE names be assigned to these issues?
+
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
+
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team 
