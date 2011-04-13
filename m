@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/09/1
-Message-ID: <20110409174458.GA26418@ngolde.de>
-Date: Sat, 9 Apr 2011 19:44:58 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/10
+Message-ID: <4DA5C858.9030006@mvista.com>
+Date: Wed, 13 Apr 2011 05:59:20 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: gitolite
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/sitaramc/gitolite/commit/4ce00aef84d1ff7c35f7adbbb99a6241cfda00cc
-http://groups.google.com/group/gitolite/browse_thread/thread/797a93ec26e1dcbc?pli=1
 
-I didn't find a CVE id for this, could I get one?
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+On 04/13/2011 01:51 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>>
+<snipped>
+. It's clear that
+> one of the membership requirements is now producing security updates. 
 
-Content of type "application/pgp-signature" skipped
+What method of proving this would be acceptable? screen shot, temporary
+access to our site, public list or other?
+
+Mahalo,
+Armin
+
