@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/5
-Message-ID: <61545434.253592.1306236243890.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 May 2011 07:24:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/19
+Message-ID: <20110413232307.4141e56e@laverne>
+Date: Wed, 13 Apr 2011 23:23:07 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: exim STARTTLS fix
+Subject: CVE request: dotclear before 2.2.3
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
-> 
-> while reviewing EXIM git for the last security issues, I also found the
-> STARTTLS fix:
-> 
-> http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
-> 
-> Is fixed with exim 4.76 apparently.
-> 
+My french isn't that good:
+http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
 
-That commit suggests it's not an issue, but rather some extra paranoid
-buffer wiping. Is there a reason to believe this is a problem?
-
-I'd rather not assign an ID if it's not needed.
-
-Thanks.
+But that sounds like a security issue:
+"Pour en revenir à cette version, signalons qu'elle contient la
+correction d'une faille de sécurité signalée il y a quelque temps par
+Raphaël — que nous remercions au passage —, ainsi qu'une correction
+attendue pour la génération manuelle des miniatures."
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
