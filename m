@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/15/1
-Message-ID: <CAD_8n+RGZQ0A4q5n2yskpupdo7Mg93rWMw0vrMa=ehwy4YhG0g@mail.gmail.com>
-Date: Fri, 14 Oct 2011 06:58:56 -0700
-From: Reuben Hawkins <reubenhwk@...il.com>
-To: Vasiliy Kulikov <segoon@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/7
+Message-ID: <20110413132625.GA3964@finlandia.home.infodrom.org>
+Date: Wed, 13 Apr 2011 15:26:25 +0200
+From: Joey Schulze <joey@...odrom.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: mahara / HTML Purifier
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 12, 2011 at 3:09 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> On Tue, Oct 11, 2011 at 23:26 -0700, Reuben Hawkins wrote:
->> On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
->> > Crap, thank you for noticing it, guys.  The fix should be:
->> >
->> > https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
->> >
->> > Now, "", "..", "." and filenames with "/" inside are denied.
->
-> In case someone didn't fully track the discussion thread, I'll sum it up -
->
-> In the original patch the variable name is typoed/confused - the check
-> should be against "iface" instead of "name".  The check against "name"
-> is totally wrong as it checks a static hint string, which always passes
-> the check.
->
-> The confused blacklisted iface set is a bug, but not a security bug;
-> the confused variable name is indeed a security bug (not a flaw per se,
-> but it greatly weakens the privsep model).
->
->
-> Thanks to Solar Designer for pointing out that this thing is probably
-> not clear to everybody.
->
-> --
-> Vasiliy Kulikov
-> http://www.openwall.com - bringing security into open computing environments
->
+Could we get CVE id(s) for these security problems discovered in
+HTML Purifier (emedded in older versions of mahara as well).
 
-radvd-1.8.3 posted.
+Patches are attached.
+
+They originate from HTML Purifier
+
+http://htmlpurifier.org/news/2011/0327-4.3.0-released
+
+Regards,
+
+	Joey
+
+-- 
+Experience is something you don't get until just after you need it.
+
+View attachment "css_url_escaping.dpatch" of type "text/plain" (1146 bytes)
+
+View attachment "font_family_attacks.dpatch" of type "text/plain" (8737 bytes)
+
+View attachment "ie_innerhtml_backticks.dpatch" of type "text/plain" (2168 bytes)
