@@ -1,42 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/03/2
-Message-ID: <20110703225241.GB8243@openwall.com>
-Date: Mon, 4 Jul 2011 02:52:41 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/18
+Message-ID: <C9CBD61C.80B79%oss-security@securityview.nl>
+Date: Wed, 13 Apr 2011 22:42:43 +0200
+From: Ronald van den Blink <oss-security@...urityview.nl>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 31, 2011 at 03:44:40PM -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > looks like this following has not CVE-ID assigned yet:
-> > http://www.kb.cert.org/vuls/id/536044
-> 
-> Please use CVE-2011-1945.
 
-I'm being a bit late to post this, but here's a decent interview with
-Billy Bob Brumley, one of the researchers who worked on this timing attack:
 
-https://threatpost.com/en_us/blogs/three-questions-billy-brumley-openssl-timing-attack-052511
+On 4/13/11 5:17 PM, "akuster" <akuster@...sta.com> wrote:
 
-"... we feel that this attack target in fact encompasses a wide range of
-real-world cryptosystems."
+>
+>
+>On 04/12/2011 11:25 PM, Ronald van den Blink wrote:
+>> On 4/12/11 11:49 PM, "akuster" <akuster@...sta.com> wrote:
+>> 
+>>>
+>>>
+>>> On 04/11/2011 09:57 AM, Josh Bressers wrote:
+>>>> ----- Original Message -----
+>>>>>
+>>>>> Postponed. I'd like to see any support for you getting onto the Linux
+>>>>> distros security contacts list, with reasoning, or/and any other
+>>>>> suggestions on what to do in this case. Josh - what do you think (as
+>>>>> someone who advocated the setup of a vendor-sec replacement)?
+>>>>>
+>>>>
+>>>> My initial thought is that a vendor without public advisories is a
+>>>> liability.
+>>>
+>>> Making our Advisories public could put our customers' customers at risk
+>>> depending on when we publish and when our customers can get the fixes
+>>> into their customers hands and so on down the line.
+>>>
+>>> - Armin
+>> Hi Armin,
+>> 
+>> Sorry for putting my $0.02 in the bucket here as well, but the whole
+>> purpose of a closed list is that you can fix them before releasing a
+>> public advisory. When you fixed it, the customers can (just like other
+>> dist's do, just get it patched before you publish it.
+>
+>Are you joking? I was told Embargoes could not be released to our
+>customers until the agreed to release date. That would change some
+>things and would be more like .02 euros.
+>
+>- Armin
+The specifics for this list are not clear to me, but fixing a security
+issue/bug can be done before the public release of the advisory. The
+second the advisory hits "the news" you have the patches ready for you
+customers. That's what I was trying to say. What Dan is pointing out as
+well is important here, I'm sure that only advisories for your own
+specific distri's and keeping those "in house" are providing your
+customers with a false sense of security. A clever sysadmin will be aware
+that a security fix for $distri will also mean that your software is
+affected. And an evil hacker will know this as well.
 
-vs. OpenSSL's statement to CERT:
+But I'm taking my ass out of this discussion. I'm not providing a Linux
+distribution, only part of the development team of an open source
+e-commerce solution with the luck of only having one security bug / CVE in
+the last 4 releases :P
 
-"... we believe that the affected code (ECDSA used with binary curves)
-is very rarely used at present."
+Cheers,
 
-These are not exactly contradictory (please read them in context), yet
-perhaps we should patch the issue sooner rather than later.
+Ronald 
+Batavi.org
 
-Question to OpenSSL developers: is the patch given in Billy Bob Brumley
-and Nicola Tuveri's paper "Remote Timing Attacks Are Still Practical" OK
-to be used by distros?  Basically, I am interested in its "review
-status" by upstream - reviewed and approved, reviewed but not approved
-for specific reasons, not sufficiently reviewed.  (The patch is tiny,
-but even tiny changes might have non-obvious implications.)
+>
+>It's not that this
+>> is so strange, as closed source OS makers are doing the same (remember
+>> Black Tuesday's at MS and Apple's releases).
+>> 
+>> Just my 2 cents.
+>> 
+>> Ronald 
+>> Batavi.org
+>> 
+>>>
+>> 
+>> 
 
-Thanks,
 
-Alexander
