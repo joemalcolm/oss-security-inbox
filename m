@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/16
-Message-ID: <20111121175306.GA21065@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 19:53:06 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/14
+Message-ID: <447554026.77433.1302722218102.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Apr 2011 15:16:58 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: vlc
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue:
 
-http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
 
-Other references:
+----- Original Message -----
+> http://www.videolan.org/security/sa1103.html
+> has no CVE id yet.
+> Can I get one please?
+> 
 
-http://osvdb.org/show/osvdb/76933
-http://osvdb.org/show/osvdb/76934
-http://osvdb.org/show/osvdb/76932
-http://secunia.com/advisories/46762/
+Their advisory seems to suggest a CVE ID has been requested.
 
-Best regards,
-Henri Salo
+Steve, does MITRE have such a request?
+
+Thanks.
+
+-- 
+    JB
