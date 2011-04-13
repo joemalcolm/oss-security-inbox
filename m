@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/1
-Message-ID: <CAAsmaPZoaGNmQgcnNsVV6ZhZMK-oPp6Udxm57gz_Zub-eXKCUw@mail.gmail.com>
-Date: Thu, 21 Jul 2011 10:25:07 -0500
-From: Tim Zingelman <tez@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/3
+Message-ID: <BANLkTimEAmBgCqBygygJCO3RicO3_4Un-Q@mail.gmail.com>
+Date: Tue, 12 Apr 2011 23:51:14 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
+Subject: Re: CVE request: mediawiki 1.16.3
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 9:55 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
->> Do you think we should combine the entries, or just make sure they
->> both contain all the information?
+BTW I submitted this as a bug for fedora:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=695577
+
+My evil(ish) plan is to take over the mediawiki package for fedora and
+then EPEL and then all the plugins. muahahaha! =).
+
+-Kurt
+
+
+On Tue, Apr 12, 2011 at 11:21 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> Mediawiki 1.16.3 has been released with three noted flaws:
 >
-> Please combine them.
-
-Done.  I kept the old one, but added a mention of it's existence in
-the regular NetBSD entry.
-
->> p.s. I at least would be very much in support of a bsd distro's
->> restricted security mailing list if you were to create one.
+> 1) XSS with IE <= 6 due to improper handling of uploaded file names
+> 2) CSS validation error in wikitext parser
+> 3) transwiki import neglects to perform access control checks
 >
-> Sounds good.  Is anyone else interested in that as well?  Also, not
-> being involved with a *BSD, perhaps I should not be on that list, but
-> this brings up the issue of resolving administrative issues (e.g., not
-> being on the list I would not notice spam getting through to it).
+> Can CVE names be assigned to these issues?
+>
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
+>
+> Thanks.
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
 
-I'm afraid I don't know about interest.  I had hoped others would have
-jumped in earlier... but they have not...
 
-In the end did the opensolaris based distributions get into the closed
-linux list?  If not, I wonder if a list for everyone who
-repackages/distributes free/open source software (other than linux
-distro's) would make more sense than a BSD specific one?
 
-As far as you being on the list... I at least have no problem with it.
- In fact I would be surprised to find much if anything on such a list
-that was not also on the linux list.
-(My personal preference would be to have the BSD folks on the linux
-list and trust us to just ignore the kernel issues that are not
-relevant to us :)
-
-Thanks for all your work to provide good communication options!
-
- - Tim
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
