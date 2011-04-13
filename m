@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/9
-Message-ID: <1843790166.178934.1305831605642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 15:00:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: viewvc DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/8
+Message-ID: <C9CB3826.7FDCB%oss-security@securityview.nl>
+Date: Wed, 13 Apr 2011 11:25:38 +0200
+From: Ronald van den Blink <oss-security@...urityview.nl>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On 4/12/11 11:49 PM, "akuster" <akuster@...sta.com> wrote:
+
+>
+>
+>On 04/11/2011 09:57 AM, Josh Bressers wrote:
+>> ----- Original Message -----
+>>>
+>>> Postponed. I'd like to see any support for you getting onto the Linux
+>>> distros security contacts list, with reasoning, or/and any other
+>>> suggestions on what to do in this case. Josh - what do you think (as
+>>> someone who advocated the setup of a vendor-sec replacement)?
+>>>
+>> 
+>> My initial thought is that a vendor without public advisories is a
+>> liability.
+>
+>Making our Advisories public could put our customers' customers at risk
+>depending on when we publish and when our customers can get the fixes
+>into their customers hands and so on down the line.
+>
+>- Armin
+Hi Armin,
+
+Sorry for putting my $0.02 in the bucket here as well, but the whole
+purpose of a closed list is that you can fix them before releasing a
+public advisory. When you fixed it, the customers can (just like other
+dist's do, just get it patched before you publish it. It's not that this
+is so strange, as closed source OS makers are doing the same (remember
+Black Tuesday's at MS and Apple's releases).
+
+Just my 2 cents.
+
+Ronald 
+Batavi.org
+
+>
 
 
------ Original Message -----
-> Hi,
-> 
-> cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row
-> limit:
-> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
-> http://viewvc.tigris.org/issues/show_bug.cgi?id=433
-> http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
-> 
-
-This one needs a 2009 ID:
-
-CVE-2009-5024
-
-My understanding is that the fix prevents a user from getting viewvc from
-displaying a really big request that easy CPU and RAM.
-
-Thanks.
-
--- 
-    JB
