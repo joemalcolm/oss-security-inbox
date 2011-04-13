@@ -1,85 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/2
-Message-ID: <CAPYM6VyPBhgLUHc4X8bchXTCEhLuwxnTBLXM_x-FbFBxOy-z1g@mail.gmail.com>
-Date: Thu, 18 Aug 2011 14:15:59 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/15
+Message-ID: <704001142.77790.1302723236646.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Apr 2011 15:33:56 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: WebsiteBaker 2.8.1 <= Cross Site Request Forgery (CSRF) Vulnerability
+Cc: coley <coley@...re.org>, tstarling@...imedia.org
+Subject: Re: CVE request: mediawiki 1.16.3
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
-
-WebsiteBaker 2.8.1 and lower versions are vulnerable to Cross Site
-Request Forgery (CSRF).
 
 
-2. BACKGROUND
+----- Original Message -----
+> Mediawiki 1.16.3 has been released with three noted flaws:
+> 
+> 1) XSS with IE <= 6 due to improper handling of uploaded file names
+Use CVE-2011-1578
 
-WebsiteBaker is a PHP-based Content Management System (CMS) designed
-with one goal in mind: to enable its users to produce websites with
-ease.
+> 2) CSS validation error in wikitext parser
+Use CVE-2011-1579
 
+> 3) transwiki import neglects to perform access control checks
+Use CVE-2011-1580
 
-3. VULNERABILITY DESCRIPTION
+> 
+> Can CVE names be assigned to these issues?
+> 
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
+> 
 
-WebsiteBaker 2.8.1 and lower versions contain a flaw that allows a
-remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
-exists because the application does not require multiple steps or
-explicit confirmation for sensitive transactions for majority of
-administrator functions such as adding new user. By using a crafted
-URL, an attacker may trick the victim into visiting to his web page to
-take advantage of the trust relationship between the authenticated
-victim and the application. Such an attack could trick the victim into
-executing arbitrary commands in the context of their session with the
-application, without further prompting or verification.
+Thanks.
 
-
-4. VERSIONS AFFECTED
-
-2.8.1 <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-The following request adds an administrator.
-
-[REQUEST]
-POST /admin/users/add.php HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 193
-
-user_id=&username_fieldname=username_abcdefg&username_abcdefg=test&password=test&password2=test&display_name=test&email=tester%40yehg.net&home_folder=&groups%5B%5D=1&active%5B%5D=1&submit=Add
-[/REQUEST]
-
-
-6. SOLUTION
-
-Upgrade to 2.8.2 or higher
-
-
-7. VENDOR
-
-WebsiteBaker Org e. V.
-http://www.websitebaker2.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-01-26: notified vendor
-2011-08-01: vendor released fix
-2011-08-13: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_cross_site_request_forgery
-
-
-#yehg [2011-08-13]
+-- 
+    JB
