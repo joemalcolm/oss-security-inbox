@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/10
-Message-ID: <4E2DBB43.30402@kde.org>
-Date: Mon, 25 Jul 2011 14:51:47 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
-Subject: CVE Request: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/4
+Message-ID: <4DA53B63.1030107@redhat.com>
+Date: Wed, 13 Apr 2011 13:57:55 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: bonding: Incorrect TX queue offset
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Backport of upstream commit:
+fd0e435b0fe85622f167b84432552885a4856ac8 bonding: Incorrect TX queue offset
 
-We've been made aware of an input validation failure affecting multiple
-KDE applications. (The details are not yet public as we're working on
-the fixes.) We'd like a CVE for this.
+By default bonding only allocates 16 queues. Devices that have more than 
+16 receive queues will exceed the tx queue index for the bonding device, 
+resulting in at least a denial of service (BUG: unable to handle kernel 
+paging request at...).
 
-The Arora and Rekonq web browsers are also vulnerable to the same attack
-vector, and other Qt-based programs may be as well. We're working with
-the Qt team to help enhance their documentation to warn developers to
-take care sanitizing their inputs, but it's not actually a Qt flaw. So
-we're a bit unsure how to proceed here. Do we get separate CVEs for
-Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
-applications? I would think the former since other applications may be
-found to be vulnerable down the line, but wanted to check.
+For proper queue allocation, in the bonding driver and down to the 
+devices, they should probably add the following line to one of the files 
+in /etc/modprobe.d/
 
-(The Rekonq team has been made aware and are currently patching their
-code; I'm in the process of trying to notify the Arora team.)
+options bonding tx_queues=N
 
-Thanks,
-Jeff
+where N>= number of processors that show up in /proc/cpuinfo.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=696029
+http://git.kernel.org/linus/fd0e435b0fe85622f167b84432552885a4856ac8
+
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
