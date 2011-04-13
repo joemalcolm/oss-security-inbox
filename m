@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/10
-Message-ID: <15766132.122498.1295974181252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Jan 2011 11:49:41 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: multiple gypsy vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/12
+Message-ID: <4DA5D476.9070609@mvista.com>
+Date: Wed, 13 Apr 2011 06:51:02 -1000
+From: akuster <akuster@...sta.com>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-I'm giving these 2011 IDs. None of the information was public in 2010.
 
------ Original Message -----
-> Hello,
+Dan,
+
+I personally want a public list but its more of an internal Company
+philosophy / process issue and more importantly what our customers
+think. There could even be contractual issues involved.
+
+If one would look at our customer list, I think one could indirectly
+determine that we would have to provide security fixes (
+http://mvista.com/customers.php ).
+
+How do I meet the requirement of "Proof"?
+
+- Armin
+
+
+On 04/13/2011 06:19 AM, Dan Rosenberg wrote:
+> Hi Armin,
 > 
-> I'd like to get CVEs assigned for two issues in Gypsy[1]:
+>> What method of proving this would be acceptable? screen shot, temporary
+>> access to our site, public list or other?
+>>
 > 
-> reads arbitrary files as root user on behalf of regular user
-> https://bugs.freedesktop.org/show_bug.cgi?id=33431
-
-Use CVE-2011-0523.
-
+> I'm confused why you think posting an advisory publicly would somehow
+> put your customers in any sort of additional danger.  All of the
+> vulnerabilities you would be fixing are certain to have public
+> advisories for other distributions, so it seems obvious that your
+> customers would be affected also.  It's not as though your advisories
+> are the only indication to an attacker that your customers are
+> vulnerable.
 > 
-> buffer overflow in nmea device input handling
-> https://bugs.freedesktop.org/show_bug.cgi?id=33431
-> 
-
-Use CVE-2011-0524.
-
-Thanks.
-
--- 
-    JB
+> Regards,
+> Dan
