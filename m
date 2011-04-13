@@ -1,48 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/18
-Message-ID: <BANLkTimHFG4vSbr_RXtmwDraLzERHJzTfQ@mail.gmail.com>
-Date: Mon, 11 Apr 2011 18:54:15 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/16
+Message-ID: <83248561.77842.1302723474926.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 13 Apr 2011 15:37:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE requests: Three Linux kernel issues
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request - kernel: bonding: Incorrect TX queue offset
 Content-Type: text/plain; charset=utf-8
 
-This made me chuckle.
+Please use CVE-2011-1581
 
->
-> [1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
->
-> | PATCH] char: briq_panel: fix TOCTOU bug
-> |
-> | There is a TOCTOU bug in briq_panel_write() code:
-> |
-> |     if (vfd_cursor > 39)   <<<
-> |             scroll_vfd();
-> |     vfd[vfd_cursor++] = c; <<<
-> |
-> | It's possible to write to arbitrary memory location in case of more than
-> | one process tries to call write() simultaneously.
->
+Thanks.
 
-Firstly, this driver has locking that only allows one open file
-descriptor at once.
+-- 
+    JB
 
-Even if you can work around this, you'd have a race window of about
-two instructions, with basically no possibility of being preempted
-since there's no blocking or potentially faulting operation.  And
-that's assuming it's even possible, since it may be the case that this
-index is in a register, which would render this completely
-unexploitable.
 
-Assuming this isn't the case, and you're running an SMP system and
-spent countless hours (days? weeks?) spinning to hit this extremely
-narrow race, you then get to write a single byte past the end of this
-array, into the vfd_is_open integer, which is already set to 1 (it's
-treated as a boolean value).  Even if due to magical powers you manage
-to hit the race window simultaneously on four cores (and the assembly
-works perfectly in your favor), you still don't achieve anything. :p
-
-But it'll get a CVE anyways, so I'm not sure what my point is. :)
-
--Dan
+----- Original Message -----
+> Backport of upstream commit:
+> fd0e435b0fe85622f167b84432552885a4856ac8 bonding: Incorrect TX queue
+> offset
+> 
+> By default bonding only allocates 16 queues. Devices that have more
+> than
+> 16 receive queues will exceed the tx queue index for the bonding
+> device,
+> resulting in at least a denial of service (BUG: unable to handle
+> kernel
+> paging request at...).
+> 
+> For proper queue allocation, in the bonding driver and down to the
+> devices, they should probably add the following line to one of the
+> files
+> in /etc/modprobe.d/
+> 
+> options bonding tx_queues=N
+> 
+> where N>= number of processors that show up in /proc/cpuinfo.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=696029
+> http://git.kernel.org/linus/fd0e435b0fe85622f167b84432552885a4856ac8
+> 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
