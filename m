@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/6
-Message-ID: <20111027194003.GI28067@dhcp-25-225.brq.redhat.com>
-Date: Thu, 27 Oct 2011 21:40:04 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/11
+Message-ID: <BANLkTim2D7H17BeFnJdSRZ9UnkU06nxAYg@mail.gmail.com>
+Date: Wed, 13 Apr 2011 12:19:20 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Cc: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 01:43:16PM -0400, Dan Rosenberg wrote:
-> On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
-> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> > to reset dmesg_restrict to 0.
-> >
-> 
-> Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
-> with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
-> correct that CAP_SYS_ADMIN is now required to modify the sysctl.
+Hi Armin,
 
-RHEL uses only CAP_SYS_ADMIN. I haven't checked upstream for
-correctness of the description.
+> What method of proving this would be acceptable? screen shot, temporary
+> access to our site, public list or other?
+>
 
-> 
-> I also agree with Vasiliy's point that LXC security boundaries in the
-> mainline kernel are not well defined at this point, so the whole thing
-> is a bit silly.
+I'm confused why you think posting an advisory publicly would somehow
+put your customers in any sort of additional danger.  All of the
+vulnerabilities you would be fixing are certain to have public
+advisories for other distributions, so it seems obvious that your
+customers would be affected also.  It's not as though your advisories
+are the only indication to an attacker that your customers are
+vulnerable.
 
-Just wondering - do you usually ack patches that you consider silly?
-
-Petr
-
-> 
-> -Dan
-
+Regards,
+Dan
