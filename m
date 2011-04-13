@@ -1,35 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/2
-Message-ID: <4EB74E6D.9060105@redhat.com>
-Date: Sun, 06 Nov 2011 20:20:13 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/5
+Message-ID: <4DA54204.1000308@redhat.com>
+Date: Wed, 13 Apr 2011 14:26:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: David Holland <dholland-oss-security@...bsd.org>
-Subject: Re: caml-light insecure temporary files
+CC: Kurt Seifried <kurt@...fried.org>
+Subject: Re: CVE request: mediawiki 1.16.3
 Content-Type: text/plain; charset=utf-8
 
-On 11/06/2011 01:09 PM, David Holland wrote:
-> I apologize for sending this out on a weekend... but I found out it
-> accidentally got broadcast to one of our mailing lists so there's
-> nothing much to be gained from waiting. And besides, it's neither
-> particularly critical nor of particularly broad interest.
+On 04/13/2011 01:51 PM, Kurt Seifried wrote:
+> BTW I submitted this as a bug for fedora:
 >
-> Anyway.
+> https://bugzilla.redhat.com/show_bug.cgi?id=695577
 >
-> I don't know if anyone besides us still ships caml-light; it is long
-> dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
-> Hat does. But just in case: it uses mktemp() insecurely, and also does
-> unsafe things in /tmp during make install.
->
-> Patches follow; reference URL (including copies of the patches) is
-> http://gnats.netbsd.org/45558.
->
-> I'm not sure it's worth allocating a CVE number for this if it turns
-> out nobody else ships it.
+> My evil(ish) plan is to take over the mediawiki package for fedora and
+> then EPEL and then all the plugins. muahahaha! =).
 
-Please use CVE-2011-4119 for this issue.
+Now I know what you are up to ;)
+
+Eugene
+
+> On Tue, Apr 12, 2011 at 11:21 PM, Vincent Danen<vdanen@...hat.com>  wrote:
+>> Mediawiki 1.16.3 has been released with three noted flaws:
+>>
+>> 1) XSS with IE<= 6 due to improper handling of uploaded file names
+>> 2) CSS validation error in wikitext parser
+>> 3) transwiki import neglects to perform access control checks
+>>
+>> Can CVE names be assigned to these issues?
+>>
+>> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
+>>
+>> Thanks.
+>>
+>> --
+>> Vincent Danen / Red Hat Security Response Team
+>
+>
+>
+
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
