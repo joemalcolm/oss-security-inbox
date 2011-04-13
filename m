@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/10
-Message-ID: <CAF6rxg=cdFBEpXvRQ5MjJBEdKoxMG0YhMz_o89u5k=ar8H77Qg@mail.gmail.com>
-Date: Mon, 24 Oct 2011 15:12:53 -0400
-From: Eitan Adler <eadler@...ebsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/4
+Message-ID: <4DA53B63.1030107@redhat.com>
+Date: Wed, 13 Apr 2011 13:57:55 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: secteam@...ebsd.org, security@...ian.org
-Subject: Re: CVE Request: FreeBSD kernel
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request - kernel: bonding: Incorrect TX queue offset
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2011 at 12:26 PM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
->> >    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
-> This has been assigned CVE-2011-4062 by MITRE in the mean time.
+Backport of upstream commit:
+fd0e435b0fe85622f167b84432552885a4856ac8 bonding: Incorrect TX queue offset
 
-Something is odd with the MITRE CVE:
+By default bonding only allocates 16 queues. Devices that have more than 
+16 receive queues will exceed the tx queue index for the bonding device, 
+resulting in at least a denial of service (BUG: unable to handle kernel 
+paging request at...).
 
-According to http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-4062
-the bug is in the Linux emulation code. However the bug is really in
-the bind(2) system call. There was a different bug in the emulation
-code exposed by fixing the bind vulnerability but the system is
-vulnerable even without linux emulation turned on.
+For proper queue allocation, in the bonding driver and down to the 
+devices, they should probably add the following line to one of the files 
+in /etc/modprobe.d/
 
-Additionally Debian appears to have copied the incorrect data from the
-MITRE cve (http://www.debian.org/security/2011/dsa-2325)/
+options bonding tx_queues=N
 
+where N>= number of processors that show up in /proc/cpuinfo.
 
+https://bugzilla.redhat.com/show_bug.cgi?id=696029
+http://git.kernel.org/linus/fd0e435b0fe85622f167b84432552885a4856ac8
 
+Thanks, Eugene
 -- 
-Eitan Adler
-Ports committer
-X11, Bugbusting teams
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
