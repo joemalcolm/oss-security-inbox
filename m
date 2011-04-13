@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/1
-Message-Id: <201106091104.03473.ludwig.nussel@suse.de>
-Date: Thu, 9 Jun 2011 11:04:03 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/13
+Message-ID: <20110413171107.GC18543@redhat.com>
+Date: Wed, 13 Apr 2011 11:11:07 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Russell Coker <rcoker@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> > I, for instance, use su -u to run commands as the www user, what are
-> > the odds of that user being compromised without my knowledge? The last
-> > thing I want is having a way for that compromised user to run
-> > arbitrary commands as any other user.
-> 
-> This is unsafe, I'm not even sure if it can be made safe honestly (without
-> breaking lots of things that expect tty access). Things like su and sudo
-> are designed to raise privileges, not lower them. If this isn't well
-> documented, it should be.
+>> This topic has lost focus lately. Rather than let it slip away, I
+>> think we
+>> should go ahead with the simplest solution right now, we can always do
+>> something different at a future date.
 
-Note that you already have the setsid() patch in Fedora since 2005
-so it actually didn't break that much I guess :-) You also have the
-runuser program with is basically su without authentication. runuser
-is specifically intended for use by root to run programs as
-unprivileged user.
+Please add me to the new list.
 
-FWIW I've found ikiwiki-mass-rebuild to be vulnerable to the tty
-hijacking issue too. Upstream was rather quick to switch to using
-su¹ now. ikiwiki-mass-rebuild is also intended to be called in
-package post scripts. I wouldn't be surprised if there are other
-packages that run su to perform some operation as unprivileged user
-in %post.
-
-So we would like to release a coreutils security update which adds
-the setsid patch.
-
-cu
-Ludwig
-
-[1] http://ikiwiki.info/news/version_3.20110608/
+pub   3072R/E8B86CAB 2011-04-12
+       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
+uid                  Vincent Danen <vdanen linsec.ca>
+uid                  Vincent Danen <vdanen annvix.org>
+uid                  Vincent Danen <vdanen redhat.com>
+sub   3072R/8BBA24C6 2011-04-12
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Vincent Danen / Red Hat Security Response Team 
