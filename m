@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/2
-Message-ID: <20110718084750.GA18157@flens.dfn-cert.de>
-Date: Mon, 18 Jul 2011 10:47:50 +0200
-From: dfncert@...-cert.de
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/13
+Message-ID: <4DA71FC8.5060101@mvista.com>
+Date: Thu, 14 Apr 2011 06:24:40 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Mike O'Connor <mjo@...o.mi.org>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 15, 2011 at 11:18:49AM -0600, Vincent Danen wrote:
-
-> >A patch was proposed to the packet maintainer.
-> 
-> This is pretty light on the details.  Any references to supply or an
-> actual description of the problem?
- 
-The implemented procedure does not verify the status of
-the certificate. For instance, if the certificate has been revoked.
 
 
-> Link to upstream fixes, emails, bugs, whatever?
+On 04/13/2011 01:02 PM, Mike O'Connor wrote:
+> :----- Original Message -----
 
-We are not aware of any upstream fix.
+> For linux-distros, I think what you really want to go for here are
+> *timely* updates.  If a distro isn't generally capable of producing a
+> security update within, say, a month of when the issue was released,
+> then their getting the issue in advance through linux-distros isn't
+> going to do them or their distro community a lot of good because they
+> have other constraints in getting fixes out the door. 
+> Focusing on how
+> you think an update ought to *look* (e.g. should the advisories be
+> public?) isn't as important as the update getting *out*.  Especially
+> since you're dealing with GPL'ed code, I think that's something you
+> can measure.  Just ask the constituency a month or so after some major
+> kernel issue who has released updates/fixes and who hasn't, show the
+> relevant source, and take it from there.
 
+Where would one draw the line? If one is truly worried about security
+the units running the software need to validated (no suggesting this at
+all, completely impractical).  Anyone up for going to Iraq to check our
+customer's units? How about Bob's house, Jill's car or outer-space?
 
--- 
-DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
-Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
-Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
-
-Content of type "application/pgp-signature" skipped
+- Armin
