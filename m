@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/13
-Message-ID: <20110223101612.34261c43@laverne>
-Date: Wed, 23 Feb 2011 10:16:12 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/7
+Message-ID: <709823227.88477.1302779423715.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 14 Apr 2011 07:10:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 22 Feb 2011 23:17:54 -0500
-schrieb Dan Rosenberg <dan.j.rosenberg@...il.com>:
+----- Original Message -----
+> 
+> 
+> "security updates" and "public advisories" aren't the same thing,
+> That's not just a semantic distinction. There's many s vendors who
+> release security updates, but not necessarily public advisories on
+> them. They may have constituencies that would simply get confused
+> by advisories, or they have auto-update mechanisms, or part of their
+> support model involves pushing their customers to keep up with all
+> fixes, security or otherwise. They may simply thing that advisories
+> are a waste of time because customers don't read.
+> 
+> For linux-distros, I think what you really want to go for here are
+> *timely* updates. If a distro isn't generally capable of producing a
+> security update within, say, a month of when the issue was released,
+> then their getting the issue in advance through linux-distros isn't
+> going to do them or their distro community a lot of good because they
+> have other constraints in getting fixes out the door. Focusing on how
+> you think an update ought to *look* (e.g. should the advisories be
+> public?) isn't as important as the update getting *out*. Especially
+> since you're dealing with GPL'ed code, I think that's something you
+> can measure. Just ask the constituency a month or so after some major
+> kernel issue who has released updates/fixes and who hasn't, show the
+> relevant source, and take it from there.
+> 
 
-> Should this be considered a vulnerability?  Probably.  But what should
-> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-> a vulnerability if auto-mounting is disabled only when the screen is
-> locked?  Should all filesystems have graceful error handling for every
-> possible edge case that can occur when dealing with corruption?
+I think the whole point comes down to how can you prove you've updated what
+you claim you have? It doesn't matter *what* is public, just as long as
+something is (and it needs to be reasonable, expecting others to dig
+through source would be silly). If someone is untrustworthy and using a
+private list inappropriately, do you really think they're going to tell the
+truth if they're asked about releasing timely updates? Clearly advisories
+are the easiest way to verify this, but if someone has a better idea that
+includes verifiable information, please speak up.
 
-I'd say the later one. Filesystem drivers in the kernel should more or
-less be treated like just another app that is able to read some kind of
-"format". If the filesystem is corrupted, it should fail without
-security impact.
-
-As others already mentioned, the impact is not limited to automounting,
-but also an issue for virtualzation (and maybe other cases we don't
-think of yet).
-
-Maybe it'd be a good idea to start a big fuzzing session on filesystems?
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
