@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/8
-Message-ID: <20110316110228.GA4109@netbookdave>
-Date: Wed, 16 Mar 2011 12:02:28 +0100
-From: David King <amigadave@...gadave.com>
-To: David Woodhouse <dwmw2@...radead.org>
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/8
+Message-ID: <loom.20110414T095606-853@post.gmane.org>
+Date: Thu, 14 Apr 2011 07:56:54 +0000 (UTC)
+From: Franck Paul <carnet.franck.paul@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: dotclear before 2.2.3
 Content-Type: text/plain; charset=utf-8
 
-On 2011-03-16 10:47, David Woodhouse <dwmw2@...radead.org> wrote:
->On Tue, 2011-03-15 at 17:10 -0400, Josh Bressers wrote:
->>
->> Issue #2
->>
->> Vino can open ports via uPnP without alerting the user.
->> https://bugzilla.redhat.com/show_bug.cgi?id=678846
->>
->> Use CVE-2011-1165
+Hanno Böck <hanno@...> writes:
 
-[snip]
+> 
+> My french isn't that good:
+> http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
+> 
+> But that sounds like a security issue:
+> "Pour en revenir à cette version, signalons qu'elle contient la
+> correction d'une faille de sécurité signalée il y a quelque temps par
+> Raphaël — que nous remercions au passage —, ainsi qu'une correction
+> attendue pour la génération manuelle des miniatures."
+> 
 
->There *is* an option to disable this feature, if the user really wants
->to. And of course it should be clearly indicated that the service is
->available to the public; but *that* is what CVE-2011-1164 is for.
 
-It should be noted that the UPnP feature is disabled by default, so the 
-user has the option to *enable* it. I concede that the string presented 
-in the UI needs improvement. Of course, I agree that indication of the 
-consequences would be appropriate, and also disallowing the 'none' 
-authentication method if UPnP is enabled.
+Hi,
 
--- 
-http://amigadave.com/
+Yes it's a minor security issue fixed by this new release.
+
+Regards
+Franck
+
