@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/2
-Message-ID: <4E02E8E2.2040106@redhat.com>
-Date: Thu, 23 Jun 2011 15:18:58 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/3
+Message-ID: <BANLkTi=N4AqFZvf0ph+aPMES9EJFR_XGSw@mail.gmail.com>
+Date: Wed, 13 Apr 2011 18:30:14 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: NLM: Don't hang forever on NLM unlock requests
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: CVE request for SAP issues
 Content-Type: text/plain; charset=utf-8
 
-NLM: Don't hang forever on NLM unlock requests
+> Hi Kurt,
+>
+> On Wed, Apr 13, 2011 at 06:06:42PM -0600, Kurt Seifried wrote:
+>> http://dsecrg.com/pages/vul/show.php?id=317
+>> [DSECRG-11-017] SAP GUI - Buffer overflow
+> ...
+>
+> Is this Open Source software?
+>
+> If not, then this is off-topic for oss-security.
 
-If the NLM daemon is killed on the NFS server, we can currently end up
-hanging forever on an 'unlock' request, instead of aborting. Basically,
-if the rpcbind request fails, or the server keeps returning garbage, we
-really want to quit instead of retrying.
+Sorry, I sometimes think of this as the CVE allocation list (since
+that seems to be a lot of what goes on =).
 
-    Tested-by: Vasily Averin <vvs@...ru>
-    Signed-off-by: Trond Myklebust <Trond.Myklebust@...app.com>
-    Cc: stable@...nel.org
+> Alexander
 
-In English, it means that a local, unprivileged user could use the flock
-system call on a NFS share to cause a denial of service.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=709393
-http://git.kernel.org/linus/0b760113a3a155269a3fba93a409c640031dd68f
-
-Thanks, Eugene
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
