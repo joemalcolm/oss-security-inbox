@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/5
-Message-ID: <4EEF75F6.3090501@redhat.com>
-Date: Mon, 19 Dec 2011 10:35:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/10
+Message-Id: <201104141531.06743.meltem@pardus.org.tr>
+Date: Thu, 14 Apr 2011 15:31:06 +0300
+From: Meltem Parmaksız <meltem@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: python-virtualenv
+Subject: Re: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+12 Nisan 2011 Salı günü (saat 19:58:18) Onur Küçük şunları yazmıştı:
+> On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+> Josh Bressers <bressers@...hat.com> wrote:
+> ...
+> 
+> > Initial members will have had to be a vendor-sec member (no exploders
+> > this time around). You must reply to this thread, in public (on
+> > oss-security). We want this to be very public, we have nothing to
+> > hide. You must have a public gpg key ID included in your reply. The
+> > new list will gpg encrypt all mail (it does accept plaintext messages
+> > though).
+> 
+>  Sorry for the late reply, we had to resolve some issues on our side
+> about who should join. I was a subscriber of vendor-sec as a
+> representitive of Pardus, please add me to the new list(s).
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sorry, I'm late. I was  a vendor-sec member representing Pardus, please add me 
+to the new list.  
 
-On 12/19/2011 09:39 AM, Nico Golde wrote:
-> Hi,
-> * Kurt Seifried <kseifried@...hat.com> [2011-12-19 17:38]:
->>
->> On 12/19/2011 09:21 AM, Nico Golde wrote:
->>> An insecure /tmp file handling was found in python-virtualenv:
->>> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
->>>
->>> Can someone assign a CVE id for this?
->> Link is 404
->
-> Sorry, c&p mistake:
-> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5
->
-> Cheers
-> Nico
-Please use CVE-2011-4617 for this issue.
+pub   4096R/29661BF8 2011-04-14 [son kullanma tarihi: 2016-04-12]
+         Key fingerprint = 0136 2B51 FD70 0545 30D2  5C3F FDA1 B5DB 2966 1BF8 
+uid                  Meltem Parmaksız <meltem@...dus.org.tr>
 
-- -- 
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJO73X2AAoJEBYNRVNeJnmTKzcP/1MwuORxy1F/L1JfuI+2P5Yc
-5ZZzKjyk65Vb0ycpbAypqNUyO3gDnqhSsMSYaftUoSKZ+QVqdO9zvSxPqbTomPWd
-oJ0H8zUWEOxrBg7kMnywBt//o6N7i0P+TYe7i1U2s+0z9iwABeZl6cTRG7DJtBO5
-lQgpgIxuWtJ3NJNobopVESbgMo6pYGxgMOQPFEwdexJRQQDMC63tPMi2iwKUECwy
-8Lv5AohE1TjfVnW20TvwPpXf4grwLcBTg2/goli8iiB9hpRs7ik895ZIpGdUASG1
-zdj7fNOE5YveMLPoWB8XUCX9PewSV0fKd26iug7S1qWPXl++mKgaI04XmU6EulFm
-dBGtrStq8kFxjMUwaF0A6HEQAvbnFRIPnmu5R2pb+kIFzzsPJ4eF/Hm9v+MiVEm3
-CarNBoKArhyTBjLnAZE1k4IPnHV8DwlFdTyEYPMOSLyzJEahogvenB2cnczdJ8ay
-b3DFhNq1XCCNp6OfR+md6pR5qBIQ5l5kmxb0zupQoddinCEfKDUsC5haAfu+bPqH
-TFx7jCvviq4+lLkdvmSJsaECqajN1ZPh8b9IwFnTP0GEzTMi0KPoNzSuAVuQTtMt
-B8vUuNnLLimDOSe8i5vEcViNbbU87T2/8hh0VuxGNA2zXWz0kmb3DpTkTdT/WAzy
-ml/3hyswpqqbyTRKbi7Q
-=fJiE
------END PGP SIGNATURE-----
-
+Thanks.
