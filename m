@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/1
-Message-ID: <4DF7432D.9010800@redhat.com>
-Date: Tue, 14 Jun 2011 19:17:01 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: Alpha kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/1
+Message-ID: <BANLkTi=KMfgWK-KYbNbwFE4G=8k8tP3zGg@mail.gmail.com>
+Date: Wed, 13 Apr 2011 18:06:42 -0600
+From: Kurt Seifried <kurt@...fried.org>
+To: oss-security@...ts.openwall.com, info@...scan.com
+Subject: CVE request for SAP issues
 Content-Type: text/plain; charset=utf-8
 
-On 06/14/2011 03:31 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> please assign CVE IDs for 
-> http://permalink.gmane.org/gmane.linux.kernel/1153884
+http://dsecrg.com/pages/vul/show.php?id=317
+[DSECRG-11-017] SAP GUI - Buffer overflow
+Attacker can construct saplogon.ini file which contains vulnerable tag
+which is vulnerable to buffer overflow attack.
+Digital Security Research Group [DSecRG] Advisory DSecRG-11-017
+(Internal #DSECRG-00181)
 
-Moritz, see my email, [oss-security] CVE request: kernel: alpha: fix
-several security issues.
 
-Josh, looks like you missed assigning CVEs for this one.
+http://dsecrg.com/pages/vul/show.php?id=316
+[DSECRG-11-016] SAP NetWaver Data Archiving Service - multiple XSS
+SAP Netweaver Data Archiving Service has multiple linked XSS vulnerabilities.
+Digital Security Research Group [DSecRG] Advisory DSecRG-11-016 (
+Internal DSECRG-00151)
 
-Thanks, Eugene
+
+http://dsecrg.com/pages/vul/show.php?id=315
+[DSECRG-11-015] SAP Netweaver MessagingServer - XSS
+NetWeaver 7.0 Messaging System application has linked XSS vulnerabilities.
+Digital Security Research Group [DSecRG] Advisory DSecRG-11-015 (
+Internal DSECRG-00122)
+
+
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
