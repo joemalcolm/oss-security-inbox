@@ -1,58 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/1
-Message-ID: <Pine.GSO.4.64.1110272304280.21599@faron.mitre.org>
-Date: Thu, 27 Oct 2011 23:38:47 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-cc: cve-assign@...re.org
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/6
+Message-ID: <20110414105709.59c835fe@orphan>
+Date: Thu, 14 Apr 2011 10:57:09 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: RE: [security-vendor] Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi Zhenfeng!
 
-All,
+Now that I'm already known for being corporatishly evil against smaller
+distros... ;)
 
-There was some discussion in January 2011 regarding CAP_SYS_ADMIN and how 
-security boundaries are defined:
+On Tue, 12 Apr 2011 09:04:05 +0000 Zhao, Zhenfeng wrote:
 
-   http://openwall.com/lists/oss-security/2011/01/07/1
+> uid    Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
 
-By this kind of logic, even though it's "silly" and a very low risk 
-because it requires such high privileges to exploit, the ability for an 
-attacker to bypass CAP_SYS_ADMIN by modifying dmesg_restrict so that the 
-attacker can read the kernel ring buffer, seems to bypass an intended 
-security policy, at least as the policy as it's currently implemented.
+My understanding of the membership rules is that the aim is to avoid
+exploders or other mechanisms that may make it easier to change who is
+receiving mails without list admin and members being aware of such
+change.  While this may not be an exploder address now, for addresses
+like security@, they seem to be less likely to be closed once the
+people behind them decide to move on and are replaced by someone else.
+It seems there may be more pressure to hand matching private key over
+during the transition of responsibilities from one person to another.
 
-There are a couple other statements worth considering:
+Just my 2c.
 
-1) Vasiliy (with Dan's agreement) saying that "LXC security boundaries in
-    the mainline kernel are not well defined at this point."
-    http://openwall.com/lists/oss-security/2011/10/26/11
-
-2) Vasiliy's statement that "Procfs is not ready for containers yet."
-    I'm not sure what this means, exactly - is procfs code being modified
-    to support containers, and development isn't complete?
-
-3) Vasiliy's statement that an attacker can "use other sysctls for
-    more harmful things."  If a user already has legitimate, "acceptable"
-    privileges to perform an action that is equivalent to
-    CAP_SYS_ADMIN/dmesg_restrict, then the bypass does not cross security
-    boundaries.
-
-If we can get agreement that there isn't a well-defined security policy 
-yet (at least by the kernel people who are on oss-security), and if 
-there's agreement that procfs isn't being advertised to conform to any 
-such policy in the first place, then there could be some collective 
-community decision to decide that these kinds of issues don't (yet) 
-represent any violation of an explicit security policy.  This could then 
-shape future decisions for whether we continue to assign CVEs for these 
-kinds of issues, at least until some more explicit policy is defined.
-
-So, I'll repeat my subtle request in January for someone to try and define 
-what the acceptable security boundaries are at this stage, and then it 
-should make it easier to interpret what needs a CVE (or not).  It sounds 
-like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
-blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
-great start; based on my (limited) understanding, this suggests that 
-CAP_SYS_ADMIN can legitimately transition to full root.
-
-- Steve
+-- 
+Tomas Hoger / Red Hat Security Response Team
