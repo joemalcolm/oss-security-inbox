@@ -1,37 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/4
-Message-ID: <20110516180956.GC2430@redhat.com>
-Date: Mon, 16 May 2011 12:09:56 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/11
+Message-ID: <20110414144051.GM18543@redhat.com>
+Date: Thu, 14 Apr 2011 08:40:52 -0600
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests; issues fixed in MySQL 5.1.52
+Subject: CVE request: mediawiki 1.16.4, incomplete fix of CVE-2011-1578
 Content-Type: text/plain; charset=utf-8
 
-I see the following changes as fixed in MySQL 5.1.52, but cannot find
-any CVEs for them:
+Looks as though Mediawiki 1.16.3 did not fully fix the CVE-2011-1578
+issue (XSS), so 1.16.4 has been released:
 
-InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
-examining the same table's information in the INFORMATION_SCHEMA
-database at the same time could cause a crash in the debug version of
-the server. (Bug #54678)
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000097.html
 
-Security Fix: The server crashed for assignment of values of types other
-than Geometry to items of type GeometryCollection (MultiPoint,
-MultiCurve, MultiSurface). Now the server checks the field type and
-fails with bad geometry value if it detects incorrect parameters. (Bug
-#55531)
-
-Security Fix: EXPLAIN EXTENDED caused a server crash with some prepared
-statements. (Bug #54494)
-
-Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
-derived table caused a server crash. (Bug #54488)
-
-There are a whole bunch of other crash-type bugs corrected in 5.1.52
-that upstream did not explicitly flag as security, which might be
-considered security-relevant as well:
-
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+Could a CVE name get assigned to this?
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
