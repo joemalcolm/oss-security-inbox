@@ -1,102 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/15
-Message-ID: <20110725230222.GB23791@openwall.com>
-Date: Tue, 26 Jul 2011 03:02:22 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jeff Johnson <n3npq@....com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/9
+Message-ID: <0F278B0E7FB40349B635BE500A9BA27F0E22C34B@ALA-MBB.corp.ad.wrs.com>
+Date: Thu, 14 Apr 2011 12:26:13 +0000
+From: "Zhao, Zhenfeng" <Zhenfeng.Zhao@...driver.com>
+To: Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [security-vendor] Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Jeff,
+Hi Alexander,
 
-Thank you for your comments!
+I have added Wind River info to the two wiki pages.  Please add me with the mail address as the member of vendor-sec list. Thanks.
 
-On Mon, Jul 25, 2011 at 03:39:15PM -0400, Jeff Johnson wrote:
-> There were a series of CVE's applied (and some withdrawn) against
-> whatever happens to be called "rpm".
+pub   2048R/66FBA52A 2011-04-12
+      Key fingerprint = BF45 878D 7941 567D 732C  D153 F997 3E81 66FB A52A
+uid                  Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
+sub   2048R/BD99FF83 2011-04-12
+
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+mQENBE2kEBcBCADGU94a4sScP87HK5a9DGaTmlWyp0y7STrJlCXUDKotOm2swiFl
+uBLZD50drMw35zH6nhHPJ5gjuA9im3BThhDIybNuf0htiSQIfm0lfeRigM6GOi8i
++1qtxJIJyq85TqZ36FQJ/frNHZ5hKG6++rF9r/HhDJZkyztu2ht2Mt2G+WsXjPPT
+c/11nHEapI6LhI1lJi27Qmn/btehWgAbKsswMLEeUARzumTvM7NV7iNDKVPcwwCp
+EDVu9ynreQoNx2Ts3d9MKCR5xtQiMODCkWfqsjXIxRNCD0AA6FBVG4dudI5MiLsI
+0BKvcvosV9WZivh4L0CIdndGEbTR0iRiyA8vABEBAAG0OlpoZW5mZW5nIFpoYW8g
+KFdpbmQgUml2ZXIpIDxzZWN1cml0eS12ZW5kb3JAd2luZHJpdmVyLmNvbT6JATgE
+EwECACIFAk2kEBcCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEPmXPoFm
++6UqfmEH/2mDk4nUqvK9KfSIeRZ5bPASkDop2+6XebHEyspZMeD4XfMd8hVtkujN
+r/GvhhIMNmia5aAwYYvYOajF8yJWKGEarC75NGQXx7RKuIj4ZPRKk7sstDpomx2e
+Ykg1RM72k54nniEhaqKuzqaB/A/kYQ5h+1y+J/+5IlbQvqMg3HHzxKPYZzWmkC+X
+wBr6+RxGXsKxmuySXw2poHCrMXmZurgHmVxOn2ZKLCJUAbBkiDHJtTMnIyzPuOF8
+2PdkjtFQlOm7g6fKCYleAPm+0p7def9LifWE793RfzQ9Otfoyj7kISQdNdO+UIw5
+jj5dQboz4GJn25aV3PvMq2CSU92ZFhO5AQ0ETaQQFwEIAL09RT5SYAFa5GuIY3oW
+wzeBEhPYh4YQWMPYTLow5Xd56FUhNEoxMYzoKuR9SiFOdcRBTmYXozuVqhkewx+O
+dKPWmOoQrba0G/dEW4UnCjmWviDFdQKOQs/WY3xgUZfjEvAB0ijQKiwFcteH3oo9
+a4rSRcClh+pFJp4XflqKr9HCVwNOT7cmVOM++91cWHbhXwt+HCXOmkQbgvnXdsaa
+Y9pku5OHFUNZ02pNFwZDMppFwB4gFZj3FI9B8WgLNt0iEuYB9WgofrLwDehFx7tO
+JgnWhBMz4rXgGehU50uKZ6omRWFl/cZC98EWR7P4lYYsv/1gy+9ruqhahsOETrrz
+B3UAEQEAAYkBHwQYAQIACQUCTaQQFwIbDAAKCRD5lz6BZvulKnvDB/9AzCamF6cw
+KCalit32iGbwPNsuTkk6OFU9roXLVWuzWJZlUV443xGVCxedeg6PKytIHh+ebll8
+1WtqnWCoqtZ+yguOrrLiTc4qs78kecKW7GhfxVjF2EoQPTNch68jCL5j75GJDffg
+129M/m4/TZWU8JkS3hJC9kI4ZDg3z1Pj8ecocKt6MSCwgPbrgkmNf7aFsHV1CnbT
+5ZCUYF00jeGnfK2wnLeraTDVD0i/+1KiTdaufOCvMlDDWlDfFwK3NBnbsf03F8ot
+/KSWSvp0uB6+G3w5acuBfgnsAI66RujU6xq+i5IMMnkDyYilazftnRBcTG2Mg9eP
+Peaf8ujaWsJU
+=n1zi
+-----END PGP PUBLIC KEY BLOCK-----
+
+
+Thanks,
+Zhenfeng(Jeffrey) Zhao
+
+> -----Original Message-----
+> From: owner-security-vendor@...driver.com [mailto:owner-security-
+> vendor@...driver.com] On Behalf Of Solar Designer
+> Sent: Wednesday, April 13, 2011 5:02 AM
+> To: oss-security@...ts.openwall.com
+> Subject: [security-vendor] Re: [oss-security] Closed list
 > 
-> The patch here was dropped when RPM was forked and the CVE was
-> essentially a replay of an issue that was already fixed 5 years ago
-> (and the patch was NOT dropped in @rpm5.org cvs).
-
-I am not sure I understand what you mean here.  As I wrote, I am aware
-of two CVEs relevant to the general issue: CVE-2005-4889 (package
-removals) and CVE-2010-2059 (package upgrades).  The corresponding
-issues were in fact fixed in rpm4 at different times.  Neither fix was
-reverted in rpm4.  Neither CVE id was withdrawn.
-
-Are you saying that the fix for CVE-2005-4889 was somehow dropped from
-rpm5, another CVE id was assigned, and the fix was re-introduced?
-I have no idea - I am just trying to guess what you might have meant.
-
-> (aside)
-> I believe there are better fixes if the link count is more carefully
-> checked always and everywhere. While rpm package metadata does not
-> (and SHOULD not) carry an expected value for st->st_nlinks, its
-> rather easy to synthesize an expected link count given the inode
-> information (which is in rpm metadata) and to warn (either with --verify,
-> or perhaps always) if the link count is not as expected.
-
-Unfortunately, only doing the chmod() to safe perms if the link count is
-other than expected is prone to a race condition.  rpm4 actually had
-this race condition introduced, then removed:
-
-commit 89be57ad9239c9ada0cba94a5003876b456d46bf
-Author: Panu Matilainen <pmatilai@...hat.com>
-Date:   Fri Jun 11 08:17:12 2010 +0300
-
-    If there are no hardlinks, dont bother with s-bit and caps removal
-
-commit 26874707edfe73e153383284f9fe33cfd9879bb1
-Author: Michal Schmidt <mschmidt@...hat.com>
-Date:   Tue Jun 22 15:51:41 2010 +0200
-
-    Revert "If there are no hardlinks, dont bother with s-bit and caps removal"
-
-    Deciding whether it is necessary to remove the SUID bit based on
-    the current link count creates an opportunity for a race condition.
-    A hardlink could be created just between lstat() and chmod().
-
-    This reverts commit 89be57ad9239c9ada0cba94a5003876b456d46bf.
-
-> There are other (and better) approaches if the actual values on
-> the file system, including files not contained in packages, is
-> stored in an rpmdb: its a fundamental design flaw in RPM that
-> only package metadata installed in an rpmdb is ever used
-> for security auditing.
-
-To me, system integrity checking for security purposes is mostly not a
-package manager task, although sometimes it is in fact useful that rpm
-can do it, even if to a very limited extent.
-
-As to having rpm check/remove some files that are closely related to a
-package being verified/removed but that didn't come from the package,
-isn't this what %ghost is for?  It won't verify those files' contents,
-but I think that maintaining a database of hashes of changing files on a
-system is not a package manager's task anyway.
-
-> But there's no harm at all in removing SUID/SGID bits from files that are being
-> removed in case there's an additional link that has been added.
-
-Yes, and it has to be done regardless of link count (as long as we don't
-have an atomic "chmod if st_nlink is ..." operation).
-
-The purpose of my posting was to suggest that a similar cleanup is also
-needed for things that are not SUID/SGID binaries, but also at least for
-device files and for regular files with world or group write permissions.
-Since it is not obvious if that list is exhaustive or not and since new
-file types may appear later, I felt that chmod'ing all files to be
-removed to 0 is a safer thing to do.
-
-Of course, even that might not reset attributes stored outside of the
-Unix permissions mask, such as fscaps.  So those need to be taken care
-of separately, which fscaps-aware builds of rpm4 already do.  Perhaps
-rpm5 does as well - I haven't looked yet.
-
-The patch that I posted was against rpm 4.2, which was not fscaps-aware.
-This is why I did not bother with that aspect of the issue there.
-
-Thanks again,
-
-Alexander
+> On Tue, Apr 12, 2011 at 09:04:05AM +0000, Zhao, Zhenfeng wrote:
+> > Sorry for the late response. Please add me with the mail address as the
+> member of the vendor-sec . Thanks.
+> >
+> > pub   2048R/66FBA52A 2011-04-12
+> >       Key fingerprint = BF45 878D 7941 567D 732C  D153 F997 3E81 66FB A52A
+> > uid                  Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
+> > sub   2048R/BD99FF83 2011-04-12
+> 
+> Given the discussion around MontaVista, can you please start by adding
+> Wind River info to:
+> 
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
+> 
+> Thanks,
+> 
+> Alexander
