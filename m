@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/7
-Message-ID: <20110224164530.GH30355@redhat.com>
-Date: Thu, 24 Feb 2011 09:45:30 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/4
+Message-ID: <20110414101413.28823b71@orphan>
+Date: Thu, 14 Apr 2011 10:14:13 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, Ralf Cors?pius <rc040203@...enet.de>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
+On Wed, 13 Apr 2011 19:02:05 -0400 Mike O'Connor wrote:
 
->> Is Redhat packaging RT now, or are you just handling the CVEs?
->
->I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
->public issues.
+> Focusing on how you think an update ought to *look* (e.g. should the
+> advisories be public?) isn't as important as the update getting
+> *out*.  Especially since you're dealing with GPL'ed code, I think
+> that's something you can measure.  Just ask the constituency a month
+> or so after some major kernel issue who has released updates/fixes
+> and who hasn't, show the relevant source, and take it from there.
 
-RT3 is packaged in Fedora and EPEL.
+Even though it's GPL'ed code, some vendors may not make their sources
+publicly available to "random strangers" and rather only restrict them
+to their customers.  Given the current context of this discussion,
+public visibility of their source packages may not be better than the
+visibility of their binary packages or "advisories" (whatever form you
+expect them to be).
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tomas Hoger / Red Hat Security Response Team
