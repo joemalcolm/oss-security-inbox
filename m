@@ -1,94 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/4
-Message-ID: <AANLkTimvizFt4PJE+RfG9xP0mxVEMgXDcZAtvc7UqW5v@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:15:25 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/7
+Message-ID: <709823227.88477.1302779423715.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 14 Apr 2011 07:10:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.5.21 <= SQL Injection Vulnerability
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+----- Original Message -----
+> 
+> 
+> "security updates" and "public advisories" aren't the same thing,
+> That's not just a semantic distinction. There's many s vendors who
+> release security updates, but not necessarily public advisories on
+> them. They may have constituencies that would simply get confused
+> by advisories, or they have auto-update mechanisms, or part of their
+> support model involves pushing their customers to keep up with all
+> fixes, security or otherwise. They may simply thing that advisories
+> are a waste of time because customers don't read.
+> 
+> For linux-distros, I think what you really want to go for here are
+> *timely* updates. If a distro isn't generally capable of producing a
+> security update within, say, a month of when the issue was released,
+> then their getting the issue in advance through linux-distros isn't
+> going to do them or their distro community a lot of good because they
+> have other constraints in getting fixes out the door. Focusing on how
+> you think an update ought to *look* (e.g. should the advisories be
+> public?) isn't as important as the update getting *out*. Especially
+> since you're dealing with GPL'ed code, I think that's something you
+> can measure. Just ask the constituency a month or so after some major
+> kernel issue who has released updates/fixes and who hasn't, show the
+> relevant source, and take it from there.
+> 
 
-Potential SQL Injection Flaws were detected Joomla! CMS version 1.5.20.
+I think the whole point comes down to how can you prove you've updated what
+you claim you have? It doesn't matter *what* is public, just as long as
+something is (and it needs to be reasonable, expecting others to dig
+through source would be silly). If someone is untrustworthy and using a
+private list inappropriately, do you really think they're going to tell the
+truth if they're asked about releasing timely updates? Clearly advisories
+are the easiest way to verify this, but if someone has a better idea that
+includes verifiable information, please speak up.
 
+Thanks.
 
-2. PRODUCT DESCRIPTION
-
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Parameters (filter_order, filer_order_Dir) were not properly sanitized
-in Joomla! that lead to SQL Injection vulnerability.
-
-
-4. VERSIONS AFFECTED
-
-Joomla! 1.5.21  and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-Exploits:
-/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir=&filter_order=%00'
-/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir='&filter_order=asc
-
-Screenshots:
-http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_(filter_order)_front.jpg
-http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_front.jpg
-http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_back.jpg
-
-
-6. IMPACT
-
-Attackers could successfully execution malicious sql command injection
-in Joomla! CMS by bypassing filers in place.
-
-
-7. SOLUTION
-
-Upgrade to Joomla! 1.5.22
-
-
-8. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-2010-10-06  : Notified Joomla! Security Strike Team
-2010-11-01  : Vulnerability disclosed
-2010-11-05  : Patched version (1.5.22) released
-
-
-11. REFERENCES
-
-Vendor Advisory URL:
-http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
-Assigned CVE: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-4166
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-89: http://cwe.mitre.org/data/definitions/89.html
-
-
-#yehg [2010-11-05]
-
-last updated: 2010-12-24
+-- 
+    JB
