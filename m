@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/2
-Message-ID: <BANLkTi=viGP4Jr4reOz4ceS=rtSFuMnw7Q@mail.gmail.com>
-Date: Wed, 27 Apr 2011 11:00:16 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/4
+Message-ID: <20110414101413.28823b71@orphan>
+Date: Thu, 14 Apr 2011 10:14:13 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 27, 2011 at 10:56 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
->
->> util-linux mount
->> =============
->> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
->> to glibc addmntent() in terms of return code
->> * Succeeds on partial writes, does not remove temp file on failure
->> (could result in additional corruption of /etc/mtab through multiple
->> invocations), does not remove lock file /etc/mtab~ on failure (also an
->> issue)
->
-> Dan, would you mind clarifying the way to achieve mtab corruption via
-> truncated left-over mtab.tmp file and multiple invocations?  After some
-> discussion with our util-linux maintainer, we fail to see an obvious
-> way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
-> open flag.  So if there's any mtab.tmp file found, it's overwritten and
-> its existence does not block further use of mount / umount as existence
-> of mtab~ lock file does.
->
+On Wed, 13 Apr 2011 19:02:05 -0400 Mike O'Connor wrote:
 
-Ah, quite right.  I missed that since I was just doing a quick survey
-of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
-Thanks for looking into it.
+> Focusing on how you think an update ought to *look* (e.g. should the
+> advisories be public?) isn't as important as the update getting
+> *out*.  Especially since you're dealing with GPL'ed code, I think
+> that's something you can measure.  Just ask the constituency a month
+> or so after some major kernel issue who has released updates/fixes
+> and who hasn't, show the relevant source, and take it from there.
 
--Dan
+Even though it's GPL'ed code, some vendors may not make their sources
+publicly available to "random strangers" and rather only restrict them
+to their customers.  Given the current context of this discussion,
+public visibility of their source packages may not be better than the
+visibility of their binary packages or "advisories" (whatever form you
+expect them to be).
 
-> Thank you!
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+-- 
+Tomas Hoger / Red Hat Security Response Team
