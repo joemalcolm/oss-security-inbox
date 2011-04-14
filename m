@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/8
-Message-ID: <1020251845.375296.1299184265420.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 15:31:05 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/6
+Message-ID: <20110414105709.59c835fe@orphan>
+Date: Thu, 14 Apr 2011 10:57:09 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: VLC bookmark buffer overflow
+Subject: Re: RE: [security-vendor] Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi Zhenfeng!
 
+Now that I'm already known for being corporatishly evil against smaller
+distros... ;)
 
------ Original Message -----
-> Can I get CVE-identifier for this issue:
-> 
-> "VLC media player is vulnerable to a buffer overflow attack when
-> processing .mp3 file and its metadata. It fails to perform boundry
-> checks when creating a bookmark from the malicious media file playing,
-> resulting in a crash, overwriting ECX register. While the evil .mp3 is
-> playing, you go Playback > Bookmarks > Manage bookmarks > Create."
-> 
-> References:
-> http://osvdb.org/show/osvdb/62728/printer
+On Tue, 12 Apr 2011 09:04:05 +0000 Zhao, Zhenfeng wrote:
 
-Please use CVE-2011-1087
+> uid    Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
 
-Thanks.
+My understanding of the membership rules is that the aim is to avoid
+exploders or other mechanisms that may make it easier to change who is
+receiving mails without list admin and members being aware of such
+change.  While this may not be an exploder address now, for addresses
+like security@, they seem to be less likely to be closed once the
+people behind them decide to move on and are replaced by someone else.
+It seems there may be more pressure to hand matching private key over
+during the transition of responsibilities from one person to another.
+
+Just my 2c.
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
