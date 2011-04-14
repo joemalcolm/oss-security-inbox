@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/2
-Message-ID: <20110615220814.GC25196@nekral.nekral.homelinux.net>
-Date: Thu, 16 Jun 2011 00:08:14 +0200
-From: Nicolas François <nicolas.francois@...traliens.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/12
+Message-ID: <4DA711CE.7030807@mvista.com>
+Date: Thu, 14 Apr 2011 05:25:02 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondrej Vasik <ovasik@...hat.com>, kzak@...hat.com
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+CC: Tomas Hoger <thoger@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Thomas,
 
-On Wed, Jun 15, 2011 at 12:50:47PM +0200, Ondrej Vasik wrote:
+Thanks for the feedback. That kind of list is what I had hoped MV could
+have created a year ago. Resources shot it down then and now MV has
+added a few more issues to work through.
+
+If SUSE's http://support.novell.com/security/cve/ is an example of what
+is being sot to meet the public advisory requirement, then I know what
+MV needs to do.
+
+Mahalo,
+Armin
+
+On 04/13/2011 10:38 PM, Tomas Hoger wrote:
+> Hi Armin!
 > 
-> For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
-> - in util-linux - could only cause a lot of confusion. Some
-> consolidation might be better.
-
-On one hand I agree, on the other hand I remember hard time getting rid of
-Debian specific patches for su.
-The behavior of -c changed and since dependencies to this tool are not
-traced, there were no other ways than grep'ing the whole distro for those
-two letters 'su' to prepare the transition.
-
-One first step could be to compare their features and behaviors
-
-
-PS: regarding the original issue, was the CVE requested? I would need the
-    number for documentation purpose.
-
-Best Regards,
--- 
-Nekral
+> On Wed, 13 Apr 2011 05:59:20 -1000 akuster wrote:
+> 
+>>> It's clear that one of the membership requirements is now producing
+>>> security updates. 
+>>
+>> What method of proving this would be acceptable? screen shot,
+>> temporary access to our site, public list or other?
+> 
+> A quick idea, rather than a real guidance:  Several vendors offer some
+> sort of public CVE database that can be used to search for vendor's
+> updates to address particular flaw.  If you're already tagging your
+> updates with CVE ids, this may not be hard to provide.  Not because
+> folks on this list ask you to do so, but because it's likely to provide
+> a significant benefit to your customers with little extra cost/effort on
+> top of what you already do.
+> 
+> SUSE's database is probably closest to what may work for you as well.
+> CVE info is split by a patched product+version, with links to
+> customer-only download site for the enterprise products.
+> 
+> http://support.novell.com/security/cve/
+> 
