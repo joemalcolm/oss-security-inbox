@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/5
-Message-ID: <20110321092126.GA5084@albatros>
-Date: Mon, 21 Mar 2011 12:21:26 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/8
+Message-ID: <loom.20110414T095606-853@post.gmane.org>
+Date: Thu, 14 Apr 2011 07:56:54 +0000 (UTC)
+From: Franck Paul <carnet.franck.paul@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: Re: CVE request: dotclear before 2.2.3
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 20, 2011 at 15:45 -0400, Dan Rosenberg wrote:
-> I don't mean to create unnecessary work, but have you actually
-> confirmed that exposing each of these files as world-writable actually
-> allows a user to cross privilege boundaries?
+Hanno Böck <hanno@...> writes:
 
-First 19 bugs allow anybody to interact with hardware on low level -
-write to hw registers, load firmware, etc.
+> 
+> My french isn't that good:
+> http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
+> 
+> But that sounds like a security issue:
+> "Pour en revenir à cette version, signalons qu'elle contient la
+> correction d'une faille de sécurité signalée il y a quelque temps par
+> Raphaël — que nous remercions au passage —, ainsi qu'une correction
+> attendue pour la génération manuelle des miniatures."
+> 
 
-I'm not sure about ubifs debugfs files - they allow anybody to dump some
-fs related information via printk(KERN_DEBUG, ...);  maybe it is just a
-bit more precise statistics than statvfs(2) without any disclosure, but
-I cannot understand it without understanding UBIFS internals.  Also this
-may be not a bug in default distro setups as KERN_DEBUG messages are not
-usually logged into world-readable log files.
 
-Thanks,
+Hi,
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Yes it's a minor security issue fixed by this new release.
+
+Regards
+Franck
+
