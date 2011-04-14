@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/3
-Message-ID: <1319897055.21316.25.camel@scapa>
-Date: Sat, 29 Oct 2011 16:04:15 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/3
+Message-ID: <BANLkTi=N4AqFZvf0ph+aPMES9EJFR_XGSw@mail.gmail.com>
+Date: Wed, 13 Apr 2011 18:30:14 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: CVE request for SAP issues
 Content-Type: text/plain; charset=utf-8
 
-On sam., 2011-10-29 at 15:50 +0200, Yves-Alexis Perez wrote:
-> On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
-> > Please use CVE-2011-3362.
-> > 
-> > Thanks.
-> > 
-> 
-> It seems that CVE-2011-3973 has been assigned as a duplicate to this
-> issue. Is there a way to know who assigned it and have it rejected?
+> Hi Kurt,
+>
+> On Wed, Apr 13, 2011 at 06:06:42PM -0600, Kurt Seifried wrote:
+>> http://dsecrg.com/pages/vul/show.php?id=317
+>> [DSECRG-11-017] SAP GUI - Buffer overflow
+> ...
+>
+> Is this Open Source software?
+>
+> If not, then this is off-topic for oss-security.
 
-Sorry for that, it looks that 3973 and 3974 are indeed in the same files
-but are a different vulnerability.
+Sorry, I sometimes think of this as the CVE allocation list (since
+that seems to be a lot of what goes on =).
 
-Regards,
+> Alexander
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Kurt Seifried
+kurt@...fried.org
+skype: 1-703-879-3176
