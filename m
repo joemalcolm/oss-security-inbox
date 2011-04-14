@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/8
-Message-ID: <20110407194624.GC3934@redhat.com>
-Date: Thu, 7 Apr 2011 13:46:25 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: Christos Zoulas <christos@...las.com>
-Cc: oss-security@...ts.openwall.com, file@...gw.com
-Subject: Re: Possible security fixes in 5.05?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/10
+Message-Id: <201104141531.06743.meltem@pardus.org.tr>
+Date: Thu, 14 Apr 2011 15:31:06 +0300
+From: Meltem Parmaksız <meltem@...dus.org.tr>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* [2011-04-07 15:17:37 -0400] Christos Zoulas wrote:
+12 Nisan 2011 Salı günü (saat 19:58:18) Onur Küçük şunları yazmıştı:
+> On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
+> Josh Bressers <bressers@...hat.com> wrote:
+> ...
+> 
+> > Initial members will have had to be a vendor-sec member (no exploders
+> > this time around). You must reply to this thread, in public (on
+> > oss-security). We want this to be very public, we have nothing to
+> > hide. You must have a public gpg key ID included in your reply. The
+> > new list will gpg encrypt all mail (it does accept plaintext messages
+> > though).
+> 
+>  Sorry for the late reply, we had to resolve some issues on our side
+> about who should join. I was a subscriber of vendor-sec as a
+> representitive of Pardus, please add me to the new list(s).
 
-Thanks for the quick response, Christos!
+Sorry, I'm late. I was  a vendor-sec member representing Pardus, please add me 
+to the new list.  
 
->On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
->-- Subject: Re: [oss-security] Possible security fixes in 5.05?
->
->| Looks like there are a few issues here:
->|
->| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
->|      * Fix two potential buffer overruns in apprentice_list.
->|
->| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
->
->This is an order of evaluation issue, that could read memory over the allocated
->limit. The limit check is done after the read instead of before. The code
->has not been present in any release.
+pub   4096R/29661BF8 2011-04-14 [son kullanma tarihi: 2016-04-12]
+         Key fingerprint = 0136 2B51 FD70 0545 30D2  5C3F FDA1 B5DB 2966 1BF8 
+uid                  Meltem Parmaksız <meltem@...dus.org.tr>
 
-Ok, so it was added post-5.04 and corrected prior to the 5.05 release.
-Thank you for clarifying.
 
->| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
->|      * Minor security fix to softmagic.c (don't use untrusted
->|        string as printf format).
->|
->| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
->
->The code is present in [5.00-5.04]. It should not be an issue because the desc
->printf formats are checked during parsing. It is mostly to silence a compiler
->warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
->printf(ms->desc, argument) in a ton of other places.
-
-Ok, great.  Thank you for the explanation.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks.
