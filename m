@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/6
-Message-ID: <20110719151300.4d435028@redhat.com>
-Date: Tue, 19 Jul 2011 15:13:00 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de, aland@...eradius.org
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/10
+Message-ID: <20110415185735.GA9002@albatros>
+Date: Fri, 15 Apr 2011 22:57:35 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 19 Jul 2011 12:19:57 +0200 dfncert@...-cert.de wrote:
+On Sun, Mar 20, 2011 at 16:43 +0300, Vasiliy Kulikov wrote:
+> Steven,
+> 
+> On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
+> > Thanks for the list. I don't have enough CVE ids for this, I've grouped
+> > them by type and version for MITRE to assign IDs.
+> 
+> Any update on this?
 
-> Are the published information sufficient to get a CVE number for the
-> issue?
-
-Was your intention to request a CVE for a still-to-remain-non-public
-issue to be disclosed in the future, or actually make the issue public?
-
-I'm CCing upstream (Alan DeKok), as it seems this thread may be giving
-out more info than expected.  Alan, this is part of the following
-discussion:
-
-http://thread.gmane.org/gmane.comp.security.oss.general/5489
+Ping.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
