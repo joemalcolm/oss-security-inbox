@@ -1,99 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/9
-Message-ID: <127847674.298986.1298925647709.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 15:40:47 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: PHPShop 0.8.1 <= | Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/10
+Message-ID: <20110415185735.GA9002@albatros>
+Date: Fri, 15 Apr 2011 22:57:35 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1069.
+On Sun, Mar 20, 2011 at 16:43 +0300, Vasiliy Kulikov wrote:
+> Steven,
+> 
+> On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
+> > Thanks for the list. I don't have enough CVE ids for this, I've grouped
+> > them by type and version for MITRE to assign IDs.
+> 
+> Any update on this?
 
-Thanks.
+Ping.
 
 -- 
-    JB
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
 
-
------ Original Message -----
-> 1. OVERVIEW
-> 
-> The PHPShop 0.8.1 and lower versions are currently vulnerable to Cross
-> Site Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> PHPShop is a PHP-powered shopping cart application. It is released
-> under the GNU General Public License.
-> The primary purpose of PHPShop is to provide a simple shopping cart
-> solution that is easy to customize to suit any purpose. PHPShop has
-> less features that many other shopping cart applications, but is
-> generally easier to customize.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The Query String was not properly sanitized upon submission to the
-> /index.php url, which allows attacker to conduct Cross Site Scripting
-> attack.
-> This may allow an attacker to create a specially crafted URL that
-> would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> PHP 0.8.1 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/phpshop0_8_1/?page=store/XSS&%26%26%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E%3d1
-> 
-> 
-> 6. SOLUTION
-> 
-> The vendor has discontinued this product.
-> It is recommended that an alternate software package be used in its
-> place.
-> 
-> 
-> 7. VENDOR
-> 
-> PHPShop Development Team
-> http://phpshop.org
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-02-25: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[phpshop_0.8.1]_cross_site_scripting
-> Project Home: http://code.google.com/p/phpshop/,
-> http://sourceforge.net/projects/phpshop/
-> PHPShop Download Stats:
-> http://sourceforge.net/projects/phpshop/files/phpshop/0.8.1/stats/timeline?dates=2010-01-01+to+2010-01-01
-> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-02-25]
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
