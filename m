@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/01/2
-Message-ID: <20111001211802.GA22063@openwall.com>
-Date: Sun, 2 Oct 2011 01:18:02 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/4
+Message-ID: <1302875648.2013.6.camel@oban>
+Date: Fri, 15 Apr 2011 15:54:08 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
+Subject: CVE request for Thunar (format string errors)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2011 at 03:25:40PM +0200, nicolas vigier wrote:
-> On Tue, 27 Sep 2011, Tavis Ormandy wrote:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=741606
-> > https://bugzilla.redhat.com/show_bug.cgi?id=741612
-> 
-> Patches on rpm git :
-> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=11a7e5d95a8ca8c7d4eaff179094afd8bb74fc3f
-> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=a48f0e20cbe2ababc88b2fc52fb7a281d6fc1656
+Two format string errors were recently fixed in Thunar (file manager for
+Xfce).
 
-Thanks!  Now there's also:
+The first one is
+http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74 (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in Thunar 1.2.1) and triggers when creating file from templates and calling it with a format string.
 
-http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=30635dd4330a192fa2b6e202a0e2490eba599a93
+The second is
+http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa and is triggered when copy/pasting a file named from a format string. There's no released version including the fix right now.
 
-...and still no info on whether any of these issues were usable for more
-than just DoS?
+I've triggered the (second) bug using file named %s or %n but didn't
+really manage to exploit it (it crashes just fine).
 
-Alexander
+I'm not so sure it really needs a CVE so it's a request for discussion
+as well :)
+
+As a side note, I do use -Wformat -Wformat-security
+-Werror=format-security (thanks to hardening-includes) for my Debian
+builds, but as those function are wrappers of wrappers of wrappers to
+printf() and stuff like that, -Wformat-security won't help. Is there a
+way to work around that?
+
+Regards,
+-- 
+Yves-Alexis
+
