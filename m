@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/4
-Message-ID: <1178977889.112211.1298059267227.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 18 Feb 2011 15:01:07 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/6
+Message-ID: <1302879971.2013.10.camel@oban>
+Date: Fri, 15 Apr 2011 17:06:11 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: avahi daemon remote denial of service by sending NULL UDP
+Subject: Re: CVE request for Thunar (format string errors)
 Content-Type: text/plain; charset=utf-8
 
-I just gave it CVE-2011-1002.
+On ven., 2011-04-15 at 16:50 +0200, Tomas Hoger wrote:
+> On Fri, 15 Apr 2011 15:54:08 +0200 Yves-Alexis Perez wrote:
+> 
+> > The first one is
+> >
+> http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74
+> > (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in
+> > Thunar 1.2.1) and triggers when creating file from templates and
+> > calling it with a format string.
+> 
+> Does this have real attack vector where trust boundary is crossed?
+> This sounds like a bug.
 
-Thanks for pointing this out!
+Yeah, I don't think there's a way to ask Thunar to create a new file
+from a template programmatically, so the user really needs to go to the
+menu and create it.
+> 
+> > The second is
+> >
+> http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
+> > and is triggered when copy/pasting a file named from a format
+> string.
+> > There's no released version including the fix right now.
+> 
+> This would probably qualify.
 
+Even if the user has to manually Ctrl-C/Ctrl-V the file in Thunar?
+Thanks.
+> 
+> > As a side note, I do use -Wformat -Wformat-security
+> > -Werror=format-security (thanks to hardening-includes) for my Debian
+> > builds, but as those function are wrappers of wrappers of wrappers
+> to
+> > printf() and stuff like that, -Wformat-security won't help. Is there
+> a
+> > way to work around that?
+> 
+> Fortify source should block code execution even in this case, I'd
+> expect.
+
+Yeah hopefully, but I was more thinking on a way to detect the format
+string error at compilation time. Manually it's kind of a pain as one
+has to check every usage of a function using va_args.
+
+Regards,
 -- 
-    JB
+Yves-Alexis
 
------ Original Message -----
-> Hello,
-> does the following need a CVE-ID or already has one assigned?
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=667187
-> 
-> 
-> Thanks,
-> Thomas
-> 
-> --
-> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> --
-> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> -- Marie von Ebner-Eschenbach
