@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/7
-Message-ID: <20110707200942.GO8259@core.inversepath.com>
-Date: Thu, 7 Jul 2011 22:09:42 +0200
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/8
+Message-ID: <358182854.11430.1302892361483.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 15 Apr 2011 14:32:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: oCERT name change due to trademark claims
+Cc: Jeff Layton <jlayton@...hat.com>, Steve French <sfrench@...ibm.com>, Suresh Jayaraman <sjayaraman@...ell.com>, coley <coley@...re.org>
+Subject: Re: CVE Request: cifs session reuse
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-1585
 
-Hello oss-security,
-
-to anyone that might be bothered with this change I'd just like to announce
-that oCERT change its "long" name from Open Source Computer Emergency
-Response Team to Open Source Computer Security Incident Response Team.
-
-This change was triggered by legal claims by Carnegie Mellon University
-linked to the fact that not only we need a license in order to use CERT in
-our name (which we obtained in 2008 after the first claim) but that in order
-to use the license it can never be implied that CERT is an acronym [1] for
-Computer Emergency Response Team (this last claim was made just now in 2011).
-
-Luckily we have better things to do with our time than engaging in possible
-legal battles, therefore we decided to comply (the "long" name appeared only
-twice on our site anyway).
-
-To any OSS project that uses or will want to use CERT in this fashion, you
-have been warned. I hope one day the security community can legally claim the
-CERT acronym back without risking these kind of consequences.
-
-Cheers
-
-[1] http://www.cert.org/faq/cert_faq.html#sectionA
+Thanks.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
+    JB
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+
+----- Original Message -----
+> Hi,
+> 
+> When one user has mounted a cifs share that requires authentication,
+> another user could mount the same share without knowing the
+> correct password. The following kernel commits fix that:
+> 
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4ff67b720c02c36e54d55b88c2931879b7db1cd2
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=fc87a40677bbe0937e2ff0642c7e83c9a4813f3d
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=24e6cf92fde1f140d8eb0bf7cd24c2c78149b6b2
+> 
+> A way to exploit this would be through mount.cifs if it's
+> installed setuid root.
+> 
+> cu
+> Ludwig
+> 
+> --
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
