@@ -1,15 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/3
-Message-ID: <20110302211129.GA22334@nashi.nerv.fi>
-Date: Wed, 2 Mar 2011 23:11:29 +0200
-From: henri@...v.fi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/9
+Message-ID: <889145794.11829.1302893554457.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 15 Apr 2011 14:52:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: VLC bookmark buffer overflow
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: incomplete fix for CVE-2010-1000 in KDE network
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue:
+Please use CVE-2011-1586
 
-"VLC media player is vulnerable to a buffer overflow attack when processing .mp3 file and its metadata. It fails to perform boundry checks when creating a bookmark from the malicious media file playing, resulting in a crash, overwriting ECX register. While the evil .mp3 is playing, you go Playback > Bookmarks > Manage bookmarks > Create."
+Thanks.
 
-References:
-http://osvdb.org/show/osvdb/62728/printer
+-- 
+    JB
+
+
+
+----- Original Message -----
+> A bug was filed in Ubuntu[1] for patches[2][3] that went into KDE
+> Network for an incomplete fix for CVE-2010-1000. The commit message
+> is:
+> 
+> "Further addresses CVE-2010-1000. The file name of Metalink File is
+> checked a better way, making it work under more conditions."
+> 
+> While the previous patch fixed things like '../../tmp/gotcha', it did
+> not fix a single leading '../'.
+> 
+> [1]https://bugs.launchpad.net/ubuntu/+source/kdenetwork/+bug/757526
+> [2]http://websvn.kde.org/?view=revision&revision=1227468 (4.4)
+> [3]http://websvn.kde.org/?view=revision&revision=1227469 (4.5)
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
