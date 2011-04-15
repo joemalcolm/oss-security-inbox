@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/1
-Message-ID: <4EE9B7E2.6050508@redhat.com>
-Date: Thu, 15 Dec 2011 17:03:30 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/1
+Message-Id: <201104151143.58257.ludwig.nussel@suse.de>
+Date: Fri, 15 Apr 2011 11:43:57 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: perf, powerpc: Handle events that raise an exception without overflowing
+Cc: Jeff Layton <jlayton@...hat.com>, Steve French <sfrench@...ibm.com>, Suresh Jayaraman <sjayaraman@...ell.com>
+Subject: CVE Request: cifs session reuse
 Content-Type: text/plain; charset=utf-8
 
-This does not affect the upstream kernel as it is already fixed. This is
-an issue that was introduced when fixing https://bugzilla.redhat.com/740465.
+Hi,
 
-A PMC is 32 bits (ie an int). When we pass it around as an unsigned
-long, we need to cast it before doing the comparison. Using perf on
-power machine with a local, unprivileged user account can cause a denial
-of service.
+When one user has mounted a cifs share that requires authentication,
+another user could mount the same share without knowing the
+correct password. The following kernel commits fix that:
 
-Upstream commit:
-http://git.kernel.org/linus/0837e3242c73566fc1c0196b4ec61779c25ffc93
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4ff67b720c02c36e54d55b88c2931879b7db1cd2
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=fc87a40677bbe0937e2ff0642c7e83c9a4813f3d
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=24e6cf92fde1f140d8eb0bf7cd24c2c78149b6b2
 
-Reference:
-https://bugzilla.redhat.com/767914
+A way to exploit this would be through mount.cifs if it's
+installed setuid root.
 
-Thanks, Eugene
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
