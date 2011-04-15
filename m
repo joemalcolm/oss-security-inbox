@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/53
-Message-ID: <20110404194016.GA14684@openwall.com>
-Date: Mon, 4 Apr 2011 23:40:16 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/11
+Message-ID: <loom.20110415T210947-398@post.gmane.org>
+Date: Fri, 15 Apr 2011 19:14:52 +0000 (UTC)
+From: JcDenis <jcdenis@...d.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: dotclear before 2.2.3
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 09:31:44PM +0200, Yves-Alexis Perez wrote:
-> On lun., 2011-04-04 at 02:38 +0400, Solar Designer wrote:
-> > "Good" employers, let alone non-commercial Open Source projects, don't
-> > remove e-mail addresses when a person leaves.  Someone having an
-> > @debian.org address does not mean they're currently with Debian. 
+Josh Bressers <bressers@...> writes:
+
 > 
-> In Debian case, that is wrong, mail redirection to @debian.org address
-> is disabled when retiring from the Debian project.
+> 
+> ----- Original Message -----
+> > My french isn't that good:
+> > http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
+> > 
+> > But that sounds like a security issue:
+> > "Pour en revenir à cette version, signalons qu'elle contient la
+> > correction d'une faille de sécurité signalée il y a quelque temps par
+> > Raphaël — que nous remercions au passage —, ainsi qu'une correction
+> > attendue pour la génération manuelle des miniatures."
+> 
+> Please use CVE-2011-1584.
+> 
+> The google translate is pretty vague, if someone has more details please
+> speak up:
+> 
+> "To come back to this version, note that it contains the
+> correcting a security flaw reported some time ago by
+> Raphael - we appreciate the way - and a correction
+> expected to generate manual thumbnail. "
+> 
+> Thanks.
+> 
 
-Oh, I was wrong, then.  I made my assumption thinking that @debian.org
-addresses are typically used in changelogs and the like, so it felt
-weird to disable those.
 
-Alexander
+Hello Josh,
+
+Yes it's a security issue. Little more detail here:
+http://www.arcabit.com/english/home/a-flaw-in-dotclear
+or here:
+http://dev.dotclear.org/2.0/changeset/3427
+
