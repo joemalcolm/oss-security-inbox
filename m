@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/2
-Message-ID: <1349870341.72848.1294841820197.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 12 Jan 2011 09:17:00 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/8
+Message-ID: <358182854.11430.1302892361483.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 15 Apr 2011 14:32:41 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
+To: oss-security@...ts.openwall.com
+Cc: Jeff Layton <jlayton@...hat.com>, Steve French <sfrench@...ibm.com>, Suresh Jayaraman <sjayaraman@...ell.com>, coley <coley@...re.org>
+Subject: Re: CVE Request: cifs session reuse
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0011
+Please use CVE-2011-1585
 
 Thanks.
 
@@ -17,26 +17,24 @@ Thanks.
 
 
 ----- Original Message -----
-> "The semantics of the ',password' option to -vnc are that it enables
-> the VNC
-> auth scheme. If the VNC server password is unset or empty string, all
-> attempts
-> to authenticate with the server will be explicitly blocked.
+> Hi,
 > 
-> This allows applications to enable and selectively allow access for a
-> period of
-> time, before clearing the password again to prevent further access.
+> When one user has mounted a cifs share that requires authentication,
+> another user could mount the same share without knowing the
+> correct password. The following kernel commits fix that:
 > 
-> Upstream changes have introduced a flaw by disabling all
-> authentication when
-> the password was cleared with upstream commit [1].
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4ff67b720c02c36e54d55b88c2931879b7db1cd2
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=fc87a40677bbe0937e2ff0642c7e83c9a4813f3d
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=24e6cf92fde1f140d8eb0bf7cd24c2c78149b6b2
 > 
-> [1]
-> http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+> A way to exploit this would be through mount.cifs if it's
+> installed setuid root.
 > 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=668589
+> cu
+> Ludwig
 > 
-> Thanks,
 > --
-> Petr Matousek / Red Hat Security Response Team
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
