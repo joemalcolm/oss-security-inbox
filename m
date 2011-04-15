@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/6
-Message-ID: <1320853637.3014.123.camel@mdlinux>
-Date: Wed, 09 Nov 2011 10:47:17 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/7
+Message-ID: <1421152075.11083.1302891075646.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 15 Apr 2011 14:11:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: dotclear before 2.2.3
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
-> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
-> >>>> cause LightDM to set the destination of the link to user ownership.
-> >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> >>>>
-> >>>> Overview of changes in lightdm 1.0.6
-> >>>>
-> >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> >>> Could a CVE be assigned for this?
-> >>>
-> >>> Regards,
-> >> Can you send me the link to this announcement so I can confirm it? Thanks.
-> >>
-> > Here's the link to the mailing list mail:
-> > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
-> >
-> > Regards,
-> Thanks, confirmed (first hand info is much better). Please use
-> CVE-2011-4105 for this issue.
+
+
+----- Original Message -----
+> My french isn't that good:
+> http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
 > 
+> But that sounds like a security issue:
+> "Pour en revenir à cette version, signalons qu'elle contient la
+> correction d'une faille de sécurité signalée il y a quelque temps par
+> Raphaël — que nous remercions au passage —, ainsi qu'une correction
+> attendue pour la génération manuelle des miniatures."
 
-BTW, the fix that is in 1.0.6 is probably not enough for distros that
-don't implement hard link restrictions, such as the Yama LSM that is
-used in Ubuntu.
+Please use CVE-2011-1584.
 
-Marc.
+The google translate is pretty vague, if someone has more details please
+speak up:
 
+"To come back to this version, note that it contains the
+correcting a security flaw reported some time ago by
+Raphael - we appreciate the way - and a correction
+expected to generate manual thumbnail. "
+
+Thanks.
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+    JB
