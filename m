@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/3
-Message-ID: <20111128134516.5cce493c@mail.a3li.li>
-Date: Mon, 28 Nov 2011 13:45:16 +0100
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/4
+Message-ID: <1302875648.2013.6.camel@oban>
+Date: Fri, 15 Apr 2011 15:54:08 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: n0idx80@...il.com
-Subject: Re: non-Linux advance notification list
+Subject: CVE request for Thunar (format string errors)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 28 Nov 2011 11:46:30 +0100
-Michael Harrison <n0idx80@...il.com> wrote:
+Two format string errors were recently fixed in Thunar (file manager for
+Xfce).
 
-> Sorry about the confusion. I work for the Gentoo security team, and I
-> am not sure whether it would be beneficial for me to be on the closed
-> list or not. It is my presumption that the release of non-Linux
-> vulnerabilities might better help us identify vulnerabilities across
-> the board.
+The first one is
+http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74 (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in Thunar 1.2.1) and triggers when creating file from templates and calling it with a format string.
 
-We are already part of the actual Linux distributions list, and
-according to the first message of this thread we would be included in
-this new list as well. So I think we're good.
+The second is
+http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa and is triggered when copy/pasting a file named from a format string. There's no released version including the fix right now.
 
-Alexander, fyi, Michael is training to be part of our security
-team, but not yet a full member. Please disregard this request.
+I've triggered the (second) bug using file named %s or %n but didn't
+really manage to exploit it (it crashes just fine).
 
-Sorry for the additional OT,
-Alex
+I'm not so sure it really needs a CVE so it's a request for discussion
+as well :)
 
+As a side note, I do use -Wformat -Wformat-security
+-Werror=format-security (thanks to hardening-includes) for my Debian
+builds, but as those function are wrappers of wrappers of wrappers to
+printf() and stuff like that, -Wformat-security won't help. Is there a
+way to work around that?
+
+Regards,
 -- 
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby/Infrastructure
+Yves-Alexis
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
