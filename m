@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/1
-Message-ID: <4E3616C9.1070406@kde.org>
-Date: Sun, 31 Jul 2011 23:00:25 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/3
+Message-ID: <1302875089.4416.6.camel@localhost>
+Date: Fri, 15 Apr 2011 08:44:49 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>,  KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+Cc: coley <coley@...re.org>
+Subject: CVE Request: incomplete fix for CVE-2010-1000 in KDE network
 Content-Type: text/plain; charset=utf-8
 
-On 07/29/2011 03:53 PM, Josh Bressers wrote:
-> OK, this one is going to get messy. If you folks want to keep this under
-> embargo, please contact me in private for IDs (I don't want to try and keep
-> track on a public list, I'm already unsure what all needs IDs).
-> 
-> If this isn't terribly serious, it may make the most sense to publish
-> details so we can figure out how many IDs are needed.
+A bug was filed in Ubuntu[1] for patches[2][3] that went into KDE
+Network for an incomplete fix for CVE-2010-1000. The commit message is:
 
-Hi Josh,
+"Further addresses CVE-2010-1000. The file name of Metalink File is
+checked a better way, making it work under more conditions."
 
-As patches are either being worked on currently or finished for the
-various affected products that we're aware of, I think we'll get those
-committed, give the packagers a 48-hour heads-up, and then we'll just
-put the details on this list. Then you can assign CVEs as appropriate
-and we can reference those in the various security advisories.
+While the previous patch fixed things like '../../tmp/gotcha', it did
+not fix a single leading '../'.
 
-Does that sound good?
+[1]https://bugs.launchpad.net/ubuntu/+source/kdenetwork/+bug/757526
+[2]http://websvn.kde.org/?view=revision&revision=1227468 (4.4)
+[3]http://websvn.kde.org/?view=revision&revision=1227469 (4.5)
 
-Thanks,
-Jeff
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
