@@ -1,36 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/3
-Message-ID: <20110604200313.GA5687@openwall.com>
-Date: Sun, 5 Jun 2011 00:03:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/5
+Message-ID: <20110415165002.16c6806b@orphan>
+Date: Fri, 15 Apr 2011 16:50:02 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Subject: Re: CVE request for Thunar (format string errors)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 04, 2011 at 02:53:29PM -0400, Michael Gilbert wrote:
-> As a practical matter, you could follow the Debian
-> secure-testing-commits mailing list [0] or check out the svn repo [1].
-> Updates to Mitre's CVE database are synced there twice a day.
+On Fri, 15 Apr 2011 15:54:08 +0200 Yves-Alexis Perez wrote:
 
-This is very nice, thanks.  Many of the commits have Debian-specific
-info, though, which would be a bit distracting, and the Subjects are not
-specific (just "data/CVE" or "data/DSA"), yet this may be helpful.
+> The first one is
+> http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74
+> (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in
+> Thunar 1.2.1) and triggers when creating file from templates and
+> calling it with a format string.
 
-I downloaded
-http://lists.alioth.debian.org/pipermail/secure-testing-commits/2011-May.txt.gz
-and grepped it for SSL (case-insensitive).  Didn't find the OpenSSL
-issue that started this thread.  This is not surprising: apparently, the
-issue did not receive a CVE ID in May, even though CERT published a
-Vulnerability Note on it.
+Does this have real attack vector where trust boundary is crossed?
+This sounds like a bug.
 
-> [0]http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/secure-testing-commits
-> [1]svn://svn.debian.org/svn/secure-testing
+> The second is
+> http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
+> and is triggered when copy/pasting a file named from a format string.
+> There's no released version including the fix right now.
 
-Perhaps add these to
-http://oss-security.openwall.org/wiki/distro-patches#debian ?
-And, while you're at it, fix the many broken links currently in the
-Debian section there (I counted at least three broken links).
+This would probably qualify.
 
-Thanks,
+> As a side note, I do use -Wformat -Wformat-security
+> -Werror=format-security (thanks to hardening-includes) for my Debian
+> builds, but as those function are wrappers of wrappers of wrappers to
+> printf() and stuff like that, -Wformat-security won't help. Is there a
+> way to work around that?
 
-Alexander
+Fortify source should block code execution even in this case, I'd
+expect.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
