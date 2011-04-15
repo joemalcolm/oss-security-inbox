@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/9
-Message-ID: <1309957476.2993.69.camel@localhost>
-Date: Wed, 06 Jul 2011 08:04:36 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org
-Subject: CVE Request: reseed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/9
+Message-ID: <889145794.11829.1302893554457.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 15 Apr 2011 14:52:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: incomplete fix for CVE-2010-1000 in KDE network
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
-> A security bug was reported by Jeffrey Walton against reseed in
-> Ubuntu. You are being emailed as the upstream contact. Please keep
-> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
-> 
-> This issue should be considered public. A CVE is being requested; please
-> mention this in any changelogs.
-> 
-> Details from the public bug follow:
-> https://launchpad.net/bugs/804594
-> 
-> From the reporter:
-> "reseed(8) performs an insecure HTTP fetch of data from random.org. The
-> script is automatically executed when installed, and any time the user
-> chooses to execute. In addition, the reseed man pages do not mention the
-> data is retrieved over an insecure channel."
-> 
-> As pointed out by the reporter, from the man page: "It is run once
-> during the installation of the package only". An attacker could perform
-> a MITM during package installation or whenever the reseed command is run
-> to provide predictable data for the random number seed.
+Please use CVE-2011-1586
 
-While the attack is difficult to achieve (need both MITM at time of
-package installation AIUI), it seems that this still should get a CVE.
-
-Thanks!
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+
+----- Original Message -----
+> A bug was filed in Ubuntu[1] for patches[2][3] that went into KDE
+> Network for an incomplete fix for CVE-2010-1000. The commit message
+> is:
+> 
+> "Further addresses CVE-2010-1000. The file name of Metalink File is
+> checked a better way, making it work under more conditions."
+> 
+> While the previous patch fixed things like '../../tmp/gotcha', it did
+> not fix a single leading '../'.
+> 
+> [1]https://bugs.launchpad.net/ubuntu/+source/kdenetwork/+bug/757526
+> [2]http://websvn.kde.org/?view=revision&revision=1227468 (4.4)
+> [3]http://websvn.kde.org/?view=revision&revision=1227469 (4.5)
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
