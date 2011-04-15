@@ -1,50 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/3
-Message-ID: <4EFAAAE9.3030907@redhat.com>
-Date: Tue, 27 Dec 2011 22:36:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/12
+Message-ID: <4DA8A1AB.5070003@mvista.com>
+Date: Fri, 15 Apr 2011 09:51:07 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eteo@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+CC: Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 02:53 PM, Eugene Teo wrote:
->>> 2: /proc/$PID/{sched,schedstat} information leak
->>> Vasiliy Kulikov of OpenWall posted a demo exploit.
->>> http://openwall.com/lists/oss-security/2011/11/05/3
->>>
->>> AFAICS no CVE ID was assigned to this?
->> I believe we are not assigning CVE's for these types of proc related
->> issues, some discussion was had:
->>
->> https://lkml.org/lkml/2011/2/7/368
->>
->> http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
->>
->> but I'm not sure what the outcome is. CC'ing Eugene Teo.
-===========
-> IIRC, it's an issue but there's no resolution as existing code may break.
->
-> There are also,
-> /proc/{interrupts, stat}
-> https://lkml.org/lkml/2011/11/7/340
-Please use CVE-2011-4915 for this issue.
->
-> /dev/pts/, /dev/tty*
-> https://lkml.org/lkml/2011/11/7/355
-Please use CVE-2011-4916 for this issue.
 
+Does affected code have to be in the main K.O repo or can it be in any
+of the other git kernel repos to get a CVE #?
 
->
-> I have not checked the status of these issues. Vasiliy, kindly shed some
-> light.
->
-> Happy holidays.
->
-> Eugene
+We have least one product possible affected in
+arch/arm/mach-omap2/debobs.c but this file does not exist in K.O, maybe
+somewhere else (our paper trail on this is coming up cold so I don't
+know where is came from).
 
+- Armin
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+On 02/22/2011 03:01 AM, Josh Bressers wrote:
+> Do we know the affected versions? This probably won't be 20 IDs,
+> but I suspect it won't be one either.
+> 
+> Thanks.
+> 
