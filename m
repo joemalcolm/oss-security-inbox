@@ -1,75 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/2
-Message-ID: <20110228163843.GB2114@redhat.com>
-Date: Mon, 28 Feb 2011 09:38:43 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/1
+Message-Id: <201104151143.58257.ludwig.nussel@suse.de>
+Date: Fri, 15 Apr 2011 11:43:57 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+Cc: Jeff Layton <jlayton@...hat.com>, Steve French <sfrench@...ibm.com>, Suresh Jayaraman <sjayaraman@...ell.com>
+Subject: CVE Request: cifs session reuse
 Content-Type: text/plain; charset=utf-8
 
-* [2011-02-28 14:16:06 +0100] Thomas Biege wrote:
+Hi,
 
->The following might also need a CVE-ID.
->
->https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
->------------------------------------------------------------------------------
->http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
->
->That's a pretty bad DOS. Everybody (even unauthenticated users) can kill the
->server by submitting a MODRDN request with an empty "olddn" value and "remove
->old RDN" set (-r). Example:
->
->      ldapmodrdn -x -H ldap://ldapserver -r '' o=test
->------------------------------------------------------------------------------
+When one user has mounted a cifs share that requires authentication,
+another user could mount the same share without knowing the
+correct password. The following kernel commits fix that:
 
-I've just tried this here.  I noted in your bug report that you indicate
-that it seems to affect all of your currently maintained products, but
-I've tried it here against openldap 2.3.43 and do not see a crash (I can
-reproduce the crash on 2.4.19).
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4ff67b720c02c36e54d55b88c2931879b7db1cd2
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=fc87a40677bbe0937e2ff0642c7e83c9a4813f3d
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=24e6cf92fde1f140d8eb0bf7cd24c2c78149b6b2
 
-Have you tested this one against older openldap, or is it just an
-assumption (it might be ACLs or something that is preventing me from
-seeing the crash, but I don't believe so if no authentication is
-required to affect this).
+A way to exploit this would be through mount.cifs if it's
+installed setuid root.
 
-Seems that this is the patch to fix it:
-
-http://www.openldap.org/devel/cvsweb.cgi/servers/slapd/modrdn.c.diff?r1=1.170.2.8&r2=1.170.2.9&hideattic=1&sortbydate=0
-
-The code is different enough in 2.3.x that I can't tell by looking at it
-whether or not it is affected (enough looks similar that perhaps it
-might be and may just require a changed ldapmodrdn command).
-
->Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
->> ----- Original Message -----
->> > Hello Josh, Steve, vendors,
->> >
->> > looks like the following two issues did not get a CVE identifiers yet:
->> > [1] http://secunia.com/advisories/43331/
->>
->> The above advisory covers both bugs below.
->>
->>
->> > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
->>
->> CVE-2011-1024 openldap forwarded bind failure messages cause success
->>
->>
->> > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
->>
->> CVE-2011-1025 openldap rootpw is not verified with slapd.conf
->>
->>
->> Thanks.
->>
->>
->
->-- 
-> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->--
->  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->                            -- Marie von Ebner-Eschenbach
+cu
+Ludwig
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
