@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/6
-Message-ID: <AANLkTikeFtNiVKpTE7xwri_JpmYH7EmD94YCGsXh5s0E@mail.gmail.com>
-Date: Tue, 18 Jan 2011 14:43:02 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/17/1
+Message-ID: <20110417023501.GH2125@redhat.com>
+Date: Sat, 16 Apr 2011 20:35:04 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: heap corruption in libpango
+Subject: CVE request: Mojolicious directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
->From Launchpad [1]:
+Could a CVE be assigned to the directory traversal flaw recently found
+in Mojolicious?
 
-"When used with FreeType2 as a backend, Pango is vulnerable to heap
-corruption when rendering malformed fonts. The vulnerability occurs in
-pango_ft2_font_render_box_glyph() in pango/pangoft2-render.c. A buffer
-is malloc'd with size box->bitmap.rows * box->bitmap.pitch.
-Subsequently, 0xff is written at offsets into this buffer without
-checking that these offsets fall within the buffer's boundaries,
-leading to heap corruption."
+References:
 
--Dan
+https://github.com/kraih/mojo/issues/114
+https://github.com/kraih/mojo/commit/b09854988c5b5b6a2ba53cc8661c4b2677da3818
+https://bugzilla.redhat.com/show_bug.cgi?id=697229
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
 
-[1] https://bugs.launchpad.net/ubuntu/+source/pango1.0/+bug/696616
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
