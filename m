@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/1
-Message-ID: <4DD310E5.5000004@redhat.com>
-Date: Wed, 18 May 2011 08:20:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/17/1
+Message-ID: <20110417023501.GH2125@redhat.com>
+Date: Sat, 16 Apr 2011 20:35:04 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: net: ip_expire() must revalidate route
+Subject: CVE request: Mojolicious directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-aka Linux Kernel 2.6.38 Remote NULL Pointer Dereference
+Could a CVE be assigned to the directory traversal flaw recently found
+in Mojolicious?
 
-http://seclists.org/bugtraq/2011/May/123
-http://packetstormsecurity.org/files/view/101475/linux2638-null.txt
-http://marc.info/?l=linux-netdev&m=130558001727019&w=2
+References:
 
-fix: http://git.kernel.org/linus/64f3b9e2
+https://github.com/kraih/mojo/issues/114
+https://github.com/kraih/mojo/commit/b09854988c5b5b6a2ba53cc8661c4b2677da3818
+https://bugzilla.redhat.com/show_bug.cgi?id=697229
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
 
-Thanks, Eugene
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
