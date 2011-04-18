@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/1
-Message-Id: <20110902001752.c7234fff467bb1f411401e2f@gmail.com>
-Date: Fri, 2 Sep 2011 00:17:52 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com, coley@...-smtp.mitre.org
-Subject: ffmpeg issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/2
+Message-ID: <4DAC11B9.8010708@redhat.com>
+Date: Mon, 18 Apr 2011 15:56:01 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Wireshark 1.2.16 / 1.4.5
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-We're trying to figure out the status of ffmpeg in debian [0].  Does
-anyone have any real info on CVE-2011-2160 (whose CVE page is in
-essence completely empty) [1].  BTW, how is a link to the software's
-homepage considered a confirmation of the issue?
+I noticed that new wireshark versions 1.2.16/1.4.5 were released on
+14th/15th April 2011 and some of issues fixed appear to have security impact
 
-Also, CVE-2011-2162 [2] seems to be a rehash of a bunch of CVE ids
-that happened to be in the recent dump of Mandriva advisories.  
-Shouldn't this get REJECTED since its just a collection of already
-known and tracked issues?
+1. Use of un-initialised variables:
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
+Patch: http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
+Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
 
-Thanks,
-Mike
+2. Buffer overflow in DECT dissector
+The advisory does not list the bug number or the relevant patch.
 
-[0] http://lists.debian.org/debian-security-tracker/2011/08/msg00009.html
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2160
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2162
+3. Crash in NFS dissector
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
+Versions affected: 1.4.0 to 1.4.4.
+This affects Windows only.
+
+http://www.wireshark.org/security/wnpa-sec-2011-05.html
+http://www.wireshark.org/security/wnpa-sec-2011-06.html
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
