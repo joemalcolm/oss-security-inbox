@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/4
-Message-ID: <20111105123536.GA10062@foo.fgeek.fi>
-Date: Sat, 5 Nov 2011 14:35:36 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/6
+Message-ID: <2051246205.43355.1303157841659.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Apr 2011 16:17:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for Thunar (format string errors)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
-> Are these duplicates:
+----- Original Message -----
+> > >
+> > http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
+> > > and is triggered when copy/pasting a file named from a format string.
+> > > There's no released version including the fix right now.
+> >
+> > This would probably qualify.
 > 
-> CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
-> CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
-> 
-> I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+> Even if the user has to manually Ctrl-C/Ctrl-V the file in Thunar?
+> Thanks.
+> >
 
-This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
+This sounds like it's worth a CVE id. It's likely that the various gcc
+protections aren't used in all situations.
 
-I am really sorry about duplicate CVEs. :(
+Use CVE-2011-1588
 
-Best regards,
-Henri Salo
+Thanks.
+
+-- 
+    JB
