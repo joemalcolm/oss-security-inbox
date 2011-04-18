@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/4
-Message-ID: <4E57263C.7040308@canonical.com>
-Date: Fri, 26 Aug 2011 14:51:08 +1000
-From: Robert Ancell <robert.ancell@...onical.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com,  Guido Berhoerster <gber@...nsuse.org>
-Subject: Re: lightdm issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/1
+Message-ID: <4DABB470.7060407@redhat.com>
+Date: Mon, 18 Apr 2011 11:48:00 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-On 25/08/11 00:08, Sebastian Krahmer wrote:
-> Hi,
+On 04/16/2011 03:51 AM, akuster wrote:
 >
-> lightdm (0.9.2) which aims to be a xdm replacement seems to
-> fall into the same pitfalls like kdm and gdm recently. There is
-> a lot of uid 0 code creating and chown()ing files in user dirs such as
-> for ~/.dmrc and ~/.Xauthority. Probably more, depending on
-> how the permissions of cache and log directories are set up. For example
-> process_start() also creates and chown()s logfiles on users behalf.
+> Does affected code have to be in the main K.O repo or can it be in any
+> of the other git kernel repos to get a CVE #?
 >
-> There is also one thing that I dont understand about the lightdm
-> user itself and why pam sessions seem to be started for it inside
-> the greeter session code.
->
-> The xdmcp code seems to be OK so far, after a quick review.
->
-> l8er,
-> -s
->
->
-Hi Sebastian,
+> We have least one product possible affected in
+> arch/arm/mach-omap2/debobs.c but this file does not exist in K.O, maybe
+> somewhere else (our paper trail on this is coming up cold so I don't
+> know where is came from).
 
-Thanks for doing this review, this issue is now being tracked in the 
-LightDM issue tracker:
-https://bugs.launchpad.net/lightdm/+bug/834079
+The affected code need not be in the mainline kernel. You may request a 
+name even if it only affects the version of kernel as shipped by mvista.
 
-Not sure what you mean in your question about the PAM sessions.  The 
-greeter object inside the daemon creates PAMSession objects which 
-attempt to be authenticated, then passes the successful one to the 
-session code which starts the PAM session.  Might just be bad naming 
-causing confusion?  (I've been meaning to split this into 
-PAMAuthentication and PAMSession objects).
-
---Robert
-
+Thanks, Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
