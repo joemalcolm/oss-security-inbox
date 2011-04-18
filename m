@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/5
-Message-ID: <4E128D30.7060703@digitaloffense.net>
-Date: Mon, 04 Jul 2011 23:04:00 -0500
-From: HD Moore <hdm@...italoffense.net>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/3
+Message-ID: <20110418171614.GA16021@inutil.org>
+Date: Mon, 18 Apr 2011 19:16:15 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mojolicious
 Content-Type: text/plain; charset=utf-8
 
-On 7/4/2011 10:58 PM, Solar Designer wrote:
-> What mirror?  As far as I'm aware, from the announcement by Chris, only
-> the official distribution site for vsftpd was compromised.
-[ snip ]
-> Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
-> one on forums where I saw this discussed appears to have it (which
-> confirms that it existed for a very short period of time only).
+Hi,
 
-This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+Please assign a CVE ID for this Mojolicious issue:
 
-http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
+http://perlninja.posterous.com/sharks-in-the-water
+http://cpansearch.perl.org/src/KRAIH/Mojolicious-1.16/Changes
+https://github.com/kraih/mojo/issues/114
 
-> Are you trying to say that Debian got the backdoored copy?  This is news
-> to me.
-
-No, I am saying that for this to become as widespread as the mtime in
-the mirror above indicates, it would be incredible for distros like
-Debian to not notice it, as they verify the hash of the tarball. This
-indicates that the mtime in the mirror above was forged (since the hash
-is indeed wrong), but the real question is how this mirror obtained the
-copy.
-
-Was the mirror compromised? Was a rsync job used against the real
-server, in which case the mtime was preserved? I couldn't find any
-public copies with the backdoored checksum, but one of the metasploit
-contributors pointed me to the link above.
-
-I would like to believe the exposure was limited to 1-3 days, but the
-mirror above casts doubt on this.
-
--HD
+Cheers,
+        Moritz
