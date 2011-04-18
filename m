@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/8
-Message-ID: <4DBEEF86.7040401@mvista.com>
-Date: Mon, 02 May 2011 07:53:10 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/8
+Message-ID: <286851831.43477.1303158210927.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Apr 2011 16:23:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: Wireshark 1.2.16 / 1.4.5
 Content-Type: text/plain; charset=utf-8
 
-Alexander,
-
-Thanks for the clarification.
-
-- Armin
-
-On 05/02/2011 07:22 AM, Solar Designer wrote:
-> On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
->> On 05/02/2011 06:12 AM, Solar Designer wrote:
->>> On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
->>>> Can you clarify what is meant by updates?
->>>
->>> RHEL-like .src.rpm's or equivalent will do.  Something else might do.
->>
->> Ok.. but do they need to be publicly available ( ie no service or
->> maintenance contract to get)?
+----- Original Message -----
+> Hi,
 > 
-> Per the discussion so far, yes, or you would likely be in another
-> category from the "open" Linux distro vendors.  I don't know what others
-> in here would say if you, for example, only make advisories public, but
-> not any code.  Maybe this will do (that is, folks would not oppose you
-> being on the same list with the "open" vendors), maybe not.  A better
-> option could be for you to make advisories and package metainfo public
-> (file lists, change logs, etc.), but not the packages themselves.
-> I similarly don't know how that would be received by others in here.
-> On one hand, it would show that you're preparing security updates, for
-> what software, and when.  On the other, the level of openness would
-> still be less than Red Hat's.
+> I noticed that new wireshark versions 1.2.16/1.4.5 were released on
+> 14th/15th April 2011 and some of issues fixed appear to have security
+> impact
 > 
-> Alexander
+> 1. Use of un-initialised variables:
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
+> Patch:
+> http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
+> Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
+
+Please use CVE-2011-1590
+
+> 
+> 2. Buffer overflow in DECT dissector
+> The advisory does not list the bug number or the relevant patch.
+
+Please use CVE-2011-1591
+
+> 
+> 3. Crash in NFS dissector
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
+> Versions affected: 1.4.0 to 1.4.4.
+> This affects Windows only.
+> 
+> http://www.wireshark.org/security/wnpa-sec-2011-05.html
+> http://www.wireshark.org/security/wnpa-sec-2011-06.html
+> 
+
+Please use CVE-2011-1592
+
+Thanks.
+
+-- 
+    JB
