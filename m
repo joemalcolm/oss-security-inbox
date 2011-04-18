@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/11
-Message-ID: <1943170616.814939.1308596722397.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Jun 2011 15:05:22 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/8
+Message-ID: <286851831.43477.1303158210927.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Apr 2011 16:23:30 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+Cc: coley <coley@...re.org>
+Subject: Re: Wireshark 1.2.16 / 1.4.5
 Content-Type: text/plain; charset=utf-8
 
-
-
 ----- Original Message -----
-> NetBSD has committed a fix for an issue in the 802.11 stack [1].
-> FreeBSD is also affected and should release a fix shortly. Due to a
-> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
-> unprivileged user could cause the kernel to copy large amounts of
-> kernel memory back to the user, disclosing potentially sensitive
-> information. The issue only affects certain non-x86 architectures,
-> such as SPARC.
+> Hi,
 > 
-> -Dan
+> I noticed that new wireshark versions 1.2.16/1.4.5 were released on
+> 14th/15th April 2011 and some of issues fixed appear to have security
+> impact
 > 
-> [1]
-> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+> 1. Use of un-initialised variables:
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
+> Patch:
+> http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
+> Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
 
-I'm not entirely sure how to assign CVE ids for this. Is the code in
-question shared between FreeBSD and NetBSD, or is it different codebases
-but the same flaw?
+Please use CVE-2011-1590
+
+> 
+> 2. Buffer overflow in DECT dissector
+> The advisory does not list the bug number or the relevant patch.
+
+Please use CVE-2011-1591
+
+> 
+> 3. Crash in NFS dissector
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
+> Versions affected: 1.4.0 to 1.4.4.
+> This affects Windows only.
+> 
+> http://www.wireshark.org/security/wnpa-sec-2011-05.html
+> http://www.wireshark.org/security/wnpa-sec-2011-06.html
+> 
+
+Please use CVE-2011-1592
 
 Thanks.
 
