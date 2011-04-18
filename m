@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/2
-Message-ID: <1110969345.43645.1295541408005.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Jan 2011 11:36:48 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/5
+Message-ID: <1446881210.43074.1303157015086.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Apr 2011 16:03:35 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap corruption in libpango
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: mediawiki 1.16.4, incomplete fix of CVE-2011-1578
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0020 for this.
+
+
+----- Original Message -----
+> Looks as though Mediawiki 1.16.3 did not fully fix the CVE-2011-1578
+> issue (XSS), so 1.16.4 has been released:
+> 
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000097.html
+> 
+> Could a CVE name get assigned to this?
+> 
+
+Please use CVE-2011-1587.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> From Launchpad [1]:
-> 
-> "When used with FreeType2 as a backend, Pango is vulnerable to heap
-> corruption when rendering malformed fonts. The vulnerability occurs in
-> pango_ft2_font_render_box_glyph() in pango/pangoft2-render.c. A buffer
-> is malloc'd with size box->bitmap.rows * box->bitmap.pitch.
-> Subsequently, 0xff is written at offsets into this buffer without
-> checking that these offsets fall within the buffer's boundaries,
-> leading to heap corruption."
-> 
-> -Dan
-> 
-> [1] https://bugs.launchpad.net/ubuntu/+source/pango1.0/+bug/696616
