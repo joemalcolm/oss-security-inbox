@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/3
-Message-ID: <20110606092657.GA23843@suse.de>
-Date: Mon, 6 Jun 2011 11:26:57 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/1
+Message-ID: <4DABB470.7060407@redhat.com>
+Date: Mon, 18 Apr 2011 11:48:00 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: pam_ssh not dropping root gid(s)
+CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 04/16/2011 03:51 AM, akuster wrote:
+>
+> Does affected code have to be in the main K.O repo or can it be in any
+> of the other git kernel repos to get a CVE #?
+>
+> We have least one product possible affected in
+> arch/arm/mach-omap2/debobs.c but this file does not exist in K.O, maybe
+> somewhere else (our paper trail on this is coming up cold so I don't
+> know where is came from).
 
-In certain configs, pam_ssh is not completely dropping its privileges
-to user. It just forgets to call setgid() and initgroups(). A fix can be found at [1].
-Can someone assign a CVE?
+The affected code need not be in the mainline kernel. You may request a 
+name even if it only affects the version of kernel as shipped by mvista.
 
-thx,
-Sebastian
-
-[1] https://bugzilla.novell.com/show_bug.cgi?id=665061
-
+Thanks, Eugene
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
