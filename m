@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/1
-Message-ID: <Pine.GSO.4.64.1101062115160.25420@faron.mitre.org>
-Date: Thu, 6 Jan 2011 21:26:26 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/6
+Message-ID: <2051246205.43355.1303157841659.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Apr 2011 16:17:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for Thunar (format string errors)
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> > >
+> > http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
+> > > and is triggered when copy/pasting a file named from a format string.
+> > > There's no released version including the fix right now.
+> >
+> > This would probably qualify.
+> 
+> Even if the user has to manually Ctrl-C/Ctrl-V the file in Thunar?
+> Thanks.
+> >
 
-On Thu, 6 Jan 2011, Michael Gilbert wrote:
+This sounds like it's worth a CVE id. It's likely that the various gcc
+protections aren't used in all situations.
 
-> On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
->> re: http://seclists.org/fulldisclosure/2011/Jan/39
->>
->> Just in case someone tries to request a CVE name for this, I'm not
->> requesting for one because if you need CAP_SYS_ADMIN capability to
->> exploit this, you are already privileged.
->
-> Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
-> mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
-> exist. There is an exposure here, and for that it deserves a CVE
-> identifier (of course in my opinion).  See Brad Spengler's recent
-> write-up [0]. There should be some effort toward making those 21 root
-> equivalent capabilities discussed there non-equivalent.
+Use CVE-2011-1588
 
-Unless/until there's some formal/semi-formal statement that "CAP_SYS_ADMIN 
-is equivalent to root in all cases," then these kinds of 
-privileged-to-privileged issues are within the scope of CVE since they 
-violate the security model; now, they might receive very low risk scores 
-because the attacker is already privileged, and I could see how vendors 
-might reasonably avoid publishing advisories for them, but that doesn't 
-mean there shouldn't be a CVE assigned to it.  Personally I agree with 
-Michael that if two cap's/privileges have both "A implies B" and "B 
-implies A," then one of them doesn't need to exist, but that's irrelevant.
+Thanks.
 
-It would be interesting (though I suspect controversial) for someone in 
-the Linux kernel world to take a stab at more closely defining/defining a 
-"security policy" regarding capability-to-capability transitions.  (Or 
-could someone point me to one?)  As a Linux outsider, I like seeing these 
-kinds of discussions.
-
-- Steve
+-- 
+    JB
