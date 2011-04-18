@@ -1,104 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/2
-Message-ID: <20110928154203.GA10367@openwall.com>
-Date: Wed, 28 Sep 2011 19:42:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/4
+Message-ID: <1177827842.43031.1303156921463.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Apr 2011 16:02:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>
-Subject: Re: LZW decompression issues
+Subject: Re: CVE id request: mahara / HTML Purifier
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Wed, Aug 10, 2011 at 08:22:20PM +0200, Tomas Hoger wrote:
-> We've recently came across an issue in commonly re-used LZW
-> decompression implementations - original BSD compress and GIF reader
-> written by David Koblas.  Due to an insufficient input checking, invalid
-> LZW stream can create a loop in the decompression table, leading to the
-> decompression stack buffer overflow.
+----- Original Message -----
+> Could we get CVE id(s) for these security problems discovered in
+> HTML Purifier (emedded in older versions of mahara as well).
 > 
-> Following bugzillas list various code bases that were checked for the
-> issue and if they are affected or not:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
+> Patches are attached.
+> 
+> They originate from HTML Purifier
+> 
+> http://htmlpurifier.org/news/2011/0327-4.3.0-released
+> 
 
-FreeBSD has just released an advisory for this:
+I find their advisory confusing. Can you break out which changelog entries
+the patches are for?
 
-http://security.freebsd.org/advisories/FreeBSD-SA-11:04.compress.asc
+Thanks.
 
-To my surprise, it lists gzip as affected (and provides a patch for it
-too), even though it was believed that neither CVE-2011-2895 nor
-CVE-2011-2896 affected current versions of gzip (at least per Tomas'
-off-list notification to distro vendors).
-
-The latest security fix in upstream gzip is from January 2010, for
-CVE-2010-0001:
-
-http://git.savannah.gnu.org/gitweb/?p=gzip.git;a=commitdiff;h=a3db5806d012082b9e25cc36d09f19cd736a468f
-
-(no idea if that issue was present in FreeBSD's gzip or not).
-
-Trying to match the changes to usr.bin/gzip/zuncompress.c in
-
-http://security.freebsd.org/patches/SA-11:04/compress.patch
-
-against code in gzip 1.4 tarball, it appears that FreeBSD's patch
-actually introduces more checks than gzip upstream has - although it is
-difficult to tell for sure because of other differences in the code.
-
-For example gzip-1.4/unlzw.c has:
-
-    if (maxbits > BITS) {
-
-FreeBSD now patches it as:
-
--	if (zs->zs_maxbits > BITS) {
-+	if (zs->zs_maxbits > BITS || zs->zs_maxbits < 12) {
-
-Do we possibly want to add the "maxbits < 12" check as well?  And does
-it matter for security?
-
-Then there are non-obvious differences related to the "oldcode"
-variable.  In one of those places, gzip-1.4/unlzw.c has:
-
-	    if (code >= free_ent) { /* Special case for KwKwK string. */
-		if (code > free_ent) {
-
-whereas the FreeBSD patch has:
-
- 		if (zs->u.r.zs_code >= zs->zs_free_ent) {
-+			if (zs->u.r.zs_code > zs->zs_free_ent ||
-+			    zs->u.r.zs_oldcode == -1) {
-+				/* Bad stream. */
-
-which adds an extra "or" condition.
-
-Similarly, gzip-1.4/unlzw.c has:
-
-	    if ((code = free_ent) < maxmaxcode) { /* Generate the new entry. */
-
-whereas the FreeBSD patch has:
-
- 		/* Generate the new entry. */
--		if ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode) {
-+		if ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode &&
-+		    zs->u.r.zs_oldcode != -1) {
-
-(an extra "and" condition this time).
-
-Are these differences only a result of other differences in the FreeBSD
-revision of gzip?  Or are they generic hardening that could get into
-gzip proper and into other distros' revisions of gzip?  Or are they even
-security fixes for issues known to FreeBSD (but presumably not to others
-yet, in gzip context)?
-
-...looking at similar changes to usr.bin/compress/zopen.c in the same
-patch, I guess this may be how those changes were made to the gzip code
-as well - due to similarities between the two codebases.  However, even
-if so this does not fully address my questions above.
-
-Colin - any comments?
-
-Thanks,
-
-Alexander
+-- 
+    JB
