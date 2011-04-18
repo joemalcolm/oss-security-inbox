@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/7
-Message-ID: <4EB7FF66.9090506@redhat.com>
-Date: Mon, 07 Nov 2011 16:55:18 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Ruby (OpenSSL extension) -- Insecure way of creation exponent value by private RSA key generation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/2
+Message-ID: <4DAC11B9.8010708@redhat.com>
+Date: Mon, 18 Apr 2011 15:56:01 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Wireshark 1.2.16 / 1.4.5
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi,
 
-   a security flaw was found in the way the OpenSSL extension of the
-Ruby programming language (of version from the Git trunk repository
-after 2011-09-01 up to 2011-11-03) generated exponent value to be used
-for private RSA key generation (the bug caused the exponent for the
-generated key to be always '1'). A remote attacker could use this flaw
-to bypass / corrupt integrity of services, depending on strong private
-RSA keys generation mechanism.
+I noticed that new wireshark versions 1.2.16/1.4.5 were released on
+14th/15th April 2011 and some of issues fixed appear to have security impact
 
-Relevant upstream patch:
-[1] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=33633
+1. Use of un-initialised variables:
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
+Patch: http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
+Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=751800
+2. Buffer overflow in DECT dissector
+The advisory does not list the bug number or the relevant patch.
 
-Could you allocate a CVE id for this?
+3. Crash in NFS dissector
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
+Versions affected: 1.4.0 to 1.4.4.
+This affects Windows only.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+http://www.wireshark.org/security/wnpa-sec-2011-05.html
+http://www.wireshark.org/security/wnpa-sec-2011-06.html
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
