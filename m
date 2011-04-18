@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/4
-Message-ID: <1987811491.563153.1307562417562.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 8 Jun 2011 15:46:57 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/7
+Message-ID: <1025236508.43444.1303158039522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 18 Apr 2011 16:20:39 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: vlc
+Subject: Re: CVE request: Mojolicious directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-
-
 ----- Original Message -----
-> From http://www.videolan.org/vlc/releases/1.1.10.html :
+> Could a CVE be assigned to the directory traversal flaw recently found
+> in Mojolicious?
 > 
-> "Security update regarding an integer overflow in xspf demuxer"
+> References:
 > 
-> Looks like it's the following commit:
-> 
-> http://repo.or.cz/w/vlc.git/commitdiff/cd929923ff49175a501bb3e9553a683bc42ff61c
-> 
+> https://github.com/kraih/mojo/issues/114
+> https://github.com/kraih/mojo/commit/b09854988c5b5b6a2ba53cc8661c4b2677da3818
+> https://bugzilla.redhat.com/show_bug.cgi?id=697229
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
 > 
 
-Please use CVE-2011-2194.
+Please use CVE-2011-1589.
 
 Thanks.
 
