@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/1
-Message-ID: <4D7EC996.3010306@redhat.com>
-Date: Tue, 15 Mar 2011 10:06:14 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/1
+Message-ID: <384589066.134954.1303214077806.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 19 Apr 2011 07:54:37 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: tpm infoleaks
+Cc: coley@...us.mitre.org, robert@...ecki.net
+Subject: CVE request -- kernel: proc: signedness issue in next_pidmap()
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2011 04:53 AM, Josh Bressers wrote:
-> I'm not able to properly parse this. Should this get one CVE id or three?
+"A signedness issue has been found in next_pidmap() function when the "last"
+parameter is negative as next_pidmap() just quietly accepted whatever
+"last" pid that was passed in, which is not all that safe when one of the
+users is /proc.
 
-Three.
+Setting f_pos to negative value when accessing /proc via readdir()/getdents()
+resulted in sign extension of this value when map pointer was being
+constructed.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+This later lead to #GP because the final pointer was not canonical (x86_64)."
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=697822
+http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/93c1088451fd3522/4a28ecb7f755a88d?#4a28ecb7f755a88d
+
+Upstream commit:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=c78193e9
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=d8bdc59f
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
+
