@@ -1,33 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/11
-Message-ID: <854174179.216810.1298573420094.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 13:50:20 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/3
+Message-ID: <4DADB653.6010708@redhat.com>
+Date: Tue, 19 Apr 2011 18:20:35 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Gerlof Langeveld <gerlof@...omputing.nl>
+Subject: Re: CVE Request -- atop: Symlink attacks via process accounting file
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1016
+Jan Lieskovsky wrote:
+> 
+> Hello Josh, Steve, vendors,
+> 
+>   atop v1.23 and earlier created process accounting file 
+> (/tmp/atop.d/atop.acct)
+> in an insecure way. A local attacker could use this flaw to conduct symlink
+> attacks (e.g. overwrite arbitrary system files).
 
-Thanks.
+Looked more into this issue and seems it may not be possible to misuse this
+issue. The steps are below:
 
--- 
-    JB
+tmp]# mkdir /etc/hello
+tmp]# ln -s /etc/hello atop.d
+tmp]# service atop start
+Starting atop: [  OK  ]
 
------ Original Message -----
-> Check values passed in to AARESOLVE_OFFSET on r300. It can be used to
-> write arbitrary data to VRAM, GTT, etc. This is specific to a range of
-> GPUs only.
+But atop detects the /tmp/atop.d directory already exists (/var/log/atop/atop.log contains):
+warning: no process exit detection (can not create directory /tmp/atop.d)
+
+So doesn't seem to be exploitable => taking the CVE request back, no CVE needed.
+
+Should have checked this earlier, sorry for the noise.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
 > 
-> drm/radeon/kms: check AA resolve registers on r300
-> http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
+> [2] http://secunia.com/advisories/44175/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=697848
 > 
-> [PATCH] drm/radeon: fix regression with AA resolve checking
-> https://patchwork.kernel.org/patch/576101/
+> Could you allocate a CVE id for this?
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=680000
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 > 
-> Eugene
-> --
-> Eugene Teo / Red Hat Security Response Team
+> 
+
