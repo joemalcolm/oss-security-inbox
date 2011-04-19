@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/9
-Message-ID: <14921541.122208.1295973514769.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Jan 2011 11:38:34 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: VLC Subtitle StripTags heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/4
+Message-ID: <4DADC8E1.9050707@redhat.com>
+Date: Tue, 19 Apr 2011 19:39:45 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Richard Hughes <rhughes@...hat.com>, Ray Strode <rstrode@...hat.com>, lsof@...ata.co.uk
+Subject: CVE Request -- gnome-desktop3: Switching users dialog does not lock the screen for the original user account
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0522.
 
-Thanks.
+Hello Josh, Steve, vendors,
 
--- 
-    JB
+   it has been reported that using of Gnome upon using of "Switch user" dialog, log in into a
+new user account (user2), logout of new user account (user2) the desktop is returned to the
+original user account (for user1) without prompting for a password. A locally proximate
+attacker could use this flaw to access resources, which should be otherwise protected
+by authentication.
 
------ Original Message -----
-> Hi,
-> 
-> I couldn't find a CVE for this one:
-> 
-> "Subtitle StripTags heap corruption, potentially exploitable."
-> 
-> http://mailman.videolan.org/pipermail/vlc-devel/2011-January/078607.html
-> 
-> http://git.videolan.org/gitweb.cgi?p=vlc/vlc-1.1.git;a=commit;h=dc14617f39c03bbe80c3cc4f92799dca840966eb
-> 
-> Thanks,
-> 
-> Marc.
+Original report:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=697199
+
+Upstream bug report:
+[2] https://bugzilla.gnome.org/show_bug.cgi?id=648234
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
