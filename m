@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/4
-Message-ID: <20110114205614.1a941701@laverne>
-Date: Fri, 14 Jan 2011 20:56:14 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: proftpd before 1.3.3d
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/5
+Message-ID: <4DADCFE2.30408@redhat.com>
+Date: Tue, 19 Apr 2011 20:09:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- OpenVAS Manager v2.0.3
 Content-Type: text/plain; charset=utf-8
 
-See:
-http://www.securityfocus.com/bid/44933
-http://phrack.org/issues.html?issue=67&id=7#article
-http://bugs.gentoo.org/show_bug.cgi?id=348998
 
-Quote from securityfocus:
-"ProFTPD is prone to a remote heap-based buffer-overflow vulnerability.
+Hello Josh, Steve, vendors,
 
-Attackers can exploit this vulnerability to execute arbitrary code with
-SYSTEM-level privileges. Failed exploit attempts will result in a
-denial-of-service condition."
+   based on:
+   [1] http://lists.wald.intevation.org/pipermail/openvas-announce/2011-April/000120.html
 
-Please assign CVE (a 2010 / last year one).
+This release fixes a severe security issue discovered after the release
+of openvas-manager 2.0.2. By crafting a special report format plugin,
+and knowing about the operating system on which OpenVAS Manager is
+running, a rogue user was able to upload the plugin and execute
+arbitrary code with the privileges of the user running the OpenVAS
+Manager.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Could you allocate a CVE id for this?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
