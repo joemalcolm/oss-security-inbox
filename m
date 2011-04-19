@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/12
-Message-ID: <20110405121852.GA17504@openwall.com>
-Date: Tue, 5 Apr 2011 16:18:52 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/1
+Message-ID: <384589066.134954.1303214077806.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Tue, 19 Apr 2011 07:54:37 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vouching system (was Re: Closed list)
+Cc: coley@...us.mitre.org, robert@...ecki.net
+Subject: CVE request -- kernel: proc: signedness issue in next_pidmap()
 Content-Type: text/plain; charset=utf-8
 
-Eugene,
+"A signedness issue has been found in next_pidmap() function when the "last"
+parameter is negative as next_pidmap() just quietly accepted whatever
+"last" pid that was passed in, which is not all that safe when one of the
+users is /proc.
 
-On Tue, Apr 05, 2011 at 05:23:40PM +0800, Eugene Teo wrote:
-> Maybe once we have a list of initial members, we should start using a
-> vouching system, that the applicant must be referred by someone from the
-> list, and we only accept members whom we met and trust. Just a suggestion.
+Setting f_pos to negative value when accessing /proc via readdir()/getdents()
+resulted in sign extension of this value when map pointer was being
+constructed.
 
-I'm afraid that we'll have to introduce something like this if/when we
-create a list not limited to Linux distros (and maybe sooner), but then
-we'll have the problem of it being an el8 list.  I think it will be an
-improvement over CC lists anyway, but many others appear to disagree.
+This later lead to #GP because the final pointer was not canonical (x86_64)."
 
-Alexander
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=697822
+http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/93c1088451fd3522/4a28ecb7f755a88d?#4a28ecb7f755a88d
+
+Upstream commit:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=c78193e9
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=d8bdc59f
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
+
