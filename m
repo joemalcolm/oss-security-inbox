@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/14
-Message-ID: <2129000690.299846.1298927603500.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 16:13:23 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: FreeBSD/OS X crontab information leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/2
+Message-ID: <4DAD86F9.5090005@redhat.com>
+Date: Tue, 19 Apr 2011 14:58:33 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Gerlof Langeveld <gerlof@...omputing.nl>
+Subject: CVE Request -- atop: Symlink attacks via process accounting file
 Content-Type: text/plain; charset=utf-8
 
-This should probably get three.
 
------ Original Message -----
-> Details here:
-> http://marc.info/?l=full-disclosure&m=129891323028897&w=2
-> 
-> There are three leaks, each of which amounts to a minor DAC bypass.
-> 
-> 1. Leakage of file/directory existence via stat() calls (e.g.
-> determining if a file exists regardless of search permissions on
-> directories)
+Hello Josh, Steve, vendors,
 
-CVE-2011-1073
+   atop v1.23 and earlier created process accounting file (/tmp/atop.d/atop.acct)
+in an insecure way. A local attacker could use this flaw to conduct symlink
+attacks (e.g. overwrite arbitrary system files).
 
-> 
-> 2. Leakage of directory existence via realpath()
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
+[2] http://secunia.com/advisories/44175/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=697848
 
-CVE-2011-1074
+Could you allocate a CVE id for this?
 
-> 
-> 3. Arbitrary MD5 comparison (e.g. ability to determine if any two
-> files have identical MD5 hashes, regardless of read permissions on
-> those files)
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-CVE-2011-1075
 
-Thanks.
-
--- 
-    JB
