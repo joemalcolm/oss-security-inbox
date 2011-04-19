@@ -1,25 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/8
-Message-ID: <4D992FB9.3080908@redhat.com>
-Date: Mon, 04 Apr 2011 10:40:57 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/3
+Message-ID: <4DADB653.6010708@redhat.com>
+Date: Tue, 19 Apr 2011 18:20:35 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+CC: "Steven M. Christey" <coley@...us.mitre.org>, Gerlof Langeveld <gerlof@...omputing.nl>
+Subject: Re: CVE Request -- atop: Symlink attacks via process accounting file
 Content-Type: text/plain; charset=utf-8
 
-On 04/02/2011 02:03 AM, Josh Bressers wrote:
-> Hello everyone,
->
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
+Jan Lieskovsky wrote:
+> 
+> Hello Josh, Steve, vendors,
+> 
+>   atop v1.23 and earlier created process accounting file 
+> (/tmp/atop.d/atop.acct)
+> in an insecure way. A local attacker could use this flaw to conduct symlink
+> attacks (e.g. overwrite arbitrary system files).
 
-pub   4096R/51BF6EF3 2011-04-04
-     Key fingerprint = 7664 496C 62A9 7BC2 7229  B654 FF73 C155 51BF 6EF3
-uid                  Eugene Teo <eugene[0x40]redhat.com>
-uid                  Eugene Teo <eteo[0x40]redhat.com>
+Looked more into this issue and seems it may not be possible to misuse this
+issue. The steps are below:
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+tmp]# mkdir /etc/hello
+tmp]# ln -s /etc/hello atop.d
+tmp]# service atop start
+Starting atop: [  OK  ]
+
+But atop detects the /tmp/atop.d directory already exists (/var/log/atop/atop.log contains):
+warning: no process exit detection (can not create directory /tmp/atop.d)
+
+So doesn't seem to be exploitable => taking the CVE request back, no CVE needed.
+
+Should have checked this earlier, sorry for the noise.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
+> [2] http://secunia.com/advisories/44175/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=697848
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> 
+
