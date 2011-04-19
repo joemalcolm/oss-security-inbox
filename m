@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/15
-Message-ID: <20110712195935.GG22543@redhat.com>
-Date: Tue, 12 Jul 2011 13:59:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: qemu -runas does not clear supplementary groups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/5
+Message-ID: <4DADCFE2.30408@redhat.com>
+Date: Tue, 19 Apr 2011 20:09:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- OpenVAS Manager v2.0.3
 Content-Type: text/plain; charset=utf-8
 
-* [2011-07-12 20:48:59 +0400] Michael Tokarev wrote:
 
->There's a missing initgroups() call in qemu in the -runas
->argument handling.  Details are available on
->
-> https://bugs.launchpad.net/qemu/+bug/807893
->
->in short, -runas is supposed to reduce privileges to a
->bare minimum (after all initialization is completed),
->but the process still has all the supplementary groups
->which should be dropped too.
->
->Can a CVE id be assigned for this issue?
+Hello Josh, Steve, vendors,
 
-Sorry, we were contacted directly to provide a CVE name, and I'm not
-sure if that was before or after you wrote this mail (probably after).
-That bug has been updated with the assigned CVE name, CVE-2011-2527.
+   based on:
+   [1] http://lists.wald.intevation.org/pipermail/openvas-announce/2011-April/000120.html
 
-https://bugs.launchpad.net/qemu/+bug/807893/comments/6
+This release fixes a severe security issue discovered after the release
+of openvas-manager 2.0.2. By crafting a special report format plugin,
+and knowing about the operating system on which OpenVAS Manager is
+running, a rogue user was able to upload the plugin and execute
+arbitrary code with the privileges of the user running the OpenVAS
+Manager.
 
-Thanks, sorry for missing this.
+Could you allocate a CVE id for this?
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
