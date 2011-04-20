@@ -1,27 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/3
-Message-ID: <20111225143751.GA571@foo.fgeek.fi>
-Date: Sun, 25 Dec 2011 16:37:51 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/3
+Message-ID: <1716247090.94564.1303331421073.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Apr 2011 16:30:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: CVE-request for three 2009 Joomla issues (second part)
+Cc: coley <coley@...re.org>
+Subject: rdesktop CVE - CVE-2011-1595
 Content-Type: text/plain; charset=utf-8
 
-Can I get three CVEs assigned for these issues:
+I assigned CVE-2011-1595 to a new rdesktop issue. Details are in our bug:
 
-1) "Input passed via the "HTTP_REFERER" is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-http://developer.joomla.org/security/news/298-20090604-core-frontend-xss-httpreferer-not-properly-filtered.html
-http://osvdb.org/show/osvdb/55589
+https://bugzilla.redhat.com/show_bug.cgi?id=676252
 
-2) "Input passed via the URL is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site."
-http://developer.joomla.org/security/news/299-20090605-core-frontend-xss-phpself-not-properly-filtered.html
-http://osvdb.org/show/osvdb/55590
+Thanks.
 
-3) "A security issue exists due to certain files missing the check for JEXEC, which can lead to the disclosure of path information."
-http://developer.joomla.org/security/news/300-20090606-core-missing-jexec-check.html (different than 302-20090722-core-missing-jexec-check.html)
-http://osvdb.org/show/osvdb/55591
-
-Secunia advisory: http://secunia.com/advisories/35668/
-
-- Henri Salo
+-- 
+    JB
