@@ -1,34 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/10
-Message-ID: <1300275632.4549.4.camel@macbook.infradead.org>
-Date: Wed, 16 Mar 2011 11:40:32 +0000
-From: David Woodhouse <dwmw2@...radead.org>
-To: David King <amigadave@...gadave.com>
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/2
+Message-ID: <4DAE611C.4000503@redhat.com>
+Date: Wed, 20 Apr 2011 12:29:16 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-03-16 at 12:02 +0100, David King wrote:
-> It should be noted that the UPnP feature is disabled by default, so the 
-> user has the option to *enable* it. I concede that the string presented 
-> in the UI needs improvement. 
+A missing socket check in can/bcm release
 
-That isn't CVE-worthy, though, surely?
+Proposed patch: http://permalink.gmane.org/gmane.linux.network/192898
+https://bugzilla.redhat.com/show_bug.cgi?id=698057
 
-> Of course, I agree that indication of the consequences would be
-> appropriate, 
-
-That's CVE-2011-1164.
-
-> and also disallowing the 'none' authentication method if UPnP is enabled. 
-
-And that, again, is not at all specific to UPnP.
-
-Disallowing the 'none' authentication method is would be appropriate
-whenever the machine is accessible from the outside world, whether
-that's through UPnP or just by listening on a publicly-available IP
-address.
-
+Thanks, Eugene
 -- 
-dwmw2
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
