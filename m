@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/5
-Message-ID: <20111124163236.GD1081@dhcp-25-225.brq.redhat.com>
-Date: Thu, 24 Nov 2011 17:32:36 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Tavis Ormandy <taviso@...xchg8b.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Please REJECT CVE-2011-4112
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/5
+Message-ID: <252789075.94975.1303332634116.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Apr 2011 16:50:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenVAS Manager v2.0.3
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 24, 2011 at 05:21:01PM +0100, Tavis Ormandy wrote:
-> Petr Matousek <pmatouse@...hat.com> wrote:
+Please use CVE-2011-1597
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> > Hi,
-> > 
-> > could you please reject CVE-2011-4112 as it is not a security bug.
-> > 
-> > Reference: https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
-> > 
-> > Thank you,
+> based on:
+> [1]
+> http://lists.wald.intevation.org/pipermail/openvas-announce/2011-April/000120.html
 > 
-> Unrelated, but if it did not require CAP_NET_ADMIN, would you have
-> considered it a security bug?
-
-Yes.
-
-> I was under the impression that there was general agreement that NULL derefs
-> that are handled gracefully are not security bugs any more.
+> This release fixes a severe security issue discovered after the
+> release
+> of openvas-manager 2.0.2. By crafting a special report format plugin,
+> and knowing about the operating system on which OpenVAS Manager is
+> running, a rogue user was able to upload the plugin and execute
+> arbitrary code with the privileges of the user running the OpenVAS
+> Manager.
 > 
-> Is this because you're setting panic_on_oops?
-
-Yes. That's the default in RHEL.
-
-Petr
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
