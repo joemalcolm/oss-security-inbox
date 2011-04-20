@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/3
-Message-ID: <604670952.2041759.1313172438084.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Aug 2011 14:07:18 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/6
+Message-ID: <130440303.95055.1303332767672.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Apr 2011 16:52:47 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: csmall@...ian.org, coley <coley@...re.org>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> The AX.25 daemon (ax25d), typically provided in the ax25-tools
-> package, allows administrators to associate incoming AX.25, NET/ROM,
-> and ROSE traffic with the execution of an endpoint program (most
-> commonly "node"), which is run under a specified user account.
-> Because ax25d is missing a check on the return code for a setuid call
-> responsible for dropping privileges to the specified user, it may be
-> possible to cause setuid to fail, after which the chosen program will
-> be executed with root privileges. In other words, if you're in the
-> business of handing out unprivileged shells over amateur radio (don't
-> we all? :p ), this would allow for remote compromise.
-> 
-
-Please use CVE-2011-2910
+Please use CVE-2011-1598
 
 Thanks.
 
 -- 
     JB
+
+
+----- Original Message -----
+> A missing socket check in can/bcm release
+> 
+> Proposed patch: http://permalink.gmane.org/gmane.linux.network/192898
+> https://bugzilla.redhat.com/show_bug.cgi?id=698057
+> 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
