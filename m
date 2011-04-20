@@ -1,41 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/6
-Message-ID: <1775331776.1261332.1316024579422.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:22:59 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/2
+Message-ID: <4DAE611C.4000503@redhat.com>
+Date: Wed, 20 Apr 2011 12:29:16 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Django project security team <security@...ngoproject.com>, "Steven M. Christey" <coley@...us.mitre.org>, cve-assign@...re.org
-Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+A missing socket check in can/bcm release
 
-Can MITRE deal with this one? I lack time to properly work through this list right now.
+Proposed patch: http://permalink.gmane.org/gmane.linux.network/192898
+https://bugzilla.redhat.com/show_bug.cgi?id=698057
 
-Thanks.
-
+Thanks, Eugene
 -- 
-    JB
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> multiple security flaws have been recently addressed in the v1.3.1
-> and v1.2.7 versions of the Django Python Web framework (from [1]):
-> 1, Session manipulation,
-> 2, Denial of service attack via URLField,
-> 3, URLField redirection,
-> 4, Host header cache poisoning,
-> 5, Host header and CSRF,
-> 6, Cross-subdomain CSRF attacks,
-> 7, DEBUG pages and sensitive POST data
-> 
-> References:
-> [1] https://www.djangoproject.com/weblog/2011/sep/09/
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=737366
-> 
-> Could you allocate a CVE ids for these flaws?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
