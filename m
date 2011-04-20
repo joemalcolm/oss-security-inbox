@@ -1,37 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/10
-Message-ID: <4EB17280.8020803@redhat.com>
-Date: Wed, 02 Nov 2011 10:40:32 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/7
+Message-ID: <4DAF7031.6070402@redhat.com>
+Date: Thu, 21 Apr 2011 07:45:53 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
->> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
->>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
->>>> Fixes a security issue where using ~/.Xauthority as a symlink would
->>>> cause LightDM to set the destination of the link to user ownership.
->>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
->>>>
->>>> Overview of changes in lightdm 1.0.6
->>>>
->>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
->>> Could a CVE be assigned for this?
->>>
->>> Regards,
->> Can you send me the link to this announcement so I can confirm it? Thanks.
->>
-> Here's the link to the mailing list mail:
-> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
->
-> Regards,
-Thanks, confirmed (first hand info is much better). Please use
-CVE-2011-4105 for this issue.
+On 04/21/2011 04:52 AM, Josh Bressers wrote:
+> Please use CVE-2011-1598
 
+Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+
+Eugene
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
