@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/3
-Message-ID: <20110725123432.03d1209c@redhat.com>
-Date: Mon, 25 Jul 2011 12:34:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request - dhcp clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/1
+Message-ID: <4DAE2FAF.60807@redhat.com>
+Date: Wed, 20 Apr 2011 08:58:23 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org, robert@...ecki.net
+Subject: Re: CVE request -- kernel: proc: signedness issue in next_pidmap()
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 04/19/2011 07:54 PM, Petr Matousek wrote:
+> "A signedness issue has been found in next_pidmap() function when the "last"
+> parameter is negative as next_pidmap() just quietly accepted whatever
+> "last" pid that was passed in, which is not all that safe when one of the
+> users is /proc.
+>
+> Setting f_pos to negative value when accessing /proc via readdir()/getdents()
+> resulted in sign extension of this value when map pointer was being
+> constructed.
+>
+> This later lead to #GP because the final pointer was not canonical (x86_64)."
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=697822
+> http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/93c1088451fd3522/4a28ecb7f755a88d?#4a28ecb7f755a88d
+>
+> Upstream commit:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=c78193e9
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=d8bdc59f
 
-Earlier this year, CVE-2011-0997 was assigned to ICS's dhclient and
-CVE-2011-0996 dhcpcd for an insufficient DHCP option checking.
+Use CVE-2011-1593.
 
-Similar issue affects busybox's udhcpc.
-
-dhcpv6's dhcp6c was previously mentioned and it seems also fixed in
-SUSE, but did not get its own CVE.
-
-The impact for DHCPv6 clients seems significantly lower, as there's no
-support for hostname option, only domain search option.  I'm not sure
-if anyone identified any good target that handles search option
-insecurely, I've only found shtool's sh.echo that may use it in sed
-script, resulting in sed script injection with file overwrite or code
-execution impact.
-
-Given that dhclient and dhcpcd got separate CVEs, udhcpc and dhcp6c
-should probably get separate ids too.
-
+Eugene
 -- 
-Tomas Hoger / Red Hat Security Response Team
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
