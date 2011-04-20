@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/5
-Message-ID: <4EB92CAA.8010001@redhat.com>
-Date: Tue, 08 Nov 2011 21:20:42 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/6
+Message-ID: <130440303.95055.1303332767672.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Apr 2011 16:52:47 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: CVE request: kernel: multiple flaws allowing to sniff keystrokes timings
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-> Also, security@...nel.org is unavailable, is there any substitution of
-> this email?
+Please use CVE-2011-1598
 
-I'm still finding out. Meanwhile, if you need help with coordination,
-ping me.
+Thanks.
 
-Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> A missing socket check in can/bcm release
+> 
+> Proposed patch: http://permalink.gmane.org/gmane.linux.network/192898
+> https://bugzilla.redhat.com/show_bug.cgi?id=698057
+> 
+> Thanks, Eugene
+> --
+> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
+> }
