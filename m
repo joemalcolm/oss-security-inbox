@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/26
-Message-ID: <1538145496.192012.1298495409359.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 16:10:09 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/5
+Message-ID: <252789075.94975.1303332634116.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Apr 2011 16:50:34 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- OpenVAS Manager v2.0.3
 Content-Type: text/plain; charset=utf-8
 
-Steve,
-
-Can MITRE handle this one. It's getting old and I'm starting to think
-I won't be able to get to it before the week ends.
+Please use CVE-2011-1597
 
 Thanks.
 
 -- 
     JB
 
+
 ----- Original Message -----
-> Hi,
-> Please assign CVE IDs for the following issues from the Debian
-> Security Tracker:
+> Hello Josh, Steve, vendors,
 > 
-> 1. FreeBSD kernel: local DoS
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
-> http://www.exploit-db.com/exploits/16064/
-> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
+> based on:
+> [1]
+> http://lists.wald.intevation.org/pipermail/openvas-announce/2011-April/000120.html
 > 
-> 2. Xinha: Multiple vulnerabilities
-> (The code is included in a few web apps, e.g. serendipity, openacs or
-> dotlrn)
-> http://secunia.com/advisories/40669/
+> This release fixes a severe security issue discovered after the
+> release
+> of openvas-manager 2.0.2. By crafting a special report format plugin,
+> and knowing about the operating system on which OpenVAS Manager is
+> running, a rogue user was able to upload the plugin and execute
+> arbitrary code with the privileges of the user running the OpenVAS
+> Manager.
 > 
-> 3. tesseract: Insecure temp file handling
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
+> Could you allocate a CVE id for this?
 > 
-> 4. proftpd mod_sftp integer overflow
-> http://bugs.proftpd.org/show_bug.cgi?id=3586
-> http://www.exploit-db.com/exploits/16129/
-> 
-> Cheers,
-> Moritz
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
