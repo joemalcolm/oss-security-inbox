@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/1
-Message-ID: <BANLkTi=KMfgWK-KYbNbwFE4G=8k8tP3zGg@mail.gmail.com>
-Date: Wed, 13 Apr 2011 18:06:42 -0600
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com, info@...scan.com
-Subject: CVE request for SAP issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/1
+Message-ID: <4DAE2FAF.60807@redhat.com>
+Date: Wed, 20 Apr 2011 08:58:23 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org, robert@...ecki.net
+Subject: Re: CVE request -- kernel: proc: signedness issue in next_pidmap()
 Content-Type: text/plain; charset=utf-8
 
-http://dsecrg.com/pages/vul/show.php?id=317
-[DSECRG-11-017] SAP GUI - Buffer overflow
-Attacker can construct saplogon.ini file which contains vulnerable tag
-which is vulnerable to buffer overflow attack.
-Digital Security Research Group [DSecRG] Advisory DSecRG-11-017
-(Internal #DSECRG-00181)
+On 04/19/2011 07:54 PM, Petr Matousek wrote:
+> "A signedness issue has been found in next_pidmap() function when the "last"
+> parameter is negative as next_pidmap() just quietly accepted whatever
+> "last" pid that was passed in, which is not all that safe when one of the
+> users is /proc.
+>
+> Setting f_pos to negative value when accessing /proc via readdir()/getdents()
+> resulted in sign extension of this value when map pointer was being
+> constructed.
+>
+> This later lead to #GP because the final pointer was not canonical (x86_64)."
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=697822
+> http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/93c1088451fd3522/4a28ecb7f755a88d?#4a28ecb7f755a88d
+>
+> Upstream commit:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=c78193e9
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=d8bdc59f
 
+Use CVE-2011-1593.
 
-http://dsecrg.com/pages/vul/show.php?id=316
-[DSECRG-11-016] SAP NetWaver Data Archiving Service - multiple XSS
-SAP Netweaver Data Archiving Service has multiple linked XSS vulnerabilities.
-Digital Security Research Group [DSecRG] Advisory DSecRG-11-016 (
-Internal DSECRG-00151)
-
-
-http://dsecrg.com/pages/vul/show.php?id=315
-[DSECRG-11-015] SAP Netweaver MessagingServer - XSS
-NetWeaver 7.0 Messaging System application has linked XSS vulnerabilities.
-Digital Security Research Group [DSecRG] Advisory DSecRG-11-015 (
-Internal DSECRG-00122)
-
-
+Eugene
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
