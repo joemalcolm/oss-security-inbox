@@ -1,39 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/6
-Message-ID: <CAEZPtU4m6e7ibQa2BnQPasBwJZXG2eW6_kg0xTOvrUiFVoFxmw@mail.gmail.com>
-Date: Sun, 25 Sep 2011 11:49:41 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Stas Malyshev <smalyshev@...arcrm.com>
-Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/1
+Message-ID: <4DAF8E7F.6070504@redhat.com>
+Date: Thu, 21 Apr 2011 09:55:11 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 25, 2011 at 11:18 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
+On 04/21/2011 07:45 AM, Eugene Teo wrote:
+> On 04/21/2011 04:52 AM, Josh Bressers wrote:
+>> Please use CVE-2011-1598
+>
+> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
 
-> I'm concerned that if we do it this way people would take it as "PHP has
-> security bug in is_a and it was fixed in this version, so as long as we run
-> updated version we're OK", not "my code has gaping security hole which by
-> pure luck wasn't exploitable but minor change made it exploitable". If we
-> don't make it crystal clear the latter and not the former is the case, we'd
-> have same problem with 5.4.
+Correction: s/Updated patch//. This patch is for a similar issue but for 
+can/raw release. I rather group these two patches with CVE-2011-1598 
+than to have another name assigned for it. But I'm fine either way.
 
-That's a valid concern however it is another matter.
-
-My suggestion would be:
-
-- get a CVE and assign it to the bug
-
-- be sure to get the right information in the CVE
-  .  about why it is not a flaw in php itself per se but a behavior
-change that could introduce a flaw in existing php scripts
-     . these php scripts were not following our guidance or good practice guide
-
-- Be sure we update the upgrade guide, the NEWS file, the
-documentation and the announce to clearly explain and define this
-problem and its consequences
-
-Cheers,
---
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
