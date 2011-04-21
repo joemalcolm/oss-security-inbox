@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/2
-Message-ID: <4E1FF43B.8010507@redhat.com>
-Date: Fri, 15 Jul 2011 16:03:07 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/7
+Message-ID: <4DB08D21.9030209@mvista.com>
+Date: Thu, 21 Apr 2011 10:01:37 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2009-4067 kernel: usb: buffer overflow in auerswald_probe()
+CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-A buffer overflow flaw was found in the Linux kernel's Auerswald
-PBX/System Telephone usb driver implementation. There's no upstream
-patch as the affected driver was removed from the kernel in 2.6.27.
+So this would affect kernels 2.6.25-rc1 and above? (if I figured it out
+correctly)
 
-For more information, check out the references:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4067
-http://labs.mwrinfosecurity.com/files/Advisories/mwri_linux-usb-buffer-overflow_2009-10-29.pdf
-https://bugzilla.redhat.com/CVE-2009-4067
+- Armin
 
-(Attention Steve:) Looks like MITRE assigned this CVE to the reporter on
-Nov 24, 2009, but did not update their CVE database entry for this since
-then. Fortunately this is not a critical issue...
-
-Eugene
+On 04/20/2011 03:58 PM, Eugene Teo wrote:
+> On 04/21/2011 09:55 AM, Eugene Teo wrote:
+>> On 04/21/2011 07:45 AM, Eugene Teo wrote:
+>>> On 04/21/2011 04:52 AM, Josh Bressers wrote:
+>>>> Please use CVE-2011-1598
+>>>
+>>> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+>>
+>> Correction: s/Updated patch//. This patch is for a similar issue but for
+>> can/raw release. I rather group these two patches with CVE-2011-1598
+>> than to have another name assigned for it. But I'm fine either way.
+> 
+> On second thoughts, let's have another CVE assigned.
+> 
+> can/bcm release: credit Dave Jones
+> can/raw release: credit Oliver Hartkopp
+> 
+> Thanks, Eugene
