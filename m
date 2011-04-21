@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/4
-Message-ID: <20111221221210.GC7178@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Dec 2011 23:12:10 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/4
+Message-ID: <20110421140130.GA7825@albatros>
+Date: Thu, 21 Apr 2011 18:01:31 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: kvm: pit timer with no irqchip crashes the system
+Subject: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-User space may create the PIT and forget about setting up the irqchips.
-In that case, firing PIT IRQs will crash the host:
+Hi,
 
-BUG: unable to handle kernel NULL pointer dereference at
-0000000000000128
-IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
-...
-Call Trace:
- [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
- [<ffffffff81071431>] process_one_work+0x111/0x4d0
- [<ffffffff81071bb2>] worker_thread+0x152/0x340
- [<ffffffff81075c8e>] kthread+0x7e/0x90
- [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
+https://lkml.org/lkml/2011/4/14/293
 
-Reference:
-http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
-https://bugzilla.redhat.com/show_bug.cgi?id=769721
+"pg_start is copied from userspace on AGPIOC_BIND and AGPIOC_UNBIND ioctl
+cmds of agp_ioctl() and passed to agpioc_bind_wrap().  As said in the
+comment, (pg_start + mem->page_count) may wrap in case of AGPIOC_BIND,
+and it is not checked at all in case of AGPIOC_UNBIND.  As a result, user
+with sufficient privileges (usually "video" group) may generate either
+local DoS or privilege escalation."
 
-Thanks,
+
+https://lkml.org/lkml/2011/4/14/294
+https://lkml.org/lkml/2011/4/19/400
+
+"page_count is copied from userspace.  agp_allocate_memory() tries to
+check whether this number is too big, but doesn't take into account the
+wrap case.  Also agp_create_user_memory() doesn't check whether
+alloc_size is calculated from num_agp_pages variable without overflow.
+This may lead to allocation of too small buffer with following buffer
+overflow.
+
+Another problem in agp code is not addressed in the patch - kernel memory
+exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls).  It is not checked
+whether requested pid is a pid of the caller (no check in agpioc_reserve_wrap()).
+Each allocation is limited to 16KB, though, there is no per-process limit.
+This might lead to OOM situation, which is not even solved in case of the
+caller death by OOM killer - the memory is allocated for another (faked)
+process."
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
