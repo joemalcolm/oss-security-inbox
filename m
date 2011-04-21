@@ -1,40 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/8
-Message-ID: <20110705043941.GA14096@openwall.com>
-Date: Tue, 5 Jul 2011 08:39:41 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/5
+Message-ID: <1303400399.4898.203.camel@solo.digium.internal>
+Date: Thu, 21 Apr 2011 10:39:59 -0500
+From: Matthew Nicholson <mnicholson@...ium.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
-> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
-> 
-> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+Hi,
 
-So, I tried searching for MD5, SHA-1, and SHA-512 of this - no hits on
-Google web search.  Lots of hits for SHA-256, indeed - due to the
-incident announcement.
+I need a CVE for a new Asterisk security vulnerability.
+-- 
+Matthew Nicholson
+Digium, Inc. | Software Developer
 
-Thus, chances are that no distro is affected.
 
-More info on what's inside the tarball: user/group "user" (either the
-intruder's username on his/her computer or --owner and --group options
-argument to tar), "GCC: (Ubuntu/Linaro 4.5.2-8ubuntu4) 4.5.2" inside the
-.o files.  This suggests Ubuntu 11.04, right?
-
-BTW, what if the .o files _don't_ match the source code? ;-)  I think
-they might be used when one builds vsftpd from this tarball, which means
-that the build (or run) will fail on some older systems (yet another
-reason why this would be noticed quickly), but also that the actual
-backdoor might be different (and more sophisticated) from what we see in
-the source code.  No, I don't think this is the case, but the
-possibility is there, and I find it curious.
-
-A trivial way to check for this would be to try compiling the source
-code on Ubuntu 11.04 and see if the .o files match.  If not, the
-differences will need to be analyzed manually.  Not that anyone cares...
-
-Alexander
