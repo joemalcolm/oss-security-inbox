@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/3
-Message-ID: <1302875089.4416.6.camel@localhost>
-Date: Fri, 15 Apr 2011 08:44:49 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/6
+Message-ID: <20110421163726.GF2125@redhat.com>
+Date: Thu, 21 Apr 2011 10:37:27 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE Request: incomplete fix for CVE-2010-1000 in KDE network
+Subject: CVE request: CVE-2011-1089-like flaw in mount.nfs
 Content-Type: text/plain; charset=utf-8
 
-A bug was filed in Ubuntu[1] for patches[2][3] that went into KDE
-Network for an incomplete fix for CVE-2010-1000. The commit message is:
+A similar issue to CVE-2011-1089 was found in mount.nfs because it uses
+it's own addmntent() implementation to update /etc/mtab
+(nfs_addmntend()).  It also fails to anticipate resource limits and
+could trigger corruption of the mtab file.
 
-"Further addresses CVE-2010-1000. The file name of Metalink File is
-checked a better way, making it work under more conditions."
+For more details see:
 
-While the previous patch fixed things like '../../tmp/gotcha', it did
-not fix a single leading '../'.
+https://bugzilla.redhat.com/show_bug.cgi?id=697975
 
-[1]https://bugs.launchpad.net/ubuntu/+source/kdenetwork/+bug/757526
-[2]http://websvn.kde.org/?view=revision&revision=1227468 (4.4)
-[3]http://websvn.kde.org/?view=revision&revision=1227469 (4.5)
+Could a CVE name be assigned to this issue please?  Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team 
