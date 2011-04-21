@@ -1,51 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/4
-Message-ID: <4EBBF9BB.5080209@redhat.com>
-Date: Thu, 10 Nov 2011 09:20:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/3
+Message-id: <573297DF-DCBC-413F-A065-8DD840045378@apple.com>
+Date: Wed, 20 Apr 2011 22:19:01 -0700
+From: Drew Yao <ayao@...le.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- ProFTPD -- Response pool use-after-free flaw (ZDI-CAN-1420)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/10/2011 06:58 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a use-after-free flaw was found in the way ProFTPD, an enhanced FTP
-> server, performed retrieval of the response pool for the old command
-> (when ProFTPD was in the midst of the data transfer, when new command
-> arrived) used by the Response API. A remote attacker could provide a
-> specially-crafted request (resulting in a need the server to handle an
-> exceptional condition), leading to memory corruption and potentially
-> arbitrary code execution, with the privileges of the user running the
-> proftpd server.
->
-> Upstream bug report:
-> [1] http://bugs.proftpd.org/show_bug.cgi?id=3711
->
-> Relevant upstream patch:
-> [2] http://bugs.proftpd.org/show_bug.cgi?id=3711#c1
->
-> References:
-> [3] https://secunia.com/advisories/46811/
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=390075
-> [5] http://www.zerodayinitiative.com/advisories/upcoming/
-> [6] https://bugzilla.redhat.com/show_bug.cgi?id=752812
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: According to the upstream bug report [1], the ZDI-CAN-1420
->       issue has been disclosed 2011-10-28, thus grepped OSS
->       archives for CVE request due this proftpd deficiency,
->       and there doesn't seem to be one yet (also ZDI-CAN-1420
->       doesn't seem to reference a CVE id).
-Please use CVE CVE-2011-4130 for this issue.
 
--- 
+Hello Alexander,
 
--Kurt Seifried / Red Hat Security Response Team
+It seems that you're not opposed to Apple's inclusion on the list. Would you reconsider and allow us on the list?  
+
+In an earlier mail, you mentioned 
+"For just one vendor, we can be CC'ing you whenever appropriate, with no list needed." We ship a lot of open source software, and outside of Apple, very few people would be qualified to know whether or not we ship any given piece of OSS, especially since we sometimes add new projects to the next, unreleased version of Mac OS X.
+
+Regarding the question of where to draw the line for allowing non-Linux distros to the table, I'd say we've earned our place by sending numerous internally discovered bugs to vendor-sec, as well as coordinating disclosure of open source projects like CUPS that we maintain.
+
+We'd want both me and <Jeffrey Czerniak <jeffcz@...le.com> on the list, both using the PGP key found at https://www.apple.com/support/security/pgp/ 
+
+---
+Drew Yao
+Apple Product Security
+
+
+
+
+On Apr 5, 2011, at 9:18 AM, Solar Designer wrote:
+
+> I wish we had this discussion for real a month ago, but apparently most
+> folks won't comment until the setup of a closed list becomes a reality.
+> So I think there was some use in setting it up even if we end up re-doing
+> or removing it, which is within consideration. ;-)
+> 
+> On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
+>> A lot of userland stuff is shared between BSD and Linux, and probably
+>> some other operating systems.  About the only things that differ between
+>> a lot of these are the Linux kernel, and the *libc.
+> 
+> There are also userland tools specific to the Linux kernel, there's
+> Linux-PAM, there are package managers that are rarely used on non-Linux.
+> 
+> I mostly agree with you, though.
+> 
+>> I think if the disqualifier to Apple is that they don't ship a Linux
+>> kernel and glibc, then we're doing them (and ourselves) a disservice.
+>> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+>> here, just stating a fact).
+> 
+> Yes.
+> 
+>> I think it would be reasonable to s/Linux list/open source vendor list/,
+>> like vendor-sec used to be.
+> 
+> If it's not just Linux, then where do we draw the line?  Do we accept
+> Solaris distros (of which there are several), Haiku, ReactOS, Cygwin,
+> and who knows what else (no offense intended to any of these fine
+> projects)?  I think this would make leaks and misuse of the information
+> significantly more likely, and make some members and reporters
+> uncomfortable about posting to the list.  So we'll be back to CC lists.
+> 
+>> ... letting Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+> 
+> I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+> so we'd be forced to introduce a vouching system (well, maybe we'd be
+> forced to do that for Linux distros as well...)
+> 
+> Alexander
 
