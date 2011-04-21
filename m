@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/5
-Message-ID: <20110412112221.GA3480@albatros>
-Date: Tue, 12 Apr 2011 15:22:22 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/2
+Message-ID: <4DAF8F40.4050903@redhat.com>
+Date: Thu, 21 Apr 2011 09:58:24 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE requests: Three Linux kernel issues
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 11, 2011 at 18:54 -0400, Dan Rosenberg wrote:
-> Firstly, this driver has locking that only allows one open file
-> descriptor at once.
+On 04/21/2011 09:55 AM, Eugene Teo wrote:
+> On 04/21/2011 07:45 AM, Eugene Teo wrote:
+>> On 04/21/2011 04:52 AM, Josh Bressers wrote:
+>>> Please use CVE-2011-1598
+>>
+>> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+>
+> Correction: s/Updated patch//. This patch is for a similar issue but for
+> can/raw release. I rather group these two patches with CVE-2011-1598
+> than to have another name assigned for it. But I'm fine either way.
 
-Yes, but the process that opened the file may:
+On second thoughts, let's have another CVE assigned.
 
-1) give fd to another process.
-2) call fork().
+can/bcm release: credit Dave Jones
+can/raw release: credit Oliver Hartkopp
 
-And since de-BLK-ization 2+ processes may run read()/write()
-simultaneously.
-
-> Even if you can work around this, you'd have a race window of about
-> two instructions, with basically no possibility of being preempted
-> since there's no blocking or potentially faulting operation.  And
-> that's assuming it's even possible, since it may be the case that this
-> index is in a register, which would render this completely
-> unexploitable.
-> 
-> Assuming this isn't the case, and you're running an SMP system and
-> spent countless hours (days? weeks?) spinning to hit this extremely
-> narrow race, you then get to write a single byte past the end of this
-> array, into the vfd_is_open integer, which is already set to 1 (it's
-> treated as a boolean value).
-
-Agreed, I thought about it too :-)
-
-
-AFAIU, all these 3 drivers are not available to non-root users.
-
+Thanks, Eugene
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
