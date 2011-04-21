@@ -1,31 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/7
-Message-Id: <201107220021.46248.steffen.joeris@skolelinux.de>
-Date: Fri, 22 Jul 2011 00:21:36 +1000
-From: Steffen Joeris <steffen.joeris@...lelinux.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/5
+Message-ID: <1303400399.4898.203.camel@solo.digium.internal>
+Date: Thu, 21 Apr 2011 10:39:59 -0500
+From: Matthew Nicholson <mnicholson@...ium.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Sorry for joining this thread so late.
+I need a CVE for a new Asterisk security vulnerability.
+-- 
+Matthew Nicholson
+Digium, Inc. | Software Developer
 
-Please add me to the new closed list. As a member of the debian security 
-team[0] I was formerly subscribed to the vendor-sec@ list via our team@ 
-address.
 
-pub   1024D/893FAD07 2004-07-12
-uid                  Steffen Joeris <white@...ian.org>
-uid                  Steffen Joeris (white) <Steffen.joeris@....de>
-uid                  Steffen Joeris (white) <steffen.joeris@...lelinux.de>
-uid                  Steffen Joeris (white) <white@....snow-crash.org>
-uid                  Steffen Joeris <white@...lelinux.org>
-sub   1024g/6F2AA41F 2004-07-12
-
-Cheers,
-Steffen
-
-[0]: http://www.debian.org/intro/organization
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
