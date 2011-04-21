@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/6
-Message-ID: <96984075-0b95-4a7d-843d-1ab82a964017@zmail04.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 18:24:40 -0400 (EDT)
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/2
+Message-ID: <4DAF8F40.4050903@redhat.com>
+Date: Thu, 21 Apr 2011 09:58:24 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Missing input sanitation in various X GLX calls
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-For more information on this, please see our bugzilla entry:
+On 04/21/2011 09:55 AM, Eugene Teo wrote:
+> On 04/21/2011 07:45 AM, Eugene Teo wrote:
+>> On 04/21/2011 04:52 AM, Josh Bressers wrote:
+>>> Please use CVE-2011-1598
+>>
+>> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+>
+> Correction: s/Updated patch//. This patch is for a similar issue but for
+> can/raw release. I rather group these two patches with CVE-2011-1598
+> than to have another name assigned for it. But I'm fine either way.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4818
+On second thoughts, let's have another CVE assigned.
 
-I emailed ajax about this and it doesn't seem to be quite as scary as it sounds, and the bug has a good analysis of the various patches noted in the upstream bug report.
+can/bcm release: credit Dave Jones
+can/raw release: credit Oliver Hartkopp
 
------ Original Message -----
-> Hi,
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=28823
-> is a tracker bug for input sanitation lacking in various GLX X calls.
-> 
-> Reporter is me@...fdog.net
-> 
-> These can probably allow a attacker with access to the GLX calls
-> (typically just the logged in user) to crash the X server or execute
-> code within it.
-> 
-> (Not thought about WebGL introduced crash potential here.)
-> 
-> The lacking checks were reported and fixed in x.org git in 2010, so
-> they
-> probably need a 2010 CVE id. (Single one should be sufficient I
-> guess.)
-
+Thanks, Eugene
 -- 
-Vincent Danen / Red Hat Security Response Team
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
