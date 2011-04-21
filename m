@@ -1,49 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/6
-Message-ID: <fb1366e8-2104-4f08-8a5a-02479e56b015@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 10:57:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/3
+Message-id: <573297DF-DCBC-413F-A065-8DD840045378@apple.com>
+Date: Wed, 20 Apr 2011 22:19:01 -0700
+From: Drew Yao <ayao@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
 
+Hello Alexander,
 
------ Original Message -----
-> Hi,
+It seems that you're not opposed to Apple's inclusion on the list. Would you reconsider and allow us on the list?  
+
+In an earlier mail, you mentioned 
+"For just one vendor, we can be CC'ing you whenever appropriate, with no list needed." We ship a lot of open source software, and outside of Apple, very few people would be qualified to know whether or not we ship any given piece of OSS, especially since we sometimes add new projects to the next, unreleased version of Mac OS X.
+
+Regarding the question of where to draw the line for allowing non-Linux distros to the table, I'd say we've earned our place by sending numerous internally discovered bugs to vendor-sec, as well as coordinating disclosure of open source projects like CUPS that we maintain.
+
+We'd want both me and <Jeffrey Czerniak <jeffcz@...le.com> on the list, both using the PGP key found at https://www.apple.com/support/security/pgp/ 
+
+---
+Drew Yao
+Apple Product Security
+
+
+
+
+On Apr 5, 2011, at 9:18 AM, Solar Designer wrote:
+
+> I wish we had this discussion for real a month ago, but apparently most
+> folks won't comment until the setup of a closed list becomes a reality.
+> So I think there was some use in setting it up even if we end up re-doing
+> or removing it, which is within consideration. ;-)
 > 
-> The hardlink(1) program from Fedora is susceptible to buffer overflows of
-> fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
-> nested directories and/or with long directory or file names.  I was able
-> to reproduce the problem (got a segfault) by running the program on a
-> directory containing 20 nested directories with 250-character names.
+> On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
+>> A lot of userland stuff is shared between BSD and Linux, and probably
+>> some other operating systems.  About the only things that differ between
+>> a lot of these are the Linux kernel, and the *libc.
 > 
-> Another problem is that the program uses full pathnames.  It neither
-> changes the current directory, nor uses openat(2).  Thus, if a pathname
-> component is replaced with a symlink while the program is running, this
-> may result in processing of directories/files outside of the intended
-> directory tree.
+> There are also userland tools specific to the Linux kernel, there's
+> Linux-PAM, there are package managers that are rarely used on non-Linux.
 > 
-> I fixed the buffer overflows (by (re)allocating the buffers dynamically)
-> in the copy that I committed into Owl today:
+> I mostly agree with you, though.
 > 
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/hardlink/
+>> I think if the disqualifier to Apple is that they don't ship a Linux
+>> kernel and glibc, then we're doing them (and ourselves) a disservice.
+>> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
+>> here, just stating a fact).
 > 
+> Yes.
+> 
+>> I think it would be reasonable to s/Linux list/open source vendor list/,
+>> like vendor-sec used to be.
+> 
+> If it's not just Linux, then where do we draw the line?  Do we accept
+> Solaris distros (of which there are several), Haiku, ReactOS, Cygwin,
+> and who knows what else (no offense intended to any of these fine
+> projects)?  I think this would make leaks and misuse of the information
+> significantly more likely, and make some members and reporters
+> uncomfortable about posting to the list.  So we'll be back to CC lists.
+> 
+>> ... letting Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
+> 
+> I am comfortable about "Apple/FreeBSD/OpenBSD", but not about "etc." -
+> so we'd be forced to introduce a vouching system (well, maybe we'd be
+> forced to do that for Linux distros as well...)
+> 
+> Alexander
 
-Based on the above commits, I'm giving this three IDs.
-
-CVE-2011-3630 hardlink buffer overflows
-https://bugzilla.redhat.com/show_bug.cgi?id=746709
-
-CVE-2011-3631 hardlink integer overflows
-https://bugzilla.redhat.com/show_bug.cgi?id=746710
-
-CVE-2011-3632 hardlink symlink attacks
-https://bugzilla.redhat.com/show_bug.cgi?id=746713
-
-The Red Hat bugs have more details and links.
-
-Thanks.
-
--- 
-    JB
