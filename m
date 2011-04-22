@@ -1,74 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/1
-Message-ID: <BANLkTikbNW-s8nuQYX9jqxRBv38w+PLLtw@mail.gmail.com>
-Date: Fri, 1 Jul 2011 14:52:49 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com, incidents@...rt.org, bressers@...hat.com
-Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/5
+Message-ID: <2073872337-1303471792-cardhu_decombobulator_blackberry.rim.net-481378627-@bda862.bisx.prod.on.blackberry>
+Date: Fri, 22 Apr 2011 11:29:45 +0000
+From: "Matthew Nicholson" <mnicholson@...ium.com>
+To: "oss-security" <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-In 1.5.22, the following files trigger Path Disclosure issue:
+It is for AST-2011-006
+-- 
+Matthew Nicholson
+Digium, Inc. | Software Developer
 
-1. /templates/system/error.php
-
-because in 1.5.23, the following validation check was added:
-
-if (!isset($this->error)) {
-	$this->error = JError::raiseWarning( 403, JText::_('ALERTNOTAUTH') );
-	$this->debug = false;
-}
-
-There must be some cases where $this->error might be undefined,
-triggering path disclosure.
-
-
-2. /administrator/components/com_media/views/media/view.html.php
-
-There is another path disclosure in $base variable in com_media of
-administrator backend.
+-----Original Message-----
+From: Jan Lieskovsky <jlieskov@...hat.com>
+Date: Fri, 22 Apr 2011 11:46:27 
+To: Matthew Nicholson<mnicholson@...ium.com>; Steven M. Christey<coley@...us.mitre.org>
+Reply-To: oss-security <oss-security@...ts.openwall.com>
+Cc: oss-security<oss-security@...ts.openwall.com>
+Subject: Re: [oss-security] CVE Request -- Asterisk Security Vulnerability
 
 
-/////////////////////////////////
-		if(DS == '\\')
-		{
-			$base = str_replace(DS,"\\\\",COM_MEDIA_BASE);
-		} else {
-			$base = COM_MEDIA_BASE;
-		}
+Hello Matthew,
 
-		$js = "
-			var basepath = '".$base."';
-			var viewstyle = '".$style."';
-		" ;
-////////////////////////////////
+   thank you for the heads up.
 
-COM_MEDIA_BASE is set to a part of JPATH_ROOT which is dirname(),
-causing to reveal full path.
+Matthew Nicholson wrote:
+> Hi,
+> 
+> I need a CVE for a new Asterisk security vulnerability.
 
+Was this request intended to be for the following one:
+[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
 
+Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
+       already got an id of CVE-2011-1507.
 
-On Mon, Jun 27, 2011 at 10:58 PM, Henri Salo <henri@...v.fi> wrote:
-> On Mon, Jun 27, 2011 at 03:53:27PM +0800, YGN Ethical Hacker Group wrote:
->> Path Disclosure should better be regarded as more closely related to
->> server-side issue.
->> It may be too redundant or unnecessary to create one path disclosure
->> issue per CVE.
->>
->> Another Path Disclosure issue in Joomla! 1.6.1
->>
->> http://bl0g.yehg.net/2011/04/joomla-161-and-lower-information.html
->>
->>
->> Almost all php CMS applications have this issue going on where  some
->> of them are listed at:
->>
->> http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln
->
-> I think this deserves own CVE-identifier as Joomla did announce security vulnerability. As far as I know the vulnerability was described as "Information Disclosure" not patch disclosure. Path disclosures should be fixed from software also, but usually it is a problem in web-server configuration. Do you have more information about issue CVE-2011-2488? Still no reply from Joomla security team regarding issue CVE-2011-2488. I asked more details nearly a week ago.
->
-> Btw. I would use domain example.org in advisories if I were you. You might not always want to keep that attacker.in domain.
->
-> Best regards,
-> Henri Salo
->
+If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
+to be assigned to this?)
+
+Or was it requested for yet something completely different from above two?
+
+Thank you, Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
