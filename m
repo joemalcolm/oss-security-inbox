@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/16/3
-Message-ID: <20111016134811.GA19558@foo.fgeek.fi>
-Date: Sun, 16 Oct 2011 16:48:11 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/3
+Message-ID: <656741753.185619.1303463295393.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Apr 2011 05:08:15 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Wrong MLIST link in CVE-2011-3783
+Cc: coley@...us.mitre.org
+Subject: CVE request -- qemu-kvm: virtio-blk: heap buffer overflow caused by unaligned requests
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 16, 2011 at 04:40:58PM +0300, Henri Salo wrote:
-> In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
+"It was found that virtio-blk driver in qemu-kvm did not properly validate 
+read and write requests from the guest. A privileged guest user could use
+this flaw to cause heap corruption, causing the guest to crash (denial of
+service) or, possibly, resulting in the privileged guest user escalating
+their privileges on the host."
 
-Or did someone start assigning CVE-identifiers for everything what has been found in http://code.google.com/p/inspathx/ and this MLIST-link is referer in all of those issues? :)
+References:
+http://www.spinics.net/lists/kvm/msg51877.html
+https://bugzilla.redhat.com/show_bug.cgi?id=698906
 
-Best regards,
-Henri Salo
+Upstream commit:
+http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=52c050236eaa4f0b5e1d160cd66dc18106445c4d
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
