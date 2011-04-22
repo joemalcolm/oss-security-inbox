@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/3
-Message-ID: <20111028070425.GD14711@foo.fgeek.fi>
-Date: Fri, 28 Oct 2011 10:04:25 +0300
-From: Henri Salo <henri@...v.fi>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwik before 1.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/9
+Message-ID: <35944480.187794.1303486798522.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Apr 2011 11:39:58 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 23, 2011 at 02:41:17PM -0400, Josh Bressers wrote:
-> The advisory just says there are a bunch of security fixes by all these
-> people, with no actual information. Such vagueness is only going to create
-> confusion, which will create extra work for me if I try to assign IDs to
-> such an advisory.
+----- Original Message -----
+> From: "Vasiliy Kulikov" <segoon@...nwall.com>
+> To: "Petr Matousek" <pmatouse@...hat.com>
+> Cc: oss-security@...ts.openwall.com
+> Sent: Friday, April 22, 2011 5:32:51 PM
+> Subject: Re: [oss-security] CVE request: kernel: buffer overflow and DoS issues in agp
+> In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
+> "Reference and patch:", but there is no patch for the issue (as I said
+> in the patch description). I have no agp hardware and I cannot test
+> whether forcing the requested pid to the current pid is a good idea
+> (it might not).
 
-Now there is information in the URI.
+Right, copy and paste issue. Fixed.
 
-Facts:
-
-- Affect all Piwik users that have let granted some access to the "anonymous" user
-- Remotely exploitable vulnerability that could allow a remote attacker to execute arbitrary code
-- Versions affected Piwik 1.2, 1.3, and 1.4
-- Credits: Neal Poole
-
-These details should be enough information for CVE assignment. I can also verify this issue if you want for every version? If there isn't enough details I can dig more :)
-
-Best regards,
-Henri Salo
+Petr
