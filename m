@@ -1,12 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/22/1
-Message-ID: <BANLkTinTwrCeKk0cEFtmW3+F=WXuNKsR_Q@mail.gmail.com>
-Date: Sun, 22 May 2011 00:28:01 -0300
-From: Javier Bassi <javierbassi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/2
+Message-ID: <4DB126BA.2050209@redhat.com>
+Date: Fri, 22 Apr 2011 14:56:58 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Webmin Local Privilege Escalation Vulnerability
+CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this issue? (It's one month old):
-http://www.securityfocus.com/bid/47558/info
-Thanks
+On 04/22/2011 04:01 AM, akuster wrote:
+> So this would affect kernels 2.6.25-rc1 and above? (if I figured it out
+> correctly)
+
+Yes, introduced in ffd980f9.
+
+Eugene
+-- 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
