@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/2
-Message-ID: <20111124042015.25688373@laverne>
-Date: Thu, 24 Nov 2011 04:20:15 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/4
+Message-ID: <4DB14E73.40705@redhat.com>
+Date: Fri, 22 Apr 2011 11:46:27 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Matthew Nicholson <mnicholson@...ium.com>, "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 23 Nov 2011 13:52:04 -0700
-schrieb Kurt Seifried <kseifried@...hat.com>:
 
-> On 11/23/2011 05:23 AM, Hanno Böck wrote:
-> > New ffmpeg releases contain a couple of security fixes:
-> > http://secunia.com/advisories/46888/
-> >
-> > 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
-> > exploited to cause a buffer overflow.
-> >
-> > 2) An integer overflow error within the "vp3_dequant()" function
-> > (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
-> >
-> > 3) Errors within the "av_image_fill_pointers()", the
-> > "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
-> > exploited to trigger out-of-bounds reads.
-> >
-> >
-> > Please assign CVEs.
-> >
-> >
-> > Maybe someone wants to have a look if other issues in those
-> > releases are security relevant:
-> > http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
-> >
-> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
-> correct?
+Hello Matthew,
 
-It is the upstream confirmation - at least it's about the same bugs.
+   thank you for the heads up.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Matthew Nicholson wrote:
+> Hi,
+> 
+> I need a CVE for a new Asterisk security vulnerability.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Was this request intended to be for the following one:
+[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
+
+Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
+       already got an id of CVE-2011-1507.
+
+If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
+to be assigned to this?)
+
+Or was it requested for yet something completely different from above two?
+
+Thank you, Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
