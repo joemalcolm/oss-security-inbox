@@ -1,52 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/6
-Message-ID: <20110705042112.GA13907@openwall.com>
-Date: Tue, 5 Jul 2011 08:21:12 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/3
+Message-ID: <656741753.185619.1303463295393.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Apr 2011 05:08:15 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request -- qemu-kvm: virtio-blk: heap buffer overflow caused by unaligned requests
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
-> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
-> 
-> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+"It was found that virtio-blk driver in qemu-kvm did not properly validate 
+read and write requests from the guest. A privileged guest user could use
+this flaw to cause heap corruption, causing the guest to crash (denial of
+service) or, possibly, resulting in the privileged guest user escalating
+their privileges on the host."
 
-This is very helpful, thank you!  How did you find it?
+References:
+http://www.spinics.net/lists/kvm/msg51877.html
+https://bugzilla.redhat.com/show_bug.cgi?id=698906
 
-So, I failed to get this server to give me ctime (looked at HTTP headers
-and also tried several FTP commands), and the mtime is Feb 15.  We could
-ask the server admins for the ctime.
-
-However, inside the archive we see 2011-06-30 14:15 UTC on the top-level
-directory, and 2011-06-30 13:46 on the .o files.  This suggests that the
-backdoored tarball was put in place no earlier than 2011-06-30 14:15 UTC,
-although that's using the intruder's system time, which might not be
-accurate. ;-)
-
-> ... I am saying that for this to become as widespread as the mtime in
-> the mirror above indicates, it would be incredible for distros like
-> Debian to not notice it, as they verify the hash of the tarball. This
-> indicates that the mtime in the mirror above was forged (since the hash
-> is indeed wrong), but the real question is how this mirror obtained the
-> copy.
-> 
-> Was the mirror compromised? Was a rsync job used against the real
-> server, in which case the mtime was preserved? I couldn't find any
-> public copies with the backdoored checksum, but one of the metasploit
-> contributors pointed me to the link above.
-
-My guess is that the mirror is automatically updated, perhaps nightly,
-and not necessarily via rsync.  It is possible to transfer/preserve the
-mtime via ftp and http as well - typical mirror programs do that.
-
-> I would like to believe the exposure was limited to 1-3 days, but the
-> mirror above casts doubt on this.
-
-Looks like it was 3 days, actually.
+Upstream commit:
+http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=52c050236eaa4f0b5e1d160cd66dc18106445c4d
 
 Thanks,
-
-Alexander
+--
+Petr Matousek / Red Hat Security Response Team
