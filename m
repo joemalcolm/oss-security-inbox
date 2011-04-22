@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/5
-Message-ID: <20110907133058.GA18544@ngolde.de>
-Date: Wed, 7 Sep 2011 15:30:58 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: masqmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/4
+Message-ID: <4DB14E73.40705@redhat.com>
+Date: Fri, 22 Apr 2011 11:46:27 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Matthew Nicholson <mnicholson@...ium.com>, "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-a misuse of the seteuid function from glibc prevents masqmail from properly 
-dropping root privileges.
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638002
-http://article.gmane.org/gmane.mail.masqmail/303
 
-Can you assign a CVE id to this?
+Hello Matthew,
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+   thank you for the heads up.
 
-Content of type "application/pgp-signature" skipped
+Matthew Nicholson wrote:
+> Hi,
+> 
+> I need a CVE for a new Asterisk security vulnerability.
+
+Was this request intended to be for the following one:
+[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
+
+Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
+       already got an id of CVE-2011-1507.
+
+If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
+to be assigned to this?)
+
+Or was it requested for yet something completely different from above two?
+
+Thank you, Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
