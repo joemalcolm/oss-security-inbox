@@ -1,34 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/2
-Message-ID: <20111118024538.GA24375@openwall.com>
-Date: Fri, 18 Nov 2011 06:45:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/6
+Message-ID: <4DB17AEF.6050206@redhat.com>
+Date: Fri, 22 Apr 2011 14:56:15 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: non-Linux advance notification list
+CC: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Matthew Nicholson wrote:
+> It is for AST-2011-006
 
-As our experiment with advance notification exploders for distros
-proceeds, I am ready to setup a list with operating system distro
-vendors not limited to Linux.
+Please use CVE-2011-1599 for this issue then.
 
-Of course, it'd be non-obvious where to stop (do we add Microsoft if
-they ask to join?), but for now I'd like to see who is interested in
-joining - and be liberal in accepting them.
-
-I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
-specific people that they're interested.  So please reply to this
-message to indicate your interest and we'll proceed.
-
-I intend to include the linux-distros members on this new list as well.
-I have difficulty imagining an issue that would affect several diverse
-distros, but obviously (to the sender) not affect any Linux distros.
-I don't mind setting up a third list that would exclude Linux if there's
-demand, though.
-
-I'd appreciate any comments.
-
-Thanks,
-
-Alexander
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
