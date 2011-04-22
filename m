@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/13
-Message-ID: <Pine.GSO.4.64.1111041648200.28484@faron.mitre.org>
-Date: Fri, 4 Nov 2011 16:51:29 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/5
+Message-ID: <2073872337-1303471792-cardhu_decombobulator_blackberry.rim.net-481378627-@bda862.bisx.prod.on.blackberry>
+Date: Fri, 22 Apr 2011 11:29:45 +0000
+From: "Matthew Nicholson" <mnicholson@...ium.com>
+To: "oss-security" <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+It is for AST-2011-006
+-- 
+Matthew Nicholson
+Digium, Inc. | Software Developer
 
-All,
+-----Original Message-----
+From: Jan Lieskovsky <jlieskov@...hat.com>
+Date: Fri, 22 Apr 2011 11:46:27 
+To: Matthew Nicholson<mnicholson@...ium.com>; Steven M. Christey<coley@...us.mitre.org>
+Reply-To: oss-security <oss-security@...ts.openwall.com>
+Cc: oss-security<oss-security@...ts.openwall.com>
+Subject: Re: [oss-security] CVE Request -- Asterisk Security Vulnerability
 
-I haven't followed the Calibre saga too closely, barring glancing through 
-the bug report comments.
 
-If bugs are introduced into a development version but also fixed within 
-that same version, then unless there's some strong evidence that the dev 
-version is extensively used or distributed to the public, then (in 
-general) it would not get a CVE.  (The Linux kernel is a special case 
-depending on what versions you consider to be "development.")
+Hello Matthew,
 
-- Steve
+   thank you for the heads up.
+
+Matthew Nicholson wrote:
+> Hi,
+> 
+> I need a CVE for a new Asterisk security vulnerability.
+
+Was this request intended to be for the following one:
+[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
+
+Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
+       already got an id of CVE-2011-1507.
+
+If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
+to be assigned to this?)
+
+Or was it requested for yet something completely different from above two?
+
+Thank you, Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
