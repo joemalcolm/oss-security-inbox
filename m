@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/6
-Message-ID: <CAEZPtU4m6e7ibQa2BnQPasBwJZXG2eW6_kg0xTOvrUiFVoFxmw@mail.gmail.com>
-Date: Sun, 25 Sep 2011 11:49:41 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Stas Malyshev <smalyshev@...arcrm.com>
-Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/8
+Message-ID: <20110422153251.GA6190@albatros>
+Date: Fri, 22 Apr 2011 19:32:51 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Petr Matousek <pmatouse@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 25, 2011 at 11:18 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
+On Fri, Apr 22, 2011 at 11:11 -0400, Petr Matousek wrote:
+> > Another problem in agp code is not addressed in the patch - kernel
+> > memory
+> > exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
+> > checked
+> > whether requested pid is a pid of the caller (no check in
+> > agpioc_reserve_wrap()).
+> > Each allocation is limited to 16KB, though, there is no per-process
+> > limit.
+> > This might lead to OOM situation, which is not even solved in case of
+> > the
+> > caller death by OOM killer - the memory is allocated for another
+> > (faked)
+> > process."
+> 
+> Please use CVE-2011-1747.
 
-> I'm concerned that if we do it this way people would take it as "PHP has
-> security bug in is_a and it was fixed in this version, so as long as we run
-> updated version we're OK", not "my code has gaping security hole which by
-> pure luck wasn't exploitable but minor change made it exploitable". If we
-> don't make it crystal clear the latter and not the former is the case, we'd
-> have same problem with 5.4.
+In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
+"Reference and patch:", but there is no patch for the issue (as I said
+in the patch description).  I have no agp hardware and I cannot test
+whether forcing the requested pid to the current pid is a good idea (it
+might not).
 
-That's a valid concern however it is another matter.
+Thanks,
 
-My suggestion would be:
-
-- get a CVE and assign it to the bug
-
-- be sure to get the right information in the CVE
-  .  about why it is not a flaw in php itself per se but a behavior
-change that could introduce a flaw in existing php scripts
-     . these php scripts were not following our guidance or good practice guide
-
-- Be sure we update the upgrade guide, the NEWS file, the
-documentation and the announce to clearly explain and define this
-problem and its consequences
-
-Cheers,
---
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
