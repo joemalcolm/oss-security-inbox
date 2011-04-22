@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/1
-Message-ID: <20111106164932.GA394@devzero.fr>
-Date: Sun, 6 Nov 2011 17:49:32 +0100
-From: vladz <vladz@...zero.fr>
-To: oss-security@...ts.openwall.com
-Cc: benml@...idev.fr
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/10
+Message-ID: <20110422171236.GA9751@albatros>
+Date: Fri, 22 Apr 2011 21:12:38 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: akuster <akuster@...sta.com>
+Cc: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Apr 22, 2011 at 06:15 -1000, akuster wrote:
+> I am a bit confused.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
+> https://lkml.org/lkml/2011/4/14/294
+> 
+>  which is assigned to CVE-2011-1746 not CVE-2011-1747.
+> 
+> is there a patch for CVE-2011-1747?
 
-Hi,
+No.  The problem of CVE-2011-1747 is mentioned in the patch fixing
+CVE-2011-1746 because the patch tries to fix a similar problem - OOM.
 
-Here is a PoC for this race condition.  It uses the Inotify API and
-always succeed on my Dual-core CPU.  
+CVE-2011-1747 is not fixed yet.
 
-  http://vladz.devzero.fr/other/bzexe_PoC.c.html
 
-Regards,
+> >> Please use CVE-2011-1747.
+> > 
+> > In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
+> > "Reference and patch:", but there is no patch for the issue (as I said
+> > in the patch description).  I have no agp hardware and I cannot test
+> > whether forcing the requested pid to the current pid is a good idea (it
+> > might not).
+
 -- 
-http://vladz.devzero.fr
-PGP key 8F7E2D3C from pgp.mit.edu
-
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
