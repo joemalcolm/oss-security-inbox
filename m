@@ -1,49 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/1
-Message-ID: <20110516142741.GA24816@suse.de>
-Date: Mon, 16 May 2011 16:27:41 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/11
+Message-ID: <4DB1A993.8070309@mvista.com>
+Date: Fri, 22 Apr 2011 06:15:15 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple libraries privilege checking
+CC: Vasiliy Kulikov <segoon@...nwall.com>,  Petr Matousek <pmatouse@...hat.com>
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Its probably about time to review libraries that are commonly
-linked to (formerly-) suid programs, such as
-libldap, libssl etc. In near future, in the advent of file caps
-they are often lacking proper checks.
-They usually just compare uid against euid (not even gid sometimes)
-and do not check the dumpable flag or AT_SECURE (dont know whether
-glibc exports a proper function to easily check that at all).
+I am a bit confused.
 
-The libraries that I had a quick look at and which were found
-"vulnerable" are:
+https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
+https://lkml.org/lkml/2011/4/14/294
 
-- openssl-1.0.0c
-- openldap-2.4.23
-- cyrus-sasl-2.1.23
+ which is assigned to CVE-2011-1746 not CVE-2011-1747.
 
-which is probably far from complete. Even if not linked directly to
-a privileged running program, these libraries may be introduced by
-plugins or frameworks (pam etc).
-As a result, attackers may specify plugin directories or rouge directory
-services for authentication as these libraries think they are
-running unprivileged.
-So better to fix them now than to be sorry in one year when they are going
-to be used the fscaps-way.
+is there a patch for CVE-2011-1747?
 
-Sebastian
+- Armin
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+On 04/22/2011 05:32 AM, Vasiliy Kulikov wrote:
+> On Fri, Apr 22, 2011 at 11:11 -0400, Petr Matousek wrote:
+>>> Another problem in agp code is not addressed in the patch - kernel
+>>> memory
+>>> exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
+>>> checked
+>>> whether requested pid is a pid of the caller (no check in
+>>> agpioc_reserve_wrap()).
+>>> Each allocation is limited to 16KB, though, there is no per-process
+>>> limit.
+>>> This might lead to OOM situation, which is not even solved in case of
+>>> the
+>>> caller death by OOM killer - the memory is allocated for another
+>>> (faked)
+>>> process."
+>>
+>> Please use CVE-2011-1747.
+> 
+> In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
+> "Reference and patch:", but there is no patch for the issue (as I said
+> in the patch description).  I have no agp hardware and I cannot test
+> whether forcing the requested pid to the current pid is a good idea (it
+> might not).
+> 
+> Thanks,
+> 
