@@ -1,68 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/5
-Message-ID: <4E325959.1060008@free.fr>
-Date: Fri, 29 Jul 2011 08:55:21 +0200
-From: miniupnp <miniupnp@...e.fr>
-To: Kees Cook <kees@...ntu.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: multiple flaws in minissdpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/7
+Message-ID: <1690556491.187672.1303485091753.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Apr 2011 11:11:31 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the report, I'm having a look at theses issues.
+----- Original Message -----
+> From: "Vasiliy Kulikov" <segoon@...nwall.com>
+> To: oss-security@...ts.openwall.com
+> Sent: Thursday, April 21, 2011 4:01:31 PM
+> Subject: [oss-security] CVE request: kernel: buffer overflow and DoS issues in agp
+> Hi,
+> 
+> https://lkml.org/lkml/2011/4/14/293
+> 
+> "pg_start is copied from userspace on AGPIOC_BIND and AGPIOC_UNBIND
+> ioctl
+> cmds of agp_ioctl() and passed to agpioc_bind_wrap(). As said in the
+> comment, (pg_start + mem->page_count) may wrap in case of AGPIOC_BIND,
+> and it is not checked at all in case of AGPIOC_UNBIND. As a result,
+> user
+> with sufficient privileges (usually "video" group) may generate either
+> local DoS or privilege escalation."
 
-Le 28/07/2011 23:24, Kees Cook a écrit :
-> Hi!
->
-> I recently did an audit[1] of minissdpd for Ubuntu, and found a lot of issues,
-> unfortunately. There may be more hiding that I didn't notice, but here
-> are the security bits of my notes:
->
->
-> Denial of Service:
->
-> - off-by-one in packet parsing can trigger crashes on unluckily alignment
->     minissdpd.c line ~290
->
-> - walk off end of memory without length check in "cache-control" packet
->     minissdpd.c line ~314
->
-> - some unchecked malloc uses could lead to crash
->
-> - does not clean up /var/run files on crash
->
->
-> Corruption, possible manipulation of responses:
->
-> - linefeed injection in service requests
->
-> - unchecked write lengths (could get interrupted, lead to corruption)
->
->
-> Memory corruption, with execution control likely:
->
-> - multiple buffer overflows in processRequest
->     - unchecked decoded lengths
->     - unchecked buffer creation length
->     - integer overflows in decoded lengths
->     - write null byte arbitrarily in heap
->     - could read stack memory out on requests (including canary if OS
->       used stack protector canary that wasn't null-started). e.g.:
->       - add bogus service with giant coded-length "location" entry
->       - read back with type==1 and matching "st"
->
->
-> General Safety:
->
-> - does not drop privileges
->
->
-> Hopefully all of this can get fixed up, it looks like a useful service. :)
->
-> Thanks,
->
-> -Kees
->
-> [1] https://bugs.launchpad.net/ubuntu/+source/minissdpd/+bug/813313
->
->   
+Please use CVE-2011-1745.
 
+> 
+> 
+> https://lkml.org/lkml/2011/4/14/294
+> https://lkml.org/lkml/2011/4/19/400
+> 
+> "page_count is copied from userspace. agp_allocate_memory() tries to
+> check whether this number is too big, but doesn't take into account
+> the
+> wrap case. Also agp_create_user_memory() doesn't check whether
+> alloc_size is calculated from num_agp_pages variable without overflow.
+> This may lead to allocation of too small buffer with following buffer
+> overflow.
+
+Please use CVE-2011-1746.
+ 
+> Another problem in agp code is not addressed in the patch - kernel
+> memory
+> exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
+> checked
+> whether requested pid is a pid of the caller (no check in
+> agpioc_reserve_wrap()).
+> Each allocation is limited to 16KB, though, there is no per-process
+> limit.
+> This might lead to OOM situation, which is not even solved in case of
+> the
+> caller death by OOM killer - the memory is allocated for another
+> (faked)
+> process."
+
+Please use CVE-2011-1747.
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
+
+> --
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing
+> environments
