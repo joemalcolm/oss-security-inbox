@@ -1,23 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/16
-Message-ID: <f1249141-c9e0-435b-bb9c-f5c10983e3fb@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:31:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/7
+Message-ID: <1690556491.187672.1303485091753.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Apr 2011 11:11:31 -0400 (EDT)
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: Re: CVE-request: Joomla 20111001 Core - Information Disclosure
+Cc: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-
-
 ----- Original Message -----
-> Can I get CVE-identifier for this issue?
-> http://developer.joomla.org/security/news/370-20111001-core-information-disclosure.html
+> From: "Vasiliy Kulikov" <segoon@...nwall.com>
+> To: oss-security@...ts.openwall.com
+> Sent: Thursday, April 21, 2011 4:01:31 PM
+> Subject: [oss-security] CVE request: kernel: buffer overflow and DoS issues in agp
+> Hi,
 > 
+> https://lkml.org/lkml/2011/4/14/293
+> 
+> "pg_start is copied from userspace on AGPIOC_BIND and AGPIOC_UNBIND
+> ioctl
+> cmds of agp_ioctl() and passed to agpioc_bind_wrap(). As said in the
+> comment, (pg_start + mem->page_count) may wrap in case of AGPIOC_BIND,
+> and it is not checked at all in case of AGPIOC_UNBIND. As a result,
+> user
+> with sufficient privileges (usually "video" group) may generate either
+> local DoS or privilege escalation."
 
-Please use CVE-2011-3629.
+Please use CVE-2011-1745.
 
-Thanks.
+> 
+> 
+> https://lkml.org/lkml/2011/4/14/294
+> https://lkml.org/lkml/2011/4/19/400
+> 
+> "page_count is copied from userspace. agp_allocate_memory() tries to
+> check whether this number is too big, but doesn't take into account
+> the
+> wrap case. Also agp_create_user_memory() doesn't check whether
+> alloc_size is calculated from num_agp_pages variable without overflow.
+> This may lead to allocation of too small buffer with following buffer
+> overflow.
 
--- 
-    JB
+Please use CVE-2011-1746.
+ 
+> Another problem in agp code is not addressed in the patch - kernel
+> memory
+> exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
+> checked
+> whether requested pid is a pid of the caller (no check in
+> agpioc_reserve_wrap()).
+> Each allocation is limited to 16KB, though, there is no per-process
+> limit.
+> This might lead to OOM situation, which is not even solved in case of
+> the
+> caller death by OOM killer - the memory is allocated for another
+> (faked)
+> process."
+
+Please use CVE-2011-1747.
+
+Thanks,
+--
+Petr Matousek / Red Hat Security Response Team
+
+> --
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing
+> environments
