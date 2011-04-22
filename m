@@ -1,56 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/4
-Message-ID: <733775406.1261153.1316024118779.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:15:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/6
+Message-ID: <4DB17AEF.6050206@redhat.com>
+Date: Fri, 22 Apr 2011 14:56:15 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: D-Link DCS-2121 Semicolon Vulnerability
+CC: "Steven M. Christey" <coley@...us.mitre.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request -- Asterisk Security Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-I'm going to leave this one to MITRE. I want to stick with the current list policy of only assigning IDs to open source projects.
+Matthew Nicholson wrote:
+> It is for AST-2011-006
 
-Thanks.
+Please use CVE-2011-1599 for this issue then.
 
--- 
-    JB
-
------ Original Message -----
-> Hello,
-> 
-> I've come up with this [0] blog post which, accordingly to author,
-> describes a 0day vulnerability within D-Link DCS-2121 camera.
-> 
-> In summary, the data posted from the web configuration interface to
-> samba is
-> directly used as a parameter without proper sanitization. This leads
-> to
-> an unwanted system call.
-> 
-> Although the author says that the vulnerability can only be used by
-> authenticated users via web interface, it would be dangerous together
-> with CSRF on authenticated user. I think that it's worth looking, or,
-> at
-> least let the vendor know.
-> 
-> """
-> Disclaimer (for not-so-funny people): yes this is "0day", unreported
-> to
-> the vendor. I even suspect the whole D-Link product line is vulnerable
-> to the same bug (if not the whole world of low-end embedded systems
-> (and
-> even business class products)). However, since Web access requires
-> authentication, this bug might be exploitable by administrators only,
-> so
-> it is only useful for people who would like to gain a shell on their
-> own
-> systems. Do not panic :)
-> """
-> 
-> [0]
-> http://newsoft-tech.blogspot.com/2010/09/d-link-dcs-2121-and-state-of-embedded.html
-> 
-> Regards,
-> 
-> --
-> . 73! DE TA1AET
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
