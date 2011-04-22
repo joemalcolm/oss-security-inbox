@@ -1,47 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/2
-Message-ID: <20110131120054.53312d3d@orphan>
-Date: Mon, 31 Jan 2011 12:00:54 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: strenholme.usenet@...il.com
-Cc: oss-security@...ts.openwall.com, list@...adns.org, geissert@...ian.org, atomo64@...il.com, coley@...re.org
-Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/11
+Message-ID: <4DB1A993.8070309@mvista.com>
+Date: Fri, 22 Apr 2011 06:15:15 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Vasiliy Kulikov <segoon@...nwall.com>,  Petr Matousek <pmatouse@...hat.com>
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-Hi Sam!
 
-On Sat, 29 Jan 2011 22:21:08 -0700 Sam Trenholme wrote:
+I am a bit confused.
 
-> I would like to thank Mr. Witold Baryluk for pointing out this issue,
-> taking the time to backtrace the bug, and for bringing it to my
-> attention by posting to the MaraDNS mailing list.  However, I need to
-> let him know that making this public by filing a public Debian bug
-> without first trying to contact me is not the appropriate way to
-> handle a security problem with MaraDNS.  The appropriate way to do so
-> is via private email.  My email address is here:
+https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
+https://lkml.org/lkml/2011/4/14/294
+
+ which is assigned to CVE-2011-1746 not CVE-2011-1747.
+
+is there a patch for CVE-2011-1747?
+
+- Armin
+
+On 04/22/2011 05:32 AM, Vasiliy Kulikov wrote:
+> On Fri, Apr 22, 2011 at 11:11 -0400, Petr Matousek wrote:
+>>> Another problem in agp code is not addressed in the patch - kernel
+>>> memory
+>>> exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
+>>> checked
+>>> whether requested pid is a pid of the caller (no check in
+>>> agpioc_reserve_wrap()).
+>>> Each allocation is limited to 16KB, though, there is no per-process
+>>> limit.
+>>> This might lead to OOM situation, which is not even solved in case of
+>>> the
+>>> caller death by OOM killer - the memory is allocated for another
+>>> (faked)
+>>> process."
+>>
+>> Please use CVE-2011-1747.
 > 
-> http://samiam.org/mailme.php
-
-I think it may be a good idea to have this preferred way of receiving
-security reports for MaraDNS documented on the project web site in a
-way that does not make it hard to find.
-
-I took a quick look at the maradns.org web to see what contact info I
-can find as someone who may want to report a security flaw, but does
-not have any closer relationship with project's upstream or community.
-
-The main page suggests using mailing list for bug reports.  There is
-the contact.html page that does document what to do when reporting
-security issue, but the page does not seem to be linked from other pages
-(I noticed it thanks to the web site copy bundled in the maradns source
-tarball).  There's a link from sponsors.html, but that page is no longer
-linked from the site menu.
-
-So while the info is there, I don't see an easy way to find it by
-following links from the main page.  Maybe that's something you may
-want to change.
-
-Just my 2c, HTH.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+> In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
+> "Reference and patch:", but there is no patch for the issue (as I said
+> in the patch description).  I have no agp hardware and I cannot test
+> whether forcing the requested pid to the current pid is a good idea (it
+> might not).
+> 
+> Thanks,
+> 
