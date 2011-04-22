@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/4
-Message-ID: <4D8B3492.6020108@redhat.com>
-Date: Thu, 24 Mar 2011 13:09:54 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: roundcube < 0.5.1 CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/10
+Message-ID: <20110422171236.GA9751@albatros>
+Date: Fri, 22 Apr 2011 21:12:38 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: akuster <akuster@...sta.com>
+Cc: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
 Content-Type: text/plain; charset=utf-8
 
-
-Thanks, Hanno.
-
-Hanno Böck wrote:
-> http://trac.roundcube.net/wiki/Changelog
+On Fri, Apr 22, 2011 at 06:15 -1000, akuster wrote:
+> I am a bit confused.
 > 
-> two cross site request forgery, one additional issue fixed in 0.5.1:
+> https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
+> https://lkml.org/lkml/2011/4/14/294
 > 
-> "Security: add optional referer check to prevent CSRF in GET requests
+>  which is assigned to CVE-2011-1746 not CVE-2011-1747.
+> 
+> is there a patch for CVE-2011-1747?
 
-Looks this one being just security hardening with the patches:
-[1] http://trac.roundcube.net/changeset/4503
-[2] http://trac.roundcube.net/changeset/4504
+No.  The problem of CVE-2011-1747 is mentioned in the patch fixing
+CVE-2011-1746 because the patch tries to fix a similar problem - OOM.
 
-For the CSRF flaws:
-
-> Security: protect login form submission from CSRF
-Patch: [3] http://trac.roundcube.net/changeset/4490
-
-> Security: prevent from relaying malicious requests through modcss.inc"
-Patch: [4] http://trac.roundcube.net/changeset/4488
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+CVE-2011-1747 is not fixed yet.
 
 
+> >> Please use CVE-2011-1747.
+> > 
+> > In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
+> > "Reference and patch:", but there is no patch for the issue (as I said
+> > in the patch description).  I have no agp hardware and I cannot test
+> > whether forcing the requested pid to the current pid is a good idea (it
+> > might not).
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
