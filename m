@@ -1,32 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/1
-Message-ID: <4ECF7439.5010105@suse.de>
-Date: Fri, 25 Nov 2011 11:55:53 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/2
+Message-ID: <4DB126BA.2050209@redhat.com>
+Date: Fri, 22 Apr 2011 14:56:58 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: colord sql injections
+CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 04/22/2011 04:01 AM, akuster wrote:
+> So this would affect kernels 2.6.25-rc1 and above? (if I figured it out
+> correctly)
 
-colord did not quote user supplied strings which made it prone to
-SQL injections:
-https://bugs.freedesktop.org/show_bug.cgi?id=42904
-https://bugzilla.novell.com/show_bug.cgi?id=698250
+Yes, introduced in ffd980f9.
 
-When colord runs as root and local active users are allowed to
-create new devices (both are the defaults AFAIK) this allows not
-only to corrupt colord's own database but also to leverage it to
-modify other databases in the system (PackageKit for example also
-uses sqlite).
-
-PoC available on request.
-
-cu
-Ludwig
-
+Eugene
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
