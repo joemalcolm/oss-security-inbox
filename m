@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/2
-Message-ID: <20110705022644.GA13130@openwall.com>
-Date: Tue, 5 Jul 2011 06:26:44 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/3
+Message-ID: <20110424110003.GA32248@openwall.com>
+Date: Sun, 24 Apr 2011 15:00:03 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: HD Moore <hdm@...italoffense.net>, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 10:09:32AM +0800, Eugene Teo wrote:
-> I did not verify.
+Jason -
+
+On Thu, Apr 21, 2011 at 08:20:48AM -0400, Jason A. Donenfeld wrote:
+> Likewise,
 > 
-> (09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
-> http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
-> 15th -> July 3rd (via mc)
+> pub   4096R/A5DE03AE 2011-01-15
+>       Key fingerprint = AB99 42E6 D4A4 CFC3 4126  20A7 49FC 7012 A5DE 03AE
+> uid                  Jason A. Donenfeld <Jason@...c4.com>
+> sub   4096R/FB1EFB7F 2011-01-15
 
-Looks unrealistic to me.  Feb 15 is when 2.3.4 was released by Chris.
-A copy I downloaded has mtime Feb 15 (preserved from the official
-download site) and ctime Mar 2 (when I downloaded it).  It passes the
-GPG signature check and lacks the backdoor.
+What Linux distro are you a security contact for, how do we verify that,
+and how were you receiving vendor-sec mail before?  (These are some of
+the eligibility criteria for the initial seed membership of the new
+list.  The requirement "was a vendor-sec member" is likely to be lifted
+after a while.)
 
-Additionally, searching for the SHA-256 digest that Chris posted reveals
-only copies of his announcement of the incident and news stories about
-it.  No hits for any distro's filelists, etc.  I wish we had MD5 and
-SHA-1 to also search for, though.  I don't have a copy of the backdoored
-vsftpd tarball to compute those, but we can ask Chris for them.
+All -
 
-My gut feeling is that the backdoored tarball has been on the site for
-1 to 3 days.  But I could be wrong.
+The moderators of oss-security approved all subscription requests and
+criticism to be posted to this thread so far, but perhaps it's time to
+start rejecting unjustified requests to keep the noise down, asking the
+senders to re-post with due justification included.  This is what we
+will likely start doing should more requests without justification be
+sent to the list address.  I don't view this as censorship; it's merely
+getting people to include all info in one message, which reduces noise.
+
+This doesn't apply to messages with criticism and/or suggestions, which
+we will continue to approve.
+
+I am pleased to see that this thread is calming down, letting us focus
+on discussing actual software security issues (in other/new threads).
+Although the thread was/is noisy, I think it also helped us highlight
+several real issues, some of which we don't have good solutions for.
 
 Alexander
