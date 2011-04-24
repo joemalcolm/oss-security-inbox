@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/1
-Message-ID: <4EF32046.9030805@redhat.com>
-Date: Thu, 22 Dec 2011 13:19:18 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Rainer Gerhards <rgerhards@...scon.com>, Tomas Heinrich <theinric@...hat.com>
-Subject: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/2
+Message-ID: <20110424104339.GB32078@openwall.com>
+Date: Sun, 24 Apr 2011 14:43:39 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Apr 13, 2011 at 11:11:07AM -0600, Vincent Danen wrote:
+> Please add me to the new list.
+> 
+> pub   3072R/E8B86CAB 2011-04-12
+>       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
+> uid                  Vincent Danen <vdanen linsec.ca>
+> uid                  Vincent Danen <vdanen annvix.org>
+> uid                  Vincent Danen <vdanen redhat.com>
+> sub   3072R/8BBA24C6 2011-04-12
 
-An integer signedness error, leading to heap based buffer overflow was found in
-the way the imfile module of rsyslog, an enhanced system logging and kernel
-message trapping daemon, processed text files larger than 64 KB. When the
-imfile rsyslog module was enabled, a local attacker could use this flaw to
-cause denial of service (rsyslogd daemon hang) via specially-crafted message,
-to be logged.
+Added.
 
-Upstream bug report:
-[1] http://bugzilla.adiscon.com/show_bug.cgi?id=221
+BTW, people eligible and wishing to join the list don't have to post the
+specific e-mail addresses and PGP key info in here.  As I wrote in:
 
-Upstream patch:
-[2] http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101
+http://www.openwall.com/lists/oss-security/2011/04/04/40
 
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=769822
+"That said, I agree that having specific e-mail addresses and key IDs
+posted to a public list is excessive.  If anyone else wishes to join
+(and qualifies), please state so in the "Closed list" thread and justify
+your request (currently that would mean info on the Linux distro you're
+a security contact for), then e-mail the specific e-mail address and PGP
+key info to me off-list.  I'll continue to reply on the list, but the
+specific e-mail addresses and keys will be exposed a little bit less."
 
-Could you allocate a CVE id for this?
+Of course, for active participants of oss-security and/or other public
+lists this shouldn't matter much (they're "exposed" anyway).
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
