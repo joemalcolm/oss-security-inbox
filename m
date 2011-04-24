@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/8
-Message-ID: <4D52BACE.5010702@redhat.com>
-Date: Thu, 10 Feb 2011 00:03:26 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/6
+Message-ID: <20110424123611.GA368@openwall.com>
+Date: Sun, 24 Apr 2011 16:36:11 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 02/10/2011 12:01 AM, Eugene Teo wrote:
-> On 02/09/2011 11:49 PM, Dan Rosenberg wrote:
->> I'm not aware of any distributions that support 2.6.37 kernels, but as
->> far as I know this doesn't affect CVE eligibility (please correct me
->> if I'm wrong).
->
-> Ok, I'm just asking. Please use CVE-2011-0696.
+On Fri, Apr 15, 2011 at 05:23:17AM +0000, Zhao, Zhenfeng wrote:
+> Now I use my own e-mail address instead of one exploder to apply for the membership, and I also have added Wind River info to the wiki pages. OK,  I was  a vendor-sec member representing Wind River, please add me to the new list.  
 
-Wrong, race condition. Please use CVE-2011-0699 instead.
+Thanks.  Unfortunately, the info you have added puts you in the same
+category with MontaVista.  We haven't yet decided on what to do with
+"closed" Linux vendors like this.  There has been some opposition to
+them receiving advance notifications of security vulnerabilities via the
+new list because the community would not be able to tell whether such
+vendors are making intended use of the advance notifications or not.
 
-Thanks, Eugene
+http://oss-security.openwall.org/wiki/vendors#wind-river
 
-> Eugene
->
->> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo<eugene@...hat.com> wrote:
->>> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
->>>>
->>>> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
->>>> btrfs_ioctl_space_info() and introduced security issues. Since they
->>>> were all introduced at once and fixed at the same time, one CVE should
->>>> suffice.
->>>>
->>>> Due to integer truncation or a signedness error in a typecasted
->>>> comparison, an integer overflow in an allocation size calculation, and
->>>> a failure to properly check bounds when copying data, it was possible
->>>> for an unprivileged user to cause a denial-of-service due to writing
->>>> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
->>>>
->>>> -Dan
->>>>
->>>> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
->>>
->>> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last
->>> year.
->>> Do we have commercially supported kernels that are affected by this?
->>>
->>> Thanks, Eugene
->>>
->
+"The process for receiving security advisories requires a Support or
+Maintenance subscription."
 
+As I wrote in another message, I am considering setting up a separate
+list that would include Linux vendors like this.  Then message senders
+will be the ones to decide on which categories of vendors to inform.
+
+I consider both the existing new list and any other lists we might setup
+experimental.  Everything is subject to change, even the very existence
+of these lists.  We're merely trying to see what works best.
+
+Alexander
