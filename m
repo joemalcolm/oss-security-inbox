@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/5
-Message-ID: <4EC9E9D2.1090404@redhat.com>
-Date: Mon, 21 Nov 2011 14:04:02 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/6
+Message-ID: <20110424123611.GA368@openwall.com>
+Date: Sun, 24 Apr 2011 16:36:11 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: hfs: add sanity check for file name length
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-https://lkml.org/lkml/2011/11/9/303
-https://bugzilla.redhat.com/show_bug.cgi?id=755431
-http://git.kernel.org/linus/bc5b8a9003132ae44559edd63a1623
+On Fri, Apr 15, 2011 at 05:23:17AM +0000, Zhao, Zhenfeng wrote:
+> Now I use my own e-mail address instead of one exploder to apply for the membership, and I also have added Wind River info to the wiki pages. OK,  I was  a vendor-sec member representing Wind River, please add me to the new list.  
 
-On a corrupted file system the ->len field could be wrong leading to a
-buffer overflow.
+Thanks.  Unfortunately, the info you have added puts you in the same
+category with MontaVista.  We haven't yet decided on what to do with
+"closed" Linux vendors like this.  There has been some opposition to
+them receiving advance notifications of security vulnerabilities via the
+new list because the community would not be able to tell whether such
+vendors are making intended use of the advance notifications or not.
 
-Thanks, Eugene
+http://oss-security.openwall.org/wiki/vendors#wind-river
+
+"The process for receiving security advisories requires a Support or
+Maintenance subscription."
+
+As I wrote in another message, I am considering setting up a separate
+list that would include Linux vendors like this.  Then message senders
+will be the ones to decide on which categories of vendors to inform.
+
+I consider both the existing new list and any other lists we might setup
+experimental.  Everything is subject to change, even the very existence
+of these lists.  We're merely trying to see what works best.
+
+Alexander
