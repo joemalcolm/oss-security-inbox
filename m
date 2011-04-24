@@ -1,45 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/9
-Message-ID: <4EC28C7E.3050405@redhat.com>
-Date: Tue, 15 Nov 2011 08:59:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/4
+Message-ID: <20110424113029.GB32248@openwall.com>
+Date: Sun, 24 Apr 2011 15:30:29 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Christian Hammond <chipx86@...px86.com>
-Subject: Re: CVE Request -- ReviewBoard v1.5.7 && v1.6.3 -- XSS in the commenting system (diff viewer and screenshot pages components)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/15/2011 06:51 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a cross-site scripting (XSS) flaw was found in the way the commenting
-> system of the ReviewBoard, a web-based code review tool, sanitized user
-> input (new comments to be loaded). A remote attacker could provide a
-> specially-crafted URL, which once visited by valid ReviewBoard user
-> could lead to arbitrary HTML or web script execution in the 'diff
-> viewer' or 'screenshot pages' components.
->
-> References:
-> [1] http://www.reviewboard.org/news/
-> [2] http://www.reviewboard.org/docs/releasenotes/dev/reviewboard/1.6.3/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=754126
->
-> Relevant upstream patch:
-> [4]
-> https://github.com/reviewboard/reviewboard/commit/7a0a9d94555502278534dedcf2d75e9fccce8c3d
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Cc-ed Christian Hammond, who committed change [4] to the
->       upstream Git repository too, so they could update CVE id
->       in their advisory, if / where needed.
+On Wed, Apr 20, 2011 at 10:19:01PM -0700, Drew Yao wrote:
+> It seems that you're not opposed to Apple's inclusion on the list. Would you reconsider and allow us on the list?
 
-Please use CVE-2011-4312 for this issue.
+Personally, I'd be happy to invite Apple, *BSD's, and Google security
+folks to have a sit at the table.  Since Google doesn't release a Linux
+distro for others to use, this precedent probably means subscribing
+MontaVista and Wind River without any requirements on them making
+advisories, updates, or whatever public.
 
--- 
+However:
 
--Kurt Seifried / Red Hat Security Response Team
+- It'd be difficult to draw the line.  What about Solaris distros, etc?
 
+- Only two issues were brought up on the new list so far, and as far as
+I can tell both are Linux specific.
+
+- We've already seen some opposition to MontaVista with its current
+non-public advisories being on the list.  And I assume the same would
+apply to Wind River.
+
+- Sorry, I am not speaking of just Apple here.  I am still trying to
+avoid/postpone the "elite club" thing, where current members would
+vouch for or veto new members.  Maybe we'll be forced to arrive at that
+eventually, but I think this would be a drawback.
+
+Thus, I am leaning towards setting up a second list, not limited to
+Linux.  And maybe a third list, for "closed" Linux vendors.  Then
+message senders will be able to decide who they want to inform.  (If
+there's any demand, we may also setup a list excluding Linux, but so far
+I haven't seen any interest in that.)
+
+> In an earlier mail, you mentioned 
+> "For just one vendor, we can be CC'ing you whenever appropriate, with no list needed." We ship a lot of open source software, and outside of Apple, very few people would be qualified to know whether or not we ship any given piece of OSS, especially since we sometimes add new projects to the next, unreleased version of Mac OS X.
+
+Fair enough.  I'll e-mail you with names of the two components mentioned
+on the new list so far such that you can confirm they're indeed of no
+relevance to you.
+
+> Regarding the question of where to draw the line for allowing non-Linux distros to the table, I'd say we've earned our place by sending numerous internally discovered bugs to vendor-sec, as well as coordinating disclosure of open source projects like CUPS that we maintain.
+
+Yes, you did.  However, as soon as we lift the "was a vendor-sec member"
+requirement for membership of the new list, which we'll need to, we'll
+have subscription requests from vendors who couldn't have possibly
+earned their place in this specific way.  So we won't be able to use
+this as a requirement, or doing so would be unreasonable.
+
+> We'd want both me and <Jeffrey Czerniak <jeffcz@...le.com> on the list, both using the PGP key found at https://www.apple.com/support/security/pgp/ 
+
+Thanks for the info.  I'll save your message to a separate folder, to
+return to it when setting up a suitable list or/and when we have some
+other solution or policy.
+
+Alexander
