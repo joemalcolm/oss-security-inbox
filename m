@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/6
-Message-ID: <4ED3A746.6050407@redhat.com>
-Date: Mon, 28 Nov 2011 08:22:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/3
+Message-ID: <20110424110003.GA32248@openwall.com>
+Date: Sun, 24 Apr 2011 15:00:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Leo Iannacone <l3on@...ntu.com>, Colin Watson <cjwatson@...ian.org>
-Subject: Re: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/27/2011 10:21 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a format string flaw was found in the Python CGI Kit (neo_cgi)
-> module of ClearSilver, a language-neutral HTML templating system,
-> processed certain input, leading to Common Gateway Interface (CGI)
-> script errors. A remote attacker could provide a specially-crafted
-> input, which once processed by an application, using the Python
-> language API of ClearSilver neo_cgi module, could lead to that
-> particular application crash, or, potentially arbitrary code
-> execution with the privileges of the user running the application.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649322
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=757542
->
-> Patch, proposed by the issue reporter to the Debian Bug Tracking System:
-> [3]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fix-cgi-error-format-security.patch;att=1;bug=649322
->
-> Could you allocate a CVE id for this issue?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2011-4357 for this issue.
+Jason -
 
--- 
+On Thu, Apr 21, 2011 at 08:20:48AM -0400, Jason A. Donenfeld wrote:
+> Likewise,
+> 
+> pub   4096R/A5DE03AE 2011-01-15
+>       Key fingerprint = AB99 42E6 D4A4 CFC3 4126  20A7 49FC 7012 A5DE 03AE
+> uid                  Jason A. Donenfeld <Jason@...c4.com>
+> sub   4096R/FB1EFB7F 2011-01-15
 
--Kurt Seifried / Red Hat Security Response Team
+What Linux distro are you a security contact for, how do we verify that,
+and how were you receiving vendor-sec mail before?  (These are some of
+the eligibility criteria for the initial seed membership of the new
+list.  The requirement "was a vendor-sec member" is likely to be lifted
+after a while.)
 
+All -
+
+The moderators of oss-security approved all subscription requests and
+criticism to be posted to this thread so far, but perhaps it's time to
+start rejecting unjustified requests to keep the noise down, asking the
+senders to re-post with due justification included.  This is what we
+will likely start doing should more requests without justification be
+sent to the list address.  I don't view this as censorship; it's merely
+getting people to include all info in one message, which reduces noise.
+
+This doesn't apply to messages with criticism and/or suggestions, which
+we will continue to approve.
+
+I am pleased to see that this thread is calming down, letting us focus
+on discussing actual software security issues (in other/new threads).
+Although the thread was/is noisy, I think it also helped us highlight
+several real issues, some of which we don't have good solutions for.
+
+Alexander
