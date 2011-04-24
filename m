@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/3
-Message-ID: <9da534f7f2949a36b808938d1a6111a3.squirrel@wm.kinkhorst.nl>
-Date: Tue, 13 Sep 2011 16:24:17 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/1
+Message-Id: <20110424164429.c07d917f.michael.s.gilbert@gmail.com>
+Date: Sun, 24 Apr 2011 16:44:29 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cbarratt@...rs.sourceforge.net
-Subject: CVE Request: BackupPC 3.2.1 fixes cross site scripting
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Solar Designer wrote:
 
-BackupPC 3.2.1 was released back in April and fixed an XSS problem:
+> On Wed, Apr 20, 2011 at 10:19:01PM -0700, Drew Yao wrote:
+> > It seems that you're not opposed to Apple's inclusion on the list. Would you reconsider and allow us on the list?
+> 
+> Personally, I'd be happy to invite Apple, *BSD's, and Google security
+> folks to have a sit at the table.  Since Google doesn't release a Linux
+> distro for others to use, this precedent probably means subscribing
+> MontaVista and Wind River without any requirements on them making
+> advisories, updates, or whatever public.
 
-http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
+I know that there is increasing momentum for the new setup, but I
+think this solution is wrong.  Its starting to look a lot like the old
+vendor-sec (too many participants), and drawing an appropriate line for
+participation is impossible and seems wrong.
 
-This is upstream's patch:
+The ideal solution to the "too many eyes" problem would be to empower
+the researcher (issue submitter) to choose exactly which eyes they want
+involved.  A way to achieve this would be a ml that accepts only
+encrypted messages for participants (participation would be unlimited)
+and an "archive participant".  The list of participants is open to all
+(for the purpose of the researcher seeing which keys they want to
+encrypt for).
 
-http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
+When sending a message to the list, the researcher has to encrypt the
+message for archive key and at least one other valid participant (if
+not the message should be rejected, and instructions sent with a list of
+valid participant key fingerprints). In order to make sure the message
+was validly received, a checksum of the message should be published to
+an open list (probably oss-sec).  The researcher can check this right
+away.
 
-The same code is present at least since BackupPC 3.1.0, which is the
-oldest version we support. It seems no CVE id has been issued to date. Can
-a CVE id please be assigned?
+Finally, the cleartext message should be posted to an open list after a
+period of time (probably two months max) so that the entire community
+can see and validate the closed discussion .  This eliminates the
+possibility of a secret cabal forming or at least empowers the outside
+world to see the true reality (although with a delay).
 
-
-thanks,
-Thijs
+Best wishes,
+Mike
