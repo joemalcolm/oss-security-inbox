@@ -1,30 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/3
-Message-ID: <4DC27695.5030104@redhat.com>
-Date: Thu, 05 May 2011 18:06:13 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/2
+Message-ID: <20110424104339.GB32078@openwall.com>
+Date: Sun, 24 Apr 2011 14:43:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel network vulns
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 02/18/2010 01:12 PM, Eugene Teo wrote:
-> 1) gre: fix netns vs proto registration ordering
-> http://patchwork.ozlabs.org/patch/45553/
->
-> "GRE protocol receive hook can be called right after protocol addition
-> is done. If netns stuff is not yet initialized, we're going to oops in
-> net_generic().
->
-> This is remotely oopsable if ip_gre is compiled as module and packet
-> comes at unfortunate moment of module loading."
->
-> 2) tunnels: fix netns vs proto registration ordering
-> http://patchwork.ozlabs.org/patch/45554/
->
-> "Same stuff as in ip_gre patch: receive hook can be called before netns
-> setup is done, oopsing in net_generic()."
+On Wed, Apr 13, 2011 at 11:11:07AM -0600, Vincent Danen wrote:
+> Please add me to the new list.
+> 
+> pub   3072R/E8B86CAB 2011-04-12
+>       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
+> uid                  Vincent Danen <vdanen linsec.ca>
+> uid                  Vincent Danen <vdanen annvix.org>
+> uid                  Vincent Danen <vdanen redhat.com>
+> sub   3072R/8BBA24C6 2011-04-12
 
-Josh, can you please assign two CVEs for these? Thanks.
+Added.
 
-Eugene
+BTW, people eligible and wishing to join the list don't have to post the
+specific e-mail addresses and PGP key info in here.  As I wrote in:
+
+http://www.openwall.com/lists/oss-security/2011/04/04/40
+
+"That said, I agree that having specific e-mail addresses and key IDs
+posted to a public list is excessive.  If anyone else wishes to join
+(and qualifies), please state so in the "Closed list" thread and justify
+your request (currently that would mean info on the Linux distro you're
+a security contact for), then e-mail the specific e-mail address and PGP
+key info to me off-list.  I'll continue to reply on the list, but the
+specific e-mail addresses and keys will be exposed a little bit less."
+
+Of course, for active participants of oss-security and/or other public
+lists this shouldn't matter much (they're "exposed" anyway).
+
+Alexander
