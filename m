@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/6
-Message-ID: <302d8142-632d-48f8-930b-ba9090fd2e83@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:34:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/6
+Message-ID: <1576686929.150732.1303761665047.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 16:01:05 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: simple machines forum before 2.0.1 and 1.1.15
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- qemu-kvm: virtio-blk: heap buffer overflow caused by unaligned requests
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> http://www.simplemachines.org/community/index.php?P=adfcf10856d3f74172b76dd384b6ade6&topic=452888.0
+> "It was found that virtio-blk driver in qemu-kvm did not properly
+> validate read and write requests from the guest. A privileged guest user
+> could use this flaw to cause heap corruption, causing the guest to crash
+> (denial of service) or, possibly, resulting in the privileged guest user
+> escalating their privileges on the host."
 > 
-> "Critical security issues have been identified and fixed with this patch,
-> therefore it is highly recommended to make sure you update your forums
-> immediately."
+> References:
+> http://www.spinics.net/lists/kvm/msg51877.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=698906
 > 
+> Upstream commit:
+> http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=52c050236eaa4f0b5e1d160cd66dc18106445c4d
 > 
-> That probably qualifies as "unknown security issue in simple machines
-> forum" ;-)
 
-Indeed. If someone has more details, please speak up. We can assign more
-IDs in the future if needed.
-
-Use CVE-2011-3615
+Please use CVE-2011-1750.
 
 Thanks.
 
