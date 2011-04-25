@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/3
-Message-ID: <1302875089.4416.6.camel@localhost>
-Date: Fri, 15 Apr 2011 08:44:49 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE Request: incomplete fix for CVE-2010-1000 in KDE network
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/4
+Message-ID: <250031570.149827.1303760258713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 15:37:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: Eugene Teo <eugene@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-A bug was filed in Ubuntu[1] for patches[2][3] that went into KDE
-Network for an incomplete fix for CVE-2010-1000. The commit message is:
+----- Original Message -----
+> On 04/21/2011 09:55 AM, Eugene Teo wrote:
+> > On 04/21/2011 07:45 AM, Eugene Teo wrote:
+> >> On 04/21/2011 04:52 AM, Josh Bressers wrote:
+> >>> Please use CVE-2011-1598
+> >>
+> >> Updated patch:
+> >> http://permalink.gmane.org/gmane.linux.network/192974
+> >
+> > Correction: s/Updated patch//. This patch is for a similar issue but
+> > for can/raw release. I rather group these two patches with
+> > CVE-2011-1598 than to have another name assigned for it. But I'm fine
+> > either way.
+> 
+> On second thoughts, let's have another CVE assigned.
+> 
+> can/bcm release: credit Dave Jones
+        This one is already CVE-2011-1598
 
-"Further addresses CVE-2010-1000. The file name of Metalink File is
-checked a better way, making it work under more conditions."
+> can/raw release: credit Oliver Hartkopp
+        This one is now CVE-2011-1748
 
-While the previous patch fixed things like '../../tmp/gotcha', it did
-not fix a single leading '../'.
-
-[1]https://bugs.launchpad.net/ubuntu/+source/kdenetwork/+bug/757526
-[2]http://websvn.kde.org/?view=revision&revision=1227468 (4.4)
-[3]http://websvn.kde.org/?view=revision&revision=1227469 (4.5)
+Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
