@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/13
-Message-ID: <4EA83120.80106@redhat.com>
-Date: Wed, 26 Oct 2011 10:11:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/5
+Message-ID: <1015413872.149944.1303760453725.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 15:40:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: CVE-2011-1089-like flaw in mount.nfs
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2011 09:53 AM, Vasiliy Kulikov wrote:
-> Hi,
->
-> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
->> On 10/26/2011 09:16 AM, Petr Matousek wrote:
->>> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
->>> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
->>> to reset dmesg_restrict to 0.
->>>
->>> This is an issue when e.g.  LXC (Linux Containers) are used and complete
->>> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
->>> root user can bypass the dmesg_restrict protection.
->>>
->>> Introduced by:
->>> eaf06b241b091357e72b76863ba16e89610d31bd
->>>
->>> Fixed by:
->>> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
->>>
->>> Thanks,
->> Please use CVE-2011-4080 for this issue.
-> Why does it worth CVE?  
-This allows an attacker to bypass a security boundary. The root user is
-able to gain privileges they shouldn't have.
+----- Original Message -----
+> A similar issue to CVE-2011-1089 was found in mount.nfs because it
+> uses
+> it's own addmntent() implementation to update /etc/mtab
+> (nfs_addmntend()). It also fails to anticipate resource limits and
+> could trigger corruption of the mtab file.
+> 
+> For more details see:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=697975
+> 
+> Could a CVE name be assigned to this issue please? Thanks.
+> 
+
+Please use CVE-2011-1749.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
