@@ -1,96 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/28/2
-Message-ID: <20110428122450.GH11290@dojo.mi.org>
-Date: Thu, 28 Apr 2011 08:24:51 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/2
+Message-ID: <20110425090508.GA11290@dojo.mi.org>
+Date: Mon, 25 Apr 2011 05:05:08 -0400
 From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-:Two eyes = one mouth (mostly), so yes, there were certainly fewer leaks
+:I know that there is increasing momentum for the new setup, but I
+:think this solution is wrong.  Its starting to look a lot like the old
+:vendor-sec (too many participants), and drawing an appropriate line for
 
-There are other relevant orifices.  
+How many participants are on security@...nel.org?  How many are part
+of the Mozilla security team?  (And yeah, I know the answer there --
+http://www.mozilla.org/projects/security/secgrouplist.html).  There's
+an assumption that "more = worse", but how many is really too many?
+You only get the answer when it seems to stop working.  
 
-:linearly with respect to the number of participants. So the problem is
-:simply limiting the number of participants to the absolute minimum
-:necessary. The only way to do that (I think) is to empower the
-:researcher to make the call for him/herself based on what they know
-:about their issue. Of course, participants in follow-on discussion can
-:to expand participation to others if they are affected by the issue at
-:hand.
-
-Researchers can already make that call.  We've seen outcomes of that
-before.  Sometimes, it's easy to isolate a problem to a given distro.
-Sometimes, it's a lot less obvious, and some vendors are left out in
-the cold who really shouldn't have been.  I wouldn't necessarily rely
-on _explicit_ cooperation amongst individual distros to do that sort
-of message passing, especially when they may be competitors in some
-sense or other.
-
-:> The issue there is that some folks don't necessarily have a good
-:> handle on the issue where they _can_ reasonably target things.  The
-:> same has sometimes been true even for the coordinating bodies who one
-:> might think would know better.  Often, it's the vendor/distro reps who
-:> know the particular nuances of their present and future product better
-:> than anyone else.  For a sufficiently diverse product base, that kind
-:> of knowledge is not easy to break down into some checklist ready-made
-:> for narrow targeting of issues.  
+:participation is impossible and seems wrong.
 :
-:That would be easy enough to solve.  Provide key lists for important
-:groups (an "open" linux distro key list, an "open+closed" linux provider
-:key list, an all unix-like os key list, etc.) and pre-cooked one-liners
-:to encrypt for those sets, then let the researcher choose which one they
-:want.
+:The ideal solution to the "too many eyes" problem would be to empower
 
-Some CERTs already operate roughly in this kind of way.  This isn't
-a new idea.  It's not clear that it's been especially effective, based
-on "what I've gotten that I probably shouldn't have gotten" + "what
-I've missed that others have gotten".
+The problem with vendor-sec of old seemingly wasn't so much "too many
+eyes" -- more like "too many mouths", too many points of leakage.  It
+wasn't at all clear how much of the vendor-sec leaks were due to any
+one list member in particular (because there were many exploders), bad
+infrastructure, a combination of factors, etc.  Apart from that, it
+seemed to be _mostly_ working, which may be as well as could ever be
+expected in reality.
 
-:> Make the barrier for participation high enough for the discoverer of
-:> an issue (who may not always be a "researcher" in any classic sense)
-:> and the level of participation will be correspondingly low.  Keep in
-:> mind that for many of the open source communities that vendor-sec has
-:> interacted with, security is _not_ their primary focus.  Most people
-:> write code so they can actually get stuff done.  :)
+:the researcher (issue submitter) to choose exactly which eyes they want
+:involved.  A way to achieve this would be a ml that accepts only
+
+The issue there is that some folks don't necessarily have a good
+handle on the issue where they _can_ reasonably target things.  The
+same has sometimes been true even for the coordinating bodies who one
+might think would know better.  Often, it's the vendor/distro reps who
+know the particular nuances of their present and future product better
+than anyone else.  For a sufficiently diverse product base, that kind
+of knowledge is not easy to break down into some checklist ready-made
+for narrow targeting of issues.  
+
+:encrypted messages for participants (participation would be unlimited)
+:and an "archive participant".  The list of participants is open to all
+:(for the purpose of the researcher seeing which keys they want to
+:encrypt for).
 :
-:If documentation is sufficient and pre-cooked commands readily
-:available, this shouldn't be a problem.  People can (and should) be
-:able to learn.  Typing "gpg --encrypt --recipient <key 1> --recipient <key 2>"
-:isn't all that difficult.
+:When sending a message to the list, the researcher has to encrypt the
 
-Any major "procedure" for reporting a security issue will mean that
-it's less likely to get reported.  The "researcher" (who may be some
-sysadmin who found a seemingly-novel exploit script on their cracked
-system) who's going to wade through a bunch of assorted email addresses
-to cherrypick the right place(s) to send an issue is just as likely 
-to pick a few major distros and call it a day.  
+Make the barrier for participation high enough for the discoverer of
+an issue (who may not always be a "researcher" in any classic sense)
+and the level of participation will be correspondingly low.  Keep in
+mind that for many of the open source communities that vendor-sec has
+interacted with, security is _not_ their primary focus.  Most people
+write code so they can actually get stuff done.  :)
 
-Imagine if oss-security were broken up into a bunch of different
-sub-lists, like you describe.  How effective would it be?
-
-:> enough like-minded folks decide they need to handle the core of the
-:> issues reported on the list off-list.  At that point, the list
-:> archives might turn into some kind of kabuki dance.  To that end, it
-:> helps to have a bunch of folks on the list who _aren't always_ quite
-:> so like minded.
+:message for archive key and at least one other valid participant (if
+:not the message should be rejected, and instructions sent with a list of
+:valid participant key fingerprints). In order to make sure the message
+:was validly received, a checksum of the message should be published to
+:an open list (probably oss-sec).  The researcher can check this right
+:away.
 :
-:The important consequence is that the outside world will be empowered to
-:see the inner workings of the one unfortunately closed part of an
-:otherwise completely open system.
+:Finally, the cleartext message should be posted to an open list after a
+:period of time (probably two months max) so that the entire community
+:can see and validate the closed discussion .  This eliminates the
+:possibility of a secret cabal forming or at least empowers the outside
+:world to see the true reality (although with a delay).
 
-It's not a "completely open" system.  There's many open-source
-components whose security arms continue to operate in relative secrecy
-while developing the fix to an issue.  Some don't necessarily share
-such info very well -- not necessarily out of malice, but sometimes
-because it just doesn't occur to them (a bug is a bug!).  vendor-sec
-was a mechanism to consolidate _some_ of that, nothing more or less.
-oss-security has been another helpful means (and again, thank you
-Solar for setting this up :) ).  
+It doesn't _eliminate_ the possibility of any sort of cabal forming.
+It's simply a gesture of good faith, which could be subverted if
+enough like-minded folks decide they need to handle the core of the
+issues reported on the list off-list.  At that point, the list
+archives might turn into some kind of kabuki dance.  To that end, it
+helps to have a bunch of folks on the list who _aren't always_ quite
+so like minded.
+
 
 -- 
  Michael J. O'Connor                                          mjo@...o.mi.org
  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Save regularly in our bank.  You'll never reget it."        -a classified ad
+"Follow that allergy!"                                              -The Tick
 
 Content of type "application/pgp-signature" skipped
