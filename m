@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/6
-Message-ID: <4EB04569.6040902@redhat.com>
-Date: Tue, 01 Nov 2011 13:15:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/4
+Message-ID: <250031570.149827.1303760258713.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 15:37:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: Eugene Teo <eugene@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: missing socket check in can/bcm release
 Content-Type: text/plain; charset=utf-8
 
-On 11/01/2011 11:11 AM, David Black wrote:
-> y with respect to their de-serialization of YAML post
-> data. Both Piston and Tastypie used the yaml.load method, which is
-> unsafe. In certain
-Can you please send me links for Piston and Tastypie announcements/code
-commits showing the vuln please? Thanks.
+----- Original Message -----
+> On 04/21/2011 09:55 AM, Eugene Teo wrote:
+> > On 04/21/2011 07:45 AM, Eugene Teo wrote:
+> >> On 04/21/2011 04:52 AM, Josh Bressers wrote:
+> >>> Please use CVE-2011-1598
+> >>
+> >> Updated patch:
+> >> http://permalink.gmane.org/gmane.linux.network/192974
+> >
+> > Correction: s/Updated patch//. This patch is for a similar issue but
+> > for can/raw release. I rather group these two patches with
+> > CVE-2011-1598 than to have another name assigned for it. But I'm fine
+> > either way.
+> 
+> On second thoughts, let's have another CVE assigned.
+> 
+> can/bcm release: credit Dave Jones
+        This one is already CVE-2011-1598
+
+> can/raw release: credit Oliver Hartkopp
+        This one is now CVE-2011-1748
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
