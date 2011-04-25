@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/5
-Message-ID: <4DECEC03.3020205@gmx.de>
-Date: Mon, 06 Jun 2011 17:02:27 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/5
+Message-ID: <1015413872.149944.1303760453725.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 15:40:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: fetchmail 6.3.20 release to fix CVE-2011-1947 (was: CVE request for fetchmail STARTTLS hang (Denial of Service))
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: CVE-2011-1089-like flaw in mount.nfs
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+----- Original Message -----
+> A similar issue to CVE-2011-1089 was found in mount.nfs because it
+> uses
+> it's own addmntent() implementation to update /etc/mtab
+> (nfs_addmntend()). It also fails to anticipate resource limits and
+> could trigger corruption of the mtab file.
+> 
+> For more details see:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=697975
+> 
+> Could a CVE name be assigned to this issue please? Thanks.
+> 
 
-I've just released fetchmail 6.3.20 to fix the STARTTLS
-denial-of-service problem present in all earlier fetchmail releases,
-CVE-2011-1947.
+Please use CVE-2011-1749.
 
-Note that distributors are advised to thoroughly check the NEWS file and
-consider doing a stable release update rather than just backporting the
-security fixes, there were several notable bug fixes.
+Thanks.
 
-At least do note <http://www.fetchmail.info/fetchmail-EN-2010-03.txt> -
-it's a good opportunity to fix this, too...
-
-Changelog:
-https://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/NEWS
-
-Homepage:
-http://www.fetchmail.info/
-
-Downloads:
-http://developer.berlios.de/project/showfiles.php?group_id=1824&release_id=18583
-
-Best regards,
-Matthias Andree
-Hat: fetchmail maintainer
+-- 
+    JB
