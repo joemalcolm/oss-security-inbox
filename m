@@ -1,60 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/9
-Message-ID: <1324808920.1453877.1311165648958.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 08:40:48 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/3
+Message-ID: <1259315225.139113.1303741338060.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 10:22:18 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, dfncert@...-cert.de
-Cc: aland@...eradius.org
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please assign this issue CVE-2011-2701. We can split that ID if more are
-needed once we understand the issue.
+----- Original Message -----
+> On Sun, Apr 24, 2011 at 03:30:29PM +0400, Solar Designer wrote:
+> > Personally, I'd be happy to invite Apple, *BSD's, and Google security
+> > folks to have a sit at the table. Since Google doesn't release a Linux
+> > distro for others to use, ...
+> 
+> Oh, I was too quick to say that. Android, Chromium OS, and Chrome OS
+> _might_ qualify once we lift the "was a vendor-sec member" requirement.
+> 
+> These are very different from typical Linux distros, which is why it did
+> not occur to me to consider them in this context.
+> 
+
+We included Mozilla in vendor-sec due to them being a large distributor of
+open source software. Google certainly fits into this category these days
+with things like Andriod and Chrome (both browser and OS).
+
+I've been contacted by some Andriod folks in the past. They're keen to
+start doing public advisories, most other Google projects already do this.
+
+I suspect the real problem we'll hit with someone like Google is who to
+subscribe. We could easily end up with hundreds of requests from a company
+that size.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> On Tue, Jul 19, 2011 at 03:13:00PM +0200, Tomas Hoger wrote:
-> 
-> > > Are the published information sufficient to get a CVE number for
-> > > the
-> > > issue?
-> >
-> > Was your intention to request a CVE for a still-to-remain-non-public
-> > issue to be disclosed in the future, or actually make the issue
-> > public?
-> 
-> We plan to make the issue public as soon as we have a CVE and can
-> publish
-> our advisory. However, almost every detail of the vulnerability has
-> been
-> already discussed on this list.
-> (Summary: the status of the certificate will not be checked)
-> 
-> Thus, the patch does not reveal any further aspects of the
-> vulnerability and
-> the only reason that we do not want to publish it publicly is that the
-> fact
-> that it may be incomplete and/or introduce side effects because we do
-> not have a complete test environment.
-> 
-> 
-> > I'm CCing upstream (Alan DeKok), as it seems this thread may be
-> > giving
-> > out more info than expected. Alan, this is part of the following
-> 
-> Good idea.
-> 
-> 
-> p.s.
-> Please include us in CC since we are not subscribed on the list.
-> 
-> --
-> DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40
-> 808077-555
-> Sitz/Register: Hamburg, AG Hamburg, HRB 88805, Ust-IdNr.: DE 232129737
-> Sachsenstraße 5, 20097 Hamburg/Germany, CEO: Dr. Klaus-Peter
-> Kossakowski
