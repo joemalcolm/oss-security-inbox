@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/9
-Message-ID: <390097197.45735.1302640078516.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Apr 2011 16:27:58 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/3
+Message-ID: <1259315225.139113.1303741338060.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 25 Apr 2011 10:22:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: solar@...nwall.com, Josh Bressers <bressers@...hat.com>
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> Hello everyone,
+> On Sun, Apr 24, 2011 at 03:30:29PM +0400, Solar Designer wrote:
+> > Personally, I'd be happy to invite Apple, *BSD's, and Google security
+> > folks to have a sit at the table. Since Google doesn't release a Linux
+> > distro for others to use, ...
 > 
-> This topic has lost focus lately. Rather than let it slip away, I
-> think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
+> Oh, I was too quick to say that. Android, Chromium OS, and Chrome OS
+> _might_ qualify once we lift the "was a vendor-sec member" requirement.
+> 
+> These are very different from typical Linux distros, which is why it did
+> not occur to me to consider them in this context.
+> 
 
-pub   4096R/C44977CA 2011-04-12
-      Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
-uid                  Petr Matousek <pmatouse@...hat.com>
-uid                  Petr Matousek <pm@...p.org>
+We included Mozilla in vendor-sec due to them being a large distributor of
+open source software. Google certainly fits into this category these days
+with things like Andriod and Chrome (both browser and OS).
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+I've been contacted by some Andriod folks in the past. They're keen to
+start doing public advisories, most other Google projects already do this.
+
+I suspect the real problem we'll hit with someone like Google is who to
+subscribe. We could easily end up with hundreds of requests from a company
+that size.
+
+Thanks.
+
+-- 
+    JB
