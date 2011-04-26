@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/1
-Message-Id: <201102211852.34619.geissert@debian.org>
-Date: Mon, 21 Feb 2011 18:52:33 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/3
+Message-ID: <4DB6FAFE.3060701@oracle.com>
+Date: Tue, 26 Apr 2011 10:03:58 -0700
+From: Oracle Security Alerts <secalert_us@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>
-Subject: CVE-2011-0436: dtc sends password of new users to site admin by unencrypted email
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-retitle 614302 CVE-2011-0436: new users' unencrypted passwords emailed to site admin
-thanks
+Hello,
 
-Hi Steven, vendors,
+Please subscribe us to the new list.
+I'll send specific emails and keys in a separate mail.
 
-I have assigned CVE-2011-0436 to the following issue:
-http://bugs.debian.org/614302
+We were members of vendor-sec as Sun Microsystems team, and now
+represent all of Oracle software and hardware products including but
+not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
+Open Office.
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+We found vendor-sec very useful in early identification of
+vulnerabilities not only in free and open source code used in our
+products, but also in common protocols, file formats or kernel
+modules/software with similar functionality or logic.
+
+All our security advisories are freely available.
+
+Thanks,
+-Chandan
+--
+Oracle Security Alerts
+Global Product Security
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (250 bytes)
