@@ -1,54 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/5
-Message-ID: <20111115035404.GA8377@openwall.com>
-Date: Tue, 15 Nov 2011 07:54:04 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/1
+Message-ID: <20110426153729.GB2160@redhat.com>
+Date: Tue, 26 Apr 2011 09:37:29 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2011-04-24 14:43:39 +0400] Solar Designer wrote:
 
-The traditional DES-based crypt(3) accepts a salt string consisting of
-characters from a certain base-64 alphabet, normally encoding a 12-bit
-salt value in two characters.
+>On Wed, Apr 13, 2011 at 11:11:07AM -0600, Vincent Danen wrote:
+>> Please add me to the new list.
+>>
+>> pub   3072R/E8B86CAB 2011-04-12
+>>       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
+>> uid                  Vincent Danen <vdanen linsec.ca>
+>> uid                  Vincent Danen <vdanen annvix.org>
+>> uid                  Vincent Danen <vdanen redhat.com>
+>> sub   3072R/8BBA24C6 2011-04-12
+>
+>Added.
+>
+>BTW, people eligible and wishing to join the list don't have to post the
+>specific e-mail addresses and PGP key info in here.  As I wrote in:
+>
+>http://www.openwall.com/lists/oss-security/2011/04/04/40
+>
+>"That said, I agree that having specific e-mail addresses and key IDs
+>posted to a public list is excessive.  If anyone else wishes to join
+>(and qualifies), please state so in the "Closed list" thread and justify
+>your request (currently that would mean info on the Linux distro you're
+>a security contact for), then e-mail the specific e-mail address and PGP
+>key info to me off-list.  I'll continue to reply on the list, but the
+>specific e-mail addresses and keys will be exposed a little bit less."
+>
+>Of course, for active participants of oss-security and/or other public
+>lists this shouldn't matter much (they're "exposed" anyway).
 
-What happens when the salt string contains characters outside of the
-usual base-64 alphabet is implementation-specific.  Typically,
-implementations map those invalid salts onto the 12-bit values in one of
-several ways.  FreeSec, an otherwise very good implementation by David
-Burren, appears to be the only widespread implementation that maps all
-invalid salt characters onto just one 6-bit value - zero.  FreeSec is
-the implementation used by FreeBSD, OpenBSD, DragonFly BSD.  The code in
-NetBSD is different, but it appears to share this problem.  Indeed,
-these systems don't use the DES-based hashes by default, and even if
-they did they'd be OK because they'd use valid salts, but the issue here
-is with third-party programs that are not as careful - especially web
-apps invoking this code via PHP's crypt() (whether the underlying
-system's crypt(3) or PHP's own code is used depends on PHP version and
-build).
+Yeah, I wasn't too concerned.  My email address is everywhere, and
+having my public key everywhere is a good thing.  If I could do the
+latter without the former, I'd be really happy.  =)
 
-Thus, with poorly written programs combined with this property of
-crypt(3) on *BSD's we get effectively matching salts, which a password
-cracker aware of this property can take advantage of for much faster
-offline attacks.
-
-I patched the FreeSec code to match UFC-crypt's handling of invalid
-salts about 20 months ago:
-
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.c
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.h
-
-This did not matter much for Owl because we do not actually override
-glibc's UFC-crypt for the traditional hashes (we use FreeSec for
-"extended" hashes with 24-bit salts, which are not produced by naive
-apps), however I made those changes primarily for reuse of the code in
-PHP - and the changes went into a certain version of PHP (5.3.2+, IIRC).
-
-Now I welcome *BSD's to reuse these as well.  Yes, this sort of breaks
-compatibility with existing invalid-salt hashes produced on those
-systems, but those will be easy to fix if necessary by explicitly
-changing their invalid salt characters to '.' (and thus making the
-problem even more apparent).
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
