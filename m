@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/3
-Message-ID: <20110411132621.GA8822@suse.de>
-Date: Mon, 11 Apr 2011 15:26:21 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/2
+Message-ID: <4DB6EC87.3090001@kde.org>
+Date: Tue, 26 Apr 2011 12:02:15 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Subject: pure-ftpd STARTTLS command injection / new CVE?
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On 4/12/2011 4:58 PM, Solar Designer wrote:
+> On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
+>> pub   4096R/C44977CA 2011-04-12
+>>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+>> uid                  Petr Matousek <pmatouse@...hat.com>
+>> uid                  Petr Matousek <pm@...p.org>
+> 
+> Added.
+> 
+> Alexander
 
-Hi,
+Hi there,
 
-http://www.pureftpd.org/project/pure-ftpd/news
+Please add me as a KDE security contact.
 
-states that pure-ftpd is affected by the same STARTTLS
-injection bug as postifx's CVE-2011-0411.
+sec   1024D/D0AE1825 2009-01-19
+Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
+uid                  Jeff Mitchell <mitchell@....org>
 
-Is this CVE postfix-specific or can it be used for
-pure-ftpd as well? If needed, can someone assign a new CVE?
-
-thx,
-Sebastian
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+Thanks,
+Jeff
