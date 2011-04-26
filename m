@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/2
-Message-ID: <4D8348ED.6080800@redhat.com>
-Date: Fri, 18 Mar 2011 19:58:37 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/3
+Message-ID: <4DB6FAFE.3060701@oracle.com>
+Date: Tue, 26 Apr 2011 10:03:58 -0700
+From: Oracle Security Alerts <secalert_us@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: AudioScience HPI driver
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 03/18/2011 07:18 PM, Dan Rosenberg wrote:
-> "The user-supplied index into the adapters array needs to be checked, or
-> an out-of-bounds kernel pointer could be accessed and used, leading to
-> potentially exploitable memory corruption."
->
-> This may be triggered by a user with access to an appropriate device
-> file, which I'd expect would be restricted to group 'audio'.  And
-> you'd need to have this particular driver loaded, either by using the
-> appropriate hardware or finding a new way to force it to be loaded in
-> violation of security policy.
->
-> Regards,
-> Dan
->
-> [1] http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=4a122c10fbfe9020df469f0f669da129c5757671
+Hello,
 
-Please use CVE-2011-1169.
+Please subscribe us to the new list.
+I'll send specific emails and keys in a separate mail.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+We were members of vendor-sec as Sun Microsystems team, and now
+represent all of Oracle software and hardware products including but
+not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
+Open Office.
+
+We found vendor-sec very useful in early identification of
+vulnerabilities not only in free and open source code used in our
+products, but also in common protocols, file formats or kernel
+modules/software with similar functionality or logic.
+
+All our security advisories are freely available.
+
+Thanks,
+-Chandan
+--
+Oracle Security Alerts
+Global Product Security
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (250 bytes)
