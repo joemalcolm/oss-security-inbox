@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/2
-Message-ID: <BANLkTi=KT4waCOJEWHa25qLVVZYO1SG5Ag@mail.gmail.com>
-Date: Tue, 28 Jun 2011 17:49:24 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Andrew Morton <akpm@...ux-foundation.org>
-Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/5
+Message-ID: <20110427202653.0a28aee7@orphan>
+Date: Wed, 27 Apr 2011 20:26:53 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 28, 2011 at 5:12 PM, Linus Torvalds
-<torvalds@...ux-foundation.org> wrote:
->
->> If rounding the counts to a 1k granularity will indeed defeat the
->> attack (I'm unsure) then I'd suggest that a fix would be to perform
->> that fuzzification if the receiving process doesn't have suitable
->> permissions.  So if the user is reading his own stats or is root, he
->> still gets byte-resolution results.  This keeps the stats as useful as
->> we can make them and reduces the back-compatibility damage.
->
-> Sure.
+On Wed, 27 Apr 2011 14:19:43 -0400 Dan Rosenberg wrote:
 
-Actually, due to the whole netlink thing, it's not obvious who the
-data goes to, so I think the taskstats interface simply needs to round
-unconditionally.
+> > Steve, it seems CVE-2011-1676 should get marked as rejected or
+> > disputed.
+> 
+> I currently only have CVE-2011-1089, which seems to be for glibc not
+> indicating failure of addmntent() calls.  Were additional CVEs
+> assigned to some of the individual issues?  If so, would you mind
+> posting them here to avoid duplicate requests?
 
-If you want the exact thing, you can use /proc/<pid>/io, which now
-does the security checking as per Vasiliy.
+CVE-2011-1675 - CVE-2011-1681 based on your list here:
+http://thread.gmane.org/gmane.comp.security.oss.general/4374/focus=4516
 
-So some patch like the appended? Vasiliy, this is different from your
-2/2, but it's simpler and I think sufficient. And shouldn't break
-iotop. What do you think? I agree that it's not perfect, but it seems
-to be sufficient at least for the particular passwd attack, no? Or is
-there some way you can fool sshd to read some other user-supplied data
-so that you can trick it into giving multiple values that you control,
-and thus see exactly when the IO counts overflow..
+CVE-2011-1089 for similar nfs-utils:
+http://thread.gmane.org/gmane.comp.security.oss.general/4954
 
-                   Linus
-
-View attachment "patch.diff" of type "text/x-patch" (1633 bytes)
+-- 
+Tomas Hoger / Red Hat Security Response Team
