@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/5
-Message-ID: <CANTw=MMyTEr0D=2Yv11aTJWCqy9A2VpyYtd76avDj+bmvEy8fg@mail.gmail.com>
-Date: Fri, 23 Dec 2011 16:10:38 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/4
+Message-ID: <BANLkTikfpkfzan2e7+v8nbGygyVBi+qngg@mail.gmail.com>
+Date: Wed, 27 Apr 2011 14:19:43 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com,  Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2011 at 3:52 PM, Kurt Seifried wrote:
-> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
->>
->> Hi,
->> there were a two Linux-related CVE requests/discussions, which
->> didn't end up in an assignment:
->>
->> 1: rose: Add length checks to CALL_REQUEST parsing
->> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
->>
->> It was decided that this should be split, but without a final
->> resulting CVE assignment:
->> http://www.openwall.com/lists/oss-security/2011/04/12/1
 >
+> Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
 >
-> Can anyone shed more light on this for me? (links to fixes/etc.?).
 
-As stated in Moritz's original message, the linux kernel git commit id
-is e0bccd315.  Here is a link directly to a message with the patch:
-http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+I currently only have CVE-2011-1089, which seems to be for glibc not
+indicating failure of addmntent() calls.  Were additional CVEs
+assigned to some of the individual issues?  If so, would you mind
+posting them here to avoid duplicate requests?
 
->>
->> 2: /proc/$PID/{sched,schedstat} information leak
->> Vasiliy Kulikov of OpenWall posted a demo exploit.
->> http://openwall.com/lists/oss-security/2011/11/05/3
->>
->> AFAICS no CVE ID was assigned to this?
+Thanks,
+Dan
+
+> Thanks!
 >
+> --
+> Tomas Hoger / Red Hat Security Response Team
 >
-> I believe we are not assigning CVE's for these types of proc related issues,
-> some discussion was had:
-
-Infoleaks certainly do get an id as they are considered an exposure
-(i.e. they make an exploiters job easier); as in Common
-Vulnerabilities and Exposures (CVE):
-http://cve.mitre.org
-
-Best wishes,
-Mike
