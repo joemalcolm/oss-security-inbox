@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/15
-Message-ID: <4D7FD193.5050904@cert.org>
-Date: Tue, 15 Mar 2011 16:52:35 -0400
-From: Art Manion <amanion@...t.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Andrea Barisani <lcars@...rt.org>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/3
+Message-ID: <20110427201047.08f42008@orphan>
+Date: Wed, 27 Apr 2011 20:10:47 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On 2011-03-08 14:56, Andrea Barisani wrote:
-> On Tue, Mar 08, 2011 at 10:59:57AM -0500, Josh Bressers wrote:
->> 3) Are we going to annoy other CERTs? Will they even care?
+On Wed, 27 Apr 2011 11:00:16 -0400 Dan Rosenberg wrote:
+
+> >> util-linux mount
+> >> =============
+> >> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves
+> >> identically to glibc addmntent() in terms of return code
+> >> * Succeeds on partial writes, does not remove temp file on failure
+> >> (could result in additional corruption of /etc/mtab through
+> >> multiple invocations), does not remove lock file /etc/mtab~ on
+> >> failure (also an issue)
+> >
+> > Dan, would you mind clarifying the way to achieve mtab corruption
+> > via truncated left-over mtab.tmp file and multiple invocations?
+> >  After some discussion with our util-linux maintainer, we fail to
+> > see an obvious way.  util-linux opens mtab.tmp using "w" fopen
+> > open, i.e. using O_TRUNC open flag.  So if there's any mtab.tmp
+> > file found, it's overwritten and its existence does not block
+> > further use of mount / umount as existence of mtab~ lock file does.
 > 
-> I don't think this is an issue. We positively worked with other CERTs when that
-> was applicable anyway.
+> Ah, quite right.  I missed that since I was just doing a quick survey
+> of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
+> Thanks for looking into it.
 
-Speaking for CERT/CC, we have no problem with oCERT or anyone else
-running a private coordination list/function.  In fact, we have no
-illusion of control over such activity.
+Ok, thank you!
 
-I think some sort of private coordination/embargo period capability is
-useful, it seems like the vendor-sec model worked reasonably well for
-the constituency -- low overhead, some leaking, but on the balance
-fairly effective during its lifespan.  My observation is that CERT/CC's
-process is probably too much overhead for typical open source
-vulnerabilities, although we'll still be involved in some cases that
-cross multiple open/closed/commercial/non-commercial vendors.
+Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
 
-CERT/CC could also possibly host a "vendor-sec replacement" mailing
-list, however we'd have to consider (as already noted in this thread)
-how to vet members, encryption (or not), overhead, etc.  I'd think this
-capability would be better provided by oCERT or Openwall or someone
-closer to the community.
+Thanks!
 
-
- - Art
+-- 
+Tomas Hoger / Red Hat Security Response Team
