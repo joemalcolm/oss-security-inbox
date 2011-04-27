@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/1
-Message-ID: <Pine.GSO.4.64.1111222227240.17118@faron.mitre.org>
-Date: Tue, 22 Nov 2011 22:30:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Kurt Seifried <kseifried@...hat.com>
-cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>, cve@...re.org
-Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/4
+Message-ID: <BANLkTikfpkfzan2e7+v8nbGygyVBi+qngg@mail.gmail.com>
+Date: Wed, 27 Apr 2011 14:19:43 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com,  Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
+>
+> Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
+>
 
-Let's keep CVE-2011-2710 and we will reject CVE-2011-2708.  Henri, I'm 
-sorry about the lack of response :-(
+I currently only have CVE-2011-1089, which seems to be for glibc not
+indicating failure of addmntent() calls.  Were additional CVEs
+assigned to some of the individual issues?  If so, would you mind
+posting them here to avoid duplicate requests?
 
-- Steve
+Thanks,
+Dan
 
-
-On Mon, 21 Nov 2011, Kurt Seifried wrote:
-
+> Thanks!
 >
->> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS 
->> vulnerability: 
->> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html 
->> and I have already contacted MITRE twice to get another one marked as 
->> obsolete.
->>
->>
->> Best regards,
->> Henri Salo
->
-> Ok CVE-2011-2710 is public in CVE and NVD:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
-> CVE-2011-2708 is still marked as reserved so we should probably quietly
-> take CVE-2011-2708 out back and shoot it.
->
-> CC'ing mitre.
->
-> -- 
->
-> -Kurt Seifried / Red Hat Security Response Team
->
+> --
+> Tomas Hoger / Red Hat Security Response Team
 >
