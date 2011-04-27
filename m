@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/7
-Message-ID: <20111104175410.GA4115@pisco.westfalen.local>
-Date: Fri, 4 Nov 2011 18:54:10 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/5
+Message-ID: <20110427202653.0a28aee7@orphan>
+Date: Wed, 27 Apr 2011 20:26:53 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mahara
+Cc: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this issue in Mahara:
+On Wed, 27 Apr 2011 14:19:43 -0400 Dan Rosenberg wrote:
 
-http://mahara.org/interaction/forum/topic.php?id=4138
-https://bugs.launchpad.net/mahara/+bug/884223
+> > Steve, it seems CVE-2011-1676 should get marked as rejected or
+> > disputed.
+> 
+> I currently only have CVE-2011-1089, which seems to be for glibc not
+> indicating failure of addmntent() calls.  Were additional CVEs
+> assigned to some of the individual issues?  If so, would you mind
+> posting them here to avoid duplicate requests?
 
-Already released as DSA 2334.
+CVE-2011-1675 - CVE-2011-1681 based on your list here:
+http://thread.gmane.org/gmane.comp.security.oss.general/4374/focus=4516
 
-Cheers,
-        Moritz
+CVE-2011-1089 for similar nfs-utils:
+http://thread.gmane.org/gmane.comp.security.oss.general/4954
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
