@@ -1,40 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/4
-Message-ID: <4EF649D6.9050404@redhat.com>
-Date: Sun, 25 Dec 2011 05:53:26 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/6
+Message-Id: <20110427145419.3d80163e.michael.s.gilbert@gmail.com>
+Date: Wed, 27 Apr 2011 14:54:19 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
->> 2: /proc/$PID/{sched,schedstat} information leak
->> Vasiliy Kulikov of OpenWall posted a demo exploit.
->> http://openwall.com/lists/oss-security/2011/11/05/3
->>
->> AFAICS no CVE ID was assigned to this?
+Mike O'Connor wrote:
+
+> :I know that there is increasing momentum for the new setup, but I
+> :think this solution is wrong.  Its starting to look a lot like the old
+> :vendor-sec (too many participants), and drawing an appropriate line for
 > 
-> I believe we are not assigning CVE's for these types of proc related
-> issues, some discussion was had:
+> How many participants are on security@...nel.org?  How many are part
+> of the Mozilla security team?  (And yeah, I know the answer there --
+> http://www.mozilla.org/projects/security/secgrouplist.html).  There's
+> an assumption that "more = worse", but how many is really too many?
+> You only get the answer when it seems to stop working.  
 > 
-> https://lkml.org/lkml/2011/2/7/368
+> :participation is impossible and seems wrong.
+> :
+> :The ideal solution to the "too many eyes" problem would be to empower
 > 
-> http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
+> The problem with vendor-sec of old seemingly wasn't so much "too many
+> eyes" -- more like "too many mouths", too many points of leakage.  It
+> wasn't at all clear how much of the vendor-sec leaks were due to any
+> one list member in particular (because there were many exploders), bad
+> infrastructure, a combination of factors, etc.  Apart from that, it
+> seemed to be _mostly_ working, which may be as well as could ever be
+> expected in reality.
+
+Two eyes = one mouth (mostly), so yes, there were certainly fewer leaks
+per eye than per mouth (pedantically).  Anyway, arguing over the
+verbiage to describe the problem isn't going to help resolve it. If I
+had to fathom a guess, the probability of leakage is likely to scale
+linearly with respect to the number of participants. So the problem is
+simply limiting the number of participants to the absolute minimum
+necessary. The only way to do that (I think) is to empower the
+researcher to make the call for him/herself based on what they know
+about their issue. Of course, participants in follow-on discussion can
+to expand participation to others if they are affected by the issue at
+hand.
+
+> :the researcher (issue submitter) to choose exactly which eyes they want
+> :involved.  A way to achieve this would be a ml that accepts only
 > 
-> but I'm not sure what the outcome is. CC'ing Eugene Teo.
+> The issue there is that some folks don't necessarily have a good
+> handle on the issue where they _can_ reasonably target things.  The
+> same has sometimes been true even for the coordinating bodies who one
+> might think would know better.  Often, it's the vendor/distro reps who
+> know the particular nuances of their present and future product better
+> than anyone else.  For a sufficiently diverse product base, that kind
+> of knowledge is not easy to break down into some checklist ready-made
+> for narrow targeting of issues.  
 
-IIRC, it's an issue but there's no resolution as existing code may break.
+That would be easy enough to solve.  Provide key lists for important
+groups (an "open" linux distro key list, an "open+closed" linux provider
+key list, an all unix-like os key list, etc.) and pre-cooked one-liners
+to encrypt for those sets, then let the researcher choose which one they
+want.
 
-There are also,
-/proc/{interrupts, stat}
-https://lkml.org/lkml/2011/11/7/340
+> :encrypted messages for participants (participation would be unlimited)
+> :and an "archive participant".  The list of participants is open to all
+> :(for the purpose of the researcher seeing which keys they want to
+> :encrypt for).
+> :
+> :When sending a message to the list, the researcher has to encrypt the
+> 
+> Make the barrier for participation high enough for the discoverer of
+> an issue (who may not always be a "researcher" in any classic sense)
+> and the level of participation will be correspondingly low.  Keep in
+> mind that for many of the open source communities that vendor-sec has
+> interacted with, security is _not_ their primary focus.  Most people
+> write code so they can actually get stuff done.  :)
 
-/dev/pts/, /dev/tty*
-https://lkml.org/lkml/2011/11/7/355
+If documentation is sufficient and pre-cooked commands readily
+available, this shouldn't be a problem.  People can (and should) be
+able to learn.  Typing "gpg --encrypt --recipient <key 1> --recipient <key 2>"
+isn't all that difficult.
 
-I have not checked the status of these issues. Vasiliy, kindly shed some
-light.
+> :message for archive key and at least one other valid participant (if
+> :not the message should be rejected, and instructions sent with a list of
+> :valid participant key fingerprints). In order to make sure the message
+> :was validly received, a checksum of the message should be published to
+> :an open list (probably oss-sec).  The researcher can check this right
+> :away.
+> :
+> :Finally, the cleartext message should be posted to an open list after a
+> :period of time (probably two months max) so that the entire community
+> :can see and validate the closed discussion .  This eliminates the
+> :possibility of a secret cabal forming or at least empowers the outside
+> :world to see the true reality (although with a delay).
+> 
+> It doesn't _eliminate_ the possibility of any sort of cabal forming.
+> It's simply a gesture of good faith, which could be subverted if
+> enough like-minded folks decide they need to handle the core of the
+> issues reported on the list off-list.  At that point, the list
+> archives might turn into some kind of kabuki dance.  To that end, it
+> helps to have a bunch of folks on the list who _aren't always_ quite
+> so like minded.
 
-Happy holidays.
+The important consequence is that the outside world will be empowered to
+see the inner workings of the one unfortunately closed part of an
+otherwise completely open system.
 
-Eugene
+If people choose to form a closed group elsewhere, then no one can stop
+that, but at least they won't be getting access to communications that
+researchers want to keep private (unless there are rogues in the official
+list intentionally feeding the other, which of course is always a
+possibility, but again that can be addressed by limiting participation
+to only those trusted by the researcher).
+
+Keeping it down to one list also reduces the confusion, disparity, and
+maintainability of having a bsd list, linux list, etc, etc (which is the
+only other suggestion to handle the different needs of the different
+potential participants).
+
+Best wishes,
+Mike
