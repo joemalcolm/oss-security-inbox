@@ -1,66 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/6
-Message-ID: <20110310210338.GA11962@openwall.com>
-Date: Fri, 11 Mar 2011 00:03:38 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com, Florian Zumbiehl <florz@...rz.de>
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/2
+Message-ID: <BANLkTi=viGP4Jr4reOz4ceS=rtSFuMnw7Q@mail.gmail.com>
+Date: Wed, 27 Apr 2011 11:00:16 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Florian, all -
+On Wed, Apr 27, 2011 at 10:56 AM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
+>
+>> util-linux mount
+>> =============
+>> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
+>> to glibc addmntent() in terms of return code
+>> * Succeeds on partial writes, does not remove temp file on failure
+>> (could result in additional corruption of /etc/mtab through multiple
+>> invocations), does not remove lock file /etc/mtab~ on failure (also an
+>> issue)
+>
+> Dan, would you mind clarifying the way to achieve mtab corruption via
+> truncated left-over mtab.tmp file and multiple invocations?  After some
+> discussion with our util-linux maintainer, we fail to see an obvious
+> way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
+> open flag.  So if there's any mtab.tmp file found, it's overwritten and
+> its existence does not block further use of mount / umount as existence
+> of mtab~ lock file does.
+>
 
-I'm sorry I failed to find time to comment on many postings in this
-thread, and also in the thread about a possible vendor-sec alternative.
+Ah, quite right.  I missed that since I was just doing a quick survey
+of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
+Thanks for looking into it.
 
-On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
-> What about these?:
-> 
-> | However, I think that still #6 (shell injection) and #7 (logrotate
-> | DoS with strange characters in file names) should be considered
-> | vulnerabilities in logrotate: It would be reasonable to assume that you
-> | can use user input that's a valid (slash-less) filename as a (part of a)
-> | log file name (assuming that the program is running as the same user that
-> | inspects and rotates the logs, so the log directory being writable by
-> | the program would not be insecure per-se) without that file name being
-> | interpreted by a shell or causing logrotate to stop functioning,
-> | respectively.
+-Dan
 
-Based on the description above only (I have not looked at the code), it
-appears that on one hand the program might behave unexpectedly, but on
-the other no privilege boundary is crossed.
-
-My understanding is that these issues would need to be treated as
-vulnerabilities (and assigned CVE ids) only if they can be demonstrated
-to have security impact (as in: someone manages to do more than they
-were supposed to be able to) in an otherwise sane setup.
-
-I guess this could be the case if logrotate config files, including log
-filename patterns, are generated based on input from another user
-(different than the service pseudo-user and not root) - e.g., via a
-web-based administration interface with its own access control.
-However, even if so (which already feels somewhat unrealistic) I have
-difficulty imagining a web-based admin user who would be permitted to
-configure log rotation (including filename patterns) yet would not
-otherwise have access to the service pseudo-user account (perhaps the
-person would be the server admin, including full root access).
-
-To summarize, it feels like in theory a privilege boundary could exist
-here and be crossed on certain systems with extra software, but in
-practice this is unlikely and it would indicate poor design of another
-piece of software or/and false sense of security put into that privilege
-boundary.  I don't know what this means for CVE id assignment per the
-current "rules".
-
-Once again, I am relying on the description posted in here only (and
-moreover on my interpretation of it), so maybe the actual situation is
-different.
-
-I usually don't care much about CVE ids being assigned or not.  I cared
-about that for the majority of these logrotate issues because it felt
-like it could affect whether other packages will be fixed or not.  This
-concern does not apply in the case of these two issues.  Thus, I have no
-objections to CVE ids being assigned for them, even though we're not
-going to treat them as vulnerabilities (based on info available so far).
-
-Alexander
+> Thank you!
+>
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
