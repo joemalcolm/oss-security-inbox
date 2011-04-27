@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/10
-Message-Id: <14029FA2-9126-4E05-A2A2-2CFC33C97FB5@rpath.com>
-Date: Sat, 2 Apr 2011 17:25:11 -0400
-From: Elliot Peele <elliot@...th.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/2
+Message-ID: <BANLkTi=viGP4Jr4reOz4ceS=rtSFuMnw7Q@mail.gmail.com>
+Date: Wed, 27 Apr 2011 11:00:16 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On Apr 1, 2011, at 2:03 PM, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+On Wed, Apr 27, 2011 at 10:56 AM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
+>
+>> util-linux mount
+>> =============
+>> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
+>> to glibc addmntent() in terms of return code
+>> * Succeeds on partial writes, does not remove temp file on failure
+>> (could result in additional corruption of /etc/mtab through multiple
+>> invocations), does not remove lock file /etc/mtab~ on failure (also an
+>> issue)
+>
+> Dan, would you mind clarifying the way to achieve mtab corruption via
+> truncated left-over mtab.tmp file and multiple invocations?  After some
+> discussion with our util-linux maintainer, we fail to see an obvious
+> way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
+> open flag.  So if there's any mtab.tmp file found, it's overwritten and
+> its existence does not block further use of mount / umount as existence
+> of mtab~ lock file does.
+>
 
-I was on vendor-sec via the security@...th.com exploder as a representative of rPath and rPath Linux.
+Ah, quite right.  I missed that since I was just doing a quick survey
+of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
+Thanks for looking into it.
 
-pub   1024D/05C54D73 2002-07-02 Elliot Peele <elliot@...th.com>
- Primary key fingerprint: 00F5 0BEE 168B C07E C49E  AEC8 992A A820 05C5 4D73
+-Dan
 
---
-Elliot Peele
-rPath, Inc.
-elliot@...th.com
-
-
-
-
+> Thank you!
+>
+> --
+> Tomas Hoger / Red Hat Security Response Team
+>
