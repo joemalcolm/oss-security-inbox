@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/14
-Message-ID: <872510506.193295.1294339837872.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 13:50:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: hastymail before 1.01 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/1
+Message-ID: <20110427165643.0542b1a8@orphan>
+Date: Wed, 27 Apr 2011 16:56:43 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: dan.j.rosenberg@...il.com
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4646 for this.
+On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
 
-Thanks.
+> util-linux mount
+> =============
+> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
+> to glibc addmntent() in terms of return code
+> * Succeeds on partial writes, does not remove temp file on failure
+> (could result in additional corruption of /etc/mtab through multiple
+> invocations), does not remove lock file /etc/mtab~ on failure (also an
+> issue)
+
+Dan, would you mind clarifying the way to achieve mtab corruption via
+truncated left-over mtab.tmp file and multiple invocations?  After some
+discussion with our util-linux maintainer, we fail to see an obvious
+way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
+open flag.  So if there's any mtab.tmp file found, it's overwritten and
+its existence does not block further use of mount / umount as existence
+of mtab~ lock file does.
+
+Thank you!
 
 -- 
-     JB
-
------ Original Message -----
-> See
-> http://www.hastymail.org/security/
-> 
-> "Many thanks to Julien CAYSSOL who discovered and reported the issue.
-> The
-> specific problem is an XSS attack vector in HTML formatted messages
-> that takes
-> advantage of background attributes used with table cell elements. Due
-> to an
-> incorrect implementation of the new htmLawed HTML filter this
-> attribute value
-> was not properly sanitized and could be used to inject executable
-> JavaScript.
-> This was NOT a flaw in the htmLawed filter code itself, but a problem
-> with
-> it's specific use in Hastymail2. The Hastymail2 1.01 release was
-> pacakages
-> specifically to address this one issue. "
-> 
-> --
-> Hanno Böck Blog: http://www.hboeck.de/
-> GPG: 3DBD3B20 Jabber/Mail: hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+Tomas Hoger / Red Hat Security Response Team
