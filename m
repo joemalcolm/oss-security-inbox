@@ -1,20 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/1
-Message-ID: <BANLkTikhKXMXVuMm+z-O=zW60kAC4-X0Qg@mail.gmail.com>
-Date: Wed, 15 Jun 2011 20:19:03 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/3
+Message-ID: <20110427201047.08f42008@orphan>
+Date: Wed, 27 Apr 2011 20:10:47 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: dan.j.rosenberg@...il.com, "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-NetBSD has committed a fix for an issue in the 802.11 stack [1].
-FreeBSD is also affected and should release a fix shortly.  Due to a
-signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
-unprivileged user could cause the kernel to copy large amounts of
-kernel memory back to the user, disclosing potentially sensitive
-information.  The issue only affects certain non-x86 architectures,
-such as SPARC.
+On Wed, 27 Apr 2011 11:00:16 -0400 Dan Rosenberg wrote:
 
--Dan
+> >> util-linux mount
+> >> =============
+> >> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves
+> >> identically to glibc addmntent() in terms of return code
+> >> * Succeeds on partial writes, does not remove temp file on failure
+> >> (could result in additional corruption of /etc/mtab through
+> >> multiple invocations), does not remove lock file /etc/mtab~ on
+> >> failure (also an issue)
+> >
+> > Dan, would you mind clarifying the way to achieve mtab corruption
+> > via truncated left-over mtab.tmp file and multiple invocations?
+> >  After some discussion with our util-linux maintainer, we fail to
+> > see an obvious way.  util-linux opens mtab.tmp using "w" fopen
+> > open, i.e. using O_TRUNC open flag.  So if there's any mtab.tmp
+> > file found, it's overwritten and its existence does not block
+> > further use of mount / umount as existence of mtab~ lock file does.
+> 
+> Ah, quite right.  I missed that since I was just doing a quick survey
+> of a bunch of helpers.  It seems the mtab.tmp file isn't an issue.
+> Thanks for looking into it.
 
-[1] http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+Ok, thank you!
+
+Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
+
+Thanks!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
