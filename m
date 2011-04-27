@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/37
-Message-ID: <BANLkTi=DjKb69mUQ_=H7_Wcfye2MnCnmAQ@mail.gmail.com>
-Date: Sun, 3 Apr 2011 19:32:52 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Benji <me@...ji.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/1
+Message-ID: <20110427165643.0542b1a8@orphan>
+Date: Wed, 27 Apr 2011 16:56:43 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: dan.j.rosenberg@...il.com
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
+Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 3, 2011 at 6:58 PM, Benji <me@...ji.com> wrote:
-> This is pathetic. You've all just made your personal and 'work' email
-> addresses targets by having a ridiculous public 'signup' system, and
-> the fact you all feel the need to hide behind some sort of veil for
-> security issues.
->
->
+On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
 
-Do you really think anyone is gaining new information by discovering
-that, say, a member of the security team for a major distro will be on
-this mailing list?  Such information seems pretty obvious to me.
+> util-linux mount
+> =============
+> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
+> to glibc addmntent() in terms of return code
+> * Succeeds on partial writes, does not remove temp file on failure
+> (could result in additional corruption of /etc/mtab through multiple
+> invocations), does not remove lock file /etc/mtab~ on failure (also an
+> issue)
 
-I think this thread is useful in the interest of transparency, which
-was sorely lacking with the previous incarnation of vendor-sec.  And
-with regards to enforcing embargoes for security issues, I'd think you
-would have better people to complain to a security community that
-tends to only enforce embargoes for days or occasionally weeks, and
-only for more serious issues, as opposed to the months or years that
-issues may go unfixed in the commercial software world.  While
-delaying security fixes unnecessarily is harmful to users,
-coordinating fixing over a short timeframe such that major
-distributions can release updates simultaneously seems like common
-sense, not "hiding being some sort of veil".
+Dan, would you mind clarifying the way to achieve mtab corruption via
+truncated left-over mtab.tmp file and multiple invocations?  After some
+discussion with our util-linux maintainer, we fail to see an obvious
+way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
+open flag.  So if there's any mtab.tmp file found, it's overwritten and
+its existence does not block further use of mount / umount as existence
+of mtab~ lock file does.
 
--Dan
+Thank you!
 
->
-> On 4/3/11, Solar Designer <solar@...nwall.com> wrote:
->> Mike,
->>
->> On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
->>> pub    512R/205BBF7D 2001-12-30
->>>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
->>>       C1
->>> uid                  Michael J. O'Connor <mjo@...o.mi.org>
->>
->> I've subscribed you with this key for now, but you really ought to
->> upgrade to a larger key, and I'd appreciate a statement on what Linux
->> distro you represent on the new list.
->>
->> All: my decision is based on some info known to me, but I'd prefer to
->> base it on Mike's posting to oss-security.  I am saying this to explain
->> that there's a reason why I subscribed Mike, whereas I would not
->> subscribe another "random" person posting the same kind of message from
->> a personal address. ;-)
->>
->> Alexander
->>
->
+-- 
+Tomas Hoger / Red Hat Security Response Team
