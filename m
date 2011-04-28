@@ -1,25 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/7
-Message-ID: <87fwjg7a8r.fsf@mid.deneb.enyo.de>
-Date: Wed, 28 Sep 2011 21:11:32 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/28/1
+Message-ID: <4DB9083A.3040600@windriver.com>
+Date: Thu, 28 Apr 2011 14:24:58 +0800
+From: Hui Zhu <hui.zhu@...driver.com>
+To: <oss-security@...ts.openwall.com>, <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-* Tomas Hoger:
+Hi Josh,
 
-> Following bugzillas list various code bases that were checked for the
-> issue and if they are affected or not:
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
+Please add me to the new maillist.  I am from Wind River.
 
-Not good. 8-(
+Thanks,
+Hui
 
-Looking at <http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/usr.bin/compress/compress.c>,
-it seems that these constants
+On 04/02/11 02:03, Josh Bressers wrote:
+> Hello everyone,
+> 
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
+> 
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
+> 
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
+> 
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
+> 
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
+> 
+> Thanks.
+> 
 
-| char_type lmask[9] = {0xff, 0xfe, 0xfc, 0xf8, 0xf0, 0xe0, 0xc0, 0x80, 0x00};
-| char_type rmask[9] = {0x00, 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff};
 
-can be used to build signatures to spot candidate binaries.
+Download attachment "0x9DD74CDB.asc" of type "application/pgp-keys" (1696 bytes)
