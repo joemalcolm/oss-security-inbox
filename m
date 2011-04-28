@@ -1,90 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/3
-Message-ID: <220531087.170596.1296160278206.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 27 Jan 2011 15:31:18 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Batavi 1.0 - XSRF bug fixed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/28/1
+Message-ID: <4DB9083A.3040600@windriver.com>
+Date: Thu, 28 Apr 2011 14:24:58 +0800
+From: Hui Zhu <hui.zhu@...driver.com>
+To: <oss-security@...ts.openwall.com>, <bressers@...hat.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0525 for this.
+Hi Josh,
 
-Thanks.
+Please add me to the new maillist.  I am from Wind River.
 
--- 
-    JB
+Thanks,
+Hui
 
------ Original Message -----
-> Hi,
+On 04/02/11 02:03, Josh Bressers wrote:
+> Hello everyone,
 > 
-> The open source project Batavi has just released their version 1.0
-> which has
-> fixed a XSRF exploit which was part of at least their latest alpha
-> release.
-> Just a quick snippet:
+> This topic has lost focus lately. Rather than let it slip away, I think we
+> should go ahead with the simplest solution right now, we can always do
+> something different at a future date.
 > 
-> "is a specially prepared page containing a form with a couple of
-> hidden form values.
+> Openwall has graciously volunteered to run a new list, and they currently
+> have some infrastructure in place to do this. The new list can start up
+> right away. In this instance, I fear perfect is the enemy of the good. I'd
+> rather see something functional in place than nothing.
 > 
-> $title = "Batavi";
-> $uri =
-> "http://$host/admin/index.php?administrators&page=1&action=save"; [^
-> <http://$host/admin/index.php?administrators&page=1&action=save";> ]
-> $method = "post";
+> Here is the plan for initial membership (this is also approved by
+> Openwall).
 > 
-> $values = array (
-> 'user_name' => "hacker",
-> 'user_password' => "b4t4v1",
-> 'first_name' => "Evil",
-> 'last_name' => "Hacker",
-> 'mail_address' => "evil.hacker@...mple.com",
-> 'configuration[MAX_DISPLAY_SEARCH_RESULTS]' => "20",
-> 'configuration[CATEGORY_PULL_DOWN_SHOW_PER_PAGE]' => "10, 20, 50,
-> 100",
-> 'configuration[PRODUCTS_SHOW_PRODUCTS_COUNT]' => "2",
-> 'configuration[PRODUCTS_SHOW_PRODUCTS_INCLUDING_SUBCATEGORIES]' =>
-> "1",
-> 'configuration[ADMIN_DEFAULT_LANGUAGE]' => "1",
-> 'configuration[SETTING_TINY_MCE]' => "2",
-> 'configuration[ADMINISTRATOR_STATE]' => "1",
-> 'configuration[ADMINISTRATOR_PRODUCT_TO_CATEGORIES]' => "1",
-> 'modules[]' => "*",
-> 'subaction' => "confirm"
-> );
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 > 
-> Of course these PHP values are converted to an HTML form, this array
-> is
-> just for my own convenience. I have an XSRF framework to be able to
-> try
-> and demonstrate this type of attack quickly and clearly.
-> The HTML form is automatically submitted as soon as the page is
-> loaded.
-> If the user is visiting the specially prepared page when he is logged
-> in
-> as an administrator with sufficient permissions, his browser takes him
-> to the URL the form is submitted to, in this case
-> "http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
-> =save",
-> <http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
-> =save%22,> [^
-> <http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
-> =save%22,> ]
-> and the browser decides to send along his original session cookie. So
-> for the application, everything seems in order. The user is logged in
-> and providing his session data, the IP address is even that of the
-> actual administrator. Only the HTTP_REFERER might be different, but
-> that
-> header cannot be trusted anyway, many client security software
-> packages
-> strip the Referrer header from HTTP requests, so often the header is
-> nonexistent or blank. You can't block people with blank referrers,
-> they
-> might be legitimate users, making use of provacy protection software."
+> Once we have an initial seed group, we can focus on future membership
+> ideas.
 > 
-> As one of the people involved I know it's fixed now, but can we still
-> receive a CVE for the versions before V0.9.3 beta?
+> Thanks.
 > 
-> Thnx
-> 
-> Ronald
+
+
+Download attachment "0x9DD74CDB.asc" of type "application/pgp-keys" (1696 bytes)
