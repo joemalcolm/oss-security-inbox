@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/5
-Message-ID: <AANLkTi==6UuJeuCUYeTY_vC+vFM4baMko0p4m+8+zncT@mail.gmail.com>
-Date: Sun, 20 Mar 2011 15:45:25 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/4
+Message-ID: <20110429194208.GV2160@redhat.com>
+Date: Fri, 29 Apr 2011 13:42:08 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: vulnerability in sssd 1.5.0+ (CVE-2011-1758)
 Content-Type: text/plain; charset=utf-8
 
-I don't mean to create unnecessary work, but have you actually
-confirmed that exposing each of these files as world-writable actually
-allows a user to cross privilege boundaries?  It seems to me that
-while it's bad practice to create these interfaces as world-writable
-and should be fixed regardless, unless being able to write to one of
-these interfaces actually allows a user to do something he shouldn't
-be able to, it's not a security bug by itself.  For example, I've
-noticed interfaces that are created with world-writable file
-permissions that don't actually do anything useful when you write to
-them.
+Hello all.
 
-Regards,
-Dan
+Anyone shipping sssd 1.5.0 or higher will want to be aware of a flaw
+that was found in how it handled cached passwords when renewal kerberos
+tickets is enabled (this is a new feature in 1.5.0).  Due to a bug, the
+cached password was overwritten with a (moderately) predictable
+filename, which could allow a user to authenticate as someone else if
+they knew the name of the cache file (under some pretty specific
+conditions).
 
-On Sun, Mar 20, 2011 at 9:43 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> Steven,
->
-> On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
->> Thanks for the list. I don't have enough CVE ids for this, I've grouped
->> them by type and version for MITRE to assign IDs.
->
-> Any update on this?
->
->
-> Thanks,
->
-> --
-> Vasiliy Kulikov
-> http://www.openwall.com - bringing security into open computing environments
->
+We've assigned the name CVE-2011-1758 to this issue and it is now fixed
+upstream.
+
+References:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=700867
+http://git.fedorahosted.org/git/?p=sssd.git;a=commitdiff;h=fffdae81651b460f3d2c119c56d5caa09b4de42a
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
