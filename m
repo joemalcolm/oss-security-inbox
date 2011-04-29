@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/6
-Message-ID: <20110804142314.GB6651@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 17:23:14 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: foomatic-gui
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/3
+Message-ID: <4DBB0086.10601@redhat.com>
+Date: Fri, 29 Apr 2011 20:16:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, William Cohen <wcohen@...hat.com>, Robert Richter <robert.richter@....com>
+Subject: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 05, 2011 at 12:17:14AM +1000, dave bl wrote:
-> So while there aren't that many "users" of the old
-> system-config-printer - it appears that debian old-stable (lenny)
-> maybe vulnerable (where python-smbc is not available) ... is it worth
-> while giving system-config-printer a 2008 CVE as well (if none
-> currently exists).
-> @Tim any thoughts?
 
-I'll bet there is still lot of system-config-printer installations: http://qa.debian.org/popcon.php?package=system-config-printer
+Hello Josh, Steve, vendors,
 
-Best regards,
-Henri Salo
+   It was found that oprofile profiling system did not properly sanitize
+the content of event argument, provided to oprofile profiling control
+utility (opcontrol). If a local unprivileged user was authorized by
+sudoers file to run the opcontrol utility, they could use the flaw
+to escalate their privileges (execute arbitrary code with the privileges
+of the privileged system user, root). Different vulnerability than
+CVE-2006-0576.
+
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
+
+Could you allocate a CVE id for this?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Oprofile is not encouraged to be run under sudo, but still
+       should not allow escalation of privileges.
