@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/1
-Message-Id: <20110803220213.1db17e033728296366bede71@gmail.com>
-Date: Wed, 3 Aug 2011 22:02:13 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: cve request: xpdf: insecure tempfile usage in zxpdf script
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/1
+Message-ID: <4DBA9AAC.5090708@redhat.com>
+Date: Fri, 29 Apr 2011 13:02:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Cyril Jaquier: <cyril.jaquier@...l2ban.org>, Tomasz Papszun <tomek@...z.tpsa.pl>, Yaroslav Halchenko <debian@...russian.com>
+Subject: CVE Request -- fail2ban -- Use of insecure default temporary file when unbanning an IP (tmpfile = /tmp/fail2ban-mail.txt)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-It was recently discovered that the compressed pdf handler script
-(zxpdf) that shipped in the Debian xpdf package handles tempfiles
-insecurely.  Due to this flaw, a specifically-crafted pdf file name can
-be used to delete files from the user's system (by taking advantage of
-the tempfile cleanup trap; i.e. "rm -f <part of crafted file name>").  
+Hello Josh, Steve, vendors,
 
-Note that as of version 3.02-13 (uploaded to Debian unstable on March
-4th, 2011), the zxpdf became the default xpdf pdf file handler. With
-this being a default, the problem was promulgated to a much wider user
-base; thus precipitating discovery of the flaw. I've now fixed the
-problem in version 3.02-19 (uploaded to unstable on July 29th, 2011, and
-entered testing on July 31st).
+   It was found that fail2ban IPs banner used insecure default temporary file
+when unbanning an IP address. A local attacker could use this flaw to conduct
+symlink attacks in order to gain access to sensitive information or potentially
+to overwrite arbitrary file on the system.
 
-Credit goes to Chung-chieh Shan from Harvard for discovering the issue.
-See his bug report for more background and details:
-http://bugs.debian.org/635849.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=544232
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=700763
 
-Please assign an id.
+Patch applied by Debian distribution:
+[3] http://git.onerussian.com/?p=deb/fail2ban.git;a=commitdiff;h=ea7d352616b1e2232fcaa99b11807a86ce29ed8b
 
-Thanks,
-Mike
+Could you allocate a CVE id for this? (Note: It should CVE-2009-* identifier)
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
