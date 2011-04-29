@@ -1,46 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/1
-Message-ID: <4DE5C6AF.6020408@redhat.com>
-Date: Wed, 01 Jun 2011 10:27:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/2
+Message-ID: <BANLkTi=Ny1zUc1B2OYmON9JtU+weG2w35g@mail.gmail.com>
+Date: Fri, 29 Apr 2011 11:24:54 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel (ARM): heap corruption in OABI semtimedop
 Content-Type: text/plain; charset=utf-8
 
-On 06/01/2011 05:24 AM, Kurt Seifried wrote:
-> I didn't see any CVE's in the Wireshark Bug tracking/advisory nor
-> could I find these in the Red Hat Bugzilla (but I'm guessing as a CNA
-> they have CVE #'s assigned?)
-> 
-Red Hat did not assign any CVE ids yet, since most of the work mentioned
-below was done by me on my personal time :)
+The OABI wrapper for semtimedop does not bound the nsops argument.  A
+sufficiently large value will cause an integer overflow in allocation
+size, followed by copying too much data into the allocated buffer.
+This only affects ARM systems with CONFIG_OABI_COMPAT set.
 
+This is exploitable for local privilege escalation, but successful
+exploitation requires winning a race.  Because user-to-kernel copy
+functions on ARM zero the destination buffer even on failure to access
+the provided user pointer, the copy loop in the vulnerable function
+that causes the overflow will zero out large amounts of kernel heap if
+not interrupted, crashing the system.  This should be possible to work
+around though.
 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Diameter dictionary file could crash Wireshark.
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-This is a memory corruption flaw caused by using a custom config files.
-You will normally have to social engineer the victim to use a malicious
-config file and then run wireshark
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted snoop file could crash Wireshark. (Bug 5912)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-> 
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Visual Networks file could crash Wireshark. (Bug
-> 5934)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-> 
-Both of the above are integer overflow issues, which cause subsequent
-memory corruption.
-> 
-> http://www.wireshark.org/security/wnpa-sec-2011-07.html
-> http://www.wireshark.org/security/wnpa-sec-2011-08.html
-> 
-Steve, could you please assign CVE ids to the issues mentioned in the
-above URLs? thanks.
+-Dan
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+[1] http://marc.info/?l=linux-kernel&m=130408851326428&w=2
