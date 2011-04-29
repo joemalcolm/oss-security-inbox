@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/8
-Message-ID: <4495cba8-d6d6-4878-ae5f-950730497b58@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:41:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Conky 1.8.1 "/tmp/.cesf" Insecure Temporary File Security Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/1
+Message-ID: <4DBA9AAC.5090708@redhat.com>
+Date: Fri, 29 Apr 2011 13:02:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Cyril Jaquier: <cyril.jaquier@...l2ban.org>, Tomasz Papszun <tomek@...z.tpsa.pl>, Yaroslav Halchenko <debian@...russian.com>
+Subject: CVE Request -- fail2ban -- Use of insecure default temporary file when unbanning an IP (tmpfile = /tmp/fail2ban-mail.txt)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3616
 
-Thanks.
+Hello Josh, Steve, vendors,
 
--- 
-    JB
+   It was found that fail2ban IPs banner used insecure default temporary file
+when unbanning an IP address. A local attacker could use this flaw to conduct
+symlink attacks in order to gain access to sensitive information or potentially
+to overwrite arbitrary file on the system.
 
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=544232
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=700763
 
------ Original Message -----
-> Hello,
-> 
-> Can a CVE be assigned for the below issue?
-> 
-> Conky 1.8.1 contains a vulnerability that allows malicious, local
-> users
-> to perform certain actions with escalated privileges.
-> 
-> https://bugs.launchpad.net/ubuntu/+source/conky/+bug/607309
-> http://secunia.com/advisories/43225/
-> 
-> 
-> Thanks,
-> 
-> --
-> Sean Amoss
-> 
+Patch applied by Debian distribution:
+[3] http://git.onerussian.com/?p=deb/fail2ban.git;a=commitdiff;h=ea7d352616b1e2232fcaa99b11807a86ce29ed8b
+
+Could you allocate a CVE id for this? (Note: It should CVE-2009-* identifier)
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
