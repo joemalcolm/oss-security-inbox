@@ -1,64 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/16
-Message-ID: <402506908.19649.1300223422042.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 17:10:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/5
+Message-ID: <20110430152614.GB30033@openwall.com>
+Date: Sat, 30 Apr 2011 19:26:14 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com, secalert_us@...cle.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, David, vendors,
-> 
-> this is due the following vino deficiency:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> As noted in [1] Vino may incorrectly report, that relevant user desktop
-> is reachable only over local network, when in fact it's reachable from
-> everywhere.
-> 
-> As this is issue slightly on the border, not sure it should receive a CVE
-> identifier, so Cc-ed David Woodhouse to elaborate more on issue impact if
-> necessary.
-> 
-> Under my opinion, the trust boundary is crossed (it is wrongly reported
-> to the the user, they have a secure setup, when they do not have it and
-> otherwise would perform steps to correct the settings). But left the
-> final decision for further discussion.
-> 
-> What are the thoughts of the others? Should this one get a CVE identifier
-> or not?
-> 
-> Upstream bug report:
-> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
-> 
-> Ubuntu bug report (IPv6 specific):
-> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
-> 
+Hello Chandan, all -
 
-The above bugs talk about two flaws. Based on discussions I'm giving them
-both CVE ids.
+On Tue, Apr 26, 2011 at 10:03:58AM -0700, Oracle Security Alerts wrote:
+> Please subscribe us to the new list.
+> I'll send specific emails and keys in a separate mail.
 
-Issue #1
+I've received a message off-list with the address to subscribe and PGP
+key info.  I've just replied to that message.
 
-Vino incorrectly tells users their desktop is only reachable over the local
-network.
+I see several issues with adding Oracle to the new list, see below.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=596190
-https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+Does Oracle start to prepare security updates for Oracle Enterprise
+Linux before or after Red Hat releases theirs?  If it's after, then
+there's too little need for Oracle to have advance notification.  If
+it's before, then I think the folks in here would like more detail on
+your approach, and what components this applies to.  Is it maybe just
+the Linux kernel, with the rest being rebuilds of Red Hat's SRPMs?
 
-Use CVE-2011-1164
+These are merely questions from someone who doesn't know (me).  I think
+some others in here would have similar questions, and I'm afraid it's my
+responsibility to ask them (since no one else has dared to, yet...)
+(Similar questions were raised for CentOS.)
 
-Issue #2
+> We were members of vendor-sec as Sun Microsystems team, and now
+> represent all of Oracle software and hardware products including but
+> not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
+> Open Office.
 
-Vino can open ports via uPnP without alerting the user.
-https://bugzilla.redhat.com/show_bug.cgi?id=678846
+Of these, only Oracle Enterprise Linux may qualify you for the list that
+has been setup so far.  As you say, Oracle got onto vendor-sec through
+the acquisition of Sun.  Although formally this satisfies "must be a
+vendor-sec member" for the initial seed membership of the new list, it
+does feel like a bypass of the intent of this requirement.  Oracle was
+never actually accepted to vendor-sec for Oracle Enterprise Linux.
 
-Use CVE-2011-1165
+Then, the only @oracle.com person currently on oss-security (judging by
+the e-mail addresses) appears not to be involved with Oracle Enterprise
+Linux specifically.
 
-Thanks.
+The person I was asked to subscribe is not publicly known (according to
+a Google web search I did) for any Oracle Enterprise Linux work.
 
--- 
-    JB
+I could be wrong, but based on these findings my feeling is that Oracle
+does not pay much attention to Linux issues being publicly disclosed in
+here.  Thus, I see little need for Oracle to have advance notification
+of other Linux issues.
+
+> We found vendor-sec very useful in early identification of
+> vulnerabilities not only in free and open source code used in our
+> products, but also in common protocols, file formats or kernel
+> modules/software with similar functionality or logic.
+
+These are some great reasons for you to be on public lists such as
+oss-security.  This is also a reason for us to avoid unnecessarily
+discussing general issues in private.  We'll try to do better with the
+new list(s) - that is, if I see an issue unnecessarily being discussed
+in private, I am going to insist on it being brought to a suitable
+public list instead.  I hope others on the list will also watch for such
+unnecessarily-private topics.
+
+Finally, it is a reason to publish the closed lists' archives with a
+delay, which is something I am going to revisit.
+
+> All our security advisories are freely available.
+
+Great.  Can you please add your info to the following wiki pages? -
+
+http://oss-security.openwall.org/wiki/vendors
+http://oss-security.openwall.org/wiki/distro-patches
+
+This will be useful regardless of whether you're subscribed or not, and
+to which lists.
+
+Thanks,
+
+Alexander
