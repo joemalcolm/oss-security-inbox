@@ -1,49 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/7
-Message-ID: <4ECFF985.7030202@redhat.com>
-Date: Fri, 25 Nov 2011 13:24:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/4
+Message-ID: <4DBC2618.8080204@kde.org>
+Date: Sat, 30 Apr 2011 11:09:12 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- yaws -- Directory traversal flaw
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/25/2011 10:39 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a directory traversal flaw was found in the way yaws, web server
-> for dynamic content written in Erlang, processed certain URLs. A
-> remote, authenticated yaws user could use this flaw to obtain content
-> of arbitrary local file, available to the yaws server user via
-> specially-crafted URL request.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650009
-> [2] https://github.com/klacke/yaws/issues/69
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=757181
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: As of right now, according to [2], there doesn't seem
->       to be an upstream patch for this issue available yet.
+On 04/30/2011 10:03 AM, Solar Designer wrote:
+> Hi Jeff,
+> 
+> On Sat, Apr 30, 2011 at 08:38:57AM -0400, Jeff Mitchell wrote:
+>> I didn't hear back about this -- can someone confirm?
+> 
+> I am sorry about the delay in getting back to you on this.  I don't
+> treat these subscription requests as high priority, but I do "flag" them
+> such that I don't miss any.  As you might have noticed, I handle them in
+> batches; the delay for some has been over 10 days so far (OK, that might
+> have been excessive).
 
-Please use CVE-2011-4350 for this issue
+No problem; I didn't actually notice you handling them in batches, but
+that explains it.
 
->Hey,
->This looks a lot like CVE-2010-4181, just a later version of yaws.
-Thoughts?
-> -Rob
+> The list that has been setup so far is Linux distro security contacts;
+> KDE is not a Linux distro, hence it should not be on the list.  That
+> said, I'll save your request to a separate folder in case we ever setup
+> a suitable list.  There have been no requests for the setup of a
+> non-OS-distro vendor security contacts list so far, and I see too little
+> use for such a list.
 
-Yes, however this is a different version so new a CVE is warranted, had
-these been released at the same time then they would have been merged
-according to ADT4.
+OK. I got a bit confused (it's been a long, long thread), because when
+people were added their information was also put on the wiki, and the
+wiki has multiple pages for different contact types. So I guess I got a
+bit confused as to exactly who the target was.
 
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Thanks,
+Jeff
