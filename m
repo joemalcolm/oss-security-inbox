@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/10
-Message-ID: <1085482903.28233.1302551871147.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 15:57:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/1
+Message-ID: <4DBC02E1.2070901@kde.org>
+Date: Sat, 30 Apr 2011 08:38:57 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+On 04/26/2011 12:02 PM, Jeff Mitchell wrote:
+> On 4/12/2011 4:58 PM, Solar Designer wrote:
+>> On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
+>>> pub   4096R/C44977CA 2011-04-12
+>>>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+>>> uid                  Petr Matousek <pmatouse@...hat.com>
+>>> uid                  Petr Matousek <pm@...p.org>
+>>
+>> Added.
+>>
+>> Alexander
 > 
-> Postponed. I'd like to see any support for you getting onto the Linux
-> distros security contacts list, with reasoning, or/and any other
-> suggestions on what to do in this case. Josh - what do you think (as
-> someone who advocated the setup of a vendor-sec replacement)?
+> Hi there,
 > 
+> Please add me as a KDE security contact.
+> 
+> sec   1024D/D0AE1825 2009-01-19
+> Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
+> uid                  Jeff Mitchell <mitchell@....org>
+> 
+> Thanks,
+> Jeff
 
-My initial thought is that a vendor without public advisories is a
-liability.
+Hi,
 
-I don't want to get into the politics of not publishing your advisories,
-but at the same time, public information such as this is all we have to
-measure if a vendor is using the information at hand.
+I didn't hear back about this -- can someone confirm?
 
-I'm happy to draw a line in the sand and make public advisories a mandatory
-requirement. If anyone disagrees, please speak up. This is my personal
-opinion, other viewpoints are welcome.
-
-Thanks.
-
--- 
-    JB
+Thanks,
+Jeff
