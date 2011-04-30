@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/8
-Message-ID: <532988263.1022824.1315592574569.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 14:22:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/6
+Message-ID: <20110430163639.GA30650@openwall.com>
+Date: Sat, 30 Apr 2011 20:36:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Matthew Barnes <mbarnes@...hat.com>, Milan Crha <mcrha@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- evolution -- Uses insecure (non-SSL) connection when storing the sent message into the Sent folder
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3355
+On Sun, Apr 24, 2011 at 04:44:29PM -0400, Michael Gilbert wrote:
+> Finally, the cleartext message should be posted to an open list after a
+> period of time (probably two months max) so that the entire community
+> can see and validate the closed discussion .  This eliminates the
+> possibility of a secret cabal forming or at least empowers the outside
+> world to see the true reality (although with a delay).
 
-Thanks.
+Does anyone in here know of an existing program to mass-decrypt all
+PGP/MIME messages in an mbox file, resulting in another mbox file?
+Note: the messages may contain multiple MIME parts.
 
--- 
-    JB
+Could this possibly be a script around Mutt (which includes PGP/MIME
+handling)?
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found that Evolution, mail and calendar client, used insecure
-> (non-SSL) connection when attempting to store sent email message into
-> the Sent folder, when the Sent folder was located on the remote
-> server.
-> An attacker on the adjacent network, able to intercept the underlying
-> communication could use this flaw to obtain login credentials of the
-> victim.
-> 
-> References:
-> [1] https://bugzilla.gnome.org/show_bug.cgi?id=648277
-> (upstream bug report)
-> [2]
-> http://git.gnome.org/browse/evolution-data-server/commit/?id=e0ac4d79705c
-> (upstream patch)
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=697904
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=707848
-> 
-> Could you allocate a CVE id for this issue?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Suggestions are welcome (but let's not turn this into a lengthy thread
+of its own).
+
+Alexander
