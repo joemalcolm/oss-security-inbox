@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/7
-Message-ID: <4EB16C66.6060603@redhat.com>
-Date: Wed, 02 Nov 2011 10:14:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/2
+Message-ID: <20110430140340.GA29810@openwall.com>
+Date: Sat, 30 Apr 2011 18:03:40 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: David Black <disclosure@....org>
-Subject: Re: Re: CVE request for Django-piston and Tastypie
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 11/01/2011 07:35 PM, David Black wrote:
-> The Tastypie announcement can be found at
-> http://groups.google.com/group/django-tastypie/browse_thread/thread/8b668d1831d35012
->
-> and the patch to fix this bug can be found at
-> https://github.com/toastdriven/django-tastypie/commit/e8af315211b07c8f48f32a063233cc3f76dd5bc2
-Thanks, first hand info is much better. Please use CVE-2011-4104 for
-this issue.
+Hi Jeff,
 
--- 
+On Sat, Apr 30, 2011 at 08:38:57AM -0400, Jeff Mitchell wrote:
+> I didn't hear back about this -- can someone confirm?
 
--Kurt Seifried / Red Hat Security Response Team
+I am sorry about the delay in getting back to you on this.  I don't
+treat these subscription requests as high priority, but I do "flag" them
+such that I don't miss any.  As you might have noticed, I handle them in
+batches; the delay for some has been over 10 days so far (OK, that might
+have been excessive).
 
+> On 04/26/2011 12:02 PM, Jeff Mitchell wrote:
+> > Please add me as a KDE security contact.
+> > 
+> > sec   1024D/D0AE1825 2009-01-19
+> > Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
+> > uid                  Jeff Mitchell <mitchell@....org>
+
+The list that has been setup so far is Linux distro security contacts;
+KDE is not a Linux distro, hence it should not be on the list.  That
+said, I'll save your request to a separate folder in case we ever setup
+a suitable list.  There have been no requests for the setup of a
+non-OS-distro vendor security contacts list so far, and I see too little
+use for such a list.
+
+Folks on the Linux distro list (and then on other distro lists, if we
+add any) are supposed to make an attempt to identify and notify
+upstreams and other affected projects, including KDE when appropriate.
+There has in fact been some effort to do that for the issues brought up
+on the list so far.
+
+Alexander
