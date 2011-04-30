@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/15
-Message-ID: <4D7E2D7E.9080703@redhat.com>
-Date: Mon, 14 Mar 2011 16:00:14 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
-Subject: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/01/1
+Message-ID: <4DBCA1BA.2060309@redhat.com>
+Date: Sat, 30 Apr 2011 19:56:42 -0400
+From: William Cohen <wcohen@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, David, vendors,
+On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
+> 
+> Hello Josh, Steve, vendors,
+> 
+>   It was found that oprofile profiling system did not properly sanitize
+> the content of event argument, provided to oprofile profiling control
+> utility (opcontrol). If a local unprivileged user was authorized by
+> sudoers file to run the opcontrol utility, they could use the flaw
+> to escalate their privileges (execute arbitrary code with the privileges
+> of the privileged system user, root). Different vulnerability than
+> CVE-2006-0576.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you & Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> P.S.: Oprofile is not encouraged to be run under sudo, but still
+>       should not allow escalation of privileges.
 
-   this is due the following vino deficiency:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
 
-As noted in [1] Vino may incorrectly report, that relevant user desktop
-is reachable only over local network, when in fact it's reachable from everywhere.
+Hi,
 
-As this is issue slightly on the border, not sure it should receive a CVE identifier,
-so Cc-ed David Woodhouse to elaborate more on issue impact if necessary.
+I did a bisection on oprofile git and found the set_event function in opcontrol in:
 
-Under my opinion, the trust boundary is crossed (it is wrongly reported to the the user, they
-have a secure setup, when they do not have it and otherwise would perform steps to correct the
-settings). But left the final decision for further discussion.
+http://oprofile.git.sourceforge.net/git/gitweb.cgi?p=oprofile/oprofile;a=commit;h=6b60be5e370aa8d58bd4fbbc39abd51c90509a31
 
-What are the thoughts of the others? Should this one get a CVE identifier or not?
+The email thread associated with that patch:
 
-Upstream bug report:
-[3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+http://marc.info/?l=oprofile-list&m=112293360728638&w=2
 
-Ubuntu bug report (IPv6 specific):
-[4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+Appears that the eval is being used to simulate arrays:
 
-To David King -- David, what are the upstream plans for this issue? Is there by any
-chance upstream patch for the bug [3] yet?
+http://marc.info/?l=oprofile-list&m=112297339521850&w=2
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-Will
