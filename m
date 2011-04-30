@@ -1,34 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/1
-Message-ID: <4ED2718B.90909@redhat.com>
-Date: Sun, 27 Nov 2011 18:21:15 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Leo Iannacone <l3on@...ntu.com>, Colin Watson <cjwatson@...ian.org>
-Subject: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/2
+Message-ID: <20110430140340.GA29810@openwall.com>
+Date: Sat, 30 Apr 2011 18:03:40 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi Jeff,
 
-   a format string flaw was found in the Python CGI Kit (neo_cgi)
-module of ClearSilver, a language-neutral HTML templating system,
-processed certain input, leading to Common Gateway Interface (CGI)
-script errors. A remote attacker could provide a specially-crafted
-input, which once processed by an application, using the Python
-language API of ClearSilver neo_cgi module, could lead to that
-particular application crash, or, potentially arbitrary code
-execution with the privileges of the user running the application.
+On Sat, Apr 30, 2011 at 08:38:57AM -0400, Jeff Mitchell wrote:
+> I didn't hear back about this -- can someone confirm?
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649322
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=757542
+I am sorry about the delay in getting back to you on this.  I don't
+treat these subscription requests as high priority, but I do "flag" them
+such that I don't miss any.  As you might have noticed, I handle them in
+batches; the delay for some has been over 10 days so far (OK, that might
+have been excessive).
 
-Patch, proposed by the issue reporter to the Debian Bug Tracking System:
-[3] 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fix-cgi-error-format-security.patch;att=1;bug=649322
+> On 04/26/2011 12:02 PM, Jeff Mitchell wrote:
+> > Please add me as a KDE security contact.
+> > 
+> > sec   1024D/D0AE1825 2009-01-19
+> > Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
+> > uid                  Jeff Mitchell <mitchell@....org>
 
-Could you allocate a CVE id for this issue?
+The list that has been setup so far is Linux distro security contacts;
+KDE is not a Linux distro, hence it should not be on the list.  That
+said, I'll save your request to a separate folder in case we ever setup
+a suitable list.  There have been no requests for the setup of a
+non-OS-distro vendor security contacts list so far, and I see too little
+use for such a list.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Folks on the Linux distro list (and then on other distro lists, if we
+add any) are supposed to make an attempt to identify and notify
+upstreams and other affected projects, including KDE when appropriate.
+There has in fact been some effort to do that for the issues brought up
+on the list so far.
+
+Alexander
