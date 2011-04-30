@@ -1,39 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/7
-Message-ID: <20111026142935.GB13364@suse.de>
-Date: Wed, 26 Oct 2011 16:29:35 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/5
+Message-ID: <20110430152614.GB30033@openwall.com>
+Date: Sat, 30 Apr 2011 19:26:14 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com, secalert_us@...cle.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 04:26:45PM +0200, Marcus Meissner wrote:
-> Hi,
+Hello Chandan, all -
 
-Dup from Sebastians mail, which he mailed at the same tiem.
+On Tue, Apr 26, 2011 at 10:03:58AM -0700, Oracle Security Alerts wrote:
+> Please subscribe us to the new list.
+> I'll send specific emails and keys in a separate mail.
 
-Ciao, Marcus
- 
-> From our openldap2 Maintainer Ralf:
-> |A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
-> |is passed a zero length string. (Can e.g. be triggered by passing a
-> |"postalAddressAttribute" with the value "$" (or no value a all). What the code
-> |does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
-> |least as far as I understand it)
-> |
-> |Upstream Bug: ITS#7059
-> |http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
-> |
-> |This bug is present in older releases as well.
-> |
-> |I wonder if this is really security relevant as it seem the worst that might
-> |happen is that an authenticated user can crash the daemon. I was not able to do
-> |so during a short test but I guess that is just a matter of trying long enough.
-> 
-> Ciao, Marcus
-> 
+I've received a message off-list with the address to subscribe and PGP
+key info.  I've just replied to that message.
 
--- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, HRB 16746 (AG Nuernberg)
-Geschaeftsfuehrer: Jeff Hawn, Jennifer Guild, Felix Imendoerffer
+I see several issues with adding Oracle to the new list, see below.
+
+Does Oracle start to prepare security updates for Oracle Enterprise
+Linux before or after Red Hat releases theirs?  If it's after, then
+there's too little need for Oracle to have advance notification.  If
+it's before, then I think the folks in here would like more detail on
+your approach, and what components this applies to.  Is it maybe just
+the Linux kernel, with the rest being rebuilds of Red Hat's SRPMs?
+
+These are merely questions from someone who doesn't know (me).  I think
+some others in here would have similar questions, and I'm afraid it's my
+responsibility to ask them (since no one else has dared to, yet...)
+(Similar questions were raised for CentOS.)
+
+> We were members of vendor-sec as Sun Microsystems team, and now
+> represent all of Oracle software and hardware products including but
+> not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
+> Open Office.
+
+Of these, only Oracle Enterprise Linux may qualify you for the list that
+has been setup so far.  As you say, Oracle got onto vendor-sec through
+the acquisition of Sun.  Although formally this satisfies "must be a
+vendor-sec member" for the initial seed membership of the new list, it
+does feel like a bypass of the intent of this requirement.  Oracle was
+never actually accepted to vendor-sec for Oracle Enterprise Linux.
+
+Then, the only @oracle.com person currently on oss-security (judging by
+the e-mail addresses) appears not to be involved with Oracle Enterprise
+Linux specifically.
+
+The person I was asked to subscribe is not publicly known (according to
+a Google web search I did) for any Oracle Enterprise Linux work.
+
+I could be wrong, but based on these findings my feeling is that Oracle
+does not pay much attention to Linux issues being publicly disclosed in
+here.  Thus, I see little need for Oracle to have advance notification
+of other Linux issues.
+
+> We found vendor-sec very useful in early identification of
+> vulnerabilities not only in free and open source code used in our
+> products, but also in common protocols, file formats or kernel
+> modules/software with similar functionality or logic.
+
+These are some great reasons for you to be on public lists such as
+oss-security.  This is also a reason for us to avoid unnecessarily
+discussing general issues in private.  We'll try to do better with the
+new list(s) - that is, if I see an issue unnecessarily being discussed
+in private, I am going to insist on it being brought to a suitable
+public list instead.  I hope others on the list will also watch for such
+unnecessarily-private topics.
+
+Finally, it is a reason to publish the closed lists' archives with a
+delay, which is something I am going to revisit.
+
+> All our security advisories are freely available.
+
+Great.  Can you please add your info to the following wiki pages? -
+
+http://oss-security.openwall.org/wiki/vendors
+http://oss-security.openwall.org/wiki/distro-patches
+
+This will be useful regardless of whether you're subscribed or not, and
+to which lists.
+
+Thanks,
+
+Alexander
