@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/15
-Message-ID: <1006511880.143408.1313782089079.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:28:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/6
+Message-ID: <20110430163639.GA30650@openwall.com>
+Date: Sat, 30 Apr 2011 20:36:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: roundcube XSS before 0.5.4
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> See:
-> 
-> http://sourceforge.net/news/?group_id=139281&id=302769
-> 
-> "We just published a new release which fixes a recently reported XSS
-> vulnerability as an update to the stable 0.5 branch."
-> 
+On Sun, Apr 24, 2011 at 04:44:29PM -0400, Michael Gilbert wrote:
+> Finally, the cleartext message should be posted to an open list after a
+> period of time (probably two months max) so that the entire community
+> can see and validate the closed discussion .  This eliminates the
+> possibility of a secret cabal forming or at least empowers the outside
+> world to see the true reality (although with a delay).
 
-Please use CVE-2011-2937.
+Does anyone in here know of an existing program to mass-decrypt all
+PGP/MIME messages in an mbox file, resulting in another mbox file?
+Note: the messages may contain multiple MIME parts.
 
-Thanks.
+Could this possibly be a script around Mutt (which includes PGP/MIME
+handling)?
 
--- 
-    JB
+Suggestions are welcome (but let's not turn this into a lengthy thread
+of its own).
+
+Alexander
