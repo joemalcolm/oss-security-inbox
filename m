@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/22
-Message-ID: <Pine.GSO.4.64.1103081733440.16895@faron.mitre.org>
-Date: Tue, 8 Mar 2011 17:35:50 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: glibc locale escaping issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/1
+Message-ID: <4DBC02E1.2070901@kde.org>
+Date: Sat, 30 Apr 2011 08:38:57 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On 04/26/2011 12:02 PM, Jeff Mitchell wrote:
+> On 4/12/2011 4:58 PM, Solar Designer wrote:
+>> On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
+>>> pub   4096R/C44977CA 2011-04-12
+>>>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+>>> uid                  Petr Matousek <pmatouse@...hat.com>
+>>> uid                  Petr Matousek <pm@...p.org>
+>>
+>> Added.
+>>
+>> Alexander
+> 
+> Hi there,
+> 
+> Please add me as a KDE security contact.
+> 
+> sec   1024D/D0AE1825 2009-01-19
+> Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
+> uid                  Jeff Mitchell <mitchell@....org>
+> 
+> Thanks,
+> Jeff
 
-On Tue, 8 Mar 2011, Josh Bressers wrote:
+Hi,
 
-> I think the line between fix vs enhancement is crossed when we're talking
-> about documented behavior.
+I didn't hear back about this -- can someone confirm?
 
-Discrepancy between documented behavior and actual behavior - whether an 
-error in the code or an error in the documentation - plus a clear or 
-likely exploit scenario - *especially* for multi-purpose libraries and 
-interpreters - seems reasonable for assigning a CVE.
-
-- Steve
+Thanks,
+Jeff
