@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/4
-Message-ID: <1319034455.2700.9.camel@mdlinux>
-Date: Wed, 19 Oct 2011 10:27:35 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com,  team@...urity.debian.org
-Subject: CVE Request: apt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/01/2
+Message-ID: <4DBCBED0.70309@redhat.com>
+Date: Sat, 30 Apr 2011 22:00:48 -0400
+From: William Cohen <wcohen@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
+> 
+> Hello Josh, Steve, vendors,
+> 
+>   It was found that oprofile profiling system did not properly sanitize
+> the content of event argument, provided to oprofile profiling control
+> utility (opcontrol). If a local unprivileged user was authorized by
+> sudoers file to run the opcontrol utility, they could use the flaw
+> to escalate their privileges (execute arbitrary code with the privileges
+> of the privileged system user, root). Different vulnerability than
+> CVE-2006-0576.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you & Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> P.S.: Oprofile is not encouraged to be run under sudo, but still
+>       should not allow escalation of privileges.
 
-Could a CVE please be assigned to the following issue:
+I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
 
-Apt before 0.8.11 incorrectly handles the Verify-Host configuration
-option, resulting in a successful connection instead of a verification
-failure when the certificate host name doesn't match.
+-Will
 
-See:
-
-http://bazaar.launchpad.net/~donkult/apt/sid/revision/2053.1.28
-https://bugs.launchpad.net/ubuntu/+source/apt/+bug/868353
-
-
-Thanks,
-
-Marc.
-
-
-
-
+View attachment "oprof-sanitize.patch" of type "text/x-patch" (792 bytes)
