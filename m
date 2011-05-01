@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/16
-Message-ID: <1516061416.999006.1309293364800.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 28 Jun 2011 16:36:04 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for libpng regression (CVE-2004-0421)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/01/2
+Message-ID: <4DBCBED0.70309@redhat.com>
+Date: Sat, 30 Apr 2011 22:00:48 -0400
+From: William Cohen <wcohen@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2501
-
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> It looks like CVE-2004-0421 was regressed upstream a few years ago and
-> was not noticed.
+On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
+> 
+> Hello Josh, Steve, vendors,
+> 
+>   It was found that oprofile profiling system did not properly sanitize
+> the content of event argument, provided to oprofile profiling control
+> utility (opcontrol). If a local unprivileged user was authorized by
+> sudoers file to run the opcontrol utility, they could use the flaw
+> to escalate their privileges (execute arbitrary code with the privileges
+> of the privileged system user, root). Different vulnerability than
+> CVE-2006-0576.
 > 
 > References:
-> http://sourceforge.net/mailarchive/forum.php?thread_name=BANLkTikrnU6FJNQYFvwmt78hwpgKPVRd1Q%40mail.gmail.com&forum_name=png-mng-implement
-> https://bugzilla.redhat.com/show_bug.cgi?id=717084
-> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=65e6d5a34f49acdb362a0625a706c6b914e670af
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
 > 
-> Could a CVE name be supplied? I don't know if upstream has requested
-> one independently or not.
+> Could you allocate a CVE id for this?
 > 
-> --
-> Vincent Danen / Red Hat Security Response Team
+> Thank you & Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> P.S.: Oprofile is not encouraged to be run under sudo, but still
+>       should not allow escalation of privileges.
+
+I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+
+-Will
+
+View attachment "oprof-sanitize.patch" of type "text/x-patch" (792 bytes)
