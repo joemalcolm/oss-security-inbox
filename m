@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/11/1
-Message-ID: <4EE3D70E.3070803@gmail.com>
-Date: Sat, 10 Dec 2011 23:02:54 +0100
-From: Paul <pawlkt@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/2
+Message-ID: <4DBE7DA6.20807@redhat.com>
+Date: Mon, 02 May 2011 15:17:18 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: bat_socket_read memory corruption
+CC: Josh Bressers <bressers@...hat.com>, Richard Hughes <rhughes@...hat.com>, Ray Strode <rstrode@...hat.com>, lsof@...ata.co.uk, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- gnome-desktop3: Switching users dialog does not lock the screen for the original user account
 Content-Type: text/plain; charset=utf-8
 
-On 2011-12-10 20:30, Kurt Seifried wrote:
+Hi Steve, Josh,
 
-> I'm going to need first hand source information, i.e. links to the
-> code/commits/project stating it's an issue or something similar.
+It turned out that this issue is with gnome-screensaver-dialog, and this
+does not kill the screensaver at all.
+Hence is not a security issue.
+
+Can we please have this CVE rejected? Thanks.
+
+References:
+Original report:
+https://bugzilla.redhat.com/show_bug.cgi?id=697199
+
+Upstream bug report:
+https://bugzilla.gnome.org/show_bug.cgi?id=648234
+
+
+
+On 04/21/2011 02:15 AM, Josh Bressers wrote:
+> Please use CVE-2011-1596
+> 
+> Thanks.
 > 
 
-https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005908.html
-
-Modified patch from Sven Eckelmann, one of project's managers, adressing
-this memory corruption problem.
 
 -- 
-Regards,
-Paul
-
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
