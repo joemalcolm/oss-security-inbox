@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/3
-Message-ID: <9da534f7f2949a36b808938d1a6111a3.squirrel@wm.kinkhorst.nl>
-Date: Tue, 13 Sep 2011 16:24:17 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/8
+Message-ID: <4DBEEF86.7040401@mvista.com>
+Date: Mon, 02 May 2011 07:53:10 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Cc: cbarratt@...rs.sourceforge.net
-Subject: CVE Request: BackupPC 3.2.1 fixes cross site scripting
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Alexander,
 
-BackupPC 3.2.1 was released back in April and fixed an XSS problem:
+Thanks for the clarification.
 
-http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
+- Armin
 
-This is upstream's patch:
-
-http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
-
-The same code is present at least since BackupPC 3.1.0, which is the
-oldest version we support. It seems no CVE id has been issued to date. Can
-a CVE id please be assigned?
-
-
-thanks,
-Thijs
+On 05/02/2011 07:22 AM, Solar Designer wrote:
+> On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
+>> On 05/02/2011 06:12 AM, Solar Designer wrote:
+>>> On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+>>>> Can you clarify what is meant by updates?
+>>>
+>>> RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+>>
+>> Ok.. but do they need to be publicly available ( ie no service or
+>> maintenance contract to get)?
+> 
+> Per the discussion so far, yes, or you would likely be in another
+> category from the "open" Linux distro vendors.  I don't know what others
+> in here would say if you, for example, only make advisories public, but
+> not any code.  Maybe this will do (that is, folks would not oppose you
+> being on the same list with the "open" vendors), maybe not.  A better
+> option could be for you to make advisories and package metainfo public
+> (file lists, change logs, etc.), but not the packages themselves.
+> I similarly don't know how that would be received by others in here.
+> On one hand, it would show that you're preparing security updates, for
+> what software, and when.  On the other, the level of openness would
+> still be less than Red Hat's.
+> 
+> Alexander
