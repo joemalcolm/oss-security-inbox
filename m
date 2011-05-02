@@ -1,20 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/4
-Message-ID: <20111201095900.GA25680@foo.fgeek.fi>
-Date: Thu, 1 Dec 2011 11:59:00 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/11
+Message-ID: <1089658792.289286.1304359748240.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 May 2011 14:09:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Subject: Re: Re: [security-vendor] Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Original post: http://seclists.org/bugtraq/2011/Nov/15
-Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
-New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+----- Original Message -----
+> > Hi Hui,
+> >
+> > On Thu, Apr 28, 2011 at 02:24:58PM +0800, Hui Zhu wrote:
+> >> > Please add me to the new maillist. I am from Wind River.
+> > Wind River is not yet being added to the new list:
+> >
+> > http://www.openwall.com/lists/oss-security/2011/04/24/6
+> >
+> > Hence, I've saved your subscription request to a separate folder, to
+> > revisit it if a decision is made to start adding "closed" vendors to
+> > the list, if Wind River starts to publish advisories and updates (in
+> > other words, if it becomes no more closed than Red Hat), or if a
+> > suitable separate list is setup.
+> >
+> 
+> While I have not personally applied for the closed vendor list, our
+> current security contact has. I thought I would attempt to explain
+> briefly what we publicly disclose and what we do not. If this changes
+> your stance on allowing us into the closed list that is fine, if not then
+> keep this as background information for the future.
+> 
+> Wind River provides a public RSS feed with the advisories for our
+> currently supported products. However, to get to the download you need to
+> be a customer.  The information in the RSS feed is accurate as to the
+> description of the issue, the only thing not published is the fixes
+> themselves (note, these fixes don't make sense if you are not a Wind
+> River customer) along with installation notes.
+> 
+> The RSS feeds for our three currently support product versions are:
+> 
+> Wind River Linux 2.x : http://www.windriver.com/feeds/wrlinux_200.xml
+> 
+> Wind River Linux 3.x : http://www.windriver.com/feeds/wrlinux_300.xml
+> 
+> Wind River Linux 4.x : http://www.windriver.com/feeds/wrlinux_400.xml
+> 
 
-I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+I think this is suitable. The goal here is to ensure that a vendor is
+actually producing updates and aren't just a potential leak.
 
-This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+Thanks.
 
-Please notify me if this is not enough information.
-
-- Henri Salo
+-- 
+    JB
