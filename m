@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/13
-Message-ID: <20110106184038.GA2780@nxnw.org>
-Date: Thu, 6 Jan 2011 10:40:38 -0800
-From: Steve Beattie <steve@...w.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/1
+Message-ID: <4DBE4AB8.2040106@redhat.com>
+Date: Mon, 02 May 2011 11:40:00 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+Subject: CVE request: libmodplugin stack-buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
-> We got a heads up on a directory traversal flaw in patch.  I don't think
-> a CVE name has been assigned to it; could we get one?  It allows for the
-> creation of arbitrary files in unexpected places due to the use of '..'.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=667529
-> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
-> 
-> Thanks.
+Some details and exploit at:
+http://www.exploit-db.com/exploits/17222/
 
-I believe the Debian security team assigned CVE-2010-1679 for this
-issue.
+>From an initial look, it seems that applications embedding libmodplug,
+sp gstreamer-plugins may not be affected, since it seems to be doing
+some parameter checking before hand.
+
+Can a CVE be assigned to this please?
 
 -- 
-Steve Beattie
-<sbeattie@...ntu.com>
-http://NxNW.org/~steve/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
