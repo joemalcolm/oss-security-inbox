@@ -1,50 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/16
-Message-ID: <840953282.1275100.1310501229264.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 16:07:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/6
+Message-ID: <4DBEE3FB.1000207@mvista.com>
+Date: Mon, 02 May 2011 07:03:55 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Drupal 7 -- Access bypass in node listings (SA-CORE-2011-002)
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2687.
-
-Thanks.
-
--- 
-    JB
 
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
+On 05/02/2011 06:12 AM, Solar Designer wrote:
+> On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+>> On 04/30/2011 04:51 AM, Solar Designer wrote:
+>> <snipped>
+>>
+>>> Hence, I've saved your subscription request to a separate folder, to
+>>> revisit it if a decision is made to start adding "closed" vendors to the
+>>> list, if Wind River starts to publish advisories and updates (in other
+>>> words, if it becomes no more closed than Red Hat), or if a suitable
+>>> separate list is setup.
+>>
+>> Can you clarify what is meant by updates?
 > 
-> this:
-> [1] http://drupal.org/node/1204582
+> RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+
+Ok.. but do they need to be publicly available ( ie no service or
+maintenance contract to get)?
+
 > 
-> From [1]: Access bypass in node listings:
-> =========================================
-> 
-> Listings showing nodes but not JOINing the node table show all
-> nodes regardless of restrictions imposed by the node_access system.
-> In core, this affects the taxonomy and the forum subsystem.
-> 
-> ...
-> 
-> Versions affected:
-> ==================
-> 
-> Drupal 7.0, 7.1 and 7.2.
-> 
-> 
-> References:
-> ------------
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=717874
-> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=633385
-> 
-> doesn't seem to have a CVE identifier allocated yet. Could you
-> allocate one?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> While we're at it, just what software do MontaVista and Wind River ship?
+
+MontaVista ships Linux, apps, toolchains and misc cross development
+tools. The number of applications vary depending on the product version.
+
+MVL6 and CGE 6 both use bitbake (ie receipt sytle) and older products
+use RPM.
+
+
+> My guess is that embedded Linux distro vendors would not care about
+> vulnerabilities in desktop-specific apps (e.g., the X server), but I
+> could be wrong.  
+
+We do supply X server.
+
+And there are other software categories, which may or
+> may not be relevant.  It'd be nice for potential reporters of security
+> issues to know which vendors might be affected.
+
+yes it would be nice. I will add it to my list of things todo.
+
+- Armin
+
