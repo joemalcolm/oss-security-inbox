@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/7
-Message-ID: <4DB08D21.9030209@mvista.com>
-Date: Thu, 21 Apr 2011 10:01:37 -1000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/8
+Message-ID: <4DBEEF86.7040401@mvista.com>
+Date: Mon, 02 May 2011 07:53:10 -1000
 From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-So this would affect kernels 2.6.25-rc1 and above? (if I figured it out
-correctly)
+Alexander,
+
+Thanks for the clarification.
 
 - Armin
 
-On 04/20/2011 03:58 PM, Eugene Teo wrote:
-> On 04/21/2011 09:55 AM, Eugene Teo wrote:
->> On 04/21/2011 07:45 AM, Eugene Teo wrote:
->>> On 04/21/2011 04:52 AM, Josh Bressers wrote:
->>>> Please use CVE-2011-1598
+On 05/02/2011 07:22 AM, Solar Designer wrote:
+> On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
+>> On 05/02/2011 06:12 AM, Solar Designer wrote:
+>>> On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+>>>> Can you clarify what is meant by updates?
 >>>
->>> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
+>>> RHEL-like .src.rpm's or equivalent will do.  Something else might do.
 >>
->> Correction: s/Updated patch//. This patch is for a similar issue but for
->> can/raw release. I rather group these two patches with CVE-2011-1598
->> than to have another name assigned for it. But I'm fine either way.
+>> Ok.. but do they need to be publicly available ( ie no service or
+>> maintenance contract to get)?
 > 
-> On second thoughts, let's have another CVE assigned.
+> Per the discussion so far, yes, or you would likely be in another
+> category from the "open" Linux distro vendors.  I don't know what others
+> in here would say if you, for example, only make advisories public, but
+> not any code.  Maybe this will do (that is, folks would not oppose you
+> being on the same list with the "open" vendors), maybe not.  A better
+> option could be for you to make advisories and package metainfo public
+> (file lists, change logs, etc.), but not the packages themselves.
+> I similarly don't know how that would be received by others in here.
+> On one hand, it would show that you're preparing security updates, for
+> what software, and when.  On the other, the level of openness would
+> still be less than Red Hat's.
 > 
-> can/bcm release: credit Dave Jones
-> can/raw release: credit Oliver Hartkopp
-> 
-> Thanks, Eugene
+> Alexander
