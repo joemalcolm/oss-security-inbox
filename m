@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/12
-Message-ID: <1656770654.148983.1294165629945.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 4 Jan 2011 13:27:09 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/18
+Message-ID: <20110502192825.GA21926@rh.iggy.bress.home>
+Date: Mon, 2 May 2011 15:29:29 -0400
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: jmw@...ian.org, coley <coley@...re.org>
-Subject: Re: (possible) CVE request: Clickjacking in Mediawiki
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, cyril.jaquier@...l2ban.org, Tomasz Papszun <tomek@...z.tpsa.pl>, Yaroslav Halchenko <debian@...russian.com>
+Subject: Re: CVE Request -- fail2ban -- Use of insecure default temporary file when unbanning an IP (tmpfile = /tmp/fail2ban-mail.txt)
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
+On Fri, Apr 29, 2011 at 01:02:04PM +0200, Jan Lieskovsky wrote:
 > 
-> Mediawiki <= 1.16 is vulnerable to clickjacking when showing iframes
-> in a
-> wiki:
+> Hello Josh, Steve, vendors,
 > 
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=26561
+>   It was found that fail2ban IPs banner used insecure default temporary file
+> when unbanning an IP address. A local attacker could use this flaw to conduct
+> symlink attacks in order to gain access to sensitive information or potentially
+> to overwrite arbitrary file on the system.
 > 
-> I don't know if this warrants a CVE ID, but if so please assign one.
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=544232
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700763
+> 
+> Patch applied by Debian distribution:
+> [3] http://git.onerussian.com/?p=deb/fail2ban.git;a=commitdiff;h=ea7d352616b1e2232fcaa99b11807a86ce29ed8b
+> 
+> Could you allocate a CVE id for this? (Note: It should CVE-2009-* identifier)
 > 
 
-Please use CVE-2011-0003
+Please use CVE-2009-5023
 
 Thanks.
 
