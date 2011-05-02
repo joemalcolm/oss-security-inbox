@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/7
-Message-ID: <1767014887.126919.1294083734165.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 14:42:14 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/5
+Message-ID: <20110502161206.GA19512@openwall.com>
+Date: Mon, 2 May 2011 20:12:06 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley  <coley@...re.org>
-Subject: Re: CVE Request: CrawlTrack < 3.2.7 - remote php code execution
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Versions of CrawlTrack prior to 3.2.7 are, according to the vendor,
-> vulnerable to a remote PHP code execution attack if the stats pages
-> are public
+On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+> On 04/30/2011 04:51 AM, Solar Designer wrote:
+> <snipped>
 > 
-> Vendor changelog: http://www.crawltrack.net/changelog.php
+> > Hence, I've saved your subscription request to a separate folder, to
+> > revisit it if a decision is made to start adding "closed" vendors to the
+> > list, if Wind River starts to publish advisories and updates (in other
+> > words, if it becomes no more closed than Red Hat), or if a suitable
+> > separate list is setup.
 > 
-> The attack vector isn't disclosed but a diff between 3.2.6 and 3.2.7
-> show the vendor's fix was to escape special characters (using
-> http://php.net/htmlspecialchars ) in values supplied through POST
-> variables.
+> Can you clarify what is meant by updates?
 
-Please use CVE-2010-4537
+RHEL-like .src.rpm's or equivalent will do.  Something else might do.
 
-Thanks.
+While we're at it, just what software do MontaVista and Wind River ship?
+My guess is that embedded Linux distro vendors would not care about
+vulnerabilities in desktop-specific apps (e.g., the X server), but I
+could be wrong.  And there are other software categories, which may or
+may not be relevant.  It'd be nice for potential reporters of security
+issues to know which vendors might be affected.
 
--- 
-    JB
+Alexander
