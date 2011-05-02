@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/10
-Message-ID: <979245400.58352.1297863982545.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Feb 2011 08:46:22 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/14
+Message-ID: <20110502184046.GA20492@openwall.com>
+Date: Mon, 2 May 2011 22:40:46 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: xfs infoleak
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
+> I think this is suitable. The goal here is to ensure that a vendor is
+> actually producing updates and aren't just a potential leak.
 
------ Original Message -----
-> From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat equivalent)
-> calls out to xfs_fs_geometry() with a version number of 3.  This code
-> path does not fill in the logsunit member of the passed xfs_fsop_geom_t,
-> leading to the leaking of four bytes of uninitialized stack data to
-> potentially unprivileged callers. Since all other members are filled in
-> all code paths and there are no padding bytes in this structure, it's
-> safe to avoid an expensive memset() in favor of just clearing this one
-> field."
-> 
-> https://patchwork.kernel.org/patch/555461/
-> https://bugzilla.redhat.com/show_bug.cgi?id=677260
-> 
+OK, so do you propose that we subscribe Wind River, and wait for
+MontaVista to setup something similar to these RSS feeds before we also
+subscribe them?
 
-Please use CVE-2011-0711.
+A secondary goal behind requiring access to advisories and updates (not
+just metainfo) would be to be able to draw the line between vendors and
+companies that build their own Linux distros in house.  The latter could
+also publish an RSS feed showing how they update their packages, yet
+they would not be a vendor to anyone other than themselves...  On the
+other hand, publishing updates without publishing the distro itself
+doesn't make them more of a vendor to others.  So to achieve this goal
+we'd probably need to require the distro itself to be public (in at
+least one form - e.g., Red Hat's .src.rpm's are sufficient), not just
+advisories and updates.
 
-Thanks.
+We may choose not to pursue this secondary goal now.
 
--- 
-    JB
+Alexander
