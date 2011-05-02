@@ -1,44 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/1
-Message-ID: <4E266FFD.6000901@redhat.com>
-Date: Wed, 20 Jul 2011 11:34:45 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/6
+Message-ID: <4DBEE3FB.1000207@mvista.com>
+Date: Mon, 02 May 2011 07:03:55 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, Joshua Bressers <bressers@...hat.com>
-Subject: Re: CVE Request: ruby PRNG fixes
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
-
-> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-> http://redmine.ruby-lang.org/issues/4579
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-
-Looking at the above patches, there seems to be two issues here, perhaps
-it needs two CVE ids to be assigned?
-
-1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-
-This one pertains to rand returning same values in forked processes.
-http://redmine.ruby-lang.org/issues/show/4338
-This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
-1.8.6-p399.
-
-2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-
-This is an issue in the securerandom.rb module.
-http://redmine.ruby-lang.org/issues/4579
-
-Josh,
-
-Can we please assign CVE-2011-2686 to one of the issues and have another
-CVE id to the other issue?
-
-Thanks.
 
 
+On 05/02/2011 06:12 AM, Solar Designer wrote:
+> On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+>> On 04/30/2011 04:51 AM, Solar Designer wrote:
+>> <snipped>
+>>
+>>> Hence, I've saved your subscription request to a separate folder, to
+>>> revisit it if a decision is made to start adding "closed" vendors to the
+>>> list, if Wind River starts to publish advisories and updates (in other
+>>> words, if it becomes no more closed than Red Hat), or if a suitable
+>>> separate list is setup.
+>>
+>> Can you clarify what is meant by updates?
+> 
+> RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+
+Ok.. but do they need to be publicly available ( ie no service or
+maintenance contract to get)?
+
+> 
+> While we're at it, just what software do MontaVista and Wind River ship?
+
+MontaVista ships Linux, apps, toolchains and misc cross development
+tools. The number of applications vary depending on the product version.
+
+MVL6 and CGE 6 both use bitbake (ie receipt sytle) and older products
+use RPM.
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+> My guess is that embedded Linux distro vendors would not care about
+> vulnerabilities in desktop-specific apps (e.g., the X server), but I
+> could be wrong.  
+
+We do supply X server.
+
+And there are other software categories, which may or
+> may not be relevant.  It'd be nice for potential reporters of security
+> issues to know which vendors might be affected.
+
+yes it would be nice. I will add it to my list of things todo.
+
+- Armin
+
