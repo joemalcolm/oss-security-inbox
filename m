@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/19
-Message-ID: <20110404133151.GA12101@openwall.com>
-Date: Mon, 4 Apr 2011 17:31:51 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/7
+Message-ID: <20110502172230.GA19876@openwall.com>
+Date: Mon, 2 May 2011 21:22:30 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
-> Please subscribe me to the new list. I was a vendor-sec subscriber.
+On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
+> On 05/02/2011 06:12 AM, Solar Designer wrote:
+> > On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+> >> Can you clarify what is meant by updates?
+> > 
+> > RHEL-like .src.rpm's or equivalent will do.  Something else might do.
 > 
-> pub   2048R/519FE93C 2011-01-26
-> uid                  ksha <ksha@...m.cl>
+> Ok.. but do they need to be publicly available ( ie no service or
+> maintenance contract to get)?
 
-Are you a security contact for a Linux distro, and for which one?
-And how do we verify that?
-
-How did you receive vendor-sec mail?
+Per the discussion so far, yes, or you would likely be in another
+category from the "open" Linux distro vendors.  I don't know what others
+in here would say if you, for example, only make advisories public, but
+not any code.  Maybe this will do (that is, folks would not oppose you
+being on the same list with the "open" vendors), maybe not.  A better
+option could be for you to make advisories and package metainfo public
+(file lists, change logs, etc.), but not the packages themselves.
+I similarly don't know how that would be received by others in here.
+On one hand, it would show that you're preparing security updates, for
+what software, and when.  On the other, the level of openness would
+still be less than Red Hat's.
 
 Alexander
