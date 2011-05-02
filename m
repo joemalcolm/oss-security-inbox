@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/8
-Message-ID: <20110304015908.GB16394@kroah.com>
-Date: Thu, 3 Mar 2011 17:59:08 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/13
+Message-ID: <20110502182907.GA20415@openwall.com>
+Date: Mon, 2 May 2011 22:29:07 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 08:11:00PM -0500, Michael Gilbert wrote:
-> On Thu, 3 Mar 2011 16:41:07 -0800 Greg KH wrote:
-> > On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
-> > > Of course failing to anticipate security impact is bound to happen in
-> > > the kernel; it frequently happens in userland too, and is unavoidable.
-> > >  That doesn't mean we can't try, and it doesn't mean we should be
-> > > overly paranoid and have security folks manually audit every patch.
-> > > Currently, maintainers and bug reporters are expected to ask
-> > > themselves a simple question when deciding whether or not to CC
-> > > stable: "does this fix a bug or security issue, or is it a new
-> > > feature?".  Similarly, I don't think it's too much to ask for people
-> > > to consider the question of "does this bug it allow an unprivileged
-> > > user to crash the system, gain additional access, or otherwise cross
-> > > privilege boundaries?"  And if the answer is "I don't know, maybe?",
-> > > then they should CC this list to be safe.  I think this would result
-> > > in not nearly as much volume as you're anticipating.
-> > 
-> > They do this already today, that's what security@...nel.org is for, and
-> > it gets a bit of traffic like this every week.
+On Mon, May 02, 2011 at 01:04:44PM -0500, Mark Hatle wrote:
+> I am a bit confused though.  If I (as a non-RH customer) look to download their
+> latest security updates, I don't see an obvious way of doing it based on their
+> advisories.  For instance:
 > 
-> Is this list open to the public?  It doesn't seem to be available on
-> http://vger.kernel.org/vger-lists.html.
+> https://rhn.redhat.com/errata/RHSA-2011-0421.html
+> 
+> This advisory ends with:  (The unlinked packages above are only available from
+> the Red Hat Network)
 
-No, it is closed, as it should be as potential security problems are
-mailed there.  You don't want that to be totally open, right?
+Yes, Red Hat advisories say that, but in practice the .src.rpm's are
+freely downloadable.  Here's one mentioned in the advisory above:
 
-thanks,
+lftp ftp.redhat.com:/pub/redhat/linux/enterprise/6Server/en/os/SRPMS> ls -l kernel-2.6.32-71.24.1.el6.src.rpm
+-rw-r--r--    5 ftp      ftp      67060785 Apr 07 02:51 kernel-2.6.32-71.24.1.el6.src.rpm
 
-greg k-h
+Yes, it's weird.
+
+> This requires that I have a support account in order to download the update.
+
+For binary updates, yes.  For sources, no (although the wording in the
+advisories is such that you get that impression).
+
+Alexander
