@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/5
-Message-ID: <78370d3f-0d25-4d90-988b-681368766450@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 14:41:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: X.org ProcRenderGlyps input sanitation issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/3
+Message-ID: <4DBEC773.3080005@redhat.com>
+Date: Mon, 02 May 2011 17:02:11 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- WordPress v3.1.2
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4819
 
-Thanks.
+Hello Josh, Steve, vendors,
 
--- 
-    JB
+   WordPress upstream has released v3.1.2 addressing one security issue:
+   [1] http://wordpress.org/news/
 
------ Original Message -----
-> Hi,
-> 
-> Also from 2010 and me@...fdog.net and the x.org bugtracker:
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=28801
-> 
-> Adam in comment #c2 thinks this might just discloses memory
-> but could not overwrite arbitrary x server memory ...
-> However the comment #c0 has a x.org server crash, so I am unsure
-> about code execution possibilities.
-> 
-> Needs one 2010 CVE id I guess.
-> 
-> Ciao, Marcus
-> 
+   More from [1]:
+   "This release addresses a vulnerability that allowed Contributor-level users to improperly publish posts.
+   The issue was discovered by a member of our security team, WordPress developer Andrew Nacin, with Benjamin Balter."
+
+Could you allocate a CVE id for this?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
