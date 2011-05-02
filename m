@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/13
-Message-ID: <c6dc7add-81ad-44af-ae5b-05969d59161b@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:12:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: double-free vulnerability in logsurfer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/3
+Message-ID: <4DBEC773.3080005@redhat.com>
+Date: Mon, 02 May 2011 17:02:11 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- WordPress v3.1.2
 Content-Type: text/plain; charset=utf-8
 
 
+Hello Josh, Steve, vendors,
 
------ Original Message -----
-> Am 17.10.2011 12:07, schrieb Marcus Meissner:
-> > On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
-> >> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
-> >> Logsurfer affecting the function prepare_exec(). The vulnerability is
-> >> caused by an insufficient treatment of an error condition that is
-> >> returned by the function get_word() when it is unable to correctly
-> >> parse its input.
-> >>
-> >> The following versions of logsurfer are affected:
-> >>
-> >>  Logsurfer 1.5b and previous versions
-> >>  Logsurfer+ 1.7 and previous versions
-> >>
-> >> A patch is available at
-> >> http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
-> > 
-> > How can this be exploited?
-> > 
-> > It seems to happen in the argument handling and I doubt an attacker can
-> > inject arguments?
-> 
-> Logsurfer allows to use substrings of log-file entries as arguments for
-> calling external commands. An attacker is able to exploit this
-> vulnerability by injecting specially crafted strings into a log-file that
-> is processed by logsurfer.
-> 
+   WordPress upstream has released v3.1.2 addressing one security issue:
+   [1] http://wordpress.org/news/
 
-This sounds CVE worthy.
+   More from [1]:
+   "This release addresses a vulnerability that allowed Contributor-level users to improperly publish posts.
+   The issue was discovered by a member of our security team, WordPress developer Andrew Nacin, with Benjamin Balter."
 
-Please use CVE-2011-3626.
+Could you allocate a CVE id for this?
 
-Thanks.
-
--- 
-    JB
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
