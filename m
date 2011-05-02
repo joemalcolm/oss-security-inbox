@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/1
-Message-ID: <4EA1428D.4020109@redhat.com>
-Date: Fri, 21 Oct 2011 15:29:41 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/16
+Message-ID: <599679687.290447.1304362741031.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 May 2011 14:59:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel (ARM): heap corruption in OABI semtimedop
 Content-Type: text/plain; charset=utf-8
 
-On 10/20/2011 08:27 PM, Josh Bressers wrote:
 
->> The hardlink(1) program from Fedora is susceptible to buffer overflows of
->> fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
->> nested directories and/or with long directory or file names.  I was able
->> to reproduce the problem (got a segfault) by running the program on a
->> directory containing 20 nested directories with 250-character names.
->>
->
-> CVE-2011-3630 hardlink buffer overflows
-> https://bugzilla.redhat.com/show_bug.cgi?id=746709
->
 
-FORTIFY_SOURCE should really be able to catch this buffer overflow.
-The buffer being overflown here in in BSS, But strcat() is used to 
-append to this buffer and __builtin___strcat_chk catches it, resulting 
-in the program being terminated.
+----- Original Message -----
+> The OABI wrapper for semtimedop does not bound the nsops argument. A
+> sufficiently large value will cause an integer overflow in allocation
+> size, followed by copying too much data into the allocated buffer.
+> This only affects ARM systems with CONFIG_OABI_COMPAT set.
+> 
+> This is exploitable for local privilege escalation, but successful
+> exploitation requires winning a race. Because user-to-kernel copy
+> functions on ARM zero the destination buffer even on failure to access
+> the provided user pointer, the copy loop in the vulnerable function
+> that causes the overflow will zero out large amounts of kernel heap if
+> not interrupted, crashing the system. This should be possible to work
+> around though.
+> 
+> -Dan
+> 
+> [1] http://marc.info/?l=linux-kernel&m=130408851326428&w=2
 
-Nice one though!
+Please use CVE-2011-1759.
 
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
