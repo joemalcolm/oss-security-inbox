@@ -1,52 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/8
-Message-ID: <4ECFFA5F.2010800@redhat.com>
-Date: Fri, 25 Nov 2011 13:28:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/18
+Message-ID: <20110502192825.GA21926@rh.iggy.bress.home>
+Date: Mon, 2 May 2011 15:29:29 -0400
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: ffmpeg before 0.7.8 and 0.8.7  2 buffer overflows and out-of-bounds read
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, cyril.jaquier@...l2ban.org, Tomasz Papszun <tomek@...z.tpsa.pl>, Yaroslav Halchenko <debian@...russian.com>
+Subject: Re: CVE Request -- fail2ban -- Use of insecure default temporary file when unbanning an IP (tmpfile = /tmp/fail2ban-mail.txt)
 Content-Type: text/plain; charset=utf-8
 
-On 11/23/2011 08:20 PM, Hanno Böck wrote:
-> Am Wed, 23 Nov 2011 13:52:04 -0700
-> schrieb Kurt Seifried <kseifried@...hat.com>:
->
->> On 11/23/2011 05:23 AM, Hanno Böck wrote:
->>> New ffmpeg releases contain a couple of security fixes:
->>> http://secunia.com/advisories/46888/
->>>
->>> 1) An error within the QDM2 decoder (libavcodec/qdm2.c) can be
->>> exploited to cause a buffer overflow.
->>>
+On Fri, Apr 29, 2011 at 01:02:04PM +0200, Jan Lieskovsky wrote:
+> 
+> Hello Josh, Steve, vendors,
+> 
+>   It was found that fail2ban IPs banner used insecure default temporary file
+> when unbanning an IP address. A local attacker could use this flaw to conduct
+> symlink attacks in order to gain access to sensitive information or potentially
+> to overwrite arbitrary file on the system.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=544232
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700763
+> 
+> Patch applied by Debian distribution:
+> [3] http://git.onerussian.com/?p=deb/fail2ban.git;a=commitdiff;h=ea7d352616b1e2232fcaa99b11807a86ce29ed8b
+> 
+> Could you allocate a CVE id for this? (Note: It should CVE-2009-* identifier)
+> 
 
-Please use CVE-2011-4351 for this issue
->>> 2) An integer overflow error within the "vp3_dequant()" function
->>> (libavcodec/vp3.c) can be exploited to cause a buffer overflow.
->>>
-Please use CVE-2011-4352 for this issue.
+Please use CVE-2009-5023
 
->>> 3) Errors within the "av_image_fill_pointers()", the
->>> "vp5_parse_coeff()", and the "vp6_parse_coeff()" functions can be
->>> exploited to trigger out-of-bounds reads.
->>>
->>>
-Please use CVE-2011-4353 for this issue.
-
->>> Please assign CVEs.
->>>
->>>
->>> Maybe someone wants to have a look if other issues in those
->>> releases are security relevant:
->>> http://git.videolan.org/?p=ffmpeg.git&a=shortlog&h=n0.7.8
->>>
->> This would be the original advisory http://ffmpeg.org/#pr7dot8and8dot7
->> correct?
-> It is the upstream confirmation - at least it's about the same bugs.
->
-
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
