@@ -1,60 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/3
-Message-ID: <20111227232509.GA832@openwall.com>
-Date: Wed, 28 Dec 2011 03:25:09 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jeff Mitchell <mitchell@....org>
-Cc: oss-security@...ts.openwall.com, cve@...re.org, ossi@....org
-Subject: Re: Disputing CVE-2011-4122
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/2
+Message-ID: <4DBF3360.3010109@caps-entreprise.com>
+Date: Tue, 03 May 2011 00:42:40 +0200
+From: Stephane Chauveau <stephane.chauveau@...s-entreprise.com>
+To: William Cohen <wcohen@...hat.com>
+CC: oss-security <oss-security@...ts.openwall.com>,  Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
-> So kcheckpass, at least for the moment, punts all of this down to
-> OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
-> its programming guide to require sanity checking of inputs at a higher
-> level (and then it should still do its own checking anyways).
+On 05/01/2011 04:00 AM, William Cohen wrote:
+> On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
+>> Hello Josh, Steve, vendors,
+>>
+>>    It was found that oprofile profiling system did not properly sanitize
+>> the content of event argument, provided to oprofile profiling control
+>> utility (opcontrol). If a local unprivileged user was authorized by
+>> sudoers file to run the opcontrol utility, they could use the flaw
+>> to escalate their privileges (execute arbitrary code with the privileges
+>> of the privileged system user, root). Different vulnerability than
+>> CVE-2006-0576.
+>>
+>> References:
+>> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
+>>
+>> Could you allocate a CVE id for this?
+>>
+>> Thank you&  Regards, Jan.
+>> -- 
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
+>> P.S.: Oprofile is not encouraged to be run under sudo, but still
+>>        should not allow escalation of privileges.
+> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+>
+> -Will
+Hello,
 
-Sure, but is it valid and not a vulnerability when installing a package
-(containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
-the system invoke any of the configured PAM stacks, some of which may
-have side-effects?
+unless I am missing something, the problem is only with the eval of $2 
+in set_event.
 
-I think it is not valid, and I think it is a vulnerability on its own,
-albeit a relatively minor one, regardless of PAM's pam_start() service
-name directory traversal possibility or lack thereof.
+$1 is fine because it always contains a number that cannot be modified 
+by the user. If so, a simple patch could be to escape $2:
 
-In other words, I say that kcheckpass is vulnerable (in this different
-way) even on systems that don't use OpenPAM (or that use fixed OpenPAM).
+set_event()
+{
+    eval "CHOSEN_EVENTS_$1=\$2"
+}
 
-> That's the basis for the maintainer wanting to challenge this CVE. Even
-> if everyone agrees that kcheckpass should do some kind of filtering of
-> service names, the fact remains that OpenPAM should have been doing its
-> own sanity checking anyways (since it should never simply trust user
-> input), and OpenPAM wasn't. If it wasn't kcheckpass that exposed this
-> problem, it would eventually have been something else.
+Stephane (the original bug reporter)
 
-Like I said before, this definitely makes some sense to me.  The service
-name was not supposed to be user input, though.  Normally, the same
-application provides the service name and cares about the authentication
-result, so it would not reasonably let the user choose the service name
-arbitrarily (as that would also let the user affect the authentication
-result in possibly unintended ways).  We have a rare exception here,
-where the authentication result actually does not matter to kcheckpass
-itself, but matters to another application - one in control of the
-supplied service name.  OK, that's a peculiar exception and a somewhat
-valid use case, and I fully support the OpenPAM hardening change that
-this prompted.
 
-> I'll happily pass your comments along to the kcheckpass maintainer, and
-> he indicated to me during our discussions that some level of filtering
-> would probably be appropriate, but this CVE is due to OpenPAM's lack of
-> sanity checking and blaming the program that exposes it via valid (if
-> ugly) usage scenarios is misguided.
 
-We need two CVE ids then - one for OpenPAM, the other for the kcheckpass
-issue (namely, letting a user run arbitrary PAM stacks, including those
-that a sysadmin may never have intended for the user to be able to run).
 
-Makes sense?
 
-Alexander
