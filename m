@@ -1,22 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/4
-Message-ID: <4DA31678.1020108@redhat.com>
-Date: Mon, 11 Apr 2011 22:55:52 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/1
+Message-ID: <4DBE4AB8.2040106@redhat.com>
+Date: Mon, 02 May 2011 11:40:00 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: sctp: fix to calc the INIT/INIT-ACK chunk length correctly to set
+Subject: CVE request: libmodplugin stack-buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-When calculating the INIT/INIT-ACK chunk length, we should not only 
-account the length of parameters, but also the parameters zero padding 
-length, such as AUTH HMACS parameter and CHUNKS parameter. Without the 
-parameters zero padding length we may get oops.
+Some details and exploit at:
+http://www.exploit-db.com/exploits/17222/
 
-Commit: http://git.kernel.org/linus/a8170c35e738d62e9919ce5b109cf4ed66e9
+>From an initial look, it seems that applications embedding libmodplug,
+sp gstreamer-plugins may not be affected, since it seems to be doing
+some parameter checking before hand.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=695383
+Can a CVE be assigned to this please?
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Huzaifa Sidhpurwala / Red Hat Security Response Team
