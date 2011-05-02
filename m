@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/6
-Message-ID: <20111117024027.GJ723@yuggoth.org>
-Date: Thu, 17 Nov 2011 02:40:28 +0000
-From: The Fungi <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/7
+Message-ID: <20110502172230.GA19876@openwall.com>
+Date: Mon, 2 May 2011 21:22:30 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 2011-11-16 23:43:25 +0400 (+0400), Solar Designer wrote:
-[...]
-> Does anyone readily know if BIND 9.3.x is affected as well?
-[...]
+On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
+> On 05/02/2011 06:12 AM, Solar Designer wrote:
+> > On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+> >> Can you clarify what is meant by updates?
+> > 
+> > RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+> 
+> Ok.. but do they need to be publicly available ( ie no service or
+> maintenance contract to get)?
 
-While obviously not conclusive, I can say that our 9.3.4-P1.2
-resolvers were not impacted and ran clean through while our 9.5.1-P3
-and 9.6-ESV-R4 resolvers crashed and had to be restarted several
-times overnight.
--- 
-{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
-WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
-MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl); }
+Per the discussion so far, yes, or you would likely be in another
+category from the "open" Linux distro vendors.  I don't know what others
+in here would say if you, for example, only make advisories public, but
+not any code.  Maybe this will do (that is, folks would not oppose you
+being on the same list with the "open" vendors), maybe not.  A better
+option could be for you to make advisories and package metainfo public
+(file lists, change logs, etc.), but not the packages themselves.
+I similarly don't know how that would be received by others in here.
+On one hand, it would show that you're preparing security updates, for
+what software, and when.  On the other, the level of openness would
+still be less than Red Hat's.
+
+Alexander
