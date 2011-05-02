@@ -1,37 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/7
-Message-ID: <4EF7763D.8040402@redhat.com>
-Date: Sun, 25 Dec 2011 12:15:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/12
+Message-ID: <20110502182235.GA20359@openwall.com>
+Date: Mon, 2 May 2011 22:22:35 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE-request for three 2009 Joomla issues
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 05:27 PM, Henri Salo wrote:
-> I didn't find CVE-identifiers for these issues:
->
-> 1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
-> http://osvdb.org/show/osvdb/56276
-> http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
+On Mon, May 02, 2011 at 12:57:16PM -0500, Mark Hatle wrote:
+> While I have not personally applied for the closed vendor list, our current
+> security contact has.  I thought I would attempt to explain briefly what we
+> publicly disclose and what we do not.  If this changes your stance on allowing
+> us into the closed list that is fine, if not then keep this as background
+> information for the future.
 
-Please use CVE-2011-4906 for this issue.
->
-> 2) Joomla! Missing JEXEC Check Weakness Path Disclosure
-> http://osvdb.org/show/osvdb/56277
-> http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
-Please use CVE-2011-4907 for this issue.
->
-> 3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
-> http://osvdb.org/show/osvdb/64578
-Please ue CVE-2011-4908 for this issue.
+Thank you!  This is useful info either way, and a positive outcome of
+this discussion thread.  I've just added a link to your posting to:
 
-> Secunia advisory for three issues: http://secunia.com/advisories/35899/
->
-> - Henri Salo
+http://oss-security.openwall.org/wiki/vendors#wind-river
 
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Alexander
