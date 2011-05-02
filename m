@@ -1,12 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/12
-Message-ID: <CAHmME9pmGn0Mqwep7ziynNPbp5-OuooWjp-AFBqAmn_yx3Kjgg@mail.gmail.com>
-Date: Fri, 4 Nov 2011 16:47:04 -0400
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/20
+Message-ID: <1322076797.291534.1304365352648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 May 2011 15:42:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, kseifried@...hat.com
-Subject: Re: Re: CVE request for Calibre
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- WordPress v3.1.2
 Content-Type: text/plain; charset=utf-8
 
-7.1. Ability to unmount any device.
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> WordPress upstream has released v3.1.2 addressing one security issue:
+> [1] http://wordpress.org/news/
+> 
+> More from [1]:
+> "This release addresses a vulnerability that allowed Contributor-level
+> users to improperly publish posts.  The issue was discovered by a member
+> of our security team, WordPress developer Andrew Nacin, with Benjamin
+> Balter."
+> 
 
+Please use CVE-2011-1762.
+
+Thanks.
+
+-- 
+    JB
