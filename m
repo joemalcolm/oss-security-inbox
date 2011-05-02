@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/13
-Message-ID: <20110804191323.GB41331@dojo.mi.org>
-Date: Thu, 4 Aug 2011 15:13:24 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/17
+Message-ID: <1434241886.291160.1304364270167.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 May 2011 15:24:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
+Cc: Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, William Cohen <wcohen@...hat.com>, Robert Richter <robert.richter@....com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-:Can I get 2010 CVE-ID for this issue? I am not sure if other distributions/operating systems need their own IDs. If I am correct one ID should be enough.
-:
-:Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
-:Bug report to FreeBSD: http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
-:NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
-:Reported to OpenBSD (and patched), but can't find references.
 
-FWIW, a reference for OpenBSD is:
 
-ftp://ftp.openbsd.org/pub/OpenBSD/patches/4.5/common/013_ftpd.patch
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> It was found that oprofile profiling system did not properly sanitize
+> the content of event argument, provided to oprofile profiling control
+> utility (opcontrol). If a local unprivileged user was authorized by
+> sudoers file to run the opcontrol utility, they could use the flaw
+> to escalate their privileges (execute arbitrary code with the
+> privileges
+> of the privileged system user, root). Different vulnerability than
+> CVE-2006-0576.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you & Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> P.S.: Oprofile is not encouraged to be run under sudo, but still
+> should not allow escalation of privileges.
+
+
+I'm giving this an ID. oprofile is one of those tools that is likely to be
+run as a privileged user.
+
+Please use CVE-2011-1760
+
+Thanks.
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"All my autopsies have been performed on dead people."     -Anguished English
-
-Content of type "application/pgp-signature" skipped
+    JB
