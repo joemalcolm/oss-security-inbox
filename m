@@ -1,90 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/4
-Message-ID: <4EDEA3C9.1000500@redhat.com>
-Date: Tue, 06 Dec 2011 16:22:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: acpid - possible issue in socket handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/10
+Message-ID: <4DBEF23C.6080500@windriver.com>
+Date: Mon, 2 May 2011 13:04:44 -0500
+From: Mark Hatle <mark.hatle@...driver.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: [security-vendor] Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-While reading the acpid ChangeLog I noticed:
+On 5/2/11 12:22 PM, Solar Designer wrote:
+> On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
+>> > On 05/02/2011 06:12 AM, Solar Designer wrote:
+>>> > > On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
+>>>> > >> Can you clarify what is meant by updates?
+>>> > > 
+>>> > > RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+>> > 
+>> > Ok.. but do they need to be publicly available ( ie no service or
+>> > maintenance contract to get)?
 
-* Tue Nov 15 2011  Ted Felix <http://www.tedfelix.com>
-  - 2.0.13 release
-  - Fix for socket name buffer overflow.  (ud_socket.c)  (Ted Felix)
+Most embedded Linux distributors don't have any concept of src.rpm or
+equivalent.  We primarily ship patches to our build infrastructure and meta-data
+in "some format".  Be it as patch files, installer "fragements", etc.
 
-This doesn't appear to cross a security boundary without an admin doing
-something intentionally strange. But just in case someone knows a clever
-way to exploit this I thought I'd post to the list and ask (and if so
-I'll assign a CVE).
+> Per the discussion so far, yes, or you would likely be in another
+> category from the "open" Linux distro vendors.  I don't know what others
+> in here would say if you, for example, only make advisories public, but
+> not any code.  Maybe this will do (that is, folks would not oppose you
+> being on the same list with the "open" vendors), maybe not.  A better
+> option could be for you to make advisories and package metainfo public
+> (file lists, change logs, etc.), but not the packages themselves.
 
-Code below:
+This is a more reasonable approach for the Embedded Linux distributors.  But
+keep in mind that due to our IT infrastructures and such, don't expect this type
+of change overnight.  However, if it would allow our participation in the closed
+lists we are certainly interested.
 
---- acpid-2.0.12/ud_socket.c    2009-04-29 08:36:27.000000000 -0600
-+++ acpid-2.0.13/ud_socket.c    2011-10-17 17:47:16.000000000 -0600
-@@ -15,6 +15,7 @@
- #include <fcntl.h>
- 
- #include "acpid.h"
-+#include "log.h"
- #include "ud_socket.h"
- 
- int
-@@ -24,7 +25,16 @@
-        int r;
-        struct sockaddr_un uds_addr;
- 
--       /* JIC */
-+    if (strnlen(name, sizeof(uds_addr.sun_path)) >
-+        sizeof(uds_addr.sun_path) - 1) {
-+        acpid_log(LOG_ERR, "ud_create_socket(): "
-+            "socket filename longer than %u characters: %s",
-+            sizeof(uds_addr.sun_path) - 1, name);
-+        errno = EINVAL;
-+        return -1;
-+    }
-+
-+    /* JIC */
-        unlink(name);
- 
-        fd = socket(AF_UNIX, SOCK_STREAM, 0);
-@@ -35,7 +45,7 @@
-        /* setup address struct */
-        memset(&uds_addr, 0, sizeof(uds_addr));
-        uds_addr.sun_family = AF_UNIX;
--       strcpy(uds_addr.sun_path, name);
-+    strncpy(uds_addr.sun_path, name, sizeof(uds_addr.sun_path) - 1);
-       
-        /* bind it to the socket */
-        r = bind(fd, (struct sockaddr *)&uds_addr, sizeof(uds_addr));
-@@ -85,6 +95,14 @@
-        int r;
-        struct sockaddr_un addr;
- 
-+    if (strnlen(name, sizeof(addr.sun_path)) > sizeof(addr.sun_path) - 1) {
-+        acpid_log(LOG_ERR, "ud_connect(): "
-+            "socket filename longer than %u characters: %s",
-+            sizeof(addr.sun_path) - 1, name);
-+        errno = EINVAL;
-+        return -1;
-+    }
-+   
-        fd = socket(AF_UNIX, SOCK_STREAM, 0);
-        if (fd < 0) {
-                return fd;
-@@ -93,6 +111,8 @@
-        memset(&addr, 0, sizeof(addr));
-        addr.sun_family = AF_UNIX;
-        sprintf(addr.sun_path, "%s", name);
-+    /* safer: */
-+    /*strncpy(addr.sun_path, name, sizeof(addr.sun_path) - 1);*/
- 
-        r = connect(fd, (struct sockaddr *)&addr, sizeof(addr));
-        if (r < 0) {
+> I similarly don't know how that would be received by others in here.
+> On one hand, it would show that you're preparing security updates, for
+> what software, and when.  On the other, the level of openness would
+> still be less than Red Hat's.
 
+I am a bit confused though.  If I (as a non-RH customer) look to download their
+latest security updates, I don't see an obvious way of doing it based on their
+advisories.  For instance:
 
+https://rhn.redhat.com/errata/RHSA-2011-0421.html
 
--- 
+This advisory ends with:  (The unlinked packages above are only available from
+the Red Hat Network)
 
--Kurt Seifried / Red Hat Security Response Team
+This requires that I have a support account in order to download the update.
+This is certainly different from the "Open" distributions, such as Fedora... but
+really isn't different from what Wind River is doing -- other then perhaps the
+verbose description of the issue.
 
+--Mark
+
+> Alexander
+> 
