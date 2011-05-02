@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/5
-Message-ID: <4E68C0D1.8070206@redhat.com>
-Date: Thu, 08 Sep 2011 15:19:13 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/4
+Message-ID: <4DBEC61E.8090308@mvista.com>
+Date: Mon, 02 May 2011 04:56:30 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
 
-   it was found that the Zikula web application framework did not
-properly sanitize the 'themename' parameter, while setting particular
-theme as a default one, modifying the theme or deleting it. A remote
-attacker, with Zikula administrator privilege, could use this flaw to
-execute arbitrary HTML or web script code in the context of the
-affected website.
 
-References:
-[1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
-[2] https://www.htbridge.ch/advisory/xss_in_zikula.html
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
+On 04/30/2011 04:51 AM, Solar Designer wrote:
+<snipped>
 
-Relevant upstream patch:
-[4] 
-https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
+> Hence, I've saved your subscription request to a separate folder, to
+> revisit it if a decision is made to start adding "closed" vendors to the
+> list, if Wind River starts to publish advisories and updates (in other
+> words, if it becomes no more closed than Red Hat), or if a suitable
+> separate list is setup.
 
-Vulnerable Zikula versions: Development versions prior to patch [4].
-Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
-                          code in question yet.
+Can you clarify what is meant by updates?
 
-Provided PoC (from [1], [2]):
-=============================
-http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu 
-ment.cookie%29%3C/script%3E
+- Armin
 
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
