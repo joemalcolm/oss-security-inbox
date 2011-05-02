@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/7
-Message-ID: <4D52BA63.6050209@redhat.com>
-Date: Thu, 10 Feb 2011 00:01:39 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/16
+Message-ID: <599679687.290447.1304362741031.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 May 2011 14:59:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel (ARM): heap corruption in OABI semtimedop
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2011 11:49 PM, Dan Rosenberg wrote:
-> I'm not aware of any distributions that support 2.6.37 kernels, but as
-> far as I know this doesn't affect CVE eligibility (please correct me
-> if I'm wrong).
 
-Ok, I'm just asking. Please use CVE-2011-0696.
 
-Eugene
+----- Original Message -----
+> The OABI wrapper for semtimedop does not bound the nsops argument. A
+> sufficiently large value will cause an integer overflow in allocation
+> size, followed by copying too much data into the allocated buffer.
+> This only affects ARM systems with CONFIG_OABI_COMPAT set.
+> 
+> This is exploitable for local privilege escalation, but successful
+> exploitation requires winning a race. Because user-to-kernel copy
+> functions on ARM zero the destination buffer even on failure to access
+> the provided user pointer, the copy loop in the vulnerable function
+> that causes the overflow will zero out large amounts of kernel heap if
+> not interrupted, crashing the system. This should be possible to work
+> around though.
+> 
+> -Dan
+> 
+> [1] http://marc.info/?l=linux-kernel&m=130408851326428&w=2
 
-> On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo<eugene@...hat.com>  wrote:
->> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
->>>
->>> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
->>> btrfs_ioctl_space_info() and introduced security issues.  Since they
->>> were all introduced at once and fixed at the same time, one CVE should
->>> suffice.
->>>
->>> Due to integer truncation or a signedness error in a typecasted
->>> comparison, an integer overflow in an allocation size calculation, and
->>> a failure to properly check bounds when copying data, it was possible
->>> for an unprivileged user to cause a denial-of-service due to writing
->>> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
->>>
->>> -Dan
->>>
->>> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
->>
->> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last year.
->> Do we have commercially supported kernels that are affected by this?
->>
->> Thanks, Eugene
->>
+Please use CVE-2011-1759.
 
+Thanks.
+
+-- 
+    JB
