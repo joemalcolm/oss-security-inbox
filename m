@@ -1,28 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/1
-Message-ID: <4E49C306.6000202@redhat.com>
-Date: Tue, 16 Aug 2011 09:08:22 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: Re: CVE request -- kernel: perf: fix software event overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/2
+Message-ID: <4DBF3360.3010109@caps-entreprise.com>
+Date: Tue, 03 May 2011 00:42:40 +0200
+From: Stephane Chauveau <stephane.chauveau@...s-entreprise.com>
+To: William Cohen <wcohen@...hat.com>
+CC: oss-security <oss-security@...ts.openwall.com>,  Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On 08/15/2011 09:43 PM, Petr Matousek wrote:
-> Hello Steve, vendors.
-> 
-> Description:
-> Under certain circumstances software event overflows go wrong and
-> deadlock. Avoid trying to delete a timer from the timer callback.
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=730706
-> https://lkml.org/lkml/2011/7/27/337 (reproducer)
-> https://lkml.org/lkml/2011/7/28/284 (fix)
-> 
-> Upstream fix:
-> a8b0ca17b80e92faab46ee7179ba9e99ccb61233 (much larger patch that
-> contains the hunk referenced above)
+On 05/01/2011 04:00 AM, William Cohen wrote:
+> On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
+>> Hello Josh, Steve, vendors,
+>>
+>>    It was found that oprofile profiling system did not properly sanitize
+>> the content of event argument, provided to oprofile profiling control
+>> utility (opcontrol). If a local unprivileged user was authorized by
+>> sudoers file to run the opcontrol utility, they could use the flaw
+>> to escalate their privileges (execute arbitrary code with the privileges
+>> of the privileged system user, root). Different vulnerability than
+>> CVE-2006-0576.
+>>
+>> References:
+>> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
+>>
+>> Could you allocate a CVE id for this?
+>>
+>> Thank you&  Regards, Jan.
+>> -- 
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
+>> P.S.: Oprofile is not encouraged to be run under sudo, but still
+>>        should not allow escalation of privileges.
+> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+>
+> -Will
+Hello,
 
-Use CVE-2011-2918.
+unless I am missing something, the problem is only with the eval of $2 
+in set_event.
 
-Thanks, Eugene
+$1 is fine because it always contains a number that cannot be modified 
+by the user. If so, a simple patch could be to escape $2:
+
+set_event()
+{
+    eval "CHOSEN_EVENTS_$1=\$2"
+}
+
+Stephane (the original bug reporter)
+
+
+
+
+
