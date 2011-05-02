@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/12
-Message-ID: <1833559043.18998.1300221590506.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:39:50 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/13
+Message-ID: <20110502182907.GA20415@openwall.com>
+Date: Mon, 2 May 2011 22:29:07 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: 2 acpid flaws
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
+On Mon, May 02, 2011 at 01:04:44PM -0500, Mark Hatle wrote:
+> I am a bit confused though.  If I (as a non-RH customer) look to download their
+> latest security updates, I don't see an obvious way of doing it based on their
+> advisories.  For instance:
 > 
-> Looks like this implicit CVE request got lost:
-> http://www.openwall.com/lists/oss-security/2011/01/19/4
+> https://rhn.redhat.com/errata/RHSA-2011-0421.html
 > 
-> The first issue deserves a CVE I guess as unprivileged users could
-> block acpid.
-> 
+> This advisory ends with:  (The unlinked packages above are only available from
+> the Red Hat Network)
 
-Sorry for missing this. I agree, the first issue deserves an ID. I'd rather
-not give the second an ID, since it's not actually a security flaw (it's
-certainly a bug though).
+Yes, Red Hat advisories say that, but in practice the .src.rpm's are
+freely downloadable.  Here's one mentioned in the advisory above:
 
-Use CVE-2011-1159
+lftp ftp.redhat.com:/pub/redhat/linux/enterprise/6Server/en/os/SRPMS> ls -l kernel-2.6.32-71.24.1.el6.src.rpm
+-rw-r--r--    5 ftp      ftp      67060785 Apr 07 02:51 kernel-2.6.32-71.24.1.el6.src.rpm
 
-Thanks.
+Yes, it's weird.
 
--- 
-    JB
+> This requires that I have a support account in order to download the update.
+
+For binary updates, yes.  For sources, no (although the wording in the
+advisories is such that you get that impression).
+
+Alexander
