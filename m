@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/7
-Message-ID: <4E12920D.6090805@freebsd.org>
-Date: Mon, 04 Jul 2011 21:24:45 -0700
-From: Colin Percival <cperciva@...ebsd.org>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/20
+Message-ID: <1322076797.291534.1304365352648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 2 May 2011 15:42:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- WordPress v3.1.2
 Content-Type: text/plain; charset=utf-8
 
-On 07/04/11 16:09, Solar Designer wrote:
-> I'd be interested in more detail on this bug.  So far, the closest to a
-> description of the bug that I saw is this:
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> http://lists.openwall.net/full-disclosure/2011/07/01/4
+> WordPress upstream has released v3.1.2 addressing one security issue:
+> [1] http://wordpress.org/news/
 > 
-> but it's not enough.
+> More from [1]:
+> "This release addresses a vulnerability that allowed Contributor-level
+> users to improperly publish posts.  The issue was discovered by a member
+> of our security team, WordPress developer Andrew Nacin, with Benjamin
+> Balter."
 > 
-> I'd like to learn not only on my own, but also on others' mistakes. ;-)
-> And for this purpose it does not matter how old the software is and
-> whether it is still supported or not.
-> 
-> Colin - any comments from you?  I realize the bug is not yours, but
-> perhaps you're one of the few people who have figured it out now, for a
-> reason similar to mine.
 
-I haven't had time to investigate, in part because I don't have any systems
-running that ancient openssh any more.  I'm interested to hear if anyone has
-tracked down exactly where the bug was, though.
+Please use CVE-2011-1762.
+
+Thanks.
 
 -- 
-Colin Percival
-Security Officer, FreeBSD | freebsd.org | The power to serve
-Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
+    JB
