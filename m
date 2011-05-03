@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/6
-Message-ID: <20110725114747.GA19113@pisco.westfalen.local>
-Date: Mon, 25 Jul 2011 13:47:47 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/4
+Message-ID: <20110503172310.GF2160@redhat.com>
+Date: Tue, 3 May 2011 11:23:11 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Squirrelmail CVE duplicates
+Subject: CVE request: openssh
 Content-Type: text/plain; charset=utf-8
 
+>OpenSSH Security Advisory: portable-keysign-rand-helper.adv
+>
+>This document may be found at:
+>http://www.openssh.com/txt/portable-keysign-rand-helper.adv
+>
+>1. Vulnerability
+>
+>        Portable OpenSSH's ssh-keysign utility may allow unauthorised
+>        local access to host keys on platforms if ssh-rand-helper is
+>        used.
 
-On Mon, Jul 25, 2011 at 01:29:04PM +0200, Jan Lieskovsky wrote:
-> Hi Moritz,
-> 
->   thank you for checking this.
-> 
-> On 07/24/2011 06:17 PM, Moritz Muehlenhoff wrote:
-> >Hi,
-> >there seems to be a duplicate CVE assignment for Squirrelmail?
-> >
-> >CVE-2010-4555 / CVE-2011-2753
-> 
-> If I got it right, the CVE-2010-4555 ID has been assigned to the XSS
-> flaws:
-> 
-> Multiple cross-site scripting (XSS) flaws were found in the SquirrelMail
-> webmail client:
-> * XSS flaws in generic options inputs,
-> * XSS flaw in the SquirrelSpell plug-in,
-> * XSS flaw in the Index Order page.
-> 
-> [1]
-> https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
-> 
-> while the CVE-2011-2753 ID has been assigned to the CSRF protection add-ons:
-> 
-> Also protection against Cross-site Request Forgery (CSRF) flaws has
-> been added to the empty trash feature and to the Index Order page.
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=722832#c0
+Full details at the URL above.  I don't see a CVE name in the advisory;
+could one be assigned for this flaw?
 
-That makes sense, thanks.
+Note: it only affects 5.6 and 5.7.
 
-Cheers,
-        Moritz
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
