@@ -1,56 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/13/2
-Message-ID: <4E46B53E.5050201@debian.org>
-Date: Sat, 13 Aug 2011 12:32:46 -0500
-From: John Lightsey <lightsey@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/1
+Message-ID: <4DBFCC85.8060600@redhat.com>
+Date: Tue, 03 May 2011 15:06:05 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: two vulnerabilities in ktsuss 1.4 and earlier
+CC: William Cohen <wcohen@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi William,
+On 05/01/2011 07:30 AM, William Cohen wrote:
+> 
+> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+> 
 
-I reported these bugs privately to the Debian security team and the
-upstream author some time ago, but it does not appear that any CVE was
-created as a result.
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626178
-
-The 1.3 and 1.4 versions of ktsuss which include a setuid ktsuss binary
-suffered from two separate security bugs which can be used for local
-root exploits.
-
-The "1.314" version which does not include a setuid ktsuss binary and
-uses "su" for privilege escalation does not suffer from these problems.
+It appears from the debian bug, that there may be others way to exploit
+this issue as well. hence i think we need a revised patch?
 
 
-1) When the target UID is the same as the real UID ktsuss skips
-authentication. Under these circumstances, ktsuss fails to change the
-effective UID back to the real UID. (line 118 of src/ktsuss.c in version
-1.3.)
 
-$ ktsuss -u `whoami` whoami
-root
-
-
-2) The setuid ktsuss binary executes a GTK interface subprocess to
-prompt for username and password. This GTK interface runs as root and
-allows arbitrary code execution via the GTK_MODULES environmental variable.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJORrU3AAoJEORPgBbTYw+J7gkP/361/sJwrIi/k/ETubWfNffe
-HtEoYtJJ6WuCtsA/lcHqSHQ8zdCk18NISEuGEu5i239Tw3OxVQjFnu5Hqit3xIZW
-5B2enCnm10mjN0YtnjS2ihG4nj6heWQeCGDyM3odTrMGWVk6bx0T5DwoP7IW4ZtG
-nR2ZNrgOM0at5SIUqqxGJyA25EHeDqdKj9k4RgBI+247tCRmcG0dYrxK7izf/nlg
-/42++1hQ/iGugtb+QSGrWqsSkutdJZs6zLmOwEC9SMRLC/SEORF89wM7X7ntPQ0m
-EoJ9TaJikwaowQqsC4ey+VlPbhJYKcbD2GiS0ir+6RO38BF4AiYnI0MMwBt845D1
-TJXCVb1PbWM8LObT4HnoJ42JpFwtZ7YnnHSyB9AJ/f5K52svRLGg1Fa32/EHw5Ju
-8qp7/S2a0qVJLWXwqBBa1d5hVjkb/iItNU53a1ymzlAu+1N6mPhwLSRRRIP97Xe2
-apb1TRV9esH8l2AsK9MEkbp7poihkf+8IwGMpy+1jqsJKuJIAKP7t8MM0VLADCH6
-EozEskqFr5ZhN7FBpqWYWx9O78gskQmLdx3zju62VJT3QZRgy9y8+AulxAMhDrRf
-/mAobPgxRrTcrELM7+Z7H1R2g1Zh1h63ksF7OnSUcdFDZOVOr2ZwrdoZy+GD9f8S
-RN/8Ra1lMG/9l2Jm5Vv+
-=G44E
------END PGP SIGNATURE-----
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
