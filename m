@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/14
-Message-ID: <20110412213344.GA16664@openwall.com>
-Date: Wed, 13 Apr 2011 01:33:44 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/4
+Message-ID: <20110503172310.GF2160@redhat.com>
+Date: Tue, 3 May 2011 11:23:11 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: openssh
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 12, 2011 at 07:58:18PM +0300, Onur K??????k wrote:
->  Sorry for the late reply, we had to resolve some issues on our side
-> about who should join. I was a subscriber of vendor-sec as a
-> representitive of Pardus, please add me to the new list(s).
-> 
-> 
-> pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
->      Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
-> uid                  Onur K??????k <onur@...dus.org.tr>
-> sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
+>OpenSSH Security Advisory: portable-keysign-rand-helper.adv
+>
+>This document may be found at:
+>http://www.openssh.com/txt/portable-keysign-rand-helper.adv
+>
+>1. Vulnerability
+>
+>        Portable OpenSSH's ssh-keysign utility may allow unauthorised
+>        local access to host keys on platforms if ssh-rand-helper is
+>        used.
 
-Added.
+Full details at the URL above.  I don't see a CVE name in the advisory;
+could one be assigned for this flaw?
 
-BTW, I am applying this restriction:
+Note: it only affects 5.6 and 5.7.
 
-| 2. Be on oss-security by the time Josh posted the above (if you did not
-| care to join oss-security until now, you hardly have a legitimate need
-| to be on the closed list now).
+Thanks.
 
-per-distro rather than per-person.  (And it will become obsolete in some
-months anyway since new distros are appearing, etc.)
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
