@@ -1,102 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/3
-Message-ID: <4E1FF96C.3040709@redhat.com>
-Date: Fri, 15 Jul 2011 10:25:16 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Erik de Castro Lopo <erikd@...a-nerd.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/6
+Message-ID: <899476003.61142.1304624656567.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 5 May 2011 15:44:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel network vulns
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> On 02/18/2010 01:12 PM, Eugene Teo wrote:
+> > 1) gre: fix netns vs proto registration ordering
+> > http://patchwork.ozlabs.org/patch/45553/
+> >
+> > "GRE protocol receive hook can be called right after protocol addition
+> > is done. If netns stuff is not yet initialized, we're going to oops in
+> > net_generic().
+> >
+> > This is remotely oopsable if ip_gre is compiled as module and packet
+> > comes at unfortunate moment of module loading."
 
-Hello Erik,
+Use CVE-2011-1767
 
-On 07/15/2011 02:47 AM, Erik de Castro Lopo wrote:
->
-> Please CC me on all mails regarding this bug. I am not on the list
-> where Dan Rosenberg wrote:
+> >
+> > 2) tunnels: fix netns vs proto registration ordering
+> > http://patchwork.ozlabs.org/patch/45554/
+> >
+> > "Same stuff as in ip_gre patch: receive hook can be called before netns
+> > setup is done, oopsing in net_generic()."
+> 
 
-There was only one reaction from Dan so far:
-[1] http://comments.gmane.org/gmane.comp.security.oss.general/5476
+Use CVE-2011-1768
 
-The oss-security list and it's content / archive are publicly accessible:
-[2] http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+Thanks.
 
-You can subscribe there and / or use one of the ways to access the archive:
-[3] http://www.openwall.com/lists/oss-security/
-[4] http://news.gmane.org/gmane.comp.security.oss.general
-(plus others)
-
-No need to be Cc-ed on each particular message, just use the thread view 
-[4], and react to message, where necessary / appropriate.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
->> On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
->> <erikd (AT) mega-nerd (DOT) com>  wrote:
->>> Jan Lieskovsky wrote:
->>>
->>>> * *an integer overflow, leading to heap-based buffer overflow flaw was
->>>> found in the way libsndfile, library for reading and writing of sound
->>>> files, processed certain PARIS Audio Format (PAF) audio files with
->>>> crafted count of channels in the PAF file header. A remote attacker
->>>> could provided a specially-crafted PAF audio file, which once opened by
->>>> a local, unsuspecting user in an application, linked against libsndfile,
->>>> could lead to that particular application crash (denial of service),
->>>
->>> I agree with everything up to here.
->>>
->>>> or, potentially arbitrary code execution with the privileges of the
->>>> user running the application.
->>>
->>> but this is rubbish. The heap gets overwritten with zeros which would
->>> certainly lead to the application segfaulting. However, there is
->>> no way for arbitrary code to be executed on amy sane OS with proper
->>> memory protection.
->>
->> This is not a sound assumption. Any sort of partially controlled heap
->> corruption, even if the data that's being written isn't controllable
->> by an attacker, should be considered potentially exploitable. Modern
->> heap exploitation is alive and well - it's worth pointing out that a
->> recent remote vulnerability in Microsoft IIS FTPD that allowed for a
->> heap overflow of strictly 0xff bytes was shown to be exploitable,
->> contradicting Microsoft's claims that it could only cause denial of
->> service.
->
-> The code which caused the heap overflow was this:
->
->      memset (ppaf24->samples, 0, ppaf24->samplesperblock * ppaf24->channels) ;
->
-> where it was the ppaf24->channels value that was not validated (and
-> ppaf24->samplesperblock is always 10). In future versions of libsndfile
-> ppaf24->samplesperblock will be replaced by a compile time constant
-> value.
->
-> That means that the heap is overwritten in blocks that are a multiple
-> of 10 bytes which makes it significatly more difficult to exploit.
->
->> Think about partially overwriting certain elements of heap
->> metadata, or even heap data, with zeroes. Suppose an application with
->> heavy function pointer usage was linked against libsndfile, and this
->> overflow allowed overwriting the least significant bytes of a function
->> pointer with zeroes and ultimately allowed for controlling execution
->> flow.
->
-> For this instance of heap overflow (overwritten in multiples of 10 bytes
-> with the base being 4 byte aligned), its only possible to zero the lowest
-> 2 bytes of a function pointer (assuming a little endian machine) if it
-> happens to lie in exactly the right place.
->
-> In terms of ease of exploitation, this one has to be in the very difficult
-> basket.
->
->> It's better to be safe than sorry.
->
-> That's why I rushed out a new release. I do take this seriously, but
-> I do not like to see the threat exaggerated beyond reason.
->
-> Erik
-
+-- 
+    JB
