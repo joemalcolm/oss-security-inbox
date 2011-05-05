@@ -1,51 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/5
-Message-ID: <462508465.25588.1295039113480.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 14 Jan 2011 16:05:13 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/4
+Message-ID: <Pine.GSO.4.64.1105050952580.15686@faron.mitre.org>
+Date: Thu, 5 May 2011 10:04:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+Subject: Re: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
 
-Can MITRE take these. I'm having trouble finding time for them this week :(
+Assuming I understand the issue correctly, there is precedent in CVE for 
+this kind of problem, or at least the exploitation of recursive 
+backup/archive programs as they process files (many seem related to 
+setting insecure permissions during the copy, and only setting the secure 
+permissions afterward, a la CWE-689).
 
-Thanks.
+CVE-2009-4411 is the only example I can easily find.
 
--- 
-    JB
+There is a "risk" of sorts to the community that a large number of these 
+issues could get disclosed for different packages in a short timeframe, 
+but this happens with any discovery of a new "class" of security problems 
+or attacks (look at the untrusted path stuff that happened last year with 
+Windows and Linux).  But IMO, better sooner rather than later.  Linux is a 
+multi-user OS and should be treated as such, which means local 
+file-writing/privilege attacks matter, even though they might not be as 
+severe as other kinds of attacks.  Somebody audited simpler symlink 
+problems in Debian packages a couple years ago, but while it must have 
+been very painful and there were dozens (hundreds?) of separate issues, 
+most of those problems seemed to get fixed in a relatively quick amount of 
+time.
 
------ Original Message -----
-> Hi,
-> 
-> Could CVE ids be assigned for the following issues? Thanks in advance.
-> 
-> ftpls: XSS in directory listing
-> http://bugs.debian.org/607494
-> 
-> xdigger: buffer overflow when parsing CLI arguments
-> (it is SGID, at least in Debian)
-> http://bugs.debian.org/609096
-> 
-> lbreakout2: buffer overflow with overly long HOME env var
-> (it is SGID, at least in Debian)
-> http://bugs.debian.org/608980
-> 
-> calibre: XSS and file disclosure
-> http://www.waraxe.us/advisory-77.html
-> http://bugs.debian.org/608822
-> 
-> typo3: 8 vulnerabilities
-> http://typo3.org/teams/security/security-bulletins/typo3-sa-2010-022/
-> http://seclists.org/fulldisclosure/2010/Dec/690
-> http://bugs.debian.org/607286
-> 
-> 
-> There are more issues without ids, will request them later.
-> 
-> Regards,
-> --
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+Maybe the appropriate strategy is for the community to agree on a good way 
+of solving these problems before announcing all the different packages 
+that are affected, but it's just a thought.  Ultimately this decision is 
+up to the researcher, affected developers, and customers.
+
+- Steve
