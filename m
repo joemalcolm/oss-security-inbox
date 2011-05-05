@@ -1,35 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/3
-Message-ID: <4DE8838B.5020401@redhat.com>
-Date: Fri, 03 Jun 2011 14:47:39 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/2
+Message-ID: <4DC1EDA3.4050007@halfdog.net>
+Date: Thu, 05 May 2011 00:21:55 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>, coley <coley@...re.org>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+Subject: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 04:22 AM, Josh Bressers wrote:
-> 
-> ----- Original Message -----
->> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
->>> On 02/24/2011 03:59 AM, Josh Bressers wrote:
->>>> ----- Original Message -----
->>>>>
->>>>> The kernel automatically evaluates partition tables of storage
->>>>> devices.  The code for evaluating LDM partitions (in
->>>>> fs/partitions/ldm.c) contains a bug that allows to overflow the
->>>>> kernel heap. It may be possible to escalate privileges by exploiting
->>>>> this bug.
-[...]
-> I would still like something along the lines of a proposed patch. I believe
-> you folks (as you're much brighter than me), but I still don't quite grasp
-> the difference. I suspect there is enough public information for MITRE to
-> public a CVE though, so please use CVE-2011-1017.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was reported that the fix for this is insufficient. I have assigned
-CVE-2011-2182 to this. See https://lkml.org/lkml/2011/5/6/407.
+Hello List,
 
-Timo, can you please post the patch here once you have submitted it to
-lkml for review. Thanks.
+I have some problems to decide, what to do about a class of
+vulnerabilities I discovered over a year ago. It seems that quite a few
+backup applications are (or were) vulnerable to special symlink attacks,
+when they are run as root and crawl though directory structures under
+control of a malicious user. The key idea is to create a file in the
+user writable location, e.g. /home/user/etc/shadow, which is just a
+normal user owned file. When the root-run backup process has read the
+directory /home/user/etc but before opening shadow,  /home/user/etc is
+symlinked to /etc. Backup program might then read /etc/shadow, which is
+included in user dump as /home/user/etc/shadow. Malicious user could
+then trigger restore, e.g. via social engineering/restore-my-site button
+at hosters/deleting other files and claim loss. Apart from file
+inclusion, this method can also be used to create arbitrary large backups.
 
-Eugene
+Issue https://bugs.launchpad.net/bugs/570050 contains one POC, that
+allows to include arbitrary files (e.g. /etc/shadow) in a tar backup of
+/home/user, this was fixed last year at least in version 1.25 (No
+advisory or CVE so far). Solaris POC can be found in references section
+at  http://www.halfdog.net/Security/2010/FilesystemRecursionAndSymlinks/
+. Please mind, that new tar versions are already fixed.
+
+The issue can also triggered remotely, e.g. via nfs, but since inotify
+does not work, one has to win the symlink race just with luck. It also
+allows to read files outside a container-virtualization guest, e.g.
+vserver, if backup runs outside of virtualization.
+
+I have tested some backup tools on ubuntu linux and solaris, before tar
+was fixed, all of them were vulnerable to this kind of attack. From my
+point of view, poor syscall interface makes it harder to write secure
+recursion code, since one would always have to keep the parent directory
+open and use openat calls to traverse the tree. This causes code to
+become more complex and might increase the risk or resource starvation,
+e.g. exceeding of maximal open file descriptors since each directory has
+to be kept open. I sent a mail to linux kernel mailing list, asking for
+opinions on modification/addition of more secure syscalls (see
+http://lkml.org/lkml/2011/4/19/43) but received no replies.
+
+The tar backup restore issue https://bugs.launchpad.net/bugs/570050 also
+contains another POC (create backdoored ls), that does not expose a real
+bug in the tar backup software but bad administrator practice: per
+design, there is no backup program that could securely restore files
+directly to a running system. Due to that reason, any restore might lead
+to root privilege escalation. It seems, that this is not widely known
+and to my knowledge, there are no backup best practice guidelines
+addressing this issue. If I remember correctly, some backup tools tested
+(was it backuppc?) allow remote restore to live systems without warning
+the user about the dangers of this action.
+
+Evaluation: Should there any actions be taken to check and secure file
+system recursion programs as such? Or is the issue too low risk, so that
+simple ignoring it is better? Exploitation already requires that
+attacker is able to create files, links, so an attacker might find much
+easier ways to gain further access than this method. When ignoring these
+issues, human opensource resources could be used to address more
+pressing security challenges.
+
+What do you think?
+
+
+
+PS: A short writeup of this issue can be found at
+http://www.halfdog.net/Security/2010/FilesystemRecursionAndSymlinks/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFNwe0nxFmThv7tq+4RAih1AJ4oaliYtkQL3rNemKJF1ZO5C0OeegCfVkHo
+zZuRzap3MvJv1igj7GyhhDI=
+=wMuB
+-----END PGP SIGNATURE-----
