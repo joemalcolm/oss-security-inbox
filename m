@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/2
-Message-ID: <mpro.lp1g063w5e11102h5.taviso@cmpxchg8b.com>
-Date: Thu, 28 Jul 2011 12:04:54 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/3
+Message-ID: <4DC27695.5030104@redhat.com>
+Date: Thu, 05 May 2011 18:06:13 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel network vulns
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen <vdanen@...hat.com> wrote:
+On 02/18/2010 01:12 PM, Eugene Teo wrote:
+> 1) gre: fix netns vs proto registration ordering
+> http://patchwork.ozlabs.org/patch/45553/
+>
+> "GRE protocol receive hook can be called right after protocol addition
+> is done. If netns stuff is not yet initialized, we're going to oops in
+> net_generic().
+>
+> This is remotely oopsable if ip_gre is compiled as module and packet
+> comes at unfortunate moment of module loading."
+>
+> 2) tunnels: fix netns vs proto registration ordering
+> http://patchwork.ozlabs.org/patch/45554/
+>
+> "Same stuff as in ip_gre patch: receive hook can be called before netns
+> setup is done, oopsing in net_generic()."
 
-> This is just a heads up to notify those who are shipping systemtap that
-> two flaws were found that could allow members of group stapusr to elevate
-> their privileges:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2502
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2503
-> 
+Josh, can you please assign two CVEs for these? Thanks.
 
-Interesting, I also looked at systemtap and found a local root
-(CVE-2010-4170), but was under the impression we had agreed it should be
-restricted to a privileged group?
-
-https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
-
-I stopped looking because I concluded that had eliminated any security risk,
-is that no longer the case?
-
-(I dont have an up to date RHEL machine to check)
-
-
-Tavis.
-
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+Eugene
