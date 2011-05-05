@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/1
-Message-ID: <4EB3C32C.6080201@redhat.com>
-Date: Fri, 04 Nov 2011 11:49:16 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Drupal (v6.x based) Views module - SQL injection due improper escaping of database parameters for certain filters / arguments (SA-CONTRIB-2011-052)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/3
+Message-ID: <4DC27695.5030104@redhat.com>
+Date: Thu, 05 May 2011 18:06:13 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel network vulns
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On 02/18/2010 01:12 PM, Eugene Teo wrote:
+> 1) gre: fix netns vs proto registration ordering
+> http://patchwork.ozlabs.org/patch/45553/
+>
+> "GRE protocol receive hook can be called right after protocol addition
+> is done. If netns stuff is not yet initialized, we're going to oops in
+> net_generic().
+>
+> This is remotely oopsable if ip_gre is compiled as module and packet
+> comes at unfortunate moment of module loading."
+>
+> 2) tunnels: fix netns vs proto registration ordering
+> http://patchwork.ozlabs.org/patch/45554/
+>
+> "Same stuff as in ip_gre patch: receive hook can be called before netns
+> setup is done, oopsing in net_generic()."
 
-   a SQL injection flaw was found in the way the views module for the
-Drupal (v6.x based), open-source content-management platform, performed
-sanitization of the database parameters for certain filters / arguments
-on certain types of views with specific configuration of arguments. A
-remote attacker could provide a specially-crafted SQL query, which once
-processed by the Drupal system instance could lead to arbitrary SQL
-commands execution.
+Josh, can you please assign two CVEs for these? Thanks.
 
-References:
-[1] http://drupal.org/node/1329898
-[2] http://drupal.org/node/1329846
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=751325
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Eugene
