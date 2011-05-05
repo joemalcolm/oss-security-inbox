@@ -1,46 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/4
-Message-id: <7C39A549-C1DA-410D-8B75-8CC0B9D04F06@apple.com>
-Date: Sat, 30 Jul 2011 13:50:40 -0700
-From: Jeffrey Czerniak <jeffcz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/5
+Message-ID: <2036734578.61013.1304624307741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 5 May 2011 15:38:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: libxml security fix from apple ... any information?
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: mediawiki
 Content-Type: text/plain; charset=utf-8
 
-On Jul 29, 2011, at 1:56 AM, Moritz Muehlenhoff wrote:
-> Thomas Biege wrote:
+
+
+----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
->> Hello,
->> if the code executed is the same on Windows and on Linux I would assume
->> this affects Linux too. That the bug is not "seen" during fuzzing
->> means nothing.
+> I would like to announce the release of MediaWiki 1.16.5. Two security
+> issues were discovered.
 > 
-> Grepping through the codebase show quite a few _WIN32 ifdefs, though.
+> The first issue is yet another recurrence of the Internet Explorer 6
+> XSS vulnerability that caused the release of 1.16.4. It was pointed
+> out that there are dangerous extensions with more than four
+> characters, so the regular expressions we introduced had to be updated
+> to match longer extensions.
 > 
-> But of course we need to see the patch applied by Apple.
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
+
+Use CVE-2011-1765
+
 > 
-> Cheers,
->        Moritz
+> The second issue allows unauthenticated users to gain additional
+> rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
+> it is disabled. The issue occurs when a malicious user sends cookies
+> which contain the user name and user ID of a "victim" account. In
+> certain circumstances, the rights of the victim are loaded and persist
+> throughout the malicious request, allowing the malicious user to
+> perform actions with the victim's rights.
+> 
+> $wgBlockDisablesLogin is a feature which is sometimes used on private
+> wikis to prevent users who have an account from logging in and viewing
+> content on the wiki.
+> 
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
+> 
 
+Use CVE-2011-1766
 
-Hello Moritz,
+Thanks.
 
-The patch we applied has been shared with Daniel Veillard of the libxml2 project.
-
-We understand this issue may affect other distributors of libxml2, and we have not seen evidence that our patch has been applied upstream.  We do not feel it is prudent to share the patch on a public mailing list such as oss-security, as we do not wish to inadvertently facilitate exploitation of the issue if other distributors are affected.
-
-We would like to cooperate with other downstream distributors of free and open source software on security issues, as Apple is a major distributor of such software.  However, our previous attempts to engage the community have not been successful.  One-way disclosure of information related to security issues subjects our customers to non-trivial risk without providing any added security benefit.  This is particularly pertinent if the disclosure were to occur in advance of the release of fixed software.
-
-Best regards,
-
-----------------
-Jeffrey Czerniak
-Apple Product Security Response
-jeffcz@...le.com
-----------------
-
-
-
-
-
-
+-- 
+    JB
