@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/8
-Message-ID: <20110701223621.34a99e20@redhat.com>
-Date: Fri, 1 Jul 2011 22:36:21 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/4
+Message-ID: <Pine.GSO.4.64.1105050952580.15686@faron.mitre.org>
+Date: Thu, 5 May 2011 10:04:08 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: cxib@...urityreason.com
-Subject: Re: Re: php ZipArchive::addGlob() crashes on invalid flags
+Subject: Re: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 01 Jul 2011 18:34:51 +0200 Maksymilian Arciemowicz wrote:
 
-> Using glob(3) with invalid flag may give unexpected results. Try
-> glob(3) of netbsd implementations and use flags 0x39 0x40..
+Assuming I understand the issue correctly, there is precedent in CVE for 
+this kind of problem, or at least the exploitation of recursive 
+backup/archive programs as they process files (many seem related to 
+setting insecure permissions during the copy, and only setting the secure 
+permissions afterward, a la CWE-689).
 
-I don't have an easy way to test on netbsd, but looking at glob.h in
-netbsd cvs, 0x40 is GLOB_ALTDIRFUNC, and 0x39 contains GLOB_APPEND,
-which were problematic on glibc as well.  Both due to uninitialized
-glob_t members.
+CVE-2009-4411 is the only example I can easily find.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+There is a "risk" of sorts to the community that a large number of these 
+issues could get disclosed for different packages in a short timeframe, 
+but this happens with any discovery of a new "class" of security problems 
+or attacks (look at the untrusted path stuff that happened last year with 
+Windows and Linux).  But IMO, better sooner rather than later.  Linux is a 
+multi-user OS and should be treated as such, which means local 
+file-writing/privilege attacks matter, even though they might not be as 
+severe as other kinds of attacks.  Somebody audited simpler symlink 
+problems in Debian packages a couple years ago, but while it must have 
+been very painful and there were dozens (hundreds?) of separate issues, 
+most of those problems seemed to get fixed in a relatively quick amount of 
+time.
+
+Maybe the appropriate strategy is for the community to agree on a good way 
+of solving these problems before announcing all the different packages 
+that are affected, but it's just a thought.  Ultimately this decision is 
+up to the researcher, affected developers, and customers.
+
+- Steve
