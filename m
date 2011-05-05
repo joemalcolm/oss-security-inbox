@@ -1,35 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/1
-Message-ID: <4DAE2FAF.60807@redhat.com>
-Date: Wed, 20 Apr 2011 08:58:23 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/2
+Message-ID: <4DC1EDA3.4050007@halfdog.net>
+Date: Thu, 05 May 2011 00:21:55 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org, robert@...ecki.net
-Subject: Re: CVE request -- kernel: proc: signedness issue in next_pidmap()
+Subject: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
 Content-Type: text/plain; charset=utf-8
 
-On 04/19/2011 07:54 PM, Petr Matousek wrote:
-> "A signedness issue has been found in next_pidmap() function when the "last"
-> parameter is negative as next_pidmap() just quietly accepted whatever
-> "last" pid that was passed in, which is not all that safe when one of the
-> users is /proc.
->
-> Setting f_pos to negative value when accessing /proc via readdir()/getdents()
-> resulted in sign extension of this value when map pointer was being
-> constructed.
->
-> This later lead to #GP because the final pointer was not canonical (x86_64)."
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=697822
-> http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/93c1088451fd3522/4a28ecb7f755a88d?#4a28ecb7f755a88d
->
-> Upstream commit:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=c78193e9
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=d8bdc59f
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Use CVE-2011-1593.
+Hello List,
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+I have some problems to decide, what to do about a class of
+vulnerabilities I discovered over a year ago. It seems that quite a few
+backup applications are (or were) vulnerable to special symlink attacks,
+when they are run as root and crawl though directory structures under
+control of a malicious user. The key idea is to create a file in the
+user writable location, e.g. /home/user/etc/shadow, which is just a
+normal user owned file. When the root-run backup process has read the
+directory /home/user/etc but before opening shadow,  /home/user/etc is
+symlinked to /etc. Backup program might then read /etc/shadow, which is
+included in user dump as /home/user/etc/shadow. Malicious user could
+then trigger restore, e.g. via social engineering/restore-my-site button
+at hosters/deleting other files and claim loss. Apart from file
+inclusion, this method can also be used to create arbitrary large backups.
+
+Issue https://bugs.launchpad.net/bugs/570050 contains one POC, that
+allows to include arbitrary files (e.g. /etc/shadow) in a tar backup of
+/home/user, this was fixed last year at least in version 1.25 (No
+advisory or CVE so far). Solaris POC can be found in references section
+at  http://www.halfdog.net/Security/2010/FilesystemRecursionAndSymlinks/
+. Please mind, that new tar versions are already fixed.
+
+The issue can also triggered remotely, e.g. via nfs, but since inotify
+does not work, one has to win the symlink race just with luck. It also
+allows to read files outside a container-virtualization guest, e.g.
+vserver, if backup runs outside of virtualization.
+
+I have tested some backup tools on ubuntu linux and solaris, before tar
+was fixed, all of them were vulnerable to this kind of attack. From my
+point of view, poor syscall interface makes it harder to write secure
+recursion code, since one would always have to keep the parent directory
+open and use openat calls to traverse the tree. This causes code to
+become more complex and might increase the risk or resource starvation,
+e.g. exceeding of maximal open file descriptors since each directory has
+to be kept open. I sent a mail to linux kernel mailing list, asking for
+opinions on modification/addition of more secure syscalls (see
+http://lkml.org/lkml/2011/4/19/43) but received no replies.
+
+The tar backup restore issue https://bugs.launchpad.net/bugs/570050 also
+contains another POC (create backdoored ls), that does not expose a real
+bug in the tar backup software but bad administrator practice: per
+design, there is no backup program that could securely restore files
+directly to a running system. Due to that reason, any restore might lead
+to root privilege escalation. It seems, that this is not widely known
+and to my knowledge, there are no backup best practice guidelines
+addressing this issue. If I remember correctly, some backup tools tested
+(was it backuppc?) allow remote restore to live systems without warning
+the user about the dangers of this action.
+
+Evaluation: Should there any actions be taken to check and secure file
+system recursion programs as such? Or is the issue too low risk, so that
+simple ignoring it is better? Exploitation already requires that
+attacker is able to create files, links, so an attacker might find much
+easier ways to gain further access than this method. When ignoring these
+issues, human opensource resources could be used to address more
+pressing security challenges.
+
+What do you think?
+
+
+
+PS: A short writeup of this issue can be found at
+http://www.halfdog.net/Security/2010/FilesystemRecursionAndSymlinks/
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFNwe0nxFmThv7tq+4RAih1AJ4oaliYtkQL3rNemKJF1ZO5C0OeegCfVkHo
+zZuRzap3MvJv1igj7GyhhDI=
+=wMuB
+-----END PGP SIGNATURE-----
