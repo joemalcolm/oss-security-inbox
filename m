@@ -1,22 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/1
-Message-ID: <AANLkTinmiFRonvoLxwdCdNqWbKhO4QzU4DVsWf_EBp-X@mail.gmail.com>
-Date: Fri, 25 Feb 2011 21:17:30 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/5
+Message-ID: <2036734578.61013.1304624307741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 5 May 2011 15:38:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: v86d: Failure to validate netlink message sender
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: mediawiki
 Content-Type: text/plain; charset=utf-8
 
-Versions of the v86d userspace helper for the Linux uvesafb driver
-before 0.1.10 did not verify that received netlink messages were sent
-by the kernel, allowing unprivileged users to manipulate the video
-mode and potentially other consequences.
 
-v86d executes video BIOS code with access to /dev/mem in response to
-netlink messages, using either vm86 mode or an x86 emulator, depending
-on configuration. I an unclear on whether it is possible to e.g. crash
-the machine or escalate privileges by spoofing requests, or only to
-mess with the video card.
 
-References:
-http://repo.or.cz/w/v86d.git/commit/f9abfd412639286c3143e93e8ba2c9598dfba640
+----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> I would like to announce the release of MediaWiki 1.16.5. Two security
+> issues were discovered.
+> 
+> The first issue is yet another recurrence of the Internet Explorer 6
+> XSS vulnerability that caused the release of 1.16.4. It was pointed
+> out that there are dangerous extensions with more than four
+> characters, so the regular expressions we introduced had to be updated
+> to match longer extensions.
+> 
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
+
+Use CVE-2011-1765
+
+> 
+> The second issue allows unauthenticated users to gain additional
+> rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
+> it is disabled. The issue occurs when a malicious user sends cookies
+> which contain the user name and user ID of a "victim" account. In
+> certain circumstances, the rights of the victim are loaded and persist
+> throughout the malicious request, allowing the malicious user to
+> perform actions with the victim's rights.
+> 
+> $wgBlockDisablesLogin is a feature which is sometimes used on private
+> wikis to prevent users who have an account from logging in and viewing
+> content on the wiki.
+> 
+> For more details, see
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
+> 
+
+Use CVE-2011-1766
+
+Thanks.
+
+-- 
+    JB
