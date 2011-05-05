@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/12
-Message-Id: <201103140944.11094.sgrubb@redhat.com>
-Date: Mon, 14 Mar 2011 09:44:10 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/6
+Message-ID: <899476003.61142.1304624656567.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 5 May 2011 15:44:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Stephan Mueller <stephan.mueller@...ec.com>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests - kernel network vulns
 Content-Type: text/plain; charset=utf-8
 
-On Monday, March 14, 2011 08:56:45 am Dan Rosenberg wrote:
->  As I see it, there are
-> four scenarios where this might matter:
+----- Original Message -----
+> On 02/18/2010 01:12 PM, Eugene Teo wrote:
+> > 1) gre: fix netns vs proto registration ordering
+> > http://patchwork.ozlabs.org/patch/45553/
+> >
+> > "GRE protocol receive hook can be called right after protocol addition
+> > is done. If netns stuff is not yet initialized, we're going to oops in
+> > net_generic().
+> >
+> > This is remotely oopsable if ip_gre is compiled as module and packet
+> > comes at unfortunate moment of module loading."
 
-What about repudiation?
+Use CVE-2011-1767
 
-5. Attacker constructs drive image such that an unexpected access of a file is made and 
-recorded by the audit system showing someone else doing it. Consider remote logging 
-and the attacker having no way to erase access.
+> >
+> > 2) tunnels: fix netns vs proto registration ordering
+> > http://patchwork.ozlabs.org/patch/45554/
+> >
+> > "Same stuff as in ip_gre patch: receive hook can be called before netns
+> > setup is done, oopsing in net_generic()."
+> 
 
--Steve
+Use CVE-2011-1768
+
+Thanks.
+
+-- 
+    JB
