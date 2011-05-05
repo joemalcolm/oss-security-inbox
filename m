@@ -1,44 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/5
-Message-ID: <20110303183237.GN2002@redhat.com>
-Date: Thu, 3 Mar 2011 11:32:37 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/1
+Message-ID: <BANLkTi=xt65GERu-o1HGNo2eQRNy_+dvsg@mail.gmail.com>
+Date: Thu, 5 May 2011 00:08:47 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+Subject: CVE request: mediawiki
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-01 10:24:48 +0000] Helgi ?ormar ?orbj?rnsson wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->Hi,
->On 1 Mar 2011, at 09:11, Pierre Joye wrote:
->
->> hi,
->>
->> 2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
->>> I'm not familiar with this code or any of the context surrounding this
->>> fix, but it appears to be an incomplete fix.  Checking for existence
->>> of a symlink and then opening the resource leaves open a window during
->>> which a legitimate file can be replaced with a symlink.
->>
->> Not sure it is fixable, or maybe using a lock on the symbolic link
->> while fetching its target (to be tested to be sure that such locks
->> cannot be overridden from shell).
->
->I assume you are referring to the parts for REST.php in the patch in question?
->At a second look, that part could do with improvements; I wrote up a function which takes TOCTOU into consideration.
->I'll have that patch done by the end of the day.
->
->For other situations I am using tempnam() (via the System class) as those files are only temporary and were being extracted from compressed archives; The predictability of their end destination where the centre part of the reported security problem.
+I would like to announce the release of MediaWiki 1.16.5. Two security
+issues were discovered.
 
-I took a quick look at the svn repository and don't see any additional
-fixes.  So this means that 1.9.2 has the original fix (CVE-2011-1072)
-but not the complete fix (to which MITRE has assigned CVE-2011-1144,
-for an incomplete fix of CVE-2011-1072) 
+The first issue is yet another recurrence of the Internet Explorer 6
+XSS vulnerability that caused the release of 1.16.4. It was pointed
+out that there are dangerous extensions with more than four
+characters, so the regular expressions we introduced had to be updated
+to match longer extensions.
 
-Any word on patches to fully fix the problem yet?  I guess that a 1.9.3
-must be planned to come soon (which would contain the CVE-2011-1144
-fixes)?
+For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+The second issue allows unauthenticated users to gain additional
+rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
+it is disabled. The issue occurs when a malicious user sends cookies
+which contain the user name and user ID of a "victim" account. In
+certain circumstances, the rights of the victim are loaded and persist
+throughout the malicious request, allowing the malicious user to
+perform actions with the victim's rights.
+
+$wgBlockDisablesLogin is a feature which is sometimes used on private
+wikis to prevent users who have an account from logging in and viewing
+content on the wiki.
+
+For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
+
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz
+
+Patch to previous version (1.16.4), without interface text:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz
+Interface text changes:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz.sig
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk3COwsACgkQgkA+Wfn4zXmfgwCfYuYKhtC/EFlXvUFXTMDeqahh
+zTcAoN0iL2Lg1uTOiWNmNJVnIDOXdTTA
+=dU8u
+-----END PGP SIGNATURE-----
