@@ -1,58 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/13
-Message-ID: <633189304.1604805.1311710600501.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 16:03:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/1
+Message-ID: <BANLkTi=xt65GERu-o1HGNo2eQRNy_+dvsg@mail.gmail.com>
+Date: Thu, 5 May 2011 00:08:47 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
+Subject: CVE request: mediawiki
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2721.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+I would like to announce the release of MediaWiki 1.16.5. Two security
+issues were discovered.
 
--- 
-    JB
+The first issue is yet another recurrence of the Internet Explorer 6
+XSS vulnerability that caused the release of 1.16.4. It was pointed
+out that there are dangerous extensions with more than four
+characters, so the regular expressions we introduced had to be updated
+to match longer extensions.
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> based on:
-> [1]
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
-> 
-> an off-by-one error was found in the way the hash manager of Clam
-> AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
-> messages with certain hashes. A remote attacker could provide a
-> message
-> with specially-crafted hash signature in it, leading to denial of
-> service (clamscan executable crash).
-> 
-> Upstream bug report:
-> [2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
-> 
-> Relevant patch:
-> [3]
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
-> 
-> Other references:
-> [4] https://bugzilla.novell.com/show_bug.cgi?id=708263
-> [5]
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
-> [6] http://www.clamav.net/lang/en/
-> [7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
-> 
-> Note: The rest of the issues fixed in [1] seem to be just bug fixes.
-> Cc-ed upstream Clam Antivirus maintainers to confirm this (that
-> there is only one issue with security implications) and correct
-> the description of the issue, if necessary (just guessing that
-> "cli_hm_scan()" stands for
-> command_line_interface_hash_manager_scan, since it doesn't seem
-> to be described in the code anywhere).
-> 
-> Josh, Steve, could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
+
+The second issue allows unauthenticated users to gain additional
+rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
+it is disabled. The issue occurs when a malicious user sends cookies
+which contain the user name and user ID of a "victim" account. In
+certain circumstances, the rights of the victim are loaded and persist
+throughout the malicious request, allowing the malicious user to
+perform actions with the victim's rights.
+
+$wgBlockDisablesLogin is a feature which is sometimes used on private
+wikis to prevent users who have an account from logging in and viewing
+content on the wiki.
+
+For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
+
+**********************************************************************
+Download:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz
+
+Patch to previous version (1.16.4), without interface text:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz
+Interface text changes:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz
+
+GPG signatures:
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz.sig
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz.sig
+http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz.sig
+
+Public keys:
+https://secure.wikimedia.org/keys.html
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk3COwsACgkQgkA+Wfn4zXmfgwCfYuYKhtC/EFlXvUFXTMDeqahh
+zTcAoN0iL2Lg1uTOiWNmNJVnIDOXdTTA
+=dU8u
+-----END PGP SIGNATURE-----
