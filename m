@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/5
-Message-ID: <20111201101643.GO21767@foo.fgeek.fi>
-Date: Thu, 1 Dec 2011 12:16:43 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/1
+Message-Id: <201105061437.54933.thomas@suse.de>
+Date: Fri, 6 May 2011 14:37:54 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: sschurtz@...nline.de
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Subject: CVE request: libarchive, multiple overflows
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
-> Original post: http://seclists.org/bugtraq/2011/Nov/15
-> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
-> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
-> 
-> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
-> 
-> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
-> 
-> Please notify me if this is not enough information.
+Hello,
+our maintainer found the following patches:
+-----------
+I was doing some maintainance on bsdtar package and noticed that there was a
+buffer overflow fix upstream, see
+http://code.google.com/p/libarchive/source/detail?r=3158&path=/trunk/libarchive/archive_read_support_format_iso9660.c
 
-These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
+Also SUSE package does not include the
+http://pkgs.fedoraproject.org/gitweb/?p=libarchive.git;a=blob_plain;f=libarchive-2.8.4-iso9660-data-types.patch;hb=HEAD
+patch which seems to be security sensitive also.
+----------
+More overflow fixes:
 
-http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
-http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
+http://code.google.com/p/libarchive/source/detail?r=2842
+http://code.google.com/p/libarchive/source/detail?r=3160
 
-If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
+Use-after-free fix (not sure if exploitable):
 
-- Henri Salo
+http://code.google.com/p/libarchive/source/detail?r=3038
+----------
+
+Cheers,
+Thomas
+
+
+-- 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
