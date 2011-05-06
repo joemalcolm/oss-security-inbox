@@ -1,62 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/15
-Message-ID: <1944776416.126357.1305663011269.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 16:10:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/3
+Message-ID: <4DC443DC.3080008@halfdog.net>
+Date: Fri, 06 May 2011 18:54:20 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Cc: "Mike O'Connor" <mjo@...o.mi.org>, coley <coley@...re.org>
-Subject: Re: CVE Request -- Cyrus-IMAP STARTTLS issue -- [was: Re: pure-ftpd STARTTLS command injection / new CVE?]
+Subject: Re: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1926.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+Steven M. Christey wrote:
+> 
+> Assuming I understand the issue correctly, there is precedent in CVE
+> for this kind of problem, or at least the exploitation of recursive 
+> backup/archive programs as they process files (many seem related to 
+> setting insecure permissions during the copy, and only setting the 
+> secure permissions afterward, a la CWE-689).
 
--- 
-    JB
+No, it is not a permission problem. Even with correct permissions, that
+disallow user x to access a file, he can make a recursion program of
+another user holding that permissions to access the file. Since backup
+is usually run as root, permissions will not stop that from happening.
+
+> CVE-2009-4411 is the only example I can easily find.
+
+As I understand it, this one is slightly different to this problem,
+because application simply does not check against symlinks correctly and
+hence may fail, even in a single-user environment. The problem with tar
+et. al is, that they correctly follow only physical path when run on
+single-user environment, but may fail, when run on untrusted directory
+controlled by malicious user due to TOCTOU.
+
+> There is a "risk" of sorts to the community that a large number of
+> these issues could get disclosed for different packages in a short
+> timeframe, but this happens with any discovery of a new "class" of
+> security problems or attacks (look at the untrusted path stuff that
+> happened last year with Windows and Linux).  But IMO, better sooner
+> rather than later.  Linux is a multi-user OS and should be treated as
+> such, which means local file-writing/privilege attacks matter, even
+> though they might not be as severe as other kinds of attacks.
+> Somebody audited simpler symlink problems in Debian packages a couple
+> years ago, but while it must have been very painful and there were
+> dozens (hundreds?) of separate issues, most of those problems seemed
+> to get fixed in a relatively quick amount of time.
+
+Well, the read problem is fixable, but might cause regressions. I'm not
+sure if the numerous regressions after the tar fix were the cause of the
+symlink fix itself (or due to unrelated cleanup also happening during
+larger code rewrites), but there were some quite annoying problems, some
+of them still exist. The question is, if the regression risk is higher
+than the security risk.
+
+The write example, that is leading to immediate root priv escalation, is
+caused by admin error. But since nearly no admin knows, that it is
+nearly impossible to securely restore a backup to a live system, they
+are not really to blame. This issue could be "fixed" creating awareness.
+
+A final fix would be much simpler, if a safe open call is provided by
+the OS. I do not know, if there are some flag bits available to modify
+current open or if a new SecureOps-Syscall (could be used as generic
+gateway for various sec-related calls) could be implemented. From my
+point of view, kernel implementation should be rather simple, user space
+would also be technically simple (libsecureio.so or addon to libc). But
+I do not know, if such a change would ever be accepted by community and
+standardization boards.
+
+> Maybe the appropriate strategy is for the community to agree on a
+> good way of solving these problems before announcing all the
+> different packages that are affected, but it's just a thought.
+> Ultimately this decision is up to the researcher, affected
+> developers, and customers.
+
+Where could be the right place to find that decision? CERT said, that
+they do not plan any advisories, which does not mean that they do
+nothing on the problem, but I think, they see it low risk/low priority,
+which I can understand in some parts.
+
+hd
 
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> it was reported that Cyrus-IMAP is also prone to the CVE-2011-0411
-> issue (in IMAP, LMTP, NNTP, POP3, .. protocols):
-> [1] http://bugzilla.cyrusimap.org/show_bug.cgi?id=3424
-> 
-> Relevant upstream patch:
-> [2]
-> http://git.cyrusimap.org/cyrus-imapd/patch/?id=523a91a5e86c8b9a27a138f04a3e3f2d8786f162
-> 
-> References:
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=705288
-> 
-> To my knowledge the list of CVE-2011-0411 related CVEs:
-> 
-> CVE-2011-0411 Postfix
-> CVE-2011-1430 Ipswich IMAIL
-> CVE-2011-1431 1431 netqmail
-> CVE-2011-1432 SCO Soffice Server
-> CVE-2011-1575 pure-ftpd
-> 
-> does not include Cyrus case yet (but not sure this list being
-> complete, so worthy of double-checking).
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> On 04/11/2011 07:19 PM, Mike O'Connor wrote:
-> > :http://www.pureftpd.org/project/pure-ftpd/news
-> > :
-> > :states that pure-ftpd is affected by the same STARTTLS
-> > :injection bug as postifx's CVE-2011-0411.
-> > :
-> > :Is this CVE postfix-specific or can it be used for
-> > :pure-ftpd as well? If needed, can someone assign a new CVE?
-> >
-> > It should get its own CVE assignment. Other products with the
-> > same STARTTLS issue have gotten unique CVE assignments for them
-> > -- see CVE-2011-143[012].
-> >
+PS: Has someone windows knowledge and programing skills to see if only
+linux-OS is affected? Would require existence of symlink-analoge
+structure, and would be more effective if inotify-like calls would be
+possible. Could the profile synchronization at login be used to take
+over a windows box at system level? Would also require sync to run at
+elevated privs.
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFNxEMdxFmThv7tq+4RAgAvAJ93fv3c9r0tZjYrcNAcGJYL6ux71gCcCnEO
+rotufy+xVYEzBRIZVTjJFRQ=
+=K218
+-----END PGP SIGNATURE-----
