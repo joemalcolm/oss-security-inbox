@@ -1,36 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/5
-Message-ID: <20111024034027.278f5144@angelo.pretender.us>
-Date: Mon, 24 Oct 2011 03:40:27 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/3
+Message-ID: <4DC443DC.3080008@halfdog.net>
+Date: Fri, 06 May 2011 18:54:20 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, Dan Veditz <dveditz@...illa.com>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+Subject: Re: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 24 Oct 2011 12:30:23 +0200
-Jan Lieskovsky <jlieskov@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->    a security flaw was found in the way nss, the Network Security
-> Services (NSS) set of libraries, performed their initialization (the
-> file path for "pkcs11.txt" configuration file was constructed 
-> incorrectly). When that configuration file was loaded from remote WebDAV 
-> or Samba CIFS share, it could lead to arbitrary security module
-> load, potentially leading to execution of arbitrary code (execution of
-> code from untrusted security module).
+Steven M. Christey wrote:
 > 
-> Upstream bug report:
-> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+> Assuming I understand the issue correctly, there is precedent in CVE
+> for this kind of problem, or at least the exploitation of recursive 
+> backup/archive programs as they process files (many seem related to 
+> setting insecure permissions during the copy, and only setting the 
+> secure permissions afterward, a la CWE-689).
 
-Mozilla is a CNA. Any reason you aren't requesting the CVE from them
-since NSS is a Mozilla product? Also, the upstream bug isn't tagged as a
-security issue, so Mozilla might not even know about this problem.
+No, it is not a permission problem. Even with correct permissions, that
+disallow user x to access a file, he can make a recursion program of
+another user holding that permissions to access the file. Since backup
+is usually run as root, permissions will not stop that from happening.
 
-cc'ing Dan Veditz of the Mozilla Security Group for CVE assignment and
-notification.
+> CVE-2009-4411 is the only example I can easily find.
 
-~reed
+As I understand it, this one is slightly different to this problem,
+because application simply does not check against symlinks correctly and
+hence may fail, even in a single-user environment. The problem with tar
+et. al is, that they correctly follow only physical path when run on
+single-user environment, but may fail, when run on untrusted directory
+controlled by malicious user due to TOCTOU.
 
---
-Reed Loden
-reed@...dloden.com
+> There is a "risk" of sorts to the community that a large number of
+> these issues could get disclosed for different packages in a short
+> timeframe, but this happens with any discovery of a new "class" of
+> security problems or attacks (look at the untrusted path stuff that
+> happened last year with Windows and Linux).  But IMO, better sooner
+> rather than later.  Linux is a multi-user OS and should be treated as
+> such, which means local file-writing/privilege attacks matter, even
+> though they might not be as severe as other kinds of attacks.
+> Somebody audited simpler symlink problems in Debian packages a couple
+> years ago, but while it must have been very painful and there were
+> dozens (hundreds?) of separate issues, most of those problems seemed
+> to get fixed in a relatively quick amount of time.
+
+Well, the read problem is fixable, but might cause regressions. I'm not
+sure if the numerous regressions after the tar fix were the cause of the
+symlink fix itself (or due to unrelated cleanup also happening during
+larger code rewrites), but there were some quite annoying problems, some
+of them still exist. The question is, if the regression risk is higher
+than the security risk.
+
+The write example, that is leading to immediate root priv escalation, is
+caused by admin error. But since nearly no admin knows, that it is
+nearly impossible to securely restore a backup to a live system, they
+are not really to blame. This issue could be "fixed" creating awareness.
+
+A final fix would be much simpler, if a safe open call is provided by
+the OS. I do not know, if there are some flag bits available to modify
+current open or if a new SecureOps-Syscall (could be used as generic
+gateway for various sec-related calls) could be implemented. From my
+point of view, kernel implementation should be rather simple, user space
+would also be technically simple (libsecureio.so or addon to libc). But
+I do not know, if such a change would ever be accepted by community and
+standardization boards.
+
+> Maybe the appropriate strategy is for the community to agree on a
+> good way of solving these problems before announcing all the
+> different packages that are affected, but it's just a thought.
+> Ultimately this decision is up to the researcher, affected
+> developers, and customers.
+
+Where could be the right place to find that decision? CERT said, that
+they do not plan any advisories, which does not mean that they do
+nothing on the problem, but I think, they see it low risk/low priority,
+which I can understand in some parts.
+
+hd
+
+
+PS: Has someone windows knowledge and programing skills to see if only
+linux-OS is affected? Would require existence of symlink-analoge
+structure, and would be more effective if inotify-like calls would be
+possible. Could the profile synchronization at login be used to take
+over a windows box at system level? Would also require sync to run at
+elevated privs.
+
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFNxEMdxFmThv7tq+4RAgAvAJ93fv3c9r0tZjYrcNAcGJYL6ux71gCcCnEO
+rotufy+xVYEzBRIZVTjJFRQ=
+=K218
+-----END PGP SIGNATURE-----
