@@ -1,19 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/4
-Message-ID: <20110217114507.GK13313@ngolde.de>
-Date: Thu, 17 Feb 2011 12:45:07 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/4
+Message-ID: <20110506205341.GA13429@dhcp-28-215.brq.redhat.com>
+Date: Fri, 6 May 2011 22:53:42 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: telepathy-gabble
+Cc: coley@...us.mitre.org
+Subject: CVE request -- virt-v2v: vnc password protection is missing after vm conversion
 Content-Type: text/plain; charset=utf-8
 
-Can I get a CVE id for:
-https://bugs.freedesktop.org/show_bug.cgi?id=34048
+Hello Steve, vendors.
 
-Thanks!
+Description:
+It was found that after virtual machine conversion using virt-v2v the
+target VM does not have VNC password enabled even though the source VM does.
+An attacker able to connect to the target VM can possibly use this flaw to
+operate the VM with privileges of the logged in user.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=702754
+ 
+Could you please allocate a CVE identifier for this issue?
 
-Content of type "application/pgp-signature" skipped
+Thanks you,
+--
+Petr Matousek / Red Hat Security Response Team
+
