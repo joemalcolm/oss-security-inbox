@@ -1,59 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/3
-Message-ID: <20110926150521.GE1528@redhat.com>
-Date: Mon, 26 Sep 2011 09:05:21 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/1
+Message-Id: <201105061437.54933.thomas@suse.de>
+Date: Fri, 6 May 2011 14:37:54 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, "security@....net" <security@....net>, Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+Subject: CVE request: libarchive, multiple overflows
 Content-Type: text/plain; charset=utf-8
 
-* [2011-09-25 19:22:19 +0200] Pierre Joye wrote:
+Hello,
+our maintainer found the following patches:
+-----------
+I was doing some maintainance on bsdtar package and noticed that there was a
+buffer overflow fix upstream, see
+http://code.google.com/p/libarchive/source/detail?r=3158&path=/trunk/libarchive/archive_read_support_format_iso9660.c
 
->On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
->> So
->> are we talking about the tiny number of people who have explicitly
->> enabled allow_url_include and are running the code with this bad autoloader?
->
->Yes, and that's why it is a very very minor problem. However it was
->not happening before the code change. The few cases where the class
->names&co have been sanitize before and the developer did not think
->about cases like the one describe in the blog post. I think it is even
->more rare combination, but it was not happening before our change.
+Also SUSE package does not include the
+http://pkgs.fedoraproject.org/gitweb/?p=libarchive.git;a=blob_plain;f=libarchive-2.8.4-iso9660-data-types.patch;hb=HEAD
+patch which seems to be security sensitive also.
+----------
+More overflow fixes:
 
-Thanks for all the discussion around this.
+http://code.google.com/p/libarchive/source/detail?r=2842
+http://code.google.com/p/libarchive/source/detail?r=3160
 
-Pierre has it right... prior to the change, whether it was intended or
-not, documented or not, PHP did things a certain way and users could
-(for better or worse) rely on a certain behaviour to do "the right
-thing" (right in the context of their application, even if it is wrong
-in the context of writing good PHP code).  5.3.7 changed that, which
-left applications that used this "feature" in a vulnerable state.
+Use-after-free fix (not sure if exploitable):
 
-It's unfortunate for everyone that PHP gets so many CVEs assigned to it
-for trivial little things.  I look at every CVE assigned for safemode
-or open_basedir bypass flaws... technically speaking, I would never
-consider those to be flaws because those functions are not meant to be
-sandboxing features or high security features, as outlined on PHP's
-page, however they do get CVEs assigned.
+http://code.google.com/p/libarchive/source/detail?r=3038
+----------
 
-Even though PHP does not consider those features to be security
-protection features, CVEs are still assigned.  You would expect that
-most people would not rely on those features as security features, which
-means those "bypass" flaws should never really affect people in a
-security context, but the sad reality is that they do.  CVE does not
-distinguish between good programming habits or bad ones.  Flaws like
-this, that are only exposed due to bad programming in applications,
-still end up with CVEs assigned at the language level.
+Cheers,
+Thomas
 
-I don't think those CVEs reflect poorly on PHP -- I think most people
-who know PHP, realize that people do dumb stuff and that a language like
-PHP makes it easier to do dumb stuff.
-
-In this case, I think this particular issue is more worthy of a CVE than
-the open_basedir/safemode-related CVEs (and there are _lots_ of those).
-
-ref: http://www.php.net/security-note.php
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
