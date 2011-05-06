@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/3
-Message-ID: <1306218493.32333.1455.camel@new-desktop>
-Date: Tue, 24 May 2011 08:28:13 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/4
+Message-ID: <20110506205341.GA13429@dhcp-28-215.brq.redhat.com>
+Date: Fri, 6 May 2011 22:53:42 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+Cc: coley@...us.mitre.org
+Subject: CVE request -- virt-v2v: vnc password protection is missing after vm conversion
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors.
 
-> > So, i propose to :
-> > - remove references to Webkit from the CVE-2011-1425 page
-> > - affect CVE-2011-1774 to the Webkit bug #52688
-> 
-> Any news ?
+Description:
+It was found that after virtual machine conversion using virt-v2v the
+target VM does not have VNC password enabled even though the source VM does.
+An attacker able to connect to the target VM can possibly use this flaw to
+operate the VM with privileges of the logged in user.
 
-Ping.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=702754
+ 
+Could you please allocate a CVE identifier for this issue?
 
-Regards,
-Nicolas Grégoire
-
-
+Thanks you,
+--
+Petr Matousek / Red Hat Security Response Team
 
