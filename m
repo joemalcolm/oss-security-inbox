@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/9
-Message-ID: <1309957476.2993.69.camel@localhost>
-Date: Wed, 06 Jul 2011 08:04:36 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org
-Subject: CVE Request: reseed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/2
+Message-ID: <20110506143928.GA9170@redhat.com>
+Date: Fri, 6 May 2011 08:39:29 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: tigervnc
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
-> A security bug was reported by Jeffrey Walton against reseed in
-> Ubuntu. You are being emailed as the upstream contact. Please keep
-> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
-> 
-> This issue should be considered public. A CVE is being requested; please
-> mention this in any changelogs.
-> 
-> Details from the public bug follow:
-> https://launchpad.net/bugs/804594
-> 
-> From the reporter:
-> "reseed(8) performs an insecure HTTP fetch of data from random.org. The
-> script is automatically executed when installed, and any time the user
-> chooses to execute. In addition, the reseed man pages do not mention the
-> data is retrieved over an insecure channel."
-> 
-> As pointed out by the reporter, from the man page: "It is run once
-> during the installation of the package only". An attacker could perform
-> a MITM during package installation or whenever the reseed command is run
-> to provide predictable data for the random number seed.
+The vncviewer in tigervnc had X.509 certificate support added in svn
+r4200 (currently beta, slated for the 1.1.0 release).  It would prompt
+for and send authentication credentials before properly validating the
+X.509 certificate, which makes it susceptible to a man-in-the-middle
+attack.
 
-While the attack is difficult to achieve (need both MITM at time of
-package installation AIUI), it seems that this still should get a CVE.
+References:
 
-Thanks!
+https://bugzilla.redhat.com/show_bug.cgi?id=702470
+http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01342.html
+http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01347.html
+
+Could a CVE be assigned to this please?  Thanks.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team 
