@@ -1,26 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/7
-Message-Id: <201106271110.11382.ludwig.nussel@suse.de>
-Date: Mon, 27 Jun 2011 11:10:10 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/08/1
+Message-ID: <BANLkTimoAZTRQuD_fhS_16j_RRey+OF7Lg@mail.gmail.com>
+Date: Sun, 8 May 2011 14:54:51 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Neil F Brown <nfbrown@...e.de>, Jeff Layton <jlayton@...hat.com>
-Subject: CVE Request: nfs-utils
+Subject: CVE request: kernel: DCCP invalid options
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On a providing a bad option length for certain DCCP options, a remote
+host may cause parsing to read beyond the bounds of the incoming
+packet.  This may possibly cause a DoS by reading unmapped memory (if
+you're unlucky), or it may allow an attacker to infer the contents of
+kernel heap memory based on the parser's response.
 
-An attacker could gain unauthorized access to an nfs exported
-filesystem by creating a DNS record that resolves to the attacker's
-IP as well as to a trusted IP:
-http://marc.info/?l=linux-nfs&m=130875695821953&w=2
-https://bugzilla.novell.com/show_bug.cgi?id=701702
+-Dan
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+[1] http://marc.info/?l=linux-kernel&m=130468845209036&w=2
