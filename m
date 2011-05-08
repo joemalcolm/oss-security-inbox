@@ -1,64 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/15
-Message-ID: <291325264.507131.1307381785428.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:36:25 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: dave b <db.pub.mail@...il.com>, akub Narebski <jnareb@...il.com>, Junio C Hamano <gitster@...ox.com>, coley <coley@...re.org>
-Subject: Re: Security issue in gitweb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/08/2
+Message-ID: <BANLkTik7WyQ977-+8XapTgBrVRMyexyHKg@mail.gmail.com>
+Date: Sun, 8 May 2011 21:57:25 +0200
+From: Filip Palian <s3810@...stk.edu.pl>
+To: Marcel Holtmann <marcel@...tmann.org>, "Gustavo F. Padovan" <padovan@...fusion.mobi>,  "David S. Miller" <davem@...emloft.net>, linux-bluetooth@...r.kernel.org,  netdev@...r.kernel.org, linux-kernel@...r.kernel.org
+Cc: security@...nel.org, oss-security@...ts.openwall.com
+Subject: Bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace.
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2186 for this.
+Hi,
 
-Thanks.
+Structures "l2cap_conninfo" and "rfcomm_conninfo" have one padding
+byte each. This byte in "cinfo" is copied to userspace uninitialized.
 
--- 
-    JB
+patch no.1:
+-- cut --
+--- a/net/bluetooth/l2cap_sock.c        2011-05-04 03:59:13.000000000 +0100
++++ b/net/bluetooth/l2cap_sock.c        2011-05-08 18:57:20.000000000 +0100
+@@ -446,6 +446,7 @@ static int l2cap_sock_getsockopt_old(str
+                        break;
+                }
+
++               memset(&cinfo, 0, sizeof(cinfo));
+                cinfo.hci_handle = l2cap_pi(sk)->conn->hcon->handle;
+                memcpy(cinfo.dev_class, l2cap_pi(sk)->conn->hcon->dev_class, 3);
+
+-- cut --
+
+patch no.2:
+-- cut --
+--- a/net/bluetooth/rfcomm/sock.c       2011-05-04 03:59:13.000000000 +0100
++++ b/net/bluetooth/rfcomm/sock.c       2011-05-08 19:00:24.000000000 +0100
+@@ -787,6 +787,7 @@ static int rfcomm_sock_getsockopt_old(st
+
+                l2cap_sk = rfcomm_pi(sk)->dlc->session->sock->sk;
+
++               memset(&cinfo, 0, sizeof(cinfo));
+                cinfo.hci_handle = l2cap_pi(l2cap_sk)->conn->hcon->handle;
+                memcpy(cinfo.dev_class,
+l2cap_pi(l2cap_sk)->conn->hcon->dev_class, 3);
+-- cut --
+
+Found by Marek Kroemeke and Filip Palian. Special thanks to Vasiliy
+Kulikov for verifying this bug.
 
 
------ Original Message -----
-> A security bug was reported by 'dave b' (in CC) against gitweb in
-> Ubuntu. You are being emailed as the upstream contact. Please keep
-> oss-security[1] CC'd for any updates on this issue.
-> 
-> This issue should be considered public, but has not yet been assigned
-> a
-> CVE. Once a CVE is assigned, please mention it in any changelogs.
-> 
-> Details from the public bug follow:
-> https://launchpad.net/bugs/777804
-> 
-> From the reporter:
-> ----
-> I am reporting a persistent xss vector in gitweb, note this requires a
-> user to have commit access to a repository that gitweb is configured
-> to display. The vector is the fact that gitweb "serves" up xml files -
-> which can (just as gitweb does) embed html that could be used to
-> perform a cross-site scripting attack.
-> 
-> e.g. (lol.xml).
-> <?xml version="1.0" encoding="utf-8"?>
-> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-> "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-> <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
-> lang="en-US">
-> <head>
-> </head>
-> <script>alert(1);</script>
-> </html>
-> 
-> and viewed at
-> http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
-> ----
-> 
-> Thanks in advance for your cooperation in coordinating a fix for this
-> issue,
-> 
-> Jamie Strandboge
-> 
-> [1] oss-security@...ts.openwall.com is a public mailing list for
-> people to collaborate on security vulnerabilities and coordinate
-> security updates.
-> 
-> --
-> Jamie Strandboge | http://www.canonical.com
+Best regards.
