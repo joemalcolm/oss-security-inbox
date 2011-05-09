@@ -1,63 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/9
-Message-ID: <4E317978.6010709@redhat.com>
-Date: Thu, 28 Jul 2011 17:00:08 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/4
+Message-ID: <1304950272.17177.226.camel@new-desktop>
+Date: Mon, 09 May 2011 16:11:12 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+To: oss-security@...ts.openwall.com
+Subject: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
 
-   by further investigation of hplip CVE-2011-2722 issue:
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
+The bug was opened on January 18 :
+https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
 
-Tim Waugh noticed the similar issue being present also in foomatic-rip
-universal print filter, when debug mode is enabled. Further details:
+A patch is available since February 20 :
+http://trac.webkit.org/changeset/79159 (public)
 
-It was found that foomatic-rip filter used insecurely created temporary
-file for storage of PostScript data by rendering the data, intended to 
-be sent to the PostScript filter, when the debug mode was enabled. A 
-local attacker could use this flaw to conduct symlink attacks (overwrite 
-arbitrary file accessible with the privileges of the user running the 
-foomatic-rip universal print filter).
+Given some recent mail exchanges with Apple, they still not have
+affected a CVE to this issue. Could you please allocate one, in order
+for me to have an easier job communicating with the numerous impacted
+vendors (many Linux distributions, RIM, Maxthon, ...) ?
 
-Relevant source code part (Perl script part / foomatic-rip.in):
-===============================================================
-    100 my $logfile = "/tmp/foomatic-rip";
-   ..
-   3454  # In debug mode save the data supposed to be fed
-           into the
-   3455  # renderer also into a file
-   3456  if ($debug) {
-   3457    $commandline = "tee -a ${logfile}.ps | ( $commandline )";
-   3458  }
-
-Note: The $logfile variable declaration (line #100) is not an insecure
-       temporary file use issue itself, since this danger (and its proper
-       usage) is documented in /etc/foomatic/filters.conf file.
-
-Relevant source code part (C script part / renderer.c):
-========================================================
-    436  /* Save the data supposed to be fed into the renderer
-           also int        o a file*/
-    437  dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
-    438  dstrcat(commandline, ")");
-    439  }
-
-Note: The LOG_FILE variable declaration by itself is not an insecure
-       temporary file use, since this danger (and its proper usage)
-       is documented in /etc/foomatic/filters.conf file.
-
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
-
-Credit: Issue discovered by Tim Waugh
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Regards,
+Nicolas Grégoire
 
