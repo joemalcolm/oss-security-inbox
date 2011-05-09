@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/7
-Message-ID: <4DC9A887.4030309@redhat.com>
-Date: Tue, 10 May 2011 17:05:11 -0400
-From: William Cohen <wcohen@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/4
+Message-ID: <1304950272.17177.226.camel@new-desktop>
+Date: Mon, 09 May 2011 16:11:12 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+To: oss-security@...ts.openwall.com
+Subject: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-On 05/03/2011 05:36 AM, Huzaifa Sidhpurwala wrote:
-> Hi William,
-> On 05/01/2011 07:30 AM, William Cohen wrote:
->>
->> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
->>
-> 
-> It appears from the debian bug, that there may be others way to exploit
-> this issue as well. hence i think we need a revised patch?
-> 
-> 
-> 
 
-The patches mentioned in the previous email.
+The bug was opened on January 18 :
+https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
 
--Will
+A patch is available since February 20 :
+http://trac.webkit.org/changeset/79159 (public)
 
-View attachment "0001-Sanitize-Event-Names.patch" of type "text/x-patch" (911 bytes)
+Given some recent mail exchanges with Apple, they still not have
+affected a CVE to this issue. Could you please allocate one, in order
+for me to have an easier job communicating with the numerous impacted
+vendors (many Linux distributions, RIM, Maxthon, ...) ?
 
-View attachment "0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch" of type "text/x-patch" (1092 bytes)
+Regards,
+Nicolas Grégoire
 
-View attachment "0003-Avoid-blindly-source-SETUP_FILE-with.patch" of type "text/x-patch" (1482 bytes)
-
-View attachment "0004-Do-additional-checks-on-user-supplied-arguments.patch" of type "text/x-patch" (4241 bytes)
