@@ -1,71 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/14
-Message-ID: <20110531130959.708b8844@angelo.pretender.us>
-Date: Tue, 31 May 2011 13:09:59 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/6
+Message-ID: <146849069.119412.1304965783884.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 May 2011 14:29:43 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, coley <coley@...re.org>, Dan Veditz <dveditz@...illa.com>
-Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
+Cc: coley@...re.org
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-Looks like Red Hat reported this upstream to Mozilla late last night...
-
-Mozilla is tracking this as
-https://bugzilla.mozilla.org/show_bug.cgi?id=660749.
-
-No CVE has been assigned yet (afaict), but I'll see about getting one
-assigned once this has been confirmed.
-
-~reed
-
-On Tue, 31 May 2011 15:42:58 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
-
-> I'm going to save this one for upstream. It's possible they've already
-> assigned something (Mozilla is a CNA).
+----- Original Message -----
+> The bug was opened on January 18 :
+> https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
 > 
-> I've CC'd Reed in the rare event he doesn't know about this.
+> A patch is available since February 20 :
+> http://trac.webkit.org/changeset/79159 (public)
 > 
-> Thanks.
+> Given some recent mail exchanges with Apple, they still not have
+> affected a CVE to this issue. Could you please allocate one, in order
+> for me to have an easier job communicating with the numerous impacted
+> vendors (many Linux distributions, RIM, Maxthon, ...) ?
 > 
-> -- 
->     JB
-> 
-> ----- Original Message -----
-> > Hi,
-> > found this in RH's bugzilla:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=709165
-> > 
-> > Vincent Danen 2011-05-30 18:38:43 EDT
-> > 
-> > A Debian bug report [1] indicated that Firefox 4.0.x handled the
-> > validation/revalidation of SSL certificates improperly. If a user were
-> > to
-> > visit a site with an untrusted certificate, Firefox would correctly
-> > display the
-> > warning about the untrusted connection. If a user were to confirm the
-> > security
-> > exception for a single session (not check off the "permanently store
-> > this
-> > exception"), then restart the browser and re-load the page, the
-> > contents of the
-> > page would be displayed from the Firefox cache. Upon reloading the
-> > page, the
-> > security warning would appear, but incorrectly indicates that the site
-> > provides
-> > a valid, verified certificate and there is no way to confirm the
-> > exception.
-> > [...]
-> > 
-> > --
-> > Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> > SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-> > 21284 (AG Nürnberg
-> > --
-> > Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> > -- Marie von Ebner-Eschenbach
 
+I don't see a CVE id in the upstream bug, so I'll risk assigning an ID.
+
+Use CVE-2011-1774
+
+Thanks.
 
 -- 
-Reed Loden
-reed@...dloden.com
+    JB
