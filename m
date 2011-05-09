@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/4
-Message-ID: <20110414101413.28823b71@orphan>
-Date: Thu, 14 Apr 2011 10:14:13 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/3
+Message-ID: <4DC75C64.6040207@redhat.com>
+Date: Mon, 09 May 2011 11:15:48 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: validate size of EFI GUID partition entries
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 13 Apr 2011 19:02:05 -0400 Mike O'Connor wrote:
+The kernel automatically evaluates partition tables of storage devices. 
+The code for evaluating GUID partitions (in fs/partitions/efi.c) 
+contains a bug that can cause a kernel heap overflow on certain 
+corrupted GUID partition tables.
 
-> Focusing on how you think an update ought to *look* (e.g. should the
-> advisories be public?) isn't as important as the update getting
-> *out*.  Especially since you're dealing with GPL'ed code, I think
-> that's something you can measure.  Just ask the constituency a month
-> or so after some major kernel issue who has released updates/fixes
-> and who hasn't, show the relevant source, and take it from there.
+http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
+http://bugzilla.redhat.com/show_bug.cgi?id=703026
 
-Even though it's GPL'ed code, some vendors may not make their sources
-publicly available to "random strangers" and rather only restrict them
-to their customers.  Given the current context of this discussion,
-public visibility of their source packages may not be better than the
-visibility of their binary packages or "advisories" (whatever form you
-expect them to be).
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
