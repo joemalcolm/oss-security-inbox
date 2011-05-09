@@ -1,59 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/9
-Message-ID: <4DA5BE7C.6080308@mvista.com>
-Date: Wed, 13 Apr 2011 05:17:16 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/11
+Message-ID: <Pine.GSO.4.64.1105091522240.1528@faron.mitre.org>
+Date: Mon, 9 May 2011 15:26:01 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: Ronald van den Blink <oss-security@...urityview.nl>
-Subject: Re: Closed list
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
 
+Nicolas,
 
-On 04/12/2011 11:25 PM, Ronald van den Blink wrote:
-> On 4/12/11 11:49 PM, "akuster" <akuster@...sta.com> wrote:
-> 
->>
->>
->> On 04/11/2011 09:57 AM, Josh Bressers wrote:
->>> ----- Original Message -----
->>>>
->>>> Postponed. I'd like to see any support for you getting onto the Linux
->>>> distros security contacts list, with reasoning, or/and any other
->>>> suggestions on what to do in this case. Josh - what do you think (as
->>>> someone who advocated the setup of a vendor-sec replacement)?
->>>>
->>>
->>> My initial thought is that a vendor without public advisories is a
->>> liability.
->>
->> Making our Advisories public could put our customers' customers at risk
->> depending on when we publish and when our customers can get the fixes
->> into their customers hands and so on down the line.
->>
->> - Armin
-> Hi Armin,
-> 
-> Sorry for putting my $0.02 in the bucket here as well, but the whole
-> purpose of a closed list is that you can fix them before releasing a
-> public advisory. When you fixed it, the customers can (just like other
-> dist's do, just get it patched before you publish it. 
+After deeper investigation, this appears to be CVE-2011-1425, which was 
+requested by you and assigned on March 14 (hopefully with email 
+notification to you), and published through CVE on April 2 or 3 after an 
+xmlsec announcement 
+http://www.aleksey.com/pipermail/xmlsec/2011/009120.html
 
-Are you joking? I was told Embargoes could not be released to our
-customers until the agreed to release date. That would change some
-things and would be more like .02 euros.
+CVE-2011-1425 points to both changeset 79159 and Webkit bug 52688.
 
-- Armin
+Are you talking about a different XSLT file-overwrite issue than 
+CVE-2011-1425?
 
-It's not that this
-> is so strange, as closed source OS makers are doing the same (remember
-> Black Tuesday's at MS and Apple's releases).
-> 
-> Just my 2 cents.
-> 
-> Ronald 
-> Batavi.org
-> 
->>
-> 
-> 
+- Steve
+
+
+On Mon, 9 May 2011, Nicolas Gr�goire wrote:
+
+>
+> The bug was opened on January 18 :
+> https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
+>
+> A patch is available since February 20 :
+> http://trac.webkit.org/changeset/79159 (public)
+>
+> Given some recent mail exchanges with Apple, they still not have
+> affected a CVE to this issue. Could you please allocate one, in order
+> for me to have an easier job communicating with the numerous impacted
+> vendors (many Linux distributions, RIM, Maxthon, ...) ?
+>
+> Regards,
+> Nicolas Grégoire
+>
+>
