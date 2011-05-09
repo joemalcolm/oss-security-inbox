@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/12
-Message-Id: <201103140944.11094.sgrubb@redhat.com>
-Date: Mon, 14 Mar 2011 09:44:10 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/7
+Message-ID: <1732124180.120317.1304967123464.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 May 2011 14:52:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Stephan Mueller <stephan.mueller@...ec.com>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+Cc: coley@...re.org
+Subject: Re: CVE request: tigervnc
 Content-Type: text/plain; charset=utf-8
 
-On Monday, March 14, 2011 08:56:45 am Dan Rosenberg wrote:
->  As I see it, there are
-> four scenarios where this might matter:
+----- Original Message -----
+> The vncviewer in tigervnc had X.509 certificate support added in svn
+> r4200 (currently beta, slated for the 1.1.0 release). It would prompt for
+> and send authentication credentials before properly validating the X.509
+> certificate, which makes it susceptible to a man-in-the-middle attack.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=702470
+> http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01342.html
+> http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01347.html
+> 
 
-What about repudiation?
+Please use CVE-2011-1775.
 
-5. Attacker constructs drive image such that an unexpected access of a file is made and 
-recorded by the audit system showing someone else doing it. Consider remote logging 
-and the attacker having no way to erase access.
+Thanks.
 
--Steve
+-- 
+    JB
