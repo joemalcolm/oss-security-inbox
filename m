@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/7
-Message-ID: <20110518084404.GA15242@stro.at>
-Date: Wed, 18 May 2011 10:44:04 +0200
-From: maximilian attems <max@...o.at>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/7
+Message-ID: <1732124180.120317.1304967123464.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 May 2011 14:52:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: klibc@...or.com
-Subject: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+Cc: coley@...re.org
+Subject: Re: CVE request: tigervnc
 Content-Type: text/plain; charset=utf-8
 
-Related to CVE-2011-0997
+----- Original Message -----
+> The vncviewer in tigervnc had X.509 certificate support added in svn
+> r4200 (currently beta, slated for the 1.1.0 release). It would prompt for
+> and send authentication credentials before properly validating the X.509
+> certificate, which makes it susceptible to a man-in-the-middle attack.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=702470
+> http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01342.html
+> http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01347.html
+> 
 
-ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
-used unquoted, than proof of concept involves
-DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
+Please use CVE-2011-1775.
 
-fix:
-http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
-will be part of the just to be released klibc-1.5.22
-
+Thanks.
 
 -- 
-maks
-
-_______________________________________________
-klibc mailing list
-klibc@...or.com
-http://www.zytor.com/mailman/listinfo/klibc
+    JB
