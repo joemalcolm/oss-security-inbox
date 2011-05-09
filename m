@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/10
-Message-ID: <4EC52F2A.2020001@redhat.com>
-Date: Thu, 17 Nov 2011 08:58:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/6
+Message-ID: <146849069.119412.1304965783884.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 May 2011 14:29:43 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: nginx resolver heap overflow
+Cc: coley@...re.org
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-On 11/17/2011 08:37 AM, Kurt Seifried wrote:
-> On 11/16/2011 10:50 PM, Ben Hawkes wrote:
->> Hi,
->>
->> The nginx team have released stable version 1.0.10, which includes a fix 
->> for a heap overflow bug in the custom DNS resolver:
->>
->> http://trac.nginx.org/nginx/changeset/4268/nginx
->>
->> The resolver is most commonly used with the proxy and fastcgi modules,
->> which are not enabled by default.
->>
->> In order to trigger this condition an attacker would need to be in
->> control of an upstream resolver host, or be in a position to brute-force
->> the weakly generated 16-bit transaction identifier.
->>
->> Thanks,
->> Ben Hawkes
-> Do you need a CVE # for this issue?
->
-And this is why coffee is a popular morning drink (and Kurt should have
-some =).
+----- Original Message -----
+> The bug was opened on January 18 :
+> https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
+> 
+> A patch is available since February 20 :
+> http://trac.webkit.org/changeset/79159 (public)
+> 
+> Given some recent mail exchanges with Apple, they still not have
+> affected a CVE to this issue. Could you please allocate one, in order
+> for me to have an easier job communicating with the numerous impacted
+> vendors (many Linux distributions, RIM, Maxthon, ...) ?
+> 
 
-Please use CVE-2011-4315 for this issue.
+I don't see a CVE id in the upstream bug, so I'll risk assigning an ID.
+
+Use CVE-2011-1774
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
