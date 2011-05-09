@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/3
-Message-ID: <CAHmME9oGDZPfstr3g9fMnbugmcB0Qo_Exgf8iaN8CmoP2mUjew@mail.gmail.com>
-Date: Wed, 2 Nov 2011 02:03:29 -0400
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/8
+Message-ID: <Pine.GSO.4.64.1105091456400.1528@faron.mitre.org>
+Date: Mon, 9 May 2011 14:59:19 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-Oh, and I suppose there's a very obvious but critical #6:
 
-6. An unprivileged user an mount/unmount/eject whatever he wants, with
-root permissions. Danger.
+All,
 
-This may help to "confirm":
-https://bugs.launchpad.net/calibre/+bug/885027/
+Note that due to all the Apple/Google confusion, we recently arranged for 
+Google to become a CVE CNA (i.e. have their own CVEs), and now they are 
+the primary coordinator for CVE assignment in Webkit issues (specifically, 
+Chris Evans).  Not sure whether the current issue has CVE coverage or not.
 
-
-As well, the maintainer has already issued a fix. From the bug report:
-"Fixed in branch lp:calibre. The fix will be in the next release.
-calibre is usually released every Friday.", which means the above
-source link, that went to the trunk, now shows the fixed result. The
-old broken code is still available here:
-http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
-
-Note that the maintainer has chosen only to address #5.
+- Steve
