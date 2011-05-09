@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/5
-Message-ID: <338770148.2044325.1313174583926.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Aug 2011 14:43:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/9
+Message-ID: <1623356836.120550.1304967664438.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 9 May 2011 15:01:06 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: improper permissions on ~/.qtnx/*.nxml
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
 Content-Type: text/plain; charset=utf-8
 
 
 
 ----- Original Message -----
-> A Debian bug report noted that qtnx stores its configuration file
-> insecurely. If a non-default SSH key is used, the key is stored in
-> this
-> world-readable file (~/.qtnx/*.nxml) in a world-readable directory
-> (~/.qtnx/).
+> The kernel automatically evaluates partition tables of storage
+> devices.
+> The code for evaluating GUID partitions (in fs/partitions/efi.c)
+> contains a bug that can cause a kernel heap overflow on certain
+> corrupted GUID partition tables.
 > 
-> Could a CVE be assigned to this please?
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=637439
-> https://bugzilla.redhat.com/show_bug.cgi?id=730081
+> http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
+> http://bugzilla.redhat.com/show_bug.cgi?id=703026
 > 
 
-Please use CVE-2011-2916
+Please use CVE-2011-1776
 
 Thanks.
 
