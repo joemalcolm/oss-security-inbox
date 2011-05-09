@@ -1,96 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/20
-Message-ID: <1592273896.87389.1300135013097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:36:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/11
+Message-ID: <Pine.GSO.4.64.1105091522240.1528@faron.mitre.org>
+Date: Mon, 9 May 2011 15:26:01 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: bbPress 1.0.2 <= Cross Site Scripting Vulnerability
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1150
 
-Thanks.
+Nicolas,
 
--- 
-    JB
+After deeper investigation, this appears to be CVE-2011-1425, which was 
+requested by you and assigned on March 14 (hopefully with email 
+notification to you), and published through CVE on April 2 or 3 after an 
+xmlsec announcement 
+http://www.aleksey.com/pipermail/xmlsec/2011/009120.html
+
+CVE-2011-1425 points to both changeset 79159 and Webkit bug 52688.
+
+Are you talking about a different XSLT file-overwrite issue than 
+CVE-2011-1425?
+
+- Steve
 
 
------ Original Message -----
-> 1. OVERVIEW
-> 
-> bbPress 1.0.2 and lower versions were vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. APPLICATION DESCRIPTION
-> 
-> bbPress is plain and simple forum software, plain and simple with a
-> twist from the creators of WordPress.
-> It is focused on web standards, ease of use, ease of integration, and
-> speed.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The "re" parameter was not properly sanitized upon submission to the
-> /bb-login.php url, which allows attacker to conduct Cross Site
-> Scripting attack.
-> This may allow an attacker to create a specially crafted URL that
-> would execute arbitrary script code in a victim's browser.
-> If a user has already logged in to the application, an XSS attack will
-> execute promptly.
-> If not, it will execute after the user's successful logging in.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> bbPress 1.0.2 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/bb-login.php?re=data%3Atext%2Fhtml%3Bbase64%2CPHNjcmlwdD5hbGVydCgiWFNTXG4iK2RvY3VtZW50LmNvb2tpZSk8L3NjcmlwdD4%3D
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 1.0.3 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> bbPress Development Team
-> http://bbpress.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-12-23: notified vendor
-> 2011-02-24: vendor released fixed version
-> 2011-03-13: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[bbpress-1.0.2]_cross_site_scripting
-> About bbPress: http://bbpress.org/about/
-> 
-> 
-> #yehg [2011-03-13]
-> 
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+On Mon, 9 May 2011, Nicolas Gr�goire wrote:
+
+>
+> The bug was opened on January 18 :
+> https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
+>
+> A patch is available since February 20 :
+> http://trac.webkit.org/changeset/79159 (public)
+>
+> Given some recent mail exchanges with Apple, they still not have
+> affected a CVE to this issue. Could you please allocate one, in order
+> for me to have an easier job communicating with the numerous impacted
+> vendors (many Linux distributions, RIM, Maxthon, ...) ?
+>
+> Regards,
+> Nicolas Grégoire
+>
+>
