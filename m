@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/15
-Message-ID: <2146170184.652361.1307994072314.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:41:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/2
+Message-ID: <4DC75331.2080406@redhat.com>
+Date: Mon, 09 May 2011 10:36:33 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: PHP File upload filename
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1771 kernel: cifs oops when creating file with O_DIRECT set
 Content-Type: text/plain; charset=utf-8
 
+CIFS does not do O_DIRECT, so when you open a file with it, you will 
+trigger a NULL pointer dereference. This is a regression introduced with 
+the patchset to clean up filehandle management in CIFS. The fix checks 
+for a NULL filp->private_data before trying to dereference it.
 
+http://marc.info/?l=linux-cifs&m=130204730006155&w=2
+https://bugzilla.redhat.com/CVE-2011-1771
 
------ Original Message -----
-> Hi,
-> Please assign a CVE id for "File path injection vulnerability in
-> RFC1867
-> File upload filename" [1].
-> 
-> The fix for the bug has been already committed. [2]
-> 
-> Reported by: Krzysztof Kotowicz <kkotowicz at gmail dot com>
-> 
-> 
-> [1] - http://bugs.php.net/bug.php?id=54939
-> [2] - http://svn.php.net/viewvc?view=revision&revision=312103
-> 
+Introduced by cdff08e7 (v2.6.37-rc1)
 
-Please use CVE-2011-2202.
+Upstream commit
+http://git.kernel.org/linus/77970693
 
-Thanks.
-
--- 
-    JB
+Thanks, Eugene
