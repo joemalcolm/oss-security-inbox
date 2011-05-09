@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/17
-Message-ID: <Pine.GSO.4.64.1104051014001.20885@faron.mitre.org>
-Date: Tue, 5 Apr 2011 10:28:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/1
+Message-ID: <4DC74A8A.5080108@redhat.com>
+Date: Mon, 09 May 2011 09:59:38 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: DCCP invalid options
 Content-Type: text/plain; charset=utf-8
 
+On 05/09/2011 02:54 AM, Dan Rosenberg wrote:
+> On a providing a bad option length for certain DCCP options, a remote
+> host may cause parsing to read beyond the bounds of the incoming
+> packet.  This may possibly cause a DoS by reading unmapped memory (if
+> you're unlucky), or it may allow an attacker to infer the contents of
+> kernel heap memory based on the parser's response.
+>
+> -Dan
+>
+> [1] http://marc.info/?l=linux-kernel&m=130468845209036&w=2
 
-Given the complexity/number of patches, one could arguably call it "lack 
-of length validation" entirely, but I think it's reasonable to give it a 
-few CVE's.  Note - we need different CVE's for the issues found by Dan 
-Hutchings versus those found by Dan Rosenberg.
+Use CVE-2011-1770.
 
-Dan, could you confirm that this breakdown makes sense?
+https://bugzilla.redhat.com/CVE-2011-1770
 
-1) buffer overflows (not validating length is <= the maximum)
-
-2) use of negative signed integers in memcpy() and other operations where
-    conversion creates a large unsigned integer, referred to as
-    "underflow"
-
-3) any other types of problems that aren't covered by those two?  (The
-    length validation checks don't always have enough context in the source
-    code).
-
-We would need separate CVE's for the issues found by Dan versus the issues 
-found by Ben Hutchings.
-
-Arguably, #2 could probably be broken down further, but without enough 
-source code context in the patches, it's not immediately clear.
-
-- Steve
+Thanks, Eugene
