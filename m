@@ -1,20 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/3
-Message-ID: <AANLkTi=kEpzBU4YCVj+vMGrj4tdf3KFA8uGZaQO3zYU9@mail.gmail.com>
-Date: Sun, 20 Mar 2011 15:26:53 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: heap corruption in IrDA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/8
+Message-ID: <Pine.GSO.4.64.1105091456400.1528@faron.mitre.org>
+Date: Mon, 9 May 2011 14:59:19 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-When providing an invalid IrDA nickname for an IrNET peer, a local
-attacker can cause a kernel panic due to an underflow in a memcpy()
-size calculation or cause a controllable heap overflow that may lead
-to privilege escalation.  Write access to the /dev/irnet device file
-is required to trigger the vulnerability.
 
-Reference:
-http://marc.info/?l=linux-netdev&m=130060169116047&w=2
+All,
 
-Regards,
-Dan
+Note that due to all the Apple/Google confusion, we recently arranged for 
+Google to become a CVE CNA (i.e. have their own CVEs), and now they are 
+the primary coordinator for CVE assignment in Webkit issues (specifically, 
+Chris Evans).  Not sure whether the current issue has CVE coverage or not.
+
+- Steve
