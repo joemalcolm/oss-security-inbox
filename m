@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/7
-Message-ID: <6894f7c9-a6ca-46dd-9bd4-be8542d11081@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 12:22:37 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/10
+Message-ID: <1304967809.15178.30.camel@meatpuppet>
+Date: Mon, 09 May 2011 13:03:29 -0600
+From: Deb Mazurek <dmazurek@...urityfocus.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mplayer RDT parsing integer underlow
+Cc: Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-5027
+Is this related to CVE-2011-1425 as described in
+http://www.aleksey.com/pipermail/xmlsec/2011/009120.html
 
-Thanks.
 
--- 
-    JB
 
------ Original Message -----
-> Hi,
+On Mon, 2011-05-09 at 14:59 -0400, Steven M. Christey wrote:
+> All,
 > 
-> Please assign a CVE for this issue from 2009. From [1]:
+> Note that due to all the Apple/Google confusion, we recently arranged for 
+> Google to become a CVE CNA (i.e. have their own CVEs), and now they are 
+> the primary coordinator for CVE assignment in Webkit issues (specifically, 
+> Chris Evans).  Not sure whether the current issue has CVE coverage or not.
 > 
-> "Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
-> (Real Data Transport) chunks headers from the network and after that
-> it
-> will parse them. A controled variable is used to allocate a buffer
-> and
-> later passed on to the rtsp_read_data() function in order to specify
-> the
-> length of an RDT chunk data to read from the network. An integer
-> underflow can be triggered when parsing a malformed RDT header chunk,
-> a remote attacker can exploit it to execute arbitrary code in the
-> context of the application."
-> 
-> [1] http://seclists.org/fulldisclosure/2009/Jul/418
-> [2] https://secunia.com/advisories/36041/3/
-> 
-> thank you
-> tim
-> 
-> --
-> Tim Sammut ~ Gentoo Security Team
-> underling@...too.org ~ C2375493
-> 
-> 
+> - Steve
+
+
