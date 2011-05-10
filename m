@@ -1,30 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/2
-Message-ID: <4DB6EC87.3090001@kde.org>
-Date: Tue, 26 Apr 2011 12:02:15 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/3
+Message-ID: <20110510073603.GB9917@suse.de>
+Date: Tue, 10 May 2011 09:36:03 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
 Content-Type: text/plain; charset=utf-8
 
-On 4/12/2011 4:58 PM, Solar Designer wrote:
-> On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
->> pub   4096R/C44977CA 2011-04-12
->>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
->> uid                  Petr Matousek <pmatouse@...hat.com>
->> uid                  Petr Matousek <pm@...p.org>
+
+All, thanks for the fast replies. I'd appreciate different text or some
+note that its not the same as a recent issue, it would save some work.
+
+thx,
+-s
+
+On Tue, May 10, 2011 at 03:32:15PM +0800, Eugene Teo wrote:
+> On 05/10/2011 03:18 PM, Sebastian Krahmer wrote:
+> >
+> >Hi,
+> >
+> >Is this really different than what was assigned CVE-2011-1577 to?
+> >See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
+> >on the OSS mail on April 12th which reads exactly the same.
 > 
-> Added.
+> I double-checked, it's different...
 > 
-> Alexander
+> Eugene
+> 
+> >Sebastian
+> >
+> >On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
+> >>
+> >>
+> >>----- Original Message -----
+> >>>The kernel automatically evaluates partition tables of storage
+> >>>devices.
+> >>>The code for evaluating GUID partitions (in fs/partitions/efi.c)
+> >>>contains a bug that can cause a kernel heap overflow on certain
+> >>>corrupted GUID partition tables.
+> >>>
+> >>>http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
+> >>>http://bugzilla.redhat.com/show_bug.cgi?id=703026
+> >>>
+> >>
+> >>Please use CVE-2011-1776
+> >>
+> >>Thanks.
+> >>
+> >>--
+> >>     JB
+> >
 
-Hi there,
+-- 
 
-Please add me as a KDE security contact.
+--
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-sec   1024D/D0AE1825 2009-01-19
-Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
-uid                  Jeff Mitchell <mitchell@....org>
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
-Thanks,
-Jeff
