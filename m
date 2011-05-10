@@ -1,25 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/4
-Message-ID: <4ED3A32A.6040807@slackware.com>
-Date: Mon, 28 Nov 2011 09:05:14 -0600
-From: "Patrick J. Volkerding" <security@...ckware.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/3
+Message-ID: <20110510073603.GB9917@suse.de>
+Date: Tue, 10 May 2011 09:36:03 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: solar@...nwall.com
-Subject: linux-distros Slackware membership
+Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
 Content-Type: text/plain; charset=utf-8
 
-Hello Alexander,
 
-I believe I was supposed to be subscribed with my security at slackware 
-dt com address (only read by me), but have never received any messages 
-from the list.  Unless there's some reason that Slackware was not 
-included (and in that case I would be curious why, and how the situation 
-could be rectified), could you subscribe me?  My GPG key is:
+All, thanks for the fast replies. I'd appreciate different text or some
+note that its not the same as a recent issue, it would save some work.
 
-pub   1024D/40102233 2003-02-26 [expires: 2012-12-21]
-uid                  Slackware Linux Project <security@...ckware.com>
+thx,
+-s
 
+On Tue, May 10, 2011 at 03:32:15PM +0800, Eugene Teo wrote:
+> On 05/10/2011 03:18 PM, Sebastian Krahmer wrote:
+> >
+> >Hi,
+> >
+> >Is this really different than what was assigned CVE-2011-1577 to?
+> >See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
+> >on the OSS mail on April 12th which reads exactly the same.
+> 
+> I double-checked, it's different...
+> 
+> Eugene
+> 
+> >Sebastian
+> >
+> >On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
+> >>
+> >>
+> >>----- Original Message -----
+> >>>The kernel automatically evaluates partition tables of storage
+> >>>devices.
+> >>>The code for evaluating GUID partitions (in fs/partitions/efi.c)
+> >>>contains a bug that can cause a kernel heap overflow on certain
+> >>>corrupted GUID partition tables.
+> >>>
+> >>>http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
+> >>>http://bugzilla.redhat.com/show_bug.cgi?id=703026
+> >>>
+> >>
+> >>Please use CVE-2011-1776
+> >>
+> >>Thanks.
+> >>
+> >>--
+> >>     JB
+> >
 
-Thanks!
+-- 
 
-Pat
+--
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
