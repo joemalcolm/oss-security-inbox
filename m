@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/8
-Message-ID: <887FE7CFF6F8DE4BB3A9535F53AFD06A6F670AB2@il-ex2.zend.net>
-Date: Sun, 25 Sep 2011 13:47:29 +0000
-From: Zeev Suraski <zeev@...d.com>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Vincent Danen <vdanen@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>, Stas Malyshev <smalyshev@...arcrm.com>
-Subject: RE: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/6
+Message-ID: <4DC9A75E.3040201@redhat.com>
+Date: Tue, 10 May 2011 17:00:14 -0400
+From: William Cohen <wcohen@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-
-
-> -----Original Message-----
-> From: Pierre Joye [mailto:pierre.php@...il.com]
-> Sent: Sunday, September 25, 2011 12:02 PM
-> To: Stas Malyshev
-> Cc: Vincent Danen; oss-security@...ts.openwall.com; security@....net
-> Subject: Re: CVE request: is_a() function may allow arbitrary code execution
-> in PHP 5.3.7/5.3.8
+On 05/03/2011 05:36 AM, Huzaifa Sidhpurwala wrote:
+> Hi William,
+> On 05/01/2011 07:30 AM, William Cohen wrote:
+>>
+>> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+>>
 > 
-> hi Stas,
+> It appears from the debian bug, that there may be others way to exploit
+> this issue as well. hence i think we need a revised patch?
 > 
-> I tend to disagree here. One of the CVE goal is not about declaring one or the
-> other guilty of bad practice(s) but about informing users about security issues
-> in the software they use and how to act correctly to fix these issues.
+> 
 
-There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
-It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
-So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
+Hi Huzaifa,
 
-Zeev
+I have generated some patches to address the CVE. However, I have not yet address the http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#19 related to the "echo do_jitconv > $SESSION_DIR/opd_pipe"
+
+I will send the the patches from my local git branch in a moment.
+
+Any feedback would be appreciated.
+
+-Will
