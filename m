@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/2
-Message-ID: <4E267BD0.5090100@redhat.com>
-Date: Wed, 20 Jul 2011 12:25:12 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Gerald Combs <gerald@...eshark.org>
-Subject: Re: CVE Request -- Wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/7
+Message-ID: <4DC9A887.4030309@redhat.com>
+Date: Tue, 10 May 2011 17:05:11 -0400
+From: William Cohen <wcohen@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On 07/19/2011 06:11 PM, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
+On 05/03/2011 05:36 AM, Huzaifa Sidhpurwala wrote:
+> Hi William,
+> On 05/01/2011 07:30 AM, William Cohen wrote:
+>>
+>> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+>>
 > 
->   an infinite loop was found in the way ANSI A Interface (IS-634/IOS)
-> dissector of the Wireshark network traffic analyzer processed certain
-> ANSI A MAP capture files. If Wireshark read a malformed packet off a
-> network or opened a malicious packet capture file, it could lead to
-> denial of service (Wireshark hang).
-> 
-> Upstream bug:
-> [1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6044
-> 
-> Public PoC:
-> [2]
-> http://www.wireshark.org/download/automated/captures/fuzz-2011-06-20-22762.pcap
+> It appears from the debian bug, that there may be others way to exploit
+> this issue as well. hence i think we need a revised patch?
 > 
 > 
-> Relevant upstream patch:
-> [3] http://anonsvn.wireshark.org/viewvc?view=revision&revision=37930
-> 
-> References:
-> [4] http://www.wireshark.org/security/
-> [5] http://www.wireshark.org/security/wnpa-sec-2011-11.html
-> [6] http://www.wireshark.org/security/wnpa-sec-2011-10.html
-> [7] https://bugzilla.redhat.com/show_bug.cgi?id=723215
-> 
-> Could you allocate a CVE id for this?
 > 
 
-This has been assigned CVE-2011-2698
+The patches mentioned in the previous email.
 
+-Will
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+View attachment "0001-Sanitize-Event-Names.patch" of type "text/x-patch" (911 bytes)
+
+View attachment "0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch" of type "text/x-patch" (1092 bytes)
+
+View attachment "0003-Avoid-blindly-source-SETUP_FILE-with.patch" of type "text/x-patch" (1482 bytes)
+
+View attachment "0004-Do-additional-checks-on-user-supplied-arguments.patch" of type "text/x-patch" (4241 bytes)
