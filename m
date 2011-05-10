@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/4
-Message-ID: <4E140071.6010908@redhat.com>
-Date: Wed, 06 Jul 2011 11:58:01 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/5
+Message-ID: <1305039325.4942.14.camel@oban>
+Date: Tue, 10 May 2011 16:55:25 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: perf, x86: fix Intel fixed counters base initialization
+Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org
+Subject: CVE request: keepalived pid file permissions issue
 Content-Type: text/plain; charset=utf-8
 
-On 07/06/2011 11:54 AM, Eugene Teo wrote:
-> The following patch solves the problems introduced by Robert's commit
-> 41bf498 and reported by Arun Sharma. This commit gets rid of the base +
-> index notation for reading and writing PMU msrs.
-> 
-> The problem is that for fixed counters, the new calculation for the base
-> did not take into account the fixed counter indexes, thus all fixed
-> counters were read/written from fixed counter 0.  Although all fixed
-> counters share the same config MSR, they each have their own counter
-> register.
-> 
-> This can cause a local denial of service.
-> 
-> Upstream commit:
-> http://git.kernel.org/linus/fc66c5210ec2539e800e87d7b3a985323c7be96e
-> 
-> Introduced in:
-> http://git.kernel.org/linus/41bf498949a263fa0b2d32524b89d696ac330e94
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=719228
-> 
-> Thanks, Eugene
+Hey,
 
-Please use CVE-2011-2521
+it was reported that keepalived (and some other daemons) store their pid
+file with permission 666. A bug was opened for keepalived in Debian,
+could a CVE be assigned to the issue?
 
+Bug text was:
+
+On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
+> Package: keepalived
+> Version: 1.1.12-1
+> Severity: grave
+> Tags: security
+> 
+> Hi,
+> 
+> keepalive writes a public writeable pid file to /var/run
+> 
+> -rw-rw-rw-  1 root     root        5 2011-02-08 13:00 keepalived.pid
+> 
+> Cheers,
+> Martin
+> 
+> 
+> reference: http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
+
+Thanks,
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Yves-Alexis
+
