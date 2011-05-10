@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/6
-Message-ID: <AANLkTikK2KVBKenHmgm8j27=aNmrPVhyQUfH=tz3PUB3@mail.gmail.com>
-Date: Thu, 17 Mar 2011 13:56:45 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: The risks of cleaning /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/7
+Message-ID: <4DC9A887.4030309@redhat.com>
+Date: Tue, 10 May 2011 17:05:11 -0400
+From: William Cohen <wcohen@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 05/03/2011 05:36 AM, Huzaifa Sidhpurwala wrote:
+> Hi William,
+> On 05/01/2011 07:30 AM, William Cohen wrote:
+>>
+>> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+>>
+> 
+> It appears from the debian bug, that there may be others way to exploit
+> this issue as well. hence i think we need a revised patch?
+> 
+> 
+> 
 
-A number of utilities (notably tmpwatch on Red Hat/Fedora) are
-designed to regularly clean the contents of the /tmp directory.  I
-wanted to draw some attention to the fact that these applications, as
-well as setting up cronjobs to perform the same task, introduce the
-same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
-Namely, they make it such that the stickiness of /tmp can no longer be
-relied on.
+The patches mentioned in the previous email.
 
-Consider a setuid application that relies on the fact that users can't
-delete its resources in /tmp because they're root owned.  An attacker
-can simply launch the application and send a SIGSTOP at the right
-moment to cause it to sleep indefinitely, until tmpwatch (or similar)
-removes its /tmp resources, allowing them to be replaced by the
-attacker.  As Tavis pointed out, doing this with ksu could allow
-denial of service, but it may be possible to escalate privileges by
-leveraging other applications.
+-Will
 
-It seems like a difficult problem to solve - it's hardly feasible to
-rewrite every suid app that relies on the stickiness of /tmp.
-Hopefully we can generate some useful discussion here.
+View attachment "0001-Sanitize-Event-Names.patch" of type "text/x-patch" (911 bytes)
 
-Regards,
-Dan
+View attachment "0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch" of type "text/x-patch" (1092 bytes)
 
-[1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
+View attachment "0003-Avoid-blindly-source-SETUP_FILE-with.patch" of type "text/x-patch" (1482 bytes)
+
+View attachment "0004-Do-additional-checks-on-user-supplied-arguments.patch" of type "text/x-patch" (4241 bytes)
