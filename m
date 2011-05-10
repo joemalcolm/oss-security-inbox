@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/5
-Message-ID: <cbe2b67c-1fe0-47e6-aa93-7b2b241aa47a@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:32:14 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vanilla forums cookie theft, plugin access control
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/6
+Message-ID: <4DC9A75E.3040201@redhat.com>
+Date: Tue, 10 May 2011 17:00:14 -0400
+From: William Cohen <wcohen@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released
+On 05/03/2011 05:36 AM, Huzaifa Sidhpurwala wrote:
+> Hi William,
+> On 05/01/2011 07:30 AM, William Cohen wrote:
+>>
+>> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+>>
 > 
-> two issues:
-> 
-> before 2.0.17.9 - [SECURITY] Fixed cookie theft vulnerability.
-
-Use CVE-2011-3613
-
-
+> It appears from the debian bug, that there may be others way to exploit
+> this issue as well. hence i think we need a revised patch?
 > 
 > 
-> before 2.0.17.10 - [SECURITY] Fixed Facebook, Twitter, and Embed
-> plugins' access control.
-> 
 
-Use CVE-2011-3614
+Hi Huzaifa,
 
-Thanks.
+I have generated some patches to address the CVE. However, I have not yet address the http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#19 related to the "echo do_jitconv > $SESSION_DIR/opd_pipe"
 
--- 
-    JB
+I will send the the patches from my local git branch in a moment.
+
+Any feedback would be appreciated.
+
+-Will
