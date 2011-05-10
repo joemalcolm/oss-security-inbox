@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/14
-Message-ID: <1103040800390.25284@mjc.redhat.com>
-Date: Fri, 4 Mar 2011 08:08:03 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/1
+Message-ID: <20110510071821.GA9917@suse.de>
+Date: Tue, 10 May 2011 09:18:21 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
 Content-Type: text/plain; charset=utf-8
 
-> This certainly underscores that very few flaws need vendor-sec
-> coordination, but I would suspect that out of those roughly 725 flaws,
-> many of the really critical ones came through vendor-sec.
 
-Actually, not so much.  Of the flaws we rated impact critical or with a 
-CVSS of 'high', only 4 were from that 29 from vendor-sec.
+Hi,
 
-> I'm also curious what "issues already public but found out about it on
-> vendor-sec" means?
+Is this really different than what was assigned CVE-2011-1577 to?
+See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
+on the OSS mail on April 12th which reads exactly the same.
 
-It's where the date the issue was public is the same date it was reported 
-to vendor-sec.  This can be because it was brought to the wrong list, the 
-embargo was a day or less, or less often vendors wanted to discuss 
-something about it confidentially (a way to exploit it, etc)
+Sebastian
 
-Mark
+On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
+> 
+> 
+> ----- Original Message -----
+> > The kernel automatically evaluates partition tables of storage
+> > devices.
+> > The code for evaluating GUID partitions (in fs/partitions/efi.c)
+> > contains a bug that can cause a kernel heap overflow on certain
+> > corrupted GUID partition tables.
+> > 
+> > http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
+> > http://bugzilla.redhat.com/show_bug.cgi?id=703026
+> > 
+> 
+> Please use CVE-2011-1776
+> 
+> Thanks.
+> 
+> -- 
+>     JB
+
+-- 
+
+--
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
