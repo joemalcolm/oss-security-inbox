@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/2
-Message-ID: <20110320134340.GA10106@albatros>
-Date: Sun, 20 Mar 2011 16:43:40 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/4
+Message-ID: <4DC8E91E.8060402@pre-sense.de>
+Date: Tue, 10 May 2011 09:28:30 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+CC: Sebastian Krahmer <krahmer@...e.de>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
 Content-Type: text/plain; charset=utf-8
 
-Steven,
+Hi,
 
-On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
-> Thanks for the list. I don't have enough CVE ids for this, I've grouped
-> them by type and version for MITRE to assign IDs.
+from my point of view, these are different bugs:
 
-Any update on this?
+CVE-2011-1577 addresses the overall header size used for a CRC32
+computation.
 
+CVE-2011-1776 addresses the size of partition entries used for
+allocating a data structure.
 
-Thanks,
+Of course, one could argue that this is only one issue "missing input
+validation on GUID partition tables".
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Cheers, Timo
+
+Am 10.05.2011 09:18, schrieb Sebastian Krahmer:
+> 
+> Hi,
+> 
+> Is this really different than what was assigned CVE-2011-1577 to?
+> See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
+> on the OSS mail on April 12th which reads exactly the same.
+> 
+> Sebastian
+> 
+> On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
+>>
+>>
+>> ----- Original Message -----
+>>> The kernel automatically evaluates partition tables of storage
+>>> devices.
+>>> The code for evaluating GUID partitions (in fs/partitions/efi.c)
+>>> contains a bug that can cause a kernel heap overflow on certain
+>>> corrupted GUID partition tables.
+>>>
+>>> http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
+>>> http://bugzilla.redhat.com/show_bug.cgi?id=703026
+>>>
+>>
+>> Please use CVE-2011-1776
+>>
+>> Thanks.
+>>
+>> -- 
+>>     JB
+> 
