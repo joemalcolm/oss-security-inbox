@@ -1,16 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/24
-Message-ID: <20111121212657.GA23629@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 23:26:57 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/2
+Message-ID: <4DC8E9FF.2010105@redhat.com>
+Date: Tue, 10 May 2011 15:32:15 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: XSS in Tiki Wiki CMS Groupware (HTB23027)
+CC: Sebastian Krahmer <krahmer@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue:
+On 05/10/2011 03:18 PM, Sebastian Krahmer wrote:
+>
+> Hi,
+>
+> Is this really different than what was assigned CVE-2011-1577 to?
+> See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
+> on the OSS mail on April 12th which reads exactly the same.
 
-https://www.htbridge.ch/advisory/xss_in_tiki_wiki_cms_groupware.html
-http://secunia.com/advisories/45283/
+I double-checked, it's different...
 
-Best regards,
-Henri Salo
+Eugene
+
+> Sebastian
+>
+> On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
+>>
+>>
+>> ----- Original Message -----
+>>> The kernel automatically evaluates partition tables of storage
+>>> devices.
+>>> The code for evaluating GUID partitions (in fs/partitions/efi.c)
+>>> contains a bug that can cause a kernel heap overflow on certain
+>>> corrupted GUID partition tables.
+>>>
+>>> http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
+>>> http://bugzilla.redhat.com/show_bug.cgi?id=703026
+>>>
+>>
+>> Please use CVE-2011-1776
+>>
+>> Thanks.
+>>
+>> --
+>>      JB
+>
+
