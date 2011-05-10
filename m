@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/6
-Message-ID: <20110811140533.GB1641@linux-mips.org>
-Date: Thu, 11 Aug 2011 15:05:33 +0100
-From: Ralf Baechle <ralf@...ux-mips.org>
-To: Thomas Osterried <thomas@...erried.de>
-Cc: Eren Türkay <eren@...dus.org.tr>, oss-security@...ts.openwall.com, Thomas Osterried <ax25@...erg.in-berlin.de>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/5
+Message-ID: <1305039325.4942.14.camel@oban>
+Date: Tue, 10 May 2011 16:55:25 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org
+Subject: CVE request: keepalived pid file permissions issue
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
+Hey,
 
-> Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
-> > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
-> > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
-> > > package, allows administrators to associate incoming AX.25, NET/ROM,
-> > > and ROSE traffic with the execution of an endpoint program (most
-> > > commonly "node"), which is run under a specified user account.
-> > > Because ax25d is missing a check on the return code for a setuid call
-> > > responsible for dropping privileges to the specified user, it may be
-> > > possible to cause setuid to fail, after which the chosen program will
-> > > be executed with root privileges.  In other words, if you're in the
-> > > business of handing out unprivileged shells over amateur radio (don't
-> > > we all? :p ), this would allow for remote compromise.
-> > 
-> > Hello,
-> > 
-> > Thank you for your investigation on the topic. Although this issue seems
-> > to be low-priority, it's good to let the maintainers know.
-> > 
-> > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
-> > linux-ac25 site, are the maintainers of ax25 utilities.
+it was reported that keepalived (and some other daemons) store their pid
+file with permission 666. A bug was opened for keepalived in Debian,
+could a CVE be assigned to the issue?
+
+Bug text was:
+
+On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
+> Package: keepalived
+> Version: 1.1.12-1
+> Severity: grave
+> Tags: security
 > 
-> thank you for your information.
+> Hi,
 > 
-> I know that code fragment, but I never imagined that if root calls
-> setuid/setgid that this could fail, because root has by definition enough
-> rights.
+> keepalive writes a public writeable pid file to /var/run
+> 
+> -rw-rw-rw-  1 root     root        5 2011-02-08 13:00 keepalived.pid
+> 
+> Cheers,
+> Martin
+> 
+> 
+> reference: http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
 
-Welcome to the new world where things are more complicated ...
+Thanks,
+-- 
+Yves-Alexis
 
-These days setuid and similar syscalls need to allocate memory for the
-credentials of a process and memory allocations may fail.  A system could
-even be put under massive memory pressure with the intend to make this
-allocation fail.
-
-Also setuid requires the capability CAP_SETUID which a process - running
-as root or not may not have.
-
-Finally a the Linux security subsystem has its say and while it's odd to
-configure an LSM to reject the attempt to drop privileges it's entirely
-possible.
-
-  Ralf
