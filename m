@@ -1,20 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/08/1
-Message-ID: <20110808172435.GD1514@redhat.com>
-Date: Mon, 8 Aug 2011 11:24:36 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: heap overflow in tcptrack < 1.4.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/4
+Message-ID: <0F278B0E7FB40349B635BE500A9BA27F0E3334C6@ALA-MBB.corp.ad.wrs.com>
+Date: Wed, 11 May 2011 16:05:15 +0000
+From: "Zhao, Zhenfeng" <Zhenfeng.Zhao@...driver.com>
+To: Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [security-vendor] Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-A heap overflow in the parsing of tcptrack's command line was found.
-The details are pretty sparse, but here are some references:
+Much Thanks.
 
-http://www.rhythm.cx/~steve/devel/tcptrack/#news
-https://bugs.gentoo.org/show_bug.cgi?id=377917
-https://bugzilla.redhat.com/show_bug.cgi?id=729096
+Zhenfeng(Jeffrey) Zhao
 
-Could a CVE be assigned to this please?  Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+> -----Original Message-----
+> From: owner-security-vendor@...driver.com [mailto:owner-security-
+> vendor@...driver.com] On Behalf Of Solar Designer
+> Sent: Wednesday, May 11, 2011 11:56 PM
+> To: oss-security@...ts.openwall.com
+> Subject: [security-vendor] Re: [oss-security] Closed list
+> 
+> On Mon, May 02, 2011 at 02:56:16PM -0400, Josh Bressers wrote:
+> > ----- Original Message -----
+> > > On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
+> > > > I think this is suitable. The goal here is to ensure that a vendor
+> > > > is actually producing updates and aren't just a potential leak.
+> > >
+> > > OK, so do you propose that we subscribe Wind River, and wait for
+> > > MontaVista to setup something similar to these RSS feeds before we
+> > > also subscribe them?
+> >
+> > I'm OK with this action.
+> 
+> I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
+> 
+> Alexander
