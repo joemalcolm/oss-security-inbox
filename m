@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/14
-Message-ID: <1285918669.841735.1308684244595.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Jun 2011 15:24:04 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/2
+Message-ID: <1305110869.17177.267.camel@new-desktop>
+Date: Wed, 11 May 2011 12:47:49 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: taskstats authorized_keys presence infoleak PoC
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
 
------ Original Message -----
-> /*
-> * This program tries to learn whether ~user/.ssh/authorized_keys exists
-> * and is nonempty for any user on local machine. It uses world-readable
-> * taskstats' nature to get somewhat private io statistics information.  If
-> * implant taskstats or /proc//io polling into ssh client, it would be
-> * possible to learn precise authorized_keys' size (and estimate private
-> * key's(s') size).
+Hi,
 
-Are you considering this a flaw, or just an interesting security exercise?
-Nothing currently comes to mind, but it's possible there could be other
-data where knowing it exists and the size would be useful. I'm thinking
-this isn't terribly dangerous for something like ssh.
+it seems that there's some confusion about these different CVE
+identifiers. I'll try to clarify it :
 
-This is very interesting either way. Well done.
+- CVE-2011-1774 was affected to the Webkit bug #52688 by Josh Bressers
+on May 9 (via oss-security and the private ticket). It seems to me to be
+actually the best choice to track this vulnerability.
 
--- 
-    JB
+- CVE-2011-0195 was mistaken by Apple as affected internally to the
+Webkit bug #52688. In fact, this CVE is affected to an information leak
+about heap addresses, disclosed by Chris Evans. Unfortunately, this info
+leak is also tracked as CVE-2011-1202. This is probably the
+"Apple/Google confusion" Steve was talking about.
+
+- CVE-2011-1425 was assigned on March 14 to a xmlsec vulnerability, at
+my request. Both xmlsec and Webkit vulnerabilities have the same root
+cause, which is unrestricted access to libxslt features like file
+creation. In xmlsec, the vector is a "<ds:Transform>" tag in a signed
+file. In Webkit, it could a XML file, a XHTML page or a SVG image.
+
+In my opinion, having the same root cause isn't a sufficient reason to
+affect the same CVE to both xmlsec and Webkit vulnerabilities.
+
+Additionally, the fact that the xmlsec advisory about CVE-2011-1425
+linked to a Webkit patch (in its **work-around** section) added some
+more confusion.
+
+So, i propose to :
+- remove references to Webkit from the CVE-2011-1425 page
+- affect CVE-2011-1774 to the Webkit bug #52688
+
+Regards,
+Nicolas Grégoire
+
