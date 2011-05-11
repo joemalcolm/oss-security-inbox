@@ -1,47 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/15
-Message-ID: <1293814125.290376.1304362576922.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 14:56:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/3
+Message-ID: <20110511155606.GA10784@openwall.com>
+Date: Wed, 11 May 2011 19:56:06 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
-> > I think this is suitable. The goal here is to ensure that a vendor is
-> > actually producing updates and aren't just a potential leak.
+On Mon, May 02, 2011 at 02:56:16PM -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
+> > > I think this is suitable. The goal here is to ensure that a vendor is
+> > > actually producing updates and aren't just a potential leak.
+> > 
+> > OK, so do you propose that we subscribe Wind River, and wait for
+> > MontaVista to setup something similar to these RSS feeds before we also
+> > subscribe them?
 > 
-> OK, so do you propose that we subscribe Wind River, and wait for
-> MontaVista to setup something similar to these RSS feeds before we also
-> subscribe them?
+> I'm OK with this action.
 
-I'm OK with this action.
+I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
 
-> 
-> A secondary goal behind requiring access to advisories and updates (not
-> just metainfo) would be to be able to draw the line between vendors and
-> companies that build their own Linux distros in house. The latter could
-> also publish an RSS feed showing how they update their packages, yet they
-> would not be a vendor to anyone other than themselves... On the other
-> hand, publishing updates without publishing the distro itself doesn't
-> make them more of a vendor to others. So to achieve this goal we'd
-> probably need to require the distro itself to be public (in at least one
-> form - e.g., Red Hat's .src.rpm's are sufficient), not just advisories
-> and updates.
-> 
-> We may choose not to pursue this secondary goal now.
-> 
-
-This one is a bit wonky. I'm not sure what the answer should be. I think we
-should refer to sanity and current list members for advice. I suspect if we
-have rules we try to follow 100%, they will be trivial to work around.
-After all, don't we all make our living making things do things they're not
-supposed to do? :)
-
-Thanks.
-
--- 
-    JB
+Alexander
