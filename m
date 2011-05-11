@@ -1,35 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/6
-Message-ID: <4D739ABD.9040508@gmail.com>
-Date: Sun, 06 Mar 2011 21:31:25 +0700
-From: Pavel Labushev <p.labushev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/2
+Message-ID: <1305110869.17177.267.camel@new-desktop>
+Date: Wed, 11 May 2011 12:47:49 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-06.03.2011 19:26, Solar Designer пишет:
 
-> For this to happen, you need to post info on the specific issues and
-> request CVEs for them.  Will you do this, please?  (Perhaps start a new
-> thread, or even a thread per package - that's up to you.)
+Hi,
 
-I mean we shouldn't sweep the logrotate issues under the carpet, even if
-logrotate wasn't suppose to handle such use cases initially. I have an
-impression that's what you suggest. I mean this:
+it seems that there's some confusion about these different CVE
+identifiers. I'll try to clarify it :
 
-> The rest, as described, appear to rely on sysadmin error and to assume
-> security properties that logrotate never advertised it had.
+- CVE-2011-1774 was affected to the Webkit bug #52688 by Josh Bressers
+on May 9 (via oss-security and the private ticket). It seems to me to be
+actually the best choice to track this vulnerability.
 
-and
+- CVE-2011-0195 was mistaken by Apple as affected internally to the
+Webkit bug #52688. In fact, this CVE is affected to an information leak
+about heap addresses, disclosed by Chris Evans. Unfortunately, this info
+leak is also tracked as CVE-2011-1202. This is probably the
+"Apple/Google confusion" Steve was talking about.
 
-> Indeed.  A vulnerability in the service package, in my opinion.  Now
-> that would require CVE id assignment and a fix to the package, whereas
-> logrotate could merely use some hardening with no CVE ids (except for
-> issue #8, which was different).
+- CVE-2011-1425 was assigned on March 14 to a xmlsec vulnerability, at
+my request. Both xmlsec and Webkit vulnerabilities have the same root
+cause, which is unrestricted access to libxslt features like file
+creation. In xmlsec, the vector is a "<ds:Transform>" tag in a signed
+file. In Webkit, it could a XML file, a XHTML page or a SVG image.
 
-So I think all the logrotate issues should get their CVEs with an advise to
-work around misuse cases by chowning the log directories root:root.
+In my opinion, having the same root cause isn't a sufficient reason to
+affect the same CVE to both xmlsec and Webkit vulnerabilities.
 
-The Gentoo issues, I think they don't need CVEs and will be fixed by the
-Gentoo security team (they are aware). The point was to show the misuse
-cases are common.
+Additionally, the fact that the xmlsec advisory about CVE-2011-1425
+linked to a Webkit patch (in its **work-around** section) added some
+more confusion.
+
+So, i propose to :
+- remove references to Webkit from the CVE-2011-1425 page
+- affect CVE-2011-1774 to the Webkit bug #52688
+
+Regards,
+Nicolas Grégoire
+
