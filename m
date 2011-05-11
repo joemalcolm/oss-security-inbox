@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/1
-Message-ID: <384589066.134954.1303214077806.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Apr 2011 07:54:37 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, robert@...ecki.net
-Subject: CVE request -- kernel: proc: signedness issue in next_pidmap()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/4
+Message-ID: <0F278B0E7FB40349B635BE500A9BA27F0E3334C6@ALA-MBB.corp.ad.wrs.com>
+Date: Wed, 11 May 2011 16:05:15 +0000
+From: "Zhao, Zhenfeng" <Zhenfeng.Zhao@...driver.com>
+To: Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [security-vendor] Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-"A signedness issue has been found in next_pidmap() function when the "last"
-parameter is negative as next_pidmap() just quietly accepted whatever
-"last" pid that was passed in, which is not all that safe when one of the
-users is /proc.
+Much Thanks.
 
-Setting f_pos to negative value when accessing /proc via readdir()/getdents()
-resulted in sign extension of this value when map pointer was being
-constructed.
+Zhenfeng(Jeffrey) Zhao
 
-This later lead to #GP because the final pointer was not canonical (x86_64)."
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=697822
-http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/93c1088451fd3522/4a28ecb7f755a88d?#4a28ecb7f755a88d
-
-Upstream commit:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=c78193e9
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=d8bdc59f
-
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
-
+> -----Original Message-----
+> From: owner-security-vendor@...driver.com [mailto:owner-security-
+> vendor@...driver.com] On Behalf Of Solar Designer
+> Sent: Wednesday, May 11, 2011 11:56 PM
+> To: oss-security@...ts.openwall.com
+> Subject: [security-vendor] Re: [oss-security] Closed list
+> 
+> On Mon, May 02, 2011 at 02:56:16PM -0400, Josh Bressers wrote:
+> > ----- Original Message -----
+> > > On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
+> > > > I think this is suitable. The goal here is to ensure that a vendor
+> > > > is actually producing updates and aren't just a potential leak.
+> > >
+> > > OK, so do you propose that we subscribe Wind River, and wait for
+> > > MontaVista to setup something similar to these RSS feeds before we
+> > > also subscribe them?
+> >
+> > I'm OK with this action.
+> 
+> I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
+> 
+> Alexander
