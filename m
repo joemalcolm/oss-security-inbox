@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/2
-Message-ID: <4E48B1DC.7070401@redhat.com>
-Date: Mon, 15 Aug 2011 11:12:52 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/1
+Message-ID: <4DCA2A97.1070706@redhat.com>
+Date: Wed, 11 May 2011 11:50:07 +0530
 From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
-Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+CC: William Cohen <wcohen@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On 07/30/2011 01:34 AM, Josh Bressers wrote:
-> Steve,
-> 
-> Can you weigh in on how to assign this one. I'm thinking we want two IDs,
-> but I know in the past one ID has been used for catchall type IDs (I'm not
-> sure if that's simply done due to lack of details).
-> 
-> Thanks.
-> 
+On 05/11/2011 02:35 AM, William Cohen wrote:
 
-Any updates on this one?
+Hi William,
+
+> The patches mentioned in the previous email.
+Thanks for the patches, they seem to work for me.
 
 
 -- 
