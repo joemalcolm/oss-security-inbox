@@ -1,21 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/1
-Message-ID: <4E32093F.1020401@redhat.com>
-Date: Fri, 29 Jul 2011 09:13:35 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/1
+Message-ID: <4DCA2A97.1070706@redhat.com>
+Date: Wed, 11 May 2011 11:50:07 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: kernel: gro: Only reset frag0 when skb can be pulled
+CC: William Cohen <wcohen@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On 07/29/2011 06:30 AM, Kees Cook wrote:
-> Hi,
-> 
-> This fixes a remote crasher under certain network device configurations:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=17dd759c67f21e34f2156abcf415e1f60605a188
+On 05/11/2011 02:35 AM, William Cohen wrote:
 
-I'm looking at this too.
+Hi William,
 
-CVE-2011-2723
+> The patches mentioned in the previous email.
+Thanks for the patches, they seem to work for me.
 
-Eugene
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
