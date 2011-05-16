@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/4
-Message-ID: <20110717191540.GB18385@openwall.com>
-Date: Sun, 17 Jul 2011 23:15:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/1
+Message-ID: <20110516142741.GA24816@suse.de>
+Date: Mon, 16 May 2011 16:27:41 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
-> PostgreSQL is affected as well (the pgcrypto module):
-> 
-> % head crypt-blowfish.c 
-> /*
->  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 
->  14:48:52 momjian Exp $
+Hi,
 
-Right.  Luckily, it is well-maintained - Tom Lane committed a fix based
-on crypt_blowfish 1.1's on June 21st:
+Its probably about time to review libraries that are commonly
+linked to (formerly-) suid programs, such as
+libldap, libssl etc. In near future, in the advent of file caps
+they are often lacking proper checks.
+They usually just compare uid against euid (not even gid sometimes)
+and do not check the dumpable flag or AT_SECURE (dont know whether
+glibc exports a proper function to easily check that at all).
 
-http://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=ca59dfa6f727fe3bf3a01904ec30e87f7fa5a67e
+The libraries that I had a quick look at and which were found
+"vulnerable" are:
 
-I've just e-mailed Tom to let him know about crypt_blowfish 1.2 with its
-more elaborate changes, and to try to persuade him to include the runtime
-quick self-test - to catch miscompiles, bugs potentially introduced in
-re-users of the code (such as in a future revision of pgcrypto - who
-knows), and to clean up the stack locations.
+- openssl-1.0.0c
+- openldap-2.4.23
+- cyrus-sasl-2.1.23
 
-Alexander
+which is probably far from complete. Even if not linked directly to
+a privileged running program, these libraries may be introduced by
+plugins or frameworks (pam etc).
+As a result, attackers may specify plugin directories or rouge directory
+services for authentication as these libraries think they are
+running unprivileged.
+So better to fix them now than to be sorry in one year when they are going
+to be used the fscaps-way.
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
