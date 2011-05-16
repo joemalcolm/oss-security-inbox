@@ -1,63 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/7
-Message-ID: <4EC68954.4030502@redhat.com>
-Date: Fri, 18 Nov 2011 09:35:32 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/7
+Message-ID: <977272446.96885.1305574633976.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 16 May 2011 15:37:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Timo Sirainen <tss@....fi>
-Subject: Re: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
+Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org, coley <coley@...re.org>
+Subject: Re: CVE request: keepalived pid file permissions issue
 Content-Type: text/plain; charset=utf-8
 
-On 11/18/2011 06:37 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way Dovecot, an IMAP and POP3 email
-> server, performed remote server identity verification (x509
-> certificate's Common Name field was not checked to match provided
-> remote server host name), when Dovecot was configured to proxy IMAP and
-> POP3 connections to remote hosts and TLS/SSL protocols were requested
-> (ssl=yes or starttls=yes) in the configuration to secure these
-> connections to the destination server. A remote attacker could use
-> this flaw to conduct man-in-the-middle (MITM) attacks via specially-
-> crafted x509v3 certificate.
->
-> References:
-> [1] http://www.dovecot.org/list/dovecot-news/2011-November/000200.html
-> [2] https://secunia.com/advisories/46886/
-> [3] https://bugs.gentoo.org/show_bug.cgi?id=390887
-> [4] http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
->
-> Relevant upstream patch:
-> [5] http://hg.dovecot.org/dovecot-2.0/rev/5e9eaf63a6b1
->
-> Could you allocate a CVE id for this?
->
-> Note: This isn't a 'direct security flaw', in the sense it would be
-> discovered / reported at some time point. This behaviour (do not check
-> x509v3 cert CN against remote server hostname), when TLS/SSL protocols
-> are configured, and the danger of MITM is already described
-> on relevant Dovecot's page:
-> http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
->
-> thus one could say, for those administrators, who are aware of [4]
-> page and configured Dovecot in safe way there is no trust boundary
-> crossing and this upstream change is just security hardening.
->
-> But on the other hand, this change is important enough, to be
-> backported to all affected versions, (regardless to the fact if
-> particular administrator has or hasn't read [4]). Thus I would vote
-> for a CVE identifier to be assigned to this issue. But opened for
-> discussion if someone else (MITRE?) thinks this should be dealt
-> with rather as with security hardening, than with a real security
-> flaw.
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2011-1784 for this.
 
-Please use CVE-2011-4318  for this issue.
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
+----- Original Message -----
+> Hey,
+> 
+> it was reported that keepalived (and some other daemons) store their
+> pid
+> file with permission 666. A bug was opened for keepalived in Debian,
+> could a CVE be assigned to the issue?
+> 
+> Bug text was:
+> 
+> On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
+> > Package: keepalived
+> > Version: 1.1.12-1
+> > Severity: grave
+> > Tags: security
+> >
+> > Hi,
+> >
+> > keepalive writes a public writeable pid file to /var/run
+> >
+> > -rw-rw-rw- 1 root root 5 2011-02-08 13:00 keepalived.pid
+> >
+> > Cheers,
+> > Martin
+> >
+> >
+> > reference:
+> > http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
+> 
+> Thanks,
+> --
+> Yves-Alexis
