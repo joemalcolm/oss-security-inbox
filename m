@@ -1,64 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/16
-Message-ID: <402506908.19649.1300223422042.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 17:10:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/1
+Message-ID: <20110516142741.GA24816@suse.de>
+Date: Mon, 16 May 2011 16:27:41 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+Subject: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, David, vendors,
-> 
-> this is due the following vino deficiency:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> As noted in [1] Vino may incorrectly report, that relevant user desktop
-> is reachable only over local network, when in fact it's reachable from
-> everywhere.
-> 
-> As this is issue slightly on the border, not sure it should receive a CVE
-> identifier, so Cc-ed David Woodhouse to elaborate more on issue impact if
-> necessary.
-> 
-> Under my opinion, the trust boundary is crossed (it is wrongly reported
-> to the the user, they have a secure setup, when they do not have it and
-> otherwise would perform steps to correct the settings). But left the
-> final decision for further discussion.
-> 
-> What are the thoughts of the others? Should this one get a CVE identifier
-> or not?
-> 
-> Upstream bug report:
-> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
-> 
-> Ubuntu bug report (IPv6 specific):
-> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
-> 
+Hi,
 
-The above bugs talk about two flaws. Based on discussions I'm giving them
-both CVE ids.
+Its probably about time to review libraries that are commonly
+linked to (formerly-) suid programs, such as
+libldap, libssl etc. In near future, in the advent of file caps
+they are often lacking proper checks.
+They usually just compare uid against euid (not even gid sometimes)
+and do not check the dumpable flag or AT_SECURE (dont know whether
+glibc exports a proper function to easily check that at all).
 
-Issue #1
+The libraries that I had a quick look at and which were found
+"vulnerable" are:
 
-Vino incorrectly tells users their desktop is only reachable over the local
-network.
+- openssl-1.0.0c
+- openldap-2.4.23
+- cyrus-sasl-2.1.23
 
-https://bugzilla.gnome.org/show_bug.cgi?id=596190
-https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+which is probably far from complete. Even if not linked directly to
+a privileged running program, these libraries may be introduced by
+plugins or frameworks (pam etc).
+As a result, attackers may specify plugin directories or rouge directory
+services for authentication as these libraries think they are
+running unprivileged.
+So better to fix them now than to be sorry in one year when they are going
+to be used the fscaps-way.
 
-Use CVE-2011-1164
-
-Issue #2
-
-Vino can open ports via uPnP without alerting the user.
-https://bugzilla.redhat.com/show_bug.cgi?id=678846
-
-Use CVE-2011-1165
-
-Thanks.
+Sebastian
 
 -- 
-    JB
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
