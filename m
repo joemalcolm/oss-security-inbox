@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/14
-Message-ID: <872510506.193295.1294339837872.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 13:50:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/11
+Message-ID: <20110516222642.GA18032@altlinux.org>
+Date: Tue, 17 May 2011 02:26:42 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: hastymail before 1.01 XSS
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4646 for this.
+On Mon, May 16, 2011 at 10:56:37PM +0400, Solar Designer wrote:
+> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
+> > Its probably about time to review libraries that are commonly
+> > linked to (formerly-) suid programs, such as
+> > libldap, libssl etc. In near future, in the advent of file caps
+> > they are often lacking proper checks.
+> 
+> Good idea.
+> 
+> > They usually just compare uid against euid (not even gid sometimes)
+> > and do not check the dumpable flag or AT_SECURE (dont know whether
+> > glibc exports a proper function to easily check that at all).
+> 
+> glibc exports the __libc_enable_secure variable, which is initialized
+> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
 
-Thanks.
+There is a problem: in upstream glibc, __libc_enable_secure is placed into
+GLIBC_PRIVATE section, thus making it unavailable in most of rpm-based
+distros.  This is surely not the case in Owl and ALT Linux, where
+__libc_enable_secure is legal interface for use in applications,
+and some essential libraries are already patched to use
+__libc_enable_secure instead of uid comparisons.
+
 
 -- 
-     JB
+ldv
 
------ Original Message -----
-> See
-> http://www.hastymail.org/security/
-> 
-> "Many thanks to Julien CAYSSOL who discovered and reported the issue.
-> The
-> specific problem is an XSS attack vector in HTML formatted messages
-> that takes
-> advantage of background attributes used with table cell elements. Due
-> to an
-> incorrect implementation of the new htmLawed HTML filter this
-> attribute value
-> was not properly sanitized and could be used to inject executable
-> JavaScript.
-> This was NOT a flaw in the htmLawed filter code itself, but a problem
-> with
-> it's specific use in Hastymail2. The Hastymail2 1.01 release was
-> pacakages
-> specifically to address this one issue. "
-> 
-> --
-> Hanno Böck Blog: http://www.hboeck.de/
-> GPG: 3DBD3B20 Jabber/Mail: hanno@...eck.de
-> 
-> http://schokokeks.org - professional webhosting
+Content of type "application/pgp-signature" skipped
