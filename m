@@ -1,43 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/4
-Message-ID: <CAEZPtU7JmsUt5pTkK5BvZxZnop8PomYPvNHeX7qr5enzN5Rpnw@mail.gmail.com>
-Date: Sun, 25 Sep 2011 11:02:17 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Stas Malyshev <smalyshev@...arcrm.com>
-Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/10
+Message-ID: <20110516222154.GF2430@redhat.com>
+Date: Mon, 16 May 2011 16:21:54 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: DoS in tor
 Content-Type: text/plain; charset=utf-8
 
-hi Stas,
+Tor 0.2.1.30 was released and includes a fix for a remote DoS flaw:
 
-I tend to disagree here. One of the CVE goal is not about declaring
-one or the other guilty of bad practice(s) but about informing users
-about security issues in the software they use and how to act
-correctly to fix these issues.
+https://lists.torproject.org/pipermail/tor-announce/2011-February/000000.html
+http://secunia.com/advisories/43548/
+https://bugzilla.redhat.com/show_bug.cgi?id=705192
 
-The is_a change is typically one of these security issues. While being
-a minor one (recommended ini settings or good code practices would
-avoid it easily), it is still one. That's why I'd to go with assigning
-one and link it to the bug.
-
-On Sun, Sep 25, 2011 at 10:56 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
-
-> Yes, it is a behavior change, and it shouldn't have happened in 5.3, the
-> fact that it happened was a bad mistake, it is clear now.
-> However, the security flaw is squarely in the code that a) misuses is_a b)
-> doesn't have security checks and c) does not follow recommended best
-> practices about PHP settings.
-> As such, telling people that it was a flaw in PHP and that BC break reversal
-> "fixed" it only gives them wrong ideas that their code was just fine. But in
-> fact their code was broken and only by luck (and due to the haphazard way
-> things were done in PHP where nobody bothered correlating function
-> signatures with one another) in might have not been malfunctioning in this
-> specific scenario. They need to fix that code ASAP, as they can not rely on
-> luck anymore and they way is_a was changed is actually they way it should
-> have worked from the start and the way is_subclass_of works right now.
-
+Could a CVE be assigned please?
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Vincent Danen / Red Hat Security Response Team 
