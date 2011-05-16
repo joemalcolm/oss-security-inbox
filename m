@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/9
-Message-ID: <1588099194.1604029.1311708902599.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 15:35:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/4
+Message-ID: <20110516180956.GC2430@redhat.com>
+Date: Mon, 16 May 2011 12:09:56 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request - dhcp clients
+Subject: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
+I see the following changes as fixed in MySQL 5.1.52, but cannot find
+any CVEs for them:
 
+InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+examining the same table's information in the INFORMATION_SCHEMA
+database at the same time could cause a crash in the debug version of
+the server. (Bug #54678)
 
------ Original Message -----
-> Hi!
-> 
-> Earlier this year, CVE-2011-0997 was assigned to ICS's dhclient and
-> CVE-2011-0996 dhcpcd for an insufficient DHCP option checking.
-> 
-> Similar issue affects busybox's udhcpc.
-> 
-> dhcpv6's dhcp6c was previously mentioned and it seems also fixed in
-> SUSE, but did not get its own CVE.
-> 
-> The impact for DHCPv6 clients seems significantly lower, as there's no
-> support for hostname option, only domain search option. I'm not sure
-> if anyone identified any good target that handles search option
-> insecurely, I've only found shtool's sh.echo that may use it in sed
-> script, resulting in sed script injection with file overwrite or code
-> execution impact.
-> 
-> Given that dhclient and dhcpcd got separate CVEs, udhcpc and dhcp6c
-> should probably get separate ids too.
-> 
+Security Fix: The server crashed for assignment of values of types other
+than Geometry to items of type GeometryCollection (MultiPoint,
+MultiCurve, MultiSurface). Now the server checks the field type and
+fails with bad geometry value if it detects incorrect parameters. (Bug
+#55531)
 
-Use CVE-2011-2716 for udhcpc
-CVE-2011-2717 for udhcp6c.
+Security Fix: EXPLAIN EXTENDED caused a server crash with some prepared
+statements. (Bug #54494)
 
-Thanks.
+Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
+derived table caused a server crash. (Bug #54488)
+
+There are a whole bunch of other crash-type bugs corrected in 5.1.52
+that upstream did not explicitly flag as security, which might be
+considered security-relevant as well:
+
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
