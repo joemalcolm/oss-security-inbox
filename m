@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/10
-Message-ID: <979245400.58352.1297863982545.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Feb 2011 08:46:22 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/5
+Message-ID: <20110516183202.GA30006@openwall.com>
+Date: Mon, 16 May 2011 22:32:02 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: xfs infoleak
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Mon, May 16, 2011 at 07:26:41PM +0200, Jan Lieskovsky wrote:
+>   please add me to the list. I was earlier vendor-sec member via
+> Red Hat exploder.
 
------ Original Message -----
-> From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat equivalent)
-> calls out to xfs_fs_geometry() with a version number of 3.  This code
-> path does not fill in the logsunit member of the passed xfs_fsop_geom_t,
-> leading to the leaking of four bytes of uninitialized stack data to
-> potentially unprivileged callers. Since all other members are filled in
-> all code paths and there are no padding bytes in this structure, it's
-> safe to avoid an expensive memset() in favor of just clearing this one
-> field."
-> 
-> https://patchwork.kernel.org/patch/555461/
-> https://bugzilla.redhat.com/show_bug.cgi?id=677260
-> 
+Added.
 
-Please use CVE-2011-0711.
+> P.S.: Was waiting if the discussion regarding limiting a distro to two
+>       or three representatives will come to conclusion and intended to
+>       post then. But not sure if there was a final decision wrt to this.
 
-Thanks.
+The prevailing opinion appeared to be not to impose this limit, so I
+proceeded to add more than 3 representatives when requested.
 
--- 
-    JB
+There are 33 subscribed addresses total, including 7 for Red Hat, 5 for
+Ubuntu, 4 for Debian, 4 for SuSE.  Other distros have 1 or 2 each.
+
+Alexander
