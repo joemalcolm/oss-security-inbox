@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/06/1
-Message-ID: <7ihb3mt6tu.fsf@lanthane.pps.jussieu.fr>
-Date: Thu, 06 Oct 2011 18:37:01 +0200
-From: Juliusz Chroboczek <jch@....jussieu.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/9
+Message-ID: <20110516215859.GD2430@redhat.com>
+Date: Mon, 16 May 2011 15:59:00 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+Subject: CVE request: polarssl
 Content-Type: text/plain; charset=utf-8
 
->   a denial of service flaw was found in the way Polipo, a lightweight
-> caching web proxy, processed certain HTTP POST / PUT requests. If
-> polipo was configured to allow remote client connections and particular
-> host was allowed to connect to polipo server instance, a remote
-> attacker could use this flaw to cause denial of service (polipo daemon
-> abort due to assertion failure) via specially-crafted HTTP POST / PUT
-> request.
+Could a CVE be assigned to this issue?
 
-Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
-it is fixed in the Git trunk, which is unfortunately not ready to be
-released (and might never be unless a maintainer is found).
+http://polarssl.org/trac/wiki/SecurityAdvisory201101
+https://bugzilla.redhat.com/show_bug.cgi?id=705187
 
-At any rate, I do not recommend running Polipo as a publicly accessible
-proxy.  While I have made reasonable efforts to ensure that this is
-safe, Polipo was not designed for that.
+Possible man-in-the-middle in Diffie Hellman key exchange, fixed in
+0.14.2.
 
-Regards,
+Thanks.
 
--- Juliusz
+-- 
+Vincent Danen / Red Hat Security Response Team 
