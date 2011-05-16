@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/12
-Message-ID: <48b5a66a-edc9-42b0-b1ab-8923e960a798@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:10:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/8
+Message-ID: <547066768.96915.1305574770754.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 16 May 2011 15:39:30 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: mplayer SAMI subtitle parsing buffer overflow
+Cc: Matej Vela <vela@...ian.org>, Jakub Jelinek <jakub@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- pmake -- Use of insecure temporary file for 'depend' target
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi, folks.
-> 
-> Please assign a CVE for the mplayer SAMI subtitle parsing buffer
-> overflow. References:
-> 
-> http://mplayerhq.hu/pipermail/mplayer-cvslog/2011-May/042075.html
-> http://labs.mwrinfosecurity.com/files/Advisories/mwri_mplayer-sami-subtitles_2011-08-12.pdf
-> 
-
-Please use CVE-2011-3625.
+Please use CVE-2011-1920
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found that pmake (BSD 4.4 version of make) used insecure
+> temporary file for 'depend' target when building libraries (/usr/share
+> /mk/bsd.lib.mk) and executables (/usr/share/mk/bsd.prog.mk). A local
+> attacker could use this flaw to conduct symlink attacks possibly
+> leading to their ability to replace content of arbitrary files,
+> belonging to user running the pmake tool or ability to modify the
+> integrity of .depend file in the home directory of the victim.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626673
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=705090
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you & Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
