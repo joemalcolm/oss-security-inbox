@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/10
-Message-ID: <20110415185735.GA9002@albatros>
-Date: Fri, 15 Apr 2011 22:57:35 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/11
+Message-ID: <20110516222642.GA18032@altlinux.org>
+Date: Tue, 17 May 2011 02:26:42 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 20, 2011 at 16:43 +0300, Vasiliy Kulikov wrote:
-> Steven,
+On Mon, May 16, 2011 at 10:56:37PM +0400, Solar Designer wrote:
+> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
+> > Its probably about time to review libraries that are commonly
+> > linked to (formerly-) suid programs, such as
+> > libldap, libssl etc. In near future, in the advent of file caps
+> > they are often lacking proper checks.
 > 
-> On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
-> > Thanks for the list. I don't have enough CVE ids for this, I've grouped
-> > them by type and version for MITRE to assign IDs.
+> Good idea.
 > 
-> Any update on this?
+> > They usually just compare uid against euid (not even gid sometimes)
+> > and do not check the dumpable flag or AT_SECURE (dont know whether
+> > glibc exports a proper function to easily check that at all).
+> 
+> glibc exports the __libc_enable_secure variable, which is initialized
+> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
 
-Ping.
+There is a problem: in upstream glibc, __libc_enable_secure is placed into
+GLIBC_PRIVATE section, thus making it unavailable in most of rpm-based
+distros.  This is surely not the case in Owl and ALT Linux, where
+__libc_enable_secure is legal interface for use in applications,
+and some essential libraries are already patched to use
+__libc_enable_secure instead of uid comparisons.
+
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+ldv
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Content of type "application/pgp-signature" skipped
