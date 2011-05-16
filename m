@@ -1,23 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/1
-Message-ID: <20110724111743.GC20396@foo.fgeek.fi>
-Date: Sun, 24 Jul 2011 14:17:43 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/10
+Message-ID: <20110516222154.GF2430@redhat.com>
+Date: Mon, 16 May 2011 16:21:54 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: bluegenexus@...il.com, namn@...emoon.com.vn
-Subject: CVE request: PyForum backdoor BMSA-2009-07
+Subject: CVE request: DoS in tor
 Content-Type: text/plain; charset=utf-8
 
-Could I get CVE-identifier for backdoor-issue: http://seclists.org/fulldisclosure/2009/Nov/353
+Tor 0.2.1.30 was released and includes a fix for a remote DoS flaw:
 
-Affected product: PyForum v1.0.3 (the newest available)
+https://lists.torproject.org/pipermail/tor-announce/2011-February/000000.html
+http://secunia.com/advisories/43548/
+https://bugzilla.redhat.com/show_bug.cgi?id=705192
 
-Other vulnerabilities affecting this version:
+Could a CVE be assigned please?
 
-XSS-vulnerability: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4408
-CSRF-vulnerability: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4407
-
-Please note that the backdoor-issue is dated as 2009. I have asked status of this issue in: http://www.pyforum.org/pyforum/default/view_topic/631
-
-Best regards,
-Henri Salo
+-- 
+Vincent Danen / Red Hat Security Response Team 
