@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/6
-Message-ID: <4DECED00.5040205@redhat.com>
-Date: Mon, 06 Jun 2011 17:06:40 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: pam_ssh not dropping root gid(s)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/9
+Message-ID: <20110516215859.GD2430@redhat.com>
+Date: Mon, 16 May 2011 15:59:00 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: polarssl
 Content-Type: text/plain; charset=utf-8
 
-Hello, Sebastian,
+Could a CVE be assigned to this issue?
 
-   thanks for the report.
+http://polarssl.org/trac/wiki/SecurityAdvisory201101
+https://bugzilla.redhat.com/show_bug.cgi?id=705187
 
-On 06/06/2011 11:26 AM, Sebastian Krahmer wrote:
-> Hi,
->
-> In certain configs, pam_ssh is not completely dropping its privileges
-> to user. It just forgets to call setgid() and initgroups(). A fix can be found at [1].
-> Can someone assign a CVE?
->
-> thx,
-> Sebastian
->
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+Possible man-in-the-middle in Diffie Hellman key exchange, fixed in
+0.14.2.
 
-Unfortunately not able to access this entry. Would it be possible to 
-make it public? (for further details & CVE assignment). Or will be
-access granted per email address approach necessary?
+Thanks.
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
