@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/6
-Message-ID: <1869784473.178456.1305830631453.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 14:43:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/4
+Message-ID: <20110516180956.GC2430@redhat.com>
+Date: Mon, 16 May 2011 12:09:56 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Dovecot releases
+Subject: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
+I see the following changes as fixed in MySQL 5.1.52, but cannot find
+any CVEs for them:
 
+InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+examining the same table's information in the INFORMATION_SCHEMA
+database at the same time could cause a crash in the debug version of
+the server. (Bug #54678)
 
------ Original Message -----
-> Henri Salo wrote:
-> > Should these two get CVE-identifier(s)?
-> >
-> > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
-> > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
-> 
-> http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
-> 
+Security Fix: The server crashed for assignment of values of types other
+than Geometry to items of type GeometryCollection (MultiPoint,
+MultiCurve, MultiSurface). Now the server checks the field type and
+fails with bad geometry value if it detects incorrect parameters. (Bug
+#55531)
 
-As best as I can tell, just the header NULL issue deserves a CVE id.
-CVE-2011-1929
+Security Fix: EXPLAIN EXTENDED caused a server crash with some prepared
+statements. (Bug #54494)
 
-Thanks.
+Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
+derived table caused a server crash. (Bug #54488)
+
+There are a whole bunch of other crash-type bugs corrected in 5.1.52
+that upstream did not explicitly flag as security, which might be
+considered security-relevant as well:
+
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
