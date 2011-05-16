@@ -1,51 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/14
-Message-ID: <1266197184.1685454.1311969185062.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 29 Jul 2011 15:53:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/6
+Message-ID: <20110516185637.GA30099@openwall.com>
+Date: Mon, 16 May 2011 22:56:37 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 07/27/2011 04:57 PM, Steven M. Christey wrote:
-> >
-> > On Mon, 25 Jul 2011, Jeff Mitchell wrote:
-> >
-> >> The Arora and Rekonq web browsers are also vulnerable to the same
-> >> attack vector, and other Qt-based programs may be as well. We're
-> >> working with the Qt team to help enhance their documentation to warn
-> >> developers to take care sanitizing their inputs, but it's not actually
-> >> a Qt flaw.  So we're a bit unsure how to proceed here.
-> >
-> > This sounds like a limitation of the Qt API, which can be avoided by
-> > programmers who are aware of the limitation. Kind of like how strcpy()
-> > can be subject to buffer overflows, *if* the programmer isn't careful.
-> > Also happened with confusing return values from certain OpenSSL API
-> > functions a couple years ago. (The PHP_SELF example is similar.) So,
-> > this should probably get separate CVEs for each application/library
-> > that misuses the relevant function(s).
-> 
-> That sounds good. On the KDE side, this is kdelibs, Kleopatra, and
-> Konqueror.
-> 
-> > If Qt itself contains misuse of its own functions - which happens
-> > sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE,
-> > too.
-> 
-> As far as I'm aware Qt itself is not affected, but we've not done an
-> exhaustive analysis.
-> 
+On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
+> Its probably about time to review libraries that are commonly
+> linked to (formerly-) suid programs, such as
+> libldap, libssl etc. In near future, in the advent of file caps
+> they are often lacking proper checks.
 
-OK, this one is going to get messy. If you folks want to keep this under
-embargo, please contact me in private for IDs (I don't want to try and keep
-track on a public list, I'm already unsure what all needs IDs).
+Good idea.
 
-If this isn't terribly serious, it may make the most sense to publish
-details so we can figure out how many IDs are needed.
+> They usually just compare uid against euid (not even gid sometimes)
+> and do not check the dumpable flag or AT_SECURE (dont know whether
+> glibc exports a proper function to easily check that at all).
 
-Thanks.
+glibc exports the __libc_enable_secure variable, which is initialized
+based on AT_* including AT_SECURE.  It also exports __secure_getenv().
 
--- 
-    JB
+> The libraries that I had a quick look at and which were found
+> "vulnerable" are:
+> 
+> - openssl-1.0.0c
+
+We've been patching OpenSSL to use __libc_enable_secure for over 10
+years now. ;-)  The patch is in use at least in Owl and ALT Linux.
+
+* Sun Apr 22 2001 Solar Designer <solar-at-owl.openwall.com>
+...
+- Use glibc's __libc_enable_secure for the new OPENSSL_issetugid().
+
+I've attached our patches for OpenSSL, ncurses, S-Lang, termcap, rpm's
+popt.  Of these, OpenSSL and ncurses apply to recent versions, termcap
+is old by itself, whereas the rest might be obsoleted by changes made
+upstream (and they're not strictly for the problem you brought up).
+
+For OpenSSL, there's another problem: it looks like some getenv()'s
+were added after the initial introduction of OPENSSL_issetugid() and
+without consideration for possible security implications.  Some of those
+should be patched.  This got on my to-do when we updated to OpenSSL
+1.0.0d earlier this year - to do myself or delegate, but I never got
+around to...  Maybe you're the one to look into this and come up with a
+patch now? ;-)
+
+Thanks,
+
+Alexander
+
+View attachment "openssl-1.0.0b-owl-alt-issetugid.diff" of type "text/plain" (345 bytes)
+
+View attachment "ncurses-5.7-owl-glibc-enable_secure.diff" of type "text/plain" (930 bytes)
+
+View attachment "slang-1.4.6-owl-fixes.diff" of type "text/plain" (7525 bytes)
+
+View attachment "termcap-2.0.8-owl-TERMCAP.diff" of type "text/plain" (406 bytes)
+
+View attachment "rpm-4.2-owl-popt-sgid.diff" of type "text/plain" (1987 bytes)
