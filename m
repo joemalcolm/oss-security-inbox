@@ -1,76 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/17/2
-Message-ID: <477818420.63568.1313609227803.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 17 Aug 2011 15:27:07 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
-Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/2
+Message-ID: <4DD14646.1030507@redhat.com>
+Date: Mon, 16 May 2011 17:44:06 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Matej Vela <vela@...ian.org>, Jakub Jelinek <jakub@...hat.com>
+Subject: CVE Request -- pmake -- Use of insecure temporary file for 'depend' target
 Content-Type: text/plain; charset=utf-8
 
-Based on the comments from MITRE, this deserves two IDs.
 
-Use CVE-2011-2923 for the perl variant.
+Hello Josh, Steve, vendors,
 
-CVE-2011-2924 for the C variant.
+   it was found that pmake (BSD 4.4 version of make) used insecure
+temporary file for 'depend' target when building libraries (/usr/share
+/mk/bsd.lib.mk) and executables (/usr/share/mk/bsd.prog.mk). A local
+attacker could use this flaw to conduct symlink attacks possibly
+leading to their ability to replace content of arbitrary files,
+belonging to user running the pmake tool or ability to modify the
+integrity of .depend file in the home directory of the victim.
 
-Thanks.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626673
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=705090
 
--- 
-    JB
+Could you allocate a CVE id for this?
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> by further investigation of hplip CVE-2011-2722 issue:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
-> 
-> Tim Waugh noticed the similar issue being present also in foomatic-rip
-> universal print filter, when debug mode is enabled. Further details:
-> 
-> It was found that foomatic-rip filter used insecurely created
-> temporary
-> file for storage of PostScript data by rendering the data, intended to
-> be sent to the PostScript filter, when the debug mode was enabled. A
-> local attacker could use this flaw to conduct symlink attacks
-> (overwrite
-> arbitrary file accessible with the privileges of the user running the
-> foomatic-rip universal print filter).
-> 
-> Relevant source code part (Perl script part / foomatic-rip.in):
-> ===============================================================
-> 100 my $logfile = "/tmp/foomatic-rip";
-> ..
-> 3454 # In debug mode save the data supposed to be fed
-> into the
-> 3455 # renderer also into a file
-> 3456 if ($debug) {
-> 3457 $commandline = "tee -a ${logfile}.ps | ( $commandline )";
-> 3458 }
-> 
-> Note: The $logfile variable declaration (line #100) is not an insecure
-> temporary file use issue itself, since this danger (and its proper
-> usage) is documented in /etc/foomatic/filters.conf file.
-> 
-> Relevant source code part (C script part / renderer.c):
-> ========================================================
-> 436 /* Save the data supposed to be fed into the renderer
-> also int o a file*/
-> 437 dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
-> 438 dstrcat(commandline, ")");
-> 439 }
-> 
-> Note: The LOG_FILE variable declaration by itself is not an insecure
-> temporary file use, since this danger (and its proper usage)
-> is documented in /etc/foomatic/filters.conf file.
-> 
-> References:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
-> 
-> Credit: Issue discovered by Tim Waugh
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
