@@ -1,36 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/10
-Message-Id: <201103211255.25451.sgrubb@redhat.com>
-Date: Mon, 21 Mar 2011 12:55:25 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/3
+Message-ID: <4DD15E51.6080300@redhat.com>
+Date: Mon, 16 May 2011 19:26:41 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Monday, March 21, 2011 12:02:40 pm Steven M. Christey wrote:
-> Doesn't memory "belong" to one process (assuming it's not shared), even in 
-> heap management?  So another user couldn't access the memory while it's 
-> used in the process, and (I guess?) if it's free'd, it's still only 
-> accessible to that process (or, alternately, is the region cleared before 
-> another program can access it?)  If this is the case, then the question 
-> becomes what happens to the memory when the vulnerable process exits - is 
-> the memory cleared by the kernel, or is it otherwise left alone?  What 
-> happens if the memory is cached on disk?
-> 
-> I did extremely limited experiments in this area a couple years ago, and 
-> for the limited set of OSes I tried this on (no idea what libraries), I 
-> always got "clean" memory when I ran initial malloc's from a fresh process 
-> (later malloc's could contain contents of memory that was previously freed 
-> in the same session).  That doesn't prove anything, of course...
+On 04/01/2011 08:03 PM, Josh Bressers wrote:
+> Initial members will have had to be a vendor-sec member (no exploders this
+> time around). You must reply to this thread, in public (on oss-security).
+> We want this to be very public, we have nothing to hide. You must have a
+> public gpg key ID included in your reply. The new list will gpg encrypt all
+> mail (it does accept plaintext messages though).
 
-Any OS that passes common criteria (Linux for example) has to meet certain 
-requirements for object reuse. This is FDP_RIP in case anyone is interested. The 
-granularity is at the process level. The clearing action is required at allocation 
-rather than release of the object. Calls to brk() and sbrk() should show cleared 
-memory when address space is increased.
+Hi Solar,
 
-So, if it were found that there is an unintended interprocess memory leak, that is a 
-big problem. Within one process, there are no common criteria claims.
+   please add me to the list. I was earlier vendor-sec member via
+Red Hat exploder.
 
--Steve
+pub   2048R/9D465824 2011-05-16
+       Key fingerprint = 905D D296 41F5 33CD D76F  25AD 24CE 3A4D 9D46 5824
+uid                  Jan Lieskovsky (iankko) <jlieskov@...hat.com>
+sub   2048R/4F954334 2011-05-16
+
+http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x24CE3A4D9D465824
+
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Was waiting if the discussion regarding limiting a distro to two
+       or three representatives will come to conclusion and intended to
+       post then. But not sure if there was a final decision wrt to this.
+       Thank you, Jan.
