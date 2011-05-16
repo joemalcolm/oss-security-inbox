@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/12/1
-Message-ID: <4EBDF7C4.9060407@redhat.com>
-Date: Fri, 11 Nov 2011 21:36:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/7
+Message-ID: <977272446.96885.1305574633976.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 16 May 2011 15:37:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
+Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org, coley <coley@...re.org>
+Subject: Re: CVE request: keepalived pid file permissions issue
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/2011 09:48 AM, Petr Matousek wrote:
-> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
-> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
-> request.
->
-> While the NFS client only asks for one attribute (FATTR4_ACL) in the
-> first bitmap word, the NFSv4 protocol allows for the server to return
-> unbounded bitmaps (more than two)."
->
-> Upstream commit:
-> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
-> case when 2 words are expected and 3 are returned
->
-> Proposed complete upstream patch:
-> http://www.spinics.net/lists/linux-nfs/msg25288.html
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=747106
->
-> Credit: Andy Adamson
->
-> Thanks,
-Please use CVE-2011-4131 for this issue
+Please use CVE-2011-1784 for this.
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
+----- Original Message -----
+> Hey,
+> 
+> it was reported that keepalived (and some other daemons) store their
+> pid
+> file with permission 666. A bug was opened for keepalived in Debian,
+> could a CVE be assigned to the issue?
+> 
+> Bug text was:
+> 
+> On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
+> > Package: keepalived
+> > Version: 1.1.12-1
+> > Severity: grave
+> > Tags: security
+> >
+> > Hi,
+> >
+> > keepalive writes a public writeable pid file to /var/run
+> >
+> > -rw-rw-rw- 1 root root 5 2011-02-08 13:00 keepalived.pid
+> >
+> > Cheers,
+> > Martin
+> >
+> >
+> > reference:
+> > http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
+> 
+> Thanks,
+> --
+> Yves-Alexis
