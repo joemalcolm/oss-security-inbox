@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/4
-Message-ID: <20111222164447.GB5888@inutil.org>
-Date: Thu, 22 Dec 2011 17:44:47 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/8
+Message-ID: <547066768.96915.1305574770754.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 16 May 2011 15:39:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Status of two Linux kernel issues w/o CVE assignments
+Cc: Matej Vela <vela@...ian.org>, Jakub Jelinek <jakub@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- pmake -- Use of insecure temporary file for 'depend' target
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there were a two Linux-related CVE requests/discussions, which 
-didn't end up in an assignment:
+Please use CVE-2011-1920
 
-1: rose: Add length checks to CALL_REQUEST parsing
-e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
+Thanks.
 
-It was decided that this should be split, but without a final
-resulting CVE assignment:
-http://www.openwall.com/lists/oss-security/2011/04/12/1
+-- 
+    JB
 
-2: /proc/$PID/{sched,schedstat} information leak
-Vasiliy Kulikov of OpenWall posted a demo exploit.
-http://openwall.com/lists/oss-security/2011/11/05/3
-
-AFAICS no CVE ID was assigned to this?
-
-Cheers,
-        Moritz
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found that pmake (BSD 4.4 version of make) used insecure
+> temporary file for 'depend' target when building libraries (/usr/share
+> /mk/bsd.lib.mk) and executables (/usr/share/mk/bsd.prog.mk). A local
+> attacker could use this flaw to conduct symlink attacks possibly
+> leading to their ability to replace content of arbitrary files,
+> belonging to user running the pmake tool or ability to modify the
+> integrity of .depend file in the home directory of the victim.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626673
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=705090
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you & Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
