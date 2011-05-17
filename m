@@ -1,35 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/3
-Message-ID: <4DF602F4.50000@redhat.com>
-Date: Mon, 13 Jun 2011 14:30:44 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Ville-Pekka Vainio <vpivaini@...helsinki.fi>
-Subject: CVE Request -- libvoikko -- DoS of application linked against libvoikko due improper handling of embedded null characters in input strings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/14
+Message-ID: <134587644.125928.1305662163541.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 17 May 2011 15:56:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: nbd-server
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+Please use CVE-2011-1925
 
-   A denial of service flaw was found in the way Python and Java
-interfaces of libvoikko, a library for spellcheckers and hyphenators,
-processed embedded null characters in input strings. If a specially-
-crafted input string was provided to an application linked against
-libvoikko, it could lead to that particular application termination.
+Thanks.
 
-References:
-[1] http://voikko.sourceforge.net/releases.html
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=712863
+-- 
+    JB
 
-Upstream patches:
-[3] 
-http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3901
-[4] 
-http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3902
-[5] 
-http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3903
 
-Could you allocate a CVE identifier for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Original Message -----
+> Hi,
+> 
+> In Debian the following was reported:
+> nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
+> phase, which allows unauthenticated users to DoS the server by causing
+> the negotiation to fail (e.g., by specifying a non-existing name for
+> an
+> export).
+> 
+> Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so
+> for us
+> goes that only our unstable distribution is affected.
+> 
+> We'd like to have a CVE name for this.
+> 
+> 
+> Cheers,
+> Thijs
