@@ -1,54 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/3
-Message-ID: <4E2C247C.7040204@redhat.com>
-Date: Sun, 24 Jul 2011 15:56:12 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Lukas Fleischer <cgit@...ptocrack.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/8
+Message-ID: <4DD2B3AE.1090503@oracle.com>
+Date: Tue, 17 May 2011 10:43:10 -0700
+From: Oracle Security Alerts <secalert_us@...cle.com>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, "secalert_us@...cle.com" <secalert_us@...cle.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On 04/30/11 08:26 AM, Solar Designer wrote:
+> Does Oracle start to prepare security updates for Oracle Enterprise
+> Linux before or after Red Hat releases theirs?  If it's after, then
+> there's too little need for Oracle to have advance notification.
 
-Hi Lukas,
+If we know about vulnerabilities in advance, our fixing process
+starts before Red Hat releases their updates. It starts with
+assessment of issue, reviewing the fix for completeness and
+applicability to our kernel and components we maintain or provide in
+our Linux distribution. See
+http://www.oracle.com/us/technologies/linux/026042.htm
+or http://oss.oracle.com/
 
-   thank you for this correction.
+We do not expect Red Hat or other vendors to evaluate impact of
+security vulnerabilities on Oracle Linux, nor fix it in a way that
+is applicable to our releases. Hence the request for subscription.
 
-On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
-> On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
->> Hello Josh, Steve, vendors,
->>
->>    an cross-site scripting (XSS) flaw was found in the way cgit, a fast
->> web interface for Git, displayed the file name in the rename hint. A
->> remote attacker could provide a specially-crafted web page, which once
->> visited by an authenticated Cgit user, with push access to the
->> repository, would lead to arbitrary web script or HTML code execution.
->
-> I think you are a tad off, here. The vulnerability I discovered actually
-> is only exploitable *by* a user with push access as it requires to push
-> a commit that renames any file to a file with a malicious file name.
+We have a large user base to protect. We do get reports of
+vulnerabilities in our Linux distribution which we may want to fix
+in collaboration with rest of the community.
 
-Have updated issue description in:
-https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
+> Oracle was never actually accepted to vendor-sec for Oracle Enterprise Linux.
 
-Hoping of it to sound better now.
+Not correct. From archives of vendor-sec I see there had been at
+least two representatives from Oracle Linux at vendor-sec and we had
+membership ever since Oracle started distributing Linux.
 
-Thanks again && Regards, Jan.
+This discussion was held whenever they requested to subscribe to
+vendor-sec and it was concluded that while we may be redistributing
+some packages, Oracle Linux is a distro in its own right.
+
+> Then, the only @oracle.com person currently on oss-security (judging by
+> the e-mail addresses) appears not to be involved with Oracle Enterprise
+> Linux specifically.
+
+There are other ways to subscribe to this list than email. See:
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+
+> Can you please add your info to the following wiki pages?
+> http://oss-security.openwall.org/wiki/vendors
+
+Done,
+
+Thanks,
+-Chandan
 --
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Oracle Security Alerts
 
->
-> The description (and the categorization of the vulnerability, which
-> definitely is a low severity one if it counts as a vulnerability at all)
-> should be corrected to reflect that.
->
->>
->> References:
->> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
->> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
->>
->> Could you allocate a CVE id for this?
->>
->> Thank you&&  Regards, Jan.
->> --
->> Jan iankko Lieskovsky / Red Hat Security Response Team
 
+Download attachment "signature.asc" of type "application/pgp-signature" (250 bytes)
