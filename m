@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/6
-Message-ID: <20110727112613.7645881f@redhat.com>
-Date: Wed, 27 Jul 2011 11:26:13 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/12
+Message-ID: <218169400.125543.1305661630405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 17 May 2011 15:47:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - dhcp clients
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: polarssl
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Jul 2011 10:57:39 +0200 Sebastian Krahmer wrote:
+Please use CVE-2011-1923
 
-> Can you point us to the exact version and location in code where
-> the vulnerability is?
-
-I've not previously looked at the code more closely to find the exact
-spot to be fixed.  However, I have successfully reproduced the issue
-with busybox 1.15.1 at least, not sure if I looked at any older
-version too.  It should be trivial to reproduce by running udhcpc -s
-<script>, where script just dumps whole env.  You should see
-server-provided options exported (hostname, domain).
-
-> I remember to have checked udhcpc at that time and neither I found it
-> setting a hostname or parsing the options for a hostname.
-
-Looks like fill_envp is the place:
-http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c#n341
-
-The logic was little different in older versions:
-http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c?id=9ac5596a#n336
-
-When I talked to upstream, they did see the issue and opened the bug:
-https://bugs.busybox.net/show_bug.cgi?id=3979
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> Could a CVE be assigned to this issue?
+> 
+> http://polarssl.org/trac/wiki/SecurityAdvisory201101
+> https://bugzilla.redhat.com/show_bug.cgi?id=705187
+> 
+> Possible man-in-the-middle in Diffie Hellman key exchange, fixed in
+> 0.14.2.
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
