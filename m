@@ -1,42 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/1
-Message-ID: <Pine.GSO.4.64.1111222227240.17118@faron.mitre.org>
-Date: Tue, 22 Nov 2011 22:30:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Kurt Seifried <kseifried@...hat.com>
-cc: oss-security@...ts.openwall.com, Henri Salo <henri@...v.fi>, cve@...re.org
-Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/10
+Message-ID: <441323329.125085.1305660435298.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 17 May 2011 15:27:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
+Steve,
 
-Let's keep CVE-2011-2710 and we will reject CVE-2011-2708.  Henri, I'm 
-sorry about the lack of response :-(
+Can MITRE deal with this one (also, have you folks assigned this yet?).
 
-- Steve
+I'm not sure how you've handled the crashes historically.
+
+Thanks.
+
+-- 
+    JB
 
 
-On Mon, 21 Nov 2011, Kurt Seifried wrote:
-
->
->> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS 
->> vulnerability: 
->> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html 
->> and I have already contacted MITRE twice to get another one marked as 
->> obsolete.
->>
->>
->> Best regards,
->> Henri Salo
->
-> Ok CVE-2011-2710 is public in CVE and NVD:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
-> CVE-2011-2708 is still marked as reserved so we should probably quietly
-> take CVE-2011-2708 out back and shoot it.
->
-> CC'ing mitre.
->
-> -- 
->
-> -Kurt Seifried / Red Hat Security Response Team
->
->
+----- Original Message -----
+> I see the following changes as fixed in MySQL 5.1.52, but cannot find
+> any CVEs for them:
+> 
+> InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+> examining the same table's information in the INFORMATION_SCHEMA
+> database at the same time could cause a crash in the debug version of
+> the server. (Bug #54678)
+> 
+> Security Fix: The server crashed for assignment of values of types
+> other
+> than Geometry to items of type GeometryCollection (MultiPoint,
+> MultiCurve, MultiSurface). Now the server checks the field type and
+> fails with bad geometry value if it detects incorrect parameters. (Bug
+> #55531)
+> 
+> Security Fix: EXPLAIN EXTENDED caused a server crash with some
+> prepared
+> statements. (Bug #54494)
+> 
+> Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
+> derived table caused a server crash. (Bug #54488)
+> 
+> There are a whole bunch of other crash-type bugs corrected in 5.1.52
+> that upstream did not explicitly flag as security, which might be
+> considered security-relevant as well:
+> 
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
