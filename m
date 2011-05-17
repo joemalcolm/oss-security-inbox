@@ -1,19 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/2
-Message-ID: <20111113121527.2a809ab3@laverne>
-Date: Sun, 13 Nov 2011 12:15:27 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/2
+Message-ID: <4DD24612.60803@redhat.com>
+Date: Tue, 17 May 2011 11:55:30 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ResourceSpace before 4.2.2833 insufficient access check
+CC: "Mike O'Connor" <mjo@...o.mi.org>
+Subject: CVE Request -- Cyrus-IMAP STARTTLS issue -- [was: Re:  pure-ftpd STARTTLS command injection / new CVE?]
 Content-Type: text/plain; charset=utf-8
 
-http://www.resourcespace.org/download.php
 
-"Security fix for an insufficient check on access keys given for
-resources"
+Hello, Josh, Steve, vendors,
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+   it was reported that Cyrus-IMAP is also prone to the CVE-2011-0411 
+issue (in IMAP, LMTP, NNTP, POP3, .. protocols):
+[1] http://bugzilla.cyrusimap.org/show_bug.cgi?id=3424
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Relevant upstream patch:
+[2] 
+http://git.cyrusimap.org/cyrus-imapd/patch/?id=523a91a5e86c8b9a27a138f04a3e3f2d8786f162
+
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=705288
+
+To my knowledge the list of CVE-2011-0411 related CVEs:
+
+CVE-2011-0411 Postfix
+CVE-2011-1430 Ipswich IMAIL
+CVE-2011-1431 1431 netqmail
+CVE-2011-1432 SCO Soffice Server
+CVE-2011-1575 pure-ftpd
+
+does not include Cyrus case yet (but not sure this list being
+complete, so worthy of double-checking).
+
+Could you allocate a CVE id for this?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On 04/11/2011 07:19 PM, Mike O'Connor wrote:
+> :http://www.pureftpd.org/project/pure-ftpd/news
+> :
+> :states that pure-ftpd is affected by the same STARTTLS
+> :injection bug as postifx's CVE-2011-0411.
+> :
+> :Is this CVE postfix-specific or can it be used for
+> :pure-ftpd as well? If needed, can someone assign a new CVE?
+>
+> It should get its own CVE assignment.  Other products with the
+> same STARTTLS issue have gotten unique CVE assignments for them
+> -- see CVE-2011-143[012].
+>
+
