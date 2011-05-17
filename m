@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/5
-Message-ID: <597760943.1021587.1315590644281.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 13:50:44 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/15
+Message-ID: <1944776416.126357.1305663011269.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 17 May 2011 16:10:11 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
+Cc: "Mike O'Connor" <mjo@...o.mi.org>, coley <coley@...re.org>
+Subject: Re: CVE Request -- Cyrus-IMAP STARTTLS issue -- [was: Re: pure-ftpd STARTTLS command injection / new CVE?]
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3352
+Please use CVE-2011-1926.
 
 Thanks.
 
@@ -17,35 +17,46 @@ Thanks.
 
 
 ----- Original Message -----
-> Hello Josh, Steve, vendors,
+> Hello, Josh, Steve, vendors,
 > 
-> it was found that the Zikula web application framework did not
-> properly sanitize the 'themename' parameter, while setting particular
-> theme as a default one, modifying the theme or deleting it. A remote
-> attacker, with Zikula administrator privilege, could use this flaw to
-> execute arbitrary HTML or web script code in the context of the
-> affected website.
-> 
-> References:
-> [1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
-> [2] https://www.htbridge.ch/advisory/xss_in_zikula.html
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
+> it was reported that Cyrus-IMAP is also prone to the CVE-2011-0411
+> issue (in IMAP, LMTP, NNTP, POP3, .. protocols):
+> [1] http://bugzilla.cyrusimap.org/show_bug.cgi?id=3424
 > 
 > Relevant upstream patch:
-> [4]
-> https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
+> [2]
+> http://git.cyrusimap.org/cyrus-imapd/patch/?id=523a91a5e86c8b9a27a138f04a3e3f2d8786f162
 > 
-> Vulnerable Zikula versions: Development versions prior to patch [4].
-> Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
-> code in question yet.
+> References:
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=705288
 > 
-> Provided PoC (from [1], [2]):
-> =============================
-> http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu
-> ment.cookie%29%3C/script%3E
+> To my knowledge the list of CVE-2011-0411 related CVEs:
+> 
+> CVE-2011-0411 Postfix
+> CVE-2011-1430 Ipswich IMAIL
+> CVE-2011-1431 1431 netqmail
+> CVE-2011-1432 SCO Soffice Server
+> CVE-2011-1575 pure-ftpd
+> 
+> does not include Cyrus case yet (but not sure this list being
+> complete, so worthy of double-checking).
 > 
 > Could you allocate a CVE id for this?
 > 
-> Thanks && Regards, Jan.
+> Thank you & Regards, Jan.
 > --
 > Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> On 04/11/2011 07:19 PM, Mike O'Connor wrote:
+> > :http://www.pureftpd.org/project/pure-ftpd/news
+> > :
+> > :states that pure-ftpd is affected by the same STARTTLS
+> > :injection bug as postifx's CVE-2011-0411.
+> > :
+> > :Is this CVE postfix-specific or can it be used for
+> > :pure-ftpd as well? If needed, can someone assign a new CVE?
+> >
+> > It should get its own CVE assignment. Other products with the
+> > same STARTTLS issue have gotten unique CVE assignments for them
+> > -- see CVE-2011-143[012].
+> >
