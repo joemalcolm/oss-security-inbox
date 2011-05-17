@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/14
-Message-ID: <1887412180.1274469.1310499815252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 15:43:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/4
+Message-ID: <20110517121201.0b40eda4@redhat.com>
+Date: Tue, 17 May 2011 12:12:01 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, coley@...re.org
-Subject: Re: CVE Request: ruby PRNG fixes
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2686
+On Mon, 2 May 2011 22:40:46 +0400 Solar Designer wrote:
 
-Thanks.
+> A secondary goal behind requiring access to advisories and updates
+> (not just metainfo) would be to be able to draw the line between
+> vendors and companies that build their own Linux distros in house.
+> The latter could also publish an RSS feed showing how they update
+> their packages, yet they would not be a vendor to anyone other than
+> themselves...  On the other hand, publishing updates without
+> publishing the distro itself doesn't make them more of a vendor to
+> others.  So to achieve this goal we'd probably need to require the
+> distro itself to be public (in at least one form - e.g., Red
+> Hat's .src.rpm's are sufficient), not just advisories and updates.
+
+I think we are likely to need exceptions to the "open as RHEL srpms"
+requirement.  It seems SUSE's SLE would not satisfy it (see
+distro-patches wiki), and I'm pretty sure we'd not benefit from not
+allowing SUSE folks, or asking them use the list info for OpenSUSE, but
+not for SLE.
 
 -- 
-    JB
-
------ Original Message -----
-> Hi,
-> 
-> Ruby 1.8.7-p352 fixes initialization of the PRNG in forked
-> processes:
-> 
-> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-> http://redmine.ruby-lang.org/issues/4579
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-> 
-> cu
-> Ludwig
-> 
-> --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
-> Imendörffer, HRB 16746 (AG Nürnberg)
+Tomas Hoger / Red Hat Security Response Team
