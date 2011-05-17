@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/2
-Message-ID: <4E1D232C.9070507@redhat.com>
-Date: Wed, 13 Jul 2011 10:16:36 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Security issues fixed in libpng 1.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/11
+Message-ID: <20110517193255.GK2430@redhat.com>
+Date: Tue, 17 May 2011 13:32:56 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: Wouter Verhelst <w@...r.be>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: nbd-server
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2011-05-17 20:40:01 +0200] Wouter Verhelst wrote:
 
-There are three security issues which are fixed in libpng 1.5.4 [1].
-The following CVE ids are assigned for those issues:
+>On Tue, May 17, 2011 at 11:07:46AM -0600, Vincent Danen wrote:
+>> * [2011-05-17 10:38:20 +0200] Thijs Kinkhorst wrote:
+>>
+>> >Hi,
+>> >
+>> >In Debian the following was reported:
+>> >nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
+>> >phase, which allows unauthenticated users to DoS the server by causing
+>> >the negotiation to fail (e.g., by specifying a non-existing name for an
+>> >export).
+>> >
+>> >Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so for us
+>> >goes that only our unstable distribution is affected.
+>> >
+>> >We'd like to have a CVE name for this.
+>>
+>> The Debian bug is really light on details, so here is the git commit
+>> that fixes this:
+>>
+>> http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commitdiff;h=ebbbe0b3ce5393fa42a259f5e03d549508586aaa
+>>
+>> But I don't see any evidence that this _only_ affects 2.9.21.  Are we
+>> sure that it doesn't affect earlier versions?  The reporter doesn't
+>> indicate one way or the other.
+>
+>Yes, absolutely; 2.9.21 and 2.9.21a (diff between .21 and .21a is a
+>documentation-related file that wasn't added to Makefile.am). The bug
+>was introduced with this commit:
+>
+>http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commit;h=9ea4e742ce6f1b7793d1edfca70427a8660aeffa
+>
+>To be 100% sure, I just checked out the tree at the 2.9.20 tag and
+>recompiled; I couldn't reproduce it.
 
-1. buffer overwrite in png_rgb_to_gray
-CVE: CVE-2011-2690
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720607
-
-2. Crash in png_default_error due to use of NULL Pointer
-CVE: CVE-2011-2691
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720608
-
-3. Memory corruption when handling empty sCAL chunks
-CVE: CVE-2011-2692
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720612
-
-Thanks.
-
-[1] http://libpng.org/pub/png/libpng.html
+Fantastic.  Thank you for the check and the additional commit link.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
