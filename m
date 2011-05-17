@@ -1,39 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/12
-Message-ID: <AANLkTinVt1yLTS5UpiJwDXZoV6CmFn3atJZtgiV9OCAd@mail.gmail.com>
-Date: Tue, 22 Mar 2011 16:29:10 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/10
+Message-ID: <441323329.125085.1305660435298.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 17 May 2011 15:27:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: irda/decnet issues
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 22, 2011 at 4:03 PM, Josh Bressers <bressers@...hat.com> wrote:
->
->
-> ----- Original Message -----
->> Both are reported by Dan Rosenberg. Description of the issues can be
->> found in the following links:-
->>
->> irda: validate peer name and attribute lengths
->> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
->
-> Use CVE-2011-1180
->
->
->>
->> DECnet: need to validate user data and access data?
->> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
->>
->
-> Use CVE-2011-1181
->
+Steve,
 
-There is no DECnet security issue:
-http://marc.info/?l=linux-netdev&m=130078511604840&w=2
+Can MITRE deal with this one (also, have you folks assigned this yet?).
 
-> Thanks.
->
+I'm not sure how you've handled the crashes historically.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> I see the following changes as fixed in MySQL 5.1.52, but cannot find
+> any CVEs for them:
+> 
+> InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+> examining the same table's information in the INFORMATION_SCHEMA
+> database at the same time could cause a crash in the debug version of
+> the server. (Bug #54678)
+> 
+> Security Fix: The server crashed for assignment of values of types
+> other
+> than Geometry to items of type GeometryCollection (MultiPoint,
+> MultiCurve, MultiSurface). Now the server checks the field type and
+> fails with bad geometry value if it detects incorrect parameters. (Bug
+> #55531)
+> 
+> Security Fix: EXPLAIN EXTENDED caused a server crash with some
+> prepared
+> statements. (Bug #54494)
+> 
+> Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
+> derived table caused a server crash. (Bug #54488)
+> 
+> There are a whole bunch of other crash-type bugs corrected in 5.1.52
+> that upstream did not explicitly flag as security, which might be
+> considered security-relevant as well:
+> 
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+> 
 > --
->    JB
->
+> Vincent Danen / Red Hat Security Response Team
