@@ -1,80 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/15/2
-Message-ID: <20111015133636.GA25066@openwall.com>
-Date: Sat, 15 Oct 2011 17:36:36 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/7
+Message-ID: <20110517170746.GI2430@redhat.com>
+Date: Tue, 17 May 2011 11:07:46 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: hardlink(1) has buffer overflows, is unsafe on changing trees
+Cc: wouter@...ian.org
+Subject: Re: CVE request: nbd-server
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2011-05-17 10:38:20 +0200] Thijs Kinkhorst wrote:
 
-The hardlink(1) program from Fedora is susceptible to buffer overflows
-of fixed-size nambuf1 and nambuf2 buffers when run on a tree with
-deeply nested directories and/or with long directory or file names.
-I was able to reproduce the problem (got a segfault) by running the
-program on a directory containing 20 nested directories with
-250-character names.
+>Hi,
+>
+>In Debian the following was reported:
+>nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
+>phase, which allows unauthenticated users to DoS the server by causing
+>the negotiation to fail (e.g., by specifying a non-existing name for an
+>export).
+>
+>Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so for us
+>goes that only our unstable distribution is affected.
+>
+>We'd like to have a CVE name for this.
 
-Another problem is that the program uses full pathnames.  It neither
-changes the current directory, nor uses openat(2).  Thus, if a pathname
-component is replaced with a symlink while the program is running, this
-may result in processing of directories/files outside of the intended
-directory tree.
+The Debian bug is really light on details, so here is the git commit
+that fixes this:
 
-I fixed the buffer overflows (by (re)allocating the buffers dynamically)
-in the copy that I committed into Owl today:
+http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commitdiff;h=ebbbe0b3ce5393fa42a259f5e03d549508586aaa
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/hardlink/
+But I don't see any evidence that this _only_ affects 2.9.21.  Are we
+sure that it doesn't affect earlier versions?  The reporter doesn't
+indicate one way or the other.
 
-For the unsafe handling of potentially changing directory trees, I
-simply added a BUGS section to the man page:
+CC'ing Wouter for clarification.
 
-BUGS
-       hardlink assumes that its target directory trees  do  not  change  from
-       under it.  If a directory tree does change, this may result in hardlink
-       accessing files and/or directories outside of  the  intended  directory
-       tree.   Thus,  you  must avoid running hardlink on potentially changing
-       directory trees, and especially on directory  trees  under  control  of
-       another user.
-
-Red Hat and others are welcome to reuse these changes.
-
-There's also a lesser problem of potentially reading from a device file
-or a FIFO if a regular file is replaced with (a link to) one of these.
-Maybe this problem needs to be documented as well, or it may be patched
-in the code by always using fstat(2) after opening a file.  Only using
-hardlink(1) on non-changing trees avoids this problem as well, though.
-
-Overall, it would be nice if someone rewrote hardlink(1) using fts(3)
-and in a cleaner fashion.  The current program appears to have evolved
-from a hack that was meant for some very specific use case only.  Now
-that the hack is successful at demonstrating that the program is
-generally desirable as well as at what problems it should avoid, it may
-be the right time for a clean rewrite.
-
-<offtopic>
-BTW, hardlink(1) is very useful when run on tzdata - e.g. from %install
-of an RPM package of tzdata:
-
-%install
-rm -rf %buildroot
-sed -i 's|@...tall_root@...uildroot|' Makeconfig
-%__make install
-hardlink -vc %buildroot
-
-This produces the following "verbose output":
-
-Directories 69
-Objects 1812
-IFREG 1743
-Comparisons 627
-Linked 588
-saved 1830912
-
-That's 1.8 MB saved on a filesystem with 4 KB blocks.
-
-I got this idea from ALT Linux and implemented it in Owl now.
-</offtopic>
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
