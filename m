@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/13
-Message-ID: <20110705093636.GA18917@suse.de>
-Date: Tue, 5 Jul 2011 11:36:36 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/3
+Message-ID: <20110517115829.763068f3@redhat.com>
+Date: Tue, 17 May 2011 11:58:29 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 03:09:06AM +0400, Solar Designer wrote:
-> Hi,
-> 
-> I'd be interested in more detail on this bug.  So far, the closest to a
-> description of the bug that I saw is this:
-> 
-> http://lists.openwall.net/full-disclosure/2011/07/01/4
-> 
-> but it's not enough.
-> 
-> I'd like to learn not only on my own, but also on others' mistakes. ;-)
-> And for this purpose it does not matter how old the software is and
-> whether it is still supported or not.
-> 
-> Colin - any comments from you?  I realize the bug is not yours, but
-> perhaps you're one of the few people who have figured it out now, for a
-> reason similar to mine.
-> 
-> Red Hat - a lesson for you might be to stop linking sshd against so
-> many libraries (over 20 last time I checked).  Don't wait until your
-> remote root, really. ;-)  Yes, this means dropping some functionality,
+On Sat, 30 Apr 2011 19:26:14 +0400 Solar Designer wrote:
 
-What a true word, probably not just for RedHat.
+> > We were members of vendor-sec as Sun Microsystems team, and now
+> > represent all of Oracle software and hardware products including but
+> > not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
+> > Open Office.
+> 
+> Of these, only Oracle Enterprise Linux may qualify you for the list
+> that has been setup so far.  As you say, Oracle got onto vendor-sec
+> through the acquisition of Sun.  Although formally this satisfies
+> "must be a vendor-sec member" for the initial seed membership of the
+> new list, it does feel like a bypass of the intent of this
+> requirement.  Oracle was never actually accepted to vendor-sec for
+> Oracle Enterprise Linux.
 
--s
-
+IIRC, Oracle was subscribed to v-s more than once - the "Sun" exploder
+that was subscribed for quite a while (originally as Solaris vendor
+probably), and individual OEL representative, added around the time
+Oracle was in the process of acquiring Sun and there was no single
+security contact for all products yet.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Tomas Hoger / Red Hat Security Response Team
