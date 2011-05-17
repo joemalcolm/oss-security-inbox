@@ -1,47 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/4
-Message-ID: <4EF4EA08.3050606@redhat.com>
-Date: Fri, 23 Dec 2011 13:52:24 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/5
+Message-ID: <20110517111833.GA28940@suse.de>
+Date: Tue, 17 May 2011 13:18:33 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, Eugene Teo <eteo@...hat.com>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> there were a two Linux-related CVE requests/discussions, which
-> didn't end up in an assignment:
->
-> 1: rose: Add length checks to CALL_REQUEST parsing
-> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
->
-> It was decided that this should be split, but without a final
-> resulting CVE assignment:
-> http://www.openwall.com/lists/oss-security/2011/04/12/1
+On Mon, May 16, 2011 at 10:56:37PM +0400, Solar Designer wrote:
+> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
+> > Its probably about time to review libraries that are commonly
+> > linked to (formerly-) suid programs, such as
+> > libldap, libssl etc. In near future, in the advent of file caps
+> > they are often lacking proper checks.
+> 
+> Good idea.
+> 
+> > They usually just compare uid against euid (not even gid sometimes)
+> > and do not check the dumpable flag or AT_SECURE (dont know whether
+> > glibc exports a proper function to easily check that at all).
+> 
+> glibc exports the __libc_enable_secure variable, which is initialized
+> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
+> 
+> > The libraries that I had a quick look at and which were found
+> > "vulnerable" are:
+> > 
+> > - openssl-1.0.0c
+> 
+> We've been patching OpenSSL to use __libc_enable_secure for over 10
+> years now. ;-)  The patch is in use at least in Owl and ALT Linux.
+> 
+> * Sun Apr 22 2001 Solar Designer <solar-at-owl.openwall.com>
+> ...
+> - Use glibc's __libc_enable_secure for the new OPENSSL_issetugid().
+> 
+> I've attached our patches for OpenSSL, ncurses, S-Lang, termcap, rpm's
+> popt.  Of these, OpenSSL and ncurses apply to recent versions, termcap
+> is old by itself, whereas the rest might be obsoleted by changes made
+> upstream (and they're not strictly for the problem you brought up).
+> 
+> For OpenSSL, there's another problem: it looks like some getenv()'s
+> were added after the initial introduction of OPENSSL_issetugid() and
+> without consideration for possible security implications.  Some of those
 
-Can anyone shed more light on this for me? (links to fixes/etc.?).
->
-> 2: /proc/$PID/{sched,schedstat} information leak
-> Vasiliy Kulikov of OpenWall posted a demo exploit.
-> http://openwall.com/lists/oss-security/2011/11/05/3
->
-> AFAICS no CVE ID was assigned to this?
+Indeed, for example if you use the engine, one can specify which
+directory should be used for drivers...
 
-I believe we are not assigning CVE's for these types of proc related 
-issues, some discussion was had:
+I uploaded a openssl-1.0.0d patch to
 
-https://lkml.org/lkml/2011/2/7/368
+http://suse.de/~krahmer/libs-vs-fscaps
 
-http://www.google.com/custom?domains=lkml.org&q=%2Fproc%2F+leaks
+[modulo synchronization time]
+I will upload patches for other libs as soon as I wrote them.
+Included is support for __libc_enable_secure (which might be also
+not available on systems without glibc, or more particular
+without glibc rtld such as systems using bionic) but it needs
+to be enabled by hand inside the Makefile (as I dont know
+of an easy check to detect that). The "static" nature on most
+dists has already been mentioned.
 
-but I'm not sure what the outcome is. CC'ing Eugene Teo.
+The prefered way is to check the dumpable flag via prctl() which
+is detected by the config script. Additionally, euid and egid is
+always checked unless enable_secure or dumpable flag already
+detects secure-mode.
+I hope I didnt miss a getenv() (some are in testcases) and got
+the logic wrong. :p
 
->
-> Cheers,
->          Moritz
+l8er,
+-s
 
--- 
 
--Kurt Seifried / Red Hat Security Response Team
+--
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
