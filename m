@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/15
-Message-ID: <20110621195128.GA10524@albatros>
-Date: Tue, 21 Jun 2011 23:51:28 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/6
+Message-ID: <1305626972.32333.75.camel@new-desktop>
+Date: Tue, 17 May 2011 12:09:32 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: taskstats authorized_keys presence infoleak PoC
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
 
-On Tue, Jun 21, 2011 at 15:24 -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > /*
-> > * This program tries to learn whether ~user/.ssh/authorized_keys exists
-> > * and is nonempty for any user on local machine. It uses world-readable
-> > * taskstats' nature to get somewhat private io statistics information.  If
-> > * implant taskstats or /proc//io polling into ssh client, it would be
-> > * possible to learn precise authorized_keys' size (and estimate private
-> > * key's(s') size).
-> 
-> Are you considering this a flaw, or just an interesting security exercise?
+> So, i propose to :
+> - remove references to Webkit from the CVE-2011-1425 page
+> - affect CVE-2011-1774 to the Webkit bug #52688
 
-The PoC itself is the latter, but i *suppose* procfs and taskstats may
-be used to get much more private information (hey, this is just a PoC!)
-and to carry out something like timing attack against specific programs,
-but using this statistic information instead of time deltas.
+Any news ?
 
-However, I'm not familiar with timing attack carrying and cannot realize
-whether it is generic or highly conditional flaw.  So, I'd not request
-CVE or anything for it.
+Regards,
+Nicolas Grégoire
 
-
-Thanks,
-
--- 
-Vasiliy
