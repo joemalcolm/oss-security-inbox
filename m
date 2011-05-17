@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/9
-Message-ID: <20111020162649.GA6235@inutil.org>
-Date: Thu, 20 Oct 2011 18:26:49 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/13
+Message-ID: <124226842.125891.1305662071787.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 17 May 2011 15:54:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: FreeBSD kernel
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: DoS in tor
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2011 at 12:25:28PM -0400, Josh Bressers wrote:
-> 
-> ----- Original Message -----
-> > Hello,
-> > 
-> > As far as I know the FreeBSD-SA-11:05.unix didn't get any CVE entry
-> > assigned. Would it be possible to get one assigned?
-> > 
-> > See:
-> > 
-> >    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
-> > 
-> 
-> Please use CVE-2011-3633.
 
-This has been assigned CVE-2011-4062 by MITRE in the mean time.
 
-Cheers,
-        Moritz
+----- Original Message -----
+> Tor 0.2.1.30 was released and includes a fix for a remote DoS flaw:
+> 
+> https://lists.torproject.org/pipermail/tor-announce/2011-February/000000.html
+> http://secunia.com/advisories/43548/
+> https://bugzilla.redhat.com/show_bug.cgi?id=705192
+> 
+> Could a CVE be assigned please?
+> 
+
+Please use CVE-2011-1924
+
+Thanks.
+
+-- 
+    JB
