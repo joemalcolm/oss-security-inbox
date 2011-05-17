@@ -1,44 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/10
-Message-ID: <777583052.141545.1313780108648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:55:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-request: pithos symlink vulnerability CWE-61
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/9
+Message-ID: <20110517184001.GB14491@celtic.nixsys.be>
+Date: Tue, 17 May 2011 20:40:01 +0200
+From: Wouter Verhelst <w@...r.be>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: nbd-server
 Content-Type: text/plain; charset=utf-8
 
+On Tue, May 17, 2011 at 11:07:46AM -0600, Vincent Danen wrote:
+> * [2011-05-17 10:38:20 +0200] Thijs Kinkhorst wrote:
+> 
+> >Hi,
+> >
+> >In Debian the following was reported:
+> >nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
+> >phase, which allows unauthenticated users to DoS the server by causing
+> >the negotiation to fail (e.g., by specifying a non-existing name for an
+> >export).
+> >
+> >Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so for us
+> >goes that only our unstable distribution is affected.
+> >
+> >We'd like to have a CVE name for this.
+> 
+> The Debian bug is really light on details, so here is the git commit
+> that fixes this:
+> 
+> http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commitdiff;h=ebbbe0b3ce5393fa42a259f5e03d549508586aaa
+> 
+> But I don't see any evidence that this _only_ affects 2.9.21.  Are we
+> sure that it doesn't affect earlier versions?  The reporter doesn't
+> indicate one way or the other.
 
+Yes, absolutely; 2.9.21 and 2.9.21a (diff between .21 and .21a is a
+documentation-related file that wasn't added to Makefile.am). The bug
+was introduced with this commit:
 
------ Original Message -----
-> Can I get 2010 CVE-ID for Pithos symlink attack vulnerability:
-> https://bugs.launchpad.net/pithos/+bug/667896
-> 
-> Software web-page: https://launchpad.net/pithos
-> Found by: lfaraone <https://launchpad.net/~lfaraone>
-> Found at: 2010-10-30 (fix released same day)
-> "Predictable file- or directory-names in /tmp/-directory can lead to
-> symlink attack."
-> 
-> Fixed in Debian:
-> 
-> http://packages.debian.org/changelogs/pool/main/p/pithos/current/changelog
-> says:
-> pithos (0.3.5-1) unstable; urgency=high
-> 
-> * New upstream version.
-> - SECURITY UPDATE: fixes overwriting of arbitrary file via symlinks
-> (LP: #667896)
-> Can be still found from DST:
-> http://security-tracker.debian.org/tracker/TEMP-0000000-14D1F9
-> 
-> And in Ubuntu:
-> http://changelogs.ubuntu.com/changelogs/pool/universe/p/pithos/pithos_0.3.8-1/changelog
-> 
+http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commit;h=9ea4e742ce6f1b7793d1edfca70427a8660aeffa
 
-Please use CVE-2010-4817.
-
-Thanks.
+To be 100% sure, I just checked out the tree at the 2.9.20 tag and
+recompiled; I couldn't reproduce it.
 
 -- 
-    JB
+The volume of a pizza of thickness a and radius z can be described by
+the following formula:
+
+pi zz a
