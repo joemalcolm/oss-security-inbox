@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/14
-Message-ID: <4E12E78F.3040707@gmx.de>
-Date: Tue, 05 Jul 2011 12:29:35 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/13
+Message-ID: <587430679.157372.1305757169621.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 18 May 2011 18:19:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Several Moodle issues
 Content-Type: text/plain; charset=utf-8
 
-Am 05.07.2011 06:39, schrieb Solar Designer:
-
-> More info on what's inside the tarball: user/group "user" (either the
-> intruder's username on his/her computer or --owner and --group options
-> argument to tar), "GCC: (Ubuntu/Linaro 4.5.2-8ubuntu4) 4.5.2" inside the
-> .o files.  This suggests Ubuntu 11.04, right?
-
-That's the tagline of "gcc --version" on my Ubuntu 11.04 system.
-
-> BTW, what if the .o files _don't_ match the source code? ;-)  I think
-> they might be used when one builds vsftpd from this tarball, which means
-> that the build (or run) will fail on some older systems (yet another
-> reason why this would be noticed quickly), but also that the actual
-> backdoor might be different (and more sophisticated) from what we see in
-> the source code.  No, I don't think this is the case, but the
-> possibility is there, and I find it curious.
+----- Original Message -----
+> Hi Steve,
+> (since I assume Josh will pass this on to you :-) )
 > 
-> A trivial way to check for this would be to try compiling the source
-> code on Ubuntu 11.04 and see if the .o files match.  If not, the
-> differences will need to be analyzed manually.  Not that anyone cares...
+> http://www.moodle.org/security/ lists more than a dozen
+> vulnerabilities requiring a CVE assignment:
+> MSA-11-0002 to MSA-11-0017 require CVE assignments.
+> 
+> (Some issues might be amalgamated to a single CVE)
+> 
 
-And you'd need to know the compiler options, flipping one optimization
-manually is sufficient to make the .o files mismatch.
+Yeah, I'll let this one through. I don't have the time to sort it out right now.
 
-However the backdoored tarball apparently got removed from the listed
-server (404 error), but I'm not interested in hunting one down.
+Sorry.
+
+-- 
+    JB
