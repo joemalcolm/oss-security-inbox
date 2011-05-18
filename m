@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/7
-Message-ID: <1025236508.43444.1303158039522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Apr 2011 16:20:39 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/13
+Message-ID: <587430679.157372.1305757169621.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 18 May 2011 18:19:29 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Mojolicious directory traversal vulnerability
+Subject: Re: CVE request: Several Moodle issues
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> Could a CVE be assigned to the directory traversal flaw recently found
-> in Mojolicious?
+> Hi Steve,
+> (since I assume Josh will pass this on to you :-) )
 > 
-> References:
+> http://www.moodle.org/security/ lists more than a dozen
+> vulnerabilities requiring a CVE assignment:
+> MSA-11-0002 to MSA-11-0017 require CVE assignments.
 > 
-> https://github.com/kraih/mojo/issues/114
-> https://github.com/kraih/mojo/commit/b09854988c5b5b6a2ba53cc8661c4b2677da3818
-> https://bugzilla.redhat.com/show_bug.cgi?id=697229
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622952
+> (Some issues might be amalgamated to a single CVE)
 > 
 
-Please use CVE-2011-1589.
+Yeah, I'll let this one through. I don't have the time to sort it out right now.
 
-Thanks.
+Sorry.
 
 -- 
     JB
