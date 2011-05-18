@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/6
-Message-ID: <20110704215939.GE1947@redhat.com>
-Date: Mon, 4 Jul 2011 15:59:39 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/6
+Message-ID: <20110518200633.GA5730@pisco.westfalen.local>
+Date: Wed, 18 May 2011 22:06:33 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: plone privilege escalation flaw
+Subject: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
 Content-Type: text/plain; charset=utf-8
 
-Looks like the previous fix for Plone/Zope (CVE-2011-0720) caused a new
-privilege escalation flaw in Plone 3.x and 4.x.
+Hi,
+please assign CVE IDs for the following issues tracked in the Debian Security Tracker:
 
-Could a CVE be assigned?
+1. ffmpeg/libav out of array write in AMV parsing
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=718824
-http://plone.org/products/plone/security/advisories/20110622
-http://plone.org/products/plone-hotfix/releases/20110622
-http://secunia.com/advisories/45111
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
+http://seclists.org/bugtraq/2011/Apr/257
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
 
-Thanks.
+2. widelands directory traversal
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
+http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
+
+3. SQL injection in Jifty::DBI
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
+http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
+
+4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
+
+5. libpcap packet truncation
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
+http://thread.gmane.org/gmane.network.tcpdump.devel/5018
+
+Cheers,
+        Moritz
