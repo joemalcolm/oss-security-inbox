@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/3
-Message-ID: <BANLkTi=N4AqFZvf0ph+aPMES9EJFR_XGSw@mail.gmail.com>
-Date: Wed, 13 Apr 2011 18:30:14 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/7
+Message-ID: <20110518084404.GA15242@stro.at>
+Date: Wed, 18 May 2011 10:44:04 +0200
+From: maximilian attems <max@...o.at>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: CVE request for SAP issues
+Cc: klibc@...or.com
+Subject: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
-> Hi Kurt,
->
-> On Wed, Apr 13, 2011 at 06:06:42PM -0600, Kurt Seifried wrote:
->> http://dsecrg.com/pages/vul/show.php?id=317
->> [DSECRG-11-017] SAP GUI - Buffer overflow
-> ...
->
-> Is this Open Source software?
->
-> If not, then this is off-topic for oss-security.
+Related to CVE-2011-0997
 
-Sorry, I sometimes think of this as the CVE allocation list (since
-that seems to be a lot of what goes on =).
+ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
+used unquoted, than proof of concept involves
+DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
 
-> Alexander
+fix:
+http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
+will be part of the just to be released klibc-1.5.22
+
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+maks
+
+_______________________________________________
+klibc mailing list
+klibc@...or.com
+http://www.zytor.com/mailman/listinfo/klibc
