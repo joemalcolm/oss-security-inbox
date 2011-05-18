@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/2
-Message-ID: <20110414000918.GA22469@openwall.com>
-Date: Thu, 14 Apr 2011 04:09:18 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for SAP issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/9
+Message-ID: <BANLkTim6Z1avns8uLPjzq27Xej0i9UPTJw@mail.gmail.com>
+Date: Wed, 18 May 2011 16:41:29 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: maximilian attems <max@...o.at>
+Cc: oss-security@...ts.openwall.com, klibc@...or.com
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+On Wed, May 18, 2011 at 4:29 PM, maximilian attems <max@...o.at> wrote:
+> On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
+>> Might it be worth fixing the insecure temporary file usage?
+>>
+>> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
+>> 123         f = fopen(fn, "w");
+>>
+>> What if someone else has already created that file, or put a symlink
+>> or hard link there?
+>
+> for the initramfs case I don't see how.
+> outside of initramfs usage I'd agree that this needs fixing.
+>
 
-On Wed, Apr 13, 2011 at 06:06:42PM -0600, Kurt Seifried wrote:
-> http://dsecrg.com/pages/vul/show.php?id=317
-> [DSECRG-11-017] SAP GUI - Buffer overflow
-...
+Right, this only applies after boot is done.
 
-Is this Open Source software?
+>> What if someone overwrites your string with
+>> command injection characters despite your stripping?
+>
+> please be more verbose, what example do you have in mind?
+>
 
-If not, then this is off-topic for oss-security.
+Sorry for not being clear.  If you're concerned about scripts parsing
+this file while it has command injection strings in it, what's to stop
+someone from putting a malicious file there if one doesn't already
+exist?  It sounds like the scripts that depend on this file should
+probably be fixed here, or the file itself should be moved to a
+location where it's not writable by unprivileged users.
 
-Alexander
+-Dan
+
+> thank you for the review.
+>
+> --
+> maks
+>
+>
