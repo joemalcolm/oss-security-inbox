@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/7
-Message-ID: <4D9E05DE.1010507@cert.org>
-Date: Thu, 07 Apr 2011 14:43:42 -0400
-From: Chad Dougherty <crd@...t.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/8
+Message-ID: <BANLkTimQGPhOTOc1DD1dexwyYgk3HuokPw@mail.gmail.com>
+Date: Wed, 18 May 2011 16:13:05 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: CERT Coordination Center <cert@...t.org>
-Subject: Apache HttpClient CVE request  [VU#153049]
+Cc: klibc@...or.com
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Might it be worth fixing the insecure temporary file usage?
 
-Per the Apache HttpClient 4.1.1 release notes:
+122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
+123         f = fopen(fn, "w");
 
-<http://www.apache.org/dist/httpcomponents/httpclient/RELEASE_NOTES-4.1.x.txt>
+What if someone else has already created that file, or put a symlink
+or hard link there?  What if someone overwrites your string with
+command injection characters despite your stripping?
 
-"The HttpClient 4.1.1 is a bug fix release that addresses a number of 
-issues reported since release 4.1, including one critical security issue 
-(HTTPCLIENT-1061). All users of HttpClient 4.0.x and 4.1 are strongly 
-encouraged to upgrade.
-[...]
-* [HTTPCLIENT-1061] Fixed critical bug causing Proxy-Authorization 
-header to be sent to the target host when tunneling requests through a 
-proxy server that requires authentication.
-   Contributed by Oleg Kalnichevski <olegk at apache.org>"
+-Dan
 
-It doesn't look like this has received a CVE identifier and I didn't 
-want to duplicate anyone by assigning one from our pool.  Could someone 
-please assign one?
-
-Thanks...
-
-	-Chad
+On Wed, May 18, 2011 at 4:44 AM, maximilian attems <max@...o.at> wrote:
+> Related to CVE-2011-0997
+>
+> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
+> used unquoted, than proof of concept involves
+> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
+>
+> fix:
+> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
+> will be part of the just to be released klibc-1.5.22
+>
+>
+> --
+> maks
+>
+> _______________________________________________
+> klibc mailing list
+> klibc@...or.com
+> http://www.zytor.com/mailman/listinfo/klibc
+>
