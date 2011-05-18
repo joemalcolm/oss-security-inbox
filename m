@@ -1,35 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/13
-Message-ID: <4D66B6FF.8030503@redhat.com>
-Date: Thu, 24 Feb 2011 20:52:31 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Mike Tremaine <mgt@...llarcore.net>, Karel Klic <kklic@...hat.com>
-Subject: CVE Request -- logwatch: Privilege escalation due improper sanitization of special characters in log file names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/3
+Message-ID: <BANLkTin27fuWNFNGSaOCpzXysurW-GHLYA@mail.gmail.com>
+Date: Wed, 18 May 2011 18:53:23 +0200
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Mon, May 16, 2011 at 8:56 PM, Solar Designer <solar@...nwall.com> wrote:
 
-   a security flaw was found in the way logwatch, a log file
-   analysis program, pre-processed log files, containing certain
-   special characters in their names. A remote attacker could
-   use this flaw to execute arbitrary code with the privileges
-   of the privileged system user (root) by creating a
-   specially-crafted log file, subsequently analyzed by the
-   logwatch script.
+> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
+> > Its probably about time to review libraries that are commonly
+> > linked to (formerly-) suid programs, such as
+> > libldap, libssl etc. In near future, in the advent of file caps
+> > they are often lacking proper checks.
+>
+> Good idea.
+>
+> > They usually just compare uid against euid (not even gid sometimes)
+> > and do not check the dumpable flag or AT_SECURE (dont know whether
+> > glibc exports a proper function to easily check that at all).
+>
+> glibc exports the __libc_enable_secure variable, which is initialized
+> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
+>
+> > The libraries that I had a quick look at and which were found
+> > "vulnerable" are:
+> >
+> > - openssl-1.0.0c
+>
+> We've been patching OpenSSL to use __libc_enable_secure for over 10
+> years now. ;-)  The patch is in use at least in Owl and ALT Linux.
+>
+> * Sun Apr 22 2001 Solar Designer <solar-at-owl.openwall.com>
+> ...
+> - Use glibc's __libc_enable_secure for the new OPENSSL_issetugid().
+>
+> I've attached our patches for OpenSSL, ncurses, S-Lang, termcap, rpm's
+> popt.  Of these, OpenSSL and ncurses apply to recent versions, termcap
+> is old by itself, whereas the rest might be obsoleted by changes made
+> upstream (and they're not strictly for the problem you brought up).
+>
+> For OpenSSL, there's another problem: it looks like some getenv()'s
+> were added after the initial introduction of OPENSSL_issetugid() and
+> without consideration for possible security implications.  Some of those
+> should be patched.  This got on my to-do when we updated to OpenSSL
+> 1.0.0d earlier this year - to do myself or delegate, but I never got
+> around to...  Maybe you're the one to look into this and come up with a
+> patch now? ;-)
+>
+It happens that I am, with another name, an rpm5/popt comantainer . I am very
+interested to integrate these patches, being also a   security
+professional. Very
+useful to follow this mailing list, but I am not part of a distro, at least
+for now, and I can no longer follow it in the future due to the  recent
+policy change. Thanks anyway.
 
-   Upstream bug report:
-   [1] http://sourceforge.net/tracker/?func=detail&aid=3184223&group_id=312875&atid=1316824
+Elia
 
-   Related patch:
-   [2] http://logwatch.svn.sourceforge.net/viewvc/logwatch?view=revision&revision=26
+>
+> Thanks,
+>
+>
 
-   Other references:
-   [3] http://sourceforge.net/mailarchive/forum.php?thread_name=4D604843.7040303%40mblmail.net&forum_name=logwatch-devel
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=680237
+> Alexander
+>
 
-Could you allocate a CVE id for this issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
