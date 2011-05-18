@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/5
-Message-ID: <20110502161206.GA19512@openwall.com>
-Date: Mon, 2 May 2011 20:12:06 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/2
+Message-ID: <1621674532.140194.1305723753096.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 18 May 2011 09:02:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: net: ip_expire() must revalidate route
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
-> On 04/30/2011 04:51 AM, Solar Designer wrote:
-> <snipped>
+----- Original Message -----
+> aka Linux Kernel 2.6.38 Remote NULL Pointer Dereference
 > 
-> > Hence, I've saved your subscription request to a separate folder, to
-> > revisit it if a decision is made to start adding "closed" vendors to the
-> > list, if Wind River starts to publish advisories and updates (in other
-> > words, if it becomes no more closed than Red Hat), or if a suitable
-> > separate list is setup.
+> http://seclists.org/bugtraq/2011/May/123
+> http://packetstormsecurity.org/files/view/101475/linux2638-null.txt
+> http://marc.info/?l=linux-netdev&m=130558001727019&w=2
 > 
-> Can you clarify what is meant by updates?
+> fix: http://git.kernel.org/linus/64f3b9e2
+> 
 
-RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+Please use CVE-2011-1927.
 
-While we're at it, just what software do MontaVista and Wind River ship?
-My guess is that embedded Linux distro vendors would not care about
-vulnerabilities in desktop-specific apps (e.g., the X server), but I
-could be wrong.  And there are other software categories, which may or
-may not be relevant.  It'd be nice for potential reporters of security
-issues to know which vendors might be affected.
+Thanks.
 
-Alexander
+-- 
+    JB
