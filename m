@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/2
-Message-ID: <20111105103508.GB11970@openwall.com>
-Date: Sat, 5 Nov 2011 14:35:08 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/5
+Message-ID: <20110518172817.GA3817@openwall.com>
+Date: Wed, 18 May 2011 21:28:17 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 04, 2011 at 01:14:46PM -0500, John Lightsey wrote:
-> On 11/04/2011 11:36 AM, Solar Designer wrote:
-> > On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
-> >> PAR::Packer - PAR packed files are extracted to unsafe and predictable
-> >> temporary directories
-> >>
-> >> https://rt.cpan.org/Public/Bug/Display.html?id=69560
-> > 
-> > I think that your description for this one happens to encourage a poor
-> > fix for it.  Specifically, starting the description by "par_mktmpdir()
-> > makes no effort to verify that the /tmp/par-<username> directory is safe
-> > to use" may result in this function being patched to do such checks,
-> > which I think would be a poor fix.  A better fix would be to properly
-> > create a temporary files directory, with a less predictable name and
-> > with due retries (with new names) if the directory already exists -
-> > preferably using File::Temp's tempdir().
-> 
-> The problem with using random directory names here is that the
-> /tmp/par-user directory is being used as a caching mechanism to avoid
-> extracting the PAR contents over and over.
+On Wed, May 18, 2011 at 06:53:23PM +0200, yersinia wrote:
+> It happens that I am, with another name, an rpm5/popt comantainer . I am very
+> interested to integrate these patches, being also a   security
+> professional. Very
 
-Oh, I did not realize that.
+<offtopic>
+We have many more rpm patches here:
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/rpm/
+These are against rpm-4.2 and most of them are non-security, but they
+were required to make rpm usable for us.  For example, when a package is
+rebuilt with some changes but without Epoch/Version/Release change, and
+the old build contains some files that are not in the new build, and the
+package is upgraded on a system (such as with "-U --force"), the
+original rpm would leave orphaned files around on the system (security
+relevance: even SUID/SGID program binaries).  Ours removes those files.
+You could want to take a look at our patches and see if any are still
+relevant to rpm5.
+</offtopic>
 
-> A better alternative may be
-> to use $ENV{'HOME'}/.par or something along those lines.
+> useful to follow this mailing list, but I am not part of a distro, at least
+> for now, and I can no longer follow it in the future due to the  recent
+> policy change. Thanks anyway.
 
-Makes sense to me.  Use of env vars is unsafe in a potentially SUID
-script, but I don't know what the current policy regarding this is in
-CPAN.  Are CPAN modules by default supposed to be safe for use in SUID
-Perl scripts or not - I guess not, or we'd have plenty of CVE ids for
-those issues by now?  An alternative would be to find the home
-directory path from the real UID.
+Huh?  There's no policy change.  Are you possibly misinterpreting the
+"Closed list" thread as applying to the oss-security list?  It does not.
+The closed list is an alternative to the old vendor-sec and to the CC
+lists that started to appear in the month without vendor-sec.  It is not
+an alternative to oss-security.  In fact, with the new closed list being
+more limited than the old vendor-sec was, I expect more topics to be
+discussed on oss-security than there were when vendor-sec was around.
+
+Thanks,
 
 Alexander
