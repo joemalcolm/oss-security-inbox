@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/5
-Message-ID: <4EDBDEAF.9020105@redhat.com>
-Date: Sun, 04 Dec 2011 13:57:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/12
+Message-ID: <20110518214805.GB7987@pisco.westfalen.local>
+Date: Wed, 18 May 2011 23:48:05 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Subject: CVE request: Several Moodle issues
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2011 12:07 PM, Hanno Böck wrote:
-> Am Thu, 01 Dec 2011 13:24:19 -0700
-> schrieb Kurt Seifried <kseifried@...hat.com>:
->
->> My mistake, this should have been merged into CVE-2011-4090, it's the
->> same vuln type (XSS) and the same version of Serendipity,
->> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
->> of CVE-2011-4090.
-> I'd disagree on that.
->
-> CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
-> issue in the main s9y code.
->
-> Although the plugin is shipped with the core s9y, the impact is quite
-> different. For 4090, you only need to care if you do something with the
-> karma-plugin.
->
-Correct me if I'm wrong though but in the plugin advisory it says the
-fix is to upgrade serendipity to 1.6? If so then it looks like the
-problem is more back end than plugin.
+Hi Steve,
+(since I assume Josh will pass this on to you :-) )
 
--- 
+http://www.moodle.org/security/ lists more than a dozen
+vulnerabilities requiring a CVE assignment:
+MSA-11-0002 to MSA-11-0017 require CVE assignments.
 
--Kurt Seifried / Red Hat Security Response Team
+(Some issues might be amalgamated to a single CVE)
+
+Cheers,
+        Moritz
+
+
+
 
