@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/7
-Message-ID: <CAOSRhRMb5htcjczxk5WaE-0EQxTLO1o_KZz=HRFik4nKthi4mg@mail.gmail.com>
-Date: Thu, 27 Oct 2011 16:58:18 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/5
+Message-ID: <20110518172817.GA3817@openwall.com>
+Date: Wed, 18 May 2011 21:28:17 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
->>
->> I also agree with Vasiliy's point that LXC security boundaries in the
->> mainline kernel are not well defined at this point, so the whole thing
->> is a bit silly.
->
-> Just wondering - do you usually ack patches that you consider silly?
->
+On Wed, May 18, 2011 at 06:53:23PM +0200, yersinia wrote:
+> It happens that I am, with another name, an rpm5/popt comantainer . I am very
+> interested to integrate these patches, being also a   security
+> professional. Very
 
-Just because a patch doesn't fix an immediate problem right now
-doesn't mean it isn't the right thing to do.  For consistency's sake,
-it makes sense that it should require CAP_SYS_ADMIN to modify this
-sysctl, and it's certainty not a bad idea to move towards a more
-well-defined security boundary for LXC for the future.  That's why I
-ack'ed the patch.  I simply meant that assigning a CVE for this case
-was silly because it doesn't represent a violation of a real security
-boundary.
+<offtopic>
+We have many more rpm patches here:
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/rpm/
+These are against rpm-4.2 and most of them are non-security, but they
+were required to make rpm usable for us.  For example, when a package is
+rebuilt with some changes but without Epoch/Version/Release change, and
+the old build contains some files that are not in the new build, and the
+package is upgraded on a system (such as with "-U --force"), the
+original rpm would leave orphaned files around on the system (security
+relevance: even SUID/SGID program binaries).  Ours removes those files.
+You could want to take a look at our patches and see if any are still
+relevant to rpm5.
+</offtopic>
 
--Dan
+> useful to follow this mailing list, but I am not part of a distro, at least
+> for now, and I can no longer follow it in the future due to the  recent
+> policy change. Thanks anyway.
+
+Huh?  There's no policy change.  Are you possibly misinterpreting the
+"Closed list" thread as applying to the oss-security list?  It does not.
+The closed list is an alternative to the old vendor-sec and to the CC
+lists that started to appear in the month without vendor-sec.  It is not
+an alternative to oss-security.  In fact, with the new closed list being
+more limited than the old vendor-sec was, I expect more topics to be
+discussed on oss-security than there were when vendor-sec was around.
+
+Thanks,
+
+Alexander
