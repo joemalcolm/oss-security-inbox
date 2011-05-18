@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/1
-Message-ID: <20111209051125.GA6884@openwall.com>
-Date: Fri, 9 Dec 2011 09:11:25 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/2
+Message-ID: <1621674532.140194.1305723753096.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 18 May 2011 09:02:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: net: ip_expire() must revalidate route
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- Original Message -----
+> aka Linux Kernel 2.6.38 Remote NULL Pointer Dereference
+> 
+> http://seclists.org/bugtraq/2011/May/123
+> http://packetstormsecurity.org/files/view/101475/linux2638-null.txt
+> http://marc.info/?l=linux-netdev&m=130558001727019&w=2
+> 
+> fix: http://git.kernel.org/linus/64f3b9e2
+> 
 
-I've just set this mailing list up:
+Please use CVE-2011-1927.
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+Thanks.
 
-Yes, it's called distros, and we also still have linux-distros.
-
-Currently on the distros list are:
-
-* All Linux distribution vendors who are also on linux-distros
-* FreeBSD
-* NetBSD/pkgsrc
-
-Yes, I received and processed some subscription requests off-list.
-I need to document these in here now:
-
-For FreeBSD, I subscribed Xin Li, who is on the security team:
-http://www.freebsd.org/administration.html#t-secteam
-
-For NetBSD/pkgsrc I subscribed Tim Zingelman and Thomas Klausner, whose
-recent activity is clear e.g. from:
-http://mail-index.netbsd.org/current-users/2011/10/03/msg017924.html
-
-Alexander
+-- 
+    JB
