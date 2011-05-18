@@ -1,64 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/5
-Message-ID: <20111027193547.GH28067@dhcp-25-225.brq.redhat.com>
-Date: Thu, 27 Oct 2011 21:35:47 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/8
+Message-ID: <BANLkTimQGPhOTOc1DD1dexwyYgk3HuokPw@mail.gmail.com>
+Date: Wed, 18 May 2011 16:13:05 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Cc: klibc@...or.com
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 07:53:10PM +0400, Vasiliy Kulikov wrote:
-> Hi,
-> 
-> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
-> > On 10/26/2011 09:16 AM, Petr Matousek wrote:
-> > > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> > > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> > > to reset dmesg_restrict to 0.
-> > >
-> > > This is an issue when e.g.  LXC (Linux Containers) are used and complete
-> > > user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
-> > > root user can bypass the dmesg_restrict protection.
-> > >
-> > > Introduced by:
-> > > eaf06b241b091357e72b76863ba16e89610d31bd
-> > >
-> > > Fixed by:
-> > > bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
-> > >
-> > > Thanks,
-> > Please use CVE-2011-4080 for this issue.
-> 
-> Why does it worth CVE?  Procfs is not ready for containers yet.  You can
-> use other sysctls for more harmful things.  E.g. kernel.core_pattern
-> allows arbitrary code execution as a full root - does it need a CVE too
-> then? :-)
+Might it be worth fixing the insecure temporary file usage?
 
-Yes, you are right. I was aware of the procfs limitations, still it looked
-to me that boundary explicitly defined in eaf06b2 is directly crossed in
-this case.
+122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
+123         f = fopen(fn, "w");
 
-Anyway I agree that it is useless to issue CVE for each procfs flaw of
-this kind.
+What if someone else has already created that file, or put a symlink
+or hard link there?  What if someone overwrites your string with
+command injection characters despite your stripping?
 
-Kurt, could you please reject the CVE?
+-Dan
 
-Sorry for the noise,
-Petr
-
-> 
-> root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
-> root@...-ubuntu:/proc/sys/kernel# cat 
-> ^\Quit (core dumped)
-> 
-> (In the root namespace)
-> $ ls /tmp/pwned
-> /tmp/pwned
-> 
-> -- 
-> Vasiliy Kulikov
-> http://www.openwall.com - bringing security into open computing environments
-
--- 
-Petr Matousek / Red Hat Security Response Team
+On Wed, May 18, 2011 at 4:44 AM, maximilian attems <max@...o.at> wrote:
+> Related to CVE-2011-0997
+>
+> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
+> used unquoted, than proof of concept involves
+> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
+>
+> fix:
+> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
+> will be part of the just to be released klibc-1.5.22
+>
+>
+> --
+> maks
+>
+> _______________________________________________
+> klibc mailing list
+> klibc@...or.com
+> http://www.zytor.com/mailman/listinfo/klibc
+>
