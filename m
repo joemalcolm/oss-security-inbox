@@ -1,43 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/3
-Message-ID: <271749804.1926232.1312919290718.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 9 Aug 2011 15:48:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/10
+Message-ID: <20110518204523.GB5221@openwall.com>
+Date: Thu, 19 May 2011 00:45:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: cve request: xpdf: insecure tempfile usage in zxpdf script
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2902.
+On Tue, May 17, 2011 at 01:18:33PM +0200, Sebastian Krahmer wrote:
+> I uploaded a openssl-1.0.0d patch to
+> 
+> http://suse.de/~krahmer/libs-vs-fscaps
 
-Thanks.
+Thank you!
 
--- 
-    JB
+> The prefered way is to check the dumpable flag via prctl() which
+> is detected by the config script.
 
------ Original Message -----
-> Hi,
-> 
-> It was recently discovered that the compressed pdf handler script
-> (zxpdf) that shipped in the Debian xpdf package handles tempfiles
-> insecurely. Due to this flaw, a specifically-crafted pdf file name can
-> be used to delete files from the user's system (by taking advantage of
-> the tempfile cleanup trap; i.e. "rm -f <part of crafted file name>").
-> 
-> Note that as of version 3.02-13 (uploaded to Debian unstable on March
-> 4th, 2011), the zxpdf became the default xpdf pdf file handler. With
-> this being a default, the problem was promulgated to a much wider user
-> base; thus precipitating discovery of the flaw. I've now fixed the
-> problem in version 3.02-19 (uploaded to unstable on July 29th, 2011,
-> and
-> entered testing on July 31st).
-> 
-> Credit goes to Chung-chieh Shan from Harvard for discovering the
-> issue.
-> See his bug report for more background and details:
-> http://bugs.debian.org/635849.
-> 
-> Please assign an id.
-> 
-> Thanks,
-> Mike
+This is fail-open (at build time).  If the -e "/usr/include/sys/prctl.h"
+check somehow fails, we silently get an insecure build.  Of course,
+risks of this nature are extremely common, but we're trying to deal with
+them.  In our package of rpm, we have the configure-presets script,
+which looks like:
+
+#!/bin/sh
+# These autoconf variables are predefined to harden configure checks for
+# security sensitive functions, and to speedup configure checks for
+# most popular functions.
+export ac_cv_func_alloca=yes
+export ac_cv_func_asprintf=yes
+export ac_cv_func_atexit=yes
+export ac_cv_func_bcopy=yes
+export ac_cv_func_dcgettext=yes
+export ac_cv_func_fchdir=yes
+...
+export ac_cv_func_utimes=yes
+export ac_cv_func_vasprintf=yes
+export ac_cv_func_vfork=yes
+export ac_cv_func_vprintf=yes
+export ac_cv_func_vsnprintf=yes
+export ac_cv_func_waitpid=yes
+export ac_cv_func_wcslen=yes
+export ac_cv_func_wcwidth=yes
+
+This script is sourced in our %___build_pre macro.
+
+Maybe you should simply drop the -e "/usr/include/sys/prctl.h" check,
+leaving only the $target =~ /^linux/i check?
+
+Thanks again,
+
+Alexander
