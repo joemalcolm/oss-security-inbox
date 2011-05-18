@@ -1,24 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/2
-Message-Id: <201101040211.35057.hanno@hboeck.de>
-Date: Tue, 4 Jan 2011 02:11:34 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/4
+Message-ID: <20110518172241.GE32435@foo.fgeek.fi>
+Date: Wed, 18 May 2011 20:22:41 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: AusweisApp
+Subject: Dovecot releases
 Content-Type: text/plain; charset=utf-8
 
-Sorry, after sending this I noted myself that it's probably not the right 
-place here, as it's OSS-security.
+Should these two get CVE-identifier(s)?
 
-I just got so used to send CVE requests here I didn't think about that.
+http://dovecot.org/pipermail/dovecot/2011-May/059085.html
+http://dovecot.org/pipermail/dovecot/2011-May/059086.html
 
-Still, MITRE, please assign CVE(s).
-
--- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+Best regards,
+Henri Salo
