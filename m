@@ -1,66 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/18
-Message-Id: <20110628155319.93c9cace.akpm@linux-foundation.org>
-Date: Tue, 28 Jun 2011 15:53:19 -0700
-From: Andrew Morton <akpm@...ux-foundation.org>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/7
+Message-ID: <20110518084404.GA15242@stro.at>
+Date: Wed, 18 May 2011 10:44:04 +0200
+From: maximilian attems <max@...o.at>
+To: oss-security@...ts.openwall.com
+Cc: klibc@...or.com
+Subject: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 26 Jun 2011 19:57:23 -0700 Linus Torvalds <torvalds@...ux-foundation.org> wrote:
+Related to CVE-2011-0997
 
-> On Fri, Jun 24, 2011 at 5:34 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> >
-> > I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
-> 
-> Hmm. Should we just round them down to 1kB boundaries or something?
-> People *do* want to know about IO accounting, but I agree that giving
-> things at a byte granularity ends up giving way too much information.
-> When you can see how many bytes something read off a tty, that's a
-> problem.
-> 
-> Returning accounting information at a 1k granularity should make it
-> impractical to use that to guess keys etc. It still gives *some*
-> information (and enough for rough statistics), but it doesn't give the
-> level of detail required for any simple attack.
-> 
-> Sometimes excessive precision isn't a good thing.
-> 
-> Andrew - the IO_ACCT stuff went through you (back in 2006), the
-> taskstats did too, methinks. Comments?
-> 
+ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
+used unquoted, than proof of concept involves
+DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
 
-Random thoughts:
-
-a) I haven't thought very hard about it, but isn't it the case that
-   fuzzifying the byte counts in this manner will still permit the
-   length of these things to be determined, albeit with a larger data
-   set?
-
-b) Where does the problem lie?  Is it with the kernel, which exposes
-   accurate accounting?  Or is it with userspace, which accidentally
-   exposes sensitive information by failing to account for the kernel's
-   exposure of accurate accounting information?  
-
-   - Assumes that userspace can be changed to obscure this
-     information.  Erroneously, I think ;)
-
-c) Should this information be world-readable?  Perhaps we should add
-   more rational privileges here.  Back-compatibility issues.
+fix:
+http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
+will be part of the just to be released klibc-1.5.22
 
 
+-- 
+maks
 
-If rounding the counts to a 1k granularity will indeed defeat the
-attack (I'm unsure) then I'd suggest that a fix would be to perform
-that fuzzification if the receiving process doesn't have suitable
-permissions.  So if the user is reading his own stats or is root, he
-still gets byte-resolution results.  This keeps the stats as useful as
-we can make them and reduces the back-compatibility damage.
-
-What might be the extent of the back-compatibility damage?  It's hard
-to believe that anyone would care about a 1k error in bulk IO stats. 
-But if there's someone out there who uses these interfaces to detect
-whether the monitored task is doing *anything* then we'll break them. 
-eg, "did my data logging task just receive a packet from my
-scintillator experiment".  
+_______________________________________________
+klibc mailing list
+klibc@...or.com
+http://www.zytor.com/mailman/listinfo/klibc
