@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/14
-Message-ID: <554744119.1604900.1311710729310.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 16:05:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/12
+Message-ID: <20110518214805.GB7987@pisco.westfalen.local>
+Date: Wed, 18 May 2011 23:48:05 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: hplip: insecure tmp file handling
+Subject: CVE request: Several Moodle issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2722.
+Hi Steve,
+(since I assume Josh will pass this on to you :-) )
 
-Thanks.
+http://www.moodle.org/security/ lists more than a dozen
+vulnerabilities requiring a CVE assignment:
+MSA-11-0002 to MSA-11-0017 require CVE assignments.
 
--- 
-    JB
+(Some issues might be amalgamated to a single CVE)
 
------ Original Message -----
-> Hi,
-> 
-> hplip has a tmp file issue:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=704608
-> https://bugs.launchpad.net/hplip/+bug/809904
-> 
-> Could someone possibly assign a CVE to it, please? Thanks in advance!
-> 
-> Matthias
-> 
-> PS: Not too critical IMO as the code path is probably rarely used
-> anyway.
-> 
-> --
-> Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-> Tel: +49-911-74053-0; http://suse.com/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
+Cheers,
+        Moritz
+
+
+
+
