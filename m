@@ -1,42 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/8
-Message-ID: <Pine.GSO.4.64.1104111431270.4424@faron.mitre.org>
-Date: Mon, 11 Apr 2011 14:36:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/9
+Message-ID: <BANLkTim6Z1avns8uLPjzq27Xej0i9UPTJw@mail.gmail.com>
+Date: Wed, 18 May 2011 16:41:29 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: maximilian attems <max@...o.at>
+Cc: oss-security@...ts.openwall.com, klibc@...or.com
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
-
-CVE's rationale here is that Wietse Venema discovered a class of 
-implementation bugs against the same prototol - it's not a vulnerability 
-in the protocol itself.  CVE-wise, this situation is not fundamentally 
-different from 20+ FTP server implementations that have had buffer 
-overflows in the username, or lots of web server directory traversals 
-through GET requests (not joking here).  The original publication and CVE 
-usage seemed to imply that the CVE would be the same for all 
-implementations, but we don't do that except in really really high-volume, 
-low-detail situations (e.g. PROTOS SNMP 2002).
-
-- Steve
-
-
-On Mon, 11 Apr 2011, Mike O'Connor wrote:
-
-> :http://www.pureftpd.org/project/pure-ftpd/news
-> :
-> :states that pure-ftpd is affected by the same STARTTLS
-> :injection bug as postifx's CVE-2011-0411.
-> :
-> :Is this CVE postfix-specific or can it be used for
-> :pure-ftpd as well? If needed, can someone assign a new CVE?
+On Wed, May 18, 2011 at 4:29 PM, maximilian attems <max@...o.at> wrote:
+> On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
+>> Might it be worth fixing the insecure temporary file usage?
+>>
+>> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
+>> 123         f = fopen(fn, "w");
+>>
+>> What if someone else has already created that file, or put a symlink
+>> or hard link there?
 >
-> It should get its own CVE assignment.  Other products with the
-> same STARTTLS issue have gotten unique CVE assignments for them
-> -- see CVE-2011-143[012].
+> for the initramfs case I don't see how.
+> outside of initramfs usage I'd agree that this needs fixing.
 >
-> -- 
-> Michael J. O'Connor                                          mjo@...o.mi.org
-> =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-> "You can't destroy everything.  Where would you sit?"               -The Tick
+
+Right, this only applies after boot is done.
+
+>> What if someone overwrites your string with
+>> command injection characters despite your stripping?
+>
+> please be more verbose, what example do you have in mind?
+>
+
+Sorry for not being clear.  If you're concerned about scripts parsing
+this file while it has command injection strings in it, what's to stop
+someone from putting a malicious file there if one doesn't already
+exist?  It sounds like the scripts that depend on this file should
+probably be fixed here, or the file itself should be moved to a
+location where it's not writable by unprivileged users.
+
+-Dan
+
+> thank you for the review.
+>
+> --
+> maks
+>
 >
