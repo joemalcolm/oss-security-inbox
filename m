@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/3
-Message-ID: <20110310180838.GB19262@florz.florz.dyndns.org>
-Date: Thu, 10 Mar 2011 19:08:38 +0100
-From: Florian Zumbiehl <florz@...rz.de>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/6
+Message-ID: <20110518200633.GA5730@pisco.westfalen.local>
+Date: Wed, 18 May 2011 22:06:33 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+please assign CVE IDs for the following issues tracked in the Debian Security Tracker:
 
-> > >     8) Issue #8: logrotate: TOCTOU race condition by creation of new
-> > >     files (between opening the file and moment, final permissions have
-> > >     been applied) [information disclosure]
-> > >
-> > 
-> 
-> Let' use CVE-2011-1098 for this.
+1. ffmpeg/libav out of array write in AMV parsing
 
-What about these?:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
+http://seclists.org/bugtraq/2011/Apr/257
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
 
-| However, I think that still #6 (shell injection) and #7 (logrotate
-| DoS with strange characters in file names) should be considered
-| vulnerabilities in logrotate: It would be reasonable to assume that you
-| can use user input that's a valid (slash-less) filename as a (part of a)
-| log file name (assuming that the program is running as the same user that
-| inspects and rotates the logs, so the log directory being writable by
-| the program would not be insecure per-se) without that file name being
-| interpreted by a shell or causing logrotate to stop functioning,
-| respectively.
+2. widelands directory traversal
 
-Florian
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
+http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
+
+3. SQL injection in Jifty::DBI
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
+http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
+
+4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
+
+5. libpcap packet truncation
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
+http://thread.gmane.org/gmane.network.tcpdump.devel/5018
+
+Cheers,
+        Moritz
