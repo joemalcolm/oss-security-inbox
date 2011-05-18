@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/5
-Message-ID: <20110120175218.GU2115@redhat.com>
-Date: Thu, 20 Jan 2011 10:52:18 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2010-4225: XSP/mod_mono source code disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/11
+Message-ID: <20110518202932.GP17786@vostochny.stro.at>
+Date: Wed, 18 May 2011 20:29:33 +0000
+From: maximilian attems <max@...o.at>
+To: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Cc: oss-security@...ts.openwall.com, klibc@...or.com
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
 Content-Type: text/plain; charset=utf-8
 
-* [2011-01-20 18:22:03 +0100] Oden Eriksson wrote:
+On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
+> Might it be worth fixing the insecure temporary file usage?
+> 
+> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
+> 123         f = fopen(fn, "w");
+> 
+> What if someone else has already created that file, or put a symlink
+> or hard link there? 
 
->fredag 07 januari 2011 10:36:00 skrev  Thomas Biege:
->> Hello,
->>
->> our Mono team released a security update to fix a source-code disclosure
->> bug.
->>
->> http://www.mono-project.com/Vulnerabilities
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
->>
->> Cheers,
->> Thomas
->
->Where's the fix for this?
+for the initramfs case I don't see how.
+outside of initramfs usage I'd agree that this needs fixing.
 
-It's fixed in mod_mono 2.8.2.  I have no idea where a patch can be found
-(in their git repo somewhere probably).
+> What if someone overwrites your string with
+> command injection characters despite your stripping?
+
+please be more verbose, what example do you have in mind?
+
+thank you for the review.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+maks
+ 
