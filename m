@@ -1,31 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/6
-Message-ID: <20110414105709.59c835fe@orphan>
-Date: Thu, 14 Apr 2011 10:57:09 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/3
+Message-ID: <BANLkTin27fuWNFNGSaOCpzXysurW-GHLYA@mail.gmail.com>
+Date: Wed, 18 May 2011 18:53:23 +0200
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RE: [security-vendor] Closed list
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-Hi Zhenfeng!
+On Mon, May 16, 2011 at 8:56 PM, Solar Designer <solar@...nwall.com> wrote:
 
-Now that I'm already known for being corporatishly evil against smaller
-distros... ;)
+> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
+> > Its probably about time to review libraries that are commonly
+> > linked to (formerly-) suid programs, such as
+> > libldap, libssl etc. In near future, in the advent of file caps
+> > they are often lacking proper checks.
+>
+> Good idea.
+>
+> > They usually just compare uid against euid (not even gid sometimes)
+> > and do not check the dumpable flag or AT_SECURE (dont know whether
+> > glibc exports a proper function to easily check that at all).
+>
+> glibc exports the __libc_enable_secure variable, which is initialized
+> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
+>
+> > The libraries that I had a quick look at and which were found
+> > "vulnerable" are:
+> >
+> > - openssl-1.0.0c
+>
+> We've been patching OpenSSL to use __libc_enable_secure for over 10
+> years now. ;-)  The patch is in use at least in Owl and ALT Linux.
+>
+> * Sun Apr 22 2001 Solar Designer <solar-at-owl.openwall.com>
+> ...
+> - Use glibc's __libc_enable_secure for the new OPENSSL_issetugid().
+>
+> I've attached our patches for OpenSSL, ncurses, S-Lang, termcap, rpm's
+> popt.  Of these, OpenSSL and ncurses apply to recent versions, termcap
+> is old by itself, whereas the rest might be obsoleted by changes made
+> upstream (and they're not strictly for the problem you brought up).
+>
+> For OpenSSL, there's another problem: it looks like some getenv()'s
+> were added after the initial introduction of OPENSSL_issetugid() and
+> without consideration for possible security implications.  Some of those
+> should be patched.  This got on my to-do when we updated to OpenSSL
+> 1.0.0d earlier this year - to do myself or delegate, but I never got
+> around to...  Maybe you're the one to look into this and come up with a
+> patch now? ;-)
+>
+It happens that I am, with another name, an rpm5/popt comantainer . I am very
+interested to integrate these patches, being also a   security
+professional. Very
+useful to follow this mailing list, but I am not part of a distro, at least
+for now, and I can no longer follow it in the future due to the  recent
+policy change. Thanks anyway.
 
-On Tue, 12 Apr 2011 09:04:05 +0000 Zhao, Zhenfeng wrote:
+Elia
 
-> uid    Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
+>
+> Thanks,
+>
+>
 
-My understanding of the membership rules is that the aim is to avoid
-exploders or other mechanisms that may make it easier to change who is
-receiving mails without list admin and members being aware of such
-change.  While this may not be an exploder address now, for addresses
-like security@, they seem to be less likely to be closed once the
-people behind them decide to move on and are replaced by someone else.
-It seems there may be more pressure to hand matching private key over
-during the transition of responsibilities from one person to another.
+> Alexander
+>
 
-Just my 2c.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
