@@ -1,27 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/3
-Message-ID: <4EC9BE67.6070109@redhat.com>
-Date: Sun, 20 Nov 2011 19:58:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/10
+Message-ID: <20110518204523.GB5221@openwall.com>
+Date: Thu, 19 May 2011 00:45:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: drupal before 7.5 access bypass
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-On 11/20/2011 04:14 AM, Hanno Böck wrote:
-> http://drupal.org/node/1231510
->
-> If a Drupal site is using these features on comments, and the parent
-> node is denied access (either by a node access module or by being
-> unpublished), the file attached to the comment can still be downloaded
-> by non-privileged users if they know or guess its direct URL.
->
->
->
+On Tue, May 17, 2011 at 01:18:33PM +0200, Sebastian Krahmer wrote:
+> I uploaded a openssl-1.0.0d patch to
+> 
+> http://suse.de/~krahmer/libs-vs-fscaps
 
-Please use CVE-2011-4323 for this issue.
+Thank you!
 
--- 
+> The prefered way is to check the dumpable flag via prctl() which
+> is detected by the config script.
 
--Kurt Seifried / Red Hat Security Response Team
+This is fail-open (at build time).  If the -e "/usr/include/sys/prctl.h"
+check somehow fails, we silently get an insecure build.  Of course,
+risks of this nature are extremely common, but we're trying to deal with
+them.  In our package of rpm, we have the configure-presets script,
+which looks like:
 
+#!/bin/sh
+# These autoconf variables are predefined to harden configure checks for
+# security sensitive functions, and to speedup configure checks for
+# most popular functions.
+export ac_cv_func_alloca=yes
+export ac_cv_func_asprintf=yes
+export ac_cv_func_atexit=yes
+export ac_cv_func_bcopy=yes
+export ac_cv_func_dcgettext=yes
+export ac_cv_func_fchdir=yes
+...
+export ac_cv_func_utimes=yes
+export ac_cv_func_vasprintf=yes
+export ac_cv_func_vfork=yes
+export ac_cv_func_vprintf=yes
+export ac_cv_func_vsnprintf=yes
+export ac_cv_func_waitpid=yes
+export ac_cv_func_wcslen=yes
+export ac_cv_func_wcwidth=yes
+
+This script is sourced in our %___build_pre macro.
+
+Maybe you should simply drop the -e "/usr/include/sys/prctl.h" check,
+leaving only the $target =~ /^linux/i check?
+
+Thanks again,
+
+Alexander
