@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/20
-Message-ID: <4ECABEC4.9040808@redhat.com>
-Date: Mon, 21 Nov 2011 14:12:36 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, cve@...re.org
-Subject: Re: CVE request: drupal before 7.5 access bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/9
+Message-ID: <1843790166.178934.1305831605642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 15:00:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: viewvc DoS
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 10:55 AM, Moritz Muehlenhoff wrote:
-> On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
->> On 11/20/2011 04:14 AM, Hanno Böck wrote:
->>> http://drupal.org/node/1231510
->>>
->>> If a Drupal site is using these features on comments, and the parent
->>> node is denied access (either by a node access module or by being
->>> unpublished), the file attached to the comment can still be downloaded
->>> by non-privileged users if they know or guess its direct URL.
->>>
->>>
->>>
->> Please use CVE-2011-4323 for this issue.
-> This has already been assigned CVE-2011-2726, see 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
->
-> Cheers,
->         Moritz
-Correct. CVE-2011-4323 is a duplicate of CVE-2011-2726. My bad.
+
+
+----- Original Message -----
+> Hi,
+> 
+> cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row
+> limit:
+> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
+> http://viewvc.tigris.org/issues/show_bug.cgi?id=433
+> http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
+> 
+
+This one needs a 2009 ID:
+
+CVE-2009-5024
+
+My understanding is that the fix prevents a user from getting viewvc from
+displaying a really big request that easy CPU and RAM.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
