@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/25
-Message-ID: <20111121213047.GB23629@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 23:30:47 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/4
+Message-ID: <20110519153151.GG32435@foo.fgeek.fi>
+Date: Thu, 19 May 2011 18:31:51 +0300
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
+Cc: coley@...re.org
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 02:23:49PM -0700, Kurt Seifried wrote:
-> On 11/21/2011 10:53 AM, Henri Salo wrote:
-> > Can I get CVE-identifier for this issue:
-> >
-> > http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
-> >
-> > Other references:
-> >
-> > http://osvdb.org/show/osvdb/76933
-> > http://osvdb.org/show/osvdb/76934
-> > http://osvdb.org/show/osvdb/76932
-> > http://secunia.com/advisories/46762/
-> >
-> > Best regards,
-> > Henri Salo
-> There appear to be two separate issues here, can you confirm this?
+On Tue, May 17, 2011 at 03:27:15PM -0400, Josh Bressers wrote:
+> Steve,
+> 
+> Can MITRE deal with this one (also, have you folks assigned this yet?).
+> 
+> I'm not sure how you've handled the crashes historically.
+> 
+> Thanks.
 > 
 > -- 
-> 
-> -Kurt Seifried / Red Hat Security Response Team
+>     JB
 
-I think this needs three different CVE-identifiers. Here is a description from Secunia and the last item seems critical.
-
-1) Input passed to the "from" parameter in index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-
-2) Input passed to the "page_no" parameter in recentchanges.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-
-3) Input passed to the "userfile" POST parameter in edit.php is not properly verified before being used to upload files. This can be exploited to e.g. upload arbitrary PHP files with e.g. a ".gif" extension.
+What is the status of this?
 
 Best regards,
 Henri Salo
