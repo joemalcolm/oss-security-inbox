@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/26
-Message-ID: <1198312966.88302.1300136762128.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 17:06:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/2
+Message-ID: <20110519103901.GJ5100@dhcp-25-225.brq.redhat.com>
+Date: Thu, 19 May 2011 12:39:02 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: coley@...us.mitre.org, nelhage@...hage.com
+Subject: CVE-2011-1751 qemu: acpi_piix4: missing hotplug check during device removal
 Content-Type: text/plain; charset=utf-8
 
-> 
-> 6) Issue #6: logrotate: Shell command injection by using the shred
-> configuration directive
-> 
-> A shell command injection flaw was found in the way the logrotate utility
-> handled shred configuration directive (intended to ensure the log files
-> are not readable after their scheduled deletion). A local attacker could
-> use this flaw to execute arbitrary system commands (if the logrotate was
-> run under privileged system user account, root) when the logrotate
-> utility was run on a log file, within attacker controllable directory.
-> 
-> References:
-> [10] https://bugzilla.redhat.com/show_bug.cgi?id=680796
-> 
-> Proposed patch:
-> [11] https://bugzilla.redhat.com/show_bug.cgi?id=680796#c5
-> 
-> Note: Sixth CVE required. The shred option has been introduced in
-> logrotate v3.7.5.
+Writing the value 2 to I/O port 0xae08 ("PCI_EJ_BASE") initiates the
+PIIX3 PCI-ISA bridge removal. Unplugging this causes all of the ISA
+devices to be unplugged and right now the ISA (in particularly the
+RTC) devices cannot handle unplug gracefuly.
 
-Please use CVE-2011-1154 for the above issue
+During MC146818 removal RTCState structure backing the emulated RTC 
+is freed but embedded timers are not unlinked from active_timers
+list. Next time the timer fires SIGSEGV occurs. RTCState embedds
+several QEMUTimer structures that define function pointers
+(callbacks) that get called when timer expires.
 
-> ----------
-> 
-> 7) Issue #7: logrotate: DoS due improper escaping of file names
-> within 'write state' action
-> 
-> A denial of service flaw was found in the way the logrotate utility
-> performed arguments sanitization, when performing the 'write state'
-> action.  A local attacker could use this flaw to cause abort in
-> subsequent logrotate runs via a specially-crafted log file name.
-> 
-> References:
-> [12] https://bugzilla.redhat.com/show_bug.cgi?id=680797
-> 
-> Proposed patch:
-> [13] https://bugzilla.redhat.com/show_bug.cgi?id=680797#c3
-> 
+Since the memory is freed, however, it is possible, under some
+circumstances, for the guest to cause a controlled allocation into
+the freed space, which can ultimately be exploited for code execution
+in the context of the qemu or qemu-kvm process.
 
-Please use CVE-2011-1155 for the above issue
+Credit: Nelson Elhage
 
-Thanks.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=699773
+http://lists.nongnu.org/archive/html/qemu-devel/2011-05/msg01810.html
 
+Thanks,
 -- 
-    JB
+Petr Matousek / Red Hat Security Response Team
