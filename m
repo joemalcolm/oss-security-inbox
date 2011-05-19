@@ -1,18 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/3
-Message-ID: <4D9ADF9C.809@redhat.com>
-Date: Tue, 05 Apr 2011 17:23:40 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/9
+Message-ID: <1843790166.178934.1305831605642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 15:00:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Vouching system (was Re: Closed list)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: viewvc DoS
 Content-Type: text/plain; charset=utf-8
 
-> Maybe once we have a list of initial members, we should start using a
-> vouching system, that the applicant must be referred by someone from the
-> list, and we only accept members whom we met and trust. Just a suggestion.
 
-A repost.
 
-Eugene
+----- Original Message -----
+> Hi,
+> 
+> cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row
+> limit:
+> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
+> http://viewvc.tigris.org/issues/show_bug.cgi?id=433
+> http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
+> 
+
+This one needs a 2009 ID:
+
+CVE-2009-5024
+
+My understanding is that the fix prevents a user from getting viewvc from
+displaying a really big request that easy CPU and RAM.
+
+Thanks.
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
