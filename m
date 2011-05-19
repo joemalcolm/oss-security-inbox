@@ -1,16 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/8
-Message-ID: <818b1323-15b9-458e-b17a-ede853ef3982@zmail02.collab.prod.int.phx2.redhat.com>
-Date: Wed, 05 Oct 2011 14:47:53 -0400 (EDT)
-From: Ramon de C Valle <rcvalle@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/5
+Message-ID: <20110519183523.GA2430@redhat.com>
+Date: Thu, 19 May 2011 12:35:24 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Request for CVE identifier: Libvoikko NULL Character Improper Input Validation
+Subject: CVE request: DoS in apr due to CVE-2011-0419 fix
 Content-Type: text/plain; charset=utf-8
 
-Do we already have a CVE identifier assigned to this issue?
+This was posted today:
 
-http://www.openwall.com/lists/oss-security/2011/06/13/3
+http://mail-archives.apache.org/mod_mbox/httpd-announce/201105.mbox/%3C4DD55092.3030403@apache.org%3E
 
---
-Ramon de C Valle / Red Hat Security Response Team
+Essentially the fix for CVE-2011-0419 in apr caused another security
+flaw.
 
+Could a CVE be assigned to this?
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
