@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/9
-Message-Id: <77A34796-8CE4-42A3-8BF6-454A8FCCC370@gmail.com>
-Date: Tue, 1 Mar 2011 12:39:06 +0000
-From: Helgi Þormar Þorbjörnsson <helgith@...il.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: Pierre Joye <pierre.php@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/3
+Message-Id: <201105191306.08348.ludwig.nussel@suse.de>
+Date: Thu, 19 May 2011 13:06:08 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Dovecot releases
 Content-Type: text/plain; charset=utf-8
 
-
-On 1 Mar 2011, at 12:19, Dan Rosenberg wrote:
-
->> Not sure it is fixable, or maybe using a lock on the symbolic link
->> while fetching its target (to be tested to be sure that such locks
->> cannot be overridden from shell).
->> 
+Henri Salo wrote:
+> Should these two get CVE-identifier(s)?
 > 
-> The easiest way is to just open the target with the O_NOFOLLOW flag to
-> avoid following symlinks and abort on failure.  If you need to support
-> systems that don't have this flag, then perhaps you could consider
-> using an application-specific temporary directory instead of operating
-> in the world-writable /tmp.
+> http://dovecot.org/pipermail/dovecot/2011-May/059085.html
+> http://dovecot.org/pipermail/dovecot/2011-May/059086.html
 
-The PEAR installer does use /tmp (and whatever the Windows equivalent is) by default unless the user opts into a local installation or does indeed change the configuration to use other temp/download/cache directories so users can guard themselves with a good setup.
+http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
 
-A flag like that would be handy but doesn't exist (yet) in PHP. 
+cu
+Ludwig
 
-I moved over to using the O_CREAT|O_EXCL equivalent in PHP when creating new files and lstat + fopen + fstat and comparing mode/ino/dev before writing to an existing file for the cache. I could add an nlink check to that as well.
-The current version I've been playing around with is located at https://gist.github.com/848371 - It is missing the nlink part but it should be able to deal with TOCTOU problems. That code snippet hasn't been committed as I consider it work-in-progress still.
-
-Any comments / suggestions are welcome, I did write that one quite late last night :-)
-
-- Helgi
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
