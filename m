@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/34
-Message-ID: <27335096.369043.1301938468030.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 13:34:28 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/6
+Message-ID: <1869784473.178456.1305830631453.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 14:43:51 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: libvirt: error reporting in libvirtd is not thread safe
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Dovecot releases
 Content-Type: text/plain; charset=utf-8
 
+
+
 ----- Original Message -----
-> "It has been found that when several libvirtd threads are
-> reporting errors at the same time, the errors can get mixed
-> or corrupted, potentially leading to a libvirtd crash (DoS)."
+> Henri Salo wrote:
+> > Should these two get CVE-identifier(s)?
+> >
+> > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
+> > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
 > 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=693391
-> https://www.redhat.com/archives/libvir-list/2011-March/msg01087.html
+> http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
 > 
 
-Please use CVE-2011-1486.
+As best as I can tell, just the header NULL issue deserves a CVE id.
+CVE-2011-1929
 
 Thanks.
 
