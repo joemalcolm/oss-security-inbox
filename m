@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/7
-Message-ID: <2034463843.706117.1308150099671.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 15 Jun 2011 11:01:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/8
+Message-ID: <20110519185232.GM32435@foo.fgeek.fi>
+Date: Thu, 19 May 2011 21:52:32 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: alpha: fix several security issues
+Subject: Re: Dovecot releases
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> https://lkml.org/lkml/2011/6/11/87; from Dan Rosenberg.
+On Thu, May 19, 2011 at 02:43:51PM -0400, Josh Bressers wrote:
 > 
-> 1. Signedness issue in osf_getdomainname allows copying out-of-bounds
-> kernel memory to userland.
-
-CVE-2011-2208
-
-
 > 
-> 2. Signedness issue in osf_sysinfo allows copying large amounts of
-> kernel memory to userland.
-
-CVE-2011-2209
-
-
+> ----- Original Message -----
+> > Henri Salo wrote:
+> > > Should these two get CVE-identifier(s)?
+> > >
+> > > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
+> > > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
+> > 
+> > http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
+> > 
 > 
-> 3. Typo (?) in osf_getsysinfo bounds minimum instead of maximum copy
-> size, allowing copying large amounts of kernel memory to userland.
-
-CVE-2011-2210
-
-
+> As best as I can tell, just the header NULL issue deserves a CVE id.
+> CVE-2011-1929
 > 
-> 4. Usage of user pointer in osf_wait4 while under KERNEL_DS allows
-> privilege escalation via writing return value of sys_wait4 to kernel
-> memory.
+> Thanks.
+> 
+> -- 
+>     JB
 
-CVE-2011-2211
+Thank you for your response. I wonder why Dovecot-project does not request these by themselves. I notified the mailing-list about new CVE-identifier.
 
-Thanks.
-
--- 
-    JB
+Best regards,
+Henri Salo
