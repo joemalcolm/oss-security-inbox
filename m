@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/7
-Message-ID: <4DB08D21.9030209@mvista.com>
-Date: Thu, 21 Apr 2011 10:01:37 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/1
+Message-Id: <201105190944.01123.ludwig.nussel@suse.de>
+Date: Thu, 19 May 2011 09:44:00 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+Subject: CVE Request: viewvc DoS
 Content-Type: text/plain; charset=utf-8
 
-So this would affect kernels 2.6.25-rc1 and above? (if I figured it out
-correctly)
+Hi,
 
-- Armin
+cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row limit:
+http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
+http://viewvc.tigris.org/issues/show_bug.cgi?id=433
+http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
 
-On 04/20/2011 03:58 PM, Eugene Teo wrote:
-> On 04/21/2011 09:55 AM, Eugene Teo wrote:
->> On 04/21/2011 07:45 AM, Eugene Teo wrote:
->>> On 04/21/2011 04:52 AM, Josh Bressers wrote:
->>>> Please use CVE-2011-1598
->>>
->>> Updated patch: http://permalink.gmane.org/gmane.linux.network/192974
->>
->> Correction: s/Updated patch//. This patch is for a similar issue but for
->> can/raw release. I rather group these two patches with CVE-2011-1598
->> than to have another name assigned for it. But I'm fine either way.
-> 
-> On second thoughts, let's have another CVE assigned.
-> 
-> can/bcm release: credit Dave Jones
-> can/raw release: credit Oliver Hartkopp
-> 
-> Thanks, Eugene
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
