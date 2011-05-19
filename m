@@ -1,44 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/5
-Message-ID: <4EBA9D55.7020401@redhat.com>
-Date: Wed, 09 Nov 2011 08:33:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/2
+Message-ID: <20110519103901.GJ5100@dhcp-25-225.brq.redhat.com>
+Date: Thu, 19 May 2011 12:39:02 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
-Subject: Re: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
+Cc: coley@...us.mitre.org, nelhage@...hage.com
+Subject: CVE-2011-1751 qemu: acpi_piix4: missing hotplug check during device removal
 Content-Type: text/plain; charset=utf-8
 
-On 11/09/2011 08:14 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way the libsocialweb,
-> a social network data aggregator, performed its initialization
-> when this service start was initiated by the dbus daemon.
-> Due to a deficiency in a way the libsocialweb service was
-> initialized, an untrusted (non-SSL) network connection has
-> been opened to remote Twitter service servers without explicit
-> approval of the user, running the libsocialweb service on the
-> local host. A remote attacker could use this flaw to conduct
-> various MITM attacks and potentially alter integrity of the user
-> account in question.
->
-> References:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: This one being on the border a bit (since clear security
->       consequences of this deficiency not completely investigated),
->       but in any case it's a bad programming practice to open
->       untrusted connection to remote servers by default without
->       particular users' approval (trust boundary crossing).
-Please use CVE-2011-4129  for this issue.
+Writing the value 2 to I/O port 0xae08 ("PCI_EJ_BASE") initiates the
+PIIX3 PCI-ISA bridge removal. Unplugging this causes all of the ISA
+devices to be unplugged and right now the ISA (in particularly the
+RTC) devices cannot handle unplug gracefuly.
 
+During MC146818 removal RTCState structure backing the emulated RTC 
+is freed but embedded timers are not unlinked from active_timers
+list. Next time the timer fires SIGSEGV occurs. RTCState embedds
+several QEMUTimer structures that define function pointers
+(callbacks) that get called when timer expires.
+
+Since the memory is freed, however, it is possible, under some
+circumstances, for the guest to cause a controlled allocation into
+the freed space, which can ultimately be exploited for code execution
+in the context of the qemu or qemu-kvm process.
+
+Credit: Nelson Elhage
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=699773
+http://lists.nongnu.org/archive/html/qemu-devel/2011-05/msg01810.html
+
+Thanks,
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
