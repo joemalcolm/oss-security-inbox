@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/3
-Message-ID: <1716247090.94564.1303331421073.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Apr 2011 16:30:21 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/7
+Message-ID: <320759649.178573.1305830835860.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 14:47:15 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: rdesktop CVE - CVE-2011-1595
+Cc: klibc@...or.com, coley <coley@...re.org>
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP	options
 Content-Type: text/plain; charset=utf-8
 
-I assigned CVE-2011-1595 to a new rdesktop issue. Details are in our bug:
+----- Original Message -----
+> Related to CVE-2011-0997
+> 
+> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
+> used unquoted, than proof of concept involves
+> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
+> 
+> fix:
+> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
+> will be part of the just to be released klibc-1.5.22
+> 
 
-https://bugzilla.redhat.com/show_bug.cgi?id=676252
+Please use CVE-2011-1930.
 
 Thanks.
 
