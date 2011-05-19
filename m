@@ -1,61 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/14
-Message-ID: <1745647813.218657.1298578952062.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 15:22:32 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/6
+Message-ID: <1869784473.178456.1305830631453.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 14:43:51 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: Jon Oberheide <jon@...rheide.org>
-Cc: Timo Warns <warns@...-sense.de>, oss-security@...ts.openwall.com, coley <coley@...re.org>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Dovecot releases
 Content-Type: text/plain; charset=utf-8
 
 
+
 ----- Original Message -----
-> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
-> > On 02/24/2011 03:59 AM, Josh Bressers wrote:
-> > > ----- Original Message -----
-> > >>
-> > >> The kernel automatically evaluates partition tables of storage
-> > >> devices.  The code for evaluating LDM partitions (in
-> > >> fs/partitions/ldm.c) contains a bug that allows to overflow the
-> > >> kernel heap. It may be possible to escalate privileges by exploiting
-> > >> this bug.
-> > >>
-> > >> (This bug is distinct from the LDM bug reported by Eugene Teo on
-> > >> 2011-02-23.)
-> > >>
-> > >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-> > >> CONFIG_LDM_PARTITION needs to be set.
-> > >>
-> > >
-> > > Can you point to a commit message or something else that is public?
-> > > It's not clear how this differs from Eugene's request.
+> Henri Salo wrote:
+> > Should these two get CVE-identifier(s)?
 > >
-> > As far as I can tell, it's not public yet. Timo will follow-up once his
-> > patch is accepted.
+> > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
+> > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
 > 
-> The advisory Timo posted mentioned ldm_frag_add() so it's public for all
-> practical purposes at this point:
-> 
-> static bool ldm_frag_add (const u8 *data, int size, struct list_head
-> *frags)
-> {
-> ...
-> f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
-> if (!f) {
-> ldm_crit ("Out of memory.");
-> return false;
-> }
-> ...
-> memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
-> size);
-> return true;
-> }
+> http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
 > 
 
-I would still like something along the lines of a proposed patch. I believe
-you folks (as you're much brighter than me), but I still don't quite grasp
-the difference. I suspect there is enough public information for MITRE to
-public a CVE though, so please use CVE-2011-1017.
+As best as I can tell, just the header NULL issue deserves a CVE id.
+CVE-2011-1929
 
 Thanks.
 
