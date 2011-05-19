@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/10/1
-Message-Id: <201106101155.11837.ludwig.nussel@suse.de>
-Date: Fri, 10 Jun 2011 11:55:11 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/10
+Message-ID: <20110519192445.GB2430@redhat.com>
+Date: Thu, 19 May 2011 13:24:45 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+Subject: Re: CVE request: DoS in apr due to CVE-2011-0419 fix
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
-> 
->    based on Debian BTS report:
->    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
->        (first CVE-2011-XXYY required for Debian case)
-> 
-> looked more into original report:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
-> 
-> and the first paragraph of [2] suggests:
-> "When starting a program via "su - user -c program" the user session
-> can escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the input buffer.  This allows for example a non-root
-> session to push "chmod 666 /etc/shadow" or similarly bad commands into
-> the input buffer such  that after the end of the session they are
-> executed."
+* [2011-05-19 12:35:24 -0600] Vincent Danen wrote:
 
-The issue also reminds me that there are several su implemenations.
-On Fedora and SUSE we have a patched coreutils version, Debian uses
-the one from shadow-utils and then there's also a su from
-SimplePAMApps, used by e.g. Owl. Of course each one has it's own
-quirks and weird features. Does anyone still remember why a
-particular implementation was chosen? :-)
+>This was posted today:
+>
+>http://mail-archives.apache.org/mod_mbox/httpd-announce/201105.mbox/%3C4DD55092.3030403@apache.org%3E
+>
+>Essentially the fix for CVE-2011-0419 in apr caused another security
+>flaw.
+>
+>Could a CVE be assigned to this?
+>
+>Thanks.
 
-cu
-Ludwig
+Answering my own question.  This was pre-assigned CVE-2011-1928.
+
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Vincent Danen / Red Hat Security Response Team 
