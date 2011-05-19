@@ -1,76 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/4
-Message-ID: <141632136.1021400.1315590303458.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 13:45:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/10
+Message-ID: <20110519192445.GB2430@redhat.com>
+Date: Thu, 19 May 2011 13:24:45 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Bugs NotHugs <bugsnothugs@...il.com>, Stjepan Gros <stjepan.gros@...il.com>, openvas-devel@...d.intevation.org
-Subject: Re: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
+Subject: Re: CVE request: DoS in apr due to CVE-2011-0419 fix
 Content-Type: text/plain; charset=utf-8
 
-Let's go with one ID. I don't see a reason to split these.
+* [2011-05-19 12:35:24 -0600] Vincent Danen wrote:
 
-Use CVE-2011-3351
+>This was posted today:
+>
+>http://mail-archives.apache.org/mod_mbox/httpd-announce/201105.mbox/%3C4DD55092.3030403@apache.org%3E
+>
+>Essentially the fix for CVE-2011-0419 in apr caused another security
+>flaw.
+>
+>Could a CVE be assigned to this?
+>
+>Thanks.
+
+Answering my own question.  This was pre-assigned CVE-2011-1928.
 
 Thanks.
 
 -- 
-    JB
-
-
------ Original Message -----
-> On Wednesday 07 Sep 2011 13:13:45 Jan Lieskovsky wrote:
-> > Hello Josh, Steve, vendors,
-> >
-> >    it was reported that the scanner module for the Open
-> >    Vulnerability
-> > Assessment System (OpenVAS) used insecure way for creation of a
-> > temporary file, when generating OVAL system characteristics document
-> > from the knowledge base data available, with the ovaldi integrated
-> > tool
-> > enabled. A local attacker could use this flaw to conduct symlink
-> > attacks to overwrite arbitrary files on the system, accessible with
-> > the
-> > privileges of the user running the SLAD daemon and / or the ovaldi
-> > OVAL
-> > interpreter.
-> >
-> 
-> Whilst having a look at the code with regard to the recently reported
-> f-d
-> issue with OpenVAS, the handling of sc-out.xml in the very same
-> function also
-> looks insecure. It also doesn't appear to care about races either and
-> I'm
-> also curious as to whether you can control the contents at all (think
-> attacks
-> against the ovaldi XML parser). I would suggest that this code needs
-> properly
-> auditing or removing.
-> 
-> Unfortunately the interaction with sc-out.xml happens before
-> privileges are
-> dropped so the malicious activitity occurs as the openvas-scanner user
-> (normally root) rather than nobody as in the case of results.xml - The
-> call to
-> unlink referenced in the f-d email is actually a misnomer as it will
-> actually
-> only delete the file from /tmp and not whatever it may or may not have
-> pointed
-> to and the actual writing to the newly race created symlink actually
-> happens
-> within the ovaldi binary which is spawned as nobody AFAIK.
-> 
-> Josh/oss-security folk, can I get a CVE for both bugs please. Will we
-> need to
-> split out the two race conditions as separate CVE? The OpenVAS
-> advisory will
-> cover both the originally reported nobody case as well as the root
-> case
-> referenced above.
-> 
-> Tim
-> --
-> Tim Brown
-> <mailto:timb@...nvas.org>
-> <http://www.openvas.org/>
+Vincent Danen / Red Hat Security Response Team 
