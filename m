@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/1
-Message-ID: <20110405232557.GB714@dojo.mi.org>
-Date: Tue, 5 Apr 2011 19:25:57 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/7
+Message-ID: <320759649.178573.1305830835860.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 14:47:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: klibc@...or.com, coley <coley@...re.org>
+Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP	options
 Content-Type: text/plain; charset=utf-8
 
-:There are also userland tools specific to the Linux kernel, there's
-:Linux-PAM, there are package managers that are rarely used on non-Linux.
+----- Original Message -----
+> Related to CVE-2011-0997
+> 
+> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
+> used unquoted, than proof of concept involves
+> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
+> 
+> fix:
+> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
+> will be part of the just to be released klibc-1.5.22
+> 
 
-Linux-PAM (well, a fair subset of it from several years back) was ported
-to IRIX.  In most notable cases, it's bug-for-bug compatible.  
+Please use CVE-2011-1930.
+
+Thanks.
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Villains always have antidotes.  They're funny that way."          -The Tick
-
-Content of type "application/pgp-signature" skipped
+    JB
