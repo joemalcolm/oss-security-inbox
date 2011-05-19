@@ -1,24 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/1
-Message-ID: <AANLkTinofL+U6LepV6kahhUCdJZ+Df9fpvShY4zu5YZ8@mail.gmail.com>
-Date: Mon, 10 Jan 2011 17:42:43 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/11
+Message-ID: <652254890.179837.1305833444194.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 15:30:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
 Content-Type: text/plain; charset=utf-8
 
-> Upstream changes have introduced a flaw by disabling all authentication when
-> the password was cleared with upstream commit [1].
->
-> [1]
-> http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+> 
+> 1. ffmpeg/libav out of array write in AMV parsing
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
+> http://seclists.org/bugtraq/2011/Apr/257
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
 
-Confirmed vulnerable in qemu-kvm source code 0.10.6, fixed in 0.11.0
+Use CVE-2011-1931
 
-http://sourceforge.net/projects/kvm/files/qemu-kvm/
+
+> 
+> 2. widelands directory traversal
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
+> http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
+
+Use CVE-2011-1932
+
+
+> 
+> 3. SQL injection in Jifty::DBI
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
+> http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
+
+Use CVE-2011-1933
+
+
+> 
+> 4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
+
+Use CVE-2011-1934
+
+
+> 
+> 5. libpcap packet truncation
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
+> http://thread.gmane.org/gmane.network.tcpdump.devel/5018
+
+Use CVE-2011-1935
+
+Thanks.
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+    JB
