@@ -1,28 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/2
-Message-ID: <4D3E3D23.3080805@redhat.com>
-Date: Tue, 25 Jan 2011 11:01:55 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/11
+Message-ID: <652254890.179837.1305833444194.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 19 May 2011 15:30:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, Dan Carpenter <error27@...il.com>, Mauro Carvalho Chehab <mchehab@...hat.com>
-Subject: Re: Linux kernel av7110 negative array offset
+Cc: coley <coley@...re.org>
+Subject: Re: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 01:13 AM, Kees Cook wrote:
-> Hi,
->
-> Tavis Ormandy pointed this[1] out to me today. Has this already been
-> assigned a CVE? It looks exploitable if someone has this hardware in their
-> system.
+> 
+> 1. ffmpeg/libav out of array write in AMV parsing
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
+> http://seclists.org/bugtraq/2011/Apr/257
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
 
-Please use CVE-2011-0521.
+Use CVE-2011-1931
 
-Thanks, Eugene
 
-> Thanks,
->
-> -Kees
->
-> [1] http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=cb26a24ee9706473f31d34cc259f4dcf45cd0644
->
+> 
+> 2. widelands directory traversal
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
+> http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
 
+Use CVE-2011-1932
+
+
+> 
+> 3. SQL injection in Jifty::DBI
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
+> http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
+
+Use CVE-2011-1933
+
+
+> 
+> 4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
+
+Use CVE-2011-1934
+
+
+> 
+> 5. libpcap packet truncation
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
+> http://thread.gmane.org/gmane.network.tcpdump.devel/5018
+
+Use CVE-2011-1935
+
+Thanks.
+
+-- 
+    JB
