@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/2
-Message-ID: <20110506143928.GA9170@redhat.com>
-Date: Fri, 6 May 2011 08:39:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/1
+Message-Id: <201105190944.01123.ludwig.nussel@suse.de>
+Date: Thu, 19 May 2011 09:44:00 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: tigervnc
+Subject: CVE Request: viewvc DoS
 Content-Type: text/plain; charset=utf-8
 
-The vncviewer in tigervnc had X.509 certificate support added in svn
-r4200 (currently beta, slated for the 1.1.0 release).  It would prompt
-for and send authentication credentials before properly validating the
-X.509 certificate, which makes it susceptible to a man-in-the-middle
-attack.
+Hi,
 
-References:
+cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row limit:
+http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
+http://viewvc.tigris.org/issues/show_bug.cgi?id=433
+http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
 
-https://bugzilla.redhat.com/show_bug.cgi?id=702470
-http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01342.html
-http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01347.html
-
-Could a CVE be assigned to this please?  Thanks.
+cu
+Ludwig
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
