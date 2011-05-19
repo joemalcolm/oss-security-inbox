@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/10
-Message-ID: <20110225121010.GA3213@albatros>
-Date: Fri, 25 Feb 2011 15:10:10 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/4
+Message-ID: <20110519153151.GG32435@foo.fgeek.fi>
+Date: Thu, 19 May 2011 18:31:51 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
+Cc: coley@...re.org
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
-Kees,
+On Tue, May 17, 2011 at 03:27:15PM -0400, Josh Bressers wrote:
+> Steve,
+> 
+> Can MITRE deal with this one (also, have you folks assigned this yet?).
+> 
+> I'm not sure how you've handled the crashes historically.
+> 
+> Thanks.
+> 
+> -- 
+>     JB
 
-On Thu, Feb 24, 2011 at 16:32 -0800, Kees Cook wrote:
-> Having a system with acpi and debugfs built into the kernel allows
-> a uid=0 user (without capabilities, e.g. in containers)
+What is the status of this?
 
-Does it fit into any current security model?  I mean that containers of
-vanilla kernel are not fully restricted, neither sysfs or procfs differ
-much in different namespaces.  If one may locate one sysfs file it may
-locate all of them (chrooting into /sys is rather pointless :-D); with
-sysfs one may change many hardware setting, they are driver-dependend,
-but still very sensitive.  With /proc/sys/ one (inside of namespace
-constainer) may change sysctl settings.  I suppose that it is not hard
-to gain full root in such situation even without any bugs in sysfs file
-read/write implementations (I didn't tried it, though).
-
-UID 0 without capabilities has not been made really unprivileged yet.
-It makes sense only within namespace container without any virtual
-filesystem which handles permissions with uid/gid checks (not CAP_*).
-But this is rather strange.
-
-
-Thanks,
-
--- 
-Vasiliy
+Best regards,
+Henri Salo
