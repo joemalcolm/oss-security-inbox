@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/9
-Message-ID: <4D6744F5.3020103@redhat.com>
-Date: Fri, 25 Feb 2011 13:58:13 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/8
+Message-ID: <20110519185232.GM32435@foo.fgeek.fi>
+Date: Thu, 19 May 2011 21:52:32 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Nelson Elhage <nelhage@...lice.com>
-Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
+Subject: Re: Dovecot releases
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 12:32 PM, Nelson Elhage wrote:
-> The cgrulesengd program from libcgroup failed to properly verify the
-> sender of netlink messages, allowing arbitrary users to spoof events
-> to the daemon, causing it to place processes into incorrect cgroups.
->
-> Note that the default configuration of cgrulesengd does not contain
-> any any rules, so this is probably only usefully exploitable if an
-> admin have specifically configured cgrulesengd to enforce some policy.
->
-> References:
-> http://sourceforge.net/mailarchive/message.php?msg_id=27102603
+On Thu, May 19, 2011 at 02:43:51PM -0400, Josh Bressers wrote:
+> 
+> 
+> ----- Original Message -----
+> > Henri Salo wrote:
+> > > Should these two get CVE-identifier(s)?
+> > >
+> > > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
+> > > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
+> > 
+> > http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
+> > 
+> 
+> As best as I can tell, just the header NULL issue deserves a CVE id.
+> CVE-2011-1929
+> 
+> Thanks.
+> 
+> -- 
+>     JB
 
-Please use CVE-2011-1022.
+Thank you for your response. I wonder why Dovecot-project does not request these by themselves. I notified the mailing-list about new CVE-identifier.
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Best regards,
+Henri Salo
