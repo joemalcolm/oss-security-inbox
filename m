@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/3
-Message-ID: <mpro.ls732t0w2f6ps06u2.taviso@cmpxchg8b.com>
-Date: Tue, 27 Sep 2011 20:52:05 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: rpm/librpm/rpm-python memory corruption pre-verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/4
+Message-ID: <BANLkTimXD43dw1+8V-kTdzbWMZiaYpz7xg@mail.gmail.com>
+Date: Fri, 20 May 2011 11:58:24 -0400
+From: Anthon Pang <anthon.pang@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: GeoIP Directory traversal weakness in geoipupdate
 Content-Type: text/plain; charset=utf-8
 
+Since this was previosly assigned a CVE ID, i.e., CVE-2007-0159, I'm
+requesting a new one for the incomplete fix in 1.4.1, and the new issue
+introduced in 1.4.5.
 
-Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
-rpm signature verification. Some trivial bitflipping found a few memory
-corruption issues.
+The GeoIP C API is an open source library (LGPL) for MaxMind's GeoIP data
+products.
 
-Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
-native module wrapper that exports librpm to python. I'll step through the
-signature verification logic when I get a chance.
+GeoIP-1.4.7.tar.gz (the latest version) contains a directory traversal
+weakness whereby a remote malicious update server (responding to requests at
+updates.maxmind.com) may overwrite arbitrary files.
 
-Obviously we need the sections of rpm code touched before signature
-verification to be bulletproof, as most distributions rely on public mirror
-services that may or may not be trusted. Any volunteers who know crypto
-better than me appreciated, I'll be primarily looking for memory corruption.
+apps/geoipupdate.c, added a sanity check in 1.4.1 but does not handle
+Windows paths containing backslash or colon.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=741606
-https://bugzilla.redhat.com/show_bug.cgi?id=741612
+apps/geoipupdate-pureperl.pl, introduced in 1.4.5, does not filter any
+filenames returned by the remote server.
 
-Tavis.
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+The fix is to reject invalid filenames, e.g., leading '.', or containing
+slash, backslash (Windows), or colons (Windows).
 
