@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/6
-Message-ID: <20110718173638.GC18284@redhat.com>
-Date: Mon, 18 Jul 2011 11:36:39 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2011-2520: flaw in system-config-firewall's usage of pickle allows privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/2
+Message-ID: <20110520140200.459a81e7@redhat.com>
+Date: Fri, 20 May 2011 14:02:00 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: systemtap@...rceware.org
+Subject: systemtap divide-by-zero issues (CVE-2011-1769, CVE-2011-1781)
 Content-Type: text/plain; charset=utf-8
 
-Hi folks.  I'm not sure if anyone else uses system-config-firewall and
-system-config-printer, but we had a report of a privilege escalation
-flaw that could allow a user with access to run these commands to
-elevate their privileges due to insecure use of the python pickle
-module.
+Hi!
 
-The solution is to use JSON rather than pickle.  The details and a patch
-for CVE-2011-2520 are available in our bugzilla:
+Two divide-by-zero flaws were recently discovered and fixed in
+systemtap:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2520
+http://sourceware.org/git/?p=systemtap.git;a=commit;h=fa2e3415185a28542d419a641ecd6cddd52e3cd9
 
-Thanks.
+These issues can be use to crash the system.  The decision was to
+handle these issues as security because of the unprivileged systemtap
+mode, where stap author is not to be considered a root-equivalent.  In
+normal mode, unprivileged user can only trigger this if she's able to
+trick some privileged user to instrument specially crafted ELF file.
+
+More details on the CVE allocation is in:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=702687#c29
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tomas Hoger / Red Hat Security Response Team
