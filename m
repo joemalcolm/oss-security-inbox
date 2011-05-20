@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/7
-Message-ID: <1421152075.11083.1302891075646.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Apr 2011 14:11:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: dotclear before 2.2.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/4
+Message-ID: <BANLkTimXD43dw1+8V-kTdzbWMZiaYpz7xg@mail.gmail.com>
+Date: Fri, 20 May 2011 11:58:24 -0400
+From: Anthon Pang <anthon.pang@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: GeoIP Directory traversal weakness in geoipupdate
 Content-Type: text/plain; charset=utf-8
 
+Since this was previosly assigned a CVE ID, i.e., CVE-2007-0159, I'm
+requesting a new one for the incomplete fix in 1.4.1, and the new issue
+introduced in 1.4.5.
 
+The GeoIP C API is an open source library (LGPL) for MaxMind's GeoIP data
+products.
 
------ Original Message -----
-> My french isn't that good:
-> http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
-> 
-> But that sounds like a security issue:
-> "Pour en revenir à cette version, signalons qu'elle contient la
-> correction d'une faille de sécurité signalée il y a quelque temps par
-> Raphaël — que nous remercions au passage —, ainsi qu'une correction
-> attendue pour la génération manuelle des miniatures."
+GeoIP-1.4.7.tar.gz (the latest version) contains a directory traversal
+weakness whereby a remote malicious update server (responding to requests at
+updates.maxmind.com) may overwrite arbitrary files.
 
-Please use CVE-2011-1584.
+apps/geoipupdate.c, added a sanity check in 1.4.1 but does not handle
+Windows paths containing backslash or colon.
 
-The google translate is pretty vague, if someone has more details please
-speak up:
+apps/geoipupdate-pureperl.pl, introduced in 1.4.5, does not filter any
+filenames returned by the remote server.
 
-"To come back to this version, note that it contains the
-correcting a security flaw reported some time ago by
-Raphael - we appreciate the way - and a correction
-expected to generate manual thumbnail. "
+The fix is to reject invalid filenames, e.g., leading '.', or containing
+slash, backslash (Windows), or colons (Windows).
 
-Thanks.
-
--- 
-    JB
