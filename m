@@ -1,20 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/5
-Message-ID: <CAJzxamJXJbT5aaui=ed19OPB=gjchjXZeJ1D01m7WQko4hEOFg@mail.gmail.com>
-Date: Wed, 2 Nov 2011 04:11:28 +1100
-From: David Black <disclosure@....org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/1
+Message-Id: <201105200855.25942.ludwig.nussel@suse.de>
+Date: Fri, 20 May 2011 08:55:25 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
 Content-Type: text/plain; charset=utf-8
 
-"It was discovered that both Piston and Tastypie share a similar
-vulnerability with respect to their de-serialization of YAML post
-data. Both Piston and Tastypie used the yaml.load method, which is
-unsafe. In certain circumstances this could be used to allow remote
-execution of arbitrary code." [0]
+Josh Bressers wrote:
+> > 5. libpcap packet truncation
+> > 
+> > http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
+> > http://thread.gmane.org/gmane.network.tcpdump.devel/5018
+> 
+> Use CVE-2011-1935
 
-Can a CVE be assigned to both Tastypie and Django-piston regarding
-these issues ?
+Does that really qualify as security issue? Just a bug IMO.
 
+cu
+Ludwig
 
-[0] https://www.djangoproject.com/weblog/2011/nov/01/piston-and-tastypie-security-releases/
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
