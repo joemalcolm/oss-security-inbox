@@ -1,59 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/1
-Message-ID: <20111229131342.080f44d6@05h7cjceim>
-Date: Thu, 29 Dec 2011 13:13:42 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/23/1
+Message-ID: <20110523063951.GA2611@suse.de>
+Date: Mon, 23 May 2011 08:39:51 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 28 Dec 2011 19:07:30 +0100
-schrieb Andrea Barisani <lcars@...rt.org>:
 
-> Affected version:
-> Java, all versions
-> JRuby <= 1.6.5
-> PHP <= 5.3.8, <= 5.4.0RC3
-> Python, all versions
-> Rubinius, all versions
-> Ruby <= 1.8.7-p356
+On Thu, May 19, 2011 at 12:45:23AM +0400, Solar Designer wrote:
+> On Tue, May 17, 2011 at 01:18:33PM +0200, Sebastian Krahmer wrote:
+> > I uploaded a openssl-1.0.0d patch to
+> > 
+> > http://suse.de/~krahmer/libs-vs-fscaps
 > 
-> Apache Geronimo, all versions
-> Apache Tomcat <= 5.5.34, <= 6.0.34, <= 7.0.22
-> Oracle Glassfish <= 3.1.1
-> Jetty, all versions
-> Plone, all versions
-> Rack, all versions
-> V8 JavaScript Engine, all versions
+> Thank you!
 > 
-> Fixed version:
-> Java, N/A
-> JRuby >= 1.6.5.1
-> PHP >= 5.3.9, >= 5.4.0RC4
-> Python, N/A
-> Rubinius, N/A
-> Ruby >= 1.8.7-p357, 1.9.x
+> > The prefered way is to check the dumpable flag via prctl() which
+> > is detected by the config script.
 > 
-> Apache Geronimo, N/A
-> Apache Tomcat >= 5.5.35, >= 6.0.35, >= 7.0.23
-> Oracle Glassfish, N/A (Oracle reports that the issue is fixed in the
-> main codeline and scheduled for a future CPU) Jetty, N/A
-> Plone, N/A
-> Rack, N/A
-> V8 JavaScript Engine, N/A
-> 
-> Credit: vulnerability report and PoC code received from Alexander
-> Klink <alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
-> cdc.informatik.tu-darmstadt.de>.
-> 
-> CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
-> (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
+> This is fail-open (at build time).  If the -e "/usr/include/sys/prctl.h"
+> check somehow fails, we silently get an insecure build.  Of course,
 
-Kurt or other CVE assigners, can you please assign a bunch for python,
-java, tomcat etc. pp.
+Honestly, that was the easiest I could do in that time frame. The openssl
+config is a bit weird to me and the openssl project is not even providing
+distclean source tarballs for download (they contain symlinks etc.).
+It is also rather meant as a help for upstream which they could use as a base.
+I am sure they know better how to combine it with their config scripts
+and I am happy with changes as long as our resulting binary contains
+the hardening. I will try to ping the openssl developers about it.
+
+Sebastian
+
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
