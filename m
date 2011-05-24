@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/5
-Message-ID: <4E1C7AFB.4090908@msgid.tls.msk.ru>
-Date: Tue, 12 Jul 2011 20:48:59 +0400
-From: Michael Tokarev <mjt@....msk.ru>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: qemu -runas does not clear supplementary groups
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/4
+Message-ID: <4DDB5363.8090609@redhat.com>
+Date: Tue, 24 May 2011 08:42:43 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Robert Scheck <robert@...oraproject.org>
+Subject: CVE Request -- phpMyAdmin -- PMASA-2011-3 & PMASA-2011-4
 Content-Type: text/plain; charset=utf-8
 
-There's a missing initgroups() call in qemu in the -runas
-argument handling.  Details are available on
 
- https://bugs.launchpad.net/qemu/+bug/807893
+Hello, Josh, Steve, vendors,
 
-in short, -runas is supposed to reduce privileges to a
-bare minimum (after all initialization is completed),
-but the process still has all the supplementary groups
-which should be dropped too.
+   the following two security flaws have been recently reported against 
+phpMyAdmin:
+[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-3.php
+[2] http://www.phpmyadmin.net/home_page/security/PMASA-2011-4.php
 
-Can a CVE id be assigned for this issue?
+References:
+[3] http://bugs.gentoo.org/show_bug.cgi?id=368495
 
-Thanks,
+Could you allocate CVE ids for these?
 
-/mjt
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
