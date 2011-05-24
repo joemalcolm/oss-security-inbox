@@ -1,107 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/6
-Message-ID: <AANLkTimZGjkKy2G8pbJGKsq-QCKbxX-EwnJ35AGyMdy8@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:17:16 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/9
+Message-ID: <706360828.253817.1306237382285.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:43:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: MyBB 1.6 <= SQL Injection
+Cc: Pierre Joye <pierre.php@...il.com>, coley <coley@...re.org>
+Subject: Re: CVE request: PHP socket_connect() - stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+----- Original Message -----
+> Hi,
+> Could a CVE be assigned to this issue?
+> 
+> PHP - Stack buffer overflow in socket_connect():
+> Fix: http://svn.php.net/viewvc?view=revision&revision=311369
+> 
+> Found by: Mateusz Kocielski, Marek Kroemeke and Filip Palian
+> 
 
-Potential SQL Injection vulnerability was detected in MyBB.
+Please use CVE-2011-1938.
 
+Thanks.
 
-2. APPLICATION DESCRIPTION
-
-MyBB is a free bulletin board system software package developed by the
-MyBB Group.
-It's supposed to be developed from XMB and DevBB bulletin board applications.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The "keywords" parameter was not properly sanitized in /private.php
-and /search.php which leads to SQL Injection vulnerability. Full
-exploitation  possibility is probably mitigated by clean_keywords and
-clean_keywords_ft functions in inc/functions_search.php.
-
-
-4. VERSIONS AFFECTED
-
-MyBB 1.6 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-=> /search.php
-
-POST /mybb/search.php
-
-action=do_search&forums=2&keywords='+or+'a'+'a&postthread=1
-
-
-=> /private.php
-
-POST /mybb/private.php
-
-my_post_key=&keywords='+or+'a'+'a&quick_search=Search+PMs&allbox=Check+All&fromfid=0&fid=4&jumpto=4&action=do_stuff
-
-
-Get nikto check
-http://trac2.assembla.com/Nikto_2/browser/trunk/plugins/db_tests?rev=588
-
-Or try nikto udb_tests
-
-"400000","0","9","/search.php","POST","MyBB has experienced an
-internal SQL error and cannot continue.","","","Sorry, but no results
-were returned","","MyBB 1.6 <= SQL Injection,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection","action=do_search&forums=2&keywords='+or+'a'+'a&postthread=1",""
-
-"400001","0","9","/private.php","POST","MyBB has experienced an
-internal SQL error and cannot continue.","","","Sorry, but no results
-were returned","","MyBBx 1.6 <= SQL Injection,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection","my_post_key=&keywords='+or+'a'+'a&quick_search=Search+PMs&allbox=Check+All&fromfid=0&fid=4&jumpto=4&action=do_stuff",""
-
-
-6. SOLUTION
-
-Upgrade to 1.6.1
-
-
-7. VENDOR
-
-MyBB Development Team
-http://www.mybb.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-09: notified vendor
-2010-12-15: vendor released fixed version
-2010-12-24: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_sql_injection
-About MyBB: http://www.mybb.com/about/mybb
-
-
-#yehg [2010-12-24]
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+-- 
+    JB
