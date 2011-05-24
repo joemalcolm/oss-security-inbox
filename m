@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/11
-Message-ID: <20111117171341.GM1686@redhat.com>
-Date: Thu, 17 Nov 2011 10:13:41 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/9
+Message-ID: <706360828.253817.1306237382285.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:43:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+Cc: Pierre Joye <pierre.php@...il.com>, coley <coley@...re.org>
+Subject: Re: CVE request: PHP socket_connect() - stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-* [2011-11-17 02:40:28 +0000] The Fungi wrote:
+----- Original Message -----
+> Hi,
+> Could a CVE be assigned to this issue?
+> 
+> PHP - Stack buffer overflow in socket_connect():
+> Fix: http://svn.php.net/viewvc?view=revision&revision=311369
+> 
+> Found by: Mateusz Kocielski, Marek Kroemeke and Filip Palian
+> 
 
->On 2011-11-16 23:43:25 +0400 (+0400), Solar Designer wrote:
->[...]
->> Does anyone readily know if BIND 9.3.x is affected as well?
->[...]
->
->While obviously not conclusive, I can say that our 9.3.4-P1.2
->resolvers were not impacted and ran clean through while our 9.5.1-P3
->and 9.6-ESV-R4 resolvers crashed and had to be restarted several
->times overnight.
+Please use CVE-2011-1938.
 
-Our bind maintainer believes that 9.3.6 is affected (but possibly harder
-to exploit or via a different vector).
+Thanks.
 
-However, he does not believe that 9.2.x and earlier are affected due to
-the old DNSSEC implementation (so 9.2.x wouldn't understand current
-DNSSEC signatures so would not cache them).
-
-Some further details can be found in our bug:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4313
-
---
-Vincent Danen / Red Hat Security Response Team
+-- 
+    JB
