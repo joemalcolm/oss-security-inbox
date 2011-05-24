@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/3
-Message-ID: <20110717191039.GA18385@openwall.com>
-Date: Sun, 17 Jul 2011 23:10:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/3
+Message-ID: <1306218493.32333.1455.camel@new-desktop>
+Date: Tue, 24 May 2011 08:28:13 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: CVE request : client-side file creation via XSLT in Webkit
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 01:22:15PM -0600, Vincent Danen wrote:
-> >On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
-> >>Ok, so taking a quick look at php-suhosin, we have:
-[...]
-> So should have included this:
+
+> > So, i propose to :
+> > - remove references to Webkit from the CVE-2011-1425 page
+> > - affect CVE-2011-1774 to the Webkit bug #52688
 > 
-> 556     __CONST char *ptr = key;
+> Any news ?
 
-Right.  I've just e-mailed Stefan.
+Ping.
 
-Thanks,
+Regards,
+Nicolas Grégoire
 
-Alexander
+
+
