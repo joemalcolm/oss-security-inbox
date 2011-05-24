@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/12
-Message-ID: <20110105221707.GM15891@redhat.com>
-Date: Wed, 5 Jan 2011 15:17:07 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/4
+Message-ID: <4DDB5363.8090609@redhat.com>
+Date: Tue, 24 May 2011 08:42:43 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Robert Scheck <robert@...oraproject.org>
+Subject: CVE Request -- phpMyAdmin -- PMASA-2011-3 & PMASA-2011-4
 Content-Type: text/plain; charset=utf-8
 
-* [2011-01-05 17:04:59 -0500] Dan Rosenberg wrote:
 
->Be sure to be careful while applying the patch to fix this one. :p
+Hello, Josh, Steve, vendors,
 
-heh, yes indeed.  =)
+   the following two security flaws have been recently reported against 
+phpMyAdmin:
+[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-3.php
+[2] http://www.phpmyadmin.net/home_page/security/PMASA-2011-4.php
 
->On Wed, Jan 5, 2011 at 4:54 PM, Vincent Danen <vdanen@...hat.com> wrote:
->> We got a heads up on a directory traversal flaw in patch.  I don't think
->> a CVE name has been assigned to it; could we get one?  It allows for the
->> creation of arbitrary files in unexpected places due to the use of '..'.
->>
->> References:
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=667529
->> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
->>
->> Thanks.
+References:
+[3] http://bugs.gentoo.org/show_bug.cgi?id=368495
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Could you allocate CVE ids for these?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
