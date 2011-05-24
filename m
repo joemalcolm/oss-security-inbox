@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/3
-Message-ID: <909072608.466818.1302293821374.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 8 Apr 2011 16:17:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/8
+Message-ID: <4DDB99A7.9090108@msgid.tls.msk.ru>
+Date: Tue, 24 May 2011 15:42:31 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: tinyproxy runs as an open proxy when attempting to restrict allowable IP ranges
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE Request: exim STARTTLS fix
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1499
+24.05.2011 15:24, Josh Bressers wrote:
+> ----- Original Message -----
+>> Hi,
+>>
+>> while reviewing EXIM git for the last security issues, I also found the
+>> STARTTLS fix:
+>>
+>> http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
+>>
+>> Is fixed with exim 4.76 apparently.
+>>
+> 
+> That commit suggests it's not an issue, but rather some extra paranoid
+> buffer wiping. Is there a reason to believe this is a problem?
 
-Thanks.
+Isn't it CVE-2011-0411 attack ?
 
--- 
-    JB
-
------ Original Message -----
-> A bug in tinyproxy prior to 1.8.3 would turn it into an open proxy if
-> it
-> were defined with an "Allow" statement including an IP address range
-> (i.e. 192.168.0.0/24).
-> 
-> Could a CVE be assigned to this?
-> 
-> References:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=621493
-> https://banu.com/bugzilla/show_bug.cgi?id=90
-> https://banu.com/cgit/tinyproxy/commit/?id=e8426f6662dc467bd1d827100481b95d9a4a23e4
-> https://bugzilla.redhat.com/show_bug.cgi?id=694658
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+/mjt
