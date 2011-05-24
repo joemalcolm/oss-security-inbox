@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/13
-Message-ID: <20110628185341.GA18560@dhcp-25-225.brq.redhat.com>
-Date: Tue, 28 Jun 2011 20:53:41 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/11
+Message-ID: <2140623688.254048.1306238348454.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:59:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: qemu-kvm: OOB memory access caused by negative vq notifies
+Cc: Robert Scheck <robert@...oraproject.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- phpMyAdmin -- PMASA-2011-3 & PMASA-2011-4
 Content-Type: text/plain; charset=utf-8
 
-The virtio_queue_notify() function checks that the virtqueue number is
-less than the maximum number of virtqueues.  A signed comparison is
-used but the virtqueue number could be negative if a buggy or malicious
-guest is run. This results in memory accesses outside of the virtqueue
-array. 
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> the following two security flaws have been recently reported against
+> phpMyAdmin:
+> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-3.php
 
-To trigger this issue the attacker needs to issue 32bit write to Queue
-Notify field of Virtio Header in the virtio pci config space even though
-the field is 16bit only by specs. Qemu-kvm allows that for the moment
-and provides whole 32bit value to the underlying functions.
+This one is an XSS flaw. Use CVE-2011-1940.
 
-Unprivileged guest user could use this flaw to crash the guest (denial
-of service) or, possibly, escalate their privileges on the host.
 
-Upstream patch:
-http://patchwork.ozlabs.org/patch/94604/
+> [2] http://www.phpmyadmin.net/home_page/security/PMASA-2011-4.php
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=717399
-http://patchwork.ozlabs.org/patch/94604/
+This one is a URL redirection flaw. Use CVE-2011-1941
 
-Thanks,
+
+> References:
+> [3] http://bugs.gentoo.org/show_bug.cgi?id=368495
+> 
+
+Thanks.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+    JB
