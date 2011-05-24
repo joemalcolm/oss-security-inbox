@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/9
-Message-ID: <1772343402.302040.1314217408278.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Aug 2011 16:23:28 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/7
+Message-ID: <1281362709.253726.1306236933908.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:35:33 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Webmin Local Privilege Escalation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-
-
 ----- Original Message -----
-> On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
-> > Hi,
-> >
-> > A number of problems have been found recently in dtc (Domain
-> > Technologie Control) and reported to the Debian BTS. These are the bugs
-> > that affect upstream code; please assign CVEs as you feel appropriate:
-> 
-> any updates here?
-> 
+> Could a CVE be assigned to this issue? (It's one month old):
+> http://www.securityfocus.com/bid/47558/info
+> Thanks
 
-I hope to have this sorted out shortly. It's a big report.
+The best description is here:
+http://www.securityfocus.com/archive/1/517658
 
-Do you know if these are fixed in an upstream version?
+Use CVE-2011-1937.
 
 Thanks.
 
