@@ -1,56 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/4
-Message-ID: <20110620131336.GH17967@nb.net.home>
-Date: Mon, 20 Jun 2011 15:13:36 +0200
-From: Karel Zak <kzak@...hat.com>
-To: Ondrej Vasik <ovasik@...hat.com>
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, oss-security@...ts.openwall.com, Nicolas François <nekral.lists@...il.com>
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/2
+Message-ID: <4DDB512A.5040301@redhat.com>
+Date: Tue, 24 May 2011 08:33:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Zend Framework -- SQL injection when using PDO_MySql
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 15, 2011 at 12:50:47PM +0200, Ondrej Vasik wrote:
-> On Wed, 2011-06-15 at 09:49 +0200, Ludwig Nussel wrote:
-> > Bernhard Rosenkraenzer wrote:
-> > > On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
-> > >  
-> > > > The issue also reminds me that there are several su implemenations.
-> > > > On Fedora and SUSE we have a patched coreutils version, Debian uses
-> > > > the one from shadow-utils and then there's also a su from
-> > > > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
-> > > > quirks and weird features. Does anyone still remember why a
-> > > > particular implementation was chosen? :-)
-> > > 
-> > > 
-> > > In Ark Linux, we switched from the coreutils one to the shadow-utils one
-> > > about 2 years ago because the shadow-utils one does what we need (incl. PAM
-> > > support) without having to port the PAM patch on every new coreutils release.
-> > 
-> > Upstream coreutils indicated that they consider su in coreutils kind
-> > of deprecated, basically only kept for legacy reasons on non-Linux
-> > OSes. They would accept the PAM patch though so distros don't need
-> > to maintain it.
-> > 
-> > Is there actually any serious distro that doesn't use PAM though?
-> > Those #ifdefs to keep old shadow compatibility makes the code rather
-> > ugly and hard to read. Maybe it's time to just rip out the old code
-> > and submit a clean, PAM only su to util-linux.
 
- No problem. I agree with the change.
+Hello, Josh, Steve, vendors,
 
-> For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
-> - in util-linux - could only cause a lot of confusion. Some
-> consolidation might be better.
+   a possibility of SQL injection flaw has been reported in Zend 
+Framework, when MySQL PDO driver was used:
+[1] http://framework.zend.com/security/advisory/ZF2011-02
 
- Some consolidation is necessary for many of your utils. I think that
- a lot code in shadow-utils is currently unnecessary -- with PAM-only
- utils we can probably simplify many things.
+Could you allocate a CVE id for this?
 
-> Adding util-linux upstream maintainer to CC.
-
- Thanks.
-
-    Karel
-
--- 
- Karel Zak  <kzak@...hat.com>
- http://karelzak.blogspot.com
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
