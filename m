@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/4
-Message-ID: <4E1D837A.6060602@suse.de>
-Date: Wed, 13 Jul 2011 13:37:30 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/7
+Message-ID: <1281362709.253726.1306236933908.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:35:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Webmin Local Privilege Escalation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
-> [...]
->> Keep using the buggy
->> algorithm for new passwords and keep storing them as 2a
->
-> I'd be unhappy about that, but it's a valid option to provide if you
-> want to minimize user annoyance, including for networked systems that
-> are not upgraded in sync (but are manually configured for this...)
+----- Original Message -----
+> Could a CVE be assigned to this issue? (It's one month old):
+> http://www.securityfocus.com/bid/47558/info
+> Thanks
 
-After more thinking however ... adding any option that influences
-how new passwords are generated means we have to patch all
-applications that generate passwords to honor that option, ie parse
-the config file. On OpenSUSE I've found pam_unix2, pwdutils,
-mkpasswd and yast2 so far. Biting the bullet and just hardcoding 2y
-would be much easier.
+The best description is here:
+http://www.securityfocus.com/archive/1/517658
 
-Nevertheless if we miss to patch any package there would be still the
-chance of someone generating 2a hashes with a different algorithm than
-what the system uses to verify them later though. So implementing your
-original idea and have crypt_gensalt change the prefix wouldn't be
-that bad after all. That bears the risk to break some programs like
-mkpasswd but they would at least fail with an error rather than
-generating unusable hashes.
+Use CVE-2011-1937.
 
-cu
-Ludwig
+Thanks.
 
 -- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
-Imendörffer, HRB 16746 (AG Nürnberg)
+    JB
