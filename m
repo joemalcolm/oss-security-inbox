@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/4
-Message-ID: <CAOSRhRM8Ct2UMkcp-cAX=RBcVaWe4Q4ktiJ4jKdi8Yi-DkPJWQ@mail.gmail.com>
-Date: Fri, 15 Jul 2011 06:49:52 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/5
+Message-ID: <61545434.253592.1306236243890.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:24:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Secunia Research <vuln@...unia.com>
-Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+Subject: Re: CVE Request: exim STARTTLS fix
 Content-Type: text/plain; charset=utf-8
 
->
-> In terms of ease of exploitation, this one has to be in the very difficult
-> basket.
->
+----- Original Message -----
+> Hi,
+> 
+> while reviewing EXIM git for the last security issues, I also found the
+> STARTTLS fix:
+> 
+> http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
+> 
+> Is fixed with exim 4.76 apparently.
+> 
 
-I agree, this would be difficult to exploit.
+That commit suggests it's not an issue, but rather some extra paranoid
+buffer wiping. Is there a reason to believe this is a problem?
 
->> It's better to be safe than sorry.
->
-> That's why I rushed out a new release. I do take this seriously, but
-> I do not like to see the threat exaggerated beyond reason.
->
+I'd rather not assign an ID if it's not needed.
 
-I didn't mean to imply we should be panicking and running for the
-hills. Just that the assessment that this is *potentially* exploitable
-for code execution is accurate and is most helpful to distributions
-and users when gauging risk and determining when to release and apply
-updates.
+Thanks.
 
--Dan
-
-> Erik
-> --
-> ----------------------------------------------------------------------
-> Erik de Castro Lopo
-> http://www.mega-nerd.com/
->
+-- 
+    JB
