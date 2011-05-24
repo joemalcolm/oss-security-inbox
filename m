@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/2
-Message-ID: <4D6FAA10.6050603@redhat.com>
-Date: Thu, 03 Mar 2011 22:47:44 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/6
+Message-ID: <20110524113445.GD26573@suse.de>
+Date: Tue, 24 May 2011 13:34:45 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1023 kernel: rds: prevent BUG_ON triggering on congestion map updates
+Subject: Re: CVE Request: exim STARTTLS fix
 Content-Type: text/plain; charset=utf-8
 
-This was discovered internally when testing CVE-2010-3904.
+On Tue, May 24, 2011 at 07:24:03AM -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > Hi,
+> > 
+> > while reviewing EXIM git for the last security issues, I also found the
+> > STARTTLS fix:
+> > 
+> > http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
+> > 
+> > Is fixed with exim 4.76 apparently.
+> > 
+> 
+> That commit suggests it's not an issue, but rather some extra paranoid
+> buffer wiping. Is there a reason to believe this is a problem?
+> 
+> I'd rather not assign an ID if it's not needed.
 
-http://marc.info/?l=linux-netdev&m=129908332903057&w=2
+Rereading the comment added ... It seems not to be an active security issue.
 
-"Tracked it down to a flaw in the xmit methods for the loop and ib 
-transports. Those two transports, when called with an rds message that 
-has the RDS_FLAG_CONG_BITMAP set, execute a rds_cong_map_updated call 
-and return.  Since the xmit method requires that the number of bytes 
-sent be returned, and a congestion map update doesn't really send any 
-data, it just returns the sizeof an rds_header plus the defined size of 
-the congestion map.  This is problematic because the caller of these 
-methods (rds_send_xmit), validates that we didn't send more data than 
-was available in the passed rds_message.  If the return value from 
-->xmit() is larger than the remaining data in the message, we bug halt, 
-which is exactly what we get above.  We could add a check to skip the 
-bug on check if the RDS_FLAG_CONG_BITMAP flag is set, but I think the 
-check is otherwise valid, so I've fixed it with this patch, which limits 
-the return value in the effected transports to not be more than the 
-remainig space in the rds_message."
+Sorry for being alarming, no CVE required. ;)
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Ciao, Marcus
