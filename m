@@ -1,46 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/2
-Message-ID: <4DC8E9FF.2010105@redhat.com>
-Date: Tue, 10 May 2011 15:32:15 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/10
+Message-ID: <83807128.253985.1306238112358.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:55:12 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zend Framework -- SQL injection when using PDO_MySql
 Content-Type: text/plain; charset=utf-8
 
-On 05/10/2011 03:18 PM, Sebastian Krahmer wrote:
->
-> Hi,
->
-> Is this really different than what was assigned CVE-2011-1577 to?
-> See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
-> on the OSS mail on April 12th which reads exactly the same.
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> a possibility of SQL injection flaw has been reported in Zend
+> Framework, when MySQL PDO driver was used:
+> [1] http://framework.zend.com/security/advisory/ZF2011-02
+> 
+> Could you allocate a CVE id for this?
+> 
 
-I double-checked, it's different...
+Please use CVE-2011-1939.
 
-Eugene
+Thanks.
 
-> Sebastian
->
-> On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
->>
->>
->> ----- Original Message -----
->>> The kernel automatically evaluates partition tables of storage
->>> devices.
->>> The code for evaluating GUID partitions (in fs/partitions/efi.c)
->>> contains a bug that can cause a kernel heap overflow on certain
->>> corrupted GUID partition tables.
->>>
->>> http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
->>> http://bugzilla.redhat.com/show_bug.cgi?id=703026
->>>
->>
->> Please use CVE-2011-1776
->>
->> Thanks.
->>
->> --
->>      JB
->
-
+-- 
+    JB
