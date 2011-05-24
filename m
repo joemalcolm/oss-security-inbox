@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/1
-Message-ID: <alpine.DEB.1.10.1103201427440.16909@eru.sfritsch.de>
-Date: Sun, 20 Mar 2011 14:37:09 +0100 (CET)
-From: Stefan Fritsch <sf@...itsch.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/5
+Message-ID: <61545434.253592.1306236243890.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 24 May 2011 07:24:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: sgunderson@...foot.com, team@...urity.debian.org
-Subject: CVE request: MPM-ITK module for Apache HTTPD
+Subject: Re: CVE Request: exim STARTTLS fix
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- Original Message -----
+> Hi,
+> 
+> while reviewing EXIM git for the last security issues, I also found the
+> STARTTLS fix:
+> 
+> http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
+> 
+> Is fixed with exim 4.76 apparently.
+> 
 
-please assign a CVE id for this issue:
+That commit suggests it's not an issue, but rather some extra paranoid
+buffer wiping. Is there a reason to believe this is a problem?
 
-In certain configurations, the MPM-ITK module for Apache HTTPD serves a 
-request as root user instead of the run user configured in the HTTPD 
-configuration:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
+I'd rather not assign an ID if it's not needed.
 
-Cheers,
-Stefan
+Thanks.
+
+-- 
+    JB
