@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/4
-Message-ID: <4EB00F35.1090909@redhat.com>
-Date: Tue, 01 Nov 2011 20:54:37 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/1
+Message-ID: <BANLkTin9_YJkia6wviVOk_Qf+2NzLUzpdA@mail.gmail.com>
+Date: Mon, 23 May 2011 22:37:11 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: libcap/capsh: does not chdir after chroot
+Cc: Pierre Joye <pierre.php@...il.com>
+Subject: CVE request: PHP socket_connect() - stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hi,
+Could a CVE be assigned to this issue?
 
-It was found that capsh program, usually shipped with the libcap
-package, did not do a chdir("/") after calling chroot, when called with
-a "--chroot" option. This resulted in the current directory being
-outside the chroot.
+PHP - Stack buffer overflow in socket_connect():
+Fix: http://svn.php.net/viewvc?view=revision&revision=311369
 
-This has been assigned CVE-2011-4099
+Found by: Mateusz Kocielski, Marek Kroemeke and Filip Palian
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=722694
-
+Thanks
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Regards,
+Felipe Pena
+
