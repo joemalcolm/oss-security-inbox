@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/8
-Message-ID: <1319749248.4817.11.camel@localhost>
-Date: Thu, 27 Oct 2011 16:00:48 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Craig Barratt <cbarratt@...rs.sourceforge.net>, coley@...us.mitre.org,  oss-security <oss-security@...ts.openwall.com>
-Cc: security@...ntu.com
-Subject: CVE Request: Security issue in backuppc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/8
+Message-ID: <4DDB99A7.9090108@msgid.tls.msk.ru>
+Date: Tue, 24 May 2011 15:42:31 +0400
+From: Michael Tokarev <mjt@....msk.ru>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE Request: exim STARTTLS fix
 Content-Type: text/plain; charset=utf-8
 
-Hi Craig,
+24.05.2011 15:24, Josh Bressers wrote:
+> ----- Original Message -----
+>> Hi,
+>>
+>> while reviewing EXIM git for the last security issues, I also found the
+>> STARTTLS fix:
+>>
+>> http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
+>>
+>> Is fixed with exim 4.76 apparently.
+>>
+> 
+> That commit suggests it's not an issue, but rather some extra paranoid
+> buffer wiping. Is there a reason to believe this is a problem?
 
-While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
-another XSS vulnerability in View.pm when accessing the following URLs
-in backuppc:
-index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
-index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
+Isn't it CVE-2011-0411 attack ?
 
-You are being emailed as the upstream contact. Please keep
-oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
-
-To oss-security, can I have a CVE for this? It is essentially the same
-vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
-of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
-3.0.0, 3.1.0, 3.2.0 and 3.2.1.
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-View attachment "view.diff" of type "text/x-patch" (410 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+/mjt
