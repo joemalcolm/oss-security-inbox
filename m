@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/6
-Message-ID: <4DECED00.5040205@redhat.com>
-Date: Mon, 06 Jun 2011 17:06:40 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: pam_ssh not dropping root gid(s)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/25/2
+Message-ID: <20110525173329.GA20752@openwall.com>
+Date: Wed, 25 May 2011 21:33:29 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: list archive
 Content-Type: text/plain; charset=utf-8
 
-Hello, Sebastian,
+Hi,
 
-   thanks for the report.
+abc and I have enhanced the official/local archive of oss-security today
+(as well as of other Openwall-hosted mailing lists):
 
-On 06/06/2011 11:26 AM, Sebastian Krahmer wrote:
-> Hi,
->
-> In certain configs, pam_ssh is not completely dropping its privileges
-> to user. It just forgets to call setgid() and initgroups(). A fix can be found at [1].
-> Can someone assign a CVE?
->
-> thx,
-> Sebastian
->
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+http://www.openwall.com/lists/oss-security/
 
-Unfortunately not able to access this entry. Would it be possible to 
-make it public? (for further details & CVE assignment). Or will be
-access granted per email address approach necessary?
+Now these have month and day index pages with message Subjects and Froms
+on them (finally).  For example:
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+http://www.openwall.com/lists/oss-security/2011/05/
+http://www.openwall.com/lists/oss-security/2011/05/24/
 
->
+Also, there are "prev month", "next month", "prev day", and "next day"
+links at top.
 
+If anyone is interested in the code:
+
+http://cvsweb.openwall.com/blists
+
+Suggestions/votes for further enhancements are welcome (we have a to-do
+list for blists internally, but we're unsure of what to work on next).
+This must not turn into a lengthy discussion thread of its own, which I
+think it won't.
+
+Alexander
+
+P.S. Five years of linux-kernel (almost 5 GB in mbox format) took two
+minutes to re-index, using 25 seconds of CPU time, on a fairly old
+machine and with the file being quite fragmented.  The index file size is
+approx. 3% of the mbox size (before the addition of Subjects and Froms,
+it was approx. 1%).  http://lists.openwall.net/linux-kernel/
