@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/24
-Message-ID: <20110405153904.GA18405@openwall.com>
-Date: Tue, 5 Apr 2011 19:39:04 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/25/2
+Message-ID: <20110525173329.GA20752@openwall.com>
+Date: Wed, 25 May 2011 21:33:29 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: list archive
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
-> pub    512R/205BBF7D 2001-12-30
->       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
->       C1
-> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+Hi,
 
-As discussed with Mike off-list, he does not currently qualify for the
-Linux distros list (he posted the subscription request above before I
-added that requirement), and a new PGP key would be needed anyway.  So
-I've just unsubscribed Mike.  He may qualify for a non-Linux list if we
-set one up.
+abc and I have enhanced the official/local archive of oss-security today
+(as well as of other Openwall-hosted mailing lists):
+
+http://www.openwall.com/lists/oss-security/
+
+Now these have month and day index pages with message Subjects and Froms
+on them (finally).  For example:
+
+http://www.openwall.com/lists/oss-security/2011/05/
+http://www.openwall.com/lists/oss-security/2011/05/24/
+
+Also, there are "prev month", "next month", "prev day", and "next day"
+links at top.
+
+If anyone is interested in the code:
+
+http://cvsweb.openwall.com/blists
+
+Suggestions/votes for further enhancements are welcome (we have a to-do
+list for blists internally, but we're unsure of what to work on next).
+This must not turn into a lengthy discussion thread of its own, which I
+think it won't.
 
 Alexander
+
+P.S. Five years of linux-kernel (almost 5 GB in mbox format) took two
+minutes to re-index, using 25 seconds of CPU time, on a fairly old
+machine and with the file being quite fragmented.  The index file size is
+approx. 3% of the mbox size (before the addition of Subjects and Froms,
+it was approx. 1%).  http://lists.openwall.net/linux-kernel/
