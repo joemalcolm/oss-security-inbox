@@ -1,83 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/4
-Message-ID: <4D636DCF.4040605@redhat.com>
-Date: Tue, 22 Feb 2011 16:03:27 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/26/2
+Message-ID: <4DDE74C8.5060505@mvista.com>
+Date: Thu, 26 May 2011 05:42:00 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: a collection of world-writable debugfs bugs
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-There are 20 patches here - some are accepted, some are probably 
-pending. All from Vasiliy Kulikov.
+Aloha,
 
-[PATCH 01/20] mach-omap2: mux: world-writable debugfs files
-https://lkml.org/lkml/2011/2/4/66 arm arch
+You can find our security Advisories at:
+http://www.mvista.com/cve_vulnerabilities.php
 
-[PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
-https://lkml.org/lkml/2011/2/4/67 arm arch
+I have updated
+http://oss-security.openwall.org/wiki/vendors
+http://oss-security.openwall.org/wiki/distro-patches
 
-[PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage files
-https://lkml.org/lkml/2011/2/4/68 arm arch
 
-[PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
-https://lkml.org/lkml/2011/2/4/69 arm arch
+Mahalo,
+Armin
 
-[PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
-https://lkml.org/lkml/2011/2/4/70
-
-[PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
-https://lkml.org/lkml/2011/2/4/81
-
-[PATCH 07/20] video: sn9c102: world-wirtable sysfs files
-https://lkml.org/lkml/2011/2/4/85
-
-[PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
-https://lkml.org/lkml/2011/2/4/82
-
-[PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
-https://lkml.org/lkml/2011/2/4/84
-
-[PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
-https://lkml.org/lkml/2011/2/4/71
-
-[PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
-https://lkml.org/lkml/2011/2/4/83
-
-[PATCH 12/20] net: can: at91_can: world-writable sysfs files
-https://lkml.org/lkml/2011/2/4/80
-fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
-
-[PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination file
-https://lkml.org/lkml/2011/2/4/72
-1e6d93e45b231b3ae87c01902ede2315aacfe976
-
-[PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg file
-https://lkml.org/lkml/2011/2/4/79
-b80b168f918bba4b847e884492415546b340e19d
-
-[PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
-https://lkml.org/lkml/2011/2/4/73
-8040835760adf0ef66876c063d47f79f015fb55d
-
-[PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless 
-and jogdial files
-https://lkml.org/lkml/2011/2/4/78
-8a6a142c1286797978e4db266d22875a5f424897
-
-[PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
-https://lkml.org/lkml/2011/2/4/74
-
-[PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
-https://lkml.org/lkml/2011/2/4/75
-
-[PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
-https://lkml.org/lkml/2011/2/4/76
-
-[PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
-https://lkml.org/lkml/2011/2/4/77
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=679303
--- 
-Eugene Teo / Red Hat Security Response Team
+On 04/09/2011 10:39 AM, Solar Designer wrote:
+> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
+>> Can I get a status on this? (+, -, Ack, Nack)
+> 
+> Postponed.  I'd like to see any support for you getting onto the Linux
+> distros security contacts list, with reasoning, or/and any other
+> suggestions on what to do in this case.  Josh - what do you think (as
+> someone who advocated the setup of a vendor-sec replacement)?
+> 
+> Formally, you sort of qualify (you were on vendor-sec and presumably you
+> have a Linux distro, although I failed to quickly find a way to see what
+> kind of software your distro contains).  However, from your own
+> statement (quoted below), it appears that we're not going to be able to
+> see whether and how you make intended use of the advance notifications:
+> 
+>> Our advisories are via a paid subscription service so they are not public.
+> 
+> Obviously, this goes against the attempt at transparency, and also it
+> means that we won't be able to evaluate your need to be on the list in
+> the same way that we do/should/will for other vendors - e.g., we may
+> re-check Frugalware and rPath in a few months from now to see if their
+> security response has sufficiently improved to warrant the advance
+> notifications to them or not, but what do we do for MontaVista? grant
+> you an unconditional exception?
+> 
+> You also wrote:
+> 
+>> Our customers require vulnerabilities to be addressed in a timely manner.
+> 
+> So you have contractual relationships with your customers and you're
+> going to use the advance notifications in your business.  Well, many of
+> the more open Linux distros also have paying customers, but in your case
+> this is all you have (if I understood you correctly).
+> 
+> For both kinds of distros, it is possible that the vendor will misuse
+> the advance notifications to notify their customers before the issue is
+> disclosed publicly (which normally happens on the CRD).  We ask and hope
+> that vendors won't do this, but the risk is there.  Arguably, for a
+> vendor that is not making their advisories and updates public, this
+> temptation and thus the risk are higher.
+> 
+> Then, a closed Linux vendor like MontaVista, working for their paying
+> customers only, is somewhat similar to an end-user of Linux who
+> maintains their own Linux distro in-house.  Where do we draw the line?
+> Many legal entities vs. one?  I doubt that this is going to work as
+> desired (and I imagine that different people in here would want it to
+> work differently anyway).  For example, a large enterprise is likely to
+> use multiple legal entities.  Substantially same ownership?  This gets
+> too tricky, non-technical, non-specific, and subject to change.
+> 
+> Clearly, we can't reasonably start to accept end-users of Linux merely
+> because they build their own distro... or just claim to.
+> 
+> I understand that generalization and reductio ad absurdum may lead to a
+> logical fallacy, however unfortunately we're setting a precedent here
+> (one way or the other), so we may need to generalize and consider likely
+> consequences of the precedent... unless we're happy to drop the list
+> when it grows too large and maybe start anew, with stricter rules.
+> 
+> Finally, here's an additional aspect/concern.  The list is being setup
+> as a hopefully better alternative to explicit CC lists.  "Members" of
+> those lists are picked by whoever reports the issue - this person
+> could be from one of the distros or it could be an external reporter.
+> Would many (or any) of those people want to report to MontaVista
+> specifically (along with other distros) or to closed Linux vendors in
+> general?  I think not.  I think that having such vendors on the list
+> would feel like a tax to many reporters, who would have to weigh the
+> pros and cons of using the exploder (ease of use, an up-to-date list of
+> contact persons, encryption, but extra vendors notified) vs. direct e-mail
+> (excluding those who they don't want to or don't care to notify).
+> I think that many would choose the latter (and end up excluding some of
+> the open distros as well, even though they would not mind notifying
+> them), thereby reducing the usefulness of the list.
+> 
+> And you also wrote:
+> 
+>> will revisit the wiki issue soon.
+> 
+> Since you pinged me about the status on your subscription, let me ping
+> you about the status on the wiki updates as well. ;-)  Any progress?
+> The pages to update with your info are:
+> 
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
+> 
+> Please don't take any of the above personal.  I am just trying to
+> provide a useful service to the community.  This is a thankless job, and
+> I'd be happy if someone else does it - and does it better, or just
+> differently to provide an alternative.  I'd be happy if the alternative
+> wins, letting me happily shutdown the list.  (I've been privately asked
+> to provide a hopefully more secure alternative to vendor-sec long before
+> vendor-sec ceased to exist, but I really did not want to get Openwall
+> into the mess, nor did I have time for it.  I only felt like I had to do
+> it when it became clear that the lst.de folks would not host something
+> like this anymore.)
+> 
+> In fact, MontaVista may host such a list as well, which would include
+> MontaVista and more... but I would not expect many (maybe even most?)
+> other distros and reporters to want to write to that list, which would
+> kind of confirm the problem with having MontaVista on the list.
+> 
+> Please let me know if I misunderstood anything or if you have any
+> suggestions.
+> 
+> Thanks,
+> 
+> Alexander
