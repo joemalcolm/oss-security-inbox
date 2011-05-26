@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/3
-Message-ID: <4E0404E8.8010902@redhat.com>
-Date: Fri, 24 Jun 2011 13:30:48 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/26/1
+Message-ID: <1306408152.20221.12.camel@mochrul.balabit>
+Date: Thu, 26 May 2011 13:09:12 +0200
+From: Szalay Attila <sasa@...abit.hu>
+To: Open Source Software Security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- syslog-ng -- Possible DoS
 Content-Type: text/plain; charset=utf-8
 
-On 06/24/2011 01:25 PM, Eugene Teo wrote:
->  From Marek Kroemeke and Filip Palian, structures "l2cap_conninfo" and
-> "rfcomm_conninfo" have one padding byte each. This byte in "cinfo" is
-> copied to userspace uninitialized.
->
-> l2cap: since 99f4808d (v2.6.39-rc1), also in l2cap.c prior to that
-> history:e9df2323 (v2.5.14)
-> rfcomm: since history:9363d05d (v2.6.11-rc2)
->
-> http://git.kernel.org/linus/8d03e971cf403305217b8e62db3a2e5ad2d6263f
-> https://bugzilla.redhat.com/show_bug.cgi?id=703019
->
-> Thanks, Eugene
-Please use CVE-2011-2492.
+Hi All,
 
-Thanks.
+In syslog-ng if a recent enough libpcre is installed (ie. 8.12 or newer)
+there is a possible Denial of Service.
+
+In our (BalaBit) opinion tis is not a big security issue, because if you
+use the vulnerable setting you will run into the DoS for sure without
+any malicious attack.
+
+The attack vector is that the attacker send a message which the regexp
+not match. 
+
+But because of this bug get this amount of attention, it' may worth the
+CVE id.
+
+References:
+http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=09710c0b105e579d35c7b5f6c66d1ea5e3a3d3ff
+http://www.securityfocus.com/bid/47800/
+
 
 -- 
-Murray McAllister / Red Hat Security Response Team
+Szalay Attila
+BalaBit IT Kft.
+Security Team Leader
+
