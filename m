@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/5
-Message-Id: <201111162132.45745.sgrubb@redhat.com>
-Date: Wed, 16 Nov 2011 21:32:45 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/26/1
+Message-ID: <1306408152.20221.12.camel@mochrul.balabit>
+Date: Thu, 26 May 2011 13:09:12 +0200
+From: Szalay Attila <sasa@...abit.hu>
+To: Open Source Software Security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- syslog-ng -- Possible DoS
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, November 16, 2011 09:22:17 PM Solar Designer wrote:
-> On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
-> > Alternatively, crypt(3) and crypt_r(3) (and the reference code for
-> > SHA-crypt?) could refuse to work on overly long key or/and salt strings,
-> > but then the question is what they should do on error.
-> 
-> Here's another related option:
-> 
-> 	if (strlen(key) > 100000 || strlen(salt) > 100000)
-> 		abort();
-> 
-> (or something like this).  Ridiculous?  Sure, but it's better than
-> overwriting another thread's stack or the heap with somewhat higher
-> lengths, and 100001 chars is not a more reasonable password length to
-> support than, say, 2 million or 10 million (typical thread stack sizes).
-> 
-> So if we can't decide on a proper fix (does anyone besides me even
-> care?), something as trivial as the above would be an improvement.
+Hi All,
 
-raise(SIGKILL) might be better because abort requests a core dump and you are in 
-crypto code.
+In syslog-ng if a recent enough libpcre is installed (ie. 8.12 or newer)
+there is a possible Denial of Service.
 
--Steve
+In our (BalaBit) opinion tis is not a big security issue, because if you
+use the vulnerable setting you will run into the DoS for sure without
+any malicious attack.
+
+The attack vector is that the attacker send a message which the regexp
+not match. 
+
+But because of this bug get this amount of attention, it' may worth the
+CVE id.
+
+References:
+http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=09710c0b105e579d35c7b5f6c66d1ea5e3a3d3ff
+http://www.securityfocus.com/bid/47800/
+
+
+-- 
+Szalay Attila
+BalaBit IT Kft.
+Security Team Leader
+
