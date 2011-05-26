@@ -1,50 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/1
-Message-ID: <20110607070821.GA20767@suse.de>
-Date: Tue, 7 Jun 2011 09:08:21 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: pam_ssh not dropping root gid(s)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/26/3
+Message-ID: <BANLkTimyKfAu35xKbSskNPP_GDDUwhQWLQ@mail.gmail.com>
+Date: Thu, 26 May 2011 13:44:50 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: akuster@...sta.com, oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi Armin,
 
-It might not be the worst issue ever, true, but it somehow doesnt sound right to
-me starting a user ssh-agent with gid 0.
+You've got a reflected cross-site scripting vulnerability in your CVE tracker:
 
-Sebastian
+http://www.mvista.com/cve_details.php?year=%3Cscript%3Ealert%28%27xss%27%29%3C/script%3E
 
-On Mon, Jun 06, 2011 at 02:03:07PM -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > Hi,
-> > 
-> > In certain configs, pam_ssh is not completely dropping its privileges to
-> > user. It just forgets to call setgid() and initgroups(). A fix can be
-> > found at [1].  Can someone assign a CVE?
-> > 
-> > thx,
-> > Sebastian
-> > 
-> > [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
-> > 
-> 
-> Is this a security flaw? From doing a little ssh-agent research, it sounds
-> harmless without another flaw. I'm not terribly familiar with it though, so
-> I could be missing something.
-> 
-> Thanks.
-> 
-> -- 
->     JB
+Regards,
+Dan
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+On Thu, May 26, 2011 at 11:42 AM, akuster <akuster@...sta.com> wrote:
+> Aloha,
+>
+> You can find our security Advisories at:
+> http://www.mvista.com/cve_vulnerabilities.php
+>
+> I have updated
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
+>
+>
+> Mahalo,
+> Armin
+>
+> On 04/09/2011 10:39 AM, Solar Designer wrote:
+>> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
+>>> Can I get a status on this? (+, -, Ack, Nack)
+>>
+>> Postponed.  I'd like to see any support for you getting onto the Linux
+>> distros security contacts list, with reasoning, or/and any other
+>> suggestions on what to do in this case.  Josh - what do you think (as
+>> someone who advocated the setup of a vendor-sec replacement)?
+>>
+>> Formally, you sort of qualify (you were on vendor-sec and presumably you
+>> have a Linux distro, although I failed to quickly find a way to see what
+>> kind of software your distro contains).  However, from your own
+>> statement (quoted below), it appears that we're not going to be able to
+>> see whether and how you make intended use of the advance notifications:
+>>
+>>> Our advisories are via a paid subscription service so they are not public.
+>>
+>> Obviously, this goes against the attempt at transparency, and also it
+>> means that we won't be able to evaluate your need to be on the list in
+>> the same way that we do/should/will for other vendors - e.g., we may
+>> re-check Frugalware and rPath in a few months from now to see if their
+>> security response has sufficiently improved to warrant the advance
+>> notifications to them or not, but what do we do for MontaVista? grant
+>> you an unconditional exception?
+>>
+>> You also wrote:
+>>
+>>> Our customers require vulnerabilities to be addressed in a timely manner.
+>>
+>> So you have contractual relationships with your customers and you're
+>> going to use the advance notifications in your business.  Well, many of
+>> the more open Linux distros also have paying customers, but in your case
+>> this is all you have (if I understood you correctly).
+>>
+>> For both kinds of distros, it is possible that the vendor will misuse
+>> the advance notifications to notify their customers before the issue is
+>> disclosed publicly (which normally happens on the CRD).  We ask and hope
+>> that vendors won't do this, but the risk is there.  Arguably, for a
+>> vendor that is not making their advisories and updates public, this
+>> temptation and thus the risk are higher.
+>>
+>> Then, a closed Linux vendor like MontaVista, working for their paying
+>> customers only, is somewhat similar to an end-user of Linux who
+>> maintains their own Linux distro in-house.  Where do we draw the line?
+>> Many legal entities vs. one?  I doubt that this is going to work as
+>> desired (and I imagine that different people in here would want it to
+>> work differently anyway).  For example, a large enterprise is likely to
+>> use multiple legal entities.  Substantially same ownership?  This gets
+>> too tricky, non-technical, non-specific, and subject to change.
+>>
+>> Clearly, we can't reasonably start to accept end-users of Linux merely
+>> because they build their own distro... or just claim to.
+>>
+>> I understand that generalization and reductio ad absurdum may lead to a
+>> logical fallacy, however unfortunately we're setting a precedent here
+>> (one way or the other), so we may need to generalize and consider likely
+>> consequences of the precedent... unless we're happy to drop the list
+>> when it grows too large and maybe start anew, with stricter rules.
+>>
+>> Finally, here's an additional aspect/concern.  The list is being setup
+>> as a hopefully better alternative to explicit CC lists.  "Members" of
+>> those lists are picked by whoever reports the issue - this person
+>> could be from one of the distros or it could be an external reporter.
+>> Would many (or any) of those people want to report to MontaVista
+>> specifically (along with other distros) or to closed Linux vendors in
+>> general?  I think not.  I think that having such vendors on the list
+>> would feel like a tax to many reporters, who would have to weigh the
+>> pros and cons of using the exploder (ease of use, an up-to-date list of
+>> contact persons, encryption, but extra vendors notified) vs. direct e-mail
+>> (excluding those who they don't want to or don't care to notify).
+>> I think that many would choose the latter (and end up excluding some of
+>> the open distros as well, even though they would not mind notifying
+>> them), thereby reducing the usefulness of the list.
+>>
+>> And you also wrote:
+>>
+>>> will revisit the wiki issue soon.
+>>
+>> Since you pinged me about the status on your subscription, let me ping
+>> you about the status on the wiki updates as well. ;-)  Any progress?
+>> The pages to update with your info are:
+>>
+>> http://oss-security.openwall.org/wiki/vendors
+>> http://oss-security.openwall.org/wiki/distro-patches
+>>
+>> Please don't take any of the above personal.  I am just trying to
+>> provide a useful service to the community.  This is a thankless job, and
+>> I'd be happy if someone else does it - and does it better, or just
+>> differently to provide an alternative.  I'd be happy if the alternative
+>> wins, letting me happily shutdown the list.  (I've been privately asked
+>> to provide a hopefully more secure alternative to vendor-sec long before
+>> vendor-sec ceased to exist, but I really did not want to get Openwall
+>> into the mess, nor did I have time for it.  I only felt like I had to do
+>> it when it became clear that the lst.de folks would not host something
+>> like this anymore.)
+>>
+>> In fact, MontaVista may host such a list as well, which would include
+>> MontaVista and more... but I would not expect many (maybe even most?)
+>> other distros and reporters to want to write to that list, which would
+>> kind of confirm the problem with having MontaVista on the list.
+>>
+>> Please let me know if I misunderstood anything or if you have any
+>> suggestions.
+>>
+>> Thanks,
+>>
+>> Alexander
+>
