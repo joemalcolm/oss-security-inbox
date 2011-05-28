@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/1
-Message-ID: <BANLkTin9_YJkia6wviVOk_Qf+2NzLUzpdA@mail.gmail.com>
-Date: Mon, 23 May 2011 22:37:11 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/28/1
+Message-ID: <20110528001152.GT12539@genesis.frugalware.org>
+Date: Sat, 28 May 2011 02:11:52 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-Cc: Pierre Joye <pierre.php@...il.com>
-Subject: CVE request: PHP socket_connect() - stack buffer overflow
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Could a CVE be assigned to this issue?
+On Wed, Apr 06, 2011 at 09:12:02PM +0400, Solar Designer <solar@...nwall.com> wrote:
+> While we're at it, can you please create entries for Frugalware at:
+> 
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
+> 
+> and then maintain them (update the links, etc)?  This would be an
+> uncontroversially positive outcome of this discussion thread. ;-)
 
-PHP - Stack buffer overflow in socket_connect():
-Fix: http://svn.php.net/viewvc?view=revision&revision=311369
+Sure, done. (Sorry, looks like I totally missed this mail, just found it
+when I searched back an older one. :) )
 
-Found by: Mateusz Kocielski, Marek Kroemeke and Filip Palian
+Thanks.
 
-Thanks
-
--- 
-Regards,
-Felipe Pena
-
+Content of type "application/pgp-signature" skipped
