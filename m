@@ -1,54 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/3
-Message-ID: <20110823093209.GA18198@suse.de>
-Date: Tue, 23 Aug 2011 11:32:09 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/28/1
+Message-ID: <20110528001152.GT12539@genesis.frugalware.org>
+Date: Sat, 28 May 2011 02:11:52 +0200
+From: Miklos Vajna <vmiklos@...galware.org>
 To: oss-security@...ts.openwall.com
-Cc: daniel.lezcano@...e.fr
-Subject: lxc + fscaps
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Apr 06, 2011 at 09:12:02PM +0400, Solar Designer <solar@...nwall.com> wrote:
+> While we're at it, can you please create entries for Frugalware at:
+> 
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
+> 
+> and then maintain them (update the links, etc)?  This would be an
+> uncontroversially positive outcome of this discussion thread. ;-)
 
-Hi Daniel, oss-sec,
+Sure, done. (Sorry, looks like I totally missed this mail, just found it
+when I searched back an older one. :) )
 
-I was checking the lxc container framework for some use-cases
-and found that it supports usage of containers by users.
-It is installed with file caps in this case. (and a lot
-of caps indeed, so actually you have almost all caps distributed
-across the binaries). Particular interesting of course is
-cap_dac_override and it looks like most lxc- binaries are
-not really prepared to handle such cases:
+Thanks.
 
-linux:~> /sbin/getcap /usr/local/bin/lxc-start
-/usr/local/bin/lxc-start = cap_dac_override,cap_fowner,cap_setpcap,\
-cap_net_admin,cap_net_raw,cap_sys_chroot,cap_sys_admin+ep
-linux:~> /usr/local/bin/lxc-start -n foo -c /etc/foo /usr/bin/id
-lxc-start: failed to spawn 'foo'
-linux:~> ls -la /etc/foo
--rw------- 1 jim users 0 Aug 23 09:38 /etc/foo
-linux:~>
-
-That means you have a trivial root exploit if lxc is installed for users.
-There is a lxc-setuid script too but I guess that the lxc binaries
-are similarily not intended for such use.
-I dont know whether any distributor ships lxc with file caps, but
-probably the tools need some hardening if you want to allow
-lxc for users at all. I checked the latest 0.7.5 version.
-
-regards,
-Sebastian
-
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Content of type "application/pgp-signature" skipped
