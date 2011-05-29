@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/9
-Message-ID: <Pine.GSO.4.64.1102221221430.21838@faron.mitre.org>
-Date: Tue, 22 Feb 2011 12:27:37 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/29/1
+Message-Id: <201105291253.30091.steffen.joeris@skolelinux.de>
+Date: Sun, 29 May 2011 12:53:25 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: avahi daemon remote denial of service by sending NULL UDP
+Subject: CVE request: movabletype-opensource
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Fri, 18 Feb 2011, Josh Bressers wrote:
+Could a please get a CVE id for this issue:
+http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
+and
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627936
 
-> I just gave it CVE-2011-1002.
->
-> Thanks for pointing this out!
+Cheers,
+Steffen
 
-The original researcher, nuh, originally requested CVE-2011-0634 for this 
-issue.  I see that the RH bug 667187 lists both CVEs, so maybe there was a 
-race condition in CVE assignment somewhere?
-
-Let's prefer CVE-2011-1002, and I will REJECT CVE-2011-0634.
-
-- Steve
-
-
-> --
->    JB
->
-> ----- Original Message -----
->> Hello,
->> does the following need a CVE-ID or already has one assigned?
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=667187
->>
->>
->> Thanks,
->> Thomas
->>
->> --
->> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
->> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->> --
->> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
->> -- Marie von Ebner-Eschenbach
->
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
