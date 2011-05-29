@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/1
-Message-ID: <20110706034112.GA18345@openwall.com>
-Date: Wed, 6 Jul 2011 07:41:12 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/29/1
+Message-Id: <201105291253.30091.steffen.joeris@skolelinux.de>
+Date: Sun, 29 May 2011 12:53:25 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+Subject: CVE request: movabletype-opensource
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 08:30:57PM +0800, Eugene Teo wrote:
-> On 07/05/2011 01:25 AM, Solar Designer wrote:
-> > On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
-> >> IIRC for such backdoored downloads CVE IDs were assigned in the past
-> >> to properly track the status of distributions providing the affected 
-> >> piece of code.
-> > 
-> > I suspect that no distributions provide the affected code this time.
-> > So if affected distributions is the only reason for CVE ID assignment in
-> > this case, it might make sense to postpone CVE ID allocation until we
-> > learn of an affected distribution (which we probably won't).
-> 
-> But with a CVE name, it is easier for people to refer to this issue, and
-> also easier for distributions to publish an official statement.
+Hi,
 
-Your reasoning makes sense to me.
+Could a please get a CVE id for this issue:
+http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
+and
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627936
 
-I have no objections to having a CVE ID assigned to this issue, but I
-have no idea what the policy is on such assignments.
+Cheers,
+Steffen
 
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
