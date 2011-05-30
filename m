@@ -1,21 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/7
-Message-ID: <20111010204022.4bd99128@laverne>
-Date: Mon, 10 Oct 2011 20:40:22 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/30/1
+Message-ID: <4DE36EC3.7010104@gmx.de>
+Date: Mon, 30 May 2011 12:17:39 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in phorum before 5.2.18
+Subject: CVE request for fetchmail STARTTLS hang (Denial of Service)
 Content-Type: text/plain; charset=utf-8
 
-http://www.phorum.org/phorum5/read.php?64,149588
+Could I get a CVE name for the issue in
+<http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
 
-cite:
-"It includes a security fix for an XSS issue reported by Paul Davis in
-the admin login screen. Thanks Paul! "
-
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Matthias Andree
