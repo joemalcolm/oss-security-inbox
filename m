@@ -1,12 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/1
-Message-ID: <CABCdqYKYk_WD5kyOxAWRF5PHzr01RiY5N_zUopQSQRRkAbs2bQ@mail.gmail.com>
-Date: Wed, 19 Oct 2011 22:18:51 -0400
-From: Anthon Pang <anthon.pang@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: piwik before 1.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/30/2
+Message-ID: <20110530134154.GB9701@suse.de>
+Date: Mon, 30 May 2011 15:41:54 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libgnomesu privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-p.s. I see a CVE ID hasn't been issued for:
+Hi,
 
-http://piwik.org/blog/2011/06/piwik-1-5-security-advisory/
+The /usr/lib/libgnomesu/gnomesu-pam-backend suid binary which belongs
+to the libgnomesu package is not checking setuid() return values.
+
+As a result, two cooperating users, or users with access to guest,
+cgi or web accounts can run arbitrary commands as root very easily.
+Attacker just needs to 'su' to this account where he knows the password
+from inside the second account and take care that enough zombie
+processes exist at the target account.
+
+A patch is attached in our bugzilla:
+
+https://bugzilla.novell.com/show_bug.cgi?id=695627
+
+-s
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
