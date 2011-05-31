@@ -1,51 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/2
-Message-ID: <20110306061624.GA9133@serpens.de>
-Date: Sun, 6 Mar 2011 07:16:25 +0100
-From: "S.P.Zeidler" <spz@...BSD.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/10
+Message-ID: <1121601387.397594.1306871080122.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 15:44:40 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-Thus wrote Greg KH (greg@...ah.com):
-> On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
-> > Thus wrote Solar Designer (solar@...nwall.com):
-> > 
-> > > > - If yes, would it be an idea to confine or split into lists of focus groups?
-> > > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-> > > 
-> > > My current proposal is: split into several sub-lists.  I'd start with
-> > > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-> > > groups would be for externally submitted reports (by non-members) and
-> > > for cross-vendor discussions.
-> > 
-> > I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
-> > items shared between BSDs, but not commonly seen in Linux distributions),
-> > shared/userland (who eg doesn't have OpenSSL?), and researchers
-> > (no opinion on the latter).
+
+----- Original Message -----
+> Hi,
+> looks like this following has not CVE-ID assigned yet:
+> http://www.kb.cert.org/vuls/id/536044
 > 
-> This means that for a "normal" Linux distribution, someone would have to
-> be subscribed to at least 2 lists, and possibly three?
 
-Two, to be made aware of issues (same for BSDs).
+Please use CVE-2011-1945.
 
-> And where would someone post a problem to?  How would they know if a
-> pacakge is shared from BSD and Linux without having to do a lot of
-> research first?
+Thanks.
 
-Assume shared unless you know it's a specific problem. :)
-
-> I really don't mind seeing all of the traffic for all of the issues, but
-> perhaps the BSD developers get tired of seeing all of the Linux kernel
-> issues go across their mailbox so they don't want to have to see them
-> anymore :)
-
-I wouldn't be on the list but I guess our security-officers coped.
-It's rather that I would like to avoid the BSDs being forgotten.
-
-regards,
-	spz
 -- 
-spz@...pens.de (S.P.Zeidler) spz@...BSD.org
+    JB
