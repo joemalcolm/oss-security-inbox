@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/4
-Message-ID: <handler.629511.B629511.130789018424564.ackinfo@bugs.debian.org>
-Date: Sun, 12 Jun 2011 14:51:06 +0000
-From: owner@...s.debian.org (Debian Bug Tracking System)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/17
+Message-ID: <4DE55285.5010405@gmx.de>
+Date: Tue, 31 May 2011 22:41:41 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Bug#629511: Info received (CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used)
+Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the additional information you have supplied regarding
-this Bug report.
+Am 31.05.2011 22:01, schrieb Josh Bressers:
+> 
+> 
+> ----- Original Message -----
+>> Could I get a CVE name for the issue in
+>> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+>>
+> 
+> Please use CVE-2011-1947.
 
-This is an automatically generated reply to let you know your message
-has been received.
+Thanks.
 
-Your message is being forwarded to the package maintainers and other
-interested parties for their attention; they will reply in due course.
+> I can't help but wonder what else could be vulnerable to a similar flaw.
+> Has anyone looked?
 
-Your message has been sent to the package maintainer(s):
- Debian Perl Group <pkg-perl-maintainers@...ts.alioth.debian.org>
+I seriously considered not asking for a CVE in the first place because
+it's rather close to a resource-hogging-through-slowdowns attack vector,
+if you send at a very slow pace just avoiding the timeout by a notch,
+you hog your peer's resources for extended amounts of time -- and I
+can't think of good heuristics to tell abuse from legit use by those on
+slow links apart, and it's pointless listing CVEs for the unfixable
+situations.
 
-If you wish to submit further information on this problem, please
-send it to 629511@...s.debian.org.
 
-Please do not send mail to owner@...s.debian.org unless you wish
-to report a problem with the Bug-tracking system.
+Anecdotal story from the fix: I've been particularly disappointed that
+Solaris 10 doesn't support setsockopt(n, SOL_SOCKET, SO_RCVTIMEO, &foo,
+sizeof foo); (returns -1 with errno == EAFNOSUPPORT), which would have
+been the thorough and easy way out.  I've had the code in place and
+released as candidate, but umm, no, didn't work. I do set SO_KEEPALIVE
+now, but that's not anywhere close of defending against malice.
 
--- 
-629511: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
-Debian Bug Tracking System
-Contact owner@...s.debian.org with problems
+Rewriting the whole socket stuff as non-blocking code with
+poll()/select() which is supposed to be the canonical portable way was
+too intrusive, hence, a no-go for a stable release update.
+
+Best regards
+Matthias Andree
