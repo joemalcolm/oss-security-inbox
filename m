@@ -1,39 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/17/1
-Message-ID: <20110817165247.GW1360@redhat.com>
-Date: Wed, 17 Aug 2011 10:52:47 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/7
+Message-ID: <1672938819.396907.1306869466564.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 15:17:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: To:  Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: ruby on rails flaws (4)
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: NetworkManager-openvpn logs cert password
 Content-Type: text/plain; charset=utf-8
 
-Could we get CVEs assigned to these flaws?  Upstream had requested CVEs
-prior to disclosure, but didn't receive any.
+Please use CVE-2011-1943 for this.
 
-http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
-
-1) Filter Skipping bugs
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
-https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
-https://bugzilla.redhat.com/show_bug.cgi?id=731432
-
-2) SQL Injection issues
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
-https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
-https://bugzilla.redhat.com/show_bug.cgi?id=731438
-
-3) Parse error in strip_tags
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
-https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
-https://bugzilla.redhat.com/show_bug.cgi?id=731436
-
-4) UTF-8 escaping vulnerability
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
-https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
-https://bugzilla.redhat.com/show_bug.cgi?id=731435
-
-Thanks!
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+----- Original Message -----
+> and another one from RH bz:
+> https://bugzilla.redhat.com/show_bug.cgi?id=708876
+> 
+> Robert Marcano 2011-05-29 20:28:01 EDT
+> 
+> Description of problem:
+> 
+> Password to unlock certificate is logged to /var/log/messages
+> 
+> May 29 19:46:42 localhost NetworkManager[4791]: destroy_one_secret:
+> destroying
+> ********
+> 
+> Version-Release number of selected component (if applicable):
+> 
+> NetworkManager-openvpn-0.8.999-1.fc15.x86_64
+> 
+> 
+> Additional info:
+> 
+> I would love to have the option to type the password at connection
+> time instead
+> of it being stored, but adding the password to the system log is wrong
+> 
+> --
+> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+> 21284 (AG Nürnberg
+> --
+> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+> -- Marie von Ebner-Eschenbach
