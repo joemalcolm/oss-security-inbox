@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/18
-Message-ID: <20110403221434.GH9516@openwall.com>
-Date: Mon, 4 Apr 2011 02:14:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/13
+Message-ID: <273444736.398067.1306872250377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 16:04:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: movabletype-opensource
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 10:49:37AM +0200, Alex Legler wrote:
-> please add me as a representative for Gentoo. We were members of v-s.
+
+
+----- Original Message -----
+> Hi,
 > 
-> pub   1024D/F3C06469 2008-06-12
-> Key fingerprint = F898 3D19 6A52 0EF1 7451  C534 93EA 2A85 F3C0 6469
+> Could a please get a CVE id for this issue:
+> http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
+> and
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627936
+> 
 
-Added.
+This one sounds tricky. The way I read it, it's two flaws, but I'm not very sure.
 
-Alexander
+I'm going to defer this one to MITRE, they're better at vague things like this.
+
+thanks.
+
+-- 
+    JB
