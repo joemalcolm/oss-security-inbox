@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/29
-Message-ID: <20110405163619.GA18727@openwall.com>
-Date: Tue, 5 Apr 2011 20:36:19 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/20
+Message-ID: <BANLkTi=rVaiWh_oBXiB8ZLks441+-ynuAw@mail.gmail.com>
+Date: Tue, 31 May 2011 17:54:16 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 05, 2011 at 09:46:25AM -0500, Tim Zingelman wrote:
-> I'll also second the question someone else posed about how cc'ing
-> others off the list could reasonably work if all messages are
-> encrypted.
+I didn't see any CVE's in the Wireshark Bug tracking/advisory nor
+could I find these in the Red Hat Bugzilla (but I'm guessing as a CNA
+they have CVE #'s assigned?)
 
-Messages from the list to members are always encrypted.  Messages to the
-list are preferably encrypted, but this is not enforced.  (If a message
-arrives to the list unencrypted, it is flagged as such in the encrypted
-copies that are sent to members, so they're aware that the information
-contained in the message is more likely to leak.)
+Wireshark 1.2.17 fixes the following vulnerabilities:
 
-So there are two ways to CC someone external:
+Large/infinite loop in the DICOM dissector. (Bug 5876)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-1. Send the message to the list and to them unencrypted.
+Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+that a corrupted Diameter dictionary file could crash Wireshark.
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-2. Send the message to both the list and the external address encrypted,
-to their respective keys - e.g., GnuPG and Mutt support this just fine
-(messages encrypted to more than one key).
+Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+that a corrupted snoop file could crash Wireshark. (Bug 5912)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-The list currently does not propagate the To/CC headers to messages
-arriving to members, though.  Maybe this is something to improve such
-that discussions CC'ing someone external can be maintained.
+David Maciejak of Fortinet's FortiGuard Labs discovered that malformed
+compressed capture data could crash Wireshark. (Bug 5908)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-Alexander
+Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+that a corrupted Visual Networks file could crash Wireshark. (Bug
+5934)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+
+
+http://www.wireshark.org/security/wnpa-sec-2011-07.html
+http://www.wireshark.org/security/wnpa-sec-2011-08.html
+
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: (206) 905-9462
