@@ -1,62 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/1
-Message-ID: <BANLkTi=xt65GERu-o1HGNo2eQRNy_+dvsg@mail.gmail.com>
-Date: Thu, 5 May 2011 00:08:47 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/3
+Message-Id: <201105311052.23603.thomas@suse.de>
+Date: Tue, 31 May 2011 10:52:23 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki
+Subject: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+looks like this following has not CVE-ID assigned yet:
+http://www.kb.cert.org/vuls/id/536044
 
-I would like to announce the release of MediaWiki 1.16.5. Two security
-issues were discovered.
-
-The first issue is yet another recurrence of the Internet Explorer 6
-XSS vulnerability that caused the release of 1.16.4. It was pointed
-out that there are dangerous extensions with more than four
-characters, so the regular expressions we introduced had to be updated
-to match longer extensions.
-
-For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
-
-The second issue allows unauthenticated users to gain additional
-rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
-it is disabled. The issue occurs when a malicious user sends cookies
-which contain the user name and user ID of a "victim" account. In
-certain circumstances, the rights of the victim are loaded and persist
-throughout the malicious request, allowing the malicious user to
-perform actions with the victim's rights.
-
-$wgBlockDisablesLogin is a feature which is sometimes used on private
-wikis to prevent users who have an account from logging in and viewing
-content on the wiki.
-
-For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
-
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz
-
-Patch to previous version (1.16.4), without interface text:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz
-Interface text changes:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz.sig
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz.sig
-
-Public keys:
-https://secure.wikimedia.org/keys.html
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk3COwsACgkQgkA+Wfn4zXmfgwCfYuYKhtC/EFlXvUFXTMDeqahh
-zTcAoN0iL2Lg1uTOiWNmNJVnIDOXdTTA
-=dU8u
------END PGP SIGNATURE-----
+Cheers
+Thomas
+-- 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
