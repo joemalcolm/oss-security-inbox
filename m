@@ -1,83 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/12
-Message-ID: <1383647632.141993.1313780931833.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:08:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/14
+Message-ID: <20110531130959.708b8844@angelo.pretender.us>
+Date: Tue, 31 May 2011 13:09:59 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: WebsiteBaker 2.8.1 <= Arbitrary File Upload Vulnerability
+Cc: bressers@...hat.com, coley <coley@...re.org>, Dan Veditz <dveditz@...illa.com>
+Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2933
+Looks like Red Hat reported this upstream to Mozilla late last night...
 
-Thanks.
+Mozilla is tracking this as
+https://bugzilla.mozilla.org/show_bug.cgi?id=660749.
+
+No CVE has been assigned yet (afaict), but I'll see about getting one
+assigned once this has been confirmed.
+
+~reed
+
+On Tue, 31 May 2011 15:42:58 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
+
+> I'm going to save this one for upstream. It's possible they've already
+> assigned something (Mozilla is a CNA).
+> 
+> I've CC'd Reed in the rare event he doesn't know about this.
+> 
+> Thanks.
+> 
+> -- 
+>     JB
+> 
+> ----- Original Message -----
+> > Hi,
+> > found this in RH's bugzilla:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=709165
+> > 
+> > Vincent Danen 2011-05-30 18:38:43 EDT
+> > 
+> > A Debian bug report [1] indicated that Firefox 4.0.x handled the
+> > validation/revalidation of SSL certificates improperly. If a user were
+> > to
+> > visit a site with an untrusted certificate, Firefox would correctly
+> > display the
+> > warning about the untrusted connection. If a user were to confirm the
+> > security
+> > exception for a single session (not check off the "permanently store
+> > this
+> > exception"), then restart the browser and re-load the page, the
+> > contents of the
+> > page would be displayed from the Firefox cache. Upon reloading the
+> > page, the
+> > security warning would appear, but incorrectly indicates that the site
+> > provides
+> > a valid, verified certificate and there is no way to confirm the
+> > exception.
+> > [...]
+> > 
+> > --
+> > Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> > SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+> > 21284 (AG Nürnberg
+> > --
+> > Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+> > -- Marie von Ebner-Eschenbach
+
 
 -- 
-    JB
-
-
-
------ Original Message -----
-> 1. OVERVIEW
-> 
-> WebsiteBaker 2.8.1 and lower versions are vulnerable to Arbitrary File
-> Upload.
-> 
-> 
-> 2. BACKGROUND
-> 
-> WebsiteBaker helps you to create the website you want: A free, easy
-> and secure, flexible and extensible open source content management
-> system (CMS). Create new templates within minutes - powered by
-> (X)HTML, CSS and jQuery. With WebsiteBaker it's quite natural your
-> site is W3C-valid, SEO-friendly and accessible - there are no
-> limitations at all.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> WebsiteBaker 2.8.1 and lower versions contain a flaw related to the
-> /admin/media/upload.php script failing to restrict uploaded files with
-> extensions - .htaccess, .php4, .php5, .phtml. This may allow an
-> attacker to execute arbitrary PHP code. User account to WebsiteBaker
-> admin backend is required. Attacker could gain access it by way of
-> either brute force or CSRFing to currently-logged in admin users.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.8.1 <=
-> 
-> 
-> 5. SOLUTION
-> 
-> Upgrade to 2.8.2 or higher
-> 
-> 
-> 6. VENDOR
-> 
-> WebsiteBaker Org e. V.
-> http://www.websitebaker2.org/
-> 
-> 
-> 7. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 8. DISCLOSURE TIME-LINE
-> 
-> 2011-01-26: notified vendor
-> 2011-08-01: vendor released fix
-> 2011-08-13: vulnerability disclosed
-> 
-> 
-> 9. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_arbitrary_file_upload
-> http://www.gnucitizen.org/blog/cross-site-file-upload-attacks/
-> 
-> 
-> #yehg [2011-08-13]
+Reed Loden
+reed@...dloden.com
