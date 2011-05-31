@@ -1,84 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/2
-Message-ID: <4E8EC762.1080801@redhat.com>
-Date: Fri, 07 Oct 2011 11:33:22 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Petr Lautrbach <plautrba@...hat.com>
-CC: oss-security@...ts.openwall.com, MustLive <mustlive@...security.com.ua>
-Subject: Re: CVE Request -- Multiple security issues in various versions of AWStats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/14
+Message-ID: <20110531130959.708b8844@angelo.pretender.us>
+Date: Tue, 31 May 2011 13:09:59 -0700
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Cc: bressers@...hat.com, coley <coley@...re.org>, Dan Veditz <dveditz@...illa.com>
+Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
 Content-Type: text/plain; charset=utf-8
 
+Looks like Red Hat reported this upstream to Mozilla late last night...
 
-And one correction yet.
+Mozilla is tracking this as
+https://bugzilla.mozilla.org/show_bug.cgi?id=660749.
 
-Petr Lautrbach (Cc-ed) commented on Red Hat Bugzilla
-bug [1], that:
+No CVE has been assigned yet (afaict), but I'll see about getting one
+assigned once this has been confirmed.
 
-<quote>
- > URL redirection abuse:
- >
- > 
-http://site/awredir.pl?key=0f3830803a70cc1636af3548b66ed978&url=http://websecurity.com.ua
+~reed
 
-awredir.pl is url redirector so this is its main/only feature and it
-is/can be secured by $KEYFORMD5. So I don't think this is flaw.
-</quote>
+On Tue, 31 May 2011 15:42:58 -0400 (EDT)
+Josh Bressers <bressers@...hat.com> wrote:
 
-Thus explicitly mentioning it here too, so this would not fall out
-of the radar and just five CVE ids would be assigned.
+> I'm going to save this one for upstream. It's possible they've already
+> assigned something (Mozilla is a CNA).
+> 
+> I've CC'd Reed in the rare event he doesn't know about this.
+> 
+> Thanks.
+> 
+> -- 
+>     JB
+> 
+> ----- Original Message -----
+> > Hi,
+> > found this in RH's bugzilla:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=709165
+> > 
+> > Vincent Danen 2011-05-30 18:38:43 EDT
+> > 
+> > A Debian bug report [1] indicated that Firefox 4.0.x handled the
+> > validation/revalidation of SSL certificates improperly. If a user were
+> > to
+> > visit a site with an untrusted certificate, Firefox would correctly
+> > display the
+> > warning about the untrusted connection. If a user were to confirm the
+> > security
+> > exception for a single session (not check off the "permanently store
+> > this
+> > exception"), then restart the browser and re-load the page, the
+> > contents of the
+> > page would be displayed from the Firefox cache. Upon reloading the
+> > page, the
+> > security warning would appear, but incorrectly indicates that the site
+> > provides
+> > a valid, verified certificate and there is no way to confirm the
+> > exception.
+> > [...]
+> > 
+> > --
+> > Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> > SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+> > 21284 (AG Nürnberg
+> > --
+> > Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+> > -- Marie von Ebner-Eschenbach
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
 
-P.S.: Petr, if you have more comments on the rest of the issues,
-       feel free to do so in order to proper set of CVE ids would
-       be assigned to these. Thanks, Jan.
-
-On 10/07/2011 10:17 AM, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
->
-> these doesn't look like CVE ids have been already assigned for:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=740926#c0
-> [2] http://secunia.com/advisories/46160/
-> [3] http://seclists.org/fulldisclosure/2011/Sep/234
-> [4] http://websecurity.com.ua/5380/
->
-> If I counted correctly, six CVE ids should be assigned for these
-> (since different versions are listed as vulnerable):
->
-> 1) XSS (WASC-08) (in versions <=1.1):
-> http://site/awredir.pl?url=javascript:alert(document.cookie)
->
-> 2) Redirector (URL Redirector Abuse in WASC 2.0) (WASC-38):
-> http://site/awredir.pl?url=http://websecurity.com.ua
->
-> 3) SQL Injection (WASC-19): (version 1.2)
-> http://site/awredir.pl?url='%20and%20benchmark(10000,md5(now()))/*
->
-> 4) XSS (WASC-08) (in version 1.2):
->
-> http://site/awredir.pl?url=%3Cscript%3Ealert(document.cookie)%3C
-> /script%3E
->
-> http://site/awredir.pl?key=%3Cscript%3Ealert(document.cookie)%3C
-> /script%3E
->
-> 5) HTTP Response Splitting (WASC-25):
->
-> http://site/awredir.pl?key=04ed5362e853c72ca275818a7c0c5857&
-> url=%0AHeader:1
->
-> 6) CRLF Injection (Improper Input Handling in WASC 2.0) (WASC-20):
->
-> http://site/awredir.pl?key=4b9faa91e2529400c4f3c70833b4e4a5&
-> url=%0AText
->
-> Could you allocate CVE identifiers for these? (let me know
-> if further description of each of the issues is necessary prior
-> assignment).
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
+-- 
+Reed Loden
+reed@...dloden.com
