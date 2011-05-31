@@ -1,42 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/1
-Message-ID: <1071366949.72601.1294840987745.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 12 Jan 2011 09:03:07 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/9
+Message-ID: <1333010105.397553.1306870978932.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 15:42:58 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: sudo does not ask for password on GID changes
+Cc: Reed Loden <reed@...dloden.com>, coley <coley@...re.org>
+Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0010
+I'm going to save this one for upstream. It's possible they've already
+assigned something (Mozilla is a CNA).
+
+I've CC'd Reed in the rare event he doesn't know about this.
 
 Thanks.
 
 -- 
     JB
 
-
 ----- Original Message -----
-> A Debian bug report noted that sudo does not access for a password on
-> GID changes, like it does for UID changes. This could allow a user to
-> execute commands using '-g [group]' without being prompted for their
-> password.
+> Hi,
+> found this in RH's bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=709165
 > 
-> It uses a (newer?) syntax; on 1.6.7p5 at least the '(ALL:ALL)'
-> specification gives a syntax error; I'm not sure when this behaviour
-> was
-> introduced.
+> Vincent Danen 2011-05-30 18:38:43 EDT
 > 
-> References:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=609641
-> http://www.sudo.ws/repos/sudo/rev/fe8a94f96542
-> http://www.sudo.ws/repos/sudo/rev/07d1b0ce530e
-> https://bugzilla.redhat.com/show_bug.cgi?id=668879
-> 
-> Could a CVE name be assigned to this please?
-> 
-> Thanks.
+> A Debian bug report [1] indicated that Firefox 4.0.x handled the
+> validation/revalidation of SSL certificates improperly. If a user were
+> to
+> visit a site with an untrusted certificate, Firefox would correctly
+> display the
+> warning about the untrusted connection. If a user were to confirm the
+> security
+> exception for a single session (not check off the "permanently store
+> this
+> exception"), then restart the browser and re-load the page, the
+> contents of the
+> page would be displayed from the Firefox cache. Upon reloading the
+> page, the
+> security warning would appear, but incorrectly indicates that the site
+> provides
+> a valid, verified certificate and there is no way to confirm the
+> exception.
+> [...]
 > 
 > --
-> Vincent Danen / Red Hat Security Response Team
+> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+> 21284 (AG Nürnberg
+> --
+> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+> -- Marie von Ebner-Eschenbach
