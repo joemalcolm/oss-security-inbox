@@ -1,82 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/8
-Message-ID: <Pine.GSO.4.64.1103211139070.29617@faron.mitre.org>
-Date: Mon, 21 Mar 2011 12:02:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/20
+Message-ID: <BANLkTi=rVaiWh_oBXiB8ZLks441+-ynuAw@mail.gmail.com>
+Date: Tue, 31 May 2011 17:54:16 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Local memory disclosure (was: libpurple CVE UnRequest)
+Subject: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
 Content-Type: text/plain; charset=utf-8
 
+I didn't see any CVE's in the Wireshark Bug tracking/advisory nor
+could I find these in the Red Hat Bugzilla (but I'm guessing as a CNA
+they have CVE #'s assigned?)
 
-All,
+Wireshark 1.2.17 fixes the following vulnerabilities:
 
-Disclosure of "local" memory to another user on the same system could 
-qualify for CVE inclusion, if the memory can contain something sensitive.
+Large/infinite loop in the DICOM dissector. (Bug 5876)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-However, I'm not completely clear on how memory management works at this 
-level, and when this behavior becomes a vulnerability.
+Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+that a corrupted Diameter dictionary file could crash Wireshark.
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-Note - I'm only talking about local memory disclosure.  Remote disclosure
-is more clear.
+Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+that a corrupted snoop file could crash Wireshark. (Bug 5912)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-Doesn't memory "belong" to one process (assuming it's not shared), even in 
-heap management?  So another user couldn't access the memory while it's 
-used in the process, and (I guess?) if it's free'd, it's still only 
-accessible to that process (or, alternately, is the region cleared before 
-another program can access it?)  If this is the case, then the question 
-becomes what happens to the memory when the vulnerable process exits - is 
-the memory cleared by the kernel, or is it otherwise left alone?  What 
-happens if the memory is cached on disk?
+David Maciejak of Fortinet's FortiGuard Labs discovered that malformed
+compressed capture data could crash Wireshark. (Bug 5908)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
-I did extremely limited experiments in this area a couple years ago, and 
-for the limited set of OSes I tried this on (no idea what libraries), I 
-always got "clean" memory when I ran initial malloc's from a fresh process 
-(later malloc's could contain contents of memory that was previously freed 
-in the same session).  That doesn't prove anything, of course...
-
-
-Thanks,
-Steve
+Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+that a corrupted Visual Networks file could crash Wireshark. (Bug
+5934)
+Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
 
 
-On Mon, 21 Mar 2011, Jan Lieskovsky wrote:
+http://www.wireshark.org/security/wnpa-sec-2011-07.html
+http://www.wireshark.org/security/wnpa-sec-2011-08.html
 
->
-> Hello vendors,
->
-> Jan Lieskovsky wrote:
->> 
->> Hello Josh, Steve, vendors,
->>
->>   the following:
->>   [1] http://pidgin.im/news/security/?id=50
->>
->>   Upstream patch:
->>   [2] 
->> http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471 
->> 
->> Doesn't seem to have a CVE identifier yet.
->> 
->> Could you allocate one?
->
-> John clarified in a reply to my post:
->
->> Jan,
->> 
->> FYI, we didn't request one because we believed it did not meet the 
->> guidelines
->> for assignment of a CVE identifier.  It's a local-only information 
->> disclosure
->> and can't be remotely exploited.
->> 
->> John
->
-> So ignore my earlier post / request.
->
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
->
->
->
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: (206) 905-9462
