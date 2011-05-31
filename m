@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/5
-Message-ID: <2073418535.897119.1308858575723.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 23 Jun 2011 15:49:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/12
+Message-ID: <722866113.398030.1306872098185.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 16:01:38 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: opie off by one and setuid() failure
+Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
 Content-Type: text/plain; charset=utf-8
 
 
 
 ----- Original Message -----
-> Hi,
-> 
-> Can someone assign 2 CVE's for a off by one in opiesu
-> and a missing setuid() retval check in opielogin which
-> leads to easy root compromise? Reviewed opie-2.4.
-> 
-> Patches are available here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=698772
+> Could I get a CVE name for the issue in
+> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
 > 
 
-Here you go:
+Please use CVE-2011-1947.
 
-CVE-2011-2489 opiesu Off by one
-CVE-2011-2490 opiesu missing setuid() check
+I can't help but wonder what else could be vulnerable to a similar flaw.
+Has anyone looked?
 
 Thanks.
 
