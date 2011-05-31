@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/2
-Message-ID: <4D7DD02A.2050307@redhat.com>
-Date: Mon, 14 Mar 2011 16:22:02 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/16
+Message-ID: <1503554961.398662.1306873661016.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 16:27:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE requests - kernel: tpm infoleaks
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Post Revolution multiple security vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-[PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
- 
-http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
-infoleak
+IDs inline.
 
-[PATCH 2/3] char/tpm: Call tpm_transmit with correct size
- 
-http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
-infoleak
+----- Original Message -----
+> Hi, I need a CVE for Post Revolution 0.8c multiple security
+> vulnerabilities. (Post Revolution is a CMS similar to Wordpress
+> released under GPLv2)
+> 
+> The vulnerabilities are:
+> 1. A Denial of service vulnerability.
+    CVE-2011-1952
 
-[PATCH 3/3] char/tpm: zero buffer after copying to userspace
- 
-http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
-prevents storing of previous result, leakage to other drivers
+> 2. Cross-site scripting vulnerabilities.
+    CVE-2011-1953
 
-Credit to Peter Huewe.
+> 3. Cross-site request forgery vulnerabilities.
+    CVE-2011-1954
 
-https://bugzilla.redhat.com/show_bug.cgi?id=684671
+> 
+> Vendor has publicly confirmed the existence of the vulnerabilities:
+> http://translate.google.com/translate?u=http%3A%2F%2Fpostrev.com.ar%2F&sl=es&tl=en&hl=&ie=UTF-8
+> I will wait for vendor to fully patch these issues before
+> full-disclosure (probably by Friday)
 
-Thanks, Eugene
+Thanks.
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
