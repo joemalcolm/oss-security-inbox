@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/5
-Message-ID: <20110415165002.16c6806b@orphan>
-Date: Fri, 15 Apr 2011 16:50:02 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/9
+Message-ID: <1333010105.397553.1306870978932.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 15:42:58 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Thunar (format string errors)
+Cc: Reed Loden <reed@...dloden.com>, coley <coley@...re.org>
+Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 15 Apr 2011 15:54:08 +0200 Yves-Alexis Perez wrote:
+I'm going to save this one for upstream. It's possible they've already
+assigned something (Mozilla is a CNA).
 
-> The first one is
-> http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74
-> (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in
-> Thunar 1.2.1) and triggers when creating file from templates and
-> calling it with a format string.
+I've CC'd Reed in the rare event he doesn't know about this.
 
-Does this have real attack vector where trust boundary is crossed?
-This sounds like a bug.
-
-> The second is
-> http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
-> and is triggered when copy/pasting a file named from a format string.
-> There's no released version including the fix right now.
-
-This would probably qualify.
-
-> As a side note, I do use -Wformat -Wformat-security
-> -Werror=format-security (thanks to hardening-includes) for my Debian
-> builds, but as those function are wrappers of wrappers of wrappers to
-> printf() and stuff like that, -Wformat-security won't help. Is there a
-> way to work around that?
-
-Fortify source should block code execution even in this case, I'd
-expect.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+----- Original Message -----
+> Hi,
+> found this in RH's bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=709165
+> 
+> Vincent Danen 2011-05-30 18:38:43 EDT
+> 
+> A Debian bug report [1] indicated that Firefox 4.0.x handled the
+> validation/revalidation of SSL certificates improperly. If a user were
+> to
+> visit a site with an untrusted certificate, Firefox would correctly
+> display the
+> warning about the untrusted connection. If a user were to confirm the
+> security
+> exception for a single session (not check off the "permanently store
+> this
+> exception"), then restart the browser and re-load the page, the
+> contents of the
+> page would be displayed from the Firefox cache. Upon reloading the
+> page, the
+> security warning would appear, but incorrectly indicates that the site
+> provides
+> a valid, verified certificate and there is no way to confirm the
+> exception.
+> [...]
+> 
+> --
+> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+> 21284 (AG Nürnberg
+> --
+> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+> -- Marie von Ebner-Eschenbach
