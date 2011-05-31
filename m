@@ -1,24 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/22
-Message-ID: <1443616220.189724.1298488018409.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 14:06:58 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/1
+Message-ID: <4DE49E75.60007@redhat.com>
+Date: Tue, 31 May 2011 15:53:25 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1763 kernel: xen: improper upper boundary check in get_free_port() function
 Content-Type: text/plain; charset=utf-8
 
+A flaw was found in the way Xen hypervisor checked for upper boundary
+when getting a new event channel port. A privileged DomU user could use
+this flaws to cause denial of service or, possibly, increase his privileges.
 
+AFAIK, upstream xen is not affected.
 
------ Original Message -----
-> Hi folks,
-> 
-> Is Redhat packaging RT now, or are you just handling the CVEs?
+https://bugzilla.redhat.com/CVE-2011-1763
 
-I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
-public issues.
+fix: xen-unstable c/s 19365:
+http://xenbits.xensource.com/hg/xen-unstable.hg/rev/2dcdd2fcb945
 
-Thanks.
-
--- 
-    JB
+Thanks, Eugene
