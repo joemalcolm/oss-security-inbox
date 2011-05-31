@@ -1,51 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/7
-Message-Id: <201103151427.39405.ludwig.nussel@suse.de>
-Date: Tue, 15 Mar 2011 14:27:38 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/16
+Message-ID: <1503554961.398662.1306873661016.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 16:27:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: 2 acpid flaws
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Post Revolution multiple security vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+IDs inline.
 
-Looks like this implicit CVE request got lost:
-http://www.openwall.com/lists/oss-security/2011/01/19/4
+----- Original Message -----
+> Hi, I need a CVE for Post Revolution 0.8c multiple security
+> vulnerabilities. (Post Revolution is a CMS similar to Wordpress
+> released under GPLv2)
+> 
+> The vulnerabilities are:
+> 1. A Denial of service vulnerability.
+    CVE-2011-1952
 
-The first issue deserves a CVE I guess as unprivileged users could
-block acpid.
+> 2. Cross-site scripting vulnerabilities.
+    CVE-2011-1953
 
-cu
-Ludwig
+> 3. Cross-site request forgery vulnerabilities.
+    CVE-2011-1954
 
-Vasiliy Kulikov wrote:
-> I. Blocking write.
 > 
-> I.1. Description.
-> 
-> acpid informs unprivileged processes about acpi events via UNIX socket.
-> This socket is in blocking mode.  If unprivileged process stops reading
-> data from the socket then, in some time, the socket queue fills up
-> leading to hanging privileged acpid daemon.  The daemon hangs until the
-> socket peer process reads some portion of the queued data or the peer
-> process exits/is killed.
-> [...]
-> II. Incorrect accept(2) error handling.
-> 
-> II.1. Description.
-> 
-> acpid doesn't gracefully handle client disconnection before the call to
-> accept(2).  If client calls close(2) between acpid calls poll(2) and
-> accept(2), acpid would hang in accept(2) until new client connects to
-> /var/run/acpid.socket.
-> 
-> This is only theoretical flaw as with current Linux kernel
-> implementation accept(2) would return new socket handler even if the
-> peer is closed.  However this behavior is implementation specific and
-> may be changed in future versions of kernels (or custom versions).
+> Vendor has publicly confirmed the existence of the vulnerabilities:
+> http://translate.google.com/translate?u=http%3A%2F%2Fpostrev.com.ar%2F&sl=es&tl=en&hl=&ie=UTF-8
+> I will wait for vendor to fully patch these issues before
+> full-disclosure (probably by Friday)
+
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
