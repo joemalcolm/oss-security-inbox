@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/17/1
-Message-ID: <20110817165247.GW1360@redhat.com>
-Date: Wed, 17 Aug 2011 10:52:47 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/2
+Message-ID: <20110531082133.GB15295@suse.de>
+Date: Tue, 31 May 2011 10:21:33 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: To:  Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: ruby on rails flaws (4)
+Subject: CVE request: multiple libraries getenv() misuse
 Content-Type: text/plain; charset=utf-8
 
-Could we get CVEs assigned to these flaws?  Upstream had requested CVEs
-prior to disclosure, but didn't receive any.
+Hi,
 
-http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
+While investigating the libs vs. fscaps issue [1] which showed
+that most libs need patching in order to work properly with fscaps
+binaries, it was also found that a lot of libs do not even honour
+suid binaries correctly. These libs use getenv() to obtain information
+about configuration/files or plugin directories. These info can be
+"chosen with care" by attackers to trick the suid programs to execute
+code as root or do harm otherwise.
+Among these libs are libudev, libdbus, libhal, libgssglue or libcrypto
+(openssl). libudev, libdbus, libhal are linked against suid Xorg.
+libgssglue is linked against mount.nfs.
+Most of these libs were probably never intented to be linked against
+suids, but nevertheless they are.
 
-1) Filter Skipping bugs
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
-https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
-https://bugzilla.redhat.com/show_bug.cgi?id=731432
+Since the issues are all of the same family I would suggest to assign
+one CVE (or two, if you want to separate missing fscaps checks from
+euid != uid issue).
 
-2) SQL Injection issues
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
-https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
-https://bugzilla.redhat.com/show_bug.cgi?id=731438
+-s
 
-3) Parse error in strip_tags
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
-https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
-https://bugzilla.redhat.com/show_bug.cgi?id=731436
+[1] http://www.suse.de/~krahmer/libs-vs-fscaps/
 
-4) UTF-8 escaping vulnerability
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
-https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
-https://bugzilla.redhat.com/show_bug.cgi?id=731435
-
-Thanks!
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
