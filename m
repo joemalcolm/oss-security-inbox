@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/12
-Message-ID: <4D66B4D5.608@redhat.com>
-Date: Thu, 24 Feb 2011 20:43:17 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- OpenLDAP -- two issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/7
+Message-ID: <1672938819.396907.1306869466564.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 15:17:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: NetworkManager-openvpn logs cert password
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+Please use CVE-2011-1943 for this.
 
-   looks like the following two issues did not get a CVE identifiers yet:
-   [1] http://secunia.com/advisories/43331/
-   [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
-   [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
+Thanks.
 
-Could you allocate them?
+-- 
+    JB
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Original Message -----
+> and another one from RH bz:
+> https://bugzilla.redhat.com/show_bug.cgi?id=708876
+> 
+> Robert Marcano 2011-05-29 20:28:01 EDT
+> 
+> Description of problem:
+> 
+> Password to unlock certificate is logged to /var/log/messages
+> 
+> May 29 19:46:42 localhost NetworkManager[4791]: destroy_one_secret:
+> destroying
+> ********
+> 
+> Version-Release number of selected component (if applicable):
+> 
+> NetworkManager-openvpn-0.8.999-1.fc15.x86_64
+> 
+> 
+> Additional info:
+> 
+> I would love to have the option to type the password at connection
+> time instead
+> of it being stored, but adding the password to the system log is wrong
+> 
+> --
+> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+> 21284 (AG Nürnberg
+> --
+> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+> -- Marie von Ebner-Eschenbach
