@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/5
-Message-ID: <20111028080642.GH29335@suse.de>
-Date: Fri, 28 Oct 2011 10:06:42 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Multiple remote denial of service in Linux bridge networking code 2.6.37-3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/19
+Message-ID: <BANLkTimyqOw-JneVzgvu5AvusX=q6tF42A@mail.gmail.com>
+Date: Tue, 31 May 2011 17:40:36 -0600
+From: Kurt Seifried <kurt@...fried.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for Wireshark 1.4.5 TCP DoS issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+This wasn't put on the security announce page for some reason (DoS,
+any TCP dissector):
 
-Linux kernel 2.6.37 introduced with this commit
-	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=462fb2af9788a82a534f8184abfde31574e1cfa0
-several regressions that be used to trigger remote denial of service attacks when
-bridging is in use.
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5837
 
-Reporter thread is on:
-	http://thread.gmane.org/gmane.linux.network/191713
+Affects Wireshark 1.4.5 only
 
-Fixes are in git commits:
-	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=f8e9881c2aef1e982e5abc25c046820cd0b7cf64
-		In 2.6.39
-	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=66944e1c5797562cebe2d1857d46dff60bf9a69e
-		In 2.6.39
-	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=c65353daf137dd41f3ede3baf62d561fca076228
-		In 3.0
-	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=10949550bd1e50cc91c0f5085f7080a44b0871fe
-		In 3.0
-So it can be considered fixed with Linux kernel 3.0.
-Thanks to Eugene for looking up the commit ids.
-
-I think it just needs one CVE, as it was one introducing patch.
-
-Ciao, Marcus
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: (206) 905-9462
