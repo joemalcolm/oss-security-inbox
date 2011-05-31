@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/2
-Message-ID: <AANLkTi==q852L4JvSepd4=4zzMwhU8poK_CmoEAM6kqf@mail.gmail.com>
-Date: Sun, 13 Mar 2011 11:00:10 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/6
+Message-Id: <201105311525.14786.thomas@suse.de>
+Date: Tue, 31 May 2011 15:25:14 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PHP substr_replace() use-after-free
+Subject: CVE request: NetworkManager-openvpn logs cert password
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I just found an use-after-free in PHP's substr_replace() function caused by
-passing the same variable multiple times to the function, which makes the
-PHP to use the same pointer in three variables inside the function, so when
-the pointer is changed by a type conversion inside the function, it invalids
-the other variables.
+and another one from RH bz:
+https://bugzilla.redhat.com/show_bug.cgi?id=708876
 
-The PHP security team has seen noticed, and a bug already was filed in the
-bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
+Robert Marcano 2011-05-29 20:28:01 EDT
 
-$ sapi/cli/php ../bug.php
-array(1) {
-[0]=>
-string(5) "0Ȅ y"
-}
-array(1) {
-[0]=>
-string(1) "0"
-}
+Description of problem:
+
+Password to unlock certificate is logged to /var/log/messages
+
+May 29 19:46:42 localhost NetworkManager[4791]: destroy_one_secret: destroying
+********
+
+Version-Release number of selected component (if applicable):
+
+NetworkManager-openvpn-0.8.999-1.fc15.x86_64
 
 
-Thanks.
+Additional info:
+
+I would love to have the option to type the password at connection time instead
+of it being stored, but adding the password to the system log is wrong
 
 -- 
-Regards,
-Felipe Pena
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
 
