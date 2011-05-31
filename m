@@ -1,66 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/15
-Message-ID: <1454752014.325860.1299014022676.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Mar 2011 16:13:42 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/15
+Message-ID: <2091474162.398401.1306873130217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 16:18:50 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: Thomas Biege <thomas@...e.de>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request -- syslog-ng -- Possible DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1081 for this new DoS.
+----- Original Message -----
+> Hi All,
+> 
+> In syslog-ng if a recent enough libpcre is installed (ie. 8.12 or newer)
+> there is a possible Denial of Service.
+> 
+> In our (BalaBit) opinion tis is not a big security issue, because if you
+> use the vulnerable setting you will run into the DoS for sure without any
+> malicious attack.
+> 
+> The attack vector is that the attacker send a message which the regexp
+> not match.
+> 
+> But because of this bug get this amount of attention, it' may worth the
+> CVE id.
+> 
+> References:
+> http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=09710c0b105e579d35c7b5f6c66d1ea5e3a3d3ff
+> http://www.securityfocus.com/bid/47800/
+> 
+
+Please use CVE-2011-1951.
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> The following might also need a CVE-ID.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
-> ------------------------------------------------------------------------------
-> http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
-> 
-> That's a pretty bad DOS. Everybody (even unauthenticated users) can
-> kill the
-> server by submitting a MODRDN request with an empty "olddn" value and
-> "remove
-> old RDN" set (-r). Example:
-> 
-> ldapmodrdn -x -H ldap://ldapserver -r '' o=test
-> ------------------------------------------------------------------------------
-> 
-> 
-> Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
-> > ----- Original Message -----
-> > > Hello Josh, Steve, vendors,
-> > >
-> > > looks like the following two issues did not get a CVE identifiers
-> > > yet:
-> > > [1] http://secunia.com/advisories/43331/
-> >
-> > The above advisory covers both bugs below.
-> >
-> >
-> > > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
-> >
-> > CVE-2011-1024 openldap forwarded bind failure messages cause success
-> >
-> >
-> > > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
-> >
-> > CVE-2011-1025 openldap rootpw is not verified with slapd.conf
-> >
-> >
-> > Thanks.
-> >
-> >
-> 
-> --
-> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-> --
-> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> -- Marie von Ebner-Eschenbach
