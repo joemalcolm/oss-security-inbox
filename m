@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/2
-Message-ID: <4D944597.5090303@erix.ericsson.se>
-Date: Thu, 31 Mar 2011 11:12:55 +0200
-From: Sverker Eriksson <sverker@...x.ericsson.se>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/12
+Message-ID: <722866113.398030.1306872098185.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 16:01:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Steve, vendors,
->
->   based on:
->   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
->
->   and:
->   [2] http://www.erlang.org/download/otp_src_R14B.readme
->   [3] http://www.erlang.org/download/otp_src_R14B01.readme
->   [4] http://www.erlang.org/download/otp_src_R14B02.readme
->
-> performed some initial issues review -- erlang-CVE-request.txt
-> attached. But since not sure, which of those are real security
-> flaws and how many CVE ids will be needed for those, Cc-ing
-> also Erlang upstream developers to shed more light into this.
->
-> The distribution of OTPs is as follows:
-> =======================================
-> Rickard Green:          OTP-8810, OTP-8781, OTP-8925, OTP-9005, OTP-8999
-> Bjorn-Egil Dahlberg:    OTP-8814, OTP-8827, OTP-8943
-> Sverker Eriksson:       OTP-8945, OTP-8716
-> Patrik Nyblom:          OTP-7178, OTP-8780, OTP-8993
-> Raimo Niskanen:         OTP-8729, OTP-8795
-> Bjorn Gustavsson:       OTP-8831, OTP-8892, OTP-9117
-> Niclas Axelsson:        OTP-9101
-> Hans Bolinder:          OTP-8898
->
-> Rickard, Bjorn-Egil, Sverker, Patrik, Raimo, Bjorn, Niclas, Hans,
-> could you please have a look at the attached review file
-> and reply which of the #20 OTPs in the list are security flaws
-> (so we would know the count of CVE identifiers needed) and which
-> are just bugs? (since you know the Erlang code better than me)
->
-> Help / guidance from your side is really appreciated to resolve
-> this one.
->
-> Thank you in advance for your time and cooperation.
->
-> Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-I would consider both OTP-8945 and OTP-8716 to be security flaws.
 
-/Sverker, Erlang/OTP
+----- Original Message -----
+> Could I get a CVE name for the issue in
+> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+> 
 
+Please use CVE-2011-1947.
+
+I can't help but wonder what else could be vulnerable to a similar flaw.
+Has anyone looked?
+
+Thanks.
+
+-- 
+    JB
