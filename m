@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/10
-Message-ID: <1339886535.650476.1307991864519.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:04:24 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/3
+Message-Id: <201105311052.23603.thomas@suse.de>
+Date: Tue, 31 May 2011 10:52:23 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: vladz <vladz@...zero.fr>, Josselin Mouette <joss@...ian.org>, Behdad Esfahbod <behdad@...me.org>, Christian Persch <chpe@...me.org>, Josselin Mouette <joss@...sain.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- vte -- Excessive memory and CPU use by processing certain character sequences
+Subject: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+looks like this following has not CVE-ID assigned yet:
+http://www.kb.cert.org/vuls/id/536044
 
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> An memory exhaustion flaw was found in the way VTE, a terminal
-> emulator widget, processed certain character sequences. A remote
-> attacker could provide a specially-crafted file, which once opened
-> in a terminal using the VTE terminal emulator could lead to excessive
-> memory and CPU consumption (leading to subsequent particular process
-> termination by OOM killer on some systems).
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629688
-> [2] https://bugzilla.gnome.org/show_bug.cgi?id=652124
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712148
-> 
-
-Please use CVE-2011-2198.
-
-Thanks.
-
+Cheers
+Thomas
 -- 
-    JB
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
