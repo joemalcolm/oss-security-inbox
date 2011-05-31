@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/2
-Message-ID: <20110919112558.4d8d9fac@laverne>
-Date: Mon, 19 Sep 2011 11:25:58 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/17
+Message-ID: <4DE55285.5010405@gmx.de>
+Date: Tue, 31 May 2011 22:41:41 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in status.net before 0.9.9 and 1.0.0beta2
+Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
 Content-Type: text/plain; charset=utf-8
 
-See
-http://status.net/2011/08/02/security-alert-for-all-versions-of-statusnet
+Am 31.05.2011 22:01, schrieb Josh Bressers:
+> 
+> 
+> ----- Original Message -----
+>> Could I get a CVE name for the issue in
+>> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+>>
+> 
+> Please use CVE-2011-1947.
 
-"Incorrectly sanitized input from the URL for "tag stream" pages,
-combined with incorrect encoding of dynamically-generated JavaScript,
-allows an attacker to create a carefully-crafted URL that will execute
-arbitrary JavaScript code on other users' browsers."
+Thanks.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+> I can't help but wonder what else could be vulnerable to a similar flaw.
+> Has anyone looked?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+I seriously considered not asking for a CVE in the first place because
+it's rather close to a resource-hogging-through-slowdowns attack vector,
+if you send at a very slow pace just avoiding the timeout by a notch,
+you hog your peer's resources for extended amounts of time -- and I
+can't think of good heuristics to tell abuse from legit use by those on
+slow links apart, and it's pointless listing CVEs for the unfixable
+situations.
+
+
+Anecdotal story from the fix: I've been particularly disappointed that
+Solaris 10 doesn't support setsockopt(n, SOL_SOCKET, SO_RCVTIMEO, &foo,
+sizeof foo); (returns -1 with errno == EAFNOSUPPORT), which would have
+been the thorough and easy way out.  I've had the code in place and
+released as candidate, but umm, no, didn't work. I do set SO_KEEPALIVE
+now, but that's not anywhere close of defending against malice.
+
+Rewriting the whole socket stuff as non-blocking code with
+poll()/select() which is supposed to be the canonical portable way was
+too intrusive, hence, a no-go for a stable release update.
+
+Best regards
+Matthias Andree
