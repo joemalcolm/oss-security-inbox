@@ -1,23 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/19
-Message-ID: <20110318190514.GN37813@dojo.mi.org>
-Date: Fri, 18 Mar 2011 15:05:14 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/19
+Message-ID: <BANLkTimyqOw-JneVzgvu5AvusX=q6tF42A@mail.gmail.com>
+Date: Tue, 31 May 2011 17:40:36 -0600
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: HP System Management Homepage(SMH) | Open URL Redirection
+Subject: CVE request for Wireshark 1.4.5 TCP DoS issue
 Content-Type: text/plain; charset=utf-8
 
-:Discovered by
-:Aung Khant (aungkhant<@>yehg.net)
-:YGN Ethical Hacker Group, Myanmar
-:http://yehg.net/
-:
-:Product:
-:HP System Management Homepage
+This wasn't put on the security announce page for some reason (DoS,
+any TCP dissector):
 
-Is this open source software?  
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5837
+
+Affects Wireshark 1.4.5 only
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Nothing in fine print is ever good news.                        -Andy Rooney
+Kurt Seifried
+kurt@...fried.org
+skype: (206) 905-9462
