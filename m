@@ -1,65 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/2
-Message-ID: <1314287667.1902.16.camel@scapa>
-Date: Thu, 25 Aug 2011 17:54:23 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: 639151@...s.debian.org
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com,  Sebastian Krahmer <krahmer@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/2
+Message-ID: <20110531082133.GB15295@suse.de>
+Date: Tue, 31 May 2011 10:21:33 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: multiple libraries getenv() misuse
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2011-08-24 at 20:55 +0200, Yves-Alexis Perez wrote:
-> And, out of curiosity, how would you achieve privilege escalation? You
-> should be able to erase/rewrite arbitrary files, including /etc/shadow,
-> but you don't really have control on what's written there. 
+Hi,
 
-In gdm (CVE-2011-0727 I guess) the issue was that a g_file_copy() was
-run as root from files under user control (.dmrc and the avatar), to a
-cache dir with write permissions (afaict). So it was easy to put
-whatever stuff you need in the original file and make a symlink
-to /etc/shadow in the destination folder so the g_file_copy() would
-erase that:
+While investigating the libs vs. fscaps issue [1] which showed
+that most libs need patching in order to work properly with fscaps
+binaries, it was also found that a lot of libs do not even honour
+suid binaries correctly. These libs use getenv() to obtain information
+about configuration/files or plugin directories. These info can be
+"chosen with care" by attackers to trick the suid programs to execute
+code as root or do harm otherwise.
+Among these libs are libudev, libdbus, libhal, libgssglue or libcrypto
+(openssl). libudev, libdbus, libhal are linked against suid Xorg.
+libgssglue is linked against mount.nfs.
+Most of these libs were probably never intented to be linked against
+suids, but nevertheless they are.
 
-                 res = g_file_copy (src_file,
-                                    dst_file,
-                                    G_FILE_COPY_OVERWRITE |
-                                    G_FILE_COPY_NOFOLLOW_SYMLINKS,
-                                    NULL,
-                                    NULL,
-                                    NULL,
-                                    &error);
+Since the issues are all of the same family I would suggest to assign
+one CVE (or two, if you want to separate missing fscaps checks from
+euid != uid issue).
+
+-s
+
+[1] http://www.suse.de/~krahmer/libs-vs-fscaps/
 
 
-I'm not too sure what G_FILE_COPY_OVERWRITE means, if it truncate()s and
-write over of if it unlink()s and start fresh (digging in glib to find
-out). Apparenlty in the fallback case (not sure if it's the case here)
-it ends up doing a g_file_replace()).
-
-In any case, in lightdm case, for .Xauthority file it uses
-g_file_replace() which creates a temporary file and then rename over the
-new file, so in the worst case you overwrite a system file with
-xauthority data.
-
-Same thing for .dmrc, you can overwrite system files but with dmrc data
-which look like 
-
-[Desktop]
-Session=xfce
-Lang=fr_FR.UTF-8
-
-so it doesn't look easy to gain root access with that.
-
-LightDM maintains a cache for dmrc files in /var/cache/lightdm but the
-folder is created 0700 so it doesn't look like one can put symlinks
-there and have it use a user-controled .dmrc.
-
-All in all, I'm not too sure there's a privilege escalation for
-Xauthority/.dmrc files (but if one exists, I'm interested in how to do
-it, by curiosity). But you still damage pretty much any arbitrary file,
-which is still an easy DoS.
-
-Regards,
 -- 
-Yves-Alexis
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
