@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/13
-Message-ID: <20110104233131.GD28060@kroah.com>
-Date: Tue, 4 Jan 2011 15:31:31 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/11
+Message-ID: <760428907.397872.1306871631176.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 31 May 2011 15:53:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE-2010-4526 kernel: sctp: a race between ICMP protocol unreachable and connect()
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: libgnomesu privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 04, 2011 at 02:33:04PM +0800, Eugene Teo wrote:
-> http://git.kernel.org/linus/50b5d6ad63821cea324a5a7a19854d4de1a0a819
-> https://bugzilla.redhat.com/CVE-2010-4526
-> 
-> commit 50b5d6ad63821cea324a5a7a19854d4de1a0a819
-> Author: Vlad Yasevich <vladislav.yasevich@...com>
-> Date:   Thu May 6 00:56:07 2010 -0700
-> 
-> sctp: Fix a race between ICMP protocol unreachable and connect()
-> 
->     ICMP protocol unreachable handling completely disregarded
->     the fact that the user may have locked the socket.  It proceeded
->     to destroy the association, even though the user may have
->     held the lock and had a ref on the association.
-> [...]
->     This was because the sctp_wait_for_connect() would aqcure the socket
->     lock and then proceed to release the last reference count on the
->     association, thus cause the fully destruction path to finish freeing
->     the socket.
-> 
-> This affects kernels v2.6.11-rc2 and above.
 
-Not all, it was fixed in the 2.6.34 kernel, which was released back in
-May of 2010.
 
-thanks,
+----- Original Message -----
+> Hi,
+> 
+> The /usr/lib/libgnomesu/gnomesu-pam-backend suid binary which belongs
+> to the libgnomesu package is not checking setuid() return values.
+> 
+> As a result, two cooperating users, or users with access to guest,
+> cgi or web accounts can run arbitrary commands as root very easily.
+> Attacker just needs to 'su' to this account where he knows the
+> password
+> from inside the second account and take care that enough zombie
+> processes exist at the target account.
+> 
+> A patch is attached in our bugzilla:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=695627
+> 
 
-greg k-h
+
+Please use CVE-2011-1946.
+
+Thanks.
+
+-- 
+    JB
