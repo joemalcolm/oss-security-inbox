@@ -1,67 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/9
-Message-ID: <22819575.1799200.1312405217097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Aug 2011 17:00:17 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: shttpd/mongoose/yassl embedded webserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/3
+Message-ID: <4DE63625.6050700@redhat.com>
+Date: Wed, 01 Jun 2011 14:52:53 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Evgeny Legerov <admin@...evydis.com>
+Subject: CVE Request -- OpenOffice.org -- InteVyDis Demo of OpenOffice 0day. Released with VulnDisco 8.8 pack (release date May,2009)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2900.
 
-Thanks.
+Hello, Josh, Steve, vendors,
 
--- 
-    JB
+   A new security flaw, potentially allowing execution of arbitrary code
+with the privileges of the user running the OpenOffice.org suite tools
+has been reported by the InteVyDis security researchers team:
+[1] http://intevydis.com/oo_0day.html
+[2] http://twitter.com/#!/legerov/status/75482755194032128
 
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=709705
 
------ Original Message -----
-> Hi,
-> I found a buffer overflow in the PUT processing of
-> shttpd/mongoose/yassl
-> embedded webserver (all based on the same source code).
-> 
-> Can someone assign a CVE id to this?
-> Upstream fix:
-> https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
-> 
-> The bug:
-> _shttpd_put_dir()/put_dir() function:
-> 26 for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
-> 27 len = p - path;
-> 28 assert(len < sizeof(buf));
-> 29 (void) memcpy(buf, path, len);
-> 30 buf[len] = '\0';
-> 31
-> 32 /* Try to create intermediate directory */
-> 33 if (_shttpd_stat(buf, &st) == -1 &&
-> 34 _shttpd_mkdir(buf, 0755) != 0)
-> 35 return (-1);
-> 36
-> 37 /* Is path itself a directory ? */
-> 38 if (p[1] == '\0')
-> 39 return (0);
-> 40 }
-> 
-> The only guard here to avoid a buffer overflow with a long path is
-> the assert call in line 28. Unfortunately this is disabled if
-> you compile with -DNDEBUG and from what I see quite a lot of people
-> are doing that in order to reduce the binary size (those are embedded
-> webservers intended to be used in embedded environments).
-> 
-> It seems quite some projects actually do that, including a
-> deployed product embedded product I'm currently
-> looking at (and that was rooted because of this bug).
-> From what I see -DNDEBUG in the mongoose makefile this is also the
-> default for the mingw
-> binary.
-> 
-> If this is not the case, this is still a DoS bug.
-> 
-> Kind regards
-> Nico
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+Unfortunately there doesn't seem to be further detailed information
+available right now. But from the Twitter post, looks this issue is
+still valid against OpenOffice.org v3.3.
+
+Hopefully Evgeny Legerov of InteVyDis security researchers team (Cc-ed)
+could provide further background information about this issue, i.e.
+if it is an old issue (like date of 2009 would suggest) and thus a CVE
+identifier has been already assigned to this issue or is this completely
+new issue (which did not get fixed from 2009 till now) and thus it 
+requires a new CVE id.
+
+Evgeny, any further information you could provide here, to clear the
+CVE doubt is really appreciated.
+
+Once the CVE doubt cleared, could you allocate a CVE id for this issue?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
