@@ -1,76 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/2
-Message-ID: <AANLkTikvhcN5Fe9ik=1_fiMk+Rw+qPuO_psax1jLMaqX@mail.gmail.com>
-Date: Wed, 5 Jan 2011 09:14:27 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/9
+Message-ID: <140667935.425455.1306959505978.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 1 Jun 2011 16:18:25 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: possible flaw in widely used strtod.c implementation
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for Wireshark 1.4.5 TCP DoS issue
 Content-Type: text/plain; charset=utf-8
 
-hi,
 
-Referring to: http://bugs.php.net/53632
 
-This bug affects PHP and can be remotely triggered if someone actually
-process an input as double (p.php?id=... and then $d
-= $id +1 for example). However this issue could also affect any
-software relying on the "strtod for IEEE-, VAX-, and IBM-arithmetic
-machines." implementation (quite a lot actually do, according to
-codesearch&co). See a non exhaustive list here:
+----- Original Message -----
+> This wasn't put on the security announce page for some reason (DoS,
+> any TCP dissector):
+> 
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5837
+> 
+> Affects Wireshark 1.4.5 only
+> 
 
-http://www.google.com/codesearch?as_q=strtod+for+IEEE-,+VAX-,+and+IBM-arithmetic+machines.&btnG=Search+Code&hl=en&as_package=&as_lang=&as_filename=&as_class=&as_function=&as_license=&as_case=
+Please use CVE-2011-1956.
 
-Whether the bug exists in the respective builds of each of these
-softwares may depend on how they are built (options, arch, etc.).
+Thanks.
 
-A fix is already in php's svn:
-http://svn.php.net/viewvc?view=revision&revision=307095
-
-A good explanation about this issue is in the gcc bug tracker (thanks
-Rasmus for the pointer):
-
-It is a design flaw in the x87 fpu registers, so keeping the float out
-of those registers circumvents the problem.  It is
-one of the suggested ways of fixing this that is mentioned in the famous
-gcc bug 323 report:
-
-http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323
-
-See Comment 87:
-
- bruno 2006-12-21 15:08:57 UTC
- The option -ffloat-store, recommended by Richard Henderson, has
- the effect of decreasing the performance of floating-point
- operations for the entire compilation unit. If you want a minimal
- fix that does not affect other functions in the same compilation
- unit, you can use 'volatile double' instead of 'double'. It's
- like a one-shot -ffloat-store. Example:
-
- #include <stdio.h>
-
- void test(double x, double y) {
-   const volatile double y2 = x + 1.0;
-   if (y != y2) printf("error\n");
- }
-
- void main() {
-   const double x = .012;
-   const double y = x + 1.0;
-
-   test(x, y);
- }
-
-On windows it is slightly more complicated as it seems to do some more
-under the wood work. I was able to reproduce the problem on certain
-CPUs (i7) and not on other  (xeon) using the exact same binaries. I
-still have to verify what is done exactly.
-
-About getting a CVE #, I'm not sure it should be categorized only for
-php or more generally about this strtod.c (newest version has the same
-problem btw). Ideas? Comments?
-
-Cheers,
---
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-- 
+    JB
