@@ -1,36 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/09/1
-Message-ID: <AANLkTinvVDGHTHcef-u6ofXn7xkxN-yWg+XCfNRpHxF7@mail.gmail.com>
-Date: Sat, 8 Jan 2011 20:58:30 -0600
-From: Hyrum K Wright <hyrum@...umwright.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, Kurt Seifried <kurt@...fried.org>,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/1
+Message-ID: <4DE5C6AF.6020408@redhat.com>
+Date: Wed, 01 Jun 2011 10:27:19 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 5, 2011 at 10:09 AM, Josh Bressers <bressers@...hat.com> wrote:
->
-> OK, let's split the CVE id then.
->
-> So for
-> A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
->  Upstream changeset:
->  http://svn.apache.org/viewvc?view=revision&revision=1033166
->
-> Let's use CVE-2010-4539.
->
-> For
-> B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
->   References:
->   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
->   Upstream changeset:
->   http://svn.apache.org/viewvc?view=revision&revision=1032808
->
-> Let's use CVE-2010-4644.
+On 06/01/2011 05:24 AM, Kurt Seifried wrote:
+> I didn't see any CVE's in the Wireshark Bug tracking/advisory nor
+> could I find these in the Red Hat Bugzilla (but I'm guessing as a CNA
+> they have CVE #'s assigned?)
+> 
+Red Hat did not assign any CVE ids yet, since most of the work mentioned
+below was done by me on my personal time :)
 
-Sounds great.
 
-Should the Subversion project plan to write and publish advisories for
-these CVEs, or has the requester already done so?
+> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+> that a corrupted Diameter dictionary file could crash Wireshark.
+> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+This is a memory corruption flaw caused by using a custom config files.
+You will normally have to social engineer the victim to use a malicious
+config file and then run wireshark
+> 
+> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+> that a corrupted snoop file could crash Wireshark. (Bug 5912)
+> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+> 
+> 
+> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+> that a corrupted Visual Networks file could crash Wireshark. (Bug
+> 5934)
+> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+> 
+Both of the above are integer overflow issues, which cause subsequent
+memory corruption.
+> 
+> http://www.wireshark.org/security/wnpa-sec-2011-07.html
+> http://www.wireshark.org/security/wnpa-sec-2011-08.html
+> 
+Steve, could you please assign CVE ids to the issues mentioned in the
+above URLs? thanks.
 
--Hyrum
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
