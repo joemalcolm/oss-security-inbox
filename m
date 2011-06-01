@@ -1,56 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/18
-Message-ID: <AANLkTi=n2oz22_Cnmb9XFH_Jg6qauw=DeLRtjRcHn3cw@mail.gmail.com>
-Date: Thu, 3 Mar 2011 18:59:20 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/1
+Message-ID: <4DE5C6AF.6020408@redhat.com>
+Date: Wed, 01 Jun 2011 10:27:19 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 06/01/2011 05:24 AM, Kurt Seifried wrote:
+> I didn't see any CVE's in the Wireshark Bug tracking/advisory nor
+> could I find these in the Red Hat Bugzilla (but I'm guessing as a CNA
+> they have CVE #'s assigned?)
+> 
+Red Hat did not assign any CVE ids yet, since most of the work mentioned
+below was done by me on my personal time :)
 
->
-> Then, as I have always said, someone needs to step up and actually do
-> this type of communication work.  I personally don't have the time to, I
-> am swamped with just getting the stable updates out in a semi-timely
-> fashion.  Digging through every patch in these releases and properly
-> conveying the real, or percieved reason why they are needed, is a lot of
-> thankless work.  Jon at lwn.net tried it for just one release, and we
-> are averaging about one a week (total number of kernels released that
-> is).  No one else has yet tried to do that, but if they will, I will be
-> _glad_ to point my release notifications at that summary.
->
-> So in other words, help is gladly accepted :)
->
 
-Rather than requiring individuals to perform substantial amounts of
-digging through patches, which I agree is infeasible, perhaps it would
-be more reasonable to establish a general policy that bug reporters
-and maintainers can use to work with distro security teams and the
-rest of the security community.
+> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+> that a corrupted Diameter dictionary file could crash Wireshark.
+> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+This is a memory corruption flaw caused by using a custom config files.
+You will normally have to social engineer the victim to use a malicious
+config file and then run wireshark
+> 
+> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+> that a corrupted snoop file could crash Wireshark. (Bug 5912)
+> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+> 
+> 
+> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
+> that a corrupted Visual Networks file could crash Wireshark. (Bug
+> 5934)
+> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
+> 
+Both of the above are integer overflow issues, which cause subsequent
+memory corruption.
+> 
+> http://www.wireshark.org/security/wnpa-sec-2011-07.html
+> http://www.wireshark.org/security/wnpa-sec-2011-08.html
+> 
+Steve, could you please assign CVE ids to the issues mentioned in the
+above URLs? thanks.
 
-For example, a public or private list could be established for all
-*potential* kernel security issues, and just as is the case with
-CC'ing stable, a policy could be developed where maintainers are
-expected to CC this list for fixes that might possibly have security
-relevance, with a tendency towards erring on the safe side if security
-impact is unclear.  I think security communication needs to be
-improved at the commit level (as opposed to the reporting), since
-maintainers are often much more knowledgeable and better able to
-understand security impact than the users who are often presenting
-issues.  Criteria could be set up for what kinds of issues would be
-candidates for being sent to this list.  I don't think this would
-require substantially more work on anyone's part, but by creating a
-culture where potential security issues are treated seriously, it
-would at least stop some of the silent patching that's been going on.
-
-Once potential security issues have been submitted to such a list, I'm
-sure there would be no shortage of people willing and able to analyze
-security impact for each issue, including assigning CVEs.  While
-digging through every kernel patch might be too much work, with the
-cooperation of maintainers this can be reduced to a much smaller
-subset that would be easily dealt with.
-
-Regards,
-Dan
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
