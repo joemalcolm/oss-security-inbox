@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/14
-Message-ID: <20110502184046.GA20492@openwall.com>
-Date: Mon, 2 May 2011 22:40:46 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/3
+Message-ID: <4DE63625.6050700@redhat.com>
+Date: Wed, 01 Jun 2011 14:52:53 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Evgeny Legerov <admin@...evydis.com>
+Subject: CVE Request -- OpenOffice.org -- InteVyDis Demo of OpenOffice 0day. Released with VulnDisco 8.8 pack (release date May,2009)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
-> I think this is suitable. The goal here is to ensure that a vendor is
-> actually producing updates and aren't just a potential leak.
 
-OK, so do you propose that we subscribe Wind River, and wait for
-MontaVista to setup something similar to these RSS feeds before we also
-subscribe them?
+Hello, Josh, Steve, vendors,
 
-A secondary goal behind requiring access to advisories and updates (not
-just metainfo) would be to be able to draw the line between vendors and
-companies that build their own Linux distros in house.  The latter could
-also publish an RSS feed showing how they update their packages, yet
-they would not be a vendor to anyone other than themselves...  On the
-other hand, publishing updates without publishing the distro itself
-doesn't make them more of a vendor to others.  So to achieve this goal
-we'd probably need to require the distro itself to be public (in at
-least one form - e.g., Red Hat's .src.rpm's are sufficient), not just
-advisories and updates.
+   A new security flaw, potentially allowing execution of arbitrary code
+with the privileges of the user running the OpenOffice.org suite tools
+has been reported by the InteVyDis security researchers team:
+[1] http://intevydis.com/oo_0day.html
+[2] http://twitter.com/#!/legerov/status/75482755194032128
 
-We may choose not to pursue this secondary goal now.
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=709705
 
-Alexander
+Unfortunately there doesn't seem to be further detailed information
+available right now. But from the Twitter post, looks this issue is
+still valid against OpenOffice.org v3.3.
+
+Hopefully Evgeny Legerov of InteVyDis security researchers team (Cc-ed)
+could provide further background information about this issue, i.e.
+if it is an old issue (like date of 2009 would suggest) and thus a CVE
+identifier has been already assigned to this issue or is this completely
+new issue (which did not get fixed from 2009 till now) and thus it 
+requires a new CVE id.
+
+Evgeny, any further information you could provide here, to clear the
+CVE doubt is really appreciated.
+
+Once the CVE doubt cleared, could you allocate a CVE id for this issue?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
