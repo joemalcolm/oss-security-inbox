@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/6
-Message-ID: <20110424123611.GA368@openwall.com>
-Date: Sun, 24 Apr 2011 16:36:11 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/6
+Message-ID: <20110601163410.GA15759@openwall.com>
+Date: Wed, 1 Jun 2011 20:34:10 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 15, 2011 at 05:23:17AM +0000, Zhao, Zhenfeng wrote:
-> Now I use my own e-mail address instead of one exploder to apply for the membership, and I also have added Wind River info to the wiki pages. OK,  I was  a vendor-sec member representing Wind River, please add me to the new list.  
+Hi Armin,
 
-Thanks.  Unfortunately, the info you have added puts you in the same
-category with MontaVista.  We haven't yet decided on what to do with
-"closed" Linux vendors like this.  There has been some opposition to
-them receiving advance notifications of security vulnerabilities via the
-new list because the community would not be able to tell whether such
-vendors are making intended use of the advance notifications or not.
+On Thu, May 26, 2011 at 05:42:00AM -1000, akuster wrote:
+> You can find our security Advisories at:
+> http://www.mvista.com/cve_vulnerabilities.php
+> 
+> I have updated
+> http://oss-security.openwall.org/wiki/vendors
+> http://oss-security.openwall.org/wiki/distro-patches
 
-http://oss-security.openwall.org/wiki/vendors#wind-river
+Thanks.  I've just reviewed the above and subscribed you to the list.
 
-"The process for receiving security advisories requires a Support or
-Maintenance subscription."
+I have some "complaints", though:
 
-As I wrote in another message, I am considering setting up a separate
-list that would include Linux vendors like this.  Then message senders
-will be the ones to decide on which categories of vendors to inform.
+http://www.mvista.com/cve_vulnerabilities.php gives a mapping of CVE IDs
+to affected MontaVista products.  That's great.  However, fix
+information is missing.  Does having a CVE ID listed there imply that
+you have fixed the issue for those affected products or not (e.g.,
+perhaps not for EOL'ed products, or are you not listing those as
+affected at all)?  Specifically relevant to this discussion would be the
+dates on which you're getting issues fixed (such that those could be
+compared to CRDs to see if you likely made use of the advance
+notifications or not).  Right now, you have "Published" and "Modified"
+dates, but no fix dates (which would be per product?)
 
-I consider both the existing new list and any other lists we might setup
-experimental.  Everything is subject to change, even the very existence
-of these lists.  We're merely trying to see what works best.
+Also, no info on 2011's CVEs yet.  Does this mean we'd have to wait
+until 2012 to get an idea on how you're handling 2011's security issues?
+
+That said, you do look like a security-conscious Linux distro vendor
+now (and you meet some other requirements), so you're on the list.
+
+Thanks again,
 
 Alexander
