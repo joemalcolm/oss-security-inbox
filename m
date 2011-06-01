@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/9
-Message-Id: <20110106125422.790cbf0b.michael.s.gilbert@gmail.com>
-Date: Thu, 6 Jan 2011 12:54:22 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/5
+Message-ID: <20110601154308.GC13831@dhcp-25-225.brq.redhat.com>
+Date: Wed, 1 Jun 2011 17:43:09 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+Cc: coley@...us.mitre.org
+Subject: CVE request -- libvirt: regression introduced in disk probe logic
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
-> re: http://seclists.org/fulldisclosure/2011/Jan/39
-> 
-> Just in case someone tries to request a CVE name for this, I'm not 
-> requesting for one because if you need CAP_SYS_ADMIN capability to 
-> exploit this, you are already privileged.
+Hello Steve, vendors.
 
-Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
-mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
-exist. There is an exposure here, and for that it deserves a CVE
-identifier (of course in my opinion).  See Brad Spengler's recent
-write-up [0]. There should be some effort toward making those 21 root
-equivalent capabilities discussed there non-equivalent.
+Description:
+Regression introduced in commit d6623003 (v0.8.8) - using the
+wrong sizeof operand meant that security manager private data
+was overlaying the allowDiskFOrmatProbing member of struct
+_virSecurityManager.  This reopens disk probing, which was
+supposed to be prevented by the solution to CVE-2010-2238.
 
-Best wishes,
-Mike
+References:
+https://www.redhat.com/archives/libvir-list/2011-May/msg01935.html
+https://bugzilla.redhat.com/show_bug.cgi?id=709769
 
-[0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
+Could you please allocate a CVE identifier for this issue?
+
+Thank you,
+--
+Petr Matousek / Red Hat Security Response Team
