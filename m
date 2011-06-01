@@ -1,20 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/3
-Message-ID: <AANLkTikGBBNvXyp1PQ_=h4xHZ0xA_kMHC=ZnoQczqXPx@mail.gmail.com>
-Date: Mon, 28 Feb 2011 18:59:15 +0000
-From: Helgi Þormar Þorbjörnsson <helgi@....net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/2
+Message-ID: <4DE5F7FF.5000400@gmx.de>
+Date: Wed, 01 Jun 2011 10:27:43 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
 Content-Type: text/plain; charset=utf-8
 
-The lack of symlink checks in the PEAR installer 1.9.1 <= while doing
-installation and upgrades, which initiate various system write
-operations, can cause privileged users unknowingly to overwrite
-critical system files.
+Am 31.05.2011 22:41, schrieb Matthias Andree:
+> Am 31.05.2011 22:01, schrieb Josh Bressers:
+>>
+>>
+>> ----- Original Message -----
+>>> Could I get a CVE name for the issue in
+>>> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+>>>
+>>
+>> Please use CVE-2011-1947.
+> 
+> Thanks.
+> 
+>> I can't help but wonder what else could be vulnerable to a similar flaw.
+>> Has anyone looked?
+> 
+> I seriously considered not asking for a CVE in the first place because
+> it's rather close to a resource-hogging-through-slowdowns attack vector,
+> if you send at a very slow pace just avoiding the timeout by a notch,
+> you hog your peer's resources for extended amounts of time -- and I
+> can't think of good heuristics to tell abuse from legit use by those on
+> slow links apart, and it's pointless listing CVEs for the unfixable
+> situations.
+> 
+> 
+> Anecdotal story from the fix: I've been particularly disappointed that
+> Solaris 10 doesn't support setsockopt(n, SOL_SOCKET, SO_RCVTIMEO, &foo,
+> sizeof foo); (returns -1 with errno == EAFNOSUPPORT), which would have
+> been the thorough and easy way out.  I've had the code in place and
+> released as candidate, but umm, no, didn't work. I do set SO_KEEPALIVE
+> now, but that's not anywhere close of defending against malice.
 
-Further information can be found in this temporary advisory
-http://pear.php.net/advisory-20110228.txt and the
+I wrote too fast.
+Just so that the list archives reflect the actual fix:
 
-Fixes can be found at http://news.php.net/php.pear.cvs/61264
+The fixed fetchmail version 6.3.20 runs the SSL_connect() [OpenSSL]
+under a real-time setitimer() that triggers SIGALRM after a
+user-configurable setting (default 300 s).
 
-- Helgi
+SO_KEEPALIVE takes more than two hours on some systems' defaults before
+even sending the first TCP keepalive probe, which is too long, but can
+be tuned through sysctl or ndd on many relevant systems -- and, more
+importantly, bears no relation to what happens up in the application
+layer. That's what I meant with "does not defend against malice" (for
+instance, a server deliberately keeping the TCP connection open without
+responding), and that situation is what the real-time setitimer() will
+signal.
+
+-- 
+Matthias Andree
