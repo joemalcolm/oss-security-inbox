@@ -1,33 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/4
-Message-ID: <4E9C025D.5080601@pre-sense.de>
-Date: Mon, 17 Oct 2011 12:24:29 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/8
+Message-ID: <4DE68A5E.9080106@mvista.com>
+Date: Wed, 01 Jun 2011 08:52:14 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: double-free vulnerability in logsurfer
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Am 17.10.2011 12:07, schrieb Marcus Meissner:
-> On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
->> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
->> Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
->> an insufficient treatment of an error condition that is returned by the
->> function get_word() when it is unable to correctly parse its input.
->>
->> The following versions of logsurfer are affected:
->>
->>  Logsurfer 1.5b and previous versions
->>  Logsurfer+ 1.7 and previous versions
->>
->> A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
-> 
-> How can this be exploited?
-> 
-> It seems to happen in the argument handling and I doubt an attacker can inject arguments?
 
-Logsurfer allows to use substrings of log-file entries as arguments for
-calling external commands. An attacker is able to exploit this
-vulnerability by injecting specially crafted strings into a log-file
-that is processed by logsurfer.
 
-Cheers, Timo
+On 06/01/2011 06:34 AM, Solar Designer wrote:
+> Hi Armin,
+> 
+> On Thu, May 26, 2011 at 05:42:00AM -1000, akuster wrote:
+>> You can find our security Advisories at:
+>> http://www.mvista.com/cve_vulnerabilities.php
+>>
+>> I have updated
+>> http://oss-security.openwall.org/wiki/vendors
+>> http://oss-security.openwall.org/wiki/distro-patches
+> 
+> Thanks.  I've just reviewed the above and subscribed you to the list.
+> 
+> I have some "complaints", though:
+
+No worries.
+
+> 
+> http://www.mvista.com/cve_vulnerabilities.php gives a mapping of CVE IDs
+> to affected MontaVista products.  That's great.  However, fix
+> information is missing.  Does having a CVE ID listed there imply that
+> you have fixed the issue for those affected products or not (e.g.,
+> perhaps not for EOL'ed products, or are you not listing those as
+> affected at all)?  
+
+Yes, having the cve listed means it is fixed.
+
+Specifically relevant to this discussion would be the
+> dates on which you're getting issues fixed (such that those could be
+> compared to CRDs to see if you likely made use of the advance
+> notifications or not).  Right now, you have "Published" and "Modified"
+> dates, but no fix dates (which would be per product?)
+
+Good input. I will put that on my list for version 2 requirements.
+
+> 
+> Also, no info on 2011's CVEs yet.  Does this mean we'd have to wait
+> until 2012 to get an idea on how you're handling 2011's security issues?
+
+Correct. I have an internal business requirement to delay public
+notifications for 6 months in order to give our customers time to
+propagate our fixes to their customers. If our internal processes are
+working, then 2011 CVE's should start showing up sometime this month.
+
+> 
+> That said, you do look like a security-conscious Linux distro vendor
+> now (and you meet some other requirements), so you're on the list.
+> 
+Many thanks.
+
+Armin
+
+
