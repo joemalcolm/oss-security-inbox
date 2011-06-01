@@ -1,29 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/7
-Message-ID: <1732124180.120317.1304967123464.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 May 2011 14:52:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/4
+Message-ID: <20110601140708.GA15031@openwall.com>
+Date: Wed, 1 Jun 2011 18:07:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...re.org
-Subject: Re: CVE request: tigervnc
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> The vncviewer in tigervnc had X.509 certificate support added in svn
-> r4200 (currently beta, slated for the 1.1.0 release). It would prompt for
-> and send authentication credentials before properly validating the X.509
-> certificate, which makes it susceptible to a man-in-the-middle attack.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=702470
-> http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01342.html
-> http://www.mail-archive.com/tigervnc-devel@lists.sourceforge.net/msg01347.html
-> 
+CERT, Thomas, Josh, all -
 
-Please use CVE-2011-1775.
+On Tue, May 31, 2011 at 03:44:40PM -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > looks like this following has not CVE-ID assigned yet:
+> > http://www.kb.cert.org/vuls/id/536044
+> 
+> Please use CVE-2011-1945.
 
-Thanks.
+Thanks!
 
--- 
-    JB
+The CERT Vulnerability Note says: "Date Public:	2011-05-17", yet this
+was only brought to oss-security on the 31st.  According to the
+Vulnerability Note, CERT notified a handful of distros, but definitely
+by far not all those shipping OpenSSL (which would be unrealistic) and
+not all those CERT had been notifying of similar issues before (which
+was realistic).  I am not too concerned about the issue itself and about
+the more restricted advance notification, but I am concerned about the
+delay between CERT making a Vulnerability Note public and us (as well as
+many others) learning of it (via oss-security in this case).  Maybe
+there's something to improve in this area.
+
+I went to http://www.us-cert.gov/cas/signup.html to see if there's a
+public CERT mailing list I should be on in order to receive new
+Vulnerability Notes (that are being made public) with no delay (or at
+least with less delay).  Unfortunately, for Vulnerability Notes there
+appears to be an Atom feed only, no mailing list (which I'd prefer).
+Perhaps set one up?
+
+Also, do we possibly want all Open Source software security issues to be
+brought to oss-security, even if they already have CVE IDs assigned?
+For example, don't we want all issues discussed on the Linux distros
+closed list to eventually be mentioned in here (in addition to the
+distro vendor advisories)?  I think we do.  Ditto for stuff handled via
+US-CERT and other CERTs.
+
+Once again, I am not too concerned about the specific OpenSSL issue,
+which even the OpenSSL team does not find important enough to warrant a
+security fix release (according to their vendor statement to CERT),
+although I like the research behind it.  I just think that it's an
+opportunity for us to learn to avoid such two-week post-disclosure
+delays in the future, potentially for more severe issues.
+
+I'd appreciate any comments.
+
+Thanks,
+
+Alexander
