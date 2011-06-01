@@ -1,31 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/7
-Message-ID: <handler.631818.B631818.130924553522669.ackinfo@bugs.debian.org>
-Date: Tue, 28 Jun 2011 07:21:06 +0000
-From: owner@...s.debian.org (Debian Bug Tracking System)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/2
+Message-ID: <4DE5F7FF.5000400@gmx.de>
+Date: Wed, 01 Jun 2011 10:27:43 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Bug#631818: Info received (CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism)
+Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the additional information you have supplied regarding
-this Bug report.
+Am 31.05.2011 22:41, schrieb Matthias Andree:
+> Am 31.05.2011 22:01, schrieb Josh Bressers:
+>>
+>>
+>> ----- Original Message -----
+>>> Could I get a CVE name for the issue in
+>>> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+>>>
+>>
+>> Please use CVE-2011-1947.
+> 
+> Thanks.
+> 
+>> I can't help but wonder what else could be vulnerable to a similar flaw.
+>> Has anyone looked?
+> 
+> I seriously considered not asking for a CVE in the first place because
+> it's rather close to a resource-hogging-through-slowdowns attack vector,
+> if you send at a very slow pace just avoiding the timeout by a notch,
+> you hog your peer's resources for extended amounts of time -- and I
+> can't think of good heuristics to tell abuse from legit use by those on
+> slow links apart, and it's pointless listing CVEs for the unfixable
+> situations.
+> 
+> 
+> Anecdotal story from the fix: I've been particularly disappointed that
+> Solaris 10 doesn't support setsockopt(n, SOL_SOCKET, SO_RCVTIMEO, &foo,
+> sizeof foo); (returns -1 with errno == EAFNOSUPPORT), which would have
+> been the thorough and easy way out.  I've had the code in place and
+> released as candidate, but umm, no, didn't work. I do set SO_KEEPALIVE
+> now, but that's not anywhere close of defending against malice.
 
-This is an automatically generated reply to let you know your message
-has been received.
+I wrote too fast.
+Just so that the list archives reflect the actual fix:
 
-Your message is being forwarded to the package maintainers and other
-interested parties for their attention; they will reply in due course.
+The fixed fetchmail version 6.3.20 runs the SSL_connect() [OpenSSL]
+under a real-time setitimer() that triggers SIGALRM after a
+user-configurable setting (default 300 s).
 
-Your message has been sent to the package maintainer(s):
- Tanguy Ortolo <tanguy+debian@...olo.eu>
-
-If you wish to submit further information on this problem, please
-send it to 631818@...s.debian.org.
-
-Please do not send mail to owner@...s.debian.org unless you wish
-to report a problem with the Bug-tracking system.
+SO_KEEPALIVE takes more than two hours on some systems' defaults before
+even sending the first TCP keepalive probe, which is too long, but can
+be tuned through sysctl or ndd on many relevant systems -- and, more
+importantly, bears no relation to what happens up in the application
+layer. That's what I meant with "does not defend against malice" (for
+instance, a server deliberately keeping the TCP connection open without
+responding), and that situation is what the real-time setitimer() will
+signal.
 
 -- 
-631818: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
-Debian Bug Tracking System
-Contact owner@...s.debian.org with problems
+Matthias Andree
