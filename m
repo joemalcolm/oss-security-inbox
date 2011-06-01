@@ -1,60 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/5
-Message-ID: <20110727085739.GA16080@suse.de>
-Date: Wed, 27 Jul 2011 10:57:39 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/8
+Message-ID: <4DE68A5E.9080106@mvista.com>
+Date: Wed, 01 Jun 2011 08:52:14 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - dhcp clients
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
 
-Can you point us to the exact version and location in code where
-the vulnerability is? I remember to have checked udhcpc at that
-time and neither I found it setting a hostname or parsing
-the options for a hostname.
-The hostname it is using must be passed on the commandline
-and are rather added to the request than parsed from a reply.
 
-While we are on the hostname issue again, AFAIR the kernel contains
-a DHCP client and was accepting hostname options so it could
-theoretically be attacked the same way as with dhclient. However
-this seems only a use-case for thin clients with NFS-root
-or so and in such a case you can execute code on the client anyways.
-So its not really worth fixing, except for vendors which lock
-down their embedded devices before shipping it to their customers, but
-who is doing that? :)
+On 06/01/2011 06:34 AM, Solar Designer wrote:
+> Hi Armin,
+> 
+> On Thu, May 26, 2011 at 05:42:00AM -1000, akuster wrote:
+>> You can find our security Advisories at:
+>> http://www.mvista.com/cve_vulnerabilities.php
+>>
+>> I have updated
+>> http://oss-security.openwall.org/wiki/vendors
+>> http://oss-security.openwall.org/wiki/distro-patches
+> 
+> Thanks.  I've just reviewed the above and subscribed you to the list.
+> 
+> I have some "complaints", though:
 
-Sebastian
+No worries.
 
+> 
+> http://www.mvista.com/cve_vulnerabilities.php gives a mapping of CVE IDs
+> to affected MontaVista products.  That's great.  However, fix
+> information is missing.  Does having a CVE ID listed there imply that
+> you have fixed the issue for those affected products or not (e.g.,
+> perhaps not for EOL'ed products, or are you not listing those as
+> affected at all)?  
 
-On Wed, Jul 27, 2011 at 09:28:48AM +0200, Tomas Hoger wrote:
-> On Tue, 26 Jul 2011 15:35:02 -0400 (EDT) Josh Bressers wrote:
-> 
-> Just to clarify...
-> 
-> > Use CVE-2011-2716 for udhcpc
-> 
-> This is dhcp client that is part of busybox.
-> 
-> > CVE-2011-2717 for udhcp6c.
-> 
-> This should say dhcp6c and is part of the (now obsolete) dhcpv6 project:
-> 
->   https://fedorahosted.org/dhcpv6/
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
+Yes, having the cve listed means it is fixed.
 
--- 
+Specifically relevant to this discussion would be the
+> dates on which you're getting issues fixed (such that those could be
+> compared to CRDs to see if you likely made use of the advance
+> notifications or not).  Right now, you have "Published" and "Modified"
+> dates, but no fix dates (which would be per product?)
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Good input. I will put that on my list for version 2 requirements.
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+> 
+> Also, no info on 2011's CVEs yet.  Does this mean we'd have to wait
+> until 2012 to get an idea on how you're handling 2011's security issues?
+
+Correct. I have an internal business requirement to delay public
+notifications for 6 months in order to give our customers time to
+propagate our fixes to their customers. If our internal processes are
+working, then 2011 CVE's should start showing up sometime this month.
+
+> 
+> That said, you do look like a security-conscious Linux distro vendor
+> now (and you meet some other requirements), so you're on the list.
+> 
+Many thanks.
+
+Armin
+
 
