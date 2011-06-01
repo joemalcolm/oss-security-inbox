@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/4
-Message-ID: <20110919145305.GC20121@suse.de>
-Date: Mon, 19 Sep 2011 16:53:05 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request? etherape remote crash (denial of service)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/5
+Message-ID: <20110601154308.GC13831@dhcp-25-225.brq.redhat.com>
+Date: Wed, 1 Jun 2011 17:43:09 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request -- libvirt: regression introduced in disk probe logic
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Steve, vendors.
 
-The authors of Etherape, a network traffic overview tool, fixed a remote
-denial of service (NULL ptr dereference) fixed in etherape 0.9.12.
+Description:
+Regression introduced in commit d6623003 (v0.8.8) - using the
+wrong sizeof operand meant that security manager private data
+was overlaying the allowDiskFOrmatProbing member of struct
+_virSecurityManager.  This reopens disk probing, which was
+supposed to be prevented by the solution to CVE-2010-2238.
 
-http://etherape.sourceforge.net/
-http://sourceforge.net/tracker/?func=detail&aid=3309061&group_id=2712&atid=102712
+References:
+https://www.redhat.com/archives/libvir-list/2011-May/msg01935.html
+https://bugzilla.redhat.com/show_bug.cgi?id=709769
 
-This tool is in the same area as wireshark, so this probably needs a CVE.
+Could you please allocate a CVE identifier for this issue?
 
-Ciao, Marcus
+Thank you,
+--
+Petr Matousek / Red Hat Security Response Team
