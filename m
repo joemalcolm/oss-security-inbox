@@ -1,21 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/17
-Message-ID: <Pine.GSO.4.64.1104131631320.6578@faron.mitre.org>
-Date: Wed, 13 Apr 2011 16:33:13 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/7
+Message-ID: <1798935709.450084.1307045614547.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Jun 2011 16:13:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: vlc
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 13 Apr 2011, Josh Bressers wrote:
 
-> Their advisory seems to suggest a CVE ID has been requested.
->
-> Steve, does MITRE have such a request?
+----- Original Message -----
+> Could you assign CVE-identifiers for following security
+> vulnerabilities?
+> 
+> https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
+> http://www.htbridge.ch/advisory/xss_in_a_really_simple_chat_arsc.html
+> http://www.htbridge.ch/advisory/multiple_sql_injections_in_a_really_simple_chat_arsc.html
+> 
+> ARSC seems to be a bit of a sinking boat. I still wonder why htbridge
+> does not request CVE-identifiers at all.
+> 
 
-I don't see any, although they've made requests in the past.
 
-Use CVE-2011-1684
+This needs two IDs:
 
-- Steve
+CVE-2011-2180 ARSC XSS
+CVE-2011-2181 ARSC SQL injection
+
+Thanks.
+
+-- 
+    JB
