@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/2
-Message-ID: <20110424104339.GB32078@openwall.com>
-Date: Sun, 24 Apr 2011 14:43:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/6
+Message-ID: <1797174353.449927.1307045180893.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Jun 2011 16:06:20 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: XSS in nagios
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 13, 2011 at 11:11:07AM -0600, Vincent Danen wrote:
-> Please add me to the new list.
+----- Original Message -----
+> An XSS was reported in Nagios today. Could a CVE be assigned to this
+> issue? Thanks.
 > 
-> pub   3072R/E8B86CAB 2011-04-12
->       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
-> uid                  Vincent Danen <vdanen linsec.ca>
-> uid                  Vincent Danen <vdanen annvix.org>
-> uid                  Vincent Danen <vdanen redhat.com>
-> sub   3072R/8BBA24C6 2011-04-12
+> References:
+> 
+> http://tracker.nagios.org/view.php?id=224
+> http://seclists.org/bugtraq/2011/Jun/17
+> https://bugzilla.redhat.com/show_bug.cgi?id=709871
+> 
 
-Added.
+Please use CVE-2011-2179.
 
-BTW, people eligible and wishing to join the list don't have to post the
-specific e-mail addresses and PGP key info in here.  As I wrote in:
+Thanks.
 
-http://www.openwall.com/lists/oss-security/2011/04/04/40
-
-"That said, I agree that having specific e-mail addresses and key IDs
-posted to a public list is excessive.  If anyone else wishes to join
-(and qualifies), please state so in the "Closed list" thread and justify
-your request (currently that would mean info on the Linux distro you're
-a security contact for), then e-mail the specific e-mail address and PGP
-key info to me off-list.  I'll continue to reply on the list, but the
-specific e-mail addresses and keys will be exposed a little bit less."
-
-Of course, for active participants of oss-security and/or other public
-lists this shouldn't matter much (they're "exposed" anyway).
-
-Alexander
+-- 
+    JB
