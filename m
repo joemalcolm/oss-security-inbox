@@ -1,50 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/4
-Message-ID: <20110228194836.GA9440@albatros>
-Date: Mon, 28 Feb 2011 22:48:36 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/1
+Message-ID: <20110602153200.GA19621@foo.fgeek.fi>
+Date: Thu, 2 Jun 2011 18:32:00 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
+Subject: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Could you assign CVE-identifiers for following security vulnerabilities?
 
-"struct sco_conninfo has one padding byte in the end.  Local variable
-cinfo of type sco_conninfo is copied to userspace with this
-uninizialized one byte, leading to old stack contents leak."
+https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
+http://www.htbridge.ch/advisory/xss_in_a_really_simple_chat_arsc.html
+http://www.htbridge.ch/advisory/multiple_sql_injections_in_a_really_simple_chat_arsc.html
 
-https://lkml.org/lkml/2011/2/14/49
+ARSC seems to be a bit of a sinking boat. I still wonder why htbridge does not request CVE-identifiers at all.
 
-
-"Struct ca is copied from userspace.  It is not checked whether the
-"device" field is NULL terminated.  This potentially leads to BUG()
-inside of alloc_netdev_mqs() and/or information leak by creating a
-device with a name made of contents of kernel stack."
-
-https://lkml.org/lkml/2011/2/14/50
-
-
-"Struct tmp is copied from userspace.  It is not checked whether the
-"name" field is NULL terminated.  This may lead to buffer overflow and
-passing contents of kernel stack as a module name to
-try_then_request_module() and, consequently, to modprobe commandline.
-It would be seen by all userspace processes."
-
-https://lkml.org/lkml/2011/2/14/51
-
-
-The vulnerable code was written before the "git epoch".  One needs
-CAP_NET_ADMIN to exploit the 2nd and the 3rd.
-
-
-JFI, the patch to prevent the panic inside of alloc_netdev() (to prevent
-analogues of #2) was rejected by upstream:
-
-https://lkml.org/lkml/2011/2/14/52
-
-
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Best regards,
+Henri Salo
