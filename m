@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/10
-Message-Id: <C953571F-C402-4B61-94D8-A68E555A4D4D@oracle.com>
-Date: Tue, 30 Aug 2011 21:25:34 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/5
+Message-ID: <1130385152.449852.1307045020774.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Jun 2011 16:03:40 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed List
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- libvirt: regression introduced in disk probe logic
 Content-Type: text/plain; charset=utf-8
 
-
-On 30 Aug 2011, at 20:51, Solar Designer wrote:
-
-> Hi John,
+----- Original Message -----
+> Hello Steve, vendors.
 > 
-> On Tue, Aug 30, 2011 at 05:06:37PM +0100, John Haxby wrote:
->> I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
->> actually in the Linux sustaining team, the team actually responsible for
->> fixing most of the bugs.
->> 
->> Could you please add me to the closed list?   There is one other person
->> on the list for Oracle, but none, yet, from the Linux group.
+> Description:
+> Regression introduced in commit d6623003 (v0.8.8) - using the
+> wrong sizeof operand meant that security manager private data
+> was overlaying the allowDiskFOrmatProbing member of struct
+> _virSecurityManager. This reopens disk probing, which was
+> supposed to be prevented by the solution to CVE-2010-2238.
 > 
-> I've just added you.
+> References:
+> https://www.redhat.com/archives/libvir-list/2011-May/msg01935.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=709769
+> 
 
+Please use CVE-2011-2178
 
-Many thanks.
+Thanks.
 
-jch
+-- 
+    JB
