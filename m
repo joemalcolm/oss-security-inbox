@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/2
-Message-ID: <905281060.247741.1299074247067.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Wed, 2 Mar 2011 08:57:27 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/5
+Message-ID: <1130385152.449852.1307045020774.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Jun 2011 16:03:40 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: nelhage@...lice.com
-Subject: Re: CVE request: kernel: Multiple DoS issues in epoll
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- libvirt: regression introduced in disk probe logic
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> Two requests for bugs in epoll:
+> Hello Steve, vendors.
 > 
-> (1) The epoll subsystem in Linux did not prevent users from creating
-> circular
-> epoll file structures, potentially leading to a denial of service
-> (kernel
-> deadlock).
-> 
-> Reference: https://lkml.org/lkml/2011/2/5/220
-> Upstream commit:
-> http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
-
-Please use CVE-2011-1082.
-
-> (2) The epoll subsystem allows users to create large nested epoll
-> structures,
-> which the kernel will then to walk with preemption disabled, causing a
-> denial of
-> service via excessive CPU consumption in the kernel.
+> Description:
+> Regression introduced in commit d6623003 (v0.8.8) - using the
+> wrong sizeof operand meant that security manager private data
+> was overlaying the allowDiskFOrmatProbing member of struct
+> _virSecurityManager. This reopens disk probing, which was
+> supposed to be prevented by the solution to CVE-2010-2238.
 > 
 > References:
-> http://thread.gmane.org/gmane.linux.kernel/1105744
-> http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
+> https://www.redhat.com/archives/libvir-list/2011-May/msg01935.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=709769
 > 
-> No upstream fix yet for this one.
 
-Please use CVE-2011-1083.
+Please use CVE-2011-2178
 
-Thank you,
---
-Petr Matousek / Red Hat Security Response Team
+Thanks.
+
+-- 
+    JB
