@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/1
-Message-ID: <4E5C60F7.8060602@redhat.com>
-Date: Tue, 30 Aug 2011 12:03:03 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: CVE-2011-2482/2519
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/2
+Message-ID: <4DE7B9AA.40908@redhat.com>
+Date: Thu, 02 Jun 2011 18:26:18 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Cherokee -- server admin vulnerable to csrf
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-2482 sctp DoS
-This does not affect the upstream kernel. Our kernel left out a chunk of
-upstream ea2bc483ff5 that was not needed at the time of the backport,
-but was later required for a feature that we introduced in the kernel.
 
-https://bugzilla.redhat.com/CVE-2011-2482
-http://git.kernel.org/linus/ea2bc483ff5caada7c4aa0d5fbf87d3a6590273d
+Hello, Josh, Steve, vendors,
 
-CVE-2011-2519 xen: x86_emulate: fix SAHF emulation
-This has been addressed in the upstream xen implementation. The patched
-code would cause a hypervisor crash due to dereferencing a bogus address
-(in the first 4 MBs of address space, as EFLAGS bits above bit 21 are
-always 0, but more likely in the first page).
+   this doesn't seem to have a CVE identifier yet:
+   [1] http://seclists.org/fulldisclosure/2011/Jun/0
 
-http://xenbits.xen.org/hg/xen-3.1-testing.hg/rev/15644
-https://bugzilla.redhat.com/CVE-2011-2519
+Though not sure, how much probable it is, it would get fixed,
+since upstream looks to consider this not to be an issue.
 
-Thanks, Eugene
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
