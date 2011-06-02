@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/7
-Message-ID: <1767014887.126919.1294083734165.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 14:42:14 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley  <coley@...re.org>
-Subject: Re: CVE Request: CrawlTrack < 3.2.7 - remote php code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/3
+Message-ID: <4DE7C702.4050502@redhat.com>
+Date: Thu, 02 Jun 2011 19:23:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Russell Coker <rcoker@...hat.com>, Daniel Ruoso <daniel@...so.com>
+Subject: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Versions of CrawlTrack prior to 3.2.7 are, according to the vendor,
-> vulnerable to a remote PHP code execution attack if the stats pages
-> are public
-> 
-> Vendor changelog: http://www.crawltrack.net/changelog.php
-> 
-> The attack vector isn't disclosed but a diff between 3.2.6 and 3.2.7
-> show the vendor's fix was to escape special characters (using
-> http://php.net/htmlspecialchars ) in values supplied through POST
-> variables.
 
-Please use CVE-2010-4537
+Hello Josh, Steve, vendors,
 
-Thanks.
+   based on Debian BTS report:
+   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+       (first CVE-2011-XXYY required for Debian case)
 
--- 
-    JB
+looked more into original report:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+
+and the first paragraph of [2] suggests:
+"When starting a program via "su - user -c program" the user session
+can escape to the parent session by using the TIOCSTI ioctl to push
+characters into the input buffer.  This allows for example a non-root
+session to push "chmod 666 /etc/shadow" or similarly bad commands into
+the input buffer such  that after the end of the session they are
+executed."
+
+this should get a CVE-2005-YYZZ CVE id.
+
+Could you allocate these?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
