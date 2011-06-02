@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/2
-Message-ID: <4E07F762.2050000@redhat.com>
-Date: Mon, 27 Jun 2011 11:22:10 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>
-Subject: Re: CVE request: kernel: mm: avoid wrapping vm_pgoff in mremap() and stack expansions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/6
+Message-ID: <1797174353.449927.1307045180893.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 2 Jun 2011 16:06:20 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: XSS in nagios
 Content-Type: text/plain; charset=utf-8
 
-On 06/25/2011 04:19 AM, Petr Matousek wrote:
-> Description of the problem:
-> The normal mmap paths all avoid creating a mapping where the pgoff
-> inside the mapping could wrap around due to overflow.  However, an
-> expanding mremap() can take such a non-wrapping mapping and make it
-> bigger and cause a wrapping condition. There is also another case
-> where we expand mappings hiding in plain sight: the automatic stack
-> expansion.
+----- Original Message -----
+> An XSS was reported in Nagios today. Could a CVE be assigned to this
+> issue? Thanks.
 > 
-> The wrapping condition can cause a BUG_ON() due to terminally
-> confusing the vma_prio_tree code.
+> References:
+> 
+> http://tracker.nagios.org/view.php?id=224
+> http://seclists.org/bugtraq/2011/Jun/17
+> https://bugzilla.redhat.com/show_bug.cgi?id=709871
+> 
 
-Please use CVE-2011-2496.
+Please use CVE-2011-2179.
 
-Eugene
+Thanks.
+
+-- 
+    JB
