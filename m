@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/16
-Message-ID: <4E12F3AE.60306@redhat.com>
-Date: Tue, 05 Jul 2011 19:21:18 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: security-officer@....org
-Subject: Re: The Bind incident
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/2
+Message-ID: <4DE7B9AA.40908@redhat.com>
+Date: Thu, 02 Jun 2011 18:26:18 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Cherokee -- server admin vulnerable to csrf
 Content-Type: text/plain; charset=utf-8
 
-(Cc'ed the ISC folks)
 
-On 07/05/2011 07:17 PM, Eugene Teo wrote:
-> You might have read about AusCert's accidental disclosure of the ISC
-> Bind advisories today. If you have more information about this, please
-> share. AFAICS, the bind source packages are still not available at the
-> ISC website.
-> 
-> https://bugzilla.redhat.com/CVE-2011-2464
-> https://bugzilla.redhat.com/CVE-2011-2465
-> http://risky.biz/auscert-bind
-> http://pastebin.com/9NUt8Pk0
-> 
-> Thanks, Eugene
+Hello, Josh, Steve, vendors,
 
+   this doesn't seem to have a CVE identifier yet:
+   [1] http://seclists.org/fulldisclosure/2011/Jun/0
+
+Though not sure, how much probable it is, it would get fixed,
+since upstream looks to consider this not to be an issue.
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
