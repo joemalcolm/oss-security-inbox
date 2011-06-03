@@ -1,42 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/4
-Message-ID: <20110621143441.GA7449@suse.de>
-Date: Tue, 21 Jun 2011 16:34:41 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/9
+Message-Id: <201106031901.28961.jnareb@gmail.com>
+Date: Fri, 3 Jun 2011 19:01:28 +0200
+From: Jakub Narebski <jnareb@...il.com>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: Junio C Hamano <gitster@...ox.com>, oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
+Subject: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
->Returning to the crypt_blowfish topic, I am considering keeping 
->support
->for the broken hashes under another prefix - say, "$2x$" (where the "x"
->would stand for "sign eXtension bug") instead of the usual "$2a$".  For
->typical passwords, they'd be the same (except for this one letter in the
->prefix).  Their potential use would be by a sysadmin wishing to avoid
->any service disruption for anyone (even if that means potentially
->staying with weaker passwords than what some users might have expected;
->maybe password changes would then be recommended or forced over time).
->That sysadmin would replace "$2a$" with "$2x$" in existing hashes on the
->system right before upgrade to corrected software (such as PHP or glibc
->with crypt_blowfish).  Alternatively, say, a custom web app could be
->making this replacement for crypt() calls only, on hashes created before
->upgrade date.
+On Fri, 3 July 2011, Jamie Strandboge wrote:
 
-I wonder whether it would make sense to patch pam_unix (resp 
-pam_unix2 in our case) to detect the problem and activate the 
-workaround automatically. pam_unix has the clear text password so 
-knows when it contains 8bit characters. It also has the shadow entry 
-which tells when the password was set. If that date is before the 
-update was installed the 2x method could be tried if 2a failed and a 
-warning could be logged to syslog.
+> https://launchpad.net/bugs/777804
+[...]
+> ----
+> I am reporting a persistent xss vector in gitweb, note this requires a
+> user to have commit access to a repository that gitweb is configured
+> to display. The vector is the fact that gitweb "serves" up xml files -
+> which can (just as gitweb does) embed html that could be used to
+> perform a cross-site scripting attack.
+> 
+> e.g. (lol.xml).
+> <?xml version="1.0" encoding="utf-8"?>
+> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+> "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+> <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+> <head>
+> </head>
+> <script>alert(1);</script>
+> </html>
+> 
+> and viewed at
+> http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+> ----
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
 
-cu
-Ludwig
+In short: This is a feature, not a bug.
+
+Origin of current behavior:
+---------------------------
+The 'blob_plain' action (raw view) together with support for path_info
+URLs were designed together so that gitweb could be used as a kind of
+deploy platform.  For example you can browse git documentation from
+'html' branch of git.git repository using gitweb, c.f.
+
+  http://repo.or.cz/w/git.git/blob_plain/html:/git.html
+
+Also, by default (and I think in most configurations) there isn't
+anything worth stealing using cross-side scripting attack; there
+is no login information, no cookies with sensitive information...
+
+Proposal of solution:
+---------------------
+Nevertheless gitweb include a germ of anti-XSS framework, namely
+$prevent_xss gitweb configuration variable.
+
+It is currently used to prevent displaying README.html from $GIT_DIR
+of repository, but I think it can be reused for this situation (at
+the cost of reduced feature set).  Namely if $prevent_xss is true,
+we can simply serve all 'blob_plain' as either text/plain or 
+application/octet-stream (with possible exception of *.jpg, *.gif
+and *.png images).
+
+Proposed patch:
+---------------
+Note that it includes unrelated fix for $prevent_xss feature.  It would
+be split in separate patch (non-security related bugfix).
+
+With this patch above lol.xml would be served as text/plain...
+
+-- >8 --
+diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index 240dd47..a3c03f3 100755
+--- i/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -3595,7 +3595,7 @@ sub blob_mimetype {
+ 	my $fd = shift;
+ 	my $filename = shift;
+ 
+-	if ($filename) {
++	if ($filename && !$prevent_xss) {
+ 		my $mime = mimetype_guess($filename);
+ 		$mime and return $mime;
+ 	}
+@@ -6127,7 +6127,7 @@ sub git_blob_plain {
+ 	# want to be sure not to break that by serving the image as an
+ 	# attachment (though Firefox 3 doesn't seem to care).
+ 	my $sandbox = $prevent_xss &&
+-		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))$!;
++		$type !~ m!^(?:text/plain(?:; ?charset=.*)|image/(?:gif|png|jpeg))$!;
+ 
+ 	print $cgi->header(
+ 		-type => $type,
+-- 8< --
 
 -- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Jakub Narebski
+Poland
