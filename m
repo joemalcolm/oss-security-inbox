@@ -1,41 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/1
-Message-ID: <CAH5b-BVOY7gD-tAzjXFnPEm2Lo2i1mRLeiHpW=L2jWQB17MC0w@mail.gmail.com>
-Date: Wed, 28 Sep 2011 13:07:58 +0200
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com, taviso@...xchg8b.com
-Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/7
+Message-ID: <1307117712.8176.17.camel@localhost>
+Date: Fri, 03 Jun 2011 11:15:12 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: akub Narebski <jnareb@...il.com>, Junio C Hamano <gitster@...ox.com>
+Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
+Subject: Security issue in gitweb
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 27, 2011 at 8:52 PM, Tavis Ormandy <taviso@...xchg8b.com> wrote:
+A security bug was reported by 'dave b' (in CC) against gitweb in
+Ubuntu. You are being emailed as the upstream contact. Please keep
+oss-security[1] CC'd for any updates on this issue.
 
->
-> Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
-> rpm signature verification. Some trivial bitflipping found a few memory
-> corruption issues.
->
-> Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
-> native module wrapper that exports librpm to python. I'll step through the
-> signature verification logic when I get a chance.
->
-> Obviously we need the sections of rpm code touched before signature
-> verification to be bulletproof, as most distributions rely on public mirror
-> services that may or may not be trusted. Any volunteers who know crypto
-> better than me appreciated, I'll be primarily looking for memory
-> corruption.
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=741606
-> https://bugzilla.redhat.com/show_bug.cgi?id=741612
->
-> These bugs don't affect IMHO rpm5 : i have updated the bugzilla with these
-infos. Best Regards
+This issue should be considered public, but has not yet been assigned a
+CVE. Once a CVE is assigned, please mention it in any changelogs.
 
-> Tavis.
->
-> --
-> -------------------------------------
-> taviso@...xchg8b.com | pgp encrypted mail preferred
-> -------------------------------------------------------
->
->
+Details from the public bug follow:
+https://launchpad.net/bugs/777804
 
+From the reporter:
+----
+I am reporting a persistent xss vector in gitweb, note this requires a
+user to have commit access to a repository that gitweb is configured
+to display. The vector is the fact that gitweb "serves" up xml files -
+which can (just as gitweb does) embed html that could be used to
+perform a cross-site scripting attack.
+
+e.g. (lol.xml).
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+lang="en-US">
+<head>
+</head>
+<script>alert(1);</script>
+</html>
+
+and viewed at
+http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+----
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
+
+Jamie Strandboge
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
