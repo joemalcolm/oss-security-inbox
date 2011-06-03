@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/5
-Message-ID: <1316704309.3222.2.camel@localhost>
-Date: Thu, 22 Sep 2011 10:11:42 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- apt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/5
+Message-ID: <4DE8DFEF.5070407@redhat.com>
+Date: Fri, 03 Jun 2011 15:21:51 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>
+Subject: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
 Content-Type: text/plain; charset=utf-8
 
-apt-key in Ubuntu is not verifying the key correctly when it is fetched
-via 'apt-key net-update'. This was reported here:
 
-http://seclists.org/fulldisclosure/2011/Sep/221
+Hello, Josh, Steve, vendors,
 
-and tracked here:
-https://launchpad.net/bugs/856489
+   It was found that fabric, a simple Pythonic remote deployment tool,
+used insecure way for creation of temporary files, when uploading
+template text files and project files to a remote system. A local
+attacker could use this flaw to conduct symlink attacks to upload
+sensitive information to remote host or to overwrite certain local
+system files.
 
-Based on the man page, Debian should not be affected. Derivatives of
-Ubuntu probably are.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+Could you allocate a CVE id for this?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
