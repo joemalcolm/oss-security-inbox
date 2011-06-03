@@ -1,26 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/5
-Message-ID: <20111129061453.GA26872@openwall.com>
-Date: Tue, 29 Nov 2011 10:14:53 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Raphael Bastos <tecnologia@...tosservice.com.br>
-Cc: oss-security@...ts.openwall.com, security@...ckware.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/11
+Message-ID: <BANLkTinhGB=BwQfhsCGCFUNABDAjUMmEPA@mail.gmail.com>
+Date: Sat, 4 Jun 2011 06:03:32 +1000
+From: dave b <db.pub.mail@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-Raphael -
-
-On Mon, Nov 28, 2011 at 09:18:50PM -0200, Raphael Bastos wrote:
-> Take a look.... this is the correction sugest to script "SeTpartitions".
-
-As Kurt said, you definitely need to provide more information.  I found
-your posting cryptic and I was unsure about approving it for
-distribution to the list (yet I did), because it could at best result in
-a request for more info.  Security relevance of your finding is unclear
-from what you posted.
-
-Please clarify.
-
-Thanks,
-
-Alexander
+I wasn't sure if the behaviour was intended or not.
+I probably missed that that part of the documentation  :(
