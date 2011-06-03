@@ -1,36 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/4
-Message-ID: <20111026142429.GA23713@suse.de>
-Date: Wed, 26 Oct 2011 16:24:29 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/2
+Message-ID: <4DE881E1.2000707@redhat.com>
+Date: Fri, 03 Jun 2011 14:40:33 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: slapd off by one
+CC: "stev >> \"Steven M. Christey\"" <coley@...us.mitre.org>
+Subject: CVE request: kernel: set cred->user_ns in key_replace_session_keyring
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+new->user_ns is uninitialised if the cred is not created with
+copy_creds(). If I'm not mistaken, this was introduced by
+47a150edc2ae734c0f4bf50aa19499 (v2.6.39).
 
-Is there already a CVE for this one?
+Thread starts from https://lkml.org/lkml/2011/5/23/199;
+Proposed patch: https://lkml.org/lkml/2011/5/25/265
 
-http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
-
-(UTF8StringNormalize() off by one)
-
-Also see:
-
-https://bugzilla.novell.com/show_bug.cgi?id=724201
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Thanks, Eugene
