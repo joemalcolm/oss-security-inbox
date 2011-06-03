@@ -1,45 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/1
-Message-ID: <20110426153729.GB2160@redhat.com>
-Date: Tue, 26 Apr 2011 09:37:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/12
+Message-ID: <20110603215355.GA1306@openwall.com>
+Date: Sat, 4 Jun 2011 01:53:55 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-* [2011-04-24 14:43:39 +0400] Solar Designer wrote:
+Hi all,
 
->On Wed, Apr 13, 2011 at 11:11:07AM -0600, Vincent Danen wrote:
->> Please add me to the new list.
->>
->> pub   3072R/E8B86CAB 2011-04-12
->>       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
->> uid                  Vincent Danen <vdanen linsec.ca>
->> uid                  Vincent Danen <vdanen annvix.org>
->> uid                  Vincent Danen <vdanen redhat.com>
->> sub   3072R/8BBA24C6 2011-04-12
->
->Added.
->
->BTW, people eligible and wishing to join the list don't have to post the
->specific e-mail addresses and PGP key info in here.  As I wrote in:
->
->http://www.openwall.com/lists/oss-security/2011/04/04/40
->
->"That said, I agree that having specific e-mail addresses and key IDs
->posted to a public list is excessive.  If anyone else wishes to join
->(and qualifies), please state so in the "Closed list" thread and justify
->your request (currently that would mean info on the Linux distro you're
->a security contact for), then e-mail the specific e-mail address and PGP
->key info to me off-list.  I'll continue to reply on the list, but the
->specific e-mail addresses and keys will be exposed a little bit less."
->
->Of course, for active participants of oss-security and/or other public
->lists this shouldn't matter much (they're "exposed" anyway).
+We have started with the project described below under GSoC 2011, and
+I've just setup a new mailing list for it, as well as for Linux kernel
+hardening topics in general.  Here's my "welcome" message explaining
+this in more detail and referencing work that has already started:
 
-Yeah, I wasn't too concerned.  My email address is everywhere, and
-having my public key everywhere is a good thing.  If I could do the
-latter without the former, I'd be really happy.  =)
+http://www.openwall.com/lists/kernel-hardening/2011/06/03/1
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Folks interested in getting involved (or just watching) are welcome to
+join the kernel-hardening list (some already did).  Subscribe here:
+
+http://www.openwall.com/lists/#subscribe
+
+(choose "kernel-hardening" from the drop-down at the bottom of this page).
+
+Now the context to this (which was too long to top-quote):
+
+On Wed, Mar 23, 2011 at 03:35:09AM +0300, Solar Designer wrote:
+> On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
+> > A push has started to try to get as much as possible upstream into the
+> > Linux kernel from the various hardening patches that exist in PaX,
+> > grsecurity, OpenWall, etc. I've got some details here:
+> > 
+> > http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
+> > 
+> > And there's a sign-up list here, for people interested in helping out:
+> > 
+> > https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+> > 
+> > We could use the help. :)
+> 
+> Here's another way to help out: Openwall is a mentoring organization for
+> Google Summer of Code 2011 (GSoC), and one of our "ideas" is this:
+> 
+> http://openwall.info/wiki/ideas
+> 
+> "Linux kernel hardening - extract security hardening changes from various
+> patches (which the mentor will point out), forward-port them to the
+> latest mainstream kernels, make it easy to enable/disable the hardening
+> measures (both compile- and runtime), add documentation, properly submit
+> to and work with LKML (make proposals and own discussions to completion:
+> either rejection or acceptance).  This is a noble but thankless job to
+> do, so be prepared!  The authors of those changes did not submit them
+> "properly" and did not "own discussions to completion" precisely because
+> the job is so thankless. ;-)
+> 
+> This may optionally involve work with other kernel branches and other
+> upstreams as well (OpenVZ, Red Hat, Ubuntu)."
+> 
+> Under Owl tasks, we also have:
+> 
+> "The rhel6 branch OpenVZ kernel that we'd update to will need to be
+> security-hardened, in part by reviewing, extracting, cleaning up,
+> porting, and documenting/commenting individual changes from grsecurity
+> and PaX (some of which have originated from Openwall's patches for older
+> kernels), and in part by implementing new security-related
+> changes/features, some of those specific to container-based
+> virtualization (purpose-specific restrictions to be applied on
+> per-container basis).  We expect help/consulting/mentoring from the
+> author of PaX on portions that are PaX (some of these are difficult to
+> understand from the code alone, especially the rationale behind things
+> being done in a certain way), whereas the rest are not too complicated
+> for a capable person to fully figure out on their own.
+> 
+> We should work with upstreams - OpenVZ and Red Hat - to try and get some
+> of these enhancements accepted."
+...
+
+Alexander
