@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/2
-Message-ID: <20110413052128.GF3934@redhat.com>
-Date: Tue, 12 Apr 2011 23:21:28 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/3
+Message-ID: <4DE8838B.5020401@redhat.com>
+Date: Fri, 03 Jun 2011 14:47:39 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki 1.16.3
+CC: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>, coley <coley@...re.org>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-Mediawiki 1.16.3 has been released with three noted flaws:
+On 02/25/2011 04:22 AM, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+>> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
+>>> On 02/24/2011 03:59 AM, Josh Bressers wrote:
+>>>> ----- Original Message -----
+>>>>>
+>>>>> The kernel automatically evaluates partition tables of storage
+>>>>> devices.  The code for evaluating LDM partitions (in
+>>>>> fs/partitions/ldm.c) contains a bug that allows to overflow the
+>>>>> kernel heap. It may be possible to escalate privileges by exploiting
+>>>>> this bug.
+[...]
+> I would still like something along the lines of a proposed patch. I believe
+> you folks (as you're much brighter than me), but I still don't quite grasp
+> the difference. I suspect there is enough public information for MITRE to
+> public a CVE though, so please use CVE-2011-1017.
 
-1) XSS with IE <= 6 due to improper handling of uploaded file names
-2) CSS validation error in wikitext parser
-3) transwiki import neglects to perform access control checks
+It was reported that the fix for this is insufficient. I have assigned
+CVE-2011-2182 to this. See https://lkml.org/lkml/2011/5/6/407.
 
-Can CVE names be assigned to these issues?
+Timo, can you please post the patch here once you have submitted it to
+lkml for review. Thanks.
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Eugene
