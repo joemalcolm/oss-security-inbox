@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/5
-Message-Id: <201103111537.56413.ludwig.nussel@suse.de>
-Date: Fri, 11 Mar 2011 15:37:56 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/3
+Message-ID: <4DE8838B.5020401@redhat.com>
+Date: Fri, 03 Jun 2011 14:47:39 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+CC: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>, coley <coley@...re.org>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-Florian Zumbiehl wrote:
-> > On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
-> > > What about these?:
-> > > 
-> > > | However, I think that still #6 (shell injection) and #7 (logrotate
-> > > | DoS with strange characters in file names) should be considered
-> > > | vulnerabilities in logrotate: It would be reasonable to assume that you
-> > > | can use user input that's a valid (slash-less) filename as a (part of a)
-> > > | log file name (assuming that the program is running as the same user that
-> > > | inspects and rotates the logs, so the log directory being writable by
-> > > | the program would not be insecure per-se) without that file name being
-> > > | interpreted by a shell or causing logrotate to stop functioning,
-> > > | respectively.
-> [...]
-> > To summarize, it feels like in theory a privilege boundary could exist
-> > here and be crossed on certain systems with extra software, but in
-> > practice this is unlikely and it would indicate poor design of another
-> > piece of software or/and false sense of security put into that privilege
-> > boundary.  I don't know what this means for CVE id assignment per the
-> > current "rules".
+On 02/25/2011 04:22 AM, Josh Bressers wrote:
 > 
-> I was thinking more in the direction of an existing config that includes
-> a wildcard and software that uses user input to construct file names
-> that would be matched by that wildcard. An example of such software
-> would be samba, which tends to create per-client-host log files named
-> after those hosts. I don't have a clue whether samba could be made to
-> include any shell meta characters (does it even do reverse lookups for
-> that?), but I guess you get the idea.
+> ----- Original Message -----
+>> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
+>>> On 02/24/2011 03:59 AM, Josh Bressers wrote:
+>>>> ----- Original Message -----
+>>>>>
+>>>>> The kernel automatically evaluates partition tables of storage
+>>>>> devices.  The code for evaluating LDM partitions (in
+>>>>> fs/partitions/ldm.c) contains a bug that allows to overflow the
+>>>>> kernel heap. It may be possible to escalate privileges by exploiting
+>>>>> this bug.
+[...]
+> I would still like something along the lines of a proposed patch. I believe
+> you folks (as you're much brighter than me), but I still don't quite grasp
+> the difference. I suspect there is enough public information for MITRE to
+> public a CVE though, so please use CVE-2011-1017.
 
-libvirt constructs log file names from user input (log file name =
-VM name). The user needs to have the org.libvirt.unix.manage
-privilege which bascially already is full root though.
+It was reported that the fix for this is insufficient. I have assigned
+CVE-2011-2182 to this. See https://lkml.org/lkml/2011/5/6/407.
 
-cu
-Ludwig
+Timo, can you please post the patch here once you have submitted it to
+lkml for review. Thanks.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Eugene
