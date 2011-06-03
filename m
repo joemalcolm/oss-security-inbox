@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/3
-Message-ID: <4D52B0C4.901@redhat.com>
-Date: Wed, 09 Feb 2011 23:20:36 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/5
+Message-ID: <4DE8DFEF.5070407@redhat.com>
+Date: Fri, 03 Jun 2011 15:21:51 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>
+Subject: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
 Content-Type: text/plain; charset=utf-8
 
-On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
-> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
-> btrfs_ioctl_space_info() and introduced security issues.  Since they
-> were all introduced at once and fixed at the same time, one CVE should
-> suffice.
->
-> Due to integer truncation or a signedness error in a typecasted
-> comparison, an integer overflow in an allocation size calculation, and
-> a failure to properly check bounds when copying data, it was possible
-> for an unprivileged user to cause a denial-of-service due to writing
-> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
->
-> -Dan
->
-> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
 
-Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last 
-year. Do we have commercially supported kernels that are affected by this?
+Hello, Josh, Steve, vendors,
 
-Thanks, Eugene
+   It was found that fabric, a simple Pythonic remote deployment tool,
+used insecure way for creation of temporary files, when uploading
+template text files and project files to a remote system. A local
+attacker could use this flaw to conduct symlink attacks to upload
+sensitive information to remote host or to overwrite certain local
+system files.
+
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
+
+Could you allocate a CVE id for this?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
