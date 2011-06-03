@@ -1,66 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/3
-Message-ID: <20111115031417.GA8192@openwall.com>
-Date: Tue, 15 Nov 2011 07:14:17 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/12
+Message-ID: <20110603215355.GA1306@openwall.com>
+Date: Sat, 4 Jun 2011 01:53:55 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>
-Subject: OpenBSD bcrypt error return
+Subject: Re: Linux kernel proactive security hardening
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-The bcrypt implementation from OpenBSD, now also found in FreeBSD and
-NetBSD, returns a constant string on error.
+We have started with the project described below under GSoC 2011, and
+I've just setup a new mailing list for it, as well as for Linux kernel
+hardening topics in general.  Here's my "welcome" message explaining
+this in more detail and referencing work that has already started:
 
-http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/crypt/
-http://www.freebsd.org/cgi/cvsweb.cgi/src/secure/lib/libcrypt/
-http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libcrypt/
+http://www.openwall.com/lists/kernel-hardening/2011/06/03/1
 
-static char    error[] = ":";
+Folks interested in getting involved (or just watching) are welcome to
+join the kernel-hardening list (some already did).  Subscribe here:
 
-Clearly, ":" can't match a field value in an /etc/passwd-like file,
-which is great, but what happens if one of those errors occurs when
-setting a new password?  Luckily, the specific errors being checked for
-have to do with unsupported or invalid salt strings, so they can't
-happen on a properly configured system.  Nevertheless, this may be a
-disaster waiting to happen - e.g., if a new "$2" prefix is introduced
-(like I did when dealing with the crypt_blowfish bug), support for it is
-added to a password-changing program, but an appropriate update to libc
-or libcrypt is not yet deployed on a system.
+http://www.openwall.com/lists/#subscribe
 
-Thus, to avoid this disaster, this poor way of handling errors may also
-get in the way of adding support for such extra "$2" prefixes on *BSD,
-unfortunately.  This is something I forgot about when deciding on those
-this summer, even though I was aware of this issue in OpenBSD since 1998
-or so.
+(choose "kernel-hardening" from the drop-down at the bottom of this page).
 
-Yes, I did report this issue to OpenBSD folks at least twice - last time
-this summer, after it was independently discovered by Zefram.
+Now the context to this (which was too long to top-quote):
 
-Maybe FreeBSD and/or NetBSD will want to patch it, or at least to be
-aware of the risk - hence the posting in here.
-
-The fix may be to reuse the approach from crypt_blowfish:
-
-int _crypt_output_magic(const char *setting, char *output, int size)
-{
-	if (size < 3)
-		return -1;
-
-	output[0] = '*';
-	output[1] = '0';
-	output[2] = '\0';
-
-	if (setting[0] == '*' && setting[1] == '0')
-		output[1] = '1';
-
-	return 0;
-}
-
-This may be done in bcrypt.c or in wrapper code common for all crypt(3)
-hash types.
-
-Proactive security, anyone?
+On Wed, Mar 23, 2011 at 03:35:09AM +0300, Solar Designer wrote:
+> On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
+> > A push has started to try to get as much as possible upstream into the
+> > Linux kernel from the various hardening patches that exist in PaX,
+> > grsecurity, OpenWall, etc. I've got some details here:
+> > 
+> > http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
+> > 
+> > And there's a sign-up list here, for people interested in helping out:
+> > 
+> > https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
+> > 
+> > We could use the help. :)
+> 
+> Here's another way to help out: Openwall is a mentoring organization for
+> Google Summer of Code 2011 (GSoC), and one of our "ideas" is this:
+> 
+> http://openwall.info/wiki/ideas
+> 
+> "Linux kernel hardening - extract security hardening changes from various
+> patches (which the mentor will point out), forward-port them to the
+> latest mainstream kernels, make it easy to enable/disable the hardening
+> measures (both compile- and runtime), add documentation, properly submit
+> to and work with LKML (make proposals and own discussions to completion:
+> either rejection or acceptance).  This is a noble but thankless job to
+> do, so be prepared!  The authors of those changes did not submit them
+> "properly" and did not "own discussions to completion" precisely because
+> the job is so thankless. ;-)
+> 
+> This may optionally involve work with other kernel branches and other
+> upstreams as well (OpenVZ, Red Hat, Ubuntu)."
+> 
+> Under Owl tasks, we also have:
+> 
+> "The rhel6 branch OpenVZ kernel that we'd update to will need to be
+> security-hardened, in part by reviewing, extracting, cleaning up,
+> porting, and documenting/commenting individual changes from grsecurity
+> and PaX (some of which have originated from Openwall's patches for older
+> kernels), and in part by implementing new security-related
+> changes/features, some of those specific to container-based
+> virtualization (purpose-specific restrictions to be applied on
+> per-container basis).  We expect help/consulting/mentoring from the
+> author of PaX on portions that are PaX (some of these are difficult to
+> understand from the code alone, especially the rationale behind things
+> being done in a certain way), whereas the rest are not too complicated
+> for a capable person to fully figure out on their own.
+> 
+> We should work with upstreams - OpenVZ and Red Hat - to try and get some
+> of these enhancements accepted."
+...
 
 Alexander
