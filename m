@@ -1,39 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/6
-Message-ID: <20110518200633.GA5730@pisco.westfalen.local>
-Date: Wed, 18 May 2011 22:06:33 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/1
+Message-ID: <4DE87A38.3030604@redhat.com>
+Date: Fri, 03 Jun 2011 14:07:52 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: ffmpeg/widelands/jifty::db/lilo/libpcap
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ksm: race between ksmd and exiting task
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs for the following issues tracked in the Debian Security Tracker:
+A race condition issue was found in the KSM implementation.
 
-1. ffmpeg/libav out of array write in AMV parsing
+https://bugzilla.redhat.com/show_bug.cgi?id=710338
+Report: http://www.spinics.net/lists/linux-mm/msg20233.html
+Proposed patch: http://www.spinics.net/lists/linux-mm/msg20301.html
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624339
-http://seclists.org/bugtraq/2011/Apr/257
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=89f903b3d5ec38c9c5d90fba7e626fa0eda61a32
-
-2. widelands directory traversal
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=617960
-http://bazaar.launchpad.net/~widelands-dev/widelands/build-15/revision/5021
-
-3. SQL injection in Jifty::DBI
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622919
-http://lists.jifty.org/pipermail/jifty-devel/2011-April/002426.html
-
-4. lilo: lilo-uuid-diskid makes lilo.conf world-readable
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=615103
-
-5. libpcap packet truncation
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=623868
-http://thread.gmane.org/gmane.network.tcpdump.devel/5018
-
-Cheers,
-        Moritz
+Thanks, Eugene
