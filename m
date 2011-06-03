@@ -1,55 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/5
-Message-ID: <20110803155646.GA26540@ngolde.de>
-Date: Wed, 3 Aug 2011 17:56:46 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: shttpd/mongoose/yassl embedded webserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/9
+Message-Id: <201106031901.28961.jnareb@gmail.com>
+Date: Fri, 3 Jun 2011 19:01:28 +0200
+From: Jakub Narebski <jnareb@...il.com>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: Junio C Hamano <gitster@...ox.com>, oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
+Subject: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I found a buffer overflow in the PUT processing of shttpd/mongoose/yassl 
-embedded webserver (all based on the same source code).
+On Fri, 3 July 2011, Jamie Strandboge wrote:
 
-Can someone assign a CVE id to this?
-Upstream fix: https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
+> https://launchpad.net/bugs/777804
+[...]
+> ----
+> I am reporting a persistent xss vector in gitweb, note this requires a
+> user to have commit access to a repository that gitweb is configured
+> to display. The vector is the fact that gitweb "serves" up xml files -
+> which can (just as gitweb does) embed html that could be used to
+> perform a cross-site scripting attack.
+> 
+> e.g. (lol.xml).
+> <?xml version="1.0" encoding="utf-8"?>
+> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+> "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+> <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+> <head>
+> </head>
+> <script>alert(1);</script>
+> </html>
+> 
+> and viewed at
+> http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+> ----
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
 
-The bug:
-_shttpd_put_dir()/put_dir() function:
-26         for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
-27                 len = p - path;
-28                 assert(len < sizeof(buf));
-29                 (void) memcpy(buf, path, len);
-30                 buf[len] = '\0';
-31
-32                 /* Try to create intermediate directory */
-33                 if (_shttpd_stat(buf, &st) == -1 &&
-34                     _shttpd_mkdir(buf, 0755) != 0)
-35                         return (-1);
-36
-37                 /* Is path itself a directory ? */
-38                 if (p[1] == '\0')
-39                         return (0);
-40         }
+In short: This is a feature, not a bug.
 
-The only guard here to avoid a buffer overflow with a long path is
-the assert call in line 28. Unfortunately this is disabled if
-you compile with -DNDEBUG and from what I see quite a lot of people
-are doing that in order to reduce the binary size (those are embedded
-webservers intended to be used in embedded environments).
+Origin of current behavior:
+---------------------------
+The 'blob_plain' action (raw view) together with support for path_info
+URLs were designed together so that gitweb could be used as a kind of
+deploy platform.  For example you can browse git documentation from
+'html' branch of git.git repository using gitweb, c.f.
 
-It seems quite some projects actually do that, including a
-deployed product embedded product I'm currently
-looking at (and that was rooted because of this bug).
-From what I see -DNDEBUG in the mongoose makefile this is also the default for the mingw
-binary.
+  http://repo.or.cz/w/git.git/blob_plain/html:/git.html
 
-If this is not the case, this is still a DoS bug.
+Also, by default (and I think in most configurations) there isn't
+anything worth stealing using cross-side scripting attack; there
+is no login information, no cookies with sensitive information...
 
-Kind regards
-Nico
+Proposal of solution:
+---------------------
+Nevertheless gitweb include a germ of anti-XSS framework, namely
+$prevent_xss gitweb configuration variable.
+
+It is currently used to prevent displaying README.html from $GIT_DIR
+of repository, but I think it can be reused for this situation (at
+the cost of reduced feature set).  Namely if $prevent_xss is true,
+we can simply serve all 'blob_plain' as either text/plain or 
+application/octet-stream (with possible exception of *.jpg, *.gif
+and *.png images).
+
+Proposed patch:
+---------------
+Note that it includes unrelated fix for $prevent_xss feature.  It would
+be split in separate patch (non-security related bugfix).
+
+With this patch above lol.xml would be served as text/plain...
+
+-- >8 --
+diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index 240dd47..a3c03f3 100755
+--- i/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -3595,7 +3595,7 @@ sub blob_mimetype {
+ 	my $fd = shift;
+ 	my $filename = shift;
+ 
+-	if ($filename) {
++	if ($filename && !$prevent_xss) {
+ 		my $mime = mimetype_guess($filename);
+ 		$mime and return $mime;
+ 	}
+@@ -6127,7 +6127,7 @@ sub git_blob_plain {
+ 	# want to be sure not to break that by serving the image as an
+ 	# attachment (though Firefox 3 doesn't seem to care).
+ 	my $sandbox = $prevent_xss &&
+-		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))$!;
++		$type !~ m!^(?:text/plain(?:; ?charset=.*)|image/(?:gif|png|jpeg))$!;
+ 
+ 	print $cgi->header(
+ 		-type => $type,
+-- 8< --
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Jakub Narebski
+Poland
