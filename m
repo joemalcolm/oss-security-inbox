@@ -1,42 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/01/1
-Message-ID: <20110901210026.GB28347@lupin.home.powdarrmonkey.net>
-Date: Thu, 1 Sep 2011 22:00:26 +0100
-From: Jonathan Wiltshire <jmw@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for bcfg2 (remote root)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/1
+Message-Id: <201106041128.03896.jnareb@gmail.com>
+Date: Sat, 4 Jun 2011 11:27:59 +0200
+From: Jakub Narebski <jnareb@...il.com>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: Junio C Hamano <gitster@...ox.com>, oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
+Subject: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, 3 July 2011, Jakub Narebski wrote:
+> On Fri, 3 July 2011, Jamie Strandboge wrote:
+> 
+> > https://launchpad.net/bugs/777804
+> [...]
+> > ----
+> > I am reporting a persistent xss vector in gitweb, note this requires a
+> > user to have commit access to a repository that gitweb is configured
+> > to display. The vector is the fact that gitweb "serves" up xml files -
+> > which can (just as gitweb does) embed html that could be used to
+> > perform a cross-site scripting attack.
+> > 
+> > e.g. (lol.xml).
+> > <?xml version="1.0" encoding="utf-8"?>
+> > <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+> > "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+> > <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+> > <head>
+> > </head>
+> > <script>alert(1);</script>
+> > </html>
+> > 
+> > and viewed at
+> > http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+> > ----
+> > 
+> > Thanks in advance for your cooperation in coordinating a fix for this
+> > issue,
+> 
+> In short: This is a feature, not a bug.
+> 
+> Origin of current behavior:
+> ---------------------------
+> The 'blob_plain' action (raw view) together with support for path_info
+> URLs were designed together so that gitweb could be used as a kind of
+> deploy platform.  For example you can browse git documentation from
+> 'html' branch of git.git repository using gitweb, c.f.
+> 
+>   http://repo.or.cz/w/git.git/blob_plain/html:/git.html
+> 
+> Also, by default (and I think in most configurations) there isn't
+> anything worth stealing using cross-side scripting attack; there
+> is no login information, no cookies with sensitive information...
+> 
+> Proposal of solution:
+> ---------------------
+> Nevertheless gitweb include a germ of anti-XSS framework, namely
+> $prevent_xss gitweb configuration variable.
 
-A bug report in Debian has come to light for which I can find no other
-information, and therefore I do not believe it has a CVE - but probably
-should.
+It was introduced by Matt McCutchen in commit 7e1100e (gitweb: add
+$prevent_xss option to prevent XSS by repository content, 2009-02-07),
+and version 1.6.1.4 / 1.6.2.
 
-From http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=640028 :
+> It is currently used to prevent displaying README.html from $GIT_DIR
+> of repository, but I think it can be reused for this situation (at
+> the cost of reduced feature set).  Namely if $prevent_xss is true,
+> we can simply serve all 'blob_plain' as either text/plain or 
+> application/octet-stream (with possible exception of *.jpg, *.gif
+> and *.png images).
 
-"All released stable versions of the bcfg2-server contain several cases
-where data from the client is used in a shell command without properly
-escaping it first. The 1.2 prerelease series has been fixed.
+Actually what I haven't noticed $prevent_xss does more than that:
 
-"At least the SSHbase plugin has been confirmed as being exploitable.
-This is a remote root hole, which requires that the SSHbase plugin is
-enabled and that the attacker has control of a bcfg2 client machine."
+	# With XSS prevention on, blobs of all types except a few known safe
+	# ones are served with "Content-Disposition: attachment" to make sure
+	# they don't run in our security domain.  For certain image types,
+	# blob view writes an <img> tag referring to blob_plain view, and we
+	# want to be sure not to break that by serving the image as an
+	# attachment (though Firefox 3 doesn't seem to care).
+	my $sandbox = $prevent_xss &&
+		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))(?:[ ;]|$)!;
 
-A patch for the problem has been commited [1] upstream and backported [2] to
-the 1.1 series.
+> Proposed patch:
+> ---------------
+> Note that it includes unrelated fix for $prevent_xss feature.  It would
+> be split in separate patch (non-security related bugfix).
+> 
+> With this patch above lol.xml would be served as text/plain...
+> 
+> -- >8 --
+> diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+> index 240dd47..a3c03f3 100755
+> --- i/gitweb/gitweb.perl
+> +++ w/gitweb/gitweb.perl
+> @@ -3595,7 +3595,7 @@ sub blob_mimetype {
+>  	my $fd = shift;
+>  	my $filename = shift;
+>  
+> -	if ($filename) {
+> +	if ($filename && !$prevent_xss) {
+>  		my $mime = mimetype_guess($filename);
+>  		$mime and return $mime;
+>  	}
 
-1: https://github.com/solj/bcfg2/commit/f4a35efec1b6a1e54d61cf1b8bfc83dd1d89eef7
-2: https://github.com/solj/bcfg2/commit/46795ae451ca6ede55a0edeb726978aef4684b53
+So I think the above is not necessary; it is enough to enable XSS
+prevention by adding
 
-Please CC me, I am not subscribed.
+  our $prevent_xss = 1;
 
-Thanks,
+in gitweb configuration file.
+
+> @@ -6127,7 +6127,7 @@ sub git_blob_plain {
+>  	# want to be sure not to break that by serving the image as an
+>  	# attachment (though Firefox 3 doesn't seem to care).
+>  	my $sandbox = $prevent_xss &&
+> -		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))$!;
+> +		$type !~ m!^(?:text/plain(?:; ?charset=.*)|image/(?:gif|png|jpeg))$!;
+>  
+>  	print $cgi->header(
+>  		-type => $type,
+> -- 8< --
+
+This unrelated fix was sent in slightly different form to git mailing
+list (as being non security related) as
+
+  Subject: [PATCH] gitweb: Fix usability of $prevent_xss
+  Message-ID: <1307177015-880-1-git-send-email-jnareb@...il.com>
+  http://permalink.gmane.org/gmane.comp.version-control.git/175057
 
 -- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
-
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Jakub Narebski
+Poland
