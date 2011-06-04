@@ -1,73 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/35
-Message-ID: <1302036752.3924.77.camel@localhost>
-Date: Tue, 05 Apr 2011 15:52:32 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/1
+Message-Id: <201106041128.03896.jnareb@gmail.com>
+Date: Sat, 4 Jun 2011 11:27:59 +0200
+From: Jakub Narebski <jnareb@...il.com>
+To: Jamie Strandboge <jamie@...onical.com>
+Cc: Junio C Hamano <gitster@...ox.com>, oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
+Subject: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-04-04 at 07:48 -0400, Marc Deslauriers wrote:
-> On Mon, 2011-04-04 at 10:51 +0200, Marcus Meissner wrote:
-> > On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
-> > > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> > > >and Josh).
-> > > 
-> > > Limiting a distro to two or three representatives is going to make things 
-> > > tricky for Red Hat; we have a rather large dedicated security response 
-> > > team (as we publish over 300 advisories a year across 70 product/versions 
-> > > and have a number of folks dealing with 'incoming' issues spread, and my 
-> > > team is dispersed across 9 different countries).  If these representatives 
-> > > have been very active on v-s and oss-security is there a reason to limit?
-> > 
-> > Similar for SUSE. We currently have 3 engineers rotating through the incident
-> > manager role (and myself).
+On Fri, 3 July 2011, Jakub Narebski wrote:
+> On Fri, 3 July 2011, Jamie Strandboge wrote:
 > 
-> Same for Ubuntu. Limiting membership to two representatives would mean a
-> lot of email from the list is going to be forwarded to the other members
-> of our security team. Although limiting membership may seem like a good
-> idea to contain leaks, having to forward email to non-members because of
-> an arbitrary limitation would surely defeat that goal.
+> > https://launchpad.net/bugs/777804
+> [...]
+> > ----
+> > I am reporting a persistent xss vector in gitweb, note this requires a
+> > user to have commit access to a repository that gitweb is configured
+> > to display. The vector is the fact that gitweb "serves" up xml files -
+> > which can (just as gitweb does) embed html that could be used to
+> > perform a cross-site scripting attack.
+> > 
+> > e.g. (lol.xml).
+> > <?xml version="1.0" encoding="utf-8"?>
+> > <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+> > "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+> > <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+> > <head>
+> > </head>
+> > <script>alert(1);</script>
+> > </html>
+> > 
+> > and viewed at
+> > http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+> > ----
+> > 
+> > Thanks in advance for your cooperation in coordinating a fix for this
+> > issue,
+> 
+> In short: This is a feature, not a bug.
+> 
+> Origin of current behavior:
+> ---------------------------
+> The 'blob_plain' action (raw view) together with support for path_info
+> URLs were designed together so that gitweb could be used as a kind of
+> deploy platform.  For example you can browse git documentation from
+> 'html' branch of git.git repository using gitweb, c.f.
+> 
+>   http://repo.or.cz/w/git.git/blob_plain/html:/git.html
+> 
+> Also, by default (and I think in most configurations) there isn't
+> anything worth stealing using cross-side scripting attack; there
+> is no login information, no cookies with sensitive information...
+> 
+> Proposal of solution:
+> ---------------------
+> Nevertheless gitweb include a germ of anti-XSS framework, namely
+> $prevent_xss gitweb configuration variable.
 
-I agree with Marc (and Marcus, Nico, et al). I was lucky enough to be on
-vacation starting last Friday and 'missed my chance' to get signed up
-before the others on my team.
+It was introduced by Matt McCutchen in commit 7e1100e (gitweb: add
+$prevent_xss option to prevent XSS by repository content, 2009-02-07),
+and version 1.6.1.4 / 1.6.2.
 
-While I'm not opposed to an initial stated limitation of 2 people per
-vendor, I think perhaps the answer is simply what was initially stated
-by Alexander: "For more than two persons per distro, the need has to be
-explained". IMHO, I don't think that the vendors who have larger
-security teams (and by extension larger software archives/numbers of
-products) should necessarily have to arbitrarily limit their membership
-to the new closed list.
+> It is currently used to prevent displaying README.html from $GIT_DIR
+> of repository, but I think it can be reused for this situation (at
+> the cost of reduced feature set).  Namely if $prevent_xss is true,
+> we can simply serve all 'blob_plain' as either text/plain or 
+> application/octet-stream (with possible exception of *.jpg, *.gif
+> and *.png images).
 
-While it would be possible for us to change our workflow to have only
-two members on the list, in our case that:
- * would create extra work for those two people
- * would create opportunities for the non-members on our team to miss
-important and time-sensitive emails in updates they are preparing (and
-participating in the discussion). Eg, aforementioned vacation/sick or
-being accidentally left out of a CC.
- * wouldn't (ultimately) limit access to the information to the other
-members of the team
+Actually what I haven't noticed $prevent_xss does more than that:
 
-In that spirit, I am a member of the Ubuntu security team and was a
-vendor-sec member via the Ubuntu exploder. In Ubuntu, the security team
-rotates triage of new issues on a weekly basis and internally discusses
-and assigns open issues to the different members of the team (I imagine
-other vendors operate similarly). For me to adequately participate in
-this triage and actively participate in discussions around embargoed
-issues that I am tasked with fixing, I am requesting membership to the
-new list.
+	# With XSS prevention on, blobs of all types except a few known safe
+	# ones are served with "Content-Disposition: attachment" to make sure
+	# they don't run in our security domain.  For certain image types,
+	# blob view writes an <img> tag referring to blob_plain view, and we
+	# want to be sure not to break that by serving the image as an
+	# attachment (though Firefox 3 doesn't seem to care).
+	my $sandbox = $prevent_xss &&
+		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))(?:[ ;]|$)!;
 
-pub   4096R/CC559573 2010-09-30
-      Key fingerprint = 4C20 C06B 5D8B DE68 8854  D28A 51DB DC58 CC55 9573
-uid                  Jamie Strandboge (Canonical Ltd) <jamie@...onical.com>
-sub   4096R/4C8A9DA4 2010-09-30
+> Proposed patch:
+> ---------------
+> Note that it includes unrelated fix for $prevent_xss feature.  It would
+> be split in separate patch (non-security related bugfix).
+> 
+> With this patch above lol.xml would be served as text/plain...
+> 
+> -- >8 --
+> diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+> index 240dd47..a3c03f3 100755
+> --- i/gitweb/gitweb.perl
+> +++ w/gitweb/gitweb.perl
+> @@ -3595,7 +3595,7 @@ sub blob_mimetype {
+>  	my $fd = shift;
+>  	my $filename = shift;
+>  
+> -	if ($filename) {
+> +	if ($filename && !$prevent_xss) {
+>  		my $mime = mimetype_guess($filename);
+>  		$mime and return $mime;
+>  	}
 
-Thank you for your consideration. :)
+So I think the above is not necessary; it is enough to enable XSS
+prevention by adding
+
+  our $prevent_xss = 1;
+
+in gitweb configuration file.
+
+> @@ -6127,7 +6127,7 @@ sub git_blob_plain {
+>  	# want to be sure not to break that by serving the image as an
+>  	# attachment (though Firefox 3 doesn't seem to care).
+>  	my $sandbox = $prevent_xss &&
+> -		$type !~ m!^(?:text/plain|image/(?:gif|png|jpeg))$!;
+> +		$type !~ m!^(?:text/plain(?:; ?charset=.*)|image/(?:gif|png|jpeg))$!;
+>  
+>  	print $cgi->header(
+>  		-type => $type,
+> -- 8< --
+
+This unrelated fix was sent in slightly different form to git mailing
+list (as being non security related) as
+
+  Subject: [PATCH] gitweb: Fix usability of $prevent_xss
+  Message-ID: <1307177015-880-1-git-send-email-jnareb@...il.com>
+  http://permalink.gmane.org/gmane.comp.version-control.git/175057
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Jakub Narebski
+Poland
