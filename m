@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/10
-Message-ID: <4EB07265.6070300@redhat.com>
-Date: Tue, 01 Nov 2011 16:27:49 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/2
+Message-Id: <20110604145329.d5e87709.michael.s.gilbert@gmail.com>
+Date: Sat, 4 Jun 2011 14:53:29 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request for Django-piston and Tastypie
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
-On 11/01/2011 03:58 PM, Vincent Danen wrote:
-> * [2011-11-01 13:15:53 -0600] Kurt Seifried wrote:
->
->> On 11/01/2011 11:11 AM, David Black wrote:
->>> y with respect to their de-serialization of YAML post
->>> data. Both Piston and Tastypie used the yaml.load method, which is
->>> unsafe. In certain
->> Can you please send me links for Piston and Tastypie announcements/code
->> commits showing the vuln please? Thanks.
->
-> Can't speak for Tastypie (we don't ship it so I didn't look), but for
-> Piston:
->
-> https://bitbucket.org/jespern/django-piston/changeset/91bdaec89543
-> https://bugzilla.redhat.com/show_bug.cgi?id=750658
->
-> There is no Piston announcement that I can see.
->
-Please use CVE-2011-4103 for the Piston yaml.load issue.
+Solar Designer wrote:
+> I went to http://www.us-cert.gov/cas/signup.html to see if there's a
+> public CERT mailing list I should be on in order to receive new
+> Vulnerability Notes (that are being made public) with no delay (or at
+> least with less delay).  Unfortunately, for Vulnerability Notes there
+> appears to be an Atom feed only, no mailing list (which I'd prefer).
+> Perhaps set one up?
 
--- 
+As a practical matter, you could follow the Debian
+secure-testing-commits mailing list [0] or check out the svn repo [1].
+Updates to Mitre's CVE database are synced there twice a day.
 
--Kurt Seifried / Red Hat Security Response Team
 
+Unfortunately, Mitre's databases pushes tend to have a couple day delay
+built in.  I've been intending to convert to the NVD database, which
+seems to get updated on exactly the disclosure date, but I haven't
+gotten around to that yet.
+
+Best wishes,
+Mike
+
+[0]http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/secure-testing-commits
+[1]svn://svn.debian.org/svn/secure-testing
