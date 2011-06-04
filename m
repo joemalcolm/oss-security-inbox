@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/5
-Message-ID: <1130385152.449852.1307045020774.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Jun 2011 16:03:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/2
+Message-Id: <20110604145329.d5e87709.michael.s.gilbert@gmail.com>
+Date: Sat, 4 Jun 2011 14:53:29 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- libvirt: regression introduced in disk probe logic
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Steve, vendors.
-> 
-> Description:
-> Regression introduced in commit d6623003 (v0.8.8) - using the
-> wrong sizeof operand meant that security manager private data
-> was overlaying the allowDiskFOrmatProbing member of struct
-> _virSecurityManager. This reopens disk probing, which was
-> supposed to be prevented by the solution to CVE-2010-2238.
-> 
-> References:
-> https://www.redhat.com/archives/libvir-list/2011-May/msg01935.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=709769
-> 
+Solar Designer wrote:
+> I went to http://www.us-cert.gov/cas/signup.html to see if there's a
+> public CERT mailing list I should be on in order to receive new
+> Vulnerability Notes (that are being made public) with no delay (or at
+> least with less delay).  Unfortunately, for Vulnerability Notes there
+> appears to be an Atom feed only, no mailing list (which I'd prefer).
+> Perhaps set one up?
 
-Please use CVE-2011-2178
+As a practical matter, you could follow the Debian
+secure-testing-commits mailing list [0] or check out the svn repo [1].
+Updates to Mitre's CVE database are synced there twice a day.
 
-Thanks.
 
--- 
-    JB
+Unfortunately, Mitre's databases pushes tend to have a couple day delay
+built in.  I've been intending to convert to the NVD database, which
+seems to get updated on exactly the disclosure date, but I haven't
+gotten around to that yet.
+
+Best wishes,
+Mike
+
+[0]http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/secure-testing-commits
+[1]svn://svn.debian.org/svn/secure-testing
