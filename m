@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/4
-Message-ID: <20111030161606.GA11526@albatros>
-Date: Sun, 30 Oct 2011 20:16:06 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Armin Burgmeier <armin@...ur.net>
-Cc: oss-security@...ts.openwall.com, Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
-Subject: Re: CVE request: 3 flaws in libobby and libnet6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/3
+Message-ID: <20110604200313.GA5687@openwall.com>
+Date: Sun, 5 Jun 2011 00:03:13 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
-Armin,
+On Sat, Jun 04, 2011 at 02:53:29PM -0400, Michael Gilbert wrote:
+> As a practical matter, you could follow the Debian
+> secure-testing-commits mailing list [0] or check out the svn repo [1].
+> Updates to Mitre's CVE database are synced there twice a day.
 
-On Sun, Oct 30, 2011 at 17:20 +0100, Armin Burgmeier wrote:
-> I have fixed the issues 1+3 in git [1,2]. It would be great if you could
-> confirm the patches to really fix the issues you raised.
+This is very nice, thanks.  Many of the commits have Debian-specific
+info, though, which would be a bit distracting, and the Subjects are not
+specific (just "data/CVE" or "data/DSA"), yet this may be helpful.
 
-Looks like they do.  FWIW, the counter overflow could be fixed by simply
-using uint_64, which would overflow in 20 billion years :)
+I downloaded
+http://lists.alioth.debian.org/pipermail/secure-testing-commits/2011-May.txt.gz
+and grepped it for SSL (case-insensitive).  Didn't find the OpenSSL
+issue that started this thread.  This is not surprising: apparently, the
+issue did not receive a CVE ID in May, even though CERT published a
+Vulnerability Note on it.
 
+> [0]http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/secure-testing-commits
+> [1]svn://svn.debian.org/svn/secure-testing
 
-> As for the second issue, I do not think it is worth the effort to
-> implement SSL certificate handling in obby. Both net6 and obby are
-> replaced by libinfinity in the current development version of Gobby.
-> libinfinity makes use of SSL certificates.
-
-Some distros probably don't want to switch to the development version of
-Gobby (which also uses a different dependency), but to fix the bugs of
-their own stable versions.
-
-As personally I am not a maintainer of a distro with the official Gobby
-support, I don't care about maintaining old versions much, though.  I'm
-happy with the fixes in the dev version.
-
-
-> We would be pleased if you could check for similar flaws in libinfinity
-> though I admit that it is much more code and probably more complicated
-> to analyze.
-
-OK, I'll probably look at libinfinity at my spare time as I did it with obby.
+Perhaps add these to
+http://oss-security.openwall.org/wiki/distro-patches#debian ?
+And, while you're at it, fix the many broken links currently in the
+Debian section there (I counted at least three broken links).
 
 Thanks,
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Alexander
