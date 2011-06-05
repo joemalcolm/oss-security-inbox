@@ -1,37 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/3
-Message-ID: <4DF4D1FD.7070604@redhat.com>
-Date: Sun, 12 Jun 2011 16:49:33 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Damyan Ivanov <dmn@...ian.org>, Mark Stosberg <mark@...mersault.com>, 629511@...s.debian.org, Iain Arnell <iarnell@...il.com>, Marcela Maslanova <mmaslano@...hat.com>
-Subject: CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/05/1
+Message-ID: <4DEB724D.5000602@pre-sense.de>
+Date: Sun, 05 Jun 2011 14:10:53 +0200
+From: Timo Warns <warns@...-sense.de>
+To: oss-security@...ts.openwall.com
+CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>,  coley <coley@...re.org>
+Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+On 03.06.2011 08:47, Eugene Teo wrote:
+> On 02/25/2011 04:22 AM, Josh Bressers wrote:
+>>
+>> ----- Original Message -----
+>>> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
+>>>> On 02/24/2011 03:59 AM, Josh Bressers wrote:
+>>>>> ----- Original Message -----
+>>>>>>
+>>>>>> The kernel automatically evaluates partition tables of storage
+>>>>>> devices.  The code for evaluating LDM partitions (in
+>>>>>> fs/partitions/ldm.c) contains a bug that allows to overflow the
+>>>>>> kernel heap. It may be possible to escalate privileges by exploiting
+>>>>>> this bug.
+> [...]
+>> I would still like something along the lines of a proposed patch. I believe
+>> you folks (as you're much brighter than me), but I still don't quite grasp
+>> the difference. I suspect there is enough public information for MITRE to
+>> public a CVE though, so please use CVE-2011-1017.
+> 
+> It was reported that the fix for this is insufficient. I have assigned
+> CVE-2011-2182 to this. See https://lkml.org/lkml/2011/5/6/407.
+> 
+> Timo, can you please post the patch here once you have submitted it to
+> lkml for review. Thanks.
 
-   It was found that perl-Data-FormValidator, a HTML form user input
-validator, used to treat certain invalid fields as valid, when the
-untaint_all_constraints directive was used (default for majority of
-Data-FormValidator routines). A remote attacker could use this flaw to
-bypass perl Taint mode protection mechanism via specially-crafted input
-provided to the HTML form.
+Greg has posted the patch to LKML (http://lkml.org/lkml/2011/6/1/119).
 
-Note: Hopefully Damyan, Mark can clarify here, if valid data from
-       Data-FormValidator are automatically marked as untainted for
-       perl Taint mode or not. If there still is perl Taint mode
-       protection check present, even on valid Data-FormValidator
-       data and it couldn't happen, that tainted data would be passed
-       further to the script processing, then this is not a security
-       issue.
+The patch:
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
-[2] https://rt.cpan.org/Public/Bug/Display.html?id=61792
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=712694
+commit cae13fe4cc3f24820ffb990c09110626837e85d4 upstream.
 
-Could you allocate a CVE id for this?
+As Ben Hutchings discovered [1], the patch for CVE-2011-1017 (buffer
+overflow in ldm_frag_add) is not sufficient.  The original patch in
+commit c340b1d64000 ("fs/partitions/ldm.c: fix oops caused by corrupted
+partition table") does not consider that, for subsequent fragments,
+previously allocated memory is used.
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[1] http://lkml.org/lkml/2011/5/6/407
+
+Reported-by: Ben Hutchings <ben@...adent.org.uk>
+Signed-off-by: Timo Warns <warns@...-sense.de>
+Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@...e.de>
+
+---
+ fs/partitions/ldm.c |    5 +++++
+ 1 file changed, 5 insertions(+)
+--- a/fs/partitions/ldm.c
++++ b/fs/partitions/ldm.c
+@@ -1335,6 +1335,11 @@ static bool ldm_frag_add (const u8 *data
+
+ 	list_add_tail (&f->list, frags);
+ found:
++	if (rec >= f->num) {
++		ldm_error("REC value (%d) exceeds NUM value (%d)", rec, f->num);
++		return false;
++	}
++
+ 	if (f->map & (1 << rec)) {
+ 		ldm_error ("Duplicate VBLK, part %d.", rec);
+ 		f->map &= 0x7F;			/* Mark the group as broken */
