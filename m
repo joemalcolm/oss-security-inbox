@@ -1,19 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/6
-Message-ID: <1305626972.32333.75.camel@new-desktop>
-Date: Tue, 17 May 2011 12:09:32 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/14
+Message-ID: <4DED0599.8060704@redhat.com>
+Date: Mon, 06 Jun 2011 18:51:37 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
+On 06/06/2011 06:19 PM, Jan Lieskovsky wrote:
+> Hello, Josh, Steve, vendors,
+>
+> It was found that vsftpd, Very Secure FTP daemon, when the network
+> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+> create a new network namespace per connection. A remote attacker could
+> use this flaw to cause a memory pressure and denial of the vsftpd
+> service.
 
-> So, i propose to :
-> - remove references to Webkit from the CVE-2011-1425 page
-> - affect CVE-2011-1774 to the Webkit bug #52688
+Just to correct / tune up the impact a bit yet:
+"A remote attacker could use this flaw to cause memory pressure (kernel
+OOM killer protection mechanism to be activated and potentially
+terminate vsftpd or arbitrary [vsftpd independent] process, which
+satisfied the OOM killer process selection algorithm)."
 
-Any news ?
+Based on record of apache2 process termination in:
+https://launchpadlibrarian.net/64456173/dmesg-oom.32.txt
 
-Regards,
-Nicolas Grégoire
+Thanks to Petr Matousek for pointing this out.
+
+Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+>
+> This one being a bit tricky one -- from my understanding of the issue,
+> vsftpd doesn't necessarily have a security flaw on its side. It's
+> kernel issue / bug, which allows this to be used for vsftpd DoS:
+> [4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+> [5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+>
+> Short-term solution would be probably to address this on the vsftpd
+> side, the long-term one then being to get this fixed in kernel.
+>
+> Though not sure, how it would be wrt to CVE identifier(s) assignment.
+>
+> Steve, could you advice here?
+>
+> Thank you & Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
