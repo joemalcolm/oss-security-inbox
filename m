@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/4
-Message-ID: <Pine.GSO.4.64.1105050952580.15686@faron.mitre.org>
-Date: Thu, 5 May 2011 10:04:08 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/12
+Message-ID: <1674131055.506851.1307381083352.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 13:24:43 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
+Cc: Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
 Content-Type: text/plain; charset=utf-8
 
 
-Assuming I understand the issue correctly, there is precedent in CVE for 
-this kind of problem, or at least the exploitation of recursive 
-backup/archive programs as they process files (many seem related to 
-setting insecure permissions during the copy, and only setting the secure 
-permissions afterward, a la CWE-689).
 
-CVE-2009-4411 is the only example I can easily find.
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> It was found that fabric, a simple Pythonic remote deployment tool,
+> used insecure way for creation of temporary files, when uploading
+> template text files and project files to a remote system. A local
+> attacker could use this flaw to conduct symlink attacks to upload
+> sensitive information to remote host or to overwrite certain local
+> system files.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
+> 
 
-There is a "risk" of sorts to the community that a large number of these 
-issues could get disclosed for different packages in a short timeframe, 
-but this happens with any discovery of a new "class" of security problems 
-or attacks (look at the untrusted path stuff that happened last year with 
-Windows and Linux).  But IMO, better sooner rather than later.  Linux is a 
-multi-user OS and should be treated as such, which means local 
-file-writing/privilege attacks matter, even though they might not be as 
-severe as other kinds of attacks.  Somebody audited simpler symlink 
-problems in Debian packages a couple years ago, but while it must have 
-been very painful and there were dozens (hundreds?) of separate issues, 
-most of those problems seemed to get fixed in a relatively quick amount of 
-time.
+Please use CVE-2011-2185.
 
-Maybe the appropriate strategy is for the community to agree on a good way 
-of solving these problems before announcing all the different packages 
-that are affected, but it's just a thought.  Ultimately this decision is 
-up to the researcher, affected developers, and customers.
+Thanks.
 
-- Steve
+-- 
+    JB
