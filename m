@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/1
-Message-ID: <4DA27647.3010400@redhat.com>
-Date: Mon, 11 Apr 2011 11:32:23 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inotify memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/8
+Message-ID: <4DECFE21.6010609@redhat.com>
+Date: Mon, 06 Jun 2011 18:19:45 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
+Subject: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-On 11/24/2010 09:17 PM, Josh Bressers wrote:
->
-> ----- "Eugene Teo"<eugene@...hat.com>  wrote:
->
->> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
->>
->> file for the new inotify group we leak the new group.
->>
->> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
->> only
->> relevant if c44dcc56 (v2.6.34-rc1) is backported)
->>
->> Issue was introduced in 63c882a0 (v2.6.31-rc1).
->>
->> https://bugzilla.redhat.com/656830
->
-> Please use CVE-2010-4250
+Hello, Josh, Steve, vendors,
 
-A regression was found. We assigned it with CVE-2011-1479. Fix for it 
-can be found at: http://git.kernel.org/linus/d0de4dc5. More info here: 
-https://bugzilla.redhat.com/CVE-2011-1479.
+   It was found that vsftpd, Very Secure FTP daemon, when the network
+namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+create a new network namespace per connection. A remote attacker could
+use this flaw to cause a memory pressure and denial of the vsftpd
+service.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+[2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+
+This one being a bit tricky one -- from my understanding of the issue,
+vsftpd doesn't necessarily have a security flaw on its side. It's
+kernel issue / bug, which allows this to be used for vsftpd DoS:
+[4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+[5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+
+Short-term solution would be probably to address this on the vsftpd
+side, the long-term one then being to get this fixed in kernel.
+
+Though not sure, how it would be wrt to CVE identifier(s) assignment.
+
+Steve, could you advice here?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
