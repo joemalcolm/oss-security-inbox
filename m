@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/1
-Message-Id: <201102281416.06874.thomas@suse.de>
-Date: Mon, 28 Feb 2011 14:16:06 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/21
+Message-ID: <1468293795.510191.1307388979417.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 15:36:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request -- Cherokee -- server admin vulnerable to csrf
 Content-Type: text/plain; charset=utf-8
 
 
-The following might also need a CVE-ID.
 
-https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
-------------------------------------------------------------------------------
-http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
+----- Original Message -----
+> Can a CVE be assigned to
+> http://code.google.com/p/cherokee/issues/detail?id=1212 regarding weak
+> admin password generation ?
+> 
 
-That's a pretty bad DOS. Everybody (even unauthenticated users) can kill the
-server by submitting a MODRDN request with an empty "olddn" value and "remove
-old RDN" set (-r). Example:
+Please use CVE-2011-2190.
 
-      ldapmodrdn -x -H ldap://ldapserver -r '' o=test 
-------------------------------------------------------------------------------
-
-
-Am Freitag 25 Februar 2011 17:18:08 schrieb Josh Bressers:
-> ----- Original Message -----
-> > Hello Josh, Steve, vendors,
-> > 
-> > looks like the following two issues did not get a CVE identifiers yet:
-> > [1] http://secunia.com/advisories/43331/
-> 
-> The above advisory covers both bugs below.
-> 
-> 
-> > [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
-> 
-> CVE-2011-1024 openldap forwarded bind failure messages cause success
-> 
-> 
-> > [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
-> 
-> CVE-2011-1025 openldap rootpw is not verified with slapd.conf
-> 
-> 
-> Thanks.
-> 
-> 
+Thanks.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+    JB
