@@ -1,36 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/1
-Message-ID: <4EA91FEF.1030408@redhat.com>
-Date: Thu, 27 Oct 2011 17:10:07 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/16
+Message-ID: <1741420034.507249.1307382130192.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 13:42:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: crypto: ghash: null pointer deref if no key is set
+Cc: Bernhard Reiter <bernhard@...evation.de>, Tomas Mraz <tmraz@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request / Discussion -- dirmngr -- Improper dealing with blocking system calls, when verifying a certificate
 Content-Type: text/plain; charset=utf-8
 
-Description from the commit: The ghash_update function passes a pointer
-to gf128mul_4k_lle which will be NULL if ghash_setkey is not called or
-if the most recent call to ghash_setkey failed to allocate memory.  This
-causes an oops.  Fix this up by returning an error code in the null case.
+----- Original Message -----
+> Hello, Josh, Steve, Bernhard, vendors,
+> 
+> based on:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377
+> [2] https://bugs.g10code.com/gnupg/issue1313
+> (upstream bug report)
+> [3] https://bugs.g10code.com/gnupg/file324/DTAG_Issuing_CA_i01.der
+> (public PoC)
+> [4] http://cvs.gnupg.org/cgi-bin/viewcvs.cgi?root=Dirmngr&view=rev
+> (relevant upstream patch)
+> 
+> it concluded:
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=710529
+> 
+> i.e.:
+> "Dirmngr, server/client tool for managing and downloading CRLS, used user
+> land threads implementation (Pth) for wrapping up of system calls, that
+> may potentially block. A remote attacker could use this flaw to cause a
+> hang of an end-user application, relying of the proper services of the
+> dirmngr daemon, via a request to verify a specially-crafted certificate."
+> 
+> But simultaneously with filling that Red Hat Bugzilla issue tracking
+> system entry performed some basic investigation, results of which can
+> be seen at:
+> [6] https://bugzilla.redhat.com/show_bug.cgi?id=710529#c2
+> 
+> IOW was not able to reproduce the complete / indefinite dirmngr-client
+> hang (thus blocking other clients from access). As noted in [6], it is
+> true that during small time period running 'dirmngr' daemon instance is
+> unresponsive also for '--ping' (dirmngr-client --ping) commands, but
+> after finite time (~21 seconds in my test) the connection ends up with
+> timeout.
+> 
+> Though Bernard in:
+> [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377#5
+> 
+> mentions "For example the KMail hung when trying to verify a signature
+> which has the certificate in the chain." which would suggest there may
+> exist clients / end-user application not able to recover from this bug
+> properly. Bernhard, hopefully here, you could clarify / list such
+> applications and provide also time details, how long that hang of such
+> applications took.
+> 
+> Based on your reply, this may not / may be worthy (in case there are
+> such end-user applications) of an CVE identifier.
+> 
 
-This is trivially triggered from unprivileged userspace through the
-AF_ALG interface by simply writing to the socket without setting a key.
+Is this expected to only be used by end user applications? It seems to me
+that if an attacker can DoS a client, it's not a security issue, especially
+when you consider the use (if a bad guy can interact with dirmngr, there
+are probably bigger potential issues).
 
-The ghash_final function has a similar issue, but triggering it requires
-a memory allocation failure in ghash_setkey _after_ at least one
-successful call to ghash_update.
+Thanks.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=749475
-https://secunia.com/advisories/46584/
-https://bugs.gentoo.org/show_bug.cgi?id=388581
-
-Upstream commit:
-http://git.kernel.org/linus/7ed47b7d142ec99ad6880bbbec51e9f12b3af74c
-
-+config CRYPTO_GHASH
-was added in commit 2cdc6899, v2.6.32-rc1.
-
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
