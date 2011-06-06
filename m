@@ -1,35 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/17
-Message-ID: <486790100.998944.1309293150522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 28 Jun 2011 16:32:30 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/23
+Message-ID: <BANLkTik0K6GQbaezekbRNb1+7EersnxRKg@mail.gmail.com>
+Date: Mon, 6 Jun 2011 16:39:06 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Neil F Brown <nfbrown@...e.de>, Jeff Layton <jlayton@...hat.com>, coley <coley@...re.org>
-Subject: Re: CVE Request: nfs-utils
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2500
+On Mon, Jun 6, 2011 at 1:22 PM, Josh Bressers wrote:
+> ----- Original Message -----
+>> Hello Josh, Steve, vendors,
+>>
+>> based on Debian BTS report:
+>> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>> (first CVE-2011-XXYY required for Debian case)
+>>
+>> looked more into original report:
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+>>
+>> and the first paragraph of [2] suggests:
+>> "When starting a program via "su - user -c program" the user session
+>> can escape to the parent session by using the TIOCSTI ioctl to push
+>> characters into the input buffer. This allows for example a non-root
+>> session to push "chmod 666 /etc/shadow" or similarly bad commands into
+>> the input buffer such that after the end of the session they are
+>> executed."
+>>
+>> this should get a CVE-2005-YYZZ CVE id.
+>>
+>
+> This really shouldn't get a CVE id. It's well known, and sadly not easy to
+> fix. There are more details in this bug:
+> https://bugzilla.redhat.com/show_bug.cgi?id=479145
+>
+> I would classify this as an administration issue, not a flaw in su or sudo.
+> If you're running arbitrary things, you're in far more trouble than this.
+>
+> I'm happy to let MITRE overrule me.
 
-Thanks.
+There is a real exposure here (although somewhat minor), and there are
+existing patches that clearly bound/fix the problem, so it should get
+an id (in my opinion of course).
 
--- 
-    JB
-
------ Original Message -----
-> Hi,
-> 
-> An attacker could gain unauthorized access to an nfs exported
-> filesystem by creating a DNS record that resolves to the attacker's
-> IP as well as to a trusted IP:
-> http://marc.info/?l=linux-nfs&m=130875695821953&w=2
-> https://bugzilla.novell.com/show_bug.cgi?id=701702
-> 
-> cu
-> Ludwig
-> 
-> --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
-> Imendörffer, HRB 16746 (AG Nürnberg)
+Best wishes,
+Mike
