@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/9
-Message-ID: <4EA82599.9040007@redhat.com>
-Date: Wed, 26 Oct 2011 09:22:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/6
+Message-ID: <4DECED00.5040205@redhat.com>
+Date: Mon, 06 Jun 2011 17:06:40 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Sebastian Krahmer <krahmer@...e.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
-On 10/26/2011 08:26 AM, Marcus Meissner wrote:
+Hello, Sebastian,
+
+   thanks for the report.
+
+On 06/06/2011 11:26 AM, Sebastian Krahmer wrote:
 > Hi,
 >
-> From our openldap2 Maintainer Ralf:
-> |A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
-> |is passed a zero length string. (Can e.g. be triggered by passing a
-> |"postalAddressAttribute" with the value "$" (or no value a all). What the code
-> |does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
-> |least as far as I understand it)
-> |
-> |Upstream Bug: ITS#7059
-> |http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
-> |
-> |This bug is present in older releases as well.
-> |
-> |I wonder if this is really security relevant as it seem the worst that might
-> |happen is that an authenticated user can crash the daemon. I was not able to do
-> |so during a short test but I guess that is just a matter of trying long enough.
+> In certain configs, pam_ssh is not completely dropping its privileges
+> to user. It just forgets to call setgid() and initgroups(). A fix can be found at [1].
+> Can someone assign a CVE?
 >
-> Ciao, Marcus
-Please use CVE-2011-4079 for this issue
+> thx,
+> Sebastian
+>
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
 
--- 
+Unfortunately not able to access this entry. Would it be possible to 
+make it public? (for further details & CVE assignment). Or will be
+access granted per email address approach necessary?
 
--Kurt Seifried / Red Hat Security Response Team
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
 
