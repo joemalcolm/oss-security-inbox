@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/4
-Message-ID: <20111115032305.GA8310@openwall.com>
-Date: Tue, 15 Nov 2011 07:23:05 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/7
+Message-Id: <201106061750.11012.thomas@suse.de>
+Date: Mon, 6 Jun 2011 17:50:10 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+Cc: Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
-> 3. Maybe glibc and the SHA-crypt reference code should stop using
-> alloca() in favor of having the underlying MD5, SHA-256, and SHA-512
-> implementations accepting potentially unaligned buffers like e.g.
-> OpenSSL's implementations do.  Unfortunately, this might have
-> performance impact.
+Am Montag, 6. Juni 2011, 17:06:40 schrieb Jan Lieskovsky:
+...
+> > [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+> 
+> Unfortunately not able to access this entry. Would it be possible to 
+> make it public? (for further details & CVE assignment). Or will be
+> access granted per email address approach necessary?
 
-This is what FreeBSD's revision of the code does, but it still has two
-alloca()s per function (the alignment-unrelated ones):
+public now.
 
-http://svnweb.freebsd.org/base/head/lib/libcrypt/
 
-More context:
-
-http://www.openwall.com/lists/oss-security/2011/11/15/1
-
-Alexander
+-- 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
