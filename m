@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/12
-Message-ID: <20110518214805.GB7987@pisco.westfalen.local>
-Date: Wed, 18 May 2011 23:48:05 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/26
+Message-ID: <4DED6072.40403@redhat.com>
+Date: Tue, 07 Jun 2011 07:19:14 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Several Moodle issues
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
-(since I assume Josh will pass this on to you :-) )
+On 06/07/2011 12:19 AM, Jan Lieskovsky wrote:
+> Hello, Josh, Steve, vendors,
+> 
+>   It was found that vsftpd, Very Secure FTP daemon, when the network
+> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+> create a new network namespace per connection. A remote attacker could
+> use this flaw to cause a memory pressure and denial of the vsftpd
+> service.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+> 
+> This one being a bit tricky one -- from my understanding of the issue,
+> vsftpd doesn't necessarily have a security flaw on its side. It's
+> kernel issue / bug, which allows this to be used for vsftpd DoS:
+> [4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+> [5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+> 
+> Short-term solution would be probably to address this on the vsftpd
+> side, the long-term one then being to get this fixed in kernel.
+> 
+> Though not sure, how it would be wrt to CVE identifier(s) assignment.
+> 
+> Steve, could you advice here?
 
-http://www.moodle.org/security/ lists more than a dozen
-vulnerabilities requiring a CVE assignment:
-MSA-11-0002 to MSA-11-0017 require CVE assignments.
+It is worth noting that for a local, unprivileged user to trigger this,
+they will need to have the CAP_SYS_ADMIN capability. So this limits the
+attack to some services like vsftpd. I see this more of a kernel issue
+as configuring vsftpd to set isolate_network=NO is not a long-term solution.
 
-(Some issues might be amalgamated to a single CVE)
-
-Cheers,
-        Moritz
-
-
-
-
+Thanks, Eugene
