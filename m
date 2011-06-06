@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/3
-Message-ID: <4DB6FAFE.3060701@oracle.com>
-Date: Tue, 26 Apr 2011 10:03:58 -0700
-From: Oracle Security Alerts <secalert_us@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/5
+Message-ID: <4DECEC03.3020205@gmx.de>
+Date: Mon, 06 Jun 2011 17:02:27 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: fetchmail 6.3.20 release to fix CVE-2011-1947 (was: CVE request for fetchmail STARTTLS hang (Denial of Service))
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Greetings,
 
-Please subscribe us to the new list.
-I'll send specific emails and keys in a separate mail.
+I've just released fetchmail 6.3.20 to fix the STARTTLS
+denial-of-service problem present in all earlier fetchmail releases,
+CVE-2011-1947.
 
-We were members of vendor-sec as Sun Microsystems team, and now
-represent all of Oracle software and hardware products including but
-not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
-Open Office.
+Note that distributors are advised to thoroughly check the NEWS file and
+consider doing a stable release update rather than just backporting the
+security fixes, there were several notable bug fixes.
 
-We found vendor-sec very useful in early identification of
-vulnerabilities not only in free and open source code used in our
-products, but also in common protocols, file formats or kernel
-modules/software with similar functionality or logic.
+At least do note <http://www.fetchmail.info/fetchmail-EN-2010-03.txt> -
+it's a good opportunity to fix this, too...
 
-All our security advisories are freely available.
+Changelog:
+https://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/NEWS
 
-Thanks,
--Chandan
---
-Oracle Security Alerts
-Global Product Security
+Homepage:
+http://www.fetchmail.info/
 
+Downloads:
+http://developer.berlios.de/project/showfiles.php?group_id=1824&release_id=18583
 
-Download attachment "signature.asc" of type "application/pgp-signature" (250 bytes)
+Best regards,
+Matthias Andree
+Hat: fetchmail maintainer
