@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/21/2
-Message-ID: <20110121085238.GB5040@albatros>
-Date: Fri, 21 Jan 2011 11:52:38 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Eugene Teo <eugeneteo@...nel.org>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/7
+Message-Id: <201106061750.11012.thomas@suse.de>
+Date: Mon, 6 Jun 2011 17:50:10 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Jan Lieskovsky <jlieskov@...hat.com>
+Subject: Re: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
-Eugene,
-
-On Fri, Jan 21, 2011 at 11:46 +0800, Eugene Teo wrote:
-> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
-> >File position is not controlled, it may lead to overwrites of arbitrary
-> >kernel memory.  Also the code may kfree() the same pointer multiple
-> >times.
+Am Montag, 6. Juni 2011, 17:06:40 schrieb Jan Lieskovsky:
+...
+> > [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
 > 
-> http://lkml.org/lkml/2011/1/20/348
-> https://bugzilla.redhat.com/CVE-2011-0023
-> 
-> Please use CVE-2011-0023 (this does not include the unresolved flaw
-> described in the following paragraph below).
-> 
-> >One more flaw is still present: if multiple processes open the file then
-> >all 3 static variables are shared, leading to various race conditions.
-> >They should be moved to file->private_data.
+> Unfortunately not able to access this entry. Would it be possible to 
+> make it public? (for further details & CVE assignment). Or will be
+> access granted per email address approach necessary?
 
-Since ed3aada1bf34c this file is available to root only.  This may be
-exploited if and only if the file is chmod'ed/chown/ed to nonroot.
+public now.
 
-
-Thanks,
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
