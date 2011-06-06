@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/1
-Message-ID: <4DBFCC85.8060600@redhat.com>
-Date: Tue, 03 May 2011 15:06:05 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/17
+Message-ID: <1080704289.507550.1307382689277.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 13:51:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: William Cohen <wcohen@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- xscreensaver -- exits when activated
 Content-Type: text/plain; charset=utf-8
 
-Hi William,
-On 05/01/2011 07:30 AM, William Cohen wrote:
+
+
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
 > 
-> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+> it was found that xscreensaver terminated, when it was activated upon
+> launch. A local proximate attacker could use this deficiency to access
+> resources, which should be otherwise protected by authentication.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627382
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=703483
 > 
 
-It appears from the debian bug, that there may be others way to exploit
-this issue as well. hence i think we need a revised patch?
+Please use CVE-2011-2187.
 
+This deserves an ID as the error probably won't happen until a few minutes
+afer a user leaves the keyboard.
 
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
