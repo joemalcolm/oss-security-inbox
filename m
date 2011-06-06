@@ -1,14 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/5
-Message-ID: <CANoWnERveGzebANk+=hL58baQyTkcuRPyZq6Aptb=Tar-ttLXQ@mail.gmail.com>
-Date: Fri, 16 Sep 2011 00:57:36 +1000
-From: dave bl <db.pub.mail@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/15
+Message-ID: <291325264.507131.1307381785428.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 13:36:25 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+Cc: dave b <db.pub.mail@...il.com>, akub Narebski <jnareb@...il.com>, Junio C Hamano <gitster@...ox.com>, coley <coley@...re.org>
+Subject: Re: Security issue in gitweb
 Content-Type: text/plain; charset=utf-8
 
-I don't know if this is helpful or not but issues:
-2, Denial of service attack via URLField,
-3, URLField redirection,
+Please use CVE-2011-2186 for this.
 
-are related to CVE-2011-1521.
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> A security bug was reported by 'dave b' (in CC) against gitweb in
+> Ubuntu. You are being emailed as the upstream contact. Please keep
+> oss-security[1] CC'd for any updates on this issue.
+> 
+> This issue should be considered public, but has not yet been assigned
+> a
+> CVE. Once a CVE is assigned, please mention it in any changelogs.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/777804
+> 
+> From the reporter:
+> ----
+> I am reporting a persistent xss vector in gitweb, note this requires a
+> user to have commit access to a repository that gitweb is configured
+> to display. The vector is the fact that gitweb "serves" up xml files -
+> which can (just as gitweb does) embed html that could be used to
+> perform a cross-site scripting attack.
+> 
+> e.g. (lol.xml).
+> <?xml version="1.0" encoding="utf-8"?>
+> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+> "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+> <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+> lang="en-US">
+> <head>
+> </head>
+> <script>alert(1);</script>
+> </html>
+> 
+> and viewed at
+> http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+> ----
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
+> 
+> Jamie Strandboge
+> 
+> [1] oss-security@...ts.openwall.com is a public mailing list for
+> people to collaborate on security vulnerabilities and coordinate
+> security updates.
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
