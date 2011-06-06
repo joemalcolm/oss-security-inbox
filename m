@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/1
-Message-ID: <20110427165643.0542b1a8@orphan>
-Date: Wed, 27 Apr 2011 16:56:43 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: dan.j.rosenberg@...il.com
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/25
+Message-ID: <20110606220106.GD19803@dhcp-25-225.brq.redhat.com>
+Date: Tue, 7 Jun 2011 00:01:06 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE-2011-1576 kernel: net: Fix memory leak/corruption on VLAN GRO_DROP
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 15 Mar 2011 09:13:00 -0400 Dan Rosenberg wrote:
+The function napi_reuse_skb is only meant to be used for packets merged
+by GRO. Using it on the VLAN path will lead to memory leaks/corruption.
 
-> util-linux mount
-> =============
-> * Edits /etc/mtab.tmp with custom my_addmntent(), behaves identically
-> to glibc addmntent() in terms of return code
-> * Succeeds on partial writes, does not remove temp file on failure
-> (could result in additional corruption of /etc/mtab through multiple
-> invocations), does not remove lock file /etc/mtab~ on failure (also an
-> issue)
+The fix for CVE-2011-1478 unveiled this issue. Note, this is not a
+CVE-2011-1478 regression.
 
-Dan, would you mind clarifying the way to achieve mtab corruption via
-truncated left-over mtab.tmp file and multiple invocations?  After some
-discussion with our util-linux maintainer, we fail to see an obvious
-way.  util-linux opens mtab.tmp using "w" fopen open, i.e. using O_TRUNC
-open flag.  So if there's any mtab.tmp file found, it's overwritten and
-its existence does not block further use of mount / umount as existence
-of mtab~ lock file does.
+This issue does not affect the upstream kernel as the code path in
+question is no longer reachable due to changes in the VLAN subsystem.
 
-Thank you!
+https://bugzilla.redhat.com/CVE-2011-1576
 
+Thanks,
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
