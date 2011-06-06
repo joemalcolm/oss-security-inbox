@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/1
-Message-ID: <4D421F73.1010901@redhat.com>
-Date: Fri, 28 Jan 2011 09:44:19 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/1
+Message-ID: <4DEC7304.2000207@redhat.com>
+Date: Mon, 06 Jun 2011 11:56:12 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
-Subject: Re: CVE request: linux kernel heap issues
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ksm: race between ksmd and exiting task
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 01:08 PM, Eugene Teo wrote:
-> On 01/25/2011 11:48 AM, Eugene Teo wrote:
->> On 01/25/2011 05:46 AM, Kees Cook wrote:
->>> Hello,
->>>
->>> I don't think these minor issues I reported to the Linux Kernel have
->>> had CVEs assigned to them:
->>>
->>> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
->>>
->>>
->>
->> These require CAP_NET_ADMIN.
->>
->> CVE-2010-4655.
->
-> Take note that you will need this too:
-> http://marc.info/?l=linux-kernel&m=129593098003553&w=2
+On 06/03/2011 11:37 AM, Eugene Teo wrote:
+> A race condition issue was found in the KSM implementation.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=710338
+> Report: http://www.spinics.net/lists/linux-mm/msg20233.html
+> Proposed patch: http://www.spinics.net/lists/linux-mm/msg20301.html
+> 
+> Thanks, Eugene
 
-http://git.kernel.org/linus/b7c7d01aaed1f71d9afe815a569f0a81465a1744
+This has been assigned CVE-2011-2183
 
-Eugene
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
