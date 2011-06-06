@@ -1,53 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/4
-Message-ID: <Pine.GSO.4.64.1109151042530.22571@faron.mitre.org>
-Date: Thu, 15 Sep 2011 10:43:57 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/18
+Message-ID: <1017653588.507851.1307383387915.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 14:03:07 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
+Subject: Re: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> Hi,
+> 
+> In certain configs, pam_ssh is not completely dropping its privileges to
+> user. It just forgets to call setgid() and initgroups(). A fix can be
+> found at [1].  Can someone assign a CVE?
+> 
+> thx,
+> Sebastian
+> 
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+> 
 
-Josh,
+Is this a security flaw? From doing a little ssh-agent research, it sounds
+harmless without another flaw. I'm not terribly familiar with it though, so
+I could be missing something.
 
-This actually requires two different CVEs because there are different 
-researchers for each one.
+Thanks.
 
-- Steve
-
-
-
-
-
-
-
-
-On Thu, 15 Sep 2011, Jan Lieskovsky wrote:
-
-> Hello Josh, Steve, vendors,
->
->  multiple XSS flaws have been recently reported in the v3.4.4
-> (and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
->
-> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
->
-> 1) An XSS flaw was found in the way phpMyAdmin processed row content,
->   containing JavaScript code, after its inline editing and saving,
->
-> 2) It was found that phpMyAdmin did not properly sanitize the content
->   of db, table, and column names prior use of their values.
->
-> A remote attacker could use these flaws to conduct XSS attacks (execute
-> arbitrary HTML or web script) by tricking authenticated phpMyAdmin user into 
-> visiting of a specially-crafted URL.
->
-> References:
-> [2] http://secunia.com/advisories/45991/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
->
-> Could you allocate a CVE id for these?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+-- 
+    JB
