@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/4
-Message-ID: <1911378042.1534633.1311364582960.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Jul 2011 15:56:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/5
+Message-ID: <4DECEC03.3020205@gmx.de>
+Date: Mon, 06 Jun 2011 17:02:27 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+Subject: fetchmail 6.3.20 release to fix CVE-2011-1947 (was: CVE request for fetchmail STARTTLS hang (Denial of Service))
 Content-Type: text/plain; charset=utf-8
 
-I presume this only needs one ID
+Greetings,
 
-Use CVE-2011-2709
+I've just released fetchmail 6.3.20 to fix the STARTTLS
+denial-of-service problem present in all earlier fetchmail releases,
+CVE-2011-1947.
 
-Thanks.
+Note that distributors are advised to thoroughly check the NEWS file and
+consider doing a stable release update rather than just backporting the
+security fixes, there were several notable bug fixes.
 
--- 
-    JB
+At least do note <http://www.fetchmail.info/fetchmail-EN-2010-03.txt> -
+it's a good opportunity to fix this, too...
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> this:
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
-> [2]
-> http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
-> [3] http://lwn.net/Alerts/449415/
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
-> 
-> doesn't seem to have CVE identifier yet (though Sebastian Krahmer
-> requested one for related fscaps issue).
-> 
-> Josh, Steve, could you allocate a CVE id for this?
-> 
-> [4] contains also further issue description + links to SUSE patches
-> (from [2]). Could not find their plaintext (*.src.rpm) version though.
-> 
-> So Sebastian, if you could share those with us, it would be
-> appreciated.
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Changelog:
+https://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/NEWS
+
+Homepage:
+http://www.fetchmail.info/
+
+Downloads:
+http://developer.berlios.de/project/showfiles.php?group_id=1824&release_id=18583
+
+Best regards,
+Matthias Andree
+Hat: fetchmail maintainer
