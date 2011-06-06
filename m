@@ -1,19 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/9
-Message-ID: <20110406170403.GB23639@openwall.com>
-Date: Wed, 6 Apr 2011 21:04:03 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/10
+Message-ID: <BANLkTim0-LZPLp6AiQAFyuWvOiKs0B4fpi_e=s=KR4KMwXNdAg@mail.gmail.com>
+Date: Mon, 6 Jun 2011 10:14:13 -0700
+From: Chris Evans <scarybeasts@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 06, 2011 at 09:33:21AM +0200, Milan Berger wrote:
-> I want to subscribe for Project-Mindstorm
+On Mon, Jun 6, 2011 at 9:19 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-I went to http://www.project-mindstorm.net and I also did a Google
-search on "Project-Mindstorm".  You do not appear to be a Linux distro
-(nor any other distro, for that matter), so there's no reason for you to
-be on the list that is being setup.  (Besides, we're initially
-subscribing ex-vendor-sec members only, although this should change.)
+> Hello, Josh, Steve, vendors,
+>
+>  It was found that vsftpd, Very Secure FTP daemon, when the network
+> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+> create a new network namespace per connection. A remote attacker could
+> use this flaw to cause a memory pressure and denial of the vsftpd
+> service.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+>
+> This one being a bit tricky one -- from my understanding of the issue,
+> vsftpd doesn't necessarily have a security flaw on its side. It's
+> kernel issue / bug, which allows this to be used for vsftpd DoS:
+>
 
-Alexander
+Yes, I will be considering this a kernel issue.
+vsftpd also uses one (or more!) process per connection. I'd have though that
+a process structure plus stack etc. would be a lot more heavyweight than an
+empty network namespace, but obviously not :)
+
+[4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+> [5]
+> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+>
+> Short-term solution would be probably to address this on the vsftpd
+> side, the long-term one then being to get this fixed in kernel.
+>
+
+It's actually configurable in vsftpd.conf:
+isolate_network=NO
+
+So for a short term fix, all you need is to deploy that config change.
+Looking at the Changelog, network isolation was added in vsftpd-2.2.0, and
+the config setting has been there from v2.2.0 as well.
+
+
+Cheers
+Chris
+
+
+> Though not sure, how it would be wrt to CVE identifier(s) assignment.
+>
+> Steve, could you advice here?
+>
+> Thank you & Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+
