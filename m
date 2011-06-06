@@ -1,63 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/14
-Message-ID: <1745647813.218657.1298578952062.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 15:22:32 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: Jon Oberheide <jon@...rheide.org>
-Cc: Timo Warns <warns@...-sense.de>, oss-security@...ts.openwall.com, coley <coley@...re.org>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/8
+Message-ID: <4DECFE21.6010609@redhat.com>
+Date: Mon, 06 Jun 2011 18:19:45 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
+Subject: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
+Hello, Josh, Steve, vendors,
 
------ Original Message -----
-> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
-> > On 02/24/2011 03:59 AM, Josh Bressers wrote:
-> > > ----- Original Message -----
-> > >>
-> > >> The kernel automatically evaluates partition tables of storage
-> > >> devices.  The code for evaluating LDM partitions (in
-> > >> fs/partitions/ldm.c) contains a bug that allows to overflow the
-> > >> kernel heap. It may be possible to escalate privileges by exploiting
-> > >> this bug.
-> > >>
-> > >> (This bug is distinct from the LDM bug reported by Eugene Teo on
-> > >> 2011-02-23.)
-> > >>
-> > >> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
-> > >> CONFIG_LDM_PARTITION needs to be set.
-> > >>
-> > >
-> > > Can you point to a commit message or something else that is public?
-> > > It's not clear how this differs from Eugene's request.
-> >
-> > As far as I can tell, it's not public yet. Timo will follow-up once his
-> > patch is accepted.
-> 
-> The advisory Timo posted mentioned ldm_frag_add() so it's public for all
-> practical purposes at this point:
-> 
-> static bool ldm_frag_add (const u8 *data, int size, struct list_head
-> *frags)
-> {
-> ...
-> f = kmalloc (sizeof (*f) + size*num, GFP_KERNEL);
-> if (!f) {
-> ldm_crit ("Out of memory.");
-> return false;
-> }
-> ...
-> memcpy (f->data+rec*(size-VBLK_SIZE_HEAD)+VBLK_SIZE_HEAD, data,
-> size);
-> return true;
-> }
-> 
+   It was found that vsftpd, Very Secure FTP daemon, when the network
+namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+create a new network namespace per connection. A remote attacker could
+use this flaw to cause a memory pressure and denial of the vsftpd
+service.
 
-I would still like something along the lines of a proposed patch. I believe
-you folks (as you're much brighter than me), but I still don't quite grasp
-the difference. I suspect there is enough public information for MITRE to
-public a CVE though, so please use CVE-2011-1017.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+[2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
 
-Thanks.
+This one being a bit tricky one -- from my understanding of the issue,
+vsftpd doesn't necessarily have a security flaw on its side. It's
+kernel issue / bug, which allows this to be used for vsftpd DoS:
+[4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+[5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
 
--- 
-    JB
+Short-term solution would be probably to address this on the vsftpd
+side, the long-term one then being to get this fixed in kernel.
+
+Though not sure, how it would be wrt to CVE identifier(s) assignment.
+
+Steve, could you advice here?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
