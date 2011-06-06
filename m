@@ -1,66 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/6
-Message-ID: <20110310210338.GA11962@openwall.com>
-Date: Fri, 11 Mar 2011 00:03:38 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com, Florian Zumbiehl <florz@...rz.de>
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/11
+Message-ID: <972003981.506786.1307380922212.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 13:22:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Russell Coker <rcoker@...hat.com>, Daniel Ruoso <daniel@...so.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Florian, all -
-
-I'm sorry I failed to find time to comment on many postings in this
-thread, and also in the thread about a possible vendor-sec alternative.
-
-On Thu, Mar 10, 2011 at 07:08:38PM +0100, Florian Zumbiehl wrote:
-> What about these?:
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> | However, I think that still #6 (shell injection) and #7 (logrotate
-> | DoS with strange characters in file names) should be considered
-> | vulnerabilities in logrotate: It would be reasonable to assume that you
-> | can use user input that's a valid (slash-less) filename as a (part of a)
-> | log file name (assuming that the program is running as the same user that
-> | inspects and rotates the logs, so the log directory being writable by
-> | the program would not be insecure per-se) without that file name being
-> | interpreted by a shell or causing logrotate to stop functioning,
-> | respectively.
+> based on Debian BTS report:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+> (first CVE-2011-XXYY required for Debian case)
+> 
+> looked more into original report:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> 
+> and the first paragraph of [2] suggests:
+> "When starting a program via "su - user -c program" the user session
+> can escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the input buffer. This allows for example a non-root
+> session to push "chmod 666 /etc/shadow" or similarly bad commands into
+> the input buffer such that after the end of the session they are
+> executed."
+> 
+> this should get a CVE-2005-YYZZ CVE id.
+> 
 
-Based on the description above only (I have not looked at the code), it
-appears that on one hand the program might behave unexpectedly, but on
-the other no privilege boundary is crossed.
+This really shouldn't get a CVE id. It's well known, and sadly not easy to
+fix. There are more details in this bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=479145
 
-My understanding is that these issues would need to be treated as
-vulnerabilities (and assigned CVE ids) only if they can be demonstrated
-to have security impact (as in: someone manages to do more than they
-were supposed to be able to) in an otherwise sane setup.
+I would classify this as an administration issue, not a flaw in su or sudo.
+If you're running arbitrary things, you're in far more trouble than this.
 
-I guess this could be the case if logrotate config files, including log
-filename patterns, are generated based on input from another user
-(different than the service pseudo-user and not root) - e.g., via a
-web-based administration interface with its own access control.
-However, even if so (which already feels somewhat unrealistic) I have
-difficulty imagining a web-based admin user who would be permitted to
-configure log rotation (including filename patterns) yet would not
-otherwise have access to the service pseudo-user account (perhaps the
-person would be the server admin, including full root access).
+I'm happy to let MITRE overrule me.
 
-To summarize, it feels like in theory a privilege boundary could exist
-here and be crossed on certain systems with extra software, but in
-practice this is unlikely and it would indicate poor design of another
-piece of software or/and false sense of security put into that privilege
-boundary.  I don't know what this means for CVE id assignment per the
-current "rules".
-
-Once again, I am relying on the description posted in here only (and
-moreover on my interpretation of it), so maybe the actual situation is
-different.
-
-I usually don't care much about CVE ids being assigned or not.  I cared
-about that for the majority of these logrotate issues because it felt
-like it could affect whether other packages will be fixed or not.  This
-concern does not apply in the case of these two issues.  Thus, I have no
-objections to CVE ids being assigned for them, even though we're not
-going to treat them as vulnerabilities (based on info available so far).
-
-Alexander
+-- 
+    JB
