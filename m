@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/8
-Message-ID: <20111122110920.GB28968@foo.fgeek.fi>
-Date: Tue, 22 Nov 2011 13:09:20 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/12
+Message-ID: <1674131055.506851.1307381083352.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 13:24:43 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: advisories@...itunasecurity.com
-Subject: CVE-request: Symphony CMS Multiple Cross-Site Scripting and SQL Injection Vulnerabilities (NS-11-008)
+Cc: Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
 Content-Type: text/plain; charset=utf-8
 
-Can we assign CVE-identifiers for these three issues, thank you?
 
-Found from: 2.2.3
-Fixed in: 2.2.4
 
-1. http://osvdb.org/show/osvdb/76882 / SA46663
-extensions/profiledevkit/content/content.profile.php profile-parameter XSS
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> It was found that fabric, a simple Pythonic remote deployment tool,
+> used insecure way for creation of temporary files, when uploading
+> template text files and project files to a remote system. A local
+> attacker could use this flaw to conduct symlink attacks to upload
+> sensitive information to remote host or to overwrite certain local
+> system files.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
+> 
 
-2. http://osvdb.org/show/osvdb/76883 / SA46663
-symphony/lib/core/class.symphony.php filter-parameter XSS
+Please use CVE-2011-2185.
 
-3. http://osvdb.org/show/osvdb/76884 / SA46663
-symphony/content/content.publish.ph filter-parameter SQL injection
-(Different than CVE-2010-3458)
+Thanks.
 
-References:
-http://seclists.org/bugtraq/2011/Nov/8
-http://www.mavitunasecurity.com/xss-and-sql-injection-vulnerabilities-in-symphony-cms/
-http://secunia.com/advisories/46663/
-Advisory Reference: NS-11-008
-
-- Henri Salo
+-- 
+    JB
