@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/39
-Message-ID: <4D990505.2050307@slackware.com>
-Date: Sun, 03 Apr 2011 18:38:45 -0500
-From: "Patrick J. Volkerding" <security@...ckware.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/4
+Message-ID: <4DECA2C9.6050402@redhat.com>
+Date: Mon, 06 Jun 2011 11:50:01 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- LuaExpat -- Prone to XML "billion laughs attack"
 Content-Type: text/plain; charset=utf-8
 
-On 04/03/2011 06:15 PM, Solar Designer wrote:
-> On Fri, Apr 01, 2011 at 01:20:30PM -0500, Patrick J. Volkerding wrote:
->> I've been on board since close to the beginning, and would be pleased to
->> participate again.  Here's the public GPG key for this address.
->
-> I assume that security@...ckware delivers mail just to you, correct?
+Hello, Josh, Steve, vendors,
 
-Yes.
+   It was found that LuaExpat, a SAX XML parser based on the Expat
+library, is prone to XML "billion laughs attack", as described in:
+[1] 
+http://www.ibm.com/developerworks/xml/library/x-tipcfsx/index.html#N100F1
 
->> It expires on 2012-12-21, but presumably that won't be a problem.  ;-)
->
-> You will need to provide a new key (or expand this one's expiration
-> date and provide it again) in time.  If the list is still around by
-> then, that is. ;-)
+A remote attacker could provide a specially-crafted XML file, which
+once opened in an application, linked against LuaExpat, could cause
+that application to crash.
 
-We'll see what happens then.  ;-)
+References:
+[2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629225
+[3] http://matthewwild.co.uk/projects/luaexpat/luaexpat-1.2.0.tar.gz
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=711027
 
-Thanks!  The effort is very much appreciated.  While I'm here, I'd like 
-to make a motion that requests for list membership continue to be made 
-in oss-security (or some other venue open to all).
+Could you allocate a CVE id for this?
 
-Take care,
-
-Pat
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
