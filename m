@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/5
-Message-ID: <1305039325.4942.14.camel@oban>
-Date: Tue, 10 May 2011 16:55:25 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/26
+Message-ID: <4DED6072.40403@redhat.com>
+Date: Tue, 07 Jun 2011 07:19:14 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org
-Subject: CVE request: keepalived pid file permissions issue
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+On 06/07/2011 12:19 AM, Jan Lieskovsky wrote:
+> Hello, Josh, Steve, vendors,
+> 
+>   It was found that vsftpd, Very Secure FTP daemon, when the network
+> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+> create a new network namespace per connection. A remote attacker could
+> use this flaw to cause a memory pressure and denial of the vsftpd
+> service.
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+> 
+> This one being a bit tricky one -- from my understanding of the issue,
+> vsftpd doesn't necessarily have a security flaw on its side. It's
+> kernel issue / bug, which allows this to be used for vsftpd DoS:
+> [4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+> [5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+> 
+> Short-term solution would be probably to address this on the vsftpd
+> side, the long-term one then being to get this fixed in kernel.
+> 
+> Though not sure, how it would be wrt to CVE identifier(s) assignment.
+> 
+> Steve, could you advice here?
 
-it was reported that keepalived (and some other daemons) store their pid
-file with permission 666. A bug was opened for keepalived in Debian,
-could a CVE be assigned to the issue?
+It is worth noting that for a local, unprivileged user to trigger this,
+they will need to have the CAP_SYS_ADMIN capability. So this limits the
+attack to some services like vsftpd. I see this more of a kernel issue
+as configuring vsftpd to set isolate_network=NO is not a long-term solution.
 
-Bug text was:
-
-On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
-> Package: keepalived
-> Version: 1.1.12-1
-> Severity: grave
-> Tags: security
-> 
-> Hi,
-> 
-> keepalive writes a public writeable pid file to /var/run
-> 
-> -rw-rw-rw-  1 root     root        5 2011-02-08 13:00 keepalived.pid
-> 
-> Cheers,
-> Martin
-> 
-> 
-> reference: http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
-
-Thanks,
--- 
-Yves-Alexis
-
+Thanks, Eugene
