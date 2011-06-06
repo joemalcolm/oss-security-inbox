@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/39
-Message-ID: <20110404181420.GB32295@altlinux.org>
-Date: Mon, 4 Apr 2011 22:14:20 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/2
+Message-ID: <4DEC731A.4000309@redhat.com>
+Date: Mon, 06 Jun 2011 11:56:34 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Eugene Teo <eugene@...hat.com>, "stev >> \"Steven M. Christey\"" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: set cred->user_ns in key_replace_session_keyring
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 04:00:29PM +0200, phocean wrote:
-> On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
-> >On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
-> >>Please subscribe me to the new list. I was a vendor-sec subscriber.
-> >>
-> >>pub   2048R/519FE93C 2011-01-26
-> >>uid                  ksha <ksha@...m.cl>
-> >
-> >Are you a security contact for a Linux distro, and for which one?
-> >And how do we verify that?
-> >
-> >How did you receive vendor-sec mail?
-> >
-> >Alexander
+On 06/03/2011 12:10 PM, Eugene Teo wrote:
+> new->user_ns is uninitialised if the cred is not created with
+> copy_creds(). If I'm not mistaken, this was introduced by
+> 47a150edc2ae734c0f4bf50aa19499 (v2.6.39).
 > 
-> I is work for Alt Linux Russia and is want to subscribe to yor list.
+> Thread starts from https://lkml.org/lkml/2011/5/23/199;
+> Proposed patch: https://lkml.org/lkml/2011/5/25/265
+> 
+> Thanks, Eugene
 
-I cannot confirm this statement. ;)
-
+This has been assigned CVE-2011-2184
 
 -- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+Huzaifa Sidhpurwala / Red Hat Security Response Team
