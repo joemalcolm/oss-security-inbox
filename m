@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/3
-Message-ID: <4D257F9D.8090707@redhat.com>
-Date: Thu, 06 Jan 2011 16:38:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/3
+Message-ID: <20110606092657.GA23843@suse.de>
+Date: Mon, 6 Jun 2011 11:26:57 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Greg KH <greg@...ah.com>, "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: Re: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
+Subject: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
-On 01/06/2011 04:16 AM, Greg KH wrote:
-> On Wed, Jan 05, 2011 at 12:14:28PM +0800, Eugene Teo wrote:
->> In addition to CVE-2010-3881, some versions of the Linux kernel
->> forgot to initialize the kvm_vcpu_events.interrupt.pad field before
->> being copied to userspace. I have assigned CVE-2010-4525 to this. I
->> briefly checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y
->> are not.
->>
->> https://bugzilla.redhat.com/CVE-2010-4525
->
-> Is there a fix for this in the upstream kernels?  How about kernels
-> greater than .35?
+Hi,
 
-The upstream kernel and .35.y onwards are not affected.
+In certain configs, pam_ssh is not completely dropping its privileges
+to user. It just forgets to call setgid() and initgroups(). A fix can be found at [1].
+Can someone assign a CVE?
 
-Thanks, Eugene
+thx,
+Sebastian
+
+[1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
