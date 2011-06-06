@@ -1,71 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/16
-Message-ID: <4D642BE8.9070600@bestpractical.com>
-Date: Tue, 22 Feb 2011 16:34:32 -0500
-From: Thomas Sibley <trs@...tpractical.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>,  Shawn M Moore <sartak@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>,  security@...tpractical.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/20
+Message-ID: <2107589435.508511.1307384934249.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 14:28:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
 
-Is Redhat packaging RT now, or are you just handling the CVEs?
-
-In all future security mail, please use our security contact address
-security@...tpractical.com, not developer email addresses pulled from
-commits.  Details for our security contact are at:
-http://bestpractical.com/security/
-
-We have no context for Redhat's (and Debian's?) involvement here.  Can
-you bring us up to speed on your plans regarding CVEs and/or security
-releases in your distributions?
-
-On 22 Feb 2011 09:37, Jan Lieskovsky wrote:
->   2) * Redirect users to their desired pages after login.
-[snip]
->      Upstream bug report:
->      [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
 > 
->      Upstream changeset:
->      [d]
-> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
+> It was found that vsftpd, Very Secure FTP daemon, when the network
+> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+> create a new network namespace per connection. A remote attacker could
+> use this flaw to cause a memory pressure and denial of the vsftpd
+> service.
 > 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
 > 
->      Thomas, could you please confirm [d] is the proper fix for 2)
-> issue? Thank you.
->      (* Redirect users to their desired pages after login.)
-
-The commit you linked to is not the full fix.  As noted in our own bug
-report you also link to above, the fix was merged into 3.8-trunk with
-commit 057552287159e801535e59b8fbd5bd98d1322069.
-
-That said, what are your plans for the diffset?  The commit itself can't
-be used as a standalone patch for the issue.  It introduced a few other
-bugs in core RT and broke the current stable versions of
-RT-Authen-ExternalAuth (a very popular, critical extension).  The bugs
-have been fixed by other commits and there are development releases of a
-fixed ExternalAuth.
-
-Are you trying to package a patch in a security update?
-
->   3) * Clone Scrip's TicketObj since we change the CurrentUser and it
-> can leak
->      information (Custom field values, etc)
+> This one being a bit tricky one -- from my understanding of the issue,
+> vsftpd doesn't necessarily have a security flaw on its side. It's
+> kernel issue / bug, which allows this to be used for vsftpd DoS:
+> [4]
+> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+> [5]
+> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
 > 
-[snip]
->      Upstream changeset (needs confirmation from upstream if it's
->      real fix for the issue yet):
->      [iii]
-> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
+> Short-term solution would be probably to address this on the vsftpd
+> side, the long-term one then being to get this fixed in kernel.
 > 
+> Though not sure, how it would be wrt to CVE identifier(s) assignment.
 > 
->      Shawn, could you please confirm [iii] is the proper fix for 3) issue?
->      (* Clone Scrip's TicketObj since we change the CurrentUser and it
-> can leak)
 
-The above commit is an unrelated bug fix.  The correct commit is
-2338cd19ed7a7f4c1e94f639ab2789d6586d01f3, however we've never tested it
-as a standalone fix.  Again, what are your plans?
+I'm going to assign CVE-2011-2189 for the kernel. There are numerous
+vendors shipping this bug.
 
-Thomas, for Best Practical
+I'll leave it up to MITRE if they think vsftpd should get an ID. I don't
+think it should myself, but they understand these corner cases better than
+I.
+
+Thanks.
+
+-- 
+    JB
