@@ -1,18 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/2
-Message-ID: <230448c4-11a5-4384-b901-ce3a84a03a5a@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Thu, 01 Dec 2011 22:54:23 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/18
+Message-ID: <1017653588.507851.1307383387915.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 14:03:07 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: DOM based XSS in the JBoss AS 7 administration console - CVE-2011-3606
+Subject: Re: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-3606 has been assigned to a DOM based XSS in the JBoss AS 7 administration console. This issue was embargoed until today, with a fix now available in the latest release of AS 7. Details are in Red Hat Bugzilla:
+----- Original Message -----
+> Hi,
+> 
+> In certain configs, pam_ssh is not completely dropping its privileges to
+> user. It just forgets to call setgid() and initgroups(). A fix can be
+> found at [1].  Can someone assign a CVE?
+> 
+> thx,
+> Sebastian
+> 
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+> 
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3606
+Is this a security flaw? From doing a little ssh-agent research, it sounds
+harmless without another flaw. I'm not terribly familiar with it though, so
+I could be missing something.
 
-Thanks to David Black for reporting this flaw.
+Thanks.
 
 -- 
-David Jorm / Red Hat Security Response Team
-
+    JB
