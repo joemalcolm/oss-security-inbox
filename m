@@ -1,31 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/28/2
-Message-Id: <201101281125.22255.tiposchi@tiscali.it>
-Date: Fri, 28 Jan 2011 11:25:21 +0100
-From: Salvo Tomaselli <tiposchi@...cali.it>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/23
+Message-ID: <BANLkTik0K6GQbaezekbRNb1+7EersnxRKg@mail.gmail.com>
+Date: Mon, 6 Jun 2011 16:39:06 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: request CVE for weborf
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On Mon, Jun 6, 2011 at 1:22 PM, Josh Bressers wrote:
+> ----- Original Message -----
+>> Hello Josh, Steve, vendors,
+>>
+>> based on Debian BTS report:
+>> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>> (first CVE-2011-XXYY required for Debian case)
+>>
+>> looked more into original report:
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+>>
+>> and the first paragraph of [2] suggests:
+>> "When starting a program via "su - user -c program" the user session
+>> can escape to the parent session by using the TIOCSTI ioctl to push
+>> characters into the input buffer. This allows for example a non-root
+>> session to push "chmod 666 /etc/shadow" or similarly bad commands into
+>> the input buffer such that after the end of the session they are
+>> executed."
+>>
+>> this should get a CVE-2005-YYZZ CVE id.
+>>
+>
+> This really shouldn't get a CVE id. It's well known, and sadly not easy to
+> fix. There are more details in this bug:
+> https://bugzilla.redhat.com/show_bug.cgi?id=479145
+>
+> I would classify this as an administration issue, not a flaw in su or sudo.
+> If you're running arbitrary things, you're in far more trouble than this.
+>
+> I'm happy to let MITRE overrule me.
 
-i am requesting a CVE for weborf http://galileo.dmi.unict.it/wiki/weborf/
+There is a real exposure here (although somewhat minor), and there are
+existing patches that clearly bound/fix the problem, so it should get
+an id (in my opinion of course).
 
-weborf 0.12.5 fixes a DoS occurring with malformed fields in HTTP request.
-
-Diff from previous version 0.12.4:
-
-$ diff 0.12.4/utils.c 0.12.5/utils.c 
-270a271,272
->     val += param_len + 2; //Moves the begin of the string to exclude the 
-name of the field
-> 
-276d277
-<     val += param_len + 2; //Moves the begin of the string to exclude the 
-name of the field
-
-Regards
--- 
-Salvo Tomaselli
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Best wishes,
+Mike
