@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/5
-Message-ID: <4E325959.1060008@free.fr>
-Date: Fri, 29 Jul 2011 08:55:21 +0200
-From: miniupnp <miniupnp@...e.fr>
-To: Kees Cook <kees@...ntu.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: multiple flaws in minissdpd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/24
+Message-ID: <988082d0-add1-46bf-92ef-bf7d0cdff9a0@email.android.com>
+Date: Mon, 06 Jun 2011 16:38:49 -0400
+From: "daniel@...so.com" <daniel@...so.com>
+To: Josh Bressers <bressers@...hat.com>,oss-security@...ts.openwall.com
+CC: Russell Coker <rcoker@...hat.com>,"Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the report, I'm having a look at theses issues.
 
-Le 28/07/2011 23:24, Kees Cook a écrit :
-> Hi!
->
-> I recently did an audit[1] of minissdpd for Ubuntu, and found a lot of issues,
-> unfortunately. There may be more hiding that I didn't notice, but here
-> are the security bits of my notes:
->
->
-> Denial of Service:
->
-> - off-by-one in packet parsing can trigger crashes on unluckily alignment
->     minissdpd.c line ~290
->
-> - walk off end of memory without length check in "cache-control" packet
->     minissdpd.c line ~314
->
-> - some unchecked malloc uses could lead to crash
->
-> - does not clean up /var/run files on crash
->
->
-> Corruption, possible manipulation of responses:
->
-> - linefeed injection in service requests
->
-> - unchecked write lengths (could get interrupted, lead to corruption)
->
->
-> Memory corruption, with execution control likely:
->
-> - multiple buffer overflows in processRequest
->     - unchecked decoded lengths
->     - unchecked buffer creation length
->     - integer overflows in decoded lengths
->     - write null byte arbitrarily in heap
->     - could read stack memory out on requests (including canary if OS
->       used stack protector canary that wasn't null-started). e.g.:
->       - add bogus service with giant coded-length "location" entry
->       - read back with type==1 and matching "st"
->
->
-> General Safety:
->
-> - does not drop privileges
->
->
-> Hopefully all of this can get fixed up, it looks like a useful service. :)
->
-> Thanks,
->
-> -Kees
->
-> [1] https://bugs.launchpad.net/ubuntu/+source/minissdpd/+bug/813313
->
->   
+
+Josh Bressers <bressers@...hat.com> wrote:
+>This really shouldn't get a CVE id. It's well known, and sadly, not easy
+>to
+>fix. There are more details in this bug:
+>https://bugzilla.redhat.com/show_bug.cgi?id=479145
+
+I failed to see why setsid() doesn't prevent the priviledges escalation. AFAIU the exploit is only possible if the process has a controlling tty, which is prevented by setsid()
+
+>I would classify this as an administration issue, not a flaw in su or
+>sudo.
+>If you're running arbitrary things, you're in far more trouble than
+>this.
+
+Well, you're not running arbitrary things, you're running commands as a less priviledged user under the assumption that it will be restricted to that user.
+
+The scenario of having this less priviledged user compromised without admin knowledge is not far from real.
+
+I, for instance, use su -u to run commands as the www user, what are the odds of that user being compromised without my knowledge? The last thing I want is having a way for that compromised user to run arbitrary commands as any other user.
+
+Daniel
 
