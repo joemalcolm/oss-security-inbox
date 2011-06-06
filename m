@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/6
-Message-ID: <20110208202708.59e6cd14@laverne>
-Date: Tue, 8 Feb 2011 20:27:08 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/1
+Message-ID: <4DEC7304.2000207@redhat.com>
+Date: Mon, 06 Jun 2011 11:56:12 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpbb before 3.0.8
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ksm: race between ksmd and exiting task
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 8 Feb 2011 14:22:54 -0500 (EST)
-schrieb Josh Bressers <bressers@...hat.com>:
+On 06/03/2011 11:37 AM, Eugene Teo wrote:
+> A race condition issue was found in the KSM implementation.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=710338
+> Report: http://www.spinics.net/lists/linux-mm/msg20233.html
+> Proposed patch: http://www.spinics.net/lists/linux-mm/msg20301.html
+> 
+> Thanks, Eugene
 
-> Sadly I can't find any public information, it seems you need a login
-> to view the changelog. If someone has an upstream contact can you ask
-> them to change this policy.
-
-There is some more info including patch:
-http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068
+This has been assigned CVE-2011-2183
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
