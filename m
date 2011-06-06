@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/7
-Message-ID: <20111026142935.GB13364@suse.de>
-Date: Wed, 26 Oct 2011 16:29:35 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/19
+Message-ID: <800812266.508346.1307384457053.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 14:20:57 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- LuaExpat -- Prone to XML "billion laughs attack"
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 04:26:45PM +0200, Marcus Meissner wrote:
-> Hi,
-
-Dup from Sebastians mail, which he mailed at the same tiem.
-
-Ciao, Marcus
- 
-> From our openldap2 Maintainer Ralf:
-> |A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
-> |is passed a zero length string. (Can e.g. be triggered by passing a
-> |"postalAddressAttribute" with the value "$" (or no value a all). What the code
-> |does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
-> |least as far as I understand it)
-> |
-> |Upstream Bug: ITS#7059
-> |http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
-> |
-> |This bug is present in older releases as well.
-> |
-> |I wonder if this is really security relevant as it seem the worst that might
-> |happen is that an authenticated user can crash the daemon. I was not able to do
-> |so during a short test but I guess that is just a matter of trying long enough.
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
 > 
-> Ciao, Marcus
+> It was found that LuaExpat, a SAX XML parser based on the Expat
+> library, is prone to XML "billion laughs attack", as described in:
+> [1]
+> http://www.ibm.com/developerworks/xml/library/x-tipcfsx/index.html#N100F1
 > 
+> A remote attacker could provide a specially-crafted XML file, which
+> once opened in an application, linked against LuaExpat, could cause
+> that application to crash.
+> 
+> References:
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629225
+> [3] http://matthewwild.co.uk/projects/luaexpat/luaexpat-1.2.0.tar.gz
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=711027
+> 
+
+Please use CVE-2011-2188 for this.
+
+Thanks.
 
 -- 
-Working, but not speaking, for the following german company:
-SUSE LINUX Products GmbH, HRB 16746 (AG Nuernberg)
-Geschaeftsfuehrer: Jeff Hawn, Jennifer Guild, Felix Imendoerffer
+    JB
