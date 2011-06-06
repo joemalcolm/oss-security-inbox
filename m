@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/8
-Message-ID: <BANLkTi=8ofrzud2DVhus0VD0M1tdqmfF7A@mail.gmail.com>
-Date: Wed, 29 Jun 2011 10:32:40 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Vasiliy Kulikov <segoon@...nwall.com>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/3
+Message-ID: <20110606092657.GA23843@suse.de>
+Date: Mon, 6 Jun 2011 11:26:57 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 29, 2011 at 10:21 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
->
-> So, with rounded read_characters value it's possible to learn privkey
-> length.
+Hi,
 
-Umm. You can trivially figure that out from the public key lenth
-already, can't you?
+In certain configs, pam_ssh is not completely dropping its privileges
+to user. It just forgets to call setgid() and initgroups(). A fix can be found at [1].
+Can someone assign a CVE?
 
-So that's not very special, afaik.
+thx,
+Sebastian
 
-                    Linus
+[1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
