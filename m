@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/1
-Message-Id: <201106211051.52116.ludwig.nussel@suse.de>
-Date: Tue, 21 Jun 2011 10:51:51 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/24
+Message-ID: <988082d0-add1-46bf-92ef-bf7d0cdff9a0@email.android.com>
+Date: Mon, 06 Jun 2011 16:38:49 -0400
+From: "daniel@...so.com" <daniel@...so.com>
+To: Josh Bressers <bressers@...hat.com>,oss-security@...ts.openwall.com
+CC: Russell Coker <rcoker@...hat.com>,"Steven M. Christey" <coley@...us.mitre.org>
 Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
-> 
->    based on Debian BTS report:
->    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
->        (first CVE-2011-XXYY required for Debian case)
-> 
-> looked more into original report:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
-> 
-> and the first paragraph of [2] suggests:
-> "When starting a program via "su - user -c program" the user session
-> can escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the input buffer.  This allows for example a non-root
-> session to push "chmod 666 /etc/shadow" or similarly bad commands into
-> the input buffer such  that after the end of the session they are
-> executed."
-> 
-> this should get a CVE-2005-YYZZ CVE id.
-> 
-> Could you allocate these?
 
-ping! :-)
 
-cu
-Ludwig
+Josh Bressers <bressers@...hat.com> wrote:
+>This really shouldn't get a CVE id. It's well known, and sadly, not easy
+>to
+>fix. There are more details in this bug:
+>https://bugzilla.redhat.com/show_bug.cgi?id=479145
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+I failed to see why setsid() doesn't prevent the priviledges escalation. AFAIU the exploit is only possible if the process has a controlling tty, which is prevented by setsid()
+
+>I would classify this as an administration issue, not a flaw in su or
+>sudo.
+>If you're running arbitrary things, you're in far more trouble than
+>this.
+
+Well, you're not running arbitrary things, you're running commands as a less priviledged user under the assumption that it will be restricted to that user.
+
+The scenario of having this less priviledged user compromised without admin knowledge is not far from real.
+
+I, for instance, use su -u to run commands as the www user, what are the odds of that user being compromised without my knowledge? The last thing I want is having a way for that compromised user to run arbitrary commands as any other user.
+
+Daniel
+
