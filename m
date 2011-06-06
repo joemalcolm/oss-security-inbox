@@ -1,39 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/2
-Message-ID: <4EA924B0.5080208@redhat.com>
-Date: Thu, 27 Oct 2011 15:00:24 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/15
+Message-ID: <291325264.507131.1307381785428.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 6 Jun 2011 13:36:25 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: crypto: ghash: null pointer deref if no key is set
+Cc: dave b <db.pub.mail@...il.com>, akub Narebski <jnareb@...il.com>, Junio C Hamano <gitster@...ox.com>, coley <coley@...re.org>
+Subject: Re: Security issue in gitweb
 Content-Type: text/plain; charset=utf-8
 
-On 10/27/2011 02:40 PM, Eugene Teo wrote:
-> Description from the commit: The ghash_update function passes a pointer
-> to gf128mul_4k_lle which will be NULL if ghash_setkey is not called or
-> if the most recent call to ghash_setkey failed to allocate memory.  This
-> causes an oops.  Fix this up by returning an error code in the null case.
->
-> This is trivially triggered from unprivileged userspace through the
-> AF_ALG interface by simply writing to the socket without setting a key.
->
-> The ghash_final function has a similar issue, but triggering it requires
-> a memory allocation failure in ghash_setkey _after_ at least one
-> successful call to ghash_update.
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=749475
-> https://secunia.com/advisories/46584/
-> https://bugs.gentoo.org/show_bug.cgi?id=388581
->
-> Upstream commit:
-> http://git.kernel.org/linus/7ed47b7d142ec99ad6880bbbec51e9f12b3af74c
->
-> +config CRYPTO_GHASH
-> was added in commit 2cdc6899, v2.6.32-rc1.
->
+Please use CVE-2011-2186 for this.
 
-This has been assigned CVE-2011-4081
-
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> A security bug was reported by 'dave b' (in CC) against gitweb in
+> Ubuntu. You are being emailed as the upstream contact. Please keep
+> oss-security[1] CC'd for any updates on this issue.
+> 
+> This issue should be considered public, but has not yet been assigned
+> a
+> CVE. Once a CVE is assigned, please mention it in any changelogs.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/777804
+> 
+> From the reporter:
+> ----
+> I am reporting a persistent xss vector in gitweb, note this requires a
+> user to have commit access to a repository that gitweb is configured
+> to display. The vector is the fact that gitweb "serves" up xml files -
+> which can (just as gitweb does) embed html that could be used to
+> perform a cross-site scripting attack.
+> 
+> e.g. (lol.xml).
+> <?xml version="1.0" encoding="utf-8"?>
+> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+> "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+> <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+> lang="en-US">
+> <head>
+> </head>
+> <script>alert(1);</script>
+> </html>
+> 
+> and viewed at
+> http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
+> ----
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
+> 
+> Jamie Strandboge
+> 
+> [1] oss-security@...ts.openwall.com is a public mailing list for
+> people to collaborate on security vulnerabilities and coordinate
+> security updates.
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
