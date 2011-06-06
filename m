@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/22
-Message-ID: <4ECAC165.6050206@redhat.com>
-Date: Mon, 21 Nov 2011 14:23:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/25
+Message-ID: <20110606220106.GD19803@dhcp-25-225.brq.redhat.com>
+Date: Tue, 7 Jun 2011 00:01:06 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
+Cc: coley@...us.mitre.org
+Subject: CVE-2011-1576 kernel: net: Fix memory leak/corruption on VLAN GRO_DROP
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 10:53 AM, Henri Salo wrote:
-> Can I get CVE-identifier for this issue:
->
-> http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
->
-> Other references:
->
-> http://osvdb.org/show/osvdb/76933
-> http://osvdb.org/show/osvdb/76934
-> http://osvdb.org/show/osvdb/76932
-> http://secunia.com/advisories/46762/
->
-> Best regards,
-> Henri Salo
-There appear to be two separate issues here, can you confirm this?
+The function napi_reuse_skb is only meant to be used for packets merged
+by GRO. Using it on the VLAN path will lead to memory leaks/corruption.
 
+The fix for CVE-2011-1478 unveiled this issue. Note, this is not a
+CVE-2011-1478 regression.
+
+This issue does not affect the upstream kernel as the code path in
+question is no longer reachable due to changes in the VLAN subsystem.
+
+https://bugzilla.redhat.com/CVE-2011-1576
+
+Thanks,
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
