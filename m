@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/19
-Message-ID: <800812266.508346.1307384457053.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 14:20:57 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/2
+Message-ID: <1307457439.2599.12.camel@mdlinux>
+Date: Tue, 07 Jun 2011 10:37:19 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- LuaExpat -- Prone to XML "billion laughs attack"
+Subject: CVE request: vlc
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> It was found that LuaExpat, a SAX XML parser based on the Expat
-> library, is prone to XML "billion laughs attack", as described in:
-> [1]
-> http://www.ibm.com/developerworks/xml/library/x-tipcfsx/index.html#N100F1
-> 
-> A remote attacker could provide a specially-crafted XML file, which
-> once opened in an application, linked against LuaExpat, could cause
-> that application to crash.
-> 
-> References:
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629225
-> [3] http://matthewwild.co.uk/projects/luaexpat/luaexpat-1.2.0.tar.gz
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=711027
-> 
+>From http://www.videolan.org/vlc/releases/1.1.10.html :
 
-Please use CVE-2011-2188 for this.
+"Security update regarding an integer overflow in xspf demuxer"
 
-Thanks.
+Looks like it's the following commit:
 
--- 
-    JB
+http://repo.or.cz/w/vlc.git/commitdiff/cd929923ff49175a501bb3e9553a683bc42ff61c
+
+
+Thanks,
+
+Marc.
+
+
