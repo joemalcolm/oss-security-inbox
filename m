@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/3
-Message-ID: <20110411132621.GA8822@suse.de>
-Date: Mon, 11 Apr 2011 15:26:21 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: pure-ftpd STARTTLS command injection / new CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/3
+Message-ID: <4DEE628F.1010806@redhat.com>
+Date: Tue, 07 Jun 2011 19:40:31 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, nospam@...il.it
+Subject: CVE Request -- WebSVN -- execCommand() remote commands injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Hello, Josh, Steve, vendors,
 
-Hi,
+   it was found that WebSVN is prone to remote commands injection 
+vulnerability due improper escaping / quoting of strings, to be
+sent to the command line. Microsoft Windows specific issue and
+different vulnerability than CVE-2008-5918, CVE-2008-5919,
+CVE-2008-5920, and CVE-2009-0240.
 
-http://www.pureftpd.org/project/pure-ftpd/news
+References:
+[1] http://seclists.org/bugtraq/2011/Jun/34
+[2] http://retrogod.altervista.org/rgod_websvn_adv.html
+[3] http://retrogod.altervista.org/rgod_websvn_poc.html
 
-states that pure-ftpd is affected by the same STARTTLS
-injection bug as postifx's CVE-2011-0411.
+Could you allocate a CVE id for this?
 
-Is this CVE postfix-specific or can it be used for
-pure-ftpd as well? If needed, can someone assign a new CVE?
-
-thx,
-Sebastian
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
