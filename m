@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/5
-Message-ID: <4EB7BDE4.4000100@redhat.com>
-Date: Mon, 07 Nov 2011 12:15:48 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Dennis Gilmore <dennis@...il.us>
-Subject: CVE Request -- pam_yubico -- Authentication bypass via NULL password
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/1
+Message-ID: <20110607070821.GA20767@suse.de>
+Date: Tue, 7 Jun 2011 09:08:21 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
 
-   a security flaw was found in the way pam_yubico, a pluggable
-authentication module for yubikeys, performed user authentication,
-when 'use_first_pass' PAM configuration option was not used and
-pam_yubico module was configured as 'sufficient' in the PAM 
-configuration. A remote attacker could use this flaw to circumvent
-common authentication process and obtain access to the account in
-question by providing a NULL value (pressing Ctrl-D keyboard
-sequence) as the password string.
+It might not be the worst issue ever, true, but it somehow doesnt sound right to
+me starting a user ssh-agent with gid 0.
 
-Relevant upstream patch:
-[1] 
-https://github.com/Yubico/yubico-pam/commit/4712da70cac159d5ca9579c1e4fac0645b674043
+Sebastian
 
-References:
-[2] 
-http://groups.google.com/group/yubico-devel/browse_thread/thread/3f179ec0e6845deb
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=733322
+On Mon, Jun 06, 2011 at 02:03:07PM -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > Hi,
+> > 
+> > In certain configs, pam_ssh is not completely dropping its privileges to
+> > user. It just forgets to call setgid() and initgroups(). A fix can be
+> > found at [1].  Can someone assign a CVE?
+> > 
+> > thx,
+> > Sebastian
+> > 
+> > [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+> > 
+> 
+> Is this a security flaw? From doing a little ssh-agent research, it sounds
+> harmless without another flaw. I'm not terribly familiar with it though, so
+> I could be missing something.
+> 
+> Thanks.
+> 
+> -- 
+>     JB
 
-Could you allocate a CVE id for this?
+-- 
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
