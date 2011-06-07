@@ -1,38 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/15
-Message-ID: <648243128.170008.1298410056466.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 16:27:36 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/2
+Message-ID: <1307457439.2599.12.camel@mdlinux>
+Date: Tue, 07 Jun 2011 10:37:19 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
+Subject: CVE request: vlc
 Content-Type: text/plain; charset=utf-8
 
+>From http://www.videolan.org/vlc/releases/1.1.10.html :
+
+"Security update regarding an integer overflow in xspf demuxer"
+
+Looks like it's the following commit:
+
+http://repo.or.cz/w/vlc.git/commitdiff/cd929923ff49175a501bb3e9553a683bc42ff61c
 
 
------ Original Message -----
-> On Tue, Feb 22, 2011 at 03:44:29PM -0500, Josh Bressers wrote:
-> >
-> >
-> > ----- Original Message -----
-> > > Reported by Timo Warns, "Validate number of blocks in map and remove
-> > > redundant variable."
-> > >
-> > > http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
-> > > https://bugzilla.redhat.com/show_bug.cgi?id=679282
-> > >
-> >
-> > I don't understand the security implication of this bug. Can you
-> > explain it?
-> 
-> Incorrectly formed mac partition tables could cause bad things to happen
-> when it was automatically scanned after plugging in a device with this
-> type of partition table on it.
-> 
+Thanks,
 
-This is good enough for me. Please use CVE-2011-1010.
+Marc.
 
-Thanks.
 
--- 
-    JB
