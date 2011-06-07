@@ -1,37 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/3
-Message-ID: <1259315225.139113.1303741338060.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 25 Apr 2011 10:22:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/1
+Message-ID: <20110607070821.GA20767@suse.de>
+Date: Tue, 7 Jun 2011 09:08:21 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: pam_ssh not dropping root gid(s)
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Sun, Apr 24, 2011 at 03:30:29PM +0400, Solar Designer wrote:
-> > Personally, I'd be happy to invite Apple, *BSD's, and Google security
-> > folks to have a sit at the table. Since Google doesn't release a Linux
-> > distro for others to use, ...
+
+It might not be the worst issue ever, true, but it somehow doesnt sound right to
+me starting a user ssh-agent with gid 0.
+
+Sebastian
+
+On Mon, Jun 06, 2011 at 02:03:07PM -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > Hi,
+> > 
+> > In certain configs, pam_ssh is not completely dropping its privileges to
+> > user. It just forgets to call setgid() and initgroups(). A fix can be
+> > found at [1].  Can someone assign a CVE?
+> > 
+> > thx,
+> > Sebastian
+> > 
+> > [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
+> > 
 > 
-> Oh, I was too quick to say that. Android, Chromium OS, and Chrome OS
-> _might_ qualify once we lift the "was a vendor-sec member" requirement.
+> Is this a security flaw? From doing a little ssh-agent research, it sounds
+> harmless without another flaw. I'm not terribly familiar with it though, so
+> I could be missing something.
 > 
-> These are very different from typical Linux distros, which is why it did
-> not occur to me to consider them in this context.
+> Thanks.
 > 
-
-We included Mozilla in vendor-sec due to them being a large distributor of
-open source software. Google certainly fits into this category these days
-with things like Andriod and Chrome (both browser and OS).
-
-I've been contacted by some Andriod folks in the past. They're keen to
-start doing public advisories, most other Google projects already do this.
-
-I suspect the real problem we'll hit with someone like Google is who to
-subscribe. We could easily end up with hundreds of requests from a company
-that size.
-
-Thanks.
+> -- 
+>     JB
 
 -- 
-    JB
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
