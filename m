@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/9
-Message-ID: <140667935.425455.1306959505978.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 1 Jun 2011 16:18:25 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/1
+Message-ID: <Pine.GSO.4.64.1106072223490.25087@faron.mitre.org>
+Date: Tue, 7 Jun 2011 22:26:03 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for Wireshark 1.4.5 TCP DoS issue
+Subject: Re: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
 Content-Type: text/plain; charset=utf-8
 
 
+On Thu, 2 Jun 2011, Henri Salo wrote:
 
------ Original Message -----
-> This wasn't put on the security announce page for some reason (DoS,
-> any TCP dissector):
-> 
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5837
-> 
-> Affects Wireshark 1.4.5 only
-> 
+> https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
 
-Please use CVE-2011-1956.
+This vector was apparently discovered by Henri and not HT-Bridge, so this 
+gets a separate identifier than the others.
 
-Thanks.
+Use CVE-2011-2470 for the arsc_message parameter to 
+chat/base/admin/login.php.
 
--- 
-    JB
+- Steve
