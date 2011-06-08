@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/8
-Message-ID: <1299877110.4898.96.camel@solo.digium.internal>
-Date: Fri, 11 Mar 2011 14:58:30 -0600
-From: Matthew Nicholson <mnicholson@...ium.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/6
+Message-ID: <1897040229.564616.1307564898406.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 8 Jun 2011 16:28:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Coppermine Photo Gallery -- cpg1.4.27 / cpg1.5.12 -- XSS flaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2011-03-11 at 15:46 -0500, Josh Bressers wrote:
+
+
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
 > 
-> ----- Original Message -----
-> > Hello Josh, Steve, vendors,
-> > 
-> > this doesn't seem to have a CVE identifier yet:
-> > [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
-> > [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
-> > 
+> Coppermine Photo Gallery upstream in the past addressed one XSS flaw
+> in cpg1.4.27 / cpg1.5.12 versions. Further details:
+> [1] http://bugs.gentoo.org/show_bug.cgi?id=347287
+> [2]
+> http://forum.coppermine-gallery.net/index.php/topic,65023.msg322935.html#msg322935
+> [3] http://forum.coppermine-gallery.net/index.php/topic,69495.0.html
+> [4] http://sourceforge.net/news/?group_id=89658
 > 
-> Please use CVE-2011-1147
+> There doesn't seem to be a CVE id for this issue yet (or at least I
+> couldn't find one).
 > 
-> Thanks.
+> Note: Should be CVE-2010-XXYY CVE id.
+> 
+> Could you allocate one?
 > 
 
-The advisory on our website has been updated.
+Please use CVE-2010-4667.
+
+Thanks.
+
 -- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
-
+    JB
