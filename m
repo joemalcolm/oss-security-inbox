@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/9
-Message-ID: <20111010204148.78eb24c8@laverne>
-Date: Mon, 10 Oct 2011 20:41:48 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/4
+Message-ID: <1987811491.563153.1307562417562.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 8 Jun 2011 15:46:57 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: fluxbb before 1.4.7
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: vlc
 Content-Type: text/plain; charset=utf-8
 
-http://fluxbb.org/forums/viewtopic.php?id=5751
 
-"This is a security release, however only affects anyone running FluxBB
-behind a reverse proxy, with FORUM_BEHIND_REVERSE_PROXY enabled - we
-expect this to be a small number of users."
 
-Whatever that means... I suggest something like
-"Unknown security vulnerability related to reverse proxying"
+----- Original Message -----
+> From http://www.videolan.org/vlc/releases/1.1.10.html :
+> 
+> "Security update regarding an integer overflow in xspf demuxer"
+> 
+> Looks like it's the following commit:
+> 
+> http://repo.or.cz/w/vlc.git/commitdiff/cd929923ff49175a501bb3e9553a683bc42ff61c
+> 
+> 
+
+Please use CVE-2011-2194.
+
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
