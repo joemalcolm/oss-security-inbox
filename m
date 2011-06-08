@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/6
-Message-ID: <AANLkTikK2KVBKenHmgm8j27=aNmrPVhyQUfH=tz3PUB3@mail.gmail.com>
-Date: Thu, 17 Mar 2011 13:56:45 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/1
+Message-ID: <Pine.GSO.4.64.1106072223490.25087@faron.mitre.org>
+Date: Tue, 7 Jun 2011 22:26:03 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: The risks of cleaning /tmp
+Subject: Re: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
 
-A number of utilities (notably tmpwatch on Red Hat/Fedora) are
-designed to regularly clean the contents of the /tmp directory.  I
-wanted to draw some attention to the fact that these applications, as
-well as setting up cronjobs to perform the same task, introduce the
-same risks as detailed in Tavis Ormandy's advisory for seunshare [1].
-Namely, they make it such that the stickiness of /tmp can no longer be
-relied on.
+On Thu, 2 Jun 2011, Henri Salo wrote:
 
-Consider a setuid application that relies on the fact that users can't
-delete its resources in /tmp because they're root owned.  An attacker
-can simply launch the application and send a SIGSTOP at the right
-moment to cause it to sleep indefinitely, until tmpwatch (or similar)
-removes its /tmp resources, allowing them to be replaced by the
-attacker.  As Tavis pointed out, doing this with ksu could allow
-denial of service, but it may be possible to escalate privileges by
-leveraging other applications.
+> https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
 
-It seems like a difficult problem to solve - it's hardly feasible to
-rewrite every suid app that relies on the stickiness of /tmp.
-Hopefully we can generate some useful discussion here.
+This vector was apparently discovered by Henri and not HT-Bridge, so this 
+gets a separate identifier than the others.
 
-Regards,
-Dan
+Use CVE-2011-2470 for the arsc_message parameter to 
+chat/base/admin/login.php.
 
-[1] http://marc.info/?l=full-disclosure&m=129842239022495&w=2
+- Steve
