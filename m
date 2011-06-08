@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/8
-Message-ID: <615251549.141401.1313779783256.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:49:43 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/6
+Message-ID: <1897040229.564616.1307564898406.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 8 Jun 2011 16:28:18 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...bb.co.uk, C Trapt <C.Trapt@...il.com>, coley <coley@...re.org>
-Subject: Re: CVE-request: KaiBB security vulnerabilities without CVE-IDs
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Coppermine Photo Gallery -- cpg1.4.27 / cpg1.5.12 -- XSS flaw
 Content-Type: text/plain; charset=utf-8
 
-I don't have enough IDs for this, nor do I have the time to go through all these.
-
-Steve, can MITRE take this one.
-
-Thanks and sorry.
-
--- 
-    JB
 
 
 ----- Original Message -----
-> Please assign CVE-IDs for following KaiBB issues:
+> Hello, Josh, Steve, vendors,
 > 
-> 2011:
-> http://osvdb.org/show/osvdb/71068 - HTB22793
-> 2010:
-> http://osvdb.org/show/osvdb/69346
-> http://osvdb.org/show/osvdb/71885 - HTB22746
-> http://osvdb.org/show/osvdb/70210 - HTB22747, HTB22748
-> http://osvdb.org/show/osvdb/70211 - HTB22749
-> http://osvdb.org/show/osvdb/69347
-> http://osvdb.org/show/osvdb/69345
+> Coppermine Photo Gallery upstream in the past addressed one XSS flaw
+> in cpg1.4.27 / cpg1.5.12 versions. Further details:
+> [1] http://bugs.gentoo.org/show_bug.cgi?id=347287
+> [2]
+> http://forum.coppermine-gallery.net/index.php/topic,65023.msg322935.html#msg322935
+> [3] http://forum.coppermine-gallery.net/index.php/topic,69495.0.html
+> [4] http://sourceforge.net/news/?group_id=89658
 > 
-> Haven't tested any of these in actual installation. I can do it if
-> someone requests it.
+> There doesn't seem to be a CVE id for this issue yet (or at least I
+> couldn't find one).
 > 
-> Vendor/project www-pages:
-> 1) http://code.google.com/p/kaibb/
-> 2) http://www.kaibb.co.uk/
+> Note: Should be CVE-2010-XXYY CVE id.
 > 
-> Best regards,
-> Henri Salo
+> Could you allocate one?
+> 
+
+Please use CVE-2010-4667.
+
+Thanks.
+
+-- 
+    JB
