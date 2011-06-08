@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/11
-Message-ID: <651729557.1262135.1316026161955.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:49:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/2
+Message-ID: <4DEFA173.90804@redhat.com>
+Date: Wed, 08 Jun 2011 18:21:07 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request -- Coppermine Photo Gallery -- cpg1.4.27 / cpg1.5.12 -- XSS flaw
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> > Are the below worth assigning CVE ids to? The advisory seems to suggest
-> > they are crash only fixes. Do those deserve CVE IDs? I know we've been
-> > fairly generous with wireshark in the past, but I'm wondering if we
-> > need to draw a line somewhere.
-> 
-> Crash-only issues are always/typically worth a CVE when it can prevent a
-> product from working in a security context. Wireshark monitors network
-> traffic, sometimes live; therefore, in some reasonable/common usage
-> scenarios, attackers can cause a crash and prevent network activities
-> from being detected.
-> 
-> We apply similar logic in forensics and other scenarios. Therefore a CVE
-> is needed for both wnpa-sec-2011-12 (crash reading live packets) as well
-> as wnpa-sec-2011-14 (by only reading a packet trace file) - in the
-> latter, analysis of a packet trace could be hampered/delayed because the
-> investigator can't use the product without it crashing.
-> 
-> Wireshark does not get any more "preference" than any other tool, except
-> indirectly because it gets more attention.
-> 
+Hello, Josh, Steve, vendors,
 
-I wasn't thinking in the sense of live monitoring. You're right of course,
-which also means previous crash IDs were needed.
+   Coppermine Photo Gallery upstream in the past addressed one XSS flaw 
+in cpg1.4.27 / cpg1.5.12 versions. Further details:
+[1] http://bugs.gentoo.org/show_bug.cgi?id=347287
+[2] 
+http://forum.coppermine-gallery.net/index.php/topic,65023.msg322935.html#msg322935
+[3] http://forum.coppermine-gallery.net/index.php/topic,69495.0.html
+[4] http://sourceforge.net/news/?group_id=89658
 
-Sorry for the confusion.
+There doesn't seem to be a CVE id for this issue yet (or at least I 
+couldn't find one).
 
-Thanks.
+Note: Should be CVE-2010-XXYY CVE id.
 
--- 
-    JB
+Could you allocate one?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
