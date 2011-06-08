@@ -1,20 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/3
-Message-ID: <20110915144040.GB1593@foo.fgeek.fi>
-Date: Thu, 15 Sep 2011 17:40:40 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/3
+Message-ID: <262379866.560389.1307556681866.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 8 Jun 2011 14:11:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+Cc: Russell Coker <rcoker@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 14, 2011 at 02:22:59PM -0400, Josh Bressers wrote:
-> Steve,
+----- Original Message -----
 > 
-> Can MITRE deal with this one? I lack time to properly work through this list right now.
+> I failed to see why setsid() doesn't prevent the priviledges
+> escalation. AFAIU the exploit is only possible if the process has a
+> controlling tty, which is prevented by setsid()
+
+It may prevent it for one condition, but not others. For example if I su to
+a normal user (not -c), I can keep the tty open. My point is it's not safe
+to do this.
+
 > 
-> Thanks.
+> >I would classify this as an administration issue, not a flaw in su or
+> >sudo.  If you're running arbitrary things, you're in far more trouble
+> >than this.
+> 
+> Well, you're not running arbitrary things, you're running commands as
+> a less priviledged user under the assumption that it will be
+> restricted to that user.
+> 
+> The scenario of having this less priviledged user compromised without
+> admin knowledge is not far from real.
+> 
+> I, for instance, use su -u to run commands as the www user, what are
+> the odds of that user being compromised without my knowledge? The last
+> thing I want is having a way for that compromised user to run
+> arbitrary commands as any other user.
+> 
 
-What information do you need? I can figure it out and inform this list.
+This is unsafe, I'm not even sure if it can be made safe honestly (without
+breaking lots of things that expect tty access). Things like su and sudo
+are designed to raise privileges, not lower them. If this isn't well
+documented, it should be.
 
-Best regards,
-Henri Salo
+In your situation, I would suggest using something like ssh with key
+authentication setup.
+
+-- 
+    JB
