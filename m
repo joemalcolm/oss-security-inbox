@@ -1,56 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/5
-Message-ID: <620725841.834382.1308668355120.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 21 Jun 2011 10:59:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/1
+Message-Id: <201106091104.03473.ludwig.nussel@suse.de>
+Date: Thu, 9 Jun 2011 11:04:03 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: Russell Coker <rcoker@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
 Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Jan Lieskovsky wrote:
-> > Hello Josh, Steve, vendors,
-> >
-> >    based on Debian BTS report:
-> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
-> >        (first CVE-2011-XXYY required for Debian case)
-> >
-> > looked more into original report:
-> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
-> >
-> > and the first paragraph of [2] suggests:
-> > "When starting a program via "su - user -c program" the user session
-> > can escape to the parent session by using the TIOCSTI ioctl to push
-> > characters into the input buffer. This allows for example a non-root
-> > session to push "chmod 666 /etc/shadow" or similarly bad commands
-> > into
-> > the input buffer such that after the end of the session they are
-> > executed."
-> >
-> > this should get a CVE-2005-YYZZ CVE id.
-> >
-> > Could you allocate these?
+Josh Bressers wrote:
+> > I, for instance, use su -u to run commands as the www user, what are
+> > the odds of that user being compromised without my knowledge? The last
+> > thing I want is having a way for that compromised user to run
+> > arbitrary commands as any other user.
 > 
-> ping! :-)
-> 
+> This is unsafe, I'm not even sure if it can be made safe honestly (without
+> breaking lots of things that expect tty access). Things like su and sudo
+> are designed to raise privileges, not lower them. If this isn't well
+> documented, it should be.
 
-I'm not sure if this should get two IDs. It's really one issue, which isn't
-actually fixed in su.
+Note that you already have the setsid() patch in Fedora since 2005
+so it actually didn't break that much I guess :-) You also have the
+runuser program with is basically su without authentication. runuser
+is specifically intended for use by root to run programs as
+unprivileged user.
 
-The fundamental issue is that tools like su and sudo keep the tty open.
-The patch in question closes the tty for the case of su -c, but not for
-just running su by itself. It is incomplete.
+FWIW I've found ikiwiki-mass-rebuild to be vulnerable to the tty
+hijacking issue too. Upstream was rather quick to switch to using
+su¹ now. ikiwiki-mass-rebuild is also intended to be called in
+package post scripts. I wouldn't be surprised if there are other
+packages that run su to perform some operation as unprivileged user
+in %post.
 
-It should get a 2005 ID at the very least, MITRE will have to do that.
-Perhaps two 2005 IDs? One for the issue, the second for the incomplete fix
-(which is still not fixed)?
+So we would like to release a coreutils security update which adds
+the setsid patch.
 
-I think the bigger issue is it needs to be decided what is proper behavior
-and document that. I'm not smart enough to know if this can be fixed
-properly without crippling these tools.
+cu
+Ludwig
 
-Thanks.
+[1] http://ikiwiki.info/news/version_3.20110608/
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
