@@ -1,20 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/6
-Message-ID: <Pine.GSO.4.64.1103231044570.12348@faron.mitre.org>
-Date: Wed, 23 Mar 2011 10:45:42 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Asterisk Security Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/2
+Message-Id: <201106091301.36138.ludwig.nussel@suse.de>
+Date: Thu, 9 Jun 2011 13:01:35 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request: Ruby on Rails 3/rails_xss XSS
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-On Wed, 23 Mar 2011, Matthew Nicholson wrote:
+http://weblog.rubyonrails.org/2011/6/8/potential-xss-vulnerability-in-ruby-on-rails-applications
 
-> I need a CVE for a new Asterisk security vulnerability.
+cu
+Ludwig
 
-CVE reservation requests for non-public issues are probably best sent 
-privately, instead of to a public list...
-
-That said, I've reserved a CVE and sent it back to you privately.
-
-- Steve
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
