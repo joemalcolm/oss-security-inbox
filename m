@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/2
-Message-ID: <4EDEEAA3.3070104@redhat.com>
-Date: Tue, 06 Dec 2011 21:25:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve@...re.org
-Subject: Re: CVE request: includeViewParameters re-evaluates param/model values as EL expressions on Mojarra/MyFaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/3
+Message-ID: <4DF0E86E.9010908@redhat.com>
+Date: Thu, 09 Jun 2011 17:36:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, vladz <vladz@...zero.fr>, Josselin Mouette <joss@...ian.org>, Behdad Esfahbod <behdad@...me.org>, Christian Persch <chpe@...me.org>, Josselin Mouette <joss@...sain.org>
+Subject: CVE Request -- vte -- Excessive memory and CPU use by processing certain character sequences
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2011 10:21 PM, Kurt Seifried wrote:
-> On 11/28/2011 10:16 PM, David Jorm wrote:
->> It has been found that when includeViewParameters is set to true, JSF 2 as implemented by Mojarra and MyFaces will re-evaluate parameter/model values as EL expressions.
->>
->> Original bug:
->> http://java.net/jira/browse/JAVASERVERFACES-2247
->>
->> MyFaces bug:
->> https://issues.apache.org/jira/browse/MYFACES-3405
->>
->> Write-up/reproducer:
->> http://www.jakobk.com/2011/11/jsf-value-expression-injection-vulnerability/
->>
->> Thanks
-> Please use CVE-2011-4358  for the Mojarra instance of this vulnerable.
->
-> Please use CVE-2011-4359  for the MyFaces instance of this vulnerable.
->
-And I have been informed that CVE-2011-4343 was previously assigned for
-the Apache MyFaces issue, so CVE-2011-4359 is a duplicate and should be
-rejected.
+Hello, Josh, Steve, vendors,
 
--- 
+   An memory exhaustion flaw was found in the way VTE, a terminal
+emulator widget, processed certain character sequences. A remote
+attacker could provide a specially-crafted file, which once opened
+in a terminal using the VTE terminal emulator could lead to excessive
+memory and CPU consumption (leading to subsequent particular process
+termination by OOM killer on some systems).
 
--Kurt Seifried / Red Hat Security Response Team
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629688
+[2] https://bugzilla.gnome.org/show_bug.cgi?id=652124
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=712148
 
+Could you allocate a CVE identifier for this?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
