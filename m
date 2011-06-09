@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/4
-Message-ID: <4E91CB52.3080109@gmail.com>
-Date: Sun, 09 Oct 2011 12:26:58 -0400
-From: Sean Amoss <failedtosync@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request -- Conky 1.8.1 "/tmp/.cesf" Insecure Temporary File Security Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/3
+Message-ID: <4DF0E86E.9010908@redhat.com>
+Date: Thu, 09 Jun 2011 17:36:14 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security <oss-security@...ts.openwall.com>, vladz <vladz@...zero.fr>, Josselin Mouette <joss@...ian.org>, Behdad Esfahbod <behdad@...me.org>, Christian Persch <chpe@...me.org>, Josselin Mouette <joss@...sain.org>
+Subject: CVE Request -- vte -- Excessive memory and CPU use by processing certain character sequences
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello, Josh, Steve, vendors,
 
-Can a CVE be assigned for the below issue?
+   An memory exhaustion flaw was found in the way VTE, a terminal
+emulator widget, processed certain character sequences. A remote
+attacker could provide a specially-crafted file, which once opened
+in a terminal using the VTE terminal emulator could lead to excessive
+memory and CPU consumption (leading to subsequent particular process
+termination by OOM killer on some systems).
 
-Conky 1.8.1 contains a vulnerability that allows malicious, local users
-to perform certain actions with escalated privileges.
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629688
+[2] https://bugzilla.gnome.org/show_bug.cgi?id=652124
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=712148
 
-https://bugs.launchpad.net/ubuntu/+source/conky/+bug/607309
-http://secunia.com/advisories/43225/
+Could you allocate a CVE identifier for this?
 
-
-Thanks,
-
--- 
-Sean Amoss
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
