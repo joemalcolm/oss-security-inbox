@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/4
-Message-ID: <4DA53B63.1030107@redhat.com>
-Date: Wed, 13 Apr 2011 13:57:55 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/1
+Message-Id: <201106091104.03473.ludwig.nussel@suse.de>
+Date: Thu, 9 Jun 2011 11:04:03 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: bonding: Incorrect TX queue offset
+Cc: Russell Coker <rcoker@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Backport of upstream commit:
-fd0e435b0fe85622f167b84432552885a4856ac8 bonding: Incorrect TX queue offset
+Josh Bressers wrote:
+> > I, for instance, use su -u to run commands as the www user, what are
+> > the odds of that user being compromised without my knowledge? The last
+> > thing I want is having a way for that compromised user to run
+> > arbitrary commands as any other user.
+> 
+> This is unsafe, I'm not even sure if it can be made safe honestly (without
+> breaking lots of things that expect tty access). Things like su and sudo
+> are designed to raise privileges, not lower them. If this isn't well
+> documented, it should be.
 
-By default bonding only allocates 16 queues. Devices that have more than 
-16 receive queues will exceed the tx queue index for the bonding device, 
-resulting in at least a denial of service (BUG: unable to handle kernel 
-paging request at...).
+Note that you already have the setsid() patch in Fedora since 2005
+so it actually didn't break that much I guess :-) You also have the
+runuser program with is basically su without authentication. runuser
+is specifically intended for use by root to run programs as
+unprivileged user.
 
-For proper queue allocation, in the bonding driver and down to the 
-devices, they should probably add the following line to one of the files 
-in /etc/modprobe.d/
+FWIW I've found ikiwiki-mass-rebuild to be vulnerable to the tty
+hijacking issue too. Upstream was rather quick to switch to using
+su¹ now. ikiwiki-mass-rebuild is also intended to be called in
+package post scripts. I wouldn't be surprised if there are other
+packages that run su to perform some operation as unprivileged user
+in %post.
 
-options bonding tx_queues=N
+So we would like to release a coreutils security update which adds
+the setsid patch.
 
-where N>= number of processors that show up in /proc/cpuinfo.
+cu
+Ludwig
 
-https://bugzilla.redhat.com/show_bug.cgi?id=696029
-http://git.kernel.org/linus/fd0e435b0fe85622f167b84432552885a4856ac8
+[1] http://ikiwiki.info/news/version_3.20110608/
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
