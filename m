@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/1
-Message-ID: <4E48A8B2.90600@redhat.com>
-Date: Mon, 15 Aug 2011 13:03:46 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: Yves-Alexis Perez <corsac@...ian.org>
-CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/10/1
+Message-Id: <201106101155.11837.ludwig.nussel@suse.de>
+Date: Fri, 10 Jun 2011 11:55:11 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-On 08/13/2011 06:12 AM, Yves-Alexis Perez wrote:
-> On ven., 2011-08-12 at 13:31 +0800, Eugene Teo wrote:
->>>> Btw, can you please mail me a copy of the /boot/config of the
->>>> most recent Debian kernel for my reference?
->>> 
->>> Please let me know if you need anything in addition to the files 
->>> Yves-Alexis sent you.
->> 
->> I didn't receive his mail.
+Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
 > 
-> For some reason Evolution “reply-all” stripped you from the
-> recipients (maybe because of the reply-to header). I've bounced you
-> the mail I sent before (it didn't reach the list either because it
-> was too large, sorry for that).
+>    based on Debian BTS report:
+>    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>        (first CVE-2011-XXYY required for Debian case)
+> 
+> looked more into original report:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> 
+> and the first paragraph of [2] suggests:
+> "When starting a program via "su - user -c program" the user session
+> can escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the input buffer.  This allows for example a non-root
+> session to push "chmod 666 /etc/shadow" or similarly bad commands into
+> the input buffer such  that after the end of the session they are
+> executed."
 
-No problem. Thanks.
+The issue also reminds me that there are several su implemenations.
+On Fedora and SUSE we have a patched coreutils version, Debian uses
+the one from shadow-utils and then there's also a su from
+SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+quirks and weird features. Does anyone still remember why a
+particular implementation was chosen? :-)
 
-Eugene
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+cu
+Ludwig
 
-iQIcBAEBCAAGBQJOSKisAAoJEP9zwVVRv27zTfUP/jp6SMU7MsEgGXHx/IBY0bOo
-P0Q105rLPp+//WT69Lj3Mt58K2TheTTOgHh4fOGkEtFDC3Gueo8TZPe8/qothfXA
-TtSLFxCVZ3M3ZIYYPE/bG/8isZm5LmrnDSn8AasEzTusv4RC+Ly8XFkiYIKoN5VE
-PbDTfqXhVJJ8K4+ZtCQ+MbvjQAOS/LPBjaH4HzyBqFZXvDZIa6utrBZbvWiX3wdc
-0OphiaTBNcnK7L+iBrmkpx3AR4MDFYJl9phVWPoAqdlxQkTXB8/X867+Xjrk7NFj
-1693uDiQufCVK1jjMSpT7d0Dm7InCdBjAq5MO9z4xRoWagMGlOSrALVRp0Br0w+z
-suML7F/kQxEjS1rVYCbWmsuGt5afC7J87AC6miAx6wHdm9iuEERXgKbL9txhQv45
-tg+nNzb4GRiw/9zsdu1VqvitaGmDgjkjJsDj91vnq9gCd3aTXjJRd8ONvC0mB/eZ
-/SoCXEAQ91c6ImOkPN20MEzVk4Cui1+T0DTz1mzqindISpJU5ae6c7MIIk0dnRPh
-ofoQE/dgae5fPqr7w/WyhzR+gDlWb4Bf8iwUzh0InU6Hn76PbUrmtYndCpwQA9iD
-USNheyIoB/0Y03de1PrDZtUrXOrEKQbJsQELf7CXbrEkB66GFkoXGquIBYLYj6LY
-gtQnZrIudyyG9Y30bSUu
-=cTUV
------END PGP SIGNATURE-----
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
