@@ -1,19 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/21
-Message-ID: <Pine.GSO.4.64.1104051054300.20885@faron.mitre.org>
-Date: Tue, 5 Apr 2011 10:54:38 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE re-request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/10/1
+Message-Id: <201106101155.11837.ludwig.nussel@suse.de>
+Date: Fri, 10 Jun 2011 11:55:11 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
+Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+> 
+>    based on Debian BTS report:
+>    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>        (first CVE-2011-XXYY required for Debian case)
+> 
+> looked more into original report:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> 
+> and the first paragraph of [2] suggests:
+> "When starting a program via "su - user -c program" the user session
+> can escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the input buffer.  This allows for example a non-root
+> session to push "chmod 666 /etc/shadow" or similarly bad commands into
+> the input buffer such  that after the end of the session they are
+> executed."
 
-On Tue, 5 Apr 2011, Josh Bressers wrote:
+The issue also reminds me that there are several su implemenations.
+On Fedora and SUSE we have a patched coreutils version, Debian uses
+the one from shadow-utils and then there's also a su from
+SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+quirks and weird features. Does anyone still remember why a
+particular implementation was chosen? :-)
 
-> That one needs a 2009 ID. I asked mitre in a previous mail,
-> let's use this to pester them again.
+cu
+Ludwig
 
-Use CVE-2009-5065
-
-- Steve
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
