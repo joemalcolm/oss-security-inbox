@@ -1,50 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/15
-Message-ID: <4D99518E.5020505@ubuntu.com>
-Date: Mon, 04 Apr 2011 00:05:18 -0500
-From: Micah Gersten <micah@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/10/2
+message-id: <5d43-4df1f880-27-199e2240@89295843>
+date: Fri, 10 Jun 2011 12:56:58 +0200
+from: "Bernhard Rosenkraenzer" <bero@...linux.ch>
+to: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-On 04/01/2011 01:03 PM, Josh Bressers wrote:
-> Hello everyone,
->
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
->
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
->
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
->
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
->
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
->
-> Thanks.
->
-Please add me to the new list, I was a member through the Ubuntu exploder:
-pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
-      Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
-uid                  Micah Gersten <micah@...ntu.com>
-sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
-
-Thanks.
-
--- 
-Micah Gersten
-Ubuntu Security Team
+On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
+ 
+> The issue also reminds me that there are several su implemenations.
+> On Fedora and SUSE we have a patched coreutils version, Debian uses
+> the one from shadow-utils and then there's also a su from
+> SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+> quirks and weird features. Does anyone still remember why a
+> particular implementation was chosen? :-)
 
 
+In Ark Linux, we switched from the coreutils one to the shadow-utils one about 2 years ago because the shadow-utils one does what we need (incl. PAM support) without having to port the PAM patch on every new coreutils release.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+ttyl
+bero
