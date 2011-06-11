@@ -1,32 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/2
-Message-ID: <4E019863.300@redhat.com>
-Date: Wed, 22 Jun 2011 15:23:15 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/11/1
+Message-ID: <4DF3BD4A.2060001@pre-sense.de>
+Date: Sat, 11 Jun 2011 21:08:58 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: CVE request: kernel: taskstats local DoS
+Subject: CVE request: buffer overflow in tftp-hpa
 Content-Type: text/plain; charset=utf-8
 
-On 06/22/2011 03:17 PM, Vasiliy Kulikov wrote:
-> "Currently a single process may register exit handlers unlimited times.
-> It may lead to a bloated listeners chain and very slow process terminations.
-> E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
-> kernel memory is stolen for the handlers chain and "time id" shows 2-7
-> seconds instead of normal 0.003.  It makes it possible to exhaust all
-> kernel memory and to eat much of CPU time by triggerring numerous exits
-> on a single CPU.
-> 
-> The patch limits the number of times a single process may register
-> itself on a single CPU to one."
-> 
-> It makes it possible for unprivileged user eat kernel memory and CPU
-> without triggering OOM killer.
-> 
-> Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
-> 
-> http://lists.openwall.net/linux-kernel/2011/06/16/605
+The tftp-hpa daemon contained a buffer overflow vulnerability in the
+function for setting the utimeout option. As the daemon accepts this
+option from clients, the buffer overflow can be remotely exploited.
 
-Please use CVE-2011-2484.
+For a patch, see
 
-Thanks, Eugene
+> git clone http://www.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
+> git diff 2864 f303
+
+Thanks, Timo
