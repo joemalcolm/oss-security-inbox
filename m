@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/5
-Message-ID: <2073418535.897119.1308858575723.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 23 Jun 2011 15:49:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/5
+Message-ID: <BANLkTimgFDh2Sq504JcVynFw=Suq0vS-CQ@mail.gmail.com>
+Date: Sun, 12 Jun 2011 12:20:06 -0300
+From: Felipe Pena <felipensp@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests: opie off by one and setuid() failure
+Subject: CVE Request: PHP File upload filename
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+Please assign a CVE id for "File path injection vulnerability in RFC1867
+File upload filename" [1].
+
+The fix for the bug has been already committed. [2]
+
+Reported by: Krzysztof Kotowicz <kkotowicz at gmail dot com>
 
 
------ Original Message -----
-> Hi,
-> 
-> Can someone assign 2 CVE's for a off by one in opiesu
-> and a missing setuid() retval check in opielogin which
-> leads to easy root compromise? Reviewed opie-2.4.
-> 
-> Patches are available here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=698772
-> 
-
-Here you go:
-
-CVE-2011-2489 opiesu Off by one
-CVE-2011-2490 opiesu missing setuid() check
+[1] - http://bugs.php.net/bug.php?id=54939
+[2] - http://svn.php.net/viewvc?view=revision&revision=312103
 
 Thanks.
 
 -- 
-    JB
+Regards,
+Felipe Pena
+
