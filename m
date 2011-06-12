@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/6
-Message-Id: <201105311525.14786.thomas@suse.de>
-Date: Tue, 31 May 2011 15:25:14 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/2
+Message-ID: <handler.629938.B629938.13078837126379.ackinfo@bugs.debian.org>
+Date: Sun, 12 Jun 2011 13:03:07 +0000
+From: owner@...s.debian.org (Debian Bug Tracking System)
 To: oss-security@...ts.openwall.com
-Subject: CVE request: NetworkManager-openvpn logs cert password
+Subject: Bug#629938: Info received (CVE Request -- dbus -- Local DoS via messages with non-native byte order)
 Content-Type: text/plain; charset=utf-8
 
+Thank you for the additional information you have supplied regarding
+this Bug report.
 
-and another one from RH bz:
-https://bugzilla.redhat.com/show_bug.cgi?id=708876
+This is an automatically generated reply to let you know your message
+has been received.
 
-Robert Marcano 2011-05-29 20:28:01 EDT
+Your message is being forwarded to the package maintainers and other
+interested parties for their attention; they will reply in due course.
 
-Description of problem:
+Your message has been sent to the package maintainer(s):
+ Utopia Maintenance Team <pkg-utopia-maintainers@...ts.alioth.debian.org>
 
-Password to unlock certificate is logged to /var/log/messages
+If you wish to submit further information on this problem, please
+send it to 629938@...s.debian.org.
 
-May 29 19:46:42 localhost NetworkManager[4791]: destroy_one_secret: destroying
-********
-
-Version-Release number of selected component (if applicable):
-
-NetworkManager-openvpn-0.8.999-1.fc15.x86_64
-
-
-Additional info:
-
-I would love to have the option to type the password at connection time instead
-of it being stored, but adding the password to the system log is wrong
+Please do not send mail to owner@...s.debian.org unless you wish
+to report a problem with the Bug-tracking system.
 
 -- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
-
+629938: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
+Debian Bug Tracking System
+Contact owner@...s.debian.org with problems
