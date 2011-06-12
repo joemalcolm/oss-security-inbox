@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/20
-Message-ID: <1064790982.196142.1294347129282.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 15:52:09 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/4
+Message-ID: <handler.629511.B629511.130789018424564.ackinfo@bugs.debian.org>
+Date: Sun, 12 Jun 2011 14:51:06 +0000
+From: owner@...s.debian.org (Debian Bug Tracking System)
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: patch directory traversal flaw
+Subject: Bug#629511: Info received (CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4651.
+Thank you for the additional information you have supplied regarding
+this Bug report.
 
-Thanks.
+This is an automatically generated reply to let you know your message
+has been received.
+
+Your message is being forwarded to the package maintainers and other
+interested parties for their attention; they will reply in due course.
+
+Your message has been sent to the package maintainer(s):
+ Debian Perl Group <pkg-perl-maintainers@...ts.alioth.debian.org>
+
+If you wish to submit further information on this problem, please
+send it to 629511@...s.debian.org.
+
+Please do not send mail to owner@...s.debian.org unless you wish
+to report a problem with the Bug-tracking system.
 
 -- 
-    JB
-
------ Original Message -----
-> We got a heads up on a directory traversal flaw in patch. I don't
-> think
-> a CVE name has been assigned to it; could we get one? It allows for
-> the
-> creation of arbitrary files in unexpected places due to the use of
-> '..'.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=667529
-> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+629511: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
+Debian Bug Tracking System
+Contact owner@...s.debian.org with problems
