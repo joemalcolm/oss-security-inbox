@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/4
-Message-ID: <AANLkTi=CYJEv4pdUghLN39h6bpYhknrWLaAq=VSizWXE@mail.gmail.com>
-Date: Thu, 6 Jan 2011 11:01:12 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/4
+Message-ID: <handler.629511.B629511.130789018424564.ackinfo@bugs.debian.org>
+Date: Sun, 12 Jun 2011 14:51:06 +0000
+From: owner@...s.debian.org (Debian Bug Tracking System)
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+Subject: Bug#629511: Info received (CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 5, 2011 at 8:23 PM, Pierre Joye <pierre.php@...il.com> wrote:
-> On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
-> <michael.s.gilbert@...il.com> wrote:
->
->> The fact that this bug can lead to a denial-of-service in PHP is
->> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
->> can lead to a dos in other apps, then each should get their own CVE
->> (again in my opinion).
->
-> I think so too but in any case it would rock if I could get a CVE #
-> asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
+Thank you for the additional information you have supplied regarding
+this Bug report.
 
-Anyone?
+This is an automatically generated reply to let you know your message
+has been received.
+
+Your message is being forwarded to the package maintainers and other
+interested parties for their attention; they will reply in due course.
+
+Your message has been sent to the package maintainer(s):
+ Debian Perl Group <pkg-perl-maintainers@...ts.alioth.debian.org>
+
+If you wish to submit further information on this problem, please
+send it to 629511@...s.debian.org.
+
+Please do not send mail to owner@...s.debian.org unless you wish
+to report a problem with the Bug-tracking system.
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+629511: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
+Debian Bug Tracking System
+Contact owner@...s.debian.org with problems
