@@ -1,172 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/3
-Message-ID: <4EFF7E23.8090009@redhat.com>
-Date: Sat, 31 Dec 2011 14:26:59 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/12
+Message-ID: <506779117.651125.1307993146270.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:25:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Pipping <sebastian@...ping.org>
-Subject: Re: mpack 1.6 allows eavesdropping on mails sent by other users
+Cc: Simon McVittie <smcv@...ian.org>, 629938@...s.debian.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- dbus -- Local DoS via messages with non-native byte order
 Content-Type: text/plain; charset=utf-8
 
-On 12/31/2011 12:39 PM, Sebastian Pipping wrote:
-> Hello oss-security,
->
->
-> I think I have found something :-)
->
->
-> Target software
-> ===============
-> I recently stumbled upon a vulnerability in mpack 1.6 [1], a handy tool
-> to (1) wrap/unwrap files into/from MIME containers and (2) send files
-> via e-mail from the command line.
->
->
-> Potential damage
-> ================
-> The vulnerability allows to eavesdrop on mails (or parts of them on
-> FreeBSD) sent by other any user on the system, including mails sent by
-> root.  I guess "information disclosure" is the term.
->
-> To reduce the probability of telling something here that turns out wrong
-> later, I wrote a little tool called "mpacktrafficripper" [2] to
-> demonstrate and verify the exploit.
->
-> The FreeBSD version may allow additional damage, see details below.
->
->
-> Affected distros
-> ================
-> So far I have superficially tested the latest editions of three major
-> distros.  The results:
->
->  - Debian (1.6-7):   vulnerable
->
->  - Gentoo (1.6-r1):  vulnerable
->
->  - FreeBSD (1.6):    vulnerable  (part 2 and after if split,
->                                   see details)
->
-> Check [3] for my Git repo collecting the patches of all of these.
->
->
-> Technical details
-> =================
-> The original code of mpack 1.6 operates this way:
->
->   1) make a tempfile name using mktemp
->
->   2) open that file using open(..., O_CREAT|O_EXCL, 0644)
->   3) write to the file                              ^^^^
->   4) close it
->
->   5) re-open the file using fopen(..., "r")
->   6) read from it
->   7) close it
->
->   8) delete the file
->
-> So due to permissions 0644 everyone can read the file he opens the file
-> for reading before it's deleted.  With an open file descriptor, there
-> should not even be a reason to hurry.
->
-> So a call like
->
->   # sudo mpack -s foo /etc/passwd fake@...l.com
->
-> can be eavesdropped on in Debian and Gentoo.
-> When instructing mpack to split the file into several mails as in
->
->   # sudo mpack -s foo -m 1700 /etc/passwd fake@...l.com
->                       ^^^^^^^
-> the tempfile names follow a pattern:
->
->   foo
->   foo.01
->   foo.02
->
-> Now on FreeBSD the original use of mktemp followed by open with
-> O_CREAT|O_EXCL has been adjusted to this procedure, instead:
->
->   1) make a temp file using mkstemp and close returned file descriptor
->                               ^
->   2) open that file using open(..., O_CREAT|O_TRUNC, 0644)
->                                             ^^^^^^^
->   3) to 8) as above
->
-> So mkstemp creates the first file (not open) which gets the permissions
-> right but all following files are created using open _without_ O_EXCL
-> and with 0644 permissions.  So the second part and after can be
-> eavesdropped on FreeBSD, too.  Additionally, there could be room for
-> symlink or hardlink attacks in that case, I have tested that.
->
->
-> A patch
-> =======
-> A patch could be to change create files with 0600 permissions rather
-> than 0644 as done by [4].  However, that approach affects creation of
-> non-temporary files too.  In some cases, users may not want that
-> behaviour -- you tell me.
->
->
-> Upstream
-> ========
-> My attempts of contacting upstream failed.  I wrote to
->
->   To: mpack-bugs@...rew.cmu.edu
->   CC: "John G. Myers" <jgm@....edu>,
->       "Christopher J. Newman" <chrisn@....edu>
->
-> and got this back:
->
->   ----- The following addresses had permanent fatal errors -----
->   <jgm@....edu>
->     (reason: 553 5.3.0 <jgm+@...rew.cmu.edu>... Unknown address.
->       See   <http://www.cmu.edu/directory?to=jgm>)
->   niftytelnet@....com
->     (reason: 550 5.1.1 unknown or illegal alias: niftytelnet@....com)
->     (expanded from: <chrisn@....edu>)
->
->   ----- Transcript of session follows -----
->   ... while talking to mx1.andrew.cmu.edu.:
->   >>> DATA
->   <<< 553 5.3.0 <jgm+@...rew.cmu.edu>... Unknown address.
->     See  <http://www.cmu.edu/directory?to=jgm>
->   550 5.1.1 <jgm@....edu>... User unknown
->   <<< 503 5.0.0 Need RCPT (recipient)
->   ... while talking to mx.mac.com.akadns.net.:
->   >>> DATA
->   <<< 550 5.1.1 unknown or illegal alias: niftytelnet@....com
->   550 5.1.1 niftytelnet@....com... User unknown
->   <<< 554 5.5.0 No recipients have been specified.
->
->
-> Next steps
-> ==========
-> You tell me.  Does this need a CVE number?  With a dead upstream, how do
-> we best get this fixed in all distros ?
-It's a vuln so yup. Please use CVE-2011-4919 for this issue. As for
-getting it fixed FreeBSD/Debian/etc monitor this list, if anyone thinks
-additional notification is needed please forward this email to the
-appropriate parties I guess.
 
->
-> Best,
->
->
->
-> Sebastian
->
->
-> [1] ftp://ftp.andrew.cmu.edu/pub/mpack/
-> [2] http://git.goodpoint.de/?p=mpacktrafficripper.git;a=summary
-> [3] http://git.goodpoint.de/?p=mpack.git;a=summary
+
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> It was found that D-BUS message bus service / messaging facility did
+> not update the byte-order flag of the message properly by swapping the
+> byte order of incoming messages into their native endiannes. A local,
+> authenticated user could use this flaw to send a specially-crafted
+> message to a system service (like Avahi or NetworkManager), using the
+> system bus, potentially leading to disconnect of such a service from
+> system bus (denial of service).
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
+> [2] https://bugs.freedesktop.org/show_bug.cgi?id=38120
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712676
+> 
+> Upstream patches:
 > [4]
-> http://git.goodpoint.de/?p=mpack.git;a=commitdiff;h=0c87201f64491575350b18d04c62ec142e119d1f
+> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.2&id=6519a1f77c61d753d4c97efd6e15630eb275336e
+> (in upstream v1.2.28 version)
+> 
+> [5]
+> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.4&id=c3223ba6c401ba81df1305851312a47c485e6cd7
+> (in upstream v1.4.12 version)
+> 
 
-Happy new years!
+Please use CVE-2011-2200.
+
+Thanks.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
+    JB
