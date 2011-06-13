@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/11
-Message-ID: <4D64BAC8.2000501@msgid.tls.msk.ru>
-Date: Wed, 23 Feb 2011 10:44:08 +0300
-From: Michael Tokarev <mjt@....msk.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/9
+Message-ID: <461006768.650405.1307991773949.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:02:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nelson Elhage <nelhage@...lice.com>,  Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: Ruby on Rails 3/rails_xss XSS
 Content-Type: text/plain; charset=utf-8
 
-23.02.2011 08:46, Nelson Elhage wrote:
-> I don't have any definite opinions here about where to draw which
-> lines, but I want to point out that in addition to physical attack
-> vectors, virtualization tools are also potentially affected by these
-> kinds of bugs. If you try to mount an untrusted VM's virtual disk
-> image from somewhere, you're also vulnerable to that VM triggering
-> bugs in the filesystem or other layers.
 
-And that's why projects like http://www.libguestfs.org/ emerges.
-FWIW ;)
 
-/mjt
+----- Original Message -----
+> Hi,
+> 
+> http://weblog.rubyonrails.org/2011/6/8/potential-xss-vulnerability-in-ruby-on-rails-applications
+> 
+
+Please use CVE-2011-2197.
+
+Thanks.
+
+-- 
+    JB
