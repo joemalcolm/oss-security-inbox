@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/6
-Message-ID: <20110728124154.GE9382@foo.fgeek.fi>
-Date: Thu, 28 Jul 2011 15:41:54 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/12
+Message-ID: <506779117.651125.1307993146270.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:25:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
+Cc: Simon McVittie <smcv@...ian.org>, 629938@...s.debian.org, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- dbus -- Local DoS via messages with non-native byte order
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 03:38:32PM -0500, Josh Bressers wrote:
-> ----- Original Message -----
-> > Can I get CVE-identifier for this vulnerability? It's old one :)
-> > 
-> > Software gri is vulnerable to insecure temp file generation.
-> > 
-> > References:
-> > http://gri.sourceforge.net/gridoc/html/Version_2_12.html
-> > http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
-> > note that this URL is not meant for public use as it is temporary)
-> > 
-> 
-> Steve,
-> 
-> Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
-> is here:
-> https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
-> 
-> Thanks.
-> 
-> -- 
->     JB
 
-This is still unhandled. What is the status?
 
-Best regards,
-Henri Salo
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> It was found that D-BUS message bus service / messaging facility did
+> not update the byte-order flag of the message properly by swapping the
+> byte order of incoming messages into their native endiannes. A local,
+> authenticated user could use this flaw to send a specially-crafted
+> message to a system service (like Avahi or NetworkManager), using the
+> system bus, potentially leading to disconnect of such a service from
+> system bus (denial of service).
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
+> [2] https://bugs.freedesktop.org/show_bug.cgi?id=38120
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712676
+> 
+> Upstream patches:
+> [4]
+> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.2&id=6519a1f77c61d753d4c97efd6e15630eb275336e
+> (in upstream v1.2.28 version)
+> 
+> [5]
+> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.4&id=c3223ba6c401ba81df1305851312a47c485e6cd7
+> (in upstream v1.4.12 version)
+> 
+
+Please use CVE-2011-2200.
+
+Thanks.
+
+-- 
+    JB
