@@ -1,46 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/2
-Message-Id: <201107040939.25020.ludwig.nussel@suse.de>
-Date: Mon, 4 Jul 2011 09:39:24 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/4
+Message-ID: <20110613134042.GA12258@foo.fgeek.fi>
+Date: Mon, 13 Jun 2011 16:40:42 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: jcameron@...min.com, webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com
+Subject: CVE-request: XSS in Webmin 1.540
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen wrote:
-> I see the following changes as fixed in MySQL 5.1.52, but cannot find
-> any CVEs for them:
-> 
-> InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
-> examining the same table's information in the INFORMATION_SCHEMA
-> database at the same time could cause a crash in the debug version of
-> the server. (Bug #54678)
-> 
-> Security Fix: The server crashed for assignment of values of types other
-> than Geometry to items of type GeometryCollection (MultiPoint,
-> MultiCurve, MultiSurface). Now the server checks the field type and
-> fails with bad geometry value if it detects incorrect parameters. (Bug
-> #55531)
-> 
-> Security Fix: EXPLAIN EXTENDED caused a server crash with some prepared
-> statements. (Bug #54494)
-> 
-> Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
-> derived table caused a server crash. (Bug #54488)
-> 
-> There are a whole bunch of other crash-type bugs corrected in 5.1.52
-> that upstream did not explicitly flag as security, which might be
-> considered security-relevant as well:
-> 
-> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+Hi,
 
-Looks like this CVE request got lost.
+I would like to receive CVE-identifier for this issue in Webmin. References:
 
-cu
-Ludwig
+http://seclists.org/fulldisclosure/2011/Apr/393
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB. Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881 which is included to Webmin 1.550 release.
+
+Should be 2011 identifier.
+
+Best regards,
+Henri Salo
