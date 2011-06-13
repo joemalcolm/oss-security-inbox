@@ -1,23 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/5
-Message-ID: <20110317172812.GZ5174@redhat.com>
-Date: Thu, 17 Mar 2011 11:28:13 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/17
+Message-ID: <60589402.652548.1307994431175.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:47:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for Asterisk flaws
+Cc: Ville-Pekka Vainio <vpivaini@...helsinki.fi>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libvoikko -- DoS of application linked against libvoikko due improper handling of embedded null characters in input strings
 Content-Type: text/plain; charset=utf-8
 
-Two flaws were fixed in Asterisk:
+Steve,
 
-AST-2011-003: http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
-- resource exhaustion DoS in Asterisk Manager Interface
+Can MITRE comment on this one? I'm not really sure what to do.
 
-AST-2011-004: http://downloads.asterisk.org/pub/security/AST-2011-003.pdf
-- DoS in TCP/TLS server due to NULL ptr deref
+The core issue, embedded null characters seems to be the same for both Java and Python, but the fix covers two different bits of code.
 
-Could CVE names be assigned to these issues?
+My guess is it's just one ID, but I'd like to be certain.
 
-Thanks!
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> A denial of service flaw was found in the way Python and Java
+> interfaces of libvoikko, a library for spellcheckers and hyphenators,
+> processed embedded null characters in input strings. If a specially-
+> crafted input string was provided to an application linked against
+> libvoikko, it could lead to that particular application termination.
+> 
+> References:
+> [1] http://voikko.sourceforge.net/releases.html
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=712863
+> 
+> Upstream patches:
+> [3]
+> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3901
+> [4]
+> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3902
+> [5]
+> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3903
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
