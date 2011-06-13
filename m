@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/2
-Message-ID: <20111227172604.GA11555@albatros>
-Date: Tue, 27 Dec 2011 21:26:04 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Eugene Teo <eteo@...hat.com>
-Cc: kseifried@...hat.com, oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/2
+Message-ID: <4DF5A1CC.60101@redhat.com>
+Date: Mon, 13 Jun 2011 13:36:12 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: alpha: fix several security issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+https://lkml.org/lkml/2011/6/11/87; from Dan Rosenberg.
 
-On Sun, Dec 25, 2011 at 05:53 +0800, Eugene Teo wrote:
-> >> 2: /proc/$PID/{sched,schedstat} information leak
-> >> Vasiliy Kulikov of OpenWall posted a demo exploit.
-> >> http://openwall.com/lists/oss-security/2011/11/05/3
-> >>
-> >> AFAICS no CVE ID was assigned to this?
-...
-> IIRC, it's an issue but there's no resolution as existing code may break.
-> 
-> There are also,
-> /proc/{interrupts, stat}
-> https://lkml.org/lkml/2011/11/7/340
-> 
-> /dev/pts/, /dev/tty*
-> https://lkml.org/lkml/2011/11/7/355
+1. Signedness issue in osf_getdomainname allows copying out-of-bounds
+kernel memory to userland.
 
-Correct, neither of these are fixed yet :-(
+2. Signedness issue in osf_sysinfo allows copying large amounts of
+kernel memory to userland.
 
+3. Typo (?) in osf_getsysinfo bounds minimum instead of maximum copy
+size, allowing copying large amounts of kernel memory to userland.
 
-/proc/$pid/* vuln will be fixed in the following patch series by introducing
-a restricted procfs permission mode:
+4. Usage of user pointer in osf_wait4 while under KERNEL_DS allows
+privilege escalation via writing return value of sys_wait4 to kernel
+memory.
 
-https://lkml.org/lkml/2011/11/19/41
-https://lkml.org/lkml/2011/12/11/62
+I didn't investigate further.
 
-Currently these series are in the -mm tree.
-
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Thanks, Eugene
