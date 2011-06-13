@@ -1,59 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/22
-Message-ID: <20110304161640.GA25667@openwall.com>
-Date: Fri, 4 Mar 2011 19:16:40 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Florian Zumbiehl <florz@...rz.de>, oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/10
+Message-ID: <1339886535.650476.1307991864519.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:04:24 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: vladz <vladz@...zero.fr>, Josselin Mouette <joss@...ian.org>, Behdad Esfahbod <behdad@...me.org>, Christian Persch <chpe@...me.org>, Josselin Mouette <joss@...sain.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- vte -- Excessive memory and CPU use by processing certain character sequences
 Content-Type: text/plain; charset=utf-8
 
-Hi Florian -
 
-Thank you for explaining your rationale behind this.  Here's my take on it:
 
-On Fri, Mar 04, 2011 at 04:14:00PM +0100, Florian Zumbiehl wrote:
-> In which scenarios exactly logrotate is supposed to be safe to use is
-> mostly undefined.
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> An memory exhaustion flaw was found in the way VTE, a terminal
+> emulator widget, processed certain character sequences. A remote
+> attacker could provide a specially-crafted file, which once opened
+> in a terminal using the VTE terminal emulator could lead to excessive
+> memory and CPU consumption (leading to subsequent particular process
+> termination by OOM killer on some systems).
+> 
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629688
+> [2] https://bugzilla.gnome.org/show_bug.cgi?id=652124
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712148
+> 
 
-Maybe.  We just need to (hopefully) agree on what is common, expected,
-correct - and this may be changing over the years.  Apply our common
-sense and experience.
+Please use CVE-2011-2198.
 
-> However, it is currently a common setup (as in: what distributions do out
-> of the box) to have a daily logrotate cron job run as root that rotates
-> the logs of all the services and to have log directories owned by service
-> users
+Thanks.
 
-Arguably, these are bugs in those service packages, which I'd call
-vulnerabilities.  At least that's the policy for Owl (our Linux distro)
-so far.  We don't have any service-writable log file directories.
-
-I reported one of those issues against nginx-0.6.39-2.el5 (a Red Hat
-distro package) to the package maintainer a year ago, and was told
-the issue was fixed in response to my report (by chown'ing the nginx
-logs directory).  IMO, such a fix was the only right thing to do.
-
-> (so they can create missing log files, for example).
-
-I think that services should either do that before they drop root at
-startup, or they should not do it at all (leave it to logrotate).
-
-However, if it's somehow desired that a service running as non-root be
-able to create log files (other than just at startup?), then the correct
-approach would be to run a dedicated instance of logrotate for that
-service under the service pseudo-user.  Don't mix the pseudo-user and
-root for the same task (dealing with log files of the same service),
-which creates unnecessary risks.
-
-> In such setups, the service user can elevate its privileges to root
-> or corrupt root-owned files using the various bugs.
-
-Indeed.  A vulnerability in the service package, in my opinion.  Now
-that would require CVE id assignment and a fix to the package, whereas
-logrotate could merely use some hardening with no CVE ids (except for
-issue #8, which was different).
-
-What do you say?
-
-Alexander
+-- 
+    JB
