@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/8
-Message-ID: <286851831.43477.1303158210927.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Apr 2011 16:23:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/15
+Message-ID: <2146170184.652361.1307994072314.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:41:12 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: Wireshark 1.2.16 / 1.4.5
+Subject: Re: CVE Request: PHP File upload filename
 Content-Type: text/plain; charset=utf-8
+
+
 
 ----- Original Message -----
 > Hi,
+> Please assign a CVE id for "File path injection vulnerability in
+> RFC1867
+> File upload filename" [1].
 > 
-> I noticed that new wireshark versions 1.2.16/1.4.5 were released on
-> 14th/15th April 2011 and some of issues fixed appear to have security
-> impact
+> The fix for the bug has been already committed. [2]
 > 
-> 1. Use of un-initialised variables:
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
-> Patch:
-> http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
-> Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
-
-Please use CVE-2011-1590
-
+> Reported by: Krzysztof Kotowicz <kkotowicz at gmail dot com>
 > 
-> 2. Buffer overflow in DECT dissector
-> The advisory does not list the bug number or the relevant patch.
-
-Please use CVE-2011-1591
-
 > 
-> 3. Crash in NFS dissector
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
-> Versions affected: 1.4.0 to 1.4.4.
-> This affects Windows only.
-> 
-> http://www.wireshark.org/security/wnpa-sec-2011-05.html
-> http://www.wireshark.org/security/wnpa-sec-2011-06.html
+> [1] - http://bugs.php.net/bug.php?id=54939
+> [2] - http://svn.php.net/viewvc?view=revision&revision=312103
 > 
 
-Please use CVE-2011-1592
+Please use CVE-2011-2202.
 
 Thanks.
 
