@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/4
-Message-ID: <4ED3A32A.6040807@slackware.com>
-Date: Mon, 28 Nov 2011 09:05:14 -0600
-From: "Patrick J. Volkerding" <security@...ckware.com>
-To: oss-security@...ts.openwall.com
-CC: solar@...nwall.com
-Subject: linux-distros Slackware membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/6
+Message-ID: <BANLkTinqqGvnk_dCx4ttNSY4Ph-41nK4kg@mail.gmail.com>
+Date: Mon, 13 Jun 2011 13:37:48 -0300
+From: Javier Bassi <javierbassi@...il.com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: XSS in Webmin 1.540
 Content-Type: text/plain; charset=utf-8
 
-Hello Alexander,
+After your email, I searched for this mailing list and asked for CVE.
+http://seclists.org/oss-sec/2011/q2/478
+CVE-2011-1937.
 
-I believe I was supposed to be subscribed with my security at slackware 
-dt com address (only read by me), but have never received any messages 
-from the list.  Unless there's some reason that Slackware was not 
-included (and in that case I would be curious why, and how the situation 
-could be rectified), could you subscribe me?  My GPG key is:
-
-pub   1024D/40102233 2003-02-26 [expires: 2012-12-21]
-uid                  Slackware Linux Project <security@...ckware.com>
-
-
-Thanks!
-
-Pat
+On Mon, Jun 13, 2011 at 10:40 AM, Henri Salo <henri@...v.fi> wrote:
+> Hi,
+>
+> I would like to receive CVE-identifier for this issue in Webmin. References:
+>
+> http://seclists.org/fulldisclosure/2011/Apr/393
+>
+> Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB. Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881 which is included to Webmin 1.550 release.
+>
+> Should be 2011 identifier.
+>
+> Best regards,
+> Henri Salo
+>
