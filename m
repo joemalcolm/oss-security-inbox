@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/23
-Message-ID: <2080726178.190661.1298490943072.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 14:55:43 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/2
+Message-ID: <4DF5A1CC.60101@redhat.com>
+Date: Mon, 13 Jun 2011 13:36:12 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: pmwiki before 2.2.21
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: alpha: fix several security issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4662.
+https://lkml.org/lkml/2011/6/11/87; from Dan Rosenberg.
 
-Thanks.
+1. Signedness issue in osf_getdomainname allows copying out-of-bounds
+kernel memory to userland.
 
--- 
-    JB
+2. Signedness issue in osf_sysinfo allows copying large amounts of
+kernel memory to userland.
 
------ Original Message -----
-> http://www.securelist.com/en/advisories/42608
-> http://www.pmwiki.org/wiki/PmWiki/ChangeLog
-> "Fix potential XSS vulnerability, reported by DFaure."
-> 
-> --
-> Hanno Böck mail/jabber: hanno@...eck.de
-> GPG: BBB51E42 http://www.hboeck.de/
+3. Typo (?) in osf_getsysinfo bounds minimum instead of maximum copy
+size, allowing copying large amounts of kernel memory to userland.
+
+4. Usage of user pointer in osf_wait4 while under KERNEL_DS allows
+privilege escalation via writing return value of sys_wait4 to kernel
+memory.
+
+I didn't investigate further.
+
+Thanks, Eugene
