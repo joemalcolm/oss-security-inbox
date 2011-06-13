@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/13/1
-Message-ID: <4EE6CC84.9000309@redhat.com>
-Date: Tue, 13 Dec 2011 09:24:44 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/16
+Message-ID: <748617436.652434.1307994238170.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:43:58 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: OpenIPMI: IPMI event daemon creates PID file with world writeable permissions
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: hfs_find_init() sb->ext_tree NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-A insecure file permissions flaw was found in the way IPMI event daemon 
-of the OpenIPMI (Intelligent Platform Management Interface) library and 
-tools created its PID file (it was created with 0666 permissions). A 
-local user could use this flaw to kill arbitrary running process during 
-ipmievd service shutdown.
 
-This has been assigned CVE-2011-4339
+----- Original Message -----
+> Reported by Clement LECIGNE. The issue is described here:
+> https://lkml.org/lkml/2011/6/8/154. No patch atm, but the impact is
+> low.
+> 
+> The relevant bug for this is:
+> https://bugzilla.redhat.com/show_bug.cgi?id=712774
+> 
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=742837
+Please use CVE-2011-2203.
 
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
