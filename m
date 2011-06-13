@@ -1,71 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/3
-Message-ID: <20111105104736.GA3509@albatros>
-Date: Sat, 5 Nov 2011 14:47:36 +0400
-From: Vasiliy Kulikov <segooon@...il.com>
-To: security@...nel.org
-Cc: oss-security@...ts.openwall.com
-Subject: /proc/$PID/sched PoC: spy-gksu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/8
+Message-ID: <493485158.650175.1307991363905.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 14:56:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com, Henri Salo <henri@...v.fi>
+Subject: Re: Re: CVE-request: XSS in Webmin 1.540
 Content-Type: text/plain; charset=utf-8
 
-#!/bin/bash
-#
-# A PoC for spying for keystrokes in gksu in Linux <= 3.1.
-#
-# /proc/$PID/{sched,schedstat} are world readable, so we can just loop
-# on one CPU core while the victim is executed on another, and spy for
-# the changes of scheduling counters.  The PoC counts only keystrokes number,
-# but it can be easily extended to note the delays between the keystrokes
-# and do the statistical analysis to learn the input characters.  See
-# e.g. "Peeping Tom in the Neighborhood: Keystroke Eavesdropping on
-# Multi-User Systems" by Kehuan Zhang and XiaoFeng Wang.
-#
-# It is NOT stable, it only shows a design flaw (the lack of proper
-# permission model of procfs debugging counters).  The constants are true
-# for the author's system only and don't take into account other sources of
-# gksu CPU activity.
-#
-#   by segoon from openwall
-#
-# run as: spy-sched gksu
+----- Original Message -----
+> On 13/Jun/2011 06:40 Henri Salo <henri@...v.fi> wrote ..
+> > Hi,
+> >
+> > I would like to receive CVE-identifier for this issue in Webmin.
+> > References:
+> >
+> > http://seclists.org/fulldisclosure/2011/Apr/393
+> >
+> > Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this
+> > from OSVDB.
+> > Fixed in commit:
+> > https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881
+> > which is included to Webmin 1.550 release.
+> >
+> > Should be 2011 identifier.
+> 
+> There is no CVE for this - the original submitter Javier had trouble
+> obtaining one.
+> 
+> Actually, I have no idea where CVEs come from either!
+> 
 
-PNAME="$1"
+A CVE id was assigned here:
+http://seclists.org/oss-sec/2011/q2/478
 
-while :; do
-    PID=`pgrep "$PNAME"`
-    if [ -n "$PID" ]; then
-        echo $PID
-        cd /proc/$PID/
-        break
-    fi
-    sleep 1
-done
+As for getting an ID in the future, your best bet is to mail me directly
+with your request. MITRE is generally swamped with requests, where I don't
+service near the volume they do.
 
-S=0.0
-while :; do
-    V=`grep se.exec_start sched 2>/dev/null | cut -d: -f2-`
-    [ -z "$V" ] && break
-    if [ "$V" != "$S" ]; then
-        VAL=`echo "$V - $S" | bc -l`
-        VALI=`echo $VAL | cut -d. -f1`
-        [ -z "$VALI" ] && VALI=0
+If you have any questions, I'd be happy to answer them.
 
-        if [ "$VALI" -le 815 -a "$VALI" -ge 785 ]; then
-            # Cursor appeared
-            :
-        elif [ $VALI -le 415 -a $VALI -ge 385 ]; then
-            # Cursor disappeared
-            :
-        elif [ $VALI -ge 150 ]; then
-            echo "$VAL (KEY PRESSED)"
-        else
-            echo "$VAL"
-        fi
-
-        S=$V
-    fi
-done
+Thanks.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+    JB
