@@ -1,21 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/13
-Message-ID: <20110728223035.GG4946@outflux.net>
-Date: Thu, 28 Jul 2011 15:30:35 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/1
+Message-ID: <4DF5A0A2.2030507@redhat.com>
+Date: Mon, 13 Jun 2011 13:31:14 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: gro: Only reset frag0 when skb can be pulled
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: hfs_find_init() sb->ext_tree NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Reported by Clement LECIGNE. The issue is described here:
+https://lkml.org/lkml/2011/6/8/154. No patch atm, but the impact is low.
 
-This fixes a remote crasher under certain network device configurations:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=17dd759c67f21e34f2156abcf415e1f60605a188
+The relevant bug for this is:
+https://bugzilla.redhat.com/show_bug.cgi?id=712774
 
-Thanks,
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+Thanks, Eugene
