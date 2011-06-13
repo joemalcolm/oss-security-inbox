@@ -1,16 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/24
-Message-ID: <20111121212657.GA23629@foo.fgeek.fi>
-Date: Mon, 21 Nov 2011 23:26:57 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: XSS in Tiki Wiki CMS Groupware (HTB23027)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/6
+Message-ID: <BANLkTinqqGvnk_dCx4ttNSY4Ph-41nK4kg@mail.gmail.com>
+Date: Mon, 13 Jun 2011 13:37:48 -0300
+From: Javier Bassi <javierbassi@...il.com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: XSS in Webmin 1.540
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue:
+After your email, I searched for this mailing list and asked for CVE.
+http://seclists.org/oss-sec/2011/q2/478
+CVE-2011-1937.
 
-https://www.htbridge.ch/advisory/xss_in_tiki_wiki_cms_groupware.html
-http://secunia.com/advisories/45283/
-
-Best regards,
-Henri Salo
+On Mon, Jun 13, 2011 at 10:40 AM, Henri Salo <henri@...v.fi> wrote:
+> Hi,
+>
+> I would like to receive CVE-identifier for this issue in Webmin. References:
+>
+> http://seclists.org/fulldisclosure/2011/Apr/393
+>
+> Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB. Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881 which is included to Webmin 1.550 release.
+>
+> Should be 2011 identifier.
+>
+> Best regards,
+> Henri Salo
+>
