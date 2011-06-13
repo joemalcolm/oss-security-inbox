@@ -1,77 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/11
-Message-ID: <20110303212321.GF372@outflux.net>
-Date: Thu, 3 Mar 2011 13:23:21 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/11
+Message-ID: <1512488830.650854.1307992464681.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:14:24 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: buffer overflow in tftp-hpa
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
-> So I would like to open up a discussion with _all_ OSS Security folks present.
+
+----- Original Message -----
+> The tftp-hpa daemon contained a buffer overflow vulnerability in the
+> function for setting the utimeout option. As the daemon accepts this
+> option from clients, the buffer overflow can be remotely exploited.
 > 
-> - Is a closed vendor coordination like vendor-sec still needed at this time?
+> For a patch, see
 > 
->   Meaning: does the benefit of a closed group really outweigh the
->   "left out feeling" of non members and its annoyances?
+> > git clone http://www.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
+> > git diff 2864 f303
+> 
 
-I believe the utility of a closed "vendor coordination" mailing list is
-related to the criticality and time-frame of certain flaws.
+Here is the gitweb URL for that patch:
+http://git.kernel.org/?p=network/tftp/tftp-hpa.git;a=commitdiff;h=f3035c45bc50bb5cac87ca01e7ef6a12485184f8
 
-The goal of such private coordination is to protect end-users, who are
-generally running a stable release of various packaged pieces of software
-and are not in a position to always use the bleeding-edge. Instead of
-making it a race to see which distro can protect their users faster at
-the cost of making other distro's users vulnerable, private coordination
-has been used to make sure all users of all distros are fixed (or at
-least have the packaged fix available) at the same time. I think this
-approach still has value, but with some caveats.
+Please use CVE-2011-2199.
 
-Having a single place for vendors to coordinate a fix for critical flaws
-seems like a good idea as long as that time-frame is short. The overhead
-of coordination only has value if the flaw is serious. The risk of leak or
-independent public discovery goes up the longer a fix takes. Therefore,
-fixes must be handled quickly. On the flip side, while it seems like
-sitting on minor issues isn't a problem, since their criticality is
-low so the risk of leak is lower, it actually is a problem because it
-does a disservice to upstreams (and end-users) that may not know about
-the issue yet. (If no one in the private group is acting on the issue,
-it should be made public so more people can see it or work on it.)
-
-Ubuntu's stance on privately reported/discovered flaws has been to choose
-a roughly 1 week Coordinated Release Date, email the details to vendor-sec
-(and upstream's private email when we can find one). If no one responds,
-the CRD expires, and we make the flaw public. So far, this seems to
-naturally select the high criticality flaws for quick coordination and
-fixing and the less critical issues for becoming public quickly.
-
-For public issues, we've tried to have them raised on oss-security@
-or with upstreams directly.
-
-> - If yes, would it be an idea to confine or split into lists of focus groups?
->   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-
-It seems to me that if you're releasing stable package updates for
-some portion of the Free Software stack, you should be in the short-CRD
-private disclosure fix-coordination mailing list.
-
-> - Or of course the old option is open:
->   Should we proceed with the current state as-is, but throw a bit more
->   GPG encryption on top?
-
-Encryption would reduce the scope of potential leaks, but not eliminate it.
-It's not clear to me if the overhead is worth the change in leak risk.
-
-Now, culturally, this has all been about reactive security. It sure
-would be nice to have more cultural movement toward proactive security,
-especially for the Linux kernel. I don't think a mailing list will fix
-that, but I thought I'd bring it up anyway. Proactive security should
-be just as valuable as reactive security...
-
--Kees
+Thanks.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
