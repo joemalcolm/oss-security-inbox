@@ -1,30 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/14
-Message-ID: <20111020192243.46b81805@laverne>
-Date: Thu, 20 Oct 2011 19:22:43 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/17
+Message-ID: <60589402.652548.1307994431175.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:47:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
+Cc: Ville-Pekka Vainio <vpivaini@...helsinki.fi>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libvoikko -- DoS of application linked against libvoikko due improper handling of embedded null characters in input strings
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 20 Oct 2011 13:17:48 -0400 (EDT)
-schrieb Josh Bressers <bressers@...hat.com>:
+Steve,
 
-> Can MITRE take this one? It's far bigger than I'm able to handle.
+Can MITRE comment on this one? I'm not really sure what to do.
 
-I read this in the past...
-the outcome was usually that nothing happened at all. This is not good.
-See here:
-http://www.openwall.com/lists/oss-security/2011/01/04/11
+The core issue, embedded null characters seems to be the same for both Java and Python, but the fix covers two different bits of code.
 
-The CVE assignment here usually works pretty well, but some requests
-keep unanswered forever. You CVE assigners should try to work out a way
-to avoid that.
+My guess is it's just one ID, but I'd like to be certain.
 
-cu,
+Thanks.
+
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+----- Original Message -----
+> Hello, Josh, Steve, vendors,
+> 
+> A denial of service flaw was found in the way Python and Java
+> interfaces of libvoikko, a library for spellcheckers and hyphenators,
+> processed embedded null characters in input strings. If a specially-
+> crafted input string was provided to an application linked against
+> libvoikko, it could lead to that particular application termination.
+> 
+> References:
+> [1] http://voikko.sourceforge.net/releases.html
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=712863
+> 
+> Upstream patches:
+> [3]
+> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3901
+> [4]
+> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3902
+> [5]
+> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3903
+> 
+> Could you allocate a CVE identifier for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
