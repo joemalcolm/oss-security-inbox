@@ -1,53 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/7
-Message-ID: <1224254609.1271391.1310493661507.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:01:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/3
+Message-ID: <4DF602F4.50000@redhat.com>
+Date: Mon, 13 Jun 2011 14:30:44 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Ville-Pekka Vainio <vpivaini@...helsinki.fi>
+Subject: CVE Request -- libvoikko -- DoS of application linked against libvoikko due improper handling of embedded null characters in input strings
 Content-Type: text/plain; charset=utf-8
 
-I'm going to leave this one for MITRE.
+Hello, Josh, Steve, vendors,
 
-Thanks.
+   A denial of service flaw was found in the way Python and Java
+interfaces of libvoikko, a library for spellcheckers and hyphenators,
+processed embedded null characters in input strings. If a specially-
+crafted input string was provided to an application linked against
+libvoikko, it could lead to that particular application termination.
 
--- 
-    JB
+References:
+[1] http://voikko.sourceforge.net/releases.html
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=712863
 
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hello List,
-> 
-> Is it possible to assign a CVE for documented behavior? Communication
-> with apache security showed, that following symlinks to arbitrary
-> locations is a documented feature, even when "-FollowSymLink" option
-> is
-> in place. This allows any user with, that can modify some content
-> served
-> by apache to access any content accessible by the apache process, also
-> content not visible to the user (e.g. outside the ftp-upload directory
-> or forbidden like /proc/http-pid/maps). Due to the small window of
-> opportunity, this might be relevant mostly when user can already
-> execute
-> code on the machine, so it is not a big issue. /proc/<pid>/mem is
-> protected, when apache is running with setuid, so key material cannot
-> be
-> extracted using range headers. PUT was not tested so far.
-> 
-> See also
-> 
-> http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
-> 
-> - --
-> http://www.halfdog.net/
-> PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.6 (GNU/Linux)
-> 
-> iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
-> PDcCdoHHWTCHe53U+XTzefY=
-> =fVzn
-> -----END PGP SIGNATURE-----
+Upstream patches:
+[3] 
+http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3901
+[4] 
+http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3902
+[5] 
+http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3903
+
+Could you allocate a CVE identifier for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
