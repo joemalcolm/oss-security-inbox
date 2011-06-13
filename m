@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/10
-Message-ID: <AANLkTimnYgV=38DEZKmenoMQ821H1PqU3FWCFSiAdntt@mail.gmail.com>
-Date: Thu, 6 Jan 2011 13:08:59 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/11
+Message-ID: <1512488830.650854.1307992464681.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 13 Jun 2011 15:14:24 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: buffer overflow in tftp-hpa
 Content-Type: text/plain; charset=utf-8
 
-This is a slippery slope.  I'm in favor of not having a CVE assigned
-for this issue.
 
-Otherwise, wouldn't we need a CVE for every vector that allows
-transitioning from various capabilities to root?  The capability
-system may be poorly designed to allow such transitions, but I don't
-think they represent unexpected behavior.
 
--Dan
+----- Original Message -----
+> The tftp-hpa daemon contained a buffer overflow vulnerability in the
+> function for setting the utimeout option. As the daemon accepts this
+> option from clients, the buffer overflow can be remotely exploited.
+> 
+> For a patch, see
+> 
+> > git clone http://www.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
+> > git diff 2864 f303
+> 
 
-On Thu, Jan 6, 2011 at 12:54 PM, Michael Gilbert
-<michael.s.gilbert@...il.com> wrote:
-> On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
->> re: http://seclists.org/fulldisclosure/2011/Jan/39
->>
->> Just in case someone tries to request a CVE name for this, I'm not
->> requesting for one because if you need CAP_SYS_ADMIN capability to
->> exploit this, you are already privileged.
->
-> Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
-> mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
-> exist. There is an exposure here, and for that it deserves a CVE
-> identifier (of course in my opinion).  See Brad Spengler's recent
-> write-up [0]. There should be some effort toward making those 21 root
-> equivalent capabilities discussed there non-equivalent.
->
-> Best wishes,
-> Mike
->
-> [0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
->
+Here is the gitweb URL for that patch:
+http://git.kernel.org/?p=network/tftp/tftp-hpa.git;a=commitdiff;h=f3035c45bc50bb5cac87ca01e7ef6a12485184f8
+
+Please use CVE-2011-2199.
+
+Thanks.
+
+-- 
+    JB
