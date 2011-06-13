@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/6
-Message-ID: <20110908161725.GP17727@dhcp-25-225.brq.redhat.com>
-Date: Thu, 8 Sep 2011 18:17:26 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- kernel: fuse: check size of FUSE_NOTIFY_INVAL_ENTRY message
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/7
+Message-Id: <1307983372.28614@webmin.com>
+Date: Mon, 13 Jun 2011 09:42:52 -0700 (PDT)
+From: "Jamie Cameron" <jcameron@...min.com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com, webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com
+Subject: Re: CVE-request: XSS in Webmin 1.540
 Content-Type: text/plain; charset=utf-8
 
-FUSE_NOTIFY_INVAL_ENTRY didn't check the length of the write so the
-message processing could overrun and result in a BUG_ON() in
-fuse_copy_fill().
+On 13/Jun/2011 06:40 Henri Salo <henri@...v.fi> wrote ..
+> Hi,
+> 
+> I would like to receive CVE-identifier for this issue in Webmin. References:
+> 
+> http://seclists.org/fulldisclosure/2011/Apr/393
+> 
+> Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB.
+> Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881
+> which is included to Webmin 1.550 release.
+> 
+> Should be 2011 identifier.
 
-User able to mount FUSE filesystems can use this flaw to crash the
-system.
+There is no CVE for this - the original submitter Javier had trouble obtaining one.
 
-References:
-http://permalink.gmane.org/gmane.linux.kernel.commits.head/313266
-http://sourceforge.net/mailarchive/forum.php?thread_name=87liut4i7w.fsf%40tucsk.pomaz.szeredi.hu&forum_name=fuse-devel
+Actually, I have no idea where CVEs come from either!
 
-Upstream fix:
-c2183d1e9b3f313dd8ba2b1b0197c8d9fb86a7ae
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+ - Jamie
