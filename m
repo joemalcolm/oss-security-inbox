@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/3
-Message-ID: <20110803152114.72d1c2d4@redhat.com>
-Date: Wed, 3 Aug 2011 15:21:14 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/4
+Message-ID: <20110613134042.GA12258@foo.fgeek.fi>
+Date: Mon, 13 Jun 2011 16:40:42 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: security@...me.org
-Subject: Re: CVE request: GIF loader buffer overflow when initializing decompression tables
+Cc: jcameron@...min.com, webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com
+Subject: CVE-request: XSS in Webmin 1.540
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2 Aug 2011 17:34:28 +0200 Thomas Biege wrote:
+Hi,
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=727081
+I would like to receive CVE-identifier for this issue in Webmin. References:
 
-...
+http://seclists.org/fulldisclosure/2011/Apr/393
 
-> This problem was corrected upstream long ago:
-> 
-> http://git.gnome.org/browse/gdk-pixbuf/commit/gdk-pixbuf/io-gif.c?id=3bac204e0d0241a0d68586ece7099e6acf0e9bea
+Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB. Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881 which is included to Webmin 1.550 release.
 
-I'm being told that even if this is 2001 fix, it's ok to use 2011 CVE
-if this was not called security before.  Hence use CVE-2011-2897 if you
-plan to fix.
+Should be 2011 identifier.
 
-> The fix can be found in all gdk-pixbuf versions embedded in gtk2
-> packages, but it seems it never got it to stand-alone gdk-pixbuf
-> version for gtk+ 1.x.
-
-Just to clarify, the above was about RHEL gtk2 packages.  For most
-distros, that implies they don't really need to look at their gtk2
-packages if it's fixed in the oldest supported RHEL.  I've not really
-tried to figure out if there was any upstream gtk2 version that did not
-have the fix though.
-
-I'm FYI CCing gnome security to reduce the amount of confusion this can
-possibly cause.  This is follow-up on:
-
-http://www.openwall.com/lists/oss-security/2011/08/02/3
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Best regards,
+Henri Salo
