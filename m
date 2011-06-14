@@ -1,20 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/19
-Message-ID: <BANLkTimyqOw-JneVzgvu5AvusX=q6tF42A@mail.gmail.com>
-Date: Tue, 31 May 2011 17:40:36 -0600
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for Wireshark 1.4.5 TCP DoS issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/5
+Message-Id: <201106141624.52899.jnareb@gmail.com>
+Date: Tue, 14 Jun 2011 16:24:52 +0200
+From: Jakub Narebski <jnareb@...il.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
+Subject: [CVE-2011-2186] [PATCH] gitweb: Enable $prevent_xss by default
 Content-Type: text/plain; charset=utf-8
 
-This wasn't put on the security announce page for some reason (DoS,
-any TCP dissector):
+On Tue, 14 June 2011, Jakub Narebski wrote:
+> On Tue, 14 June 2011, Ludwig Nussel wrote:
+> > Jakub Narebski wrote:
+> 
+> > > [...] it is enough to enable XSS prevention by adding
+> > > 
+> > >   our $prevent_xss = 1;
+> > > 
+> > > in gitweb configuration file.
+> > 
+> > What about making that the default?
+> 
+> I'll come up with a patch...
 
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5837
+And here it is (though I am not sure if it is the correct form
+of including attributions / acknowledgements):
 
-Affects Wireshark 1.4.5 only
+Based on 'maint', applies to 'master'.
+-- >8 --
+From: Jakub Narebski <jnareb@...il.com>
+Subject: [PATCH] gitweb: Enable $prevent_xss by default
 
+This fixes issue CVE-2011-2186 originally reported in
+https://launchpad.net/bugs/777804
+
+Reported-by: dave b <db.pub.mail@...il.com>
+Signed-off-by: Jakub Narebski <jnareb@...il.com>
+---
+ git-instaweb.sh    |    4 ++++
+ gitweb/README      |    5 +++--
+ gitweb/gitweb.perl |    2 +-
+ 3 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 8bfa8a0..e541164 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -583,6 +583,10 @@ our \$projectroot = "$(dirname "$fqgitdir")";
+ our \$git_temp = "$fqgitdir/gitweb/tmp";
+ our \$projects_list = \$projectroot;
+ 
++# we can trust our own repository, so disable XSS prevention
++# to enable some extra features
++our \$prevent_xss = 0;
++
+ \$feature{'remote_heads'}{'default'} = [1];
+ EOF
+ }
+diff --git a/gitweb/README b/gitweb/README
+index a92bde7..9ae5d84 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -236,8 +236,9 @@ not include variables usually directly set during build):
+  * $prevent_xss
+    If true, some gitweb features are disabled to prevent content in
+    repositories from launching cross-site scripting (XSS) attacks.  Set this
+-   to true if you don't trust the content of your repositories. The default
+-   is false.
++   to false if you trust the content of your repositories, and want to use
++   per-repository README.html, or use gitweb as deployment platform
++   via 'blob_plain' view and path_info links. The default is true.
+  * $maxload
+    Used to set the maximum load that we will still respond to gitweb queries.
+    If server load exceed this value then return "503 Service Unavailable" error.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index f8db40a..0351338 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -162,7 +162,7 @@ our @diff_opts = ('-M'); # taken from git_commit
+ 
+ # Disables features that would allow repository owners to inject script into
+ # the gitweb domain.
+-our $prevent_xss = 0;
++our $prevent_xss = 1;
+ 
+ # Path to the highlight executable to use (must be the one from
+ # http://www.andre-simon.de due to assumptions about parameters and output).
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: (206) 905-9462
+1.7.5
+
