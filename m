@@ -1,24 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/3
-Message-ID: <4D5CCAAD.8070304@redhat.com>
-Date: Thu, 17 Feb 2011 15:13:49 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: thp: prevent hugepages during args/env copying into the user stack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/4
+Message-Id: <201106141514.25397.jnareb@gmail.com>
+Date: Tue, 14 Jun 2011 15:14:24 +0200
+From: Jakub Narebski <jnareb@...il.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
+Subject: Re: [CVE-2011-2186] XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-"Transparent hugepages can only be created if rmap is fully functional. 
-A specially crafted binary could allow the user stack to grow huge and 
-backed by hugepages without this patch while is_vma_temporary_stack() is 
-true.
+On Tue, 14 June 2011, Ludwig Nussel wrote:
+> Jakub Narebski wrote:
 
-This also optmizes away some harmless but unnecessary setting of 
-khugepaged_scan.address and it switches some BUG_ON to VM_BUG_ON."
+> > [...] it is enough to enable XSS prevention by adding
+> > 
+> >   our $prevent_xss = 1;
+> > 
+> > in gitweb configuration file.
+> 
+> What about making that the default?
 
-mm/huge_memory.c - introduced in 71e3aac0 (v2.6.38-rc1)
+I'll come up with a patch... though I am not sure if it shouldn't be
+done by distributions, which usually ship their own system-wide
+gitweb config file.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=678209
-http://git.kernel.org/linus/a7d6e4ecdb7648478ddec76d30d87d03d6e22b31
+Note that with $prevent_xss enabled gitweb is a bit poorer in features:
+no support for $GIT_DIR/README.html, no using gitweb as deploy platform.
+XSS threat level for gitweb isn't high, I think - there is nothing to
+steal.
 
-Thanks, Eugene
+> For convenience it may make sense to s!text/.*!text/plain! and allow
+> to display that inline.
+
+Already done in
+
+  [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain' more usable
+  http://article.gmane.org/gmane.comp.version-control.git/175604
+  http://thread.gmane.org/gmane.comp.version-control.git/175057/focus=175604
+
+It is in git repository as
+
+  fb76adb (gitweb: Make $prevent_xss protection for 'blob_plain' more usable, 2011-06-10)
+
+currently in 'pu' (proposed updates) patch.
+-- 
+Jakub Narebski
+Poland
