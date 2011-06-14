@@ -1,19 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/10
-Message-ID: <20110516222154.GF2430@redhat.com>
-Date: Mon, 16 May 2011 16:21:54 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS in tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/2
+Message-Id: <201106141446.40489.ludwig.nussel@suse.de>
+Date: Tue, 14 Jun 2011 14:46:40 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: Jakub Narebski <jnareb@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-Tor 0.2.1.30 was released and includes a fix for a remote DoS flaw:
+Jakub Narebski wrote:
+> On Fri, 3 July 2011, Jakub Narebski wrote:
+> [...]
+> > Proposed patch:
+> > ---------------
+> > Note that it includes unrelated fix for $prevent_xss feature.  It would
+> > be split in separate patch (non-security related bugfix).
+> > 
+> > With this patch above lol.xml would be served as text/plain...
+> > 
+> > -- >8 --
+> > diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+> > index 240dd47..a3c03f3 100755
+> > --- i/gitweb/gitweb.perl
+> > +++ w/gitweb/gitweb.perl
+> > @@ -3595,7 +3595,7 @@ sub blob_mimetype {
+> >  	my $fd = shift;
+> >  	my $filename = shift;
+> >  
+> > -	if ($filename) {
+> > +	if ($filename && !$prevent_xss) {
+> >  		my $mime = mimetype_guess($filename);
+> >  		$mime and return $mime;
+> >  	}
+> 
+> So I think the above is not necessary; it is enough to enable XSS
+> prevention by adding
+> 
+>   our $prevent_xss = 1;
+> 
+> in gitweb configuration file.
 
-https://lists.torproject.org/pipermail/tor-announce/2011-February/000000.html
-http://secunia.com/advisories/43548/
-https://bugzilla.redhat.com/show_bug.cgi?id=705192
+What about making that the default?
+For convenience it may make sense to s!text/.*!text/plain! and allow
+to display that inline.
 
-Could a CVE be assigned please?
+cu
+Ludwig
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
