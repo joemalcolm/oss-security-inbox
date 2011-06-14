@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/3
-Message-ID: <1418086390.282600.1296749422278.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Feb 2011 11:10:22 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/6
+Message-ID: <BANLkTi=GRtrzKW=oGkS=4TJrN7PnvmJA1Q@mail.gmail.com>
+Date: Tue, 14 Jun 2011 22:50:32 +0200
+From: Wouter Coekaerts <wouter@...kaerts.be>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Server-side arbitrary script inclusion vulnerability in MediaWiki <=1.16.1
+Cc: Yann Kerherve <yann.kerherve@...il.com>, Matthew Wild <matthew@...sody.im>
+Subject: CVE Request: prosody DoS, djabberd external entity injection
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0537
+Hi,
 
-Thanks.
+As far as I know, there's no CVE for these ones yet. Could you assign one?
+* prosody billion laughs DoS: http://blog.prosody.im/prosody-0-8-1-released/
+* djabberd external entity injection:
+http://groups.google.com/group/djabberd/browse_thread/thread/47974331c37e54c5#
 
--- 
-    JB
+Btw, a blog post about these and the other recent jabber billion
+laughs vulnerabilities:
+http://wouter.coekaerts.be/2011/jabber-dos
 
+Regards,
 
------ Original Message -----
-> Greetings,
-> 
-> MediaWiki 1.16.2 was just released as a security update for two
-> vulnerabilities. One already has a CVE, but this one still needs one:
-> 
-> "An arbitrary script inclusion vulnerability was discovered. The
-> vulnerability only allows execution of files with names ending in
-> ".php" which are already present in the local filesystem. Only servers
-> running Microsoft Windows and possibly Novell Netware are affected.
-> Despite these mitigating factors, all users are advised to upgrade,
-> since there is a risk of complete server compromise. MediaWiki 1.8.0
-> and later is affected. For more details, see bug 27094"
-> 
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=27094
-> 
-> Thanks,
-> ~reed
-> 
-> --
-> Reed Loden
-> reed@...dloden.com
+Wouter.
