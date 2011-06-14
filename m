@@ -1,35 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/6
-Message-ID: <20111027194003.GI28067@dhcp-25-225.brq.redhat.com>
-Date: Thu, 27 Oct 2011 21:40:04 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/3
+Message-Id: <201106141538.59133.ludwig.nussel@suse.de>
+Date: Tue, 14 Jun 2011 15:38:58 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: Jakub Narebski <jnareb@...il.com>
+Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
+Subject: Re: [CVE-2011-2186] XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 01:43:16PM -0400, Dan Rosenberg wrote:
-> On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
-> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> > to reset dmesg_restrict to 0.
-> >
+Jakub Narebski wrote:
+> On Tue, 14 June 2011, Ludwig Nussel wrote:
+> > Jakub Narebski wrote:
 > 
-> Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
-> with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
-> correct that CAP_SYS_ADMIN is now required to modify the sysctl.
-
-RHEL uses only CAP_SYS_ADMIN. I haven't checked upstream for
-correctness of the description.
-
+> > > [...] it is enough to enable XSS prevention by adding
+> > > 
+> > >   our $prevent_xss = 1;
+> > > 
+> > > in gitweb configuration file.
+> > 
+> > What about making that the default?
 > 
-> I also agree with Vasiliy's point that LXC security boundaries in the
-> mainline kernel are not well defined at this point, so the whole thing
-> is a bit silly.
+> I'll come up with a patch... though I am not sure if it shouldn't be
+> done by distributions, which usually ship their own system-wide
+> gitweb config file.
 
-Just wondering - do you usually ack patches that you consider silly?
+We don't have a system wide config at least. It's just the defaults
+in the script.
 
-Petr
+> Note that with $prevent_xss enabled gitweb is a bit poorer in features:
+> no support for $GIT_DIR/README.html, no using gitweb as deploy platform.
+> XSS threat level for gitweb isn't high, I think - there is nothing to
+> steal.
 
+You never know. Better safe than sorry :-)
+
+> > For convenience it may make sense to s!text/.*!text/plain! and allow
+> > to display that inline.
 > 
-> -Dan
+> Already done in
+> 
+>   [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain' more usable
+>   http://article.gmane.org/gmane.comp.version-control.git/175604
+>   http://thread.gmane.org/gmane.comp.version-control.git/175057/focus=175604
+> 
+> It is in git repository as
+> 
+>   fb76adb (gitweb: Make $prevent_xss protection for 'blob_plain' more usable, 2011-06-10)
+> 
+> currently in 'pu' (proposed updates) patch.
 
+Ah, nice :-)
+
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
