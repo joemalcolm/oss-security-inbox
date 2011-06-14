@@ -1,63 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/12
-Message-ID: <AANLkTi=8+gdQnHW+uP1qRWucveB4gjzXGx2+hvvnrn+f@mail.gmail.com>
-Date: Mon, 14 Mar 2011 00:13:27 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/6
+Message-ID: <BANLkTi=GRtrzKW=oGkS=4TJrN7PnvmJA1Q@mail.gmail.com>
+Date: Tue, 14 Jun 2011 22:50:32 +0200
+From: Wouter Coekaerts <wouter@...kaerts.be>
 To: oss-security@...ts.openwall.com
-Cc: Andrew Clausen <clausen@...n.upenn.edu>
-Subject: Re: announcing libwipe
+Cc: Yann Kerherve <yann.kerherve@...il.com>, Matthew Wild <matthew@...sody.im>
+Subject: CVE Request: prosody DoS, djabberd external entity injection
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Hi,
 
-I like this idea, and could be very useful especially in massive
-shared environment (as in lot of users sharing a server, like web
-servers for example).
+As far as I know, there's no CVE for these ones yet. Could you assign one?
+* prosody billion laughs DoS: http://blog.prosody.im/prosody-0-8-1-released/
+* djabberd external entity injection:
+http://groups.google.com/group/djabberd/browse_thread/thread/47974331c37e54c5#
 
-My only concern right now is the choice of the gplv3, which is a no go
-for many projects, especially for a library. Any chance to release it
-under a more permissive or non viral license like bsd or MIT?
+Btw, a blog post about these and the other recent jabber billion
+laughs vulnerabilities:
+http://wouter.coekaerts.be/2011/jabber-dos
 
-ps: that's not a license FUD, only a question (before I got shot :).
+Regards,
 
-Cheers,
-
-On Sat, Mar 12, 2011 at 7:29 AM, Andrew Clausen <clausen@...n.upenn.edu> wrote:
-> Hi all,
->
-> I have written a program called "libwipe" for GNU/Linux to wipe memory
-> as soon as it is not being used.  I am releasing it under the GPL3
-> licence, and you can download it here:
->
-> http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
->
-> Any suggestions are appreciated.  In particular, I would like feedback on
-> * which memory mappings should be erased on exit
-> * which project this could be included in (secure-delete?)
->
-> OVERVIEW
->
-> This library is designed to make programs respect users' privacy by wiping
-> information when it is no longer needed.  It does not require any modifications
-> to the original programs.  To use it for all programs in a single shell
-> session, set the LD_PRELOAD environment variable with the shell command
->
->        export LD_PRELOAD=/usr/local/lib/libwipe.so
->
-> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
-> configure file.
->
-> The program uses two mechanisms:
-> (1) when memory is deallocated with free(3), it is zeroed out.
-> (2) when the process terminates, the entire memory is zeroed out.
->
-> Cheers,
-> Andrew
->
-
-
-
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Wouter.
