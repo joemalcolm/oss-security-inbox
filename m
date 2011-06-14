@@ -1,51 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/6
-Message-ID: <4E327148.5030100@redhat.com>
-Date: Fri, 29 Jul 2011 16:37:28 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/3
+Message-Id: <201106141538.59133.ludwig.nussel@suse.de>
+Date: Tue, 14 Jun 2011 15:38:58 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: Jakub Narebski <jnareb@...il.com>
+Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
+Subject: Re: [CVE-2011-2186] XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-On 06/07/2011 02:28 AM, Josh Bressers wrote:
+Jakub Narebski wrote:
+> On Tue, 14 June 2011, Ludwig Nussel wrote:
+> > Jakub Narebski wrote:
 > 
-> ----- Original Message -----
->> Hello, Josh, Steve, vendors,
->>
->> It was found that vsftpd, Very Secure FTP daemon, when the network
->> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
->> create a new network namespace per connection. A remote attacker could
->> use this flaw to cause a memory pressure and denial of the vsftpd
->> service.
->>
->> References:
->> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
->> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
->> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
->>
->> This one being a bit tricky one -- from my understanding of the issue,
->> vsftpd doesn't necessarily have a security flaw on its side. It's
->> kernel issue / bug, which allows this to be used for vsftpd DoS:
->> [4]
->> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
->> [5]
->> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
->>
->> Short-term solution would be probably to address this on the vsftpd
->> side, the long-term one then being to get this fixed in kernel.
->>
->> Though not sure, how it would be wrt to CVE identifier(s) assignment.
->>
+> > > [...] it is enough to enable XSS prevention by adding
+> > > 
+> > >   our $prevent_xss = 1;
+> > > 
+> > > in gitweb configuration file.
+> > 
+> > What about making that the default?
 > 
-> I'm going to assign CVE-2011-2189 for the kernel. There are numerous
-> vendors shipping this bug.
-> 
-> I'll leave it up to MITRE if they think vsftpd should get an ID. I don't
-> think it should myself, but they understand these corner cases better than
-> I.
+> I'll come up with a patch... though I am not sure if it shouldn't be
+> done by distributions, which usually ship their own system-wide
+> gitweb config file.
 
-Kees, how are you guys fixing this? Disable net_ns and fix vsftpd? I
-wonder how other distros approach this. Any suggestions?
+We don't have a system wide config at least. It's just the defaults
+in the script.
 
-Thanks, Eugene
+> Note that with $prevent_xss enabled gitweb is a bit poorer in features:
+> no support for $GIT_DIR/README.html, no using gitweb as deploy platform.
+> XSS threat level for gitweb isn't high, I think - there is nothing to
+> steal.
+
+You never know. Better safe than sorry :-)
+
+> > For convenience it may make sense to s!text/.*!text/plain! and allow
+> > to display that inline.
+> 
+> Already done in
+> 
+>   [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain' more usable
+>   http://article.gmane.org/gmane.comp.version-control.git/175604
+>   http://thread.gmane.org/gmane.comp.version-control.git/175057/focus=175604
+> 
+> It is in git repository as
+> 
+>   fb76adb (gitweb: Make $prevent_xss protection for 'blob_plain' more usable, 2011-06-10)
+> 
+> currently in 'pu' (proposed updates) patch.
+
+Ah, nice :-)
+
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
