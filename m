@@ -1,47 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/9
-Message-ID: <BANLkTim6Z1avns8uLPjzq27Xej0i9UPTJw@mail.gmail.com>
-Date: Wed, 18 May 2011 16:41:29 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: maximilian attems <max@...o.at>
-Cc: oss-security@...ts.openwall.com, klibc@...or.com
-Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/2
+Message-Id: <201106141446.40489.ludwig.nussel@suse.de>
+Date: Tue, 14 Jun 2011 14:46:40 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: Jakub Narebski <jnareb@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 18, 2011 at 4:29 PM, maximilian attems <max@...o.at> wrote:
-> On Wed, May 18, 2011 at 04:13:05PM -0400, Dan Rosenberg wrote:
->> Might it be worth fixing the insecure temporary file usage?
->>
->> 122         snprintf(fn, sizeof(fn), "/tmp/net-%s.conf", dev->name);
->> 123         f = fopen(fn, "w");
->>
->> What if someone else has already created that file, or put a symlink
->> or hard link there?
->
-> for the initramfs case I don't see how.
-> outside of initramfs usage I'd agree that this needs fixing.
->
+Jakub Narebski wrote:
+> On Fri, 3 July 2011, Jakub Narebski wrote:
+> [...]
+> > Proposed patch:
+> > ---------------
+> > Note that it includes unrelated fix for $prevent_xss feature.  It would
+> > be split in separate patch (non-security related bugfix).
+> > 
+> > With this patch above lol.xml would be served as text/plain...
+> > 
+> > -- >8 --
+> > diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+> > index 240dd47..a3c03f3 100755
+> > --- i/gitweb/gitweb.perl
+> > +++ w/gitweb/gitweb.perl
+> > @@ -3595,7 +3595,7 @@ sub blob_mimetype {
+> >  	my $fd = shift;
+> >  	my $filename = shift;
+> >  
+> > -	if ($filename) {
+> > +	if ($filename && !$prevent_xss) {
+> >  		my $mime = mimetype_guess($filename);
+> >  		$mime and return $mime;
+> >  	}
+> 
+> So I think the above is not necessary; it is enough to enable XSS
+> prevention by adding
+> 
+>   our $prevent_xss = 1;
+> 
+> in gitweb configuration file.
 
-Right, this only applies after boot is done.
+What about making that the default?
+For convenience it may make sense to s!text/.*!text/plain! and allow
+to display that inline.
 
->> What if someone overwrites your string with
->> command injection characters despite your stripping?
->
-> please be more verbose, what example do you have in mind?
->
+cu
+Ludwig
 
-Sorry for not being clear.  If you're concerned about scripts parsing
-this file while it has command injection strings in it, what's to stop
-someone from putting a malicious file there if one doesn't already
-exist?  It sounds like the scripts that depend on this file should
-probably be fixed here, or the file itself should be moved to a
-location where it's not writable by unprivileged users.
-
--Dan
-
-> thank you for the review.
->
-> --
-> maks
->
->
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
