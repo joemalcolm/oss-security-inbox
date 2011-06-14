@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/7
-Message-ID: <20110804143326.GC6651@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 17:33:26 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/1
+Message-ID: <4DF7432D.9010800@redhat.com>
+Date: Tue, 14 Jun 2011 19:17:01 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...bb.co.uk, C.Trapt@...il.com
-Subject: CVE-request: KaiBB security vulnerabilities without CVE-IDs
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: Alpha kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Please assign CVE-IDs for following KaiBB issues:
+On 06/14/2011 03:31 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign CVE IDs for 
+> http://permalink.gmane.org/gmane.linux.kernel/1153884
 
-2011:
-http://osvdb.org/show/osvdb/71068 - HTB22793
-2010:
-http://osvdb.org/show/osvdb/69346
-http://osvdb.org/show/osvdb/71885 - HTB22746
-http://osvdb.org/show/osvdb/70210 - HTB22747, HTB22748
-http://osvdb.org/show/osvdb/70211 - HTB22749
-http://osvdb.org/show/osvdb/69347
-http://osvdb.org/show/osvdb/69345
+Moritz, see my email, [oss-security] CVE request: kernel: alpha: fix
+several security issues.
 
-Haven't tested any of these in actual installation. I can do it if someone requests it.
+Josh, looks like you missed assigning CVEs for this one.
 
-Vendor/project www-pages:
-1) http://code.google.com/p/kaibb/
-2) http://www.kaibb.co.uk/
-
-Best regards,
-Henri Salo
+Thanks, Eugene
