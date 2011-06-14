@@ -1,23 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/4
-Message-ID: <AANLkTin_cxUt+ESYLFxT7W_W+8HukqwoGRPYx7XUKRx9@mail.gmail.com>
-Date: Mon, 14 Mar 2011 04:13:45 -0400
-From: Andrew Clausen <clausen@...n.upenn.edu>
-To: oss-security@...ts.openwall.com
-Cc: Kees Cook <kees@...ntu.com>
-Subject: Re: announcing libwipe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/4
+Message-Id: <201106141514.25397.jnareb@gmail.com>
+Date: Tue, 14 Jun 2011 15:14:24 +0200
+From: Jakub Narebski <jnareb@...il.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
+Subject: Re: [CVE-2011-2186] XSS security issue in gitweb for 'blob_plain' view with HTML files
 Content-Type: text/plain; charset=utf-8
 
-Hi Kees,
+On Tue, 14 June 2011, Ludwig Nussel wrote:
+> Jakub Narebski wrote:
 
-Thanks for your encouragement!
+> > [...] it is enough to enable XSS prevention by adding
+> > 
+> >   our $prevent_xss = 1;
+> > 
+> > in gitweb configuration file.
+> 
+> What about making that the default?
 
-> If libwipe grew similar bit-pattern handling for new(), it could be used
-> for similar purposes (trying to ferret out use-after-free or
-> use-before-init bugs in general).
+I'll come up with a patch... though I am not sure if it shouldn't be
+done by distributions, which usually ship their own system-wide
+gitweb config file.
 
-I'm not sure I understood your proposal.  Are you thinking about the
-C++ new operator?  Is there a problem with MALLOC_PERTURB_?
+Note that with $prevent_xss enabled gitweb is a bit poorer in features:
+no support for $GIT_DIR/README.html, no using gitweb as deploy platform.
+XSS threat level for gitweb isn't high, I think - there is nothing to
+steal.
 
-Cheers,
-Andrew
+> For convenience it may make sense to s!text/.*!text/plain! and allow
+> to display that inline.
+
+Already done in
+
+  [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain' more usable
+  http://article.gmane.org/gmane.comp.version-control.git/175604
+  http://thread.gmane.org/gmane.comp.version-control.git/175057/focus=175604
+
+It is in git repository as
+
+  fb76adb (gitweb: Make $prevent_xss protection for 'blob_plain' more usable, 2011-06-10)
+
+currently in 'pu' (proposed updates) patch.
+-- 
+Jakub Narebski
+Poland
