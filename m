@@ -1,67 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/12
-Message-ID: <20110106183147.GE2808@ksplice.com>
-Date: Thu, 6 Jan 2011 13:31:47 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/1
+Message-ID: <4DF7432D.9010800@redhat.com>
+Date: Tue, 14 Jun 2011 19:17:01 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+CC: Moritz Muehlenhoff <jmm@...ian.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: Alpha kernel issues
 Content-Type: text/plain; charset=utf-8
 
-IMO, there is a (usually fairly clear) distinction between ways that a
-capability can transition to root "by design" and ones that are implementation
-bugs.
+On 06/14/2011 03:31 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign CVE IDs for 
+> http://permalink.gmane.org/gmane.linux.kernel/1153884
 
-If I, as a system administrator, grant you CAP_SYS_ADMIN, assuming that I know
-what I'm doing, I intend you to have the ability to (for example) mount and
-unmount filesystems. It is conceivable, although barely, that I have put in
-other protections in place to prevent you from using that ability from
-escalating yourself to full root.
+Moritz, see my email, [oss-security] CVE request: kernel: alpha: fix
+several security issues.
 
-I almost certainly did /not/ intend to grant you the ability to corrupt kernel
-memory using a signedness error in the phonet subsystem. And so, in my opinion,
-this does represent a deviation from the intended security model that could
-"allow an attacker to [...] violate a reasonable security policy for that
-system", even if it's extremely unlikely that anyone is actually operating under
-such a security model.
+Josh, looks like you missed assigning CVEs for this one.
 
-Admittedly, in the case of CAP_SYS_ADMIN, this is a hopelessly fine distinction
-because of the number of ways that CAP_SYS_ADMIN is equivalent to "full control
-of the machine".
-
-I don't personally care whether this issue gets a CVE, but I do think there is a
-distinction to be made here that is worth being aware of.
-
-- Nelson
-
-On Thu, Jan 06, 2011 at 01:08:59PM -0500, Dan Rosenberg wrote:
-> This is a slippery slope.  I'm in favor of not having a CVE assigned
-> for this issue.
-> 
-> Otherwise, wouldn't we need a CVE for every vector that allows
-> transitioning from various capabilities to root?  The capability
-> system may be poorly designed to allow such transitions, but I don't
-> think they represent unexpected behavior.
-> 
-> -Dan
-> 
-> On Thu, Jan 6, 2011 at 12:54 PM, Michael Gilbert
-> <michael.s.gilbert@...il.com> wrote:
-> > On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
-> >> re: http://seclists.org/fulldisclosure/2011/Jan/39
-> >>
-> >> Just in case someone tries to request a CVE name for this, I'm not
-> >> requesting for one because if you need CAP_SYS_ADMIN capability to
-> >> exploit this, you are already privileged.
-> >
-> > Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
-> > mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
-> > exist. There is an exposure here, and for that it deserves a CVE
-> > identifier (of course in my opinion).  See Brad Spengler's recent
-> > write-up [0]. There should be some effort toward making those 21 root
-> > equivalent capabilities discussed there non-equivalent.
-> >
-> > Best wishes,
-> > Mike
-> >
-> > [0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
-> >
+Thanks, Eugene
