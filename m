@@ -1,90 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/17
-Message-ID: <BANLkTik9TYa56_ayi7JX2AaZzc286qvSJg@mail.gmail.com>
-Date: Mon, 4 Apr 2011 07:32:12 +0100
-From: Benji <me@...ji.com>
-To: oss-security@...ts.openwall.com
-Cc: Michael Gilbert <michael.s.gilbert@...il.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/4
+Message-ID: <1308135047.3466.36.camel@dhcp-24-196.brq.redhat.com>
+Date: Wed, 15 Jun 2011 12:50:47 +0200
+From: Ondrej Vasik <ovasik@...hat.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Nicolas François <nekral.lists@...il.com>, kzak@...hat.com
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
->>Benji's trolling does raise a couple real issues
+On Wed, 2011-06-15 at 09:49 +0200, Ludwig Nussel wrote:
+> Bernhard Rosenkraenzer wrote:
+> > On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
+> >  
+> > > The issue also reminds me that there are several su implemenations.
+> > > On Fedora and SUSE we have a patched coreutils version, Debian uses
+> > > the one from shadow-utils and then there's also a su from
+> > > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+> > > quirks and weird features. Does anyone still remember why a
+> > > particular implementation was chosen? :-)
+> > 
+> > 
+> > In Ark Linux, we switched from the coreutils one to the shadow-utils one
+> > about 2 years ago because the shadow-utils one does what we need (incl. PAM
+> > support) without having to port the PAM patch on every new coreutils release.
+> 
+> Upstream coreutils indicated that they consider su in coreutils kind
+> of deprecated, basically only kept for legacy reasons on non-Linux
+> OSes. They would accept the PAM patch though so distros don't need
+> to maintain it.
+> 
+> Is there actually any serious distro that doesn't use PAM though?
+> Those #ifdefs to keep old shadow compatibility makes the code rather
+> ugly and hard to read. Maybe it's time to just rip out the old code
+> and submit a clean, PAM only su to util-linux.
 
-I'm not trolling.
+For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
+- in util-linux - could only cause a lot of confusion. Some
+consolidation might be better.
 
-I think your argument for this mailing list is that vulnerabilities need to
-be fixed before they're released to the greater public. While I can
-understand that, it seems ridiculous to parade yourselves around in public
-with a signup system that is akin to
+Adding util-linux upstream maintainer to CC.
 
-
->>Huh?  Now you're with "the other" group that accuses "us" of "hiding"?
-
-Can I not be part of the group that thinks a public signup system for a
-mailing list that previously had the mail server owned due to the fact it
-was secret (showing interest in possibly owning users now that emails like
-mjo@...o.mi.org have been confirmed on the list) for a mailing list that is
-'embargoed' when really it shouldn't be.
-
->>What is your opinion on making the list's archive public with a delay(when
-the corresponding security issues are already public)?
-
-It would be better. In my opinion, delay would be 1-2 days. Vendor-sec
-(alternatives) should be a last resort in publishing issues, other projects
-don't get the same "privileges", and have to "make do" with oss-sec. If you
-really need such help 'co-ordinating' and fixing things, maybe you should
-have a policy to, release advisory/info first, then have a 'co-ordination'
-list.
-
-
->>Do you really think anyone is gaining new information by discovering
->>that, say, a member of the security team for a major distro will be on
->>this mailing list?  Such information seems pretty obvious to me.
-
-Yes Dan, but now we have private email accounts as well (by people who
-apparently don't like to use vendor email addresses) that are also signed up
-to this, allowing targeting and easy identification of probably less secure
-infrastructure.
-
-
-Excuse my "trolling" if some of this has already been covered, I'm up early
-(for me) and thus can be slightly unintelligible.
-
-
-On Mon, Apr 4, 2011 at 1:11 AM, Michael Gilbert <michael.s.gilbert@...il.com
-> wrote:
-
-> Dan Rosenberg wrote:
->
-> > On Sun, Apr 3, 2011 at 6:58 PM, Benji wrote:
-> > > This is pathetic. You've all just made your personal and 'work' email
-> > > addresses targets by having a ridiculous public 'signup' system, and
-> > > the fact you all feel the need to hide behind some sort of veil for
-> > > security issues.
-> > >
-> > >
-> >
-> > Do you really think anyone is gaining new information by discovering
-> > that, say, a member of the security team for a major distro will be on
-> > this mailing list?  Such information seems pretty obvious to me.
->
-> Benji's trolling does raise a couple real issues.  The private keys and
-> passphrases of those responding here have now become highly lucrative
-> targets for attackers.  Hence, everyone on this new list needs to use
-> good practices to keep their keys, hard drives, and computers safe.
-> There should probably be some common guidelines for key safety for all
-> participants.
->
-> A private period is rather unfortunate, and hopefully it hasn't been and
-> isn't being used as a veil.  I for one am for full transparency
-> (especially given Mark Cox's statistic that vendor-sec was only relevant
-> for 29 out of over 700 open source issues last year).  However, I
-> recognize that there seems to be a need for some private coordination
-> at present. Perhaps all discussions should be published in the open
-> something like 2 months after the initial posting?  That would be a
-> kind of maximum private coordination period.
->
-> Best wishes,
-> Mike
->
+Greetings,
+         Ondrej Vasik
 
