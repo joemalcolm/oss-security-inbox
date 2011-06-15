@@ -1,29 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/2
-Message-ID: <4DAD86F9.5090005@redhat.com>
-Date: Tue, 19 Apr 2011 14:58:33 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Gerlof Langeveld <gerlof@...omputing.nl>
-Subject: CVE Request -- atop: Symlink attacks via process accounting file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/6
+Message-ID: <78335345.703640.1308145730313.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 15 Jun 2011 09:48:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Tomas Mraz <tmraz@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Werner Koch <wk@...code.com>
+Subject: Re: CVE Request / Discussion -- dirmngr -- Improper dealing with blocking system calls, when verifying a certificate
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-2207.
 
-Hello Josh, Steve, vendors,
+Thanks.
 
-   atop v1.23 and earlier created process accounting file (/tmp/atop.d/atop.acct)
-in an insecure way. A local attacker could use this flaw to conduct symlink
-attacks (e.g. overwrite arbitrary system files).
-
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
-[2] http://secunia.com/advisories/44175/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=697848
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
 
 
+----- Original Message -----
+> Dear Jan, Gentlemen,
+> 
+> thanks for caring about the issue, here is my input:
+> 
+> Am Montag, 6. Juni 2011 19:42:10 schrieb Josh Bressers:
+> > > IOW was not able to reproduce the complete / indefinite
+> > > dirmngr-client
+> > > hang (thus blocking other clients from access). As noted in [6],
+> > > it is
+> > > true that during small time period running 'dirmngr' daemon
+> > > instance is
+> > > unresponsive also for '--ping' (dirmngr-client --ping) commands,
+> > > but
+> > > after finite time (~21 seconds in my test) the connection ends up
+> > > with
+> > > timeout.
+> > >
+> > > Though Bernard in:
+> > > [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377#5
+> > >
+> > > mentions "For example the KMail hung when trying to verify a
+> > > signature
+> > > which has the certificate in the chain." which would suggest there
+> > > may
+> > > exist clients / end-user application not able to recover from this
+> > > bug
+> > > properly. Bernhard, hopefully here, you could clarify / list such
+> > > applications and provide also time details, how long that hang of
+> > > such
+> > > applications took.
+> 
+> For me the verification of the certiciate DTAG_Issuing_CA_i01.der
+> hangs for several minutes, e.g. just tested on Debian Lenny
+> for three minutes:
+> real 3m9.237s
+> user 0m0.000s
+> sys 0m0.004s
+> The time might depend on some network parameters or network timeouts
+> of the operating system. I have not changed these on my test system,
+> but I am also not very knowledgable about the various timeouts.
+> 
+> Three minutes are way too much. People that use Kontact will
+> experience a
+> freeze of the application for that time and must assume their client
+> application to be hung or crashed. Given that Kontact is also a
+> calender
+> and contacts manager, this causes significant interruptions in a
+> typical
+> office.
+> 
+> Applications affected are all applications that use dirmngr in a
+> blocking
+> way. Applications use dirmngr when they are trying to use the GnuPG
+> crypto
+> stack with CMS operations (aka X509 certificated, e.g. used with
+> S/MIME
+> emails or similar file crypto operations) and use of dirmngr is not
+> explicitely switched off. The default is to use dirmngr for
+> certification
+> revocation on all CMS operations that involve certificates.
+> 
+> The application I have tested is KMail/Kontact which uses GnuPG via
+> the
+> library gpgme, which is the recommended way. Command line usage of
+> gpgsm is
+> also affected, which I have also verified.
+> 
+> > > Based on your reply, this may not / may be worthy (in case there
+> > > are
+> > > such end-user applications) of an CVE identifier.
+> >
+> > Is this expected to only be used by end user applications?
+> 
+> Gpgsm or gpgme can be used by system scripts, other scripts or system
+> applications as well. Dirmngr itself is a system service, so on a
+> multiuser
+> system all users are affected once one user tries a verification
+> waiting
+> for a network timeout.
+> 
+> > It seems to me
+> > that if an attacker can DoS a client, it's not a security issue,
+> > especially
+> > when you consider the use (if a bad guy can interact with dirmngr,
+> > there
+> > are probably bigger potential issues).
+> 
+> Two attack scenarios:
+> a) a local uses wants to block other users from using email or crypto
+> operations, like encrypting or verifying signatures to someone. This
+> user can
+> just initiate this verification with the system dirmngr. Any user of a
+> system
+> should be able to ask the system dirmngr for verifications. So all
+> users have
+> access.
+> 
+> b) A remote user wants to cause interruptions and sends signed emails
+> or files
+> that causes an gpgsm to attempt to decrypt or verify with such a
+> certificate.
+> This will often be done automatically by the email clients for the
+> comfort of
+> the user. As gpgsm and thus dirmngr is needed to decide if a signature
+> is
+> good, attackers can assume that emails with such a signature will be
+> passed
+> to gpgsm who will pass the certificate to dirmngr and ask for
+> verification.
+> So it is a normal situation that outside data will reach dirmngr.
+> 
+> Best Regards,
+> Bernhard Reiter
+> 
+> --
+> Managing Director - Owner: www.Intevation.net (Free Software Company)
+> FSFE.org: Founding GA Member. Kolabsys.com: Board Member
+> Intevation GmbH, Osnabrück, DE; Amtsgericht Osnabrück, HRB 18998
+> Geschäftsführer Frank Koormann, Bernhard Reiter, Dr. Jan-Oliver Wagner
