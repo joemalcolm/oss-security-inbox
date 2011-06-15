@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/5
-Message-ID: <4ECB0DAC.7070207@redhat.com>
-Date: Tue, 22 Nov 2011 10:49:16 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/2
+Message-ID: <20110615220814.GC25196@nekral.nekral.homelinux.net>
+Date: Thu, 16 Jun 2011 00:08:14 +0200
+From: Nicolas François <nicolas.francois@...traliens.net>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondrej Vasik <ovasik@...hat.com>, kzak@...hat.com
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-On 11/22/2011 05:26 AM, Kurt Seifried wrote:
-> On 11/21/2011 10:51 AM, Petr Matousek wrote:
->> There is a NULL pointer deref in the user-defined key type whereby
->> updating a negative key into a fully instantiated key will cause
->> an oops to occur when the code attempts to free the non-existent
->> old payload.
->>
->> Upstream commit:
->> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
->>
->> References:
->> https://lkml.org/lkml/2011/11/15/363
->> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
->>
->> Thanks,
-> Please use CVE-2011-4331 for this issue.
+Hello,
 
-Kurt, we have assigned this with CVE-2011-4110, please reject
-CVE-2011-4331. Thanks.
+On Wed, Jun 15, 2011 at 12:50:47PM +0200, Ondrej Vasik wrote:
+> 
+> For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
+> - in util-linux - could only cause a lot of confusion. Some
+> consolidation might be better.
 
-Eugene
+On one hand I agree, on the other hand I remember hard time getting rid of
+Debian specific patches for su.
+The behavior of -c changed and since dependencies to this tool are not
+traced, there were no other ways than grep'ing the whole distro for those
+two letters 'su' to prepare the transition.
+
+One first step could be to compare their features and behaviors
+
+
+PS: regarding the original issue, was the CVE requested? I would need the
+    number for documentation purpose.
+
+Best Regards,
+-- 
+Nekral
