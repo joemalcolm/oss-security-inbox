@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/2
-Message-ID: <20110317030947.GA46207@dojo.mi.org>
-Date: Wed, 16 Mar 2011 23:09:47 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/2
+Message-ID: <BANLkTikAA7W8mTk-qxDgAmejATby_Lq7Pg@mail.gmail.com>
+Date: Wed, 15 Jun 2011 11:14:39 +0200
+From: Luka Marinko <luka.marinko@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: Nicolas François <nekral.lists@...il.com>,  Ondřej Vašík <ovasik@...hat.com>
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-:who got vendor sec for HP.  Likely, we would still want to be part of
-:vendor-sec.new.
+2011/6/15 Ludwig Nussel <ludwig.nussel@...e.de>:
+> Bernhard Rosenkraenzer wrote:
+>> On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+>>
+>> > The issue also reminds me that there are several su implemenations.
+>> > On Fedora and SUSE we have a patched coreutils version, Debian uses
+>> > the one from shadow-utils and then there's also a su from
+>> > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+>> > quirks and weird features. Does anyone still remember why a
+>> > particular implementation was chosen? :-)
+>>
+>>
+>> In Ark Linux, we switched from the coreutils one to the shadow-utils one
+>> about 2 years ago because the shadow-utils one does what we need (incl. PAM
+>> support) without having to port the PAM patch on every new coreutils release.
+>
+> Upstream coreutils indicated that they consider su in coreutils kind
+> of deprecated, basically only kept for legacy reasons on non-Linux
+> OSes. They would accept the PAM patch though so distros don't need
+> to maintain it.
+>
+> Is there actually any serious distro that doesn't use PAM though?
+> Those #ifdefs to keep old shadow compatibility makes the code rather
+> ugly and hard to read. Maybe it's time to just rip out the old code
+> and submit a clean, PAM only su to util-linux.
+>
 
-I'd also be interested in participating in a new incarnation of
-vendor-sec on behalf of my employer.
+Slackware does not use PAM by default and it uses coreutils su (at
+least it did in 12)
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Once again we find that slime does not pay!"                       -The Tick
+Luka Marinko
