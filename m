@@ -1,63 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/20/1
-Message-ID: <1387428885.2901743.1313814595534.JavaMail.root@zmail04.collab.prod.int.phx2.redhat.com>
-Date: Sat, 20 Aug 2011 00:29:55 -0400 (EDT)
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/1
+Message-Id: <201106150949.21070.ludwig.nussel@suse.de>
+Date: Wed, 15 Jun 2011 09:49:20 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ruby on rails flaws (4)
+Cc: Nicolas François <nekral.lists@...il.com>, Ondřej Vašík <ovasik@...hat.com>
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-Sorry, there is one more flaw that needs a CVE assignment:
+Bernhard Rosenkraenzer wrote:
+> On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
+>  
+> > The issue also reminds me that there are several su implemenations.
+> > On Fedora and SUSE we have a patched coreutils version, Debian uses
+> > the one from shadow-utils and then there's also a su from
+> > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+> > quirks and weird features. Does anyone still remember why a
+> > particular implementation was chosen? :-)
+> 
+> 
+> In Ark Linux, we switched from the coreutils one to the shadow-utils one
+> about 2 years ago because the shadow-utils one does what we need (incl. PAM
+> support) without having to port the PAM patch on every new coreutils release.
 
-Response splitting flaw in 2.3.x (3.0.0 and later not affected).
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6ffc93bde0298768
-https://github.com/rails/rails/commit/11dafeaa7533be26441a63618be93a03869c83a9
-https://bugzilla.redhat.com/show_bug.cgi?id=732156
+Upstream coreutils indicated that they consider su in coreutils kind
+of deprecated, basically only kept for legacy reasons on non-Linux
+OSes. They would accept the PAM patch though so distros don't need
+to maintain it.
 
-Sorry I missed this one earlier, I was looking at the 3.x advisory page and missed this one.
+Is there actually any serious distro that doesn't use PAM though?
+Those #ifdefs to keep old shadow compatibility makes the code rather
+ugly and hard to read. Maybe it's time to just rip out the old code
+and submit a clean, PAM only su to util-linux.
 
------ Original Message -----
-> ----- Original Message -----
-> > Could we get CVEs assigned to these flaws? Upstream had requested
-> > CVEs
-> > prior to disclosure, but didn't receive any.
-> >
-> > http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
-> >
-> > 1) Filter Skipping bugs
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
-> > https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731432
-> 
-> Use CVE-2011-2929
-> 
-> 
-> >
-> > 2) SQL Injection issues
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
-> > https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731438
-> 
-> Use CVE-2011-2930
-> 
-> 
-> >
-> > 3) Parse error in strip_tags
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
-> > https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731436
-> 
-> Use CVE-2011-2931
-> 
-> 
-> >
-> > 4) UTF-8 escaping vulnerability
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
-> > https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731435
-> 
-> Use CVE-2011-2932
+cu
+Ludwig
 
 -- 
-Vincent Danen / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
