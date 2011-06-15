@@ -1,26 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/1
-Message-ID: <4DC74A8A.5080108@redhat.com>
-Date: Mon, 09 May 2011 09:59:38 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: DCCP invalid options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/4
+Message-ID: <1308135047.3466.36.camel@dhcp-24-196.brq.redhat.com>
+Date: Wed, 15 Jun 2011 12:50:47 +0200
+From: Ondrej Vasik <ovasik@...hat.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Nicolas François <nekral.lists@...il.com>, kzak@...hat.com
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-On 05/09/2011 02:54 AM, Dan Rosenberg wrote:
-> On a providing a bad option length for certain DCCP options, a remote
-> host may cause parsing to read beyond the bounds of the incoming
-> packet.  This may possibly cause a DoS by reading unmapped memory (if
-> you're unlucky), or it may allow an attacker to infer the contents of
-> kernel heap memory based on the parser's response.
->
-> -Dan
->
-> [1] http://marc.info/?l=linux-kernel&m=130468845209036&w=2
+On Wed, 2011-06-15 at 09:49 +0200, Ludwig Nussel wrote:
+> Bernhard Rosenkraenzer wrote:
+> > On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
+> >  
+> > > The issue also reminds me that there are several su implemenations.
+> > > On Fedora and SUSE we have a patched coreutils version, Debian uses
+> > > the one from shadow-utils and then there's also a su from
+> > > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+> > > quirks and weird features. Does anyone still remember why a
+> > > particular implementation was chosen? :-)
+> > 
+> > 
+> > In Ark Linux, we switched from the coreutils one to the shadow-utils one
+> > about 2 years ago because the shadow-utils one does what we need (incl. PAM
+> > support) without having to port the PAM patch on every new coreutils release.
+> 
+> Upstream coreutils indicated that they consider su in coreutils kind
+> of deprecated, basically only kept for legacy reasons on non-Linux
+> OSes. They would accept the PAM patch though so distros don't need
+> to maintain it.
+> 
+> Is there actually any serious distro that doesn't use PAM though?
+> Those #ifdefs to keep old shadow compatibility makes the code rather
+> ugly and hard to read. Maybe it's time to just rip out the old code
+> and submit a clean, PAM only su to util-linux.
 
-Use CVE-2011-1770.
+For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
+- in util-linux - could only cause a lot of confusion. Some
+consolidation might be better.
 
-https://bugzilla.redhat.com/CVE-2011-1770
+Adding util-linux upstream maintainer to CC.
 
-Thanks, Eugene
+Greetings,
+         Ondrej Vasik
+
