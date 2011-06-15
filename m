@@ -1,114 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/7
-Message-ID: <CAPYM6Vx5ZXrsFOMuNoc+QcKbBdj0+R-m5AAhuLZM4-nJm_ZHsg@mail.gmail.com>
-Date: Sat, 27 Aug 2011 00:00:20 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/3
+Message-ID: <20110615214906.GB25196@nekral.nekral.homelinux.net>
+Date: Wed, 15 Jun 2011 23:49:06 +0200
+From: Nicolas François <nicolas.francois@...traliens.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondřej Vašík <ovasik@...hat.com>
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
+Hello,
 
+On Wed, Jun 15, 2011 at 09:49:20AM +0200, Ludwig Nussel wrote:
+> 
+> Is there actually any serious distro that doesn't use PAM though?
+> Those #ifdefs to keep old shadow compatibility makes the code rather
+> ugly and hard to read. Maybe it's time to just rip out the old code
+> and submit a clean, PAM only su to util-linux.
 
+I still receive bug reports for shadow-utils for the non-PAM variant.
+(bug I don't remember if these bugs were reported for su).
+In my case, I would prefer to keep the su non-PAM variant as long as I
+would support non-PAM variants for the other tools (or as long as I
+support su).
 
-1. OVERVIEW
+Regarding distros without PAM, there might be gentoo to be counted in the
+list (although PAM is enabled by default).
 
-Jcow CMS versions  (4.x: 4.2 and lower, 5.x: 5.2 and lower) are
-vulnerable to Arbitrary Code Execution.
-
-
-2. BACKGROUND
-
-Jcow is a flexible Social Networking software written in PHP. It can
-help you to build a social network for your interests and passions, a
-member community for your existing website and a social networking
-site like facebook/myspace/twitter.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The parameter "attachment" is not properly sanitized upon submission
-to /index.php, which allows attacker to execute arbitrary PHP code of
-his own.
-
-
-4. VERSIONS AFFECTED
-
-Free version:  4.x: 4.2 and lower
-Commercial version:  5.x: 5.2 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://dev.metasploit.com/redmine/attachments/1660/jcow_eval.rb
-
-jcow 4.2.1:
-file: /includes/libs/ss.inc.php
-line: 167
-
-       $app = $_POST['attachment'];
-   if (strlen($app) && $app != 'status') {
-       include_once('modules/'.$app.'/'.$app.'.php');
-       $c_run = $app.'::ajax_post();';
-       eval($c_run);
-       exit;
-   }
-
-
-jcow 5.2.0:
-file: /includes/libs/ss.inc.php
-line: 45
-
- $Vd2a57dc1 = $_POST['attachment']; if (strlen($Vd2a57dc1) &&
-$Vd2a57dc1 != 'status') {
- include_once('modules/'.$Vd2a57dc1.'/'.$Vd2a57dc1.'.php'); $Ve8200cee
-= $Vd2a57dc1.'::ajax_post();';
-eval($Ve8200cee); exit; }
-
-
-
-6. SOLUTION
-
-Free version users can upgrade to 4.3.1 or higher.
-Commercial users can upgrade to 5.3 or higher.
-
-
-7. VENDOR
-
-Jcow CMS Development Team
-http://www.jcow.net
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-06-03: notified vendor
-2010-06-03: vendor replied fix would be available within 48hrs
-2011-08-24: vendor released fixed versions for 4.x and 5.x,
-                       4.3.1 for free release
-                       5.3 for commercial release
-2011-08-26: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[jcow_4.2,5.2]_arbitrary_code_execution
-Jcow CMS: http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
-
-
-#yehg [2011-08-26]
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+Kind Regards,
+-- 
+Nekral
