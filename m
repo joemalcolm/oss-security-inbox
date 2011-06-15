@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/2
-Message-ID: <4D66F488.5000809@redhat.com>
-Date: Fri, 25 Feb 2011 08:15:04 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/1
+Message-Id: <201106150949.21070.ludwig.nussel@suse.de>
+Date: Wed, 15 Jun 2011 09:49:20 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: kernel: /proc/$pid/ leaks contents across setuid exec
+Cc: Nicolas François <nekral.lists@...il.com>, Ondřej Vašík <ovasik@...hat.com>
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 07:57 AM, Kees Cook wrote:
-> Hi,
->
-> I'd like to get a CVE assigned for this information leak issue:
-> https://lkml.org/lkml/2011/2/7/368
->
-> Pre-opened file descriptors in /proc/$pid/ can bypass DAC allowing
-> visibility into setuid process state, especially leaking ASLR offset.
+Bernhard Rosenkraenzer wrote:
+> On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
+>  
+> > The issue also reminds me that there are several su implemenations.
+> > On Fedora and SUSE we have a patched coreutils version, Debian uses
+> > the one from shadow-utils and then there's also a su from
+> > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+> > quirks and weird features. Does anyone still remember why a
+> > particular implementation was chosen? :-)
+> 
+> 
+> In Ark Linux, we switched from the coreutils one to the shadow-utils one
+> about 2 years ago because the shadow-utils one does what we need (incl. PAM
+> support) without having to port the PAM patch on every new coreutils release.
 
-Please use CVE-2011-1020.
+Upstream coreutils indicated that they consider su in coreutils kind
+of deprecated, basically only kept for legacy reasons on non-Linux
+OSes. They would accept the PAM patch though so distros don't need
+to maintain it.
 
-Eugene
+Is there actually any serious distro that doesn't use PAM though?
+Those #ifdefs to keep old shadow compatibility makes the code rather
+ugly and hard to read. Maybe it's time to just rip out the old code
+and submit a clean, PAM only su to util-linux.
+
+cu
+Ludwig
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
