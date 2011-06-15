@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/2
-Message-ID: <20111224150540.GA29606@foo.fgeek.fi>
-Date: Sat, 24 Dec 2011 17:05:40 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/2
+Message-ID: <BANLkTikAA7W8mTk-qxDgAmejATby_Lq7Pg@mail.gmail.com>
+Date: Wed, 15 Jun 2011 11:14:39 +0200
+From: Luka Marinko <luka.marinko@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request 2006: Joomla Web Link Submission title Parameter SQL injection
+Cc: Nicolas François <nekral.lists@...il.com>,  Ondřej Vašík <ovasik@...hat.com>
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-Is it possible to get CVE assigned for very old Joomla-issue?
+2011/6/15 Ludwig Nussel <ludwig.nussel@...e.de>:
+> Bernhard Rosenkraenzer wrote:
+>> On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
+>>
+>> > The issue also reminds me that there are several su implemenations.
+>> > On Fedora and SUSE we have a patched coreutils version, Debian uses
+>> > the one from shadow-utils and then there's also a su from
+>> > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
+>> > quirks and weird features. Does anyone still remember why a
+>> > particular implementation was chosen? :-)
+>>
+>>
+>> In Ark Linux, we switched from the coreutils one to the shadow-utils one
+>> about 2 years ago because the shadow-utils one does what we need (incl. PAM
+>> support) without having to port the PAM patch on every new coreutils release.
+>
+> Upstream coreutils indicated that they consider su in coreutils kind
+> of deprecated, basically only kept for legacy reasons on non-Linux
+> OSes. They would accept the PAM patch though so distros don't need
+> to maintain it.
+>
+> Is there actually any serious distro that doesn't use PAM though?
+> Those #ifdefs to keep old shadow compatibility makes the code rather
+> ugly and hard to read. Maybe it's time to just rip out the old code
+> and submit a clean, PAM only su to util-linux.
+>
 
-http://osvdb.org/show/osvdb/26626
-http://secunia.com/advisories/20746/
-http://www.exploit-db.com/exploits/1922/
-http://www.securityfocus.com/archive/1/437496
+Slackware does not use PAM by default and it uses coreutils su (at
+least it did in 12)
 
-I can see from honeypot-logs that they are still using this vulnerability. I did not yet find Joomla-references for this. If this is too old vulnerability for CVE or wrong reason please notify me.
-
-- Henri Salo
+Luka Marinko
