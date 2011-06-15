@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/1
-Message-ID: <4EB3C32C.6080201@redhat.com>
-Date: Fri, 04 Nov 2011 11:49:16 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Drupal (v6.x based) Views module - SQL injection due improper escaping of database parameters for certain filters / arguments (SA-CONTRIB-2011-052)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/7
+Message-ID: <2034463843.706117.1308150099671.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 15 Jun 2011 11:01:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: alpha: fix several security issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+----- Original Message -----
+> https://lkml.org/lkml/2011/6/11/87; from Dan Rosenberg.
+> 
+> 1. Signedness issue in osf_getdomainname allows copying out-of-bounds
+> kernel memory to userland.
 
-   a SQL injection flaw was found in the way the views module for the
-Drupal (v6.x based), open-source content-management platform, performed
-sanitization of the database parameters for certain filters / arguments
-on certain types of views with specific configuration of arguments. A
-remote attacker could provide a specially-crafted SQL query, which once
-processed by the Drupal system instance could lead to arbitrary SQL
-commands execution.
+CVE-2011-2208
 
-References:
-[1] http://drupal.org/node/1329898
-[2] http://drupal.org/node/1329846
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=751325
 
-Could you allocate a CVE id for this?
+> 
+> 2. Signedness issue in osf_sysinfo allows copying large amounts of
+> kernel memory to userland.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+CVE-2011-2209
+
+
+> 
+> 3. Typo (?) in osf_getsysinfo bounds minimum instead of maximum copy
+> size, allowing copying large amounts of kernel memory to userland.
+
+CVE-2011-2210
+
+
+> 
+> 4. Usage of user pointer in osf_wait4 while under KERNEL_DS allows
+> privilege escalation via writing return value of sys_wait4 to kernel
+> memory.
+
+CVE-2011-2211
+
+Thanks.
+
+-- 
+    JB
