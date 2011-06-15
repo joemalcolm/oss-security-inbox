@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/2
-Message-ID: <20110226073038.GP4669@outflux.net>
-Date: Fri, 25 Feb 2011 23:30:38 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/7
+Message-ID: <2034463843.706117.1308150099671.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 15 Jun 2011 11:01:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: alpha: fix several security issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 25, 2011 at 03:10:10PM +0300, Vasiliy Kulikov wrote:
-> UID 0 without capabilities has not been made really unprivileged yet.
-> It makes sense only within namespace container without any virtual
-> filesystem which handles permissions with uid/gid checks (not CAP_*).
-> But this is rather strange.
+----- Original Message -----
+> https://lkml.org/lkml/2011/6/11/87; from Dan Rosenberg.
+> 
+> 1. Signedness issue in osf_getdomainname allows copying out-of-bounds
+> kernel memory to userland.
 
-True, but I was just trying to show some examples. The case I'm most
-concerned about is the case where modules_disable has been set. It
-is possible to use acpi/custom_method to unset this and then load
-kernel rootkit modules, etc.
+CVE-2011-2208
 
-I know it's a special case, but it still provides arbitrary kernel
-memory writes which is not an intended ability for any user to
-have, even root.
 
--Kees
+> 
+> 2. Signedness issue in osf_sysinfo allows copying large amounts of
+> kernel memory to userland.
+
+CVE-2011-2209
+
+
+> 
+> 3. Typo (?) in osf_getsysinfo bounds minimum instead of maximum copy
+> size, allowing copying large amounts of kernel memory to userland.
+
+CVE-2011-2210
+
+
+> 
+> 4. Usage of user pointer in osf_wait4 while under KERNEL_DS allows
+> privilege escalation via writing return value of sys_wait4 to kernel
+> memory.
+
+CVE-2011-2211
+
+Thanks.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
