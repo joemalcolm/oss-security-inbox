@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/7
-Message-ID: <1224254609.1271391.1310493661507.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:01:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/3
+Message-ID: <20110615214906.GB25196@nekral.nekral.homelinux.net>
+Date: Wed, 15 Jun 2011 23:49:06 +0200
+From: Nicolas François <nicolas.francois@...traliens.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondřej Vašík <ovasik@...hat.com>
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-I'm going to leave this one for MITRE.
+Hello,
 
-Thanks.
+On Wed, Jun 15, 2011 at 09:49:20AM +0200, Ludwig Nussel wrote:
+> 
+> Is there actually any serious distro that doesn't use PAM though?
+> Those #ifdefs to keep old shadow compatibility makes the code rather
+> ugly and hard to read. Maybe it's time to just rip out the old code
+> and submit a clean, PAM only su to util-linux.
 
+I still receive bug reports for shadow-utils for the non-PAM variant.
+(bug I don't remember if these bugs were reported for su).
+In my case, I would prefer to keep the su non-PAM variant as long as I
+would support non-PAM variants for the other tools (or as long as I
+support su).
+
+Regarding distros without PAM, there might be gentoo to be counted in the
+list (although PAM is enabled by default).
+
+Kind Regards,
 -- 
-    JB
-
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Hello List,
-> 
-> Is it possible to assign a CVE for documented behavior? Communication
-> with apache security showed, that following symlinks to arbitrary
-> locations is a documented feature, even when "-FollowSymLink" option
-> is
-> in place. This allows any user with, that can modify some content
-> served
-> by apache to access any content accessible by the apache process, also
-> content not visible to the user (e.g. outside the ftp-upload directory
-> or forbidden like /proc/http-pid/maps). Due to the small window of
-> opportunity, this might be relevant mostly when user can already
-> execute
-> code on the machine, so it is not a big issue. /proc/<pid>/mem is
-> protected, when apache is running with setuid, so key material cannot
-> be
-> extracted using range headers. PUT was not tested so far.
-> 
-> See also
-> 
-> http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
-> 
-> - --
-> http://www.halfdog.net/
-> PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.6 (GNU/Linux)
-> 
-> iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
-> PDcCdoHHWTCHe53U+XTzefY=
-> =fVzn
-> -----END PGP SIGNATURE-----
+Nekral
