@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/17/1
-Message-ID: <20110917055353.GB19260@openwall.com>
-Date: Sat, 17 Sep 2011 09:53:53 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/2
+Message-ID: <20110615220814.GC25196@nekral.nekral.homelinux.net>
+Date: Thu, 16 Jun 2011 00:08:14 +0200
+From: Nicolas François <nicolas.francois@...traliens.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondrej Vasik <ovasik@...hat.com>, kzak@...hat.com
+Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 16, 2011 at 10:53:40AM -0700, Kees Cook wrote:
-> My last day with Canonical is today. Starting on Sep 19th, I will be
-> working for Google on ChromeOS. I'd like to transition my closed-list
-> membership based on the fact that ChromeOS is also a distro, and I'll
-> still have security responsibilities with it. How should this be handled?
+Hello,
 
-The initial seed membership for the closed list was limited to distros
-who were on the old vendor-sec (and additionally limited to Linux only).
+On Wed, Jun 15, 2011 at 12:50:47PM +0200, Ondrej Vasik wrote:
+> 
+> For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
+> - in util-linux - could only cause a lot of confusion. Some
+> consolidation might be better.
 
-I think it's in fact time for us to start accepting other qualifying
-Linux distros.
+On one hand I agree, on the other hand I remember hard time getting rid of
+Debian specific patches for su.
+The behavior of -c changed and since dependencies to this tool are not
+traced, there were no other ways than grep'ing the whole distro for those
+two letters 'su' to prepare the transition.
 
-One of the criteria should be that the distro is generally available
-(not limited to just one organization).  Another is that it should be
-issuing timely security updates.  And, without the "was on vendor-sec"
-requirement, we'll need someone to vouch for each new distro member and
-first person to subscribe from that new distro.  (Then that person can
-nominate additional contact persons for the distro.)
+One first step could be to compare their features and behaviors
 
-I think that Chrome OS qualifies.  As far as I can see, it's generally
-available now: http://getchrome.eu/download.php
 
-Also, I am happy to vouch for Kees.  (I would vouch for other Chrome OS
-security people I know as well, but this specific request is from Kees.)
+PS: regarding the original issue, was the CVE requested? I would need the
+    number for documentation purpose.
 
-So I'd like Chrome OS and Kees in particular to be on the closed Linux
-distros list, to receive advance notification of up to 14 days on medium
-severity issues (this is what the list is for).
-
-I'd appreciate any comments on any of the above (support, objections,
-anything else).
-
-Thanks,
-
-Alexander
+Best Regards,
+-- 
+Nekral
