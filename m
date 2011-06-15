@@ -1,100 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/1
-Message-ID: <20110826084355.GB27079@suse.de>
-Date: Fri, 26 Aug 2011 10:43:55 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: Yves-Alexis Perez <corsac@...ian.org>
-Cc: 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com, oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/15/3
+Message-Id: <201106151011.58154.bernhard@intevation.de>
+Date: Wed, 15 Jun 2011 10:11:55 +0200
+From: Bernhard Reiter <bernhard@...evation.de>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com, Tomas Mraz <tmraz@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Werner Koch <wk@...code.com>
+Subject: Re: CVE Request / Discussion -- dirmngr -- Improper dealing with blocking system calls, when verifying a certificate
 Content-Type: text/plain; charset=utf-8
 
+Dear Jan, Gentlemen,
 
-Hi,
+thanks for caring about the issue, here is my input:
 
-You probably dont take into account the chown() that happens in lightdm.
-Just unlink the created ~/.dmrc or ~/.Xauthority files after creation and make a symlink
-to /etc/passwd to chown it to yourself.
-However I didnt dig deep enough into it to write an exploit as I dont have
-a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
-to that of the user if doing anything with his files.
+Am Montag, 6. Juni 2011 19:42:10 schrieb Josh Bressers:
+> > IOW was not able to reproduce the complete / indefinite dirmngr-client
+> > hang (thus blocking other clients from access). As noted in [6], it is
+> > true that during small time period running 'dirmngr' daemon instance is
+> > unresponsive also for '--ping' (dirmngr-client --ping) commands, but
+> > after finite time (~21 seconds in my test) the connection ends up with
+> > timeout.
+> >
+> > Though Bernard in:
+> > [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377#5
+> >
+> > mentions "For example the KMail hung when trying to verify a signature
+> > which has the certificate in the chain." which would suggest there may
+> > exist clients / end-user application not able to recover from this bug
+> > properly. Bernhard, hopefully here, you could clarify / list such
+> > applications and provide also time details, how long that hang of such
+> > applications took.
 
-The PAM issue that I was curious about was that a pam_start() etc is done
-for the greeter-user (which I expect to be some "lightdm" user)?
+For me the verification of the certiciate DTAG_Issuing_CA_i01.der 
+hangs for several minutes, e.g. just tested on Debian Lenny
+for three minutes:
+real    3m9.237s
+user    0m0.000s
+sys     0m0.004s
+The time might depend on some network parameters or network timeouts
+of the operating system. I have not changed these on my test system,
+but I am also not very knowledgable about the various timeouts.
 
-I would expect all pam_ calls are only done for the user who is actually
-about to login. The question that came up to me was whether pam_environment
-from the user would have impact on uid-0 called programs/scripts since
-you transfer the PAM env to the process env.
+Three minutes are way too much. People that use Kontact will experience a 
+freeze of the application for that time and must assume their client
+application to be hung or crashed. Given that Kontact is also a calender
+and contacts manager, this causes significant interruptions in a typical 
+office.
 
-Sebastian
+Applications affected are all applications that use dirmngr in a blocking
+way. Applications use dirmngr when they are trying to use the GnuPG crypto 
+stack with CMS operations (aka X509 certificated, e.g. used with S/MIME 
+emails or similar file crypto operations) and use of dirmngr is not 
+explicitely switched off. The default is to use dirmngr for certification 
+revocation on all CMS operations that involve certificates.
 
-On Thu, Aug 25, 2011 at 05:54:23PM +0200, Yves-Alexis Perez wrote:
-> On mer., 2011-08-24 at 20:55 +0200, Yves-Alexis Perez wrote:
-> > And, out of curiosity, how would you achieve privilege escalation? You
-> > should be able to erase/rewrite arbitrary files, including /etc/shadow,
-> > but you don't really have control on what's written there. 
-> 
-> In gdm (CVE-2011-0727 I guess) the issue was that a g_file_copy() was
-> run as root from files under user control (.dmrc and the avatar), to a
-> cache dir with write permissions (afaict). So it was easy to put
-> whatever stuff you need in the original file and make a symlink
-> to /etc/shadow in the destination folder so the g_file_copy() would
-> erase that:
-> 
->                  res = g_file_copy (src_file,
->                                     dst_file,
->                                     G_FILE_COPY_OVERWRITE |
->                                     G_FILE_COPY_NOFOLLOW_SYMLINKS,
->                                     NULL,
->                                     NULL,
->                                     NULL,
->                                     &error);
-> 
-> 
-> I'm not too sure what G_FILE_COPY_OVERWRITE means, if it truncate()s and
-> write over of if it unlink()s and start fresh (digging in glib to find
-> out). Apparenlty in the fallback case (not sure if it's the case here)
-> it ends up doing a g_file_replace()).
-> 
-> In any case, in lightdm case, for .Xauthority file it uses
-> g_file_replace() which creates a temporary file and then rename over the
-> new file, so in the worst case you overwrite a system file with
-> xauthority data.
-> 
-> Same thing for .dmrc, you can overwrite system files but with dmrc data
-> which look like 
-> 
-> [Desktop]
-> Session=xfce
-> Lang=fr_FR.UTF-8
-> 
-> so it doesn't look easy to gain root access with that.
-> 
-> LightDM maintains a cache for dmrc files in /var/cache/lightdm but the
-> folder is created 0700 so it doesn't look like one can put symlinks
-> there and have it use a user-controled .dmrc.
-> 
-> All in all, I'm not too sure there's a privilege escalation for
-> Xauthority/.dmrc files (but if one exists, I'm interested in how to do
-> it, by curiosity). But you still damage pretty much any arbitrary file,
-> which is still an easy DoS.
-> 
-> Regards,
-> -- 
-> Yves-Alexis
+The application I have tested is KMail/Kontact which uses GnuPG via the 
+library gpgme, which is the recommended way. Command line usage of gpgsm is 
+also affected, which I have also verified.
 
+> > Based on your reply, this may not / may be worthy (in case there are
+> > such end-user applications) of an CVE identifier.
+>
+> Is this expected to only be used by end user applications?
 
+Gpgsm or gpgme can be used by system scripts, other scripts or system 
+applications as well. Dirmngr itself is a system service, so on a multiuser 
+system all users are affected once one user tries a verification waiting 
+for a network timeout.
+
+> It seems to me 
+> that if an attacker can DoS a client, it's not a security issue, especially
+> when you consider the use (if a bad guy can interact with dirmngr, there
+> are probably bigger potential issues).
+
+Two attack scenarios:
+a) a local uses wants to block other users from using email or crypto 
+operations, like encrypting or verifying signatures to someone. This user can 
+just initiate this verification with the system dirmngr. Any user of a system
+should be able to ask the system dirmngr for verifications. So all users have 
+access.
+
+b) A remote user wants to cause interruptions and sends signed emails or files
+that causes an gpgsm to attempt to decrypt or verify with such a certificate. 
+This will often be done automatically by the email clients for the comfort of 
+the user. As gpgsm and thus dirmngr is needed to decide if a signature is 
+good, attackers can assume that emails with such a signature will be passed 
+to gpgsm who will pass the certificate to dirmngr and ask for verification.
+So it is a normal situation that outside data will reach dirmngr.
+
+Best Regards,
+Bernhard Reiter
 
 -- 
+Managing Director - Owner: www.Intevation.net       (Free Software Company)
+FSFE.org: Founding GA Member.  Kolabsys.com: Board Member
+Intevation GmbH, Osnabrück, DE; Amtsgericht Osnabrück, HRB 18998
+Geschäftsführer Frank Koormann, Bernhard Reiter, Dr. Jan-Oliver Wagner
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3696 bytes)
