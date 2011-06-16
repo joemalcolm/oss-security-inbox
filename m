@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/14
-Message-ID: <134587644.125928.1305662163541.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 15:56:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/6
+Message-ID: <20110617001432.0735f6fe@redhat.com>
+Date: Fri, 17 Jun 2011 00:14:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: nbd-server
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1925
+On Wed, 1 Jun 2011 21:51:34 +0400 Solar Designer wrote:
 
-Thanks.
+> This is semi-consistent with what Tomas Hoger wrote:
+> 
+> "IIRC, Oracle was subscribed to v-s more than once - the "Sun"
+> exploder that was subscribed for quite a while (originally as Solaris
+> vendor probably), and individual OEL representative, added around the
+> time Oracle was in the process of acquiring Sun and there was no
+> single security contact for all products yet."
+> 
+> However, I don't see anyone from Oracle on what was given to me as the
+> final vendor-sec members list.  There's Sun's exploder, but no Oracle,
+> nor any Oracle person.
+> 
+> I recall that Joel Becker of Oracle had briefly contributed both to
+> vendor-sec and to oss-security discussions (thanks!), e.g. here:
+> 
+> http://www.openwall.com/lists/oss-security/2010/09/30/2
+> 
+> I don't recall if Joel was on vendor-sec (perhaps he was subscribed
+> for a while, then he asked to unsubscribe? just a guess), but I don't
+> see him on the final members list, and he has since unsubscribed from
+> oss-security (which may or may not indicate anything).
+
+I was referring to Joel in my mail.  The outcome of the discussion of
+his subscription request was to add him to the list.  I do not know why
+he does not appear on the final member list, sorry.
 
 -- 
-    JB
-
-
------ Original Message -----
-> Hi,
-> 
-> In Debian the following was reported:
-> nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
-> phase, which allows unauthenticated users to DoS the server by causing
-> the negotiation to fail (e.g., by specifying a non-existing name for
-> an
-> export).
-> 
-> Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so
-> for us
-> goes that only our unstable distribution is affected.
-> 
-> We'd like to have a CVE name for this.
-> 
-> 
-> Cheers,
-> Thijs
+Tomas Hoger / Red Hat Security Response Team
