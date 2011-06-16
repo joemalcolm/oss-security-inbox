@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/3
-Message-ID: <20110225003225.GX4212@outflux.net>
-Date: Thu, 24 Feb 2011 16:32:25 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/5
+Message-ID: <20110617000422.541ea4f3@redhat.com>
+Date: Fri, 17 Jun 2011 00:04:22 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Alexander!
 
-While CVE-2010-4347 covers the unprivileged to fully privileged escalation
-issue, this interface still allows an unprivileged root user to gain
-back all their capabilities.
+On Wed, 25 May 2011 21:33:29 +0400 Solar Designer wrote:
 
-Having a system with acpi and debugfs built into the kernel allows
-a uid=0 user (without capabilities, e.g. in containers) to write to
-arbitrary kernel memory, likely resulting in escalated capability
-privileges[1], or unlocking an otherwise modules-disabled kernel by
-changing /proc/sys/kernel/modules_disabled back to 0.
+> abc and I have enhanced the official/local archive of oss-security
+> today (as well as of other Openwall-hosted mailing lists):
+> 
+> http://www.openwall.com/lists/oss-security/
+> 
+> Now these have month and day index pages with message Subjects and
+> Froms on them (finally).
 
-Thanks,
+This certainly is a nice enhancement, that makes it a lot easier to find
+specific mail in the web archive.
 
--Kees
+> Suggestions/votes for further enhancements are welcome (we have a
+> to-do list for blists internally, but we're unsure of what to work on
+> next).
 
-[1] http://jon.oberheide.org/files/american-sign-language.c
+Thread view is what other archive managers tend to provide.  It's
+usually more convenient for navigating through longer / more complex
+threads than only thread-prev / thread-next.  Most archive managers
+split archive on the month boundary, which breaks threads view, but,
+guessing from what you've written, it seems blists should not suffer
+form such problem.
+
+For oss-security, there's also a gmane hosted archive which already
+offers a rather nice thread view.  It also provides short links to
+views that only show specific thread, with option to focus on a
+particular post. I'd expect you don't plan to compete with gmane
+feature set, but there surely is some inspiration to be found there if
+you're after ideas.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Tomas Hoger
