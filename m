@@ -1,125 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/6
-Message-ID: <1116306428.531624.1314732379386.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Aug 2011 15:26:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/1
+Message-ID: <BANLkTikhKXMXVuMm+z-O=zW60kAC4-X0Qg@mail.gmail.com>
+Date: Wed, 15 Jun 2011 20:19:03 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
+Subject: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3203.
+NetBSD has committed a fix for an issue in the 802.11 stack [1].
+FreeBSD is also affected and should release a fix shortly.  Due to a
+signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+unprivileged user could cause the kernel to copy large amounts of
+kernel memory back to the user, disclosing potentially sensitive
+information.  The issue only affects certain non-x86 architectures,
+such as SPARC.
 
-Thanks.
+-Dan
 
--- 
-    JB
-
-
------ Original Message -----
-> Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
-> 
-> 
-> 
-> 1. OVERVIEW
-> 
-> Jcow CMS versions (4.x: 4.2 and lower, 5.x: 5.2 and lower) are
-> vulnerable to Arbitrary Code Execution.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Jcow is a flexible Social Networking software written in PHP. It can
-> help you to build a social network for your interests and passions, a
-> member community for your existing website and a social networking
-> site like facebook/myspace/twitter.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The parameter "attachment" is not properly sanitized upon submission
-> to /index.php, which allows attacker to execute arbitrary PHP code of
-> his own.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Free version: 4.x: 4.2 and lower
-> Commercial version: 5.x: 5.2 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://dev.metasploit.com/redmine/attachments/1660/jcow_eval.rb
-> 
-> jcow 4.2.1:
-> file: /includes/libs/ss.inc.php
-> line: 167
-> 
-> $app = $_POST['attachment'];
-> if (strlen($app) && $app != 'status') {
-> include_once('modules/'.$app.'/'.$app.'.php');
-> $c_run = $app.'::ajax_post();';
-> eval($c_run);
-> exit;
-> }
-> 
-> 
-> jcow 5.2.0:
-> file: /includes/libs/ss.inc.php
-> line: 45
-> 
-> $Vd2a57dc1 = $_POST['attachment']; if (strlen($Vd2a57dc1) &&
-> $Vd2a57dc1 != 'status') {
-> include_once('modules/'.$Vd2a57dc1.'/'.$Vd2a57dc1.'.php'); $Ve8200cee
-> = $Vd2a57dc1.'::ajax_post();';
-> eval($Ve8200cee); exit; }
-> 
-> 
-> 
-> 6. SOLUTION
-> 
-> Free version users can upgrade to 4.3.1 or higher.
-> Commercial users can upgrade to 5.3 or higher.
-> 
-> 
-> 7. VENDOR
-> 
-> Jcow CMS Development Team
-> http://www.jcow.net
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-06-03: notified vendor
-> 2010-06-03: vendor replied fix would be available within 48hrs
-> 2011-08-24: vendor released fixed versions for 4.x and 5.x,
-> 4.3.1 for free release
-> 5.3 for commercial release
-> 2011-08-26: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[jcow_4.2,5.2]_arbitrary_code_execution
-> Jcow CMS:
-> http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
-> 
-> 
-> #yehg [2011-08-26]
-> 
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+[1] http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
