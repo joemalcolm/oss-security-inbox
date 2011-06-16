@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/9
-Message-ID: <20110305223002.GC30397@kroah.com>
-Date: Sat, 5 Mar 2011 14:30:02 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/7
+Message-ID: <20110617002706.43a3d674@redhat.com>
+Date: Fri, 17 Jun 2011 00:27:06 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: secalert_us@...cle.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 05, 2011 at 09:17:51PM +0100, S.P.Zeidler wrote:
-> Hi,
+On Tue, 17 May 2011 10:43:10 -0700 Oracle Security Alerts wrote:
+
+> On 04/30/11 08:26 AM, Solar Designer wrote:
+> > Does Oracle start to prepare security updates for Oracle Enterprise
+> > Linux before or after Red Hat releases theirs?  If it's after, then
+> > there's too little need for Oracle to have advance notification.
 > 
-> Thus wrote Solar Designer (solar@...nwall.com):
+> If we know about vulnerabilities in advance, our fixing process
+> starts before Red Hat releases their updates. It starts with
+> assessment of issue, reviewing the fix for completeness and
+> applicability to our kernel and components we maintain or provide in
+> our Linux distribution. See
+> http://www.oracle.com/us/technologies/linux/026042.htm
+> or http://oss.oracle.com/
 > 
-> > > - If yes, would it be an idea to confine or split into lists of focus groups?
-> > >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-> > 
-> > My current proposal is: split into several sub-lists.  I'd start with
-> > three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-> > groups would be for externally submitted reports (by non-members) and
-> > for cross-vendor discussions.
-> 
-> I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
-> items shared between BSDs, but not commonly seen in Linux distributions),
-> shared/userland (who eg doesn't have OpenSSL?), and researchers
-> (no opinion on the latter).
+> We do not expect Red Hat or other vendors to evaluate impact of
+> security vulnerabilities on Oracle Linux, nor fix it in a way that
+> is applicable to our releases. Hence the request for subscription.
 
-This means that for a "normal" Linux distribution, someone would have to
-be subscribed to at least 2 lists, and possibly three?
+Maybe I'm mis-reading the above statement, but it seems to imply it's
+not uncommon for you to re-do security patches that were applied to
+RHEL packages before building them as OEL updates.  Do you have any
+specific examples to point to (on- or off-list), so we can possibly
+check what mistakes we did?
 
-And where would someone post a problem to?  How would they know if a
-pacakge is shared from BSD and Linux without having to do a lot of
-research first?
+Thank you!
 
-I really don't mind seeing all of the traffic for all of the issues, but
-perhaps the BSD developers get tired of seeing all of the Linux kernel
-issues go across their mailbox so they don't want to have to see them
-anymore :)
-
-Either way, I think we still need a vendor-sec-like list for the
-Linux distros, as it is very invaluable and provides a way to coordinate
-things that is needed at times.
-
-thanks,
-
-greg k-h
+-- 
+Tomas Hoger / Red Hat Security Response Team
