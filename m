@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/5
-Message-ID: <4DADCFE2.30408@redhat.com>
-Date: Tue, 19 Apr 2011 20:09:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- OpenVAS Manager v2.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/6
+Message-ID: <20110617001432.0735f6fe@redhat.com>
+Date: Fri, 17 Jun 2011 00:14:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 1 Jun 2011 21:51:34 +0400 Solar Designer wrote:
 
-Hello Josh, Steve, vendors,
+> This is semi-consistent with what Tomas Hoger wrote:
+> 
+> "IIRC, Oracle was subscribed to v-s more than once - the "Sun"
+> exploder that was subscribed for quite a while (originally as Solaris
+> vendor probably), and individual OEL representative, added around the
+> time Oracle was in the process of acquiring Sun and there was no
+> single security contact for all products yet."
+> 
+> However, I don't see anyone from Oracle on what was given to me as the
+> final vendor-sec members list.  There's Sun's exploder, but no Oracle,
+> nor any Oracle person.
+> 
+> I recall that Joel Becker of Oracle had briefly contributed both to
+> vendor-sec and to oss-security discussions (thanks!), e.g. here:
+> 
+> http://www.openwall.com/lists/oss-security/2010/09/30/2
+> 
+> I don't recall if Joel was on vendor-sec (perhaps he was subscribed
+> for a while, then he asked to unsubscribe? just a guess), but I don't
+> see him on the final members list, and he has since unsubscribed from
+> oss-security (which may or may not indicate anything).
 
-   based on:
-   [1] http://lists.wald.intevation.org/pipermail/openvas-announce/2011-April/000120.html
+I was referring to Joel in my mail.  The outcome of the discussion of
+his subscription request was to add him to the list.  I do not know why
+he does not appear on the final member list, sorry.
 
-This release fixes a severe security issue discovered after the release
-of openvas-manager 2.0.2. By crafting a special report format plugin,
-and knowing about the operating system on which OpenVAS Manager is
-running, a rogue user was able to upload the plugin and execute
-arbitrary code with the privileges of the user running the OpenVAS
-Manager.
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Tomas Hoger / Red Hat Security Response Team
