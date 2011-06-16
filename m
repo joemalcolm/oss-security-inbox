@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/13
-Message-ID: <1139942889.379029.1297288704824.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Feb 2011 16:58:24 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/4
+Message-ID: <20110616173820.GA4176@pisco.westfalen.local>
+Date: Thu, 16 Jun 2011 19:38:20 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: wordpress before 3.0.5
+Cc: cve@...re.org
+Subject: Re: CVE request: Several Moodle issues
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> http://wordpress.org/news/2011/02/wordpress-3-0-5/
+On Wed, May 18, 2011 at 11:48:05PM +0200, Moritz Muehlenhoff wrote:
+> Hi Steve,
+> (since I assume Josh will pass this on to you :-) )
 > 
-> From release announcement, I'm unsure which of them deserves CVEs:
+> http://www.moodle.org/security/ lists more than a dozen
+> vulnerabilities requiring a CVE assignment:
+> MSA-11-0002 to MSA-11-0017 require CVE assignments.
 > 
-> "Two moderate security issues were fixed that could have allowed a
-> Contributor- or Author-level user to gain further access to the site.
-> 
-> One information disclosure issue was addressed that could have allowed
-> an Author-level user to view contents of posts they should not be able
-> to see, such as draft or private posts.
-> 
-> Two security enhancements were added. One improved the security of any
-> plugins which were not properly leveraging our security API. The other
-> offers additional defense in depth against a vulnerability that was
-> fixed in previous release."
-> 
-> 
-> 
+> (Some issues might be amalgamated to a single CVE)
 
-I'm not going to assign anything to the "enhancements" unless someone wants
-me to. They don't sound like security flaws.
+*ping*
 
-There is more information on these here:
-http://codex.wordpress.org/Version_3.0.5
-
-
-# Fix XSS bug: Properly encode title used in Quick/Bulk Edit, and offer
-  additional sanitization to various fields. Affects users of the Author or
-  Contributor role. (r17397, r17406, r17412)
-# Fix XSS bug: Preserve tag escaping in the tags meta box. Affects users of
-  the Author or Contributor role. (r17401)
-
-Use CVE-2011-0700 for the XSS flaws.
-
-
-# Fix potential information disclosure of posts through the media uploader.
-  Affects users of the Author role. (r17393)
-
-Use CVE-2011-0701 for the information disclosure.
-
-Thanks.
-
--- 
-    JB
+Cheers,
+        Moritz
