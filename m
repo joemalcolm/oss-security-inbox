@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/4
-Message-ID: <BANLkTikfpkfzan2e7+v8nbGygyVBi+qngg@mail.gmail.com>
-Date: Wed, 27 Apr 2011 14:19:43 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/1
+Message-ID: <BANLkTikhKXMXVuMm+z-O=zW60kAC4-X0Qg@mail.gmail.com>
+Date: Wed, 15 Jun 2011 20:19:03 -0400
 From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com,  Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+To: oss-security@...ts.openwall.com
+Subject: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
->
-> Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
->
+NetBSD has committed a fix for an issue in the 802.11 stack [1].
+FreeBSD is also affected and should release a fix shortly.  Due to a
+signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+unprivileged user could cause the kernel to copy large amounts of
+kernel memory back to the user, disclosing potentially sensitive
+information.  The issue only affects certain non-x86 architectures,
+such as SPARC.
 
-I currently only have CVE-2011-1089, which seems to be for glibc not
-indicating failure of addmntent() calls.  Were additional CVEs
-assigned to some of the individual issues?  If so, would you mind
-posting them here to avoid duplicate requests?
+-Dan
 
-Thanks,
-Dan
-
-> Thanks!
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+[1] http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
