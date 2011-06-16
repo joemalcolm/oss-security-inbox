@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/6
-Message-ID: <20110524113445.GD26573@suse.de>
-Date: Tue, 24 May 2011 13:34:45 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: exim STARTTLS fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/7
+Message-ID: <20110617002706.43a3d674@redhat.com>
+Date: Fri, 17 Jun 2011 00:27:06 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: secalert_us@...cle.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 24, 2011 at 07:24:03AM -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > Hi,
-> > 
-> > while reviewing EXIM git for the last security issues, I also found the
-> > STARTTLS fix:
-> > 
-> > http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
-> > 
-> > Is fixed with exim 4.76 apparently.
-> > 
+On Tue, 17 May 2011 10:43:10 -0700 Oracle Security Alerts wrote:
+
+> On 04/30/11 08:26 AM, Solar Designer wrote:
+> > Does Oracle start to prepare security updates for Oracle Enterprise
+> > Linux before or after Red Hat releases theirs?  If it's after, then
+> > there's too little need for Oracle to have advance notification.
 > 
-> That commit suggests it's not an issue, but rather some extra paranoid
-> buffer wiping. Is there a reason to believe this is a problem?
+> If we know about vulnerabilities in advance, our fixing process
+> starts before Red Hat releases their updates. It starts with
+> assessment of issue, reviewing the fix for completeness and
+> applicability to our kernel and components we maintain or provide in
+> our Linux distribution. See
+> http://www.oracle.com/us/technologies/linux/026042.htm
+> or http://oss.oracle.com/
 > 
-> I'd rather not assign an ID if it's not needed.
+> We do not expect Red Hat or other vendors to evaluate impact of
+> security vulnerabilities on Oracle Linux, nor fix it in a way that
+> is applicable to our releases. Hence the request for subscription.
 
-Rereading the comment added ... It seems not to be an active security issue.
+Maybe I'm mis-reading the above statement, but it seems to imply it's
+not uncommon for you to re-do security patches that were applied to
+RHEL packages before building them as OEL updates.  Do you have any
+specific examples to point to (on- or off-list), so we can possibly
+check what mistakes we did?
 
-Sorry for being alarming, no CVE required. ;)
+Thank you!
 
-Ciao, Marcus
+-- 
+Tomas Hoger / Red Hat Security Response Team
