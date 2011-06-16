@@ -1,21 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/09/2
-Message-Id: <201106091301.36138.ludwig.nussel@suse.de>
-Date: Thu, 9 Jun 2011 13:01:35 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE Request: Ruby on Rails 3/rails_xss XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/5
+Message-ID: <20110617000422.541ea4f3@redhat.com>
+Date: Fri, 17 Jun 2011 00:04:22 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: list archive
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Alexander!
 
-http://weblog.rubyonrails.org/2011/6/8/potential-xss-vulnerability-in-ruby-on-rails-applications
+On Wed, 25 May 2011 21:33:29 +0400 Solar Designer wrote:
 
-cu
-Ludwig
+> abc and I have enhanced the official/local archive of oss-security
+> today (as well as of other Openwall-hosted mailing lists):
+> 
+> http://www.openwall.com/lists/oss-security/
+> 
+> Now these have month and day index pages with message Subjects and
+> Froms on them (finally).
+
+This certainly is a nice enhancement, that makes it a lot easier to find
+specific mail in the web archive.
+
+> Suggestions/votes for further enhancements are welcome (we have a
+> to-do list for blists internally, but we're unsure of what to work on
+> next).
+
+Thread view is what other archive managers tend to provide.  It's
+usually more convenient for navigating through longer / more complex
+threads than only thread-prev / thread-next.  Most archive managers
+split archive on the month boundary, which breaks threads view, but,
+guessing from what you've written, it seems blists should not suffer
+form such problem.
+
+For oss-security, there's also a gmane hosted archive which already
+offers a rather nice thread view.  It also provides short links to
+views that only show specific thread, with option to focus on a
+particular post. I'd expect you don't plan to compete with gmane
+feature set, but there surely is some inspiration to be found there if
+you're after ideas.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Tomas Hoger
