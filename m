@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/2
-Message-ID: <4EF4E60D.1030604@redhat.com>
-Date: Fri, 23 Dec 2011 13:35:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/19/1
+Message-ID: <87aadd22va.fsf@mid.deneb.enyo.de>
+Date: Sun, 19 Jun 2011 18:38:17 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: WordPress flash-album-gallery plugin facebook.php XSS
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-On 12/22/2011 10:31 AM, Henri Salo wrote:
-> Original report: http://seclists.org/bugtraq/2011/Nov/186
-> Fix: http://plugins.trac.wordpress.org/changeset/469785
-> Changelog: http://wordpress.org/extend/plugins/flash-album-gallery/changelog/
-> Fixed in version: 1.57
+* Sebastian Krahmer:
+
+> The libraries that I had a quick look at and which were found
+> "vulnerable" are:
 >
-> - Henri Salo
-Please use CVE-2011-4624  for this issue.
+> - openssl-1.0.0c
+> - openldap-2.4.23
+> - cyrus-sasl-2.1.23
+>
+> which is probably far from complete.
 
--- 
+If someone wants to keep track, here's another one:
 
--Kurt Seifried / Red Hat Security Response Team
-
+NSS (the crypto library) has some questionable features controlled by
+environment variables.
