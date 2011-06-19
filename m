@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/2
-Message-ID: <CAPBnJLvzZGpJ1vBFgthHBZFjj_zKh4wP8nWM6kKzRLnvFp+JFw@mail.gmail.com>
-Date: Sat, 26 Nov 2011 12:53:17 +0100
-From: Joost Hoogendoorn <joost@...ced.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/19/1
+Message-ID: <87aadd22va.fsf@mid.deneb.enyo.de>
+Date: Sun, 19 Jun 2011 18:38:17 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: Re: Multiple libraries privilege checking
 Content-Type: text/plain; charset=utf-8
 
-I'm also interested. Thanks.
+* Sebastian Krahmer:
 
+> The libraries that I had a quick look at and which were found
+> "vulnerable" are:
+>
+> - openssl-1.0.0c
+> - openldap-2.4.23
+> - cyrus-sasl-2.1.23
+>
+> which is probably far from complete.
 
-2011/11/26 Solar Designer <solar@...nwall.com>
+If someone wants to keep track, here's another one:
 
-> Hi Tim,
->
-> On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
-> > On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com>
-> wrote:
-> >
-> > > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
-> > > specific people that they're interested.  So please reply to this
-> > > message to indicate your interest and we'll proceed.
-> >
-> > I am interested.  Thanks for doing this.
->
-> Please send me (off-list is OK) your PGP key and e-mail address to
-> subscribe to the new list.
->
-> I thought there would be more interest in this, but I don't mind setting
-> this up as just pkgsrc + Linux distros initially.
->
-> (And, like I said, the Linux distros list will also continue to exist on
-> its own, letting message senders decide on who to notify.)
->
-> Thanks,
->
-> Alexander
->
-
+NSS (the crypto library) has some questionable features controlled by
+environment variables.
