@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/10
-Message-ID: <CAPQRN=X27pir9Jsn6vaNWWzAQywYPcrSrFLkNFd6PV654FMS-Q@mail.gmail.com>
-Date: Tue, 29 Nov 2011 12:45:23 -0200
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
-To: "Patrick J. Volkerding" <security@...ckware.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/12
+Message-ID: <BANLkTimu=a4QACapwQn75n1dx2YB74fA0A@mail.gmail.com>
+Date: Mon, 20 Jun 2011 15:07:54 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-2011/11/29 Patrick J. Volkerding <security@...ckware.com>
+On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com> wrote:
+>
+>
+> ----- Original Message -----
+>> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+>> FreeBSD is also affected and should release a fix shortly. Due to a
+>> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+>> unprivileged user could cause the kernel to copy large amounts of
+>> kernel memory back to the user, disclosing potentially sensitive
+>> information. The issue only affects certain non-x86 architectures,
+>> such as SPARC.
+>>
+>> -Dan
+>>
+>> [1]
+>> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+>
+> I'm not entirely sure how to assign CVE ids for this. Is the code in
+> question shared between FreeBSD and NetBSD, or is it different codebases
+> but the same flaw?
+>
 
-> Hello,
->
-> While I'm sure there are a number of bugs in the crufty old installer
-> scripts, I'll need to know how there's a security impact before notifying
-> everyone that the sky has fallen.  I'd also like to note that if running
-> the installer requires physical access to the machine I'm liable to
-> consider security to already be non-existent at that time.
->
-> Please clarify what is wrong with examples of how to reproduce the issue,
-> and I'll look into it.
->
+Most of the 802.11 code, including the vulnerable code, is shared
+between FreeBSD and NetBSD.
+
+-Dan
+
 > Thanks.
 >
-
-
-Hello Pat,
-
-It would be a security flaw .... Patrick I only report here on the list
-because I sent an email to 30 days and getting no return. It would be
-a bug that
-affected the slackware developers.
-
-But if you want to play a scenario, okay. Simply just change the variable mount
-point to a directory other than / mnt and try to run the default
-installation of Slackware, so you have a broken installation.
-
-Thank you for your attention.
-
-Att,
-Raphael Bastos aka chemonz
-
-===============================================
-Bastos Service Manutenção Industrial Ltda.
-www.bastosservice.com.br
-Linux Reg. User: 388431  //  LPI ID: LPI000214711
-email:~> $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
-'s/(.)/chr(ord($1)-2)/ge'
-===============================================
-
+> --
+>    JB
+>
