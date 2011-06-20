@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/1
-Message-ID: <128863757.71904.1297901372227.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Feb 2011 19:09:32 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/13
+Message-ID: <1398886469.815055.1308596913704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:08:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- kernel: deficiency in processing igmp host membership reports in br_multicast
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
 Content-Type: text/plain; charset=utf-8
 
-"It was found that executing bridge snooping code triggered by host
-originated IGMP packets could cause corruption in 512-byte slabs,
-most commonly leading to crashes in jbd2. This could be possibly
-exploited by local unprivileged user to crash the host (DoS)."
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=678169
-http://git.kernel.org/?p=linux/kernel/git/davem/net-2.6.git;a=commitdiff;h=6b0d6a9b4296fa16a28d10d416db7a770fc03287
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+----- Original Message -----
+> [PATCH] inet_diag: fix inet_diag_bc_audit()
+> 
+> A malicious user or buggy application can inject code and trigger an
+> infinite loop in inet_diag_bc_audit()
 
+Use CVE-2011-2213.
+
+> 
+> Also make sure each instruction is aligned on 4 bytes boundary, to avoid
+> unaligned accesses.
+
+Should this get a seperate ID?
+
+
+> 
+> Reported-by: Dan Rosenberg <drosenberg@...curity.com>
+> 
+> http://thread.gmane.org/gmane.linux.network/197206/focus=197386
+> http://patchwork.ozlabs.org/patch/100857/
+> https://bugzilla.redhat.com/show_bug.cgi?id=714536
+> 
+
+Thanks.
+
+-- 
+    JB
