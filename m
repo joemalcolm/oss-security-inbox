@@ -1,20 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/9
-Message-ID: <20111007214139.GB12618@radis.liafa.jussieu.fr>
-Date: Fri, 7 Oct 2011 23:41:39 +0200
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/8
+Message-ID: <20110620151913.GA31770@openwall.com>
+Date: Mon, 20 Jun 2011 19:19:13 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Juliusz Chroboczek <jch@....jussieu.fr>
-Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct  7, 2011 at 23:26:13 +0200, Julien Cristau wrote:
+On Mon, Jun 20, 2011 at 02:56:28PM +0000, The Fungi wrote:
+> Would it make sense to include transitional compatability calls
+> which preserve the original behavior?
 
-> git bisect using the PoC from the RH bug suggests that was fixed by
-> https://gitweb.torproject.org/chrisd/polipo.git/commitdiff/0e2b44af619e46e365971ea52b97457bc0778cd3
-> 
-However, that change is not in the master branch on github, which still
-crashes AFAICT.
+Maybe, but this sounds worse than my "$2x$" proposal, which allows for
+the same and more (it also lets one access the backwards compat
+functionality without patching any code, by patching the hash encodings
+in a database instead).
 
-Cheers,
-Julien
+If an app knows what it is doing (and you're talking solely about such
+apps above), it can simply replace 'a' with 'x' before its call to
+crypt() or the like.
+
+> Then applications using the
+> library can be adjusted to fall back on the buggy version if the
+> supplied data has 8-bit characters and the corrected calls don't
+> result in a match.
+
+This doubles the CPU time that a DoS attacker can consume per
+authentication attempt, thereby halving the maximum iteration count that
+an admin can reasonably set for new password hashes to use.  On the
+other hand, if the iteration count was set significantly below the
+affordable maximum for whatever reason, which is the common case, then
+this is acceptable.  Then there's also the remotely measurable timing
+difference, but that leak may be acceptable (telling an observer roughly
+what goes on).
+
+> This would allow tools to regenerate and replace
+> non-conforming hashes if they were the result of this bug, and might
+> make it easier to audit existing lists for them as well.
+
+This is possible with my proposal as well.  The difference is that with
+your proposal all hashes would remain listed as "$2a$", and only the
+affected ones would be replaced (still remaining at "$2a$", which is
+important not to leak any extra info about the passwords via the hash
+encodings).  However, if one wants to implement your approach (or
+similar), they can do so via my proposed interface (with "$2x$") as
+well, by changing the 'a' to 'x' for just one function call (rather than
+in the database).  The choice is theirs.
+
+That said, I appreciate you posting this suggestion, and I'd be happy to
+consider some more.  It is always possible that there's some brilliant
+idea I had not thought of...
+
+Thanks,
+
+Alexander
