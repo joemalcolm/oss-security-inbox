@@ -1,82 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/8
-Message-ID: <4EB42B96.5080506@nixnuts.net>
-Date: Fri, 04 Nov 2011 13:14:46 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/15
+Message-ID: <346627832.815232.1308597155134.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:12:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On 11/04/2011 11:36 AM, Solar Designer wrote:
-> On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
->> PAR::Packer - PAR packed files are extracted to unsafe and predictable
->> temporary directories
->>
->> https://rt.cpan.org/Public/Bug/Display.html?id=69560
+
+----- Original Message -----
+> On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com>
+> wrote:
+> >
+> >
+> > ----- Original Message -----
+> >> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+> >> FreeBSD is also affected and should release a fix shortly. Due to a
+> >> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+> >> unprivileged user could cause the kernel to copy large amounts of
+> >> kernel memory back to the user, disclosing potentially sensitive
+> >> information. The issue only affects certain non-x86 architectures,
+> >> such as SPARC.
+> >>
+> >> -Dan
+> >>
+> >> [1]
+> >> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+> >
+> > I'm not entirely sure how to assign CVE ids for this. Is the code in
+> > question shared between FreeBSD and NetBSD, or is it different
+> > codebases
+> > but the same flaw?
+> >
 > 
-> I think that your description for this one happens to encourage a poor
-> fix for it.  Specifically, starting the description by "par_mktmpdir()
-> makes no effort to verify that the /tmp/par-<username> directory is safe
-> to use" may result in this function being patched to do such checks,
-> which I think would be a poor fix.  A better fix would be to properly
-> create a temporary files directory, with a less predictable name and
-> with due retries (with new names) if the directory already exists -
-> preferably using File::Temp's tempdir().
+> Most of the 802.11 code, including the vulnerable code, is shared
+> between FreeBSD and NetBSD.
 > 
 
-The problem with using random directory names here is that the
-/tmp/par-user directory is being used as a caching mechanism to avoid
-extracting the PAR contents over and over. A better alternative may be
-to use $ENV{'HOME'}/.par or something along those lines.
+One ID will work then.
 
->> File::Temp - _is_safe() allows unsafe traversal of symlinks
->>
->> https://rt.cpan.org/Public/Bug/Display.html?id=69106
-> 
+Please use CVE-2011-2480.
 
-> As to the proposed fix (symlink-safety.patch), it partially helps in
-> certain special misuse cases.  Namely, when the pathname is not
-> untrusted/malicious, but is poorly chosen, yet it contains just one
-> unsafe component.  However, even in that case this fix doesn't protect
-> from hard-linking of an existing suitable symlink (of a trusted user)
-> into /tmp (possibly under a different name, although the symlink target
-> name remains that of the original symlink).  And the limitation of
-> working for just one unsafe path component is no good; perhaps HIGH's
-> checks of parent directories would be better enabled unconditionally,
-> and even then this stuff is highly questionable.
+Thanks.
 
-I'm not sure I follow how that would work as an attack vector. If I
-hardlink a symlink of another user into /tmp, I can't easily remove the
-symlink afterwards to point it somewhere else. If _is_safe() checks the
-ownership of the symlink and the ownership of the symlink target it
-would be very difficult to misuse a symlink in this fashion.
-
-I would definitely agree that using File::Temp is preferable to someone
-implementing custom /tmp handling logic. Most of the CPAN code that
-messes with /tmp directly should be using File::Temp instead.
-
-I've not seen any code on CPAN uses File::Temp to create nested
-subdirectories in the fashion that would be required for an unsafe
-intermediate symlink to be a problem. IE: /tmp/foo/barXXXXX with
-/tmp/foo being the unsafe symlink.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJOtCuUAAoJEORPgBbTYw+JLNIP/2XGGZX2fsnjf1TSREmAHZOa
-b7p8W/4MHR05EgY+Zp9eMv/sEx22CmeptCHfNtBhNpxWVmQ4yuvamk9mazaUTCqD
-2iGjsftKRXn3OxLRg5RduiWBJD/4Jwm7XUfUy3E8P566JagxevxduVu7kYNVWGrJ
-I1lb8xoLM9NcgGVzlK9G5pk1rQr50vSXJLF/H9sk7dtKv0FToJgJJBbixJDNdhBD
-EsUowkoIDcOejDZLnT5XCdwJSk6RO2wNGry81gfvMirasPtEj1L4TDv6sauB6MEE
-yKr09EVpUwdM+DnGDj4fHWdTHESQFMIXjUNMmgcmzOupIKyrNxeS2CWU1RYImzaE
-lSmehWFVR4acpjHChXVDnKW8fhA3nypYkk1i4QjpaMecHarHMckU0ZzXwsLZQ8P3
-GKd07BRvqZSZZS0crjv+o9lqa6v/itsn+Fplf47s9CGHdVKlVQeKta5yXywRa3yL
-RnNLkoVmCyVphO6Wt5Dt1YKnteHoZb4d6kWlTNGGfbdY5Ymm/L+ZnJQsrc6RNPSL
-Kx7DDWoxfAe2CLFW/kaxIuXsMf3jalNVd43JvudCAwuxKBJJPTeu7CZPN/nkuK3y
-iZUSXMW++yX6OsEqdESBYYPQKjSqjX8ufpJKWybdFSthFF2b69rr3E2DpowVo0k8
-GYiMgjNKCRwbXfJmPJAr
-=gUmO
------END PGP SIGNATURE-----
+-- 
+    JB
