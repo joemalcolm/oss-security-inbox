@@ -1,40 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/01/2
-Message-ID: <4DBCBED0.70309@redhat.com>
-Date: Sat, 30 Apr 2011 22:00:48 -0400
-From: William Cohen <wcohen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/8
+Message-ID: <20110620151913.GA31770@openwall.com>
+Date: Mon, 20 Jun 2011 19:19:13 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
-> 
-> Hello Josh, Steve, vendors,
-> 
->   It was found that oprofile profiling system did not properly sanitize
-> the content of event argument, provided to oprofile profiling control
-> utility (opcontrol). If a local unprivileged user was authorized by
-> sudoers file to run the opcontrol utility, they could use the flaw
-> to escalate their privileges (execute arbitrary code with the privileges
-> of the privileged system user, root). Different vulnerability than
-> CVE-2006-0576.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Oprofile is not encouraged to be run under sudo, but still
->       should not allow escalation of privileges.
+On Mon, Jun 20, 2011 at 02:56:28PM +0000, The Fungi wrote:
+> Would it make sense to include transitional compatability calls
+> which preserve the original behavior?
 
-I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+Maybe, but this sounds worse than my "$2x$" proposal, which allows for
+the same and more (it also lets one access the backwards compat
+functionality without patching any code, by patching the hash encodings
+in a database instead).
 
--Will
+If an app knows what it is doing (and you're talking solely about such
+apps above), it can simply replace 'a' with 'x' before its call to
+crypt() or the like.
 
-View attachment "oprof-sanitize.patch" of type "text/x-patch" (792 bytes)
+> Then applications using the
+> library can be adjusted to fall back on the buggy version if the
+> supplied data has 8-bit characters and the corrected calls don't
+> result in a match.
+
+This doubles the CPU time that a DoS attacker can consume per
+authentication attempt, thereby halving the maximum iteration count that
+an admin can reasonably set for new password hashes to use.  On the
+other hand, if the iteration count was set significantly below the
+affordable maximum for whatever reason, which is the common case, then
+this is acceptable.  Then there's also the remotely measurable timing
+difference, but that leak may be acceptable (telling an observer roughly
+what goes on).
+
+> This would allow tools to regenerate and replace
+> non-conforming hashes if they were the result of this bug, and might
+> make it easier to audit existing lists for them as well.
+
+This is possible with my proposal as well.  The difference is that with
+your proposal all hashes would remain listed as "$2a$", and only the
+affected ones would be replaced (still remaining at "$2a$", which is
+important not to leak any extra info about the passwords via the hash
+encodings).  However, if one wants to implement your approach (or
+similar), they can do so via my proposed interface (with "$2x$") as
+well, by changing the 'a' to 'x' for just one function call (rather than
+in the database).  The choice is theirs.
+
+That said, I appreciate you posting this suggestion, and I'd be happy to
+consider some more.  It is always possible that there's some brilliant
+idea I had not thought of...
+
+Thanks,
+
+Alexander
