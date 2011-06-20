@@ -1,31 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/5
-Message-ID: <4ECFD2C6.9030704@redhat.com>
-Date: Fri, 25 Nov 2011 18:39:18 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- yaws -- Directory traversal flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/12
+Message-ID: <BANLkTimu=a4QACapwQn75n1dx2YB74fA0A@mail.gmail.com>
+Date: Mon, 20 Jun 2011 15:07:54 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com> wrote:
+>
+>
+> ----- Original Message -----
+>> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+>> FreeBSD is also affected and should release a fix shortly. Due to a
+>> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+>> unprivileged user could cause the kernel to copy large amounts of
+>> kernel memory back to the user, disclosing potentially sensitive
+>> information. The issue only affects certain non-x86 architectures,
+>> such as SPARC.
+>>
+>> -Dan
+>>
+>> [1]
+>> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+>
+> I'm not entirely sure how to assign CVE ids for this. Is the code in
+> question shared between FreeBSD and NetBSD, or is it different codebases
+> but the same flaw?
+>
 
-   a directory traversal flaw was found in the way yaws, web server
-for dynamic content written in Erlang, processed certain URLs. A
-remote, authenticated yaws user could use this flaw to obtain content
-of arbitrary local file, available to the yaws server user via
-specially-crafted URL request.
+Most of the 802.11 code, including the vulnerable code, is shared
+between FreeBSD and NetBSD.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650009
-[2] https://github.com/klacke/yaws/issues/69
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=757181
+-Dan
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: As of right now, according to [2], there doesn't seem
-       to be an upstream patch for this issue available yet.
+> Thanks.
+>
+> --
+>    JB
+>
