@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/14
-Message-ID: <20110303215345.GB30451@kroah.com>
-Date: Thu, 3 Mar 2011 13:53:45 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/7
+Message-ID: <20110620145622.GF1293@yuggoth.org>
+Date: Mon, 20 Jun 2011 14:56:28 +0000
+From: The Fungi <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 01:36:40PM -0800, Kees Cook wrote:
-> Several upstreams, though disappointingly not the Linux kernel, are very
-> good about keeping their end-users in mind and providing direct distro
-> coordination for important security updates (MIT Kerberos comes to mind
-> first as a great example).
+On Mon, Jun 20, 2011 at 06:05:54PM +0400, Solar Designer wrote:
+[...]
+> Does anyone need this? Or do we just assume that passwords with
+> non-ASCII characters are uncommon enough that we can bite the
+> bullet (of fixing the bug) without providing any backwards
+> compatibility workaround?
+[...]
 
-Note, that is just your opinion about the Linux kernel, not all distros
-or developers share that view.
-
-thanks,
-
-greg k-h
+Would it make sense to include transitional compatability calls
+which preserve the original behavior? Then applications using the
+library can be adjusted to fall back on the buggy version if the
+supplied data has 8-bit characters and the corrected calls don't
+result in a match. This would allow tools to regenerate and replace
+non-conforming hashes if they were the result of this bug, and might
+make it easier to audit existing lists for them as well.
+-- 
+{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
+WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
+MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
+ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
