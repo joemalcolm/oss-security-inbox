@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/2
-Message-ID: <4D804E52.9030309@redhat.com>
-Date: Wed, 16 Mar 2011 13:44:50 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/5
+Message-ID: <BANLkTikiLGrEGf9b+4noCSV-vhqJxKQHDw@mail.gmail.com>
+Date: Mon, 20 Jun 2011 09:57:56 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 03/16/2011 12:07 PM, Menkhus, Mark (GSE Security HP SSRT) wrote:
-[...]
-> Not being the one fixing the code for our kernel left me with little to
-> immediately contribute, but I requested and coordinated with several folks
-> who got vendor sec for HP.  Likely, we would still want to be part of
-> vendor-sec.new.
+On Wed, Jun 15, 2011 at 8:19 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+> FreeBSD is also affected and should release a fix shortly.  Due to a
+> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+> unprivileged user could cause the kernel to copy large amounts of
+> kernel memory back to the user, disclosing potentially sensitive
+> information.  The issue only affects certain non-x86 architectures,
+> such as SPARC.
+>
+> -Dan
+>
+> [1] http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+>
 
-Many of the kernel vulnerabilities I have seen over the past two years 
-at least, were reported and fixed upstream. Only a handful of them were 
-reported privately. I can't remember when was the last time we had a 
-kernel issue reported via vendor-sec. There were, but it must have been 
-quite some time ago. LKML is still one of the better places to find 
-vulnerabilities :) Contributions welcomed.
-
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+FreeBSD has commited a fix:
+http://svnweb.freebsd.org/base?view=revision&revision=223145
