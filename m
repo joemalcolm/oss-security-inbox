@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/6
-Message-ID: <20111124174935.GF1081@dhcp-25-225.brq.redhat.com>
-Date: Thu, 24 Nov 2011 18:49:36 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/9
+Message-ID: <20110620154319.GG1293@yuggoth.org>
+Date: Mon, 20 Jun 2011 15:43:20 +0000
+From: The Fungi <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: kvm: device assignment DoS
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-It was found that kvm_vm_ioctl_assign_device function did not check if
-the user requesting assignment was privileged or not. Together with
-/dev/kvm being 666, unprivileged user could assign unused pci devices,
-or even devices that were in use and whose resources were not properly
-claimed by the respective drivers.
+On Mon, Jun 20, 2011 at 07:19:13PM +0400, Solar Designer wrote:
+[...]
+> That said, I appreciate you posting this suggestion, and I'd be
+> happy to consider some more. It is always possible that there's
+> some brilliant idea I had not thought of...
 
-Please note that privileged access was still needed to re-program the
-device to for example issue DMA requests. This is typically achieved by
-touching files on sysfs filesystem. These files are usually not
-accessible to unprivileged users.
-
-As a result, local user could use this flaw to crash the system.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=756084
-http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
-
-Thanks,
+No, I agree your proposed approach lends a more general solution
+which could be applied to the use cases I was considering. I saw you
+mention it over on the crypto list as well, but it sounded like you
+were trying to find ways to avoid a new hash encoding identifier in
+the wild which could conflict with something OpenBSD might consider
+assigning for some other purpose at a later date (though assuming
+this workaround makes it onto their radar, that seems an unlikely
+situation anyway).
 -- 
-Petr Matousek / Red Hat Security Response Team
+{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
+WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
+MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
+ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
