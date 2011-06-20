@@ -1,17 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/04/1
-Message-ID: <4D4BDB73.2030504@redhat.com>
-Date: Fri, 04 Feb 2011 16:26:51 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/11
+Message-ID: <1943170616.814939.1308596722397.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:05:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Wireshark: Freeing uninitialized pointer
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-The following wireshark issue has been assigned CVE-2011-0538
 
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5652
 
+----- Original Message -----
+> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+> FreeBSD is also affected and should release a fix shortly. Due to a
+> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+> unprivileged user could cause the kernel to copy large amounts of
+> kernel memory back to the user, disclosing potentially sensitive
+> information. The issue only affects certain non-x86 architectures,
+> such as SPARC.
+> 
+> -Dan
+> 
+> [1]
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+
+I'm not entirely sure how to assign CVE ids for this. Is the code in
+question shared between FreeBSD and NetBSD, or is it different codebases
+but the same flaw?
+
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
