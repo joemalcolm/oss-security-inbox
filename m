@@ -1,43 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/4
-Message-ID: <4EB41048.4050009@redhat.com>
-Date: Fri, 04 Nov 2011 10:18:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/5
+Message-ID: <BANLkTikiLGrEGf9b+4noCSV-vhqJxKQHDw@mail.gmail.com>
+Date: Mon, 20 Jun 2011 09:57:56 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: John Lightsey <john@...nuts.net>
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2011 08:46 AM, John Lightsey wrote:
-> These were reported to the upstream authors a while back. None of these
-> bugs are fixed in the currently available versions:
+On Wed, Jun 15, 2011 at 8:19 PM, Dan Rosenberg
+<dan.j.rosenberg@...il.com> wrote:
+> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+> FreeBSD is also affected and should release a fix shortly.  Due to a
+> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+> unprivileged user could cause the kernel to copy large amounts of
+> kernel memory back to the user, disclosing potentially sensitive
+> information.  The issue only affects certain non-x86 architectures,
+> such as SPARC.
 >
+> -Dan
 >
-> PAR::Packer - PAR packed files are extracted to unsafe and predictable
-> temporary directories
+> [1] http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
 >
-> https://rt.cpan.org/Public/Bug/Display.html?id=69560
-Please use CVE-2011-4114 for this issue
 
-> Parallel::ForkManager - Insecure /tmp file handling
->
-> https://rt.cpan.org/Public/Bug/Display.html?id=68298
->
-Please use CVE-2011-4115 for this issue
-
-> File::Temp - _is_safe() allows unsafe traversal of symlinks
->
-> https://rt.cpan.org/Public/Bug/Display.html?id=69106
->
-Please use CVE-2011-4116 for this issue
-
-> Batch::BatchRun - Unsafe /tmp file usage
->
-> https://rt.cpan.org/Public/Bug/Display.html?id=69594
->
-Please use CVE-2011-4117 for this issue
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+FreeBSD has commited a fix:
+http://svnweb.freebsd.org/base?view=revision&revision=223145
