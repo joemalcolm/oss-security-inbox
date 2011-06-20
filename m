@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/4
-Message-Id: <201101201822.03830.oeriksson@mandriva.com>
-Date: Thu, 20 Jan 2011 18:22:03 +0100
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/14
+Message-ID: <298752811.815199.1308597087807.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:11:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2010-4225: XSP/mod_mono source code disclosure
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: thp: madvise on top of /dev/zero private mapping can lead to panic
 Content-Type: text/plain; charset=utf-8
 
-fredag 07 januari 2011 10:36:00 skrev  Thomas Biege:
-> Hello,
+----- Original Message -----
+> Description of problem:
+> The huge_memory.c THP page fault was allowed to run if vm_ops was null
+> (which would succeed for /dev/zero MAP_PRIVATE, as the f_op->mmap
+> wouldn't setup a special vma->vm_ops and it would fallback to regular
+> anonymous memory) but other THP logics weren't fully activated for
+> vmas with vm_file not NULL (/dev/zero has a not NULL vma->vm_file).
 > 
-> our Mono team released a security update to fix a source-code disclosure
-> bug.
+> Unprivileged local user could use this flaw to crash the server.
 > 
-> http://www.mono-project.com/Vulnerabilities
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
+> Upstream patch: 78f11a255749d09025f54d4e2df4fbcb031530e2
 > 
-> Cheers,
-> Thomas
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=714761
+> https://bugzilla.kernel.org/show_bug.cgi?id=33682
+> http://www.spinics.net/lists/stable-commits/msg11762.html
+> 
 
-Where's the fix for this?
+Please use CVE-2011-2479.
+
+Thanks.
 
 -- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+    JB
