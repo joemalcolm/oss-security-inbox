@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/2
-Message-ID: <20110721172906.GA20394@steve.org.uk>
-Date: Thu, 21 Jul 2011 18:29:06 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/9
+Message-ID: <20110620154319.GG1293@yuggoth.org>
+Date: Mon, 20 Jun 2011 15:43:20 +0000
+From: The Fungi <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Sun Apr 03, 2011 at 22:54:54 +0100, Steve Kemp wrote:
+On Mon, Jun 20, 2011 at 07:19:13PM +0400, Solar Designer wrote:
+[...]
+> That said, I appreciate you posting this suggestion, and I'd be
+> happy to consider some more. It is always possible that there's
+> some brilliant idea I had not thought of...
 
-> I too was subscribed through the team@...urity.debian.org exploder. My key:
-> 
-> pub   1024D/CD4C0D9D 2002-05-29
-> uid                  Steve Kemp <steve@...ve.org.uk>
-> uid                  Steve Kemp <skx@...ian.org>
-> sub   2048g/AC995563 2002-05-29
-> 
->   Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
-
-  I should now be removed; currently subscribed as steve@...ve.org.uk.
-
-  (I'm no longer a member of the Debian project, nor the Debian security
- team.)
-
-Steve
---
-Let me steal your soul?
-http://stolen-souls.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+No, I agree your proposed approach lends a more general solution
+which could be applied to the use cases I was considering. I saw you
+mention it over on the crypto list as well, but it sounded like you
+were trying to find ways to avoid a new hash encoding identifier in
+the wild which could conflict with something OpenBSD might consider
+assigning for some other purpose at a later date (though assuming
+this workaround makes it onto their radar, that seems an unlikely
+situation anyway).
+-- 
+{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
+WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
+MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
+ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
