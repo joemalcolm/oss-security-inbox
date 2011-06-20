@@ -1,41 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/1
-Message-ID: <4EA4EA6E.7020100@redhat.com>
-Date: Mon, 24 Oct 2011 10:02:46 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/15
+Message-ID: <346627832.815232.1308597155134.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:12:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 10/22/2011 08:51 AM, Solar Designer wrote:
->
-> I investigated the non-crashing build further.  No, adding more
-> directories did not cause a crash either.  What happens is that lstat()
-> starts failing with ENAMETOOLONG shortly _after_ the overflow occurs.
-> This happens to limit the largest overflow size.  If "dirs" is not yet
-> overwritten by this point (was not reached by the overflow), then the
-> program may proceed without crashing and without descending to deeper
-> directories (thus not overflowing the buffer even further).  So
-> different builds may be affected to a different extent, depending on
-> relative placement of variables in .bss.  The behavior may also vary by
-> kernel version, though (when lstat() starts to fail is a property of the
-> kernel, whereas NAMELEN in hardlink.c is fixed).  I am able to make this
-> build crash with "*** buffer overflow detected ***" on the strcat(),
-> though, by carefully adjusting the directory name lengths (but that's
-> relatively uninteresting).
->
 
-I think this is exactly what i hit, when testing on some Fedora/RHEL 
-machines.
 
-Kernel defines the following:
-#define PATH_MAX        4096    /* # chars in a path name including nul */
+----- Original Message -----
+> On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com>
+> wrote:
+> >
+> >
+> > ----- Original Message -----
+> >> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+> >> FreeBSD is also affected and should release a fix shortly. Due to a
+> >> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+> >> unprivileged user could cause the kernel to copy large amounts of
+> >> kernel memory back to the user, disclosing potentially sensitive
+> >> information. The issue only affects certain non-x86 architectures,
+> >> such as SPARC.
+> >>
+> >> -Dan
+> >>
+> >> [1]
+> >> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+> >
+> > I'm not entirely sure how to assign CVE ids for this. Is the code in
+> > question shared between FreeBSD and NetBSD, or is it different
+> > codebases
+> > but the same flaw?
+> >
+> 
+> Most of the 802.11 code, including the vulnerable code, is shared
+> between FreeBSD and NetBSD.
+> 
 
-And in the lstat implementation:
+One ID will work then.
 
-      if (dentry->d_name.len > NAME_MAX)
-                 return ERR_PTR(-ENAMETOOLONG);
+Please use CVE-2011-2480.
 
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
