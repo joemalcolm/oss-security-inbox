@@ -1,17 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/1
-Message-ID: <4DF5A0A2.2030507@redhat.com>
-Date: Mon, 13 Jun 2011 13:31:14 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/10
+Message-ID: <20110620163220.GG24658@dhcp-25-225.brq.redhat.com>
+Date: Mon, 20 Jun 2011 18:32:20 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: hfs_find_init() sb->ext_tree NULL pointer dereference
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: thp: madvise on top of /dev/zero private mapping can lead to panic
 Content-Type: text/plain; charset=utf-8
 
-Reported by Clement LECIGNE. The issue is described here:
-https://lkml.org/lkml/2011/6/8/154. No patch atm, but the impact is low.
+Description of problem:
+The huge_memory.c THP page fault was allowed to run if vm_ops was null
+(which would succeed for /dev/zero MAP_PRIVATE, as the f_op->mmap
+wouldn't setup a special vma->vm_ops and it would fallback to regular
+anonymous memory) but other THP logics weren't fully activated for
+vmas with vm_file not NULL (/dev/zero has a not NULL vma->vm_file).
 
-The relevant bug for this is:
-https://bugzilla.redhat.com/show_bug.cgi?id=712774
+Unprivileged local user could use this flaw to crash the server.
 
-Thanks, Eugene
+Upstream patch: 78f11a255749d09025f54d4e2df4fbcb031530e2
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=714761
+https://bugzilla.kernel.org/show_bug.cgi?id=33682
+http://www.spinics.net/lists/stable-commits/msg11762.html
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
