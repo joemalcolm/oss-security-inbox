@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/10
-Message-ID: <1926483466.299316.1298926424618.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 15:53:44 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/7
+Message-ID: <20110620145622.GF1293@yuggoth.org>
+Date: Mon, 20 Jun 2011 14:56:28 +0000
+From: The Fungi <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: v86d: Failure to validate netlink message sender
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1070
+On Mon, Jun 20, 2011 at 06:05:54PM +0400, Solar Designer wrote:
+[...]
+> Does anyone need this? Or do we just assume that passwords with
+> non-ASCII characters are uncommon enough that we can bite the
+> bullet (of fixing the bug) without providing any backwards
+> compatibility workaround?
+[...]
 
-Thanks.
-
+Would it make sense to include transitional compatability calls
+which preserve the original behavior? Then applications using the
+library can be adjusted to fall back on the buggy version if the
+supplied data has 8-bit characters and the corrected calls don't
+result in a match. This would allow tools to regenerate and replace
+non-conforming hashes if they were the result of this bug, and might
+make it easier to audit existing lists for them as well.
 -- 
-    JB
-
-
------ Original Message -----
-> Versions of the v86d userspace helper for the Linux uvesafb driver
-> before 0.1.10 did not verify that received netlink messages were sent
-> by the kernel, allowing unprivileged users to manipulate the video
-> mode and potentially other consequences.
-> 
-> v86d executes video BIOS code with access to /dev/mem in response to
-> netlink messages, using either vm86 mode or an x86 emulator, depending
-> on configuration. I an unclear on whether it is possible to e.g. crash
-> the machine or escalate privileges by spoofing requests, or only to
-> mess with the video card.
-> 
-> References:
-> http://repo.or.cz/w/v86d.git/commit/f9abfd412639286c3143e93e8ba2c9598dfba640
+{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
+WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
+MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl);
+ICQ(114362511); YAHOO(crawlingchaoslabs); AIM(dreadazathoth); }
