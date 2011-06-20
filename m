@@ -1,56 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/13/2
-Message-ID: <4E46B53E.5050201@debian.org>
-Date: Sat, 13 Aug 2011 12:32:46 -0500
-From: John Lightsey <lightsey@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/2
+Message-ID: <20110620050111.GA28959@openwall.com>
+Date: Mon, 20 Jun 2011 09:01:11 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: two vulnerabilities in ktsuss 1.4 and earlier
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-I reported these bugs privately to the Debian security team and the
-upstream author some time ago, but it does not appear that any CVE was
-created as a result.
+Earlier today, while working on a test suite for John the Ripper, magnum
+discovered and reported what turned out to be a bug in John the Ripper
+and crypt_blowfish:
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626178
+http://www.openwall.com/lists/john-dev/2011/06/19/2
 
-The 1.3 and 1.4 versions of ktsuss which include a setuid ktsuss binary
-suffered from two separate security bugs which can be used for local
-root exploits.
+The bug is inadvertent sign extension, and the fix is trivial:
 
-The "1.314" version which does not include a setuid ktsuss binary and
-uses "su" for privilege escalation does not suffer from these problems.
+http://www.openwall.com/lists/john-dev/2011/06/19/3
 
+This bug dates back to 1998 (or maybe even 1997).
 
-1) When the target UID is the same as the real UID ktsuss skips
-authentication. Under these circumstances, ktsuss fails to change the
-effective UID back to the real UID. (line 118 of src/ktsuss.c in version
-1.3.)
+Unfortunately, the bug is not only in JtR, but also in crypt_blowfish,
+and thus in plenty of other systems and programs that have integrated
+crypt_blowfish.  Obviously, I am quite embarrassed; I should have
+included 8-bit test vectors or subjected crypt_blowfish to a fuzzer (vs.
+OpenBSD's implementation), or/and used different coding conventions (use
+"unsigned char" almost everywhere, although this has its problems too -
+such as compiler warnings on library calls that expect simple "char *").
 
-$ ktsuss -u `whoami` whoami
-root
+Since the code successfully worked in JtR, I thought that it was
+essentially already fuzz-tested.  But apparently passwords with 8-bit
+characters were uncommon enough that no one noticed the bug for years.
 
+I am going to provide an official fix for crypt_blowfish (likely the
+one-liner plus added tests).  I thought I'd bring the issue up on
+oss-security sooner rather than later.
 
-2) The setuid ktsuss binary executes a GTK interface subprocess to
-prompt for username and password. This GTK interface runs as root and
-allows arbitrary code execution via the GTK_MODULES environmental variable.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Here's my preliminary analysis of the impact:
 
-iQIcBAEBAgAGBQJORrU3AAoJEORPgBbTYw+J7gkP/361/sJwrIi/k/ETubWfNffe
-HtEoYtJJ6WuCtsA/lcHqSHQ8zdCk18NISEuGEu5i239Tw3OxVQjFnu5Hqit3xIZW
-5B2enCnm10mjN0YtnjS2ihG4nj6heWQeCGDyM3odTrMGWVk6bx0T5DwoP7IW4ZtG
-nR2ZNrgOM0at5SIUqqxGJyA25EHeDqdKj9k4RgBI+247tCRmcG0dYrxK7izf/nlg
-/42++1hQ/iGugtb+QSGrWqsSkutdJZs6zLmOwEC9SMRLC/SEORF89wM7X7ntPQ0m
-EoJ9TaJikwaowQqsC4ey+VlPbhJYKcbD2GiS0ir+6RO38BF4AiYnI0MMwBt845D1
-TJXCVb1PbWM8LObT4HnoJ42JpFwtZ7YnnHSyB9AJ/f5K52svRLGg1Fa32/EHw5Ju
-8qp7/S2a0qVJLWXwqBBa1d5hVjkb/iItNU53a1ymzlAu+1N6mPhwLSRRRIP97Xe2
-apb1TRV9esH8l2AsK9MEkbp7poihkf+8IwGMpy+1jqsJKuJIAKP7t8MM0VLADCH6
-EozEskqFr5ZhN7FBpqWYWx9O78gskQmLdx3zju62VJT3QZRgy9y8+AulxAMhDrRf
-/mAobPgxRrTcrELM7+Z7H1R2g1Zh1h63ksF7OnSUcdFDZOVOr2ZwrdoZy+GD9f8S
-RN/8Ra1lMG/9l2Jm5Vv+
-=G44E
------END PGP SIGNATURE-----
+http://www.openwall.com/lists/john-dev/2011/06/20/3
+http://www.openwall.com/lists/john-dev/2011/06/20/5
+
+To summarize:
+
+The majority of hashes (but not all of them) for passwords containing
+characters with the 8th bit set are incompatible with OpenBSD's (really
+nasty, but no security impact here).
+
+What's worse, approximately 3 in 16 passwords containing a single
+character with the 8th bit set have 1 to 3 characters immediately
+preceding the 8-bit character ignored.  With more than one character
+with the 8th bit set, things may be even worse.
+
+Thus, those passwords may be much easier to crack than expected.
+
+As to what's affected besides crypt_blowfish itself, I expect it to be
+PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
+crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
+identify them and notify the maintainers).
+
+Sorry about that!
+
+Since this is the second bug with char signedness in crypt_blowfish, it
+looks like I have a lesson to learn here.  The last time, the bug was
+with salt generation for hash types other than bcrypt (that code was
+little used and little tested).  Besides fixing the bug, I responded by
+running extensive tests and making sure the distribution of salts was
+uniform.  Of course, it was better to run those tests before releasing
+the code to the public.  Now we have an issue with the passwords
+themselves.  Obviously, I will be adding more tests, even though it
+would be better done before releasing the code.
+
+No, I don't expect even more sign extension bugs in crypt_blowfish.
+There's not that much code, and we've pretty much tested it by now.
+
+However, I might reconsider my C programming conventions for new code as
+it relates to use of integer types.  I think I'd rather workaround
+meaningless compiler warnings on strlen() and the like (even though
+those extra casts look dirty) than miss real bugs elsewhere.
+
+Perl's Crypt::Eksblowfish turns out to have sufficiently reworked code
+that it's unaffected:
+
+http://www.openwall.com/lists/john-dev/2011/06/20/4
+
+Oh, also some builds of crypt_blowfish (and of affected systems/apps)
+for PowerPC are probably unaffected, because char is typically unsigned
+there (unless overridden in compiler flags for compatibility with more
+typical systems).
+
+Once again, my apologies for the mess.
+
+Alexander
