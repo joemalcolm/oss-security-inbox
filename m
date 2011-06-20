@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/3
-Message-ID: <4D6CB75F.5090303@redhat.com>
-Date: Tue, 01 Mar 2011 17:07:43 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/11
+Message-ID: <1943170616.814939.1308596722397.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:05:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: xfs infoleak
+Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 02/16/2011 04:41 PM, Eugene Teo wrote:
->  From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat
-> equivalent) calls out to xfs_fs_geometry() with a version number of 3.
-> This code path does not fill in the logsunit member of the passed
-> xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized
-> stack data to potentially unprivileged callers. Since all other members
-> are filled in all code paths and there are no padding bytes in this
-> structure, it's safe to avoid an expensive memset() in favor of just
-> clearing this one field."
->
-> https://patchwork.kernel.org/patch/555461/
-> https://bugzilla.redhat.com/show_bug.cgi?id=677260
 
-There's an issue with the patch, here's the fix to the fix:
-http://www.spinics.net/lists/xfs/msg03801.html
 
-Eugene
+----- Original Message -----
+> NetBSD has committed a fix for an issue in the 802.11 stack [1].
+> FreeBSD is also affected and should release a fix shortly. Due to a
+> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
+> unprivileged user could cause the kernel to copy large amounts of
+> kernel memory back to the user, disclosing potentially sensitive
+> information. The issue only affects certain non-x86 architectures,
+> such as SPARC.
+> 
+> -Dan
+> 
+> [1]
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+
+I'm not entirely sure how to assign CVE ids for this. Is the code in
+question shared between FreeBSD and NetBSD, or is it different codebases
+but the same flaw?
+
+Thanks.
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
