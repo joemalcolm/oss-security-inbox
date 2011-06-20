@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/09/2
-Message-ID: <AANLkTimCAAbLzq53BXvdd6sozMRC_Wns=TnH3inKYJKi@mail.gmail.com>
-Date: Sat, 8 Jan 2011 23:05:17 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: Hyrum K Wright <hyrum@...umwright.org>
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/17
+Message-ID: <20110620194911.GM11550@foo.fgeek.fi>
+Date: Mon, 20 Jun 2011 22:49:11 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: bressers@...hat.com, incidents@...rt.org
+Subject: CVE request: Joomla unspecified information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-> Sounds great.
->
-> Should the Subversion project plan to write and publish advisories for
-> these CVEs, or has the requester already done so?
+Couldn't find a CVE-identifier for this issue. Joomla does have too many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may lead to an unauthorized information disclosure. Should this one get a 2010 or 2011 identifier?
 
-I'm not affiliated with subversion so it's up to them (I assume they
-won't since they didn't do so originally).
+Reported: 2010-12-08
+Joomla advisory: 2011-04-01
+Release with a fix (version 1.5.23): 2011-04-04
 
-> -Hyrum
+References:
+http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
+http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
+http://osvdb.org/show/osvdb/71587
+http://secunia.com/advisories/44028/
 
--- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+I hope this request isn't duplicate. I included oCERT to this email as Joomla is part of that group. Please notify me and mailing-list if this issue already has a CVE-identifier.
+
+Best regards,
+Henri Salo
