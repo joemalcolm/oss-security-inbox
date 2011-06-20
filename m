@@ -1,22 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/3
-Message-ID: <4EBCF374.60800@oracle.com>
-Date: Fri, 11 Nov 2011 10:05:40 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/13
+Message-ID: <1398886469.815055.1308596913704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:08:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/11 08:06, Guido Berhoerster wrote:
-> Replacing the file between the lstat and the open would change
-> its inode and then be caught by the check before the fchown, no?
 
-Nope.   There is no reason why the same inode should not be reused.
 
-On ext4 (btrfs seems to be different):
+----- Original Message -----
+> [PATCH] inet_diag: fix inet_diag_bc_audit()
+> 
+> A malicious user or buggy application can inject code and trigger an
+> infinite loop in inet_diag_bc_audit()
 
-$ touch test; ls -i test; rm test; touch test; ls -i test
-656078 test
-656078 test
+Use CVE-2011-2213.
 
-jch
+> 
+> Also make sure each instruction is aligned on 4 bytes boundary, to avoid
+> unaligned accesses.
+
+Should this get a seperate ID?
+
+
+> 
+> Reported-by: Dan Rosenberg <drosenberg@...curity.com>
+> 
+> http://thread.gmane.org/gmane.linux.network/197206/focus=197386
+> http://patchwork.ozlabs.org/patch/100857/
+> https://bugzilla.redhat.com/show_bug.cgi?id=714536
+> 
+
+Thanks.
+
+-- 
+    JB
