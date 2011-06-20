@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/7
-Message-ID: <handler.631818.B631818.130924553522669.ackinfo@bugs.debian.org>
-Date: Tue, 28 Jun 2011 07:21:06 +0000
-From: owner@...s.debian.org (Debian Bug Tracking System)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/17
+Message-ID: <20110620194911.GM11550@foo.fgeek.fi>
+Date: Mon, 20 Jun 2011 22:49:11 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Bug#631818: Info received (CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism)
+Cc: bressers@...hat.com, incidents@...rt.org
+Subject: CVE request: Joomla unspecified information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the additional information you have supplied regarding
-this Bug report.
+Couldn't find a CVE-identifier for this issue. Joomla does have too many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may lead to an unauthorized information disclosure. Should this one get a 2010 or 2011 identifier?
 
-This is an automatically generated reply to let you know your message
-has been received.
+Reported: 2010-12-08
+Joomla advisory: 2011-04-01
+Release with a fix (version 1.5.23): 2011-04-04
 
-Your message is being forwarded to the package maintainers and other
-interested parties for their attention; they will reply in due course.
+References:
+http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
+http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
+http://osvdb.org/show/osvdb/71587
+http://secunia.com/advisories/44028/
 
-Your message has been sent to the package maintainer(s):
- Tanguy Ortolo <tanguy+debian@...olo.eu>
+I hope this request isn't duplicate. I included oCERT to this email as Joomla is part of that group. Please notify me and mailing-list if this issue already has a CVE-identifier.
 
-If you wish to submit further information on this problem, please
-send it to 631818@...s.debian.org.
-
-Please do not send mail to owner@...s.debian.org unless you wish
-to report a problem with the Bug-tracking system.
-
--- 
-631818: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
-Debian Bug Tracking System
-Contact owner@...s.debian.org with problems
+Best regards,
+Henri Salo
