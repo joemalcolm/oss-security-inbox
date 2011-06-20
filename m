@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/11
-Message-ID: <20111129204124.GA29519@openwall.com>
-Date: Wed, 30 Nov 2011 00:41:24 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Raphael Bastos <tecnologia@...tosservice.com.br>
-Cc: "Patrick J. Volkerding" <security@...ckware.com>, oss-security@...ts.openwall.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/14
+Message-ID: <298752811.815199.1308597087807.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 20 Jun 2011 15:11:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: thp: madvise on top of /dev/zero private mapping can lead to panic
 Content-Type: text/plain; charset=utf-8
 
-Raphael -
-
-On Tue, Nov 29, 2011 at 12:45:23PM -0200, Raphael Bastos wrote:
-> It would be a security flaw .... Patrick I only report here on the list
-> because I sent an email to 30 days and getting no return. It would be
-> a bug that affected the slackware developers.
+----- Original Message -----
+> Description of problem:
+> The huge_memory.c THP page fault was allowed to run if vm_ops was null
+> (which would succeed for /dev/zero MAP_PRIVATE, as the f_op->mmap
+> wouldn't setup a special vma->vm_ops and it would fallback to regular
+> anonymous memory) but other THP logics weren't fully activated for
+> vmas with vm_file not NULL (/dev/zero has a not NULL vma->vm_file).
 > 
-> But if you want to play a scenario, okay. Simply just change the variable mount
-> point to a directory other than / mnt and try to run the default
-> installation of Slackware, so you have a broken installation.
+> Unprivileged local user could use this flaw to crash the server.
+> 
+> Upstream patch: 78f11a255749d09025f54d4e2df4fbcb031530e2
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=714761
+> https://bugzilla.kernel.org/show_bug.cgi?id=33682
+> http://www.spinics.net/lists/stable-commits/msg11762.html
+> 
 
-According to what you wrote so far, the bug is not a security flaw.
-Please take further discussion of this (with Patrick) off-list.  Thanks!
+Please use CVE-2011-2479.
 
-Alexander
+Thanks.
+
+-- 
+    JB
