@@ -1,26 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/7
-Message-ID: <20110922162611.GC4095@suse.de>
-Date: Thu, 22 Sep 2011 18:26:11 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Missing input sanitation in various X GLX calls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/3
+Message-ID: <624679018.832439.1308665000259.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Jun 2011 10:03:20 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2011-2483.
 
-https://bugs.freedesktop.org/show_bug.cgi?id=28823 
-is a tracker bug for input sanitation lacking in various GLX X calls.
+Sorry I missed this yesterday. I suspect I got caught up reading up on it.
 
-Reporter is me@...fdog.net
+-- 
+    JB
 
-These can probably allow a attacker with access to the GLX calls
-(typically just the logged in user) to crash the X server or execute
-code within it.
 
-(Not thought about WebGL introduced crash potential here.)
-
-The lacking checks were reported and fixed in x.org git in 2010, so they
-probably need a 2010 CVE id. (Single one should be sufficient I guess.)
-
-Ciao, Marcus
+----- Original Message -----
+> Steve -
+> 
+> Can I have a CVE id, please? ASAP, or I am releasing without referring
+> to a CVE id.
+> 
+> On Mon, Jun 20, 2011 at 03:43:20PM +0000, The Fungi wrote:
+> > No, I agree your proposed approach lends a more general solution
+> > which could be applied to the use cases I was considering. I saw you
+> > mention it over on the crypto list as well, but it sounded like you
+> > were trying to find ways to avoid a new hash encoding identifier in
+> > the wild which could conflict with something OpenBSD might consider
+> > assigning for some other purpose at a later date (though assuming
+> > this workaround makes it onto their radar, that seems an unlikely
+> > situation anyway).
+> 
+> Of course, I need to inform them that we're taking "$2x$" for our
+> backwards compatibility feature.
+> 
+> Here's how I am dealing with the issue in code:
+> 
+> Bug fix, plus a backwards compatibility feature:
+> 
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.9;r2=1.10
+> 
+> 8-bit test vectors added, for both modes (correct and buggy):
+> 
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/wrapper.c.diff?r1=1.9;r2=1.10
+> 
+> These are only used by "make check", which I felt was not enough -
+> many
+> people are taking just the main C file and use it in their programs.
+> Obviously, my "make check" would not exist in their source code trees.
+> So if those programs are ever miscompiled or otherwise broken, it
+> might
+> not be detected. To deal with this, I added:
+> 
+> Quick self-test on every use:
+> 
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.10;r2=1.11
+> 
+> I am likely to go ahead and release this.
+> 
+> Alexander
