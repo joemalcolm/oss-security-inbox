@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/6
-Message-Id: <201105311525.14786.thomas@suse.de>
-Date: Tue, 31 May 2011 15:25:14 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/7
+Message-ID: <20110621161850.GA6761@openwall.com>
+Date: Tue, 21 Jun 2011 20:18:50 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: NetworkManager-openvpn logs cert password
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
+> PostgreSQL is affected as well (the pgcrypto module):
+> 
+> % head crypt-blowfish.c 
+> /*
+>  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 
+>  14:48:52 momjian Exp $
 
-and another one from RH bz:
-https://bugzilla.redhat.com/show_bug.cgi?id=708876
+We need to actually review and/or test this revision of the code before
+we conclusively say that it's affected.  Maybe you did that already?
 
-Robert Marcano 2011-05-29 20:28:01 EDT
+So far, there's one example where a revision of the code turned out to
+be unaffected - Crypt::Eksblowfish in CPAN.  In fact, this is what has
+resulted in discovery of the bug (even though it was fixed in
+Crypt::Eksblowfish during its initial integration of the code in 2007).
 
-Description of problem:
+> php-suhosin also contains the same code.
 
-Password to unlock certificate is logged to /var/log/messages
+Yes.  These two are listed at http://www.openwall.com/crypt/
 
-May 29 19:46:42 localhost NetworkManager[4791]: destroy_one_secret: destroying
-********
+We need to go over those listed on that page and then also search the
+web for possible other users of the code.  Then try to figure out which
+are actually affected (probably most of them are) and notify the
+maintainers.  For now, my focus is to push crypt_blowfish 1.1 out, but I
+do need to include a few sentences on roughly what software is affected
+in my announcement.  I'd appreciate any help with those reviews/testing.
 
-Version-Release number of selected component (if applicable):
+Thank you!
 
-NetworkManager-openvpn-0.8.999-1.fc15.x86_64
-
-
-Additional info:
-
-I would love to have the option to type the password at connection time instead
-of it being stored, but adding the password to the system log is wrong
-
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
-
+Alexander
