@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/2
-Message-ID: <20110430140340.GA29810@openwall.com>
-Date: Sat, 30 Apr 2011 18:03:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/4
+Message-ID: <20110621143441.GA7449@suse.de>
+Date: Tue, 21 Jun 2011 16:34:41 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi Jeff,
+Solar Designer wrote:
+>Returning to the crypt_blowfish topic, I am considering keeping 
+>support
+>for the broken hashes under another prefix - say, "$2x$" (where the "x"
+>would stand for "sign eXtension bug") instead of the usual "$2a$".  For
+>typical passwords, they'd be the same (except for this one letter in the
+>prefix).  Their potential use would be by a sysadmin wishing to avoid
+>any service disruption for anyone (even if that means potentially
+>staying with weaker passwords than what some users might have expected;
+>maybe password changes would then be recommended or forced over time).
+>That sysadmin would replace "$2a$" with "$2x$" in existing hashes on the
+>system right before upgrade to corrected software (such as PHP or glibc
+>with crypt_blowfish).  Alternatively, say, a custom web app could be
+>making this replacement for crypt() calls only, on hashes created before
+>upgrade date.
 
-On Sat, Apr 30, 2011 at 08:38:57AM -0400, Jeff Mitchell wrote:
-> I didn't hear back about this -- can someone confirm?
+I wonder whether it would make sense to patch pam_unix (resp 
+pam_unix2 in our case) to detect the problem and activate the 
+workaround automatically. pam_unix has the clear text password so 
+knows when it contains 8bit characters. It also has the shadow entry 
+which tells when the password was set. If that date is before the 
+update was installed the 2x method could be tried if 2a failed and a 
+warning could be logged to syslog.
 
-I am sorry about the delay in getting back to you on this.  I don't
-treat these subscription requests as high priority, but I do "flag" them
-such that I don't miss any.  As you might have noticed, I handle them in
-batches; the delay for some has been over 10 days so far (OK, that might
-have been excessive).
+cu
+Ludwig
 
-> On 04/26/2011 12:02 PM, Jeff Mitchell wrote:
-> > Please add me as a KDE security contact.
-> > 
-> > sec   1024D/D0AE1825 2009-01-19
-> > Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
-> > uid                  Jeff Mitchell <mitchell@....org>
-
-The list that has been setup so far is Linux distro security contacts;
-KDE is not a Linux distro, hence it should not be on the list.  That
-said, I'll save your request to a separate folder in case we ever setup
-a suitable list.  There have been no requests for the setup of a
-non-OS-distro vendor security contacts list so far, and I see too little
-use for such a list.
-
-Folks on the Linux distro list (and then on other distro lists, if we
-add any) are supposed to make an attempt to identify and notify
-upstreams and other affected projects, including KDE when appropriate.
-There has in fact been some effort to do that for the issues brought up
-on the list so far.
-
-Alexander
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
