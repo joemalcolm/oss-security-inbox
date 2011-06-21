@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/12
-Message-ID: <4D5BDF62.4020704@redhat.com>
-Date: Wed, 16 Feb 2011 22:29:54 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/9
+Message-ID: <20110621175526.GA7482@openwall.com>
+Date: Tue, 21 Jun 2011 21:55:26 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: Re: kernel: ALSA: caiaq - Fix possible string-buffer overflow
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 02/16/2011 09:48 PM, Josh Bressers wrote:
->
-> ----- Original Message -----
->> Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to
->> overflow the string array sizes by too long USB device name string."
->>
->> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
->>
->> Just FYI, I'm not requesting a CVE name for this as it only affects
->> Native Instruments USB audio devices with very long device name which I
->> think is unlikely.
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=677881
->>
->
-> I'm assigning this CVE-2011-0712.
->
-> With the recent research about having a smartphone impersonate various USB
-> devices, I think this attack is now more plausible than in previous years.
+On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
+> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
+> know why that is?
 
-Actually this is hardware-specific, and the strcpys are in the 
-initialisation part of the code.
+It is based on the same code, but the author made changes when merging
+the code.  Specifically, he switched to using "unsigned char *".
 
-Eugene
+> I can't promise I will have time to look at it, but I will try if I can
+> find the time.
+
+Thanks!
+
+Meanwhile, I've released crypt_blowfish 1.1 with the fixes I had
+mentioned in here.
+
+http://www.openwall.com/crypt/
+
+Alexander
