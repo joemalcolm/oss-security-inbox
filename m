@@ -1,56 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/18
-Message-ID: <AANLkTi=n2oz22_Cnmb9XFH_Jg6qauw=DeLRtjRcHn3cw@mail.gmail.com>
-Date: Thu, 3 Mar 2011 18:59:20 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/16
+Message-ID: <20110621201838.GA8278@openwall.com>
+Date: Wed, 22 Jun 2011 00:18:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Jun 21, 2011 at 04:34:41PM +0200, Ludwig Nussel wrote:
+> I wonder whether it would make sense to patch pam_unix (resp 
+> pam_unix2 in our case) to detect the problem and activate the 
+> workaround automatically. pam_unix has the clear text password so 
+> knows when it contains 8bit characters. It also has the shadow entry 
+> which tells when the password was set. If that date is before the 
+> update was installed the 2x method could be tried if 2a failed and a 
+> warning could be logged to syslog.
 
->
-> Then, as I have always said, someone needs to step up and actually do
-> this type of communication work.  I personally don't have the time to, I
-> am swamped with just getting the stable updates out in a semi-timely
-> fashion.  Digging through every patch in these releases and properly
-> conveying the real, or percieved reason why they are needed, is a lot of
-> thankless work.  Jon at lwn.net tried it for just one release, and we
-> are averaging about one a week (total number of kernels released that
-> is).  No one else has yet tried to do that, but if they will, I will be
-> _glad_ to point my release notifications at that summary.
->
-> So in other words, help is gladly accepted :)
->
+This is tricky.  When implementing things like that, we need to consider
+timing leaks (do we care if an observer of ssh traffic is able to
+tell whether the password contained 8-bit chars or not? perhaps we do)
+and leaks via the hash encodings themselves (if only some are changed to
+a certain type, this may leak some info about the corresponding
+passwords, thereby speeding up offline attacks on the hashes).
 
-Rather than requiring individuals to perform substantial amounts of
-digging through patches, which I agree is infeasible, perhaps it would
-be more reasonable to establish a general policy that bug reporters
-and maintainers can use to work with distro security teams and the
-rest of the security community.
+My response above is generic, not focused on your specific proposed
+approach.  Overall, I think we'll need to give this more thought.
 
-For example, a public or private list could be established for all
-*potential* kernel security issues, and just as is the case with
-CC'ing stable, a policy could be developed where maintainers are
-expected to CC this list for fixes that might possibly have security
-relevance, with a tendency towards erring on the safe side if security
-impact is unclear.  I think security communication needs to be
-improved at the commit level (as opposed to the reporting), since
-maintainers are often much more knowledgeable and better able to
-understand security impact than the users who are often presenting
-issues.  Criteria could be set up for what kinds of issues would be
-candidates for being sent to this list.  I don't think this would
-require substantially more work on anyone's part, but by creating a
-culture where potential security issues are treated seriously, it
-would at least stop some of the silent patching that's been going on.
+One idea is to allocate yet another prefix, which will mean the same
+thing as 2a, but "certified" as passing a certain specific test suite
+(which will include 8-bit chars).  So we'll have:
 
-Once potential security issues have been submitted to such a list, I'm
-sure there would be no shortage of people willing and able to analyze
-security impact for each issue, including assigning CVEs.  While
-digging through every kernel patch might be too much work, with the
-cooperation of maintainers this can be reduced to a much smaller
-subset that would be easily dealt with.
+2a - unknown correctness (may be correct, may be buggy)
+2x - sign extension bug
+2y - definitely correct
 
-Regards,
-Dan
+Newly set/changed passwords will be getting the new prefix.
+
+Then we'll be able to do things such as optionally have a PAM module
+deny logins with 8-bit char passwords to accounts that have 2a or/and
+2x hashes.  (Rationale for the admin: passwords weaker than expected.)
+With another option, we'll be able to have 2a treated as 2x.  (Rationale
+for the admin: minimum inconvenience to the users.)  Perhaps there can
+be other reasonable settings as well.
+
+What do you think?
+
+Meanwhile, here's my announcement of crypt_blowfish 1.1 and the Owl
+glibc security update:
+
+http://www.openwall.com/lists/announce/2011/06/21/1
+
+It includes my latest summary of the bug's impact.
+
+Thanks,
+
+Alexander
