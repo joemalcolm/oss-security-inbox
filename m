@@ -1,33 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/6
-Message-ID: <20111108151040.GA31470@foo.fgeek.fi>
-Date: Tue, 8 Nov 2011 17:10:40 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/8
+Message-ID: <20110621165018.GJ1952@redhat.com>
+Date: Tue, 21 Jun 2011 10:50:18 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 06, 2011 at 10:57:55PM +0100, Marcus Meissner wrote:
-> On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
-> > On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
-> > > Are these duplicates:
-> > > 
-> > > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
-> > > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
-> > > 
-> > > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
-> > 
-> > This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
-> > 
-> > I am really sorry about duplicate CVEs. :(
-> 
-> Did you mail the new cve-assign alias they have?
-> 
-> Ciao, Marcus
+* [2011-06-21 20:18:50 +0400] Solar Designer wrote:
 
-http://cve.mitre.org/cve/editorial_policies/duplicates.html
+>On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
+>> PostgreSQL is affected as well (the pgcrypto module):
+>>
+>> % head crypt-blowfish.c
+>> /*
+>>  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11
+>>  14:48:52 momjian Exp $
+>
+>We need to actually review and/or test this revision of the code before
+>we conclusively say that it's affected.  Maybe you did that already?
+>
+>So far, there's one example where a revision of the code turned out to
+>be unaffected - Crypt::Eksblowfish in CPAN.  In fact, this is what has
+>resulted in discovery of the bug (even though it was fixed in
+>Crypt::Eksblowfish during its initial integration of the code in 2007).
 
-I contacted cve@...dress. I would also like to point out that they have never replied to any of my emails, which I have also heard from others.
+Ahhh... ok.  I only did a code review, I didn't test the actual
+functionality to make that determination.
 
-Best regards,
-Henri Salo
+So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
+know why that is?
+
+>> php-suhosin also contains the same code.
+>
+>Yes.  These two are listed at http://www.openwall.com/crypt/
+>
+>We need to go over those listed on that page and then also search the
+>web for possible other users of the code.  Then try to figure out which
+>are actually affected (probably most of them are) and notify the
+>maintainers.  For now, my focus is to push crypt_blowfish 1.1 out, but I
+>do need to include a few sentences on roughly what software is affected
+>in my announcement.  I'd appreciate any help with those reviews/testing.
+
+I can't promise I will have time to look at it, but I will try if I can
+find the time.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
