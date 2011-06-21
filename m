@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/5
-Message-ID: <1446881210.43074.1303157015086.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Apr 2011 16:03:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/13
+Message-ID: <20110621192214.GL1952@redhat.com>
+Date: Tue, 21 Jun 2011 13:22:15 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mediawiki 1.16.4, incomplete fix of CVE-2011-1578
+Cc: magnum <rawsmooth@...dband.net>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
+* [2011-06-21 22:15:25 +0400] Solar Designer wrote:
 
+>On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
+>> Ok, so taking a quick look at php-suhosin, we have:
+>>
+>> ...
+>>  61 typedef unsigned int BF_word;
+>> ...
+>> 558     BF_word tmp;
+>> 559
+>> 560     for (i = 0; i < BF_N + 2; i++) {
+>> 561         tmp = 0;
+>> 562         for (j = 0; j < 4; j++) {
+>> 563             tmp <<= 8;
+>> 564             tmp |= *ptr;
+>>
+>> I'm assuming the above means it is vulnerable (unsigned int vs unsigned
+>> char).
+>
+>No, we can't conclude anything from just the excerpt you quoted above.
+>If *ptr is signed char, then we have the bug.  If it's unsigned char,
+>then we don't.  If it's just char, which it was in my original code,
+>then we have the bug on most platforms, but not on those few where char
+>defaults to unsigned.  Or rather, the bug is mitigated on those.
 
------ Original Message -----
-> Looks as though Mediawiki 1.16.3 did not fully fix the CVE-2011-1578
-> issue (XSS), so 1.16.4 has been released:
-> 
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000097.html
-> 
-> Could a CVE name get assigned to this?
-> 
+So should have included this:
 
-Please use CVE-2011-1587.
-
-Thanks.
+556     __CONST char *ptr = key; 
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
