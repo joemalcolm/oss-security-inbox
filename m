@@ -1,60 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/12/2
-Message-ID: <20110312170344.GA14833@albatros>
-Date: Sat, 12 Mar 2011 20:03:45 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/4
+Message-ID: <20110621143441.GA7449@suse.de>
+Date: Tue, 21 Jun 2011 16:34:41 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Untrusted fs and invalid filenames
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-This is a resumption of the subject "Physical access vulnerabilities and
-auto-mounting" brought by Dan Rosenberg.  The previous discussion was
-about possible attacks the kernel, now I'd like to talk about attacks
-userland programs.
+Solar Designer wrote:
+>Returning to the crypt_blowfish topic, I am considering keeping 
+>support
+>for the broken hashes under another prefix - say, "$2x$" (where the "x"
+>would stand for "sign eXtension bug") instead of the usual "$2a$".  For
+>typical passwords, they'd be the same (except for this one letter in the
+>prefix).  Their potential use would be by a sysadmin wishing to avoid
+>any service disruption for anyone (even if that means potentially
+>staying with weaker passwords than what some users might have expected;
+>maybe password changes would then be recommended or forced over time).
+>That sysadmin would replace "$2a$" with "$2x$" in existing hashes on the
+>system right before upgrade to corrected software (such as PHP or glibc
+>with crypt_blowfish).  Alternatively, say, a custom web app could be
+>making this replacement for crypt() calls only, on hashes created before
+>upgrade date.
 
-While POSIX restricts the character set used in filenames, some Linux
-filesystems (at least ext2) permit reserved filenames ".", ".." and
-filenames with "/" inside.  I have a crafted flash drive with ext2 that
-has such files:
+I wonder whether it would make sense to patch pam_unix (resp 
+pam_unix2 in our case) to detect the problem and activate the 
+workaround automatically. pam_unix has the clear text password so 
+knows when it contains 8bit characters. It also has the shadow entry 
+which tells when the password was set. If that date is before the 
+update was installed the 2x method could be tried if 2a failed and a 
+warning could be logged to syslog.
 
-root@...atros:/media# ls cdrom/ -la
-итого 28
-drwxr-xr-x 4 root root  4096 2011-03-12 18:55 .
-drwxr-xr-x 3 root root  4096 2011-03-12 18:48 ..
-drwxr-xr-x 3 root root  4096 2011-03-12 18:48 ..
-drwx------ 2 root root 16384 2011-03-12 18:54 lost+found
-
-root@...atros:/media# ls a2f202b6-a3ef-45b5-bce4-01c4d35af4a0/ -la
-итого 28
-drwxr-xr-x 4 root root  4096 2011-03-12 18:55 .
-drwxr-xr-x 4 root root  4096 2011-03-12 19:08 ..
-drwx------ 2 root root 16384 2011-03-12 18:54 lost+found
--rw-r--r-- 1 root root  3146 2011-03-12 19:07 lost+found/../../../etc/passwd
-
-Guess what does "rm" with such filenames :-)
-
-Another example of crafted fs is ext2 partition with EXT2_ERRORS_PANIC
-option set in superblock and corrupted root directory.  When run "ls" on
-the fs, the kernel would panic.
-
-While it was said that such attacks have low impact, some systems
-already try to protect itself from untrusted external filesystems.
-E.g. automounting of flash drives in Ubuntu is processed with
-"-o nodev,nosuid".  I read this as external flash drives are not fully
-trusted and may contain some dangerous files.  If some automatic file
-processing of files on drives with specially crafted filenames is
-started then it might have a security impact.  I don't know such popular
-apps, though.
-
-What I suggest is something like "-o untrusted" option to mount.  This
-would mean that the system considers the input from such fs as a malicious
-input.  Such mounted fs would try to consider the data on disk as
-untrusted and to be as robust as possible, e.g. check against
-"/"-filenames, against corrupted fs structures, etc.  I'd be happy to
-hear opinions about the usefulness of this feature.
-
-Thanks,
+cu
+Ludwig
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
