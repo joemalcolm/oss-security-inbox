@@ -1,50 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/1
-Message-ID: <4EBCBEBC.2080004@canonical.com>
-Date: Fri, 11 Nov 2011 17:20:44 +1100
-From: Robert Ancell <robert.ancell@...onical.com>
-To: oss-security@...ts.openwall.com,  Guido Berhoerster <gber@...nsuse.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/6
+Message-ID: <20110621155623.GI1952@redhat.com>
+Date: Tue, 21 Jun 2011 09:56:23 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 10/11/11 23:57, Guido Berhoerster wrote:
-> * Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
->> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
->>> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
->>>> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
->>>>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
->>>>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
->>>>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
->>>>>>> cause LightDM to set the destination of the link to user ownership.
->>>>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
->>>>>>>
->>>>>>> Overview of changes in lightdm 1.0.6
->>>>>>>
->>>>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
->>>>>> Could a CVE be assigned for this?
->>>>>>
->>>>>> Regards,
->>>>> Can you send me the link to this announcement so I can confirm it? Thanks.
->>>>>
->>>> Here's the link to the mailing list mail:
->>>> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
->>>>
->>>> Regards,
->>> Thanks, confirmed (first hand info is much better). Please use
->>> CVE-2011-4105 for this issue.
->>>
->> BTW, the fix that is in 1.0.6 is probably not enough for distros that
->> don't implement hard link restrictions, such as the Yama LSM that is
->> used in Ubuntu.
-> Does an incomplete fix in a released version warrant a new CVE?
->
-> I've attached a suggested fix.
-Note the attached patch can still be exploited; if the file changes from
-a standard file to a hard link / symlink between the lstat and the
-fchown then lightdm can be fooled into thinking it's safe when it's
-not.  A malicious program could sit there creating a file, deleting it,
-then creating a link as fast as possible and eventually it would work. 
-We need an atomic operation like lchown, and if that doesn't work the
-only safe thing I can think of doing is a) nothing (requiring the user
-to manually fix the bug) or b) delete the file (could delete information
-set by other programs).
+* [2011-06-20 09:01:11 +0400] Solar Designer wrote:
+
+[...]
+>As to what's affected besides crypt_blowfish itself, I expect it to be
+>PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
+>crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
+>identify them and notify the maintainers).
+
+PostgreSQL is affected as well (the pgcrypto module):
+
+% head crypt-blowfish.c 
+/*
+  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 14:48:52 momjian Exp $
+  *
+  * This code comes from John the Ripper password cracker, with reentrant
+  * and crypt(3) interfaces added, but optimizations specific to password
+  * cracking removed.
+
+php-suhosin also contains the same code.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
