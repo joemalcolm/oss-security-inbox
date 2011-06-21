@@ -1,49 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/5
-Message-ID: <CABqVa3--fZxG+52j7ocmySwCvFzMEOevSp341vOG00BgK0HD7Q@mail.gmail.com>
-Date: Sun, 13 Nov 2011 22:51:57 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/14
+Message-ID: <1285918669.841735.1308684244595.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Jun 2011 15:24:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Arch Linux Shaman issue
+Subject: Re: taskstats authorized_keys presence infoleak PoC
 Content-Type: text/plain; charset=utf-8
 
-Did this ever get a CVE #? I can't find one.
 
-https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+----- Original Message -----
+> /*
+> * This program tries to learn whether ~user/.ssh/authorized_keys exists
+> * and is nonempty for any user on local machine. It uses world-readable
+> * taskstats' nature to get somewhat private io statistics information.  If
+> * implant taskstats or /proc//io polling into ssh client, it would be
+> * possible to learn precise authorized_keys' size (and estimate private
+> * key's(s') size).
 
-The point of this thread was that you don't need to enter the root
-password at all. Not the first time, not ever.
+Are you considering this a flaw, or just an interesting security exercise?
+Nothing currently comes to mind, but it's possible there could be other
+data where knowing it exists and the size would be useful. I'm thinking
+this isn't terribly dangerous for something like ssh.
 
-As far as I understand, it is supposed to work like this: When you
-first use shaman too install anything, it asks for the root password
-You can tick a "Do not ask me again"-box, so you don't have to enter
-the password again. If you tick the box and enter the password, shaman
-add the lines
-[auth]
-askforpwd=false
-to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
-time shaman is run, it checks the config file, and if the askforpwd
-value is set to false, it grants itself root privileges (with some
-nifty setuuid root-thingy, I imagine) This is not the problem - this
-is the feature.
-
-The bug is this:
-the fact that any user can add the lines
-[auth]
-askforpwd=false
-to his own shaman.conf file, without ever entering the root password
-in shaman. The next time shaman is run, it checks the config file, and
-if the askforpwd value is set to false, it grants itself root
-privileges - even though the user has never entered the root password.
-This works for any unprivileged user on the system.
-
-If that is indeed a feature intended by any sane person, then I'm
-Mother Mary. And that can't be, seeing as I don't have breasts.
-
-Appears to never have been fixed, the last release of shaman appears
-to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
+This is very interesting either way. Well done.
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: (206) 905-9462
+    JB
