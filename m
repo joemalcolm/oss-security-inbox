@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/5
-Message-ID: <20111127231350.GA21202@openwall.com>
-Date: Mon, 28 Nov 2011 03:13:50 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/5
+Message-ID: <620725841.834382.1308668355120.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Jun 2011 10:59:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-All -
+----- Original Message -----
+> Jan Lieskovsky wrote:
+> > Hello Josh, Steve, vendors,
+> >
+> >    based on Debian BTS report:
+> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+> >        (first CVE-2011-XXYY required for Debian case)
+> >
+> > looked more into original report:
+> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> >
+> > and the first paragraph of [2] suggests:
+> > "When starting a program via "su - user -c program" the user session
+> > can escape to the parent session by using the TIOCSTI ioctl to push
+> > characters into the input buffer. This allows for example a non-root
+> > session to push "chmod 666 /etc/shadow" or similarly bad commands
+> > into
+> > the input buffer such that after the end of the session they are
+> > executed."
+> >
+> > this should get a CVE-2005-YYZZ CVE id.
+> >
+> > Could you allocate these?
+> 
+> ping! :-)
+> 
 
-On Mon, Nov 28, 2011 at 02:56:22AM +0400, Solar Designer wrote:
-> OK, now this is starting to look about as ridiculous as the old "closed
-> list" thread did. ;-)  I am approving these messages so far in part
-> because I think they serve as (valid) criticism of the idea of such
-> lists, even if the senders did not intend such meaning.  I have mixed
-> feelings about these advance notification lists myself.
+I'm not sure if this should get two IDs. It's really one issue, which isn't
+actually fixed in su.
 
-Oh, I think I need to clarify.  By "these messages" above, I mean closed
-list membership requests that lack justification.  I can see how my
-positive reply to Tim's message might have created the false impression
-that no justification was required.  In fact, NetBSD/pkgsrc had previously
-expressed interest in being on such a list (during the "closed list"
-thread from half a year ago), Tim posted from his @pkgsrc address, and I
-verified that he was credited for pkgsrc security work just recently:
+The fundamental issue is that tools like su and sudo keep the tty open.
+The patch in question closes the tty for the case of su -c, but not for
+just running su by itself. It is incomplete.
 
-http://mail-index.netbsd.org/current-users/2011/10/03/msg017924.html
+It should get a 2005 ID at the very least, MITRE will have to do that.
+Perhaps two 2005 IDs? One for the issue, the second for the incomplete fix
+(which is still not fixed)?
 
-"pkgsrc security: OBATA Akio, Guillaume Lasmayous, Fredrik Pettai, Tim
-Zingelman"
+I think the bigger issue is it needs to be decided what is proper behavior
+and document that. I'm not smart enough to know if this can be fixed
+properly without crippling these tools.
 
-None of these things were true for Joost's and Michael's requests - so I
-had no better choice than to ask them for justification.
+Thanks.
 
-It'd help avoid any confusion like that if further requests include
-justification in a more explicit form, even when the sender can
-reasonably expect that I'd recognize their OS and themselves and their
-involvement in security work for their OS.  While I did recall past
-discussions and notice the @pkgsrc address, not everyone did, which
-clearly caused confusion.
-
-Thanks,
-
-Alexander
+-- 
+    JB
