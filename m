@@ -1,32 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/7
-Message-ID: <20110719132457.GA25477@openwall.com>
-Date: Tue, 19 Jul 2011 17:24:57 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/16
+Message-ID: <20110621201838.GA8278@openwall.com>
+Date: Wed, 22 Jun 2011 00:18:38 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 02:37:46AM +0400, Solar Designer wrote:
-> On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
-> > Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-> > sounds like the right thing to do.
-> 
-> This is not exactly the new vendor-sec.  As the name suggests, it is a
-> Linux distros only list.  Also, please note that the maximum acceptable
-> embargo period on this list is 14 days.  We need to communicate this
-> detail to whoever we're asking to disclose anything to the list, before
-> they disclose.  When posting to the list, you may encrypt messages to
-> the attached key.
+On Tue, Jun 21, 2011 at 04:34:41PM +0200, Ludwig Nussel wrote:
+> I wonder whether it would make sense to patch pam_unix (resp 
+> pam_unix2 in our case) to detect the problem and activate the 
+> workaround automatically. pam_unix has the clear text password so 
+> knows when it contains 8bit characters. It also has the shadow entry 
+> which tells when the password was set. If that date is before the 
+> update was installed the 2x method could be tried if 2a failed and a 
+> warning could be logged to syslog.
 
-I've just described the new list and some of its policies in the newly
-added "Linux distribution security contacts list" section at:
+This is tricky.  When implementing things like that, we need to consider
+timing leaks (do we care if an observer of ssh traffic is able to
+tell whether the password contained 8-bit chars or not? perhaps we do)
+and leaks via the hash encodings themselves (if only some are changed to
+a certain type, this may leak some info about the corresponding
+passwords, thereby speeding up offline attacks on the hashes).
 
-http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+My response above is generic, not focused on your specific proposed
+approach.  Overall, I think we'll need to give this more thought.
 
-Maybe this will need to be moved to its own wiki page or to a wiki page
-on multiple non-historical closed lists if we ever host several at once.
-(Non-Linux lists may be setup if there's demand.)
+One idea is to allocate yet another prefix, which will mean the same
+thing as 2a, but "certified" as passing a certain specific test suite
+(which will include 8-bit chars).  So we'll have:
+
+2a - unknown correctness (may be correct, may be buggy)
+2x - sign extension bug
+2y - definitely correct
+
+Newly set/changed passwords will be getting the new prefix.
+
+Then we'll be able to do things such as optionally have a PAM module
+deny logins with 8-bit char passwords to accounts that have 2a or/and
+2x hashes.  (Rationale for the admin: passwords weaker than expected.)
+With another option, we'll be able to have 2a treated as 2x.  (Rationale
+for the admin: minimum inconvenience to the users.)  Perhaps there can
+be other reasonable settings as well.
+
+What do you think?
+
+Meanwhile, here's my announcement of crypt_blowfish 1.1 and the Owl
+glibc security update:
+
+http://www.openwall.com/lists/announce/2011/06/21/1
+
+It includes my latest summary of the bug's impact.
+
+Thanks,
 
 Alexander
