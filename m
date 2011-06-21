@@ -1,27 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/3
-Message-ID: <1318943004.5781.2.camel@mdlinux>
-Date: Tue, 18 Oct 2011 09:03:24 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: pam
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/8
+Message-ID: <20110621165018.GJ1952@redhat.com>
+Date: Tue, 21 Jun 2011 10:50:18 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+* [2011-06-21 20:18:50 +0400] Solar Designer wrote:
 
-Could a CVE please be assigned to the following issue:
+>On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
+>> PostgreSQL is affected as well (the pgcrypto module):
+>>
+>> % head crypt-blowfish.c
+>> /*
+>>  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11
+>>  14:48:52 momjian Exp $
+>
+>We need to actually review and/or test this revision of the code before
+>we conclusively say that it's affected.  Maybe you did that already?
+>
+>So far, there's one example where a revision of the code turned out to
+>be unaffected - Crypt::Eksblowfish in CPAN.  In fact, this is what has
+>resulted in discovery of the bug (even though it was fixed in
+>Crypt::Eksblowfish during its initial integration of the code in 2007).
 
-A Debian/Ubuntu specific patch in pam, update-motd, calls the scripts
-in /etc/update-motd.d as root without sanitizing the environment.
+Ahhh... ok.  I only did a code review, I didn't test the actual
+functionality to make that determination.
 
-See:
+So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
+know why that is?
 
-https://bugs.launchpad.net/ubuntu/+source/pam/+bug/610125
+>> php-suhosin also contains the same code.
+>
+>Yes.  These two are listed at http://www.openwall.com/crypt/
+>
+>We need to go over those listed on that page and then also search the
+>web for possible other users of the code.  Then try to figure out which
+>are actually affected (probably most of them are) and notify the
+>maintainers.  For now, my focus is to push crypt_blowfish 1.1 out, but I
+>do need to include a few sentences on roughly what software is affected
+>in my announcement.  I'd appreciate any help with those reviews/testing.
 
-Thanks,
+I can't promise I will have time to look at it, but I will try if I can
+find the time.
 
-Marc.
-
-
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
