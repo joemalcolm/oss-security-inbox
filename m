@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/13
-Message-ID: <20110502182907.GA20415@openwall.com>
-Date: Mon, 2 May 2011 22:29:07 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/7
+Message-ID: <20110621161850.GA6761@openwall.com>
+Date: Tue, 21 Jun 2011 20:18:50 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 01:04:44PM -0500, Mark Hatle wrote:
-> I am a bit confused though.  If I (as a non-RH customer) look to download their
-> latest security updates, I don't see an obvious way of doing it based on their
-> advisories.  For instance:
+On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
+> PostgreSQL is affected as well (the pgcrypto module):
 > 
-> https://rhn.redhat.com/errata/RHSA-2011-0421.html
-> 
-> This advisory ends with:  (The unlinked packages above are only available from
-> the Red Hat Network)
+> % head crypt-blowfish.c 
+> /*
+>  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 
+>  14:48:52 momjian Exp $
 
-Yes, Red Hat advisories say that, but in practice the .src.rpm's are
-freely downloadable.  Here's one mentioned in the advisory above:
+We need to actually review and/or test this revision of the code before
+we conclusively say that it's affected.  Maybe you did that already?
 
-lftp ftp.redhat.com:/pub/redhat/linux/enterprise/6Server/en/os/SRPMS> ls -l kernel-2.6.32-71.24.1.el6.src.rpm
--rw-r--r--    5 ftp      ftp      67060785 Apr 07 02:51 kernel-2.6.32-71.24.1.el6.src.rpm
+So far, there's one example where a revision of the code turned out to
+be unaffected - Crypt::Eksblowfish in CPAN.  In fact, this is what has
+resulted in discovery of the bug (even though it was fixed in
+Crypt::Eksblowfish during its initial integration of the code in 2007).
 
-Yes, it's weird.
+> php-suhosin also contains the same code.
 
-> This requires that I have a support account in order to download the update.
+Yes.  These two are listed at http://www.openwall.com/crypt/
 
-For binary updates, yes.  For sources, no (although the wording in the
-advisories is such that you get that impression).
+We need to go over those listed on that page and then also search the
+web for possible other users of the code.  Then try to figure out which
+are actually affected (probably most of them are) and notify the
+maintainers.  For now, my focus is to push crypt_blowfish 1.1 out, but I
+do need to include a few sentences on roughly what software is affected
+in my announcement.  I'd appreciate any help with those reviews/testing.
+
+Thank you!
 
 Alexander
