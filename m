@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/5
-Message-ID: <4D3E5ABB.6080306@redhat.com>
-Date: Tue, 25 Jan 2011 13:08:11 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/14
+Message-ID: <1285918669.841735.1308684244595.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 21 Jun 2011 15:24:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
-Subject: Re: CVE request: linux kernel heap issues
+Subject: Re: taskstats authorized_keys presence infoleak PoC
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 11:48 AM, Eugene Teo wrote:
-> On 01/25/2011 05:46 AM, Kees Cook wrote:
->> Hello,
->>
->> I don't think these minor issues I reported to the Linux Kernel have
->> had CVEs assigned to them:
->>
->> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
->>
->
-> These require CAP_NET_ADMIN.
->
-> CVE-2010-4655.
 
-Take note that you will need this too:
-http://marc.info/?l=linux-kernel&m=129593098003553&w=2
+----- Original Message -----
+> /*
+> * This program tries to learn whether ~user/.ssh/authorized_keys exists
+> * and is nonempty for any user on local machine. It uses world-readable
+> * taskstats' nature to get somewhat private io statistics information.  If
+> * implant taskstats or /proc//io polling into ssh client, it would be
+> * possible to learn precise authorized_keys' size (and estimate private
+> * key's(s') size).
 
->> iowarrior usb device heap overflow
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
->>
->
-> CVE-2010-4656.
+Are you considering this a flaw, or just an interesting security exercise?
+Nothing currently comes to mind, but it's possible there could be other
+data where knowing it exists and the size would be useful. I'm thinking
+this isn't terribly dangerous for something like ssh.
 
-Eugene
+This is very interesting either way. Well done.
+
+-- 
+    JB
