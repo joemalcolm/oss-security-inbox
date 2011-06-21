@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/7
-Message-ID: <20110728124719.GF9382@foo.fgeek.fi>
-Date: Thu, 28 Jul 2011 15:47:19 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/10
+Message-ID: <20110621180916.GK1952@redhat.com>
+Date: Tue, 21 Jun 2011 12:09:16 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request Tribiq CMS path disclosure HTB22857
+Cc: magnum <rawsmooth@...dband.net>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue? Verified that this is a valid bug.
+* [2011-06-21 21:55:26 +0400] Solar Designer wrote:
 
-Best regards,
-Henri Salo
+>On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
+>> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
+>> know why that is?
+>
+>It is based on the same code, but the author made changes when merging
+>the code.  Specifically, he switched to using "unsigned char *".
+>
+>> I can't promise I will have time to look at it, but I will try if I can
+>> find the time.
+>
+>Thanks!
 
------ Forwarded message from advisory@...ridge.ch -----
+Ok, so taking a quick look at php-suhosin, we have:
 
-Date: Thu, 3 Mar 2011 12:50:21 +0100 (CET)
-From: advisory@...ridge.ch
-To: bugtraq@...urityfocus.com
-Subject: HTB22857: Path disclosure in Tribiq CMS
+...
+  61 typedef unsigned int BF_word;
+...
+558     BF_word tmp;
+559 
+560     for (i = 0; i < BF_N + 2; i++) {
+561         tmp = 0;
+562         for (j = 0; j < 4; j++) {
+563             tmp <<= 8;
+564             tmp |= *ptr;
 
-Vulnerability ID: HTB22857
-Reference: http://www.htbridge.ch/advisory/full_path_disclosure_in_tribiq_cms.html
-Product: Tribiq CMS
-Vendor: Tribal Limited ( http://tribiq.com/ ) 
-Vulnerable Version: 5.2.7b and probably prior versions
-Vendor Notification: 17 February 2011 
-Vulnerability Type: Path disclosure
-Status: Fixed by Vendor
-Risk level: Low 
-Credit: High-Tech Bridge SA - Ethical Hacking & Penetration Testing (http://www.htbridge.ch/) 
+I'm assuming the above means it is vulnerable (unsigned int vs unsigned
+char).
 
-Vulnerability Details:
-The vulnerability exists due to failure in the "templatewrap/templatefoot.php", "cmsjs/plugin.js.php", "cmsincludes/cms_plugin_api_link.inc.php" scripts, it's possible to generate an error that will reveal the full path of the script.
-A remote user can determine the full path to the web root directory and other potentially sensitive information.
-
-
-http://host/templatewrap/templatefoot.php
-http://host/cmsjs/plugin.js.php
-http://host/cmsincludes/cms_plugin_api_link.inc.php
-
-Solution: Upgrade to the most recent version
-
-
------ End forwarded message -----
+-- 
+Vincent Danen / Red Hat Security Response Team 
