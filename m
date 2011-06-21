@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/11
-Message-ID: <1294097965.10245.158.camel@localhost>
-Date: Mon, 03 Jan 2011 17:39:25 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/15
+Message-ID: <20110621195128.GA10524@albatros>
+Date: Tue, 21 Jun 2011 23:51:28 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: John Johansen <john@...x.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Possible CVE Request: improper AppArmor exec transition
+Subject: Re: taskstats authorized_keys presence infoleak PoC
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-01-03 at 15:33 -0600, Jamie Strandboge wrote:
-> If the policy is:
-> /usr/bin/baz {
->   ...
->   /usr/bin/bar px,
->   /usr/bin/foo pux,
-> }
+Hi Josh,
+
+On Tue, Jun 21, 2011 at 15:24 -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > /*
+> > * This program tries to learn whether ~user/.ssh/authorized_keys exists
+> > * and is nonempty for any user on local machine. It uses world-readable
+> > * taskstats' nature to get somewhat private io statistics information.  If
+> > * implant taskstats or /proc//io polling into ssh client, it would be
+> > * possible to learn precise authorized_keys' size (and estimate private
+> > * key's(s') size).
 > 
-> Then when baz executes /usr/bin/bar, bar will correctly run under the
-> 'bar' profile if it exists, otherwise baz will receive a failed exec.
-> The problem is when baz execs /usr/bin/foo, foo will run under the 'foo'
-> profile if it exists (correct), otherwise baz will receive a failed exec
-> (incorrect). bar should instead run unconfined. This is a bug, but not
-> security relevant as the 'foo pux' rule is treated as a more strict 'foo
-> px'.
+> Are you considering this a flaw, or just an interesting security exercise?
 
-This:
-"bar should instead run unconfined"
+The PoC itself is the latter, but i *suppose* procfs and taskstats may
+be used to get much more private information (hey, this is just a PoC!)
+and to carry out something like timing attack against specific programs,
+but using this statistic information instead of time deltas.
 
-should have been:
-"foo should instead run unconfined"
+However, I'm not familiar with timing attack carrying and cannot realize
+whether it is generic or highly conditional flaw.  So, I'd not request
+CVE or anything for it.
 
-Sorry for any confusion.
+
+Thanks,
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vasiliy
