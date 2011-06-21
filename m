@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/9
-Message-ID: <35944480.187794.1303486798522.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Apr 2011 11:39:58 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/13
+Message-ID: <20110621192214.GL1952@redhat.com>
+Date: Tue, 21 Jun 2011 13:22:15 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+Cc: magnum <rawsmooth@...dband.net>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> From: "Vasiliy Kulikov" <segoon@...nwall.com>
-> To: "Petr Matousek" <pmatouse@...hat.com>
-> Cc: oss-security@...ts.openwall.com
-> Sent: Friday, April 22, 2011 5:32:51 PM
-> Subject: Re: [oss-security] CVE request: kernel: buffer overflow and DoS issues in agp
-> In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-> "Reference and patch:", but there is no patch for the issue (as I said
-> in the patch description). I have no agp hardware and I cannot test
-> whether forcing the requested pid to the current pid is a good idea
-> (it might not).
+* [2011-06-21 22:15:25 +0400] Solar Designer wrote:
 
-Right, copy and paste issue. Fixed.
+>On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
+>> Ok, so taking a quick look at php-suhosin, we have:
+>>
+>> ...
+>>  61 typedef unsigned int BF_word;
+>> ...
+>> 558     BF_word tmp;
+>> 559
+>> 560     for (i = 0; i < BF_N + 2; i++) {
+>> 561         tmp = 0;
+>> 562         for (j = 0; j < 4; j++) {
+>> 563             tmp <<= 8;
+>> 564             tmp |= *ptr;
+>>
+>> I'm assuming the above means it is vulnerable (unsigned int vs unsigned
+>> char).
+>
+>No, we can't conclude anything from just the excerpt you quoted above.
+>If *ptr is signed char, then we have the bug.  If it's unsigned char,
+>then we don't.  If it's just char, which it was in my original code,
+>then we have the bug on most platforms, but not on those few where char
+>defaults to unsigned.  Or rather, the bug is mitigated on those.
 
-Petr
+So should have included this:
+
+556     __CONST char *ptr = key; 
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
