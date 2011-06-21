@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/11
-Message-ID: <1294097965.10245.158.camel@localhost>
-Date: Mon, 03 Jan 2011 17:39:25 -0600
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/11
+Message-ID: <20110621181525.GA7762@openwall.com>
+Date: Tue, 21 Jun 2011 22:15:25 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: John Johansen <john@...x.net>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Possible CVE Request: improper AppArmor exec transition
+Cc: magnum <rawsmooth@...dband.net>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-01-03 at 15:33 -0600, Jamie Strandboge wrote:
-> If the policy is:
-> /usr/bin/baz {
->   ...
->   /usr/bin/bar px,
->   /usr/bin/foo pux,
-> }
+On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
+> Ok, so taking a quick look at php-suhosin, we have:
 > 
-> Then when baz executes /usr/bin/bar, bar will correctly run under the
-> 'bar' profile if it exists, otherwise baz will receive a failed exec.
-> The problem is when baz execs /usr/bin/foo, foo will run under the 'foo'
-> profile if it exists (correct), otherwise baz will receive a failed exec
-> (incorrect). bar should instead run unconfined. This is a bug, but not
-> security relevant as the 'foo pux' rule is treated as a more strict 'foo
-> px'.
+> ...
+>  61 typedef unsigned int BF_word;
+> ...
+> 558     BF_word tmp;
+> 559 
+> 560     for (i = 0; i < BF_N + 2; i++) {
+> 561         tmp = 0;
+> 562         for (j = 0; j < 4; j++) {
+> 563             tmp <<= 8;
+> 564             tmp |= *ptr;
+> 
+> I'm assuming the above means it is vulnerable (unsigned int vs unsigned
+> char).
 
-This:
-"bar should instead run unconfined"
+No, we can't conclude anything from just the excerpt you quoted above.
+If *ptr is signed char, then we have the bug.  If it's unsigned char,
+then we don't.  If it's just char, which it was in my original code,
+then we have the bug on most platforms, but not on those few where char
+defaults to unsigned.  Or rather, the bug is mitigated on those.
 
-should have been:
-"foo should instead run unconfined"
-
-Sorry for any confusion.
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
