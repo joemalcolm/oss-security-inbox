@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/9
-Message-ID: <4E0E4A07.1070408@oracle.com>
-Date: Fri, 01 Jul 2011 15:28:23 -0700
-From: Oracle Security Alerts <secalert_us@...cle.com>
-To: Tomas Hoger <thoger@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/9
+Message-ID: <20110621175526.GA7482@openwall.com>
+Date: Tue, 21 Jun 2011 21:55:26 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
+> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
+> know why that is?
 
+It is based on the same code, but the author made changes when merging
+the code.  Specifically, he switched to using "unsigned char *".
 
->> We do not expect Red Hat or other vendors to evaluate impact of
->> security vulnerabilities on Oracle Linux, 
+> I can't promise I will have time to look at it, but I will try if I can
+> find the time.
 
-> Maybe I'm mis-reading the above statement, but it seems to imply it's
-> not uncommon for you to re-do security patches that were applied to
-> RHEL packages before building them as OEL updates.  Do you have any
-> specific examples to point to (on- or off-list), so we can possibly
-> check what mistakes we did?
+Thanks!
 
-We are not saying that your security fixes can be incomplete or have mistakes. 
-Oracle Linux is different from RHEL.
-Issues that do not affect RHEL may affect Oracle Linux or vice versa.
-We may also choose to fix an issue in a different way.
+Meanwhile, I've released crypt_blowfish 1.1 with the fixes I had
+mentioned in here.
 
-- -Chandan
-- --
-Best Regards,
-Oracle Security Alerts
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (Darwin)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+http://www.openwall.com/crypt/
 
-iEYEARECAAYFAk4OSgcACgkQf36Vx1dNy5oq2ACaAuGEGcPxQdBxIomp0DCpK7TW
-wKAAnjNAx4mksMPpWGCsGCZSaGPK2UL7
-=fo+5
------END PGP SIGNATURE-----
+Alexander
