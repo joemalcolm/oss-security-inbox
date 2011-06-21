@@ -1,37 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/2
-Message-ID: <CAAsmaPZBrrTKydd=bHsENG6UAPs66sx8+kPh9DTTG21wetjg0w@mail.gmail.com>
-Date: Mon, 18 Jul 2011 22:44:13 -0500
-From: Tim Zingelman <tez@...bsd.org>
-To: dfncert@...-cert.de
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/2
+Message-ID: <20110621124211.GA5938@openwall.com>
+Date: Tue, 21 Jun 2011 16:42:11 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 18, 2011 at 5:37 PM, Solar Designer <solar@...nwall.com> wrote:
->
-> dfncert@...-cert.de wrote:
->> > We would be willing to provide the patch to all Linux distributors
->> > but we do not want to release the patch publicly and wait for the
->> > official patch by the packet maintainer of FreeRADIUS.
->
-> For FreeRADIUS specifically, it sounds like non-Linux vendors could be
-> interested as well.  DFN-CERT did mention Linux distros specifically in
-> the quote above, so the suggestion to use the list was appropriate, but
-> perhaps requests from other distros shipping FreeRADIUS should be
-> accommodated as well.  If something like this arrived to the Linux
-> distros list without prior discussion on oss-security, I would bring
-> this up and suggest that we contact *BSD's at least.  Since this is
-> already on oss-security, I assume that interested *BSD's and others may
-> ask DFN-CERT themselves. ;-)
->
+Steve -
 
-NetBSD pkgsrc security team would be interested in the patch, as
-FreeRADIUS is included in pkgsrc.
-You could send to me, or to pkgsrc-security@...bsd.org in either case
-the message could be encrypted using
-this key  http://ftp.netbsd.org/pub/NetBSD/security/PGP/pkgsrc-security@NetBSD.org.asc
+Can I have a CVE id, please?  ASAP, or I am releasing without referring
+to a CVE id.
 
-Thanks,
+On Mon, Jun 20, 2011 at 03:43:20PM +0000, The Fungi wrote:
+> No, I agree your proposed approach lends a more general solution
+> which could be applied to the use cases I was considering. I saw you
+> mention it over on the crypto list as well, but it sounded like you
+> were trying to find ways to avoid a new hash encoding identifier in
+> the wild which could conflict with something OpenBSD might consider
+> assigning for some other purpose at a later date (though assuming
+> this workaround makes it onto their radar, that seems an unlikely
+> situation anyway).
 
-- Tim
+Of course, I need to inform them that we're taking "$2x$" for our
+backwards compatibility feature.
+
+Here's how I am dealing with the issue in code:
+
+Bug fix, plus a backwards compatibility feature:
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.9;r2=1.10
+
+8-bit test vectors added, for both modes (correct and buggy):
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/wrapper.c.diff?r1=1.9;r2=1.10
+
+These are only used by "make check", which I felt was not enough - many
+people are taking just the main C file and use it in their programs.
+Obviously, my "make check" would not exist in their source code trees.
+So if those programs are ever miscompiled or otherwise broken, it might
+not be detected.  To deal with this, I added:
+
+Quick self-test on every use:
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.10;r2=1.11
+
+I am likely to go ahead and release this.
+
+Alexander
