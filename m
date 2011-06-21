@@ -1,72 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/3
-Message-ID: <4ECAFAD5.1060107@redhat.com>
-Date: Mon, 21 Nov 2011 18:28:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/10
+Message-ID: <20110621180916.GK1952@redhat.com>
+Date: Tue, 21 Jun 2011 12:09:16 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, n0b0d13s@...il.com
-Subject: Re: Fwd: Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
+Cc: magnum <rawsmooth@...dband.net>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 10:18 AM, Henri Salo wrote:
-> Can we get CVE assigned for this issue?
+* [2011-06-21 21:55:26 +0400] Solar Designer wrote:
+
+>On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
+>> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
+>> know why that is?
 >
-> Best regards,
-> Henri Salo
+>It is based on the same code, but the author made changes when merging
+>the code.  Specifically, he switched to using "unsigned char *".
 >
-> ----- Forwarded message from n0b0d13s@...il.com -----
+>> I can't promise I will have time to look at it, but I will try if I can
+>> find the time.
 >
-> Date: Sat, 19 Nov 2011 15:27:47 GMT
-> From: n0b0d13s@...il.com
-> To: bugtraq@...urityfocus.com
-> Subject: Support Incident Tracker <= 3.65 (translate.php) Remote Code
-> 	Execution Vulnerability
-> X-Mailer: MIME-tools 5.420 (Entity 5.420)
->
-> Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
->
->
-> author...............: Egidio Romano aka EgiX
-> mail.................: n0b0d13s[at]gmail[dot]com
-> software link........: http://sitracker.org/
-> affected versions....: from 3.45 to 3.65
->
->
-> [-] vulnerable code in /translate.php
->
-> 234.        foreach (array_keys($_POST) as $key)
-> 235.        {
-> 236.            if (!empty($_POST[$key]) AND substr($key, 0, 3) == "str")
-> 237.            {
-> 238.                if ($lastchar!='' AND substr($key, 3, 1) != $lastchar) $i18nfile .= "\n";
-> 239.                $i18nfile .= "\${$key} = '".addslashes($_POST[$key])."';\n";
-> 240.                $lastchar = substr($key, 3, 1);
-> 241.                $translatedcount++;
-> 242.            }
-> 243.        }
->
-> Input passed via keys of $_POST array isn't properly sanitized before being stored into $i18nfile variable
-> at line 239, that variable will be the contents of a language file stored into 'i18n' directory with a php
-> extension. This could allow authenticated users to inject and execute arbitrary PHP code. Furthermore,
-> access directly to /translate.php?mode=save will reveal the full installation path of the application.
->
->
-> [-] Disclosure timeline:
->
-> [13/11/2011] - Vulnerability discovered
-> [13/11/2011] - Issue reported to http://bugs.sitracker.org/view.php?id=1737
-> [13/11/2011] - Vendor replied that this issue is fixed in the current SVN trunk
-> [19/11/2011] - Public disclosure
->
->
-> [-] Proof of concept:
->
-> http://www.exploit-db.com/exploits/18132
->
-> ----- End forwarded message -----
-Yes we can! Please use CVE-2011-4337 for this issue.
+>Thanks!
+
+Ok, so taking a quick look at php-suhosin, we have:
+
+...
+  61 typedef unsigned int BF_word;
+...
+558     BF_word tmp;
+559 
+560     for (i = 0; i < BF_N + 2; i++) {
+561         tmp = 0;
+562         for (j = 0; j < 4; j++) {
+563             tmp <<= 8;
+564             tmp |= *ptr;
+
+I'm assuming the above means it is vulnerable (unsigned int vs unsigned
+char).
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
