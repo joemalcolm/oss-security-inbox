@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/3
-Message-ID: <1320093282.17057.3.camel@henriknordstrom.net>
-Date: Mon, 31 Oct 2011 21:34:42 +0100
-From: Henrik Nordström <henrik@...riknordstrom.net>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jiri Skala <jskala@...hat.com>
-Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/15
+Message-ID: <20110621195128.GA10524@albatros>
+Date: Tue, 21 Jun 2011 23:51:28 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: taskstats authorized_keys presence infoleak PoC
 Content-Type: text/plain; charset=utf-8
 
-mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
+Hi Josh,
 
-> > Could you allocate a CVE id for this? (cc-ed Henrik and Jiri 
-> > for their opinion / comments too, if this should be considered 
-> > a security issue or not) 
+On Tue, Jun 21, 2011 at 15:24 -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > /*
+> > * This program tries to learn whether ~user/.ssh/authorized_keys exists
+> > * and is nonempty for any user on local machine. It uses world-readable
+> > * taskstats' nature to get somewhat private io statistics information.  If
+> > * implant taskstats or /proc//io polling into ssh client, it would be
+> > * possible to learn precise authorized_keys' size (and estimate private
+> > * key's(s') size).
 > 
-> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
-> CVE-2009-3700, etc. Lots of similar ones.
+> Are you considering this a flaw, or just an interesting security exercise?
 
-Agreed.
+The PoC itself is the latter, but i *suppose* procfs and taskstats may
+be used to get much more private information (hey, this is just a PoC!)
+and to carry out something like timing attack against specific programs,
+but using this statistic information instead of time deltas.
 
-Regards
-Henrik
+However, I'm not familiar with timing attack carrying and cannot realize
+whether it is generic or highly conditional flaw.  So, I'd not request
+CVE or anything for it.
 
+
+Thanks,
+
+-- 
+Vasiliy
