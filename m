@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/20
-Message-ID: <1802386215.451633.1299619079125.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 16:17:59 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/6
+Message-ID: <20110621155623.GI1952@redhat.com>
+Date: Tue, 21 Jun 2011 09:56:23 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: KDE SSL name check issue
+Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1094.
+* [2011-06-20 09:01:11 +0400] Solar Designer wrote:
 
-Thanks.
+[...]
+>As to what's affected besides crypt_blowfish itself, I expect it to be
+>PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
+>crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
+>identify them and notify the maintainers).
+
+PostgreSQL is affected as well (the pgcrypto module):
+
+% head crypt-blowfish.c 
+/*
+  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 14:48:52 momjian Exp $
+  *
+  * This code comes from John the Ripper password cracker, with reentrant
+  * and crypt(3) interfaces added, but optimizations specific to password
+  * cracking removed.
+
+php-suhosin also contains the same code.
 
 -- 
-    JB
-
-
------ Original Message -----
-> Hi!
-> 
-> KDE recently fixed an issue in the code checking host names of the
-> server SSL certificates. Previously, it accepted certificate as valid
-> for the site if it was issued for the user-specified host name, or if
-> it was issued for an IP address to which user-specified host name
-> resolved.
-> 
-> An attacker able to get an SSL certificate form a trusted CA issued
-> for
-> an attacker-controlled IP address could perform a MITM attack, if they
-> were also able to hijack victim's DNS to resolve host names to the
-> attacker's IP.
-> 
-> Fixed upstream in:
-> https://projects.kde.org/projects/kde/kdelibs/repository/revisions/76f935197599a335a5fe09b78751ddb455248cf7
-> 
-> Patch is included in kdelibs 4.6.1.
-> 
-> --
-> Tomas Hoger / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
