@@ -1,70 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/5
-Message-ID: <1317076730.3606.58.camel@guybrush>
-Date: Tue, 27 Sep 2011 00:38:50 +0200
-From: Johannes Schlüter <johannes@...lueters.de>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com, Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, security@....net, Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/2
+Message-ID: <20110621124211.GA5938@openwall.com>
+Date: Tue, 21 Jun 2011 16:42:11 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-09-26 at 09:05 -0600, Vincent Danen wrote:
-> * [2011-09-25 19:22:19 +0200] Pierre Joye wrote:
-> 
-> >On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
-> >> So
-> >> are we talking about the tiny number of people who have explicitly
-> >> enabled allow_url_include and are running the code with this bad autoloader?
-> >
-> >Yes, and that's why it is a very very minor problem. However it was
-> >not happening before the code change. The few cases where the class
-> >names&co have been sanitize before and the developer did not think
-> >about cases like the one describe in the blog post. I think it is even
-> >more rare combination, but it was not happening before our change.
-> 
-> Thanks for all the discussion around this.
-> 
-> Pierre has it right... prior to the change, whether it was intended or
-> not, documented or not, PHP did things a certain way and users could
-> (for better or worse) rely on a certain behaviour to do "the right
-> thing" (right in the context of their application, even if it is wrong
-> in the context of writing good PHP code).  5.3.7 changed that, which
-> left applications that used this "feature" in a vulnerable state.
+Steve -
 
-The old code didn't make code secure. There was still a high chance that
-an attacker might exploit such a broken __autoload() function. If there
-is an security issue it is the existence of allow_url_include.
+Can I have a CVE id, please?  ASAP, or I am releasing without referring
+to a CVE id.
 
-> It's unfortunate for everyone that PHP gets so many CVEs assigned to it
-> for trivial little things.  I look at every CVE assigned for safemode
-> or open_basedir bypass flaws... technically speaking, I would never
-> consider those to be flaws because those functions are not meant to be
-> sandboxing features or high security features, as outlined on PHP's
-> page, however they do get CVEs assigned.
-> 
-> Even though PHP does not consider those features to be security
-> protection features, CVEs are still assigned.  You would expect that
-> most people would not rely on those features as security features, which
-> means those "bypass" flaws should never really affect people in a
-> security context, but the sad reality is that they do.  CVE does not
-> distinguish between good programming habits or bad ones.  Flaws like
-> this, that are only exposed due to bad programming in applications,
-> still end up with CVEs assigned at the language level.
+On Mon, Jun 20, 2011 at 03:43:20PM +0000, The Fungi wrote:
+> No, I agree your proposed approach lends a more general solution
+> which could be applied to the use cases I was considering. I saw you
+> mention it over on the crypto list as well, but it sounded like you
+> were trying to find ways to avoid a new hash encoding identifier in
+> the wild which could conflict with something OpenBSD might consider
+> assigning for some other purpose at a later date (though assuming
+> this workaround makes it onto their radar, that seems an unlikely
+> situation anyway).
 
-Well, I accept most of the safe_mode things. safe_mode is a way to also
-limit "bad people" with local file access. Which is a different level.
-(While nowadays virtualization etc. can be used to solve that need)
+Of course, I need to inform them that we're taking "$2x$" for our
+backwards compatibility feature.
 
-johannes
+Here's how I am dealing with the issue in code:
 
-> I don't think those CVEs reflect poorly on PHP -- I think most people
-> who know PHP, realize that people do dumb stuff and that a language like
-> PHP makes it easier to do dumb stuff.
-> 
-> In this case, I think this particular issue is more worthy of a CVE than
-> the open_basedir/safemode-related CVEs (and there are _lots_ of those).
-> 
-> ref: http://www.php.net/security-note.php
-> 
+Bug fix, plus a backwards compatibility feature:
 
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.9;r2=1.10
 
+8-bit test vectors added, for both modes (correct and buggy):
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/wrapper.c.diff?r1=1.9;r2=1.10
+
+These are only used by "make check", which I felt was not enough - many
+people are taking just the main C file and use it in their programs.
+Obviously, my "make check" would not exist in their source code trees.
+So if those programs are ever miscompiled or otherwise broken, it might
+not be detected.  To deal with this, I added:
+
+Quick self-test on every use:
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.10;r2=1.11
+
+I am likely to go ahead and release this.
+
+Alexander
