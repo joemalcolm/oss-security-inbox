@@ -1,79 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/12
-Message-ID: <20110603215355.GA1306@openwall.com>
-Date: Sat, 4 Jun 2011 01:53:55 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/5
+Message-Id: <201106221419.p5MEJN5s009216@core.courtesan.com>
+Date: Wed, 22 Jun 2011 10:19:23 -0400
+From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Wed, 22 Jun 2011 15:41:09 +0200, Ludwig Nussel wrote:
 
-We have started with the project described below under GSoC 2011, and
-I've just setup a new mailing list for it, as well as for Linux kernel
-hardening topics in general.  Here's my "welcome" message explaining
-this in more detail and referencing work that has already started:
+> Newer sudo actually have a use_pty option that fixes the problem. 
+> It's not enabled by default though.
+> As I just found out there's also code missing to make sudo actually 
+> honor the option in the config (patch attached, CC'd upstream).
 
-http://www.openwall.com/lists/kernel-hardening/2011/06/03/1
+Thanks for the patch, it will be part of sudo 1.8.2.
 
-Folks interested in getting involved (or just watching) are welcome to
-join the kernel-hardening list (some already did).  Subscribe here:
+> Introducing similar code in su would be possible but requires some 
+> programming effort. sudo has a liberal licence though so the code 
+> could probably be reused.
 
-http://www.openwall.com/lists/#subscribe
+The level of effort involved depends on whether or not you need job
+control to work between the user's tty and the command running in
+the pty.  Sudo proxies job control signals via an extra process so
+that for, e.g. "sudo vi foo", the vi process be suspended by ^Z
+even when it is running in a pty.  I don't think that people using
+"su -c command" have the same expectations so it is probably not
+worth the extra effort.
 
-(choose "kernel-hardening" from the drop-down at the bottom of this page).
-
-Now the context to this (which was too long to top-quote):
-
-On Wed, Mar 23, 2011 at 03:35:09AM +0300, Solar Designer wrote:
-> On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
-> > A push has started to try to get as much as possible upstream into the
-> > Linux kernel from the various hardening patches that exist in PaX,
-> > grsecurity, OpenWall, etc. I've got some details here:
-> > 
-> > http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
-> > 
-> > And there's a sign-up list here, for people interested in helping out:
-> > 
-> > https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
-> > 
-> > We could use the help. :)
-> 
-> Here's another way to help out: Openwall is a mentoring organization for
-> Google Summer of Code 2011 (GSoC), and one of our "ideas" is this:
-> 
-> http://openwall.info/wiki/ideas
-> 
-> "Linux kernel hardening - extract security hardening changes from various
-> patches (which the mentor will point out), forward-port them to the
-> latest mainstream kernels, make it easy to enable/disable the hardening
-> measures (both compile- and runtime), add documentation, properly submit
-> to and work with LKML (make proposals and own discussions to completion:
-> either rejection or acceptance).  This is a noble but thankless job to
-> do, so be prepared!  The authors of those changes did not submit them
-> "properly" and did not "own discussions to completion" precisely because
-> the job is so thankless. ;-)
-> 
-> This may optionally involve work with other kernel branches and other
-> upstreams as well (OpenVZ, Red Hat, Ubuntu)."
-> 
-> Under Owl tasks, we also have:
-> 
-> "The rhel6 branch OpenVZ kernel that we'd update to will need to be
-> security-hardened, in part by reviewing, extracting, cleaning up,
-> porting, and documenting/commenting individual changes from grsecurity
-> and PaX (some of which have originated from Openwall's patches for older
-> kernels), and in part by implementing new security-related
-> changes/features, some of those specific to container-based
-> virtualization (purpose-specific restrictions to be applied on
-> per-container basis).  We expect help/consulting/mentoring from the
-> author of PaX on portions that are PaX (some of these are difficult to
-> understand from the code alone, especially the rationale behind things
-> being done in a certain way), whereas the rest are not too complicated
-> for a capable person to fully figure out on their own.
-> 
-> We should work with upstreams - OpenVZ and Red Hat - to try and get some
-> of these enhancements accepted."
-...
-
-Alexander
+ - todd
