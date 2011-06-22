@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/14
-Message-ID: <1887412180.1274469.1310499815252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 15:43:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/1
+Message-ID: <20110622071707.GA4282@albatros>
+Date: Wed, 22 Jun 2011 11:17:07 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, coley@...re.org
-Subject: Re: CVE Request: ruby PRNG fixes
+Subject: CVE request: kernel: taskstats local DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2686
+"Currently a single process may register exit handlers unlimited times.
+It may lead to a bloated listeners chain and very slow process terminations.
+E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
+kernel memory is stolen for the handlers chain and "time id" shows 2-7
+seconds instead of normal 0.003.  It makes it possible to exhaust all
+kernel memory and to eat much of CPU time by triggerring numerous exits
+on a single CPU.
 
-Thanks.
+The patch limits the number of times a single process may register
+itself on a single CPU to one."
+
+It makes it possible for unprivileged user eat kernel memory and CPU
+without triggering OOM killer.
+
+Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
+
+http://lists.openwall.net/linux-kernel/2011/06/16/605
+
+
+Thanks,
 
 -- 
-    JB
-
------ Original Message -----
-> Hi,
-> 
-> Ruby 1.8.7-p352 fixes initialization of the PRNG in forked
-> processes:
-> 
-> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-> http://redmine.ruby-lang.org/issues/4579
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-> 
-> cu
-> Ludwig
-> 
-> --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
-> Imendörffer, HRB 16746 (AG Nürnberg)
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
