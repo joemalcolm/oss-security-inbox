@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/5
-Message-ID: <20110824144944.3251fb79@redhat.com>
-Date: Wed, 24 Aug 2011 14:49:44 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/2
+Message-ID: <4E019863.300@redhat.com>
+Date: Wed, 22 Jun 2011 15:23:15 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libqt4: two memory issues
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: taskstats local DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 22 Aug 2011 10:43:23 +0200 Matthias Weckbecker wrote:
+On 06/22/2011 03:17 PM, Vasiliy Kulikov wrote:
+> "Currently a single process may register exit handlers unlimited times.
+> It may lead to a bloated listeners chain and very slow process terminations.
+> E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
+> kernel memory is stolen for the handlers chain and "time id" shows 2-7
+> seconds instead of normal 0.003.  It makes it possible to exhaust all
+> kernel memory and to eat much of CPU time by triggerring numerous exits
+> on a single CPU.
+> 
+> The patch limits the number of times a single process may register
+> itself on a single CPU to one."
+> 
+> It makes it possible for unprivileged user eat kernel memory and CPU
+> without triggering OOM killer.
+> 
+> Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
+> 
+> http://lists.openwall.net/linux-kernel/2011/06/16/605
 
-> A) buffer overflow (looks only like an off-by-one from a very quick
-> look)
-> http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+Please use CVE-2011-2484.
 
-The fix is for 3rdparty/harfbuzz, any reason to prefer calling it Qt,
-rather than harfbuzz / pango issue.  The code even seems to be based on
-some FreeType code, though it's not obvious if FreeType was affected by
-that.  Is that more than over-read?
-
-> B) buffer overflow on greyscale images with multiple samples per pixel
-> https://bugzilla.novell.com/show_bug.cgi?id=637275
-> http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
-
-The bug is not public.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
