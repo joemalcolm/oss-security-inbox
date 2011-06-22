@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/8
-Message-ID: <C9CB3826.7FDCB%oss-security@securityview.nl>
-Date: Wed, 13 Apr 2011 11:25:38 +0200
-From: Ronald van den Blink <oss-security@...urityview.nl>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/6
+Message-ID: <20110622142847.GA14951@suse.de>
+Date: Wed, 22 Jun 2011 16:28:47 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: opie off by one and setuid() failure
 Content-Type: text/plain; charset=utf-8
 
-On 4/12/11 11:49 PM, "akuster" <akuster@...sta.com> wrote:
+Hi,
 
->
->
->On 04/11/2011 09:57 AM, Josh Bressers wrote:
->> ----- Original Message -----
->>>
->>> Postponed. I'd like to see any support for you getting onto the Linux
->>> distros security contacts list, with reasoning, or/and any other
->>> suggestions on what to do in this case. Josh - what do you think (as
->>> someone who advocated the setup of a vendor-sec replacement)?
->>>
->> 
->> My initial thought is that a vendor without public advisories is a
->> liability.
->
->Making our Advisories public could put our customers' customers at risk
->depending on when we publish and when our customers can get the fixes
->into their customers hands and so on down the line.
->
->- Armin
-Hi Armin,
+Can someone assign 2 CVE's for a off by one in opiesu
+and a missing setuid() retval check in opielogin which
+leads to easy root compromise? Reviewed opie-2.4.
 
-Sorry for putting my $0.02 in the bucket here as well, but the whole
-purpose of a closed list is that you can fix them before releasing a
-public advisory. When you fixed it, the customers can (just like other
-dist's do, just get it patched before you publish it. It's not that this
-is so strange, as closed source OS makers are doing the same (remember
-Black Tuesday's at MS and Apple's releases).
+Patches are available here:
 
-Just my 2 cents.
+https://bugzilla.novell.com/show_bug.cgi?id=698772
 
-Ronald 
-Batavi.org
+thx,
+Sebastian
 
->
 
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
