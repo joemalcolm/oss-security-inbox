@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/1
-Message-ID: <alpine.DEB.1.10.1103201427440.16909@eru.sfritsch.de>
-Date: Sun, 20 Mar 2011 14:37:09 +0100 (CET)
-From: Stefan Fritsch <sf@...itsch.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/1
+Message-ID: <20110622071707.GA4282@albatros>
+Date: Wed, 22 Jun 2011 11:17:07 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-cc: sgunderson@...foot.com, team@...urity.debian.org
-Subject: CVE request: MPM-ITK module for Apache HTTPD
+Subject: CVE request: kernel: taskstats local DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+"Currently a single process may register exit handlers unlimited times.
+It may lead to a bloated listeners chain and very slow process terminations.
+E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
+kernel memory is stolen for the handlers chain and "time id" shows 2-7
+seconds instead of normal 0.003.  It makes it possible to exhaust all
+kernel memory and to eat much of CPU time by triggerring numerous exits
+on a single CPU.
 
-please assign a CVE id for this issue:
+The patch limits the number of times a single process may register
+itself on a single CPU to one."
 
-In certain configurations, the MPM-ITK module for Apache HTTPD serves a 
-request as root user instead of the run user configured in the HTTPD 
-configuration:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
+It makes it possible for unprivileged user eat kernel memory and CPU
+without triggering OOM killer.
 
-Cheers,
-Stefan
+Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
+
+http://lists.openwall.net/linux-kernel/2011/06/16/605
+
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
