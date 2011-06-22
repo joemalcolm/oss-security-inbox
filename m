@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/13
-Message-ID: <1301917705.2521.113.camel@mdlinux>
-Date: Mon, 04 Apr 2011 07:48:25 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/2
+Message-ID: <4E019863.300@redhat.com>
+Date: Wed, 22 Jun 2011 15:23:15 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: taskstats local DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2011-04-04 at 10:51 +0200, Marcus Meissner wrote:
-> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
-> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> > >and Josh).
-> > 
-> > Limiting a distro to two or three representatives is going to make things 
-> > tricky for Red Hat; we have a rather large dedicated security response 
-> > team (as we publish over 300 advisories a year across 70 product/versions 
-> > and have a number of folks dealing with 'incoming' issues spread, and my 
-> > team is dispersed across 9 different countries).  If these representatives 
-> > have been very active on v-s and oss-security is there a reason to limit?
+On 06/22/2011 03:17 PM, Vasiliy Kulikov wrote:
+> "Currently a single process may register exit handlers unlimited times.
+> It may lead to a bloated listeners chain and very slow process terminations.
+> E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
+> kernel memory is stolen for the handlers chain and "time id" shows 2-7
+> seconds instead of normal 0.003.  It makes it possible to exhaust all
+> kernel memory and to eat much of CPU time by triggerring numerous exits
+> on a single CPU.
 > 
-> Similar for SUSE. We currently have 3 engineers rotating through the incident
-> manager role (and myself).
+> The patch limits the number of times a single process may register
+> itself on a single CPU to one."
+> 
+> It makes it possible for unprivileged user eat kernel memory and CPU
+> without triggering OOM killer.
+> 
+> Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
+> 
+> http://lists.openwall.net/linux-kernel/2011/06/16/605
 
-Same for Ubuntu. Limiting membership to two representatives would mean a
-lot of email from the list is going to be forwarded to the other members
-of our security team. Although limiting membership may seem like a good
-idea to contain leaks, having to forward email to non-members because of
-an arbitrary limitation would surely defeat that goal.
+Please use CVE-2011-2484.
 
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+Thanks, Eugene
