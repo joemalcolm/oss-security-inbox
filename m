@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/2
-Message-ID: <4EF4E60D.1030604@redhat.com>
-Date: Fri, 23 Dec 2011 13:35:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/7
+Message-ID: <20110622143356.GA8729@albatros>
+Date: Wed, 22 Jun 2011 18:33:56 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: WordPress flash-album-gallery plugin facebook.php XSS
+Subject: Re: CVE requests: opie off by one and setuid() failure
 Content-Type: text/plain; charset=utf-8
 
-On 12/22/2011 10:31 AM, Henri Salo wrote:
-> Original report: http://seclists.org/bugtraq/2011/Nov/186
-> Fix: http://plugins.trac.wordpress.org/changeset/469785
-> Changelog: http://wordpress.org/extend/plugins/flash-album-gallery/changelog/
-> Fixed in version: 1.57
->
-> - Henri Salo
-Please use CVE-2011-4624  for this issue.
+Hi,
+
+On Wed, Jun 22, 2011 at 16:28 +0200, Sebastian Krahmer wrote:
+> Can someone assign 2 CVE's for a off by one in opiesu
+> and a missing setuid() retval check in opielogin which
+> leads to easy root compromise? Reviewed opie-2.4.
+> 
+> Patches are available here:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=698772
+
+I don't see memory zeroing before strcat():
+
+argvbuf[0] = 0;
+
+Probably it is not spotted as it is the first malloc(), but it is a bug.
+
+
+Thanks,
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vasiliy
