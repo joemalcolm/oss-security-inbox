@@ -1,24 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/10
-Message-ID: <908015927.216787.1298573364778.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 13:49:24 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/4
+Message-ID: <20110622134109.GA19180@suse.de>
+Date: Wed, 22 Jun 2011 15:41:09 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Information disclosure in CGIHTTPServer from Python
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
+Josh Bressers wrote:
+>----- Original Message -----
+>> Jan Lieskovsky wrote:
+>> > Hello Josh, Steve, vendors,
+>> >
+>> >    based on Debian BTS report:
+>> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>> >        (first CVE-2011-XXYY required for Debian case)
+>> >
+>> > looked more into original report:
+>> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+>> >
+>> > and the first paragraph of [2] suggests:
+>> > "When starting a program via "su - user -c program" the user session
+>> > can escape to the parent session by using the TIOCSTI ioctl to push
+>> > characters into the input buffer. This allows for example a non-root
+>> > session to push "chmod 666 /etc/shadow" or similarly bad commands
+>> > into
+>> > the input buffer such that after the end of the session they are
+>> > executed."
+>> >
+>> > this should get a CVE-2005-YYZZ CVE id.
+>> >
+>> > Could you allocate these?
+>>
+>> ping! :-)
+>>
+>
+>I'm not sure if this should get two IDs. It's really one issue, which isn't
+>actually fixed in su.
+>
+>The fundamental issue is that tools like su and sudo keep the tty open.
+>The patch in question closes the tty for the case of su -c, but not for
+>just running su by itself. It is incomplete.
 
+I'm not worried too much about the interactive su case really. The 
+usual direction there is user->root, not the other way around I 
+suppose. "su -c" might be used by (%post) scripts though as seen 
+with ikiwiki.
+Wrt non-interactive sudo I'm not sure. It's less likely to be used 
+by sane packages at least as it's behavior is rather unpredictable 
+due to it's many configuration options.
 
------ Original Message -----
-> Hi,
-> please assign a CVE ID for http://bugs.python.org/issue2254
-> 
+>It should get a 2005 ID at the very least, MITRE will have to do that.
+>Perhaps two 2005 IDs? One for the issue, the second for the incomplete fix
+>(which is still not fixed)?
+>
+>I think the bigger issue is it needs to be decided what is proper behavior
+>and document that. I'm not smart enough to know if this can be fixed
+>properly without crippling these tools.
 
+Newer sudo actually have a use_pty option that fixes the problem. 
+It's not enabled by default though.
+As I just found out there's also code missing to make sudo actually 
+honor the option in the config (patch attached, CC'd upstream).
+Introducing similar code in su would be possible but requires some 
+programming effort. sudo has a liberal licence though so the code 
+could probably be reused.
 
-Please use CVE-2011-1015
-
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+
+View attachment "sudo-1.8.1p2-use_pty.diff" of type "text/x-patch" (617 bytes)
