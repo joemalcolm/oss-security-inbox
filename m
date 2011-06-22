@@ -1,33 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/1
-Message-ID: <384589066.134954.1303214077806.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Tue, 19 Apr 2011 07:54:37 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/3
+Message-ID: <20110622120253.GA17388@suse.de>
+Date: Wed, 22 Jun 2011 14:02:53 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, robert@...ecki.net
-Subject: CVE request -- kernel: proc: signedness issue in next_pidmap()
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-"A signedness issue has been found in next_pidmap() function when the "last"
-parameter is negative as next_pidmap() just quietly accepted whatever
-"last" pid that was passed in, which is not all that safe when one of the
-users is /proc.
+Solar Designer wrote:
+>On Tue, Jun 21, 2011 at 04:34:41PM +0200, Ludwig Nussel wrote:
+>> I wonder whether it would make sense to patch pam_unix (resp
+>> pam_unix2 in our case) to detect the problem and activate the
+>> workaround automatically. pam_unix has the clear text password so
+>> knows when it contains 8bit characters. It also has the shadow entry
+>> which tells when the password was set. If that date is before the
+>> update was installed the 2x method could be tried if 2a failed and a
+>> warning could be logged to syslog.
+>
+>This is tricky.  When implementing things like that, we need to consider
+>timing leaks (do we care if an observer of ssh traffic is able to
+>tell whether the password contained 8-bit chars or not? perhaps we do)
+>and leaks via the hash encodings themselves (if only some are changed to
+>a certain type, this may leak some info about the corresponding
+>passwords, thereby speeding up offline attacks on the hashes).
 
-Setting f_pos to negative value when accessing /proc via readdir()/getdents()
-resulted in sign extension of this value when map pointer was being
-constructed.
+For SUSE Linux we're not that paranoid I guess :-) The extra time 
+would only hit accounts that are not converted yet. I suppose there 
+are not too many anyways and there will be less over time.
 
-This later lead to #GP because the final pointer was not canonical (x86_64)."
+>My response above is generic, not focused on your specific proposed
+>approach.  Overall, I think we'll need to give this more thought.
+>
+>One idea is to allocate yet another prefix, which will mean the same
+>thing as 2a, but "certified" as passing a certain specific test suite
+>(which will include 8-bit chars).  So we'll have:
+>
+>2a - unknown correctness (may be correct, may be buggy)
+>2x - sign extension bug
+>2y - definitely correct
+>
+>Newly set/changed passwords will be getting the new prefix.
+>
+>Then we'll be able to do things such as optionally have a PAM module
+>deny logins with 8-bit char passwords to accounts that have 2a or/and
+>2x hashes.  (Rationale for the admin: passwords weaker than expected.)
+>With another option, we'll be able to have 2a treated as 2x.  (Rationale
+>for the admin: minimum inconvenience to the users.)  Perhaps there can
+>be other reasonable settings as well.
+>
+>What do you think?
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=697822
-http://groups.google.com/group/fa.linux.kernel/browse_thread/thread/93c1088451fd3522/4a28ecb7f755a88d?#4a28ecb7f755a88d
+I'm not sure we can expect admins to put that much thought into the 
+issue and expect them to configure things. I think for the system 
+logins we can get away with patching pam_unix2 to have a fallback to 
+2x and log a message for the admin that tells him to run "passwd -e" 
+on the account. Theoretically it could even issue a PAM_TEXT_INFO 
+message to the user. That might confuse some applications though.
 
-Upstream commit:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=c78193e9
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=d8bdc59f
+cu
+Ludwig
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
-
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
