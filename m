@@ -1,29 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/10
-Message-ID: <AANLkTinLh8s4Eg0oMids_JxQpwK8TUzEp4k2XmeiiYm1@mail.gmail.com>
-Date: Wed, 23 Mar 2011 11:56:05 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/4
+Message-ID: <20110622134109.GA19180@suse.de>
+Date: Wed, 22 Jun 2011 15:41:09 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: two OSS fixes
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, "Todd C. Miller" <Todd.Miller@...rtesan.com>
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-For both issues, access to /dev/sequencer is required, which is
-typically reserved for group audio.  Additionally, these only affect
-systems that use OSS (not to be confused with the OSS emulation layer
-provided by ALSA).
+Josh Bressers wrote:
+>----- Original Message -----
+>> Jan Lieskovsky wrote:
+>> > Hello Josh, Steve, vendors,
+>> >
+>> >    based on Debian BTS report:
+>> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+>> >        (first CVE-2011-XXYY required for Debian case)
+>> >
+>> > looked more into original report:
+>> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+>> >
+>> > and the first paragraph of [2] suggests:
+>> > "When starting a program via "su - user -c program" the user session
+>> > can escape to the parent session by using the TIOCSTI ioctl to push
+>> > characters into the input buffer. This allows for example a non-root
+>> > session to push "chmod 666 /etc/shadow" or similarly bad commands
+>> > into
+>> > the input buffer such that after the end of the session they are
+>> > executed."
+>> >
+>> > this should get a CVE-2005-YYZZ CVE id.
+>> >
+>> > Could you allocate these?
+>>
+>> ping! :-)
+>>
+>
+>I'm not sure if this should get two IDs. It's really one issue, which isn't
+>actually fixed in su.
+>
+>The fundamental issue is that tools like su and sudo keep the tty open.
+>The patch in question closes the tty for the case of su -c, but not for
+>just running su by itself. It is incomplete.
 
-1. Specially crafted requests may be written to /dev/sequencer
-resulting in an underflow when calculating a size for a
-copy_from_user() operation in the driver for MIDI interfaces.  On x86,
-this just returns an error, but it may cause memory corruption on
-other architectures.  Other malformed requests may result in the use
-of uninitialized variables.  [1]
+I'm not worried too much about the interactive su case really. The 
+usual direction there is user->root, not the other way around I 
+suppose. "su -c" might be used by (%post) scripts though as seen 
+with ikiwiki.
+Wrt non-interactive sudo I'm not sure. It's less likely to be used 
+by sane packages at least as it's behavior is rather unpredictable 
+due to it's many configuration options.
 
-2. Due to a failure to validate user-supplied indexes in the driver
-for Yamaha YM3812 and OPL-3 chips, a specially crafted ioctl request
-may be sent to /dev/sequencer, resulting in reading and writing beyond
-the bounds of heap buffers, and potentially allowing privilege
-escalation.  [2]
+>It should get a 2005 ID at the very least, MITRE will have to do that.
+>Perhaps two 2005 IDs? One for the issue, the second for the incomplete fix
+>(which is still not fixed)?
+>
+>I think the bigger issue is it needs to be decided what is proper behavior
+>and document that. I'm not smart enough to know if this can be fixed
+>properly without crippling these tools.
 
-[1] http://marc.info/?l=linux-kernel&m=130089204124354&w=2
-[2] http://marc.info/?l=linux-kernel&m=130089499728386&w=2
+Newer sudo actually have a use_pty option that fixes the problem. 
+It's not enabled by default though.
+As I just found out there's also code missing to make sudo actually 
+honor the option in the config (patch attached, CC'd upstream).
+Introducing similar code in su would be possible but requires some 
+programming effort. sudo has a liberal licence though so the code 
+could probably be reused.
+
+cu
+Ludwig
+
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+
+View attachment "sudo-1.8.1p2-use_pty.diff" of type "text/x-patch" (617 bytes)
