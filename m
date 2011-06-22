@@ -1,73 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/2
-Message-ID: <20110305163954.GU372@outflux.net>
-Date: Sat, 5 Mar 2011 08:39:54 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/3
+Message-ID: <20110622120253.GA17388@suse.de>
+Date: Wed, 22 Jun 2011 14:02:53 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: modules_disabled policy
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 05, 2011 at 07:16:43PM +0300, Vasiliy Kulikov wrote:
-> It is one way ticket, there is no defined interface to enable LKM
-> loading after disabling it.  The sticking point is that it gives an idea
-> that using it prevents loading rootkits to the kernel:
-> 
-> https://wiki.ubuntu.com/Security/Features#block-modules
-> 
-> "This was another layer of protection to stop kernel rootkits from being
-> installed." 
-> 
-> But does it really stop rootkits or is it gives a false sence of security?
+Solar Designer wrote:
+>On Tue, Jun 21, 2011 at 04:34:41PM +0200, Ludwig Nussel wrote:
+>> I wonder whether it would make sense to patch pam_unix (resp
+>> pam_unix2 in our case) to detect the problem and activate the
+>> workaround automatically. pam_unix has the clear text password so
+>> knows when it contains 8bit characters. It also has the shadow entry
+>> which tells when the password was set. If that date is before the
+>> update was installed the 2x method could be tried if 2a failed and a
+>> warning could be logged to syslog.
+>
+>This is tricky.  When implementing things like that, we need to consider
+>timing leaks (do we care if an observer of ssh traffic is able to
+>tell whether the password contained 8-bit chars or not? perhaps we do)
+>and leaks via the hash encodings themselves (if only some are changed to
+>a certain type, this may leak some info about the corresponding
+>passwords, thereby speeding up offline attacks on the hashes).
 
-It was never my intention to give a false sense of security with the
-option, but I did want to try to continue to block common kernel-rootkit
-vectors. Kernel rootkits are really just a specialized form of arbitrary
-kernel memory writing, so that's what I'd like to see squashed.
+For SUSE Linux we're not that paranoid I guess :-) The extra time 
+would only hit accounts that are not converted yet. I suppose there 
+are not too many anyways and there will be less over time.
 
-I think a higher priority goal is protecting the kernel from non-root
-users, but when there are obvious places where it is trivial to protect
-the kernel from root, we should plug those holes.
+>My response above is generic, not focused on your specific proposed
+>approach.  Overall, I think we'll need to give this more thought.
+>
+>One idea is to allocate yet another prefix, which will mean the same
+>thing as 2a, but "certified" as passing a certain specific test suite
+>(which will include 8-bit chars).  So we'll have:
+>
+>2a - unknown correctness (may be correct, may be buggy)
+>2x - sign extension bug
+>2y - definitely correct
+>
+>Newly set/changed passwords will be getting the new prefix.
+>
+>Then we'll be able to do things such as optionally have a PAM module
+>deny logins with 8-bit char passwords to accounts that have 2a or/and
+>2x hashes.  (Rationale for the admin: passwords weaker than expected.)
+>With another option, we'll be able to have 2a treated as 2x.  (Rationale
+>for the admin: minimum inconvenience to the users.)  Perhaps there can
+>be other reasonable settings as well.
+>
+>What do you think?
 
-> There are other ways to write to arbitrary kernel memory location being
-> full root, e.g. via hibernation:
-> 
-> http://comments.gmane.org/gmane.linux.kernel/1108853
+I'm not sure we can expect admins to put that much thought into the 
+issue and expect them to configure things. I think for the system 
+logins we can get away with patching pam_unix2 to have a fallback to 
+2x and log a message for the admin that tells him to run "passwd -e" 
+on the account. Theoretically it could even issue a PAM_TEXT_INFO 
+message to the user. That might confuse some applications though.
 
-Right, this is a good fix, but as other people point out, perhaps the
-naming of things needs to be changed.
-
-> LKML folks responds that modules_disabled does nothing with protecting
-> the kernel from root.
-
-There are two schools of thought on security: perfect security and layered
-security. The phrase "does nothing" implies someone is approaching the
-issue from the "perfect security" line of reasoning. In reality, it does do
-something, because certain methods of attack simply do not work any more.
-Of course, the arms race continues, and the skilled attackers will move to
-using /sys/kernel/debug/acpi/custom_method, or the hibernation image
-attacks. Just like they moved away from /dev/mem after it was plugged. The
-point is to try to keep closing dangerous interfaces and holes.
-
-> So, I'd be happy to hear an answer to the question:
-> 
-> Is it possible to implement strict do-not-touch-the-kernel policy for
-> root via disabling LKM loading and _all_ other indirect places with write
-> access that allows root to do something, but being too relaxed and
-> allows to write to [almost] arbitrary kernel location?  This would make
-> root the Boss Of Userland, but as to the kernel it would be but just a
-> privileged client.  Or such policy would be incomplete and there is
-> almost always a way to by-pass it due to the system design?
-
-IMO, privileged client is preferred. Of course, if you're running on a
-regular system, the kernel image on disk can be changed, or any of the
-start-up settings, and root can just reboot the system. So, as I said, it's
-not a high priority thing to fix, but when it's easy to do so, I think we
-should try to plug the holes since having ways to modify the running kernel
-(when the system owner doesn't want this to happen) allows for some rather
-nasty and hard-to-discover attacks.
-
--Kees
+cu
+Ludwig
 
 -- 
-Kees Cook
-Ubuntu Security Team
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
