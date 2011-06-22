@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/1
-Message-ID: <4D66F47D.2030604@redhat.com>
-Date: Fri, 25 Feb 2011 08:14:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/7
+Message-ID: <20110622143356.GA8729@albatros>
+Date: Wed, 22 Jun 2011 18:33:56 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: kernel: CAP_SYS_MODULE bypass via CAP_NET_ADMIN
+Subject: Re: CVE requests: opie off by one and setuid() failure
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 07:54 AM, Kees Cook wrote:
-> Hi,
->
-> While not as bad as CVE-2010-4661 (unprivileged module loading)
-> I'd like to get a CVE assigned for this issue for tracking purposes:
-> https://lkml.org/lkml/2011/2/24/203
->
-> Basically "ifconfig $module" will load any module as long as the process
-> has CAP_NET_ADMIN (ignoring CAP_SYS_MODULE).
+Hi,
 
-Please use CVE-2011-1019.
+On Wed, Jun 22, 2011 at 16:28 +0200, Sebastian Krahmer wrote:
+> Can someone assign 2 CVE's for a off by one in opiesu
+> and a missing setuid() retval check in opielogin which
+> leads to easy root compromise? Reviewed opie-2.4.
+> 
+> Patches are available here:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=698772
 
-Eugene
+I don't see memory zeroing before strcat():
+
+argvbuf[0] = 0;
+
+Probably it is not spotted as it is the first malloc(), but it is a bug.
+
+
+Thanks,
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+Vasiliy
