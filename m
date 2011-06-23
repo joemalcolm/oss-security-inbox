@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/5
-Message-ID: <4EAED91F.8000404@redhat.com>
-Date: Mon, 31 Oct 2011 18:21:35 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Henrik Nordstrom <henrik@...riknordstrom.net>, Jiri Skala <jskala@...hat.com>
-Subject: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/2
+Message-ID: <4E02E8E2.2040106@redhat.com>
+Date: Thu, 23 Jun 2011 15:18:58 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: NLM: Don't hang forever on NLM unlock requests
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors,
+NLM: Don't hang forever on NLM unlock requests
 
-   an invalid free flaw was found in the way Squid proxy caching server
-processed DNS requests, where one CNAME record pointed to another CNAME
-record pointing to an empty A-record. A remote attacker could issue a
-specially-crafted DNS request, leading to denial of service (squid 
-daemon abort).
+If the NLM daemon is killed on the NFS server, we can currently end up
+hanging forever on an 'unlock' request, instead of aborting. Basically,
+if the rpcbind request fails, or the server keeps returning garbage, we
+really want to quit instead of retrying.
 
-Upstream bug report:
-[1] http://bugs.squid-cache.org/show_bug.cgi?id=3237
+    Tested-by: Vasily Averin <vvs@...ru>
+    Signed-off-by: Trond Myklebust <Trond.Myklebust@...app.com>
+    Cc: stable@...nel.org
 
-Relevant upstream patch:
-[2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10384
+In English, it means that a local, unprivileged user could use the flock
+system call on a NFS share to cause a denial of service.
 
-References:
-[3] http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_16.html
-[4] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c4
-[5] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c5
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=750316
+https://bugzilla.redhat.com/show_bug.cgi?id=709393
+http://git.kernel.org/linus/0b760113a3a155269a3fba93a409c640031dd68f
 
-Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
-for their opinion / comments too, if this should be considered
-a security issue or not)
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, Eugene
