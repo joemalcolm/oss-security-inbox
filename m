@@ -1,45 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/1
-Message-ID: <4E687DAF.6000904@redhat.com>
-Date: Thu, 08 Sep 2011 10:32:47 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Ferdinand <debbug@...tplaza.com>, Russ Allbery <rra@...ian.org>, Sven Verdoolaege <skimo@...net.org>, Chris Weyl <cweyl@...mni.drew.edu>
-Subject: CVE Request -- libfcgi-perl / perl-FCGI: Certain environment variables shared between first and subsequent HTTP requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/1
+Message-ID: <4E02BA3A.5080403@redhat.com>
+Date: Thu, 23 Jun 2011 09:29:54 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: NetworkManager: did not honour PolicyKit auth_admin action element by creation of Ad-Hoc wireless networks
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+Hi All,
 
-   it was found that the perl Fast CGI module did not properly clean up
-certain environment variables, related to a particular HTTP request,
-between subsequent incoming requests. Any environment variable set in
-the first pass through the code by processing the first request, that
-wasn't set in some subsequent request, has been added to the hash
-containing environment variables for that subsequent request. A remote
-attacker could use this flaw to bypass the authentication process and
-obtain access to resources, which would be otherwise protected by
-authentication.
+https://bugzilla.redhat.com/show_bug.cgi?id=709662
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=736604
+This has been assigned CVE-2011-2176.
 
-Russ Allbery of Debian (Cc-ed) provides further elaborated analysis
-of the reasons of the issue:
-[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479#10
-
-Cc-ed also Sven Verdoolaege, the perl FCGI module author (as noted
-on CPAN) for his opinion too.
-
-Could you allocate a CVE id for this issue?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Though the issue has been reported Sat, 18 Dec 2010 22:13:40 +0100
-       already, only Russ's analysis (Wed, 07 Sep 2011 20:24:00 -0700)
-       unveiled the full security implications of this issue. So I
-       assume, the CVE-2011-* identifier would be sufficient to cover
-       this issue. But feel free to correct me if I am wrong here.
-       Thanks, Jan.
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
