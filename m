@@ -1,36 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/12
-Message-id: <A15D21C2-8546-463B-8CBF-B87D5ECA12DE@mac.com>
-Date: Mon, 25 Jul 2011 15:39:15 -0400
-From: Jeff Johnson <n3npq@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/4
+Message-ID: <1408065980.896976.1308858392489.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 23 Jun 2011 15:46:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+Cc: incidents@...rt.org, henri@...v.fi
+Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-There were a series of CVE's applied (and some withdrawn) against
-whatever happens to be called "rpm".
 
-The patch here was dropped when RPM was forked and the CVE was
-essentially a replay of an issue that was already fixed 5 years ago
-(and the patch was NOT dropped in @rpm5.org cvs).
 
-(aside)
-I believe there are better fixes if the link count is more carefully
-checked always and everywhere. While rpm package metadata does not
-(and SHOULD not) carry an expected value for st->st_nlinks, its
-rather easy to synthesize an expected link count given the inode
-information (which is in rpm metadata) and to warn (either with --verify,
-or perhaps always) if the link count is not as expected.
+----- Original Message -----
+> Couldn't find a CVE-identifier for this issue. Joomla does have too
+> many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may
+> lead to an unauthorized information disclosure. Should this one get a
+> 2010 or 2011 identifier?
+> 
+> Reported: 2010-12-08
+> Joomla advisory: 2011-04-01
+> Release with a fix (version 1.5.23): 2011-04-04
+> 
+> References:
+> http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
+> http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
+> http://osvdb.org/show/osvdb/71587
+> http://secunia.com/advisories/44028/
+> 
+> I hope this request isn't duplicate. I included oCERT to this email as
+> Joomla is part of that group. Please notify me and mailing-list if
+> this issue already has a CVE-identifier.
+> 
 
-There are other (and better) approaches if the actual values on
-the file system, including files not contained in packages, is
-stored in an rpmdb: its a fundamental design flaw in RPM that
-only package metadata installed in an rpmdb is ever used
-for security auditing.
+I'm giving this CVE-2011-2488.
 
-But there's no harm at all in removing SUID/SGID bits from files that are being
-removed in case there's an additional link that has been added.
+While the flaw was reported in 2010 they claim, I consider 2011 when
+it went public.
 
-hth
+Thanks.
 
-73 de Jeff
+-- 
+    JB
