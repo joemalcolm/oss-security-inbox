@@ -1,53 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/2
-Message-ID: <4EFF7C81.3050308@redhat.com>
-Date: Sat, 31 Dec 2011 14:20:01 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/4
+Message-ID: <1408065980.896976.1308858392489.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 23 Jun 2011 15:46:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Elxis CMS two XSS-vulnerabilities
+Cc: incidents@...rt.org, henri@...v.fi
+Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 12/30/2011 04:49 AM, Henri Salo wrote:
-> 1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-> http://osvdb.org/show/osvdb/77563
->
-> 2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-> http://osvdb.org/show/osvdb/77564
-Merging these two issues as per ADT4:
 
-At this stage, X and Y are the same bug type, affect the same versions,
-and affect the same products.
 
-Do X and Y have any of the following characteristics?
+----- Original Message -----
+> Couldn't find a CVE-identifier for this issue. Joomla does have too
+> many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may
+> lead to an unauthorized information disclosure. Should this one get a
+> 2010 or 2011 identifier?
+> 
+> Reported: 2010-12-08
+> Joomla advisory: 2011-04-01
+> Release with a fix (version 1.5.23): 2011-04-04
+> 
+> References:
+> http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
+> http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
+> http://osvdb.org/show/osvdb/71587
+> http://secunia.com/advisories/44028/
+> 
+> I hope this request isn't duplicate. I included oCERT to this email as
+> Joomla is part of that group. Please notify me and mailing-list if
+> this issue already has a CVE-identifier.
+> 
 
-  * X appears in a different DLL, library, or program than Y (e.g. X
-    affects LIB1.DLL and Y affects LIB2.DLL)
-  * X has more serious impact than Y (e.g. code execution as root versus
-    leak of system pathname)
-  * X takes a different input parameter/argument than Y (e.g. SQL
-    injection in both the "user" and "password" parameters)
-  * X is exploitable locally, but Y is not.
-  * X requires stronger authentication than Y.
-  * X can be exploited by a certain user that Y can not (e.g. a guest
-    user vs. an admin)
+I'm giving this CVE-2011-2488.
 
-*Yes:* *MERGE
+While the flaw was reported in 2010 they claim, I consider 2011 when
+it went public.
 
-*Please use CVE-2011-4918 for these two issues
-*
-*
->
-> http://secunia.com/advisories/47073/
->
-> Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
->
-> - Henri Salo
-Does anyone have a contact name for Secunia with respect to
-co-ordinating CVE assignments better?
+Thanks.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
-
+    JB
