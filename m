@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/7
-Message-ID: <20110308101439.0cbe5720@orphan>
-Date: Tue, 8 Mar 2011 10:14:39 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/6
+Message-ID: <1972953755.897157.1308858678769.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 23 Jun 2011 15:51:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: sgrubb@...hat.com
-Subject: Re: ldd can execute an app unexpectedly
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: NLM: Don't hang forever on NLM unlock requests
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 7 Mar 2011 18:27:05 -0500 Steve Grubb wrote:
 
->  http://reverse.lostrealm.com/protect/ldd.html
->  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
+
+----- Original Message -----
+> NLM: Don't hang forever on NLM unlock requests
 > 
-> Besides telling everyone don't do that. ldd could take the PoV that
-> it should only call runtime linkers in trusted directories like /sbin
-> or /usr/sbin.
+> If the NLM daemon is killed on the NFS server, we can currently end up
+> hanging forever on an 'unlock' request, instead of aborting.  Basically,
+> if the rpcbind request fails, or the server keeps returning garbage, we
+> really want to quit instead of retrying.
+> 
+> Tested-by: Vasily Averin <vvs@...ru>
+> Signed-off-by: Trond Myklebust <Trond.Myklebust@...app.com>
+> Cc: stable@...nel.org
+> 
+> In English, it means that a local, unprivileged user could use the flock
+> system call on a NFS share to cause a denial of service.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=709393
+> http://git.kernel.org/linus/0b760113a3a155269a3fba93a409c640031dd68f
+> 
 
-Upstream does not seem to consider this to be an issue:
-  https://bugzilla.redhat.com/show_bug.cgi?id=531160#c1
+Please use CVE-2011-2491.
 
-Debian also uses the patch similar to what ldv pointed out - it changes
-ldd to always do:
-
-  LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 /path/to/ELF-lib-or-binary
-
-rather than:
-
-  LD_TRACE_LOADED_OBJECTS=1 /path/to/ELF-lib-or-binary
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
