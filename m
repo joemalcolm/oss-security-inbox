@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/4
-Message-ID: <20110705035839.GA13674@openwall.com>
-Date: Tue, 5 Jul 2011 07:58:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/7
+Message-ID: <20110623213845.GP25507@outflux.net>
+Date: Thu, 23 Jun 2011 14:38:45 -0700
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ext4: init timer earlier to avoid a kernel panic in __save_error_info
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 10:31:07PM -0500, HD Moore wrote:
-> Thanks for the CC -- as a guess as to what happened; was this particular
-> mirror compromised
+This came to our attention:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0449641130f5
+by way of https://bugs.launchpad.net/ubuntu/+source/linux/+bug/801087 and
+https://bugzilla.kernel.org/show_bug.cgi?id=32082
 
-What mirror?  As far as I'm aware, from the announcement by Chris, only
-the official distribution site for vsftpd was compromised.
-
-> and the original tarball modified (along with its
-> mtime) to match the original Feb 15th date?
-
-Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
-one on forums where I saw this discussed appears to have it (which
-confirms that it existed for a very short period of time only).
-
-> Does anyone have a "we noticed it first" flag that is before July 3rd?
-
-Not that I know of.
-
-> Debian (and most other repos) are storing the SHA-256/SHA1/MD5 of each
-> source package, so a Feb 15 date does seem incredible, but so does the
-> complete pwnage of a non-official mirror with the original mtime, at the
-> same moment as an official dist server compromise. A nightly rsync would
-> account for this, but we would need to know more about the mirror
-> structure from Chris.
-
-Are you trying to say that Debian got the backdoored copy?  This is news
-to me.
+"During mount, when we fail to open journal inode or root inode, the
+__save_error_info will mod_timer. But actually s_err_report isn't
+initialized yet and the kernel oops."
 
 Thanks,
 
-Alexander
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
