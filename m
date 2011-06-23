@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/20
-Message-ID: <20110403223428.GA18438@steve.org.uk>
-Date: Sun, 3 Apr 2011 23:34:28 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/7
+Message-ID: <20110623213845.GP25507@outflux.net>
+Date: Thu, 23 Jun 2011 14:38:45 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ext4: init timer earlier to avoid a kernel panic in __save_error_info
 Content-Type: text/plain; charset=utf-8
 
-On Mon Apr 04, 2011 at 02:22:37 +0400, Solar Designer wrote:
+This came to our attention:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0449641130f5
+by way of https://bugs.launchpad.net/ubuntu/+source/linux/+bug/801087 and
+https://bugzilla.kernel.org/show_bug.cgi?id=32082
 
-> > I too was subscribed through the team@...urity.debian.org exploder. My key:
-> > 
-> > pub   1024D/CD4C0D9D 2002-05-29
-> > uid                  Steve Kemp <steve@...ve.org.uk>
-> > uid                  Steve Kemp <skx@...ian.org>
-> > sub   2048g/AC995563 2002-05-29
+"During mount, when we fail to open journal inode or root inode, the
+__save_error_info will mod_timer. But actually s_err_report isn't
+initialized yet and the kernel oops."
 
-> Added.  This gives us three representatives from Debian, which feels
-> like a bit too many.
+Thanks,
 
-  Since I came last feel free to remove me, I won't take it personally
-  :)
+-Kees
 
-Steve
---
-Let me steal your soul?
-http://stolen-souls.com
+-- 
+Kees Cook
+Ubuntu Security Team
