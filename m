@@ -1,29 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/10
-Message-ID: <AANLkTinLh8s4Eg0oMids_JxQpwK8TUzEp4k2XmeiiYm1@mail.gmail.com>
-Date: Wed, 23 Mar 2011 11:56:05 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: two OSS fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/5
+Message-ID: <4E0454E2.1010401@redhat.com>
+Date: Fri, 24 Jun 2011 11:12:02 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Matthias Clasen <mclasen@...hat.com>, Mark Doliner <markdoliner@...gin.im>
+CC: oss-security@...ts.openwall.com
+Subject: CVE-2011-2485 assignment notification -- gdk-pixbuf
 Content-Type: text/plain; charset=utf-8
 
-For both issues, access to /dev/sequencer is required, which is
-typically reserved for group audio.  Additionally, these only affect
-systems that use OSS (not to be confused with the OSS emulation layer
-provided by ALSA).
+Hello Josh, Steve, vendors,
 
-1. Specially crafted requests may be written to /dev/sequencer
-resulting in an underflow when calculating a size for a
-copy_from_user() operation in the driver for MIDI interfaces.  On x86,
-this just returns an error, but it may cause memory corruption on
-other architectures.  Other malformed requests may result in the use
-of uninitialized variables.  [1]
+   the following security flaw has been found in the way gdk-pixbuf, an
+image loading library, loaded certain Graphics Interchange Format (GIF) 
+image files:
+=======================================================================
 
-2. Due to a failure to validate user-supplied indexes in the driver
-for Yamaha YM3812 and OPL-3 chips, a specially crafted ioctl request
-may be sent to /dev/sequencer, resulting in reading and writing beyond
-the bounds of heap buffers, and potentially allowing privilege
-escalation.  [2]
+It was found that gdk-pixbuf's gdk_pixbuf__gif_image_load() GIF image 
+loader routine did not properly handle certain return values from its
+subroutines. A remote attacker could provide a specially-crafted GIF
+image, which once opened in an application, linked against gdk-pixbuf
+would lead to gdk-pixbuf to return partially initialized pixbuf
+structure, possibly having huge width and height, leading to that
+particular application termination due excessive memory use.
 
-[1] http://marc.info/?l=linux-kernel&m=130089204124354&w=2
-[2] http://marc.info/?l=linux-kernel&m=130089499728386&w=2
+The CVE identifier of CVE-2011-2485 has been assigned to this issue.
+
+References:
+
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2485
+[2] 
+http://git.gnome.org/browse/gdk-pixbuf/commit/?id=f8569bb13e2aa1584dde61ca545144750f7a7c98
+
+This issue could lead (for example) in Pidgin to:
+=================================================
+
+A remote attacker could set a specially-crafted GIF image as their
+buddy icon that could lead to Pidgin being terminated due to excessive
+memory use.
+
+References:
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=714754
+[4] http://www.pidgin.im/news/security/?id=52
+
+Credit: Issue has been discovered and reported by Mark Doliner
+         of the Pidgin project.
+
+We did not allocate a second CVE identifier for the Pidgin issue,
+since the true underlying reason for this was the gdk-pixbuf image 
+loading library problem. This is based on last paragraph from:
+[5] http://www.openwall.com/lists/oss-security/2011/03/30/3
+
+more exactly on that part about 'issues like incorrectly
+reporting error status from an API function' (although this not
+being case of compiler, but rather case of library).
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
