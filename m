@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/12
-Message-Id: <201102231001.08004.thomas@suse.de>
-Date: Wed, 23 Feb 2011 10:01:07 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/8
+Message-ID: <20110624201950.GA8319@dhcp-25-225.brq.redhat.com>
+Date: Fri, 24 Jun 2011 22:19:50 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: gdm PostLogin script executes scripts as user gdm
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>, Eugene Teo <eteo@...hat.com>
+Subject: CVE request: kernel: mm: avoid wrapping vm_pgoff in mremap() and stack expansions
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 22 Februar 2011 21:54:11 schrieb Josh Bressers:
-> 
-> ----- Original Message -----
-> > Hello oss-security,
-> > 
-> > should we consider this as a vulnerability?
-> > https://bugzilla.gnome.org/show_bug.cgi?id=602403
-> > 
-> 
-> I'm not sure this is a security flaw. It's not running user controlled
-> scripts (at least not by default). In order for it to run a user controlled
-> script, the admin would have to modify the Default script. Is this normal?
-> 
-> I'm not all that familiar with expected use of gdm, perhaps someone who
-> knows more can chime in?
+Description of the problem:
+The normal mmap paths all avoid creating a mapping where the pgoff
+inside the mapping could wrap around due to overflow.  However, an
+expanding mremap() can take such a non-wrapping mapping and make it
+bigger and cause a wrapping condition. There is also another case
+where we expand mappings hiding in plain sight: the automatic stack
+expansion.
 
-I am not familiar with this functionality too. The bug reporter states that
-the handling was differently in the past. This different behaviour may
-lead to security problems for the deployed systems... hmmm.
+The wrapping condition can cause a BUG_ON() due to terminally
+confusing the vma_prio_tree code.
 
+Upstream patches:
+982134ba62618c2d69fbbbd166d0a11ee3b7e3d8 mremap
+a626ca6a656450e9f4df91d0dda238fff23285f4 stack expansion downwards
+42c36f63ac1366ab0ecc2d5717821362c259f517 stack expansion upwards
 
-Thomas
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=716538
+http://www.spinics.net/lists/stable-commits/msg11385.html
+http://www.spinics.net/lists/linux-mm/msg17093.html
+http://groups.google.com/group/fa.linux.kernel/msg/9e43ab898c5e6d16
 
+Thanks,
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Petr Matousek / Red Hat Security Response Team
