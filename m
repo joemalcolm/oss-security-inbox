@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/58
-Message-ID: <20110404232756.GB15833@openwall.com>
-Date: Tue, 5 Apr 2011 03:27:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/4
+Message-ID: <4E0411C3.4040905@redhat.com>
+Date: Fri, 24 Jun 2011 12:25:39 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ext4: init timer earlier to avoid a kernel panic in __save_error_info
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey,
-
-On Mon, Apr 04, 2011 at 01:03:31PM -0700, Jeffrey Czerniak wrote:
-> I'm Jeffrey Czerniak, a member of Apple's Product Security team.  I was a member of vendor-sec via the Apple exploder.   Please subscribe me to the new list.
+On 06/24/2011 05:38 AM, Kees Cook wrote:
+> This came to our attention:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0449641130f5
+> by way of https://bugs.launchpad.net/ubuntu/+source/linux/+bug/801087 and
+> https://bugzilla.kernel.org/show_bug.cgi?id=32082
 > 
-> My PGP public key can be found at https://www.apple.com/support/security/pgp/   I have also pasted it below for convenience:
+> "During mount, when we fail to open journal inode or root inode, the
+> __save_error_info will mod_timer. But actually s_err_report isn't
+> initialized yet and the kernel oops."
 
-Thanks, and sorry for the confusion caused by my last minute
-determination to start with a Linux distros list only.
+Please use this CVE-2011-2493.
 
-Obviously, I won't add Apple to a Linux distro security contacts list
-(well, unless you start a Linux distro).
-
-Yet I recognize that Apple has been contributing to vendor-sec, so I'd
-be happy to add you to a suitable list if one is setup.  Perhaps a BSD
-distros list, which would generally be CC'ed on issues that are expected
-to be shared between Linux and *BSD userlands and thus likely also with
-Mac OS X?  Do you and other vendors feel that such a list is needed?
-
-So far, yours is the only non-Linux vendor request.  For just one
-vendor, we can be CC'ing you whenever appropriate, with no list needed.
-
-One of my reasons to go with a Linux-only list for now was that during
-the month without vendor-sec only Linux distro folks approached me
-asking for the setup of such a list.  Others did not appear to need it.
-The attitude from security researchers and non-Linux projects appeared
-to be like "we don't need this list, but if one exists, we want to be on
-it".  This made some sense to me, but not enough to setup a list shared
-by both those who say they need it (Linux distros) and those who want to
-be on it just not to be left out.
-
-I'd appreciate any proposals from prospective non-Linux-distro members
-of private list(s) to be setup (if any are needed).
-
-Thanks,
-
-Alexander
+Thanks, Eugene
