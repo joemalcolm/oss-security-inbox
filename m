@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/4
-Message-ID: <4E0D8B75.5000805@redhat.com>
-Date: Fri, 01 Jul 2011 16:55:17 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: nl80211: missing check for valid SSID size in scan operations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/7
+Message-ID: <20110624130517.GA18027@dztty>
+Date: Fri, 24 Jun 2011 14:05:17 +0100
+From: Djalal Harouni <tixxdz@...ndz.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 07/01/2011 04:48 PM, Petr Matousek wrote:
-> In both trigger_scan and sched_scan operations, we were checking for the
-> SSID length before assigning the value correctly.  Since the memory was
-> just kzalloc'ed, the check was always failing and SSID with over 32
-> characters were allowed to go through.
-> 
-> This is causing a buffer overflow when copying the actual SSID to the
-> proper place.
-> 
-> Please note that it needs CAP_NET_ADMIN privileges.
-> 
-> Upstream commits:
-> 208c72f4fe44fe09577e7975ba0e7fa0278f3d03
-> 57a27e1d6a3bb9ad4efeebd3a8c71156d6207536
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=718152
+On Mon, Jun 20, 2011 at 09:01:11AM +0400, Solar Designer wrote:
+> Oh, also some builds of crypt_blowfish (and of affected systems/apps)
+> for PowerPC are probably unaffected, because char is typically unsigned
+> there (unless overridden in compiler flags for compatibility with more
+> typical systems).
+Just to add that on some (perhaps all) ARM plateforms char is by
+default: "unsigned" (unless you compile with -fsigned-char as you have
+noted).
 
-Use CVE-2011-2517.
+This is an old link that expose some problems when you just use 'char var'
+on ARM (perhaps not only on ARM):
+http://www.arm.linux.org.uk/docs/faqs/signedchar.php
 
-Eugene
+-- 
+tixxdz
+http://opendz.org
