@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/2
-Message-ID: <4DB6EC87.3090001@kde.org>
-Date: Tue, 26 Apr 2011 12:02:15 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/4
+Message-ID: <4E0411C3.4040905@redhat.com>
+Date: Fri, 24 Jun 2011 12:25:39 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: ext4: init timer earlier to avoid a kernel panic in __save_error_info
 Content-Type: text/plain; charset=utf-8
 
-On 4/12/2011 4:58 PM, Solar Designer wrote:
-> On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
->> pub   4096R/C44977CA 2011-04-12
->>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
->> uid                  Petr Matousek <pmatouse@...hat.com>
->> uid                  Petr Matousek <pm@...p.org>
+On 06/24/2011 05:38 AM, Kees Cook wrote:
+> This came to our attention:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0449641130f5
+> by way of https://bugs.launchpad.net/ubuntu/+source/linux/+bug/801087 and
+> https://bugzilla.kernel.org/show_bug.cgi?id=32082
 > 
-> Added.
-> 
-> Alexander
+> "During mount, when we fail to open journal inode or root inode, the
+> __save_error_info will mod_timer. But actually s_err_report isn't
+> initialized yet and the kernel oops."
 
-Hi there,
+Please use this CVE-2011-2493.
 
-Please add me as a KDE security contact.
-
-sec   1024D/D0AE1825 2009-01-19
-Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
-uid                  Jeff Mitchell <mitchell@....org>
-
-Thanks,
-Jeff
+Thanks, Eugene
