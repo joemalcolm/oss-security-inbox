@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/2
-Message-ID: <4DD14646.1030507@redhat.com>
-Date: Mon, 16 May 2011 17:44:06 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Matej Vela <vela@...ian.org>, Jakub Jelinek <jakub@...hat.com>
-Subject: CVE Request -- pmake -- Use of insecure temporary file for 'depend' target
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/2
+Message-ID: <4E0403C7.2040608@redhat.com>
+Date: Fri, 24 Jun 2011 11:25:59 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace
 Content-Type: text/plain; charset=utf-8
 
+>From Marek Kroemeke and Filip Palian, structures "l2cap_conninfo" and
+"rfcomm_conninfo" have one padding byte each. This byte in "cinfo" is
+copied to userspace uninitialized.
 
-Hello Josh, Steve, vendors,
+l2cap: since 99f4808d (v2.6.39-rc1), also in l2cap.c prior to that
+history:e9df2323 (v2.5.14)
+rfcomm: since history:9363d05d (v2.6.11-rc2)
 
-   it was found that pmake (BSD 4.4 version of make) used insecure
-temporary file for 'depend' target when building libraries (/usr/share
-/mk/bsd.lib.mk) and executables (/usr/share/mk/bsd.prog.mk). A local
-attacker could use this flaw to conduct symlink attacks possibly
-leading to their ability to replace content of arbitrary files,
-belonging to user running the pmake tool or ability to modify the
-integrity of .depend file in the home directory of the victim.
+http://git.kernel.org/linus/8d03e971cf403305217b8e62db3a2e5ad2d6263f
+https://bugzilla.redhat.com/show_bug.cgi?id=703019
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626673
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=705090
-
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks, Eugene
