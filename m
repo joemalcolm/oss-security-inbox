@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/1
-Message-ID: <20111126081651.GA14242@openwall.com>
-Date: Sat, 26 Nov 2011 12:16:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/9
+Message-ID: <BANLkTik1ZsRT69dyrFCLkOYRGKC=r7uSzA@mail.gmail.com>
+Date: Fri, 24 Jun 2011 19:15:05 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: CVE request: kernel: remote buffer overflow in bluetooth
 Content-Type: text/plain; charset=utf-8
 
-Hi Tim,
+A remote user can provide a small value for the command size field in
+the command header of an l2cap configuration request, resulting in an
+integer underflow when subtracting the size of the configuration request
+header.  This results in copying a very large amount of data via
+memcpy() and destroying the kernel heap. [1]
 
-On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
-> On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
-> 
-> > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
-> > specific people that they're interested.  So please reply to this
-> > message to indicate your interest and we'll proceed.
-> 
-> I am interested.  Thanks for doing this.
+-Dan
 
-Please send me (off-list is OK) your PGP key and e-mail address to
-subscribe to the new list.
-
-I thought there would be more interest in this, but I don't mind setting
-this up as just pkgsrc + Linux distros initially.
-
-(And, like I said, the Linux distros list will also continue to exist on
-its own, letting message senders decide on who to notify.)
-
-Thanks,
-
-Alexander
+[1] http://marc.info/?l=linux-kernel&m=130891911909436&w=2
