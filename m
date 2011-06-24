@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/5
-Message-ID: <BANLkTimgFDh2Sq504JcVynFw=Suq0vS-CQ@mail.gmail.com>
-Date: Sun, 12 Jun 2011 12:20:06 -0300
-From: Felipe Pena <felipensp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/3
+Message-ID: <4E0404E8.8010902@redhat.com>
+Date: Fri, 24 Jun 2011 13:30:48 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: PHP File upload filename
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Please assign a CVE id for "File path injection vulnerability in RFC1867
-File upload filename" [1].
-
-The fix for the bug has been already committed. [2]
-
-Reported by: Krzysztof Kotowicz <kkotowicz at gmail dot com>
-
-
-[1] - http://bugs.php.net/bug.php?id=54939
-[2] - http://svn.php.net/viewvc?view=revision&revision=312103
+On 06/24/2011 01:25 PM, Eugene Teo wrote:
+>  From Marek Kroemeke and Filip Palian, structures "l2cap_conninfo" and
+> "rfcomm_conninfo" have one padding byte each. This byte in "cinfo" is
+> copied to userspace uninitialized.
+>
+> l2cap: since 99f4808d (v2.6.39-rc1), also in l2cap.c prior to that
+> history:e9df2323 (v2.5.14)
+> rfcomm: since history:9363d05d (v2.6.11-rc2)
+>
+> http://git.kernel.org/linus/8d03e971cf403305217b8e62db3a2e5ad2d6263f
+> https://bugzilla.redhat.com/show_bug.cgi?id=703019
+>
+> Thanks, Eugene
+Please use CVE-2011-2492.
 
 Thanks.
 
 -- 
-Regards,
-Felipe Pena
-
+Murray McAllister / Red Hat Security Response Team
