@@ -1,22 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/6
-Message-ID: <CAEZPtU7ixC8g-Jy-uFz+7WW4yu5DBFWttSimuybrVqd2eRdmQw@mail.gmail.com>
-Date: Tue, 27 Sep 2011 01:27:23 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Johannes Schlüter <johannes@...lueters.de>
-Cc: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com,  Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, security@....net,  Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/9
+Message-ID: <BANLkTik1ZsRT69dyrFCLkOYRGKC=r7uSzA@mail.gmail.com>
+Date: Fri, 24 Jun 2011 19:15:05 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: remote buffer overflow in bluetooth
 Content-Type: text/plain; charset=utf-8
 
-2011/9/27 Johannes Schlüter <johannes@...lueters.de>:
+A remote user can provide a small value for the command size field in
+the command header of an l2cap configuration request, resulting in an
+integer underflow when subtracting the size of the configuration request
+header.  This results in copying a very large amount of data via
+memcpy() and destroying the kernel heap. [1]
 
-> The old code didn't make code secure. There was still a high chance that
-> an attacker might exploit such a broken __autoload() function.
+-Dan
 
-With this change, it is not a chance anymore but a fact. And that's
-the whole point.
-
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+[1] http://marc.info/?l=linux-kernel&m=130891911909436&w=2
