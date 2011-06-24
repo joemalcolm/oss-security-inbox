@@ -1,90 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/6
-Message-ID: <20111207221143.GL3090@redhat.com>
-Date: Wed, 7 Dec 2011 15:11:43 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/3
+Message-ID: <4E0404E8.8010902@redhat.com>
+Date: Fri, 24 Jun 2011 13:30:48 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Moodle 1.9.15/2.0.6/2.1.3 releases
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace
 Content-Type: text/plain; charset=utf-8
 
-A number of flaws were fixed in the most recent Moodle releases.  Could
-CVEs be assigned for these flaws?
-
-
-MSA-11-0042: Information leak in Wiki
-Affects: 2.1.x, 2.0.x 
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=140af2a0f0a4598bf568b9ae182cb81eb583edeb 
-Reference: http://moodle.org/mod/forum/discuss.php?d=191747
-
-MSA-11-0043: Possible link redirect in Calendar
-Affects: 2.1.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28720&sr=1
-Reference: http://moodle.org/mod/forum/discuss.php?d=191748
-
-MSA-11-0044: Expired identification information shown in Web services
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28670&sr=1
-Reference: http://moodle.org/mod/forum/discuss.php?d=191750
-
-MSA-11-0045: Potential to masquerade through MNet 
-Affects: 2.1.x, 2.0.x, 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=10df8657c1c138c0d0ab1d4796c552fcec0c299b
-Reference: http://moodle.org/mod/forum/discuss.php?d=191751
-
-MSA-11-0046: Insecure authentication transmission
-Affects: 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=01dd64a8c8aa95f793accea371b2392e662663c5
-Reference: http://moodle.org/mod/forum/discuss.php?d=191752
-
-MSA-11-0047: Possible injection attack in Calendar
-Affects: 2.1.x, 2.0.x, 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=581e8dba387f090d89382115fd850d8b44351526
-Reference: moodle.org/mod/forum/discuss.php?d=191754
-
-MSA-11-0048: Password loss issue
-Affects: 2.1.x, 2.0.x, 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=e079e82c087becf06d902089d14f3f76686bde19
-Reference: http://moodle.org/mod/forum/discuss.php?d=191755
-
-MSA-11-0049: Network restriction ineffective with MNet
-Affects: 1.9.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commitdiff;h=3ab2851d2a59721445945d0706c58092e07e861e
-Reference: http://moodle.org/mod/forum/discuss.php?d=191756
-
-MSA-11-0050: Backup capability issue
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29591
-Reference: http://moodle.org/mod/forum/discuss.php?d=191758
-
-MSA-11-0051: Authentication issue with Web services
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-28629
-Reference: http://moodle.org/mod/forum/discuss.php?d=191759
-
-MSA-11-0052: Potential to exploit developer debugging scripts
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=187672608ec96659e07f2461b3b83634debd16cb
-Reference: http://moodle.org/mod/forum/discuss.php?d=191760
-
-MSA-11-0053: Security and system administration conflict
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=ade30ad3c420ce035a3d68287db701b70e806b3f
-Refrence: http://moodle.org/mod/forum/discuss.php?d=191761
-
-MSA-11-0054: Personal information leak
-Affects: 2.1.x, 2.0.x
-Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=e94113a859015a4a80b9397957b8fc4044e2951f
-Reference: http://moodle.org/mod/forum/discuss.php?d=191762
-
-
-Global-ish references:
-
-http://docs.moodle.org/dev/Moodle_2.1.3_release_notes
-http://docs.moodle.org/dev/Moodle_2.0.6_release_notes
-http://docs.moodle.org/dev/Moodle_1.9.15_release_notes
-https://bugzilla.redhat.com/show_bug.cgi?id=761248
+On 06/24/2011 01:25 PM, Eugene Teo wrote:
+>  From Marek Kroemeke and Filip Palian, structures "l2cap_conninfo" and
+> "rfcomm_conninfo" have one padding byte each. This byte in "cinfo" is
+> copied to userspace uninitialized.
+>
+> l2cap: since 99f4808d (v2.6.39-rc1), also in l2cap.c prior to that
+> history:e9df2323 (v2.5.14)
+> rfcomm: since history:9363d05d (v2.6.11-rc2)
+>
+> http://git.kernel.org/linus/8d03e971cf403305217b8e62db3a2e5ad2d6263f
+> https://bugzilla.redhat.com/show_bug.cgi?id=703019
+>
+> Thanks, Eugene
+Please use CVE-2011-2492.
 
 Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Murray McAllister / Red Hat Security Response Team
