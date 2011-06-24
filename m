@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/10
-Message-ID: <1327428976.168611.1298407469916.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 15:44:29 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/7
+Message-ID: <20110624130517.GA18027@dztty>
+Date: Fri, 24 Jun 2011 14:05:17 +0100
+From: Djalal Harouni <tixxdz@...ndz.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jun 20, 2011 at 09:01:11AM +0400, Solar Designer wrote:
+> Oh, also some builds of crypt_blowfish (and of affected systems/apps)
+> for PowerPC are probably unaffected, because char is typically unsigned
+> there (unless overridden in compiler flags for compatibility with more
+> typical systems).
+Just to add that on some (perhaps all) ARM plateforms char is by
+default: "unsigned" (unless you compile with -fsigned-char as you have
+noted).
 
-
------ Original Message -----
-> Reported by Timo Warns, "Validate number of blocks in map and remove
-> redundant variable."
-> 
-> http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
-> https://bugzilla.redhat.com/show_bug.cgi?id=679282
-> 
-
-I don't understand the security implication of this bug. Can you explain it?
-
-Thanks.
+This is an old link that expose some problems when you just use 'char var'
+on ARM (perhaps not only on ARM):
+http://www.arm.linux.org.uk/docs/faqs/signedchar.php
 
 -- 
-    JB
+tixxdz
+http://opendz.org
