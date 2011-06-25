@@ -1,33 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/11
-Message-ID: <885510560.142085.1300824215392.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Mar 2011 16:03:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/25/1
+Message-ID: <20110625174359.GA3439@albatros>
+Date: Sat, 25 Jun 2011 21:44:22 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: irda/decnet issues
+Cc: security@...nel.org
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Both are reported by Dan Rosenberg. Description of the issues can be
-> found in the following links:-
+On Fri, Jun 24, 2011 at 16:34 +0400, Vasiliy Kulikov wrote:
+> It can be used to learn ssh and ftp password length.  If privsep is
+> enabled in openssh and vsftpd, the unprivileged process' activity very
+> precisely shows password information.
 > 
-> irda: validate peer name and attribute lengths
-> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
-
-Use CVE-2011-1180
-
-
+> For vsftpd read characters count is strlen("USER username\r\n") +
+> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
+> related to a privileged parent.  If measure statistics between user and
+> passwords commands, actual password length and username length can be
+> gathered.
 > 
-> DECnet: need to validate user data and access data?
-> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
+> For ssh, vice versa, networking activity is constant in packets length,
+> but interprocess communications, specifically passwords, depend on
+> user input.
 > 
+> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars - CONST.
+> 
+> Another daemons with more or less constant io activity might be
+> vulnerable too.  PAM greatly complicates precise measurements.
 
-Use CVE-2011-1181
+Based on the code review, OpenVZ containers limit the threat of
+information gathering to a single container.  E.g. a process in CT 101
+cannot gather any io information of a process in CT 102.  Some other
+restricting policies might limit the information too, e.g. grsecurity
+chroot protection denies sending taskstats commands (if the socket is
+already opened and TASKSTATS_CMD_ATTR_REGISTER_CPUMASK is handled before
+chroot(2), it doesn't help).
 
-Thanks.
+
+BTW, I'd appreciate if somebody points me how information stored in
+sched, schedstats, stat, and status files can be exploited.  I suspect
+it can be used similar way.
+
+
+Other thoughts:
+
+Files mountinfo, mounts store information related to the process' fs
+namespace.  I feel this information can be somewhat private, e.g. mount
+points can reveal private file pathes in case of separate namespaces
+where this information cannot be learned by reading /proc/self/mountinfo.
+
+Files limits and status store process related restrictions.  I dunno
+whether this can be considered as a private information in some
+situations.
+
+Thanks,
 
 -- 
-    JB
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
