@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/2
-Message-ID: <71543c91-47fb-41fb-9af2-7e87261df950@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Sep 2011 08:35:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in status.net before 0.9.9 and 1.0.0beta2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/2
+Message-ID: <4E07F762.2050000@redhat.com>
+Date: Mon, 27 Jun 2011 11:22:10 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>
+Subject: Re: CVE request: kernel: mm: avoid wrapping vm_pgoff in mremap() and stack expansions
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> See
-> http://status.net/2011/08/02/security-alert-for-all-versions-of-statusnet
+On 06/25/2011 04:19 AM, Petr Matousek wrote:
+> Description of the problem:
+> The normal mmap paths all avoid creating a mapping where the pgoff
+> inside the mapping could wrap around due to overflow.  However, an
+> expanding mremap() can take such a non-wrapping mapping and make it
+> bigger and cause a wrapping condition. There is also another case
+> where we expand mappings hiding in plain sight: the automatic stack
+> expansion.
 > 
-> "Incorrectly sanitized input from the URL for "tag stream" pages,
-> combined with incorrect encoding of dynamically-generated JavaScript,
-> allows an attacker to create a carefully-crafted URL that will execute
-> arbitrary JavaScript code on other users' browsers."
+> The wrapping condition can cause a BUG_ON() due to terminally
+> confusing the vma_prio_tree code.
 
-Please use CVE-2011-3370.
+Please use CVE-2011-2496.
 
-Thanks.
-
--- 
-    JB
+Eugene
