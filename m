@@ -1,20 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/4
-Message-ID: <20110704172538.GA10255@openwall.com>
-Date: Mon, 4 Jul 2011 21:25:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/7
+Message-Id: <201106271110.11382.ludwig.nussel@suse.de>
+Date: Mon, 27 Jun 2011 11:10:10 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+Cc: Neil F Brown <nfbrown@...e.de>, Jeff Layton <jlayton@...hat.com>
+Subject: CVE Request: nfs-utils
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
-> IIRC for such backdoored downloads CVE IDs were assigned in the past
-> to properly track the status of distributions providing the affected 
-> piece of code.
+Hi,
 
-I suspect that no distributions provide the affected code this time.
-So if affected distributions is the only reason for CVE ID assignment in
-this case, it might make sense to postpone CVE ID allocation until we
-learn of an affected distribution (which we probably won't).
+An attacker could gain unauthorized access to an nfs exported
+filesystem by creating a DNS record that resolves to the attacker's
+IP as well as to a trusted IP:
+http://marc.info/?l=linux-nfs&m=130875695821953&w=2
+https://bugzilla.novell.com/show_bug.cgi?id=701702
 
-Alexander
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
