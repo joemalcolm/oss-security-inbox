@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/11
-Message-ID: <972003981.506786.1307380922212.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:22:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/8
+Message-ID: <20110627145835.GA14674@foo.fgeek.fi>
+Date: Mon, 27 Jun 2011 17:58:35 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Russell Coker <rcoker@...hat.com>, Daniel Ruoso <daniel@...so.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+Cc: incidents@...rt.org, lists@...g.net, bressers@...hat.com
+Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
+On Mon, Jun 27, 2011 at 03:53:27PM +0800, YGN Ethical Hacker Group wrote:
+> Path Disclosure should better be regarded as more closely related to
+> server-side issue.
+> It may be too redundant or unnecessary to create one path disclosure
+> issue per CVE.
 > 
-> based on Debian BTS report:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
-> (first CVE-2011-XXYY required for Debian case)
+> Another Path Disclosure issue in Joomla! 1.6.1
 > 
-> looked more into original report:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> http://bl0g.yehg.net/2011/04/joomla-161-and-lower-information.html
 > 
-> and the first paragraph of [2] suggests:
-> "When starting a program via "su - user -c program" the user session
-> can escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the input buffer. This allows for example a non-root
-> session to push "chmod 666 /etc/shadow" or similarly bad commands into
-> the input buffer such that after the end of the session they are
-> executed."
 > 
-> this should get a CVE-2005-YYZZ CVE id.
+> Almost all php CMS applications have this issue going on where  some
+> of them are listed at:
 > 
+> http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln
 
-This really shouldn't get a CVE id. It's well known, and sadly not easy to
-fix. There are more details in this bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=479145
+I think this deserves own CVE-identifier as Joomla did announce security vulnerability. As far as I know the vulnerability was described as "Information Disclosure" not patch disclosure. Path disclosures should be fixed from software also, but usually it is a problem in web-server configuration. Do you have more information about issue CVE-2011-2488? Still no reply from Joomla security team regarding issue CVE-2011-2488. I asked more details nearly a week ago.
 
-I would classify this as an administration issue, not a flaw in su or sudo.
-If you're running arbitrary things, you're in far more trouble than this.
+Btw. I would use domain example.org in advisories if I were you. You might not always want to keep that attacker.in domain.
 
-I'm happy to let MITRE overrule me.
-
--- 
-    JB
+Best regards,
+Henri Salo
