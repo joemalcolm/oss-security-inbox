@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/16/2
-Message-ID: <20111116194325.GA17162@openwall.com>
-Date: Wed, 16 Nov 2011 23:43:25 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/4
+Message-ID: <BANLkTikYhbyJs=42misf5JjtFsTAK5CM6A@mail.gmail.com>
+Date: Sun, 26 Jun 2011 19:57:23 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Vasiliy Kulikov <segoon@...nwall.com>, Andrew Morton <akpm@...ux-foundation.org>
+Cc: oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jun 24, 2011 at 5:34 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+>
+> I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
 
-This says it was posted today:
+Hmm. Should we just round them down to 1kB boundaries or something?
+People *do* want to know about IO accounting, but I agree that giving
+things at a byte granularity ends up giving way too much information.
+When you can see how many bytes something read off a tty, that's a
+problem.
 
-http://www.isc.org/software/bind/advisories/cve-2011-4313
+Returning accounting information at a 1k granularity should make it
+impractical to use that to guess keys etc. It still gives *some*
+information (and enough for rough statistics), but it doesn't give the
+level of detail required for any simple attack.
 
-"Versions affected:
-All currently supported versions of BIND, 9.4-ESV, 9.6-ESV, 9.7.x, 9.8.x"
+Sometimes excessive precision isn't a good thing.
 
-Does anyone readily know if BIND 9.3.x is affected as well?  It is not
-"currently supported" upstream (per the table below), but is still found
-in and supported by some distros.
+Andrew - the IO_ACCT stuff went through you (back in 2006), the
+taskstats did too, methinks. Comments?
 
-http://www.isc.org/software/bind/versions
-
-Alexander
+                     Linus
