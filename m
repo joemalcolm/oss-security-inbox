@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/4
-Message-ID: <4EAECC21.9010105@redhat.com>
-Date: Mon, 31 Oct 2011 10:26:09 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/3
+Message-ID: <4E07F77C.7070301@redhat.com>
+Date: Mon, 27 Jun 2011 11:22:36 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Jara 1.6 SQL injection and XSS
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: CVE request: kernel: remote buffer overflow in bluetooth
 Content-Type: text/plain; charset=utf-8
 
-On 10/31/2011 10:01 AM, Kurt Seifried wrote:
-> On 10/30/2011 04:48 AM, Henri Salo wrote:
->> Can I get CVE-identifiers for these issues:
->>
->> SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
->> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
->>
-Please use CVE-2011-4094 for the SQL injection issue.
->> XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
->> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
->>
-> I assume here you are referring to the comment:
->
-> "http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
->
-Please use CVE-2011-4095 for the XSS issue.
->> No vendor reply. No fix.
->>
->> Best regards,
->> Henri Salo
+On 06/25/2011 07:15 AM, Dan Rosenberg wrote:
+> A remote user can provide a small value for the command size field in
+> the command header of an l2cap configuration request, resulting in an
+> integer underflow when subtracting the size of the configuration request
+> header.  This results in copying a very large amount of data via
+> memcpy() and destroying the kernel heap. [1]
+> 
+> -Dan
+> 
+> [1] http://marc.info/?l=linux-kernel&m=130891911909436&w=2
 
+Please use CVE-2011-2497.
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Eugene
