@@ -1,40 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/9
-Message-Id: <201103141406.47580.stephan.mueller@atsec.com>
-Date: Mon, 14 Mar 2011 14:06:46 +0100
-From: Stephan Mueller <stephan.mueller@...ec.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: oss-security@...ts.openwall.com, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/9
+Message-Id: <201106271659.06078.ludwig.nussel@suse.de>
+Date: Mon, 27 Jun 2011 16:59:05 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Am Montag, 14. März 2011, um 13:56:45 schrieb Dan Rosenberg:
-
-Hi Dan,
-
+Solar Designer wrote:
+> On Wed, Jun 22, 2011 at 02:02:53PM +0200, Ludwig Nussel wrote:
+> > [...] 
+> > and log a message for the admin that tells him to run "passwd -e" 
+> > on the account.
 > 
-> I'd like to add that while this kind of hardening would be nice in
-> theory, there is little urgency in making these improvements since the
-> proposed attack vectors are extremely limited.  As I see it, there are
-> four scenarios where this might matter:
-
-I am not so sure that all the following is unlikely:
+> This is even worse: you'd be storing some info about the password itself
+> in plaintext!  Yes, that's just one bit, yet it may allow for more
+> focused attacks.  If an intruder retrieves not only the shadow file, but
+> also the log file, they'd be able to attack those hashes faster.
+> Similarly, if another user has read access to the log file, but not to
+> the shadow file, they'd know which accounts (not) to target with 8-bit
+> chars in an online password guessing attack.
+>
+> So please don't do that.  If you need to make things mostly transparent
+> for admins and users, here's my suggestion:
 > 
-> 1. An attacker convinces a victim to download an evil filesystem image
-> and manually mount it.
+> Add an option to treat 2a in existing hashes as 2x.  Maybe this should
+> even be the default.
 
-I guess that is the most likely vector - how often did you download ISO images 
-from somewhere - it is often for me?
+I think we cannot risk locking out users (which might include the
+admin) with a security update on a released product. So existing
+hashes have to keep working. My fear is that most systems just stay
+in that compat mode forever if we don't make some component complain
+though.
 
-How often did you get USB drives from somebody - it happens frequently?
+> For new hashes, produced by crypt_blowfish 1.1+ with the mandatory
+> self-test in it, use a new prefix - 2y.  When checking, treat it as 2a
+> (and I may make it official and transparent in 1.1.1+).
+> 
+> How does this sound to you?
+> 
+> Additionally, for the paranoid, when the option to treat 2a as 2x is
+> disabled, disallow logins with passwords containing 0xff chars (possible
+> attack).  Maybe only for 2a hashes, but not for 2y.  In order not to
+> leak this fact via timings, perform the hashing anyway.  (I'll consider
+> making this built-in in a new version of crypt_blowfish, which should
+> let us be more careful with timings.)
 
-How often did you mount them?
+Ok, so we'd need two config options, one to toggle signedness bug
+compat mode (2a=2x) and one to disallow 0xff if compat mode is off.
 
-I guess, this happened often. The concern here is that most users are very 
-unsuspecting of the discussed issue. Most people think that you should not 
-execute files from unknown media. But hardly anyone thinks that simply 
-mounting the media or listing directory contents would cause problems. At 
-least that is what I have learned.
+Default for for the security update would be bug compat mode on.
+In that mode new passwords would get the 2y prefix. The 0xff option
+has no effect. Over time the number of 2a passwords decreases. Once
+/etc/shadow contains no 2a passwords on important accounts anymore
+the admin could switch off bug compat mode and s/2y/2a/.
 
-Ciao
-Stephan
+More nervous admins could disable bug compat mode right away. That
+would lock out affected users unless the admin also does s/2a/2x/.
+The really paranoid could additionally enable the 0xff option. New
+passwords would get 2a.
+
+I suppose crypt_blowfish is not meant to parse some config file, so
+we'd have to implement the options in the pam modules.
+
+cu
+Ludwig
+
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
