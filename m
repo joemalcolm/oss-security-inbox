@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/6
-Message-ID: <1320249249.8441.25.camel@scapa>
-Date: Wed, 02 Nov 2011 16:54:09 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/5
+Message-ID: <BANLkTi=khwAhieJwxwRzvQ25qv8Cfhchqg@mail.gmail.com>
+Date: Mon, 27 Jun 2011 15:45:06 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: [LightDM] Version 1.0.6 released
+Subject: CVE Request: Mambo CMS 4.6.x | Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> Fixes a security issue where using ~/.Xauthority as a symlink would
-> cause LightDM to set the destination of the link to user ownership.
-> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> 
-> Overview of changes in lightdm 1.0.6
-> 
->     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+1. OVERVIEW
+
+Mambo CMS 4.6.5 and lower versions are vulnerable to Cross Site Scripting.
 
 
-Could a CVE be assigned for this?
+2. BACKGROUND
 
-Regards,
--- 
-Yves-Alexis
+Mambo is a full-featured, award-winning content management system that
+can be used for everything from simple websites to complex corporate
+applications. It is used all over the world to power government
+portals, corporate intranets and extranets, ecommerce sites, nonprofit
+outreach, schools, church, and community sites. Mambo's "power in
+simplicity" also makes it the CMS of choice for many small businesses
+and personal sites.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+3. VULNERABILITY DESCRIPTION
+
+Multiple parameters are not properly sanitized, which allows attacker
+to conduct Cross Site Scripting attack.
+This may allow an attacker to create a specially crafted URL that
+would execute arbitrary script code in a victim's browser.
+If a user has already logged in to the application, an XSS attack will
+execute promptly.
+If not, it will execute after the user's successful logging in.
+
+
+4. VERSIONS AFFECTED
+
+Tested on Mambo CMS 4.6.5 (current as of 2011-06-27)
