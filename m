@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/10
-Message-ID: <1121601387.397594.1306871080122.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 15:44:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/1
+Message-ID: <4E07F740.1040804@kernel.org>
+Date: Mon, 27 Jun 2011 11:21:36 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: openssl timing attack
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
+On 06/24/2011 08:34 PM, Vasiliy Kulikov wrote:
 > Hi,
-> looks like this following has not CVE-ID assigned yet:
-> http://www.kb.cert.org/vuls/id/536044
 > 
+> On Tue, Jun 21, 2011 at 15:24 -0400, Josh Bressers wrote:
+>>> /*
+>>> * This program tries to learn whether ~user/.ssh/authorized_keys exists
+>>> * and is nonempty for any user on local machine. It uses world-readable
+>>> * taskstats' nature to get somewhat private io statistics information.  If
+>>> * implant taskstats or /proc//io polling into ssh client, it would be
+>>> * possible to learn precise authorized_keys' size (and estimate private
+>>> * key's(s') size).
+>>
+>> Are you considering this a flaw, or just an interesting security exercise?
+>> Nothing currently comes to mind, but it's possible there could be other
+>> data where knowing it exists and the size would be useful.
+> 
+> It can be used to learn ssh and ftp password length.  If privsep is
+> enabled in openssh and vsftpd, the unprivileged process' activity very
+> precisely shows password information.
+> 
+> For vsftpd read characters count is strlen("USER username\r\n") +
+> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
+> related to a privileged parent.  If measure statistics between user and
+> passwords commands, actual password length and username length can be
+> gathered.
+> 
+> For ssh, vice versa, networking activity is constant in packets length,
+> but interprocess communications, specifically passwords, depend on
+> user input.
+> 
+> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars - CONST.
+> 
+> Another daemons with more or less constant io activity might be
+> vulnerable too.  PAM greatly complicates precise measurements.
+> 
+> 
+> I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
+> 
+> https://lkml.org/lkml/2011/6/24/88
 
-Please use CVE-2011-1945.
+procfs io - CVE-2011-2495
+taskstats - CVE-2011-2494
 
-Thanks.
-
--- 
-    JB
+Thanks, Eugene
