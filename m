@@ -1,78 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/05/1
-Message-Id: <20110205174537.237e05b9.michael.s.gilbert@gmail.com>
-Date: Sat, 5 Feb 2011 17:45:37 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/6
+Message-ID: <BANLkTinSTHWYNqUW+TQ3QtVXwXoL_gfaWw@mail.gmail.com>
+Date: Mon, 27 Jun 2011 15:53:27 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Webkit Roundup
+Cc: incidents@...rt.org, henri@...v.fi
+Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Path Disclosure should better be regarded as more closely related to
+server-side issue.
+It may be too redundant or unnecessary to create one path disclosure
+issue per CVE.
 
-I've been doing some work on applying security patches to the stable
-webkitgtk release in Debian.  However, I've found a lot of the security
-issues were published without sufficient detail to be able to review
-the problems.  I would really appreciate help resolving the status of
-the following issues.  You can see the current state of what we know in
-the Debian security tracker [0].
+Another Path Disclosure issue in Joomla! 1.6.1
 
-CVE-2008-1010, CVE-2008-1011:
-- This is a case of apple providing no useful info, but are two redhat
-bug reports; both of which are claim the issues fixed as of svn31787,
-unfortunately, there is no info about the actual problems to be able to
-check. I suppose there is no reason to believe these are still open,
-but I would feel more comfortable if there were some concrete info
-about the problems to be able to check.
+http://bl0g.yehg.net/2011/04/joomla-161-and-lower-information.html
 
-CVE-2009-2068:
-- This issue was assigned based on an academic paper, and there are no
-patches or fixes for reference in the CVE references. Chrome claims
-the issue is fixed as of version 5.0.342.9.  Was webkit itself ever
-affected by this issue, and when was it fixed?
 
-CVE-2010-1403, CVE-2010-1404:
-- According to redhat, both of these issues were fixed in the same
-webkit commit.  That seems a bit surprising, but may be true.  I was
-just wondering if anyone can confirm that the info is correct?
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1403
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1404
+Almost all php CMS applications have this issue going on where  some
+of them are listed at:
 
-CVE-2010-1757:
-- This issue sounds like an iphone-specific duplicate of
-CVE-2010-2441.  If that is the case, can the two CVEs be merged?  If
-its a different problem, is it in iphone-specific or is webkit itself
-affected?
+http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln
 
-CVE-2010-1781:
-- This is claimed fixed by Vincent Danen in webkitgtk 1.2.4, but there
-is no redhat bug report about it and no info available to check whether
-this is indeed fixed or not.  Does anyone have any info on this?
-http://gitorious.org/webkitgtk/stable/commit/9d07fda89aab7105962d933eef32ca15dda610d8
 
-CVE-2010-1783:
-- According to redhat's info webkit commit 62134 fixes this, which is
-believed to be the same commit that fixes CVE-2010-2899, but google is
-still embargoing the bug report for that.  Does anyone have any info?
-http://code.google.com/p/chromium/issues/detail?id=42736
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
 
-CVE-2010-2264:
-- This is claimed to fixed in webkitgtk 1.2.3, but wasn't noted until
-after the fact. There is no info anywhere to be able to check that this
-statement is true.
-http://gitorious.org/webkitgtk/stable/commit/9d07fda89aab7105962d933eef32ca15dda610d8
 
-CVE-2010-3803, CVE-2010-3804, CVE-2010-3805, CVE-2010-3808,
-CVE-2010-3809, CVE-2010-3810, CVE-2010-3811, CVE-2010-3816,
-CVE-2010-3817, CVE-2010-3818, CVE-2010-3819, CVE-2010-3820,
-CVE-2010-3821, CVE-2010-3822, CVE-2010-3823, CVE-2010-3824,
-CVE-2010-3826, CVE-2010-3829: 
-- These are all recent apple webkit announcements without any relevant
-details :( Does anyone have any info to be able to check this deluge
-of issues?
 
-Thanks so much for any help in advance.
-
-Best wishes,
-Mike
-
-[0] http://security-tracker.debian.org/tracker/source-package/webkit
+On Fri, Jun 24, 2011 at 3:46 AM, Josh Bressers <bressers@...hat.com> wrote:
+>
+>
+> ----- Original Message -----
+>> Couldn't find a CVE-identifier for this issue. Joomla does have too
+>> many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may
+>> lead to an unauthorized information disclosure. Should this one get a
+>> 2010 or 2011 identifier?
+>>
+>> Reported: 2010-12-08
+>> Joomla advisory: 2011-04-01
+>> Release with a fix (version 1.5.23): 2011-04-04
+>>
+>> References:
+>> http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
+>> http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
+>> http://osvdb.org/show/osvdb/71587
+>> http://secunia.com/advisories/44028/
+>>
+>> I hope this request isn't duplicate. I included oCERT to this email as
+>> Joomla is part of that group. Please notify me and mailing-list if
+>> this issue already has a CVE-identifier.
+>>
+>
+> I'm giving this CVE-2011-2488.
+>
+> While the flaw was reported in 2010 they claim, I consider 2011 when
+> it went public.
+>
+> Thanks.
+>
+> --
+>    JB
+>
