@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/1
-Message-ID: <20110602153200.GA19621@foo.fgeek.fi>
-Date: Thu, 2 Jun 2011 18:32:00 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/11
+Message-ID: <20110627163423.GA6806@openwall.com>
+Date: Mon, 27 Jun 2011 20:34:23 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
+Cc: Michael Matz <matz@...e.de>, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Could you assign CVE-identifiers for following security vulnerabilities?
+On Mon, Jun 27, 2011 at 05:44:42PM +0200, Michael Matz wrote:
+> What's this 0xff business that crept up recently?  It's all characters 
+> with the high bit set, not just 0xff, that pose problems.  Let's be 
+> precise with these issues.
 
-https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
-http://www.htbridge.ch/advisory/xss_in_a_really_simple_chat_arsc.html
-http://www.htbridge.ch/advisory/multiple_sql_injections_in_a_really_simple_chat_arsc.html
+We're considering the state we'll be in after upgrade to fixed code.
+0xff is the only known practical way to have a correctly computed hash
+match one computed by the buggy code in cases where the latter was in
+fact computed incorrectly.  Since a large subset of such incorrectly
+computed hashes had some of the original passwords' characters ignored,
+some working passwords for them are too easy to find, including in some
+cases passwords that will work even after the bug in the code is fixed.
+Those passwords will contain specifically the 0xff character.  This is
+why we may want to treat the 0xff character specially.
 
-ARSC seems to be a bit of a sinking boat. I still wonder why htbridge does not request CVE-identifiers at all.
-
-Best regards,
-Henri Salo
+Alexander
