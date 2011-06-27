@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/10
-Message-ID: <908015927.216787.1298573364778.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 13:49:24 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/7
+Message-Id: <201106271110.11382.ludwig.nussel@suse.de>
+Date: Mon, 27 Jun 2011 11:10:10 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Information disclosure in CGIHTTPServer from Python
+Cc: Neil F Brown <nfbrown@...e.de>, Jeff Layton <jlayton@...hat.com>
+Subject: CVE Request: nfs-utils
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+An attacker could gain unauthorized access to an nfs exported
+filesystem by creating a DNS record that resolves to the attacker's
+IP as well as to a trusted IP:
+http://marc.info/?l=linux-nfs&m=130875695821953&w=2
+https://bugzilla.novell.com/show_bug.cgi?id=701702
 
------ Original Message -----
-> Hi,
-> please assign a CVE ID for http://bugs.python.org/issue2254
-> 
-
-
-Please use CVE-2011-1015
-
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
