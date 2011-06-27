@@ -1,23 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/4
-Message-ID: <4D5B8DBA.8040600@redhat.com>
-Date: Wed, 16 Feb 2011 16:41:30 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/13
+Message-ID: <20110627224349.GH1944@redhat.com>
+Date: Mon, 27 Jun 2011 16:43:49 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: xfs infoleak
+Subject: CVE request for libpng regression (CVE-2004-0421)
 Content-Type: text/plain; charset=utf-8
 
- From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat 
-equivalent) calls out to xfs_fs_geometry() with a version number of 3. 
-This code path does not fill in the logsunit member of the passed 
-xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized 
-stack data to potentially unprivileged callers.  Since all other members 
-are filled in all code paths and there are no padding bytes in this 
-structure, it's safe to avoid an expensive memset() in favor of just 
-clearing this one field."
+It looks like CVE-2004-0421 was regressed upstream a few years ago and
+was not noticed.
 
-https://patchwork.kernel.org/patch/555461/
-https://bugzilla.redhat.com/show_bug.cgi?id=677260
+References:
+http://sourceforge.net/mailarchive/forum.php?thread_name=BANLkTikrnU6FJNQYFvwmt78hwpgKPVRd1Q%40mail.gmail.com&forum_name=png-mng-implement
+https://bugzilla.redhat.com/show_bug.cgi?id=717084
+http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=65e6d5a34f49acdb362a0625a706c6b914e670af
 
-Eugene
+Could a CVE name be supplied?  I don't know if upstream has requested
+one independently or not.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
