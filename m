@@ -1,23 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/15
-Message-ID: <20110403215454.GA10880@steve.org.uk>
-Date: Sun, 3 Apr 2011 22:54:54 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/12
+Message-ID: <20110627165848.GA6954@openwall.com>
+Date: Mon, 27 Jun 2011 20:58:48 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jun 27, 2011 at 04:59:05PM +0200, Ludwig Nussel wrote:
+> I think we cannot risk locking out users (which might include the
+> admin) with a security update on a released product. So existing
+> hashes have to keep working. My fear is that most systems just stay
+> in that compat mode forever if we don't make some component complain
+> though.
 
-I too was subscribed through the team@...urity.debian.org exploder. My key:
+This makes sense.  For Owl, I think we'll accept this lockout risk, but
+warn our admins that they should make sure they're able to log in after
+installing the update.  In fact, it is a good practice to do this after
+any upgrade to relevant components, such as to glibc, not only this time.
 
-pub   1024D/CD4C0D9D 2002-05-29
-uid                  Steve Kemp <steve@...ve.org.uk>
-uid                  Steve Kemp <skx@...ian.org>
-sub   2048g/AC995563 2002-05-29
+What about having a warning printed from %post in a relevant package?
+Oh, I guess this won't achieve anything with automated updates.
 
-  Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
+> Ok, so we'd need two config options, one to toggle signedness bug
+> compat mode (2a=2x) and one to disallow 0xff if compat mode is off.
 
-Steve
---
+I think you could do with just one option.  When the compat mode is
+enabled, you treat 2a in existing hashes as 2x.  When it is disabled,
+you stop doing that and you disallow 0xff chars in passwords being
+authenticated against 2a hashes.  In either mode, any new hashes are
+marked with 2y, as long as the self-test is not disabled.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+The 2y is certification of proper operation at least for the specific
+test vector, which includes both 7- and 8-bit chars.  This should catch
+most miscompiles in the future, in case we get anything similar to the
+gcc 4.1.0 bug that caused such a miscompile in JtR, but by pure luck not
+in crypt_blowfish.  I want some safety from that, hence I think the
+self-test on every hash computation must not be disabled.
+
+I am seriously considering making special treatment of 0xff with 2a the
+default in crypt_blowfish itself.  So you wouldn't need to have it in
+your code, and I am the one to take care of timing issues.  Yes, this
+means that I deliberately break 2a somewhat vs. OpenBSD's, but this
+might be the best way to resolve the situation we got into.  The reality
+is that right now 2a means "unknown correctness", unfortunately, and
+treating only 0xff chars differently from OpenBSD is far less incorrect
+than having the sign extension bug was.
+
+> Default for for the security update would be bug compat mode on.
+
+That's up to you to decide.
+
+> In that mode new passwords would get the 2y prefix. The 0xff option
+> has no effect. Over time the number of 2a passwords decreases. Once
+> /etc/shadow contains no 2a passwords on important accounts anymore
+> the admin could switch off bug compat mode
+
+Right.
+
+> and s/2y/2a/.
+
+No.  I think these should stay as-is.
+
+> More nervous admins could disable bug compat mode right away. That
+> would lock out affected users unless the admin also does s/2a/2x/.
+
+Right.
+
+> The really paranoid could additionally enable the 0xff option. New
+> passwords would get 2a.
+
+No, and no.  I see no reason for either of these (assuming that you
+implement what was discussed above).
+
+> I suppose crypt_blowfish is not meant to parse some config file, so
+> we'd have to implement the options in the pam modules.
+
+Yes, but I think it'd be just one option, and its behavior will be as
+trivial as to treat 2a on existing hashes as 2x.  It shouldn't do
+anything else.  The 0xff thing will be in crypt_blowfish itself, per my
+current proposal above - which I'd appreciate comments on.
+
+Thanks,
+
+Alexander
