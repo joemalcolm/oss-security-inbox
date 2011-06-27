@@ -1,19 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/2
-Message-ID: <87d3bb4qxj.fsf@mid.deneb.enyo.de>
-Date: Mon, 26 Dec 2011 10:34:32 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4862 is not BSD-specific
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/2
+Message-ID: <4E07F762.2050000@redhat.com>
+Date: Mon, 27 Jun 2011 11:22:10 +0800
+From: Eugene Teo <eteo@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>
+Subject: Re: CVE request: kernel: mm: avoid wrapping vm_pgoff in mremap() and stack expansions
 Content-Type: text/plain; charset=utf-8
 
-* Huzaifa Sidhpurwala:
+On 06/25/2011 04:19 AM, Petr Matousek wrote:
+> Description of the problem:
+> The normal mmap paths all avoid creating a mapping where the pgoff
+> inside the mapping could wrap around due to overflow.  However, an
+> expanding mremap() can take such a non-wrapping mapping and make it
+> bigger and cause a wrapping condition. There is also another case
+> where we expand mappings hiding in plain sight: the automatic stack
+> expansion.
+> 
+> The wrapping condition can cause a BUG_ON() due to terminally
+> confusing the vma_prio_tree code.
 
->> The telnetd from netkit does not appear to be affected.
->
-> The patch seems to be applicable though, probably you need to do
-> something else to make it segfault?
+Please use CVE-2011-2496.
 
-Our version of netkit (which we once got from
-<ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/>) lacks Kerberos
-support entirely.
+Eugene
