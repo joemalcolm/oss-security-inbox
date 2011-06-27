@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/8
-Message-ID: <4EC6899F.6090400@redhat.com>
-Date: Fri, 18 Nov 2011 09:36:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Ruby on Rails / rubygem-actionpack -- XSS in the 'translate' helper method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/10
+Message-ID: <Pine.LNX.4.64.1106271743170.17115@wotan.suse.de>
+Date: Mon, 27 Jun 2011 17:44:42 +0200 (CEST)
+From: Michael Matz <matz@...e.de>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 11/18/2011 07:52 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a cross-site scripting (XSS) flaw was found in the way the
-> 'translate' helper method of the Ruby on Rails performed HTML
-> escaping of interpolated user input, when interpolation in
-> combination with HTML-safe translations were used. A remote
-> attacker could use this flaw to execute arbitrary HTML or web
-> script by providing a specially-crafted input to Ruby on Rails
-> application, using the ActionPack module and its 'translate'
-> helper method without explicit (application specific) sanitization
-> of user provided input.
->
-> References:
-> [1]
-> http://weblog.rubyonrails.org/2011/11/18/rails-3-1-2-has-been-released
-> [2]
-> http://weblog.rubyonrails.org/2011/11/18/rails-3-0-11-has-been-released
-> [3] https://secunia.com/advisories/46877/
-> [4] https://bugs.gentoo.org/show_bug.cgi?id=390915
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=755004
->
-> Relevant upstream patches:
-> [6]
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b61d70fb73c7cc5
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Hi,
 
-Please use CVE-2011-4319 for this issue.
+On Mon, 27 Jun 2011, Ludwig Nussel wrote:
 
--- 
+> > Additionally, for the paranoid, when the option to treat 2a as 2x is 
+> > disabled, disallow logins with passwords containing 0xff chars 
+> > (possible attack).  Maybe only for 2a hashes, but not for 2y.  In 
+> > order not to leak this fact via timings, perform the hashing anyway.  
+> > (I'll consider making this built-in in a new version of 
+> > crypt_blowfish, which should let us be more careful with timings.)
+> 
+> Ok, so we'd need two config options, one to toggle signedness bug compat 
+> mode (2a=2x) and one to disallow 0xff if compat mode is off.
 
--Kurt Seifried / Red Hat Security Response Team
+What's this 0xff business that crept up recently?  It's all characters 
+with the high bit set, not just 0xff, that pose problems.  Let's be 
+precise with these issues.
 
+
+Ciao,
+Michael.
