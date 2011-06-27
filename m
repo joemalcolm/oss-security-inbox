@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/2
-Message-ID: <4DA27B9F.8010605@redhat.com>
-Date: Mon, 11 Apr 2011 11:55:11 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/5
+Message-ID: <BANLkTi=khwAhieJwxwRzvQ25qv8Cfhchqg@mail.gmail.com>
+Date: Mon, 27 Jun 2011 15:45:06 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1479 (was Re: CVE request: kernel: inotify memory leak)
+Subject: CVE Request: Mambo CMS 4.6.x | Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 04/11/2011 11:32 AM, Eugene Teo wrote:
-> On 11/24/2010 09:17 PM, Josh Bressers wrote:
->>
->> ----- "Eugene Teo"<eugene@...hat.com> wrote:
->>
->>> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
->>>
->>> file for the new inotify group we leak the new group.
->>>
->>> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
->>> only
->>> relevant if c44dcc56 (v2.6.34-rc1) is backported)
->>>
->>> Issue was introduced in 63c882a0 (v2.6.31-rc1).
->>>
->>> https://bugzilla.redhat.com/656830
->>
->> Please use CVE-2010-4250
->
-> A regression was found. We assigned it with CVE-2011-1479. Fix for it
-> can be found at: http://git.kernel.org/linus/d0de4dc5. More info here:
-> https://bugzilla.redhat.com/CVE-2011-1479.
+1. OVERVIEW
 
-Repost just to make the subject clearer.
+Mambo CMS 4.6.5 and lower versions are vulnerable to Cross Site Scripting.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+
+2. BACKGROUND
+
+Mambo is a full-featured, award-winning content management system that
+can be used for everything from simple websites to complex corporate
+applications. It is used all over the world to power government
+portals, corporate intranets and extranets, ecommerce sites, nonprofit
+outreach, schools, church, and community sites. Mambo's "power in
+simplicity" also makes it the CMS of choice for many small businesses
+and personal sites.
+
+
+3. VULNERABILITY DESCRIPTION
+
+Multiple parameters are not properly sanitized, which allows attacker
+to conduct Cross Site Scripting attack.
+This may allow an attacker to create a specially crafted URL that
+would execute arbitrary script code in a victim's browser.
+If a user has already logged in to the application, an XSS attack will
+execute promptly.
+If not, it will execute after the user's successful logging in.
+
+
+4. VERSIONS AFFECTED
+
+Tested on Mambo CMS 4.6.5 (current as of 2011-06-27)
