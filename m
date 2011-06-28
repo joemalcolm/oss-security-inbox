@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/6
-Message-ID: <2075640592.225906.1296508672982.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 31 Jan 2011 16:17:52 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/14
+Message-ID: <706988880.998704.1309292560379.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 16:22:40 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: request CVE for weborf
+Cc: security@...nel.org
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0529.
+----- Original Message -----
+> 
+> It can be used to learn ssh and ftp password length. If privsep is
+> enabled in openssh and vsftpd, the unprivileged process' activity very
+> precisely shows password information.
+> 
+> For vsftpd read characters count is strlen("USER username\r\n") +
+> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
+> related to a privileged parent. If measure statistics between user and
+> passwords commands, actual password length and username length can be
+> gathered.
+> 
+> For ssh, vice versa, networking activity is constant in packets length,
+> but interprocess communications, specifically passwords, depend on user
+> input.
+> 
+> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
+> CONST.
+> 
+> Another daemons with more or less constant io activity might be
+> vulnerable too. PAM greatly complicates precise measurements.
+> 
+> 
+> I think it needs 2 CVE, one for /proc/PID/io and another for
+> taskstats.
+> 
+> https://lkml.org/lkml/2011/6/24/88
+> 
+
+I can't find a nice description of both issues. Can you give me one or two
+sentence explanations with a few references for the CVE database?
+
+Once I have those I'll give it two IDs.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> Greetings,
-> 
-> i am requesting a CVE for weborf
-> http://galileo.dmi.unict.it/wiki/weborf/
-> 
-> weborf 0.12.5 fixes a DoS occurring with malformed fields in HTTP
-> request.
-> 
-> Diff from previous version 0.12.4:
-> 
-> $ diff 0.12.4/utils.c 0.12.5/utils.c
-> 270a271,272
-> >     val += param_len + 2; //Moves the begin of the string to exclude
-> >     the
-> name of the field
-> >
-> 276d277
-> < val += param_len + 2; //Moves the begin of the string to exclude the
-> name of the field
-> 
-> Regards
-> --
-> Salvo Tomaselli
