@@ -1,155 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/2
-Message-ID: <0F278B0E7FB40349B635BE500A9BA27F0E22D38C@ALA-MBB.corp.ad.wrs.com>
-Date: Fri, 15 Apr 2011 05:23:17 +0000
-From: "Zhao, Zhenfeng" <Zhenfeng.Zhao@...driver.com>
-To: Solar Designer <solar@...nwall.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [security-vendor] Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/18
+Message-Id: <20110628155319.93c9cace.akpm@linux-foundation.org>
+Date: Tue, 28 Jun 2011 15:53:19 -0700
+From: Andrew Morton <akpm@...ux-foundation.org>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Now I use my own e-mail address instead of one exploder to apply for the membership, and I also have added Wind River info to the wiki pages. OK,  I was  a vendor-sec member representing Wind River, please add me to the new list.  
+On Sun, 26 Jun 2011 19:57:23 -0700 Linus Torvalds <torvalds@...ux-foundation.org> wrote:
 
-===============================
-
-pub   2048R/13D9AF86 2011-04-15
-      Key fingerprint = D7F2 2248 ECA2 DA1D FFC2  0470 D581 BFC5 13D9 AF86
-uid                  Zhenfeng Zhao (Wind River Security Response Team) <zhenfeng.zhao@...driver.com>
-sub   2048R/D63F4F5E 2011-04-15
-
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-mQENBE2n0nsBCACxxzgIcGdaaTUSjMSS85sTuMAyKX9P2pSjKZkpX6ugvuJuJEXz
-7cBL50nShE5OaHpEaKXUJK93NYuOKk9vmMcaLhdxlqCnb2VKC9OOct7YDe/adoxU
-j/dfwZQFykVtWIclgP1puCWmhl2hg8qhicGCGn855xeMb53EOkE80syqZRLBZXm4
-8GZmtZc09RTGuSYz+iE/RoJsCQmdKqey9zNyq+FAmGb70MN/mKiB9CRH1xZiTqf0
-p57BaW4IsOib6oKHqj6/j9cnLjQE652uSO2Lxwh1UcwpLva++1NWGofKLd3Ludgh
-bn7CcZYe+eX6elEgDd5Se6oN5BVvxcekZZKPABEBAAG0T1poZW5mZW5nIFpoYW8g
-KFdpbmQgUml2ZXIgU2VjdXJpdHkgUmVzcG9uc2UgVGVhbSkgPHpoZW5mZW5nLnpo
-YW9Ad2luZHJpdmVyLmNvbT6JATgEEwECACIFAk2n0nsCGwMGCwkIBwMCBhUIAgkK
-CwQWAgMBAh4BAheAAAoJENWBv8UT2a+GKakH+wdnBt5avEpWi14xCxw4sv/aYYE/
-LRJFyp700OZqkoshiFFs/cjUuKJ/5+7AcBGeNeF35GCfF1j+52tBD15zSR2fcoYk
-5T67qwcb7uzFfgm4T+dCMdRAC2IgNjYZfQWTwausi7znd8y5nSTl4UaOkZPJJtYT
-M9UXNFTTbqJhEfHy+V2iRM8gvs8meD9VFBUpkBBcbQ+vA4GjPlUNoXr+jMAeEQZl
-/dLyTUcHCcpnjxM2xiA0RokwlR6bTreOa+7sTun+6FyaBia/7Xv0lkYbDP2D3yQz
-L2uaU2btoQC/fE2SNQsGu9LdlDpG8KG4Haqol//Z5xmCKRvUq/71rAhcqBi5AQ0E
-TafSewEIAMuAdoEYDNVVl8AzmDlg7ixWTpt9bZjdkceRpe7wjYUaUctj9nK0gTmH
-Hr0rMSdZ9llyuxhp3jYIrnKYaGSZbxOzdv/RZFwNPVrp7jLeSEhIo3p2pK6rikib
-9CTpsaozRa67LWJSsdDV9Jg1mWPJz8hPKurcGj64h0uZ90+oiS2LUC6Pt+qG2Khx
-Cj8EZg/ZoQakJQXd1mtCflyt5h5POnhzyDASoIll7RYLFCzQ1xwjjyuDnaTkrlZe
-n02sear2yiRX8xNs+0VLNUL8JKoZdsdOhU66803tlJHvzASJdVVKcNVhJexkaEoH
-lSxlTTwnvnCgXO5IWrcOfLDhMNxRVosAEQEAAYkBHwQYAQIACQUCTafSewIbDAAK
-CRDVgb/FE9mvhh2vB/oD/kZij/Aj9AurBkGvF5Uz1SQeube76GHEwI0HdZZCNn3b
-q1/t32SHxk8vuklpOMj6CCpmSeKT3YsrcSFWQn/S43DiiQ3cE597VTgnMLo/fdsZ
-1z4HvMWL8gnPitYEX8WQ8bZSXiTzjVkGHHb1GeTL8afKLbDmsHs67WgkZMj4XJQu
-Fh8RkCorkfvzK4PEXVg9ARoOzxgyS7FDOX0/qd1yNQj/UTU1YUztLUEIV7iyZO8+
-a0hvC6CWrRdIWd36ibCwRPgO9kzw8I71B4yFOlLlTIsG+/M/qRz1Q1bhiL1KUAw3
-m1V8/zjQXq0sxzEPWXWEfwOZOAsFnIyGU15UO/EQ
-=arUO
------END PGP PUBLIC KEY BLOCK-----
-
-Thanks,
-Zhenfeng(Jeffrey) Zhao
-
-
-> -----Original Message-----
-> From: Zhao, Zhenfeng
-> Sent: Thursday, April 14, 2011 8:26 PM
-> To: 'Solar Designer'; oss-security@...ts.openwall.com
-> Subject: [security-vendor] Re: [oss-security] Closed list
-> 
-> Hi Alexander,
-> 
-> I have added Wind River info to the two wiki pages.  Please add me with the
-> mail address as the member of vendor-sec list. Thanks.
-> 
-> pub   2048R/66FBA52A 2011-04-12
->       Key fingerprint = BF45 878D 7941 567D 732C  D153 F997 3E81 66FB A52A
-> uid                  Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
-> sub   2048R/BD99FF83 2011-04-12
-> 
-> 
-> -----BEGIN PGP PUBLIC KEY BLOCK-----
-> Version: GnuPG v2.0.14 (GNU/Linux)
-> 
-> mQENBE2kEBcBCADGU94a4sScP87HK5a9DGaTmlWyp0y7STrJlCXUDKotOm2s
-> wiFl
-> uBLZD50drMw35zH6nhHPJ5gjuA9im3BThhDIybNuf0htiSQIfm0lfeRigM6GOi8i
-> +1qtxJIJyq85TqZ36FQJ/frNHZ5hKG6++rF9r/HhDJZkyztu2ht2Mt2G+WsXjPPT
-> c/11nHEapI6LhI1lJi27Qmn/btehWgAbKsswMLEeUARzumTvM7NV7iNDKVPcw
-> wCp
-> EDVu9ynreQoNx2Ts3d9MKCR5xtQiMODCkWfqsjXIxRNCD0AA6FBVG4dudI5
-> MiLsI
-> 0BKvcvosV9WZivh4L0CIdndGEbTR0iRiyA8vABEBAAG0OlpoZW5mZW5nIFpoY
-> W8g
-> KFdpbmQgUml2ZXIpIDxzZWN1cml0eS12ZW5kb3JAd2luZHJpdmVyLmNvbT6J
-> ATgE
-> EwECACIFAk2kEBcCGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAo
-> JEPmXPoFm
-> +6UqfmEH/2mDk4nUqvK9KfSIeRZ5bPASkDop2+6XebHEyspZMeD4XfMd8hVt
-> kujN
-> r/GvhhIMNmia5aAwYYvYOajF8yJWKGEarC75NGQXx7RKuIj4ZPRKk7sstDpom
-> x2e
-> Ykg1RM72k54nniEhaqKuzqaB/A/kYQ5h+1y+J/+5IlbQvqMg3HHzxKPYZzWmkC
-> +X
-> wBr6+RxGXsKxmuySXw2poHCrMXmZurgHmVxOn2ZKLCJUAbBkiDHJtTMnIyz
-> PuOF8
-> 2PdkjtFQlOm7g6fKCYleAPm+0p7def9LifWE793RfzQ9Otfoyj7kISQdNdO+UIw5
-> jj5dQboz4GJn25aV3PvMq2CSU92ZFhO5AQ0ETaQQFwEIAL09RT5SYAFa5GuIY3
-> oW
-> wzeBEhPYh4YQWMPYTLow5Xd56FUhNEoxMYzoKuR9SiFOdcRBTmYXozuVqh
-> kewx+O
-> dKPWmOoQrba0G/dEW4UnCjmWviDFdQKOQs/WY3xgUZfjEvAB0ijQKiwFcte
-> H3oo9
-> a4rSRcClh+pFJp4XflqKr9HCVwNOT7cmVOM++91cWHbhXwt+HCXOmkQbgvn
-> Xdsaa
-> Y9pku5OHFUNZ02pNFwZDMppFwB4gFZj3FI9B8WgLNt0iEuYB9WgofrLwDehF
-> x7tO
-> JgnWhBMz4rXgGehU50uKZ6omRWFl/cZC98EWR7P4lYYsv/1gy+9ruqhahsOETr
-> rz
-> B3UAEQEAAYkBHwQYAQIACQUCTaQQFwIbDAAKCRD5lz6BZvulKnvDB/9AzCa
-> mF6cw
-> KCalit32iGbwPNsuTkk6OFU9roXLVWuzWJZlUV443xGVCxedeg6PKytIHh+ebll8
-> 1WtqnWCoqtZ+yguOrrLiTc4qs78kecKW7GhfxVjF2EoQPTNch68jCL5j75GJDffg
-> 129M/m4/TZWU8JkS3hJC9kI4ZDg3z1Pj8ecocKt6MSCwgPbrgkmNf7aFsHV1Cn
-> bT
-> 5ZCUYF00jeGnfK2wnLeraTDVD0i/+1KiTdaufOCvMlDDWlDfFwK3NBnbsf03F8o
-> t
-> /KSWSvp0uB6+G3w5acuBfgnsAI66RujU6xq+i5IMMnkDyYilazftnRBcTG2Mg9e
-> P
-> Peaf8ujaWsJU
-> =n1zi
-> -----END PGP PUBLIC KEY BLOCK-----
-> 
-> 
-> Thanks,
-> Zhenfeng(Jeffrey) Zhao
-> 
-> > -----Original Message-----
-> > From: owner-security-vendor@...driver.com [mailto:owner-security-
-> > vendor@...driver.com] On Behalf Of Solar Designer
-> > Sent: Wednesday, April 13, 2011 5:02 AM
-> > To: oss-security@...ts.openwall.com
-> > Subject: [security-vendor] Re: [oss-security] Closed list
+> On Fri, Jun 24, 2011 at 5:34 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
 > >
-> > On Tue, Apr 12, 2011 at 09:04:05AM +0000, Zhao, Zhenfeng wrote:
-> > > Sorry for the late response. Please add me with the mail address as
-> > > the
-> > member of the vendor-sec . Thanks.
-> > >
-> > > pub   2048R/66FBA52A 2011-04-12
-> > >       Key fingerprint = BF45 878D 7941 567D 732C  D153 F997 3E81 66FB A52A
-> > > uid                  Zhenfeng Zhao (Wind River) <security-
-> vendor@...driver.com>
-> > > sub   2048R/BD99FF83 2011-04-12
-> >
-> > Given the discussion around MontaVista, can you please start by adding
-> > Wind River info to:
-> >
-> > http://oss-security.openwall.org/wiki/vendors
-> > http://oss-security.openwall.org/wiki/distro-patches
-> >
-> > Thanks,
-> >
-> > Alexander
+> > I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
+> 
+> Hmm. Should we just round them down to 1kB boundaries or something?
+> People *do* want to know about IO accounting, but I agree that giving
+> things at a byte granularity ends up giving way too much information.
+> When you can see how many bytes something read off a tty, that's a
+> problem.
+> 
+> Returning accounting information at a 1k granularity should make it
+> impractical to use that to guess keys etc. It still gives *some*
+> information (and enough for rough statistics), but it doesn't give the
+> level of detail required for any simple attack.
+> 
+> Sometimes excessive precision isn't a good thing.
+> 
+> Andrew - the IO_ACCT stuff went through you (back in 2006), the
+> taskstats did too, methinks. Comments?
+> 
+
+Random thoughts:
+
+a) I haven't thought very hard about it, but isn't it the case that
+   fuzzifying the byte counts in this manner will still permit the
+   length of these things to be determined, albeit with a larger data
+   set?
+
+b) Where does the problem lie?  Is it with the kernel, which exposes
+   accurate accounting?  Or is it with userspace, which accidentally
+   exposes sensitive information by failing to account for the kernel's
+   exposure of accurate accounting information?  
+
+   - Assumes that userspace can be changed to obscure this
+     information.  Erroneously, I think ;)
+
+c) Should this information be world-readable?  Perhaps we should add
+   more rational privileges here.  Back-compatibility issues.
+
+
+
+If rounding the counts to a 1k granularity will indeed defeat the
+attack (I'm unsure) then I'd suggest that a fix would be to perform
+that fuzzification if the receiving process doesn't have suitable
+permissions.  So if the user is reading his own stats or is root, he
+still gets byte-resolution results.  This keeps the stats as useful as
+we can make them and reduces the back-compatibility damage.
+
+What might be the extent of the back-compatibility damage?  It's hard
+to believe that anyone would care about a 1k error in bulk IO stats. 
+But if there's someone out there who uses these interfaces to detect
+whether the monitored task is doing *anything* then we'll break them. 
+eg, "did my data logging task just receive a packet from my
+scintillator experiment".  
