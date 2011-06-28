@@ -1,32 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/10
-Message-ID: <20110810202220.66890fea@redhat.com>
-Date: Wed, 10 Aug 2011 20:22:20 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/11
+Message-Id: <201106281421.47262.ludwig.nussel@suse.de>
+Date: Tue, 28 Jun 2011 14:21:47 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Ludwig Nussel wrote:
+> Josh Bressers wrote:
+> >----- Original Message -----
+> >> Jan Lieskovsky wrote:
+> >> > Hello Josh, Steve, vendors,
+> >> >
+> >> >    based on Debian BTS report:
+> >> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+> >> >        (first CVE-2011-XXYY required for Debian case)
+> >> >
+> >> > looked more into original report:
+> >> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> >> >
+> >> > and the first paragraph of [2] suggests:
+> >> > "When starting a program via "su - user -c program" the user session
+> >> > can escape to the parent session by using the TIOCSTI ioctl to push
+> >> > characters into the input buffer. This allows for example a non-root
+> >> > session to push "chmod 666 /etc/shadow" or similarly bad commands
+> >> > into
+> >> > the input buffer such that after the end of the session they are
+> >> > executed."
+> >> >
+> >> > this should get a CVE-2005-YYZZ CVE id.
+> >> >
+> >> > Could you allocate these?
+> >>
+> >> ping! :-)
+> >
+> >I'm not sure if this should get two IDs. It's really one issue, which isn't
+> >actually fixed in su.
+> >
+> >The fundamental issue is that tools like su and sudo keep the tty open.
+> >The patch in question closes the tty for the case of su -c, but not for
+> >just running su by itself. It is incomplete.
+> 
+> I'm not worried too much about the interactive su case really. The 
+> usual direction there is user->root, not the other way around I 
+> suppose. "su -c" might be used by (%post) scripts though as seen 
+> with ikiwiki.
 
-We've recently came across an issue in commonly re-used LZW
-decompression implementations - original BSD compress and GIF reader
-written by David Koblas.  Due to an insufficient input checking, invalid
-LZW stream can create a loop in the decompression table, leading to the
-decompression stack buffer overflow.
+So can we have a CVE for that issue at least?
 
-Following bugzillas list various code bases that were checked for the
-issue and if they are affected or not:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
-
-Many code bases are unaffected as the problem was fixed in the past,
-so this is probably like N-th re-discovery of the issue.  Some previous
-fixes were called security (CVE-2006-1168), some were not.  The problem
-may not be security relevant, or have much security impact in all
-currently affected code bases, though please mail the list if you come
-across any other affected code base that is not already mentioned and
-that may be worth fixing.
+cu
+Ludwig
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
