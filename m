@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/4
-Message-Id: <201105311441.44989.thomas@suse.de>
-Date: Tue, 31 May 2011 14:41:44 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/17
+Message-ID: <486790100.998944.1309293150522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 16:32:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
+Cc: Neil F Brown <nfbrown@...e.de>, Jeff Layton <jlayton@...hat.com>, coley <coley@...re.org>
+Subject: Re: CVE Request: nfs-utils
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-found this in RH's bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=709165
+Please use CVE-2011-2500
 
-Vincent Danen 2011-05-30 18:38:43 EDT
-
-A Debian bug report [1] indicated that Firefox 4.0.x handled the
-validation/revalidation of SSL certificates improperly.  If a user were to
-visit a site with an untrusted certificate, Firefox would correctly display the
-warning about the untrusted connection.  If a user were to confirm the security
-exception for a single session (not check off the "permanently store this
-exception"), then restart the browser and re-load the page, the contents of the
-page would be displayed from the Firefox cache.  Upon reloading the page, the
-security warning would appear, but incorrectly indicates that the site provides
-a valid, verified certificate and there is no way to confirm the exception.
-[...]
+Thanks.
 
 -- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+    JB
+
+----- Original Message -----
+> Hi,
+> 
+> An attacker could gain unauthorized access to an nfs exported
+> filesystem by creating a DNS record that resolves to the attacker's
+> IP as well as to a trusted IP:
+> http://marc.info/?l=linux-nfs&m=130875695821953&w=2
+> https://bugzilla.novell.com/show_bug.cgi?id=701702
+> 
+> cu
+> Ludwig
+> 
+> --
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
+> Imendörffer, HRB 16746 (AG Nürnberg)
