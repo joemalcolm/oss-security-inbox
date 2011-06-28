@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/7
-Message-ID: <4D9E05DE.1010507@cert.org>
-Date: Thu, 07 Apr 2011 14:43:42 -0400
-From: Chad Dougherty <crd@...t.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/7
+Message-ID: <handler.631818.B631818.130924553522669.ackinfo@bugs.debian.org>
+Date: Tue, 28 Jun 2011 07:21:06 +0000
+From: owner@...s.debian.org (Debian Bug Tracking System)
 To: oss-security@...ts.openwall.com
-CC: CERT Coordination Center <cert@...t.org>
-Subject: Apache HttpClient CVE request  [VU#153049]
+Subject: Bug#631818: Info received (CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism)
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Thank you for the additional information you have supplied regarding
+this Bug report.
 
-Per the Apache HttpClient 4.1.1 release notes:
+This is an automatically generated reply to let you know your message
+has been received.
 
-<http://www.apache.org/dist/httpcomponents/httpclient/RELEASE_NOTES-4.1.x.txt>
+Your message is being forwarded to the package maintainers and other
+interested parties for their attention; they will reply in due course.
 
-"The HttpClient 4.1.1 is a bug fix release that addresses a number of 
-issues reported since release 4.1, including one critical security issue 
-(HTTPCLIENT-1061). All users of HttpClient 4.0.x and 4.1 are strongly 
-encouraged to upgrade.
-[...]
-* [HTTPCLIENT-1061] Fixed critical bug causing Proxy-Authorization 
-header to be sent to the target host when tunneling requests through a 
-proxy server that requires authentication.
-   Contributed by Oleg Kalnichevski <olegk at apache.org>"
+Your message has been sent to the package maintainer(s):
+ Tanguy Ortolo <tanguy+debian@...olo.eu>
 
-It doesn't look like this has received a CVE identifier and I didn't 
-want to duplicate anyone by assigning one from our pool.  Could someone 
-please assign one?
+If you wish to submit further information on this problem, please
+send it to 631818@...s.debian.org.
 
-Thanks...
+Please do not send mail to owner@...s.debian.org unless you wish
+to report a problem with the Bug-tracking system.
 
-	-Chad
+-- 
+631818: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
+Debian Bug Tracking System
+Contact owner@...s.debian.org with problems
