@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/11
-Message-ID: <4e129ec5.c5ead80a.2780.3376@mx.google.com>
-Date: Tue, 05 Jul 2011 05:22:45 +0000
-From: "pinto.elia@...il.com" <pinto.elia@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: R: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/16
+Message-ID: <1516061416.999006.1309293364800.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 16:36:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for libpng regression (CVE-2004-0421)
 Content-Type: text/plain; charset=utf-8
 
-Sorry for not quoting. Just for Info rpm5 have all the necessary for embedding all these check in a spec file from years. Regards. Elia
-----Messaggio originale----
-Da: Moritz Muehlenhoff
-Inviato:  04/07/2011, 18:56 
-A: oss-security@...ts.openwall.com
-Oggetto: Re: [oss-security] vsftpd download backdoored
+Please use CVE-2011-2501
 
+Thanks.
 
+-- 
+    JB
 
-Solar Designer wrote:
-
-> Here's a great example of why maintainers should sign their release
-> tarballs, why distributions should insist on that, and why they should
-> actually check the signatures indeed.
+----- Original Message -----
+> It looks like CVE-2004-0421 was regressed upstream a few years ago and
+> was not noticed.
 > 
-> I think we should be referring to this when convincing people to do that
-> (I had moderate success so far - some projects started signing their
-> tarballs after my suggestions/requests, some did not).
+> References:
+> http://sourceforge.net/mailarchive/forum.php?thread_name=BANLkTikrnU6FJNQYFvwmt78hwpgKPVRd1Q%40mail.gmail.com&forum_name=png-mng-implement
+> https://bugzilla.redhat.com/show_bug.cgi?id=717084
+> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=65e6d5a34f49acdb362a0625a706c6b914e670af
 > 
-> http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+> Could a CVE name be supplied? I don't know if upstream has requested
+> one independently or not.
 > 
-> New vsftpd homepage:
-> 
-> https://security.appspot.com/vsftpd.html
-
-IIRC for such backdoored downloads CVE IDs were assigned in the past
-to properly track the status of distributions providing the affected 
-piece of code. 
-
-Can someone please assign an ID for this?
-
-Cheers,
-        Moritz
-
+> --
+> Vincent Danen / Red Hat Security Response Team
