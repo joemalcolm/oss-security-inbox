@@ -1,57 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/2
-Message-ID: <1401696469.859521.1315341953859.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Sep 2011 16:45:53 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/14
+Message-ID: <706988880.998704.1309292560379.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 16:22:40 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: rubidium@...nttd.org, Michael Lutz <michi+openttd@...sahedron.de>, coley <coley@...re.org>
-Subject: Re: CVE request for OpenTTD
+Cc: security@...nel.org
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> Hello folks,
 > 
-> the OpenTTD team and contributors have discovered several security
-> vulnerabilities in OpenTTD. Please be so kind to allocate a CVE id for
-> each of the issues detailed below:
+> It can be used to learn ssh and ftp password length. If privsep is
+> enabled in openssh and vsftpd, the unprivileged process' activity very
+> precisely shows password information.
 > 
-> 1.) Denial of service via improperly validated commands
+> For vsftpd read characters count is strlen("USER username\r\n") +
+> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
+> related to a privileged parent. If measure statistics between user and
+> passwords commands, actual password length and username length can be
+> gathered.
 > 
-> In multiple places in-game commands are not properly validated that allow
-> remote attackers to cause a denial of service (crash) and possibly
-> execute arbitrary code via unspecified vectors.
+> For ssh, vice versa, networking activity is constant in packets length,
+> but interprocess communications, specifically passwords, depend on user
+> input.
 > 
-> Vulnerability is present since 0.3.5 and will be fixed in the upcoming
-> 1.1.3 release. Issue report at http://bugs.openttd.org/task/4745
-
-Use CVE-2011-3341 for the above.
-
+> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
+> CONST.
 > 
-> 2.) Buffer overflows in savegame loading
+> Another daemons with more or less constant io activity might be
+> vulnerable too. PAM greatly complicates precise measurements.
 > 
-> In multiple places indices in savegames are not properly validated that
-> allow (remote) attackers to cause a denial of service (crash) and
-> possibly execute arbitrary code via unspecified vectors.
 > 
-> Vulnerability is present since 0.1.0 and will be fixed in the upcoming
-> 1.1.3 release. Issue reports at http://bugs.openttd.org/task/4717 and
-> http://bugs.openttd.org/task/4748
-
-Use CVE-2011-3342 for the above.
-
+> I think it needs 2 CVE, one for /proc/PID/io and another for
+> taskstats.
 > 
-> 3.) Multiple buffer overflows in validation of external data
-> 
-> In multiple places external data from the local file system isn't
-> properly checked before allocating memory, which could lead to buffer
-> overflows and arbitrary code execution.
-> 
-> Vulnerability is present since 0.3.4 and will be fixed in the upcoming
-> 1.1.3 release. Issue reports at http://bugs.openttd.org/task/4746 and
-> http://bugs.openttd.org/task/4747
+> https://lkml.org/lkml/2011/6/24/88
 > 
 
-Use CVE-2011-3343 for the above.
+I can't find a nice description of both issues. Can you give me one or two
+sentence explanations with a few references for the CVE database?
+
+Once I have those I'll give it two IDs.
 
 Thanks.
 
