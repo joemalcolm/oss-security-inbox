@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/8
-Message-ID: <2002843853.1360816.1310749508345.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Jul 2011 13:05:08 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/12
+Message-ID: <1279272335.991770.1309277813352.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 12:16:53 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- kernel: ext4: kernel panic when writing data to the last block of sparse file
+Subject: nspluginwrapper CVE id
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2695.
+Hello all. I've assigned CVE-2011-2486 to a nspluginwrapper flaw where
+flash won't honor the private browsing boolean.
+
+More details are here:
+https://bugzilla.redhat.com/show_bug.cgi?id=715384
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> If an extent exists which includes the block right before the maximum
-> file offset, and the block for the maximum file offset is written,
-> the kernel panics. For 4KB block size, the problem only occurs on
-> x86_64 architecture. For 1KB or 2KB block size, the problem occurs on
-> both i386 and x86_64.
-> 
-> Local unprivileged users can use this flaw to crash the system when
-> ext4
-> filesystem is in use.
-> 
-> Upstream fix:
-> f17722f917b2f21497deb6edc62fb1683daa08e6
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=722557
-> http://www.spinics.net/lists/linux-ext4/msg25697.html
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
