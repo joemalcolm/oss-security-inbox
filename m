@@ -1,80 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/3
-Message-ID: <20111030120834.GA15185@albatros>
-Date: Sun, 30 Oct 2011 16:08:34 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/16
+Message-ID: <1516061416.999006.1309293364800.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 16:36:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
-Subject: CVE request: 3 flaws in libobby and libnet6
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request for libpng regression (CVE-2004-0421)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2011-2501
 
-1) the libobby's server checks for users' color collisions before
-checking users' passwords.  Any user without password authentication
-may check whether a specific color is used by someone.  With knowledge
-of person's color preferences he may learn whether a specific person
-uses the server.  Also, he may enumerate all default colors and learn
-the number of users.
-
-    inc/server_buffer.hpp: 
-
-    bool basic_server_buffer<Document, Selector>::on_auth()
-    {
-    ...
-        // Check colour
-        if(!basic_buffer<Document, Selector>::check_colour(colour) )
-        {
-            error = login::ERROR_COLOUR_IN_USE;
-            return false;
-        }
-
-        // Check global password
-        if(!m_global_password.empty() )
-        {
-            if(global_password != m_global_password)
-            {
-                error = login::ERROR_WRONG_GLOBAL_PASSWORD;
-                return false;
-            }
-        }
-    ...
-    }
-
-
-2) libobby doesn't check server's SSL certificate and passes the
-password in plain text over SSL channel.  All remote clients are
-vulnerable to a MITM attack.
-
-    • The attacker (A) learns the client's (C) and the server's (S) IP
-        addresses and used ports.
-    • A breaks the established TCP connection between C and S.
-    • A changes the way C's packets with dst = S are routed, resulting
-        in all packets from C to S's IP go to A.  The simplest way is
-        ARP cache poisoning.
-    • A starts listening on the same IP:port as S did.
-    • C notices the connection interruption and tries to reconnect to S.
-        (Note: if the client is gobby, this step needs user's interaction.)
-    • As all C's packets intended for S are routed to A, so, in reality
-        C connects to A, not S.
-    • C starts SSL session and, as C doesn't check SSL certificate, he
-        think it talks to S.
-    • A requests C' password.
-    • C passes the password in plain text over SSL channel.
-
-
-3) libnet6 doesn't check basic_server::id_counter for integer overflow.
-This number is used to distinguish among different users.  An attacker
-may open UINT_MAX successive connections and get an identifier of the
-already established connection, resulting in the connection hijacking.
-On i686 uint is a 32 bit counter, so an attacker should be able to open
-4.000.000.000 connections to complete the attack.  This is a rather big
-number: if an attacker may create 2000 connections per second, it would
-took ~24 days of continuous connection attempts.  However, it is a real
-threat for servers with a huge uptime.
-
-Thanks,
+Thanks.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+    JB
+
+----- Original Message -----
+> It looks like CVE-2004-0421 was regressed upstream a few years ago and
+> was not noticed.
+> 
+> References:
+> http://sourceforge.net/mailarchive/forum.php?thread_name=BANLkTikrnU6FJNQYFvwmt78hwpgKPVRd1Q%40mail.gmail.com&forum_name=png-mng-implement
+> https://bugzilla.redhat.com/show_bug.cgi?id=717084
+> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=65e6d5a34f49acdb362a0625a706c6b914e670af
+> 
+> Could a CVE name be supplied? I don't know if upstream has requested
+> one independently or not.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
