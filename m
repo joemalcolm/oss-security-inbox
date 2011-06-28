@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/5
-Message-ID: <1849403901.384299.1314370023764.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 26 Aug 2011 10:47:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/7
+Message-ID: <handler.631818.B631818.130924553522669.ackinfo@bugs.debian.org>
+Date: Tue, 28 Jun 2011 07:21:06 +0000
+From: owner@...s.debian.org (Debian Bug Tracking System)
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE Assignment - evolution CVE-2011-3201
+Subject: Bug#631818: Info received (CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism)
 Content-Type: text/plain; charset=utf-8
 
-Matt McCutchen reported a flaw in the way handles mailto: urls.
+Thank you for the additional information you have supplied regarding
+this Bug report.
 
-A malicious site can specify an attach= parameter to the URL, which can
-attach arbitrary files to a mail message.
+This is an automatically generated reply to let you know your message
+has been received.
 
-I've assigned CVE-2011-3201 to the issue.
+Your message is being forwarded to the package maintainers and other
+interested parties for their attention; they will reply in due course.
 
-Our bug contains what we currently know:
-https://bugzilla.redhat.com/show_bug.cgi?id=733504
+Your message has been sent to the package maintainer(s):
+ Tanguy Ortolo <tanguy+debian@...olo.eu>
 
-Thanks.
+If you wish to submit further information on this problem, please
+send it to 631818@...s.debian.org.
+
+Please do not send mail to owner@...s.debian.org unless you wish
+to report a problem with the Bug-tracking system.
 
 -- 
-    JB
+631818: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
+Debian Bug Tracking System
+Contact owner@...s.debian.org with problems
