@@ -1,42 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/3
-Message-ID: <20111201003946.GG21767@foo.fgeek.fi>
-Date: Thu, 1 Dec 2011 02:39:46 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/2
+Message-ID: <BANLkTimXodf9nRk9ibkyF3pYTN19GxW-rw@mail.gmail.com>
+Date: Tue, 28 Jun 2011 04:32:04 +0200
+From: Mango <h@...r.se>
 To: oss-security@...ts.openwall.com
-Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
+Subject: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 30, 2011 at 05:29:55PM -0700, Kurt Seifried wrote:
-> On 11/30/2011 05:11 PM, Solar Designer wrote:
-> 
-> > > All -
-> > >
-> > > On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
-> >> >> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
-> >> >> scripter framework.
-> > > We do not have a strict policy on whether security tool announcements
-> > > are appropriate in here or not.  My current stance on it is that
-> > > one-time announcements of tools with specific relevance to Open Source
-> > > are OK, whereas repeated new version announcements are not.  Thus, I
-> > > approved the announcement of XSSer this one time, but I don't intend to
-> > > approve an announcement of the next version of XSSer.  Please let me
-> > > know if you'd like this approach changed in some way.
-> > >
-> Agreed. Random thought: or if a project makes a major
-> breakthrough/update/change/once a year type of announcement is probably
-> sane too? I like hearing about new tools and definitely don't have time
-> to go through Google/etc any more =).
-> 
-> 
-> > > Meanwhile, the various CFPs and e-magazine issue announcements that are
-> > > arriving to oss-security are being rejected - as we decided previously.
-> > >
-> +1
-> 
-> > > Alexander
-> -- -Kurt Seifried / Red Hat Security Response Team
+Hi.
+I've found a bunch of vulnerabilities in the latest release of phpMyAdmin.
 
-Advisories of major improvements is good limit in my opinion and I really do mean major improvements. +1 for e-magazine case also. I don't see a point of spamming list yearly if nothing interesting has happened. Software vendors/developers should create their own mailing lists and/or RSS-feeds.
+Vuln 1:
+Any variable in the super global $_SESSION array can be overwritten or
+created with an arbitrate value.
 
-- Henri Salo
+Vuln 2:
+A (common) misconfiguration of phpMyAdmin allows content from the $_SESSION
+array can be written to a .php-file.
+Combined with Vuln 1 this becomes a conditional remote code execution.
+
+Vuln 3:
+Content from the $_SESSION array are (post authentication) used as input to
+a function that can execute PHP code.
+Under the current circumstances a previously unknown null byte string
+truncation in this function is used.
+I have only been able to reproduce this string truncation on PHP 5.2.13
+running on Windows 7 and I've failed to reproduce it on PHP 5.2.13 running
+on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
+the necessary C++ debugging skills to find out why this only works on my
+windows box.
+Combined with Vuln 1 this becomes an authenticated remote code execution.
+
+Vuln 4:
+Under a certain configuration an authenticated attacker can include a local
+file and interpret it's content as PHP.
+By modifying values in the $_SESSION array a cache holding the required
+configuration option can be temporarily altered during run time.
+If combined with Vuln 1 all configurations are vulnerable to this
+authenticated local file inclusion.
+
+
+Vuln 2 & 3 does not rely on Vuln 1 since the $_SESSION array could also be
+modified by a local attacker trying to elevate his/hers privileges in an
+improperly configured shared environment.
+Do I need 4 CVEs?
+
+Regards
+/Mango - ha.xxor.se
+
