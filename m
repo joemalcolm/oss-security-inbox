@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/7
-Message-ID: <20111101215133.GA22739@redhat.com>
-Date: Tue, 1 Nov 2011 15:51:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/9
+Message-ID: <20110628114608.GA7525@dhcp-25-225.brq.redhat.com>
+Date: Tue, 28 Jun 2011 13:46:09 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for wireshark flaws
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>
+Subject: CVE request: libvirt: integer overflow in VirDomainGetVcpus
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVEs assigned to the following wireshark flaws?
+It has been found that calling VirDomainGetVcpus with bogus parameters
+can lead to integer overflow and subsequent heap corruption. A remote
+attacker could use this flaw to crash libvirtd (DoS).
 
-
-1) An uninitialized variable in the CSN.1 dissector could cause a crash.
-
-Affects: 1.6.0 to 1.6.2, fixed in 1.6.3
-
-References:
-http://www.wireshark.org/security/wnpa-sec-2011-17.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6351
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=39140
-https://bugzilla.redhat.com/show_bug.cgi?id=750643
-
-
-2) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered that
-the Infiniband dissector could dereference a NULL pointer.
-
-Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
+Upstream patch:
+https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
 
 References:
-http://www.wireshark.org/security/wnpa-sec-2011-18.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6476
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=39500
-https://bugzilla.redhat.com/show_bug.cgi?id=750645
+https://bugzilla.redhat.com/show_bug.cgi?id=717199
+https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
 
-
-3) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered a
-buffer overflow in the ERF file reader.
-
-Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
-
-References:
-http://www.wireshark.org/security/wnpa-sec-2011-19.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6479
-http://anonsvn.wireshark.org/viewvc?view=revision&revision=39508
-https://bugzilla.redhat.com/show_bug.cgi?id=750648
-
+Thanks,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Petr Matousek / Red Hat Security Response Team
