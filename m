@@ -1,40 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/4
-Message-ID: <mpro.lv6ar0065ew5s081n.taviso@cmpxchg8b.com>
-Date: Thu, 24 Nov 2011 17:21:01 +0100
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Please REJECT CVE-2011-4112
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/6
+Message-ID: <4E098464.6080104@redhat.com>
+Date: Tue, 28 Jun 2011 09:36:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Mango <h@...r.se>, phpMyAdmin Security Team <security@...myadmin.net>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Petr Matousek <pmatouse@...hat.com> wrote:
+Hello Mango,
 
-> Hi,
-> 
-> could you please reject CVE-2011-4112 as it is not a security bug.
-> 
-> Reference: https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
-> 
-> Thank you,
+   thank you for your report.
 
-Unrelated, but if it did not require CAP_NET_ADMIN, would you have
-considered it a security bug?
+Wondering if you have contacted phpMyAdmin Security Team first (Cc-ed
+too) for their review, opinion and actions planned regarding the issues
+below? ( http://www.phpmyadmin.net/home_page/security/ )
 
-I was under the impression that there was general agreement that NULL derefs
-that are handled gracefully are not security bugs any more.
+Also, are there relevant upstream bugzilla issue tracking system:
+[1] http://sourceforge.net/tracker/?atid=377408&group_id=23067&func=browse
 
-Is this because you're setting panic_on_oops?
+records (where further information about the issues could be found) yet?
 
-I wonder if we should create a separate panic_on_null, as I agree
-panic_on_oops is probably the correct default so as to avoid transitioning
-into a potentially exploitable state. I think I'm reasonably confident in
-the handling of NULL derefs (or am I deluded? I havn't thought about it a
-great deal).
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Tavis.
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+On 06/28/2011 04:32 AM, Mango wrote:
+> Hi.
+> I've found a bunch of vulnerabilities in the latest release of phpMyAdmin.
+>
+> Vuln 1:
+> Any variable in the super global $_SESSION array can be overwritten or
+> created with an arbitrate value.
+>
+> Vuln 2:
+> A (common) misconfiguration of phpMyAdmin allows content from the $_SESSION
+> array can be written to a .php-file.
+> Combined with Vuln 1 this becomes a conditional remote code execution.
+>
+> Vuln 3:
+> Content from the $_SESSION array are (post authentication) used as input to
+> a function that can execute PHP code.
+> Under the current circumstances a previously unknown null byte string
+> truncation in this function is used.
+> I have only been able to reproduce this string truncation on PHP 5.2.13
+> running on Windows 7 and I've failed to reproduce it on PHP 5.2.13 running
+> on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
+> the necessary C++ debugging skills to find out why this only works on my
+> windows box.
+> Combined with Vuln 1 this becomes an authenticated remote code execution.
+>
+> Vuln 4:
+> Under a certain configuration an authenticated attacker can include a local
+> file and interpret it's content as PHP.
+> By modifying values in the $_SESSION array a cache holding the required
+> configuration option can be temporarily altered during run time.
+> If combined with Vuln 1 all configurations are vulnerable to this
+> authenticated local file inclusion.
+>
+>
+> Vuln 2&  3 does not rely on Vuln 1 since the $_SESSION array could also be
+> modified by a local attacker trying to elevate his/hers privileges in an
+> improperly configured shared environment.
+> Do I need 4 CVEs?
+>
+> Regards
+> /Mango - ha.xxor.se
+>
 
