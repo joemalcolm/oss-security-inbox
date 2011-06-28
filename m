@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/11
-Message-Id: <201102251020.02709.sgrubb@redhat.com>
-Date: Fri, 25 Feb 2011 10:20:02 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/13
+Message-ID: <20110628185341.GA18560@dhcp-25-225.brq.redhat.com>
+Date: Tue, 28 Jun 2011 20:53:41 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>, Nelson Elhage <nelhage@...lice.com>
-Subject: Re: CVE request: libcgroup: Failure to verify netlink messages
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: qemu-kvm: OOB memory access caused by negative vq notifies
 Content-Type: text/plain; charset=utf-8
 
-On Friday, February 25, 2011 12:58:13 am Eugene Teo wrote:
-> On 02/25/2011 12:32 PM, Nelson Elhage wrote:
-> > The cgrulesengd program from libcgroup failed to properly verify the
-> > sender of netlink messages, allowing arbitrary users to spoof events
-> > to the daemon, causing it to place processes into incorrect cgroups.
-> > 
-> > Note that the default configuration of cgrulesengd does not contain
-> > any any rules, so this is probably only usefully exploitable if an
-> > admin have specifically configured cgrulesengd to enforce some policy.
-> > 
-> > References:
-> > http://sourceforge.net/mailarchive/message.php?msg_id=27102603
-> 
-> Please use CVE-2011-1022.
+The virtio_queue_notify() function checks that the virtqueue number is
+less than the maximum number of virtqueues.  A signed comparison is
+used but the virtqueue number could be negative if a buggy or malicious
+guest is run. This results in memory accesses outside of the virtqueue
+array. 
 
-That's a shame. I reported this same problem in November last year:
+To trigger this issue the attacker needs to issue 32bit write to Queue
+Notify field of Virtio Header in the virtio pci config space even though
+the field is 16bit only by specs. Qemu-kvm allows that for the moment
+and provides whole 32bit value to the underlying functions.
 
-http://sourceforge.net/mailarchive/message.php?msg_id=26598749
+Unprivileged guest user could use this flaw to crash the guest (denial
+of service) or, possibly, escalate their privileges on the host.
 
-The current patch does not check  if (from_nla_len != sizeof(from_nla))  before making 
-decisions based on the header. I contacted upstream about this.
+Upstream patch:
+http://patchwork.ozlabs.org/patch/94604/
 
--Steve
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=717399
+http://patchwork.ozlabs.org/patch/94604/
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
