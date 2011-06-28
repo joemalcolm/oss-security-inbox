@@ -1,31 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/7
-Message-ID: <4EB7FF66.9090506@redhat.com>
-Date: Mon, 07 Nov 2011 16:55:18 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/11
+Message-Id: <201106281421.47262.ludwig.nussel@suse.de>
+Date: Tue, 28 Jun 2011 14:21:47 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Ruby (OpenSSL extension) -- Insecure way of creation exponent value by private RSA key generation
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Ludwig Nussel wrote:
+> Josh Bressers wrote:
+> >----- Original Message -----
+> >> Jan Lieskovsky wrote:
+> >> > Hello Josh, Steve, vendors,
+> >> >
+> >> >    based on Debian BTS report:
+> >> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
+> >> >        (first CVE-2011-XXYY required for Debian case)
+> >> >
+> >> > looked more into original report:
+> >> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> >> >
+> >> > and the first paragraph of [2] suggests:
+> >> > "When starting a program via "su - user -c program" the user session
+> >> > can escape to the parent session by using the TIOCSTI ioctl to push
+> >> > characters into the input buffer. This allows for example a non-root
+> >> > session to push "chmod 666 /etc/shadow" or similarly bad commands
+> >> > into
+> >> > the input buffer such that after the end of the session they are
+> >> > executed."
+> >> >
+> >> > this should get a CVE-2005-YYZZ CVE id.
+> >> >
+> >> > Could you allocate these?
+> >>
+> >> ping! :-)
+> >
+> >I'm not sure if this should get two IDs. It's really one issue, which isn't
+> >actually fixed in su.
+> >
+> >The fundamental issue is that tools like su and sudo keep the tty open.
+> >The patch in question closes the tty for the case of su -c, but not for
+> >just running su by itself. It is incomplete.
+> 
+> I'm not worried too much about the interactive su case really. The 
+> usual direction there is user->root, not the other way around I 
+> suppose. "su -c" might be used by (%post) scripts though as seen 
+> with ikiwiki.
 
-   a security flaw was found in the way the OpenSSL extension of the
-Ruby programming language (of version from the Git trunk repository
-after 2011-09-01 up to 2011-11-03) generated exponent value to be used
-for private RSA key generation (the bug caused the exponent for the
-generated key to be always '1'). A remote attacker could use this flaw
-to bypass / corrupt integrity of services, depending on strong private
-RSA keys generation mechanism.
+So can we have a CVE for that issue at least?
 
-Relevant upstream patch:
-[1] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=33633
+cu
+Ludwig
 
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=751800
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
