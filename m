@@ -1,17 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/2
-Message-ID: <4D255131.7000604@redhat.com>
-Date: Thu, 06 Jan 2011 13:20:49 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/3
+Message-ID: <4E095F26.30008@redhat.com>
+Date: Tue, 28 Jun 2011 10:27:10 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-NONE kernel: PHONET signedness issue
+Subject: Re: CVE request: kernel: oom: use pte pages in OOM score
 Content-Type: text/plain; charset=utf-8
 
-re: http://seclists.org/fulldisclosure/2011/Jan/39
+On 06/28/2011 09:32 AM, Eugene Teo wrote:
+> PTE pages are invisible memory user. A local, unprivileged user could
+> leverage this flaw to trigger a denial of service. AFAIK, this was
+> introduced in a63d83f427f (v2.6.36-rc1), fixed in f755a042d (v2.6.39-rc6).
+> 
+> http://git.kernel.org/linus/a63d83f427f
+> http://git.kernel.org/linus/f755a042d
+> 
 
-Just in case someone tries to request a CVE name for this, I'm not 
-requesting for one because if you need CAP_SYS_ADMIN capability to 
-exploit this, you are already privileged.
+Assigned CVE-2011-2498
 
-Thanks, Eugene
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
