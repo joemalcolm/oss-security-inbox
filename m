@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/19
-Message-Id: <20110412194323.bb5defbe.michael.s.gilbert@gmail.com>
-Date: Tue, 12 Apr 2011 19:43:23 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/13
+Message-ID: <20110628185341.GA18560@dhcp-25-225.brq.redhat.com>
+Date: Tue, 28 Jun 2011 20:53:41 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: qemu-kvm: OOB memory access caused by negative vq notifies
 Content-Type: text/plain; charset=utf-8
 
-akuster wrote:
-> So publicly available advisories are a requirement.  What about access
-> to the patches?
-> 
-> Is there somewhere I can point my management to that defines these new
-> requirements or is this too soon?
+The virtio_queue_notify() function checks that the virtqueue number is
+less than the maximum number of virtqueues.  A signed comparison is
+used but the virtqueue number could be negative if a buggy or malicious
+guest is run. This results in memory accesses outside of the virtqueue
+array. 
 
-I think it may be more productive for you to propose your method of
-participation, and let the community decide.  You can use
-redhat/debian/ubuntu as (mostly ideal) models of participation.
+To trigger this issue the attacker needs to issue 32bit write to Queue
+Notify field of Virtio Header in the virtio pci config space even though
+the field is 16bit only by specs. Qemu-kvm allows that for the moment
+and provides whole 32bit value to the underlying functions.
 
-Best wishes,
-Mike
+Unprivileged guest user could use this flaw to crash the guest (denial
+of service) or, possibly, escalate their privileges on the host.
+
+Upstream patch:
+http://patchwork.ozlabs.org/patch/94604/
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=717399
+http://patchwork.ozlabs.org/patch/94604/
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
