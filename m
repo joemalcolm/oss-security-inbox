@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/2
-Message-Id: <201102211233.19436.thomas@suse.de>
-Date: Mon, 21 Feb 2011 12:33:19 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/8
+Message-ID: <4E099406.9050501@initfour.nl>
+Date: Tue, 28 Jun 2011 10:42:46 +0200
+From: Herman van Rink <rink@...tfour.nl>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ruby: FileUtils is vulnerable to symlink race attacks + Exception methods can bypass $SAFE
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Mango <h@...r.se>,  phpMyAdmin Security Team <security@...myadmin.net>
+Subject: Re: [Phpmyadmin-security] CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On 28-06-11 09:36, Jan Lieskovsky wrote:
+> Hello Mango,
+>
+>    thank you for your report.
 
-AFAIK this two need a CVE-ID:
-1) http://www.ruby-lang.org/en/news/2011/02/18/fileutils-is-vulnerable-to-symlink-race-attacks/
-2) http://www.ruby-lang.org/en/news/2011/02/18/exception-methods-can-bypass-safe/
+Thanks for the info, we'll investigate.
+Mango, could you provide some more details, off-list preferably, on the
+exact methods you used?
+
+
+> Wondering if you have contacted phpMyAdmin Security Team first (Cc-ed
+> too) for their review, opinion and actions planned regarding the issues
+> below? ( http://www.phpmyadmin.net/home_page/security/ )
+
+This had not yet been reported to us, thanks for cc'ing.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Met vriendelijke groet / Regards,
+
+Herman van Rink 
+Initfour websolutions
+
 
