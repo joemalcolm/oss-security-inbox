@@ -1,36 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/5
-Message-ID: <20110704221721.6a1d22bd@redhat.com>
-Date: Mon, 4 Jul 2011 22:17:21 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/15
+Message-ID: <615919935.998757.1309292668366.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 16:24:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: secalert_us@...cle.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Mambo CMS 4.6.x | Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 01 Jul 2011 15:28:23 -0700 Oracle Security Alerts wrote:
+Please use CVE-2011-2499
 
-> >> We do not expect Red Hat or other vendors to evaluate impact of
-> >> security vulnerabilities on Oracle Linux, 
-> 
-> > Maybe I'm mis-reading the above statement, but it seems to imply
-> > it's not uncommon for you to re-do security patches that were
-> > applied to RHEL packages before building them as OEL updates.  Do
-> > you have any specific examples to point to (on- or off-list), so we
-> > can possibly check what mistakes we did?
-> 
-> We are not saying that your security fixes can be incomplete or have
-> mistakes. Oracle Linux is different from RHEL.
-> Issues that do not affect RHEL may affect Oracle Linux or vice versa.
-> We may also choose to fix an issue in a different way.
-
-They are different, but as OEL is based on RHEL, I believe they're
-still sufficiently similar (same upstream versions, mostly the same
-patches and spec files) to expect most flaws affecting components
-shipped in both should affect both distros in the same way.  Hence the
-interest in those differences that required different fixes in the
-past, or were for the common component but did not affect one of the
-distros.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> 1. OVERVIEW
+> 
+> Mambo CMS 4.6.5 and lower versions are vulnerable to Cross Site
+> Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Mambo is a full-featured, award-winning content management system that
+> can be used for everything from simple websites to complex corporate
+> applications. It is used all over the world to power government
+> portals, corporate intranets and extranets, ecommerce sites, nonprofit
+> outreach, schools, church, and community sites. Mambo's "power in
+> simplicity" also makes it the CMS of choice for many small businesses
+> and personal sites.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Multiple parameters are not properly sanitized, which allows attacker
+> to conduct Cross Site Scripting attack.
+> This may allow an attacker to create a specially crafted URL that
+> would execute arbitrary script code in a victim's browser.
+> If a user has already logged in to the application, an XSS attack will
+> execute promptly.
+> If not, it will execute after the user's successful logging in.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> Tested on Mambo CMS 4.6.5 (current as of 2011-06-27)
