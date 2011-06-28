@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/4
-Message-ID: <4EE3B365.50104@redhat.com>
-Date: Sat, 10 Dec 2011 12:30:45 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/15
+Message-ID: <615919935.998757.1309292668366.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 28 Jun 2011 16:24:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Paul <pawlkt@...il.com>
-Subject: Re: cve request: bat_socket_read memory corruption
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Mambo CMS 4.6.x | Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 12/10/2011 09:13 AM, Paul wrote:
-> Hi
->
-> can I get a CVE for this:
-> https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005904.html
-> ?
->
-> If root does read() on a specific socket, it's possible to corrupt
-> (kernel) memory over network, with an ICMP packet, if B.A.T.M.A.N. mesh
-> protocol is used.
->
-I'm going to need first hand source information, i.e. links to the
-code/commits/project stating it's an issue or something similar.
+Please use CVE-2011-2499
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
 
+----- Original Message -----
+> 1. OVERVIEW
+> 
+> Mambo CMS 4.6.5 and lower versions are vulnerable to Cross Site
+> Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Mambo is a full-featured, award-winning content management system that
+> can be used for everything from simple websites to complex corporate
+> applications. It is used all over the world to power government
+> portals, corporate intranets and extranets, ecommerce sites, nonprofit
+> outreach, schools, church, and community sites. Mambo's "power in
+> simplicity" also makes it the CMS of choice for many small businesses
+> and personal sites.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Multiple parameters are not properly sanitized, which allows attacker
+> to conduct Cross Site Scripting attack.
+> This may allow an attacker to create a specially crafted URL that
+> would execute arbitrary script code in a victim's browser.
+> If a user has already logged in to the application, an XSS attack will
+> execute promptly.
+> If not, it will execute after the user's successful logging in.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> Tested on Mambo CMS 4.6.5 (current as of 2011-06-27)
