@@ -1,52 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/3
-Message-ID: <4DADB653.6010708@redhat.com>
-Date: Tue, 19 Apr 2011 18:20:35 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/6
+Message-ID: <4E098464.6080104@redhat.com>
+Date: Tue, 28 Jun 2011 09:36:04 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Gerlof Langeveld <gerlof@...omputing.nl>
-Subject: Re: CVE Request -- atop: Symlink attacks via process accounting file
+To: Mango <h@...r.se>, phpMyAdmin Security Team <security@...myadmin.net>
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Jan Lieskovsky wrote:
-> 
-> Hello Josh, Steve, vendors,
-> 
->   atop v1.23 and earlier created process accounting file 
-> (/tmp/atop.d/atop.acct)
-> in an insecure way. A local attacker could use this flaw to conduct symlink
-> attacks (e.g. overwrite arbitrary system files).
+Hello Mango,
 
-Looked more into this issue and seems it may not be possible to misuse this
-issue. The steps are below:
+   thank you for your report.
 
-tmp]# mkdir /etc/hello
-tmp]# ln -s /etc/hello atop.d
-tmp]# service atop start
-Starting atop: [  OK  ]
+Wondering if you have contacted phpMyAdmin Security Team first (Cc-ed
+too) for their review, opinion and actions planned regarding the issues
+below? ( http://www.phpmyadmin.net/home_page/security/ )
 
-But atop detects the /tmp/atop.d directory already exists (/var/log/atop/atop.log contains):
-warning: no process exit detection (can not create directory /tmp/atop.d)
+Also, are there relevant upstream bugzilla issue tracking system:
+[1] http://sourceforge.net/tracker/?atid=377408&group_id=23067&func=browse
 
-So doesn't seem to be exploitable => taking the CVE request back, no CVE needed.
+records (where further information about the issues could be found) yet?
 
-Should have checked this earlier, sorry for the noise.
-
-Regards, Jan.
+Thank you && Regards, Jan.
 --
 Jan iankko Lieskovsky / Red Hat Security Response Team
 
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
-> [2] http://secunia.com/advisories/44175/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=697848
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> 
+On 06/28/2011 04:32 AM, Mango wrote:
+> Hi.
+> I've found a bunch of vulnerabilities in the latest release of phpMyAdmin.
+>
+> Vuln 1:
+> Any variable in the super global $_SESSION array can be overwritten or
+> created with an arbitrate value.
+>
+> Vuln 2:
+> A (common) misconfiguration of phpMyAdmin allows content from the $_SESSION
+> array can be written to a .php-file.
+> Combined with Vuln 1 this becomes a conditional remote code execution.
+>
+> Vuln 3:
+> Content from the $_SESSION array are (post authentication) used as input to
+> a function that can execute PHP code.
+> Under the current circumstances a previously unknown null byte string
+> truncation in this function is used.
+> I have only been able to reproduce this string truncation on PHP 5.2.13
+> running on Windows 7 and I've failed to reproduce it on PHP 5.2.13 running
+> on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
+> the necessary C++ debugging skills to find out why this only works on my
+> windows box.
+> Combined with Vuln 1 this becomes an authenticated remote code execution.
+>
+> Vuln 4:
+> Under a certain configuration an authenticated attacker can include a local
+> file and interpret it's content as PHP.
+> By modifying values in the $_SESSION array a cache holding the required
+> configuration option can be temporarily altered during run time.
+> If combined with Vuln 1 all configurations are vulnerable to this
+> authenticated local file inclusion.
+>
+>
+> Vuln 2&  3 does not rely on Vuln 1 since the $_SESSION array could also be
+> modified by a local attacker trying to elevate his/hers privileges in an
+> improperly configured shared environment.
+> Do I need 4 CVEs?
+>
+> Regards
+> /Mango - ha.xxor.se
+>
 
