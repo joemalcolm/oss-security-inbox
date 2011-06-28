@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/10
-Message-ID: <4EB95D1B.5080508@redhat.com>
-Date: Tue, 08 Nov 2011 09:47:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/8
+Message-ID: <4E099406.9050501@initfour.nl>
+Date: Tue, 28 Jun 2011 10:42:46 +0200
+From: Herman van Rink <rink@...tfour.nl>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Re: CVE request: Android: vold stack buffer overflow
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Mango <h@...r.se>,  phpMyAdmin Security Team <security@...myadmin.net>
+Subject: Re: [Phpmyadmin-security] CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
-> On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
->> A local user with group "log" on Android may send a malformed message
->> to vold ("volume daemon"), causing a stack buffer overflow.  This has
->> been demonstrated to be exploitable to escalate privileges to root on
->> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
->> arbitrary heap object and triggering a use-after-free condition [1].
->> It appears the bug was silently patched in Honeycomb (3.x), but note
->> that since Honeycomb is not open source, it does not fall within the
->> scope of this list.  Bug discovered and exploited by the Revolutionary
->> team [2].
->>
-> Oops, a few minor corrections.
+On 28-06-11 09:36, Jan Lieskovsky wrote:
+> Hello Mango,
 >
-> Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
-> the libsysutils library, and was demonstrated to be exploitable via
-> vold, which makes use of the affected library function.  Sorry for the
-> noise.
->
->> -Dan
->>
->> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
->> [2] http://revolutionary.io/
->>
-Please use CVE-2011-4123 for this issue.
+>    thank you for your report.
+
+Thanks for the info, we'll investigate.
+Mango, could you provide some more details, off-list preferably, on the
+exact methods you used?
+
+
+> Wondering if you have contacted phpMyAdmin Security Team first (Cc-ed
+> too) for their review, opinion and actions planned regarding the issues
+> below? ( http://www.phpmyadmin.net/home_page/security/ )
+
+This had not yet been reported to us, thanks for cc'ing.
 
 -- 
+Met vriendelijke groet / Regards,
 
--Kurt Seifried / Red Hat Security Response Team
+Herman van Rink 
+Initfour websolutions
+
 
