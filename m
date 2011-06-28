@@ -1,38 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/9
-Message-ID: <20110810172320.GA8187@inutil.org>
-Date: Wed, 10 Aug 2011 19:23:20 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/18
+Message-Id: <20110628155319.93c9cace.akpm@linux-foundation.org>
+Date: Tue, 28 Jun 2011 15:53:19 -0700
+From: Andrew Morton <akpm@...ux-foundation.org>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 10, 2011 at 06:49:59AM +0800, Eugene Teo wrote:
-> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
-> > Hi,
-> > the following two issues also seem to warrant a CVE assignment:
-> > 
-> > 1. staging: comedi: fix infoleak to userspace
-> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
-> > 
-> > (It's a staging driver and I'm unsure whether we have assigned
-> >  CVE IDs for staging drivers in the past. OTOH, this driver
-> >  is enabled in the Debian 6.0 kernel)
+On Sun, 26 Jun 2011 19:57:23 -0700 Linus Torvalds <torvalds@...ux-foundation.org> wrote:
+
+> On Fri, Jun 24, 2011 at 5:34 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> >
+> > I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
 > 
-> We don't as code from the staging drivers are usually are substandard
-> and usually not supported.
+> Hmm. Should we just round them down to 1kB boundaries or something?
+> People *do* want to know about IO accounting, but I agree that giving
+> things at a byte granularity ends up giving way too much information.
+> When you can see how many bytes something read off a tty, that's a
+> problem.
+> 
+> Returning accounting information at a 1k granularity should make it
+> impractical to use that to guess keys etc. It still gives *some*
+> information (and enough for rough statistics), but it doesn't give the
+> level of detail required for any simple attack.
+> 
+> Sometimes excessive precision isn't a good thing.
+> 
+> Andrew - the IO_ACCT stuff went through you (back in 2006), the
+> taskstats did too, methinks. Comments?
+> 
 
-I agree on that approach for new drivers in the works (e.g. gma500), but
-the Comedi driver is quite old and in use outside the kernel/staging
-version as well. (Debian is providing a separate comedi source package 
-since 2002.).
+Random thoughts:
 
-> Btw, can you please mail me a copy of the /boot/config of the most
-> recent Debian kernel for my reference?
+a) I haven't thought very hard about it, but isn't it the case that
+   fuzzifying the byte counts in this manner will still permit the
+   length of these things to be determined, albeit with a larger data
+   set?
 
-Please let me know if you need anything in addition to the files
-Yves-Alexis sent you.
+b) Where does the problem lie?  Is it with the kernel, which exposes
+   accurate accounting?  Or is it with userspace, which accidentally
+   exposes sensitive information by failing to account for the kernel's
+   exposure of accurate accounting information?  
 
-Cheers,
-        Moritz
+   - Assumes that userspace can be changed to obscure this
+     information.  Erroneously, I think ;)
+
+c) Should this information be world-readable?  Perhaps we should add
+   more rational privileges here.  Back-compatibility issues.
+
+
+
+If rounding the counts to a 1k granularity will indeed defeat the
+attack (I'm unsure) then I'd suggest that a fix would be to perform
+that fuzzification if the receiving process doesn't have suitable
+permissions.  So if the user is reading his own stats or is root, he
+still gets byte-resolution results.  This keeps the stats as useful as
+we can make them and reduces the back-compatibility damage.
+
+What might be the extent of the back-compatibility damage?  It's hard
+to believe that anyone would care about a 1k error in bulk IO stats. 
+But if there's someone out there who uses these interfaces to detect
+whether the monitored task is doing *anything* then we'll break them. 
+eg, "did my data logging task just receive a packet from my
+scintillator experiment".  
