@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/3
-Message-ID: <4E2864C9.2080606@redhat.com>
-Date: Thu, 21 Jul 2011 19:41:29 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/9
+Message-ID: <20110628114608.GA7525@dhcp-25-225.brq.redhat.com>
+Date: Tue, 28 Jun 2011 13:46:09 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>
+Subject: CVE request: libvirt: integer overflow in VirDomainGetVcpus
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+It has been found that calling VirDomainGetVcpus with bogus parameters
+can lead to integer overflow and subsequent heap corruption. A remote
+attacker could use this flaw to crash libvirtd (DoS).
 
-   this:
-   [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
-   [2] 
-http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
-   [3] http://lwn.net/Alerts/449415/
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
+Upstream patch:
+https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
 
-doesn't seem to have CVE identifier yet (though Sebastian Krahmer
-requested one for related fscaps issue).
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=717199
+https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
 
-Josh, Steve, could you allocate a CVE id for this?
-
-[4] contains also further issue description + links to SUSE patches
-(from [2]). Could not find their plaintext (*.src.rpm) version though.
-
-So Sebastian, if you could share those with us, it would be appreciated.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
