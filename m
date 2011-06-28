@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/5
-Message-Id: <20110303201100.b0ae71a1.michael.s.gilbert@gmail.com>
-Date: Thu, 3 Mar 2011 20:11:00 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/5
+Message-ID: <4E098058.6090405@redhat.com>
+Date: Tue, 28 Jun 2011 09:18:48 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Luciano Bello <luciano@...ian.org>, 631818@...s.debian.org
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 3 Mar 2011 16:41:07 -0800 Greg KH wrote:
-> On Thu, Mar 03, 2011 at 07:26:21PM -0500, Dan Rosenberg wrote:
-> > Of course failing to anticipate security impact is bound to happen in
-> > the kernel; it frequently happens in userland too, and is unavoidable.
-> >  That doesn't mean we can't try, and it doesn't mean we should be
-> > overly paranoid and have security folks manually audit every patch.
-> > Currently, maintainers and bug reporters are expected to ask
-> > themselves a simple question when deciding whether or not to CC
-> > stable: "does this fix a bug or security issue, or is it a new
-> > feature?".  Similarly, I don't think it's too much to ask for people
-> > to consider the question of "does this bug it allow an unprivileged
-> > user to crash the system, gain additional access, or otherwise cross
-> > privilege boundaries?"  And if the answer is "I don't know, maybe?",
-> > then they should CC this list to be safe.  I think this would result
-> > in not nearly as much volume as you're anticipating.
-> 
-> They do this already today, that's what security@...nel.org is for, and
-> it gets a bit of traffic like this every week.
+Hello Josh, Steve, vendors,
 
-Is this list open to the public?  It doesn't seem to be available on
-http://vger.kernel.org/vger-lists.html.
+   it was found that DokuWiki's RSS embedding mechanism did not properly
+escape user-provided links. An attacker could use this flaw to conduct
+cross-site scripting (XSS) attacks, potentially leading to arbitrary
+JavaScript code execution.
 
-Best wishes,
-Mike
+References:
+-----------
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
+[2] 
+http://www.certa.ssi.gouv.fr/site/CERTA-2011-AVI-366/CERTA-2011-AVI-366.html
+[3] 
+http://www.freelists.org/post/dokuwiki/Hotfix-Release-20110525a-Rincewind
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=717146
+
+Solution:
+---------
+This issue has been addressed in upstream "2011-05-25 Rincewind"
+release:
+[5] http://www.dokuwiki.org/changes
+
+This issue doesn't seem to have a CVE identifier yet. Could you allocate
+one?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
