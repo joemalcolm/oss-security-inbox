@@ -1,52 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/5
-Message-ID: <4EEF75F6.3090501@redhat.com>
-Date: Mon, 19 Dec 2011 10:35:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: python-virtualenv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/10
+Message-ID: <Pine.LNX.4.64.1106281357430.17115@wotan.suse.de>
+Date: Tue, 28 Jun 2011 14:05:35 +0200 (CEST)
+From: Michael Matz <matz@...e.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, 27 Jun 2011, Solar Designer wrote:
 
-On 12/19/2011 09:39 AM, Nico Golde wrote:
-> Hi,
-> * Kurt Seifried <kseifried@...hat.com> [2011-12-19 17:38]:
->>
->> On 12/19/2011 09:21 AM, Nico Golde wrote:
->>> An insecure /tmp file handling was found in python-virtualenv:
->>> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
->>>
->>> Can someone assign a CVE id for this?
->> Link is 404
->
-> Sorry, c&p mistake:
-> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5
->
-> Cheers
-> Nico
-Please use CVE-2011-4617 for this issue.
+> > What's this 0xff business that crept up recently?  It's all characters 
+> > with the high bit set, not just 0xff, that pose problems.  Let's be 
+> > precise with these issues.
+> 
+> We're considering the state we'll be in after upgrade to fixed code. 
+> 0xff is the only known practical way to have a correctly computed hash 
+> match one computed by the buggy code in cases where the latter was in 
+> fact computed incorrectly.  Since a large subset of such incorrectly 
+> computed hashes had some of the original passwords' characters ignored, 
+> some working passwords for them are too easy to find, including in some 
+> cases passwords that will work even after the bug in the code is fixed. 
+> Those passwords will contain specifically the 0xff character.  This is 
+> why we may want to treat the 0xff character specially.
 
-- -- 
+Thanks, so, let me see if I got this: the original password contained some 
+8bit chars (0xff or not doesn't matter), the buggy hashes lead to easily 
+finding passwords with the same hash, some of those conflicting passwords 
+might have 0xff chars in them, and _those_ then will sometimes still 
+produce a hash conflict even with the fixed blowfish code.
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+If so, treating passwords containing 0xff special seems sensible.
 
-iQIcBAEBAgAGBQJO73X2AAoJEBYNRVNeJnmTKzcP/1MwuORxy1F/L1JfuI+2P5Yc
-5ZZzKjyk65Vb0ycpbAypqNUyO3gDnqhSsMSYaftUoSKZ+QVqdO9zvSxPqbTomPWd
-oJ0H8zUWEOxrBg7kMnywBt//o6N7i0P+TYe7i1U2s+0z9iwABeZl6cTRG7DJtBO5
-lQgpgIxuWtJ3NJNobopVESbgMo6pYGxgMOQPFEwdexJRQQDMC63tPMi2iwKUECwy
-8Lv5AohE1TjfVnW20TvwPpXf4grwLcBTg2/goli8iiB9hpRs7ik895ZIpGdUASG1
-zdj7fNOE5YveMLPoWB8XUCX9PewSV0fKd26iug7S1qWPXl++mKgaI04XmU6EulFm
-dBGtrStq8kFxjMUwaF0A6HEQAvbnFRIPnmu5R2pb+kIFzzsPJ4eF/Hm9v+MiVEm3
-CarNBoKArhyTBjLnAZE1k4IPnHV8DwlFdTyEYPMOSLyzJEahogvenB2cnczdJ8ay
-b3DFhNq1XCCNp6OfR+md6pR5qBIQ5l5kmxb0zupQoddinCEfKDUsC5haAfu+bPqH
-TFx7jCvviq4+lLkdvmSJsaECqajN1ZPh8b9IwFnTP0GEzTMi0KPoNzSuAVuQTtMt
-B8vUuNnLLimDOSe8i5vEcViNbbU87T2/8hh0VuxGNA2zXWz0kmb3DpTkTdT/WAzy
-ml/3hyswpqqbyTRKbi7Q
-=fJiE
------END PGP SIGNATURE-----
 
+Ciao,
+Michael.
