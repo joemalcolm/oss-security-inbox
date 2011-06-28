@@ -1,27 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/3
-Message-ID: <20110406094738.GA3124@suse.de>
-Date: Wed, 6 Apr 2011 11:47:38 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/2
+Message-ID: <BANLkTimXodf9nRk9ibkyF3pYTN19GxW-rw@mail.gmail.com>
+Date: Tue, 28 Jun 2011 04:32:04 +0200
+From: Mango <h@...r.se>
 To: oss-security@...ts.openwall.com
-Subject: CVE for ruby on rails XSS fixes
+Subject: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi.
+I've found a bunch of vulnerabilities in the latest release of phpMyAdmin.
 
-Can someone assign a CVE for the XSS issue described in
+Vuln 1:
+Any variable in the super global $_SESSION array can be overwritten or
+created with an arbitrate value.
 
-https://github.com/rails/rails/blob/38df020c95beca7e12f0188cb7e18f3c37789e20/actionpack/CHANGELOG
+Vuln 2:
+A (common) misconfiguration of phpMyAdmin allows content from the $_SESSION
+array can be written to a .php-file.
+Combined with Vuln 1 this becomes a conditional remote code execution.
 
-?
-thx,
--s
+Vuln 3:
+Content from the $_SESSION array are (post authentication) used as input to
+a function that can execute PHP code.
+Under the current circumstances a previously unknown null byte string
+truncation in this function is used.
+I have only been able to reproduce this string truncation on PHP 5.2.13
+running on Windows 7 and I've failed to reproduce it on PHP 5.2.13 running
+on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
+the necessary C++ debugging skills to find out why this only works on my
+windows box.
+Combined with Vuln 1 this becomes an authenticated remote code execution.
+
+Vuln 4:
+Under a certain configuration an authenticated attacker can include a local
+file and interpret it's content as PHP.
+By modifying values in the $_SESSION array a cache holding the required
+configuration option can be temporarily altered during run time.
+If combined with Vuln 1 all configurations are vulnerable to this
+authenticated local file inclusion.
 
 
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Vuln 2 & 3 does not rely on Vuln 1 since the $_SESSION array could also be
+modified by a local attacker trying to elevate his/hers privileges in an
+improperly configured shared environment.
+Do I need 4 CVEs?
+
+Regards
+/Mango - ha.xxor.se
 
