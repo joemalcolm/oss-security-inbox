@@ -1,37 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/13
-Message-Id: <20110401203753.7413BA6E00@smtp.hushmail.com>
-Date: Fri, 01 Apr 2011 16:37:53 -0400
-From: zardoz@...h.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/16
+Message-ID: <20110629215334.GA15871@openwall.com>
+Date: Thu, 30 Jun 2011 01:53:34 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Michael Matz <matz@...e.de>, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2011-04-02 at 00:17 +0400, Solar Designer wrote:
-Reed, all -
-> 
-> On Fri, Apr 01, 2011 at 11:09:50AM -0700, Reed Loden wrote:
-> > I'm a (now former) vendor-sec member who would like to be added 
-to the
-> > new closed list.
-> 
-> When posting statements like the above, please also list the 
-project(s)
-> that you represent.
-> 
-> It is not yet decided whether and how this may affect who is 
-accepted
-> and onto which of the new lists (if there's more than one), but 
-I'd like
-> to have the information readily available.
+On Tue, Jun 28, 2011 at 02:05:35PM +0200, Michael Matz wrote:
+> Thanks, so, let me see if I got this: the original password contained some 
+> 8bit chars (0xff or not doesn't matter), the buggy hashes lead to easily 
+> finding passwords with the same hash, some of those conflicting passwords 
+> might have 0xff chars in them, and _those_ then will sometimes still 
+> produce a hash conflict even with the fixed blowfish code.
 
-Hi,
+The above is almost right, but not exactly.  Not all buggy hashes for
+passwords with 8-bit chars lead to easily finding other passwords with
+the same hash, but many do.
 
-I previously had a backdoor on the vendor-sec box and would like to 
-be included in the new vendor-sec list.  If you could migrate my 
-backdoor to the new infrastructure, it would be much appreciated.
+Simple example:
 
-My public key should still be in /root/.ssh/authorized_keys.
+With the buggy code, all of: "\xa3", "ab\xa3", and "\xff\xff\xa3"
+produce the same hash.
 
-- Zardoz
+With the fixed code, "\xff\xff\xa3" is the only easily found password
+that produces that same hash.
 
+(This matches your understanding.)
+
+No extra unauthorized access risk, OpenBSD compatible hash:
+
+With the buggy code, "\xa3" "ab" (3 chars total) produces a certain
+hash.  No other password may be easily found that produces the same hash.
+
+With the fixed code, the same password produces the same hash.  (So the
+user can log in.)
+
+No extra unauthorized access risk, OpenBSD incompatible hash:
+
+With the buggy code, "a\xa3" (2 chars total) produces a certain hash.
+No other password may be easily found that produces the same hash.
+
+With the fixed code, no password may be easily found that produces the
+same hash.  (So the user cannot log in.)
+
+Complicated example:
+
+With the buggy code, "1\xa3" "345" (5 chars total) produces a certain
+hash.  "\xff\xa3" "345" and some other strings produce the same hash.
+Among those other strings is "\xff\xa3" "34" "\xff\xff\xff\xa3" "345"
+(11 chars total).
+
+With the fixed code, "\xff\xa3" "345" no longer produces the same hash,
+but "\xff\xa3" "34" "\xff\xff\xff\xa3" "345" still does.
+
+> If so, treating passwords containing 0xff special seems sensible.
+
+Yes.  In "Simple" and "Complicated" examples above, an attacker wouldn't
+need to know/guess some of the original password's characters to log in,
+even after the code is fixed, unless we introduce special treatment of
+0xff chars.
+
+Alexander
