@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/5
-Message-ID: <20110305201750.GB20321@serpens.de>
-Date: Sat, 5 Mar 2011 21:17:51 +0100
-From: "S.P.Zeidler" <spz@...BSD.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/14
+Message-ID: <18104020.1024492.1309377425735.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Jun 2011 15:57:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: libvirt: integer overflow in VirDomainGetVcpus
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2011-2511.
 
-Thus wrote Solar Designer (solar@...nwall.com):
+Thanks.
 
-> > - If yes, would it be an idea to confine or split into lists of focus groups?
-> >   (like Linux vendors, BSD vendors, all OSS source using vendors, etc?)
-> 
-> My current proposal is: split into several sub-lists.  I'd start with
-> three: Linux vendors, *BSD vendors, security "researchers".  The vendor
-> groups would be for externally submitted reports (by non-members) and
-> for cross-vendor discussions.
-
-I'd suggest four, then: Linux (kernel and libc), BSD (kernel and other
-items shared between BSDs, but not commonly seen in Linux distributions),
-shared/userland (who eg doesn't have OpenSSL?), and researchers
-(no opinion on the latter).
-
-best regards,
-	spz
 -- 
-spz@...pens.de (S.P.Zeidler) spz@...BSD.org
+    JB
+
+
+----- Original Message -----
+> It has been found that calling VirDomainGetVcpus with bogus parameters
+> can lead to integer overflow and subsequent heap corruption. A remote
+> attacker could use this flaw to crash libvirtd (DoS).
+> 
+> Upstream patch:
+> https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=717199
+> https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
