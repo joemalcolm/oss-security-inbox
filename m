@@ -1,18 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/3
-Message-ID: <4D9ADF9C.809@redhat.com>
-Date: Tue, 05 Apr 2011 17:23:40 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Vouching system (was Re: Closed list)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/7
+Message-ID: <20110629173519.GA4831@albatros>
+Date: Wed, 29 Jun 2011 21:35:19 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-> Maybe once we have a list of initial members, we should start using a
-> vouching system, that the applicant must be referred by someone from the
-> list, and we only accept members whom we met and trust. Just a suggestion.
+On Wed, Jun 29, 2011 at 10:32 -0700, Linus Torvalds wrote:
+> On Wed, Jun 29, 2011 at 10:21 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> >
+> > So, with rounded read_characters value it's possible to learn privkey
+> > length.
+> 
+> Umm. You can trivially figure that out from the public key lenth
+> already, can't you?
 
-A repost.
+No, the attacker here have no information about the key at all.  It
+tries to authorize with a random key and a random password.
 
-Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
