@@ -1,16 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/6
-Message-ID: <20110127220336.GA4069@pisco.westfalen.local>
-Date: Thu, 27 Jan 2011 23:03:36 +0100
-From: Moritz Mühlenhoff <jmm@...til.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: puppet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/10
+Message-ID: <20110629180805.GA6907@albatros>
+Date: Wed, 29 Jun 2011 22:08:05 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for this vulnerability in the Puppet configuration
-management system:
-http://www.mail-archive.com/puppet-users@googlegroups.com/msg16429.html
+On Wed, Jun 29, 2011 at 22:03 +0400, Vasiliy Kulikov wrote:
+> Now the attacker has to increment the fake password length (incrementing
+> the resulted read_characters of the dead login task) and wait for
+> the successful victim's login.  After ~log2(1024) tries (binary search)
+> he learns precise password length.
 
-Cheers,
-        Moritz
+Not log2(1024), but log2(passlen).  It doesn't matter, actually.
+
+Also if constants are unknown, it still allows to know the delta between
+old and new password lengthes on user password change.
+
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
