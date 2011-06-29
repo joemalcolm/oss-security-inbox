@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/18
-Message-ID: <20110224235706.GU4212@outflux.net>
-Date: Thu, 24 Feb 2011 15:57:06 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: /proc/$pid/ leaks contents across setuid exec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/2
+Message-ID: <BANLkTi=KT4waCOJEWHa25qLVVZYO1SG5Ag@mail.gmail.com>
+Date: Tue, 28 Jun 2011 17:49:24 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Andrew Morton <akpm@...ux-foundation.org>
+Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Jun 28, 2011 at 5:12 PM, Linus Torvalds
+<torvalds@...ux-foundation.org> wrote:
+>
+>> If rounding the counts to a 1k granularity will indeed defeat the
+>> attack (I'm unsure) then I'd suggest that a fix would be to perform
+>> that fuzzification if the receiving process doesn't have suitable
+>> permissions.  So if the user is reading his own stats or is root, he
+>> still gets byte-resolution results.  This keeps the stats as useful as
+>> we can make them and reduces the back-compatibility damage.
+>
+> Sure.
 
-I'd like to get a CVE assigned for this information leak issue:
-https://lkml.org/lkml/2011/2/7/368
+Actually, due to the whole netlink thing, it's not obvious who the
+data goes to, so I think the taskstats interface simply needs to round
+unconditionally.
 
-Pre-opened file descriptors in /proc/$pid/ can bypass DAC allowing
-visibility into setuid process state, especially leaking ASLR offset.
+If you want the exact thing, you can use /proc/<pid>/io, which now
+does the security checking as per Vasiliy.
 
-Thanks,
+So some patch like the appended? Vasiliy, this is different from your
+2/2, but it's simpler and I think sufficient. And shouldn't break
+iotop. What do you think? I agree that it's not perfect, but it seems
+to be sufficient at least for the particular passwd attack, no? Or is
+there some way you can fool sshd to read some other user-supplied data
+so that you can trick it into giving multiple values that you control,
+and thus see exactly when the IO counts overflow..
 
--Kees
+                   Linus
 
--- 
-Kees Cook
-Ubuntu Security Team
+View attachment "patch.diff" of type "text/x-patch" (1633 bytes)
