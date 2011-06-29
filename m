@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/12
-Message-ID: <20110705054919.GA14599@openwall.com>
-Date: Tue, 5 Jul 2011 09:49:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Colin Percival <cperciva@...ebsd.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/8
+Message-ID: <BANLkTi=8ofrzud2DVhus0VD0M1tdqmfF7A@mail.gmail.com>
+Date: Wed, 29 Jun 2011 10:32:40 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Vasiliy Kulikov <segoon@...nwall.com>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 09:24:45PM -0700, Colin Percival wrote:
-> I haven't had time to investigate, in part because I don't have any systems
-> running that ancient openssh any more.  I'm interested to hear if anyone has
-> tracked down exactly where the bug was, though.
+On Wed, Jun 29, 2011 at 10:21 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+>
+> So, with rounded read_characters value it's possible to learn privkey
+> length.
 
-Thanks for your reply.
+Umm. You can trivially figure that out from the public key lenth
+already, can't you?
 
-Since I also have other uses for my time, would anyone else investigate,
-please?  I'd appreciate it.  Perhaps install FreeBSD 4.x into a VM.
-Sounds like fun for someone who has time.
+So that's not very special, afaik.
 
-I don't think the bug is in OpenSSH per se, nor in FreeBSD 4's PAM (my
-understanding is that it was cut-down Linux-PAM at the time, which was
-replaced with OpenPAM in 5.x), nor in pam_opie.  libopie sounds more
-plausible.  But I could be wrong.
-
-Alexander
+                    Linus
