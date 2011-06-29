@@ -1,35 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/2
-Message-ID: <20110304002431.GA20114@suse.de>
-Date: Fri, 4 Mar 2011 01:24:31 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/11
+Message-ID: <2004393315.1024379.1309377152704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Jun 2011 15:52:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 07:12:24PM +0100, Marcus Meissner wrote:
-> Hi folks,
+This sounds like 4 issues. It's possible it's less, but I suspect duping
+will be less work than splitting in the future. IDs below.
+
+----- Original Message -----
+> Hi.
+> I've found a bunch of vulnerabilities in the latest release of
+> phpMyAdmin.
 > 
-> As moderator of vendor-sec and one of the sysadmins of lst.de I noticed
-> a break-in into the lst.de machine last week, which was likely used to
-> sniff email traffic of vendor-sec. This incident probably happened on Jan 20
-> as confirmed by timestamp, but might have existed for longer.
+> Vuln 1:
+> Any variable in the super global $_SESSION array can be overwritten or
+> created with an arbitrate value.
+
+CVE-2011-2505
+
 > 
-> As the system in use at lst.de is quite old and the admin team and myself
-> does not really have the time anymore to keep it on a secure level, we
-> would like to move the list to another hosting place.
+> Vuln 2:
+> A (common) misconfiguration of phpMyAdmin allows content from the
+> $_SESSION
+> array can be written to a .php-file.
+> Combined with Vuln 1 this becomes a conditional remote code execution.
+
+CVE-2011-2506
+
 > 
-> I have disabled the specific backdoor, but as I am not sure how the
-> break-in happened it might reappear. So I recommend not mailing embargoed
-> issues to vendor-sec@....de at this time.
+> Vuln 3:
+> Content from the $_SESSION array are (post authentication) used as
+> input to
+> a function that can execute PHP code.
+> Under the current circumstances a previously unknown null byte string
+> truncation in this function is used.
+> I have only been able to reproduce this string truncation on PHP
+> 5.2.13
+> running on Windows 7 and I've failed to reproduce it on PHP 5.2.13
+> running
+> on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
+> the necessary C++ debugging skills to find out why this only works on
+> my
+> windows box.
+> Combined with Vuln 1 this becomes an authenticated remote code
+> execution.
 
-So after I posted this (and went for some beers) the attacker read this
-and reentered the lst.de machine, went amok and destroyed the machine's
-installation. The machine has now been shutdown.
+CVE-2011-2507
 
-So everyone please consider vendor-sec@....de is dead and gone at this point,
-successors (or not) will hopefully result out of this discussion.
+> 
+> Vuln 4:
+> Under a certain configuration an authenticated attacker can include a
+> local
+> file and interpret it's content as PHP.
+> By modifying values in the $_SESSION array a cache holding the
+> required
+> configuration option can be temporarily altered during run time.
+> If combined with Vuln 1 all configurations are vulnerable to this
+> authenticated local file inclusion.
+> 
 
-Ciao, Marcus (ex-moderator)
+CVE-2011-2508
 
-Content of type "application/pgp-signature" skipped
+Thanks.
+
+-- 
+    JB
