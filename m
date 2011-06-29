@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/3
-Message-ID: <4E07F77C.7070301@redhat.com>
-Date: Mon, 27 Jun 2011 11:22:36 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: remote buffer overflow in bluetooth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/2
+Message-ID: <BANLkTi=KT4waCOJEWHa25qLVVZYO1SG5Ag@mail.gmail.com>
+Date: Tue, 28 Jun 2011 17:49:24 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Andrew Morton <akpm@...ux-foundation.org>
+Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-On 06/25/2011 07:15 AM, Dan Rosenberg wrote:
-> A remote user can provide a small value for the command size field in
-> the command header of an l2cap configuration request, resulting in an
-> integer underflow when subtracting the size of the configuration request
-> header.  This results in copying a very large amount of data via
-> memcpy() and destroying the kernel heap. [1]
-> 
-> -Dan
-> 
-> [1] http://marc.info/?l=linux-kernel&m=130891911909436&w=2
+On Tue, Jun 28, 2011 at 5:12 PM, Linus Torvalds
+<torvalds@...ux-foundation.org> wrote:
+>
+>> If rounding the counts to a 1k granularity will indeed defeat the
+>> attack (I'm unsure) then I'd suggest that a fix would be to perform
+>> that fuzzification if the receiving process doesn't have suitable
+>> permissions.  So if the user is reading his own stats or is root, he
+>> still gets byte-resolution results.  This keeps the stats as useful as
+>> we can make them and reduces the back-compatibility damage.
+>
+> Sure.
 
-Please use CVE-2011-2497.
+Actually, due to the whole netlink thing, it's not obvious who the
+data goes to, so I think the taskstats interface simply needs to round
+unconditionally.
 
-Eugene
+If you want the exact thing, you can use /proc/<pid>/io, which now
+does the security checking as per Vasiliy.
+
+So some patch like the appended? Vasiliy, this is different from your
+2/2, but it's simpler and I think sufficient. And shouldn't break
+iotop. What do you think? I agree that it's not perfect, but it seems
+to be sufficient at least for the particular passwd attack, no? Or is
+there some way you can fool sshd to read some other user-supplied data
+so that you can trick it into giving multiple values that you control,
+and thus see exactly when the IO counts overflow..
+
+                   Linus
+
+View attachment "patch.diff" of type "text/x-patch" (1633 bytes)
