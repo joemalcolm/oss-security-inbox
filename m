@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/13
-Message-ID: <20110301202256.GO2114@redhat.com>
-Date: Tue, 1 Mar 2011 13:22:56 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: Ralf Haferkamp <rhafer@...e.de>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/5
+Message-ID: <20110629131030.GA30811@albatros>
+Date: Wed, 29 Jun 2011 17:10:30 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-01 17:38:51 +0100] Ralf Haferkamp wrote:
+On Wed, Jun 29, 2011 at 15:11 +0400, Vasiliy Kulikov wrote:
+> 2) as you say here:
+> 
+> READ = CONST + SENSITIVE + CONTROLLABLE
+> 
+> If CONST is known and CONTROLLABLE is controlled by an attacker then he
+> may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
 
->Am Montag 28 Februar 2011, 17:38:43 schrieb Vincent Danen:
->> * [2011-02-28 14:16:06 +0100] Thomas Biege wrote:
->> >The following might also need a CVE-ID.
->> >
->> >https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
->> >---------------------------------------------------------------------
->> >--------- http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
->> >
->> >That's a pretty bad DOS. Everybody (even unauthenticated users) can
->> >kill the server by submitting a MODRDN request with an empty "olddn"
->> >value and "remove
->> >
->> >old RDN" set (-r). Example:
->> >      ldapmodrdn -x -H ldap://ldapserver -r '' o=test
->> >
->> >---------------------------------------------------------------------
->> >---------
->>
->> I've just tried this here.  I noted in your bug report that you
->> indicate that it seems to affect all of your currently maintained
->> products, but I've tried it here against openldap 2.3.43 and do not
->> see a crash (I can reproduce the crash on 2.4.19).
->It seems you are right. Even though the bug slipped into CVS HEAD already
->in 2006 it never got merged into the 2.3 release branch. So only 2.4.x
->releases are affected by this. Sorry for causing confusion here.
+(X+1) kb - 1 and (X+1) kb of course, they are rounded to X and X+1 kbs,
+respectively.
 
-Thanks for that clarification, Ralf.
+> respectively, revealing len(SENSITIVE).
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
