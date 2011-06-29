@@ -1,51 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/4
-Message-ID: <1578624989.449766.1307044898092.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Jun 2011 16:01:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Caolán McNamara <caolanm@...hat.com>, David Tardon <dtardon@...hat.com>, Evgeny Legerov <admin@...evydis.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenOffice.org -- InteVyDis Demo of OpenOffice 0day. Released with VulnDisco 8.8 pack (release date May,2009)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/10
+Message-ID: <20110629180805.GA6907@albatros>
+Date: Wed, 29 Jun 2011 22:08:05 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Jun 29, 2011 at 22:03 +0400, Vasiliy Kulikov wrote:
+> Now the attacker has to increment the fake password length (incrementing
+> the resulted read_characters of the dead login task) and wait for
+> the successful victim's login.  After ~log2(1024) tries (binary search)
+> he learns precise password length.
 
+Not log2(1024), but log2(passlen).  It doesn't matter, actually.
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> A new security flaw, potentially allowing execution of arbitrary code
-> with the privileges of the user running the OpenOffice.org suite tools
-> has been reported by the InteVyDis security researchers team:
-> [1] http://intevydis.com/oo_0day.html
-> [2] http://twitter.com/#!/legerov/status/75482755194032128
-> 
-> References:
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=709705
-> 
-> Unfortunately there doesn't seem to be further detailed information
-> available right now. But from the Twitter post, looks this issue is
-> still valid against OpenOffice.org v3.3.
-> 
-> Hopefully Evgeny Legerov of InteVyDis security researchers team
-> (Cc-ed)
-> could provide further background information about this issue, i.e.
-> if it is an old issue (like date of 2009 would suggest) and thus a CVE
-> identifier has been already assigned to this issue or is this
-> completely
-> new issue (which did not get fixed from 2009 till now) and thus it
-> requires a new CVE id.
-> 
-> Evgeny, any further information you could provide here, to clear the CVE
-> doubt is really appreciated.
-> 
-> Once the CVE doubt cleared, could you allocate a CVE id for this issue?
-> 
+Also if constants are unknown, it still allows to know the delta between
+old and new password lengthes on user password change.
 
-I'd say this is plenty to give a CVE ID.
-
-Use CVE-2011-2177
-
-Thanks.
 
 -- 
-    JB
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
