@@ -1,26 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/1
-Message-ID: <20111225002724.GA31068@foo.fgeek.fi>
-Date: Sun, 25 Dec 2011 02:27:24 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: security@...mla.org
-Subject: CVE-request for three 2009 Joomla issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/4
+Message-ID: <20110629111107.GA29236@albatros>
+Date: Wed, 29 Jun 2011 15:11:07 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-I didn't find CVE-identifiers for these issues:
+On Tue, Jun 28, 2011 at 17:49 -0700, Linus Torvalds wrote:
+> Actually, due to the whole netlink thing, it's not obvious who the
+> data goes to,
 
-1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
-http://osvdb.org/show/osvdb/56276
-http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
+In send_cpu_listeners() there is a loop over all listeners,
+genlmsg_unicast() is called for exclusively for each listening socket.
+It's possible to make 2 taskstats structs, one with precise information,
+one with rouned information.
 
-2) Joomla! Missing JEXEC Check Weakness Path Disclosure
-http://osvdb.org/show/osvdb/56277
-http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
 
-3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
-http://osvdb.org/show/osvdb/64578
+> If you want the exact thing, you can use /proc/<pid>/io, which now
+> does the security checking as per Vasiliy.
 
-Secunia advisory for three issues: http://secunia.com/advisories/35899/
+The patch lacks proper locking against a race with exec (noticed by
+KOSAKI).  task->signal->cred_guard_mutex should be fine, but I hesitate
+whether it's fine to mix it with lock_task_sighand() and if mix then in
+what order.  If keeping ->cred_guard_mutex prevents theads from exiting
+then sighand is redundant.
 
-- Henri Salo
+
+> So some patch like the appended?
+
+1) The filtering on exit looks OK, but fill_stats_for_tgid() is not filtered:
+
+	if (first->signal->stats)
+		memcpy(stats, first->signal->stats, sizeof(*stats));
+	else
+		memset(stats, 0, sizeof(*stats));
+
+2) syscalls counts is probably needs another rounding constant, it is
+not measures in kbs.  However, 1024 might be OK if round char number by
+1024.
+
+
+> Vasiliy, this is different from your
+> 2/2, but it's simpler and I think sufficient. And shouldn't break
+> iotop. What do you think? I agree that it's not perfect, but it seems
+> to be sufficient at least for the particular passwd attack, no?
+
+Indeed, such rounding does break this specific exploit.
+
+
+> Or is
+> there some way you can fool sshd to read some other user-supplied data
+> so that you can trick it into giving multiple values that you control,
+> and thus see exactly when the IO counts overflow..
+
+I'm trying to find a way to bypass 1k rounding.  I see 2 abstract ways:
+
+1) a program generates X bytes io traffic for every 1 byte of sensitive
+information.  X should be as close to kb boundary as possible.
+
+2) as you say here:
+
+READ = CONST + SENSITIVE + CONTROLLABLE
+
+If CONST is known and CONTROLLABLE is controlled by an attacker then he
+may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
+respectively, revealing len(SENSITIVE).
+
+
+I cannot find vulnerable programs now, but I believe there are some of them
+among widespread programs.
+
+
+The core problem here is that by giving *some part* of information about
+internal task activity the kernel violating the task privacy, strictly
+speaking.  A program doing IO expects this activity to be kept private.
+This revealted part may or may not reveal sensible information, depends
+on the specific program.
+
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
