@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/7
-Message-ID: <4D9C9419.3020908@mvista.com>
-Date: Wed, 06 Apr 2011 06:26:01 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/9
+Message-ID: <20110629180304.GA5060@albatros>
+Date: Wed, 29 Jun 2011 22:03:04 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+One more thing, this is more dangerous, but very conditional.
+
+Create one system account with no files (a victim).  This simplifies
+measurements.
+
+As an attacker:
+    Start taskstats listener in the background.
+    Swith to tty1, push SAK to kill current login task.
+    Enter some fake username and password, e.g. 1:1.
+    The login fails, of course.
+
+Now the attacker hides and the victim comes to tty1.
+    He enters his username:password.
+    The login succeeds from the first try.
+    The victim exits from the shell.
+
+Attacker measures login's read_characters value.  The victim has to
+succeed from the first try and shouldn't push SAK :)
+
+Now the attacker has to increment the fake password length (incrementing
+the resulted read_characters of the dead login task) and wait for
+the successful victim's login.  After ~log2(1024) tries (binary search)
+he learns precise password length.
 
 
-On 04/01/2011 08:03 AM, Josh Bressers wrote:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
-> 
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
-> 
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
-> 
-> Thanks.
-> 
-Please subscribe me to the new list. I was a vendor-sec subscriber for
-MontaVista Software.
+As exiting "login" just waits for the child to exit to call
+pam_close_session(), victim's activity doesn't really add any noise.
 
-pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
-uid Armin Kuster <akuster@...sta.com>
-Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
