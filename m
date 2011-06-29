@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/2
-Message-Id: <20110604145329.d5e87709.michael.s.gilbert@gmail.com>
-Date: Sat, 4 Jun 2011 14:53:29 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/7
+Message-ID: <20110629173519.GA4831@albatros>
+Date: Wed, 29 Jun 2011 21:35:19 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> I went to http://www.us-cert.gov/cas/signup.html to see if there's a
-> public CERT mailing list I should be on in order to receive new
-> Vulnerability Notes (that are being made public) with no delay (or at
-> least with less delay).  Unfortunately, for Vulnerability Notes there
-> appears to be an Atom feed only, no mailing list (which I'd prefer).
-> Perhaps set one up?
+On Wed, Jun 29, 2011 at 10:32 -0700, Linus Torvalds wrote:
+> On Wed, Jun 29, 2011 at 10:21 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> >
+> > So, with rounded read_characters value it's possible to learn privkey
+> > length.
+> 
+> Umm. You can trivially figure that out from the public key lenth
+> already, can't you?
 
-As a practical matter, you could follow the Debian
-secure-testing-commits mailing list [0] or check out the svn repo [1].
-Updates to Mitre's CVE database are synced there twice a day.
+No, the attacker here have no information about the key at all.  It
+tries to authorize with a random key and a random password.
 
-
-Unfortunately, Mitre's databases pushes tend to have a couple day delay
-built in.  I've been intending to convert to the NVD database, which
-seems to get updated on exactly the disclosure date, but I haven't
-gotten around to that yet.
-
-Best wishes,
-Mike
-
-[0]http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/secure-testing-commits
-[1]svn://svn.debian.org/svn/secure-testing
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
