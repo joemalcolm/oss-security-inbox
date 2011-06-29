@@ -1,38 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/10
-Message-ID: <4E7F5910.2080508@php.net>
-Date: Sun, 25 Sep 2011 18:38:40 +0200
-From: Rasmus Lerdorf <rasmus@....net>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Zeev Suraski <zeev@...d.com>, Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/3
+Message-ID: <4E0ABF68.6070906@kernel.org>
+Date: Wed, 29 Jun 2011 14:00:08 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/2011 04:10 PM, Pierre Joye wrote:
-> On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
-> 
->> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
->> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
+On 06/29/2011 04:22 AM, Josh Bressers wrote:
+> ----- Original Message -----
 >>
->> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
+>> It can be used to learn ssh and ftp password length. If privsep is
+>> enabled in openssh and vsftpd, the unprivileged process' activity very
+>> precisely shows password information.
+>>
+>> For vsftpd read characters count is strlen("USER username\r\n") +
+>> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
+>> related to a privileged parent. If measure statistics between user and
+>> passwords commands, actual password length and username length can be
+>> gathered.
+>>
+>> For ssh, vice versa, networking activity is constant in packets length,
+>> but interprocess communications, specifically passwords, depend on user
+>> input.
+>>
+>> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
+>> CONST.
+>>
+>> Another daemons with more or less constant io activity might be
+>> vulnerable too. PAM greatly complicates precise measurements.
+>>
+>>
+>> I think it needs 2 CVE, one for /proc/PID/io and another for
+>> taskstats.
+>>
+>> https://lkml.org/lkml/2011/6/24/88
+>>
 > 
-> The whole point is that some code was not having any issue before this
-> change. If the check was done earlier using is_a then this unexpected
-> behavior will happen, and that actually causes a security issue in
-> existing working code. The example in the blog post is very good one,
-> it clearly shows that the impact on existing code is not only about
-> wrongly implemented autoloader, or someone not disabling
-> allow_url_fopen (I can imagine local file include being an issue as
-> well under some circumstances).
+> I can't find a nice description of both issues. Can you give me one or two
+> sentence explanations with a few references for the CVE database?
 > 
-> All in all, there is no shame or bad image to get a new CVE for
-> something like that, I even see it as a good thing as it will:
+> Once I have those I'll give it two IDs.
 
-I didn't read the thread from the beginning, but is there an actual
-exploit here? Presumably the autoloader code in question isn't doing an
-fopen/eval to execute the code and since allow_url_include is disabled
-by default, remote includes aren't an issue in the default install. So
-are we talking about the tiny number of people who have explicitly
-enabled allow_url_include and are running the code with this bad autoloader?
+I have assigned the CVE names for these two issues.
 
--Rasmus
+Thanks, Eugene
