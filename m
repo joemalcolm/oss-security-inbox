@@ -1,43 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/5
-Message-ID: <4ED3A651.4010609@redhat.com>
-Date: Mon, 28 Nov 2011 08:18:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/5
+Message-ID: <20110629131030.GA30811@albatros>
+Date: Wed, 29 Jun 2011 17:10:30 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2011 02:09 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a privilege escalation flaw was found in the way 'celeryd-multi',
-> 'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
-> an asynchronous task queue based on distributed message passing,
-> performed sanitization of --uid and --gid arguments, provided to
-> the tools on the command line (only effective user id was changed,
-> with the real one remaining unchanged). A local attacker could use
-> this flaw to send messages via the message broker or use the Pickle
-> serializer to load and execute arbitrary code with elevated privileges.
->
-> References:
-> [1] http://www.celeryproject.org/news/celery-24-released/
-> [2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
-> [3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
-> [4] https://github.com/ask/celery/pull/544
->
-> Relevant upstream patch:
-> [5]
-> https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
->
-> Could you allocate a CVE id for this issue?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2011-4356 for this issue.
+On Wed, Jun 29, 2011 at 15:11 +0400, Vasiliy Kulikov wrote:
+> 2) as you say here:
+> 
+> READ = CONST + SENSITIVE + CONTROLLABLE
+> 
+> If CONST is known and CONTROLLABLE is controlled by an attacker then he
+> may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
+
+(X+1) kb - 1 and (X+1) kb of course, they are rounded to X and X+1 kbs,
+respectively.
+
+> respectively, revealing len(SENSITIVE).
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
