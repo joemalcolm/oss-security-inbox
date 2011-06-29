@@ -1,54 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/9
-Message-ID: <AANLkTikcuwsoWPPd3T-BE72X8SjUtbAg6E=D3CjwadqB@mail.gmail.com>
-Date: Thu, 3 Mar 2011 21:42:17 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/13
+Message-ID: <1601135524.1024438.1309377311109.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Jun 2011 15:55:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Luciano Bello <luciano@...ian.org>
+Subject: Re: CVE Request -- DokuWiki -- XSS in DokuWiki's RSS embedding mechanism
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Please use CVE-2011-2510.
 
-This was originally sent to the now-defunct vendor-sec mailing list.
-Seeing how it's a relatively low-severity issue and that we're
-currently lacking a mechanism for coordination among package
-maintainers and vendors, this list seems like a perfectly acceptable
-venue for discussing how to fix it.
+Thanks.
 
-I discovered that essentially every suid mount helper that uses
-addmntent() (or invokes util-linux mount, which in turn calls
-addmntent()) to add entries to /etc/mtab fails to anticipate a low
-value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
-/etc/mtab and possibly manipulate mountpoint options.  Affected
-software includes at least:
+-- 
+    JB
 
-mount.cifs (samba)
-fusermount (FUSE)
-mount (util-linux)
-ncpmount (ncpfs)
-vmware-hgfsmounter (open-vm-tools)
 
-Also affected are all their unmount equivalents.
-
-This can be exploited by checking the current size of /etc/mtab,
-setting an RLIMIT_FSIZE of some small amount greater than that, and
-invoking a suid mount helper.  The edits to /etc/mtab will be
-truncated to the ulimit and no newline will be appended, so multiple
-invocations allow near-arbitrary appending to /etc/mtab.  addmntent()
-will octal-encode most special characters, which makes exploitation
-beyond simple corruption not quite as straightforward, but I'm
-confident that with some creativity it would be possible to perform
-unauthorized unmounting, for example.
-
-There are a few possible options   We could patch glibc to try to
-raise the rlimit in addmntent().  Or we could fix every suid mount
-helper to raise the rlimit or have proper error handling for the case
-when addmntent() fails.  This final option requires that mtab editing
-be done in a temporary file and aborted on failure, which isn't the
-case for all helpers.
-
-Of course, once we figure out how to fix this, we can talk about
-assigning CVEs, etc.
-
-Regards,
-Dan
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found that DokuWiki's RSS embedding mechanism did not properly
+> escape user-provided links. An attacker could use this flaw to conduct
+> cross-site scripting (XSS) attacks, potentially leading to arbitrary
+> JavaScript code execution.
+> 
+> References:
+> -----------
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=631818
+> [2]
+> http://www.certa.ssi.gouv.fr/site/CERTA-2011-AVI-366/CERTA-2011-AVI-366.html
+> [3]
+> http://www.freelists.org/post/dokuwiki/Hotfix-Release-20110525a-Rincewind
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=717146
+> 
+> Solution:
+> ---------
+> This issue has been addressed in upstream "2011-05-25 Rincewind"
+> release:
+> [5] http://www.dokuwiki.org/changes
+> 
+> This issue doesn't seem to have a CVE identifier yet. Could you
+> allocate
+> one?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
