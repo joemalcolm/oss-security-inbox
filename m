@@ -1,43 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/5
-Message-ID: <4ED3A651.4010609@redhat.com>
-Date: Mon, 28 Nov 2011 08:18:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/4
+Message-ID: <20110629111107.GA29236@albatros>
+Date: Wed, 29 Jun 2011 15:11:07 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2011 02:09 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a privilege escalation flaw was found in the way 'celeryd-multi',
-> 'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
-> an asynchronous task queue based on distributed message passing,
-> performed sanitization of --uid and --gid arguments, provided to
-> the tools on the command line (only effective user id was changed,
-> with the real one remaining unchanged). A local attacker could use
-> this flaw to send messages via the message broker or use the Pickle
-> serializer to load and execute arbitrary code with elevated privileges.
->
-> References:
-> [1] http://www.celeryproject.org/news/celery-24-released/
-> [2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
-> [3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
-> [4] https://github.com/ask/celery/pull/544
->
-> Relevant upstream patch:
-> [5]
-> https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
->
-> Could you allocate a CVE id for this issue?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2011-4356 for this issue.
+On Tue, Jun 28, 2011 at 17:49 -0700, Linus Torvalds wrote:
+> Actually, due to the whole netlink thing, it's not obvious who the
+> data goes to,
+
+In send_cpu_listeners() there is a loop over all listeners,
+genlmsg_unicast() is called for exclusively for each listening socket.
+It's possible to make 2 taskstats structs, one with precise information,
+one with rouned information.
+
+
+> If you want the exact thing, you can use /proc/<pid>/io, which now
+> does the security checking as per Vasiliy.
+
+The patch lacks proper locking against a race with exec (noticed by
+KOSAKI).  task->signal->cred_guard_mutex should be fine, but I hesitate
+whether it's fine to mix it with lock_task_sighand() and if mix then in
+what order.  If keeping ->cred_guard_mutex prevents theads from exiting
+then sighand is redundant.
+
+
+> So some patch like the appended?
+
+1) The filtering on exit looks OK, but fill_stats_for_tgid() is not filtered:
+
+	if (first->signal->stats)
+		memcpy(stats, first->signal->stats, sizeof(*stats));
+	else
+		memset(stats, 0, sizeof(*stats));
+
+2) syscalls counts is probably needs another rounding constant, it is
+not measures in kbs.  However, 1024 might be OK if round char number by
+1024.
+
+
+> Vasiliy, this is different from your
+> 2/2, but it's simpler and I think sufficient. And shouldn't break
+> iotop. What do you think? I agree that it's not perfect, but it seems
+> to be sufficient at least for the particular passwd attack, no?
+
+Indeed, such rounding does break this specific exploit.
+
+
+> Or is
+> there some way you can fool sshd to read some other user-supplied data
+> so that you can trick it into giving multiple values that you control,
+> and thus see exactly when the IO counts overflow..
+
+I'm trying to find a way to bypass 1k rounding.  I see 2 abstract ways:
+
+1) a program generates X bytes io traffic for every 1 byte of sensitive
+information.  X should be as close to kb boundary as possible.
+
+2) as you say here:
+
+READ = CONST + SENSITIVE + CONTROLLABLE
+
+If CONST is known and CONTROLLABLE is controlled by an attacker then he
+may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
+respectively, revealing len(SENSITIVE).
+
+
+I cannot find vulnerable programs now, but I believe there are some of them
+among widespread programs.
+
+
+The core problem here is that by giving *some part* of information about
+internal task activity the kernel violating the task privacy, strictly
+speaking.  A program doing IO expects this activity to be kept private.
+This revealted part may or may not reveal sensible information, depends
+on the specific program.
+
+
+Thanks,
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
