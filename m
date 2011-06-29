@@ -1,56 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/11
-Message-ID: <1830487479.425541.1306959803399.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 1 Jun 2011 16:23:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/6
+Message-ID: <20110629172152.GA2971@albatros>
+Date: Wed, 29 Jun 2011 21:21:52 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> I didn't see any CVE's in the Wireshark Bug tracking/advisory nor could I
-> find these in the Red Hat Bugzilla (but I'm guessing as a CNA they have
-> CVE #'s assigned?)
+On Wed, Jun 29, 2011 at 17:10 +0400, Vasiliy Kulikov wrote:
+> On Wed, Jun 29, 2011 at 15:11 +0400, Vasiliy Kulikov wrote:
+> > 2) as you say here:
+> > 
+> > READ = CONST + SENSITIVE + CONTROLLABLE
+> > 
+> > If CONST is known and CONTROLLABLE is controlled by an attacker then he
+> > may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
 > 
-> Wireshark 1.2.17 fixes the following vulnerabilities:
-> 
-> Large/infinite loop in the DICOM dissector. (Bug 5876)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-1957
+> (X+1) kb - 1 and (X+1) kb of course, they are rounded to X and X+1 kbs,
+> respectively.
 
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Diameter dictionary file could crash Wireshark.
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-1958
+OK, what I've explored:
 
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted snoop file could crash Wireshark. (Bug 5912)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-1959
+For the same ssh if try to log and send pubkey/password auth requests:
 
-> 
-> David Maciejak of Fortinet's FortiGuard Labs discovered that malformed
-> compressed capture data could crash Wireshark. (Bug 5908)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-2174
+read = C1 + (C2 + X)*A + C3*B
 
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Visual Networks file could crash Wireshark. (Bug
-> 5934)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-CVE-2011-2175
+    where 1 <= A+B <= 6, 0 < A, 0 <= B
+    A - number of pubkey requests
+    B - number of password requests
+    C1, C2, C3 - system dependant constants
 
-> 
-> 
-> http://www.wireshark.org/security/wnpa-sec-2011-07.html
-> http://www.wireshark.org/security/wnpa-sec-2011-08.html
-> 
+Trying all possible pairs (A,B) I get a set of rounded read_characters.
+Comparing it with generated table of all possible lengthes and possible
+inputs (A,B) I learn an interval of possible authorized_keys files
+sizes.  For my system I can learn privkey length because for all
+possible key len values (768, 1024, 2048) the intervals are different.
 
-Thanks.
+So, with rounded read_characters value it's possible to learn privkey
+length.
+
+
+Not a password length, but already something.
 
 -- 
-    JB
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
