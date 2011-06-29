@@ -1,18 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/5
-Message-id: <46788CE8-49E9-4562-B1AA-0D9DAA7FF7A0@apple.com>
-Date: Sun, 17 Jul 2011 13:52:45 -0700
-From: Geoffrey Keating <geoffk@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/11
+Message-ID: <2004393315.1024379.1309377152704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 29 Jun 2011 15:52:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request and info: freetype flaw to jailbreak iphone
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+This sounds like 4 issues. It's possible it's less, but I suspect duping
+will be less work than splitting in the future. IDs below.
 
-On 16/07/2011, at 11:53 AM, Vincent Danen wrote:
+----- Original Message -----
+> Hi.
+> I've found a bunch of vulnerabilities in the latest release of
+> phpMyAdmin.
+> 
+> Vuln 1:
+> Any variable in the super global $_SESSION array can be overwritten or
+> created with an arbitrate value.
 
-> I'm not sure if this has received a CVE name or not (if it did, it was
-> likely assigned to iOS specifically and not freetype).
+CVE-2011-2505
 
-We have CVE-2011-0226 for the type1 issue, see
+> 
+> Vuln 2:
+> A (common) misconfiguration of phpMyAdmin allows content from the
+> $_SESSION
+> array can be written to a .php-file.
+> Combined with Vuln 1 this becomes a conditional remote code execution.
 
-http://support.apple.com/kb/HT4802
+CVE-2011-2506
+
+> 
+> Vuln 3:
+> Content from the $_SESSION array are (post authentication) used as
+> input to
+> a function that can execute PHP code.
+> Under the current circumstances a previously unknown null byte string
+> truncation in this function is used.
+> I have only been able to reproduce this string truncation on PHP
+> 5.2.13
+> running on Windows 7 and I've failed to reproduce it on PHP 5.2.13
+> running
+> on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
+> the necessary C++ debugging skills to find out why this only works on
+> my
+> windows box.
+> Combined with Vuln 1 this becomes an authenticated remote code
+> execution.
+
+CVE-2011-2507
+
+> 
+> Vuln 4:
+> Under a certain configuration an authenticated attacker can include a
+> local
+> file and interpret it's content as PHP.
+> By modifying values in the $_SESSION array a cache holding the
+> required
+> configuration option can be temporarily altered during run time.
+> If combined with Vuln 1 all configurations are vulnerable to this
+> authenticated local file inclusion.
+> 
+
+CVE-2011-2508
+
+Thanks.
+
+-- 
+    JB
