@@ -1,89 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/6
-Message-ID: <CAPYM6VxpaoOB2pjR7iXV43Ui0V-s1YdSWHPqbmHEbAJgBhUsHA@mail.gmail.com>
-Date: Fri, 26 Aug 2011 23:59:33 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/3
+Message-ID: <4E0ABF68.6070906@kernel.org>
+Date: Wed, 29 Jun 2011 14:00:08 +0800
+From: Eugene Teo <eugeneteo@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Jcow CMS 4.2 <= | Cross Site Scripting
+CC: Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Jcow CMS 4.2 <= | Cross Site Scripting
+On 06/29/2011 04:22 AM, Josh Bressers wrote:
+> ----- Original Message -----
+>>
+>> It can be used to learn ssh and ftp password length. If privsep is
+>> enabled in openssh and vsftpd, the unprivileged process' activity very
+>> precisely shows password information.
+>>
+>> For vsftpd read characters count is strlen("USER username\r\n") +
+>> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
+>> related to a privileged parent. If measure statistics between user and
+>> passwords commands, actual password length and username length can be
+>> gathered.
+>>
+>> For ssh, vice versa, networking activity is constant in packets length,
+>> but interprocess communications, specifically passwords, depend on user
+>> input.
+>>
+>> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
+>> CONST.
+>>
+>> Another daemons with more or less constant io activity might be
+>> vulnerable too. PAM greatly complicates precise measurements.
+>>
+>>
+>> I think it needs 2 CVE, one for /proc/PID/io and another for
+>> taskstats.
+>>
+>> https://lkml.org/lkml/2011/6/24/88
+>>
+> 
+> I can't find a nice description of both issues. Can you give me one or two
+> sentence explanations with a few references for the CVE database?
+> 
+> Once I have those I'll give it two IDs.
 
+I have assigned the CVE names for these two issues.
 
-1. OVERVIEW
-
-Jcow CMS 4.2 and lower versions are vulnerable to Cross Site Scripting.
-
-
-2. BACKGROUND
-
-Jcow is a flexible Social Networking software written in PHP. It can
-help you to build a social network for your interests and passions, a
-member community for your existing website and a social networking
-site like facebook/myspace/twitter.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The parameter "g" is not properly sanitized upon submission to
-/index.php, which allows attacker to conduct Cross Site Scripting
-attack. This may allow an attacker to create a specially crafted URL
-that would execute arbitrary script code in a victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-Jcow CMS 4.2 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-File    : /includes/libs/member.module.php:
-Line 605: <input type="hidden" name="g" value="'.$_REQUEST['g'].'" />
-
-http://[target]/index.php?p=member/signup&email=&username=&password=&fullname=&birthyear=1991&birthmonth=01&birthday=01&gender=0&location=Myanmar++&about_me=&recaptcha_challenge_field=03AHJ_Vuvk8U6zCeSdrjB0GPDuwaRP-tPJ2G7u3Nm5LpmVSGmZs_CIP9I_C0PYZ1zYY6F42zpzGKQkxSiUhhyu-QhhwZA6oTlLNntgAgmRkDjfZpu3j4-bMeQNpOVh1afb4fZ4qwaIxHpP1wL8-8-LgkEBE5auAFmF_w&recaptcha_response_field=&g=%22%3E%3Cscript%3Ealert%28/XSS/%29%3C/script%3E&onpost=1&agree_rules=1
-
-
-6. SOLUTION
-
-Upgrade to 4.3.1 or higher.
-The commercial version 5.x.x is not vulnerable.
-
-
-7. VENDOR
-
-Jcow CMS Development Team
-http://www.jcow.net
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-06-03: notified vendor
-2010-06-03: vendor replied fix would be available within 48hrs
-2011-08-24: vendor released fixed version, jcow.4.3.1.ce
-2011-08-26: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[jcow_4.2]_cross_site_scripting
-Jcow CMS: http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
-
-
-#yehg [2011-08-26]
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+Thanks, Eugene
