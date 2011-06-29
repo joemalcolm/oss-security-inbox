@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/7
-Message-ID: <20110518084404.GA15242@stro.at>
-Date: Wed, 18 May 2011 10:44:04 +0200
-From: maximilian attems <max@...o.at>
-To: oss-security@...ts.openwall.com
-Cc: klibc@...or.com
-Subject: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/9
+Message-ID: <20110629180304.GA5060@albatros>
+Date: Wed, 29 Jun 2011 22:03:04 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Linus Torvalds <torvalds@...ux-foundation.org>
+Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
-Related to CVE-2011-0997
+Hi,
 
-ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
-used unquoted, than proof of concept involves
-DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
+One more thing, this is more dangerous, but very conditional.
 
-fix:
-http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
-will be part of the just to be released klibc-1.5.22
+Create one system account with no files (a victim).  This simplifies
+measurements.
 
+As an attacker:
+    Start taskstats listener in the background.
+    Swith to tty1, push SAK to kill current login task.
+    Enter some fake username and password, e.g. 1:1.
+    The login fails, of course.
+
+Now the attacker hides and the victim comes to tty1.
+    He enters his username:password.
+    The login succeeds from the first try.
+    The victim exits from the shell.
+
+Attacker measures login's read_characters value.  The victim has to
+succeed from the first try and shouldn't push SAK :)
+
+Now the attacker has to increment the fake password length (incrementing
+the resulted read_characters of the dead login task) and wait for
+the successful victim's login.  After ~log2(1024) tries (binary search)
+he learns precise password length.
+
+
+As exiting "login" just waits for the child to exit to call
+pam_close_session(), victim's activity doesn't really add any noise.
 
 -- 
-maks
-
-_______________________________________________
-klibc mailing list
-klibc@...or.com
-http://www.zytor.com/mailman/listinfo/klibc
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
