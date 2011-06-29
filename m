@@ -1,29 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/13
-Message-ID: <273444736.398067.1306872250377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 16:04:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: movabletype-opensource
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/1
+Message-ID: <BANLkTinK7bnN7Zhcg9KS5YU--Pqu+=i+Pw@mail.gmail.com>
+Date: Tue, 28 Jun 2011 17:12:13 -0700
+From: Linus Torvalds <torvalds@...ux-foundation.org>
+To: Andrew Morton <akpm@...ux-foundation.org>
+Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
+Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jun 28, 2011 at 3:53 PM, Andrew Morton
+<akpm@...ux-foundation.org> wrote:
+>
+> a) I haven't thought very hard about it, but isn't it the case that
+>   fuzzifying the byte counts in this manner will still permit the
+>   length of these things to be determined, albeit with a larger data
+>   set?
 
+Well, if we're talking things like passwords read from /dev/tty, there
+really _isn't_ a larger data set to be had. Which is why I suspect
+that it would be fine to just mask the low bits and give 1kB
+resolution in general.
 
------ Original Message -----
-> Hi,
-> 
-> Could a please get a CVE id for this issue:
-> http://www.movabletype.org/2011/05/movable_type_51_and_505_436_security_update.html
-> and
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627936
-> 
+It's not like I could imagine an app like "iotop" would ever care
+about individual bytes, so there's no reason to expose things at that
+granularity.
 
-This one sounds tricky. The way I read it, it's two flaws, but I'm not very sure.
+> b) Where does the problem lie?  Is it with the kernel, which exposes
+>   accurate accounting?  Or is it with userspace, which accidentally
+>   exposes sensitive information by failing to account for the kernel's
+>   exposure of accurate accounting information?
 
-I'm going to defer this one to MITRE, they're better at vague things like this.
+Well, if you do a read of a password from a tty, there really isn't
+much you can do about the tty IO count showing up. If the rest of the
+IO is packetized some way, you can probably figure out the parts that
+are individual bytes.
 
-thanks.
+> c) Should this information be world-readable?  Perhaps we should add
+>   more rational privileges here.  Back-compatibility issues.
 
--- 
-    JB
+I already applied the /proc part. That seemed like a nobrainer. The
+taskstat part look slike it might break iotop to tighten the security,
+so there I'm thinking the granularity approach would be a sufficient
+workaround.
+
+> If rounding the counts to a 1k granularity will indeed defeat the
+> attack (I'm unsure) then I'd suggest that a fix would be to perform
+> that fuzzification if the receiving process doesn't have suitable
+> permissions.  So if the user is reading his own stats or is root, he
+> still gets byte-resolution results.  This keeps the stats as useful as
+> we can make them and reduces the back-compatibility damage.
+
+Sure.
+
+                 Linus
