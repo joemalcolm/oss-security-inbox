@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/3
-Message-ID: <777693093.44058.1295542633717.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Jan 2011 11:57:13 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/30/1
+Message-ID: <20110630101300.GA16091@dhcp-25-225.brq.redhat.com>
+Date: Thu, 30 Jun 2011 12:13:01 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: heap corruption in VLC media player
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: tomoyo: oops in tomoyo_mount_acl()
 Content-Type: text/plain; charset=utf-8
 
-This should only need one ID. Please use CVE-2011-0021.
+Description of problem:
+In tomoyo_mount_acl() since 2.6.36, kern_path() was called without
+checking dev_name != NULL. As a result, an unprivileged user can
+trigger oops by issuing mount(NULL, "/", "ext3", 0, NULL) request.
 
-Thanks.
+Upstream fix:
+4e78c724d47e2342aa8fde61f6b8536f662f795f
 
+Thanks,
 -- 
-    JB
-
-
------ Original Message -----
-> From upstream git [1]:
-> 
-> "This patch resolves two heap corruption vulnerabilities in the CDG
-> decoder for VLC media player. In both cases, a failure to properly
-> validate indexes into statically-sized arrays on the heap allows a
-> maliciously crafted CDG video to corrupt the heap in a controlled
-> manner, potentially leading to code execution."
-> 
-> -Dan
-> 
-> [1]
-> http://git.videolan.org/?p=vlc.git;a=commit;h=f9b664eac0e1a7bceed9d7b5854fd9fc351b4aab
+Petr Matousek / Red Hat Security Response Team
