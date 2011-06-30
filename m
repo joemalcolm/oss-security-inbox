@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/1
-Message-ID: <4E1E8E16.9050107@redhat.com>
-Date: Thu, 14 Jul 2011 08:35:02 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Erik de Castro Lopo <erikd@...a-nerd.com>, Secunia Research <vuln@...unia.com>
-Subject: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/30/2
+Message-ID: <20110630101816.GA6201@albatros>
+Date: Thu, 30 Jun 2011 14:18:16 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: taskstats local DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Wed, Jun 22, 2011 at 15:23 +0800, Eugene Teo wrote:
+> On 06/22/2011 03:17 PM, Vasiliy Kulikov wrote:
+> > "Currently a single process may register exit handlers unlimited times.
+> > It may lead to a bloated listeners chain and very slow process terminations.
+> > E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
+> > kernel memory is stolen for the handlers chain and "time id" shows 2-7
+> > seconds instead of normal 0.003.  It makes it possible to exhaust all
+> > kernel memory and to eat much of CPU time by triggerring numerous exits
+> > on a single CPU.
+> > 
+> > The patch limits the number of times a single process may register
+> > itself on a single CPU to one."
+> > 
+> > It makes it possible for unprivileged user eat kernel memory and CPU
+> > without triggering OOM killer.
+> > 
+> > Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
+> > 
+> > http://lists.openwall.net/linux-kernel/2011/06/16/605
+> 
+> Please use CVE-2011-2484.
 
-   an integer overflow, leading to heap-based buffer overflow flaw was
-found in the way libsndfile, library for reading and writing of sound
-files, processed certain PARIS Audio Format (PAF) audio files with
-crafted count of channels in the PAF file header. A remote attacker
-could provided a specially-crafted PAF audio file, which once opened by
-a local, unsuspecting user in an application, linked against libsndfile,
-could lead to that particular application crash (denial of service),
-or, potentially arbitrary code execution with the privileges of the
-user running the application.
+The fix:
 
-References:
-[1] https://bugs.gentoo.org/show_bug.cgi?id=375125
-[2] http://www.securelist.com/en/advisories/45125
-[3] http://secunia.com/advisories/45125/
-[4] http://www.mega-nerd.com/libsndfile/
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=721234
-
-Relevant upstream patch (from Bzr log):
----------------------------------------
-
-revno: 1610
-committer: Erik de Castro Lopo <erikd@...a-nerd.com>
-branch nick: libsndfile-dev
-timestamp: Wed 2011-07-06 19:40:05 +1000
-message:
-   Fix for Secunia Advisory SA45125, heap overflow in PAF file handler.
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=26c4caea9d697043cc5a458b96411b86d7f6babd
 
 
-Could you allocate a CVE identifier for this?
+Thanks,
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
