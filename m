@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/6
-Message-ID: <20110621155623.GI1952@redhat.com>
-Date: Tue, 21 Jun 2011 09:56:23 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/30/1
+Message-ID: <20110630101300.GA16091@dhcp-25-225.brq.redhat.com>
+Date: Thu, 30 Jun 2011 12:13:01 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: tomoyo: oops in tomoyo_mount_acl()
 Content-Type: text/plain; charset=utf-8
 
-* [2011-06-20 09:01:11 +0400] Solar Designer wrote:
+Description of problem:
+In tomoyo_mount_acl() since 2.6.36, kern_path() was called without
+checking dev_name != NULL. As a result, an unprivileged user can
+trigger oops by issuing mount(NULL, "/", "ext3", 0, NULL) request.
 
-[...]
->As to what's affected besides crypt_blowfish itself, I expect it to be
->PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
->crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
->identify them and notify the maintainers).
+Upstream fix:
+4e78c724d47e2342aa8fde61f6b8536f662f795f
 
-PostgreSQL is affected as well (the pgcrypto module):
-
-% head crypt-blowfish.c 
-/*
-  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 14:48:52 momjian Exp $
-  *
-  * This code comes from John the Ripper password cracker, with reentrant
-  * and crypt(3) interfaces added, but optimizations specific to password
-  * cracking removed.
-
-php-suhosin also contains the same code.
-
+Thanks,
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Petr Matousek / Red Hat Security Response Team
