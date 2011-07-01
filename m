@@ -1,30 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/5
-Message-ID: <1015413872.149944.1303760453725.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 25 Apr 2011 15:40:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: CVE-2011-1089-like flaw in mount.nfs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/7
+Message-ID: <4E0DF72B.6000904@securityreason.com>
+Date: Fri, 01 Jul 2011 18:34:51 +0200
+From: Maksymilian Arciemowicz <cxib@...urityreason.com>
+To: Tomas Hoger <thoger@...hat.com>
+CC: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: php ZipArchive::addGlob() crashes on invalid flags
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> A similar issue to CVE-2011-1089 was found in mount.nfs because it
-> uses
-> it's own addmntent() implementation to update /etc/mtab
-> (nfs_addmntend()). It also fails to anticipate resource limits and
-> could trigger corruption of the mtab file.
-> 
-> For more details see:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=697975
-> 
-> Could a CVE name be assigned to this issue please? Thanks.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use CVE-2011-1749.
+> Reporter mentions this really was an underlying glob() implementation
+> flaw, but that's not entirely true.  Maybe there are some flags that
+> are not recognized by glob() and still cause it to crash, but the
+> crashes I've been able to reproduce were due to the use of flags
+> supported by glob() that require some glob_t struct setup before
+> calling glob() (such as GLOB_ALTDIRFUNC).
 
-Thanks.
+hi Tomas,
 
--- 
-    JB
+The main problem is in the php code, not libc. Using glob(3) with
+invalid flag may give unexpected results. Try glob(3) of netbsd
+implementations and use flags 0x39 0x40..
+
+0x39
+0xbb8e2960 in pthread_mutex_lock () from /usr/lib/libpthread.so.0
+
+or
+
+eip            0xbb86bb12       0xbb86bb12 <realloc+118>
+(gdb) x/i $eip
+0xbb86bb12 <realloc+118>:       mov    0x8(%eax),%edi
+(gdb) x/i $eax
+0x410041:       Cannot access memory at address 0x410041
+
+0x40
+0x083b21c4 in php_XML_ParserFree ()
+
+try netbsd/glob(3). glibc return alloca() problem
+
+- -- 
+Best Regards
+pub   4096R/D6E5B530 2010-09-19
+uid                  Maksymilian Arciemowicz (cx) <max@...b.net>
+sub   4096R/58BA663C 2010-09-19
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBAgAGBQJODfcqAAoJEIO8+dzW5bUwUikP/09/wTrQXiJhoDxIt9BjWl+P
+DVZNYhbG2G5Ncrv6IZYyeBVkrinpq8hDBuXTx6MtAFjt2MC71A2jqrs2Xhes97Z8
+kpLqGbBoWfiSV+UMz/YTrKYOj7kClv1VRx7DQeohPZFtgQ360wLKPPzkyiGPoaci
+U0q9oMSgXl6Qc2Jxi5AQQzi0tu8sviZmB7Yq+I7PN4Wq4v8jT0v8ukwAmV2tdwFn
+LronZJzuTiOajiU9Xo7pTrmcRwVFHBPs6P/8gXQ4ryme5Wi7nDRIU/RB1fHEsqFL
+17p3+lp4rEltxCgldrSVuSye/yBoId2QPHu1qaLpqODNe6H1Y5rgMy3BrO/QYCAB
+6bfozNJX4EAL8rF37zT6YQ0Pvkqm8UhNDvYlEbtIy8Ac+7ht5fF5m5U77ZeA8TVn
+ZBP0pIrZJ8n0FaGURQl6sShBB9AsdmeraVNKcx8+MndO2XleAxtp3FFUztc78gOL
+QtfuEoUdJS8PuyST5SopFUugknyXdq87bBmsP09A3Ee06mHT2uubA3ZNScnTBhbq
+j5E9d0ZpcsBadwSpeB9yjcXgNNw6zSe8B8P0Wzj213PU2rX3ZkD02aqu+449YAQu
+Q+rG8RVzJ5EjOT8pyoMzyE7qC/RLpdxuZaW6SpSSsKHz+7nW8D+SC4ZfeFUWccz/
+l5sEMIOmYU2n/cHTgD9O
+=V4oy
+-----END PGP SIGNATURE-----
+
+Download attachment "0xD6E5B530.asc" of type "application/pgp-keys" (3087 bytes)
