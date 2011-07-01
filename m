@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/9
-Message-ID: <20110517184001.GB14491@celtic.nixsys.be>
-Date: Tue, 17 May 2011 20:40:01 +0200
-From: Wouter Verhelst <w@...r.be>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: nbd-server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/9
+Message-ID: <4E0E4A07.1070408@oracle.com>
+Date: Fri, 01 Jul 2011 15:28:23 -0700
+From: Oracle Security Alerts <secalert_us@...cle.com>
+To: Tomas Hoger <thoger@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 17, 2011 at 11:07:46AM -0600, Vincent Danen wrote:
-> * [2011-05-17 10:38:20 +0200] Thijs Kinkhorst wrote:
-> 
-> >Hi,
-> >
-> >In Debian the following was reported:
-> >nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
-> >phase, which allows unauthenticated users to DoS the server by causing
-> >the negotiation to fail (e.g., by specifying a non-existing name for an
-> >export).
-> >
-> >Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so for us
-> >goes that only our unstable distribution is affected.
-> >
-> >We'd like to have a CVE name for this.
-> 
-> The Debian bug is really light on details, so here is the git commit
-> that fixes this:
-> 
-> http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commitdiff;h=ebbbe0b3ce5393fa42a259f5e03d549508586aaa
-> 
-> But I don't see any evidence that this _only_ affects 2.9.21.  Are we
-> sure that it doesn't affect earlier versions?  The reporter doesn't
-> indicate one way or the other.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes, absolutely; 2.9.21 and 2.9.21a (diff between .21 and .21a is a
-documentation-related file that wasn't added to Makefile.am). The bug
-was introduced with this commit:
 
-http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commit;h=9ea4e742ce6f1b7793d1edfca70427a8660aeffa
+>> We do not expect Red Hat or other vendors to evaluate impact of
+>> security vulnerabilities on Oracle Linux, 
 
-To be 100% sure, I just checked out the tree at the 2.9.20 tag and
-recompiled; I couldn't reproduce it.
+> Maybe I'm mis-reading the above statement, but it seems to imply it's
+> not uncommon for you to re-do security patches that were applied to
+> RHEL packages before building them as OEL updates.  Do you have any
+> specific examples to point to (on- or off-list), so we can possibly
+> check what mistakes we did?
 
--- 
-The volume of a pizza of thickness a and radius z can be described by
-the following formula:
+We are not saying that your security fixes can be incomplete or have mistakes. 
+Oracle Linux is different from RHEL.
+Issues that do not affect RHEL may affect Oracle Linux or vice versa.
+We may also choose to fix an issue in a different way.
 
-pi zz a
+- -Chandan
+- --
+Best Regards,
+Oracle Security Alerts
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Darwin)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk4OSgcACgkQf36Vx1dNy5oq2ACaAuGEGcPxQdBxIomp0DCpK7TW
+wKAAnjNAx4mksMPpWGCsGCZSaGPK2UL7
+=fo+5
+-----END PGP SIGNATURE-----
