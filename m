@@ -1,16 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/36
-Message-ID: <20110403231756.GA10724@openwall.com>
-Date: Mon, 4 Apr 2011 03:17:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/3
+Message-ID: <20110701084857.GA31716@dhcp-25-225.brq.redhat.com>
+Date: Fri, 1 Jul 2011 10:48:58 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: nl80211: missing check for valid SSID size in scan operations
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 02:46:34AM +0400, ArkanoiD wrote:
-> Well, i have at least one active opensource project that is closely related to vulnerabilities and preventive countermeasures, openfwtk.sourceforge.net, doesn't it qualify?
+In both trigger_scan and sched_scan operations, we were checking for the
+SSID length before assigning the value correctly.  Since the memory was
+just kzalloc'ed, the check was always failing and SSID with over 32
+characters were allowed to go through.
 
-No.  That's not a Linux distro.  Like I said, we might setup more lists
-later, but for now it's just Linux distros.
+This is causing a buffer overflow when copying the actual SSID to the
+proper place.
 
-Alexander
+Please note that it needs CAP_NET_ADMIN privileges.
+
+Upstream commits:
+208c72f4fe44fe09577e7975ba0e7fa0278f3d03
+57a27e1d6a3bb9ad4efeebd3a8c71156d6207536
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=718152
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
