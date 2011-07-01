@@ -1,77 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/12
-Message-ID: <699844942.168715.1298407868110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 15:51:08 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Shawn M Moore <sartak@...tpractical.com>, Thomas Sibley <trs@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/4
+Message-ID: <4E0D8B75.5000805@redhat.com>
+Date: Fri, 01 Jul 2011 16:55:17 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: nl80211: missing check for valid SSID size in scan operations
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+On 07/01/2011 04:48 PM, Petr Matousek wrote:
+> In both trigger_scan and sched_scan operations, we were checking for the
+> SSID length before assigning the value correctly.  Since the memory was
+> just kzalloc'ed, the check was always failing and SSID with over 32
+> characters were allowed to go through.
 > 
-> 2) * Redirect users to their desired pages after login.
-> This prevents possible back button attacks after a user logs out.
-
-Use CVE-2011-1007 for this one.
-
+> This is causing a buffer overflow when copying the actual SSID to the
+> proper place.
 > 
-> Further issue details:
-> A security flaw was found in the way the RT3 ticketing
-> system handled resubmitting of form data after the user
-> has logged out of the browser (but not closed it).
-> A local attacker could use this flaw to access the user
-> account of the victim (login without providing a password
-> or obtain user credentials).
+> Please note that it needs CAP_NET_ADMIN privileges.
 > 
-> References:
-> [a] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614575
-> [b]
-> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
-> 
-> Upstream bug report:
-> [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
-> 
-> Upstream changeset:
-> [d]
-> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
-> 
-> Thomas, could you please confirm [d] is the proper fix for 2) issue?
-> Thank you.
-> (* Redirect users to their desired pages after login.)
-> 
-> 3) * Clone Scrip's TicketObj since we change the CurrentUser and it can
-> leak information (Custom field values, etc)
-
-Use CVE-2011-1008 for this one.
-
-> 
-> Further issue details:
-> A security flaw was found in the way the RT3 ticketing
-> system handled logging of SQL queries during performing
-> of user account transition. A remote, authenticated RT3
-> user could use this flaw to obtain sensitive information.
+> Upstream commits:
+> 208c72f4fe44fe09577e7975ba0e7fa0278f3d03
+> 57a27e1d6a3bb9ad4efeebd3a8c71156d6207536
 > 
 > References:
-> [i] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614576
-> [ii]
-> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
-> 
-> Upstream changeset (needs confirmation from upstream if it's
-> real fix for the issue yet):
-> [iii]
-> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
-> 
-> Shawn, could you please confirm [iii] is the proper fix for 3) issue?
-> (* Clone Scrip's TicketObj since we change the CurrentUser and it can
-> leak)
-> 
-> If [iii] not being the correct one for 3) issue, could you point us
-> to the right one? Thank you.
-> 
-> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=718152
 
-Thanks.
+Use CVE-2011-2517.
 
--- 
-    JB
+Eugene
