@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/14
-Message-ID: <1924498187.325698.1299013690930.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Mar 2011 16:08:10 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Atlassian JIRA Parameter-Based Redirection	Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/6
+Message-ID: <20110701173720.059b9ce6@redhat.com>
+Date: Fri, 1 Jul 2011 17:37:20 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: cxib@...urityreason.com
+Subject: php ZipArchive::addGlob() crashes on invalid flags
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
+Following PHP bug is marked as security and lists CVE-2011-1657:
 
------ Original Message -----
-> Can I get CVE-identifier for this issue:
-> 
-> http://confluence.atlassian.com/display/JIRA/JIRA+Security+Advisory+2011-02-21
-> http://secunia.com/advisories/43384
-> 
+https://bugs.php.net/bug.php?id=54681
+http://svn.php.net/viewvc/?view=revision&revision=310814
 
-JIRA is not open source, this request is out of the scope of this list.
+The fix is committed, hence should be released with 5.3.7.
 
-I know I gave JIRA an ID in the past, but that was in the context of the
-trouble it caused the Apache group.
-
-You should contact MITRE directly (cve@...re.org) with this request.
-
-Sorry.
+Reporter mentions this really was an underlying glob() implementation
+flaw, but that's not entirely true.  Maybe there are some flags that
+are not recognized by glob() and still cause it to crash, but the
+crashes I've been able to reproduce were due to the use of flags
+supported by glob() that require some glob_t struct setup before
+calling glob() (such as GLOB_ALTDIRFUNC).
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
