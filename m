@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/4
-Message-ID: <20111229191240.GA11413@openwall.com>
-Date: Thu, 29 Dec 2011 23:12:40 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/6
+Message-ID: <20110701173720.059b9ce6@redhat.com>
+Date: Fri, 1 Jul 2011 17:37:20 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Cc: cxib@...urityreason.com
+Subject: php ZipArchive::addGlob() crashes on invalid flags
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2011 at 07:07:30PM +0100, Andrea Barisani wrote:
-> 2011-11-01: contacted affected distributions
-...
-> 2011-12-28: advisory release
+Hi!
 
-The linux-distros list was made use of.  (I assume oCERT also contacted
-non-Linux distributions separately.)
+Following PHP bug is marked as security and lists CVE-2011-1657:
 
-This was the first major exception to linux-distros' list policy to
-limit embargoes to 14 days at most (after initial posting to the list).
+https://bugs.php.net/bug.php?id=54681
+http://svn.php.net/viewvc/?view=revision&revision=310814
 
-I did not object this time because the underlying issue was publicly
-known and the impact was limited to DoS.  Well, and I was not given an
-opportunity to object other than by asking for the CRD to be moved to an
-earlier date, which would likely not work for others.  (I am not
-complaining.)
+The fix is committed, hence should be released with 5.3.7.
 
-Yet I feel that I need to post in here and state that this does not set
-a precedent, that the "14 days" policy is in effect, and that occasional
-exceptions, if any, need to be agreed upon in advance (unlike it
-happened this time).  That is, if someone wants to report an issue via
-the linux-distros or distros lists and propose a longer embargo period,
-they need to state so first, without disclosing much detail about the
-issue to the list.  I think it may be OK (although this might vary on a
-case by case basis) to disclose the minimum required for list members to
-agree to a longer embargo period as a rare exception (like it would
-probably happen for these hash collision issues), object to it (have the
-list notified with detailed info closer to the proposed CRD), or/and opt
-to request the detail individually (not via the list).
+Reporter mentions this really was an underlying glob() implementation
+flaw, but that's not entirely true.  Maybe there are some flags that
+are not recognized by glob() and still cause it to crash, but the
+crashes I've been able to reproduce were due to the use of flags
+supported by glob() that require some glob_t struct setup before
+calling glob() (such as GLOB_ALTDIRFUNC).
 
-I think this is a rare exception to oCERT's policy, too.  It says:
-
-"- under extremely exceptional circumstances, if the oCERT Team and all
-the parties involved feel the need for longer time, a 2 months embargo
-can be applied, in this case we would clearly document the decision for
-public review"
-
-Andrea - you could want to "clearly document the decision for public
-review" now, although I guess your rationale was similar to mine (when I
-decided not to object to the unusually long embargo period this time).
-
-Thank you for your work on this issue!  I imagine it was pretty
-time-consuming with so many affected projects.
-
-Alexander
+-- 
+Tomas Hoger / Red Hat Security Response Team
