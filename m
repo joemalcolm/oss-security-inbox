@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/4
-Message-ID: <BANLkTimXD43dw1+8V-kTdzbWMZiaYpz7xg@mail.gmail.com>
-Date: Fri, 20 May 2011 11:58:24 -0400
-From: Anthon Pang <anthon.pang@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: GeoIP Directory traversal weakness in geoipupdate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/2
+Message-ID: <4E0D8815.5090002@redhat.com>
+Date: Fri, 01 Jul 2011 14:10:53 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: Please reject CVE-2011-0705
 Content-Type: text/plain; charset=utf-8
 
-Since this was previosly assigned a CVE ID, i.e., CVE-2007-0159, I'm
-requesting a new one for the incomplete fix in 1.4.1, and the new issue
-introduced in 1.4.5.
+Hi Steven,
 
-The GeoIP C API is an open source library (LGPL) for MaxMind's GeoIP data
-products.
+Can you please reject CVE-2011-0705.
 
-GeoIP-1.4.7.tar.gz (the latest version) contains a directory traversal
-weakness whereby a remote malicious update server (responding to requests at
-updates.maxmind.com) may overwrite arbitrary files.
+This is not a bug.
 
-apps/geoipupdate.c, added a sanity check in 1.4.1 but does not handle
-Windows paths containing backslash or colon.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=696082#c6
 
-apps/geoipupdate-pureperl.pl, introduced in 1.4.5, does not filter any
-filenames returned by the remote server.
+Thanks.
 
-The fix is to reject invalid filenames, e.g., leading '.', or containing
-slash, backslash (Windows), or colons (Windows).
-
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
