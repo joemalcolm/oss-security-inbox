@@ -1,59 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/5
-Message-ID: <20110713201730.GJ8259@core.inversepath.com>
-Date: Wed, 13 Jul 2011 22:17:30 +0200
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2011-001] Chyrp input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/5
+Message-ID: <4E0D8CBA.8050309@redhat.com>
+Date: Fri, 01 Jul 2011 17:00:42 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: tomoyo: oops in tomoyo_mount_acl()
 Content-Type: text/plain; charset=utf-8
 
+On 06/30/2011 06:13 PM, Petr Matousek wrote:
+> Description of problem:
+> In tomoyo_mount_acl() since 2.6.36, kern_path() was called without
+> checking dev_name != NULL. As a result, an unprivileged user can
+> trigger oops by issuing mount(NULL, "/", "ext3", 0, NULL) request.
+> 
+> Upstream fix:
+> 4e78c724d47e2342aa8fde61f6b8536f662f795f
 
-#2011-001 Chyrp input sanitization errors
+Use CVE-2011-2518.
 
-Description:
-
-The Chyrp framework, an open source blogging engine, suffers from cross-site
-scripting (XSS) and local file inclusion (LFI) vulnerabilities.
-
-Insufficient input sanitization on the parameters passed to pages related to
-administration settings, the javascript handler and the index handler leads to
-arbitrary javascript injection in the context of the user session. This could
-be potentially exploited to hijack the session of the administrator.
-
-Insufficient path sanitization on the root 'action' query string parameter
-leads to inclusion of arbitrary files from local sources, this could be
-exploited to read arbitrary accessible files on the hosting server filesystem
-and potentially execute arbitrary commands or code.
-
-Affected version:
-
-Chyrp <= 2.1
-
-Fixed version:
-
-Chyrp, N/A
-
-Credit: vulnerability report and PoC code received from Eldar Marcussen
-<wireghoul [at] justanotherhacker [dot] com>.
-
-CVE: N/A
-
-Timeline:
-
-2011-05-17: vulnerability report received
-2010-05-17: contacted chyrp maintainers
-2010-07-13: oCERT advisory published jointly with reporter advisory
-
-References:
-http://www.justanotherhacker.com/advisories/JAHx113.txt
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2011-001.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Eugene
