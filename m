@@ -1,109 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/17
-Message-ID: <1280434049.193561.1294340814006.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 14:06:54 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/8
+Message-ID: <20110701223621.34a99e20@redhat.com>
+Date: Fri, 1 Jul 2011 22:36:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, lists@...g.net
-Subject: Re: CVE Request for Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
+Cc: cxib@...urityreason.com
+Subject: Re: Re: php ZipArchive::addGlob() crashes on invalid flags
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0005.
+On Fri, 01 Jul 2011 18:34:51 +0200 Maksymilian Arciemowicz wrote:
 
-Thanks.
+> Using glob(3) with invalid flag may give unexpected results. Try
+> glob(3) of netbsd implementations and use flags 0x39 0x40..
+
+I don't have an easy way to test on netbsd, but looking at glob.h in
+netbsd cvs, 0x40 is GLOB_ALTDIRFUNC, and 0x39 contains GLOB_APPEND,
+which were problematic on glibc as well.  Both due to uninitialized
+glob_t members.
 
 -- 
-    JB
-
-
------ Original Message -----
-> http://seclists.org/fulldisclosure/2011/Jan/43
-> 
-> http://yehg.net/lab/pr0js/advisories/joomla/core/%5Bjoomla_1.0.x~15%5D_cross_site_scripting
-> 
-> 
-> 
-> ==============================================================================
-> Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
-> ==============================================================================
-> 
-> 
-> 1. OVERVIEW
-> 
-> The Joomla! 1.0.x series are currently vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Joomla! is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The "ordering" parameter in a core module,com_search, is not properly
-> sanitized and thus vulnerable to XSS.
-> By leveraging this vulnerability, attackers can compromise currently
-> logged-in user/administrator session and impersonate arbitrary user
-> actions available under /administrator/ functions. As the
-> vulnerability is based on the core module, it affects both classic and
-> customized Joomla! 1.0.x based web sites.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Joomla! 1.0.x ~ 1.0.15 series
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://attacker.in/joomla1015/index.php?option=com_search&searchword=xss&searchphrase=any&ordering=newest%22%20onmousemove=alert%28document.cookie%29%20style=position:fixed;top:0;left:0;width:100%;height:100%;%22
-> 
-> 
-> 6. SOLUTION
-> 
-> Joomla 1.0.x series has been at end of life since 2009-07-22.
-> 
-> Upgrade to Joomla! 1.5.x family (1.5.22 as of 2011-01-06)
-> 
-> 
-> 7. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-01-03: notified Joomla! Security Strike Team regardless of EOL
-> status
-> 2011-01-06: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.0.x~15]_cross_site_scripting
-> Joomla! 1.0.x End of Life -
-> http://community.joomla.org/blogs/community/509-an-old-friend-comes-of-age.html
-> OWASP Top 10:
-> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-01-06]
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+Tomas Hoger / Red Hat Security Response Team
