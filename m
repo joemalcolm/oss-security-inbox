@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/4
-Message-ID: <4E9D8B1B.90909@redhat.com>
-Date: Tue, 18 Oct 2011 08:20:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Matthias Weckbecker <mweckbecker@...e.de>
-Subject: Re: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/5
+Message-ID: <4E0D8CBA.8050309@redhat.com>
+Date: Fri, 01 Jul 2011 17:00:42 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: tomoyo: oops in tomoyo_mount_acl()
 Content-Type: text/plain; charset=utf-8
 
-Matthias Weckbecker <mweckbecker@...e.de> wrote:
->> https://redmine.ruby-lang.org/issues/5418
->>
->> Can we get a CVE for this please?
->>
-> I think this is already covered by CVE-2011-3187.
+On 06/30/2011 06:13 PM, Petr Matousek wrote:
+> Description of problem:
+> In tomoyo_mount_acl() since 2.6.36, kern_path() was called without
+> checking dev_name != NULL. As a result, an unprivileged user can
+> trigger oops by issuing mount(NULL, "/", "ext3", 0, NULL) request.
+> 
+> Upstream fix:
+> 4e78c724d47e2342aa8fde61f6b8536f662f795f
 
-Sort of, similar issue (lack of input verification), but it's in a
-different code base, which traditionally means a different CVE is
-assigned. Also CVE-2011-3187 was fixed in Ruby on Rails 3.0.10, this new
-issue is still unfixed in Ruby.
- 
+Use CVE-2011-2518.
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Eugene
