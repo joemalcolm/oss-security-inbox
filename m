@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/5
-Message-ID: <20111201101643.GO21767@foo.fgeek.fi>
-Date: Thu, 1 Dec 2011 12:16:43 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: sschurtz@...nline.de
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/9
+Message-ID: <4E0E4A07.1070408@oracle.com>
+Date: Fri, 01 Jul 2011 15:28:23 -0700
+From: Oracle Security Alerts <secalert_us@...cle.com>
+To: Tomas Hoger <thoger@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
-> Original post: http://seclists.org/bugtraq/2011/Nov/15
-> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
-> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
-> 
-> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
-> 
-> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
-> 
-> Please notify me if this is not enough information.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
 
-http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
-http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
+>> We do not expect Red Hat or other vendors to evaluate impact of
+>> security vulnerabilities on Oracle Linux, 
 
-If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
+> Maybe I'm mis-reading the above statement, but it seems to imply it's
+> not uncommon for you to re-do security patches that were applied to
+> RHEL packages before building them as OEL updates.  Do you have any
+> specific examples to point to (on- or off-list), so we can possibly
+> check what mistakes we did?
 
-- Henri Salo
+We are not saying that your security fixes can be incomplete or have mistakes. 
+Oracle Linux is different from RHEL.
+Issues that do not affect RHEL may affect Oracle Linux or vice versa.
+We may also choose to fix an issue in a different way.
+
+- -Chandan
+- --
+Best Regards,
+Oracle Security Alerts
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Darwin)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk4OSgcACgkQf36Vx1dNy5oq2ACaAuGEGcPxQdBxIomp0DCpK7TW
+wKAAnjNAx4mksMPpWGCsGCZSaGPK2UL7
+=fo+5
+-----END PGP SIGNATURE-----
