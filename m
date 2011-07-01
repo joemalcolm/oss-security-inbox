@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/15
-Message-ID: <20110712195935.GG22543@redhat.com>
-Date: Tue, 12 Jul 2011 13:59:35 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/8
+Message-ID: <20110701223621.34a99e20@redhat.com>
+Date: Fri, 1 Jul 2011 22:36:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: qemu -runas does not clear supplementary groups
+Cc: cxib@...urityreason.com
+Subject: Re: Re: php ZipArchive::addGlob() crashes on invalid flags
 Content-Type: text/plain; charset=utf-8
 
-* [2011-07-12 20:48:59 +0400] Michael Tokarev wrote:
+On Fri, 01 Jul 2011 18:34:51 +0200 Maksymilian Arciemowicz wrote:
 
->There's a missing initgroups() call in qemu in the -runas
->argument handling.  Details are available on
->
-> https://bugs.launchpad.net/qemu/+bug/807893
->
->in short, -runas is supposed to reduce privileges to a
->bare minimum (after all initialization is completed),
->but the process still has all the supplementary groups
->which should be dropped too.
->
->Can a CVE id be assigned for this issue?
+> Using glob(3) with invalid flag may give unexpected results. Try
+> glob(3) of netbsd implementations and use flags 0x39 0x40..
 
-Sorry, we were contacted directly to provide a CVE name, and I'm not
-sure if that was before or after you wrote this mail (probably after).
-That bug has been updated with the assigned CVE name, CVE-2011-2527.
-
-https://bugs.launchpad.net/qemu/+bug/807893/comments/6
-
-Thanks, sorry for missing this.
+I don't have an easy way to test on netbsd, but looking at glob.h in
+netbsd cvs, 0x40 is GLOB_ALTDIRFUNC, and 0x39 contains GLOB_APPEND,
+which were problematic on glibc as well.  Both due to uninitialized
+glob_t members.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Tomas Hoger / Red Hat Security Response Team
