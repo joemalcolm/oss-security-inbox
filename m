@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/34
-Message-ID: <20110403231523.GJ10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:15:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/3
+Message-ID: <20110701084857.GA31716@dhcp-25-225.brq.redhat.com>
+Date: Fri, 1 Jul 2011 10:48:58 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: nl80211: missing check for valid SSID size in scan operations
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 01:20:30PM -0500, Patrick J. Volkerding wrote:
-> I've been on board since close to the beginning, and would be pleased to 
-> participate again.  Here's the public GPG key for this address.
+In both trigger_scan and sched_scan operations, we were checking for the
+SSID length before assigning the value correctly.  Since the memory was
+just kzalloc'ed, the check was always failing and SSID with over 32
+characters were allowed to go through.
 
-I assume that security@...ckware delivers mail just to you, correct?
+This is causing a buffer overflow when copying the actual SSID to the
+proper place.
 
-> It expires on 2012-12-21, but presumably that won't be a problem.  ;-)
+Please note that it needs CAP_NET_ADMIN privileges.
 
-You will need to provide a new key (or expand this one's expiration
-date and provide it again) in time.  If the list is still around by
-then, that is. ;-)
+Upstream commits:
+208c72f4fe44fe09577e7975ba0e7fa0278f3d03
+57a27e1d6a3bb9ad4efeebd3a8c71156d6207536
 
-Alexander
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=718152
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
