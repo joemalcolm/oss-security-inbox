@@ -1,16 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/12
-Message-ID: <AANLkTikFQ5zAvJBsbKcFDut0Ff+0a7K4+YZF0gzzwBea@mail.gmail.com>
-Date: Wed, 2 Mar 2011 04:05:18 +1100
-From: dave b <db.pub.mail@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: cve request for smoothwall & openfiler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/03/1
+Message-ID: <20110703211627.GA7688@openwall.com>
+Date: Mon, 4 Jul 2011 01:16:27 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Hi can someone allocate a cve for smoothwall express 3 regarding the
-csrf and xss issue raised in [1].
-Also if someone could allocate a cve for an xss in Openfiler - see [2].
+Hi,
 
+Here's a great example of why maintainers should sign their release
+tarballs, why distributions should insist on that, and why they should
+actually check the signatures indeed.
 
-[1] http://secunia.com/advisories/42897/
-[2] http://secunia.com/advisories/42507/
+I think we should be referring to this when convincing people to do that
+(I had moderate success so far - some projects started signing their
+tarballs after my suggestions/requests, some did not).
+
+http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+
+New vsftpd homepage:
+
+https://security.appspot.com/vsftpd.html
+
+Alexander
