@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/4
-Message-ID: <a9fa49fc-b7fc-4182-ac6e-913a15637aab@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 14:00:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/03/2
+Message-ID: <20110703225241.GB8243@openwall.com>
+Date: Mon, 4 Jul 2011 02:52:41 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Missing input sanitation in various X GLX calls
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
-I'm assign this as "X.org multiple input sanitization flaws"
+On Tue, May 31, 2011 at 03:44:40PM -0400, Josh Bressers wrote:
+> ----- Original Message -----
+> > looks like this following has not CVE-ID assigned yet:
+> > http://www.kb.cert.org/vuls/id/536044
+> 
+> Please use CVE-2011-1945.
 
-Use CVE-2010-4818
+I'm being a bit late to post this, but here's a decent interview with
+Billy Bob Brumley, one of the researchers who worked on this timing attack:
 
-Thanks.
+https://threatpost.com/en_us/blogs/three-questions-billy-brumley-openssl-timing-attack-052511
 
--- 
-    JB
+"... we feel that this attack target in fact encompasses a wide range of
+real-world cryptosystems."
 
------ Original Message -----
-> Hi,
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=28823
-> is a tracker bug for input sanitation lacking in various GLX X calls.
-> 
-> Reporter is me@...fdog.net
-> 
-> These can probably allow a attacker with access to the GLX calls
-> (typically just the logged in user) to crash the X server or execute
-> code within it.
-> 
-> (Not thought about WebGL introduced crash potential here.)
-> 
-> The lacking checks were reported and fixed in x.org git in 2010, so
-> they
-> probably need a 2010 CVE id. (Single one should be sufficient I
-> guess.)
-> 
-> Ciao, Marcus
-> 
+vs. OpenSSL's statement to CERT:
+
+"... we believe that the affected code (ECDSA used with binary curves)
+is very rarely used at present."
+
+These are not exactly contradictory (please read them in context), yet
+perhaps we should patch the issue sooner rather than later.
+
+Question to OpenSSL developers: is the patch given in Billy Bob Brumley
+and Nicola Tuveri's paper "Remote Timing Attacks Are Still Practical" OK
+to be used by distros?  Basically, I am interested in its "review
+status" by upstream - reviewed and approved, reviewed but not approved
+for specific reasons, not sufficiently reviewed.  (The patch is tiny,
+but even tiny changes might have non-obvious implications.)
+
+Thanks,
+
+Alexander
