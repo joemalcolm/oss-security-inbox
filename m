@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/1
-Message-ID: <4D3E1CF7.2010207@redhat.com>
-Date: Tue, 25 Jan 2011 08:44:39 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/4
+Message-ID: <20110704172538.GA10255@openwall.com>
+Date: Mon, 4 Jul 2011 21:25:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 02:34 AM, Josh Bressers wrote:
-> ----- Original Message -----
->> On 01/23/2011 04:13 AM, Steven M. Christey wrote:
->>>
->>> On Fri, 21 Jan 2011, Eugene Teo wrote:
->>>
->>>> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
->>>>> File position is not controlled, it may lead to overwrites of
->>>>> arbitrary
->>>>> kernel memory. Also the code may kfree() the same pointer multiple
->>>>> times.
->>>>
->>>> http://lkml.org/lkml/2011/1/20/348
->>>> https://bugzilla.redhat.com/CVE-2011-0023
->>>>
->>>> Please use CVE-2011-0023 (this does not include the unresolved flaw
->>>> described in the following paragraph below).
->>>
->>> There seem to be 2 types of issues described above - the
->>> uncontrolled
->>> file position / memory overwrite, and a "double free". So there
->>> should
->>> probably be 2 separate CVEs, not one. Am I missing something?
->>
->> Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
->
-> Eugene, does the "unresolved flaw" still need an ID? This thread now
-> confuses me.
+On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+> IIRC for such backdoored downloads CVE IDs were assigned in the past
+> to properly track the status of distributions providing the affected 
+> piece of code.
 
-No need. Thanks.
+I suspect that no distributions provide the affected code this time.
+So if affected distributions is the only reason for CVE ID assignment in
+this case, it might make sense to postpone CVE ID allocation until we
+learn of an affected distribution (which we probably won't).
 
-Eugene
+Alexander
