@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/15
-Message-ID: <1542530748.193410.1294340225061.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 13:57:05 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/3
+Message-ID: <20110704165657.GA3084@inutil.org>
+Date: Mon, 4 Jul 2011 18:56:57 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Multiple XSS Vulnerabiliies < Piwik 1.1
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0004 for the multiple XSS flaws.
+Solar Designer wrote:
 
-Thanks.
-
--- 
-    JB
-
-
------ Original Message -----
-> Piwik 1.1 released on Jan 4, 2011, addresses numerous security issues
-> following a security audit by SektionEins (led by Stefan Esser), an
-> internal
-> review, and coordinated disclosures from Jarosław Sajko
-> (Pentesters.pl) and
-> Fabian Becker.
+> Here's a great example of why maintainers should sign their release
+> tarballs, why distributions should insist on that, and why they should
+> actually check the signatures indeed.
 > 
-> Notably, versions of Piwik prior to 1.1 contain multiple persistent
-> and
-> reflective XSS vulnerabilities through unescaped parameters and/or
-> output.
+> I think we should be referring to this when convincing people to do that
+> (I had moderate success so far - some projects started signing their
+> tarballs after my suggestions/requests, some did not).
 > 
-> Security advisory:
-> http://piwik.org/blog/2011/01/piwik-1-1-security-advisory/
-> Other advisory:
-> http://piwik.org/blog/2011/01/professional-security-audit-in-piwik/
-> Changelog: http://piwik.org/blog/2011/01/piwik-1-1-2/
+> http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+> 
+> New vsftpd homepage:
+> 
+> https://security.appspot.com/vsftpd.html
+
+IIRC for such backdoored downloads CVE IDs were assigned in the past
+to properly track the status of distributions providing the affected 
+piece of code. 
+
+Can someone please assign an ID for this?
+
+Cheers,
+        Moritz
