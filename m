@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/17
-Message-ID: <20110401214923.GC22286@altlinux.org>
-Date: Sat, 2 Apr 2011 01:49:24 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/6
+Message-ID: <20110704215939.GE1947@redhat.com>
+Date: Mon, 4 Jul 2011 15:59:39 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: plone privilege escalation flaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+Looks like the previous fix for Plone/Zope (CVE-2011-0720) caused a new
+privilege escalation flaw in Plone 3.x and 4.x.
 
-I was a vendor-sec member representing ALT Linux.  My gpg key ID for
-email conversations is FE4C93ABE19A2E4CCB5D3E4E7CABE6AC9E35361E.
+Could a CVE be assigned?
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=718824
+http://plone.org/products/plone/security/advisories/20110622
+http://plone.org/products/plone-hotfix/releases/20110622
+http://secunia.com/advisories/45111
+
+Thanks.
 
 -- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+Vincent Danen / Red Hat Security Response Team 
