@@ -1,70 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/6
-Message-ID: <BANLkTinSTHWYNqUW+TQ3QtVXwXoL_gfaWw@mail.gmail.com>
-Date: Mon, 27 Jun 2011 15:53:27 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Cc: incidents@...rt.org, henri@...v.fi
-Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/2
+Message-Id: <201107040939.25020.ludwig.nussel@suse.de>
+Date: Mon, 4 Jul 2011 09:39:24 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
-Path Disclosure should better be regarded as more closely related to
-server-side issue.
-It may be too redundant or unnecessary to create one path disclosure
-issue per CVE.
+Vincent Danen wrote:
+> I see the following changes as fixed in MySQL 5.1.52, but cannot find
+> any CVEs for them:
+> 
+> InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+> examining the same table's information in the INFORMATION_SCHEMA
+> database at the same time could cause a crash in the debug version of
+> the server. (Bug #54678)
+> 
+> Security Fix: The server crashed for assignment of values of types other
+> than Geometry to items of type GeometryCollection (MultiPoint,
+> MultiCurve, MultiSurface). Now the server checks the field type and
+> fails with bad geometry value if it detects incorrect parameters. (Bug
+> #55531)
+> 
+> Security Fix: EXPLAIN EXTENDED caused a server crash with some prepared
+> statements. (Bug #54494)
+> 
+> Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
+> derived table caused a server crash. (Bug #54488)
+> 
+> There are a whole bunch of other crash-type bugs corrected in 5.1.52
+> that upstream did not explicitly flag as security, which might be
+> considered security-relevant as well:
+> 
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
 
-Another Path Disclosure issue in Joomla! 1.6.1
+Looks like this CVE request got lost.
 
-http://bl0g.yehg.net/2011/04/joomla-161-and-lower-information.html
+cu
+Ludwig
 
-
-Almost all php CMS applications have this issue going on where  some
-of them are listed at:
-
-http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
-
-
-
-On Fri, Jun 24, 2011 at 3:46 AM, Josh Bressers <bressers@...hat.com> wrote:
->
->
-> ----- Original Message -----
->> Couldn't find a CVE-identifier for this issue. Joomla does have too
->> many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may
->> lead to an unauthorized information disclosure. Should this one get a
->> 2010 or 2011 identifier?
->>
->> Reported: 2010-12-08
->> Joomla advisory: 2011-04-01
->> Release with a fix (version 1.5.23): 2011-04-04
->>
->> References:
->> http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
->> http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
->> http://osvdb.org/show/osvdb/71587
->> http://secunia.com/advisories/44028/
->>
->> I hope this request isn't duplicate. I included oCERT to this email as
->> Joomla is part of that group. Please notify me and mailing-list if
->> this issue already has a CVE-identifier.
->>
->
-> I'm giving this CVE-2011-2488.
->
-> While the flaw was reported in 2010 they claim, I consider 2011 when
-> it went public.
->
-> Thanks.
->
-> --
->    JB
->
+-- 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
