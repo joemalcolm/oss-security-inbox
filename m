@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/3
-Message-ID: <4EF84066.3060805@redhat.com>
-Date: Mon, 26 Dec 2011 15:07:42 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/4
+Message-ID: <20110704172538.GA10255@openwall.com>
+Date: Mon, 4 Jul 2011 21:25:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4862 is not BSD-specific
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On 12/26/2011 03:04 PM, Florian Weimer wrote:
-> * Huzaifa Sidhpurwala:
->
->>> The telnetd from netkit does not appear to be affected.
->>
->> The patch seems to be applicable though, probably you need to do
->> something else to make it segfault?
->
-> Our version of netkit (which we once got from
-> <ftp://ftp.uk.linux.org/pub/linux/Networking/netkit/>) lacks Kerberos
-> support entirely.
+On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+> IIRC for such backdoored downloads CVE IDs were assigned in the past
+> to properly track the status of distributions providing the affected 
+> piece of code.
 
- From what i see, if your telnetd can do encrypted connections, then it 
-is affected.
+I suspect that no distributions provide the affected code this time.
+So if affected distributions is the only reason for CVE ID assignment in
+this case, it might make sense to postpone CVE ID allocation until we
+learn of an affected distribution (which we probably won't).
 
-However netkit telnet clients dont have support for encryption, so using 
-the telnet client out of box is not going to work.
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Alexander
