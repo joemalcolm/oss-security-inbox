@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/4
-Message-ID: <4D66FFD9.30802@redhat.com>
-Date: Fri, 25 Feb 2011 09:03:21 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/2
+Message-Id: <201107040939.25020.ludwig.nussel@suse.de>
+Date: Mon, 4 Jul 2011 09:39:24 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/2011 11:43 AM, Eugene Teo wrote:
-> Check values passed in to AARESOLVE_OFFSET on r300. It can be used to
-> write arbitrary data to VRAM, GTT, etc. This is specific to a range of
-> GPUs only.
->
-> drm/radeon/kms: check AA resolve registers on r300
-> http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
->
-> [PATCH] drm/radeon: fix regression with AA resolve checking
-> https://patchwork.kernel.org/patch/576101/
+Vincent Danen wrote:
+> I see the following changes as fixed in MySQL 5.1.52, but cannot find
+> any CVEs for them:
+> 
+> InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+> examining the same table's information in the INFORMATION_SCHEMA
+> database at the same time could cause a crash in the debug version of
+> the server. (Bug #54678)
+> 
+> Security Fix: The server crashed for assignment of values of types other
+> than Geometry to items of type GeometryCollection (MultiPoint,
+> MultiCurve, MultiSurface). Now the server checks the field type and
+> fails with bad geometry value if it detects incorrect parameters. (Bug
+> #55531)
+> 
+> Security Fix: EXPLAIN EXTENDED caused a server crash with some prepared
+> statements. (Bug #54494)
+> 
+> Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
+> derived table caused a server crash. (Bug #54488)
+> 
+> There are a whole bunch of other crash-type bugs corrected in 5.1.52
+> that upstream did not explicitly flag as security, which might be
+> considered security-relevant as well:
+> 
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
 
-http://git.kernel.org/linus/45e4039c3aea597ede44a264cea322908cdedfe9
+Looks like this CVE request got lost.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=680000
+cu
+Ludwig
 
-Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
