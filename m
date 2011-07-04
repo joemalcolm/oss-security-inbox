@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/2
-Message-ID: <CAHmME9r-riJFGhmBxbcMOt6dpuPOqyJ-yCdbdshnUpEWzW778A@mail.gmail.com>
-Date: Tue, 1 Nov 2011 21:43:04 -0400
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/5
+Message-ID: <20110704221721.6a1d22bd@redhat.com>
+Date: Mon, 4 Jul 2011 22:17:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: secalert_us@...cle.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, 01 Jul 2011 15:28:23 -0700 Oracle Security Alerts wrote:
 
-There are 5 separate vulnerabilities with the calibre SUID mount
-helper, with each possibly requiring a different CVE, or perhaps two
-can be clumped together:
+> >> We do not expect Red Hat or other vendors to evaluate impact of
+> >> security vulnerabilities on Oracle Linux, 
+> 
+> > Maybe I'm mis-reading the above statement, but it seems to imply
+> > it's not uncommon for you to re-do security patches that were
+> > applied to RHEL packages before building them as OEL updates.  Do
+> > you have any specific examples to point to (on- or off-list), so we
+> > can possibly check what mistakes we did?
+> 
+> We are not saying that your security fixes can be incomplete or have
+> mistakes. Oracle Linux is different from RHEL.
+> Issues that do not affect RHEL may affect Oracle Linux or vice versa.
+> We may also choose to fix an issue in a different way.
 
-These vulnerabilities concern /src/calibre/devices/linux_mount_helper.c
-http://bazaar.launchpad.net/~kovid/calibre/trunk/view/head:/src/calibre/devices/linux_mount_helper.c
+They are different, but as OEL is based on RHEL, I believe they're
+still sufficiently similar (same upstream versions, mostly the same
+patches and spec files) to expect most flaws affecting components
+shipped in both should affect both distros in the same way.  Hence the
+interest in those differences that required different fixes in the
+past, or were for the common component but did not affect one of the
+distros.
 
-1. Ability to create root owned directory anywhere. The mount helper
-calls mkdir(argv[3], ...) on line 48.
-
-2. Ability to remove any empty directory on the system. For example, line 172.
-
-3. Ability to create and delete
-user_controlled_dir/.created_by_calibre_mount_helper anywhere on the
-filesystem, lines 55 and 165.
-
-4. Ability to inject arguments into 'mount' being exec'd. On lines 78,
-81, and 83, the final two arguments to mount are user controlled. On
-lines 1033, 106, 108, 139, and 141, the last argument to unmount/eject
-is user controlled. The "exists()" check can be subverted via race
-condition or by creating an existing file in the working directory
-with a filename equal to the desired injected argument.
-
-5. Ability to execute any program as root. The mount helper makes use
-of execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the
-first argument does not start with a / character. Because of this,
-execlp will search PATH for the executable to run. PATH is user
-controlled, and thus it is trivial to write a program that spawns a
-shell and give it "mount" as a filename, and direct PATH to its
-directory.
-
-These have been reported in bug 885027 for the Calibre project.
-
-Thanks,
-Jason
+-- 
+Tomas Hoger / Red Hat Security Response Team
