@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/6
-Message-ID: <42390634.57980.1299876372996.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 11 Mar 2011 15:46:12 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/1
+Message-ID: <20110704092423.027dc897@redhat.com>
+Date: Mon, 4 Jul 2011 09:24:23 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Matthew Nicholson <mnicholson@...ium.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 4 Jul 2011 02:52:41 +0400 Solar Designer wrote:
 
+> Question to OpenSSL developers: is the patch given in Billy Bob
+> Brumley and Nicola Tuveri's paper "Remote Timing Attacks Are Still
+> Practical" OK to be used by distros?  Basically, I am interested in
+> its "review status" by upstream - reviewed and approved, reviewed but
+> not approved for specific reasons, not sufficiently reviewed.  (The
+> patch is tiny, but even tiny changes might have non-obvious
+> implications.)
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> this doesn't seem to have a CVE identifier yet:
-> [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
-> 
+I'm not part of the group you directed this question too, but as I've
+not seen any upstream developer or list in CC...
 
-Please use CVE-2011-1147
+The fix from the paper was committed in openssl CVS within about a week
+from public disclosure:
 
-Thanks.
+http://cvs.openssl.org/chngview?cn=20892
+
+However, there were some concerns raised regarding the extra #ifdef
+wrapping added as part of the commit, which disable the fix by default,
+and the name suggests #ifndef was probably intended:
+
+http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+
+HTH
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
