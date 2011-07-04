@@ -1,72 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/3
-Message-ID: <4ECAFAD5.1060107@redhat.com>
-Date: Mon, 21 Nov 2011 18:28:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, n0b0d13s@...il.com
-Subject: Re: Fwd: Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/7
+Message-ID: <20110704230906.GA11990@openwall.com>
+Date: Tue, 5 Jul 2011 03:09:06 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com, cperciva@...ebsd.org
+Subject: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 10:18 AM, Henri Salo wrote:
-> Can we get CVE assigned for this issue?
->
-> Best regards,
-> Henri Salo
->
-> ----- Forwarded message from n0b0d13s@...il.com -----
->
-> Date: Sat, 19 Nov 2011 15:27:47 GMT
-> From: n0b0d13s@...il.com
-> To: bugtraq@...urityfocus.com
-> Subject: Support Incident Tracker <= 3.65 (translate.php) Remote Code
-> 	Execution Vulnerability
-> X-Mailer: MIME-tools 5.420 (Entity 5.420)
->
-> Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
->
->
-> author...............: Egidio Romano aka EgiX
-> mail.................: n0b0d13s[at]gmail[dot]com
-> software link........: http://sitracker.org/
-> affected versions....: from 3.45 to 3.65
->
->
-> [-] vulnerable code in /translate.php
->
-> 234.        foreach (array_keys($_POST) as $key)
-> 235.        {
-> 236.            if (!empty($_POST[$key]) AND substr($key, 0, 3) == "str")
-> 237.            {
-> 238.                if ($lastchar!='' AND substr($key, 3, 1) != $lastchar) $i18nfile .= "\n";
-> 239.                $i18nfile .= "\${$key} = '".addslashes($_POST[$key])."';\n";
-> 240.                $lastchar = substr($key, 3, 1);
-> 241.                $translatedcount++;
-> 242.            }
-> 243.        }
->
-> Input passed via keys of $_POST array isn't properly sanitized before being stored into $i18nfile variable
-> at line 239, that variable will be the contents of a language file stored into 'i18n' directory with a php
-> extension. This could allow authenticated users to inject and execute arbitrary PHP code. Furthermore,
-> access directly to /translate.php?mode=save will reveal the full installation path of the application.
->
->
-> [-] Disclosure timeline:
->
-> [13/11/2011] - Vulnerability discovered
-> [13/11/2011] - Issue reported to http://bugs.sitracker.org/view.php?id=1737
-> [13/11/2011] - Vendor replied that this issue is fixed in the current SVN trunk
-> [19/11/2011] - Public disclosure
->
->
-> [-] Proof of concept:
->
-> http://www.exploit-db.com/exploits/18132
->
-> ----- End forwarded message -----
-Yes we can! Please use CVE-2011-4337 for this issue.
+Hi,
 
--- 
+I'd be interested in more detail on this bug.  So far, the closest to a
+description of the bug that I saw is this:
 
--Kurt Seifried / Red Hat Security Response Team
+http://lists.openwall.net/full-disclosure/2011/07/01/4
 
+but it's not enough.
+
+I'd like to learn not only on my own, but also on others' mistakes. ;-)
+And for this purpose it does not matter how old the software is and
+whether it is still supported or not.
+
+Colin - any comments from you?  I realize the bug is not yours, but
+perhaps you're one of the few people who have figured it out now, for a
+reason similar to mine.
+
+Red Hat - a lesson for you might be to stop linking sshd against so
+many libraries (over 20 last time I checked).  Don't wait until your
+remote root, really. ;-)  Yes, this means dropping some functionality,
+or maybe moving it to extra builds of sshd that only a small subset of
+systems will choose to run (e.g., configurable via /etc/sysconfig/sshd).
+Just an idea.
+
+Thanks,
+
+Alexander
