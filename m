@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/1
-Message-ID: <20110717134821.GA15527@openwall.com>
-Date: Sun, 17 Jul 2011 17:48:21 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/3
+Message-ID: <20110704165657.GA3084@inutil.org>
+Date: Mon, 4 Jul 2011 18:56:57 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 14, 2011 at 04:37:36PM +0200, Ludwig Nussel wrote:
-> Solar Designer wrote:
-> >I am tempted to just release the current code as 1.2 now.  We won't
-> >arrive at a perfect solution anyway, because it doesn't exist.  And we
-> >need to let other projects upgrade to better/safer code (dealing with
-> >one-correct to many-buggy collisions) sooner rather than later.
+Solar Designer wrote:
+
+> Here's a great example of why maintainers should sign their release
+> tarballs, why distributions should insist on that, and why they should
+> actually check the signatures indeed.
 > 
-> Indeed.
+> I think we should be referring to this when convincing people to do that
+> (I had moderate success so far - some projects started signing their
+> tarballs after my suggestions/requests, some did not).
+> 
+> http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+> 
+> New vsftpd homepage:
+> 
+> https://security.appspot.com/vsftpd.html
 
-I've just released crypt_blowfish 1.2:
+IIRC for such backdoored downloads CVE IDs were assigned in the past
+to properly track the status of distributions providing the affected 
+piece of code. 
 
-http://www.openwall.com/crypt/
+Can someone please assign an ID for this?
 
-All projects using crypt_blowfish should upgrade to this newer code.
-
-Alexander
+Cheers,
+        Moritz
