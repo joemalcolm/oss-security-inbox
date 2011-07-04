@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/9
-Message-ID: <1231476421.212930.1314038372136.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 14:39:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE assignment php NULL pointer dereference - CVE-2011-3182
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/7
+Message-ID: <20110704230906.GA11990@openwall.com>
+Date: Tue, 5 Jul 2011 03:09:06 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com, cperciva@...ebsd.org
+Subject: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-This message was sent to the full-disclosure mailing list:
-http://marc.info/?l=full-disclosure&m=131373057621672&w=2
+Hi,
 
->From what I can tell, this is a plausible problem. The advisory doesn't
-show any specific places where this could be exploited, but there are quite
-a few unchecked calls to malloc(). Rather than go through them all, I'm
-assigning the ID CVE-2011-3182 to be safe.
+I'd be interested in more detail on this bug.  So far, the closest to a
+description of the bug that I saw is this:
 
-Thanks.
+http://lists.openwall.net/full-disclosure/2011/07/01/4
 
--- 
-    JB
+but it's not enough.
+
+I'd like to learn not only on my own, but also on others' mistakes. ;-)
+And for this purpose it does not matter how old the software is and
+whether it is still supported or not.
+
+Colin - any comments from you?  I realize the bug is not yours, but
+perhaps you're one of the few people who have figured it out now, for a
+reason similar to mine.
+
+Red Hat - a lesson for you might be to stop linking sshd against so
+many libraries (over 20 last time I checked).  Don't wait until your
+remote root, really. ;-)  Yes, this means dropping some functionality,
+or maybe moving it to extra builds of sshd that only a small subset of
+systems will choose to run (e.g., configurable via /etc/sysconfig/sshd).
+Just an idea.
+
+Thanks,
+
+Alexander
