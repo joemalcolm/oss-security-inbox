@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/24
-Message-ID: <21216ad193b639fa0749a251f2d893bc@phocean.net>
-Date: Mon, 04 Apr 2011 16:00:29 +0200
-From: phocean <0x90@...cean.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/13
+Message-ID: <20110705093636.GA18917@suse.de>
+Date: Tue, 5 Jul 2011 11:36:36 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
- On Mon, 4 Apr 2011 17:31:51 +0400, Solar Designer wrote:
-> On Mon, Apr 04, 2011 at 08:53:49AM -0400, ksha wrote:
->> Please subscribe me to the new list. I was a vendor-sec subscriber.
->>
->> pub   2048R/519FE93C 2011-01-26
->> uid                  ksha <ksha@...m.cl>
->
-> Are you a security contact for a Linux distro, and for which one?
-> And how do we verify that?
->
-> How did you receive vendor-sec mail?
->
-> Alexander
+On Tue, Jul 05, 2011 at 03:09:06AM +0400, Solar Designer wrote:
+> Hi,
+> 
+> I'd be interested in more detail on this bug.  So far, the closest to a
+> description of the bug that I saw is this:
+> 
+> http://lists.openwall.net/full-disclosure/2011/07/01/4
+> 
+> but it's not enough.
+> 
+> I'd like to learn not only on my own, but also on others' mistakes. ;-)
+> And for this purpose it does not matter how old the software is and
+> whether it is still supported or not.
+> 
+> Colin - any comments from you?  I realize the bug is not yours, but
+> perhaps you're one of the few people who have figured it out now, for a
+> reason similar to mine.
+> 
+> Red Hat - a lesson for you might be to stop linking sshd against so
+> many libraries (over 20 last time I checked).  Don't wait until your
+> remote root, really. ;-)  Yes, this means dropping some functionality,
 
- I is work for Alt Linux Russia and is want to subscribe to yor list.
- Is is thank you is advance.
+What a true word, probably not just for RedHat.
+
+-s
+
 
 -- 
- phocean
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
