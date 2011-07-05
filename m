@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/10
-Message-ID: <15766132.122498.1295974181252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Jan 2011 11:49:41 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: multiple gypsy vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/9
+Message-ID: <20110705050219.GA14223@openwall.com>
+Date: Tue, 5 Jul 2011 09:02:19 +0400
+From: Solar Designer <solar@...nwall.com>
+To: HD Moore <hdm@...italoffense.net>
+Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-I'm giving these 2011 IDs. None of the information was public in 2010.
-
------ Original Message -----
-> Hello,
+On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
+> > This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+> > when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+> > 
+> > http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
 > 
-> I'd like to get CVEs assigned for two issues in Gypsy[1]:
+> This is very helpful, thank you!  How did you find it?
 > 
-> reads arbitrary files as root user on behalf of regular user
-> https://bugs.freedesktop.org/show_bug.cgi?id=33431
+> So, I failed to get this server to give me ctime (looked at HTTP headers
+> and also tried several FTP commands), and the mtime is Feb 15.  We could
+> ask the server admins for the ctime.
 
-Use CVE-2011-0523.
+I think I got the equivalent of the ctime by listing the mtime for ".".
+It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
+other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
+or +2 for Namibia.
 
-> 
-> buffer overflow in nmea device input handling
-> https://bugs.freedesktop.org/show_bug.cgi?id=33431
-> 
+So it appears that the backdoor was introduced between June 30 14:15 UTC
+and July 1 23:35 UTC (probably before 21:35, though).
 
-Use CVE-2011-0524.
+I think I'll stop wasting time on this...
 
-Thanks.
-
--- 
-    JB
+Alexander
