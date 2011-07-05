@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/6
-Message-ID: <Pine.GSO.4.64.1111141737030.17128@faron.mitre.org>
-Date: Mon, 14 Nov 2011 17:42:24 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/14
+Message-ID: <4E12E78F.3040707@gmx.de>
+Date: Tue, 05 Jul 2011 12:29:35 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
+Am 05.07.2011 06:39, schrieb Solar Designer:
 
-In general, an attacker-triggered crash in any type of product that acts 
-as an "intermediary" between two parties - such as a proxy, firewall, mail 
-server, anti-virus, etc. - is typically counted as a vulnerability for 
-CVE, since the crash of the intermediary may cause many active sessions to 
-be lost, not just the session for the attacker.  Add repeated crashes and 
-you can have a substantive DoS on your hands.
+> More info on what's inside the tarball: user/group "user" (either the
+> intruder's username on his/her computer or --owner and --group options
+> argument to tar), "GCC: (Ubuntu/Linaro 4.5.2-8ubuntu4) 4.5.2" inside the
+> .o files.  This suggests Ubuntu 11.04, right?
 
-For "passive" intermediaries like IDS and sniffers that just monitor 
-traffic, a crash/DoS can lead to loss of visibility/awareness (passing 
-traffic doesn't get captured), which can allow an attacker to hide 
-activities.
+That's the tagline of "gcc --version" on my Ubuntu 11.04 system.
 
-- Steve
+> BTW, what if the .o files _don't_ match the source code? ;-)  I think
+> they might be used when one builds vsftpd from this tarball, which means
+> that the build (or run) will fail on some older systems (yet another
+> reason why this would be noticed quickly), but also that the actual
+> backdoor might be different (and more sophisticated) from what we see in
+> the source code.  No, I don't think this is the case, but the
+> possibility is there, and I find it curious.
+> 
+> A trivial way to check for this would be to try compiling the source
+> code on Ubuntu 11.04 and see if the .o files match.  If not, the
+> differences will need to be analyzed manually.  Not that anyone cares...
 
+And you'd need to know the compiler options, flipping one optimization
+manually is sufficient to make the .o files mismatch.
 
-On Mon, 31 Oct 2011, Henrik Nordstr�m wrote:
-
-> mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
->
->>> Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
->>> for their opinion / comments too, if this should be considered
->>> a security issue or not)
->>
->> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
->> CVE-2009-3700, etc. Lots of similar ones.
->
-> Agreed.
->
-> Regards
-> Henrik
->
->
+However the backdoored tarball apparently got removed from the listed
+server (404 error), but I'm not interested in hunting one down.
