@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/4
-Message-ID: <1254955020.94867.1303332352648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Apr 2011 16:45:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Richard Hughes <rhughes@...hat.com>, Ray Strode <rstrode@...hat.com>, lsof@...ata.co.uk, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- gnome-desktop3: Switching users dialog does not lock the screen for the original user account
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/9
+Message-ID: <20110705050219.GA14223@openwall.com>
+Date: Tue, 5 Jul 2011 09:02:19 +0400
+From: Solar Designer <solar@...nwall.com>
+To: HD Moore <hdm@...italoffense.net>
+Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1596
+On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
+> > This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+> > when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+> > 
+> > http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+> 
+> This is very helpful, thank you!  How did you find it?
+> 
+> So, I failed to get this server to give me ctime (looked at HTTP headers
+> and also tried several FTP commands), and the mtime is Feb 15.  We could
+> ask the server admins for the ctime.
 
-Thanks.
+I think I got the equivalent of the ctime by listing the mtime for ".".
+It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
+other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
+or +2 for Namibia.
 
--- 
-    JB
+So it appears that the backdoor was introduced between June 30 14:15 UTC
+and July 1 23:35 UTC (probably before 21:35, though).
 
+I think I'll stop wasting time on this...
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it has been reported that using of Gnome upon using of "Switch user"
-> dialog, log in into a
-> new user account (user2), logout of new user account (user2) the
-> desktop is returned to the
-> original user account (for user1) without prompting for a password. A
-> locally proximate
-> attacker could use this flaw to access resources, which should be
-> otherwise protected
-> by authentication.
-> 
-> Original report:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=697199
-> 
-> Upstream bug report:
-> [2] https://bugzilla.gnome.org/show_bug.cgi?id=648234
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
