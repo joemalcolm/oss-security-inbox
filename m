@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/11
-Message-ID: <AANLkTin7rEnGm0bhar732k3GG1Q3ARmwzX3ZbrUMSz1Y@mail.gmail.com>
-Date: Thu, 3 Mar 2011 22:46:51 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/1
+Message-ID: <4E12725C.2000100@redhat.com>
+Date: Tue, 05 Jul 2011 10:09:32 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Dmitry V. Levin" <ldv@...linux.org>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
->
-> One more option is to replace /etc/mtab regular file with a symlink to
-> /proc/mounts, thus making any /etc/mtab editing unneeded.
->
->
+On 07/05/2011 01:25 AM, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+>> IIRC for such backdoored downloads CVE IDs were assigned in the past
+>> to properly track the status of distributions providing the affected 
+>> piece of code.
+> 
+> I suspect that no distributions provide the affected code this time.
+> So if affected distributions is the only reason for CVE ID assignment in
+> this case, it might make sense to postpone CVE ID allocation until we
+> learn of an affected distribution (which we probably won't).
 
-This is a very good point.  I'm not sure why /etc/mtab exists anymore
-given /proc/mounts is a more reliable source for this information.
+I did not verify.
 
--Dan
+(09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
+http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
+15th -> July 3rd (via mc)
+
+Eugene
