@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/29
-Message-ID: <4D99D975.5080700@redhat.com>
-Date: Mon, 04 Apr 2011 22:45:09 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/15
+Message-ID: <4E12F2CC.4060307@redhat.com>
+Date: Tue, 05 Jul 2011 19:17:32 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: Closed list
+Subject: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-On 04/04/2011 10:38 PM, Ludwig Nussel wrote:
-> Josh Bressers wrote:
->> Initial members will have had to be a vendor-sec member (no exploders this
->> time around). You must reply to this thread, in public (on oss-security).
->> We want this to be very public, we have nothing to hide. You must have a
->> public gpg key ID included in your reply. The new list will gpg encrypt all
->> mail (it does accept plaintext messages though).
->
-> I've created a dedicated key for this purpose:
->
-> pub   2048R/1F334FA6 2011-04-04 [expires: 2012-04-03]
-> uid                  Ludwig Nussel (vendor-sec)<ludwig.nussel@...e.de>
-> sub   2048R/4F5FEB97 2011-04-04 [expires: 2012-04-03]
+You might have read about AusCert's accidental disclosure of the ISC
+Bind advisories today. If you have more information about this, please
+share. AFAICS, the bind source packages are still not available at the
+ISC website.
 
-Maybe once we have a list of initial members, we should start using a 
-vouching system, that the applicant must be referred by someone from the 
-list, and we only accept members whom we met and trust. Just a suggestion.
+https://bugzilla.redhat.com/CVE-2011-2464
+https://bugzilla.redhat.com/CVE-2011-2465
+http://risky.biz/auscert-bind
+http://pastebin.com/9NUt8Pk0
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Thanks, Eugene
