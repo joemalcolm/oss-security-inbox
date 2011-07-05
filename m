@@ -1,46 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/15
-Message-ID: <1265265450.219398.1298581061714.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 15:57:41 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/13
+Message-ID: <20110705093636.GA18917@suse.de>
+Date: Tue, 5 Jul 2011 11:36:36 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Mike Tremaine <mgt@...llarcore.net>, Karel Klic <kklic@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- logwatch: Privilege escalation due improper sanitization of special characters in log file names
+Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1018
+On Tue, Jul 05, 2011 at 03:09:06AM +0400, Solar Designer wrote:
+> Hi,
+> 
+> I'd be interested in more detail on this bug.  So far, the closest to a
+> description of the bug that I saw is this:
+> 
+> http://lists.openwall.net/full-disclosure/2011/07/01/4
+> 
+> but it's not enough.
+> 
+> I'd like to learn not only on my own, but also on others' mistakes. ;-)
+> And for this purpose it does not matter how old the software is and
+> whether it is still supported or not.
+> 
+> Colin - any comments from you?  I realize the bug is not yours, but
+> perhaps you're one of the few people who have figured it out now, for a
+> reason similar to mine.
+> 
+> Red Hat - a lesson for you might be to stop linking sshd against so
+> many libraries (over 20 last time I checked).  Don't wait until your
+> remote root, really. ;-)  Yes, this means dropping some functionality,
 
-Thanks.
+What a true word, probably not just for RedHat.
+
+-s
+
 
 -- 
-    JB
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> a security flaw was found in the way logwatch, a log file
-> analysis program, pre-processed log files, containing certain
-> special characters in their names. A remote attacker could
-> use this flaw to execute arbitrary code with the privileges
-> of the privileged system user (root) by creating a
-> specially-crafted log file, subsequently analyzed by the
-> logwatch script.
-> 
-> Upstream bug report:
-> [1]
-> http://sourceforge.net/tracker/?func=detail&aid=3184223&group_id=312875&atid=1316824
-> 
-> Related patch:
-> [2]
-> http://logwatch.svn.sourceforge.net/viewvc/logwatch?view=revision&revision=26
-> 
-> Other references:
-> [3]
-> http://sourceforge.net/mailarchive/forum.php?thread_name=4D604843.7040303%40mblmail.net&forum_name=logwatch-devel
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=680237
-> 
-> Could you allocate a CVE id for this issue?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
