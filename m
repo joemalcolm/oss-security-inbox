@@ -1,76 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/2
-Message-ID: <AANLkTikvhcN5Fe9ik=1_fiMk+Rw+qPuO_psax1jLMaqX@mail.gmail.com>
-Date: Wed, 5 Jan 2011 09:14:27 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: possible flaw in widely used strtod.c implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/3
+Message-ID: <4E12857B.2040005@digitaloffense.net>
+Date: Mon, 04 Jul 2011 22:31:07 -0500
+From: HD Moore <hdm@...italoffense.net>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On 7/4/2011 9:26 PM, Solar Designer wrote:
+> On Tue, Jul 05, 2011 at 10:09:32AM +0800, Eugene Teo wrote:
+>> I did not verify.
+>>
+>> (09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
+>> http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
+>> 15th -> July 3rd (via mc)
+> 
+> Looks unrealistic to me.  Feb 15 is when 2.3.4 was released by Chris.
+> A copy I downloaded has mtime Feb 15 (preserved from the official
+> download site) and ctime Mar 2 (when I downloaded it).  It passes the
+> GPG signature check and lacks the backdoor.
+> 
+> Additionally, searching for the SHA-256 digest that Chris posted reveals
+> only copies of his announcement of the incident and news stories about
+> it.  No hits for any distro's filelists, etc.  I wish we had MD5 and
+> SHA-1 to also search for, though.  I don't have a copy of the backdoored
+> vsftpd tarball to compute those, but we can ask Chris for them.
+> 
+> My gut feeling is that the backdoored tarball has been on the site for
+> 1 to 3 days.  But I could be wrong.
 
-Referring to: http://bugs.php.net/53632
+Thanks for the CC -- as a guess as to what happened; was this particular
+mirror compromised and the original tarball modified (along with its
+mtime) to match the original Feb 15th date?
 
-This bug affects PHP and can be remotely triggered if someone actually
-process an input as double (p.php?id=... and then $d
-= $id +1 for example). However this issue could also affect any
-software relying on the "strtod for IEEE-, VAX-, and IBM-arithmetic
-machines." implementation (quite a lot actually do, according to
-codesearch&co). See a non exhaustive list here:
+Does anyone have a "we noticed it first" flag that is before July 3rd?
 
-http://www.google.com/codesearch?as_q=strtod+for+IEEE-,+VAX-,+and+IBM-arithmetic+machines.&btnG=Search+Code&hl=en&as_package=&as_lang=&as_filename=&as_class=&as_function=&as_license=&as_case=
+Debian (and most other repos) are storing the SHA-256/SHA1/MD5 of each
+source package, so a Feb 15 date does seem incredible, but so does the
+complete pwnage of a non-official mirror with the original mtime, at the
+same moment as an official dist server compromise. A nightly rsync would
+account for this, but we would need to know more about the mirror
+structure from Chris.
 
-Whether the bug exists in the respective builds of each of these
-softwares may depend on how they are built (options, arch, etc.).
+I am happy to correct the metasploit module if new facts arrive; thank
+you to everyone who spends their free time dealing with this crap.
 
-A fix is already in php's svn:
-http://svn.php.net/viewvc?view=revision&revision=307095
-
-A good explanation about this issue is in the gcc bug tracker (thanks
-Rasmus for the pointer):
-
-It is a design flaw in the x87 fpu registers, so keeping the float out
-of those registers circumvents the problem.  It is
-one of the suggested ways of fixing this that is mentioned in the famous
-gcc bug 323 report:
-
-http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323
-
-See Comment 87:
-
- bruno 2006-12-21 15:08:57 UTC
- The option -ffloat-store, recommended by Richard Henderson, has
- the effect of decreasing the performance of floating-point
- operations for the entire compilation unit. If you want a minimal
- fix that does not affect other functions in the same compilation
- unit, you can use 'volatile double' instead of 'double'. It's
- like a one-shot -ffloat-store. Example:
-
- #include <stdio.h>
-
- void test(double x, double y) {
-   const volatile double y2 = x + 1.0;
-   if (y != y2) printf("error\n");
- }
-
- void main() {
-   const double x = .012;
-   const double y = x + 1.0;
-
-   test(x, y);
- }
-
-On windows it is slightly more complicated as it seems to do some more
-under the wood work. I was able to reproduce the problem on certain
-CPUs (i7) and not on other  (xeon) using the exact same binaries. I
-still have to verify what is done exactly.
-
-About getting a CVE #, I'm not sure it should be categorized only for
-php or more generally about this strtod.c (newest version has the same
-problem btw). Ideas? Comments?
-
-Cheers,
---
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-HD
