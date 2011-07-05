@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/15
-Message-ID: <2146170184.652361.1307994072314.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:41:12 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: PHP File upload filename
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/8
+Message-ID: <20110705043941.GA14096@openwall.com>
+Date: Tue, 5 Jul 2011 08:39:41 +0400
+From: Solar Designer <solar@...nwall.com>
+To: HD Moore <hdm@...italoffense.net>
+Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi,
-> Please assign a CVE id for "File path injection vulnerability in
-> RFC1867
-> File upload filename" [1].
+On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
+> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
 > 
-> The fix for the bug has been already committed. [2]
-> 
-> Reported by: Krzysztof Kotowicz <kkotowicz at gmail dot com>
-> 
-> 
-> [1] - http://bugs.php.net/bug.php?id=54939
-> [2] - http://svn.php.net/viewvc?view=revision&revision=312103
-> 
+> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
 
-Please use CVE-2011-2202.
+So, I tried searching for MD5, SHA-1, and SHA-512 of this - no hits on
+Google web search.  Lots of hits for SHA-256, indeed - due to the
+incident announcement.
 
-Thanks.
+Thus, chances are that no distro is affected.
 
--- 
-    JB
+More info on what's inside the tarball: user/group "user" (either the
+intruder's username on his/her computer or --owner and --group options
+argument to tar), "GCC: (Ubuntu/Linaro 4.5.2-8ubuntu4) 4.5.2" inside the
+.o files.  This suggests Ubuntu 11.04, right?
+
+BTW, what if the .o files _don't_ match the source code? ;-)  I think
+they might be used when one builds vsftpd from this tarball, which means
+that the build (or run) will fail on some older systems (yet another
+reason why this would be noticed quickly), but also that the actual
+backdoor might be different (and more sophisticated) from what we see in
+the source code.  No, I don't think this is the case, but the
+possibility is there, and I find it curious.
+
+A trivial way to check for this would be to try compiling the source
+code on Ubuntu 11.04 and see if the .o files match.  If not, the
+differences will need to be analyzed manually.  Not that anyone cares...
+
+Alexander
