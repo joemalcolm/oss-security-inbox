@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/9
-Message-ID: <1314389676.10232.22.camel@localhost>
-Date: Fri, 26 Aug 2011 15:14:33 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: geoff@...ttered.org, dwyer@...lab.ee.mu.oz.au, jgifford@...ksmart.net
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Security issue in hammerhead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/2
+Message-ID: <20110705022644.GA13130@openwall.com>
+Date: Tue, 5 Jul 2011 06:26:44 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: HD Moore <hdm@...italoffense.net>, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-A security bug was reported against hammerhead in Ubuntu. You are being
-emailed as the upstream contact. Please keep
-oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+On Tue, Jul 05, 2011 at 10:09:32AM +0800, Eugene Teo wrote:
+> I did not verify.
+> 
+> (09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
+> http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
+> 15th -> July 3rd (via mc)
 
-This issue should be considered public and has not yet been assigned a CVE.
+Looks unrealistic to me.  Feb 15 is when 2.3.4 was released by Chris.
+A copy I downloaded has mtime Feb 15 (preserved from the official
+download site) and ctime Mar 2 (when I downloaded it).  It passes the
+GPG signature check and lacks the backdoor.
 
-Details from the public bug follow:
-https://launchpad.net/bugs/826679
+Additionally, searching for the SHA-256 digest that Chris posted reveals
+only copies of his announcement of the incident and news stories about
+it.  No hits for any distro's filelists, etc.  I wish we had MD5 and
+SHA-1 to also search for, though.  I don't have a copy of the backdoored
+vsftpd tarball to compute those, but we can ask Chris for them.
 
-----
-From the reporter:
+My gut feeling is that the backdoored tarball has been on the site for
+1 to 3 days.  But I could be wrong.
 
-"hammerhead blindly writes to to /tmp/hammer.log without prior checks.
-It is possible to put a symbolic link at /tmp/hammer.log pointing at
-another file - that hammerhead will then end up appending data into.
-(it appears that hammerhead uses the file location as specified
-in /etc/hammerhead/hh.conf - which in debian/ubuntu
-is /tmp/hammer.log)."
-----
-
-A quick check shows that HH_LOG and REPORT_LOG are indeed being
-unconditionally opened with 'fopen(..., "a+")' in src/hammerhead.cc. 
-
-Thanks in advance for your cooperation in coordinating a fix for this
-issue,
-
-Jamie Strandboge
-
-[1] oss-security@...ts.openwall.com is a public mailing list for
-    people to collaborate on security vulnerabilities and coordinate
-    security updates.
-
-PS - I couldn't find a security contact for hammerhead, so emailed to
-those I could find in AUTHORS.
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
