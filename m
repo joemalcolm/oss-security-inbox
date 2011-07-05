@@ -1,37 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/16
-Message-ID: <1503554961.398662.1306873661016.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 16:27:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Post Revolution multiple security vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/6
+Message-ID: <20110705042112.GA13907@openwall.com>
+Date: Tue, 5 Jul 2011 08:21:12 +0400
+From: Solar Designer <solar@...nwall.com>
+To: HD Moore <hdm@...italoffense.net>
+Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-IDs inline.
-
------ Original Message -----
-> Hi, I need a CVE for Post Revolution 0.8c multiple security
-> vulnerabilities. (Post Revolution is a CMS similar to Wordpress
-> released under GPLv2)
+On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
+> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
 > 
-> The vulnerabilities are:
-> 1. A Denial of service vulnerability.
-    CVE-2011-1952
+> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
 
-> 2. Cross-site scripting vulnerabilities.
-    CVE-2011-1953
+This is very helpful, thank you!  How did you find it?
 
-> 3. Cross-site request forgery vulnerabilities.
-    CVE-2011-1954
+So, I failed to get this server to give me ctime (looked at HTTP headers
+and also tried several FTP commands), and the mtime is Feb 15.  We could
+ask the server admins for the ctime.
 
+However, inside the archive we see 2011-06-30 14:15 UTC on the top-level
+directory, and 2011-06-30 13:46 on the .o files.  This suggests that the
+backdoored tarball was put in place no earlier than 2011-06-30 14:15 UTC,
+although that's using the intruder's system time, which might not be
+accurate. ;-)
+
+> ... I am saying that for this to become as widespread as the mtime in
+> the mirror above indicates, it would be incredible for distros like
+> Debian to not notice it, as they verify the hash of the tarball. This
+> indicates that the mtime in the mirror above was forged (since the hash
+> is indeed wrong), but the real question is how this mirror obtained the
+> copy.
 > 
-> Vendor has publicly confirmed the existence of the vulnerabilities:
-> http://translate.google.com/translate?u=http%3A%2F%2Fpostrev.com.ar%2F&sl=es&tl=en&hl=&ie=UTF-8
-> I will wait for vendor to fully patch these issues before
-> full-disclosure (probably by Friday)
+> Was the mirror compromised? Was a rsync job used against the real
+> server, in which case the mtime was preserved? I couldn't find any
+> public copies with the backdoored checksum, but one of the metasploit
+> contributors pointed me to the link above.
 
-Thanks.
+My guess is that the mirror is automatically updated, perhaps nightly,
+and not necessarily via rsync.  It is possible to transfer/preserve the
+mtime via ftp and http as well - typical mirror programs do that.
 
--- 
-    JB
+> I would like to believe the exposure was limited to 1-3 days, but the
+> mirror above casts doubt on this.
+
+Looks like it was 3 days, actually.
+
+Thanks,
+
+Alexander
