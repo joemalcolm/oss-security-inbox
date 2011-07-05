@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/5
-Message-ID: <20110124183757.GA28279@albatros>
-Date: Mon, 24 Jan 2011 21:37:59 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Cc: Eugene Teo <eugeneteo@...nel.org>, oss-security@...ts.openwall.com
-Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/14
+Message-ID: <4E12E78F.3040707@gmx.de>
+Date: Tue, 05 Jul 2011 12:29:35 +0200
+From: Matthias Andree <matthias.andree@....de>
+To: oss-security@...ts.openwall.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 22, 2011 at 15:13 -0500, Steven M. Christey wrote:
-> 
-> On Fri, 21 Jan 2011, Eugene Teo wrote:
-> 
-> >On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
-> >>File position is not controlled, it may lead to overwrites of arbitrary
-> >>kernel memory.  Also the code may kfree() the same pointer multiple
-> >>times.
-> >
-> >http://lkml.org/lkml/2011/1/20/348
-> >https://bugzilla.redhat.com/CVE-2011-0023
-> >
-> >Please use CVE-2011-0023 (this does not include the unresolved
-> >flaw described in the following paragraph below).
-> 
-> There seem to be 2 types of issues described above - the
-> uncontrolled file position / memory overwrite, and a "double free".
+Am 05.07.2011 06:39, schrieb Solar Designer:
 
-If you want to count every bug in this code, here you are: if zero *ppos
-after each write() then buf is leaked :-)
+> More info on what's inside the tarball: user/group "user" (either the
+> intruder's username on his/her computer or --owner and --group options
+> argument to tar), "GCC: (Ubuntu/Linaro 4.5.2-8ubuntu4) 4.5.2" inside the
+> .o files.  This suggests Ubuntu 11.04, right?
 
-> So there should probably be 2 separate CVEs, not one.  Am I missing
-> something?
+That's the tagline of "gcc --version" on my Ubuntu 11.04 system.
+
+> BTW, what if the .o files _don't_ match the source code? ;-)  I think
+> they might be used when one builds vsftpd from this tarball, which means
+> that the build (or run) will fail on some older systems (yet another
+> reason why this would be noticed quickly), but also that the actual
+> backdoor might be different (and more sophisticated) from what we see in
+> the source code.  No, I don't think this is the case, but the
+> possibility is there, and I find it curious.
 > 
-> - Steve
+> A trivial way to check for this would be to try compiling the source
+> code on Ubuntu 11.04 and see if the .o files match.  If not, the
+> differences will need to be analyzed manually.  Not that anyone cares...
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+And you'd need to know the compiler options, flipping one optimization
+manually is sufficient to make the .o files mismatch.
+
+However the backdoored tarball apparently got removed from the listed
+server (404 error), but I'm not interested in hunting one down.
