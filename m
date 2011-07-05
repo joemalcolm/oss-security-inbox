@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/11
-Message-ID: <4E25A123.8010302@redhat.com>
-Date: Tue, 19 Jul 2011 17:22:11 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Even Rouault <even.rouault@...es-paris.org>, Pavel Lisý <pavel.lisy@...il.com>
-Subject: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/4
+Message-ID: <20110705035839.GA13674@openwall.com>
+Date: Tue, 5 Jul 2011 07:58:39 +0400
+From: Solar Designer <solar@...nwall.com>
+To: HD Moore <hdm@...italoffense.net>
+Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Mon, Jul 04, 2011 at 10:31:07PM -0500, HD Moore wrote:
+> Thanks for the CC -- as a guess as to what happened; was this particular
+> mirror compromised
 
-   the following has been brought to our attention:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
-   [2] http://trac.osgeo.org/mapserver/ticket/3903
+What mirror?  As far as I'm aware, from the announcement by Chris, only
+the official distribution site for vsftpd was compromised.
 
-More from [2]:
+> and the original tarball modified (along with its
+> mtime) to match the original Feb 15th date?
 
-This ticket is to track fixes to prevent SQL injections through OGC 
-filter encoding (in WMS, WFS and SOS), as well as a potential SQL 
-injection in WMS time support.
+Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
+one on forums where I saw this discussed appears to have it (which
+confirms that it existed for a very short period of time only).
 
-Your system may be vulnerable if it has MapServer with OGC protocols 
-enabled, with layers connecting to an SQL RDBMS backend, either natively 
-or via OGR.
+> Does anyone have a "we noticed it first" flag that is before July 3rd?
 
-All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable. 
-All users are ** strongly encouraged ** to upgrade to one of the latest 
-releases with the fixes.
+Not that I know of.
 
-Could you allocate a CVE id for this?
+> Debian (and most other repos) are storing the SHA-256/SHA1/MD5 of each
+> source package, so a Feb 15 date does seem incredible, but so does the
+> complete pwnage of a non-official mirror with the original mtime, at the
+> same moment as an official dist server compromise. A nightly rsync would
+> account for this, but we would need to know more about the mirror
+> structure from Chris.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Are you trying to say that Debian got the backdoored copy?  This is news
+to me.
+
+Thanks,
+
+Alexander
