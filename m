@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/2
-Message-ID: <20110718084750.GA18157@flens.dfn-cert.de>
-Date: Mon, 18 Jul 2011 10:47:50 +0200
-From: dfncert@...-cert.de
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/16
+Message-ID: <4E12F3AE.60306@redhat.com>
+Date: Tue, 05 Jul 2011 19:21:18 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: security-officer@....org
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 15, 2011 at 11:18:49AM -0600, Vincent Danen wrote:
+(Cc'ed the ISC folks)
 
-> >A patch was proposed to the packet maintainer.
+On 07/05/2011 07:17 PM, Eugene Teo wrote:
+> You might have read about AusCert's accidental disclosure of the ISC
+> Bind advisories today. If you have more information about this, please
+> share. AFAICS, the bind source packages are still not available at the
+> ISC website.
 > 
-> This is pretty light on the details.  Any references to supply or an
-> actual description of the problem?
- 
-The implemented procedure does not verify the status of
-the certificate. For instance, if the certificate has been revoked.
+> https://bugzilla.redhat.com/CVE-2011-2464
+> https://bugzilla.redhat.com/CVE-2011-2465
+> http://risky.biz/auscert-bind
+> http://pastebin.com/9NUt8Pk0
+> 
+> Thanks, Eugene
 
-
-> Link to upstream fixes, emails, bugs, whatever?
-
-We are not aware of any upstream fix.
-
-
--- 
-DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
-Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
-Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
-
-Content of type "application/pgp-signature" skipped
