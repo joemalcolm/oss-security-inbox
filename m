@@ -1,34 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/12
-Message-ID: <4D5BDF62.4020704@redhat.com>
-Date: Wed, 16 Feb 2011 22:29:54 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, coley <coley@...re.org>
-Subject: Re: kernel: ALSA: caiaq - Fix possible string-buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/11
+Message-ID: <4e129ec5.c5ead80a.2780.3376@mx.google.com>
+Date: Tue, 05 Jul 2011 05:22:45 +0000
+From: "pinto.elia@...il.com" <pinto.elia@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: R: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On 02/16/2011 09:48 PM, Josh Bressers wrote:
->
-> ----- Original Message -----
->> Reported by rafa@...infosecurity.com, "Use strlcpy() to assure not to
->> overflow the string array sizes by too long USB device name string."
->>
->> http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commitdiff;h=eaae55dac6b64c0616046436b294e69fc5311581
->>
->> Just FYI, I'm not requesting a CVE name for this as it only affects
->> Native Instruments USB audio devices with very long device name which I
->> think is unlikely.
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=677881
->>
->
-> I'm assigning this CVE-2011-0712.
->
-> With the recent research about having a smartphone impersonate various USB
-> devices, I think this attack is now more plausible than in previous years.
+Sorry for not quoting. Just for Info rpm5 have all the necessary for embedding all these check in a spec file from years. Regards. Elia
+----Messaggio originale----
+Da: Moritz Muehlenhoff
+Inviato:  04/07/2011, 18:56 
+A: oss-security@...ts.openwall.com
+Oggetto: Re: [oss-security] vsftpd download backdoored
 
-Actually this is hardware-specific, and the strcpys are in the 
-initialisation part of the code.
 
-Eugene
+
+Solar Designer wrote:
+
+> Here's a great example of why maintainers should sign their release
+> tarballs, why distributions should insist on that, and why they should
+> actually check the signatures indeed.
+> 
+> I think we should be referring to this when convincing people to do that
+> (I had moderate success so far - some projects started signing their
+> tarballs after my suggestions/requests, some did not).
+> 
+> http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+> 
+> New vsftpd homepage:
+> 
+> https://security.appspot.com/vsftpd.html
+
+IIRC for such backdoored downloads CVE IDs were assigned in the past
+to properly track the status of distributions providing the affected 
+piece of code. 
+
+Can someone please assign an ID for this?
+
+Cheers,
+        Moritz
+
