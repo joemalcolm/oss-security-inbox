@@ -1,46 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/21
-Message-ID: <ig59jn$okq$1@dough.gmane.org>
-Date: Thu, 06 Jan 2011 14:44:36 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/6
+Message-ID: <20110705042112.GA13907@openwall.com>
+Date: Tue, 5 Jul 2011 08:21:12 +0400
+From: Solar Designer <solar@...nwall.com>
+To: HD Moore <hdm@...italoffense.net>
+Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen wrote:
-> We got a heads up on a directory traversal flaw in patch.  I don't think
-> a CVE name has been assigned to it; could we get one?  It allows for the
-> creation of arbitrary files in unexpected places due to the use of '..'.
+On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
+> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
 > 
-> References:
+> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+
+This is very helpful, thank you!  How did you find it?
+
+So, I failed to get this server to give me ctime (looked at HTTP headers
+and also tried several FTP commands), and the mtime is Feb 15.  We could
+ask the server admins for the ctime.
+
+However, inside the archive we see 2011-06-30 14:15 UTC on the top-level
+directory, and 2011-06-30 13:46 on the .o files.  This suggests that the
+backdoored tarball was put in place no earlier than 2011-06-30 14:15 UTC,
+although that's using the intruder's system time, which might not be
+accurate. ;-)
+
+> ... I am saying that for this to become as widespread as the mtime in
+> the mirror above indicates, it would be incredible for distros like
+> Debian to not notice it, as they verify the hash of the tarball. This
+> indicates that the mtime in the mirror above was forged (since the hash
+> is indeed wrong), but the real question is how this mirror obtained the
+> copy.
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=667529
-> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
+> Was the mirror compromised? Was a rsync job used against the real
+> server, in which case the mtime was preserved? I couldn't find any
+> public copies with the backdoored checksum, but one of the metasploit
+> contributors pointed me to the link above.
 
-Talking to Steve it looks like some things are not very clear, so I hope the 
-following explains it:
+My guess is that the mirror is automatically updated, perhaps nightly,
+and not necessarily via rsync.  It is possible to transfer/preserve the
+mtime via ftp and http as well - typical mirror programs do that.
 
-* dpkg uses patch to apply patches in source packages format 1.0 and 3.0 
-quilt (in spite of the name, dpkg uses an internal implementation of quilt)
-* under the hood, patch is the one traversing directories when applying 
-patches
-* dpkg has its own set of checks for such traversals and general patch 
-sanity checks. In fact, CVE-2010-0396 was also related to directory 
-traversals.
+> I would like to believe the exposure was limited to 1-3 days, but the
+> mirror above casts doubt on this.
 
-CVE-2010-1679 is about dpkg being happy to pass patches with invalid paths 
-to patch and following symlinks in the .pc directory.
+Looks like it was 3 days, actually.
 
-That said, I don't know if quilt itself is affected by the .pc directory 
-issue, and if it is, whether it is really relevant.
+Thanks,
 
-For further reference, DSA-2142-1 addresses the flaws in dpkg:
-http://lists.debian.org/debian-security-announce/2011/msg00004.html
-
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+Alexander
