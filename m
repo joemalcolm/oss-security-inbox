@@ -1,36 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/8
-Message-ID: <20110929155100.GP4635@cmpxchg8b.com>
-Date: Thu, 29 Sep 2011 17:51:00 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: Joerg Sonnenberger <joerg@...tannica.bec.de>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/3
+Message-ID: <4E12857B.2040005@digitaloffense.net>
+Date: Mon, 04 Jul 2011 22:31:07 -0500
+From: HD Moore <hdm@...italoffense.net>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2011 at 02:50:22PM +0200, Joerg Sonnenberger wrote:
-> On Thu, Sep 29, 2011 at 04:38:08AM +0400, Solar Designer wrote:
-> > Hi Tavis,
-> > 
-> > On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
-> > > I believe I wrote that patch,
-> > 
-> > I believe you wrote a different patch, or two:
-> > 
-> > http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
-> > http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+On 7/4/2011 9:26 PM, Solar Designer wrote:
+> On Tue, Jul 05, 2011 at 10:09:32AM +0800, Eugene Teo wrote:
+>> I did not verify.
+>>
+>> (09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
+>> http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
+>> 15th -> July 3rd (via mc)
 > 
-> This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
-> name. The corresponding NetBSD advisory explicitly lists GNU gzip and
-> libarchive as not vulnerable.
+> Looks unrealistic to me.  Feb 15 is when 2.3.4 was released by Chris.
+> A copy I downloaded has mtime Feb 15 (preserved from the official
+> download site) and ctime Mar 2 (when I downloaded it).  It passes the
+> GPG signature check and lacks the backdoor.
 > 
-> Joerg
+> Additionally, searching for the SHA-256 digest that Chris posted reveals
+> only copies of his announcement of the incident and news stories about
+> it.  No hits for any distro's filelists, etc.  I wish we had MD5 and
+> SHA-1 to also search for, though.  I don't have a copy of the backdoored
+> vsftpd tarball to compute those, but we can ask Chris for them.
+> 
+> My gut feeling is that the backdoored tarball has been on the site for
+> 1 to 3 days.  But I could be wrong.
 
-I see, apologies for misunderstanding.
+Thanks for the CC -- as a guess as to what happened; was this particular
+mirror compromised and the original tarball modified (along with its
+mtime) to match the original Feb 15th date?
 
-Tavis.
+Does anyone have a "we noticed it first" flag that is before July 3rd?
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+Debian (and most other repos) are storing the SHA-256/SHA1/MD5 of each
+source package, so a Feb 15 date does seem incredible, but so does the
+complete pwnage of a non-official mirror with the original mtime, at the
+same moment as an official dist server compromise. A nightly rsync would
+account for this, but we would need to know more about the mirror
+structure from Chris.
+
+I am happy to correct the metasploit module if new facts arrive; thank
+you to everyone who spends their free time dealing with this crap.
+
+-HD
