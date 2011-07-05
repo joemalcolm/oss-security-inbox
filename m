@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/4
-Message-ID: <20111117022217.GA18757@openwall.com>
-Date: Thu, 17 Nov 2011 06:22:17 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/4
+Message-ID: <20110705035839.GA13674@openwall.com>
+Date: Tue, 5 Jul 2011 07:58:39 +0400
 From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+To: HD Moore <hdm@...italoffense.net>
+Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
-> Alternatively, crypt(3) and crypt_r(3) (and the reference code for
-> SHA-crypt?) could refuse to work on overly long key or/and salt strings,
-> but then the question is what they should do on error.
+On Mon, Jul 04, 2011 at 10:31:07PM -0500, HD Moore wrote:
+> Thanks for the CC -- as a guess as to what happened; was this particular
+> mirror compromised
 
-Here's another related option:
+What mirror?  As far as I'm aware, from the announcement by Chris, only
+the official distribution site for vsftpd was compromised.
 
-	if (strlen(key) > 100000 || strlen(salt) > 100000)
-		abort();
+> and the original tarball modified (along with its
+> mtime) to match the original Feb 15th date?
 
-(or something like this).  Ridiculous?  Sure, but it's better than
-overwriting another thread's stack or the heap with somewhat higher
-lengths, and 100001 chars is not a more reasonable password length to
-support than, say, 2 million or 10 million (typical thread stack sizes).
+Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
+one on forums where I saw this discussed appears to have it (which
+confirms that it existed for a very short period of time only).
 
-So if we can't decide on a proper fix (does anyone besides me even
-care?), something as trivial as the above would be an improvement.
+> Does anyone have a "we noticed it first" flag that is before July 3rd?
+
+Not that I know of.
+
+> Debian (and most other repos) are storing the SHA-256/SHA1/MD5 of each
+> source package, so a Feb 15 date does seem incredible, but so does the
+> complete pwnage of a non-official mirror with the original mtime, at the
+> same moment as an official dist server compromise. A nightly rsync would
+> account for this, but we would need to know more about the mirror
+> structure from Chris.
+
+Are you trying to say that Debian got the backdoored copy?  This is news
+to me.
+
+Thanks,
 
 Alexander
