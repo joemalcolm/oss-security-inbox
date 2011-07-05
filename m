@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/2
-Message-ID: <4D884EA7.7060400@redhat.com>
-Date: Tue, 22 Mar 2011 15:24:23 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/17
+Message-ID: <4E130401.3090501@redhat.com>
+Date: Tue, 05 Jul 2011 20:30:57 +0800
 From: Eugene Teo <eugene@...hat.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: heap corruption in IrDA
+To: oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On 03/22/2011 07:18 AM, Dan Rosenberg wrote:
-> On Mon, Mar 21, 2011 at 12:59 AM, Eugene Teo<eugene@...hat.com>  wrote:
->> On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
->>>
->>> When providing an invalid IrDA nickname for an IrNET peer, a local
->>> attacker can cause a kernel panic due to an underflow in a memcpy()
->>> size calculation or cause a controllable heap overflow that may lead
->>> to privilege escalation.  Write access to the /dev/irnet device file
->>> is required to trigger the vulnerability.
->>>
->>> Reference:
->>> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
->>
->> The default permissions for /dev/irnet is root-read/write only. In the past
->> I have ignored such issues that can only be triggered by root, even though
->> the permissions can be changed. I wouldn't assign a CVE name for this. CC'ed
->> Steve.
->
-> Fair enough, I should probably have been more clear about the exact
-> impact of the flaw.  But given recent discussions about hardening the
-> kernel even against the root user, it seems like reliably triggered
+On 07/05/2011 01:25 AM, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+>> IIRC for such backdoored downloads CVE IDs were assigned in the past
+>> to properly track the status of distributions providing the affected 
+>> piece of code.
+> 
+> I suspect that no distributions provide the affected code this time.
+> So if affected distributions is the only reason for CVE ID assignment in
+> this case, it might make sense to postpone CVE ID allocation until we
+> learn of an affected distribution (which we probably won't).
 
-wrt to capabilities.
+But with a CVE name, it is easier for people to refer to this issue, and
+also easier for distributions to publish an official statement.
 
-> kernel memory corruption of any kind enables crossing some security
-> boundary, so this may still deserve a CVE - just one with a
-> description that accurately reflects the relatively less common attack
-> scenario.
-
-Yes, but it can't be triggered by a local, unprivileged user.
+My two cents.
 
 Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
