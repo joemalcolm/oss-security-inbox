@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/3
-Message-ID: <4DBEC773.3080005@redhat.com>
-Date: Mon, 02 May 2011 17:02:11 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- WordPress v3.1.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/17
+Message-ID: <4E130401.3090501@redhat.com>
+Date: Tue, 05 Jul 2011 20:30:57 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
+On 07/05/2011 01:25 AM, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+>> IIRC for such backdoored downloads CVE IDs were assigned in the past
+>> to properly track the status of distributions providing the affected 
+>> piece of code.
+> 
+> I suspect that no distributions provide the affected code this time.
+> So if affected distributions is the only reason for CVE ID assignment in
+> this case, it might make sense to postpone CVE ID allocation until we
+> learn of an affected distribution (which we probably won't).
 
-Hello Josh, Steve, vendors,
+But with a CVE name, it is easier for people to refer to this issue, and
+also easier for distributions to publish an official statement.
 
-   WordPress upstream has released v3.1.2 addressing one security issue:
-   [1] http://wordpress.org/news/
+My two cents.
 
-   More from [1]:
-   "This release addresses a vulnerability that allowed Contributor-level users to improperly publish posts.
-   The issue was discovered by a member of our security team, WordPress developer Andrew Nacin, with Benjamin Balter."
-
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Eugene
