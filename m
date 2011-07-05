@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/6
-Message-ID: <4EEF765B.8030700@redhat.com>
-Date: Mon, 19 Dec 2011 10:37:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/1
+Message-ID: <4E12725C.2000100@redhat.com>
+Date: Tue, 05 Jul 2011 10:09:32 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: WordPress advanced-text-widget XSS advancedtext.php?page=
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On 12/18/2011 02:45 AM, Henri Salo wrote:
-> Can I get CVE-identifier for this issue?
->
-> Original report: http://seclists.org/bugtraq/2011/Nov/133
-> Vendor report: http://wordpress.org/support/topic/wordpress-advanced-text-widget-plugin-cross-site-scripting-vulnerabilities
-> Fixed in 2.0.2
-> Vulnerable versions: 2.0.1 and all below
-> One example: advancedtext.php?page=
->
-> http://wordpress.org/extend/plugins/advanced-text-widget/changelog/
-> ------------------------------------------------------------------------
-> r466102 | maxchirkov | 2011-11-22 19:32:02 +0200 (Tue, 22 Nov 2011) | 2 lines
->
-> Committing version 2.0.2
-> - Updated all instances of $_GET method with esc_attr() to improve security.
-> ------------------------------------------------------------------------
->
-> - Henri Salo
-Please use CVE-2011-4618 for this issue.
+On 07/05/2011 01:25 AM, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+>> IIRC for such backdoored downloads CVE IDs were assigned in the past
+>> to properly track the status of distributions providing the affected 
+>> piece of code.
+> 
+> I suspect that no distributions provide the affected code this time.
+> So if affected distributions is the only reason for CVE ID assignment in
+> this case, it might make sense to postpone CVE ID allocation until we
+> learn of an affected distribution (which we probably won't).
 
--- 
+I did not verify.
 
--Kurt Seifried / Red Hat Security Response Team
+(09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
+http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
+15th -> July 3rd (via mc)
 
+Eugene
