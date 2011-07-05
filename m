@@ -1,85 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/2
-Message-ID: <20110425090508.GA11290@dojo.mi.org>
-Date: Mon, 25 Apr 2011 05:05:08 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/7
+Message-ID: <4E12920D.6090805@freebsd.org>
+Date: Mon, 04 Jul 2011 21:24:45 -0700
+From: Colin Percival <cperciva@...ebsd.org>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-:I know that there is increasing momentum for the new setup, but I
-:think this solution is wrong.  Its starting to look a lot like the old
-:vendor-sec (too many participants), and drawing an appropriate line for
+On 07/04/11 16:09, Solar Designer wrote:
+> I'd be interested in more detail on this bug.  So far, the closest to a
+> description of the bug that I saw is this:
+> 
+> http://lists.openwall.net/full-disclosure/2011/07/01/4
+> 
+> but it's not enough.
+> 
+> I'd like to learn not only on my own, but also on others' mistakes. ;-)
+> And for this purpose it does not matter how old the software is and
+> whether it is still supported or not.
+> 
+> Colin - any comments from you?  I realize the bug is not yours, but
+> perhaps you're one of the few people who have figured it out now, for a
+> reason similar to mine.
 
-How many participants are on security@...nel.org?  How many are part
-of the Mozilla security team?  (And yeah, I know the answer there --
-http://www.mozilla.org/projects/security/secgrouplist.html).  There's
-an assumption that "more = worse", but how many is really too many?
-You only get the answer when it seems to stop working.  
-
-:participation is impossible and seems wrong.
-:
-:The ideal solution to the "too many eyes" problem would be to empower
-
-The problem with vendor-sec of old seemingly wasn't so much "too many
-eyes" -- more like "too many mouths", too many points of leakage.  It
-wasn't at all clear how much of the vendor-sec leaks were due to any
-one list member in particular (because there were many exploders), bad
-infrastructure, a combination of factors, etc.  Apart from that, it
-seemed to be _mostly_ working, which may be as well as could ever be
-expected in reality.
-
-:the researcher (issue submitter) to choose exactly which eyes they want
-:involved.  A way to achieve this would be a ml that accepts only
-
-The issue there is that some folks don't necessarily have a good
-handle on the issue where they _can_ reasonably target things.  The
-same has sometimes been true even for the coordinating bodies who one
-might think would know better.  Often, it's the vendor/distro reps who
-know the particular nuances of their present and future product better
-than anyone else.  For a sufficiently diverse product base, that kind
-of knowledge is not easy to break down into some checklist ready-made
-for narrow targeting of issues.  
-
-:encrypted messages for participants (participation would be unlimited)
-:and an "archive participant".  The list of participants is open to all
-:(for the purpose of the researcher seeing which keys they want to
-:encrypt for).
-:
-:When sending a message to the list, the researcher has to encrypt the
-
-Make the barrier for participation high enough for the discoverer of
-an issue (who may not always be a "researcher" in any classic sense)
-and the level of participation will be correspondingly low.  Keep in
-mind that for many of the open source communities that vendor-sec has
-interacted with, security is _not_ their primary focus.  Most people
-write code so they can actually get stuff done.  :)
-
-:message for archive key and at least one other valid participant (if
-:not the message should be rejected, and instructions sent with a list of
-:valid participant key fingerprints). In order to make sure the message
-:was validly received, a checksum of the message should be published to
-:an open list (probably oss-sec).  The researcher can check this right
-:away.
-:
-:Finally, the cleartext message should be posted to an open list after a
-:period of time (probably two months max) so that the entire community
-:can see and validate the closed discussion .  This eliminates the
-:possibility of a secret cabal forming or at least empowers the outside
-:world to see the true reality (although with a delay).
-
-It doesn't _eliminate_ the possibility of any sort of cabal forming.
-It's simply a gesture of good faith, which could be subverted if
-enough like-minded folks decide they need to handle the core of the
-issues reported on the list off-list.  At that point, the list
-archives might turn into some kind of kabuki dance.  To that end, it
-helps to have a bunch of folks on the list who _aren't always_ quite
-so like minded.
-
+I haven't had time to investigate, in part because I don't have any systems
+running that ancient openssh any more.  I'm interested to hear if anyone has
+tracked down exactly where the bug was, though.
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Follow that allergy!"                                              -The Tick
-
-Content of type "application/pgp-signature" skipped
+Colin Percival
+Security Officer, FreeBSD | freebsd.org | The power to serve
+Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
