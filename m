@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/04/6
-Message-ID: <20110704215939.GE1947@redhat.com>
-Date: Mon, 4 Jul 2011 15:59:39 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: plone privilege escalation flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/11
+Message-ID: <4e129ec5.c5ead80a.2780.3376@mx.google.com>
+Date: Tue, 05 Jul 2011 05:22:45 +0000
+From: "pinto.elia@...il.com" <pinto.elia@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: R: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Looks like the previous fix for Plone/Zope (CVE-2011-0720) caused a new
-privilege escalation flaw in Plone 3.x and 4.x.
+Sorry for not quoting. Just for Info rpm5 have all the necessary for embedding all these check in a spec file from years. Regards. Elia
+----Messaggio originale----
+Da: Moritz Muehlenhoff
+Inviato:  04/07/2011, 18:56 
+A: oss-security@...ts.openwall.com
+Oggetto: Re: [oss-security] vsftpd download backdoored
 
-Could a CVE be assigned?
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=718824
-http://plone.org/products/plone/security/advisories/20110622
-http://plone.org/products/plone-hotfix/releases/20110622
-http://secunia.com/advisories/45111
 
-Thanks.
+Solar Designer wrote:
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+> Here's a great example of why maintainers should sign their release
+> tarballs, why distributions should insist on that, and why they should
+> actually check the signatures indeed.
+> 
+> I think we should be referring to this when convincing people to do that
+> (I had moderate success so far - some projects started signing their
+> tarballs after my suggestions/requests, some did not).
+> 
+> http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+> 
+> New vsftpd homepage:
+> 
+> https://security.appspot.com/vsftpd.html
+
+IIRC for such backdoored downloads CVE IDs were assigned in the past
+to properly track the status of distributions providing the affected 
+piece of code. 
+
+Can someone please assign an ID for this?
+
+Cheers,
+        Moritz
+
