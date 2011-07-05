@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/5
-Message-ID: <4E257B68.6040106@redhat.com>
-Date: Tue, 19 Jul 2011 14:41:12 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>
-Subject: CVE Request -- Wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/7
+Message-ID: <4E12920D.6090805@freebsd.org>
+Date: Mon, 04 Jul 2011 21:24:45 -0700
+From: Colin Percival <cperciva@...ebsd.org>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On 07/04/11 16:09, Solar Designer wrote:
+> I'd be interested in more detail on this bug.  So far, the closest to a
+> description of the bug that I saw is this:
+> 
+> http://lists.openwall.net/full-disclosure/2011/07/01/4
+> 
+> but it's not enough.
+> 
+> I'd like to learn not only on my own, but also on others' mistakes. ;-)
+> And for this purpose it does not matter how old the software is and
+> whether it is still supported or not.
+> 
+> Colin - any comments from you?  I realize the bug is not yours, but
+> perhaps you're one of the few people who have figured it out now, for a
+> reason similar to mine.
 
-   an infinite loop was found in the way ANSI A Interface (IS-634/IOS)
-dissector of the Wireshark network traffic analyzer processed certain
-ANSI A MAP capture files. If Wireshark read a malformed packet off a
-network or opened a malicious packet capture file, it could lead to 
-denial of service (Wireshark hang).
+I haven't had time to investigate, in part because I don't have any systems
+running that ancient openssh any more.  I'm interested to hear if anyone has
+tracked down exactly where the bug was, though.
 
-Upstream bug:
-[1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6044
-
-Public PoC:
-[2]
-http://www.wireshark.org/download/automated/captures/fuzz-2011-06-20-22762.pcap
-
-Relevant upstream patch:
-[3] http://anonsvn.wireshark.org/viewvc?view=revision&revision=37930
-
-References:
-[4] http://www.wireshark.org/security/
-[5] http://www.wireshark.org/security/wnpa-sec-2011-11.html
-[6] http://www.wireshark.org/security/wnpa-sec-2011-10.html
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=723215
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Colin Percival
+Security Officer, FreeBSD | freebsd.org | The power to serve
+Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
