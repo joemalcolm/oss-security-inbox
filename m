@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/8
-Message-ID: <493485158.650175.1307991363905.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 14:56:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com, Henri Salo <henri@...v.fi>
-Subject: Re: Re: CVE-request: XSS in Webmin 1.540
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/10
+Message-ID: <4E129B8A.7090506@digitaloffense.net>
+Date: Tue, 05 Jul 2011 00:05:14 -0500
+From: HD Moore <hdm@...italoffense.net>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 13/Jun/2011 06:40 Henri Salo <henri@...v.fi> wrote ..
-> > Hi,
-> >
-> > I would like to receive CVE-identifier for this issue in Webmin.
-> > References:
-> >
-> > http://seclists.org/fulldisclosure/2011/Apr/393
-> >
-> > Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this
-> > from OSVDB.
-> > Fixed in commit:
-> > https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881
-> > which is included to Webmin 1.550 release.
-> >
-> > Should be 2011 identifier.
+On 7/5/2011 12:02 AM, Solar Designer wrote:
+> On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
+>> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
+>>> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+>>> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+>>>
+>>> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+>>
+>> This is very helpful, thank you!  How did you find it?
+>>
+>> So, I failed to get this server to give me ctime (looked at HTTP headers
+>> and also tried several FTP commands), and the mtime is Feb 15.  We could
+>> ask the server admins for the ctime.
 > 
-> There is no CVE for this - the original submitter Javier had trouble
-> obtaining one.
+> I think I got the equivalent of the ctime by listing the mtime for ".".
+> It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
+> other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
+> or +2 for Namibia.
 > 
-> Actually, I have no idea where CVEs come from either!
-> 
+> So it appears that the backdoor was introduced between June 30 14:15 UTC
+> and July 1 23:35 UTC (probably before 21:35, though).
 
-A CVE id was assigned here:
-http://seclists.org/oss-sec/2011/q2/478
+Thanks Alexander! I will update references accordingly, nice call on the
+o's, ill continue digging there, would love to unmask this asshat
+through included env :)
 
-As for getting an ID in the future, your best bet is to mail me directly
-with your request. MITRE is generally swamped with requests, where I don't
-service near the volume they do.
-
-If you have any questions, I'd be happy to answer them.
-
-Thanks.
-
--- 
-    JB
+-HD
