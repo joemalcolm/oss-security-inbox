@@ -1,40 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/5
-Message-ID: <AANLkTi==6UuJeuCUYeTY_vC+vFM4baMko0p4m+8+zncT@mail.gmail.com>
-Date: Sun, 20 Mar 2011 15:45:25 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/15
+Message-ID: <4E12F2CC.4060307@redhat.com>
+Date: Tue, 05 Jul 2011 19:17:32 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-I don't mean to create unnecessary work, but have you actually
-confirmed that exposing each of these files as world-writable actually
-allows a user to cross privilege boundaries?  It seems to me that
-while it's bad practice to create these interfaces as world-writable
-and should be fixed regardless, unless being able to write to one of
-these interfaces actually allows a user to do something he shouldn't
-be able to, it's not a security bug by itself.  For example, I've
-noticed interfaces that are created with world-writable file
-permissions that don't actually do anything useful when you write to
-them.
+You might have read about AusCert's accidental disclosure of the ISC
+Bind advisories today. If you have more information about this, please
+share. AFAICS, the bind source packages are still not available at the
+ISC website.
 
-Regards,
-Dan
+https://bugzilla.redhat.com/CVE-2011-2464
+https://bugzilla.redhat.com/CVE-2011-2465
+http://risky.biz/auscert-bind
+http://pastebin.com/9NUt8Pk0
 
-On Sun, Mar 20, 2011 at 9:43 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> Steven,
->
-> On Wed, Feb 23, 2011 at 16:23 -0500, Josh Bressers wrote:
->> Thanks for the list. I don't have enough CVE ids for this, I've grouped
->> them by type and version for MITRE to assign IDs.
->
-> Any update on this?
->
->
-> Thanks,
->
-> --
-> Vasiliy Kulikov
-> http://www.openwall.com - bringing security into open computing environments
->
+Thanks, Eugene
