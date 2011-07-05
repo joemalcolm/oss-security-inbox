@@ -1,18 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/2
-Message-ID: <4DAE611C.4000503@redhat.com>
-Date: Wed, 20 Apr 2011 12:29:16 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: missing socket check in can/bcm release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/12
+Message-ID: <20110705054919.GA14599@openwall.com>
+Date: Tue, 5 Jul 2011 09:49:19 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Colin Percival <cperciva@...ebsd.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-A missing socket check in can/bcm release
+On Mon, Jul 04, 2011 at 09:24:45PM -0700, Colin Percival wrote:
+> I haven't had time to investigate, in part because I don't have any systems
+> running that ancient openssh any more.  I'm interested to hear if anyone has
+> tracked down exactly where the bug was, though.
 
-Proposed patch: http://permalink.gmane.org/gmane.linux.network/192898
-https://bugzilla.redhat.com/show_bug.cgi?id=698057
+Thanks for your reply.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Since I also have other uses for my time, would anyone else investigate,
+please?  I'd appreciate it.  Perhaps install FreeBSD 4.x into a VM.
+Sounds like fun for someone who has time.
+
+I don't think the bug is in OpenSSH per se, nor in FreeBSD 4's PAM (my
+understanding is that it was cut-down Linux-PAM at the time, which was
+replaced with OpenPAM in 5.x), nor in pam_opie.  libopie sounds more
+plausible.  But I could be wrong.
+
+Alexander
