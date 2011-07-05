@@ -1,56 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/1
-Message-ID: <20110305161642.GA2007@albatros>
-Date: Sat, 5 Mar 2011 19:16:43 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: kernel: modules_disabled policy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/5
+Message-ID: <4E128D30.7060703@digitaloffense.net>
+Date: Mon, 04 Jul 2011 23:04:00 -0500
+From: HD Moore <hdm@...italoffense.net>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 7/4/2011 10:58 PM, Solar Designer wrote:
+> What mirror?  As far as I'm aware, from the announcement by Chris, only
+> the official distribution site for vsftpd was compromised.
+[ snip ]
+> Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
+> one on forums where I saw this discussed appears to have it (which
+> confirms that it existed for a very short period of time only).
 
-I'd like to bring this subject to the list to receive some comments.
-The thing is that there is a sysctl parameter in Linux kernel to control
-whether it is possible to load/unload LKMs, kernel.modules_disabled.  It
-was originally created because since the removal of system global capability
-set there was no way to globally drop CAP_SYS_MODULE.  It was committed
-as 3d43321b by Kees Cook in Apr 2009:
+This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
 
-"Implement a sysctl file that disables module-loading system-wide since
-there is no longer a viable way to remove CAP_SYS_MODULE after the system
-bounding capability set was removed in 2.6.25."
+http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
 
-It is one way ticket, there is no defined interface to enable LKM
-loading after disabling it.  The sticking point is that it gives an idea
-that using it prevents loading rootkits to the kernel:
+> Are you trying to say that Debian got the backdoored copy?  This is news
+> to me.
 
-https://wiki.ubuntu.com/Security/Features#block-modules
+No, I am saying that for this to become as widespread as the mtime in
+the mirror above indicates, it would be incredible for distros like
+Debian to not notice it, as they verify the hash of the tarball. This
+indicates that the mtime in the mirror above was forged (since the hash
+is indeed wrong), but the real question is how this mirror obtained the
+copy.
 
-"This was another layer of protection to stop kernel rootkits from being
-installed." 
+Was the mirror compromised? Was a rsync job used against the real
+server, in which case the mtime was preserved? I couldn't find any
+public copies with the backdoored checksum, but one of the metasploit
+contributors pointed me to the link above.
 
-But does it really stop rootkits or is it gives a false sence of security?
-There are other ways to write to arbitrary kernel memory location being
-full root, e.g. via hibernation:
+I would like to believe the exposure was limited to 1-3 days, but the
+mirror above casts doubt on this.
 
-http://comments.gmane.org/gmane.linux.kernel/1108853
-
-LKML folks responds that modules_disabled does nothing with protecting
-the kernel from root.
-
-
-So, I'd be happy to hear an answer to the question:
-
-Is it possible to implement strict do-not-touch-the-kernel policy for
-root via disabling LKM loading and _all_ other indirect places with write
-access that allows root to do something, but being too relaxed and
-allows to write to [almost] arbitrary kernel location?  This would make
-root the Boss Of Userland, but as to the kernel it would be but just a
-privileged client.  Or such policy would be incomplete and there is
-almost always a way to by-pass it due to the system design?
-
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+-HD
