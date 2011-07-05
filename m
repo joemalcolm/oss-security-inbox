@@ -1,71 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/11
-Message-ID: <2004393315.1024379.1309377152704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:52:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/10
+Message-ID: <4E129B8A.7090506@digitaloffense.net>
+Date: Tue, 05 Jul 2011 00:05:14 -0500
+From: HD Moore <hdm@...italoffense.net>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-This sounds like 4 issues. It's possible it's less, but I suspect duping
-will be less work than splitting in the future. IDs below.
-
------ Original Message -----
-> Hi.
-> I've found a bunch of vulnerabilities in the latest release of
-> phpMyAdmin.
+On 7/5/2011 12:02 AM, Solar Designer wrote:
+> On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
+>> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
+>>> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+>>> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+>>>
+>>> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+>>
+>> This is very helpful, thank you!  How did you find it?
+>>
+>> So, I failed to get this server to give me ctime (looked at HTTP headers
+>> and also tried several FTP commands), and the mtime is Feb 15.  We could
+>> ask the server admins for the ctime.
 > 
-> Vuln 1:
-> Any variable in the super global $_SESSION array can be overwritten or
-> created with an arbitrate value.
-
-CVE-2011-2505
-
+> I think I got the equivalent of the ctime by listing the mtime for ".".
+> It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
+> other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
+> or +2 for Namibia.
 > 
-> Vuln 2:
-> A (common) misconfiguration of phpMyAdmin allows content from the
-> $_SESSION
-> array can be written to a .php-file.
-> Combined with Vuln 1 this becomes a conditional remote code execution.
+> So it appears that the backdoor was introduced between June 30 14:15 UTC
+> and July 1 23:35 UTC (probably before 21:35, though).
 
-CVE-2011-2506
+Thanks Alexander! I will update references accordingly, nice call on the
+o's, ill continue digging there, would love to unmask this asshat
+through included env :)
 
-> 
-> Vuln 3:
-> Content from the $_SESSION array are (post authentication) used as
-> input to
-> a function that can execute PHP code.
-> Under the current circumstances a previously unknown null byte string
-> truncation in this function is used.
-> I have only been able to reproduce this string truncation on PHP
-> 5.2.13
-> running on Windows 7 and I've failed to reproduce it on PHP 5.2.13
-> running
-> on OpenBSD 4.7 and PHP 5.2.17 running on Linux 2.6.18. I do lack
-> the necessary C++ debugging skills to find out why this only works on
-> my
-> windows box.
-> Combined with Vuln 1 this becomes an authenticated remote code
-> execution.
-
-CVE-2011-2507
-
-> 
-> Vuln 4:
-> Under a certain configuration an authenticated attacker can include a
-> local
-> file and interpret it's content as PHP.
-> By modifying values in the $_SESSION array a cache holding the
-> required
-> configuration option can be temporarily altered during run time.
-> If combined with Vuln 1 all configurations are vulnerable to this
-> authenticated local file inclusion.
-> 
-
-CVE-2011-2508
-
-Thanks.
-
--- 
-    JB
+-HD
