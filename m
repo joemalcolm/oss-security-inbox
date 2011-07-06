@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/2
-Message-ID: <20110716185352.GW18284@redhat.com>
-Date: Sat, 16 Jul 2011 12:53:52 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/1
+Message-ID: <20110706034112.GA18345@openwall.com>
+Date: Wed, 6 Jul 2011 07:41:12 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request and info: freetype flaw to jailbreak iphone
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-I'm not sure if this has received a CVE name or not (if it did, it was
-likely assigned to iOS specifically and not freetype).
+On Tue, Jul 05, 2011 at 08:30:57PM +0800, Eugene Teo wrote:
+> On 07/05/2011 01:25 AM, Solar Designer wrote:
+> > On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+> >> IIRC for such backdoored downloads CVE IDs were assigned in the past
+> >> to properly track the status of distributions providing the affected 
+> >> piece of code.
+> > 
+> > I suspect that no distributions provide the affected code this time.
+> > So if affected distributions is the only reason for CVE ID assignment in
+> > this case, it might make sense to postpone CVE ID allocation until we
+> > learn of an affected distribution (which we probably won't).
+> 
+> But with a CVE name, it is easier for people to refer to this issue, and
+> also easier for distributions to publish an official statement.
 
-It looks like the flaw used to jailbreak the iphone was in freetype's
-PS type1 font handling.
+Your reasoning makes sense to me.
 
-I've taken a quick look, but am by no means a C guy, but the code paths
-are different in freetype 2.2.x and it looks as thought 2.3.11 at least
-(so perhaps all of 2.3.x?) is affected.  The Secunia report indicates
-2.4.5 and possibly older versions.
+I have no objections to having a CVE ID assigned to this issue, but I
+have no idea what the policy is on such assignments.
 
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=722701
-http://secunia.com/advisories/45167
-http://lists.nongnu.org/archive/html/freetype-devel/2011-07/msg00014.html
-http://lists.nongnu.org/archive/html/freetype-devel/2011-07/msg00015.html
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Alexander
