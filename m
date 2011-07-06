@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/3
-Message-ID: <Pine.GSO.4.64.1101190721080.9694@faron.mitre.org>
-Date: Wed, 19 Jan 2011 07:21:36 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Matthew Nicholson <mnicholson@...ium.com>
-Subject: Re: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/12
+Message-Id: <FDF5E768-AFDB-48DB-9C26-10D3DD05DC21@isc.org>
+Date: Wed, 6 Jul 2011 12:09:22 -0700
+From: Barry Greene <bgreene@....org>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com, security-officer@....org
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
+Hi Eugene,
 
-On Wed, 19 Jan 2011, Jan Lieskovsky wrote:
+Yes, we worked hard to contain disclosure process. Politics took over. We will put factors in place for the next security advisory cycle to remediate so it does not happen again.
 
->  Asterisk upstream yesterday released AST-2011-001, also with patches for 
-> supported versions.
->  References:
->  [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
->  [2] http://seclists.org/fulldisclosure/2011/Jan/297
->  [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
->  [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
+Thanks,
 
-Use CVE-2011-0495
+Barry
 
-- Steve
+On Jul 5, 2011, at 4:21 AM, Eugene Teo wrote:
+
+> (Cc'ed the ISC folks)
+> 
+> On 07/05/2011 07:17 PM, Eugene Teo wrote:
+>> You might have read about AusCert's accidental disclosure of the ISC
+>> Bind advisories today. If you have more information about this, please
+>> share. AFAICS, the bind source packages are still not available at the
+>> ISC website.
+>> 
+>> https://bugzilla.redhat.com/CVE-2011-2464
+>> https://bugzilla.redhat.com/CVE-2011-2465
+>> http://risky.biz/auscert-bind
+>> http://pastebin.com/9NUt8Pk0
+>> 
+>> Thanks, Eugene
+> 
+
