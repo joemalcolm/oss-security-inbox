@@ -1,50 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/16/3
-Message-ID: <4EEBC570.2060100@redhat.com>
-Date: Fri, 16 Dec 2011 15:25:52 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/3
+Message-ID: <4E13FFA4.4090001@redhat.com>
+Date: Wed, 06 Jul 2011 14:24:36 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: zabbix persistent XSS flaw
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: perf, x86: fix Intel fixed counters base initialization
 Content-Type: text/plain; charset=utf-8
 
+The following patch solves the problems introduced by Robert's commit
+41bf498 and reported by Arun Sharma. This commit gets rid of the base +
+index notation for reading and writing PMU msrs.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The problem is that for fixed counters, the new calculation for the base
+did not take into account the fixed counter indexes, thus all fixed
+counters were read/written from fixed counter 0.  Although all fixed
+counters share the same config MSR, they each have their own counter
+register.
 
-On 12/16/2011 03:16 PM, Vincent Danen wrote:
-> Could a CVE be assigned to this flaw?
->
-> Zabbix 1.8.10rc1 was released to correct persistant cross-site
-> scripting vulnerabilities due to improper sanitization of the gname
-> variable when creating user and host groups.
->
-> References:
->
-> http://www.zabbix.com/rn1.8.10rc1.php
-> https://support.zabbix.com/browse/ZBX-4015
-> https://bugzilla.redhat.com/show_bug.cgi?id=768525
->
-Please use CVE-2011-4615 for this issue.
+This can cause a local denial of service.
 
-- -- 
+Upstream commit:
+http://git.kernel.org/linus/fc66c5210ec2539e800e87d7b3a985323c7be96e
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+Introduced in:
+http://git.kernel.org/linus/41bf498949a263fa0b2d32524b89d696ac330e94
 
-iQIcBAEBAgAGBQJO68VwAAoJEBYNRVNeJnmT+4oP/jiCMcsybieFQ4Ds4IEsH52k
-+8lGLSWER6vchRhjJZs7LNcHalsrGJTbnQtBPAAHF89m8kgYEE5jcaGuVzwaRmkP
-IygrCyIBLKNguKUniwD7eUbkYXIJK3zKLqiYGIRKSet3T539foGzCo+4nYueTQZr
-nI7dJeXdsyZe+2Z3AtYWfqtk7srNXAMf4KCRyITfcpDZt1iR4b2UQHuL/D/pcBJI
-l4+q+QL1wnfXXYGzIELDga4WnOCWHyMa5IU9PRv0DFKnXLk4qxzyDrgbLRdw0OvB
-m6mVj41eUe5zePUqEgWgeuLZ1aWzv2nGYsiNJOCSupD2loa1Lvh+7rrGbNJfS14W
-SEP8FjLvqX+nYexyclt3wPQleLAw3CobjpUOVmdysFXxh7oUlEiS0mROkDflzz0F
-Xqr6d8Jk9DysWhJ5E2Ciz466/0X53GXa7gD7Lk88ecZUTg+w0jCpci0z+Q887Mup
-tgl4fbD/Rk/DhkJz35QBbnLp8oeAQIwnwO0iWkZC8wkGjQxuaOPqM2xEjIxNfn9f
-bu8eqNJLoWrAy0lahnFhBrNm67YnJ3XAHK65/9IMhVnt+KufC9A44isknn/P7Iwl
-diAjaOWwn4aWKjmuiGKLaguIaGzUql1tJQlFwVHXr36WQePuaIX/a3xkvSWLGefb
-/zC7tkRNt2CnPAEnATur
-=4mxv
------END PGP SIGNATURE-----
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=719228
 
+Thanks, Eugene
