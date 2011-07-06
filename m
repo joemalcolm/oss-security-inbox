@@ -1,27 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/1
-Message-ID: <20111130123814.GK5089@ngolde.de>
-Date: Wed, 30 Nov 2011 13:38:14 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/5
+Message-ID: <20110706065646.GC19469@openwall.com>
+Date: Wed, 6 Jul 2011 10:56:46 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: ffmpeg
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-it seems the new ffmpeg issue described in 
-http://www.usenix.org/events/woot11/tech/final_files/Yamaguchi.pdf has fallen 
-through the cracks. Can someone assign a CVE id to the described issue in 
-vmd_decode (see see page 6, Extrapolation. page 7 contains the vulnerable code)?
+On Mon, Jul 04, 2011 at 09:24:23AM +0200, Tomas Hoger wrote:
+> On Mon, 4 Jul 2011 02:52:41 +0400 Solar Designer wrote:
+> 
+> > Question to OpenSSL developers: is the patch given in Billy Bob
+> > Brumley and Nicola Tuveri's paper "Remote Timing Attacks Are Still
+> > Practical" OK to be used by distros?  Basically, I am interested in
+> > its "review status" by upstream - reviewed and approved, reviewed but
+> > not approved for specific reasons, not sufficiently reviewed.  (The
+> > patch is tiny, but even tiny changes might have non-obvious
+> > implications.)
+> 
+> I'm not part of the group you directed this question too, but as I've
+> not seen any upstream developer or list in CC...
 
-Please note that this is not CVE-2010-3429. The paper is about finding bugs 
-similar to a given one and CVE-2010-3429 is the original bug, while the one in 
-vmd_decode is similar.
+Yes, I did not CC.  Maybe I should have.  I thought that we had some
+OpenSSL folks in here.
 
-Kind regards
-Nico
+> The fix from the paper was committed in openssl CVS within about a week
+> from public disclosure:
+> 
+> http://cvs.openssl.org/chngview?cn=20892
+> 
+> However, there were some concerns raised regarding the extra #ifdef
+> wrapping added as part of the commit, which disable the fix by default,
+> and the name suggests #ifndef was probably intended:
+> 
+> http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+This helps.
 
-Content of type "application/pgp-signature" skipped
+Are you dealing with the issue for Red Hat products?  Perhaps you have a
+Bugzilla entry?
+
+Thank you!
+
+Alexander
