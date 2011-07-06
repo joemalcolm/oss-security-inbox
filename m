@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/7
-Message-ID: <20110622143356.GA8729@albatros>
-Date: Wed, 22 Jun 2011 18:33:56 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/13
+Message-ID: <20110706201406.GD26418@ngolde.de>
+Date: Wed, 6 Jul 2011 22:14:06 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: opie off by one and setuid() failure
+Subject: libreoffice/openoffice.org CVE id request
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+can someone assign a CVE id (or multiple) to:
+http://www.kb.cert.org/vuls/id/953183?
 
-On Wed, Jun 22, 2011 at 16:28 +0200, Sebastian Krahmer wrote:
-> Can someone assign 2 CVE's for a off by one in opiesu
-> and a missing setuid() retval check in opielogin which
-> leads to easy root compromise? Reviewed opie-2.4.
-> 
-> Patches are available here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=698772
-
-I don't see memory zeroing before strcat():
-
-argvbuf[0] = 0;
-
-Probably it is not spotted as it is the first malloc(), but it is a bug.
-
-
-Thanks,
+Kind regards
+Nico
 
 -- 
-Vasiliy
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
