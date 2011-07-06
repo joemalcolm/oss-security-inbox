@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/5
-Message-ID: <4E960899.3010404@redhat.com>
-Date: Wed, 12 Oct 2011 15:37:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/2
+Message-ID: <20110706034815.GB18345@openwall.com>
+Date: Wed, 6 Jul 2011 07:48:15 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-Got my Ruby/Ruby on rails mixed up.
+On Tue, Jul 05, 2011 at 07:17:32PM +0800, Eugene Teo wrote:
+> You might have read about AusCert's accidental disclosure of the ISC
+> Bind advisories today. If you have more information about this, please
+> share. AFAICS, the bind source packages are still not available at the
+> ISC website.
+> 
+> https://bugzilla.redhat.com/CVE-2011-2464
+> https://bugzilla.redhat.com/CVE-2011-2465
+> http://risky.biz/auscert-bind
+> http://pastebin.com/9NUt8Pk0
 
-Various methods in WEBrick::HTTPRequest in Ruby 1.9.2-p290 and
-1.8.7-p352 and earlier and do not validate the X-Forwarded-For,
-X-Forwarded-Host and X-Forwarded-Server headers in requests, which might
-allow remote attackers to inject arbitrary text into log files or bypass
-intended address parsing via a crafted header.
+Here are the ISC advisories:
 
-https://redmine.ruby-lang.org/issues/5418
+http://www.isc.org/software/bind/advisories/cve-2011-2464
+http://www.isc.org/software/bind/advisories/cve-2011-2465
 
-Can we get a CVE for this please?
+The oldest affected version is 9.6'ish, and the advisories explicitly
+say that "Other versions of BIND 9 not listed in this advisory are not
+vulnerable to this problem."  So those of us with older BIND 9 appear to
+have nothing to do on this. ;-)  (Of course, we might have other/older
+issues to patch.)
 
--Kurt Seifried / Red Hat Security Response Team
-
+Alexander
