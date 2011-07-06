@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/1
-Message-ID: <CAPZ8mV533aw7Att9pOgH_WSQM=bSx2+2Pp4M7hEYBU4AB5rz2w@mail.gmail.com>
-Date: Fri, 9 Dec 2011 18:08:19 -0800
-From: Mark Doliner <mark@...gant.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/1
+Message-ID: <20110706034112.GA18345@openwall.com>
+Date: Wed, 6 Jul 2011 07:41:12 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Pidgin crash
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Hi!  Would it be possible to issue a CVE for a newish crash in Pidgin?
- This is a remotely-triggerable crash in the oscar protocol (used by
-the AIM and ICQ plugins) when handling incoming buddy list-related
-SNACs.  I do not believe remote-code execution is possible.  It was
-discovered by Evgeny Boger and reported on our public issue tracker at
-http://developer.pidgin.im/ticket/14682  I do not believe a CVE exists
-for this yet.
+On Tue, Jul 05, 2011 at 08:30:57PM +0800, Eugene Teo wrote:
+> On 07/05/2011 01:25 AM, Solar Designer wrote:
+> > On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
+> >> IIRC for such backdoored downloads CVE IDs were assigned in the past
+> >> to properly track the status of distributions providing the affected 
+> >> piece of code.
+> > 
+> > I suspect that no distributions provide the affected code this time.
+> > So if affected distributions is the only reason for CVE ID assignment in
+> > this case, it might make sense to postpone CVE ID allocation until we
+> > learn of an affected distribution (which we probably won't).
+> 
+> But with a CVE name, it is easier for people to refer to this issue, and
+> also easier for distributions to publish an official statement.
 
-The Pidgin project will be releasing version 2.10.1 tomorrow and it
-will include a fix for this issue.
+Your reasoning makes sense to me.
 
-Thanks (and sorry for sending this at the beginning of your weekends!),
-Mark
+I have no objections to having a CVE ID assigned to this issue, but I
+have no idea what the policy is on such assignments.
+
+Alexander
