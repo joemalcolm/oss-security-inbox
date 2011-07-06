@@ -1,48 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/4
-Message-ID: <Pine.GSO.4.64.1101121750300.17455@faron.mitre.org>
-Date: Wed, 12 Jan 2011 17:51:08 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/7
+Message-ID: <20110706125139.3e4b6d0f@redhat.com>
+Date: Wed, 6 Jul 2011 12:51:39 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE assignments for Wireshark
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 6 Jul 2011 10:56:46 +0400 Solar Designer wrote:
 
-CVE-2011-0444 - MAC-LTE
+> > The fix from the paper was committed in openssl CVS within about a
+> > week from public disclosure:
+> > 
+> > http://cvs.openssl.org/chngview?cn=20892
+> > 
+> > However, there were some concerns raised regarding the extra #ifdef
+> > wrapping added as part of the commit, which disable the fix by
+> > default, and the name suggests #ifndef was probably intended:
+> > 
+> > http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+> 
+> This helps.
+> 
+> Are you dealing with the issue for Red Hat products?  Perhaps you
+> have a Bugzilla entry?
 
-CVE-2011-0445 - ASN.1 BER
+We have bugzilla (as usual, use CVE as a bug id), but not too useful
+for other distros, as it only says we're not affected.  All EC crypto is
+one of the "patent or otherwise encumbered" code pieces that are removed
+and not compiled in.
 
+http://pkgs.fedoraproject.org/gitweb/?p=openssl.git;a=blob;f=hobble-openssl;h=a8be844f6ba7654b5738ae0e27e192a38797bd74;hb=master
 
-
-======================================================
-Name: CVE-2011-0444
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0444
-Reference: MISC:https://bugs.wireshark.org/bugzilla/attachment.cgi?id=5676
-Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-01.html
-Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
-Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
-Reference: VUPEN:ADV-2011-0079
-Reference: URL:http://www.vupen.com/english/advisories/2011/0079
-
-Buffer overflow in the MAC-LTE dissector
-(epan/dissectors/packet-mac-lte.c) in Wireshark 1.2.0 through 1.2.13
-and 1.4.0 through 1.4.2 allows remote attackers to cause a denial of
-service (crash) and possibly execute arbitrary code via a large number
-of RARs.
-
-
-======================================================
-Name: CVE-2011-0445
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0445
-Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
-Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5537
-Reference: VUPEN:ADV-2011-0079
-Reference: URL:http://www.vupen.com/english/advisories/2011/0079
-
-The ASN.1 BER dissector in Wireshark 1.4.0 through 1.4.2 allows remote
-attackers to cause a denial of service (assertion failure) via crafted
-packets, as demonstrated by fuzz-2010-12-30-28473.pcap.
-
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
