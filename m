@@ -1,19 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/2
-Message-ID: <4DB126BA.2050209@redhat.com>
-Date: Fri, 22 Apr 2011 14:56:58 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/15
+Message-ID: <20110706224848.GA3766@localhost>
+Date: Thu, 7 Jul 2011 00:48:48 +0200
+From: Markus Friedl <mfriedl@...il.com>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-On 04/22/2011 04:01 AM, akuster wrote:
-> So this would affect kernels 2.6.25-rc1 and above? (if I figured it out
-> correctly)
+Yes, it's last years libopie bug CVE-2010-1938, even
+if the exploit author does not think so.
 
-Yes, introduced in ffd980f9.
+http://twitter.com/msfriedl/status/87114829789278208
+http://twitter.com/msfriedl/status/87910449634476033
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+On Mon, Jul 04, 2011 at 03:07:45PM +0000, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 09:24:45PM -0700, Colin Percival wrote:
+> > I haven't had time to investigate, in part because I don't have any systems
+> > running that ancient openssh any more.  I'm interested to hear if anyone has
+> > tracked down exactly where the bug was, though.
+> 
+> Thanks for your reply.
+> 
+> Since I also have other uses for my time, would anyone else investigate,
+> please?  I'd appreciate it.  Perhaps install FreeBSD 4.x into a VM.
+> Sounds like fun for someone who has time.
+> 
+> I don't think the bug is in OpenSSH per se, nor in FreeBSD 4's PAM (my
+> understanding is that it was cut-down Linux-PAM at the time, which was
+> replaced with OpenPAM in 5.x), nor in pam_opie.  libopie sounds more
+> plausible.  But I could be wrong.
+> 
+> Alexander
