@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/2
-Message-ID: <20110705022644.GA13130@openwall.com>
-Date: Tue, 5 Jul 2011 06:26:44 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: HD Moore <hdm@...italoffense.net>, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/10
+Message-ID: <1309972769.3937.40.camel@mdlinux>
+Date: Wed, 06 Jul 2011 13:19:29 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: foo2zjs
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 10:09:32AM +0800, Eugene Teo wrote:
-> I did not verify.
-> 
-> (09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
-> http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
-> 15th -> July 3rd (via mc)
+Hello,
 
-Looks unrealistic to me.  Feb 15 is when 2.3.4 was released by Chris.
-A copy I downloaded has mtime Feb 15 (preserved from the official
-download site) and ctime Mar 2 (when I downloaded it).  It passes the
-GPG signature check and lacks the backdoor.
+A temp file issue was reported in a distro-specific patch to foo2zjs.
+This probably only affects Debian/Ubuntu and derivatives.
 
-Additionally, searching for the SHA-256 digest that Chris posted reveals
-only copies of his announcement of the incident and news stories about
-it.  No hits for any distro's filelists, etc.  I wish we had MD5 and
-SHA-1 to also search for, though.  I don't have a copy of the backdoored
-vsftpd tarball to compute those, but we can ask Chris for them.
+The original bug report can be found here:
 
-My gut feeling is that the backdoored tarball has been on the site for
-1 to 3 days.  But I could be wrong.
+https://bugs.launchpad.net/bugs/805370
 
-Alexander
+Could a CVE please be assigned to this?
+
+Thanks,
+
+Marc.
+
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
