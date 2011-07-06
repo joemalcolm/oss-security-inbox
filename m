@@ -1,62 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/16
-Message-ID: <20110411213813.GA2919@pisco.westfalen.local>
-Date: Mon, 11 Apr 2011 23:38:13 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE requests: Three Linux kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/9
+Message-ID: <1309957476.2993.69.camel@localhost>
+Date: Wed, 06 Jul 2011 08:04:36 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org
+Subject: CVE Request: reseed
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I noticed the following reports by Vasiliy Kulikov on on linux-kernel. 
+On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
+> A security bug was reported by Jeffrey Walton against reseed in
+> Ubuntu. You are being emailed as the upstream contact. Please keep
+> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+> 
+> This issue should be considered public. A CVE is being requested; please
+> mention this in any changelogs.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/804594
+> 
+> From the reporter:
+> "reseed(8) performs an insecure HTTP fetch of data from random.org. The
+> script is automatically executed when installed, and any time the user
+> chooses to execute. In addition, the reseed man pages do not mention the
+> data is retrieved over an insecure channel."
+> 
+> As pointed out by the reporter, from the man page: "It is run once
+> during the installation of the package only". An attacker could perform
+> a MITM during package installation or whenever the reseed command is run
+> to provide predictable data for the random number seed.
 
-Josh/Eugene, please assign CVE IDs:
+While the attack is difficult to achieve (need both MITM at time of
+package installation AIUI), it seems that this still should get a CVE.
 
-[1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
+Thanks!
 
-| PATCH] char: briq_panel: fix TOCTOU bug
-|
-| There is a TOCTOU bug in briq_panel_write() code:
-|
-|     if (vfd_cursor > 39)   <<<
-|             scroll_vfd();
-|     vfd[vfd_cursor++] = c; <<<
-|
-| It's possible to write to arbitrary memory location in case of more than
-| one process tries to call write() simultaneously.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-[2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
-
-| [PATCH] char: genrtc: fix infoleak to userspace
-|
-| struct pll is copied to userspace.  It is filled in "multiplexing" function
-| get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
-| fill .pll_ctrl field.  It's hard to understand whether either the caller
-| or the callee must zero the unused struct fields, however, on another
-| ioctl commands the caller already zeroes the structure.  So, let's the
-| caller use memset().
-
-[3] http://permalink.gmane.org/gmane.linux.kernel/1124409 :
-
-| [PATCH] char: istallion: fix arbitrary kernel memory reads/writes
-|
-| stli_brdstats is defined as global variable.  After de-BKL-ization in
-| the patch b4eda9cb48eac1b7 an access to the variable is not serialized
-| anymore.  This leads to the TOCTOU in stli_getbrdstats():
-|
-|        if (copy_from_user(&stli_brdstats, bp, sizeof(combrd_t)))
-|                return -EFAULT;
-|        if (stli_brdstats.brd >= STL_MAXBRDS)  <<<<
-|                return -ENODEV;
-|        brdp = stli_brds[stli_brdstats.brd];   <<<<
-|
-| If one process calls COM_GETBRDSTATS ioctl() with sane .brd, second
-| process calls COM_GETBRDSTATS ioctl() with invalid .brd, and the
-| second process' copy_from_user() executes exactly between the check and
-| stli_brds[] indexation of the first process, then the first process gets
-| contents of memory at *stli_brds[stli_brdstats.brd] address.  Also
-| the resulting .nrpanels field may be too big, in this case
-| stli_brdstats.panels array overflows.
-
-Cheers,
-        Moritz
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
