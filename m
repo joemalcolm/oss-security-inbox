@@ -1,18 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/11
-Message-ID: <20110414144051.GM18543@redhat.com>
-Date: Thu, 14 Apr 2011 08:40:52 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/4
+Message-ID: <4E140071.6010908@redhat.com>
+Date: Wed, 06 Jul 2011 11:58:01 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki 1.16.4, incomplete fix of CVE-2011-1578
+Subject: Re: CVE request: kernel: perf, x86: fix Intel fixed counters base initialization
 Content-Type: text/plain; charset=utf-8
 
-Looks as though Mediawiki 1.16.3 did not fully fix the CVE-2011-1578
-issue (XSS), so 1.16.4 has been released:
+On 07/06/2011 11:54 AM, Eugene Teo wrote:
+> The following patch solves the problems introduced by Robert's commit
+> 41bf498 and reported by Arun Sharma. This commit gets rid of the base +
+> index notation for reading and writing PMU msrs.
+> 
+> The problem is that for fixed counters, the new calculation for the base
+> did not take into account the fixed counter indexes, thus all fixed
+> counters were read/written from fixed counter 0.  Although all fixed
+> counters share the same config MSR, they each have their own counter
+> register.
+> 
+> This can cause a local denial of service.
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/fc66c5210ec2539e800e87d7b3a985323c7be96e
+> 
+> Introduced in:
+> http://git.kernel.org/linus/41bf498949a263fa0b2d32524b89d696ac330e94
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=719228
+> 
+> Thanks, Eugene
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000097.html
-
-Could a CVE name get assigned to this?
+Please use CVE-2011-2521
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
