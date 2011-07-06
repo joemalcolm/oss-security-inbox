@@ -1,29 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/3
-Message-Id: <201107162135.20489.sf@sfritsch.de>
-Date: Sat, 16 Jul 2011 21:35:20 +0200
-From: Stefan Fritsch <sf@...itsch.de>
-To: halfdog <me@...fdog.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/14
+Message-ID: <20110706213318.GA27098@openwall.com>
+Date: Thu, 7 Jul 2011 01:33:18 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Michael Matz <matz@...e.de>
+Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 16 July 2011, halfdog wrote:
-> Understood. I've looked at the issue more closely and found a
-> similar DOS-exploitable timerace and a buffer overwrite unrelated
-> to this. Just for study, I'm currently trying to combine 3
-> timeraces + buffer overwrite + ROP to get code execution. Since
-> apache will quite likely fix the other two issues, they have to
-> touch the code anyway, so the symlink issue might be historic soon
-> also.
+Hi,
 
-I don't think the race conditions can be fixed without openat, which 
-is available in Linux since 2.6.16 and is not available in many other 
-flavours of UNIX. Currently, it is clear that your issue only concerns 
-an un-supported use case of Apache httpd. IMHO it would not be wise to 
-change httpd to support this use case on recent Linux but not on other 
-UNIXs.
+On Tue, Jun 28, 2011 at 02:05:35PM +0200, Michael Matz wrote:
+> If so, treating passwords containing 0xff special seems sensible.
 
-And if you have a setup where the races are a problem, you can fix it 
-outside of httpd. E.g. configure your FTP-server to deny creating of 
-symlinks or configure SELinux/Apparmor/... accordingly.
+I implemented this in a certain smart way.  Hopefully, not too smart.
+I used bitwise ops.  No branches, no variable count bit shifts, no table
+lookups using password data.  Also, not all passwords with 0xff chars
+are affected by the change - only those that would produce collisions
+with buggy hashes of multiple passwords.
+
+There's still a minor timing leak of password length, but it is not
+related to the sign extension bug aftermath - it was there before.
+Also, it is difficult to deal with, especially considering that the
+callers use C strings anyway, with things such as strlen() on them.
+(On a related note, with SHA-crypt things are worse in this respect.)
+
+I gave some thought to what action to take on a would-be collision.
+Simply failing the password hashing operation didn't sound great - it'd
+be prone to side-channel leaks of this property of the attempted
+password, and users wouldn't be able to set those weird passwords if the
+system happens to use $2a$ instead of the now more correct $2y$ for new
+hashes.  This would in turn reveal properties of system setup to a
+non-root user.  So I chose to alter the hashing method in those cases
+such that the collision is avoided and no other collision may be easily
+found (without breaking Blowfish).  There appeared to be two primary
+ways to do it: by altering the key expansion or by altering something
+else.  Speaking of the former, one way to do it would be to produce a
+sequence of bytes in the expanded key that wouldn't otherwise be
+possible.  One such sequence is two NUL bytes in a row.  This would be
+great, except that there's no room to make use of this trick for
+passwords of length 71 and 72.  Excluding those two lengths from
+protection wasn't nice, and treating them specially wasn't nice either.
+So I opted to alter something else, but not too far away from key setup.
+Specifically, I alter the initial expanded key, but not the expanded key
+used further in bcrypt.  Such discrepancy between the two expanded keys
+could not be achieved before.
+
+Here's my current code, with lots of comments - more comments than code,
+actually, because the code is very compact:
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.19;r2=1.20
+
+and here's the entire thing (temporary URL, not released, not for actual use):
+
+http://www.openwall.com/tmp/crypt_blowfish-1.1.1.tar.gz
+
+(the release will probably be 1.2).
+
+Please help me review and test this.
+
+For testing, here's my buggy to correct input password converter,
+implemented as John the Ripper external filter.  Put it in john.conf,
+invoke as -e=bcrypt_x2a along with any other mode, maybe even along with
+--stdin and --stdout at once for manual testing (that's what I did).
+
+http://www.openwall.com/lists/john-dev/2011/07/06/15
+
+Thanks,
+
+Alexander
