@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/6
-Message-ID: <130440303.95055.1303332767672.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Apr 2011 16:52:47 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/8
+Message-ID: <1309956456.2993.66.camel@localhost>
+Date: Wed, 06 Jul 2011 07:47:36 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Simon Dobson <simon.dobson@...tcd.ie>
+Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org,  Jeffrey Walton <noloader@...il.com>
+Subject: Security issue in reseed
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1598
+A security bug was reported by Jeffrey Walton against reseed in
+Ubuntu. You are being emailed as the upstream contact. Please keep
+oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
 
-Thanks.
+This issue should be considered public. A CVE is being requested; please
+mention this in any changelogs.
+
+Details from the public bug follow:
+https://launchpad.net/bugs/804594
+
+From the reporter:
+"reseed(8) performs an insecure HTTP fetch of data from random.org. The
+script is automatically executed when installed, and any time the user
+chooses to execute. In addition, the reseed man pages do not mention the
+data is retrieved over an insecure channel."
+
+As pointed out by the reporter, from the man page: "It is run once
+during the installation of the package only". An attacker could perform
+a MITM during package installation or whenever the reseed command is run
+to provide predictable data for the random number seed.
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
+
+Jamie Strandboge
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
 
 -- 
-    JB
+Jamie Strandboge             | http://www.canonical.com
 
-
------ Original Message -----
-> A missing socket check in can/bcm release
-> 
-> Proposed patch: http://permalink.gmane.org/gmane.linux.network/192898
-> https://bugzilla.redhat.com/show_bug.cgi?id=698057
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
