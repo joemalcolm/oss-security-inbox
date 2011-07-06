@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/30/1
-Message-ID: <20110630101300.GA16091@dhcp-25-225.brq.redhat.com>
-Date: Thu, 30 Jun 2011 12:13:01 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/4
+Message-ID: <4E140071.6010908@redhat.com>
+Date: Wed, 06 Jul 2011 11:58:01 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: tomoyo: oops in tomoyo_mount_acl()
+Subject: Re: CVE request: kernel: perf, x86: fix Intel fixed counters base initialization
 Content-Type: text/plain; charset=utf-8
 
-Description of problem:
-In tomoyo_mount_acl() since 2.6.36, kern_path() was called without
-checking dev_name != NULL. As a result, an unprivileged user can
-trigger oops by issuing mount(NULL, "/", "ext3", 0, NULL) request.
+On 07/06/2011 11:54 AM, Eugene Teo wrote:
+> The following patch solves the problems introduced by Robert's commit
+> 41bf498 and reported by Arun Sharma. This commit gets rid of the base +
+> index notation for reading and writing PMU msrs.
+> 
+> The problem is that for fixed counters, the new calculation for the base
+> did not take into account the fixed counter indexes, thus all fixed
+> counters were read/written from fixed counter 0.  Although all fixed
+> counters share the same config MSR, they each have their own counter
+> register.
+> 
+> This can cause a local denial of service.
+> 
+> Upstream commit:
+> http://git.kernel.org/linus/fc66c5210ec2539e800e87d7b3a985323c7be96e
+> 
+> Introduced in:
+> http://git.kernel.org/linus/41bf498949a263fa0b2d32524b89d696ac330e94
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=719228
+> 
+> Thanks, Eugene
 
-Upstream fix:
-4e78c724d47e2342aa8fde61f6b8536f662f795f
+Please use CVE-2011-2521
 
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
