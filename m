@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/10
-Message-ID: <CABqVa39kjp6ROj=SBYGRHQBxYEy4kvHXvQKn9VNtaYHzVj+tJA@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:07:49 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/5
+Message-ID: <20110706065646.GC19469@openwall.com>
+Date: Wed, 6 Jul 2011 10:56:46 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: wrong headroom check in udp6_ufo_fragment()
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 8:54 AM, Petr Matousek <pmatouse@...hat.com> wrote:
-> "A bug was found in the way headroom check was performed in
-> udp6_ufo_fragment() function. A remote attacker could use this flaw to
-> crash the system."
->
-> Details:
-> http://bugzilla.redhat.com/show_bug.cgi?id=755584#c1
->
-> Upstream commit:
-> a9cf73ea7ff78f52662c8658d93c226effbbedde
->
-> References:
-> http://bugzilla.redhat.com/show_bug.cgi?id=755584
-> http://bugzilla.redhat.com/show_bug.cgi?id=682066
->
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
->
+On Mon, Jul 04, 2011 at 09:24:23AM +0200, Tomas Hoger wrote:
+> On Mon, 4 Jul 2011 02:52:41 +0400 Solar Designer wrote:
+> 
+> > Question to OpenSSL developers: is the patch given in Billy Bob
+> > Brumley and Nicola Tuveri's paper "Remote Timing Attacks Are Still
+> > Practical" OK to be used by distros?  Basically, I am interested in
+> > its "review status" by upstream - reviewed and approved, reviewed but
+> > not approved for specific reasons, not sufficiently reviewed.  (The
+> > patch is tiny, but even tiny changes might have non-obvious
+> > implications.)
+> 
+> I'm not part of the group you directed this question too, but as I've
+> not seen any upstream developer or list in CC...
 
-Sorry having some laptop/email issues. Please use CVE-2011-4326 for this issue.
+Yes, I did not CC.  Maybe I should have.  I thought that we had some
+OpenSSL folks in here.
 
--- 
-Kurt Seifried
-kurt@...fried.org
+> The fix from the paper was committed in openssl CVS within about a week
+> from public disclosure:
+> 
+> http://cvs.openssl.org/chngview?cn=20892
+> 
+> However, there were some concerns raised regarding the extra #ifdef
+> wrapping added as part of the commit, which disable the fix by default,
+> and the name suggests #ifndef was probably intended:
+> 
+> http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+
+This helps.
+
+Are you dealing with the issue for Red Hat products?  Perhaps you have a
+Bugzilla entry?
+
+Thank you!
+
+Alexander
