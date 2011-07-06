@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/3
-Message-ID: <4DEE628F.1010806@redhat.com>
-Date: Tue, 07 Jun 2011 19:40:31 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, nospam@...il.it
-Subject: CVE Request -- WebSVN -- execCommand() remote commands injection vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/8
+Message-ID: <1309956456.2993.66.camel@localhost>
+Date: Wed, 06 Jul 2011 07:47:36 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Simon Dobson <simon.dobson@...tcd.ie>
+Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org,  Jeffrey Walton <noloader@...il.com>
+Subject: Security issue in reseed
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+A security bug was reported by Jeffrey Walton against reseed in
+Ubuntu. You are being emailed as the upstream contact. Please keep
+oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
 
-   it was found that WebSVN is prone to remote commands injection 
-vulnerability due improper escaping / quoting of strings, to be
-sent to the command line. Microsoft Windows specific issue and
-different vulnerability than CVE-2008-5918, CVE-2008-5919,
-CVE-2008-5920, and CVE-2009-0240.
+This issue should be considered public. A CVE is being requested; please
+mention this in any changelogs.
 
-References:
-[1] http://seclists.org/bugtraq/2011/Jun/34
-[2] http://retrogod.altervista.org/rgod_websvn_adv.html
-[3] http://retrogod.altervista.org/rgod_websvn_poc.html
+Details from the public bug follow:
+https://launchpad.net/bugs/804594
 
-Could you allocate a CVE id for this?
+From the reporter:
+"reseed(8) performs an insecure HTTP fetch of data from random.org. The
+script is automatically executed when installed, and any time the user
+chooses to execute. In addition, the reseed man pages do not mention the
+data is retrieved over an insecure channel."
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+As pointed out by the reporter, from the man page: "It is run once
+during the installation of the package only". An attacker could perform
+a MITM during package installation or whenever the reseed command is run
+to provide predictable data for the random number seed.
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
+
+Jamie Strandboge
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
