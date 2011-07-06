@@ -1,25 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/9
-Message-ID: <20110105201627.GB11372@kroah.com>
-Date: Wed, 5 Jan 2011 12:16:27 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/11
+Message-ID: <87zkkrp6cc.fsf@mid.deneb.enyo.de>
+Date: Wed, 06 Jul 2011 21:16:51 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: Re: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 05, 2011 at 12:14:28PM +0800, Eugene Teo wrote:
-> In addition to CVE-2010-3881, some versions of the Linux kernel
-> forgot to initialize the kvm_vcpu_events.interrupt.pad field before
-> being copied to userspace. I have assigned CVE-2010-4525 to this. I
-> briefly checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y
-> are not.
-> 
-> https://bugzilla.redhat.com/CVE-2010-4525
+* Mike O'Connor:
 
-Is there a fix for this in the upstream kernels?  How about kernels
-greater than .35?
+> Note that the BIND 9.4 ESV formally EOLed just last month:
+>
+> http://www.isc.org/softwaresupportpolicy
+>
+> So, if you are distributing an older rev of BIND and some new security
+> issue comes up that you are prone to, it _might_ not be quite as easy to
+> backport the fixes.
 
-thanks,
+If you move from 9.4 or 9.5 to 9.6, your users might hit an issue in
+the OpenSSL initialization function:
 
-greg k-h
+<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=584911>
+
+We've applied the kludge below to our 9.6 version, which seems to
+address the most common cause of a silently dying named process.
+(There are others, but those are more difficult to check.)
+
+diff --git a/lib/dns/openssl_link.c b/lib/dns/openssl_link.c
+index 2dc7d7e..80e6e00 100644
+--- a/lib/dns/openssl_link.c
++++ b/lib/dns/openssl_link.c
+@@ -48,12 +48,16 @@
+ #include "dst_internal.h"
+ #include "dst_openssl.h"
+ 
++#include <dns/log.h>
++
+ #include <openssl/err.h>
+ #include <openssl/rand.h>
+ #include <openssl/evp.h>
+ #include <openssl/conf.h>
+ #include <openssl/crypto.h>
+ 
++#include <unistd.h>
++
+ #if defined(CRYPTO_LOCK_ENGINE) && (OPENSSL_VERSION_NUMBER >= 0x0090707f)
+ #define USE_ENGINE 1
+ #endif
+@@ -188,7 +192,19 @@ dst__openssl_init() {
+ 	rm->pseudorand = entropy_getpseudo;
+ 	rm->status = entropy_status;
+ #ifdef USE_ENGINE
++	const char *cnf_path = "/usr/lib/ssl/openssl.cnf";
++	if (access(cnf_path, R_OK) == -1 && errno != ENOENT) {
++		isc_log_write(dns_lctx, DNS_LOGCATEGORY_GENERAL,
++			      DNS_LOGMODULE_CONFIG, ISC_LOG_CRITICAL,
++			      "The OpenSSL configuration file %s exists, "
++			      "but it is not readable.", cnf_path);
++		isc_log_write(dns_lctx, DNS_LOGCATEGORY_GENERAL,
++			      DNS_LOGMODULE_CONFIG, ISC_LOG_CRITICAL,
++			      "The process may terminate without further "
++			      "notice.");
++	}
+ 	OPENSSL_config(NULL);
++
+ #ifdef USE_PKCS11
+ #ifndef PKCS11_SO_PATH
+ #define PKCS11_SO_PATH		"/usr/local/lib/engines/engine_pkcs11.so"
+
