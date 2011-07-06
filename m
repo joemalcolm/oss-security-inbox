@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/31
-Message-ID: <AANLkTikLhWzy7Zoi-qg8OQCY2RD-W8nnHJagcAgVKbJA@mail.gmail.com>
-Date: Fri, 4 Mar 2011 13:14:51 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Florian Zumbiehl <florz@...rz.de>,  Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>,  Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/10
+Message-ID: <1309972769.3937.40.camel@mdlinux>
+Date: Wed, 06 Jul 2011 13:19:29 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: foo2zjs
 Content-Type: text/plain; charset=utf-8
 
->
->> It felt wrong, say, to blame a text editor for being unsafe to use on
->> files in untrusted directories when such unsafety was the typical and
->> expected situation for text editors in general.
->
-> Some items can be assigned a CVE without deep thought about the larger
-> context.  This may happen due to volume, time constraints, or an
-> under-specified attack scenario by the requester.  That may be the case with
-> the case you're talking about here, but I don't remember it.
->
+Hello,
 
-Just to chime in here about parallels to the GNU nano case you're
-referring to.  I agree with you that a CVE for those issues may have
-been unnecessary, but it depends on your expectations of what
-guarantees a text editor provides.  If I try to open an untrusted file
-with a text editor, and an attacker replaces that file before I open
-it, resulting in me making edits to the wrong file, then of course
-that's not a security issue, because the text editor did exactly what
-it was told to do: open the file, which happened to be different by
-the time it got around to opening it.  There would also be visual
-feedback in the text editor to alert the user as to which file was
-being edited.  However, if I open a file to edit, and someone changes
-that file out from under me while I'm making edits, and a resulting
-save overwrites the new underlying file, including following symlinks,
-that's slightly different, since one might argue that some feedback or
-warning from the editor would be expected (this is the case with
-almost all other text editors).  But this is subtle, and I understand
-both sides of the argument - personally, I don't think it's a serious
-enough attack vector to warrant splitting hairs over.
+A temp file issue was reported in a distro-specific patch to foo2zjs.
+This probably only affects Debian/Ubuntu and derivatives.
 
-The logrotate case is even more subtle, since it's even less clear
-what constitute reasonable expectations with regards to the security
-guarantees of the application.
+The original bug report can be found here:
 
--Dan
+https://bugs.launchpad.net/bugs/805370
+
+Could a CVE please be assigned to this?
+
+Thanks,
+
+Marc.
+
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
