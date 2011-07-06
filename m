@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/12
-Message-ID: <1254374822.1262221.1316026288551.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:51:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/2
+Message-ID: <20110706034815.GB18345@openwall.com>
+Date: Wed, 6 Jul 2011 07:48:15 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, cve-assign@...re.org
-Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3363 for this.
-
-Thanks.
-
--- 
-    JB
-
-
------ Original Message -----
-> "Currently, we skip doing the is_path_accessible check in cifs_mount
-> if
-> there is no prefixpath. There is a report of at least one server
-> however
-> that allows a TREE_CONNECT to a share that has a DFS referral at its
-> root. UNC that had no prefixpath was used in that case, so the
-> is_path_accessible check was not triggered and the box later hit
-> a BUG() because we were chasing a DFS referral on the root dentry for
-> the mount."
+On Tue, Jul 05, 2011 at 07:17:32PM +0800, Eugene Teo wrote:
+> You might have read about AusCert's accidental disclosure of the ISC
+> Bind advisories today. If you have more information about this, please
+> share. AFAICS, the bind source packages are still not available at the
+> ISC website.
 > 
-> Upstream fix:
-> 70945643722ffeac779d2529a348f99567fa5c33
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=682829
-> https://github.com/mirrors/linux/commit/70945643722ffeac779d2529a348f99567fa5c33
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+> https://bugzilla.redhat.com/CVE-2011-2464
+> https://bugzilla.redhat.com/CVE-2011-2465
+> http://risky.biz/auscert-bind
+> http://pastebin.com/9NUt8Pk0
+
+Here are the ISC advisories:
+
+http://www.isc.org/software/bind/advisories/cve-2011-2464
+http://www.isc.org/software/bind/advisories/cve-2011-2465
+
+The oldest affected version is 9.6'ish, and the advisories explicitly
+say that "Other versions of BIND 9 not listed in this advisory are not
+vulnerable to this problem."  So those of us with older BIND 9 appear to
+have nothing to do on this. ;-)  (Of course, we might have other/older
+issues to patch.)
+
+Alexander
