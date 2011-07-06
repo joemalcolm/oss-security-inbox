@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/8
-Message-ID: <20111101215805.GC22739@redhat.com>
-Date: Tue, 1 Nov 2011 15:58:05 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/9
+Message-ID: <1309957476.2993.69.camel@localhost>
+Date: Wed, 06 Jul 2011 08:04:36 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com, security@...ian.org
+Subject: CVE Request: reseed
 Content-Type: text/plain; charset=utf-8
 
-* [2011-11-01 13:15:53 -0600] Kurt Seifried wrote:
+On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
+> A security bug was reported by Jeffrey Walton against reseed in
+> Ubuntu. You are being emailed as the upstream contact. Please keep
+> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+> 
+> This issue should be considered public. A CVE is being requested; please
+> mention this in any changelogs.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/804594
+> 
+> From the reporter:
+> "reseed(8) performs an insecure HTTP fetch of data from random.org. The
+> script is automatically executed when installed, and any time the user
+> chooses to execute. In addition, the reseed man pages do not mention the
+> data is retrieved over an insecure channel."
+> 
+> As pointed out by the reporter, from the man page: "It is run once
+> during the installation of the package only". An attacker could perform
+> a MITM during package installation or whenever the reseed command is run
+> to provide predictable data for the random number seed.
 
->On 11/01/2011 11:11 AM, David Black wrote:
->> y with respect to their de-serialization of YAML post
->> data. Both Piston and Tastypie used the yaml.load method, which is
->> unsafe. In certain
->Can you please send me links for Piston and Tastypie announcements/code
->commits showing the vuln please? Thanks.
+While the attack is difficult to achieve (need both MITM at time of
+package installation AIUI), it seems that this still should get a CVE.
 
-Can't speak for Tastypie (we don't ship it so I didn't look), but for
-Piston:
-
-https://bitbucket.org/jespern/django-piston/changeset/91bdaec89543
-https://bugzilla.redhat.com/show_bug.cgi?id=750658
-
-There is no Piston announcement that I can see.
+Thanks!
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
