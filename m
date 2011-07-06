@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/7
-Message-ID: <20110413132625.GA3964@finlandia.home.infodrom.org>
-Date: Wed, 13 Apr 2011 15:26:25 +0200
-From: Joey Schulze <joey@...odrom.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/15
+Message-ID: <20110706224848.GA3766@localhost>
+Date: Thu, 7 Jul 2011 00:48:48 +0200
+From: Markus Friedl <mfriedl@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: mahara / HTML Purifier
+Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
 Content-Type: text/plain; charset=utf-8
 
-Could we get CVE id(s) for these security problems discovered in
-HTML Purifier (emedded in older versions of mahara as well).
+Yes, it's last years libopie bug CVE-2010-1938, even
+if the exploit author does not think so.
 
-Patches are attached.
+http://twitter.com/msfriedl/status/87114829789278208
+http://twitter.com/msfriedl/status/87910449634476033
 
-They originate from HTML Purifier
-
-http://htmlpurifier.org/news/2011/0327-4.3.0-released
-
-Regards,
-
-	Joey
-
--- 
-Experience is something you don't get until just after you need it.
-
-View attachment "css_url_escaping.dpatch" of type "text/plain" (1146 bytes)
-
-View attachment "font_family_attacks.dpatch" of type "text/plain" (8737 bytes)
-
-View attachment "ie_innerhtml_backticks.dpatch" of type "text/plain" (2168 bytes)
+On Mon, Jul 04, 2011 at 03:07:45PM +0000, Solar Designer wrote:
+> On Mon, Jul 04, 2011 at 09:24:45PM -0700, Colin Percival wrote:
+> > I haven't had time to investigate, in part because I don't have any systems
+> > running that ancient openssh any more.  I'm interested to hear if anyone has
+> > tracked down exactly where the bug was, though.
+> 
+> Thanks for your reply.
+> 
+> Since I also have other uses for my time, would anyone else investigate,
+> please?  I'd appreciate it.  Perhaps install FreeBSD 4.x into a VM.
+> Sounds like fun for someone who has time.
+> 
+> I don't think the bug is in OpenSSH per se, nor in FreeBSD 4's PAM (my
+> understanding is that it was cut-down Linux-PAM at the time, which was
+> replaced with OpenPAM in 5.x), nor in pam_opie.  libopie sounds more
+> plausible.  But I could be wrong.
+> 
+> Alexander
