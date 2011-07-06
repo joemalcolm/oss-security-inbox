@@ -1,31 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/4
-Message-ID: <4EBFE854.7090005@redhat.com>
-Date: Sun, 13 Nov 2011 08:55:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/13
+Message-ID: <20110706201406.GD26418@ngolde.de>
+Date: Wed, 6 Jul 2011 22:14:06 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: jbd/jbd2: invalid value of first log block leads to oops
+Subject: libreoffice/openoffice.org CVE id request
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/2011 03:50 PM, Petr Matousek wrote:
-> A flaw was found in the way Linux kernel's Journaling Block Device (JBD)
-> handled invalid log first block value. An attacker able to mount
-> malicious ext3 or ext4 image could use this flaw to crash the system.
->
-> Upstream commit:
-> 8762202dd0d6e46854f786bdb6fb3780a1625efe
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=753341
->
-> Thanks,
-With apologies, I replied to a previous message twice, the correct CVE
-assignment for this issue is:
+Hi,
+can someone assign a CVE id (or multiple) to:
+http://www.kb.cert.org/vuls/id/953183?
 
-CVE-2011-4132 is for kernel: jbd/jbd2: invalid value of first log block
-leads to oops
+Kind regards
+Nico
 
 -- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
--Kurt Seifried / Red Hat Security Response Team
-
+Content of type "application/pgp-signature" skipped
