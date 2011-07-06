@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/1
-Message-ID: <4DE5C6AF.6020408@redhat.com>
-Date: Wed, 01 Jun 2011 10:27:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for Wireshark 1.4.6/1.2.16 Multiple DoS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/3
+Message-ID: <4E13FFA4.4090001@redhat.com>
+Date: Wed, 06 Jul 2011 14:24:36 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: perf, x86: fix Intel fixed counters base initialization
 Content-Type: text/plain; charset=utf-8
 
-On 06/01/2011 05:24 AM, Kurt Seifried wrote:
-> I didn't see any CVE's in the Wireshark Bug tracking/advisory nor
-> could I find these in the Red Hat Bugzilla (but I'm guessing as a CNA
-> they have CVE #'s assigned?)
-> 
-Red Hat did not assign any CVE ids yet, since most of the work mentioned
-below was done by me on my personal time :)
+The following patch solves the problems introduced by Robert's commit
+41bf498 and reported by Arun Sharma. This commit gets rid of the base +
+index notation for reading and writing PMU msrs.
 
+The problem is that for fixed counters, the new calculation for the base
+did not take into account the fixed counter indexes, thus all fixed
+counters were read/written from fixed counter 0.  Although all fixed
+counters share the same config MSR, they each have their own counter
+register.
 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Diameter dictionary file could crash Wireshark.
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-This is a memory corruption flaw caused by using a custom config files.
-You will normally have to social engineer the victim to use a malicious
-config file and then run wireshark
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted snoop file could crash Wireshark. (Bug 5912)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-> 
-> 
-> Huzaifa Sidhpurwala of the Red Hat Security Response Team discovered
-> that a corrupted Visual Networks file could crash Wireshark. (Bug
-> 5934)
-> Versions affected: 1.2.0 to 1.2.16 and 1.4.0 to 1.4.6.
-> 
-Both of the above are integer overflow issues, which cause subsequent
-memory corruption.
-> 
-> http://www.wireshark.org/security/wnpa-sec-2011-07.html
-> http://www.wireshark.org/security/wnpa-sec-2011-08.html
-> 
-Steve, could you please assign CVE ids to the issues mentioned in the
-above URLs? thanks.
+This can cause a local denial of service.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Upstream commit:
+http://git.kernel.org/linus/fc66c5210ec2539e800e87d7b3a985323c7be96e
+
+Introduced in:
+http://git.kernel.org/linus/41bf498949a263fa0b2d32524b89d696ac330e94
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=719228
+
+Thanks, Eugene
