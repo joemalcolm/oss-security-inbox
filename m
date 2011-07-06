@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/23
-Message-ID: <20110403224821.GB31184@eltex.net>
-Date: Mon, 4 Apr 2011 02:48:21 +0400
-From: ArkanoiD <ark@...ex.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/12
+Message-Id: <FDF5E768-AFDB-48DB-9C26-10D3DD05DC21@isc.org>
+Date: Wed, 6 Jul 2011 12:09:22 -0700
+From: Barry Greene <bgreene@....org>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com, security-officer@....org
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-Ah, ok, i might be missing the whole idea, sorry.
+Hi Eugene,
 
-On Mon, Apr 04, 2011 at 01:33:01AM +0400, Solar Designer wrote:
+Yes, we worked hard to contain disclosure process. Politics took over. We will put factors in place for the next security advisory cycle to remediate so it does not happen again.
+
+Thanks,
+
+Barry
+
+On Jul 5, 2011, at 4:21 AM, Eugene Teo wrote:
+
+> (Cc'ed the ISC folks)
 > 
-> As you can see from another message I posted, I've only setup a
-> Linux distros list for now, which lets us side-step the issue of
-> comparing one security researcher vs. another for membership of that
-> list.  I'd be happy to setup a separate list with only security
-> researchers on it, and we can ask folks to CC that list whenever a
-> discussion on the Linux distros list is expected to significantly
-> benefit from participation of the researchers.
+> On 07/05/2011 07:17 PM, Eugene Teo wrote:
+>> You might have read about AusCert's accidental disclosure of the ISC
+>> Bind advisories today. If you have more information about this, please
+>> share. AFAICS, the bind source packages are still not available at the
+>> ISC website.
+>> 
+>> https://bugzilla.redhat.com/CVE-2011-2464
+>> https://bugzilla.redhat.com/CVE-2011-2465
+>> http://risky.biz/auscert-bind
+>> http://pastebin.com/9NUt8Pk0
+>> 
+>> Thanks, Eugene
 > 
+
