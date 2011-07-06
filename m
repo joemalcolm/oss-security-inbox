@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/25
-Message-ID: <Pine.GSO.4.64.1102231505040.25301@faron.mitre.org>
-Date: Wed, 23 Feb 2011 15:17:32 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/7
+Message-ID: <20110706125139.3e4b6d0f@redhat.com>
+Date: Wed, 6 Jul 2011 12:51:39 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Eugene Teo <eugene@...hat.com>, Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 6 Jul 2011 10:56:46 +0400 Solar Designer wrote:
 
-On Wed, 23 Feb 2011, Steve Grubb wrote:
+> > The fix from the paper was committed in openssl CVS within about a
+> > week from public disclosure:
+> > 
+> > http://cvs.openssl.org/chngview?cn=20892
+> > 
+> > However, there were some concerns raised regarding the extra #ifdef
+> > wrapping added as part of the commit, which disable the fix by
+> > default, and the name suggests #ifndef was probably intended:
+> > 
+> > http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+> 
+> This helps.
+> 
+> Are you dealing with the issue for Red Hat products?  Perhaps you
+> have a Bugzilla entry?
 
-> However, this doesn't help in the scenario where you have a kiosk or 
-> internet cafe and untrusted people walk up to machines.
+We have bugzilla (as usual, use CVE as a bug id), but not too useful
+for other distros, as it only says we're not affected.  All EC crypto is
+one of the "patent or otherwise encumbered" code pieces that are removed
+and not compiled in.
 
-I used to be reluctant to use this kind of scenario, but times have 
-changed and kiosks/cafes are a rather common environment.  It seems 
-reasonable for a system owner to expect that the simple insertion of a USB 
-stick is not going to interfere with the operation of the host computer. 
-The presence of auto-mounting doesn't seem to require "user-assistance" 
-(i.e. careful social engineering) in the kiosk exploit scenario.  The 
-attacker is the person with physical access trying to DoS the given 
-machine in a less-detectable fashion than the "defenestration exploit," 
-i.e., throwing the target computer out the window for a literal denial of 
-service (crash).
+http://pkgs.fedoraproject.org/gitweb/?p=openssl.git;a=blob;f=hobble-openssl;h=a8be844f6ba7654b5738ae0e27e192a38797bd74;hb=master
 
-Now, if you have to social-engineer some admin into running "mount" for 
-you, then maybe that's a little too dependent on admin carelessness to get 
-a CVE (might as well tell them to run "rm -rf" or "download and execute 
-this program").
-
-These bugs might have a very low impact due to attack complexity, but 
-there is still a reasonable/realistic attack scenario, so technically it 
-can be given a CVE.
-
-- Steve
+-- 
+Tomas Hoger / Red Hat Security Response Team
