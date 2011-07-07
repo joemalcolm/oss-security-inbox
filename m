@@ -1,66 +1,252 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/4
-Message-Id: <201108101027.18631.thomas@suse.de>
-Date: Wed, 10 Aug 2011 10:27:18 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/5
+Message-Id: <201107071641.18449.ludwig.nussel@suse.de>
+Date: Thu, 7 Jul 2011 16:41:17 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi ppl,
+Solar Designer wrote:
+> On Mon, Jun 27, 2011 at 04:59:05PM +0200, Ludwig Nussel wrote:
+> > I suppose crypt_blowfish is not meant to parse some config file, so
+> > we'd have to implement the options in the pam modules.
+> 
+> Yes, but I think it'd be just one option, and its behavior will be as
+> trivial as to treat 2a on existing hashes as 2x.  It shouldn't do
+> anything else.  The 0xff thing will be in crypt_blowfish itself, per my
+> current proposal above - which I'd appreciate comments on.
 
-from RH bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=728371
+So here is a first draft of a pam_unix2 patch for discussion. The
+password function of pam_unix2 already reads /etc/default/passwd
+and /etc/login.defs, now the auth function also does.
 
-The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
+The new option BLOWFISH_2a2x=yes/no toggles the compat mode to treat
+2a as 2x as discussed before.
 
--------------------------------------------------------------------------------
-Vincent Danen 2011-08-04 16:42:51 EDT
+I've also added a second option BLOWFISH_2y=yes/no (default yes) as
+safeguard. When set to 'no' new passwords are still stored as 2a
+instead of 2y. I've been thinking about networked environments where
+not all systems might get patched at the same time. If some user on
+a patched system changes the password and gets 2y he can not log in
+on other systems anymore, even if no 8bit characters are used. So if
+that use case is important it may be better to risk locking out a
+few users with umlauts in the password rather than having 2y not
+accepted by unpatched systems.
 
-A number of vulnerabilities were reported in libmodplug, which can be exploited
-to cause a DoS or possibly compromise an application using the library [1]:
+cu
+Ludwig
 
-1) An integer overflow error exists within the "CSoundFile::ReadWav()" function
-(src/load_wav.cpp) when processing certain WAV files. This can be exploited to
-cause a heap-based buffer overflow by tricking a user into opening a specially
-crafted WAV file.
+---
+ configure.in      |   18 +++++++++++++++++-
+ src/get_options.c |   16 ++++++++++++++++
+ src/public.h      |    5 +++++
+ src/support.c     |   26 ++++++++++++++++++++++++++
+ src/unix_auth.c   |    8 +-------
+ src/unix_passwd.c |   11 ++++++++---
+ 6 files changed, 73 insertions(+), 11 deletions(-)
 
-2) Boundary errors within the "CSoundFile::ReadS3M()" function
-(src/load_s3m.cpp) when processing S3M files can be exploited to cause
-stack-based buffer overflows by tricking a user into opening a specially
-crafted S3M file.
-
-3) An off-by-one error within the "CSoundFile::ReadAMS()" function
-(src/load_ams.cpp) can be exploited to cause a stack corruption by tricking a
-user into opening a specially crafted AMS file.
-
-4) An off-by-one error within the "CSoundFile::ReadDSM()" function
-(src/load_dms.cpp) can be exploited to cause a memory corruption by tricking a
-user into opening a specially crafted DSM file.
-
-5) An off-by-one error within the "CSoundFile::ReadAMS2()" function
-(src/load_ams.cpp) can be exploited to cause a memory corruption by tricking a
-user into opening a specially crafted AMS file.
-
-Upstream patches are available to correct the flaws [2],[3],[4],[5]
-
-While older gstreamer-plugins contains an embedded copy of libmodplug, it is
-not yet known to what extent it is affected by these flaws.
-
-[1] http://secunia.com/advisories/45131
-[2]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=2d4c56de314ab13e4437bd8b609f0b751066eee8
-[3]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
-[4]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=26243ab9fe1171f70053e9aec4b20e9f7de9e4ef
-[5]
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=16d7a78efe14d345a6c5b241f88422ad0ee483ea
--------------------------------------------------------------------------------
+diff --git a/configure.in b/configure.in
+index f4cdcd1..10c4e1f 100644
+--- a/configure.in
++++ b/configure.in
+@@ -48,13 +48,29 @@ dnl Should we compile with SELinux support? default: yes
+ AC_ARG_ENABLE([selinux],
+    AC_HELP_STRING([--disable-selinux],[Enable SELinux support (default=yes)]),
+    WITH_SELINUX=$enableval, WITH_SELINUX=yes)
+-if test "$WITH_SELINUX" == "yes" ; then
++if test "$WITH_SELINUX" = "yes" ; then
+    AC_CHECK_LIB(selinux,is_selinux_enabled,
+         [AC_DEFINE(WITH_SELINUX,1,
+                 [Define if you want to compile in SELinux support])
+          LIBS="$LIBS -lselinux"])
+ fi
+ 
++AC_ARG_ENABLE([blowfish-bug-workaround],
++   AC_HELP_STRING([--disable-blowfish-bug-workaround],[Enable workarounds for blowfish signedness bug]),
++   CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS=$enableval, CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS=yes)
++if test "$CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS" = "yes" ; then
++        AC_DEFINE(CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS,1,
++                [Define if you want to enable workarounds for blowfish signedness bug])
++fi
++
++AC_ARG_ENABLE([blowfish-bug-compatmode],
++   AC_HELP_STRING([--enable-blowfish-bug-compatmode],[Enable blowfish compat mode by default]),
++   CRYPT_BLOWFISH_COMPATMODE=$enableval, CRYPT_BLOWFISH_COMPATMODE=no)
++if test "$CRYPT_BLOWFISH_COMPATMODE" = "yes" ; then
++	AC_DEFINE(CRYPT_BLOWFISH_COMPATMODE,1,
++		[Define if you want to enable blowfish compat mode by default])
++fi
++
+ dnl Check standard headers
+ AC_HEADER_STDC
+ AC_CHECK_HEADERS(crypt.h)
+diff --git a/src/get_options.c b/src/get_options.c
+index faf8aa0..3ca786e 100644
+--- a/src/get_options.c
++++ b/src/get_options.c
+@@ -138,6 +138,22 @@ get_options (pam_handle_t *pamh, options_t *options, const char *type,
+   /* Set some default values, which could be overwritten later.  */
+   options->use_crypt = NONE;
+ 
++#ifdef CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS
++#ifdef CRYPT_BLOWFISH_COMPATMODE
++#define _2a2x_default 1
++#else
++#define _2a2x_default 0
++#endif
++  options->blowfish_2a2x = getlogindefs_bool("BLOWFISH_2a2x", _2a2x_default);
++  options->blowfish_2y = getlogindefs_bool("BLOWFISH_2y", 1);
++  if (!options->blowfish_2y && options->blowfish_2a2x)
++    {
++      pam_syslog (pamh, LOG_ERR, "You can't have BLOWFISH_2a2x on and BLOWFISH_2y off, turning on BLOWFISH_2y");
++      options->blowfish_2y = 1;
++    }
++  free_getlogindefs_data();
++#endif
++
+   /* Parse parameters for module */
+   for ( ; argc-- > 0; argv++)
+     parse_option (pamh, *argv, type, options);
+diff --git a/src/public.h b/src/public.h
+index 7200759..491faf2 100644
+--- a/src/public.h
++++ b/src/public.h
+@@ -68,6 +68,8 @@ struct options_t {
+   int nullok;
+   int use_authtok;
+   int use_first_pass;
++  int blowfish_2a2x:1;
++  int blowfish_2y:1;
+   char **use_other_modules;
+   char *nisdir;
+   crypt_t use_crypt;
+@@ -86,6 +88,9 @@ extern int __call_other_module(pam_handle_t * pamh, int flags,
+ 			const char *mod_name, const char *func_name,
+ 			options_t *options);
+ 
++extern int __check_password_match (const char *hash, const char *pass,
++			options_t *options);
++
+ extern int get_options (pam_handle_t *pamh, options_t *options,
+ 			const char *type, int argc, const char **argv);
+ 
+diff --git a/src/support.c b/src/support.c
+index 6a1ce5e..d3285e1 100644
+--- a/src/support.c
++++ b/src/support.c
+@@ -48,6 +48,11 @@
+ #include <security/pam_ext.h>
+ #endif
+ 
++#if defined(HAVE_CRYPT_H)
++#define _OW_SOURCE
++#include <crypt.h>
++#endif
++
+ #include "public.h"
+ 
+ int
+@@ -360,3 +365,24 @@ struct pam_module _pam_unix2_modstruct =
+   pam_sm_chauthtok
+ };
+ #endif
++
++int
++__check_password_match (const char *hash, const char *pass, options_t *options)
++{
++  struct crypt_data output;
++
++  memset (&output, 0, sizeof (output));
++
++#ifdef CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS
++  /* if compat mode is turned on treat all 2a hashes as affected by
++     signess bug, ie 2x */
++  if (options->blowfish_2a2x && !strncmp(hash, "$2a$", 4))
++    {
++      char* h = strdupa(hash);
++      h[2] = 'x';
++      hash = h;
++    }
++#endif
++
++  return (strcmp (hash, crypt_r (pass, hash, &output)) == 0);
++}
+diff --git a/src/unix_auth.c b/src/unix_auth.c
+index e61c45e..e78c520 100644
+--- a/src/unix_auth.c
++++ b/src/unix_auth.c
+@@ -61,10 +61,6 @@
+ #include <security/pam_ext.h>
+ #endif
+ 
+-#if defined(HAVE_CRYPT_H)
+-#include <crypt.h>
+-#endif
+-
+ #include "public.h"
+ 
+ 
+@@ -124,7 +120,6 @@ int
+ pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc,
+ 		     const char **argv)
+ {
+-  struct crypt_data output;
+   int retval;
+   int sp_buflen = 256;
+   char *sp_buffer = alloca (sp_buflen);
+@@ -141,7 +136,6 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc,
+   options_t options;
+   int ask_user, ask_password;
+ 
+-  memset (&output, 0, sizeof (output));
+   memset (&options, 0, sizeof (options));
+ 
+   if (get_options (pamh, &options, "auth", argc, argv) < 0)
+@@ -325,7 +319,7 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags, int argc,
+       *cp = '\0';
+     }
+ 
+-  if (strcmp (crypt_r (password, salt, &output), salt) != 0)
++  if (!__check_password_match(salt, password, &options))
+     {
+       if (options.debug)
+ 	pam_syslog (pamh, LOG_DEBUG, "wrong password, return PAM_AUTH_ERR");
+diff --git a/src/unix_passwd.c b/src/unix_passwd.c
+index 16c5f14..fc16bf4 100644
+--- a/src/unix_passwd.c
++++ b/src/unix_passwd.c
+@@ -257,8 +257,7 @@ pam_sm_chauthtok (pam_handle_t *pamh, int flags, int argc, const char **argv)
+ 
+   /* Check if the old password was correct.  */
+   if ((getuid () || (flags & PAM_CHANGE_EXPIRED_AUTHTOK)) &&
+-      strcmp (data->oldpassword,
+-	      crypt_r (oldpass, data->oldpassword, &output)) != 0)
++      !__check_password_match(data->oldpassword, oldpass, &options))
+     {
+       if (options.debug)
+ 	pam_syslog (pamh, LOG_DEBUG,
+@@ -686,7 +685,13 @@ __do_setpass (pam_handle_t *pamh, int flags, user_t *data,
+     case BLOWFISH:
+       salt = make_crypt_salt ("$2a$", options->crypt_rounds, pamh, flags);
+       if (salt != NULL)
+-	newpassword = crypt_r (data->newpassword, salt, output);
++	{
++#ifdef CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS
++	  if (!options->blowfish_2y && salt[2] == 'y')
++	    salt[2] = 'a';
++#endif
++	  newpassword = crypt_r (data->newpassword, salt, output);
++	}
+       else
+ 	{
+ 	  __write_message (pamh, flags, PAM_ERROR_MSG,
+-- 
+1.7.3.4
 
 -- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
