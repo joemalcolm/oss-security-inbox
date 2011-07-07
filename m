@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/7
-Message-ID: <20110411171917.GL714@dojo.mi.org>
-Date: Mon, 11 Apr 2011 13:19:17 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/3
+Message-ID: <4E1574C8.7030802@redhat.com>
+Date: Thu, 07 Jul 2011 16:56:40 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1780, CVE-2011-1936, kernel/xen issues
 Content-Type: text/plain; charset=utf-8
 
-:http://www.pureftpd.org/project/pure-ftpd/news
-:
-:states that pure-ftpd is affected by the same STARTTLS
-:injection bug as postifx's CVE-2011-0411.
-:
-:Is this CVE postfix-specific or can it be used for
-:pure-ftpd as well? If needed, can someone assign a new CVE?
+1) CVE-2011-1780 kernel: xen: svm: insufficiencies in handling emulated
+instructions during vm exits
 
-It should get its own CVE assignment.  Other products with the
-same STARTTLS issue have gotten unique CVE assignments for them
--- see CVE-2011-143[012].
+A bug was found in the way Xen handles instruction emulation during VM
+exits. Malicious guest user space process running in SMP guest can trick
+the emulator into reading different instruction than the one that caused
+the VM exit. To do so it should run legitimate instruction that causes
+VM exit in one thread and replace this instruction to another one from
+second thread. An unprivileged guest user can potentially use this flaw
+to crash the host. Doesn't affect upstream.
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"You can't destroy everything.  Where would you sit?"               -The Tick
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1780
 
-Content of type "application/pgp-signature" skipped
+2) CVE-2011-1936 kernel: xen: vmx: insecure cpuid vmexit
+A bug was found in the way Xen handles cpuid instruction emulation
+during VM exits. An unprivileged guest user can potentially use this
+flaw to crash the guest.
+
+This issue only affects systems running on x86 architecture with Intel
+processor and VMX virtualization extension enabled. Doesn't affect upstream.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1936
+
+Thanks, Eugene
