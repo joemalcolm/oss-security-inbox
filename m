@@ -1,30 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/3
-Message-Id: <201103291638.44993.ludwig.nussel@suse.de>
-Date: Tue, 29 Mar 2011 16:38:44 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: rsyslogd memory leaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/10
+Message-ID: <20110707235456.GA30957@openwall.com>
+Date: Fri, 8 Jul 2011 03:54:56 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Jul 07, 2011 at 04:41:17PM +0200, Ludwig Nussel wrote:
+> So here is a first draft of a pam_unix2 patch for discussion. The
 
-The $RepeatedMsgReduction option could cause a memory leak:
-http://bugzilla.adiscon.com/show_bug.cgi?id=225
-http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=8083bd1433449fd2b1b79bf759f782e0f64c0cd2
+Thanks!
 
-Multiple rulesets that are used by multiple inputs could cause a
-memory leak or crash:
-http://bugzilla.adiscon.com/show_bug.cgi?id=226
-http://bugzilla.adiscon.com/show_bug.cgi?id=218
-http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=1ef709cc97d54f74d3fdeb83788cc4b01f4c6a2a
+> password function of pam_unix2 already reads /etc/default/passwd
+> and /etc/login.defs, now the auth function also does.
+> 
+> The new option BLOWFISH_2a2x=yes/no toggles the compat mode to treat
+> 2a as 2x as discussed before.
 
+OK.
 
-cu
-Ludwig
+> I've also added a second option BLOWFISH_2y=yes/no (default yes) as
+> safeguard. When set to 'no' new passwords are still stored as 2a
+> instead of 2y. I've been thinking about networked environments where
+> not all systems might get patched at the same time. If some user on
+> a patched system changes the password and gets 2y he can not log in
+> on other systems anymore, even if no 8bit characters are used. So if
+> that use case is important it may be better to risk locking out a
+> few users with umlauts in the password rather than having 2y not
+> accepted by unpatched systems.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+That's a nasty problem I had not thought of.  I am unhappy about your
+workaround for it.  With such a workaround, we'll have more uncertainty
+of what $2a$ hashes are on SUSE systems.  (Before this point, you could
+have more confidence that all of those were computed with the sign
+extension bug, so treating them as $2x$ would allow all users to log in
+with no issues if that's what's desired despite of the security risk.)
+
+Also, it brings up the question: why merely use $2a$ running the new
+code rather than fully emulate the bug even for newly set passwords,
+which would make all passwords work, even on other networked machines?
+Sure, that would be even nastier for security, so maybe you managed to
+strike a balance well.  But nevertheless the question is there.  One of
+your options results in full backwards compatibility at a security cost
+(for the local system), but the other somehow chooses to strike a
+balance between compatibility and security without achieving either of
+these fully (for a network of systems).
+
+Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
+I imagine that people won't know to enable this option unless/until they
+have already run into an issue anyway (that is, someone is already
+unable to log in).  At this point, they could likely upgrade the rest of
+their networked systems as well... or downgrade this one. ;-(
+
+BTW, this problem is a reason for us to possibly use the magic salt
+substring approach instead of $2y$, although it has its drawbacks too.
+
+> +#ifdef CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS
+> +  /* if compat mode is turned on treat all 2a hashes as affected by
+> +     signess bug, ie 2x */
+> +  if (options->blowfish_2a2x && !strncmp(hash, "$2a$", 4))
+> +    {
+> +      char* h = strdupa(hash);
+> +      h[2] = 'x';
+> +      hash = h;
+> +    }
+> +#endif
+> +
+> +  return (strcmp (hash, crypt_r (pass, hash, &output)) == 0);
+
+You probably want to wipe and free your altered copy of the hash here
+(after strcmp(), but before return).
+
+Alexander
