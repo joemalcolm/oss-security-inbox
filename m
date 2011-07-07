@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/4
-Message-ID: <4EA71BCC.2040907@redhat.com>
-Date: Tue, 25 Oct 2011 14:27:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/2
+Message-Id: <201107071005.07672.ludwig.nussel@suse.de>
+Date: Thu, 7 Jul 2011 10:05:07 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Jamie Strandboge <jamie@...onical.com>, thierry@...nstack.org, security <security@...ntu.com>
-Subject: Re: CVE request: nova
+Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 10/25/2011 11:11 AM, Jamie Strandboge wrote:
-> A flaw was discovered in OpenStack nova[1] which allows someone with
-> access to an EC2_ACCESS_KEY (equivalent to a username) to obtain the
-> EC2_SECRET_KEY (equivalent to a password). While the EC2_ACCESS_KEY is
-> typically not public, if the user exposes it via http or tools that
-> allow MITM over https, then an attacker could obtain the EC2_SECRET_KEY
-> easily. An attacker could also presumably brute force values for
-> EC2_ACCESS_KEY.
->
-> Fix:
-> https://review.openstack.org/#change,794
->
-> [1]https://launchpad.net/bugs/868360
->
-Please use CVE-2011-4076 for this issue
+Solar Designer wrote:
+> Here's my current code, with lots of comments - more comments than code,
+> actually, because the code is very compact:
+
+mkpasswd (package whois) checks whether the crypted password starts
+with the originally requested prefix. Since crypt_gensalt now
+returns $2y for $2a mkpasswd fails. I'm not claiming mkpasswd's
+assumption on the behavior of crypt_gensalt is correct but it's not
+documented whether crypt_gensalt may change the prefix.
+
+cu
+Ludwig
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
