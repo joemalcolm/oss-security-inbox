@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/2
-Message-ID: <4D3E3D23.3080805@redhat.com>
-Date: Tue, 25 Jan 2011 11:01:55 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/4
+Message-ID: <4E157938.8060007@redhat.com>
+Date: Thu, 07 Jul 2011 17:15:36 +0800
 From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, Dan Carpenter <error27@...il.com>, Mauro Carvalho Chehab <mchehab@...hat.com>
-Subject: Re: Linux kernel av7110 negative array offset
+To: Barry Greene <bgreene@....org>
+CC: oss-security@...ts.openwall.com, security-officer@....org
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 01:13 AM, Kees Cook wrote:
-> Hi,
->
-> Tavis Ormandy pointed this[1] out to me today. Has this already been
-> assigned a CVE? It looks exploitable if someone has this hardware in their
-> system.
-
-Please use CVE-2011-0521.
-
-Thanks, Eugene
-
+On 07/07/2011 03:09 AM, Barry Greene wrote:
+> Hi Eugene,
+> 
+> Yes, we worked hard to contain disclosure process. Politics took over. We will put factors in place for the next security advisory cycle to remediate so it does not happen again.
+> 
 > Thanks,
->
-> -Kees
->
-> [1] http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=cb26a24ee9706473f31d34cc259f4dcf45cd0644
->
+
+Thanks Barry.
+
+Eugene
+
+> Barry
+> 
+> On Jul 5, 2011, at 4:21 AM, Eugene Teo wrote:
+> 
+>> (Cc'ed the ISC folks)
+>>
+>> On 07/05/2011 07:17 PM, Eugene Teo wrote:
+>>> You might have read about AusCert's accidental disclosure of the ISC
+>>> Bind advisories today. If you have more information about this, please
+>>> share. AFAICS, the bind source packages are still not available at the
+>>> ISC website.
+>>>
+>>> https://bugzilla.redhat.com/CVE-2011-2464
+>>> https://bugzilla.redhat.com/CVE-2011-2465
+>>> http://risky.biz/auscert-bind
+>>> http://pastebin.com/9NUt8Pk0
+>>>
+>>> Thanks, Eugene
+>>
+> 
 
