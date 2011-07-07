@@ -1,22 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/9
-Message-ID: <20110830195129.GA15630@openwall.com>
-Date: Tue, 30 Aug 2011 23:51:29 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed List
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/4
+Message-ID: <4E157938.8060007@redhat.com>
+Date: Thu, 07 Jul 2011 17:15:36 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Barry Greene <bgreene@....org>
+CC: oss-security@...ts.openwall.com, security-officer@....org
+Subject: Re: The Bind incident
 Content-Type: text/plain; charset=utf-8
 
-Hi John,
-
-On Tue, Aug 30, 2011 at 05:06:37PM +0100, John Haxby wrote:
-> I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
-> actually in the Linux sustaining team, the team actually responsible for
-> fixing most of the bugs.
+On 07/07/2011 03:09 AM, Barry Greene wrote:
+> Hi Eugene,
 > 
-> Could you please add me to the closed list?   There is one other person
-> on the list for Oracle, but none, yet, from the Linux group.
+> Yes, we worked hard to contain disclosure process. Politics took over. We will put factors in place for the next security advisory cycle to remediate so it does not happen again.
+> 
+> Thanks,
 
-I've just added you.
+Thanks Barry.
 
-Alexander
+Eugene
+
+> Barry
+> 
+> On Jul 5, 2011, at 4:21 AM, Eugene Teo wrote:
+> 
+>> (Cc'ed the ISC folks)
+>>
+>> On 07/05/2011 07:17 PM, Eugene Teo wrote:
+>>> You might have read about AusCert's accidental disclosure of the ISC
+>>> Bind advisories today. If you have more information about this, please
+>>> share. AFAICS, the bind source packages are still not available at the
+>>> ISC website.
+>>>
+>>> https://bugzilla.redhat.com/CVE-2011-2464
+>>> https://bugzilla.redhat.com/CVE-2011-2465
+>>> http://risky.biz/auscert-bind
+>>> http://pastebin.com/9NUt8Pk0
+>>>
+>>> Thanks, Eugene
+>>
+> 
+
