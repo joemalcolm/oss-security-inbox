@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/3
-Message-ID: <20111012100931.GA8290@albatros>
-Date: Wed, 12 Oct 2011 14:09:32 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Reuben Hawkins <reubenhwk@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/6
+Message-ID: <1310054195.2993.93.camel@localhost>
+Date: Thu, 07 Jul 2011 10:56:35 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: William Cohen <wcohen@...hat.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 11, 2011 at 23:26 -0700, Reuben Hawkins wrote:
-> On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> > Crap, thank you for noticing it, guys.  The fix should be:
-> >
-> > https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
-> >
-> > Now, "", "..", "." and filenames with "/" inside are denied.
+On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
+> The patches mentioned in the previous email.
+> 
+> -Will
 
-In case someone didn't fully track the discussion thread, I'll sum it up -
+Thanks for these patches. I was reviewing them and noticed that
+0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
+'error_if_not_basename $arg $val' for --save added in
+0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
+if you apply all 4 patches, method #2 from the Debian bug[1] is no
+longer fixed. Attached is a patch to correct this (to be applied after
+the other 4).
 
-In the original patch the variable name is typoed/confused - the check
-should be against "iface" instead of "name".  The check against "name"
-is totally wrong as it checks a static hint string, which always passes
-the check.
-
-The confused blacklisted iface set is a bug, but not a security bug;
-the confused variable name is indeed a security bug (not a flaw per se,
-but it greatly weakens the privsep model).
-
-
-Thanks to Solar Designer for pointing out that this thing is probably
-not clear to everybody.
+[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Jamie Strandboge             | http://www.canonical.com
+
+View attachment "0005-add-back-error_if_not_basename.patch" of type "text/x-patch" (506 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
