@@ -1,17 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/5
-Message-ID: <87mxag7ew7.fsf@mid.deneb.enyo.de>
-Date: Sun, 25 Dec 2011 18:14:00 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4862 is not BSD-specific
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/6
+Message-ID: <1310054195.2993.93.camel@localhost>
+Date: Thu, 07 Jul 2011 10:56:35 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: William Cohen <wcohen@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
-overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
-seems to have been added at MIT when the BSD telnetd was Kerberized,
-and it ended up in the Heimdal recryptofication of Kerberos (from
-where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
-pre-authentication segfault with both versions (as shipped by Debian).
+On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
+> The patches mentioned in the previous email.
+> 
+> -Will
 
-The telnetd from netkit does not appear to be affected.
+Thanks for these patches. I was reviewing them and noticed that
+0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
+'error_if_not_basename $arg $val' for --save added in
+0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
+if you apply all 4 patches, method #2 from the Debian bug[1] is no
+longer fixed. Attached is a patch to correct this (to be applied after
+the other 4).
+
+[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+View attachment "0005-add-back-error_if_not_basename.patch" of type "text/x-patch" (506 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
