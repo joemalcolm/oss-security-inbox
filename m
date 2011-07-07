@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/7
-Message-ID: <4ECA37FF.8080100@redhat.com>
-Date: Mon, 21 Nov 2011 12:37:35 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request (minor) -- gnash -- Unsafe management of HTTP cookies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/8
+Message-ID: <20110707213103.GA30354@openwall.com>
+Date: Fri, 8 Jul 2011 01:31:03 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+On Thu, Jul 07, 2011 at 10:05:07AM +0200, Ludwig Nussel wrote:
+> mkpasswd (package whois) checks whether the crypted password starts
+> with the originally requested prefix. Since crypt_gensalt now
+> returns $2y for $2a mkpasswd fails. I'm not claiming mkpasswd's
+> assumption on the behavior of crypt_gensalt is correct but it's not
+> documented whether crypt_gensalt may change the prefix.
 
-   a security flaw was found in the way Shockwave Flash plug-in of the
-gnash, a GNU flash movie player, performed management of HTTP cookies
-(they were stored under /tmp directory with predictable name and world-
-readable permissions). A local attacker could use this flaw to obtain
-sensitive information.
+Thank you for letting me know.  Yes, this prefix change in
+crypt_gensalt*() was a hack, which I didn't give much thought yet.
+It would have been nice to be able to switch to using $2y$ for
+crypt_gensalt*()-aware apps (including our pam_tcb) just by upgrading
+glibc, without changes to any other component nor to a config file, but
+I agree that we'll want to avoid surprises like that.  I'll change my
+code to preserve the requested prefix.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649384
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=755518
+Another idea that I haven't given much thought yet is to encode, say, a
+64-bit magic constant in the salt (leaving the remaining 64 bits out of
+the total of 128 for the actual salt), indicating that this is a newly
+generated "setting" string and enabling crypt(3) to treat $2a$ as $2y$
+safely.  Or we could in fact fully use this instead of $2y$, although
+that would reduce the salt space for all - not really a problem since
+128 bits for a crypt(3) salt was excessive, but it doesn't sound good.
+This would have the advantage of being 100% compatible with OpenBSD's
+$2a$ hashes, including usage of the $2a$ prefix, yet carrying the
+desired extra bit for us.  There's only a very slight chance of someone
+else's salt string inadvertently having our magic constant in it, which
+would exclude the hash from collision protection against hashes of the
+buggy algorithm.  A drawback: this fails if a new version of
+crypt_gensalt*() is used with an older version of the hashing code (with
+the sign extension bug in it).  $2y$ protects from that (the old code
+would refuse to process such "setting" strings).
 
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
