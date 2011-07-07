@@ -1,56 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/11
-Message-ID: <1093098424.141863.1313780632015.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:03:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/7
+Message-ID: <20110707200942.GO8259@core.inversepath.com>
+Date: Thu, 7 Jul 2011 22:09:42 +0200
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ruby on rails flaws (4)
+Subject: oCERT name change due to trademark claims
 Content-Type: text/plain; charset=utf-8
 
 
+Hello oss-security,
 
------ Original Message -----
-> Could we get CVEs assigned to these flaws? Upstream had requested CVEs
-> prior to disclosure, but didn't receive any.
-> 
-> http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
-> 
-> 1) Filter Skipping bugs
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
-> https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
-> https://bugzilla.redhat.com/show_bug.cgi?id=731432
+to anyone that might be bothered with this change I'd just like to announce
+that oCERT change its "long" name from Open Source Computer Emergency
+Response Team to Open Source Computer Security Incident Response Team.
 
-Use CVE-2011-2929
+This change was triggered by legal claims by Carnegie Mellon University
+linked to the fact that not only we need a license in order to use CERT in
+our name (which we obtained in 2008 after the first claim) but that in order
+to use the license it can never be implied that CERT is an acronym [1] for
+Computer Emergency Response Team (this last claim was made just now in 2011).
 
+Luckily we have better things to do with our time than engaging in possible
+legal battles, therefore we decided to comply (the "long" name appeared only
+twice on our site anyway).
 
-> 
-> 2) SQL Injection issues
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
-> https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
-> https://bugzilla.redhat.com/show_bug.cgi?id=731438
+To any OSS project that uses or will want to use CERT in this fashion, you
+have been warned. I hope one day the security community can legally claim the
+CERT acronym back without risking these kind of consequences.
 
-Use CVE-2011-2930
+Cheers
 
-
-> 
-> 3) Parse error in strip_tags
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
-> https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
-> https://bugzilla.redhat.com/show_bug.cgi?id=731436
-
-Use CVE-2011-2931
-
-
-> 
-> 4) UTF-8 escaping vulnerability
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
-> https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
-> https://bugzilla.redhat.com/show_bug.cgi?id=731435
-
-Use CVE-2011-2932
-
-Thanks.
+[1] http://www.cert.org/faq/cert_faq.html#sectionA
 
 -- 
-    JB
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
