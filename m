@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/13/1
-Message-ID: <4d2e6afd.0849960a.6d7e.4efb@mx.google.com>
-Date: Wed, 12 Jan 2011 21:01:09 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: "Steven M. Christey" <coley@...re.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE requests: IO::Socket::SSL, cakephp, collectd, gnash, ocrodjvu, hypermail, libcloud, piwigo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/2
+Message-Id: <201107071005.07672.ludwig.nussel@suse.de>
+Date: Thu, 7 Jul 2011 10:05:07 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-[...]
-> Steve, can MITRE take the one below. It's quite large and I don't have
-> time to do it right now. Thanks.
-> 
->> piwigo:
->> a1) CSRF
->> a2) SQL injection
->> a3) stored XSS
->> http://secunia.com/advisories/41365/
->> http://piwigo.org/releases/2.1.3
->> http://www.exploit-db.com/exploits/14973/
->> (the issues mentioned by the exploit-db entry appear to be the same
->> that
->> were fixed in 2.1.3)
->> b) search.php SQL injection
->> http://secunia.com/advisories/38305/
->> http://piwigo.org/releases/2.0.8
->> c) CSRF in the admin panel:
->> http://secunia.com/advisories/37681/
->> http://www.exploit-db.com/exploits/10417
->> (the exploit-db entry details two other issues, but are "admin-only"
->> -- feel
->> free to assign or ignore those.)
->>
+Solar Designer wrote:
+> Here's my current code, with lots of comments - more comments than code,
+> actually, because the code is very compact:
 
-Ping.
+mkpasswd (package whois) checks whether the crypted password starts
+with the originally requested prefix. Since crypt_gensalt now
+returns $2y for $2a mkpasswd fails. I'm not claiming mkpasswd's
+assumption on the behavior of crypt_gensalt is correct but it's not
+documented whether crypt_gensalt may change the prefix.
 
-Not urgent, but I saw them again on the list of issues without ids on our 
-tracker.
+cu
+Ludwig
 
-Regards,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
