@@ -1,67 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/4
-Message-Id: <201107290952.42084.thomas@suse.de>
-Date: Fri, 29 Jul 2011 09:52:41 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/3
+Message-ID: <4E1574C8.7030802@redhat.com>
+Date: Thu, 07 Jul 2011 16:56:40 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Billy Rios <billy.rios@...il.com>
-Subject: Re: Re: libxml security fix from apple ... any information?
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1780, CVE-2011-1936, kernel/xen issues
 Content-Type: text/plain; charset=utf-8
 
+1) CVE-2011-1780 kernel: xen: svm: insufficiencies in handling emulated
+instructions during vm exits
 
-Hello,
-if the code executed is the same on Windows and on Linux I would assume
-this affects Linux too. That the bug is not "seen" during fuzzing
-means nothing.
+A bug was found in the way Xen handles instruction emulation during VM
+exits. Malicious guest user space process running in SMP guest can trick
+the emulator into reading different instruction than the one that caused
+the VM exit. To do so it should run legitimate instruction that causes
+VM exit in one thread and replace this instruction to another one from
+second thread. An unprivileged guest user can potentially use this flaw
+to crash the host. Doesn't affect upstream.
 
-Cheers,
-Thomas
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1780
 
-Am Freitag, 29. Juli 2011, 06:59:22 schrieb Billy Rios:
-> The crash was indeed in libxml2, but I could not get the bug to repro in
-> Linux.  We took the crash file and fuzzed a bit more on Linux, but no
-> crashes were observed.
-> 
-> BK
-> 
-> 
-> On Thu, Jul 28, 2011 at 6:22 AM, Marcus Meissner <meissner@...e.de> wrote:
-> 
-> > Hi folks, Billy, Daniel,
-> >
-> > On
-> > http://support.apple.com/kb/HT4808
-> > there is a libxml security issue listed:
-> >
-> > -----------------------------------------
-> > libxml
-> >
-> > Available for: Windows 7, Vista, XP SP2 or later
-> >
-> > Impact: Visiting a maliciously crafted website may lead to an unexpected
-> > application termination or arbitrary code execution
-> >
-> > Description: A one-byte heap buffer overflow existed in libxml's handling
-> > of XML data. Visiting a maliciously crafted website may lead to an
-> > unexpected application termination or arbitrary code execution.
-> >
-> > CVE-ID
-> >
-> > CVE-2011-0216 : Billy Rios of the Google Security Team
-> > -----------------------------------------
-> >
-> > I suspect this is libxml2 and it likely also affects Linux?
-> >
-> > If this is correct, could you identify the commit fixing this issue?
-> >
-> > Ciao, Marcus
-> >
-> 
+2) CVE-2011-1936 kernel: xen: vmx: insecure cpuid vmexit
+A bug was found in the way Xen handles cpuid instruction emulation
+during VM exits. An unprivileged guest user can potentially use this
+flaw to crash the guest.
 
+This issue only affects systems running on x86 architecture with Intel
+processor and VMX virtualization extension enabled. Doesn't affect upstream.
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-1936
+
+Thanks, Eugene
