@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/8
-Message-ID: <1187053605.301058.1314215357677.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Aug 2011 15:49:17 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/7
+Message-ID: <20110707200942.GO8259@core.inversepath.com>
+Date: Thu, 7 Jul 2011 22:09:42 +0200
+From: Andrea Barisani <lcars@...rt.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libqt4: two memory issues
+Subject: oCERT name change due to trademark claims
 Content-Type: text/plain; charset=utf-8
 
 
+Hello oss-security,
 
------ Original Message -----
-> Hi,
-> 
-> A) buffer overflow (looks only like an off-by-one from a very quick
-> look)
-> http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+to anyone that might be bothered with this change I'd just like to announce
+that oCERT change its "long" name from Open Source Computer Emergency
+Response Team to Open Source Computer Security Incident Response Team.
 
-Use CVE-2011-3193 for this.
+This change was triggered by legal claims by Carnegie Mellon University
+linked to the fact that not only we need a license in order to use CERT in
+our name (which we obtained in 2008 after the first claim) but that in order
+to use the license it can never be implied that CERT is an acronym [1] for
+Computer Emergency Response Team (this last claim was made just now in 2011).
 
-I couldn't find this code in Harfbuzz-ng or pango. Has someone looked into
-this further?
+Luckily we have better things to do with our time than engaging in possible
+legal battles, therefore we decided to comply (the "long" name appeared only
+twice on our site anyway).
 
-> 
-> B) buffer overflow on greyscale images with multiple samples per pixel
-> https://bugzilla.novell.com/show_bug.cgi?id=637275
-> http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
-> 
+To any OSS project that uses or will want to use CERT in this fashion, you
+have been warned. I hope one day the security community can legally claim the
+CERT acronym back without risking these kind of consequences.
 
-Use CVE-2011-3194
+Cheers
 
-Thanks.
+[1] http://www.cert.org/faq/cert_faq.html#sectionA
 
 -- 
-    JB
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
