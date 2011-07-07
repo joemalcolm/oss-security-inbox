@@ -1,40 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/01/2
-Message-ID: <4DBCBED0.70309@redhat.com>
-Date: Sat, 30 Apr 2011 22:00:48 -0400
-From: William Cohen <wcohen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/1
+Message-ID: <CAMnK33VtZMfJPU6mMVsxfZadGXSNoiwXqUh8aLL5TgQGWfWorQ@mail.gmail.com>
+Date: Wed, 6 Jul 2011 22:48:17 -0700
+From: Chris Evans <scarybeasts@...il.com>
+To: HD Moore <hdm@...italoffense.net>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-On 04/29/2011 02:16 PM, Jan Lieskovsky wrote:
-> 
-> Hello Josh, Steve, vendors,
-> 
->   It was found that oprofile profiling system did not properly sanitize
-> the content of event argument, provided to oprofile profiling control
-> utility (opcontrol). If a local unprivileged user was authorized by
-> sudoers file to run the opcontrol utility, they could use the flaw
-> to escalate their privileges (execute arbitrary code with the privileges
-> of the privileged system user, root). Different vulnerability than
-> CVE-2006-0576.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Oprofile is not encouraged to be run under sudo, but still
->       should not allow escalation of privileges.
+On Mon, Jul 4, 2011 at 9:04 PM, HD Moore <hdm@...italoffense.net> wrote:
+> On 7/4/2011 10:58 PM, Solar Designer wrote:
+>> What mirror?  As far as I'm aware, from the announcement by Chris, only
+>> the official distribution site for vsftpd was compromised.
+> [ snip ]
+>> Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
+>> one on forums where I saw this discussed appears to have it (which
+>> confirms that it existed for a very short period of time only).
+>
+> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
+> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
 
-I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
+Yeah, on vacation at the moment but looks like you found a good alternative?
+FWIW, https://docs.
+Google.com/leaf?id=0B-_usSLlqH60Y2QwZDM0YWEtYWY0My00NmM5LWI3NDAtY2Y0MzRiOTg5ZGJm&hl=en_US
 
--Will
+Seems strange to me that the attacker would remember to update mtime
+on the replacement tarball, but leave .o files kicking around (thus
+also changing tarball size radically).
 
-View attachment "oprof-sanitize.patch" of type "text/x-patch" (792 bytes)
+
+Cheers
+Chris
+
+>
+> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+>
+>> Are you trying to say that Debian got the backdoored copy?  This is news
+>> to me.
+>
+> No, I am saying that for this to become as widespread as the mtime in
+> the mirror above indicates, it would be incredible for distros like
+> Debian to not notice it, as they verify the hash of the tarball. This
+> indicates that the mtime in the mirror above was forged (since the hash
+> is indeed wrong), but the real question is how this mirror obtained the
+> copy.
+>
+> Was the mirror compromised? Was a rsync job used against the real
+> server, in which case the mtime was preserved? I couldn't find any
+> public copies with the backdoored checksum, but one of the metasploit
+> contributors pointed me to the link above.
+>
+> I would like to believe the exposure was limited to 1-3 days, but the
+> mirror above casts doubt on this.
+>
+> -HD
+>
