@@ -1,104 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/6
-Message-ID: <alpine.DEB.2.00.1112011232370.2227@cipher.ics.hut.fi>
-Date: Thu, 1 Dec 2011 12:42:51 +0200 (EET)
-From: Billy Brumley <billy.brumley@...to.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4354 OpenSSL 0.9.8g (32-bit builds) bug leaks ECC private keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/08/1
+Message-ID: <20110708123208.GA3917@openwall.com>
+Date: Fri, 8 Jul 2011 16:32:08 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-This issue is tracked by CVE-2011-4354. It is publicly disclosed.
+Ludwig, all -
 
+On Fri, Jul 08, 2011 at 01:31:03AM +0400, Solar Designer wrote:
+> On Thu, Jul 07, 2011 at 10:05:07AM +0200, Ludwig Nussel wrote:
+> > mkpasswd (package whois) checks whether the crypted password starts
+> > with the originally requested prefix. Since crypt_gensalt now
+> > returns $2y for $2a mkpasswd fails. I'm not claiming mkpasswd's
+> > assumption on the behavior of crypt_gensalt is correct but it's not
+> > documented whether crypt_gensalt may change the prefix.
+> 
+> Thank you for letting me know.  Yes, this prefix change in
+> crypt_gensalt*() was a hack, which I didn't give much thought yet.
+> It would have been nice to be able to switch to using $2y$ for
+> crypt_gensalt*()-aware apps (including our pam_tcb) just by upgrading
+> glibc, without changes to any other component nor to a config file, but
+> I agree that we'll want to avoid surprises like that.  I'll change my
+> code to preserve the requested prefix.
 
+I took care of this in 1.1.2, still unreleased.
 
-Contributors
-===========================
-Billy Brumley <billy.brumley [at] aalto [dot] fi>
-Manuel Barbosa <mbb [at] di.uminho [dot] pt>
-Dan Page <page [at] cs.bris.ac [dot] uk>
-Fre Vercauteren <fvercaut [at] esat.kuleuven.ac [dot] be>
+http://www.openwall.com/tmp/crypt_blowfish-1.1.2.tar.gz
 
+I also did some testing to make sure the safety measure for $2a$
+actually works (on passwords deliberately constructed to result in
+collisions with multiple passwords input to the buggy algorithm) and to
+see whether and how often it is triggered inadvertently (on passwords
+that are not deliberately malicious, but just happen to be among those).
 
+One conclusion is that, yes, the countermeasure works - not a single
+failure on thousands of malicious passwords produced by the bcrypt_x2a
+external filter to JtR.  In all of those cases, the hashes were computed
+using the altered algorithm, thereby avoiding collisions with the buggy
+algorithm's hashes.  I also made sure that $2x$ vs. $2y$ would in fact
+produce collisions for all of those passwords (except for the different
+prefix, which prevents the problem).
 
-Vulnerability description
-===========================
-The openssl-dev mailing list thread
+The other conclusion is that the countermeasure is almost harmless, as
+expected.  It got triggered on one non-deliberately-malicious password
+in over 150,000 where each contained the 0xff character.  Of those
+150,000+, over 50,000 were produced by replacing a common letter in
+Russian words in koi8-r encoding with the 0xff character, and the
+remaining 100,000 by doing a similar thing to the top 100,000+ entries
+of "all.lst", which contains common passwords, English words, etc.
 
-http://marc.info/?t=119271238800004
+Over the entire set of passwords, where most don't include the 0xff
+character, the countermeasure will be triggered even more infrequently.
+It is never triggered without 0xff, and rarely triggered with 0xff.
 
-describes a bug affecting 32-bit builds of OpenSSL 0.9.8g. In extremely 
-rare instances, it causes incorrect computation of finite field operations 
-when using NIST elliptic curves P-256 or P-384.
+So I think it is OK to have it, and there's no need to bother
+implementing compatibility support for those extremely rare altered
+hashes in other tools.
 
-Exploiting said bug, we designed and implemented an attack that recovers a 
-TLS server's private key. As far as we are aware, this is the first public 
-exploitation of the bug.
-
-The bug is fixed in OpenSSL >= 0.9.8h and a series of patches is available 
-to resolve it for version 0.9.8g starting from check in version 1.15 at
-
-http://cvs.openssl.org/rlog?f=openssl%2Fcrypto%2Fbn%2Fbn_nist.c
-
-As a more generic countermeasure to these types of attacks, we implemented 
-coordinate blinding as a patch to the OpenSSL source, available on the 
-openssl-dev mailing list at
-
-http://marc.info/?l=openssl-dev&m=131194808413635
-
-You can find our manuscript describing the attack at
-
-http://eprint.iacr.org/2011/633
-
-and our proof-of-concept code to verify the attack at
-
-http://crypto.di.uminho.pt/CACE/
-
-
-
-Vulnerability prerequisites
-===========================
-REQUIRED:
-
-- OpenSSL 0.9.8g (32-bit build)
-
-One or more of:
-- Use of curve P-256
-- Use of curve P-384
-
-One or more of:
-- Use of ECDH family ciphers
-- Use of ECDHE family ciphers *and* lack of SSL_OP_SINGLE_ECDH_USE context 
-option
-
-Ubuntu 9.10 Karmic ships with OpenSSL 0.9.8g and we verified the attack 
-against it.
-Debian 5.0 Lenny ships with OpenSSL 0.9.8g and, although we did not verify 
-the attack, the code suggests it is vulnerable.
-We verified the attack against stunnel 4.43 (linked against OpenSSL 
-0.9.8g) configured to use an ECDH cipher and P-256.
-Our methods do not seem to be effective for attacking OpenSSH: their 
-implementation strictly uses ephemeral ECDH keys.
-
-
-
-Vulnerability impact
-===========================
-The attack allows recovery of a TLS server's private key.
-For ECDH family ciphers, this is the long term private key of the public 
-key in a certificate.
-For ECDHE family ciphers, this is the private key of the per application 
-instance's ECDH ephemeral-static public key.
-The attack is remote and in that sense only requires observing the result 
-(success or failure) of repeated attacker-initiated TLS handshakes.
-
-
-
-Disclosure timeline
-===========================
-16 Sep 2011 Notified CERT
-15 Oct 2011 Notified Secunia
-27 Oct 2011 Notified OpenSSL team
-26 Nov 2011 Manuscript posted at IACR eprint
-28 Nov 2011 Updated OpenSSL team
-28 Nov 2011 Notified linux-distros list
-01 Dec 2011 Notified oss-security list
+Alexander
