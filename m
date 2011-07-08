@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/28
-Message-ID: <20110403230039.GE10158@openwall.com>
-Date: Mon, 4 Apr 2011 03:00:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/08/2
+Message-ID: <20110708152345.7e6115bc@redhat.com>
+Date: Fri, 8 Jul 2011 15:23:45 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: SSL renegotiation DoS CVE-2011-1473
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:08:23PM -0700, Kees Cook wrote:
-> Hi, please add me to the list. I was a member via the Ubuntu exploder.
-> 
-> pub   4096R/DC6DC026 2010-09-27
->       Key fingerprint = A5C3 F68F 229D D60F 723E  6E13 8972 F4DF DC6D C026
-> uid                  Kees Cook <kees@...ntu.com>
-> sub   4096R/650DE414 2010-09-27
+Hi!
 
-Added.  This gives us three contacts for Ubuntu on the list:
+FYI, as this has a nessus test, and likely to be seen and reported by
+users.
 
-marc.deslauriers@...onical.com
-sbeattie@...ntu.com
-kees@...ntu.com
+CVE-2011-1473 is used seemingly for the SSL protocol issue.  Most
+TLS/SSL implementations handle session renegotiation by default, client
+may trigger high CPU use by renegotiating repeatedly and taking
+advantage of the fact that there's more work to do on the server side
+than on the client side.  Similar problem affects initial handshake
+too, renegotiation allows achieving the same over single / few
+connections.
 
-Maybe this needs to be reduced to two most active ones at a later point.
+This should affect most server apps using openssl and nss, but not
+recent httpd/mod_ssl.
 
-Alexander
+Original blog post is not accessible, but TLS WG list post has all the
+relevant info.
+
+http://orchilles.com/2011/03/ssl-renegotiation-dos.html
+http://www.ietf.org/mail-archive/web/tls/current/msg07553.html
+http://www.nessus.org/plugins/index.php?view=single&id=53491
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
