@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/08/2
-Message-ID: <BANLkTik7WyQ977-+8XapTgBrVRMyexyHKg@mail.gmail.com>
-Date: Sun, 8 May 2011 21:57:25 +0200
-From: Filip Palian <s3810@...stk.edu.pl>
-To: Marcel Holtmann <marcel@...tmann.org>, "Gustavo F. Padovan" <padovan@...fusion.mobi>,  "David S. Miller" <davem@...emloft.net>, linux-bluetooth@...r.kernel.org,  netdev@...r.kernel.org, linux-kernel@...r.kernel.org
-Cc: security@...nel.org, oss-security@...ts.openwall.com
-Subject: Bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/10/1
+Message-ID: <20110710060508.GB8303@openwall.com>
+Date: Sun, 10 Jul 2011 10:05:08 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: openssl timing attack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Jul 06, 2011 at 12:51:39PM +0200, Tomas Hoger wrote:
+> We have bugzilla (as usual, use CVE as a bug id), but not too useful
+> for other distros, as it only says we're not affected.  All EC crypto is
+> one of the "patent or otherwise encumbered" code pieces that are removed
+> and not compiled in.
+> 
+> http://pkgs.fedoraproject.org/gitweb/?p=openssl.git;a=blob;f=hobble-openssl;h=a8be844f6ba7654b5738ae0e27e192a38797bd74;hb=master
 
-Structures "l2cap_conninfo" and "rfcomm_conninfo" have one padding
-byte each. This byte in "cinfo" is copied to userspace uninitialized.
+Oh, I did not realize this was the case.  Looks like we don't compile
+this stuff in either - we have "no-idea no-mdc2 no-rc5 no-ec no-ecdh
+no-ecdsa" on the ./Configure line.
 
-patch no.1:
--- cut --
---- a/net/bluetooth/l2cap_sock.c        2011-05-04 03:59:13.000000000 +0100
-+++ b/net/bluetooth/l2cap_sock.c        2011-05-08 18:57:20.000000000 +0100
-@@ -446,6 +446,7 @@ static int l2cap_sock_getsockopt_old(str
-                        break;
-                }
+Thanks,
 
-+               memset(&cinfo, 0, sizeof(cinfo));
-                cinfo.hci_handle = l2cap_pi(sk)->conn->hcon->handle;
-                memcpy(cinfo.dev_class, l2cap_pi(sk)->conn->hcon->dev_class, 3);
-
--- cut --
-
-patch no.2:
--- cut --
---- a/net/bluetooth/rfcomm/sock.c       2011-05-04 03:59:13.000000000 +0100
-+++ b/net/bluetooth/rfcomm/sock.c       2011-05-08 19:00:24.000000000 +0100
-@@ -787,6 +787,7 @@ static int rfcomm_sock_getsockopt_old(st
-
-                l2cap_sk = rfcomm_pi(sk)->dlc->session->sock->sk;
-
-+               memset(&cinfo, 0, sizeof(cinfo));
-                cinfo.hci_handle = l2cap_pi(l2cap_sk)->conn->hcon->handle;
-                memcpy(cinfo.dev_class,
-l2cap_pi(l2cap_sk)->conn->hcon->dev_class, 3);
--- cut --
-
-Found by Marek Kroemeke and Filip Palian. Special thanks to Vasiliy
-Kulikov for verifying this bug.
-
-
-Best regards.
+Alexander
