@@ -1,20 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/4
-Message-ID: <4E95E522.5070302@redhat.com>
-Date: Wed, 12 Oct 2011 13:06:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Ruby 3.0.10 WEBrick::HTTPRequest X-Forwarded-*
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/2
+Message-ID: <4E1AD3FC.8060000@redhat.com>
+Date: Mon, 11 Jul 2011 12:44:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Drupal 7 -- Access bypass in node listings (SA-CORE-2011-002)
 Content-Type: text/plain; charset=utf-8
 
-Various methods in WEBrick::HTTPRequest in Ruby on Rails 3.0.10 do not
-validate the X-Forwarded-For, X-Forwarded-Host and X-Forwarded-Server
-headers in requests, which might allow remote attackers to inject
-arbitrary text into log files or bypass intended address parsing via a
-crafted header.
+Hello Josh, Steve, vendors,
 
-https://redmine.ruby-lang.org/issues/5418
+   this:
+   [1] http://drupal.org/node/1204582
 
-Can we get a CVE for this please?
+   From [1]: Access bypass in node listings:
+   =========================================
 
--Kurt Seifried / Red Hat Security Response Team
+   Listings showing nodes but not JOINing the node table show all
+   nodes regardless of restrictions imposed by the node_access system.
+   In core, this affects the taxonomy and the forum subsystem.
+
+   ...
+
+   Versions affected:
+   ==================
+
+   Drupal 7.0, 7.1 and 7.2.
+
+
+References:
+------------
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=717874
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=633385
+
+doesn't seem to have a CVE identifier allocated yet. Could you allocate one?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
