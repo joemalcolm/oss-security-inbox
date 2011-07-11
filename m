@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/2
-Message-ID: <20110830155918.GH9091@dhcp-25-225.brq.redhat.com>
-Date: Tue, 30 Aug 2011 17:59:18 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/3
+Message-ID: <4E1B0B0C.1080308@suse.de>
+Date: Mon, 11 Jul 2011 16:39:08 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: kernel: xen: CVE-2011-2901
+Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-2901 kernel: xen: off-by-one shift in x86_64 __addr_ok()
+Solar Designer wrote:
+> [...]
+> Also, it brings up the question: why merely use $2a$ running the new
+> code rather than fully emulate the bug even for newly set passwords,
+> which would make all passwords work, even on other networked machines?
+> Sure, that would be even nastier for security, so maybe you managed to
+> strike a balance well.  But nevertheless the question is there.  One of
+> your options results in full backwards compatibility at a security cost
+> (for the local system), but the other somehow chooses to strike a
+> balance between compatibility and security without achieving either of
+> these fully (for a network of systems).
+>
+> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
+> I imagine that people won't know to enable this option unless/until they
+> have already run into an issue anyway (that is, someone is already
+> unable to log in).  At this point, they could likely upgrade the rest of
+> their networked systems as well... or downgrade this one. ;-(
 
-The x86_64 __addr_ok() macro intends to ensure that the checked address
-is either in the positive half of the 48-bit virtual address space, or
-above the Xen-reserved area. However, the current shift count is
-off-by-one, allowing full access to the "negative half" too, via
-certain hypercalls which ignore virtual-address bits [63:48]. 
+I'm not sure I understand what you are suggesting. Keep using the buggy
+algorithm for new passwords and keep storing them as 2a as long as
+BLOWFISH_2a2x is turned on?
 
-As a result, a malicious guest administrator on a vulnerable system is
-able to crash the host.
+cu
+Ludwig
 
-Upstream status: 
-This issue only affects very old hypervisors, Xen 3.3 and earlier.
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=728042
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
+Imendörffer, HRB 16746 (AG Nürnberg)
