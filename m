@@ -1,97 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/2
-Message-ID: <CAPYM6VzMMxF_ku+EO=LEk+Bta=bxwKydrCYnhhvabBXj_fCAOg@mail.gmail.com>
-Date: Mon, 26 Sep 2011 12:13:34 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery (CSRF) Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/2
+Message-ID: <4E1AD3FC.8060000@redhat.com>
+Date: Mon, 11 Jul 2011 12:44:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Drupal 7 -- Access bypass in node listings (SA-CORE-2011-002)
 Content-Type: text/plain; charset=utf-8
 
-Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery
-(CSRF) Vulnerability
+Hello Josh, Steve, vendors,
+
+   this:
+   [1] http://drupal.org/node/1204582
+
+   From [1]: Access bypass in node listings:
+   =========================================
+
+   Listings showing nodes but not JOINing the node table show all
+   nodes regardless of restrictions imposed by the node_access system.
+   In core, this affects the taxonomy and the forum subsystem.
+
+   ...
+
+   Versions affected:
+   ==================
+
+   Drupal 7.0, 7.1 and 7.2.
 
 
+References:
+------------
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=717874
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=633385
 
-1. OVERVIEW
+doesn't seem to have a CVE identifier allocated yet. Could you allocate one?
 
-The Advanced Electron Forums (AEF)  1.0.9 <= versions are vulnerable
-to Cross Site Request Forgery (CSRF).
-
-
-2. BACKGROUND
-
-AEF has a very simple and easy to use Administration Panel and
-installing this software is a piece of cake! You can install new
-themes, customize themes the way you want. The User Control Panel has
-a simple yet beautiful interface where users can set their preferences
-for the board.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Advanced Electron Forums (AEF) 1.0.9 <=  versions contain a flaw that
-allows a remote Cross-site Request Forgery (CSRF / XSRF) attack. The
-flaw exists because the application does not require multiple steps or
-explicit confirmation for sensitive transactions for majority of
-administrator functions such as adding new user, assigning user to
-administrative privilege. By using a crafted URL, an attacker may
-trick the victim into visiting to his web page to take advantage of
-the trust relationship between the authenticated victim and the
-application. Such an attack could trick the victim into executing
-arbitrary commands in the context of their session with the
-application, without further prompting or verification.
-
-
-4. VERSIONS AFFECTED
-
-1.0.9 <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-The following request ecalates a normal user to an administrator.
-
-[REQUEST]
-POST /aef/index.php?act=editprofile&uid=2 HTTP/1.1
-
-username=tester&email=tester%40yehg.net&u_member_group=1&realname=&title=&location=&gender=1&privatetext=&icq=&yim=&msn=&aim=&www=&sig=&editprofile=Edit+Profile
-[/REQUEST]
-
-
-6. SOLUTION
-
-Partial fix is available.
-The vendor released a single patch for the provided vulnerable
-EditProfile functionality.
-http://www.anelectron.com/downloads/index.php?act=downloadattach&atid=59
-
-
-7. VENDOR
-
-Electron Inc.
-http://www.anelectron.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-14: notified vendor through email, website contact form submission
-2011-05-17: vendor released aef 1.0.9 without the CSRF fix
-2011-09-06: vendor released separate patch about the CSRF fix
-2011-09-26: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[aef-1.x]_cross_site_request_forgery
-CSRF Wiki: https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
-
-
-
-#yehg [2011-09-26]
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
