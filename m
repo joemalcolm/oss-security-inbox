@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/12
-Message-ID: <20110105221707.GM15891@redhat.com>
-Date: Wed, 5 Jan 2011 15:17:07 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/5
+Message-ID: <817422485.1240376.1310406801730.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Jul 2011 13:53:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-* [2011-01-05 17:04:59 -0500] Dan Rosenberg wrote:
+----- Original Message -----
+> On Tue, Jul 05, 2011 at 08:30:57PM +0800, Eugene Teo wrote:
+> >
+> > But with a CVE name, it is easier for people to refer to this issue,
+> > and also easier for distributions to publish an official statement.
+> 
+> Your reasoning makes sense to me.
+> 
+> I have no objections to having a CVE ID assigned to this issue, but I
+> have no idea what the policy is on such assignments.
+> 
 
->Be sure to be careful while applying the patch to fix this one. :p
+Use CVE-2011-2523.
 
-heh, yes indeed.  =)
-
->On Wed, Jan 5, 2011 at 4:54 PM, Vincent Danen <vdanen@...hat.com> wrote:
->> We got a heads up on a directory traversal flaw in patch.  I don't think
->> a CVE name has been assigned to it; could we get one?  It allows for the
->> creation of arbitrary files in unexpected places due to the use of '..'.
->>
->> References:
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=667529
->> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
->>
->> Thanks.
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
