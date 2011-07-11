@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/54
-Message-ID: <1301950842.1154.14.camel@hidalgo>
-Date: Mon, 04 Apr 2011 23:00:42 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Web of trust
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/4
+Message-ID: <20110711162254.GB14118@openwall.com>
+Date: Mon, 11 Jul 2011 20:22:54 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On lun., 2011-04-04 at 16:41 +0200, Nico Golde wrote:
-> Ok please use nion@...ian.org with E1AB DE0E FFCA AEF3 9494 7592 CD4B 2AF3 A0A0 AAAA.
-> This key is signed by 73647CFF which is in the Debian keyring and a transition 
-> statement signed by 73647CFF as well is online at http://nion.modprobe.de/key-transition-2008-06-01.txt.asc 
+On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
+> Solar Designer wrote:
+> >[...]
+> >Also, it brings up the question: why merely use $2a$ running the new
+> >code rather than fully emulate the bug even for newly set passwords,
+> >which would make all passwords work, even on other networked machines?
+> >Sure, that would be even nastier for security, so maybe you managed to
+> >strike a balance well.  But nevertheless the question is there.  One of
+> >your options results in full backwards compatibility at a security cost
+> >(for the local system), but the other somehow chooses to strike a
+> >balance between compatibility and security without achieving either of
+> >these fully (for a network of systems).
+> >
+> >Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
+> >I imagine that people won't know to enable this option unless/until they
+> >have already run into an issue anyway (that is, someone is already
+> >unable to log in).  At this point, they could likely upgrade the rest of
+> >their networked systems as well... or downgrade this one. ;-(
+> 
+> I'm not sure I understand what you are suggesting.
 
-Sorry for diverting the thread. I'm not intending to request
-subscription to vendor-sec (I'm not yet really active in Debian security
-team) but considering the use of GPG, would it make sense to have at
-least some kind of “web of trust” thing on the involved keys? That plus
-subscribing the project address when possible could help maintaining
-some confidence about where the mail really ends (though that doesn't
-mean it can't be leaked later).
+I am not exactly suggesting anything specific as I don't know your
+priorities, but I point out the inconsistency.
 
-I'm not sure the procedure Debian use for cross-signing would fit
-because it involves physical meeting (and usually beer signing too) and
-it might not be practical, but it's still an idea.
+My preference would be that you don't implement that BLOWFISH_2y option -
+always have new hashes generated as 2y, even though this means that
+networked systems need to be upgraded to new package versions in sync.
 
-Regards,
--- 
-Yves-Alexis
+> Keep using the buggy
+> algorithm for new passwords and keep storing them as 2a
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+I'd be unhappy about that, but it's a valid option to provide if you
+want to minimize user annoyance, including for networked systems that
+are not upgraded in sync (but are manually configured for this...)
+
+> as long as BLOWFISH_2a2x is turned on?
+
+No, you'd need a separate option (or a tri-state option) such that
+there's a way for non-networked systems to gradually migrate to 2y
+hashes without annoying any users.
+
+Alexander
