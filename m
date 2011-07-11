@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/8
-Message-ID: <20110922163236.GD4095@suse.de>
-Date: Thu, 22 Sep 2011 18:32:36 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: X.org ProcRenderGlyps input sanitation issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/5
+Message-ID: <817422485.1240376.1310406801730.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 11 Jul 2011 13:53:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: vsftpd download backdoored
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- Original Message -----
+> On Tue, Jul 05, 2011 at 08:30:57PM +0800, Eugene Teo wrote:
+> >
+> > But with a CVE name, it is easier for people to refer to this issue,
+> > and also easier for distributions to publish an official statement.
+> 
+> Your reasoning makes sense to me.
+> 
+> I have no objections to having a CVE ID assigned to this issue, but I
+> have no idea what the policy is on such assignments.
+> 
 
-Also from 2010 and me@...fdog.net and the x.org bugtracker:
+Use CVE-2011-2523.
 
-https://bugs.freedesktop.org/show_bug.cgi?id=28801
+Thanks.
 
-Adam in comment #c2 thinks this might just discloses memory
-but could not overwrite arbitrary x server memory ... 
-However the comment #c0 has a x.org server crash, so I am unsure
-about code execution possibilities.
-
-Needs one 2010 CVE id I guess.
-
-Ciao, Marcus
+-- 
+    JB
