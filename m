@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/18
-Message-ID: <20110401215229.GA16196@suse.de>
-Date: Fri, 1 Apr 2011 23:52:29 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/3
+Message-ID: <4E1B0B0C.1080308@suse.de>
+Date: Mon, 11 Jul 2011 16:39:08 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
+Solar Designer wrote:
+> [...]
+> Also, it brings up the question: why merely use $2a$ running the new
+> code rather than fully emulate the bug even for newly set passwords,
+> which would make all passwords work, even on other networked machines?
+> Sure, that would be even nastier for security, so maybe you managed to
+> strike a balance well.  But nevertheless the question is there.  One of
+> your options results in full backwards compatibility at a security cost
+> (for the local system), but the other somehow chooses to strike a
+> balance between compatibility and security without achieving either of
+> these fully (for a network of systems).
+>
+> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
+> I imagine that people won't know to enable this option unless/until they
+> have already run into an issue anyway (that is, someone is already
+> unable to log in).  At this point, they could likely upgrade the rest of
+> their networked systems as well... or downgrade this one. ;-(
 
-Yes, I doubt perfection could be reached ;)
- 
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+I'm not sure I understand what you are suggesting. Keep using the buggy
+algorithm for new passwords and keep storing them as 2a as long as
+BLOWFISH_2a2x is turned on?
 
-pub   1024D/0175623E 2003-11-21
-      Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
-uid                  Marcus Meissner <meissner@...e.de>
-uid                  Marcus Meissner <meissner@...ell.com>
-sub   1024g/EA43E05E 2003-11-21
+cu
+Ludwig
 
-Ciao, Marcus
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
+Imendörffer, HRB 16746 (AG Nürnberg)
