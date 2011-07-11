@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/13
-Message-ID: <20110728223035.GG4946@outflux.net>
-Date: Thu, 28 Jul 2011 15:30:35 -0700
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: gro: Only reset frag0 when skb can be pulled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/1
+Message-ID: <4E1AB63A.1010508@suse.de>
+Date: Mon, 11 Jul 2011 10:37:14 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>
+Subject: CVE Request: ruby PRNG fixes
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-This fixes a remote crasher under certain network device configurations:
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=17dd759c67f21e34f2156abcf415e1f60605a188
+Ruby 1.8.7-p352 fixes initialization of the PRNG in forked
+processes:
 
-Thanks,
+http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
+http://redmine.ruby-lang.org/issues/4579
+http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
 
--Kees
+cu
+Ludwig
 
 -- 
-Kees Cook
-Ubuntu Security Team
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
+Imendörffer, HRB 16746 (AG Nürnberg)
