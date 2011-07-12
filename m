@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/6
-Message-ID: <Pine.GSO.4.64.1107131700500.18426@faron.mitre.org>
-Date: Wed, 13 Jul 2011 17:02:29 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/12
+Message-ID: <1202580859.1273610.1310497822198.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 15:10:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: bressers@...hat.com
-Subject: Re: [oCERT-2011-001] Chyrp input sanitization errors
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foo2zjs
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> Hello,
+> 
+> A temp file issue was reported in a distro-specific patch to foo2zjs.
+> This probably only affects Debian/Ubuntu and derivatives.
+> 
+> The original bug report can be found here:
+> 
+> https://bugs.launchpad.net/bugs/805370
+> 
+> Could a CVE please be assigned to this?
+> 
 
-On Wed, 13 Jul 2011, Andrea Barisani wrote:
+Please use CVE-2011-2684.
 
-> http://www.justanotherhacker.com/advisories/JAHx113.txt
+Thanks.
 
-This advisory covers 3 CVEs (but the oCERT advisory only seems to cover 
-the first two):
-
-XSS: CVE-2011-2743
-
-LFI/directory traversal: CVE-2011-2744
-
-file upload: CVE-2011-2745
-
-
-- Steve
-
-
-
->
-> Permalink:
-> http://www.ocert.org/advisories/ocert-2011-001.html
->
-> -- 
-> Andrea Barisani |                Founder & Project Coordinator
->          oCERT | OSS Computer Security Incident Response Team
->
-> <lcars@...rt.org>                         http://www.ocert.org
-> 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
->        "Pluralitas non est ponenda sine necessitate"
->
+-- 
+    JB
