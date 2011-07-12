@@ -1,70 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/6
-Message-ID: <BANLkTinSTHWYNqUW+TQ3QtVXwXoL_gfaWw@mail.gmail.com>
-Date: Mon, 27 Jun 2011 15:53:27 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/14
+Message-ID: <1887412180.1274469.1310499815252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 15:43:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: incidents@...rt.org, henri@...v.fi
-Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
+Cc: Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, coley@...re.org
+Subject: Re: CVE Request: ruby PRNG fixes
 Content-Type: text/plain; charset=utf-8
 
-Path Disclosure should better be regarded as more closely related to
-server-side issue.
-It may be too redundant or unnecessary to create one path disclosure
-issue per CVE.
+Please use CVE-2011-2686
 
-Another Path Disclosure issue in Joomla! 1.6.1
+Thanks.
 
-http://bl0g.yehg.net/2011/04/joomla-161-and-lower-information.html
+-- 
+    JB
 
-
-Almost all php CMS applications have this issue going on where  some
-of them are listed at:
-
-http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
-
-
-
-On Fri, Jun 24, 2011 at 3:46 AM, Josh Bressers <bressers@...hat.com> wrote:
->
->
-> ----- Original Message -----
->> Couldn't find a CVE-identifier for this issue. Joomla does have too
->> many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may
->> lead to an unauthorized information disclosure. Should this one get a
->> 2010 or 2011 identifier?
->>
->> Reported: 2010-12-08
->> Joomla advisory: 2011-04-01
->> Release with a fix (version 1.5.23): 2011-04-04
->>
->> References:
->> http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
->> http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
->> http://osvdb.org/show/osvdb/71587
->> http://secunia.com/advisories/44028/
->>
->> I hope this request isn't duplicate. I included oCERT to this email as
->> Joomla is part of that group. Please notify me and mailing-list if
->> this issue already has a CVE-identifier.
->>
->
-> I'm giving this CVE-2011-2488.
->
-> While the flaw was reported in 2010 they claim, I consider 2011 when
-> it went public.
->
-> Thanks.
->
+----- Original Message -----
+> Hi,
+> 
+> Ruby 1.8.7-p352 fixes initialization of the PRNG in forked
+> processes:
+> 
+> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
+> http://redmine.ruby-lang.org/issues/4579
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+> 
+> cu
+> Ludwig
+> 
 > --
->    JB
->
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
+> Imendörffer, HRB 16746 (AG Nürnberg)
