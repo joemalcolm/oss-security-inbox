@@ -1,41 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/12
-Message-ID: <BANLkTimu=a4QACapwQn75n1dx2YB74fA0A@mail.gmail.com>
-Date: Mon, 20 Jun 2011 15:07:54 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/3
+Message-ID: <4E1C6102.9050706@suse.de>
+Date: Tue, 12 Jul 2011 16:58:10 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com> wrote:
->
->
-> ----- Original Message -----
->> NetBSD has committed a fix for an issue in the 802.11 stack [1].
->> FreeBSD is also affected and should release a fix shortly. Due to a
->> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
->> unprivileged user could cause the kernel to copy large amounts of
->> kernel memory back to the user, disclosing potentially sensitive
->> information. The issue only affects certain non-x86 architectures,
->> such as SPARC.
+Solar Designer wrote:
+> On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
+>> Solar Designer wrote:
+>>> [...]
+>>> Also, it brings up the question: why merely use $2a$ running the new
+>>> code rather than fully emulate the bug even for newly set passwords,
+>>> which would make all passwords work, even on other networked machines?
+>>> Sure, that would be even nastier for security, so maybe you managed to
+>>> strike a balance well.  But nevertheless the question is there.  One of
+>>> your options results in full backwards compatibility at a security cost
+>>> (for the local system), but the other somehow chooses to strike a
+>>> balance between compatibility and security without achieving either of
+>>> these fully (for a network of systems).
+>>>
+>>> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
+>>> I imagine that people won't know to enable this option unless/until they
+>>> have already run into an issue anyway (that is, someone is already
+>>> unable to log in).  At this point, they could likely upgrade the rest of
+>>> their networked systems as well... or downgrade this one. ;-(
 >>
->> -Dan
->>
->> [1]
->> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
+>> I'm not sure I understand what you are suggesting.
 >
-> I'm not entirely sure how to assign CVE ids for this. Is the code in
-> question shared between FreeBSD and NetBSD, or is it different codebases
-> but the same flaw?
+> I am not exactly suggesting anything specific as I don't know your
+> priorities, but I point out the inconsistency.
 >
+> My preference would be that you don't implement that BLOWFISH_2y option -
+> always have new hashes generated as 2y, even though this means that
+> networked systems need to be upgraded to new package versions in sync.
 
-Most of the 802.11 code, including the vulnerable code, is shared
-between FreeBSD and NetBSD.
+The default would be to use 2y by default. The option would be there
+as last resort only.
 
--Dan
+>> Keep using the buggy
+>> algorithm for new passwords and keep storing them as 2a
+>
+> I'd be unhappy about that, but it's a valid option to provide if you
+> want to minimize user annoyance, including for networked systems that
+> are not upgraded in sync (but are manually configured for this...)
 
-> Thanks.
->
-> --
->    JB
->
+The fourth possibility would be to use the 2y algorithm and store as
+2a. That would be the better option if non-ASCII passwords are
+unlikely.
+
+cu
+Ludwig
+
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
+Imendörffer, HRB 16746 (AG Nürnberg)
