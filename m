@@ -1,45 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/28/1
-Message-ID: <4DB9083A.3040600@windriver.com>
-Date: Thu, 28 Apr 2011 14:24:58 +0800
-From: Hui Zhu <hui.zhu@...driver.com>
-To: <oss-security@...ts.openwall.com>, <bressers@...hat.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/3
+Message-ID: <4E1C6102.9050706@suse.de>
+Date: Tue, 12 Jul 2011 16:58:10 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
+Solar Designer wrote:
+> On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
+>> Solar Designer wrote:
+>>> [...]
+>>> Also, it brings up the question: why merely use $2a$ running the new
+>>> code rather than fully emulate the bug even for newly set passwords,
+>>> which would make all passwords work, even on other networked machines?
+>>> Sure, that would be even nastier for security, so maybe you managed to
+>>> strike a balance well.  But nevertheless the question is there.  One of
+>>> your options results in full backwards compatibility at a security cost
+>>> (for the local system), but the other somehow chooses to strike a
+>>> balance between compatibility and security without achieving either of
+>>> these fully (for a network of systems).
+>>>
+>>> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
+>>> I imagine that people won't know to enable this option unless/until they
+>>> have already run into an issue anyway (that is, someone is already
+>>> unable to log in).  At this point, they could likely upgrade the rest of
+>>> their networked systems as well... or downgrade this one. ;-(
+>>
+>> I'm not sure I understand what you are suggesting.
+>
+> I am not exactly suggesting anything specific as I don't know your
+> priorities, but I point out the inconsistency.
+>
+> My preference would be that you don't implement that BLOWFISH_2y option -
+> always have new hashes generated as 2y, even though this means that
+> networked systems need to be upgraded to new package versions in sync.
 
-Please add me to the new maillist.  I am from Wind River.
+The default would be to use 2y by default. The option would be there
+as last resort only.
 
-Thanks,
-Hui
+>> Keep using the buggy
+>> algorithm for new passwords and keep storing them as 2a
+>
+> I'd be unhappy about that, but it's a valid option to provide if you
+> want to minimize user annoyance, including for networked systems that
+> are not upgraded in sync (but are manually configured for this...)
 
-On 04/02/11 02:03, Josh Bressers wrote:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
-> 
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
-> 
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
-> 
-> Thanks.
-> 
+The fourth possibility would be to use the 2y algorithm and store as
+2a. That would be the better option if non-ASCII passwords are
+unlikely.
 
+cu
+Ludwig
 
-Download attachment "0x9DD74CDB.asc" of type "application/pgp-keys" (1696 bytes)
+-- 
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
+Imendörffer, HRB 16746 (AG Nürnberg)
