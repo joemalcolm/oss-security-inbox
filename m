@@ -1,19 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/3
-Message-Id: <20110226092303.53d1a78b.michael.s.gilbert@gmail.com>
-Date: Sat, 26 Feb 2011 09:23:03 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/4
+Message-ID: <CANbgwsF=HwpvdRAAiM7A5ox+O6bvYeuH5hPoFStfkaV844uZhA@mail.gmail.com>
+Date: Tue, 12 Jul 2011 21:19:33 +0530
+From: Abhijeet Patil <getabhijeetpatil@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: cve request: eglibc memory corruption
+Subject: [Announcement] ClubHack Magazine Issue 18-July2011 Released
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Dear All, here we are with issue18 of ClubHack Mag for the month of
+July2011. Like most of the times, this issue is also theme based and the
+theme for issue18 is Metasploit.
 
-An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
-it.
+We have some good news for our readers. CHMag is now partners with Hakin9
+and PenTestMag. Also starting from June 2011, CHMag is available in ePUB
+format also for eBook readers like Kindle & iPad.
 
-Thanks,
-Mike
+This issue covers following articles:-
 
-[0] http://seclists.org/fulldisclosure/2011/Feb/635
-[1] http://bugs.debian.org/615120
+0x00 Tech Gyan - Using Metasploit with Nessus Bridge on Ubuntu
+0x01 Tool Gyan - Armitage – The Ultimate Attack Platform for Metasploit
+0x02 Mom's Guide - Penetration Testing with Metasploit Framework
+0x03 Legal Gyan - Trademark Law and Cyberspace
+0x04 Matriux Vibhag - The Exploitation Ka Baap MSF
+
+Check http://chmag.in for articles.
+PDF version can be download from:- http://chmag.in/issue/jul2011.pdf
+
+Hope you'll enjoy the magazine. Please send your suggestions, feedback to
+info@...ag.in
+
+Regards,
+Abhijeet Patil,
+Co-Founder, CHMag
+URLs: http://chmag.in, http://clubhack.com
+Email: abhijeet@...bhack.com
+
