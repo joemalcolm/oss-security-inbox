@@ -1,41 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/7
-Message-ID: <AANLkTi=nWJydC2ZgAc83xmN_L8HMDS3tyw_wSs-niTjy@mail.gmail.com>
-Date: Mon, 14 Mar 2011 08:32:24 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/18
+Message-ID: <4E1CB444.6000303@redhat.com>
+Date: Tue, 12 Jul 2011 16:53:24 -0400
+From: William Cohen <wcohen@...hat.com>
+To: Jamie Strandboge <jamie@...onical.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-Sigh.  Unfortunately I think this is the truth - I just wish there
-were an easier way of addressing this besides patching every affected
-helper individually.  Unless anyone else has any ideas, I'll write up
-some patches for affected programs later today.
+On 07/07/2011 11:56 AM, Jamie Strandboge wrote:
+> On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
+>> The patches mentioned in the previous email.
+>>
+>> -Will
+> 
+> Thanks for these patches. I was reviewing them and noticed that
+> 0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
+> 'error_if_not_basename $arg $val' for --save added in
+> 0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
+> if you apply all 4 patches, method #2 from the Debian bug[1] is no
+> longer fixed. Attached is a patch to correct this (to be applied after
+> the other 4).
+> 
+> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
+> 
 
--Dan
+Hi Jamie,
 
-On Mon, Mar 14, 2011 at 8:14 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
-> Dan Rosenberg wrote:
->> There are a few possible options   We could patch glibc to try to
->> raise the rlimit in addmntent(). [...]
->
-> Citing our glibc maintainer Petr Baudis via Bugzilla:
->
-> | I have been thinking about it and I'm not at all sure the proposed solution
-> | makes sense. First, this may also concern the obscure interfaces like
-> | putspent() (not sure if anyone uses these, moreover in security relevant
-> | contexts). Second, messing with RLIMIT_FSIZE within library routine is just
-> | evil. The caller may be multi-threaded or just do something else between
-> | setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
-> | programs must sanitize things like this, on their own terms.
->
-> cu
-> Ludwig
->
-> --
->  (o_   Ludwig Nussel
->  //\
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->
+Can you check whether this problem still exists in upstream? This patch does not apply cleanly to upstream. The upstream opcontrol has:
+
+
+			--save)
+				error_if_not_valid_savename "$arg" "$val"
+				DUMP=yes
+				SAVE_SESSION=yes
+				SAVE_NAME=$val
+				EXCLUSIVE_ARGC=`expr $EXCLUSIVE_ARGC + 1`
+				EXCLUSIVE_ARGV="$arg"
+				;;
+
+And:
+
+# check value is a base filename
+error_if_not_valid_savename()
+{
+	error_if_empty "$1" "$2"
+	bname=`basename "$2"`
+	if test "$2" !=  "$bname"; then
+		echo "Argument for $1, $2, cannot change directory." >&2
+		exit 1
+	fi
+	case "$2" in
+		# The following catches anything that is not
+		# 0-9, a-z, A-Z, an '-', ':', ',', '.', or '/'
+		*[!-[:alnum:]_:,./]*) 
+			echo "Argument for $1, $2, not allow to have special ch
+aracters" >&2
+			exit 1;;
+	esac
+}
+
