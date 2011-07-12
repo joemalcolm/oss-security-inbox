@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/4
-Message-ID: <20110819145226.6da97b47@redhat.com>
-Date: Fri, 19 Aug 2011 14:52:26 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/2
+Message-ID: <4E1C2E16.1010708@halfdog.net>
+Date: Tue, 12 Jul 2011 11:20:54 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: BusyBox unpack_Z_stream() buffer underflow
+Subject: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 19 Aug 2011 13:36:31 +0200 Alex Legler wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Secunia [1] reported a fix in BusyBox for a flaw similar to
-> CVE-2006-1168:
+Hello List,
 
-We had that mentioned here:
-  https://bugzilla.redhat.com/show_bug.cgi?id=727624#c8
+Is it possible to assign a CVE for documented behavior? Communication
+with apache security showed, that following symlinks to arbitrary
+locations is a documented feature, even when "-FollowSymLink" option is
+in place. This allows any user with, that can modify some content served
+by apache to access any content accessible by the apache process, also
+content not visible to the user (e.g. outside the ftp-upload directory
+or forbidden like /proc/http-pid/maps). Due to the small window of
+opportunity, this might be relevant mostly when user can already execute
+code on the machine, so it is not a big issue. /proc/<pid>/mem is
+protected, when apache is running with setuid, so key material cannot be
+extracted using range headers. PUT was not tested so far.
 
-> Please assign a CVE.
+See also
 
-Given that busybox embeds ncompress code, I believe old CVE can /
-should be used for busybox too.  I'm happy to be corrected if I'm wrong.
+http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
+PDcCdoHHWTCHe53U+XTzefY=
+=fVzn
+-----END PGP SIGNATURE-----
