@@ -1,16 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/3
-Message-ID: <4D898855.3090505@redhat.com>
-Date: Wed, 23 Mar 2011 13:42:45 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/9
+Message-ID: <454836448.1272235.1310495411052.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 14:30:11 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: oss-security is on twitter
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: plone privilege escalation flaw
 Content-Type: text/plain; charset=utf-8
 
-Just in case you do not know, oss-security is on twitter.
+Please use CVE-2011-2528.
 
-Follow @oss_security :)
+Thanks.
 
-Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+----- Original Message -----
+> Looks like the previous fix for Plone/Zope (CVE-2011-0720) caused a
+> new
+> privilege escalation flaw in Plone 3.x and 4.x.
+> 
+> Could a CVE be assigned?
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=718824
+> http://plone.org/products/plone/security/advisories/20110622
+> http://plone.org/products/plone-hotfix/releases/20110622
+> http://secunia.com/advisories/45111
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
