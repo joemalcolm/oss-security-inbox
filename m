@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/7
-Message-ID: <1421152075.11083.1302891075646.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Apr 2011 14:11:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/10
+Message-ID: <20110712183427.GO7511@ngolde.de>
+Date: Tue, 12 Jul 2011 20:34:27 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: dotclear before 2.2.3
+Subject: CVE id request: apache mod-auth-external
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+there has been an SQL injection reported in mod-auth-external.
+http://code.google.com/p/mod-auth-external/issues/detail?id=5
+http://bugs.debian.org/633637
 
-
------ Original Message -----
-> My french isn't that good:
-> http://fr.dotclear.org/blog/post/2011/04/01/Dotclear-2.2.3
-> 
-> But that sounds like a security issue:
-> "Pour en revenir à cette version, signalons qu'elle contient la
-> correction d'une faille de sécurité signalée il y a quelque temps par
-> Raphaël — que nous remercions au passage —, ainsi qu'une correction
-> attendue pour la génération manuelle des miniatures."
-
-Please use CVE-2011-1584.
-
-The google translate is pretty vague, if someone has more details please
-speak up:
-
-"To come back to this version, note that it contains the
-correcting a security flaw reported some time ago by
-Raphael - we appreciate the way - and a correction
-expected to generate manual thumbnail. "
-
-Thanks.
+Can someone assign a CVE id to this?
+Cheers
+Nico
 
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
