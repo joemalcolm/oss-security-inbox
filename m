@@ -1,50 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/7
-Message-ID: <4DA47197.7070809@mvista.com>
-Date: Tue, 12 Apr 2011 05:36:55 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/11
+Message-ID: <405505459.1273108.1310497040397.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 14:57:20 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+Cc: security@...ntu.com, security@...ian.org, coley@...us.mitre.org
+Subject: Re: CVE Request: reseed
 Content-Type: text/plain; charset=utf-8
 
-
-
-On 04/11/2011 09:57 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> Postponed. I'd like to see any support for you getting onto the Linux
->> distros security contacts list, with reasoning, or/and any other
->> suggestions on what to do in this case. Josh - what do you think (as
->> someone who advocated the setup of a vendor-sec replacement)?
->>
+----- Original Message -----
+> On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
+> > A security bug was reported by Jeffrey Walton against reseed in
+> > Ubuntu. You are being emailed as the upstream contact. Please keep
+> > oss-security@...ts.openwall.com[1] CC'd for any updates on this
+> > issue.
+> >
+> > This issue should be considered public. A CVE is being requested;
+> > please mention this in any changelogs.
+> >
+> > Details from the public bug follow:
+> > https://launchpad.net/bugs/804594
+> >
+> > From the reporter:
+> > "reseed(8) performs an insecure HTTP fetch of data from random.org.
+> > The script is automatically executed when installed, and any time the
+> > user chooses to execute. In addition, the reseed man pages do not
+> > mention the data is retrieved over an insecure channel."
+> >
+> > As pointed out by the reporter, from the man page: "It is run once
+> > during the installation of the package only". An attacker could perform
+> > a MITM during package installation or whenever the reseed command is
+> > run to provide predictable data for the random number seed.
 > 
-> My initial thought is that a vendor without public advisories is a
-> liability.
-
-Then we has been a liability to vendor-sec ever since we first got
-accepted way-back-when. My apologies.
-
+> While the attack is difficult to achieve (need both MITM at time of
+> package installation AIUI), it seems that this still should get a CVE.
 > 
-> I don't want to get into the politics of not publishing your advisories,
 
-(I don't either)
+I'll give the HTTP issue CVE-2011-2683.
 
-> but at the same time, public information such as this is all we have to
-> measure if a vendor is using the information at hand.
+In all seriousness though, running this on install should probably get an
+ID as you can't say you have complete trust in whatever the default random
+site is (in this case it's random.org).
 
-Agreed.
+It's probably not safe at all honestly. If you don't have entropy, HTTPS
+isn't going to be secure either.
 
-> I'm happy to draw a line in the sand and make public advisories a mandatory
-> requirement. If anyone disagrees, please speak up. This is my personal
-> opinion, other viewpoints are welcome.
+I'd rather not start a fight though by assigning a bunch of IDs for
+something that is insecure by design. If you wish for more IDs, please let
+me know.
 
-So publicly available advisories are a requirement.  What about access
-to the patches?
+Thanks.
 
-Is there somewhere I can point my management to that defines these new
-requirements or is this too soon?
-
-Mahalo,
-Armin
-
+-- 
+    JB
