@@ -1,66 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/6
-Message-ID: <20110721183255.GE821@dojo.mi.org>
-Date: Thu, 21 Jul 2011 14:32:55 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/8
+Message-ID: <1606538479.1272180.1310495267637.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 14:27:47 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
-:Hi,
-:
-:This may be an odd request.  The proprietary fglrx driver has an
-:info disclosure flaw in one of it's shell scripts [0].  It passes the
+Did these ever get IDs? I've been away and don't want to dupe these.
 
-One could argue that the shell script itself is "open source".
-
-:xauth secret cookie in an insecure manner (such that it's exposed to
-:prying eyes in the output of ps for example).
-:
-:The oddness in this request is that the driver is proprietary; but
-:then again it is also included in most linux distributions in one form
-:or another, so I think oss-sec is an appropriate forum.  There is also
-:a specific additional right granted in the script's header: "Distro
-:maintainers may modify this reference script as necessary to conform
-:to their distribution policies."
-:
-:This is debian bug #625868 [1], and I've commited an untested fix
-:(I don't use authatieventsd myself) to our svn repo [2].
-:
-:Note that there is discussion in the bug report claiming the
-:debian-specific patch is to blame, but that conclusion is incorrect.
-:The same flaw is also present in the upstream ati code as well.
-:The debian code is only different in that it was made to handle a
-:slightly different use case, but the underlying flaw is indeed
-:present in both, so other distros are very likely affected as well.
-:
-:Note also that xauth's design makes this insecure usage seem like
-:an obvious solution for the cookie handling problem, so there are
-:probably many other flawed implementations like this, which could
-:be found by grepping for xauth and auditing those cases handling
-:the secret cookie.  This may be something worth calling out as a
-:CWE.
-
-It looks like you've seen the same kind of thing before:
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526678
-
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
-
-This may be worth a mention in the xauth man page.
-
-:Credit goes to Vincent Zweije who submitted the debian bug report.
-:
-:Best wishes,
-:Mike
-:
-:[0] common/etc/ati/authatieventsd.sh
-:[1] http://bugs.debian.org/625868
-:[2] svn://svn.debian.org/svn/pkg-fglrx/fglrx-driver/trunk
+Thanks.
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Supermodels don't usually date guys who live in the dirt."         -The Tick
+    JB
 
-Content of type "application/pgp-signature" skipped
+----- Original Message -----
+> Vincent Danen wrote:
+> > I see the following changes as fixed in MySQL 5.1.52, but cannot
+> > find
+> > any CVEs for them:
+> >
+> > InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+> > examining the same table's information in the INFORMATION_SCHEMA
+> > database at the same time could cause a crash in the debug version
+> > of
+> > the server. (Bug #54678)
+> >
+> > Security Fix: The server crashed for assignment of values of types
+> > other
+> > than Geometry to items of type GeometryCollection (MultiPoint,
+> > MultiCurve, MultiSurface). Now the server checks the field type and
+> > fails with bad geometry value if it detects incorrect parameters.
+> > (Bug
+> > #55531)
+> >
+> > Security Fix: EXPLAIN EXTENDED caused a server crash with some
+> > prepared
+> > statements. (Bug #54494)
+> >
+> > Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from
+> > a
+> > derived table caused a server crash. (Bug #54488)
+> >
+> > There are a whole bunch of other crash-type bugs corrected in 5.1.52
+> > that upstream did not explicitly flag as security, which might be
+> > considered security-relevant as well:
+> >
+> > http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+> 
+> Looks like this CVE request got lost.
+> 
+> cu
+> Ludwig
+> 
+> --
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
+> Imendörffer, HRB 16746 (AG Nürnberg)
