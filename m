@@ -1,30 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/5
-Message-ID: <1319114047.31111.3.camel@scapa>
-Date: Thu, 20 Oct 2011 14:34:07 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/16
+Message-ID: <840953282.1275100.1310501229264.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 16:07:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PR attack against XML Encryption
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Drupal 7 -- Access bypass in node listings (SA-CORE-2011-002)
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
-> A German university has released a press release, alleging a
-> vulnerability in the W3C XML Encryption standard.  Apparently, error
-> reporting from existing implementations can be used as an oracle to
-> recover information from messages encrypted in CBC mode.
-> 
-> Details have not been published, as far as I know.  Does anybody know
-> more? 
+Please use CVE-2011-2687.
 
-Paper was just presented at ACM CCS
-(http://www.sigsac.org/ccs/CCS2011/paper_list.shtml). Proceedings are
-available at
-http://dl.acm.org/citation.cfm?id=2046756&dl=ACM&coll=DL&CFID=61633880&CFTOKEN=38378828
+Thanks.
 
-but afaict the paper is not (yet?) available freely.
-
-Regards,
 -- 
-Yves-Alexis
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> this:
+> [1] http://drupal.org/node/1204582
+> 
+> From [1]: Access bypass in node listings:
+> =========================================
+> 
+> Listings showing nodes but not JOINing the node table show all
+> nodes regardless of restrictions imposed by the node_access system.
+> In core, this affects the taxonomy and the forum subsystem.
+> 
+> ...
+> 
+> Versions affected:
+> ==================
+> 
+> Drupal 7.0, 7.1 and 7.2.
+> 
+> 
+> References:
+> ------------
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=717874
+> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=633385
+> 
+> doesn't seem to have a CVE identifier allocated yet. Could you
+> allocate one?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
