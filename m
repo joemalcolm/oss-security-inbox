@@ -1,52 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/4
-Message-ID: <20110711162254.GB14118@openwall.com>
-Date: Mon, 11 Jul 2011 20:22:54 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/7
+Message-ID: <1224254609.1271391.1310493661507.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 14:01:01 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
-> Solar Designer wrote:
-> >[...]
-> >Also, it brings up the question: why merely use $2a$ running the new
-> >code rather than fully emulate the bug even for newly set passwords,
-> >which would make all passwords work, even on other networked machines?
-> >Sure, that would be even nastier for security, so maybe you managed to
-> >strike a balance well.  But nevertheless the question is there.  One of
-> >your options results in full backwards compatibility at a security cost
-> >(for the local system), but the other somehow chooses to strike a
-> >balance between compatibility and security without achieving either of
-> >these fully (for a network of systems).
-> >
-> >Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
-> >I imagine that people won't know to enable this option unless/until they
-> >have already run into an issue anyway (that is, someone is already
-> >unable to log in).  At this point, they could likely upgrade the rest of
-> >their networked systems as well... or downgrade this one. ;-(
+I'm going to leave this one for MITRE.
+
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> I'm not sure I understand what you are suggesting.
-
-I am not exactly suggesting anything specific as I don't know your
-priorities, but I point out the inconsistency.
-
-My preference would be that you don't implement that BLOWFISH_2y option -
-always have new hashes generated as 2y, even though this means that
-networked systems need to be upgraded to new package versions in sync.
-
-> Keep using the buggy
-> algorithm for new passwords and keep storing them as 2a
-
-I'd be unhappy about that, but it's a valid option to provide if you
-want to minimize user annoyance, including for networked systems that
-are not upgraded in sync (but are manually configured for this...)
-
-> as long as BLOWFISH_2a2x is turned on?
-
-No, you'd need a separate option (or a tri-state option) such that
-there's a way for non-networked systems to gradually migrate to 2y
-hashes without annoying any users.
-
-Alexander
+> Hello List,
+> 
+> Is it possible to assign a CVE for documented behavior? Communication
+> with apache security showed, that following symlinks to arbitrary
+> locations is a documented feature, even when "-FollowSymLink" option
+> is
+> in place. This allows any user with, that can modify some content
+> served
+> by apache to access any content accessible by the apache process, also
+> content not visible to the user (e.g. outside the ftp-upload directory
+> or forbidden like /proc/http-pid/maps). Due to the small window of
+> opportunity, this might be relevant mostly when user can already
+> execute
+> code on the machine, so it is not a big issue. /proc/<pid>/mem is
+> protected, when apache is running with setuid, so key material cannot
+> be
+> extracted using range headers. PUT was not tested so far.
+> 
+> See also
+> 
+> http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
+> 
+> - --
+> http://www.halfdog.net/
+> PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.6 (GNU/Linux)
+> 
+> iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
+> PDcCdoHHWTCHe53U+XTzefY=
+> =fVzn
+> -----END PGP SIGNATURE-----
