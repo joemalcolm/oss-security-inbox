@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/1
-Message-ID: <20111230112656.5c9df449@redhat.com>
-Date: Fri, 30 Dec 2011 11:26:56 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, hanno@...eck.de
-Cc: Andrea Barisani <lcars@...rt.org>
-Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/6
+Message-ID: <20110712143945.GA64086@dojo.mi.org>
+Date: Tue, 12 Jul 2011 10:39:46 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Dec 2011 13:13:42 +0100 Hanno Böck wrote:
+:Hello List,
+:
+:Is it possible to assign a CVE for documented behavior? Communication
 
-> Am Wed, 28 Dec 2011 19:07:30 +0100
-> schrieb Andrea Barisani <lcars@...rt.org>:
-
-> > CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
-> > (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
-> 
-> Kurt or other CVE assigners, can you please assign a bunch for python,
-> java, tomcat etc. pp.
-
-Few already assigned:
-
-ASP.NET
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3414
-
-Apache Geronimo
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5034
-
-Oracle Glassfish
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5035
-
-Rack
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5036
-
-Google V8
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5037
+Especially in the early days of CVE, some were assigned for documented
+behavior.  The one I used to hit the most is CVE-1999-0651, a CVE for
+rlogind running (with all sorts of potential for insecurity based on
+how it's deployed, but not necessarily insecure in and of itself).  It
+would give some folks slaved to CVE-based security-scanning tools fits. 
+The scan tool flags a CVE for which nothing can really be done because
+it acts as documented.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Security freaks are pretty wierd."                    -Brian Harvey, RFC 686
+
+Content of type "application/pgp-signature" skipped
