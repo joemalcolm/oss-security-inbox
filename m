@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/13
-Message-ID: <20110706201406.GD26418@ngolde.de>
-Date: Wed, 6 Jul 2011 22:14:06 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/13
+Message-ID: <1520941642.1274184.1310499116751.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 15:31:56 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: libreoffice/openoffice.org CVE id request
+Cc: coley <coley@...re.org>
+Subject: Re: libreoffice/openoffice.org CVE id request
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-can someone assign a CVE id (or multiple) to:
-http://www.kb.cert.org/vuls/id/953183?
 
-Kind regards
-Nico
+
+----- Original Message -----
+> Hi,
+> can someone assign a CVE id (or multiple) to:
+> http://www.kb.cert.org/vuls/id/953183?
+> 
+
+Please use CVE-2011-2685
+
+Thanks.
 
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
