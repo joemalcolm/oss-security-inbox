@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/1
-Message-ID: <4D8FF689.5050502@redhat.com>
-Date: Mon, 28 Mar 2011 10:46:33 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/4
+Message-ID: <CANbgwsF=HwpvdRAAiM7A5ox+O6bvYeuH5hPoFStfkaV844uZhA@mail.gmail.com>
+Date: Tue, 12 Jul 2011 21:19:33 +0530
+From: Abhijeet Patil <getabhijeetpatil@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1478 kernel: gro: reset dev and skb_iff on skb reuse
+Subject: [Announcement] ClubHack Magazine Issue 18-July2011 Released
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/CVE-2011-1478
+Dear All, here we are with issue18 of ClubHack Mag for the month of
+July2011. Like most of the times, this issue is also theme based and the
+theme for issue18 is Metasploit.
 
-There is an issue in the core GRO code where an skb belonging to an 
-unknown VLAN is reused as we don't reset skb->dev in the reuse case. 
-This could result in a NULL pointer dereference.
+We have some good news for our readers. CHMag is now partners with Hakin9
+and PenTestMag. Also starting from June 2011, CHMag is available in ePUB
+format also for eBook readers like Kindle & iPad.
 
-6d152e23ad1a7a5b40fef1f42e017d66e6115159 gro: reset skb_iif on reuse
-66c46d741e2e60f0e8b625b80edb0ab820c46d7a gro: Reset dev pointer on reuse
+This issue covers following articles:-
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+0x00 Tech Gyan - Using Metasploit with Nessus Bridge on Ubuntu
+0x01 Tool Gyan - Armitage – The Ultimate Attack Platform for Metasploit
+0x02 Mom's Guide - Penetration Testing with Metasploit Framework
+0x03 Legal Gyan - Trademark Law and Cyberspace
+0x04 Matriux Vibhag - The Exploitation Ka Baap MSF
+
+Check http://chmag.in for articles.
+PDF version can be download from:- http://chmag.in/issue/jul2011.pdf
+
+Hope you'll enjoy the magazine. Please send your suggestions, feedback to
+info@...ag.in
+
+Regards,
+Abhijeet Patil,
+Co-Founder, CHMag
+URLs: http://chmag.in, http://clubhack.com
+Email: abhijeet@...bhack.com
+
