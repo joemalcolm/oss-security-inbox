@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/3
-Message-ID: <220531087.170596.1296160278206.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 27 Jan 2011 15:31:18 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/7
+Message-ID: <1224254609.1271391.1310493661507.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 14:01:01 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: Batavi 1.0 - XSRF bug fixed
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0525 for this.
+I'm going to leave this one for MITRE.
 
 Thanks.
 
@@ -16,75 +16,38 @@ Thanks.
     JB
 
 ----- Original Message -----
-> Hi,
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> The open source project Batavi has just released their version 1.0
-> which has
-> fixed a XSRF exploit which was part of at least their latest alpha
-> release.
-> Just a quick snippet:
+> Hello List,
 > 
-> "is a specially prepared page containing a form with a couple of
-> hidden form values.
-> 
-> $title = "Batavi";
-> $uri =
-> "http://$host/admin/index.php?administrators&page=1&action=save"; [^
-> <http://$host/admin/index.php?administrators&page=1&action=save";> ]
-> $method = "post";
-> 
-> $values = array (
-> 'user_name' => "hacker",
-> 'user_password' => "b4t4v1",
-> 'first_name' => "Evil",
-> 'last_name' => "Hacker",
-> 'mail_address' => "evil.hacker@...mple.com",
-> 'configuration[MAX_DISPLAY_SEARCH_RESULTS]' => "20",
-> 'configuration[CATEGORY_PULL_DOWN_SHOW_PER_PAGE]' => "10, 20, 50,
-> 100",
-> 'configuration[PRODUCTS_SHOW_PRODUCTS_COUNT]' => "2",
-> 'configuration[PRODUCTS_SHOW_PRODUCTS_INCLUDING_SUBCATEGORIES]' =>
-> "1",
-> 'configuration[ADMIN_DEFAULT_LANGUAGE]' => "1",
-> 'configuration[SETTING_TINY_MCE]' => "2",
-> 'configuration[ADMINISTRATOR_STATE]' => "1",
-> 'configuration[ADMINISTRATOR_PRODUCT_TO_CATEGORIES]' => "1",
-> 'modules[]' => "*",
-> 'subaction' => "confirm"
-> );
-> 
-> Of course these PHP values are converted to an HTML form, this array
+> Is it possible to assign a CVE for documented behavior? Communication
+> with apache security showed, that following symlinks to arbitrary
+> locations is a documented feature, even when "-FollowSymLink" option
 > is
-> just for my own convenience. I have an XSRF framework to be able to
-> try
-> and demonstrate this type of attack quickly and clearly.
-> The HTML form is automatically submitted as soon as the page is
-> loaded.
-> If the user is visiting the specially prepared page when he is logged
-> in
-> as an administrator with sufficient permissions, his browser takes him
-> to the URL the form is submitted to, in this case
-> "http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
-> =save",
-> <http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
-> =save%22,> [^
-> <http://batavi.cheatah.nl/$host/admin/index.php?administrators&page=1&action
-> =save%22,> ]
-> and the browser decides to send along his original session cookie. So
-> for the application, everything seems in order. The user is logged in
-> and providing his session data, the IP address is even that of the
-> actual administrator. Only the HTTP_REFERER might be different, but
-> that
-> header cannot be trusted anyway, many client security software
-> packages
-> strip the Referrer header from HTTP requests, so often the header is
-> nonexistent or blank. You can't block people with blank referrers,
-> they
-> might be legitimate users, making use of provacy protection software."
+> in place. This allows any user with, that can modify some content
+> served
+> by apache to access any content accessible by the apache process, also
+> content not visible to the user (e.g. outside the ftp-upload directory
+> or forbidden like /proc/http-pid/maps). Due to the small window of
+> opportunity, this might be relevant mostly when user can already
+> execute
+> code on the machine, so it is not a big issue. /proc/<pid>/mem is
+> protected, when apache is running with setuid, so key material cannot
+> be
+> extracted using range headers. PUT was not tested so far.
 > 
-> As one of the people involved I know it's fixed now, but can we still
-> receive a CVE for the versions before V0.9.3 beta?
+> See also
 > 
-> Thnx
+> http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
 > 
-> Ronald
+> - --
+> http://www.halfdog.net/
+> PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.6 (GNU/Linux)
+> 
+> iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
+> PDcCdoHHWTCHe53U+XTzefY=
+> =fVzn
+> -----END PGP SIGNATURE-----
