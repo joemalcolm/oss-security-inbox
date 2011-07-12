@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/13
-Message-ID: <379223907.122864.1295975285015.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 25 Jan 2011 12:08:05 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/5
+Message-ID: <4E1C7AFB.4090908@msgid.tls.msk.ru>
+Date: Tue, 12 Jul 2011 20:48:59 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: multiple status.net issues
+Subject: CVE Request: qemu -runas does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
+There's a missing initgroups() call in qemu in the -runas
+argument handling.  Details are available on
 
+ https://bugs.launchpad.net/qemu/+bug/807893
 
------ Original Message -----
-> Hello,
-> 
-> I wanted to get some CVEs assigned for some minor issues that I
-> reported to
-> status.net.
-> 
-> syslog message spoofing via newline injections into logging
-> http://status.net/open-source/issues/2795
+in short, -runas is supposed to reduce privileges to a
+bare minimum (after all initialization is completed),
+but the process still has all the supplementary groups
+which should be dropped too.
 
-Use CVE-2010-4658.
+Can a CVE id be assigned for this issue?
 
-> 
-> limited XSS in error message contents
-> http://status.net/open-source/issues/2796 (fixed)
+Thanks,
 
-Use CVE-2010-4659.
-
-> 
-> unsafe use of addslashes for SQL string escapes
-> http://status.net/open-source/issues/2797 (fixed)
-> 
-
-Use CVE-2010-4660.
-
-Thanks.
-
--- 
-    JB
+/mjt
