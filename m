@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/2
-Message-ID: <1316154511.17824.5.camel@scapa>
-Date: Fri, 16 Sep 2011 08:28:31 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/14
+Message-ID: <1887412180.1274469.1310499815252.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 15:43:35 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: Is there a maintainer for librsvg ?
+Cc: Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, coley@...re.org
+Subject: Re: CVE Request: ruby PRNG fixes
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2011-09-15 at 15:23 +0200, Nicolas Grégoire wrote:
-> Hello,
-> 
-> librsvg is a SVG rendering library hosted at librsvg.sourceforge.net. No
-> new version was published since 2005, and a (security) bug that I
-> reported via bugzilla.gnome.org 6 weeks ago wasn't even triaged.
-> 
-> Given that this lib is used by a lot of distros, what can I do in order
-> to get this bug (and others) patched ?
+Please use CVE-2011-2686
 
-It seems that librsvg is hosted on GNOME since quite some time, see
-http://git.gnome.org/browse/librsvg/ and
-http://ftp.gnome.org/pub/GNOME/sources/librsvg/2.34/ (and
-https://bugzilla.gnome.org/buglist.cgi?quicksearch=librsvg)
+Thanks.
 
-Regards,
 -- 
-Yves-Alexis
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+----- Original Message -----
+> Hi,
+> 
+> Ruby 1.8.7-p352 fixes initialization of the PRNG in forked
+> processes:
+> 
+> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
+> http://redmine.ruby-lang.org/issues/4579
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+> 
+> cu
+> Ludwig
+> 
+> --
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
+> Imendörffer, HRB 16746 (AG Nürnberg)
