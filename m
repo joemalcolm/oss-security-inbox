@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/1
-Message-ID: <4E9E439A.70007@gentoo.org>
-Date: Tue, 18 Oct 2011 20:27:22 -0700
-From: Tim Sammut <underling@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/15
+Message-ID: <20110712195935.GG22543@redhat.com>
+Date: Tue, 12 Jul 2011 13:59:35 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: mplayer RDT parsing integer underlow
+Subject: Re: CVE Request: qemu -runas does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* [2011-07-12 20:48:59 +0400] Michael Tokarev wrote:
 
-Please assign a CVE for this issue from 2009. From [1]:
+>There's a missing initgroups() call in qemu in the -runas
+>argument handling.  Details are available on
+>
+> https://bugs.launchpad.net/qemu/+bug/807893
+>
+>in short, -runas is supposed to reduce privileges to a
+>bare minimum (after all initialization is completed),
+>but the process still has all the supplementary groups
+>which should be dropped too.
+>
+>Can a CVE id be assigned for this issue?
 
-"Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
-(Real Data Transport) chunks headers from the network and after that it
-will parse them. A controled variable is used to allocate a buffer and
-later passed on to the rtsp_read_data() function in order to specify the
-length of an RDT chunk data to read from the network. An integer
-underflow can be triggered when parsing a malformed RDT header chunk,
-a remote attacker can exploit it to execute arbitrary code in the
-context of the application."
+Sorry, we were contacted directly to provide a CVE name, and I'm not
+sure if that was before or after you wrote this mail (probably after).
+That bug has been updated with the assigned CVE name, CVE-2011-2527.
 
-[1] http://seclists.org/fulldisclosure/2009/Jul/418
-[2] https://secunia.com/advisories/36041/3/
+https://bugs.launchpad.net/qemu/+bug/807893/comments/6
 
-thank you
-tim
+Thanks, sorry for missing this.
 
 -- 
-Tim Sammut ~ Gentoo Security Team
-underling@...too.org ~ C2375493
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
+Vincent Danen / Red Hat Security Response Team 
