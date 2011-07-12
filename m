@@ -1,57 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/1
-Message-ID: <CAMnK33VtZMfJPU6mMVsxfZadGXSNoiwXqUh8aLL5TgQGWfWorQ@mail.gmail.com>
-Date: Wed, 6 Jul 2011 22:48:17 -0700
-From: Chris Evans <scarybeasts@...il.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/18
+Message-ID: <4E1CB444.6000303@redhat.com>
+Date: Tue, 12 Jul 2011 16:53:24 -0400
+From: William Cohen <wcohen@...hat.com>
+To: Jamie Strandboge <jamie@...onical.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 4, 2011 at 9:04 PM, HD Moore <hdm@...italoffense.net> wrote:
-> On 7/4/2011 10:58 PM, Solar Designer wrote:
->> What mirror?  As far as I'm aware, from the announcement by Chris, only
->> the official distribution site for vsftpd was compromised.
-> [ snip ]
->> Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
->> one on forums where I saw this discussed appears to have it (which
->> confirms that it existed for a very short period of time only).
->
-> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+On 07/07/2011 11:56 AM, Jamie Strandboge wrote:
+> On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
+>> The patches mentioned in the previous email.
+>>
+>> -Will
+> 
+> Thanks for these patches. I was reviewing them and noticed that
+> 0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
+> 'error_if_not_basename $arg $val' for --save added in
+> 0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
+> if you apply all 4 patches, method #2 from the Debian bug[1] is no
+> longer fixed. Attached is a patch to correct this (to be applied after
+> the other 4).
+> 
+> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
+> 
 
-Yeah, on vacation at the moment but looks like you found a good alternative?
-FWIW, https://docs.
-Google.com/leaf?id=0B-_usSLlqH60Y2QwZDM0YWEtYWY0My00NmM5LWI3NDAtY2Y0MzRiOTg5ZGJm&hl=en_US
+Hi Jamie,
 
-Seems strange to me that the attacker would remember to update mtime
-on the replacement tarball, but leave .o files kicking around (thus
-also changing tarball size radically).
+Can you check whether this problem still exists in upstream? This patch does not apply cleanly to upstream. The upstream opcontrol has:
 
 
-Cheers
-Chris
+			--save)
+				error_if_not_valid_savename "$arg" "$val"
+				DUMP=yes
+				SAVE_SESSION=yes
+				SAVE_NAME=$val
+				EXCLUSIVE_ARGC=`expr $EXCLUSIVE_ARGC + 1`
+				EXCLUSIVE_ARGV="$arg"
+				;;
 
->
-> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
->
->> Are you trying to say that Debian got the backdoored copy?  This is news
->> to me.
->
-> No, I am saying that for this to become as widespread as the mtime in
-> the mirror above indicates, it would be incredible for distros like
-> Debian to not notice it, as they verify the hash of the tarball. This
-> indicates that the mtime in the mirror above was forged (since the hash
-> is indeed wrong), but the real question is how this mirror obtained the
-> copy.
->
-> Was the mirror compromised? Was a rsync job used against the real
-> server, in which case the mtime was preserved? I couldn't find any
-> public copies with the backdoored checksum, but one of the metasploit
-> contributors pointed me to the link above.
->
-> I would like to believe the exposure was limited to 1-3 days, but the
-> mirror above casts doubt on this.
->
-> -HD
->
+And:
+
+# check value is a base filename
+error_if_not_valid_savename()
+{
+	error_if_empty "$1" "$2"
+	bname=`basename "$2"`
+	if test "$2" !=  "$bname"; then
+		echo "Argument for $1, $2, cannot change directory." >&2
+		exit 1
+	fi
+	case "$2" in
+		# The following catches anything that is not
+		# 0-9, a-z, A-Z, an '-', ':', ',', '.', or '/'
+		*[!-[:alnum:]_:,./]*) 
+			echo "Argument for $1, $2, not allow to have special ch
+aracters" >&2
+			exit 1;;
+	esac
+}
+
