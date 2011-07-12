@@ -1,21 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/5
-Message-ID: <20110424114525.GA32498@openwall.com>
-Date: Sun, 24 Apr 2011 15:45:25 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/15
+Message-ID: <20110712195935.GG22543@redhat.com>
+Date: Tue, 12 Jul 2011 13:59:35 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request: qemu -runas does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 24, 2011 at 03:30:29PM +0400, Solar Designer wrote:
-> Personally, I'd be happy to invite Apple, *BSD's, and Google security
-> folks to have a sit at the table.  Since Google doesn't release a Linux
-> distro for others to use, ...
+* [2011-07-12 20:48:59 +0400] Michael Tokarev wrote:
 
-Oh, I was too quick to say that.  Android, Chromium OS, and Chrome OS
-_might_ qualify once we lift the "was a vendor-sec member" requirement.
+>There's a missing initgroups() call in qemu in the -runas
+>argument handling.  Details are available on
+>
+> https://bugs.launchpad.net/qemu/+bug/807893
+>
+>in short, -runas is supposed to reduce privileges to a
+>bare minimum (after all initialization is completed),
+>but the process still has all the supplementary groups
+>which should be dropped too.
+>
+>Can a CVE id be assigned for this issue?
 
-These are very different from typical Linux distros, which is why it did
-not occur to me to consider them in this context.
+Sorry, we were contacted directly to provide a CVE name, and I'm not
+sure if that was before or after you wrote this mail (probably after).
+That bug has been updated with the assigned CVE name, CVE-2011-2527.
 
-Alexander
+https://bugs.launchpad.net/qemu/+bug/807893/comments/6
+
+Thanks, sorry for missing this.
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
