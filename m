@@ -1,83 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/12
-Message-ID: <1383647632.141993.1313780931833.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:08:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/5
+Message-ID: <4E1C7AFB.4090908@msgid.tls.msk.ru>
+Date: Tue, 12 Jul 2011 20:48:59 +0400
+From: Michael Tokarev <mjt@....msk.ru>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: WebsiteBaker 2.8.1 <= Arbitrary File Upload Vulnerability
+Subject: CVE Request: qemu -runas does not clear supplementary groups
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2933
+There's a missing initgroups() call in qemu in the -runas
+argument handling.  Details are available on
 
-Thanks.
+ https://bugs.launchpad.net/qemu/+bug/807893
 
--- 
-    JB
+in short, -runas is supposed to reduce privileges to a
+bare minimum (after all initialization is completed),
+but the process still has all the supplementary groups
+which should be dropped too.
 
+Can a CVE id be assigned for this issue?
 
+Thanks,
 
------ Original Message -----
-> 1. OVERVIEW
-> 
-> WebsiteBaker 2.8.1 and lower versions are vulnerable to Arbitrary File
-> Upload.
-> 
-> 
-> 2. BACKGROUND
-> 
-> WebsiteBaker helps you to create the website you want: A free, easy
-> and secure, flexible and extensible open source content management
-> system (CMS). Create new templates within minutes - powered by
-> (X)HTML, CSS and jQuery. With WebsiteBaker it's quite natural your
-> site is W3C-valid, SEO-friendly and accessible - there are no
-> limitations at all.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> WebsiteBaker 2.8.1 and lower versions contain a flaw related to the
-> /admin/media/upload.php script failing to restrict uploaded files with
-> extensions - .htaccess, .php4, .php5, .phtml. This may allow an
-> attacker to execute arbitrary PHP code. User account to WebsiteBaker
-> admin backend is required. Attacker could gain access it by way of
-> either brute force or CSRFing to currently-logged in admin users.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.8.1 <=
-> 
-> 
-> 5. SOLUTION
-> 
-> Upgrade to 2.8.2 or higher
-> 
-> 
-> 6. VENDOR
-> 
-> WebsiteBaker Org e. V.
-> http://www.websitebaker2.org/
-> 
-> 
-> 7. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 8. DISCLOSURE TIME-LINE
-> 
-> 2011-01-26: notified vendor
-> 2011-08-01: vendor released fix
-> 2011-08-13: vulnerability disclosed
-> 
-> 
-> 9. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_arbitrary_file_upload
-> http://www.gnucitizen.org/blog/cross-site-file-upload-attacks/
-> 
-> 
-> #yehg [2011-08-13]
+/mjt
