@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/4
-Message-ID: <4E7B3006.4000401@redhat.com>
-Date: Thu, 22 Sep 2011 14:54:30 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Drupal Security Team <security@...pal.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- drupal6-views_bulk_operations: XSS due improper escaping of a vocabulary help (SA-CONTRIB-2011-042)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/2
+Message-ID: <4E1C2E16.1010708@halfdog.net>
+Date: Tue, 12 Jul 2011 11:20:54 +0000
+From: halfdog <me@...fdog.net>
+To: oss-security@...ts.openwall.com
+Subject: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-   it was found in the way Drupal Views Builk Operations (VBO) module
-did not escape the vocabulary help properly, when the vocabulary has
-had user tagging enabled and "Modify node taxonomy terms" action was
-used for modification of the taxonomy. A remote attacker could provide
-a specially-crafted URL, which once visited by unsuspecting Drupal
-user, disposing with the 'administer taxonomy' permission / privilege,
-could lead to arbitrary HTML or web script execution (cross-site
-scripting [XSS] attack).
+Hello List,
 
-References:
-[1] http://drupal.org/node/1286844
-[2] http://secunia.com/advisories/46114/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=740553
+Is it possible to assign a CVE for documented behavior? Communication
+with apache security showed, that following symlinks to arbitrary
+locations is a documented feature, even when "-FollowSymLink" option is
+in place. This allows any user with, that can modify some content served
+by apache to access any content accessible by the apache process, also
+content not visible to the user (e.g. outside the ftp-upload directory
+or forbidden like /proc/http-pid/maps). Due to the small window of
+opportunity, this might be relevant mostly when user can already execute
+code on the machine, so it is not a big issue. /proc/<pid>/mem is
+protected, when apache is running with setuid, so key material cannot be
+extracted using range headers. PUT was not tested so far.
 
-Upstream solution:
+See also
 
-Upgrage to 6.x-1.11:
-[4] http://drupal.org/node/1286778
+http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
 
-Could you allocate a CVE id for this?
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
+PDcCdoHHWTCHe53U+XTzefY=
+=fVzn
+-----END PGP SIGNATURE-----
