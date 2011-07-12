@@ -1,41 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/6
-Message-ID: <1775331776.1261332.1316024579422.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:22:59 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/11
+Message-ID: <405505459.1273108.1310497040397.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 14:57:20 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Django project security team <security@...ngoproject.com>, "Steven M. Christey" <coley@...us.mitre.org>, cve-assign@...re.org
-Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+Cc: security@...ntu.com, security@...ian.org, coley@...us.mitre.org
+Subject: Re: CVE Request: reseed
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+----- Original Message -----
+> On Wed, 2011-07-06 at 07:47 -0500, Jamie Strandboge wrote:
+> > A security bug was reported by Jeffrey Walton against reseed in
+> > Ubuntu. You are being emailed as the upstream contact. Please keep
+> > oss-security@...ts.openwall.com[1] CC'd for any updates on this
+> > issue.
+> >
+> > This issue should be considered public. A CVE is being requested;
+> > please mention this in any changelogs.
+> >
+> > Details from the public bug follow:
+> > https://launchpad.net/bugs/804594
+> >
+> > From the reporter:
+> > "reseed(8) performs an insecure HTTP fetch of data from random.org.
+> > The script is automatically executed when installed, and any time the
+> > user chooses to execute. In addition, the reseed man pages do not
+> > mention the data is retrieved over an insecure channel."
+> >
+> > As pointed out by the reporter, from the man page: "It is run once
+> > during the installation of the package only". An attacker could perform
+> > a MITM during package installation or whenever the reseed command is
+> > run to provide predictable data for the random number seed.
+> 
+> While the attack is difficult to achieve (need both MITM at time of
+> package installation AIUI), it seems that this still should get a CVE.
+> 
 
-Can MITRE deal with this one? I lack time to properly work through this list right now.
+I'll give the HTTP issue CVE-2011-2683.
+
+In all seriousness though, running this on install should probably get an
+ID as you can't say you have complete trust in whatever the default random
+site is (in this case it's random.org).
+
+It's probably not safe at all honestly. If you don't have entropy, HTTPS
+isn't going to be secure either.
+
+I'd rather not start a fight though by assigning a bunch of IDs for
+something that is insecure by design. If you wish for more IDs, please let
+me know.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> multiple security flaws have been recently addressed in the v1.3.1
-> and v1.2.7 versions of the Django Python Web framework (from [1]):
-> 1, Session manipulation,
-> 2, Denial of service attack via URLField,
-> 3, URLField redirection,
-> 4, Host header cache poisoning,
-> 5, Host header and CSRF,
-> 6, Cross-subdomain CSRF attacks,
-> 7, DEBUG pages and sensitive POST data
-> 
-> References:
-> [1] https://www.djangoproject.com/weblog/2011/sep/09/
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=737366
-> 
-> Could you allocate a CVE ids for these flaws?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
