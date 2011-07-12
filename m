@@ -1,40 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/3
-Message-ID: <20110315032814.GK6691@dojo.mi.org>
-Date: Mon, 14 Mar 2011 23:28:14 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/8
+Message-ID: <1606538479.1272180.1310495267637.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 14:27:47 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
-[catching up on old email]
+Did these ever get IDs? I've been away and don't want to dupe these.
 
-:> > As suggested by Josh Bressers oCERT would be favourable to providing a
-:> > system that would accept user submission and allow selection of security
-:> > contacts from our existing member database as well as other verified
-:> > contacts.
-
-...
-
-:It all depends on how this process is going to be handled. I can see oCERT
-:helping in routing reports to the proper contacts via email to our trusted
-:member contacts as well as external ones that we can seek on a report basis.
-
-What I've observed is that some times, the reporter or coordinator
-doesn't have a good idea of the scope of their issue.  To cite some
-real-world examples involving folks who I thought would know better:
-
-  1) no, BSD networking isn't just in Free/Net/OpenBSD 
-  2) no, ONC RPC just isn't in Sun products
-  3) no, a RH-specific kernel issue is a general Linux kernel issue
-
-Scoping issues isn't always easy.  How do you know whether I backported
-some bleeding-edge fix with broken security implications into one of the
-OSes I care about last week?  Sometimes, I'll need specific info just to
-confirm that I don't care about the issue.  Scoping is one of the things
-that vendor-sec was occasionally quite helpful with.  
+Thanks.
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"I'd be terrific!  Colossal!  Stupendous!  Mediocre even!"        -Babs Bunny
+    JB
+
+----- Original Message -----
+> Vincent Danen wrote:
+> > I see the following changes as fixed in MySQL 5.1.52, but cannot
+> > find
+> > any CVEs for them:
+> >
+> > InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+> > examining the same table's information in the INFORMATION_SCHEMA
+> > database at the same time could cause a crash in the debug version
+> > of
+> > the server. (Bug #54678)
+> >
+> > Security Fix: The server crashed for assignment of values of types
+> > other
+> > than Geometry to items of type GeometryCollection (MultiPoint,
+> > MultiCurve, MultiSurface). Now the server checks the field type and
+> > fails with bad geometry value if it detects incorrect parameters.
+> > (Bug
+> > #55531)
+> >
+> > Security Fix: EXPLAIN EXTENDED caused a server crash with some
+> > prepared
+> > statements. (Bug #54494)
+> >
+> > Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from
+> > a
+> > derived table caused a server crash. (Bug #54488)
+> >
+> > There are a whole bunch of other crash-type bugs corrected in 5.1.52
+> > that upstream did not explicitly flag as security, which might be
+> > considered security-relevant as well:
+> >
+> > http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+> 
+> Looks like this CVE request got lost.
+> 
+> cu
+> Ludwig
+> 
+> --
+> (o_ Ludwig Nussel
+> //\
+> V_/_ http://www.suse.de/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
+> Imendörffer, HRB 16746 (AG Nürnberg)
