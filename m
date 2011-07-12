@@ -1,58 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/16
-Message-ID: <20110621201838.GA8278@openwall.com>
-Date: Wed, 22 Jun 2011 00:18:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/12
+Message-ID: <1202580859.1273610.1310497822198.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 12 Jul 2011 15:10:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foo2zjs
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 04:34:41PM +0200, Ludwig Nussel wrote:
-> I wonder whether it would make sense to patch pam_unix (resp 
-> pam_unix2 in our case) to detect the problem and activate the 
-> workaround automatically. pam_unix has the clear text password so 
-> knows when it contains 8bit characters. It also has the shadow entry 
-> which tells when the password was set. If that date is before the 
-> update was installed the 2x method could be tried if 2a failed and a 
-> warning could be logged to syslog.
+----- Original Message -----
+> Hello,
+> 
+> A temp file issue was reported in a distro-specific patch to foo2zjs.
+> This probably only affects Debian/Ubuntu and derivatives.
+> 
+> The original bug report can be found here:
+> 
+> https://bugs.launchpad.net/bugs/805370
+> 
+> Could a CVE please be assigned to this?
+> 
 
-This is tricky.  When implementing things like that, we need to consider
-timing leaks (do we care if an observer of ssh traffic is able to
-tell whether the password contained 8-bit chars or not? perhaps we do)
-and leaks via the hash encodings themselves (if only some are changed to
-a certain type, this may leak some info about the corresponding
-passwords, thereby speeding up offline attacks on the hashes).
+Please use CVE-2011-2684.
 
-My response above is generic, not focused on your specific proposed
-approach.  Overall, I think we'll need to give this more thought.
+Thanks.
 
-One idea is to allocate yet another prefix, which will mean the same
-thing as 2a, but "certified" as passing a certain specific test suite
-(which will include 8-bit chars).  So we'll have:
-
-2a - unknown correctness (may be correct, may be buggy)
-2x - sign extension bug
-2y - definitely correct
-
-Newly set/changed passwords will be getting the new prefix.
-
-Then we'll be able to do things such as optionally have a PAM module
-deny logins with 8-bit char passwords to accounts that have 2a or/and
-2x hashes.  (Rationale for the admin: passwords weaker than expected.)
-With another option, we'll be able to have 2a treated as 2x.  (Rationale
-for the admin: minimum inconvenience to the users.)  Perhaps there can
-be other reasonable settings as well.
-
-What do you think?
-
-Meanwhile, here's my announcement of crypt_blowfish 1.1 and the Owl
-glibc security update:
-
-http://www.openwall.com/lists/announce/2011/06/21/1
-
-It includes my latest summary of the bug's impact.
-
-Thanks,
-
-Alexander
+-- 
+    JB
