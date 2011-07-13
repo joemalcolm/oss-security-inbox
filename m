@@ -1,31 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/3
-Message-ID: <20110615214906.GB25196@nekral.nekral.homelinux.net>
-Date: Wed, 15 Jun 2011 23:49:06 +0200
-From: Nicolas François <nicolas.francois@...traliens.net>
-To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Ondřej Vašík <ovasik@...hat.com>
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/5
+Message-ID: <20110713201730.GJ8259@core.inversepath.com>
+Date: Wed, 13 Jul 2011 22:17:30 +0200
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2011-001] Chyrp input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-On Wed, Jun 15, 2011 at 09:49:20AM +0200, Ludwig Nussel wrote:
-> 
-> Is there actually any serious distro that doesn't use PAM though?
-> Those #ifdefs to keep old shadow compatibility makes the code rather
-> ugly and hard to read. Maybe it's time to just rip out the old code
-> and submit a clean, PAM only su to util-linux.
+#2011-001 Chyrp input sanitization errors
 
-I still receive bug reports for shadow-utils for the non-PAM variant.
-(bug I don't remember if these bugs were reported for su).
-In my case, I would prefer to keep the su non-PAM variant as long as I
-would support non-PAM variants for the other tools (or as long as I
-support su).
+Description:
 
-Regarding distros without PAM, there might be gentoo to be counted in the
-list (although PAM is enabled by default).
+The Chyrp framework, an open source blogging engine, suffers from cross-site
+scripting (XSS) and local file inclusion (LFI) vulnerabilities.
 
-Kind Regards,
+Insufficient input sanitization on the parameters passed to pages related to
+administration settings, the javascript handler and the index handler leads to
+arbitrary javascript injection in the context of the user session. This could
+be potentially exploited to hijack the session of the administrator.
+
+Insufficient path sanitization on the root 'action' query string parameter
+leads to inclusion of arbitrary files from local sources, this could be
+exploited to read arbitrary accessible files on the hosting server filesystem
+and potentially execute arbitrary commands or code.
+
+Affected version:
+
+Chyrp <= 2.1
+
+Fixed version:
+
+Chyrp, N/A
+
+Credit: vulnerability report and PoC code received from Eldar Marcussen
+<wireghoul [at] justanotherhacker [dot] com>.
+
+CVE: N/A
+
+Timeline:
+
+2011-05-17: vulnerability report received
+2010-05-17: contacted chyrp maintainers
+2010-07-13: oCERT advisory published jointly with reporter advisory
+
+References:
+http://www.justanotherhacker.com/advisories/JAHx113.txt
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2011-001.html
+
 -- 
-Nekral
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
