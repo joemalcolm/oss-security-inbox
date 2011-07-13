@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/19
-Message-ID: <739815754.450622.1299617404152.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 15:50:04 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/3
+Message-ID: <20110713105302.GA25485@suse.de>
+Date: Wed, 13 Jul 2011 12:53:02 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: dccp: fix oops on Reset after close
+Subject: CVE Request: hplip/foomatic-filters
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1093
+Hi
 
-Thanks.
+The foomatic filters of the hplip package allow remote users
+to execute arbitrary commands as the lp user. The flaw allows
+hosts which are listed in the printing ACL or local users to
+pass PPD file arguments to the foomatic filters. A PoC was
+demonstrated using the CUPS server.
+
+More info and patches are here:
+
+https://bugzilla.novell.com/show_bug.cgi?id=698451
+
+
+Sebastian
 
 -- 
-    JB
 
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
------ Original Message -----
-> https://bugzilla.redhat.com/682954
-> http://git.kernel.org/linus/720dc34bbbe9493c7bd48b2243058b4e447a929d
-> 
-> "This fixes a bug in the order of dccp_rcv_state_process() that still
-> permitted reception even after closing the socket. A Reset after close
-> thus causes a NULL pointer dereference by not preventing operations on
-> an already torn-down socket."
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
