@@ -1,96 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/3
-Message-ID: <CAPYM6Vz6jQ5Nt6ymzjZ59C68NYGrZTaDC48_UujNFFkg71zruA@mail.gmail.com>
-Date: Wed, 5 Oct 2011 18:07:59 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/2
+Message-ID: <4E1D232C.9070507@redhat.com>
+Date: Wed, 13 Jul 2011 10:16:36 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+Subject: Security issues fixed in libpng 1.5.4
 Content-Type: text/plain; charset=utf-8
 
-vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
+Hi,
 
+There are three security issues which are fixed in libpng 1.5.4 [1].
+The following CVE ids are assigned for those issues:
 
-1. OVERVIEW
+1. buffer overwrite in png_rgb_to_gray
+CVE: CVE-2011-2690
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720607
 
-The vTiger CRM 5.2.1 and lower versions are vulnerable to Remote Code
-Execution. No fixed version has been released as of 2011-10-05.
+2. Crash in png_default_error due to use of NULL Pointer
+CVE: CVE-2011-2691
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720608
 
+3. Memory corruption when handling empty sCAL chunks
+CVE: CVE-2011-2692
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720612
 
-2. BACKGROUND
+Thanks.
 
-vtiger CRM is a free, full-featured, 100% Open Source CRM software
-ideal for small and medium businesses, with low-cost product support
-available to production users that need reliable support. vtiger CRM
-is a widely used product with thousands of users in dozens of
-countries.  It has a vibrant community of users driving the product
-forward, and contributing to it's development.  Over 2 million copies
-of vtiger CRM have been downloaded so far. It was launched as a fork
-of version 1.0 of the SugarCRM project launched on December 31st,
-2004.
+[1] http://libpng.org/pub/png/libpng.html
 
-
-3. VULNERABILITY DESCRIPTION
-
-vTiger uses the vulnerable version of phpmailer class file located at
-/cron/class.phpmailer.php .
-
-
-4. VERSIONS AFFECTED
-
-Tested on 5.2.1
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-File: /cron/class.phpmailer.php
-[code]
-
-391:    function SendmailSend($header, $body) {
-392:    if ($this->Sender != "")
-393:       $sendmail = sprintf("%s -oi -f %s -t", $this->Sendmail,
-$this->Sender);
-394:    else
-395:       $sendmail = sprintf("%s -oi -t", $this->Sendmail);
-
-[/code]
-
-
-6. SOLUTION
-
-The vendor hasn't attempted to incorporate the latest version of
-phpMailer class in their vTigerCRM as of version 5.2.1.
-
-The flawed code portion can be patched with:
-
-393: $sendmail = sprintf("%s -oi -f %s -t",
-escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
-395: $sendmail = sprintf("%s -oi -t", escapeshellcmd($this->Sendmail));
-
-
-7. VENDOR
-
-vTiger Development Team
-http://www.vtiger.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-08: notified vendor
-2011-10-05: no fixed version released yet
-2011-10-05: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_rce
-Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
-
-#yehg [2011-10-05]
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
