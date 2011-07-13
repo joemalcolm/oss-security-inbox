@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/18
-Message-ID: <1252659521.144256.1313783933183.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:58:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/1
+Message-ID: <4E1D07DA.2050805@redhat.com>
+Date: Wed, 13 Jul 2011 10:50:02 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: stunnel 4.4x heap overflow flaw
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-2689 kernel: gfs2: make sure fallocate bytes is a multiple of blksize
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2940.
+The GFS2 fallocate code chooses a target size to for allocating chunks
+of space. Whenever it can't find any resource groups with enough space
+free, it halves its target. Since this target is in bytes, eventually it
+will no longer be a multiple of blksize. As long as there is more space
+available in the resource group than the target, this isn't a problem,
+since gfs2 will use the actual space available, which is always a
+multiple of blksize. However, when gfs couldn't fallocate a bigger chunk
+than the target, it was using the non-blksize aligned number. This
+caused a BUG in later code that required blksize aligned offsets.
 
-Thanks.
+Upstream commit:
+http://git.kernel.org/linus/6905d9e4dda6112f007e9090bca80507da158e63
 
--- 
-    JB
+Reference:
+https://bugzilla.redhat.com/CVE-2011-2689
 
-
------ Original Message -----
-> As noted in the stunnel changelog, 4.42 corrects a heap overflow flaw
-> that could lead to a DoS or remote execution of arbitrary code.
-> 
-> References:
-> 
-> http://stunnel.org/?page=sdf_ChangeLog
-> https://bugzilla.redhat.com/show_bug.cgi?id=732068
-> 
-> Could a CVE be assigned for this?
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+Thanks, Eugene
+@eugeneteo
