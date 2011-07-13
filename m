@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/4
-Message-ID: <AANLkTin_cxUt+ESYLFxT7W_W+8HukqwoGRPYx7XUKRx9@mail.gmail.com>
-Date: Mon, 14 Mar 2011 04:13:45 -0400
-From: Andrew Clausen <clausen@...n.upenn.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/2
+Message-ID: <4E1D232C.9070507@redhat.com>
+Date: Wed, 13 Jul 2011 10:16:36 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Kees Cook <kees@...ntu.com>
-Subject: Re: announcing libwipe
+Subject: Security issues fixed in libpng 1.5.4
 Content-Type: text/plain; charset=utf-8
 
-Hi Kees,
+Hi,
 
-Thanks for your encouragement!
+There are three security issues which are fixed in libpng 1.5.4 [1].
+The following CVE ids are assigned for those issues:
 
-> If libwipe grew similar bit-pattern handling for new(), it could be used
-> for similar purposes (trying to ferret out use-after-free or
-> use-before-init bugs in general).
+1. buffer overwrite in png_rgb_to_gray
+CVE: CVE-2011-2690
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720607
 
-I'm not sure I understood your proposal.  Are you thinking about the
-C++ new operator?  Is there a problem with MALLOC_PERTURB_?
+2. Crash in png_default_error due to use of NULL Pointer
+CVE: CVE-2011-2691
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720608
 
-Cheers,
-Andrew
+3. Memory corruption when handling empty sCAL chunks
+CVE: CVE-2011-2692
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720612
+
+Thanks.
+
+[1] http://libpng.org/pub/png/libpng.html
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
