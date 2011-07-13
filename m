@@ -1,31 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/21/1
-Message-ID: <20110921171211.GB15869@albatros>
-Date: Wed, 21 Sep 2011 21:12:12 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/7
+Message-ID: <Pine.GSO.4.64.1107131713010.18426@faron.mitre.org>
+Date: Wed, 13 Jul 2011 17:23:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: taskstats/procfs io infoleak
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Mon, Jun 27, 2011 at 11:21 +0800, Eugene Teo wrote:
-> On 06/24/2011 08:34 PM, Vasiliy Kulikov wrote:
-> procfs io - CVE-2011-2495
+Very rarely, we will cover "documented behavior" if there is sufficient 
+evidence of widespread abuse/misuse of that behavior by admins, in which 
+case the CVE description would emphasize the fact that it is the admin's 
+"fault" or "misconception."  I generally try to stay away from edge cases 
+(such as this one) that could have a "snowball effect" of setting a 
+precedent that could ultimately be used to argue for assigning too many 
+low-priority CVEs to many issues.  I would be inclined to avoid assigning 
+a CVE for this issue unless someone can provide a realistic, relatively 
+common scenario under which this would pose a significant security 
+problem.
 
-Fixed in:
+Speaking of Apache, the well-known double-extension handling issue that 
+enables arbitrary upload/execution of dangerous files like abc.php.gif 
+also doesn't have a CVE [I don't think] for similar reasons, that it is 
+well-documented behavior.
 
-https://github.com/torvalds/linux/commit/1d1221f375c94ef961ba8574ac4f85c8870ddd51
-https://github.com/torvalds/linux/commit/293eb1e7772b25a93647c798c7b89bf26c2da2e0
+- Steve
 
-> taskstats - CVE-2011-2494
 
-Finally fixed in:
 
-https://github.com/torvalds/linux/commit/1a51410abe7d0ee4b1d112780f46df87d3621043
+On Tue, 12 Jul 2011, Josh Bressers wrote:
 
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+> I'm going to leave this one for MITRE.
+>
+> Thanks.
+>
+> --
+>    JB
+>
+> ----- Original Message -----
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>> Hello List,
+>>
+>> Is it possible to assign a CVE for documented behavior? Communication
+>> with apache security showed, that following symlinks to arbitrary
+>> locations is a documented feature, even when "-FollowSymLink" option
+>> is
+>> in place. This allows any user with, that can modify some content
+>> served
+>> by apache to access any content accessible by the apache process, also
+>> content not visible to the user (e.g. outside the ftp-upload directory
+>> or forbidden like /proc/http-pid/maps). Due to the small window of
+>> opportunity, this might be relevant mostly when user can already
+>> execute
+>> code on the machine, so it is not a big issue. /proc/<pid>/mem is
+>> protected, when apache is running with setuid, so key material cannot
+>> be
+>> extracted using range headers. PUT was not tested so far.
+>>
+>> See also
+>>
+>> http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
+>>
+>> - --
+>> http://www.halfdog.net/
+>> PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.6 (GNU/Linux)
+>>
+>> iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
+>> PDcCdoHHWTCHe53U+XTzefY=
+>> =fVzn
+>> -----END PGP SIGNATURE-----
+>
