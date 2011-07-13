@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/4
-Message-ID: <1493366954.102437.1295894087346.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 24 Jan 2011 13:34:47 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/1
+Message-ID: <4E1D07DA.2050805@redhat.com>
+Date: Wed, 13 Jul 2011 10:50:02 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-2689 kernel: gfs2: make sure fallocate bytes is a multiple of blksize
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 01/23/2011 04:13 AM, Steven M. Christey wrote:
-> >
-> > On Fri, 21 Jan 2011, Eugene Teo wrote:
-> >
-> >> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
-> >>> File position is not controlled, it may lead to overwrites of
-> >>> arbitrary
-> >>> kernel memory. Also the code may kfree() the same pointer multiple
-> >>> times.
-> >>
-> >> http://lkml.org/lkml/2011/1/20/348
-> >> https://bugzilla.redhat.com/CVE-2011-0023
-> >>
-> >> Please use CVE-2011-0023 (this does not include the unresolved flaw
-> >> described in the following paragraph below).
-> >
-> > There seem to be 2 types of issues described above - the
-> > uncontrolled
-> > file position / memory overwrite, and a "double free". So there
-> > should
-> > probably be 2 separate CVEs, not one. Am I missing something?
-> 
-> Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
-> 
+The GFS2 fallocate code chooses a target size to for allocating chunks
+of space. Whenever it can't find any resource groups with enough space
+free, it halves its target. Since this target is in bytes, eventually it
+will no longer be a multiple of blksize. As long as there is more space
+available in the resource group than the target, this isn't a problem,
+since gfs2 will use the actual space available, which is always a
+multiple of blksize. However, when gfs couldn't fallocate a bigger chunk
+than the target, it was using the non-blksize aligned number. This
+caused a BUG in later code that required blksize aligned offsets.
 
-Eugene, does the "unresolved flaw" still need an ID? This thread now
-confuses me.
+Upstream commit:
+http://git.kernel.org/linus/6905d9e4dda6112f007e9090bca80507da158e63
 
-Thanks.
+Reference:
+https://bugzilla.redhat.com/CVE-2011-2689
 
--- 
-    JB
+Thanks, Eugene
+@eugeneteo
