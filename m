@@ -1,39 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/12/1
-Message-ID: <AANLkTi=v+miMDoy3my_MCw8-v=vdNLqx19DBuFMiCHpd@mail.gmail.com>
-Date: Sat, 12 Mar 2011 01:29:13 -0500
-From: Andrew Clausen <clausen@...n.upenn.edu>
-To: oss-security@...ts.openwall.com
-Subject: announcing libwipe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/5
+Message-ID: <20110713201730.GJ8259@core.inversepath.com>
+Date: Wed, 13 Jul 2011 22:17:30 +0200
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2011-001] Chyrp input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
 
-I have written a program called "libwipe" for GNU/Linux to wipe memory
-as soon as it is not being used.  I am releasing it under the GPL3
-licence, and you can download it here:
+#2011-001 Chyrp input sanitization errors
 
-http://www.econ.upenn.edu/~clausen/computing/libwipe.tar.gz
+Description:
 
-Any suggestions are appreciated.  In particular, I would like feedback on
-* which memory mappings should be erased on exit
-* which project this could be included in (secure-delete?)
+The Chyrp framework, an open source blogging engine, suffers from cross-site
+scripting (XSS) and local file inclusion (LFI) vulnerabilities.
 
-OVERVIEW
+Insufficient input sanitization on the parameters passed to pages related to
+administration settings, the javascript handler and the index handler leads to
+arbitrary javascript injection in the context of the user session. This could
+be potentially exploited to hijack the session of the administrator.
 
-This library is designed to make programs respect users' privacy by wiping
-information when it is no longer needed.  It does not require any modifications
-to the original programs.  To use it for all programs in a single shell
-session, set the LD_PRELOAD environment variable with the shell command
+Insufficient path sanitization on the root 'action' query string parameter
+leads to inclusion of arbitrary files from local sources, this could be
+exploited to read arbitrary accessible files on the hosting server filesystem
+and potentially execute arbitrary commands or code.
 
-        export LD_PRELOAD=/usr/local/lib/libwipe.so
+Affected version:
 
-To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
-configure file.
+Chyrp <= 2.1
 
-The program uses two mechanisms:
-(1) when memory is deallocated with free(3), it is zeroed out.
-(2) when the process terminates, the entire memory is zeroed out.
+Fixed version:
 
-Cheers,
-Andrew
+Chyrp, N/A
+
+Credit: vulnerability report and PoC code received from Eldar Marcussen
+<wireghoul [at] justanotherhacker [dot] com>.
+
+CVE: N/A
+
+Timeline:
+
+2011-05-17: vulnerability report received
+2010-05-17: contacted chyrp maintainers
+2010-07-13: oCERT advisory published jointly with reporter advisory
+
+References:
+http://www.justanotherhacker.com/advisories/JAHx113.txt
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2011-001.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
