@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/4
-Message-ID: <396081601.369326.1297265018769.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Feb 2011 10:23:38 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/4
+Message-ID: <4E1D837A.6060602@suse.de>
+Date: Wed, 13 Jul 2011 13:37:30 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE assignments for Wireshark
+Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Solar Designer wrote:
+> On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
+> [...]
+>> Keep using the buggy
+>> algorithm for new passwords and keep storing them as 2a
+>
+> I'd be unhappy about that, but it's a valid option to provide if you
+> want to minimize user annoyance, including for networked systems that
+> are not upgraded in sync (but are manually configured for this...)
 
-Any update on this?
+After more thinking however ... adding any option that influences
+how new passwords are generated means we have to patch all
+applications that generate passwords to honor that option, ie parse
+the config file. On OpenSUSE I've found pam_unix2, pwdutils,
+mkpasswd and yast2 so far. Biting the bullet and just hardcoding 2y
+would be much easier.
 
-Thanks.
+Nevertheless if we miss to patch any package there would be still the
+chance of someone generating 2a hashes with a different algorithm than
+what the system uses to verify them later though. So implementing your
+original idea and have crypt_gensalt change the prefix wouldn't be
+that bad after all. That bears the risk to break some programs like
+mkpasswd but they would at least fail with an error rather than
+generating unusable hashes.
+
+cu
+Ludwig
 
 -- 
-    JB
-
------ Original Message -----
-> ----- Original Message -----
-> > On 01/13/2011 04:21 AM, Steven M. Christey wrote:
-> > >
-> > > CVE-2011-0444 - MAC-LTE
-> > >
-> > > CVE-2011-0445 - ASN.1 BER
-> >
-> > Looking at the following wireshark bug and the relevant commits:
-> >
-> > https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
-> >
-> > http://anonsvn.wireshark.org/viewvc?view=rev&revision=35292
-> > http://anonsvn.wireshark.org/viewvc?view=rev&revision=35298
-> >
-> > It seems that there are two issues here, buffer overflow in MAC-LTE
-> > dissector as well as buffer overflow in SNMP engineID preferences.
-> >
-> > This issue was however assigned only one CVE i.e. CVE-2011-0444.
-> > Do you think two CVEs (for each individual issues), should be
-> > assigned
-> > in this case?
-> >
-> 
-> Hi Steve,
-> 
-> Can MITRE handle this one?
-> 
-> Thanks.
-> 
-> --
-> JB
+  (o_   Ludwig Nussel
+  //\
+  V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
+Imendörffer, HRB 16746 (AG Nürnberg)
