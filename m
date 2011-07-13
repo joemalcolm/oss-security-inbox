@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/7
-Message-ID: <1319802316.20049.9.camel@scapa>
-Date: Fri, 28 Oct 2011 13:45:16 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/6
+Message-ID: <Pine.GSO.4.64.1107131700500.18426@faron.mitre.org>
+Date: Wed, 13 Jul 2011 17:02:29 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Sean Amoss <failedtosync@...il.com>
-Subject: Re: CVE Request -- Opera Manipulating fonts in SVG can allow execution of arbitrary code
+cc: bressers@...hat.com
+Subject: Re: [oCERT-2011-001] Chyrp input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-10-28 at 07:17 -0400, Sean Amoss wrote:
-> Can a CVE be assigned for the below issue?
-> 
-> "Certain font manipulations inside a dynamically added and
-> specifically
-> embedded SVG image can cause Opera to crash. Additional techniques can
-> reliably be used in combination with this crash to allow execution of
-> arbitrary code.
-> 
-> Opera Software has released Opera 11.52, where this issue has been
-> fixed."
-> 
-> http://www.opera.com/support/kb/view/1002/
-> http://spa-s3c.blogspot.com/2011/10/spas3c-sv-006opera-browser-101112-0-day.html 
 
-Note that *OSS*-sec is for Open Source Software, which Opera is not,
-afair.
+On Wed, 13 Jul 2011, Andrea Barisani wrote:
 
-Regards,
--- 
-Yves-Alexis
+> http://www.justanotherhacker.com/advisories/JAHx113.txt
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+This advisory covers 3 CVEs (but the oCERT advisory only seems to cover 
+the first two):
+
+XSS: CVE-2011-2743
+
+LFI/directory traversal: CVE-2011-2744
+
+file upload: CVE-2011-2745
+
+
+- Steve
+
+
+
+>
+> Permalink:
+> http://www.ocert.org/advisories/ocert-2011-001.html
+>
+> -- 
+> Andrea Barisani |                Founder & Project Coordinator
+>          oCERT | OSS Computer Security Incident Response Team
+>
+> <lcars@...rt.org>                         http://www.ocert.org
+> 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+>        "Pluralitas non est ponenda sine necessitate"
+>
