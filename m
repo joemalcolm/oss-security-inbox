@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/10
-Message-ID: <4DA5C858.9030006@mvista.com>
-Date: Wed, 13 Apr 2011 05:59:20 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/3
+Message-ID: <20110713105302.GA25485@suse.de>
+Date: Wed, 13 Jul 2011 12:53:02 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+Subject: CVE Request: hplip/foomatic-filters
 Content-Type: text/plain; charset=utf-8
 
+Hi
+
+The foomatic filters of the hplip package allow remote users
+to execute arbitrary commands as the lp user. The flaw allows
+hosts which are listed in the printing ACL or local users to
+pass PPD file arguments to the foomatic filters. A PoC was
+demonstrated using the CUPS server.
+
+More info and patches are here:
+
+https://bugzilla.novell.com/show_bug.cgi?id=698451
 
 
-On 04/13/2011 01:51 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
-<snipped>
-. It's clear that
-> one of the membership requirements is now producing security updates. 
+Sebastian
 
-What method of proving this would be acceptable? screen shot, temporary
-access to our site, public list or other?
+-- 
 
-Mahalo,
-Armin
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
