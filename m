@@ -1,37 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/28
-Message-ID: <20110304175214.GA26198@openwall.com>
-Date: Fri, 4 Mar 2011 20:52:14 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/7
+Message-ID: <Pine.GSO.4.64.1107131713010.18426@faron.mitre.org>
+Date: Wed, 13 Jul 2011 17:23:58 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
-> 
-> If there's a common usage scenario that doesn't stem from blatant 
-> administrator negligence, then a CVE is probably still appropriate. 
-> ("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
-> script setuid, or modifies the perms for an executable or config file to 
-> be world-writable.)
 
-I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
-say, "chown nginx /var/log/nginx", it could be negligence or it could be
-lack of familiarity with the risks involved.  So I am willing to admit
-that it's not necessarily negligence that turns those issues into
-vulnerabilities on specific systems.
+Very rarely, we will cover "documented behavior" if there is sufficient 
+evidence of widespread abuse/misuse of that behavior by admins, in which 
+case the CVE description would emphasize the fact that it is the admin's 
+"fault" or "misconception."  I generally try to stay away from edge cases 
+(such as this one) that could have a "snowball effect" of setting a 
+precedent that could ultimately be used to argue for assigning too many 
+low-priority CVEs to many issues.  I would be inclined to avoid assigning 
+a CVE for this issue unless someone can provide a realistic, relatively 
+common scenario under which this would pose a significant security 
+problem.
 
-> We will sometimes write the CVE description more as an "adminisrator 
-> practice" than as "fault of the software."
+Speaking of Apache, the well-known double-extension handling issue that 
+enables arbitrary upload/execution of dangerous files like abc.php.gif 
+also doesn't have a CVE [I don't think] for similar reasons, that it is 
+well-documented behavior.
 
-Oh, this is something I did not realize.  A lot of people assume that
-CVEs "blame" the software and its authors for having made an error.
+- Steve
 
-It felt wrong, say, to blame a text editor for being unsafe to use on
-files in untrusted directories when such unsafety was the typical and
-expected situation for text editors in general.
 
-Thank you for your responses!
 
-Alexander
+On Tue, 12 Jul 2011, Josh Bressers wrote:
+
+> I'm going to leave this one for MITRE.
+>
+> Thanks.
+>
+> --
+>    JB
+>
+> ----- Original Message -----
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>> Hello List,
+>>
+>> Is it possible to assign a CVE for documented behavior? Communication
+>> with apache security showed, that following symlinks to arbitrary
+>> locations is a documented feature, even when "-FollowSymLink" option
+>> is
+>> in place. This allows any user with, that can modify some content
+>> served
+>> by apache to access any content accessible by the apache process, also
+>> content not visible to the user (e.g. outside the ftp-upload directory
+>> or forbidden like /proc/http-pid/maps). Due to the small window of
+>> opportunity, this might be relevant mostly when user can already
+>> execute
+>> code on the machine, so it is not a big issue. /proc/<pid>/mem is
+>> protected, when apache is running with setuid, so key material cannot
+>> be
+>> extracted using range headers. PUT was not tested so far.
+>>
+>> See also
+>>
+>> http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
+>>
+>> - --
+>> http://www.halfdog.net/
+>> PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.6 (GNU/Linux)
+>>
+>> iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
+>> PDcCdoHHWTCHe53U+XTzefY=
+>> =fVzn
+>> -----END PGP SIGNATURE-----
+>
