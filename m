@@ -1,16 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/12
-Message-ID: <AANLkTikFQ5zAvJBsbKcFDut0Ff+0a7K4+YZF0gzzwBea@mail.gmail.com>
-Date: Wed, 2 Mar 2011 04:05:18 +1100
-From: dave b <db.pub.mail@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: cve request for smoothwall & openfiler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/4
+Message-ID: <CAOSRhRN1FRT5gbjPFtg+Vfm+bjOEhdOkxGwMJs7vU2xYJ7kZrQ@mail.gmail.com>
+Date: Thu, 14 Jul 2011 07:02:48 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Secunia Research <vuln@...unia.com>
+Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-Hi can someone allocate a cve for smoothwall express 3 regarding the
-csrf and xss issue raised in [1].
-Also if someone could allocate a cve for an xss in Openfiler - see [2].
+On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
+<erikd@...a-nerd.com> wrote:
+> Jan Lieskovsky wrote:
+>
+>>    an integer overflow, leading to heap-based buffer overflow flaw was
+>> found in the way libsndfile, library for reading and writing of sound
+>> files, processed certain PARIS Audio Format (PAF) audio files with
+>> crafted count of channels in the PAF file header. A remote attacker
+>> could provided a specially-crafted PAF audio file, which once opened by
+>> a local, unsuspecting user in an application, linked against libsndfile,
+>> could lead to that particular application crash (denial of service),
+>
+> I agree with everything up to here.
+>
+>> or, potentially arbitrary code execution with the privileges of the
+>> user running the application.
+>
+> but this is rubbish. The heap gets overwritten with zeros which would
+> certainly lead to the application segfaulting. However, there is
+> no way for arbitrary code to be executed on amy sane OS with proper
+> memory protection.
 
+This is not a sound assumption.  Any sort of partially controlled heap
+corruption, even if the data that's being written isn't controllable
+by an attacker, should be considered potentially exploitable.  Modern
+heap exploitation is alive and well - it's worth pointing out that a
+recent remote vulnerability in Microsoft IIS FTPD that allowed for a
+heap overflow of strictly 0xff bytes was shown to be exploitable,
+contradicting Microsoft's claims that it could only cause denial of
+service.  Think about partially overwriting certain elements of heap
+metadata, or even heap data, with zeroes.  Suppose an application with
+heavy function pointer usage was linked against libsndfile, and this
+overflow allowed overwriting the least significant bytes of a function
+pointer with zeroes and ultimately allowed for controlling execution
+flow.
 
-[1] http://secunia.com/advisories/42897/
-[2] http://secunia.com/advisories/42507/
+It's better to be safe than sorry.
+
+Regards,
+Dan
