@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/02/1
-Message-ID: <AANLkTinbk+EJVzewvQ2HhN-pt=8tQn-Pv7Lis76qTfa3@mail.gmail.com>
-Date: Wed, 2 Feb 2011 03:23:32 +0000
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xpdf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/8
+Message-ID: <20110714153118.GA30247@openwall.com>
+Date: Thu, 14 Jul 2011 19:31:18 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 20, 2011 at 11:15 PM, Dan Rosenberg wrote:
-> 2. Malformed commands may cause corruption of the internal stack used
-> to maintain graphics contexts, leading to potentially exploitable
-> memory corruption.  Fixed in poppler commit at [2], hopefully fixed
-> soon at xpdf upstream.
+On Thu, Jul 14, 2011 at 04:37:36PM +0200, Ludwig Nussel wrote:
+> Well, you need to modify that in %post to automatically get 2y for
+> new passwords then.
 
-Correct me if I'm wrong, but it looks like all versions of xpdf and
-poppler <= 0.12.x should not be affected by this issue (since graphics
-states are not tracked via stackheight in those versions).  Also,
-according to redhat, poppler in rhel5 does not crash when tested with
-your poc.  Would you be willing to share so we can test that?
+Not in %post - we'll just provide the new file, which is marked
+%config(noreplace).  Yes, it does mean that if there were any local
+changes, the admin will need to merge the changes and/or rename the file
+from *.rpmnew manually.
 
-Best wishes,
-Mike
+> Which is kind of ugly as that's a file the admin may have modified.
+
+You're right.  In a sense, having the change in code only would have
+been better.
+
+Alexander
