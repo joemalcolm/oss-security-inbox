@@ -1,98 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/29
-Message-ID: <4ECAC75A.9090402@redhat.com>
-Date: Mon, 21 Nov 2011 14:49:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
-Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/1
+Message-ID: <4E1E8E16.9050107@redhat.com>
+Date: Thu, 14 Jul 2011 08:35:02 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Erik de Castro Lopo <erikd@...a-nerd.com>, Secunia Research <vuln@...unia.com>
+Subject: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 02:39 PM, Henri Salo wrote:
-> On Mon, Nov 21, 2011 at 02:20:00PM -0700, Kurt Seifried wrote:
->> On 11/21/2011 11:01 AM, Henri Salo wrote:
->>> Can we get CVE-identifier assigned for this issue, thank you?
->>>
->>> Best regards,
->>> Henri Salo
->>>
->>> ----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
->>>
->>> Date: Thu, 10 Nov 2011 16:32:12 +0200
->>> From: Netsparker Advisories <advisories@...itunasecurity.com>
->>> To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
->>> Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
->>>
->>> Information
->>> --------------------
->>> Name :  XSS vulnerability in Joomla 1.6.3.
->>> Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
->>> Vendor Hompeage :  http://www.joomla.org
->>> Vulnerability Type :  Cross-Site Scripting
->>> Severity :  High
->>> Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
->>> Advisory Reference :  NS-11-009
->>>
->>> Description
->>> ------------------
->>> Joomla is an award-winning content management system (CMS), which
->>> enables you to build Web sites and powerful online applications. Many
->>> aspects, including its ease-of-use and extensibility, have made Joomla
->>> the most popular Web site software available. Best of all, Joomla is
->>> an open source solution that is freely available to everyone.
->>>
->>> Details
->>> -------------------
->>> Joomla is affected by a XSS vulnerability in various administrator
->>> screens. All 1.6.x installs prior to and including 1.6.3 are affected.
->>> You can read the full article about Cross-Site Scripting
->>> vulnerabilities from here :
->>> http://www.mavitunasecurity.com/crosssite-scripting-xss/
->>>
->>> Solution
->>> -------------------
->>> Upgrade to the latest Joomla! version (1.6.4 or later).
->>>
->>> Credits
->>> -------------------
->>> It has been discovered on testing of Netsparker, Web Application
->>> Security Scanner - http://www.mavitunasecurity.com/netsparker/
->>>
->>> References
->>> -------------------
->>> 1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
->>> 2. MSL Advisory Link :
->>> http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
->>> 3. Netsparker Advisories :
->>> http://www.mavitunasecurity.com/netsparker-advisories/
->>>
->>> About Netsparker
->>> -------------------
->>> Netsparker® can find and report security issues such as SQL Injection
->>> and Cross-site Scripting (XSS) in all web applications regardless of
->>> the platform and the technology they are built on. Netsparker's unique
->>> detection and exploitation techniques allows it to be dead accurate in
->>> reporting hence it's the first and the only False Positive Free web
->>> application security scanner.
->>>
->> Can you confirm that this is a different issue from CVE-2011-2708 and
->> CVE-2011-3595?
->>
->> -- 
->>
->> -Kurt Seifried / Red Hat Security Response Team
-> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
->
-> This new is about: 20110601 XSS Vulnerabilities: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
->
-> Sorry, but I don't know where to find SVN/GIT/CVS logs.
->
-> Best regards,
-> Henri Salo
+Hello Josh, Steve, vendors,
 
-Please use CVE-2011-4332 for this issue.
+   an integer overflow, leading to heap-based buffer overflow flaw was
+found in the way libsndfile, library for reading and writing of sound
+files, processed certain PARIS Audio Format (PAF) audio files with
+crafted count of channels in the PAF file header. A remote attacker
+could provided a specially-crafted PAF audio file, which once opened by
+a local, unsuspecting user in an application, linked against libsndfile,
+could lead to that particular application crash (denial of service),
+or, potentially arbitrary code execution with the privileges of the
+user running the application.
 
--- 
+References:
+[1] https://bugs.gentoo.org/show_bug.cgi?id=375125
+[2] http://www.securelist.com/en/advisories/45125
+[3] http://secunia.com/advisories/45125/
+[4] http://www.mega-nerd.com/libsndfile/
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=721234
 
--Kurt Seifried / Red Hat Security Response Team
+Relevant upstream patch (from Bzr log):
+---------------------------------------
 
+revno: 1610
+committer: Erik de Castro Lopo <erikd@...a-nerd.com>
+branch nick: libsndfile-dev
+timestamp: Wed 2011-07-06 19:40:05 +1000
+message:
+   Fix for Secunia Advisory SA45125, heap overflow in PAF file handler.
+
+
+Could you allocate a CVE identifier for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
