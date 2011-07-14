@@ -1,53 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/4
-Message-ID: <4EC13E87.4000807@redhat.com>
-Date: Mon, 14 Nov 2011 09:15:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Did this ArchLinux/shaman thing ever get a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/8
+Message-ID: <20110714153118.GA30247@openwall.com>
+Date: Thu, 14 Jul 2011 19:31:18 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Did this ever get a CVE #? I can't find one.
+On Thu, Jul 14, 2011 at 04:37:36PM +0200, Ludwig Nussel wrote:
+> Well, you need to modify that in %post to automatically get 2y for
+> new passwords then.
 
-https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+Not in %post - we'll just provide the new file, which is marked
+%config(noreplace).  Yes, it does mean that if there were any local
+changes, the admin will need to merge the changes and/or rename the file
+from *.rpmnew manually.
 
-====================
-The point of this thread was that you don't need to enter the root
-password at all. Not the first time, not ever.
+> Which is kind of ugly as that's a file the admin may have modified.
 
-As far as I understand, it is supposed to work like this: When you
-first use shaman too install anything, it asks for the root password
-You can tick a "Do not ask me again"-box, so you don't have to enter
-the password again. If you tick the box and enter the password, shaman
-add the lines
-[auth]
-askforpwd=false
-to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
-time shaman is run, it checks the config file, and if the askforpwd
-value is set to false, it grants itself root privileges (with some
-nifty setuuid root-thingy, I imagine) This is not the problem - this
-is the feature.
+You're right.  In a sense, having the change in code only would have
+been better.
 
-The bug is this:
-the fact that any user can add the lines
-[auth]
-askforpwd=false
-to his own shaman.conf file, without ever entering the root password
-in shaman. The next time shaman is run, it checks the config file, and
-if the askforpwd value is set to false, it grants itself root
-privileges - even though the user has never entered the root password.
-This works for any unprivileged user on the system.
-
-If that is indeed a feature intended by any sane person, then I'm
-Mother Mary. And that can't be, seeing as I don't have breasts.
-====================
-
-
-Appears to never have been fixed, the last release of shaman appears
-to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
+Alexander
