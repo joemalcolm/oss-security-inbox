@@ -1,27 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/4
-Message-ID: <20110506205341.GA13429@dhcp-28-215.brq.redhat.com>
-Date: Fri, 6 May 2011 22:53:42 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- virt-v2v: vnc password protection is missing after vm conversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/1
+Message-ID: <4E1E8E16.9050107@redhat.com>
+Date: Thu, 14 Jul 2011 08:35:02 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Erik de Castro Lopo <erikd@...a-nerd.com>, Secunia Research <vuln@...unia.com>
+Subject: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors.
+Hello Josh, Steve, vendors,
 
-Description:
-It was found that after virtual machine conversion using virt-v2v the
-target VM does not have VNC password enabled even though the source VM does.
-An attacker able to connect to the target VM can possibly use this flaw to
-operate the VM with privileges of the logged in user.
+   an integer overflow, leading to heap-based buffer overflow flaw was
+found in the way libsndfile, library for reading and writing of sound
+files, processed certain PARIS Audio Format (PAF) audio files with
+crafted count of channels in the PAF file header. A remote attacker
+could provided a specially-crafted PAF audio file, which once opened by
+a local, unsuspecting user in an application, linked against libsndfile,
+could lead to that particular application crash (denial of service),
+or, potentially arbitrary code execution with the privileges of the
+user running the application.
 
 References:
-https://bugzilla.redhat.com/show_bug.cgi?id=702754
- 
-Could you please allocate a CVE identifier for this issue?
+[1] https://bugs.gentoo.org/show_bug.cgi?id=375125
+[2] http://www.securelist.com/en/advisories/45125
+[3] http://secunia.com/advisories/45125/
+[4] http://www.mega-nerd.com/libsndfile/
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=721234
 
-Thanks you,
+Relevant upstream patch (from Bzr log):
+---------------------------------------
+
+revno: 1610
+committer: Erik de Castro Lopo <erikd@...a-nerd.com>
+branch nick: libsndfile-dev
+timestamp: Wed 2011-07-06 19:40:05 +1000
+message:
+   Fix for Secunia Advisory SA45125, heap overflow in PAF file handler.
+
+
+Could you allocate a CVE identifier for this?
+
+Thank you && Regards, Jan.
 --
-Petr Matousek / Red Hat Security Response Team
-
+Jan iankko Lieskovsky / Red Hat Security Response Team
