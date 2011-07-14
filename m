@@ -1,73 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/2
-Message-ID: <20110305163954.GU372@outflux.net>
-Date: Sat, 5 Mar 2011 08:39:54 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/3
+Message-Id: <20110714164922.ebbccde6.erikd@mega-nerd.com>
+Date: Thu, 14 Jul 2011 16:49:22 +1000
+From: Erik de Castro Lopo <erikd@...a-nerd.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: modules_disabled policy
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
+Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 05, 2011 at 07:16:43PM +0300, Vasiliy Kulikov wrote:
-> It is one way ticket, there is no defined interface to enable LKM
-> loading after disabling it.  The sticking point is that it gives an idea
-> that using it prevents loading rootkits to the kernel:
-> 
-> https://wiki.ubuntu.com/Security/Features#block-modules
-> 
-> "This was another layer of protection to stop kernel rootkits from being
-> installed." 
-> 
-> But does it really stop rootkits or is it gives a false sence of security?
+Jan Lieskovsky wrote:
 
-It was never my intention to give a false sense of security with the
-option, but I did want to try to continue to block common kernel-rootkit
-vectors. Kernel rootkits are really just a specialized form of arbitrary
-kernel memory writing, so that's what I'd like to see squashed.
+>    an integer overflow, leading to heap-based buffer overflow flaw was
+> found in the way libsndfile, library for reading and writing of sound
+> files, processed certain PARIS Audio Format (PAF) audio files with
+> crafted count of channels in the PAF file header. A remote attacker
+> could provided a specially-crafted PAF audio file, which once opened by
+> a local, unsuspecting user in an application, linked against libsndfile,
+> could lead to that particular application crash (denial of service),
 
-I think a higher priority goal is protecting the kernel from non-root
-users, but when there are obvious places where it is trivial to protect
-the kernel from root, we should plug those holes.
+I agree with everything up to here.
 
-> There are other ways to write to arbitrary kernel memory location being
-> full root, e.g. via hibernation:
-> 
-> http://comments.gmane.org/gmane.linux.kernel/1108853
+> or, potentially arbitrary code execution with the privileges of the
+> user running the application.
 
-Right, this is a good fix, but as other people point out, perhaps the
-naming of things needs to be changed.
+but this is rubbish. The heap gets overwritten with zeros which would
+certainly lead to the application segfaulting. However, there is
+no way for arbitrary code to be executed on amy sane OS with proper
+memory protection.
 
-> LKML folks responds that modules_disabled does nothing with protecting
-> the kernel from root.
+Furthermore, Secunia when they contacted me about this said they would
+release information about this vulernability on the 18th and then ended
+up releasing it on the 12th instead which means I had to rush out the
+release I was working on (and would have easily had ready for the
+18th). That is not the way to win friends and influence people.
 
-There are two schools of thought on security: perfect security and layered
-security. The phrase "does nothing" implies someone is approaching the
-issue from the "perfect security" line of reasoning. In reality, it does do
-something, because certain methods of attack simply do not work any more.
-Of course, the arms race continues, and the skilled attackers will move to
-using /sys/kernel/debug/acpi/custom_method, or the hibernation image
-attacks. Just like they moved away from /dev/mem after it was plugged. The
-point is to try to keep closing dangerous interfaces and holes.
-
-> So, I'd be happy to hear an answer to the question:
-> 
-> Is it possible to implement strict do-not-touch-the-kernel policy for
-> root via disabling LKM loading and _all_ other indirect places with write
-> access that allows root to do something, but being too relaxed and
-> allows to write to [almost] arbitrary kernel location?  This would make
-> root the Boss Of Userland, but as to the kernel it would be but just a
-> privileged client.  Or such policy would be incomplete and there is
-> almost always a way to by-pass it due to the system design?
-
-IMO, privileged client is preferred. Of course, if you're running on a
-regular system, the kernel image on disk can be changed, or any of the
-start-up settings, and root can just reboot the system. So, as I said, it's
-not a high priority thing to fix, but when it's easy to do so, I think we
-should try to plug the holes since having ways to modify the running kernel
-(when the system owner doesn't want this to happen) allows for some rather
-nasty and hard-to-discover attacks.
-
--Kees
-
+Regards,
+Erik
 -- 
-Kees Cook
-Ubuntu Security Team
+----------------------------------------------------------------------
+Erik de Castro Lopo
+http://www.mega-nerd.com/
