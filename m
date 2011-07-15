@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/7
-Message-Id: <201107141702.10704.thomas@suse.de>
-Date: Thu, 14 Jul 2011 17:02:10 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/7
+Message-ID: <20110715163949.GB16365@dhcp-25-225.brq.redhat.com>
+Date: Fri, 15 Jul 2011 18:39:50 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: webkit ZDI-11-138 and ZDI-11-139
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- kernel: ext4: kernel panic when writing data to the last block of sparse file
 Content-Type: text/plain; charset=utf-8
 
-Looks like the following two issus have no CVE-ID assigned:
+If an extent exists which includes the block right before the maximum
+file offset, and the block for the maximum file offset is written,
+the kernel panics. For 4KB block size, the problem only occurs on
+x86_64 architecture. For 1KB or 2KB block size, the problem occurs on
+both i386 and x86_64.
 
+Local unprivileged users can use this flaw to crash the system when ext4
+filesystem is in use.
 
-http://www.zerodayinitiative.com/advisories/ZDI-11-138/
-Webkit Undefined DOM Prototype Attach Remote Code Execution Vulnerability
-ZDI-11-138: April 19th, 2011 
+Upstream fix:
+f17722f917b2f21497deb6edc62fb1683daa08e6
 
-http://www.zerodayinitiative.com/advisories/ZDI-11-139/
-Webkit Anonymous Frame Remote Code Execution Vulnerability
-ZDI-11-139: April 19th, 2011 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=722557
+http://www.spinics.net/lists/linux-ext4/msg25697.html
 
-
-Cheers
-Thomas
+Thanks,
 -- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Petr Matousek / Red Hat Security Response Team
