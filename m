@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/3
-Message-ID: <20111124144023.GB1081@dhcp-25-225.brq.redhat.com>
-Date: Thu, 24 Nov 2011 15:40:24 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, eteo@...hat.com
-Subject: Please REJECT CVE-2011-4112
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/5
+Message-ID: <20110715104927.GA22533@dztty>
+Date: Fri, 15 Jul 2011 11:49:27 +0100
+From: Djalal Harouni <tixxdz@...ndz.org>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1764 Exim: DKIM Format String
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A format string vulnerability affects the Exim SMTP server with DomainKeys
+Identified Mail (DKIM) support, version between 4.70 and 4.75. The DKIM
+logging mechanism did not use format string specifiers when logging some
+parts of the DKIM-Signature header field. A remote attacker who is able
+to send emails, can exploit this vulnerability and execute arbitrary
+code with the privileges of the Exim daemon [1].
 
-could you please reject CVE-2011-4112 as it is not a security bug.
+MITRE assigned CVE-2011-1764 to this vulnerability but the entry was not
+updated [2]. We would appreciate if it can be updated, we are using this
+CVE name in one of our new Nmap scripts smtp-vuln-cve2011-1764.nse [3].
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=751006#c5
+Thanks.
 
-Thank you,
+[1] http://thread.gmane.org/gmane.mail.exim.devel/4946
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=2011-1764
+[3] http://seclists.org/nmap-dev/2011/q3/221
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+tixxdz
+http://opendz.org
