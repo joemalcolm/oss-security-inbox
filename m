@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/5
-Message-ID: <20110601154308.GC13831@dhcp-25-225.brq.redhat.com>
-Date: Wed, 1 Jun 2011 17:43:09 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/4
+Message-ID: <CAOSRhRM8Ct2UMkcp-cAX=RBcVaWe4Q4ktiJ4jKdi8Yi-DkPJWQ@mail.gmail.com>
+Date: Fri, 15 Jul 2011 06:49:52 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- libvirt: regression introduced in disk probe logic
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Secunia Research <vuln@...unia.com>
+Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors.
+>
+> In terms of ease of exploitation, this one has to be in the very difficult
+> basket.
+>
 
-Description:
-Regression introduced in commit d6623003 (v0.8.8) - using the
-wrong sizeof operand meant that security manager private data
-was overlaying the allowDiskFOrmatProbing member of struct
-_virSecurityManager.  This reopens disk probing, which was
-supposed to be prevented by the solution to CVE-2010-2238.
+I agree, this would be difficult to exploit.
 
-References:
-https://www.redhat.com/archives/libvir-list/2011-May/msg01935.html
-https://bugzilla.redhat.com/show_bug.cgi?id=709769
+>> It's better to be safe than sorry.
+>
+> That's why I rushed out a new release. I do take this seriously, but
+> I do not like to see the threat exaggerated beyond reason.
+>
 
-Could you please allocate a CVE identifier for this issue?
+I didn't mean to imply we should be panicking and running for the
+hills. Just that the assessment that this is *potentially* exploitable
+for code execution is accurate and is most helpful to distributions
+and users when gauging risk and determining when to release and apply
+updates.
 
-Thank you,
---
-Petr Matousek / Red Hat Security Response Team
+-Dan
+
+> Erik
+> --
+> ----------------------------------------------------------------------
+> Erik de Castro Lopo
+> http://www.mega-nerd.com/
+>
