@@ -1,31 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/6
-Message-Id: <201103080933.38597.ludwig.nussel@suse.de>
-Date: Tue, 8 Mar 2011 09:33:38 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Buffer overflows in fsck may become security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/1
+Message-Id: <20110715104744.9f8428bf.erikd@mega-nerd.com>
+Date: Fri, 15 Jul 2011 10:47:44 +1000
+From: Erik de Castro Lopo <erikd@...a-nerd.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
+Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-A buffer overflow in dosfsck caught my attention recently. Don't
-worry, it's harmless and already fixed upstream¹. However, it turned
-out that udisks has a dbus method that by default allows the user on
-the active console to run fsck on removable media. fsck is run as
-root in this case. I haven't checked whether fsck is run
-automatically in any environment. However, since some desktops
-automatically mount removeable media it seems logical to call fsck
-first. So overflows in the various fsck binaries could allow local
-privilege escalation.
+Please CC me on all mails regarding this bug. I am not on the list
+where Dan Rosenberg wrote:
 
-cu
-Ludwig
+> On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
+> <erikd (AT) mega-nerd (DOT) com> wrote:
+> > Jan Lieskovsky wrote:
+> >
+> >> * *an integer overflow, leading to heap-based buffer overflow flaw was
+> >> found in the way libsndfile, library for reading and writing of sound
+> >> files, processed certain PARIS Audio Format (PAF) audio files with
+> >> crafted count of channels in the PAF file header. A remote attacker
+> >> could provided a specially-crafted PAF audio file, which once opened by
+> >> a local, unsuspecting user in an application, linked against libsndfile,
+> >> could lead to that particular application crash (denial of service),
+> >
+> > I agree with everything up to here.
+> >
+> >> or, potentially arbitrary code execution with the privileges of the
+> >> user running the application.
+> >
+> > but this is rubbish. The heap gets overwritten with zeros which would
+> > certainly lead to the application segfaulting. However, there is
+> > no way for arbitrary code to be executed on amy sane OS with proper
+> > memory protection.
+>
+> This is not a sound assumption. Any sort of partially controlled heap
+> corruption, even if the data that's being written isn't controllable
+> by an attacker, should be considered potentially exploitable. Modern
+> heap exploitation is alive and well - it's worth pointing out that a
+> recent remote vulnerability in Microsoft IIS FTPD that allowed for a
+> heap overflow of strictly 0xff bytes was shown to be exploitable,
+> contradicting Microsoft's claims that it could only cause denial of
+> service.
 
-[1] http://git.debian-maintainers.org/?p=daniel/dosfstools.git;a=commitdiff;h=a9055613f0d826021db65c79c2df87ac91e89215
+The code which caused the heap overflow was this:
 
+    memset (ppaf24->samples, 0, ppaf24->samplesperblock * ppaf24->channels) ;
+
+where it was the ppaf24->channels value that was not validated (and
+ppaf24->samplesperblock is always 10). In future versions of libsndfile
+ppaf24->samplesperblock will be replaced by a compile time constant
+value.
+
+That means that the heap is overwritten in blocks that are a multiple
+of 10 bytes which makes it significatly more difficult to exploit.
+
+> Think about partially overwriting certain elements of heap
+> metadata, or even heap data, with zeroes. Suppose an application with
+> heavy function pointer usage was linked against libsndfile, and this
+> overflow allowed overwriting the least significant bytes of a function
+> pointer with zeroes and ultimately allowed for controlling execution
+> flow.
+
+For this instance of heap overflow (overwritten in multiples of 10 bytes
+with the base being 4 byte aligned), its only possible to zero the lowest
+2 bytes of a function pointer (assuming a little endian machine) if it
+happens to lie in exactly the right place.
+
+In terms of ease of exploitation, this one has to be in the very difficult
+basket.
+
+> It's better to be safe than sorry.
+
+That's why I rushed out a new release. I do take this seriously, but
+I do not like to see the threat exaggerated beyond reason.
+
+Erik
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+----------------------------------------------------------------------
+Erik de Castro Lopo
+http://www.mega-nerd.com/
