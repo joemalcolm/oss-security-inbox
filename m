@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/26/1
-Message-ID: <AANLkTinmiFRonvoLxwdCdNqWbKhO4QzU4DVsWf_EBp-X@mail.gmail.com>
-Date: Fri, 25 Feb 2011 21:17:30 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/7
+Message-ID: <20110715163949.GB16365@dhcp-25-225.brq.redhat.com>
+Date: Fri, 15 Jul 2011 18:39:50 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: v86d: Failure to validate netlink message sender
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE Request -- kernel: ext4: kernel panic when writing data to the last block of sparse file
 Content-Type: text/plain; charset=utf-8
 
-Versions of the v86d userspace helper for the Linux uvesafb driver
-before 0.1.10 did not verify that received netlink messages were sent
-by the kernel, allowing unprivileged users to manipulate the video
-mode and potentially other consequences.
+If an extent exists which includes the block right before the maximum
+file offset, and the block for the maximum file offset is written,
+the kernel panics. For 4KB block size, the problem only occurs on
+x86_64 architecture. For 1KB or 2KB block size, the problem occurs on
+both i386 and x86_64.
 
-v86d executes video BIOS code with access to /dev/mem in response to
-netlink messages, using either vm86 mode or an x86 emulator, depending
-on configuration. I an unclear on whether it is possible to e.g. crash
-the machine or escalate privileges by spoofing requests, or only to
-mess with the video card.
+Local unprivileged users can use this flaw to crash the system when ext4
+filesystem is in use.
+
+Upstream fix:
+f17722f917b2f21497deb6edc62fb1683daa08e6
 
 References:
-http://repo.or.cz/w/v86d.git/commit/f9abfd412639286c3143e93e8ba2c9598dfba640
+https://bugzilla.redhat.com/show_bug.cgi?id=722557
+http://www.spinics.net/lists/linux-ext4/msg25697.html
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
