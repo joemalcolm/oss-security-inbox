@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/11
-Message-ID: <1eccb0b8-f3fe-433f-b1c2-fa1327d22dae@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:06:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/5
+Message-ID: <20110715104927.GA22533@dztty>
+Date: Fri, 15 Jul 2011 11:49:27 +0100
+From: Djalal Harouni <tixxdz@...ndz.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-1764 Exim: DKIM Format String
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3624 for this.
+A format string vulnerability affects the Exim SMTP server with DomainKeys
+Identified Mail (DKIM) support, version between 4.70 and 4.75. The DKIM
+logging mechanism did not use format string specifiers when logging some
+parts of the DKIM-Signature header field. A remote attacker who is able
+to send emails, can exploit this vulnerability and execute arbitrary
+code with the privileges of the Exim daemon [1].
+
+MITRE assigned CVE-2011-1764 to this vulnerability but the entry was not
+updated [2]. We would appreciate if it can be updated, we are using this
+CVE name in one of our new Nmap scripts smtp-vuln-cve2011-1764.nse [3].
 
 Thanks.
 
+[1] http://thread.gmane.org/gmane.mail.exim.devel/4946
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=2011-1764
+[3] http://seclists.org/nmap-dev/2011/q3/221
+
 -- 
-    JB
-
-
------ Original Message -----
-> Got my Ruby/Ruby on rails mixed up.
-> 
-> Various methods in WEBrick::HTTPRequest in Ruby 1.9.2-p290 and
-> 1.8.7-p352 and earlier and do not validate the X-Forwarded-For,
-> X-Forwarded-Host and X-Forwarded-Server headers in requests, which
-> might
-> allow remote attackers to inject arbitrary text into log files or
-> bypass
-> intended address parsing via a crafted header.
-> 
-> https://redmine.ruby-lang.org/issues/5418
-> 
-> Can we get a CVE for this please?
-> 
-> -Kurt Seifried / Red Hat Security Response Team
-> 
-> 
+tixxdz
+http://opendz.org
