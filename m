@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/12
-Message-Id: <201103040735.33312.ludwig.nussel@suse.de>
-Date: Fri, 4 Mar 2011 07:35:33 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/6
+Message-ID: <20110715131302.GB20116@flens.dfn-cert.de>
+Date: Fri, 15 Jul 2011 15:13:02 +0200
+From: dfncert@...-cert.de
 To: oss-security@...ts.openwall.com
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Cc: dfncert@...-cert.de
+Subject: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-Dan Rosenberg wrote:
-> > One more option is to replace /etc/mtab regular file with a symlink to
-> > /proc/mounts, thus making any /etc/mtab editing unneeded.
-> 
-> This is a very good point.  I'm not sure why /etc/mtab exists anymore
-> given /proc/mounts is a more reliable source for this information.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-/proc/mounts doesn't store options like user=. So replacing /etc/mtab
-with a symlink wasn't feasible in general. util-linux recently
-introduced /dev/.mount/utab which stores the missing information.
+There is a vulnerability in the recently introduced OCSP feature in
+FreeRADIUS version 2.1.11.
 
-cu
-Ludwig
+A patch was proposed to the packet maintainer.
 
--- 
- (o_   Ludwig Nussel
- //\   
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Thanks.
+
+- -- 
+DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
+Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
+Sachsenstrasse 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
+-----BEGIN PGP SIGNATURE-----
+
+iQEVAwUBTiA83fNu3tfxLoPHAQJ4SAf/UVCeXlAojFxccVgLygyZFRboX2hPjeOF
+b5OAyUWSi7Uh9O/NFpyUi/JErQI6Z2QYHnp0gnEWLMN/q3SJe6nnrH7EunNexUvx
+cNAwASJoZS+JXpG9Q33oSLPeAkZ3jO6VgAy5dMQVFLDR0KV7y+1BW93v2yazzeXP
+7vj7+umns4n5mr6/xEi4LXWTuVMvY0WEe3DFvZ21Sj3mxz07VvKp2/NU+LKOGVzT
+76Zt2oJYb5bq3f8HP6Rrg62wY8bQPS2tNBj6MWieWh7Zf7GrwdmdaX4dqwk7Q+X/
+OMN0+NYJLEGVlVayDcV6Dj/hDOQW2m2LRf7uwm//6qj0cwqqoZkyCw==
+=o4QW
+-----END PGP SIGNATURE-----
