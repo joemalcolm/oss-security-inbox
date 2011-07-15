@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/13
-Message-ID: <1398886469.815055.1308596913704.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Jun 2011 15:08:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/6
+Message-ID: <20110715131302.GB20116@flens.dfn-cert.de>
+Date: Fri, 15 Jul 2011 15:13:02 +0200
+From: dfncert@...-cert.de
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
+Cc: dfncert@...-cert.de
+Subject: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+There is a vulnerability in the recently introduced OCSP feature in
+FreeRADIUS version 2.1.11.
 
------ Original Message -----
-> [PATCH] inet_diag: fix inet_diag_bc_audit()
-> 
-> A malicious user or buggy application can inject code and trigger an
-> infinite loop in inet_diag_bc_audit()
-
-Use CVE-2011-2213.
-
-> 
-> Also make sure each instruction is aligned on 4 bytes boundary, to avoid
-> unaligned accesses.
-
-Should this get a seperate ID?
-
-
-> 
-> Reported-by: Dan Rosenberg <drosenberg@...curity.com>
-> 
-> http://thread.gmane.org/gmane.linux.network/197206/focus=197386
-> http://patchwork.ozlabs.org/patch/100857/
-> https://bugzilla.redhat.com/show_bug.cgi?id=714536
-> 
+A patch was proposed to the packet maintainer.
 
 Thanks.
 
--- 
-    JB
+- -- 
+DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
+Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
+Sachsenstrasse 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
+-----BEGIN PGP SIGNATURE-----
+
+iQEVAwUBTiA83fNu3tfxLoPHAQJ4SAf/UVCeXlAojFxccVgLygyZFRboX2hPjeOF
+b5OAyUWSi7Uh9O/NFpyUi/JErQI6Z2QYHnp0gnEWLMN/q3SJe6nnrH7EunNexUvx
+cNAwASJoZS+JXpG9Q33oSLPeAkZ3jO6VgAy5dMQVFLDR0KV7y+1BW93v2yazzeXP
+7vj7+umns4n5mr6/xEi4LXWTuVMvY0WEe3DFvZ21Sj3mxz07VvKp2/NU+LKOGVzT
+76Zt2oJYb5bq3f8HP6Rrg62wY8bQPS2tNBj6MWieWh7Zf7GrwdmdaX4dqwk7Q+X/
+OMN0+NYJLEGVlVayDcV6Dj/hDOQW2m2LRf7uwm//6qj0cwqqoZkyCw==
+=o4QW
+-----END PGP SIGNATURE-----
