@@ -1,123 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/3
-Message-ID: <20110623140025.GB23129@openwall.com>
-Date: Thu, 23 Jun 2011 18:00:25 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/1
+Message-Id: <20110715104744.9f8428bf.erikd@mega-nerd.com>
+Date: Fri, 15 Jul 2011 10:47:44 +1000
+From: Erik de Castro Lopo <erikd@...a-nerd.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
+Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 22, 2011 at 02:02:53PM +0200, Ludwig Nussel wrote:
-> Solar Designer wrote:
-> > ... we need to consider
-> >timing leaks (do we care if an observer of ssh traffic is able to
-> >tell whether the password contained 8-bit chars or not? perhaps we do)
-> >and leaks via the hash encodings themselves (if only some are changed to
-> >a certain type, this may leak some info about the corresponding
-> >passwords, thereby speeding up offline attacks on the hashes).
-> 
-> For SUSE Linux we're not that paranoid I guess :-)
 
-You should be.  One of the lessons we should learn from this bug is that
-we were not paranoid enough.  Clearly, I was not.
+Please CC me on all mails regarding this bug. I am not on the list
+where Dan Rosenberg wrote:
 
-(Yet, of course, we should limit our paranoia to a reasonable level -
-e.g., don't introduce paranoid checks so complicated that they could
-likely contain security bugs themselves.  This is something I need to
-consider when I work on those mandatory self-tests, introduced in
-crypt_blowfish 1.1 and likely to be revised somewhat in future revisions.)
-
-> The extra time 
-> would only hit accounts that are not converted yet. I suppose there 
-> are not too many anyways and there will be less over time.
-
-Yes, but you'd expose them in a worse manner than they currently are.
-
-And the extra password hashing call would be usable by a DoS attacker,
-thereby halving the maximum iteration count for new password hashes that
-an admin can configure.
-
-> >One idea is to allocate yet another prefix, which will mean the same
-> >thing as 2a, but "certified" as passing a certain specific test suite
-> >(which will include 8-bit chars).  So we'll have:
+> On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
+> <erikd (AT) mega-nerd (DOT) com> wrote:
+> > Jan Lieskovsky wrote:
 > >
-> >2a - unknown correctness (may be correct, may be buggy)
-> >2x - sign extension bug
-> >2y - definitely correct
+> >> * *an integer overflow, leading to heap-based buffer overflow flaw was
+> >> found in the way libsndfile, library for reading and writing of sound
+> >> files, processed certain PARIS Audio Format (PAF) audio files with
+> >> crafted count of channels in the PAF file header. A remote attacker
+> >> could provided a specially-crafted PAF audio file, which once opened by
+> >> a local, unsuspecting user in an application, linked against libsndfile,
+> >> could lead to that particular application crash (denial of service),
 > >
-> >Newly set/changed passwords will be getting the new prefix.
-
-I am leaning towards this approach.  It is flexible and it may be
-implemented safely, without added risks on top of what we already have.
-(Of course, we'll need to be careful with the implementation.  We must
-not reveal anything about the actual passwords through the prefix used.
-The prefixes should depend solely on system settings and on when a given
-password was set, but not on the password itself.  The "when" is stored
-in shadow anyway, so we're not revealing anything new.)
-
-> >Then we'll be able to do things such as optionally have a PAM module
-> >deny logins with 8-bit char passwords to accounts that have 2a or/and
-> >2x hashes.  (Rationale for the admin: passwords weaker than expected.)
-> >With another option, we'll be able to have 2a treated as 2x.  (Rationale
-> >for the admin: minimum inconvenience to the users.)  Perhaps there can
-> >be other reasonable settings as well.
+> > I agree with everything up to here.
 > >
-> >What do you think?
-> 
-> I'm not sure we can expect admins to put that much thought into the 
-> issue and expect them to configure things.
+> >> or, potentially arbitrary code execution with the privileges of the
+> >> user running the application.
+> >
+> > but this is rubbish. The heap gets overwritten with zeros which would
+> > certainly lead to the application segfaulting. However, there is
+> > no way for arbitrary code to be executed on amy sane OS with proper
+> > memory protection.
+>
+> This is not a sound assumption. Any sort of partially controlled heap
+> corruption, even if the data that's being written isn't controllable
+> by an attacker, should be considered potentially exploitable. Modern
+> heap exploitation is alive and well - it's worth pointing out that a
+> recent remote vulnerability in Microsoft IIS FTPD that allowed for a
+> heap overflow of strictly 0xff bytes was shown to be exploitable,
+> contradicting Microsoft's claims that it could only cause denial of
+> service.
 
-You don't need to "expect" them to do it, but giving advanced admins
-the option could be nice.  The drawback is code complexity, though
-(extra options, extra if's).
+The code which caused the heap overflow was this:
 
-> I think for the system 
-> logins we can get away with patching pam_unix2 to have a fallback to 
-> 2x
+    memset (ppaf24->samples, 0, ppaf24->samplesperblock * ppaf24->channels) ;
 
-See above re: timing and halved maximum iteration count.
+where it was the ppaf24->channels value that was not validated (and
+ppaf24->samplesperblock is always 10). In future versions of libsndfile
+ppaf24->samplesperblock will be replaced by a compile time constant
+value.
 
-> and log a message for the admin that tells him to run "passwd -e" 
-> on the account.
+That means that the heap is overwritten in blocks that are a multiple
+of 10 bytes which makes it significatly more difficult to exploit.
 
-This is even worse: you'd be storing some info about the password itself
-in plaintext!  Yes, that's just one bit, yet it may allow for more
-focused attacks.  If an intruder retrieves not only the shadow file, but
-also the log file, they'd be able to attack those hashes faster.
-Similarly, if another user has read access to the log file, but not to
-the shadow file, they'd know which accounts (not) to target with 8-bit
-chars in an online password guessing attack.
+> Think about partially overwriting certain elements of heap
+> metadata, or even heap data, with zeroes. Suppose an application with
+> heavy function pointer usage was linked against libsndfile, and this
+> overflow allowed overwriting the least significant bytes of a function
+> pointer with zeroes and ultimately allowed for controlling execution
+> flow.
 
-So please don't do that.  If you need to make things mostly transparent
-for admins and users, here's my suggestion:
+For this instance of heap overflow (overwritten in multiples of 10 bytes
+with the base being 4 byte aligned), its only possible to zero the lowest
+2 bytes of a function pointer (assuming a little endian machine) if it
+happens to lie in exactly the right place.
 
-Add an option to treat 2a in existing hashes as 2x.  Maybe this should
-even be the default.
+In terms of ease of exploitation, this one has to be in the very difficult
+basket.
 
-For new hashes, produced by crypt_blowfish 1.1+ with the mandatory
-self-test in it, use a new prefix - 2y.  When checking, treat it as 2a
-(and I may make it official and transparent in 1.1.1+).
+> It's better to be safe than sorry.
 
-How does this sound to you?
+That's why I rushed out a new release. I do take this seriously, but
+I do not like to see the threat exaggerated beyond reason.
 
-Additionally, for the paranoid, when the option to treat 2a as 2x is
-disabled, disallow logins with passwords containing 0xff chars (possible
-attack).  Maybe only for 2a hashes, but not for 2y.  In order not to
-leak this fact via timings, perform the hashing anyway.  (I'll consider
-making this built-in in a new version of crypt_blowfish, which should
-let us be more careful with timings.)
-
-The 0xff char rejection idea was also proposed by iabervon in the
-thread at LWN: http://lwn.net/Articles/448699/ (subscription required).
-
-iabervon also wrote:
-
-"Alternatively, the function could replace any char 255 with a char 127,
-based on the fact that no common encoding uses both of these (so it's
-not interesting to confuse them), and get the same effect without
-prohibiting any newly-entered passwords."
-
-but I think 2y takes care of that same goal better.
-
-Alexander
+Erik
+-- 
+----------------------------------------------------------------------
+Erik de Castro Lopo
+http://www.mega-nerd.com/
