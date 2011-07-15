@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/4
-Message-ID: <1304950272.17177.226.camel@new-desktop>
-Date: Mon, 09 May 2011 16:11:12 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/8
+Message-ID: <2002843853.1360816.1310749508345.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 15 Jul 2011 13:05:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request : client-side file creation via XSLT in Webkit
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- kernel: ext4: kernel panic when writing data to the last block of sparse file
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-2695.
 
-The bug was opened on January 18 :
-https://bugs.webkit.org/show_bug.cgi?id=52688 (restricted)
+Thanks.
 
-A patch is available since February 20 :
-http://trac.webkit.org/changeset/79159 (public)
+-- 
+    JB
 
-Given some recent mail exchanges with Apple, they still not have
-affected a CVE to this issue. Could you please allocate one, in order
-for me to have an easier job communicating with the numerous impacted
-vendors (many Linux distributions, RIM, Maxthon, ...) ?
 
-Regards,
-Nicolas Grégoire
-
+----- Original Message -----
+> If an extent exists which includes the block right before the maximum
+> file offset, and the block for the maximum file offset is written,
+> the kernel panics. For 4KB block size, the problem only occurs on
+> x86_64 architecture. For 1KB or 2KB block size, the problem occurs on
+> both i386 and x86_64.
+> 
+> Local unprivileged users can use this flaw to crash the system when
+> ext4
+> filesystem is in use.
+> 
+> Upstream fix:
+> f17722f917b2f21497deb6edc62fb1683daa08e6
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=722557
+> http://www.spinics.net/lists/linux-ext4/msg25697.html
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
