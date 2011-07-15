@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/1
-Message-ID: <4E7FE264.1080603@redhat.com>
-Date: Mon, 26 Sep 2011 10:24:36 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/4
+Message-ID: <CAOSRhRM8Ct2UMkcp-cAX=RBcVaWe4Q4ktiJ4jKdi8Yi-DkPJWQ@mail.gmail.com>
+Date: Fri, 15 Jul 2011 06:49:52 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, coley@...us.mitre.org, cve-assign@...re.org
-Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Secunia Research <vuln@...unia.com>
+Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
 Content-Type: text/plain; charset=utf-8
 
-On 09/23/2011 11:18 PM, akuster wrote:
-> so this was introduced by e4cce94c9c8797b08faf6a79396df4d175e377fa ?
+>
+> In terms of ease of exploitation, this one has to be in the very difficult
+> basket.
+>
 
-Yes,
+I agree, this would be difficult to exploit.
 
-[CIFS] Prevent OOPs when mounting with remote prefixpath.
-e4cce94c9c8797b08faf6a79396df4d175e377fa
+>> It's better to be safe than sorry.
+>
+> That's why I rushed out a new release. I do take this seriously, but
+> I do not like to see the threat exaggerated beyond reason.
+>
 
-If you have this, you might also want
-cifs: add fallback in is_path_accessible for old servers
-221d1d797202984cb874e3ed9f1388593d34ee22
+I didn't mean to imply we should be panicking and running for the
+hills. Just that the assessment that this is *potentially* exploitable
+for code execution is accurate and is most helpful to distributions
+and users when gauging risk and determining when to release and apply
+updates.
 
-Thanks, Eugene
+-Dan
 
-> - Armin
-> 
-> On 09/14/2011 08:51 AM, Josh Bressers wrote:
->> Please use CVE-2011-3363 for this.
->>
->> Thanks.
->>
-
+> Erik
+> --
+> ----------------------------------------------------------------------
+> Erik de Castro Lopo
+> http://www.mega-nerd.com/
+>
