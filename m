@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/9
-Message-ID: <20111028142213.52f499e8@laverne>
-Date: Fri, 28 Oct 2011 14:22:13 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/8
+Message-ID: <2002843853.1360816.1310749508345.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 15 Jul 2011 13:05:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: rcvalle@...hat.com
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- kernel: ext4: kernel panic when writing data to the last block of sparse file
 Content-Type: text/plain; charset=utf-8
 
-Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
-schrieb Ramon de C Valle <rcvalle@...hat.com>:
+Please use CVE-2011-2695.
 
-> This is a security issue reported by vladz in bzexe. This is a low
-> impact security issue, since bzexe is rarely used and the race
-> condition window is very narrow, but still exploitable.
-
-Have you checked if this also affects gzexe? It is pretty much the same
-as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+----- Original Message -----
+> If an extent exists which includes the block right before the maximum
+> file offset, and the block for the maximum file offset is written,
+> the kernel panics. For 4KB block size, the problem only occurs on
+> x86_64 architecture. For 1KB or 2KB block size, the problem occurs on
+> both i386 and x86_64.
+> 
+> Local unprivileged users can use this flaw to crash the system when
+> ext4
+> filesystem is in use.
+> 
+> Upstream fix:
+> f17722f917b2f21497deb6edc62fb1683daa08e6
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=722557
+> http://www.spinics.net/lists/linux-ext4/msg25697.html
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
