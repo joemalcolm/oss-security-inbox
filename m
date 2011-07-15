@@ -1,73 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/6
-Message-ID: <AANLkTimYFS4ZR3umoPuRX=_S=DTDrc271h2y5LosS82-@mail.gmail.com>
-Date: Tue, 22 Mar 2011 07:52:02 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/2
+Message-ID: <4E1FF43B.8010507@redhat.com>
+Date: Fri, 15 Jul 2011 16:03:07 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2009-4067 kernel: usb: buffer overflow in auerswald_probe()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 22, 2011 at 5:48 AM, Tomas Hoger <thoger@...hat.com> wrote:
-> On Mon, 14 Mar 2011 12:31:18 -0400 Dan Rosenberg wrote:
->
->> I've done some further investigation, and have found one of the
->> underlying problems.  addmntent() will return 0 (success) even if the
->> write was truncated:
->>
->>   return (fprintf (stream, "%s %s %s %s %d %d\n",
->>                    mntcopy.mnt_fsname,
->>                    mntcopy.mnt_dir,
->>                    mntcopy.mnt_type,
->>                    mntcopy.mnt_opts,
->>                    mntcopy.mnt_freq,
->>                    mntcopy.mnt_passno)
->>           < 0 ? 1 : 0);
->
-> I must admit that I fail to see an obvious issue here.  This should do
-> the right thing assuming fprintf returns what you expect (which does
-> not seem to happen due to stdio buffering).
->
+A buffer overflow flaw was found in the Linux kernel's Auerswald
+PBX/System Telephone usb driver implementation. There's no upstream
+patch as the affected driver was removed from the kernel in 2.6.27.
 
-You're right, I neglected to consider stdio buffering, so the
-fprintf() return code will always be the full number of characters
-written, even if they weren't actually written yet.
+For more information, check out the references:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-4067
+http://labs.mwrinfosecurity.com/files/Advisories/mwri_linux-usb-buffer-overflow_2009-10-29.pdf
+https://bugzilla.redhat.com/CVE-2009-4067
 
->> Of course, this only matters if the process is catching the SIGXFSZ
->> that gets thrown if the resource limit is exceeded, but nearly all
->> suid mount helpers block or ignore signals (if they don't, that's an
->> additional problem, because the process could be terminated mid-write,
->> corrupting /etc/mtab or leaving a stale lockfile, for example).
->>
->> So, I think the first step is to patch glibc to return success in
->> these functions if and only if the *full* contents have been written.
->> Then, it will be possible to have proper error handling in these
->> helper utilities.  Currently, there's really no way for these programs
->> to know whether or not their calls to addmntent() actually succeeded
->> besides installing a special signal handler for SIGXFSZ (ugly).
->
-> Do you have any specific idea for the fix?  It seems following approach
-> may work:
->
->  if (fprintf (stream, "%s %s %s %s %d %d\n", ...) < 0)
->    return 1;
->
->  return (fflush(stream) == 0 ? 0 : 1);
->
+(Attention Steve:) Looks like MITRE assigned this CVE to the reporter on
+Nov 24, 2009, but did not update their CVE database entry for this since
+then. Fortunately this is not a critical issue...
 
-This may work.  I'll do some testing later today.
-
-> Detecting this error in endmntent() seems more problematic API-wise,
-> given that endmntent() currently "always returns 1".
->
-> Do you plan to open bug in glibc bugzilla for this issue?
->
-
-Sure, I'll open one today.
-
-Thanks,
-Dan
-
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+Eugene
