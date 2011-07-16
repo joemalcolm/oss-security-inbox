@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/3
-Message-ID: <CAOSRhROOAg33GnudkF910gx+a3Ee=VY3Z=qKOVJ3HngwUK_0Ww@mail.gmail.com>
-Date: Tue, 8 Nov 2011 08:03:45 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/2
+Message-ID: <20110716185352.GW18284@redhat.com>
+Date: Sat, 16 Jul 2011 12:53:52 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Android: vold stack buffer overflow
+Subject: CVE request and info: freetype flaw to jailbreak iphone
 Content-Type: text/plain; charset=utf-8
 
-A local user with group "log" on Android may send a malformed message
-to vold ("volume daemon"), causing a stack buffer overflow.  This has
-been demonstrated to be exploitable to escalate privileges to root on
-all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
-arbitrary heap object and triggering a use-after-free condition [1].
-It appears the bug was silently patched in Honeycomb (3.x), but note
-that since Honeycomb is not open source, it does not fall within the
-scope of this list.  Bug discovered and exploited by the Revolutionary
-team [2].
+I'm not sure if this has received a CVE name or not (if it did, it was
+likely assigned to iOS specifically and not freetype).
 
--Dan
+It looks like the flaw used to jailbreak the iphone was in freetype's
+PS type1 font handling.
 
-[1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
-[2] http://revolutionary.io/
+I've taken a quick look, but am by no means a C guy, but the code paths
+are different in freetype 2.2.x and it looks as thought 2.3.11 at least
+(so perhaps all of 2.3.x?) is affected.  The Secunia report indicates
+2.4.5 and possibly older versions.
+
+References:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=722701
+http://secunia.com/advisories/45167
+http://lists.nongnu.org/archive/html/freetype-devel/2011-07/msg00014.html
+http://lists.nongnu.org/archive/html/freetype-devel/2011-07/msg00015.html
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
