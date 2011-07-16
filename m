@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/5
-Message-ID: <252789075.94975.1303332634116.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Apr 2011 16:50:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenVAS Manager v2.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/3
+Message-Id: <201107162135.20489.sf@sfritsch.de>
+Date: Sat, 16 Jul 2011 21:35:20 +0200
+From: Stefan Fritsch <sf@...itsch.de>
+To: halfdog <me@...fdog.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1597
+On Saturday 16 July 2011, halfdog wrote:
+> Understood. I've looked at the issue more closely and found a
+> similar DOS-exploitable timerace and a buffer overwrite unrelated
+> to this. Just for study, I'm currently trying to combine 3
+> timeraces + buffer overwrite + ROP to get code execution. Since
+> apache will quite likely fix the other two issues, they have to
+> touch the code anyway, so the symlink issue might be historic soon
+> also.
 
-Thanks.
+I don't think the race conditions can be fixed without openat, which 
+is available in Linux since 2.6.16 and is not available in many other 
+flavours of UNIX. Currently, it is clear that your issue only concerns 
+an un-supported use case of Apache httpd. IMHO it would not be wise to 
+change httpd to support this use case on recent Linux but not on other 
+UNIXs.
 
--- 
-    JB
-
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> based on:
-> [1]
-> http://lists.wald.intevation.org/pipermail/openvas-announce/2011-April/000120.html
-> 
-> This release fixes a severe security issue discovered after the
-> release
-> of openvas-manager 2.0.2. By crafting a special report format plugin,
-> and knowing about the operating system on which OpenVAS Manager is
-> running, a rogue user was able to upload the plugin and execute
-> arbitrary code with the privileges of the user running the OpenVAS
-> Manager.
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+And if you have a setup where the races are a problem, you can fix it 
+outside of httpd. E.g. configure your FTP-server to deny creating of 
+symlinks or configure SELinux/Apparmor/... accordingly.
