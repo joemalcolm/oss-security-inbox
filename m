@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/6
-Message-ID: <20111129111217.65560ec7@laverne>
-Date: Tue, 29 Nov 2011 11:12:17 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/1
+Message-ID: <4E217827.8030000@halfdog.net>
+Date: Sat, 16 Jul 2011 11:38:15 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki before 1.17.1
+CC: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-November/000104.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-From announce mail:
+Steven M. Christey wrote:
+> 
+> Very rarely, we will cover "documented behavior" if there is
+> sufficient evidence of widespread abuse/misuse of that behavior by
+> admins, in which case the CVE description would emphasize the fact
+> that it is the admin's "fault" or "misconception."  I generally try
+> to stay away from edge cases (such as this one) that could have a
+> "snowball effect" of setting a precedent that could ultimately be
+> used to argue for assigning too many low-priority CVEs to many
+> issues.  I would be inclined to avoid assigning a CVE for this issue
+> unless someone can provide a realistic, relatively common scenario
+> under which this would pose a significant security problem.
+> 
+> Speaking of Apache, the well-known double-extension handling issue
+> that enables arbitrary upload/execution of dangerous files like
+> abc.php.gif also doesn't have a CVE [I don't think] for similar
+> reasons, that it is well-documented behavior.
 
--------------
-I would like to announce the release of MediaWiki 1.17.1. Two security
-issues were discovered.
+Understood. I've looked at the issue more closely and found a similar
+DOS-exploitable timerace and a buffer overwrite unrelated to this. Just
+for study, I'm currently trying to combine 3 timeraces + buffer
+overwrite + ROP to get code execution. Since apache will quite likely
+fix the other two issues, they have to touch the code anyway, so the
+symlink issue might be historic soon also.
 
-Alexandre Emsenhuber discovered an issue where page titles on private
-wikis could be exposed bypassing different page ids to index.php. In the
-case of the user not having correct permissions, they will now be
-redirected to Special:BadTitle.
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-For more details, see
-https://bugzilla.wikimedia.org/show_bug.cgi?id=32276
-
-The second issue was found by Tim Starling, who discovered that
-action=ajax requests were dispatched to the relevant function without
-any read permission checks being done. This could have led to data
-leakage on private wikis.
-
-For more details, see
-https://bugzilla.wikimedia.org/show_bug.cgi?id=32616
-
-------------------------
-
-Please assign two CVEs.
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iD8DBQFOIXgjxFmThv7tq+4RAsILAJ9PCl87wk/Ii5D3ewVytYa4aDGHWACfc72d
+V/3gP5Ga7RajR681LWs4t/c=
+=/V3r
+-----END PGP SIGNATURE-----
