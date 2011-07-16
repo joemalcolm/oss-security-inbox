@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/7
-Message-ID: <AANLkTi=ze1G3WRwSM=nZHD_WTCshyka-TmUXAYOXw-VC@mail.gmail.com>
-Date: Tue, 1 Mar 2011 07:19:10 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Pierre Joye <pierre.php@...il.com>
-Cc: oss-security@...ts.openwall.com,  Helgi Þormar Þorbjörnsson <helgi@....net>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/2
+Message-ID: <20110716185352.GW18284@redhat.com>
+Date: Sat, 16 Jul 2011 12:53:52 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request and info: freetype flaw to jailbreak iphone
 Content-Type: text/plain; charset=utf-8
 
-> Not sure it is fixable, or maybe using a lock on the symbolic link
-> while fetching its target (to be tested to be sure that such locks
-> cannot be overridden from shell).
->
+I'm not sure if this has received a CVE name or not (if it did, it was
+likely assigned to iOS specifically and not freetype).
 
-The easiest way is to just open the target with the O_NOFOLLOW flag to
-avoid following symlinks and abort on failure.  If you need to support
-systems that don't have this flag, then perhaps you could consider
-using an application-specific temporary directory instead of operating
-in the world-writable /tmp.
+It looks like the flaw used to jailbreak the iphone was in freetype's
+PS type1 font handling.
 
->> Also, I don't see a reason why a hard link couldn't be used for exploitation
->> instead.
->
-> Hard link are not detectable (lstat), they are treated like normal files.
->
+I've taken a quick look, but am by no means a C guy, but the code paths
+are different in freetype 2.2.x and it looks as thought 2.3.11 at least
+(so perhaps all of 2.3.x?) is affected.  The Secunia report indicates
+2.4.5 and possibly older versions.
 
-Sure they are - just open the file, fstat() it, and check the st_nlink
-field.  If it's more than one, you know there's hard linking going on.
- Sometimes this kind of check introduces a race condition of its own
-where the file can be removed by the attacker after a file descriptor
-is obtained but before the fstat(), but in this case since an attacker
-would be creating a hard link to a victim's file, he wouldn't be able
-to remove it since it's in a sticky-bit /tmp directory.
+References:
 
--Dan
+https://bugzilla.redhat.com/show_bug.cgi?id=722701
+http://secunia.com/advisories/45167
+http://lists.nongnu.org/archive/html/freetype-devel/2011-07/msg00014.html
+http://lists.nongnu.org/archive/html/freetype-devel/2011-07/msg00015.html
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
