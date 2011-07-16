@@ -1,116 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/21
-Message-ID: <1023890783.87472.1300135189975.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:39:49 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/1
+Message-ID: <4E217827.8030000@halfdog.net>
+Date: Sat, 16 Jul 2011 11:38:15 +0000
+From: halfdog <me@...fdog.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Joomla! 1.6.0 | SQL Injection Vulnerability
+CC: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1151
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+Steven M. Christey wrote:
+> 
+> Very rarely, we will cover "documented behavior" if there is
+> sufficient evidence of widespread abuse/misuse of that behavior by
+> admins, in which case the CVE description would emphasize the fact
+> that it is the admin's "fault" or "misconception."  I generally try
+> to stay away from edge cases (such as this one) that could have a
+> "snowball effect" of setting a precedent that could ultimately be
+> used to argue for assigning too many low-priority CVEs to many
+> issues.  I would be inclined to avoid assigning a CVE for this issue
+> unless someone can provide a realistic, relatively common scenario
+> under which this would pose a significant security problem.
+> 
+> Speaking of Apache, the well-known double-extension handling issue
+> that enables arbitrary upload/execution of dangerous files like
+> abc.php.gif also doesn't have a CVE [I don't think] for similar
+> reasons, that it is well-documented behavior.
 
--- 
-    JB
+Understood. I've looked at the issue more closely and found a similar
+DOS-exploitable timerace and a buffer overwrite unrelated to this. Just
+for study, I'm currently trying to combine 3 timeraces + buffer
+overwrite + ROP to get code execution. Since apache will quite likely
+fix the other two issues, they have to touch the code anyway, so the
+symlink issue might be historic soon also.
 
+- -- 
+http://www.halfdog.net/
+PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
------ Original Message -----
-> =================================
-> Joomla! 1.6.0 | SQL Injection Vulnerability
-> =================================
-> 
-> 
-> 1. OVERVIEW
-> 
-> Joomla! 1.6.0 was vulnerable to SQL Injection.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Joomla is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets. It comprises a
-> model–view–controller (MVC) Web application framework that can also be
-> used independently.
-> Joomla is written in PHP, uses object-oriented programming (OOP)
-> techniques and software design patterns, stores data in a MySQL
-> database, and includes features such as page caching, RSS feeds,
-> printable versions of pages, news flashes, blogs, polls, search, and
-> support for language internationalization.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Parameters (filter_order, filer_order_Dir) were not properly sanitized
-> in Joomla! that lead to SQL Injection vulnerability. This could an
-> attacker to inject or manipulate SQL queries in the back-end database,
-> allowing for the manipulation or disclosure of arbitrary data.
-> 
-> 
-> 4. VERSION AFFECTED
-> 
-> Joomla! 1.6.0
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=yehg.net.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAAAAA,&filter_order_Dir=2&limit=3&limitstart=4
-> 
-> 
-> http://attacker.in/joomla160/index.php/using-joomla/extensions/components/content-component/article-category-list/?filter_order=1,&filter_order_Dir=yehg.net.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB,&limit=3&limitstart=4
-> 
-> 
-> This is the exact same variant as shown in Joomla! 1.5.21:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
-> 
-> We thought Joomla! team would fix this issue in 1.6.0 stable release
-> whilst they fixed it in Joomla! 1.5.22!
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to Joomla! 1.6.1 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-01-24: notified vendor
-> 2011-03-08: vendor released fix
-> 2011-03-14: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Vendor Advisory URL:
-> http://developer.joomla.org/security/news/328-20110201-core-sql-injection-path-disclosure.html
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.0]_sql_injection
-> OWASP Top 10:
-> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-> CWE-89: http://cwe.mitre.org/data/definitions/89.html
-> 
-> 
-> #yehg [2011-03-14]
-> 
-> 
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+iD8DBQFOIXgjxFmThv7tq+4RAsILAJ9PCl87wk/Ii5D3ewVytYa4aDGHWACfc72d
+V/3gP5Ga7RajR681LWs4t/c=
+=/V3r
+-----END PGP SIGNATURE-----
