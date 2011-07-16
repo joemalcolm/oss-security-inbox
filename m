@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/19/1
-Message-Id: <201102181757.01422.geissert@debian.org>
-Date: Fri, 18 Feb 2011 17:57:00 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: vendor-sec@....de
-Cc: "Steven M. Christey" <coley@...re.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE request: More Evince overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/16/3
+Message-Id: <201107162135.20489.sf@sfritsch.de>
+Date: Sat, 16 Jul 2011 21:35:20 +0200
+From: Stefan Fritsch <sf@...itsch.de>
+To: halfdog <me@...fdog.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Friday 18 February 2011 08:41:08 Thomas Biege wrote:
-> Has someone assigned a CVE-ID for this already?
-> > https://bugzilla.gnome.org/show_bug.cgi?id=640923
+On Saturday 16 July 2011, halfdog wrote:
+> Understood. I've looked at the issue more closely and found a
+> similar DOS-exploitable timerace and a buffer overwrite unrelated
+> to this. Just for study, I'm currently trying to combine 3
+> timeraces + buffer overwrite + ROP to get code execution. Since
+> apache will quite likely fix the other two issues, they have to
+> touch the code anyway, so the symlink issue might be historic soon
+> also.
 
-Looks like everyone is just waiting for somebody else to assign an id, so 
-let's just assign one:
+I don't think the race conditions can be fixed without openat, which 
+is available in Linux since 2.6.16 and is not available in many other 
+flavours of UNIX. Currently, it is clear that your issue only concerns 
+an un-supported use case of Apache httpd. IMHO it would not be wise to 
+change httpd to support this use case on recent Linux but not on other 
+UNIXs.
 
-Please use CVE-2011-0433
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+And if you have a setup where the races are a problem, you can fix it 
+outside of httpd. E.g. configure your FTP-server to deny creating of 
+symlinks or configure SELinux/Apparmor/... accordingly.
