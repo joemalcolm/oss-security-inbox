@@ -1,35 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/13
-Message-ID: <4DA71FC8.5060101@mvista.com>
-Date: Thu, 14 Apr 2011 06:24:40 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/5
+Message-id: <46788CE8-49E9-4562-B1AA-0D9DAA7FF7A0@apple.com>
+Date: Sun, 17 Jul 2011 13:52:45 -0700
+From: Geoffrey Keating <geoffk@...le.com>
 To: oss-security@...ts.openwall.com
-CC: Mike O'Connor <mjo@...o.mi.org>
-Subject: Re: Closed list
+Subject: Re: CVE request and info: freetype flaw to jailbreak iphone
 Content-Type: text/plain; charset=utf-8
 
 
+On 16/07/2011, at 11:53 AM, Vincent Danen wrote:
 
-On 04/13/2011 01:02 PM, Mike O'Connor wrote:
-> :----- Original Message -----
+> I'm not sure if this has received a CVE name or not (if it did, it was
+> likely assigned to iOS specifically and not freetype).
 
-> For linux-distros, I think what you really want to go for here are
-> *timely* updates.  If a distro isn't generally capable of producing a
-> security update within, say, a month of when the issue was released,
-> then their getting the issue in advance through linux-distros isn't
-> going to do them or their distro community a lot of good because they
-> have other constraints in getting fixes out the door. 
-> Focusing on how
-> you think an update ought to *look* (e.g. should the advisories be
-> public?) isn't as important as the update getting *out*.  Especially
-> since you're dealing with GPL'ed code, I think that's something you
-> can measure.  Just ask the constituency a month or so after some major
-> kernel issue who has released updates/fixes and who hasn't, show the
-> relevant source, and take it from there.
+We have CVE-2011-0226 for the type1 issue, see
 
-Where would one draw the line? If one is truly worried about security
-the units running the software need to validated (no suggesting this at
-all, completely impractical).  Anyone up for going to Iraq to check our
-customer's units? How about Bob's house, Jill's car or outer-space?
-
-- Armin
+http://support.apple.com/kb/HT4802
