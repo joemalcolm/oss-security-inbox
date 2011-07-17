@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/14
-Message-ID: <2129000690.299846.1298927603500.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 16:13:23 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/3
+Message-ID: <20110717191039.GA18385@openwall.com>
+Date: Sun, 17 Jul 2011 23:10:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: FreeBSD/OS X crontab information leakage
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-This should probably get three.
-
------ Original Message -----
-> Details here:
-> http://marc.info/?l=full-disclosure&m=129891323028897&w=2
+On Tue, Jun 21, 2011 at 01:22:15PM -0600, Vincent Danen wrote:
+> >On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
+> >>Ok, so taking a quick look at php-suhosin, we have:
+[...]
+> So should have included this:
 > 
-> There are three leaks, each of which amounts to a minor DAC bypass.
-> 
-> 1. Leakage of file/directory existence via stat() calls (e.g.
-> determining if a file exists regardless of search permissions on
-> directories)
+> 556     __CONST char *ptr = key;
 
-CVE-2011-1073
+Right.  I've just e-mailed Stefan.
 
-> 
-> 2. Leakage of directory existence via realpath()
+Thanks,
 
-CVE-2011-1074
-
-> 
-> 3. Arbitrary MD5 comparison (e.g. ability to determine if any two
-> files have identical MD5 hashes, regardless of read permissions on
-> those files)
-
-CVE-2011-1075
-
-Thanks.
-
--- 
-    JB
+Alexander
