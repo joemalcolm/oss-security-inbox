@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/8
-Message-ID: <1319749248.4817.11.camel@localhost>
-Date: Thu, 27 Oct 2011 16:00:48 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: Craig Barratt <cbarratt@...rs.sourceforge.net>, coley@...us.mitre.org,  oss-security <oss-security@...ts.openwall.com>
-Cc: security@...ntu.com
-Subject: CVE Request: Security issue in backuppc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/2
+Message-ID: <20110717183033.GA17408@openwall.com>
+Date: Sun, 17 Jul 2011 22:30:33 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Hi Craig,
+On Sun, Jul 17, 2011 at 05:48:21PM +0400, Solar Designer wrote:
+> I've just released crypt_blowfish 1.2:
+> 
+> http://www.openwall.com/crypt/
+> 
+> All projects using crypt_blowfish should upgrade to this newer code.
 
-While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
-another XSS vulnerability in View.pm when accessing the following URLs
-in backuppc:
-index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
-index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
+Patches for PHP 5.3 and 5.4:
 
-You are being emailed as the upstream contact. Please keep
-oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+http://news.php.net/php.internals/54000
 
-To oss-security, can I have a CVE for this? It is essentially the same
-vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
-of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
-3.0.0, 3.1.0, 3.2.0 and 3.2.1.
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-View attachment "view.diff" of type "text/x-patch" (410 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
