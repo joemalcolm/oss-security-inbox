@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/3
-Message-ID: <20111106215755.GB29061@suse.de>
-Date: Sun, 6 Nov 2011 22:57:55 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/1
+Message-ID: <20110717134821.GA15527@openwall.com>
+Date: Sun, 17 Jul 2011 17:48:21 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
-> On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
-> > Are these duplicates:
-> > 
-> > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
-> > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
-> > 
-> > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+On Thu, Jul 14, 2011 at 04:37:36PM +0200, Ludwig Nussel wrote:
+> Solar Designer wrote:
+> >I am tempted to just release the current code as 1.2 now.  We won't
+> >arrive at a perfect solution anyway, because it doesn't exist.  And we
+> >need to let other projects upgrade to better/safer code (dealing with
+> >one-correct to many-buggy collisions) sooner rather than later.
 > 
-> This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
-> 
-> I am really sorry about duplicate CVEs. :(
+> Indeed.
 
-Did you mail the new cve-assign alias they have?
+I've just released crypt_blowfish 1.2:
 
-Ciao, Marcus
+http://www.openwall.com/crypt/
+
+All projects using crypt_blowfish should upgrade to this newer code.
+
+Alexander
