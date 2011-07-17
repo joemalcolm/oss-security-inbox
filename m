@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/14
-Message-ID: <706988880.998704.1309292560379.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 28 Jun 2011 16:22:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/4
+Message-ID: <20110717191540.GB18385@openwall.com>
+Date: Sun, 17 Jul 2011 23:15:40 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org
-Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
+> PostgreSQL is affected as well (the pgcrypto module):
 > 
-> It can be used to learn ssh and ftp password length. If privsep is
-> enabled in openssh and vsftpd, the unprivileged process' activity very
-> precisely shows password information.
-> 
-> For vsftpd read characters count is strlen("USER username\r\n") +
-> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
-> related to a privileged parent. If measure statistics between user and
-> passwords commands, actual password length and username length can be
-> gathered.
-> 
-> For ssh, vice versa, networking activity is constant in packets length,
-> but interprocess communications, specifically passwords, depend on user
-> input.
-> 
-> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
-> CONST.
-> 
-> Another daemons with more or less constant io activity might be
-> vulnerable too. PAM greatly complicates precise measurements.
-> 
-> 
-> I think it needs 2 CVE, one for /proc/PID/io and another for
-> taskstats.
-> 
-> https://lkml.org/lkml/2011/6/24/88
-> 
+> % head crypt-blowfish.c 
+> /*
+>  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 
+>  14:48:52 momjian Exp $
 
-I can't find a nice description of both issues. Can you give me one or two
-sentence explanations with a few references for the CVE database?
+Right.  Luckily, it is well-maintained - Tom Lane committed a fix based
+on crypt_blowfish 1.1's on June 21st:
 
-Once I have those I'll give it two IDs.
+http://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=ca59dfa6f727fe3bf3a01904ec30e87f7fa5a67e
 
-Thanks.
+I've just e-mailed Tom to let him know about crypt_blowfish 1.2 with its
+more elaborate changes, and to try to persuade him to include the runtime
+quick self-test - to catch miscompiles, bugs potentially introduced in
+re-users of the code (such as in a future revision of pgcrypto - who
+knows), and to clean up the stack locations.
 
--- 
-    JB
+Alexander
