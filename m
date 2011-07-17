@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/15
-Message-ID: <1542530748.193410.1294340225061.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 13:57:05 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Multiple XSS Vulnerabiliies < Piwik 1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/2
+Message-ID: <20110717183033.GA17408@openwall.com>
+Date: Sun, 17 Jul 2011 22:30:33 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>, Pierre Joye <pierre.php@...il.com>
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0004 for the multiple XSS flaws.
-
-Thanks.
-
--- 
-    JB
-
-
------ Original Message -----
-> Piwik 1.1 released on Jan 4, 2011, addresses numerous security issues
-> following a security audit by SektionEins (led by Stefan Esser), an
-> internal
-> review, and coordinated disclosures from Jarosław Sajko
-> (Pentesters.pl) and
-> Fabian Becker.
+On Sun, Jul 17, 2011 at 05:48:21PM +0400, Solar Designer wrote:
+> I've just released crypt_blowfish 1.2:
 > 
-> Notably, versions of Piwik prior to 1.1 contain multiple persistent
-> and
-> reflective XSS vulnerabilities through unescaped parameters and/or
-> output.
+> http://www.openwall.com/crypt/
 > 
-> Security advisory:
-> http://piwik.org/blog/2011/01/piwik-1-1-security-advisory/
-> Other advisory:
-> http://piwik.org/blog/2011/01/professional-security-audit-in-piwik/
-> Changelog: http://piwik.org/blog/2011/01/piwik-1-1-2/
+> All projects using crypt_blowfish should upgrade to this newer code.
+
+Patches for PHP 5.3 and 5.4:
+
+http://news.php.net/php.internals/54000
+
+Alexander
