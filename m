@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/3
-Message-ID: <4DD15E51.6080300@redhat.com>
-Date: Mon, 16 May 2011 19:26:41 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/3
+Message-ID: <20110717191039.GA18385@openwall.com>
+Date: Sun, 17 Jul 2011 23:10:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On 04/01/2011 08:03 PM, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+On Tue, Jun 21, 2011 at 01:22:15PM -0600, Vincent Danen wrote:
+> >On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
+> >>Ok, so taking a quick look at php-suhosin, we have:
+[...]
+> So should have included this:
+> 
+> 556     __CONST char *ptr = key;
 
-Hi Solar,
+Right.  I've just e-mailed Stefan.
 
-   please add me to the list. I was earlier vendor-sec member via
-Red Hat exploder.
+Thanks,
 
-pub   2048R/9D465824 2011-05-16
-       Key fingerprint = 905D D296 41F5 33CD D76F  25AD 24CE 3A4D 9D46 5824
-uid                  Jan Lieskovsky (iankko) <jlieskov@...hat.com>
-sub   2048R/4F954334 2011-05-16
-
-http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x24CE3A4D9D465824
-
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Was waiting if the discussion regarding limiting a distro to two
-       or three representatives will come to conclusion and intended to
-       post then. But not sure if there was a final decision wrt to this.
-       Thank you, Jan.
+Alexander
