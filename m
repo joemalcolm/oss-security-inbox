@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/11
-Message-ID: <20110804155530.GB7292@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 18:55:30 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/4
+Message-ID: <20110717191540.GB18385@openwall.com>
+Date: Sun, 17 Jul 2011 23:15:40 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: pithos symlink vulnerability CWE-61
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2010 CVE-ID for Pithos symlink attack vulnerability: https://bugs.launchpad.net/pithos/+bug/667896
+On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
+> PostgreSQL is affected as well (the pgcrypto module):
+> 
+> % head crypt-blowfish.c 
+> /*
+>  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 
+>  14:48:52 momjian Exp $
 
-Software web-page: https://launchpad.net/pithos
-Found by: lfaraone <https://launchpad.net/~lfaraone>
-Found at: 2010-10-30 (fix released same day)
-"Predictable file- or directory-names in /tmp/-directory can lead to symlink attack."
+Right.  Luckily, it is well-maintained - Tom Lane committed a fix based
+on crypt_blowfish 1.1's on June 21st:
 
-Fixed in Debian:
+http://git.postgresql.org/gitweb/?p=postgresql.git;a=commitdiff;h=ca59dfa6f727fe3bf3a01904ec30e87f7fa5a67e
 
-http://packages.debian.org/changelogs/pool/main/p/pithos/current/changelog says:
-pithos (0.3.5-1) unstable; urgency=high
+I've just e-mailed Tom to let him know about crypt_blowfish 1.2 with its
+more elaborate changes, and to try to persuade him to include the runtime
+quick self-test - to catch miscompiles, bugs potentially introduced in
+re-users of the code (such as in a future revision of pgcrypto - who
+knows), and to clean up the stack locations.
 
-   * New upstream version.
-     - SECURITY UPDATE: fixes overwriting of arbitrary file via symlinks
-       (LP: #667896)
-Can be still found from DST: http://security-tracker.debian.org/tracker/TEMP-0000000-14D1F9
-
-And in Ubuntu: http://changelogs.ubuntu.com/changelogs/pool/universe/p/pithos/pithos_0.3.8-1/changelog
-
-Best regards,
-Henri Salo
+Alexander
