@@ -1,64 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/1
-Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A70F4D84C@GVW0671EXC.americas.hpqcorp.net>
-Date: Wed, 16 Mar 2011 04:07:15 +0000
-From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/6
+Message-ID: <20110718173638.GC18284@redhat.com>
+Date: Mon, 18 Jul 2011 11:36:39 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2011-2520: flaw in system-config-firewall's usage of pickle allows privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Mike has an interesting idea, of opening the archives after a period of
-time.  The embargoes in vendor-sec were typically weeks, but I don't recall
-the longest one.  I too favor opening the vendor-sec archives after a while,
-maybe quarterly.
+Hi folks.  I'm not sure if anyone else uses system-config-firewall and
+system-config-printer, but we had a report of a privilege escalation
+flaw that could allow a user with access to run these commands to
+elevate their privileges due to insecure use of the python pickle
+module.
 
-Not being the one fixing the code for our kernel left me with little to
-immediately contribute, but I requested and coordinated with several folks
-who got vendor sec for HP.  Likely, we would still want to be part of
-vendor-sec.new.
+The solution is to use JSON rather than pickle.  The details and a patch
+for CVE-2011-2520 are available in our bugzilla:
 
-Most importantly, we would be glad to restate our need to continue to
-participate based on the new ground rules of whomever administers the new
-vendor-sec.  FWIW, I understand our largely silent participation in
-vendor-sec was annoying to folks looking at code, assessing risk, and
-suggesting fixes.  If there is something we could contribute, I'll encourage
-us not to be as shy.
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2520
 
--Mark Menkhus
-Hewlett Packard Software Security Response Team
+Thanks.
 
-> -----Original Message-----
-> From: Mike O'Connor [mailto:mjo@...o.mi.org]
-> Sent: Monday, March 14, 2011 9:01 PM
-> To: oss-security@...ts.openwall.com
-> Subject: Re: [oss-security] Vendor-sec hosting and future of closed
-> lists
-> 
-> [catching up on older emails]
-> 
-> :> > They do this already today, that's what security@...nel.org is
-> for, and
-> :> > it gets a bit of traffic like this every week.
-> :>
-> :> Is this list open to the public?  It doesn't seem to be available on
-> :> http://vger.kernel.org/vger-lists.html.
-> :
-> :No, it is closed, as it should be as potential security problems are
-> :mailed there.  You don't want that to be totally open, right?
-> 
-> One suggestion I've made in the past is to have the list _archives_ be
-> open.  So anything older than, say, a month is made public.  That way,
-> folks can see how issues were disclosed, how decisions were reached,
-> etc.  for old issues that are no longer under embargo.  The way I see
-> it, if we don't publish the list archive on our own terms, miscreants
-> will get around to publishing it for us.
-> 
-> --
->  Michael J. O'Connor
-> mjo@...o.mi.org
->  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==-
-> -==--=
-> "Why make trillions when we could make... billions?"                -
-> Dr. Evil
-
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
+-- 
+Vincent Danen / Red Hat Security Response Team 
