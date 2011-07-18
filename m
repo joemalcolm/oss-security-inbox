@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/3
-Message-ID: <4E8EC67B.60201@redhat.com>
-Date: Fri, 07 Oct 2011 14:59:31 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: akuster <akuster@...sta.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/4
+Message-ID: <4E242D66.7080606@suse.de>
+Date: Mon, 18 Jul 2011 14:56:06 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: dfncert@...-cert.de
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-On 10/05/2011 10:09 PM, akuster wrote:
-> What version does this affect ?
+dfncert@...-cert.de wrote:
+> There is a vulnerability in the recently introduced OCSP feature in
+> FreeRADIUS version 2.1.11.
+> 
+> A patch was proposed to the packet maintainer.
 
-My mail should have been more verbose earlier. sorry for that!
+Would you mind sharing that patch with us?
 
-The flaw exists in the set of shell scripts, shipped with Red Hat 
-Enterprise Linux and Fedora kexec-tools packages.
-
-(kdump.init and mkdumprd, more specifically)
-
-I am not sure what other distros. ship these scripts.
-
-
+cu
+Ludwig
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+
