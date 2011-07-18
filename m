@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/02/2
-Message-ID: <20110402104937.57fb5bf4@mail.a3li.li>
-Date: Sat, 2 Apr 2011 10:49:37 +0200
-From: Alex Legler <a3li@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/5
+Message-ID: <20110718142742.GA10369@flens.dfn-cert.de>
+Date: Mon, 18 Jul 2011 16:27:42 +0200
+From: dfncert@...-cert.de
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+Cc: dfncert@...-cert.de, oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jul 18, 2011 at 02:56:06PM +0200, Ludwig Nussel wrote:
 
-On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
-
+> > A patch was proposed to the packet maintainer.
 > 
-> Initial members will have had to be a vendor-sec member (no exploders
-> this time around). You must reply to this thread, in public (on
-> oss-security). We want this to be very public, we have nothing to
-> hide. You must have a public gpg key ID included in your reply. The
-> new list will gpg encrypt all mail (it does accept plaintext messages
-> though).
+> Would you mind sharing that patch with us?
 
-please add me as a representative for Gentoo. We were members of v-s.
-
-pub   1024D/F3C06469 2008-06-12
-Key fingerprint = F898 3D19 6A52 0EF1 7451  C534 93EA 2A85 F3C0 6469
-
-Thanks for your efforts,
-Alex
+We would be willing to provide the patch to all Linux distributors
+but we do not want to release the patch publicly and wait for the
+official patch by the packet maintainer of FreeRADIUS.
 
 -- 
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby
+DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
+Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
+Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
