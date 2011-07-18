@@ -1,53 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/4
-Message-ID: <4EC13E87.4000807@redhat.com>
-Date: Mon, 14 Nov 2011 09:15:03 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Did this ArchLinux/shaman thing ever get a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/2
+Message-ID: <20110718084750.GA18157@flens.dfn-cert.de>
+Date: Mon, 18 Jul 2011 10:47:50 +0200
+From: dfncert@...-cert.de
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-Did this ever get a CVE #? I can't find one.
+On Fri, Jul 15, 2011 at 11:18:49AM -0600, Vincent Danen wrote:
 
-https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
-
-====================
-The point of this thread was that you don't need to enter the root
-password at all. Not the first time, not ever.
-
-As far as I understand, it is supposed to work like this: When you
-first use shaman too install anything, it asks for the root password
-You can tick a "Do not ask me again"-box, so you don't have to enter
-the password again. If you tick the box and enter the password, shaman
-add the lines
-[auth]
-askforpwd=false
-to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
-time shaman is run, it checks the config file, and if the askforpwd
-value is set to false, it grants itself root privileges (with some
-nifty setuuid root-thingy, I imagine) This is not the problem - this
-is the feature.
-
-The bug is this:
-the fact that any user can add the lines
-[auth]
-askforpwd=false
-to his own shaman.conf file, without ever entering the root password
-in shaman. The next time shaman is run, it checks the config file, and
-if the askforpwd value is set to false, it grants itself root
-privileges - even though the user has never entered the root password.
-This works for any unprivileged user on the system.
-
-If that is indeed a feature intended by any sane person, then I'm
-Mother Mary. And that can't be, seeing as I don't have breasts.
-====================
+> >A patch was proposed to the packet maintainer.
+> 
+> This is pretty light on the details.  Any references to supply or an
+> actual description of the problem?
+ 
+The implemented procedure does not verify the status of
+the certificate. For instance, if the certificate has been revoked.
 
 
-Appears to never have been fixed, the last release of shaman appears
-to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
+> Link to upstream fixes, emails, bugs, whatever?
+
+We are not aware of any upstream fix.
+
 
 -- 
+DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
+Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
+Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
 
--Kurt Seifried / Red Hat Security Response Team
-
-
+Content of type "application/pgp-signature" skipped
