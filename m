@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/9
-Message-ID: <889145794.11829.1302893554457.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Apr 2011 14:52:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/7
+Message-ID: <20110718212447.GF29529@ngolde.de>
+Date: Mon, 18 Jul 2011 23:24:47 +0200
+From: Nico Golde <nico@...lde.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: incomplete fix for CVE-2010-1000 in KDE network
+Subject: CVE id request: (e)glibc
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1586
+Is there already a CVE id assigned to http://www.nodefense.org/eglibc.txt?
 
-Thanks.
+Kind regards
+Nico
 
 -- 
-    JB
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-
------ Original Message -----
-> A bug was filed in Ubuntu[1] for patches[2][3] that went into KDE
-> Network for an incomplete fix for CVE-2010-1000. The commit message
-> is:
-> 
-> "Further addresses CVE-2010-1000. The file name of Metalink File is
-> checked a better way, making it work under more conditions."
-> 
-> While the previous patch fixed things like '../../tmp/gotcha', it did
-> not fix a single leading '../'.
-> 
-> [1]https://bugs.launchpad.net/ubuntu/+source/kdenetwork/+bug/757526
-> [2]http://websvn.kde.org/?view=revision&revision=1227468 (4.4)
-> [3]http://websvn.kde.org/?view=revision&revision=1227469 (4.5)
-> 
-> --
-> Jamie Strandboge | http://www.canonical.com
+Content of type "application/pgp-signature" skipped
