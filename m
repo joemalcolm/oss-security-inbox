@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/12
-Message-ID: <822bd361-ca1c-484e-bfa9-f1bcadd16760@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 13:09:39 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, team@...urity.debian.org
-Subject: Re: CVE Request: apt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/3
+Message-ID: <4E242890.9050101@redhat.com>
+Date: Mon, 18 Jul 2011 14:35:28 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Sebastian Krahmer <krahmer@...e.de>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: hplip/foomatic-filters
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3634
+On 07/13/2011 12:53 PM, Sebastian Krahmer wrote:
+> Hi
+>
+> The foomatic filters of the hplip package allow remote users
+> to execute arbitrary commands as the lp user. The flaw allows
+> hosts which are listed in the printing ACL or local users to
+> pass PPD file arguments to the foomatic filters. A PoC was
+> demonstrated using the CUPS server.
+>
+> More info and patches are here:
+>
+> https://bugzilla.novell.com/show_bug.cgi?id=698451
 
-Thanks.
+Please use CVE-2011-2697 for this.
 
--- 
-    JB
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
------ Original Message -----
-> Hello,
-> 
-> Could a CVE please be assigned to the following issue:
-> 
-> Apt before 0.8.11 incorrectly handles the Verify-Host configuration
-> option, resulting in a successful connection instead of a
-> verification
-> failure when the certificate host name doesn't match.
-> 
-> See:
-> 
-> http://bazaar.launchpad.net/~donkult/apt/sid/revision/2053.1.28
-> https://bugs.launchpad.net/ubuntu/+source/apt/+bug/868353
-> 
-> 
-> Thanks,
-> 
-> Marc.
-> 
-> 
-> 
-> 
-> 
+>
+>
+> Sebastian
+>
+
