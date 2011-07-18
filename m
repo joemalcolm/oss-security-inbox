@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/08/2
-Message-ID: <20111009011422.114caf8a@laverne>
-Date: Sun, 9 Oct 2011 01:14:22 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/8
+Message-ID: <4E24AE57.8050303@gentoo.org>
+Date: Tue, 19 Jul 2011 00:06:15 +0200
+From: Stefan Behte <craig@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: serendipity freetag plugin before 3.30 and probably others
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-XSS in the tagcloud generation flash in serendipity freetag before 3.30:
-http://blog.s9y.org/archives/234-Security-fix-for-flash-based-cloud-in-Freetag-plugin.html
+Hi,
 
-The linked vulnerability report indicates that this flash code is also
-used by other software, e.g. the wp cumulus plugin:
-http://websecurity.com.ua/5356/
+>> Would you mind sharing that patch with us?
+> 
+> We would be willing to provide the patch to all Linux distributors
+> but we do not want to release the patch publicly and wait for the
+> official patch by the packet maintainer of FreeRADIUS.
+> 
 
-Though my ukrainian isn't that good ;-)
+Then posting it to the new vendor-sec (linux-distros@...openwall.org)
+sounds like the right thing to do. Gentoo complies to your requirements
+and would like to get the patch directly, if you do not plan to send it
+there.
 
-Please assign cve.
+Best regards,
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Stefan Behte,
+Gentoo Security
