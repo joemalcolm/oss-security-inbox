@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/31
-Message-ID: <20110404175934.3541eb88@orphan>
-Date: Mon, 4 Apr 2011 17:59:34 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/8
+Message-ID: <4E24AE57.8050303@gentoo.org>
+Date: Tue, 19 Jul 2011 00:06:15 +0200
+From: Stefan Behte <craig@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Apr 2011 01:54:35 +0400 Solar Designer wrote:
+Hi,
 
-> On Sat, Apr 02, 2011 at 01:28:18PM -0400, R P Herrold wrote:
-> > Key fingerprint:	0x9B649644
-> > Distribution:		CentOS
+>> Would you mind sharing that patch with us?
 > 
-> Subscribed.
+> We would be willing to provide the patch to all Linux distributors
+> but we do not want to release the patch publicly and wait for the
+> official patch by the packet maintainer of FreeRADIUS.
+> 
 
-Given the aim to keep the subscriber list very limited, this probably
-falls into a tentatively subscribed category too.  AFAIK, CentOS has
-rather few components that are not rebuilds of the RHEL SRPMs, the
-question is how often a v-s info was useful in the past in providing
-security updates for those extra packages.
+Then posting it to the new vendor-sec (linux-distros@...openwall.org)
+sounds like the right thing to do. Gentoo complies to your requirements
+and would like to get the patch directly, if you do not plan to send it
+there.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Best regards,
+
+Stefan Behte,
+Gentoo Security
