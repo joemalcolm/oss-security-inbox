@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/6
-Message-ID: <20110421163726.GF2125@redhat.com>
-Date: Thu, 21 Apr 2011 10:37:27 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: CVE-2011-1089-like flaw in mount.nfs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/4
+Message-ID: <4E242D66.7080606@suse.de>
+Date: Mon, 18 Jul 2011 14:56:06 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
+To: dfncert@...-cert.de
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-A similar issue to CVE-2011-1089 was found in mount.nfs because it uses
-it's own addmntent() implementation to update /etc/mtab
-(nfs_addmntend()).  It also fails to anticipate resource limits and
-could trigger corruption of the mtab file.
+dfncert@...-cert.de wrote:
+> There is a vulnerability in the recently introduced OCSP feature in
+> FreeRADIUS version 2.1.11.
+> 
+> A patch was proposed to the packet maintainer.
 
-For more details see:
+Would you mind sharing that patch with us?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=697975
-
-Could a CVE name be assigned to this issue please?  Thanks.
+cu
+Ludwig
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+
