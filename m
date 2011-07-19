@@ -1,18 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/3
-Message-ID: <1108241017100.21645@mjc.redhat.com>
-Date: Wed, 24 Aug 2011 10:22:18 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE assignment Apache httpd multiple-range DoS ("Apache Killer") - CVE-2011-3192
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/8
+Message-ID: <20110719132817.GA13858@flens.dfn-cert.de>
+Date: Tue, 19 Jul 2011 15:28:17 +0200
+From: dfncert@...-cert.de
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de, aland@...eradius.org
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-This thread is on the full-disclosure mailing list:
-http://marc.info/?t=131379269200002&r=1&w=2
-leading to this upstream discussion:
-http://marc.info/?t=131409787700005&r=1&w=2
+On Tue, Jul 19, 2011 at 03:13:00PM +0200, Tomas Hoger wrote:
 
-It is an escalation of server memory usage, and a plausible candidate 
-for a CVE, so I've assigned CVE-2011-3192.
+> > Are the published information sufficient to get a CVE number for the
+> > issue?
+> 
+> Was your intention to request a CVE for a still-to-remain-non-public
+> issue to be disclosed in the future, or actually make the issue public?
 
-Thanks, Mark
+We plan to make the issue public as soon as we have a CVE and can publish
+our advisory. However, almost every detail of the vulnerability has been
+already discussed on this list. 
+(Summary: the status of the certificate will not be checked)
+
+Thus, the patch does not reveal any further aspects of the vulnerability and
+the only reason that we do not want to publish it publicly is that the fact
+that it may be incomplete and/or introduce side effects because we do
+not have a complete test environment.
+
+
+> I'm CCing upstream (Alan DeKok), as it seems this thread may be giving
+> out more info than expected.  Alan, this is part of the following
+
+Good idea.
+
+
+p.s.
+Please include us in CC since we are not subscribed on the list.
+
+-- 
+DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
+Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
+Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
+
+Content of type "application/pgp-signature" skipped
