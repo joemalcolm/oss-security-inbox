@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/10
-Message-ID: <1178433251.426653.1299529537474.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 7 Mar 2011 15:25:37 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/1
+Message-Id: <20110718211319.0c06099ac63b110ec5d31e21@gmail.com>
+Date: Mon, 18 Jul 2011 21:13:19 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: coley@...-smtp.mitre.org
+Subject: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Friday, March 04, 2011 12:52:14 pm Solar Designer wrote:
-> > On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
-> > > If there's a common usage scenario that doesn't stem from blatant
-> > > administrator negligence, then a CVE is probably still appropriate.
-> > > ("blatant admin negligence" might be, say, if an admin arbitrarily
-> > > makes a script setuid, or modifies the perms for an executable or
-> > > config file to be world-writable.)
-> >
-> > I think that "chmod 777 /var/log" is "blatant admin negligence". As to,
-> > say, "chown nginx /var/log/nginx", it could be negligence or it could
-> > be lack of familiarity with the risks involved. So I am willing to
-> > admit that it's not necessarily negligence that turns those issues into
-> > vulnerabilities on specific systems.
-> >
-> > > We will sometimes write the CVE description more as an "adminisrator
-> > > practice" than as "fault of the software."
-> >
-> > Oh, this is something I did not realize. A lot of people assume that
-> > CVEs "blame" the software and its authors for having made an error.
-> >
-> > It felt wrong, say, to blame a text editor for being unsafe to use on
-> > files in untrusted directories when such unsafety was the typical and
-> > expected situation for text editors in general.
-> 
-> So, where does that leave us for things like this? :
-> 
-> http://reverse.lostrealm.com/protect/ldd.html
-> http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
-> 
+Hi,
 
-Steve,
+This may be an odd request.  The proprietary fglrx driver has an
+info disclosure flaw in one of it's shell scripts [0].  It passes the
+xauth secret cookie in an insecure manner (such that it's exposed to
+prying eyes in the output of ps for example).
 
-Can you start a new thread for that issue. This one is already hard enough
-to follow, and I think it deserves attention on its own.
+The oddness in this request is that the driver is proprietary; but
+then again it is also included in most linux distributions in one form
+or another, so I think oss-sec is an appropriate forum.  There is also
+a specific additional right granted in the script's header: "Distro
+maintainers may modify this reference script as necessary to conform
+to their distribution policies."
 
-Thanks.
+This is debian bug #625868 [1], and I've commited an untested fix
+(I don't use authatieventsd myself) to our svn repo [2].
 
--- 
-    JB
+Note that there is discussion in the bug report claiming the
+debian-specific patch is to blame, but that conclusion is incorrect.
+The same flaw is also present in the upstream ati code as well.
+The debian code is only different in that it was made to handle a
+slightly different use case, but the underlying flaw is indeed
+present in both, so other distros are very likely affected as well.
+
+Note also that xauth's design makes this insecure usage seem like
+an obvious solution for the cookie handling problem, so there are
+probably many other flawed implementations like this, which could
+be found by grepping for xauth and auditing those cases handling
+the secret cookie.  This may be something worth calling out as a
+CWE.
+
+Credit goes to Vincent Zweije who submitted the debian bug report.
+
+Best wishes,
+Mike
+
+[0] common/etc/ati/authatieventsd.sh
+[1] http://bugs.debian.org/625868
+[2] svn://svn.debian.org/svn/pkg-fglrx/fglrx-driver/trunk
