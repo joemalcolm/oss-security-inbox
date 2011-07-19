@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/7
-Message-ID: <661055294.29341.1300276718876.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Mar 2011 07:58:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: David Woodhouse <dwmw2@...radead.org>
-Cc: oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>, David King <amigadave@...gadave.com>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/9
+Message-ID: <CAAsmaPZhdCoJzK66L3h9VtjAj3ENZcm08G3tz9Dxj_EtC_QY=w@mail.gmail.com>
+Date: Tue, 19 Jul 2011 09:28:51 -0500
+From: Tim Zingelman <tez@...bsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Wed, 2011-03-16 at 12:02 +0100, David King wrote:
-> > It should be noted that the UPnP feature is disabled by default, so the
-> > user has the option to *enable* it. I concede that the string presented
-> > in the UI needs improvement.
-> 
-> That isn't CVE-worthy, though, surely?
-> 
-> > Of course, I agree that indication of the consequences would be
-> > appropriate,
-> 
-> That's CVE-2011-1164.
-> 
-> > and also disallowing the 'none' authentication method if UPnP is
-> > enabled.
-> 
-> And that, again, is not at all specific to UPnP.
-> 
-> Disallowing the 'none' authentication method is would be appropriate
-> whenever the machine is accessible from the outside world, whether that's
-> through UPnP or just by listening on a publicly-available IP address.
-> 
+On Tue, Jul 19, 2011 at 7:39 AM, Solar Designer <solar@...nwall.com> wrote:
 
-I probably should have been more clear here. I was under the impression the
-CVE id applied to instances where it would use UPnP and no auth, which is
-dangerous and should probably include a big warning with a button that says
-"I know what I'm doing (but probably not really)".
+> I've just added NetBSD pkgsrc to:
+>
+> http://oss-security.openwall.org/wiki/vendors
 
-UPnP by itself is not a security flaw.
+Thanks, but we were/are already there as simply pkgsrc.  Note that
+pkgsrc supports many OS in addition to NetBSD.
 
-Sorry for the confusion.
+Do you think we should combine the entries, or just make sure they
+both contain all the information?
 
--- 
-    JB
+Thanks,
+
+ - Tim
+
+p.s. I at least would be very much in support of a bsd distro's
+restricted security mailing list if you were to create one.
