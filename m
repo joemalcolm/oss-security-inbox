@@ -1,19 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/13
-Message-ID: <20110412210319.GC16400@openwall.com>
-Date: Wed, 13 Apr 2011 01:03:19 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/7
+Message-ID: <20110719132457.GA25477@openwall.com>
+Date: Tue, 19 Jul 2011 17:24:57 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: a3li@...too.org
-Subject: Re: Closed list
+Cc: dfncert@...-cert.de
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 06, 2011 at 10:13:05PM +0200, Stefan Behte wrote:
-> please add me as gentoo linux security contact:
+On Tue, Jul 19, 2011 at 02:37:46AM +0400, Solar Designer wrote:
+> On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
+> > Then posting it to the new vendor-sec (linux-distros@...openwall.org)
+> > sounds like the right thing to do.
 > 
-> pub  1024D/E28C7BB4 2009-01-26 Stefan Behte <craig@...too.org>
-> Fingerprint: 0F01 31A6 BD64 8C4C A187 6253 BA27 33A7 E28C 7BB4
+> This is not exactly the new vendor-sec.  As the name suggests, it is a
+> Linux distros only list.  Also, please note that the maximum acceptable
+> embargo period on this list is 14 days.  We need to communicate this
+> detail to whoever we're asking to disclose anything to the list, before
+> they disclose.  When posting to the list, you may encrypt messages to
+> the attached key.
 
-Added.
+I've just described the new list and some of its policies in the newly
+added "Linux distribution security contacts list" section at:
+
+http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+
+Maybe this will need to be moved to its own wiki page or to a wiki page
+on multiple non-historical closed lists if we ever host several at once.
+(Non-Linux lists may be setup if there's demand.)
 
 Alexander
