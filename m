@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/2
-Message-ID: <4DAC11B9.8010708@redhat.com>
-Date: Mon, 18 Apr 2011 15:56:01 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/1
+Message-Id: <20110718211319.0c06099ac63b110ec5d31e21@gmail.com>
+Date: Mon, 18 Jul 2011 21:13:19 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Wireshark 1.2.16 / 1.4.5
+Cc: coley@...-smtp.mitre.org
+Subject: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I noticed that new wireshark versions 1.2.16/1.4.5 were released on
-14th/15th April 2011 and some of issues fixed appear to have security impact
+This may be an odd request.  The proprietary fglrx driver has an
+info disclosure flaw in one of it's shell scripts [0].  It passes the
+xauth secret cookie in an insecure manner (such that it's exposed to
+prying eyes in the output of ps for example).
 
-1. Use of un-initialised variables:
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
-Patch: http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
-Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
+The oddness in this request is that the driver is proprietary; but
+then again it is also included in most linux distributions in one form
+or another, so I think oss-sec is an appropriate forum.  There is also
+a specific additional right granted in the script's header: "Distro
+maintainers may modify this reference script as necessary to conform
+to their distribution policies."
 
-2. Buffer overflow in DECT dissector
-The advisory does not list the bug number or the relevant patch.
+This is debian bug #625868 [1], and I've commited an untested fix
+(I don't use authatieventsd myself) to our svn repo [2].
 
-3. Crash in NFS dissector
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
-Versions affected: 1.4.0 to 1.4.4.
-This affects Windows only.
+Note that there is discussion in the bug report claiming the
+debian-specific patch is to blame, but that conclusion is incorrect.
+The same flaw is also present in the upstream ati code as well.
+The debian code is only different in that it was made to handle a
+slightly different use case, but the underlying flaw is indeed
+present in both, so other distros are very likely affected as well.
 
-http://www.wireshark.org/security/wnpa-sec-2011-05.html
-http://www.wireshark.org/security/wnpa-sec-2011-06.html
+Note also that xauth's design makes this insecure usage seem like
+an obvious solution for the cookie handling problem, so there are
+probably many other flawed implementations like this, which could
+be found by grepping for xauth and auditing those cases handling
+the secret cookie.  This may be something worth calling out as a
+CWE.
 
+Credit goes to Vincent Zweije who submitted the debian bug report.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Best wishes,
+Mike
+
+[0] common/etc/ati/authatieventsd.sh
+[1] http://bugs.debian.org/625868
+[2] svn://svn.debian.org/svn/pkg-fglrx/fglrx-driver/trunk
