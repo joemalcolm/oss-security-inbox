@@ -1,49 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/4
-Message-ID: <20110406093321.13e480ef@0xC0FF33>
-Date: Wed, 6 Apr 2011 09:33:21 +0200
-From: Milan Berger <m.berger@...ject-mindstorm.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/5
+Message-ID: <4E257B68.6040106@redhat.com>
+Date: Tue, 19 Jul 2011 14:41:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>
+Subject: CVE Request -- Wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Josh, Steve, vendors,
 
-Hello,
+   an infinite loop was found in the way ANSI A Interface (IS-634/IOS)
+dissector of the Wireshark network traffic analyzer processed certain
+ANSI A MAP capture files. If Wireshark read a malformed packet off a
+network or opened a malicious packet capture file, it could lead to 
+denial of service (Wireshark hang).
 
-I want to subscribe for Project-Mindstorm
-Please add:
+Upstream bug:
+[1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6044
 
-pub   1024D/E1EFD422 2010-01-18
-uid   Milan Berger <m.berger@...ject-mindstorm.net>
-sub   2048g/A7C4369B 2010-01-18
+Public PoC:
+[2]
+http://www.wireshark.org/download/automated/captures/fuzz-2011-06-20-22762.pcap
 
+Relevant upstream patch:
+[3] http://anonsvn.wireshark.org/viewvc?view=revision&revision=37930
 
+References:
+[4] http://www.wireshark.org/security/
+[5] http://www.wireshark.org/security/wnpa-sec-2011-11.html
+[6] http://www.wireshark.org/security/wnpa-sec-2011-10.html
+[7] https://bugzilla.redhat.com/show_bug.cgi?id=723215
 
+Could you allocate a CVE id for this?
 
-- -- 
-Kind Regards
-
-Milan Berger
-Project-Mindstorm Technical Engineer
-
-- --
-project-mindstorm.net
-Fruehlingstrasse 4 
-90537 Feucht
-Germany
-
-Mob.: +49 176 22 98 76 02
-
-http://www.androcom.net
-http://www.project-mindstorm.net
-
-twitter: http://twitter.com/twit4c
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.11 (GNU/Linux)
-
-iEYEARECAAYFAk2cF0kACgkQUKNzQuHv1CIP6wCgiQvRKZzmbHkcMHwxlwuwOgNf
-KwcAoJj4pKtwiI8HA+8nAZR3atEl2pFx
-=eZJZ
------END PGP SIGNATURE-----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
