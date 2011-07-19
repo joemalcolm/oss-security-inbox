@@ -1,17 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/7
-Message-ID: <78cda3d9-c891-40db-a4c2-706603f347b5@zmail02.collab.prod.int.phx2.redhat.com>
-Date: Wed, 05 Oct 2011 14:27:09 -0400 (EDT)
-From: Ramon de C Valle <rcvalle@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/4
+Message-ID: <20110719123900.GA25301@openwall.com>
+Date: Tue, 19 Jul 2011 16:39:00 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Request for a CVE identifier: XML-RPC SAX Parser Information Exposure
+Cc: dfncert@...-cert.de
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request a CVE identifier for the following issue:
+On Mon, Jul 18, 2011 at 10:44:13PM -0500, Tim Zingelman wrote:
+> NetBSD pkgsrc security team would be interested in the patch, as
+> FreeRADIUS is included in pkgsrc.
+> You could send to me, or to pkgsrc-security@...bsd.org in either case
+> the message could be encrypted using
+> this key  http://ftp.netbsd.org/pub/NetBSD/security/PGP/pkgsrc-security@NetBSD.org.asc
 
-https://bugzilla.redhat.com/show_bug.cgi?id=705869
-http://old.nabble.com/-PATCH--Setting-SAX-features-for-XML-RPC-td27435656.html
+I've just added NetBSD pkgsrc to:
 
---
-Ramon de C Valle / Red Hat Security Response Team
+http://oss-security.openwall.org/wiki/vendors
 
+While at it, I've also added FreeBSD and DragonFly BSD.  NetBSD itself
+and OpenBSD were already there.
+
+I also went to the MirBSD website, but couldn't find any security
+contact info there - I guess they don't care much.
+
+Alexander
