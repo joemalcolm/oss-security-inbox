@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/8
-Message-ID: <20110403205955.GA8811@openwall.com>
-Date: Mon, 4 Apr 2011 00:59:55 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/12
+Message-ID: <1311089309.4e25a29d1a173@webmail.free.fr>
+Date: Tue, 19 Jul 2011 17:28:29 +0200
+From: Even Rouault <even.rouault@...es-paris.org>
+To: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Even Rouault <even.rouault@...es-paris.org>, Pavel Lisý <pavel.lisy@...il.com>, aboudreault@...gears.com
+Subject: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 05:25:11PM -0400, Elliot Peele wrote:
-> I was on vendor-sec via the security@...th.com exploder as a representative of rPath and rPath Linux.
-> 
-> pub   1024D/05C54D73 2002-07-02 Elliot Peele <elliot@...th.com>
->  Primary key fingerprint: 00F5 0BEE 168B C07E C49E  AEC8 992A A820 05C5 4D73
+Selon Jan Lieskovsky <jlieskov@...hat.com>:
 
-Tentatively subscribed (although Elliot reported an issue with list
-messages arriving to him, which we'll try to figure out off-list).
+Jan,
 
-Elliot - can you please post an URL with info on rPath Linux security
-response?  I went to http://www.rpath.com but could not easily find
-anything relevant.  There's an entry for rPath on the oss-security wiki:
+I believe Alan Boudreault (MapServer team member that I've added to the CC list)
+has already asked the Debian security team to request for a CVE number, but
+without any result for now. Maybe he can confirm.
 
-http://oss-security.openwall.org/wiki/vendors#rpath-inc
+Best regards,
 
-It has a link to the security-announce mailing list.  The archive has a
-message in Feb 2011 ("kernel" update on 2011-02-07) and a message in Dec
-2010 ("gnupg" update on 2010-12-06).  Nothing in Nov (but a bunch of
-updates in Oct).  This gives us two security updates in 5 most recent
-months.  Naturally, I am not convinced that you should be on the list,
-but I'd be happy to be convinced once we start using the list.
+Even
 
-Alexander
+> Hello Josh, Steve, vendors,
+>
+>    the following has been brought to our attention:
+>    [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+>    [2] http://trac.osgeo.org/mapserver/ticket/3903
+>
+> More from [2]:
+>
+> This ticket is to track fixes to prevent SQL injections through OGC
+> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+> injection in WMS time support.
+>
+> Your system may be vulnerable if it has MapServer with OGC protocols
+> enabled, with layers connecting to an SQL RDBMS backend, either natively
+> or via OGR.
+>
+> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
+> All users are ** strongly encouraged ** to upgrade to one of the latest
+> releases with the fixes.
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+
+
