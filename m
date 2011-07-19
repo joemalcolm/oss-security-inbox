@@ -1,41 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/10
-Message-ID: <439581293.232576.1298994372734.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Mar 2011 10:46:12 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/12
+Message-ID: <1311089309.4e25a29d1a173@webmail.free.fr>
+Date: Tue, 19 Jul 2011 17:28:29 +0200
+From: Even Rouault <even.rouault@...es-paris.org>
+To: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Even Rouault <even.rouault@...es-paris.org>, Pavel Lisý <pavel.lisy@...il.com>, aboudreault@...gears.com
+Subject: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
 Content-Type: text/plain; charset=utf-8
 
-> "struct sco_conninfo has one padding byte in the end. Local variable
-> cinfo of type sco_conninfo is copied to userspace with this
-> uninizialized one byte, leading to old stack contents leak."
-> 
-> https://lkml.org/lkml/2011/2/14/49
+Selon Jan Lieskovsky <jlieskov@...hat.com>:
 
-Please use CVE-2011-1078.
+Jan,
 
-> "Struct ca is copied from userspace. It is not checked whether the
-> "device" field is NULL terminated. This potentially leads to BUG()
-> inside of alloc_netdev_mqs() and/or information leak by creating a
-> device with a name made of contents of kernel stack."
-> 
-> https://lkml.org/lkml/2011/2/14/50
+I believe Alan Boudreault (MapServer team member that I've added to the CC list)
+has already asked the Debian security team to request for a CVE number, but
+without any result for now. Maybe he can confirm.
 
-Please use CVE-2011-1079.
+Best regards,
 
-> "Struct tmp is copied from userspace. It is not checked whether the
-> "name" field is NULL terminated. This may lead to buffer overflow and
-> passing contents of kernel stack as a module name to
-> try_then_request_module() and, consequently, to modprobe commandline.
-> It would be seen by all userspace processes."
-> 
-> https://lkml.org/lkml/2011/2/14/51
+Even
 
-Please use CVE-2011-1080.
+> Hello Josh, Steve, vendors,
+>
+>    the following has been brought to our attention:
+>    [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+>    [2] http://trac.osgeo.org/mapserver/ticket/3903
+>
+> More from [2]:
+>
+> This ticket is to track fixes to prevent SQL injections through OGC
+> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+> injection in WMS time support.
+>
+> Your system may be vulnerable if it has MapServer with OGC protocols
+> enabled, with layers connecting to an SQL RDBMS backend, either natively
+> or via OGR.
+>
+> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
+> All users are ** strongly encouraged ** to upgrade to one of the latest
+> releases with the fixes.
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
-Thanks you,
---
-Petr Matousek / Red Hat Security Response Team
 
