@@ -1,20 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/10
-Message-ID: <20110804152350.GA7292@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 18:23:50 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/8
+Message-ID: <20110719132817.GA13858@flens.dfn-cert.de>
+Date: Tue, 19 Jul 2011 15:28:17 +0200
+From: dfncert@...-cert.de
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de, aland@...eradius.org
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2010 CVE-ID for this issue? I am not sure if other distributions/operating systems need their own IDs. If I am correct one ID should be enough.
+On Tue, Jul 19, 2011 at 03:13:00PM +0200, Tomas Hoger wrote:
 
-Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
-Bug report to FreeBSD: http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
-NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
-Reported to OpenBSD (and patched), but can't find references.
-Does not affect Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572813
-Not listed in OSVDB, but I can handle it.
+> > Are the published information sufficient to get a CVE number for the
+> > issue?
+> 
+> Was your intention to request a CVE for a still-to-remain-non-public
+> issue to be disclosed in the future, or actually make the issue public?
 
-Best regards,
-Henri Salo
+We plan to make the issue public as soon as we have a CVE and can publish
+our advisory. However, almost every detail of the vulnerability has been
+already discussed on this list. 
+(Summary: the status of the certificate will not be checked)
+
+Thus, the patch does not reveal any further aspects of the vulnerability and
+the only reason that we do not want to publish it publicly is that the fact
+that it may be incomplete and/or introduce side effects because we do
+not have a complete test environment.
+
+
+> I'm CCing upstream (Alan DeKok), as it seems this thread may be giving
+> out more info than expected.  Alan, this is part of the following
+
+Good idea.
+
+
+p.s.
+Please include us in CC since we are not subscribed on the list.
+
+-- 
+DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
+Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
+Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
+
+Content of type "application/pgp-signature" skipped
