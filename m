@@ -1,24 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/19/1
-Message-ID: <87aadd22va.fsf@mid.deneb.enyo.de>
-Date: Sun, 19 Jun 2011 18:38:17 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/13
+Message-Id: <201107191132.30985.aboudreault@mapgears.com>
+Date: Tue, 19 Jul 2011 11:32:30 -0400
+From: Alan Boudreault <aboudreault@...gears.com>
+To: Even Rouault <even.rouault@...es-paris.org>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Pavel  Lisý <pavel.lisy@...il.com>
+Subject: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
 Content-Type: text/plain; charset=utf-8
 
-* Sebastian Krahmer:
+I got new from the debian security guy yesterday. I should get the CVE id 
+soon.
 
-> The libraries that I had a quick look at and which were found
-> "vulnerable" are:
->
-> - openssl-1.0.0c
-> - openldap-2.4.23
-> - cyrus-sasl-2.1.23
->
-> which is probably far from complete.
+Thanks,
+Alan
 
-If someone wants to keep track, here's another one:
+On July 19, 2011 11:28:29 am Even Rouault wrote:
+> Selon Jan Lieskovsky <jlieskov@...hat.com>:
+> 
+> Jan,
+> 
+> I believe Alan Boudreault (MapServer team member that I've added to the CC
+> list) has already asked the Debian security team to request for a CVE
+> number, but without any result for now. Maybe he can confirm.
+> 
+> Best regards,
+> 
+> Even
+> 
+> > Hello Josh, Steve, vendors,
+> > 
+> >    the following has been brought to our attention:
+> >    [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+> >    [2] http://trac.osgeo.org/mapserver/ticket/3903
+> > 
+> > More from [2]:
+> > 
+> > This ticket is to track fixes to prevent SQL injections through OGC
+> > filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+> > injection in WMS time support.
+> > 
+> > Your system may be vulnerable if it has MapServer with OGC protocols
+> > enabled, with layers connecting to an SQL RDBMS backend, either natively
+> > or via OGR.
+> > 
+> > All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
+> > All users are ** strongly encouraged ** to upgrade to one of the latest
+> > releases with the fixes.
+> > 
+> > Could you allocate a CVE id for this?
+> > 
+> > Thank you && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
 
-NSS (the crypto library) has some questionable features controlled by
-environment variables.
+-- 
+Alan Boudreault
+Mapgears
+http://www.mapgears.com
