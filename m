@@ -1,69 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/8
-Message-ID: <4D23366C.9000108@redhat.com>
-Date: Tue, 04 Jan 2011 16:02:04 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Kurt Seifried <kurt@...fried.org>, Josh Bressers <bressers@...hat.com>
-CC: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Hyrum Wright <hwright@...che.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/2
+Message-ID: <CAAsmaPZBrrTKydd=bHsENG6UAPs66sx8+kPh9DTTG21wetjg0w@mail.gmail.com>
+Date: Mon, 18 Jul 2011 22:44:13 -0500
+From: Tim Zingelman <tez@...bsd.org>
+To: dfncert@...-cert.de
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Josh, vendors,
+On Mon, Jul 18, 2011 at 5:37 PM, Solar Designer <solar@...nwall.com> wrote:
+>
+> dfncert@...-cert.de wrote:
+>> > We would be willing to provide the patch to all Linux distributors
+>> > but we do not want to release the patch publicly and wait for the
+>> > official patch by the packet maintainer of FreeRADIUS.
+>
+> For FreeRADIUS specifically, it sounds like non-Linux vendors could be
+> interested as well.  DFN-CERT did mention Linux distros specifically in
+> the quote above, so the suggestion to use the list was appropriate, but
+> perhaps requests from other distros shipping FreeRADIUS should be
+> accommodated as well.  If something like this arrived to the Linux
+> distros list without prior discussion on oss-security, I would bring
+> this up and suggest that we contact *BSD's at least.  Since this is
+> already on oss-security, I assume that interested *BSD's and others may
+> ask DFN-CERT themselves. ;-)
+>
 
-Josh Bressers wrote:
-> 
-> ----- Original Message -----
->> Unspecified vulnerability in the server component in Apache Subversion
->> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
->> service via unknown vectors, related to a "several bug fixes,
->> including two which can cause client-initiated crashes on the server."
->>
- >> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
+NetBSD pkgsrc security team would be interested in the patch, as
+FreeRADIUS is included in pkgsrc.
+You could send to me, or to pkgsrc-security@...bsd.org in either case
+the message could be encrypted using
+this key  http://ftp.netbsd.org/pub/NetBSD/security/PGP/pkgsrc-security@NetBSD.org.asc
 
-   Cc-ed Hyrum to shed more light into this one. [1] mentions two issues:
-<begin quote>
-...
-several bug fixes, including two which can cause client-initiated
-crashes on the server.
-</end quote>
+Thanks,
 
-Further look at:
-[2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
-
-suggest:
-
-A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)" being the first one.
-    Upstream changeset:
-    http://svn.apache.org/viewvc?view=revision&revision=1033166
-
-and after discussion with Joe Orton, Joe suggested:
-
-B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
-    References:
-    http://svn.haxx.se/dev/archive-2010-11/0102.shtml
-    Upstream changeset:
-    http://svn.apache.org/viewvc?view=revision&revision=1032808
-
-    being the second one as denial of service attack (by memory consumption) against
-    svnserve.
-
-Questions:
-----------
-Hyrum, could you confirm A, and B, issues are those two, mentioned in [2]
-to be able to cause client-initiated crashes on the server?
-
-> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
-> We can split it if needed once more information is known.
-
-Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
-we consider CVE-2010-4539 to be a CVE identifier for A, issue
-and request yet another / second one for B, issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> Thanks.
-> 
-
+- Tim
