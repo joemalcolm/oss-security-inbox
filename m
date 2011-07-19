@@ -1,53 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/8
-Message-ID: <AANLkTikEk9mw4FqbnSKQrJND7OE4Ajp47KH5gXQ8YqTB@mail.gmail.com>
-Date: Wed, 23 Feb 2011 00:46:47 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/10
+Message-ID: <20110719145520.GA25999@openwall.com>
+Date: Tue, 19 Jul 2011 18:55:20 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Subject: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
 Content-Type: text/plain; charset=utf-8
 
-I don't have any definite opinions here about where to draw which
-lines, but I want to point out that in addition to physical attack
-vectors, virtualization tools are also potentially affected by these
-kinds of bugs. If you try to mount an untrusted VM's virtual disk
-image from somewhere, you're also vulnerable to that VM triggering
-bugs in the filesystem or other layers.
+On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
+> On Tue, Jul 19, 2011 at 7:39 AM, Solar Designer <solar@...nwall.com> wrote:
+> 
+> > I've just added NetBSD pkgsrc to:
+> >
+> > http://oss-security.openwall.org/wiki/vendors
+> 
+> Thanks, but we were/are already there as simply pkgsrc.
 
-- Nelson
+Oops.
 
-On Tue, Feb 22, 2011 at 11:17 PM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> I originally started writing this as a response to the recent CVE
-> requests for issues in partition handling, but thought it might be a
-> useful discussion on its own.  I was wondering if there are any
-> clear-cut policies on issues involving physical access, since these
-> can be very difficult in terms of assigning blame.
->
-> For example, many Linux distributions will auto-mount filesystems on
-> removable storage, often going so far as to load corresponding kernel
-> modules for filesystems that aren't compiled in or don't already have
-> an LKM loaded.  Sometimes, this will happen even if the screen is
-> locked.
->
-> Incidentally, many Linux filesystem implementations don't have
-> especially robust error handling for failures during attempts to mount
-> corrupt filesystems.  As an example, I have a deliberately corrupted
-> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
-> formatted a USB stick with this filesystem, so now I have a USB stick
-> that will panic the kernels of distributions that support
-> auto-mounting, in some cases even when the screen is locked.
->
-> Should this be considered a vulnerability?  Probably.  But what should
-> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-> a vulnerability if auto-mounting is disabled only when the screen is
-> locked?  Should all filesystems have graceful error handling for every
-> possible edge case that can occur when dealing with corruption?
->
-> I'd be interested to hear opinions on this.  And depending on how the
-> discussion goes, I'd be happy to provide more details on specific
-> cases, such as the btrfs example.
->
-> -Dan
->
+> Note that pkgsrc supports many OS in addition to NetBSD.
+
+Yes, we're quite aware of that:
+
+http://openwall.info/wiki/Owl/pkgsrc
+
+Thank you!
+
+> Do you think we should combine the entries, or just make sure they
+> both contain all the information?
+
+Please combine them.  I am not sure which name is better - please make
+your own determination.  Somehow I expected to find pkgsrc under or near
+NetBSD, despite of being aware of it being usable on other systems.
+
+> p.s. I at least would be very much in support of a bsd distro's
+> restricted security mailing list if you were to create one.
+
+Sounds good.  Is anyone else interested in that as well?  Also, not
+being involved with a *BSD, perhaps I should not be on that list, but
+this brings up the issue of resolving administrative issues (e.g., not
+being on the list I would not notice spam getting through to it).
+
+Alexander
