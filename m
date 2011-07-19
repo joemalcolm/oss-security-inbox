@@ -1,44 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/10
-Message-ID: <20110719145520.GA25999@openwall.com>
-Date: Tue, 19 Jul 2011 18:55:20 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/13
+Message-Id: <201107191132.30985.aboudreault@mapgears.com>
+Date: Tue, 19 Jul 2011 11:32:30 -0400
+From: Alan Boudreault <aboudreault@...gears.com>
+To: Even Rouault <even.rouault@...es-paris.org>
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Pavel  Lisý <pavel.lisy@...il.com>
+Subject: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
-> On Tue, Jul 19, 2011 at 7:39 AM, Solar Designer <solar@...nwall.com> wrote:
+I got new from the debian security guy yesterday. I should get the CVE id 
+soon.
+
+Thanks,
+Alan
+
+On July 19, 2011 11:28:29 am Even Rouault wrote:
+> Selon Jan Lieskovsky <jlieskov@...hat.com>:
 > 
-> > I've just added NetBSD pkgsrc to:
-> >
-> > http://oss-security.openwall.org/wiki/vendors
+> Jan,
 > 
-> Thanks, but we were/are already there as simply pkgsrc.
+> I believe Alan Boudreault (MapServer team member that I've added to the CC
+> list) has already asked the Debian security team to request for a CVE
+> number, but without any result for now. Maybe he can confirm.
+> 
+> Best regards,
+> 
+> Even
+> 
+> > Hello Josh, Steve, vendors,
+> > 
+> >    the following has been brought to our attention:
+> >    [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+> >    [2] http://trac.osgeo.org/mapserver/ticket/3903
+> > 
+> > More from [2]:
+> > 
+> > This ticket is to track fixes to prevent SQL injections through OGC
+> > filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+> > injection in WMS time support.
+> > 
+> > Your system may be vulnerable if it has MapServer with OGC protocols
+> > enabled, with layers connecting to an SQL RDBMS backend, either natively
+> > or via OGR.
+> > 
+> > All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
+> > All users are ** strongly encouraged ** to upgrade to one of the latest
+> > releases with the fixes.
+> > 
+> > Could you allocate a CVE id for this?
+> > 
+> > Thank you && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Oops.
-
-> Note that pkgsrc supports many OS in addition to NetBSD.
-
-Yes, we're quite aware of that:
-
-http://openwall.info/wiki/Owl/pkgsrc
-
-Thank you!
-
-> Do you think we should combine the entries, or just make sure they
-> both contain all the information?
-
-Please combine them.  I am not sure which name is better - please make
-your own determination.  Somehow I expected to find pkgsrc under or near
-NetBSD, despite of being aware of it being usable on other systems.
-
-> p.s. I at least would be very much in support of a bsd distro's
-> restricted security mailing list if you were to create one.
-
-Sounds good.  Is anyone else interested in that as well?  Also, not
-being involved with a *BSD, perhaps I should not be on that list, but
-this brings up the issue of resolving administrative issues (e.g., not
-being on the list I would not notice spam getting through to it).
-
-Alexander
+-- 
+Alan Boudreault
+Mapgears
+http://www.mapgears.com
