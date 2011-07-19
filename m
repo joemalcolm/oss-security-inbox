@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/05/1
-Message-Id: <201112051114.49796.mweckbecker@suse.de>
-Date: Mon, 5 Dec 2011 11:14:48 +0100
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/10
+Message-ID: <20110719145520.GA25999@openwall.com>
+Date: Tue, 19 Jul 2011 18:55:20 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: glibc: timezone integer overflow
+Subject: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
+> On Tue, Jul 19, 2011 at 7:39 AM, Solar Designer <solar@...nwall.com> wrote:
+> 
+> > I've just added NetBSD pkgsrc to:
+> >
+> > http://oss-security.openwall.org/wiki/vendors
+> 
+> Thanks, but we were/are already there as simply pkgsrc.
 
-looks like this has never got a CVE so far or at least I couldn't find one,
+Oops.
 
-http://dividead.wordpress.com/tag/heap-overflow/
-http://lists.grok.org.uk/pipermail/full-disclosure/2011-December/084452.html
- 
-Could there possibly be a CVE assigned, please? Thanks in advance.
+> Note that pkgsrc supports many OS in addition to NetBSD.
 
-Matthias
+Yes, we're quite aware of that:
 
--- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+http://openwall.info/wiki/Owl/pkgsrc
+
+Thank you!
+
+> Do you think we should combine the entries, or just make sure they
+> both contain all the information?
+
+Please combine them.  I am not sure which name is better - please make
+your own determination.  Somehow I expected to find pkgsrc under or near
+NetBSD, despite of being aware of it being usable on other systems.
+
+> p.s. I at least would be very much in support of a bsd distro's
+> restricted security mailing list if you were to create one.
+
+Sounds good.  Is anyone else interested in that as well?  Also, not
+being involved with a *BSD, perhaps I should not be on that list, but
+this brings up the issue of resolving administrative issues (e.g., not
+being on the list I would not notice spam getting through to it).
+
+Alexander
