@@ -1,38 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/30/2
-Message-ID: <20110530134154.GB9701@suse.de>
-Date: Mon, 30 May 2011 15:41:54 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: libgnomesu privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/14
+Message-ID: <4E25B0C5.5010306@redhat.com>
+Date: Tue, 19 Jul 2011 18:28:53 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Alan Boudreault <aboudreault@...gears.com>, Even Rouault <even.rouault@...es-paris.org>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Pavel Lisý <pavel.lisy@...il.com>
+Subject: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Alan, Even, thanks for your replies.
 
-The /usr/lib/libgnomesu/gnomesu-pam-backend suid binary which belongs
-to the libgnomesu package is not checking setuid() return values.
+Just to clarify this one a bit yet. Two CVE identifiers (one for the
+multiple SQL injection flaws, the other for the stack based buffer 
+overflow issue) seem to be necessary in this case (due different
+versions affected):
 
-As a result, two cooperating users, or users with access to guest,
-cgi or web accounts can run arbitrary commands as root very easily.
-Attacker just needs to 'su' to this account where he knows the password
-from inside the second account and take care that enough zombie
-processes exist at the target account.
+[1] http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
 
-A patch is attached in our bugzilla:
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-https://bugzilla.novell.com/show_bug.cgi?id=695627
-
--s
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+On 07/19/2011 05:32 PM, Alan Boudreault wrote:
+> I got new from the debian security guy yesterday. I should get the CVE id
+> soon.
+>
+> Thanks,
+> Alan
+>
+> On July 19, 2011 11:28:29 am Even Rouault wrote:
+>> Selon Jan Lieskovsky<jlieskov@...hat.com>:
+>>
+>> Jan,
+>>
+>> I believe Alan Boudreault (MapServer team member that I've added to the CC
+>> list) has already asked the Debian security team to request for a CVE
+>> number, but without any result for now. Maybe he can confirm.
+>>
+>> Best regards,
+>>
+>> Even
+>>
+>>> Hello Josh, Steve, vendors,
+>>>
+>>>     the following has been brought to our attention:
+>>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+>>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
+>>>
+>>> More from [2]:
+>>>
+>>> This ticket is to track fixes to prevent SQL injections through OGC
+>>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+>>> injection in WMS time support.
+>>>
+>>> Your system may be vulnerable if it has MapServer with OGC protocols
+>>> enabled, with layers connecting to an SQL RDBMS backend, either natively
+>>> or via OGR.
+>>>
+>>> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
+>>> All users are ** strongly encouraged ** to upgrade to one of the latest
+>>> releases with the fixes.
+>>>
+>>> Could you allocate a CVE id for this?
+>>>
+>>> Thank you&&  Regards, Jan.
+>>> --
+>>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
