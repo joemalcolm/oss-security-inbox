@@ -1,32 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/4
-Message-ID: <20111004142428.GA32532@boyd>
-Date: Tue, 4 Oct 2011 09:24:29 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/3
+Message-ID: <20110719101957.GA3463@flens.dfn-cert.de>
+Date: Tue, 19 Jul 2011 12:19:57 +0200
+From: dfncert@...-cert.de
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-Hello - I recently joined the Ubuntu Security team and request
-membership to the closed linux-distros list so that I may participate
-fully in reporting and fixing vulnerabilities in Ubuntu and FOSS.
+On Tue, Jul 19, 2011 at 02:37:46AM +0400, Solar Designer wrote:
 
-Here is my GPG fingerprint:
+> On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
+> > Then posting it to the new vendor-sec (linux-distros@...openwall.org)
+> > sounds like the right thing to do.
+> 
+> This is not exactly the new vendor-sec.  As the name suggests, it is a
+> Linux distros only list.  Also, please note that the maximum acceptable
 
-pub   4096R/AA02C70A 2011-09-01
-      Key fingerprint = 3E05 3E70 DE40 B13A DE91  3E7E D692 003D AA02 C70A
-uid                  Tyler Hicks <tyhicks@...icks.net>
-uid                  Tyler Hicks <tyhicks@...nel.org>
-uid                  Tyler Hicks <tyhicks@...il.com>
-uid                  Tyler Hicks <tyhicks@...onical.com>
-uid                  Tyler Hicks <tyler.hicks@...onical.com>
-uid                  Tyler Hicks <tyhicks@...ntu.com>
-uid                  Tyler Hicks <tyler.hicks@...ntu.com>
-uid                  Tyler Hicks <tyhicks@...edu>
-sub   4096R/CB16CDD4 2011-09-01
+We meant to say that we are willing to provide it to all distributions
+which provide packages for FreeRadius, not only Linux vendors. Sorry.
 
-I appreciate your consideration!
 
-Tyler
+> distros list without prior discussion on oss-security, I would bring
+> this up and suggest that we contact *BSD's at least.  Since this is
+> already on oss-security, I assume that interested *BSD's and others may
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+We will contact the NetBSD/FreeBSD/OpenBSD security teams about the issue.
+
+
+> -----BEGIN PGP PUBLIC KEY BLOCK-----
+[snip]
+> -----END PGP PUBLIC KEY BLOCK-----
+
+Thanks for the information.
+
+
+Are the published information sufficient to get a CVE number for the issue?
+
+
+p.s.
+Please include us in CC since we are not subscribed on the list.
+
+-- 
+DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
+Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
+Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
+
+Content of type "application/pgp-signature" skipped
