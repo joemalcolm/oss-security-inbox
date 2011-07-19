@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/2
-Message-ID: <1305110869.17177.267.camel@new-desktop>
-Date: Wed, 11 May 2011 12:47:49 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request : client-side file creation via XSLT in Webkit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/2
+Message-ID: <CAAsmaPZBrrTKydd=bHsENG6UAPs66sx8+kPh9DTTG21wetjg0w@mail.gmail.com>
+Date: Mon, 18 Jul 2011 22:44:13 -0500
+From: Tim Zingelman <tez@...bsd.org>
+To: dfncert@...-cert.de
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jul 18, 2011 at 5:37 PM, Solar Designer <solar@...nwall.com> wrote:
+>
+> dfncert@...-cert.de wrote:
+>> > We would be willing to provide the patch to all Linux distributors
+>> > but we do not want to release the patch publicly and wait for the
+>> > official patch by the packet maintainer of FreeRADIUS.
+>
+> For FreeRADIUS specifically, it sounds like non-Linux vendors could be
+> interested as well.  DFN-CERT did mention Linux distros specifically in
+> the quote above, so the suggestion to use the list was appropriate, but
+> perhaps requests from other distros shipping FreeRADIUS should be
+> accommodated as well.  If something like this arrived to the Linux
+> distros list without prior discussion on oss-security, I would bring
+> this up and suggest that we contact *BSD's at least.  Since this is
+> already on oss-security, I assume that interested *BSD's and others may
+> ask DFN-CERT themselves. ;-)
+>
 
-Hi,
+NetBSD pkgsrc security team would be interested in the patch, as
+FreeRADIUS is included in pkgsrc.
+You could send to me, or to pkgsrc-security@...bsd.org in either case
+the message could be encrypted using
+this key  http://ftp.netbsd.org/pub/NetBSD/security/PGP/pkgsrc-security@NetBSD.org.asc
 
-it seems that there's some confusion about these different CVE
-identifiers. I'll try to clarify it :
+Thanks,
 
-- CVE-2011-1774 was affected to the Webkit bug #52688 by Josh Bressers
-on May 9 (via oss-security and the private ticket). It seems to me to be
-actually the best choice to track this vulnerability.
-
-- CVE-2011-0195 was mistaken by Apple as affected internally to the
-Webkit bug #52688. In fact, this CVE is affected to an information leak
-about heap addresses, disclosed by Chris Evans. Unfortunately, this info
-leak is also tracked as CVE-2011-1202. This is probably the
-"Apple/Google confusion" Steve was talking about.
-
-- CVE-2011-1425 was assigned on March 14 to a xmlsec vulnerability, at
-my request. Both xmlsec and Webkit vulnerabilities have the same root
-cause, which is unrestricted access to libxslt features like file
-creation. In xmlsec, the vector is a "<ds:Transform>" tag in a signed
-file. In Webkit, it could a XML file, a XHTML page or a SVG image.
-
-In my opinion, having the same root cause isn't a sufficient reason to
-affect the same CVE to both xmlsec and Webkit vulnerabilities.
-
-Additionally, the fact that the xmlsec advisory about CVE-2011-1425
-linked to a Webkit patch (in its **work-around** section) added some
-more confusion.
-
-So, i propose to :
-- remove references to Webkit from the CVE-2011-1425 page
-- affect CVE-2011-1774 to the Webkit bug #52688
-
-Regards,
-Nicolas Grégoire
-
+- Tim
