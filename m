@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/3
-Message-ID: <1103160827070.15802@mjc.redhat.com>
-Date: Wed, 16 Mar 2011 08:36:17 +0000 (GMT)
-From: Mark J Cox <mjc@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/7
+Message-ID: <20110719132457.GA25477@openwall.com>
+Date: Tue, 19 Jul 2011 17:24:57 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: dfncert@...-cert.de
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-> time.  The embargoes in vendor-sec were typically weeks, but I don't recall
-> the longest one.  I too favor opening the vendor-sec archives after a while,
-> maybe quarterly.
+On Tue, Jul 19, 2011 at 02:37:46AM +0400, Solar Designer wrote:
+> On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
+> > Then posting it to the new vendor-sec (linux-distros@...openwall.org)
+> > sounds like the right thing to do.
+> 
+> This is not exactly the new vendor-sec.  As the name suggests, it is a
+> Linux distros only list.  Also, please note that the maximum acceptable
+> embargo period on this list is 14 days.  We need to communicate this
+> detail to whoever we're asking to disclose anything to the list, before
+> they disclose.  When posting to the list, you may encrypt messages to
+> the attached key.
 
-There were some very long embargos when third parties reporting the issues 
-to vendor-sec requested delays (due to issues being actually in firmware 
-in one case, and due to closed-source vendor co-ordination in another). 
-And we did discuss things on the list that were never made public 
-(particular ways to test or exploit vulnerabilities).  Also there were 
-things reported to us by people that wished to get no credit and remain 
-anonymous when the issue was public.
+I've just described the new list and some of its policies in the newly
+added "Linux distribution security contacts list" section at:
 
-However all those things are exceptions and I'd support us opening the 
-archives after a while and making it clear to folks reporting to us to 
-expect that to happen.  We'd need to check with common reporters like 
-CERT/CC who may not expect their early drafts to become public.
+http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
 
-Thanks, Mark
---
-Mark J Cox / Red Hat Security Response
+Maybe this will need to be moved to its own wiki page or to a wiki page
+on multiple non-historical closed lists if we ever host several at once.
+(Non-Linux lists may be setup if there's demand.)
+
+Alexander
