@@ -1,19 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/3
-Message-ID: <20110307090738.782d2ac0@orphan>
-Date: Mon, 7 Mar 2011 09:07:38 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: Jim Meyering <meyering@...hat.com>
-Subject: cgit convert_query_hexchar infinite loop (CVE-2011-1027)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/5
+Message-ID: <4E257B68.6040106@redhat.com>
+Date: Tue, 19 Jul 2011 14:41:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>
+Subject: CVE Request -- Wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hello Josh, Steve, vendors,
 
-Jim Meyering discovered an infinite loop flaw in cgit.  The issue was
-fixed upstream in 0.9 and 0.8.3.5.  Upstream commit has all the details:
+   an infinite loop was found in the way ANSI A Interface (IS-634/IOS)
+dissector of the Wireshark network traffic analyzer processed certain
+ANSI A MAP capture files. If Wireshark read a malformed packet off a
+network or opened a malicious packet capture file, it could lead to 
+denial of service (Wireshark hang).
 
-http://hjemli.net/git/cgit/commit/?id=fc384b16fb9787380746000d3cea2d53fccc548e
+Upstream bug:
+[1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6044
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Public PoC:
+[2]
+http://www.wireshark.org/download/automated/captures/fuzz-2011-06-20-22762.pcap
+
+Relevant upstream patch:
+[3] http://anonsvn.wireshark.org/viewvc?view=revision&revision=37930
+
+References:
+[4] http://www.wireshark.org/security/
+[5] http://www.wireshark.org/security/wnpa-sec-2011-11.html
+[6] http://www.wireshark.org/security/wnpa-sec-2011-10.html
+[7] https://bugzilla.redhat.com/show_bug.cgi?id=723215
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
