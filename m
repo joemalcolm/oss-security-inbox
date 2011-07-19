@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/8
-Message-ID: <1001842782.533346.1314733464377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Aug 2011 15:44:24 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/9
+Message-ID: <CAAsmaPZhdCoJzK66L3h9VtjAj3ENZcm08G3tz9Dxj_EtC_QY=w@mail.gmail.com>
+Date: Tue, 19 Jul 2011 09:28:51 -0500
+From: Tim Zingelman <tez@...bsd.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-request(?): squid: buffer overflow in Gopher reply parser
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-This needs a 2011 CVE id.
+On Tue, Jul 19, 2011 at 7:39 AM, Solar Designer <solar@...nwall.com> wrote:
 
-Use CVE-2011-3205.
+> I've just added NetBSD pkgsrc to:
+>
+> http://oss-security.openwall.org/wiki/vendors
 
-Thanks.
+Thanks, but we were/are already there as simply pkgsrc.  Note that
+pkgsrc supports many OS in addition to NetBSD.
 
--- 
-    JB
+Do you think we should combine the entries, or just make sure they
+both contain all the information?
 
+Thanks,
 
------ Original Message -----
-> Hi,
-> 
-> squid 3.x seems to have re-introduced a security issue found by Ben
-> Hawkes of
-> the Google Security Team in 2005,
-> 
-> 2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
-> 2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt
-> (CVE-2005-0094)
-> 
-> Will there be a new CVE required? Not quite sure how such "special"
-> cases are
-> handled usually.
-> 
-> Thanks,
-> Matthias
-> 
-> --
-> Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-> Tel: +49-911-74053-0; http://suse.com/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
+ - Tim
+
+p.s. I at least would be very much in support of a bsd distro's
+restricted security mailing list if you were to create one.
