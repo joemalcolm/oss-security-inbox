@@ -1,50 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/20
-Message-ID: <2107589435.508511.1307384934249.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 14:28:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/11
+Message-ID: <4E26E055.9000208@redhat.com>
+Date: Wed, 20 Jul 2011 16:04:05 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
 Content-Type: text/plain; charset=utf-8
 
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> It was found that vsftpd, Very Secure FTP daemon, when the network
-> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
-> create a new network namespace per connection. A remote attacker could
-> use this flaw to cause a memory pressure and denial of the vsftpd
-> service.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
-> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
-> 
-> This one being a bit tricky one -- from my understanding of the issue,
-> vsftpd doesn't necessarily have a security flaw on its side. It's
-> kernel issue / bug, which allows this to be used for vsftpd DoS:
-> [4]
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
-> [5]
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
-> 
-> Short-term solution would be probably to address this on the vsftpd
-> side, the long-term one then being to get this fixed in kernel.
-> 
-> Though not sure, how it would be wrt to CVE identifier(s) assignment.
-> 
+Hello Steve,
 
-I'm going to assign CVE-2011-2189 for the kernel. There are numerous
-vendors shipping this bug.
+   since assuming lack of further information is the fact, which is 
+preventing CVE identifiers to be assigned to these issue, attached below 
+is the list of the issues from set, corrected in MySQL-v5.1.52 release, 
+which would be interesting from security point of view
+(MySQL-v5.1.52-review.txt).
 
-I'll leave it up to MITRE if they think vsftpd should get an ID. I don't
-think it should myself, but they understand these corner cases better than
-I.
+The rest of the v5.1.52 corrections does not seem to have security 
+implications.
 
-Thanks.
+Also, from the time, when MySQL-v5.1.52 has been released, couple of
+newer versions has been released too:
+1) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-53.html
+2) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-54.html
+3) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-55.html
+4) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-55.html
+5) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-56.html
+6) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-57.html
 
--- 
-    JB
+And the two not released yet:
+7) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-58.html
+8) http://dev.mysql.com/doc/refman/5.1/en/news-5-1-59.html
+
+But prior requesting CVE ids for these, I will first review the lists
+in 1) up to 8) and select only those, which might be interesting from 
+security point of view. Once the review is done, would attach another
+similar review document, like the one attached below.
+
+For now it would be sufficient if you could allocate CVE ids for
+those v5.1.52 issues.
+
+Hope this being helpful && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+On 07/12/2011 08:27 PM, Josh Bressers wrote:
+> Did these ever get IDs? I've been away and don't want to dupe these.
+>
+> Thanks.
+>
+
+> ----- Original Message -----
+>> > Vincent Danen wrote:
+>>> > > I see the following changes as fixed in MySQL 5.1.52, but cannot
+>>> > > find
+>>> > > any CVEs for them:
+>>> > >
+>>> > > InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
+>>> > > examining the same table's information in the INFORMATION_SCHEMA
+>>> > > database at the same time could cause a crash in the debug version
+>>> > > of
+>>> > > the server. (Bug #54678)
+>>> > >
+>>> > > Security Fix: The server crashed for assignment of values of types
+>>> > > other
+>>> > > than Geometry to items of type GeometryCollection (MultiPoint,
+>>> > > MultiCurve, MultiSurface). Now the server checks the field type and
+>>> > > fails with bad geometry value if it detects incorrect parameters.
+>>> > > (Bug
+>>> > > #55531)
+>>> > >
+>>> > > Security Fix: EXPLAIN EXTENDED caused a server crash with some
+>>> > > prepared
+>>> > > statements. (Bug #54494)
+>>> > >
+>>> > > Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from
+>>> > > a
+>>> > > derived table caused a server crash. (Bug #54488)
+>>> > >
+>>> > > There are a whole bunch of other crash-type bugs corrected in 5.1.52
+>>> > > that upstream did not explicitly flag as security, which might be
+>>> > > considered security-relevant as well:
+>>> > >
+>>> > > http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
+>> >
+>> > Looks like this CVE request got lost.
+>> >
+>> > cu
+>> > Ludwig
+>> >
+>> > --
+>> > (o_ Ludwig Nussel
+>> > //\
+>> > V_/_ http://www.suse.de/
+>> > SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
+>> > Imendörffer, HRB 16746 (AG Nürnberg)
+
+View attachment "MySQL-v5.1.52-review.txt" of type "text/plain" (9778 bytes)
