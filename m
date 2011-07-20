@@ -1,39 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/19
-Message-ID: <ig57re$eb8$1@dough.gmane.org>
-Date: Thu, 06 Jan 2011 14:14:38 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/12
+Message-Id: <201107201023.05570.aboudreault@mapgears.com>
+Date: Wed, 20 Jul 2011 10:23:05 -0400
+From: Alan Boudreault <aboudreault@...gears.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: patch directory traversal flaw
+Cc: Even Rouault <even.rouault@...es-paris.org>, "Steven M. Christey" <coley@...us.mitre.org>, Pavel  Lisý <pavel.lisy@...il.com>
+Subject: Re: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Looks like the issue is already on oss-security? Who created it ?
 
-Steve Beattie wrote:
+Alan
 
-> On Wed, Jan 05, 2011 at 02:54:57PM -0700, Vincent Danen wrote:
->> We got a heads up on a directory traversal flaw in patch.  I don't think
->> a CVE name has been assigned to it; could we get one?  It allows for the
->> creation of arbitrary files in unexpected places due to the use of '..'.
->> 
->> References:
->> 
->> https://bugzilla.redhat.com/show_bug.cgi?id=667529
->> http://osdir.com/ml/bug-patch-gnu/2010-12/msg00000.html
->> 
->> Thanks.
+On July 19, 2011 12:28:53 pm Jan Lieskovsky wrote:
+> Alan, Even, thanks for your replies.
 > 
-> I believe the Debian security team assigned CVE-2010-1679 for this
-> issue.
+> Just to clarify this one a bit yet. Two CVE identifiers (one for the
+> multiple SQL injection flaws, the other for the stack based buffer
+> overflow issue) seem to be necessary in this case (due different
+> versions affected):
+> 
+> [1] http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
+> On 07/19/2011 05:32 PM, Alan Boudreault wrote:
+> > I got new from the debian security guy yesterday. I should get the CVE id
+> > soon.
+> > 
+> > Thanks,
+> > Alan
+> > 
+> > On July 19, 2011 11:28:29 am Even Rouault wrote:
+> >> Selon Jan Lieskovsky<jlieskov@...hat.com>:
+> >> 
+> >> Jan,
+> >> 
+> >> I believe Alan Boudreault (MapServer team member that I've added to the
+> >> CC list) has already asked the Debian security team to request for a
+> >> CVE number, but without any result for now. Maybe he can confirm.
+> >> 
+> >> Best regards,
+> >> 
+> >> Even
+> >> 
+> >>> Hello Josh, Steve, vendors,
+> >>> 
+> >>>     the following has been brought to our attention:
+> >>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+> >>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
+> >>> 
+> >>> More from [2]:
+> >>> 
+> >>> This ticket is to track fixes to prevent SQL injections through OGC
+> >>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+> >>> injection in WMS time support.
+> >>> 
+> >>> Your system may be vulnerable if it has MapServer with OGC protocols
+> >>> enabled, with layers connecting to an SQL RDBMS backend, either
+> >>> natively or via OGR.
+> >>> 
+> >>> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
+> >>> All users are ** strongly encouraged ** to upgrade to one of the latest
+> >>> releases with the fixes.
+> >>> 
+> >>> Could you allocate a CVE id for this?
+> >>> 
+> >>> Thank you&&  Regards, Jan.
+> >>> --
+> >>> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-
-That CVE is for dpkg (same principle, different code).
-My opinion is that patch should be fixed too and it would require another 
-CVE (we've run out of them atm.)
-
-Cheers,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-
+Alan Boudreault
+Mapgears
+http://www.mapgears.com
