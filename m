@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/5
-Message-ID: <20111129061453.GA26872@openwall.com>
-Date: Tue, 29 Nov 2011 10:14:53 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Raphael Bastos <tecnologia@...tosservice.com.br>
-Cc: oss-security@...ts.openwall.com, security@...ckware.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/3
+Message-ID: <4E267FCF.6030003@redhat.com>
+Date: Wed, 20 Jul 2011 15:12:15 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ipv6: make fragment identifications less predictable
 Content-Type: text/plain; charset=utf-8
 
-Raphael -
+IPv6 fragment identification generation is way beyond what we use for
+IPv4 : It uses a single generator. Its not scalable and allows DoS attacks.
 
-On Mon, Nov 28, 2011 at 09:18:50PM -0200, Raphael Bastos wrote:
-> Take a look.... this is the correction sugest to script "SeTpartitions".
+Now inetpeer is IPv6 aware, we can use it to provide a more secure and
+scalable frag ident generator (per destination, instead of system wide)
 
-As Kurt said, you definitely need to provide more information.  I found
-your posting cryptic and I was unsure about approving it for
-distribution to the list (yet I did), because it could at best result in
-a request for more info.  Security relevance of your finding is unclear
-from what you posted.
+This patch :
+1) defines a new secure_ipv6_id() helper
+2) extends inet_getid() to provide 32bit results
+3) extends ipv6_select_ident() with a new dest parameter
 
-Please clarify.
+http://thread.gmane.org/gmane.linux.network/201773/focus=201776
+https://bugzilla.redhat.com/show_bug.cgi?id=723429
 
-Thanks,
-
-Alexander
+Thanks, Eugene
