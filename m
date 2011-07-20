@@ -1,44 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/3
-Message-ID: <4EBBD8A3.7090809@redhat.com>
-Date: Thu, 10 Nov 2011 14:58:59 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- ProFTPD -- Response pool use-after-free flaw (ZDI-CAN-1420)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/7
+Message-ID: <20110720103525.GA8295@foo.fgeek.fi>
+Date: Wed, 20 Jul 2011 13:35:25 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: minhbq@...v.com.vn
+Subject: CVE request: sNews 1.7.1 XSS in reorder
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+This vulnerability does not seem to have CVE-identifier assigned. Can I get one? :)
 
-   a use-after-free flaw was found in the way ProFTPD, an enhanced FTP
-server, performed retrieval of the response pool for the old command
-(when ProFTPD was in the midst of the data transfer, when new command
-arrived) used by the Response API. A remote attacker could provide a
-specially-crafted request (resulting in a need the server to handle an
-exceptional condition), leading to memory corruption and potentially
-arbitrary code execution, with the privileges of the user running the
-proftpd server.
+Bkis page: http://security.bkis.com/snews-1-7-1-xss-vulnerability/
+Original report: http://seclists.org/fulldisclosure/2011/May/300
 
-Upstream bug report:
-[1] http://bugs.proftpd.org/show_bug.cgi?id=3711
-
-Relevant upstream patch:
-[2] http://bugs.proftpd.org/show_bug.cgi?id=3711#c1
-
-References:
-[3] https://secunia.com/advisories/46811/
-[4] https://bugs.gentoo.org/show_bug.cgi?id=390075
-[5] http://www.zerodayinitiative.com/advisories/upcoming/
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=752812
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: According to the upstream bug report [1], the ZDI-CAN-1420
-       issue has been disclosed 2011-10-28, thus grepped OSS
-       archives for CVE request due this proftpd deficiency,
-       and there doesn't seem to be one yet (also ZDI-CAN-1420
-       doesn't seem to reference a CVE id).
+Best regards,
+Henri Salo
