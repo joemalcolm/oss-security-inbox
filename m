@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/6
-Message-ID: <20110104122018.GA1795@lupin.powdarrmonkey.net>
-Date: Tue, 4 Jan 2011 12:20:18 +0000
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/3
+Message-ID: <4E267FCF.6030003@redhat.com>
+Date: Wed, 20 Jul 2011 15:12:15 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: (possible) CVE request: Clickjacking in Mediawiki
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: ipv6: make fragment identifications less predictable
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+IPv6 fragment identification generation is way beyond what we use for
+IPv4 : It uses a single generator. Its not scalable and allows DoS attacks.
 
-Mediawiki <= 1.16 is vulnerable to clickjacking when showing iframes in a
-wiki:
+Now inetpeer is IPv6 aware, we can use it to provide a more secure and
+scalable frag ident generator (per destination, instead of system wide)
 
-https://bugzilla.wikimedia.org/show_bug.cgi?id=26561
+This patch :
+1) defines a new secure_ipv6_id() helper
+2) extends inet_getid() to provide 32bit results
+3) extends ipv6_select_ident() with a new dest parameter
 
-I don't know if this warrants a CVE ID, but if so please assign one.
+http://thread.gmane.org/gmane.linux.network/201773/focus=201776
+https://bugzilla.redhat.com/show_bug.cgi?id=723429
 
-(please CC me on replies, TIA)
-
-Thanks,
-
--- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
-
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks, Eugene
