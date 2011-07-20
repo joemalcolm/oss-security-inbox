@@ -1,49 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/3
-Message-ID: <4E2E9907.9090008@redhat.com>
-Date: Tue, 26 Jul 2011 12:37:59 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>
-Subject: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/13
+Message-ID: <20110720170837.0033138e@redhat.com>
+Date: Wed, 20 Jul 2011 17:08:37 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: New IcedTea and IcedTea-Web releases
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+Hi!
 
-   based on:
-   [1] 
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
+New IcedTea6 and IcedTea-Web releases fix two issues affecting browser
+plugin and javaws:
 
-an off-by-one error was found in the way the hash manager of Clam
-AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
-messages with certain hashes. A remote attacker could provide a message
-with specially-crafted hash signature in it, leading to denial of
-service (clamscan executable crash).
+http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2011-July/015170.html
+http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2011-July/015171.html
 
-Upstream bug report:
-[2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
-
-Relevant patch:
-[3] 
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
-
-Other references:
-[4] https://bugzilla.novell.com/show_bug.cgi?id=708263
-[5] 
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
-[6] http://www.clamav.net/lang/en/
-[7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
-
-Note: The rest of the issues fixed in [1] seem to be just bug fixes.
-       Cc-ed upstream Clam Antivirus maintainers to confirm this (that
-       there is only one issue with security implications) and correct
-       the description of the issue, if necessary (just guessing that
-       "cli_hm_scan()" stands for
-       command_line_interface_hash_manager_scan, since it doesn't seem
-       to be described in the code anywhere).
-
-Josh, Steve, could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+Tomas Hoger / Red Hat Security Response Team
