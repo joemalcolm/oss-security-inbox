@@ -1,14 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/12
-Message-ID: <609112549.1024404.1309377240402.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:54:00 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/15
+Message-ID: <1019797868.1472632.1311190821123.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:40:21 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS) Vulnerabilities
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Pavel Lisý <pavel.lisy@...il.com>, Alan Boudreault <aboudreault@...gears.com>, Even Rouault <even.rouault@...es-paris.org>
+Subject: Re: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2509.
+I'm assigning IDs as such:
+
+CVE-2011-2703 mapserver SQL injection flaws
+CVE-2011-2704 mapserver stack based buffer overflows
 
 Thanks.
 
@@ -16,133 +19,71 @@ Thanks.
     JB
 
 ----- Original Message -----
-> Joomla! 1.6.3 and lower | Multiple Cross Site Scripting (XSS)
-> Vulnerabilities
+> Alan, Even, thanks for your replies.
 > 
+> Just to clarify this one a bit yet. Two CVE identifiers (one for the
+> multiple SQL injection flaws, the other for the stack based buffer
+> overflow issue) seem to be necessary in this case (due different
+> versions affected):
 > 
+> [1]
+> http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
 > 
-> 1. OVERVIEW
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 > 
-> Joomla! 1.6.3 and lower are vulnerable to multiple Cross Site
-> Scripting issues.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Joomla is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets. It comprises a
-> model–view–controller (MVC) Web application framework that can also be
-> used independently.
-> Joomla is written in PHP, uses object-oriented programming (OOP)
-> techniques and software design patterns, stores data in a MySQL
-> database, and includes features such as page caching, RSS feeds,
-> printable versions of pages, news flashes, blogs, polls, search, and
-> support for language internationalization.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Several parameters (QueryString, option, searchword) in Joomla! Core
-> components (com_content, com_contact, com_newsfeeds, com_search) are
-> not properly sanitized upon submission to the /index.php url, which
-> allows attacker to conduct Cross Site Scripting attack. This may allow
-> an attacker to create a specially crafted URL that would execute
-> arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSION AFFECTED
-> 
-> 1.6.3 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> 
-> component: com_contact , parameter: QueryString (Browser: All)
-> ===============================================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option=com_contact&view=category&catid=26&id=36&Itemid=-1"><script>alert(/XSS/)</script>
-> 
-> 
-> component:com_content , parameter: QueryString (Browser: All)
-> ===============================================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option=com_content&view=category&id=19&Itemid=260&limit=10&filter_order_Dir=&limitstart=&filter_order=><script>alert(/XSS/)</script>
-> 
-> 
-> component: com_newsfeeds , parameter: QueryString (Browser: All)
-> =================================================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option=com_newsfeeds&view=category&id=17&whateverehere="><script>alert(/XSS/)</script>&Itemid=253&limit=10&filter_order_Dir=ASC&filter_order=ordering
-> 
-> 
-> parameter: option (Browser: All)
-> ====================================
-> 
-> http://attacker.in/joomla163_noseo/index.php?option="><script>alert(/XSS/)</script>&task=reset.request
-> 
-> 
-> component: com_search, parameter: searchword (Browser: IE, Konqueror)
-> =====================================================================
-> 
-> [REQUEST]
-> POST /joomla163/index.php HTTP/1.1
-> Referer: http://attacker.in/joomla163/
-> User-Agent: Konqueror/4.5
-> Cache-Control: no-cache
-> Content-Type: application/x-www-form-urlencoded
-> Host: attacker.in
-> Accept-Encoding: gzip, deflate
-> Content-Length: 125
-> 
-> option=com_search&searchword='%2522%253C%252Fscript%253E%253Cscript%253Ealert(%252FXSS%252F)%253C%252Fscript%253E&task=search
-> [/REQUEST]
-> 
-> This searchword XSS was identified via source code:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/1.6.3/xss/XSS%20%5bMode=SEO,NON-SEO%5d/(searchword)_xss_vuln_code_portion.jpg
-> 
-> 
-> 6. IMPACT
-> 
-> Attackers can compromise currently logged-in user/administrator
-> session and impersonate arbitrary user actions available under
-> /administrator/ functions.
-> 
-> 
-> 7. SOLUTION
-> 
-> Upgrade to Joomla! 1.6.4 or higher
-> 
-> 
-> 8. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 9. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 10. DISCLOSURE TIME-LINE
-> 
-> 2011-05-26: notified vendor
-> 2011-06-28: vendor released fix
-> 2011-06-28: vulnerability disclosed
-> 
-> 
-> 11. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
-> Vendor Advisory URL:
-> http://developer.joomla.org/security/news/352-20110604-xss-vulnerability.html
-> XSS FAQ: http://www.cgisecurity.com/xss-faq.html
-> OWASP Top 10:
-> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-06-28]
+> On 07/19/2011 05:32 PM, Alan Boudreault wrote:
+> > I got new from the debian security guy yesterday. I should get the
+> > CVE id
+> > soon.
+> >
+> > Thanks,
+> > Alan
+> >
+> > On July 19, 2011 11:28:29 am Even Rouault wrote:
+> >> Selon Jan Lieskovsky<jlieskov@...hat.com>:
+> >>
+> >> Jan,
+> >>
+> >> I believe Alan Boudreault (MapServer team member that I've added to
+> >> the CC
+> >> list) has already asked the Debian security team to request for a
+> >> CVE
+> >> number, but without any result for now. Maybe he can confirm.
+> >>
+> >> Best regards,
+> >>
+> >> Even
+> >>
+> >>> Hello Josh, Steve, vendors,
+> >>>
+> >>>     the following has been brought to our attention:
+> >>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+> >>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
+> >>>
+> >>> More from [2]:
+> >>>
+> >>> This ticket is to track fixes to prevent SQL injections through
+> >>> OGC
+> >>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+> >>> injection in WMS time support.
+> >>>
+> >>> Your system may be vulnerable if it has MapServer with OGC
+> >>> protocols
+> >>> enabled, with layers connecting to an SQL RDBMS backend, either
+> >>> natively
+> >>> or via OGR.
+> >>>
+> >>> All versions of MapServer 4.x, 5.x and 6.x are potentially
+> >>> vulnerable.
+> >>> All users are ** strongly encouraged ** to upgrade to one of the
+> >>> latest
+> >>> releases with the fixes.
+> >>>
+> >>> Could you allocate a CVE id for this?
+> >>>
+> >>> Thank you&& Regards, Jan.
+> >>> --
+> >>> Jan iankko Lieskovsky / Red Hat Security Response Team
+> >
