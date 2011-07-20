@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/1
-Message-ID: <20110914104332.GB25572@dhcp-25-225.brq.redhat.com>
-Date: Wed, 14 Sep 2011 12:43:32 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/1
+Message-ID: <4E266FFD.6000901@redhat.com>
+Date: Wed, 20 Jul 2011 11:34:45 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- kernel: b43: allocate receive buffers big enough for max frame len + offset
+CC: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, Joshua Bressers <bressers@...hat.com>
+Subject: Re: CVE Request: ruby PRNG fixes
 Content-Type: text/plain; charset=utf-8
 
-"A flaw has been found in a way b43 driver processed incoming frames. An
-attacker able to send frames to the systems with Broadcom 43xx series
-wireless devices could use this flaw to crash those systems."
+On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
 
-Upstream patch:
-c85ce65ecac078ab1a1835c87c4a6319cf74660a
+> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
+> http://redmine.ruby-lang.org/issues/4579
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=738202
-https://bugzilla.kernel.org/show_bug.cgi?id=32042
-https://github.com/mirrors/linux/commit/c85ce65ecac078ab1a1835c87c4a6319cf74660a
+Looking at the above patches, there seems to be two issues here, perhaps
+it needs two CVE ids to be assigned?
 
-Thanks,
+1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+
+This one pertains to rand returning same values in forked processes.
+http://redmine.ruby-lang.org/issues/show/4338
+This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
+1.8.6-p399.
+
+2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+
+This is an issue in the securerandom.rb module.
+http://redmine.ruby-lang.org/issues/4579
+
+Josh,
+
+Can we please assign CVE-2011-2686 to one of the issues and have another
+CVE id to the other issue?
+
+Thanks.
+
+
+
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
