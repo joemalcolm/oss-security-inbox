@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/20/4
-Message-ID: <AANLkTik1O_p5NSOnfwLAY50k06CWt+xx8GzkuuY0wvR0@mail.gmail.com>
-Date: Sun, 20 Mar 2011 15:40:27 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/6
+Message-ID: <4E268A67.9070707@redhat.com>
+Date: Wed, 20 Jul 2011 13:27:27 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: multiple issues in ROSE
+Subject: Re: CVE request: kernel: si4713-i2c: avoid potential buffer overflow on si4713
 Content-Type: text/plain; charset=utf-8
 
-I sent in a patch [1] resolving two issues in ROSE:
+On 07/20/2011 12:52 PM, Eugene Teo wrote:
+> "While compiling it with Fedora 15, [Mauro Carvalho Chehab] noticed this
+> issue:
+> 
+> inlined from ‘si4713_write_econtrol_string’ at
+> drivers/media/radio/si4713-i2c.c:1065:24:
+> /home/v4l/work_trees/linus/arch/x86/include/asm/uaccess_32.h:211:26:
+> error: call to ‘copy_from_user_overflow’ declared with attribute error:
+> copy_from_user() buffer size is not provably correct"
+> 
+> http://git.kernel.org/?p=linux/kernel/git/longterm/longterm-queue-2.6.33.git;a=blob;f=queue-2.6.33/si4713-i2c-avoid-potential-buffer-overflow-on-si4713.patch;h=d99c471980a074cf4ef55fb4428d5f2fec66bffb;hb=29be9ef5e43df840fb19af1d4b3dfa51b3a956c8
+> 
+> AFAIK, only N900 uses this.
+> 
+> Thanks, Eugene
 
-"When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
-for a remote host to provide more digipeaters than expected, resulting
-in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
-overflows, and abort facilities parsing on failure.
+Please use CVE-2011-2700
 
-Additionally, when parsing the FAC_CCITT_DEST_NSAP and
-FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide a
-length of less than 10, resulting in an underflow in a memcpy size,
-causing a kernel panic due to massive heap corruption.  A length of
-greater than 20 results in a stack overflow of the callsign array.
-Abort facilities parsing on these invalid length values."
-
-These issues may both result in code execution.  They may be triggered
-by a remote attacker if the victim has a listening ROSE socket, or by
-a local attacker (for privilege escalation) if a ROSE device exists
-(e.g. rose0).
-
-Ben Hutchings followed up with a patch [2] that resolves a number of
-other ROSE issues related to lack of size field validation, some of
-which may also result in heap corruption.
-
-Not sure about the proper CVE breakdown for all these issues, since
-the entire protocol was quite broken.  Perhaps one is enough to cover
-everything.
-
-Regards,
-Dan
-
-[1] http://marc.info/?l=linux-netdev&m=130060344616926
-[2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
