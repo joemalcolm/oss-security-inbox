@@ -1,22 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/17/3
-Message-ID: <20110717191039.GA18385@openwall.com>
-Date: Sun, 17 Jul 2011 23:10:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/8
+Message-ID: <CAOSRhRPyUj0diDn_93ZVdR2Rco_-wh2dvvs6f6tif+HkeE4pjQ@mail.gmail.com>
+Date: Wed, 20 Jul 2011 08:22:45 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: CVE request: kernel: arbitrary kernel read in xtensa
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 01:22:15PM -0600, Vincent Danen wrote:
-> >On Tue, Jun 21, 2011 at 12:09:16PM -0600, Vincent Danen wrote:
-> >>Ok, so taking a quick look at php-suhosin, we have:
-[...]
-> So should have included this:
-> 
-> 556     __CONST char *ptr = key;
+Not sure if any distributions support xtensa, but regardless:
 
-Right.  I've just e-mailed Stefan.
+Due to a failure to check user pointers passed to a ptrace_setxregs
+request, it is possible for a local unprivileged user to read
+arbitrary kernel memory [1].
 
-Thanks,
+-Dan
 
-Alexander
+[1] http://marc.info/?l=linux-kernel&m=131008344912672&w=2
