@@ -1,71 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/1
-Message-ID: <4D37BA8C.1030107@redhat.com>
-Date: Thu, 20 Jan 2011 10:01:08 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE assignments for Wireshark
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/16
+Message-ID: <1373857797.1472712.1311190971471.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:42:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, oss-security@...ts.openwall.com, coley <coley@...re.org>
+Subject: Re: CVE Request: ruby PRNG fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
+Sorry for the confusion.
 
-On 01/13/2011 04:21 AM, Steven M. Christey wrote:
+----- Original Message -----
+> On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
 > 
-> CVE-2011-0444 - MAC-LTE
+> > http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
+> > http://redmine.ruby-lang.org/issues/4579
+> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
 > 
-> CVE-2011-0445 - ASN.1 BER
+> Looking at the above patches, there seems to be two issues here,
+> perhaps
+> it needs two CVE ids to be assigned?
+> 
+> 1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> 
+> This one pertains to rand returning same values in forked processes.
+> http://redmine.ruby-lang.org/issues/show/4338
+> This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
+> 1.8.6-p399.
 
-Looking at the following wireshark bug and the relevant commits:
-
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
-
-http://anonsvn.wireshark.org/viewvc?view=rev&revision=35292
-http://anonsvn.wireshark.org/viewvc?view=rev&revision=35298
-
-It seems that there are two issues here, buffer overflow in MAC-LTE
-dissector as well as buffer overflow in SNMP engineID preferences.
-
-This issue was however assigned only one CVE i.e. CVE-2011-0444.
-Do you think two CVEs (for each individual issues), should be assigned
-in this case?
+Let's use CVE-2011-2686 for this one.
 
 > 
+> 2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
 > 
-> 
-> ======================================================
-> Name: CVE-2011-0444
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0444
-> Reference: MISC:https://bugs.wireshark.org/bugzilla/attachment.cgi?id=5676
-> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-01.html
-> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
-> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5530
-> Reference: VUPEN:ADV-2011-0079
-> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
-> 
-> Buffer overflow in the MAC-LTE dissector
-> (epan/dissectors/packet-mac-lte.c) in Wireshark 1.2.0 through 1.2.13
-> and 1.4.0 through 1.4.2 allows remote attackers to cause a denial of
-> service (crash) and possibly execute arbitrary code via a large number
-> of RARs.
-> 
-> 
-> ======================================================
-> Name: CVE-2011-0445
-> Status: Candidate
-> URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0445
-> Reference: CONFIRM:http://www.wireshark.org/security/wnpa-sec-2011-02.html
-> Reference: CONFIRM:https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5537
-> Reference: VUPEN:ADV-2011-0079
-> Reference: URL:http://www.vupen.com/english/advisories/2011/0079
-> 
-> The ASN.1 BER dissector in Wireshark 1.4.0 through 1.4.2 allows remote
-> attackers to cause a denial of service (assertion failure) via crafted
-> packets, as demonstrated by fuzz-2010-12-30-28473.pcap.
-> 
+> This is an issue in the securerandom.rb module.
+> http://redmine.ruby-lang.org/issues/4579
 > 
 
+Use CVE-2011-2705 for this.
+
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
