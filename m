@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/40
-Message-ID: <20110404182134.GC13884@openwall.com>
-Date: Mon, 4 Apr 2011 22:21:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/17
+Message-ID: <1323016410.1472978.1311191421600.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:50:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: my key
+Cc: minhbq@...v.com.vn, coley <coley@...re.org>
+Subject: Re: CVE request: sNews 1.7.1 XSS in reorder
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 04:26:35PM +0200, Sebastian Krahmer wrote:
-> "we have nothing to hide", thats why we use GPG keys and force
-> the whole Open Source security community to run naked on
-> the grass with a unique (key-) ID on the back.
-> Someone got "transparency" wrong.
+Please use CVE-2011-2706.
 
-Perhaps, but how do we get transparency right?  There's no single
-correct opinion on that.  The "discussion" we're having is similar to
-what we could have in private otherwise, and quite possibly it would
-eventually leak anyway.  In fact, there's all this talk on making the
-private list's archive public with a delay - which means that info on
-new members joining, etc. would be public with a delay as well.  Then
-why the delay (for this info)?
+Thanks.
 
-That said, I agree that having specific e-mail addresses and key IDs
-posted to a public list is excessive.  If anyone else wishes to join
-(and qualifies), please state so in the "Closed list" thread and justify
-your request (currently that would mean info on the Linux distro you're
-a security contact for), then e-mail the specific e-mail address and PGP
-key info to me off-list.  I'll continue to reply on the list, but the
-specific e-mail addresses and keys will be exposed a little bit less.
+-- 
+    JB
 
-... now I expect to hear some objections to that change.  Anyone? ;-)
-
-> Nevertheless, I generated a fresh key for that purpose,
-> signed with our security@...e.de key (3D25D3D9).
-
-Added.
-
-Alexander
+----- Original Message -----
+> This vulnerability does not seem to have CVE-identifier assigned. Can
+> I get one? :)
+> 
+> Bkis page: http://security.bkis.com/snews-1-7-1-xss-vulnerability/
+> Original report: http://seclists.org/fulldisclosure/2011/May/300
+> 
+> Best regards,
+> Henri Salo
