@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/3
-Message-Id: <20110722141628.e0bd378d22e61ddb2a56c2c5@gmail.com>
-Date: Fri, 22 Jul 2011 14:16:28 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/4
+Message-ID: <4E268233.3050909@redhat.com>
+Date: Wed, 20 Jul 2011 15:22:27 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: si4713-i2c: avoid potential buffer overflow on si4713
 Content-Type: text/plain; charset=utf-8
 
-Mike O'Connor wrote:
-> It looks like you've seen the same kind of thing before:
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526678
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
+"While compiling it with Fedora 15, [Mauro Carvalho Chehab] noticed this
+issue:
 
-Yes, those are CVE-2009-1573 and CVE-2009-1756.
+inlined from ‘si4713_write_econtrol_string’ at
+drivers/media/radio/si4713-i2c.c:1065:24:
+/home/v4l/work_trees/linus/arch/x86/include/asm/uaccess_32.h:211:26:
+error: call to ‘copy_from_user_overflow’ declared with attribute error:
+copy_from_user() buffer size is not provably correct"
 
-> This may be worth a mention in the xauth man page.
+http://git.kernel.org/?p=linux/kernel/git/longterm/longterm-queue-2.6.33.git;a=blob;f=queue-2.6.33/si4713-i2c-avoid-potential-buffer-overflow-on-si4713.patch;h=d99c471980a074cf4ef55fb4428d5f2fec66bffb;hb=29be9ef5e43df840fb19af1d4b3dfa51b3a956c8
 
-I think the vast majority aren't going to pay attention to
-seemingly pedantic man page warnings, but then again it may
-be worth it to help the few that do.
+AFAIK, only N900 uses this.
 
-Mike
+Thanks, Eugene
