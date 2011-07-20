@@ -1,84 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/2
-Message-ID: <4E8EC762.1080801@redhat.com>
-Date: Fri, 07 Oct 2011 11:33:22 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Petr Lautrbach <plautrba@...hat.com>
-CC: oss-security@...ts.openwall.com, MustLive <mustlive@...security.com.ua>
-Subject: Re: CVE Request -- Multiple security issues in various versions of AWStats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/15
+Message-ID: <1019797868.1472632.1311190821123.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:40:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Pavel Lisý <pavel.lisy@...il.com>, Alan Boudreault <aboudreault@...gears.com>, Even Rouault <even.rouault@...es-paris.org>
+Subject: Re: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
 Content-Type: text/plain; charset=utf-8
 
+I'm assigning IDs as such:
 
-And one correction yet.
+CVE-2011-2703 mapserver SQL injection flaws
+CVE-2011-2704 mapserver stack based buffer overflows
 
-Petr Lautrbach (Cc-ed) commented on Red Hat Bugzilla
-bug [1], that:
+Thanks.
 
-<quote>
- > URL redirection abuse:
- >
- > 
-http://site/awredir.pl?key=0f3830803a70cc1636af3548b66ed978&url=http://websecurity.com.ua
+-- 
+    JB
 
-awredir.pl is url redirector so this is its main/only feature and it
-is/can be secured by $KEYFORMD5. So I don't think this is flaw.
-</quote>
-
-Thus explicitly mentioning it here too, so this would not fall out
-of the radar and just five CVE ids would be assigned.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Petr, if you have more comments on the rest of the issues,
-       feel free to do so in order to proper set of CVE ids would
-       be assigned to these. Thanks, Jan.
-
-On 10/07/2011 10:17 AM, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
->
-> these doesn't look like CVE ids have been already assigned for:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=740926#c0
-> [2] http://secunia.com/advisories/46160/
-> [3] http://seclists.org/fulldisclosure/2011/Sep/234
-> [4] http://websecurity.com.ua/5380/
->
-> If I counted correctly, six CVE ids should be assigned for these
-> (since different versions are listed as vulnerable):
->
-> 1) XSS (WASC-08) (in versions <=1.1):
-> http://site/awredir.pl?url=javascript:alert(document.cookie)
->
-> 2) Redirector (URL Redirector Abuse in WASC 2.0) (WASC-38):
-> http://site/awredir.pl?url=http://websecurity.com.ua
->
-> 3) SQL Injection (WASC-19): (version 1.2)
-> http://site/awredir.pl?url='%20and%20benchmark(10000,md5(now()))/*
->
-> 4) XSS (WASC-08) (in version 1.2):
->
-> http://site/awredir.pl?url=%3Cscript%3Ealert(document.cookie)%3C
-> /script%3E
->
-> http://site/awredir.pl?key=%3Cscript%3Ealert(document.cookie)%3C
-> /script%3E
->
-> 5) HTTP Response Splitting (WASC-25):
->
-> http://site/awredir.pl?key=04ed5362e853c72ca275818a7c0c5857&
-> url=%0AHeader:1
->
-> 6) CRLF Injection (Improper Input Handling in WASC 2.0) (WASC-20):
->
-> http://site/awredir.pl?key=4b9faa91e2529400c4f3c70833b4e4a5&
-> url=%0AText
->
-> Could you allocate CVE identifiers for these? (let me know
-> if further description of each of the issues is necessary prior
-> assignment).
->
+----- Original Message -----
+> Alan, Even, thanks for your replies.
+> 
+> Just to clarify this one a bit yet. Two CVE identifiers (one for the
+> multiple SQL injection flaws, the other for the stack based buffer
+> overflow issue) seem to be necessary in this case (due different
+> versions affected):
+> 
+> [1]
+> http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
+> 
 > Thank you && Regards, Jan.
 > --
 > Jan iankko Lieskovsky / Red Hat Security Response Team
-
+> 
+> On 07/19/2011 05:32 PM, Alan Boudreault wrote:
+> > I got new from the debian security guy yesterday. I should get the
+> > CVE id
+> > soon.
+> >
+> > Thanks,
+> > Alan
+> >
+> > On July 19, 2011 11:28:29 am Even Rouault wrote:
+> >> Selon Jan Lieskovsky<jlieskov@...hat.com>:
+> >>
+> >> Jan,
+> >>
+> >> I believe Alan Boudreault (MapServer team member that I've added to
+> >> the CC
+> >> list) has already asked the Debian security team to request for a
+> >> CVE
+> >> number, but without any result for now. Maybe he can confirm.
+> >>
+> >> Best regards,
+> >>
+> >> Even
+> >>
+> >>> Hello Josh, Steve, vendors,
+> >>>
+> >>>     the following has been brought to our attention:
+> >>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
+> >>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
+> >>>
+> >>> More from [2]:
+> >>>
+> >>> This ticket is to track fixes to prevent SQL injections through
+> >>> OGC
+> >>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
+> >>> injection in WMS time support.
+> >>>
+> >>> Your system may be vulnerable if it has MapServer with OGC
+> >>> protocols
+> >>> enabled, with layers connecting to an SQL RDBMS backend, either
+> >>> natively
+> >>> or via OGR.
+> >>>
+> >>> All versions of MapServer 4.x, 5.x and 6.x are potentially
+> >>> vulnerable.
+> >>> All users are ** strongly encouraged ** to upgrade to one of the
+> >>> latest
+> >>> releases with the fixes.
+> >>>
+> >>> Could you allocate a CVE id for this?
+> >>>
+> >>> Thank you&& Regards, Jan.
+> >>> --
+> >>> Jan iankko Lieskovsky / Red Hat Security Response Team
+> >
