@@ -1,52 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/6
-Message-ID: <20110705042112.GA13907@openwall.com>
-Date: Tue, 5 Jul 2011 08:21:12 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/14
+Message-ID: <1417239145.1472160.1311189811542.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:23:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: (e)glibc
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
-> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+
+
+----- Original Message -----
+> Is there already a CVE id assigned to
+> http://www.nodefense.org/eglibc.txt?
 > 
-> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
 
-This is very helpful, thank you!  How did you find it?
+I can't find an ID for this. Use CVE-2011-2702.
 
-So, I failed to get this server to give me ctime (looked at HTTP headers
-and also tried several FTP commands), and the mtime is Feb 15.  We could
-ask the server admins for the ctime.
+Thanks.
 
-However, inside the archive we see 2011-06-30 14:15 UTC on the top-level
-directory, and 2011-06-30 13:46 on the .o files.  This suggests that the
-backdoored tarball was put in place no earlier than 2011-06-30 14:15 UTC,
-although that's using the intruder's system time, which might not be
-accurate. ;-)
-
-> ... I am saying that for this to become as widespread as the mtime in
-> the mirror above indicates, it would be incredible for distros like
-> Debian to not notice it, as they verify the hash of the tarball. This
-> indicates that the mtime in the mirror above was forged (since the hash
-> is indeed wrong), but the real question is how this mirror obtained the
-> copy.
-> 
-> Was the mirror compromised? Was a rsync job used against the real
-> server, in which case the mtime was preserved? I couldn't find any
-> public copies with the backdoored checksum, but one of the metasploit
-> contributors pointed me to the link above.
-
-My guess is that the mirror is automatically updated, perhaps nightly,
-and not necessarily via rsync.  It is possible to transfer/preserve the
-mtime via ftp and http as well - typical mirror programs do that.
-
-> I would like to believe the exposure was limited to 1-3 days, but the
-> mirror above casts doubt on this.
-
-Looks like it was 3 days, actually.
-
-Thanks,
-
-Alexander
+-- 
+    JB
