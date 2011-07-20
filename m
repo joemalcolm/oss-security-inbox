@@ -1,46 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/5
-Message-ID: <2073872337-1303471792-cardhu_decombobulator_blackberry.rim.net-481378627-@bda862.bisx.prod.on.blackberry>
-Date: Fri, 22 Apr 2011 11:29:45 +0000
-From: "Matthew Nicholson" <mnicholson@...ium.com>
-To: "oss-security" <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Asterisk Security Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/10
+Message-ID: <20110720131542.GB9851@foo.fgeek.fi>
+Date: Wed, 20 Jul 2011 16:15:42 +0300
+From: Henri Salo <henri@...v.fi>
+To: full-disclosure@...ts.grok.org.uk
+Cc: oss-security@...ts.openwall.com
+Subject: Fwd: Joomla! Security News
 Content-Type: text/plain; charset=utf-8
 
-It is for AST-2011-006
--- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
+Joomla! Developer Network - Security News
 
------Original Message-----
-From: Jan Lieskovsky <jlieskov@...hat.com>
-Date: Fri, 22 Apr 2011 11:46:27 
-To: Matthew Nicholson<mnicholson@...ium.com>; Steven M. Christey<coley@...us.mitre.org>
-Reply-To: oss-security <oss-security@...ts.openwall.com>
-Cc: oss-security<oss-security@...ts.openwall.com>
-Subject: Re: [oss-security] CVE Request -- Asterisk Security Vulnerability
+///////////////////////////////////////////
+[20110701] - XSS Vulnerability
+
+Posted: 19 Jul 2011 09:15 PM PDT
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/4KDvSjZRIvs/357-20110701-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
 
 
-Hello Matthew,
+Project: Joomla!
+SubProject: All
+Severity: Medium
+Versions: 1.6.5 and all earlier 1.6.x versions
+Exploit type: XSS
+Reported Date: 2011-July-11
+Fixed Date: 2011-July-19
 
-   thank you for the heads up.
+Description
 
-Matthew Nicholson wrote:
-> Hi,
-> 
-> I need a CVE for a new Asterisk security vulnerability.
+Inadequate escaping leads to XSS vulnerability.
 
-Was this request intended to be for the following one:
-[1] http://downloads.asterisk.org/pub/security/AST-2011-006.html ?
+Affected Installs
 
-Note: Because http://downloads.asterisk.org/pub/security/AST-2011-005.html
-       already got an id of CVE-2011-1507.
+Joomla! version 1.6.5 and all earlier 1.6.x versions
+Solution
 
-If the request was meant for [1] is it still valid? (i.e. still a CVE id needs
-to be assigned to this?)
+Upgrade to the latest Joomla! version (1.7.0 or later)
 
-Or was it requested for yet something completely different from above two?
+Reported by Aung Khant
+Contact
 
-Thank you, Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+The JSST at the Joomla! Security  Center.
