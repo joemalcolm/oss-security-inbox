@@ -1,31 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/1
-Message-ID: <4DBA9AAC.5090708@redhat.com>
-Date: Fri, 29 Apr 2011 13:02:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Cyril Jaquier: <cyril.jaquier@...l2ban.org>, Tomasz Papszun <tomek@...z.tpsa.pl>, Yaroslav Halchenko <debian@...russian.com>
-Subject: CVE Request -- fail2ban -- Use of insecure default temporary file when unbanning an IP (tmpfile = /tmp/fail2ban-mail.txt)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/19
+Message-ID: <1020327824.1475004.1311193706140.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 16:28:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: Fwd: Joomla! Security News
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-2708
 
-Hello Josh, Steve, vendors,
+Thanks.
 
-   It was found that fail2ban IPs banner used insecure default temporary file
-when unbanning an IP address. A local attacker could use this flaw to conduct
-symlink attacks in order to gain access to sensitive information or potentially
-to overwrite arbitrary file on the system.
+-- 
+    JB
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=544232
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=700763
-
-Patch applied by Debian distribution:
-[3] http://git.onerussian.com/?p=deb/fail2ban.git;a=commitdiff;h=ea7d352616b1e2232fcaa99b11807a86ce29ed8b
-
-Could you allocate a CVE id for this? (Note: It should CVE-2009-* identifier)
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+----- Original Message -----
+> Joomla! Developer Network - Security News
+> 
+> ///////////////////////////////////////////
+> [20110701] - XSS Vulnerability
+> 
+> Posted: 19 Jul 2011 09:15 PM PDT
+> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/4KDvSjZRIvs/357-20110701-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
+> 
+> 
+> Project: Joomla!
+> SubProject: All
+> Severity: Medium
+> Versions: 1.6.5 and all earlier 1.6.x versions
+> Exploit type: XSS
+> Reported Date: 2011-July-11
+> Fixed Date: 2011-July-19
+> 
+> Description
+> 
+> Inadequate escaping leads to XSS vulnerability.
+> 
+> Affected Installs
+> 
+> Joomla! version 1.6.5 and all earlier 1.6.x versions
+> Solution
+> 
+> Upgrade to the latest Joomla! version (1.7.0 or later)
+> 
+> Reported by Aung Khant
+> Contact
+> 
+> The JSST at the Joomla! Security Center.
