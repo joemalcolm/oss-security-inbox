@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/11
-Message-ID: <4E2DBB3A.60703@kde.org>
-Date: Mon, 25 Jul 2011 14:51:38 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
-Subject: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/4
+Message-ID: <4E268233.3050909@redhat.com>
+Date: Wed, 20 Jul 2011 15:22:27 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: si4713-i2c: avoid potential buffer overflow on si4713
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+"While compiling it with Fedora 15, [Mauro Carvalho Chehab] noticed this
+issue:
 
-We've been made aware of an input validation failure affecting multiple
-KDE applications. (The details are not yet public as we're working on
-the fixes.) We'd like a CVE for this.
+inlined from ‘si4713_write_econtrol_string’ at
+drivers/media/radio/si4713-i2c.c:1065:24:
+/home/v4l/work_trees/linus/arch/x86/include/asm/uaccess_32.h:211:26:
+error: call to ‘copy_from_user_overflow’ declared with attribute error:
+copy_from_user() buffer size is not provably correct"
 
-The Arora and Rekonq web browsers are also vulnerable to the same attack
-vector, and other Qt-based programs may be as well. We're working with
-the Qt team to help enhance their documentation to warn developers to
-take care sanitizing their inputs, but it's not actually a Qt flaw. So
-we're a bit unsure how to proceed here. Do we get separate CVEs for
-Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
-applications? I would think the former since other applications may be
-found to be vulnerable down the line, but wanted to check.
+http://git.kernel.org/?p=linux/kernel/git/longterm/longterm-queue-2.6.33.git;a=blob;f=queue-2.6.33/si4713-i2c-avoid-potential-buffer-overflow-on-si4713.patch;h=d99c471980a074cf4ef55fb4428d5f2fec66bffb;hb=29be9ef5e43df840fb19af1d4b3dfa51b3a956c8
 
-(The Rekonq team has been made aware and are currently patching their
-code; I'm in the process of trying to notify the Arora team.)
+AFAIK, only N900 uses this.
 
-Thanks,
-Jeff
+Thanks, Eugene
