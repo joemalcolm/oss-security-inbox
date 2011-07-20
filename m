@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/1
-Message-ID: <4DEC7304.2000207@redhat.com>
-Date: Mon, 06 Jun 2011 11:56:12 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/2
+Message-ID: <4E267BD0.5090100@redhat.com>
+Date: Wed, 20 Jul 2011 12:25:12 +0530
 From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: ksm: race between ksmd and exiting task
+CC: Gerald Combs <gerald@...eshark.org>
+Subject: Re: CVE Request -- Wireshark: Infinite loop in the ANSI A Interface (IS-634/IOS) dissector
 Content-Type: text/plain; charset=utf-8
 
-On 06/03/2011 11:37 AM, Eugene Teo wrote:
-> A race condition issue was found in the KSM implementation.
+On 07/19/2011 06:11 PM, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=710338
-> Report: http://www.spinics.net/lists/linux-mm/msg20233.html
-> Proposed patch: http://www.spinics.net/lists/linux-mm/msg20301.html
+>   an infinite loop was found in the way ANSI A Interface (IS-634/IOS)
+> dissector of the Wireshark network traffic analyzer processed certain
+> ANSI A MAP capture files. If Wireshark read a malformed packet off a
+> network or opened a malicious packet capture file, it could lead to
+> denial of service (Wireshark hang).
 > 
-> Thanks, Eugene
+> Upstream bug:
+> [1] https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6044
+> 
+> Public PoC:
+> [2]
+> http://www.wireshark.org/download/automated/captures/fuzz-2011-06-20-22762.pcap
+> 
+> 
+> Relevant upstream patch:
+> [3] http://anonsvn.wireshark.org/viewvc?view=revision&revision=37930
+> 
+> References:
+> [4] http://www.wireshark.org/security/
+> [5] http://www.wireshark.org/security/wnpa-sec-2011-11.html
+> [6] http://www.wireshark.org/security/wnpa-sec-2011-10.html
+> [7] https://bugzilla.redhat.com/show_bug.cgi?id=723215
+> 
+> Could you allocate a CVE id for this?
+> 
 
-This has been assigned CVE-2011-2183
+This has been assigned CVE-2011-2698
+
 
 -- 
 Huzaifa Sidhpurwala / Red Hat Security Response Team
