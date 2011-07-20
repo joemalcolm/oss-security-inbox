@@ -1,70 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/13/1
-Message-ID: <4E968F6A.4090203@redhat.com>
-Date: Thu, 13 Oct 2011 12:42:42 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/8
+Message-ID: <CAOSRhRPyUj0diDn_93ZVdR2Rco_-wh2dvvs6f6tif+HkeE4pjQ@mail.gmail.com>
+Date: Wed, 20 Jul 2011 08:22:45 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: radvd 1.8.2 released with security fixes
+Subject: CVE request: kernel: arbitrary kernel read in xtensa
 Content-Type: text/plain; charset=utf-8
 
-On 10/07/2011 04:22 AM, Solar Designer wrote:
+Not sure if any distributions support xtensa, but regardless:
 
-> 3) The radvd daemon would not fail on privsep_init() errors, which could
-> cause it to run with full root privileges when it should be running as
-> an unprivileged user. (CVE-2011-3603)
->
+Due to a failure to check user pointers passed to a ptrace_setxregs
+request, it is possible for a local unprivileged user to read
+arbitrary kernel memory [1].
 
-I think this is not an issue at all:
+-Dan
 
-If you look at the unpatched code, in privsep-linux.c, privsep_init() 
-can return -1 at two places.
-
-A. if pipe(pipefds) fails
-B. If fork() fails
-
-If either of these functions fails, the end result is that there is no 
-fork() and radvd runs as a single process.
-
-Now looking at radvd.c
-
-
-         /* drop root privileges if requested. */
-         if (username) {
-                 if (!singleprocess) {
-                         dlog(LOG_DEBUG, 3, "Initializing privsep");
-                         if (privsep_init() < 0)
-                                 flog(LOG_WARNING, "Failed to initialize 
-privsep.");
-                 }
-
-                 if (drop_root_privileges(username) < 0) {
-                         perror("drop_root_privileges");
-                         exit(1);
-                 }
-         }
-
-
-After running privsep_init(), drop_root_privileges() is run, so :
-
-a. if privsep_init() failed and drop_root_privileges() did not fail, you 
-end up running a single radvd process running as radvd user, which is 
-similar to running "radvd --singleprocess"
-
-b. if privsep_init() failed and drop_root_privileges() failed, you bail 
-out of the program, similar to what would happen if privsep_init() did 
-not fail.
-
-c. if privsep_init() and drop_root_privileges() did not fail, we have 
-two radvd process, one running as radvd user and the other is root
-
-So from what i can see, the maximum harm which would occur if 
-privsep_init() fails, is that radvd would effectively run in 
---singleprocess mode
-
-
-
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+[1] http://marc.info/?l=linux-kernel&m=131008344912672&w=2
