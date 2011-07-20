@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/6
-Message-ID: <479180174.64225.1302695479209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Apr 2011 07:51:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/10
+Message-ID: <20110720131542.GB9851@foo.fgeek.fi>
+Date: Wed, 20 Jul 2011 16:15:42 +0300
+From: Henri Salo <henri@...v.fi>
+To: full-disclosure@...ts.grok.org.uk
+Cc: oss-security@...ts.openwall.com
+Subject: Fwd: Joomla! Security News
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> Your initial e-mail indicated we would be part of this new group since we
-> where a vendor-sec member. Now there are new requirements we have to
-> meet. Is there a possibility of a probationary period so we can try to
-> comply to these new requirements and still be on the closed list?
-> 
+Joomla! Developer Network - Security News
 
-I don't want to start arguing technicalities, semantics, or politics. Here
-is my current view, I'm going to leave the final decision up to Solar
-Designer, I view this as Openwall's list.
+///////////////////////////////////////////
+[20110701] - XSS Vulnerability
 
-We have rejected certain membership requests because they are not currently
-releasing security updates. I agree with this policy, I would say my
-initial mail was too vague. This instance is no different. It's clear that
-one of the membership requirements is now producing security updates.  If
-you can show you're doing this, that's grounds for membership in my
-opinion.
+Posted: 19 Jul 2011 09:15 PM PDT
+http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/4KDvSjZRIvs/357-20110701-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
 
-Thanks.
 
--- 
-    JB
+Project: Joomla!
+SubProject: All
+Severity: Medium
+Versions: 1.6.5 and all earlier 1.6.x versions
+Exploit type: XSS
+Reported Date: 2011-July-11
+Fixed Date: 2011-July-19
+
+Description
+
+Inadequate escaping leads to XSS vulnerability.
+
+Affected Installs
+
+Joomla! version 1.6.5 and all earlier 1.6.x versions
+Solution
+
+Upgrade to the latest Joomla! version (1.7.0 or later)
+
+Reported by Aung Khant
+Contact
+
+The JSST at the Joomla! Security  Center.
