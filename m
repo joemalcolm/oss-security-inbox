@@ -1,37 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/14
-Message-ID: <134587644.125928.1305662163541.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 15:56:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/9
+Message-ID: <1324808920.1453877.1311165648958.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 08:40:48 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: nbd-server
+To: oss-security@...ts.openwall.com, dfncert@...-cert.de
+Cc: aland@...eradius.org
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1925
+Please assign this issue CVE-2011-2701. We can split that ID if more are
+needed once we understand the issue.
 
 Thanks.
 
 -- 
     JB
 
-
 ----- Original Message -----
-> Hi,
+> On Tue, Jul 19, 2011 at 03:13:00PM +0200, Tomas Hoger wrote:
 > 
-> In Debian the following was reported:
-> nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
-> phase, which allows unauthenticated users to DoS the server by causing
-> the negotiation to fail (e.g., by specifying a non-existing name for
-> an
-> export).
+> > > Are the published information sufficient to get a CVE number for
+> > > the
+> > > issue?
+> >
+> > Was your intention to request a CVE for a still-to-remain-non-public
+> > issue to be disclosed in the future, or actually make the issue
+> > public?
 > 
-> Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so
-> for us
-> goes that only our unstable distribution is affected.
+> We plan to make the issue public as soon as we have a CVE and can
+> publish
+> our advisory. However, almost every detail of the vulnerability has
+> been
+> already discussed on this list.
+> (Summary: the status of the certificate will not be checked)
 > 
-> We'd like to have a CVE name for this.
+> Thus, the patch does not reveal any further aspects of the
+> vulnerability and
+> the only reason that we do not want to publish it publicly is that the
+> fact
+> that it may be incomplete and/or introduce side effects because we do
+> not have a complete test environment.
 > 
 > 
-> Cheers,
-> Thijs
+> > I'm CCing upstream (Alan DeKok), as it seems this thread may be
+> > giving
+> > out more info than expected. Alan, this is part of the following
+> 
+> Good idea.
+> 
+> 
+> p.s.
+> Please include us in CC since we are not subscribed on the list.
+> 
+> --
+> DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40
+> 808077-555
+> Sitz/Register: Hamburg, AG Hamburg, HRB 88805, Ust-IdNr.: DE 232129737
+> Sachsenstraße 5, 20097 Hamburg/Germany, CEO: Dr. Klaus-Peter
+> Kossakowski
