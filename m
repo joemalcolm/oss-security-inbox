@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/14/2
-Message-ID: <1297727697.2930.17.camel@localhost>
-Date: Mon, 14 Feb 2011 18:54:57 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/18
+Message-ID: <1707635281.1473034.1311191528928.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:52:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: aircrack-ng
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: kernel: arbitrary kernel read in xtensa
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Please use CVE-2011-2707.
 
-I can't seem to locate a CVE for this issue:
+Thanks.
 
-"Remote buffer overflow in aircrack-ng causes DOS and possible code
-execution"
-http://seclists.org/bugtraq/2010/Mar/236
-http://pyrit.wordpress.com/2010/03/28/remote-exploit-against-aircrack-ng/
+-- 
+    JB
 
-version 1.1 was released with the following fix:
-http://trac.aircrack-ng.org/changeset/1676
-
-This bug was then opened stating the fix was incomplete:
-http://trac.aircrack-ng.org/ticket/728
-https://bugzilla.redhat.com/show_bug.cgi?id=577654
-
-And then the following commits were done post-1.1:
-http://trac.aircrack-ng.org/changeset/1683
-http://trac.aircrack-ng.org/changeset/1687
-http://trac.aircrack-ng.org/changeset/1699
-http://trac.aircrack-ng.org/changeset/1701
-http://trac.aircrack-ng.org/changeset/1702
-
-Thanks,
-
-Marc.
-
-
+----- Original Message -----
+> Not sure if any distributions support xtensa, but regardless:
+> 
+> Due to a failure to check user pointers passed to a ptrace_setxregs
+> request, it is possible for a local unprivileged user to read
+> arbitrary kernel memory [1].
+> 
+> -Dan
+> 
+> [1] http://marc.info/?l=linux-kernel&m=131008344912672&w=2
