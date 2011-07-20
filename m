@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/12
-Message-ID: <1001446510.28719.1302552993447.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 16:16:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/1
+Message-ID: <4E266FFD.6000901@redhat.com>
+Date: Wed, 20 Jul 2011 11:34:45 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: sctp: fix to calc the INIT/INIT-ACK chunk length correctly to set
+CC: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, Joshua Bressers <bressers@...hat.com>
+Subject: Re: CVE Request: ruby PRNG fixes
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1573
+On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
+
+> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
+> http://redmine.ruby-lang.org/issues/4579
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+
+Looking at the above patches, there seems to be two issues here, perhaps
+it needs two CVE ids to be assigned?
+
+1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+
+This one pertains to rand returning same values in forked processes.
+http://redmine.ruby-lang.org/issues/show/4338
+This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
+1.8.6-p399.
+
+2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+
+This is an issue in the securerandom.rb module.
+http://redmine.ruby-lang.org/issues/4579
+
+Josh,
+
+Can we please assign CVE-2011-2686 to one of the issues and have another
+CVE id to the other issue?
 
 Thanks.
 
+
+
+
 -- 
-    JB
-
-
------ Original Message -----
-> When calculating the INIT/INIT-ACK chunk length, we should not only
-> account the length of parameters, but also the parameters zero padding
-> length, such as AUTH HMACS parameter and CHUNKS parameter. Without the
-> parameters zero padding length we may get oops.
-> 
-> Commit:
-> http://git.kernel.org/linus/a8170c35e738d62e9919ce5b109cf4ed66e9
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=695383
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Huzaifa Sidhpurwala / Red Hat Security Response Team
