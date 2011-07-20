@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/4
-Message-ID: <4E268233.3050909@redhat.com>
-Date: Wed, 20 Jul 2011 15:22:27 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/5
+Message-ID: <4E268A59.5030408@redhat.com>
+Date: Wed, 20 Jul 2011 13:27:13 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: si4713-i2c: avoid potential buffer overflow on si4713
+Subject: Re: CVE request: kernel: ipv6: make fragment identifications less predictable
 Content-Type: text/plain; charset=utf-8
 
-"While compiling it with Fedora 15, [Mauro Carvalho Chehab] noticed this
-issue:
+On 07/20/2011 12:42 PM, Eugene Teo wrote:
+> IPv6 fragment identification generation is way beyond what we use for
+> IPv4 : It uses a single generator. Its not scalable and allows DoS attacks.
+> 
+> Now inetpeer is IPv6 aware, we can use it to provide a more secure and
+> scalable frag ident generator (per destination, instead of system wide)
+> 
+> This patch :
+> 1) defines a new secure_ipv6_id() helper
+> 2) extends inet_getid() to provide 32bit results
+> 3) extends ipv6_select_ident() with a new dest parameter
+> 
+> http://thread.gmane.org/gmane.linux.network/201773/focus=201776
+> https://bugzilla.redhat.com/show_bug.cgi?id=723429
+> 
+> Thanks, Eugene
 
-inlined from ‘si4713_write_econtrol_string’ at
-drivers/media/radio/si4713-i2c.c:1065:24:
-/home/v4l/work_trees/linus/arch/x86/include/asm/uaccess_32.h:211:26:
-error: call to ‘copy_from_user_overflow’ declared with attribute error:
-copy_from_user() buffer size is not provably correct"
+Please use CVE-2011-2699
 
-http://git.kernel.org/?p=linux/kernel/git/longterm/longterm-queue-2.6.33.git;a=blob;f=queue-2.6.33/si4713-i2c-avoid-potential-buffer-overflow-on-si4713.patch;h=d99c471980a074cf4ef55fb4428d5f2fec66bffb;hb=29be9ef5e43df840fb19af1d4b3dfa51b3a956c8
-
-AFAIK, only N900 uses this.
-
-Thanks, Eugene
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
