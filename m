@@ -1,85 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/5
-Message-Id: <20110105115255.a4a3f9e6.michael.s.gilbert@gmail.com>
-Date: Wed, 5 Jan 2011 11:52:55 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/9
+Message-ID: <1324808920.1453877.1311165648958.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 08:40:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, dfncert@...-cert.de
+Cc: aland@...eradius.org
+Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Jan 2011 09:14:27 +0100, Pierre Joye wrote:
-> hi,
-> 
-> Referring to: http://bugs.php.net/53632
-> 
-> This bug affects PHP and can be remotely triggered if someone actually
-> process an input as double (p.php?id=... and then $d
-> = $id +1 for example). However this issue could also affect any
-> software relying on the "strtod for IEEE-, VAX-, and IBM-arithmetic
-> machines." implementation (quite a lot actually do, according to
-> codesearch&co). See a non exhaustive list here:
-> 
-> http://www.google.com/codesearch?as_q=strtod+for+IEEE-,+VAX-,+and+IBM-arithmetic+machines.&btnG=Search+Code&hl=en&as_package=&as_lang=&as_filename=&as_class=&as_function=&as_license=&as_case=
-> 
-> Whether the bug exists in the respective builds of each of these
-> softwares may depend on how they are built (options, arch, etc.).
-> 
-> A fix is already in php's svn:
-> http://svn.php.net/viewvc?view=revision&revision=307095
-> 
-> A good explanation about this issue is in the gcc bug tracker (thanks
-> Rasmus for the pointer):
-> 
-> It is a design flaw in the x87 fpu registers, so keeping the float out
-> of those registers circumvents the problem.  It is
-> one of the suggested ways of fixing this that is mentioned in the famous
-> gcc bug 323 report:
-> 
-> http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323
-> 
-> See Comment 87:
-> 
->  bruno 2006-12-21 15:08:57 UTC
->  The option -ffloat-store, recommended by Richard Henderson, has
->  the effect of decreasing the performance of floating-point
->  operations for the entire compilation unit. If you want a minimal
->  fix that does not affect other functions in the same compilation
->  unit, you can use 'volatile double' instead of 'double'. It's
->  like a one-shot -ffloat-store. Example:
-> 
->  #include <stdio.h>
-> 
->  void test(double x, double y) {
->    const volatile double y2 = x + 1.0;
->    if (y != y2) printf("error\n");
->  }
-> 
->  void main() {
->    const double x = .012;
->    const double y = x + 1.0;
-> 
->    test(x, y);
->  }
-> 
-> On windows it is slightly more complicated as it seems to do some more
-> under the wood work. I was able to reproduce the problem on certain
-> CPUs (i7) and not on other  (xeon) using the exact same binaries. I
-> still have to verify what is done exactly.
-> 
-> About getting a CVE #, I'm not sure it should be categorized only for
-> php or more generally about this strtod.c (newest version has the same
-> problem btw). Ideas? Comments?
+Please assign this issue CVE-2011-2701. We can split that ID if more are
+needed once we understand the issue.
 
-The x87 floating point extended precision issue itself is just a bug
-(well a hardware bug at that), and as of gcc >= 4.5 it can be avoided
-with the -fexcess-precision=standard option [0].
+Thanks.
 
-The fact that this bug can lead to a denial-of-service in PHP is
-sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
-can lead to a dos in other apps, then each should get their own CVE
-(again in my opinion).
+-- 
+    JB
 
-Best wishes,
-Mike
-
-[0] http://gcc.gnu.org/bugzilla/show_bug.cgi?id=323#c127
+----- Original Message -----
+> On Tue, Jul 19, 2011 at 03:13:00PM +0200, Tomas Hoger wrote:
+> 
+> > > Are the published information sufficient to get a CVE number for
+> > > the
+> > > issue?
+> >
+> > Was your intention to request a CVE for a still-to-remain-non-public
+> > issue to be disclosed in the future, or actually make the issue
+> > public?
+> 
+> We plan to make the issue public as soon as we have a CVE and can
+> publish
+> our advisory. However, almost every detail of the vulnerability has
+> been
+> already discussed on this list.
+> (Summary: the status of the certificate will not be checked)
+> 
+> Thus, the patch does not reveal any further aspects of the
+> vulnerability and
+> the only reason that we do not want to publish it publicly is that the
+> fact
+> that it may be incomplete and/or introduce side effects because we do
+> not have a complete test environment.
+> 
+> 
+> > I'm CCing upstream (Alan DeKok), as it seems this thread may be
+> > giving
+> > out more info than expected. Alan, this is part of the following
+> 
+> Good idea.
+> 
+> 
+> p.s.
+> Please include us in CC since we are not subscribed on the list.
+> 
+> --
+> DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40
+> 808077-555
+> Sitz/Register: Hamburg, AG Hamburg, HRB 88805, Ust-IdNr.: DE 232129737
+> Sachsenstraße 5, 20097 Hamburg/Germany, CEO: Dr. Klaus-Peter
+> Kossakowski
