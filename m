@@ -1,29 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/05/2
-Message-ID: <CANoWnESGd+f8-d9LVnJMSyR7gNtnK4MBckD8_pu45PmbyJQ6Mw@mail.gmail.com>
-Date: Fri, 5 Aug 2011 19:53:15 +1000
-From: dave bl <db.pub.mail@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foomatic-gui
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/16
+Message-ID: <1373857797.1472712.1311190971471.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:42:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, oss-security@...ts.openwall.com, coley <coley@...re.org>
+Subject: Re: CVE Request: ruby PRNG fixes
 Content-Type: text/plain; charset=utf-8
 
-On 5 August 2011 03:53, Josh Bressers <bressers@...hat.com> wrote:
->
->
-> ----- Original Message -----
->> On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
->> > So while there aren't that many "users" of the old
->> > system-config-printer - it appears that debian old-stable (lenny)
->> > maybe vulnerable (where python-smbc is not available) ... is it
->> > worth
->> > while giving system-config-printer a 2008 CVE as well (if none
->> > currently exists).
->>
->> Yes, I think it is worth doing that.
->>
->
-> This request doesn't really make any sense. It deserves a 2011 ID, that's
-> when the flaw was discovered.
+Sorry for the confusion.
 
-Ah ok, this why I asked  ^ ^.
+----- Original Message -----
+> On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
+> 
+> > http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
+> > http://redmine.ruby-lang.org/issues/4579
+> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+> 
+> Looking at the above patches, there seems to be two issues here,
+> perhaps
+> it needs two CVE ids to be assigned?
+> 
+> 1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
+> 
+> This one pertains to rand returning same values in forked processes.
+> http://redmine.ruby-lang.org/issues/show/4338
+> This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
+> 1.8.6-p399.
+
+Let's use CVE-2011-2686 for this one.
+
+> 
+> 2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+> 
+> This is an issue in the securerandom.rb module.
+> http://redmine.ruby-lang.org/issues/4579
+> 
+
+Use CVE-2011-2705 for this.
+
+Thanks.
+
+-- 
+    JB
