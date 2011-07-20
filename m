@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/5
-Message-ID: <2036734578.61013.1304624307741.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 5 May 2011 15:38:27 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/18
+Message-ID: <1707635281.1473034.1311191528928.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 20 Jul 2011 15:52:08 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mediawiki
+Subject: Re: CVE request: kernel: arbitrary kernel read in xtensa
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> I would like to announce the release of MediaWiki 1.16.5. Two security
-> issues were discovered.
-> 
-> The first issue is yet another recurrence of the Internet Explorer 6
-> XSS vulnerability that caused the release of 1.16.4. It was pointed
-> out that there are dangerous extensions with more than four
-> characters, so the regular expressions we introduced had to be updated
-> to match longer extensions.
-> 
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
-
-Use CVE-2011-1765
-
-> 
-> The second issue allows unauthenticated users to gain additional
-> rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
-> it is disabled. The issue occurs when a malicious user sends cookies
-> which contain the user name and user ID of a "victim" account. In
-> certain circumstances, the rights of the victim are loaded and persist
-> throughout the malicious request, allowing the malicious user to
-> perform actions with the victim's rights.
-> 
-> $wgBlockDisablesLogin is a feature which is sometimes used on private
-> wikis to prevent users who have an account from logging in and viewing
-> content on the wiki.
-> 
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
-> 
-
-Use CVE-2011-1766
+Please use CVE-2011-2707.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Not sure if any distributions support xtensa, but regardless:
+> 
+> Due to a failure to check user pointers passed to a ptrace_setxregs
+> request, it is possible for a local unprivileged user to read
+> arbitrary kernel memory [1].
+> 
+> -Dan
+> 
+> [1] http://marc.info/?l=linux-kernel&m=131008344912672&w=2
