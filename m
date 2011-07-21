@@ -1,50 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/4
-Message-ID: <4ED4736C.5010201@redhat.com>
-Date: Mon, 28 Nov 2011 22:53:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/6
+Message-ID: <20110721183255.GE821@dojo.mi.org>
+Date: Thu, 21 Jul 2011 14:32:55 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-CC: Raphael Bastos <tecnologia@...tosservice.com.br>, security@...ckware.com
-Subject: Re: Fwd: Bug script install slackware
+Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
 Content-Type: text/plain; charset=utf-8
 
-On 11/28/2011 04:18 PM, Raphael Bastos wrote:
-> ---------- Forwarded message ----------
-> From: Raphael Bastos <tecnologia@...tosservice.com.br>
-> Date: 2011/10/28
-> Subject: Bug script install slackware
-> To: volkerdi@...ckware.com
->
->
-> Take a look.... this is the correction sugest to script "SeTpartitions".
->
-> EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
->
-> livecd setup # cat -n  SeTpartitions |grep T_PX
->   10  T_PX=/mnt
->  374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1> $REDIR 2> $REDIR
->  495        if [ ! -d $T_PX/$MTPT ]; then
->  496           mkdir -p $T_PX/$MTPT
->  503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
-> $REDIR 2> $REDIR
->
->
-> Att,
-> Raphael Bastos aka chemonz
->
-> ===============================================
-> Bastos Service Manutenção Industrial Ltda.
-> www.bastosservice.com.br
-> Linux Reg. User: 388431  //  LPI ID: LPI000214711
-> email:~> $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
-> 's/(.)/chr(ord($1)-2)/ge'
-> ===============================================
->
-I'm going to need more information before I assign a CVE. Can you please
-include links to the affected program and to any response by
-volkerdi@...ckware.com? thanks.
+:Hi,
+:
+:This may be an odd request.  The proprietary fglrx driver has an
+:info disclosure flaw in one of it's shell scripts [0].  It passes the
+
+One could argue that the shell script itself is "open source".
+
+:xauth secret cookie in an insecure manner (such that it's exposed to
+:prying eyes in the output of ps for example).
+:
+:The oddness in this request is that the driver is proprietary; but
+:then again it is also included in most linux distributions in one form
+:or another, so I think oss-sec is an appropriate forum.  There is also
+:a specific additional right granted in the script's header: "Distro
+:maintainers may modify this reference script as necessary to conform
+:to their distribution policies."
+:
+:This is debian bug #625868 [1], and I've commited an untested fix
+:(I don't use authatieventsd myself) to our svn repo [2].
+:
+:Note that there is discussion in the bug report claiming the
+:debian-specific patch is to blame, but that conclusion is incorrect.
+:The same flaw is also present in the upstream ati code as well.
+:The debian code is only different in that it was made to handle a
+:slightly different use case, but the underlying flaw is indeed
+:present in both, so other distros are very likely affected as well.
+:
+:Note also that xauth's design makes this insecure usage seem like
+:an obvious solution for the cookie handling problem, so there are
+:probably many other flawed implementations like this, which could
+:be found by grepping for xauth and auditing those cases handling
+:the secret cookie.  This may be something worth calling out as a
+:CWE.
+
+It looks like you've seen the same kind of thing before:
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526678
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
+
+This may be worth a mention in the xauth man page.
+
+:Credit goes to Vincent Zweije who submitted the debian bug report.
+:
+:Best wishes,
+:Mike
+:
+:[0] common/etc/ati/authatieventsd.sh
+:[1] http://bugs.debian.org/625868
+:[2] svn://svn.debian.org/svn/pkg-fglrx/fglrx-driver/trunk
 
 -- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Supermodels don't usually date guys who live in the dirt."         -The Tick
 
--Kurt Seifried / Red Hat Security Response Team
-
+Content of type "application/pgp-signature" skipped
