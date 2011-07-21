@@ -1,92 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/3
-Message-ID: <AANLkTim1+iO5Na9mdWrHq6F1Sy9QHGqG9wcD8jJ3Y1Xd@mail.gmail.com>
-Date: Sat, 5 Mar 2011 13:57:41 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/1
+Message-ID: <CAAsmaPZoaGNmQgcnNsVV6ZhZMK-oPp6Udxm57gz_Zub-eXKCUw@mail.gmail.com>
+Date: Thu, 21 Jul 2011 10:25:07 -0500
+From: Tim Zingelman <tez@...bsd.org>
 To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, security <security@...ntu.com>, security@...ian.org,  secalert@...hat.com, security@...e.de
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Subject: Re: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
 Content-Type: text/plain; charset=utf-8
 
-CC-ing various distros in case they missed the original email, which
-I've included below.
-
-This is all good to know, but what do we think is the best way to
-actually fix this specific issue for all the systems supported by
-distros that are using older versions of util-linux, or for various
-other reasons can't get rid of /etc/mtab?
-
-Fixing every suid mount helper individually seems a bit tedious, but
-there might not be a way around it.
-
--Dan
-
-On Fri, Mar 4, 2011 at 1:35 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
-> Dan Rosenberg wrote:
->> > One more option is to replace /etc/mtab regular file with a symlink to
->> > /proc/mounts, thus making any /etc/mtab editing unneeded.
->>
->> This is a very good point.  I'm not sure why /etc/mtab exists anymore
->> given /proc/mounts is a more reliable source for this information.
+On Tue, Jul 19, 2011 at 9:55 AM, Solar Designer <solar@...nwall.com> wrote:
+> On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
+>> Do you think we should combine the entries, or just make sure they
+>> both contain all the information?
 >
-> /proc/mounts doesn't store options like user=. So replacing /etc/mtab
-> with a symlink wasn't feasible in general. util-linux recently
-> introduced /dev/.mount/utab which stores the missing information.
+> Please combine them.
+
+Done.  I kept the old one, but added a mention of it's existence in
+the regular NetBSD entry.
+
+>> p.s. I at least would be very much in support of a bsd distro's
+>> restricted security mailing list if you were to create one.
 >
-> cu
-> Ludwig
->
-> --
->  (o_   Ludwig Nussel
->  //\
->  V_/_  http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->
+> Sounds good.  Is anyone else interested in that as well?  Also, not
+> being involved with a *BSD, perhaps I should not be on that list, but
+> this brings up the issue of resolving administrative issues (e.g., not
+> being on the list I would not notice spam getting through to it).
 
-Original e-mail:
+I'm afraid I don't know about interest.  I had hoped others would have
+jumped in earlier... but they have not...
 
-Hi all,
+In the end did the opensolaris based distributions get into the closed
+linux list?  If not, I wonder if a list for everyone who
+repackages/distributes free/open source software (other than linux
+distro's) would make more sense than a BSD specific one?
 
-This was originally sent to the now-defunct vendor-sec mailing list.
-Seeing how it's a relatively low-severity issue and that we're
-currently lacking a mechanism for coordination among package
-maintainers and vendors, this list seems like a perfectly acceptable
-venue for discussing how to fix it.
+As far as you being on the list... I at least have no problem with it.
+ In fact I would be surprised to find much if anything on such a list
+that was not also on the linux list.
+(My personal preference would be to have the BSD folks on the linux
+list and trust us to just ignore the kernel issues that are not
+relevant to us :)
 
-I discovered that essentially every suid mount helper that uses
-addmntent() (or invokes util-linux mount, which in turn calls
-addmntent()) to add entries to /etc/mtab fails to anticipate a low
-value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
-/etc/mtab and possibly manipulate mountpoint options.  Affected
-software includes at least:
+Thanks for all your work to provide good communication options!
 
-mount.cifs (samba)
-fusermount (FUSE)
-mount (util-linux)
-ncpmount (ncpfs)
-vmware-hgfsmounter (open-vm-tools)
-
-Also affected are all their unmount equivalents.
-
-This can be exploited by checking the current size of /etc/mtab,
-setting an RLIMIT_FSIZE of some small amount greater than that, and
-invoking a suid mount helper.  The edits to /etc/mtab will be
-truncated to the ulimit and no newline will be appended, so multiple
-invocations allow near-arbitrary appending to /etc/mtab.  addmntent()
-will octal-encode most special characters, which makes exploitation
-beyond simple corruption not quite as straightforward, but I'm
-confident that with some creativity it would be possible to perform
-unauthorized unmounting, for example.
-
-There are a few possible options   We could patch glibc to try to
-raise the rlimit in addmntent().  Or we could fix every suid mount
-helper to raise the rlimit or have proper error handling for the case
-when addmntent() fails.  This final option requires that mtab editing
-be done in a temporary file and aborted on failure, which isn't the
-case for all helpers.
-
-Of course, once we figure out how to fix this, we can talk about
-assigning CVEs, etc.
-
-Regards,
-Dan
+ - Tim
