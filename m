@@ -1,22 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/1
-Message-ID: <4DE49E75.60007@redhat.com>
-Date: Tue, 31 May 2011 15:53:25 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/1
+Message-ID: <CAAsmaPZoaGNmQgcnNsVV6ZhZMK-oPp6Udxm57gz_Zub-eXKCUw@mail.gmail.com>
+Date: Thu, 21 Jul 2011 10:25:07 -0500
+From: Tim Zingelman <tez@...bsd.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1763 kernel: xen: improper upper boundary check in get_free_port() function
+Subject: Re: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Xen hypervisor checked for upper boundary
-when getting a new event channel port. A privileged DomU user could use
-this flaws to cause denial of service or, possibly, increase his privileges.
+On Tue, Jul 19, 2011 at 9:55 AM, Solar Designer <solar@...nwall.com> wrote:
+> On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
+>> Do you think we should combine the entries, or just make sure they
+>> both contain all the information?
+>
+> Please combine them.
 
-AFAIK, upstream xen is not affected.
+Done.  I kept the old one, but added a mention of it's existence in
+the regular NetBSD entry.
 
-https://bugzilla.redhat.com/CVE-2011-1763
+>> p.s. I at least would be very much in support of a bsd distro's
+>> restricted security mailing list if you were to create one.
+>
+> Sounds good.  Is anyone else interested in that as well?  Also, not
+> being involved with a *BSD, perhaps I should not be on that list, but
+> this brings up the issue of resolving administrative issues (e.g., not
+> being on the list I would not notice spam getting through to it).
 
-fix: xen-unstable c/s 19365:
-http://xenbits.xensource.com/hg/xen-unstable.hg/rev/2dcdd2fcb945
+I'm afraid I don't know about interest.  I had hoped others would have
+jumped in earlier... but they have not...
 
-Thanks, Eugene
+In the end did the opensolaris based distributions get into the closed
+linux list?  If not, I wonder if a list for everyone who
+repackages/distributes free/open source software (other than linux
+distro's) would make more sense than a BSD specific one?
+
+As far as you being on the list... I at least have no problem with it.
+ In fact I would be surprised to find much if anything on such a list
+that was not also on the linux list.
+(My personal preference would be to have the BSD folks on the linux
+list and trust us to just ignore the kernel issues that are not
+relevant to us :)
+
+Thanks for all your work to provide good communication options!
+
+ - Tim
