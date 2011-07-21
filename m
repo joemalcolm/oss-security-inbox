@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/4
-Message-ID: <Pine.GSO.4.64.1103281036230.7261@faron.mitre.org>
-Date: Mon, 28 Mar 2011 10:36:39 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: CVE Request -- Nagios -- XSS in the network status map CGI script
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/3
+Message-ID: <4E2864C9.2080606@redhat.com>
+Date: Thu, 21 Jul 2011 19:41:29 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
+Hello Josh, Steve, vendors,
 
-On Fri, 25 Mar 2011, Jan Lieskovsky wrote:
+   this:
+   [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
+   [2] 
+http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
+   [3] http://lwn.net/Alerts/449415/
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
 
->  Cross-site scripting (XSS) vulnerability in Nagios allows remote
-> attackers to inject arbitrary web script or HTML via specially-crafted
-> 'layer' parameter passed to the Nagios network status map CGI script
-> (statusmap.cgi).
->
-> References:
-> [1] http://tracker.nagios.org/view.php?id=207
-> [2] http://www.rul3z.de/advisories/SSCHADV2011-002.txt
-> [3] http://secunia.com/advisories/43287/
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=690877
+doesn't seem to have CVE identifier yet (though Sebastian Krahmer
+requested one for related fscaps issue).
 
+Josh, Steve, could you allocate a CVE id for this?
 
-Use CVE-2011-1523
+[4] contains also further issue description + links to SUSE patches
+(from [2]). Could not find their plaintext (*.src.rpm) version though.
 
-- Steve
+So Sebastian, if you could share those with us, it would be appreciated.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
