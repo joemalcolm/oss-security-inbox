@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/14
-Message-ID: <661619212.218334.1314045085973.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 16:31:25 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/7
+Message-Id: <201107220021.46248.steffen.joeris@skolelinux.de>
+Date: Fri, 22 Jul 2011 00:21:36 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: ruby on rails flaws (4)
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
-> 
-> maybe this issue would qualify for a CVE too(?):
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=673010
-> http://webservsec.blogspot.com/2011/02/ruby-on-rails-vulnerability.html
-> 
+Hi,
 
-This looks like it should also get one. Use CVE-2011-3187
+Sorry for joining this thread so late.
 
-Thanks.
+Please add me to the new closed list. As a member of the debian security 
+team[0] I was formerly subscribed to the vendor-sec@ list via our team@ 
+address.
 
--- 
-    JB
+pub   1024D/893FAD07 2004-07-12
+uid                  Steffen Joeris <white@...ian.org>
+uid                  Steffen Joeris (white) <Steffen.joeris@....de>
+uid                  Steffen Joeris (white) <steffen.joeris@...lelinux.de>
+uid                  Steffen Joeris (white) <white@....snow-crash.org>
+uid                  Steffen Joeris <white@...lelinux.org>
+sub   1024g/6F2AA41F 2004-07-12
+
+Cheers,
+Steffen
+
+[0]: http://www.debian.org/intro/organization
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
