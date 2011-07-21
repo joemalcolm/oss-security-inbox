@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/13
-Message-ID: <124226842.125891.1305662071787.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 15:54:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: DoS in tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/3
+Message-ID: <4E2864C9.2080606@redhat.com>
+Date: Thu, 21 Jul 2011 19:41:29 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
+Hello Josh, Steve, vendors,
 
+   this:
+   [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
+   [2] 
+http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
+   [3] http://lwn.net/Alerts/449415/
+   [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
 
------ Original Message -----
-> Tor 0.2.1.30 was released and includes a fix for a remote DoS flaw:
-> 
-> https://lists.torproject.org/pipermail/tor-announce/2011-February/000000.html
-> http://secunia.com/advisories/43548/
-> https://bugzilla.redhat.com/show_bug.cgi?id=705192
-> 
-> Could a CVE be assigned please?
-> 
+doesn't seem to have CVE identifier yet (though Sebastian Krahmer
+requested one for related fscaps issue).
 
-Please use CVE-2011-1924
+Josh, Steve, could you allocate a CVE id for this?
 
-Thanks.
+[4] contains also further issue description + links to SUSE patches
+(from [2]). Could not find their plaintext (*.src.rpm) version though.
 
--- 
-    JB
+So Sebastian, if you could share those with us, it would be appreciated.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
