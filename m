@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/3
-Message-ID: <CAHmME9qHN56w4Dn1wtzau5H1jULPTG2dG=gt0oD7_SGMKC3E+A@mail.gmail.com>
-Date: Sun, 6 Nov 2011 23:27:47 -0500
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/7
+Message-Id: <201107220021.46248.steffen.joeris@skolelinux.de>
+Date: Fri, 22 Jul 2011 00:21:36 +1000
+From: Steffen Joeris <steffen.joeris@...lelinux.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 6, 2011 at 22:11, Kurt Seifried <kseifried@...hat.com> wrote:
+Hi,
 
-> On 11/04/2011 02:45 PM, Jason A. Donenfeld wrote:
-> > Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
-> > current version that has been out for quite some time now. These require
-> a
-> > CVE. Issues 8 through 14 are ones introduced only during development and
-> So to confirm these issues will be assigned a CVE (double checking since
-> this has been quite the mess):
+Sorry for joining this thread so late.
 
+Please add me to the new closed list. As a member of the debian security 
+team[0] I was formerly subscribed to the vendor-sec@ list via our team@ 
+address.
 
-Roger that. A CVE or multiple CVEs, depending on however whomever wants to
-do it.
+pub   1024D/893FAD07 2004-07-12
+uid                  Steffen Joeris <white@...ian.org>
+uid                  Steffen Joeris (white) <Steffen.joeris@....de>
+uid                  Steffen Joeris (white) <steffen.joeris@...lelinux.de>
+uid                  Steffen Joeris (white) <white@....snow-crash.org>
+uid                  Steffen Joeris <white@...lelinux.org>
+sub   1024g/6F2AA41F 2004-07-12
 
+Cheers,
+Steffen
+
+[0]: http://www.debian.org/intro/organization
+
+Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
