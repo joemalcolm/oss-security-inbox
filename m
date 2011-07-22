@@ -1,19 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/9
-Message-ID: <4E2DB9BA.9000701@kde.org>
-Date: Mon, 25 Jul 2011 14:45:14 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com,  Tim Brown <timb@...-dimension.org.uk>, KDE Security Team <security@....org>
-Subject: CVE Request: Ark path traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/2
+Message-ID: <4E29A9E6.5040902@redhat.com>
+Date: Fri, 22 Jul 2011 18:48:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Lukas Fleischer <cgit@...ptocrack.de>
+Subject: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Josh, Steve, vendors,
 
-Ark contains a path traversal vulnerability allowing a
-maliciously-crafted zip file to allow for an arbitrary file to be
-displayed and, if the user has appropriate credentials, removed.
+   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+web interface for Git, displayed the file name in the rename hint. A
+remote attacker could provide a specially-crafted web page, which once
+visited by an authenticated Cgit user, with push access to the
+repository, would lead to arbitrary web script or HTML code execution.
 
-Can we please get a CVE for this?
+References:
+[1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
 
-Thanks,
-Jeff
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
