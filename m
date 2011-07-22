@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/3
-Message-ID: <4E12857B.2040005@digitaloffense.net>
-Date: Mon, 04 Jul 2011 22:31:07 -0500
-From: HD Moore <hdm@...italoffense.net>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/6
+Message-ID: <1956951432.1535107.1311365646651.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Jul 2011 16:14:06 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Lukas Fleischer <cgit@...ptocrack.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
-On 7/4/2011 9:26 PM, Solar Designer wrote:
-> On Tue, Jul 05, 2011 at 10:09:32AM +0800, Eugene Teo wrote:
->> I did not verify.
->>
->> (09:55:37 AM) hdmoore: The timestamp on vsftpd-2.3.4.tar.gz
->> http://bit.ly/j4VC5y indicates that the backdoor was present from Feb
->> 15th -> July 3rd (via mc)
+Please use CVE-2011-2711.
+
+Thanks.
+
+-- 
+    JB
+
+
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> Looks unrealistic to me.  Feb 15 is when 2.3.4 was released by Chris.
-> A copy I downloaded has mtime Feb 15 (preserved from the official
-> download site) and ctime Mar 2 (when I downloaded it).  It passes the
-> GPG signature check and lacks the backdoor.
+> an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+> web interface for Git, displayed the file name in the rename hint. A
+> remote attacker could provide a specially-crafted web page, which once
+> visited by an authenticated Cgit user, with push access to the
+> repository, would lead to arbitrary web script or HTML code execution.
 > 
-> Additionally, searching for the SHA-256 digest that Chris posted reveals
-> only copies of his announcement of the incident and news stories about
-> it.  No hits for any distro's filelists, etc.  I wish we had MD5 and
-> SHA-1 to also search for, though.  I don't have a copy of the backdoored
-> vsftpd tarball to compute those, but we can ask Chris for them.
+> References:
+> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
 > 
-> My gut feeling is that the backdoored tarball has been on the site for
-> 1 to 3 days.  But I could be wrong.
-
-Thanks for the CC -- as a guess as to what happened; was this particular
-mirror compromised and the original tarball modified (along with its
-mtime) to match the original Feb 15th date?
-
-Does anyone have a "we noticed it first" flag that is before July 3rd?
-
-Debian (and most other repos) are storing the SHA-256/SHA1/MD5 of each
-source package, so a Feb 15 date does seem incredible, but so does the
-complete pwnage of a non-official mirror with the original mtime, at the
-same moment as an official dist server compromise. A nightly rsync would
-account for this, but we would need to know more about the mirror
-structure from Chris.
-
-I am happy to correct the metasploit module if new facts arrive; thank
-you to everyone who spends their free time dealing with this crap.
-
--HD
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
