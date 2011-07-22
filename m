@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/11
-Message-ID: <1104040934450.26429@mjc.redhat.com>
-Date: Mon, 4 Apr 2011 09:42:37 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/7
+Message-ID: <20110722203544.GA30239@blizzard>
+Date: Fri, 22 Jul 2011 22:35:44 +0200
+From: Lukas Fleischer <cgit@...ptocrack.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
-> I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> and Josh).
+On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+> 
+>   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+> web interface for Git, displayed the file name in the rename hint. A
+> remote attacker could provide a specially-crafted web page, which once
+> visited by an authenticated Cgit user, with push access to the
+> repository, would lead to arbitrary web script or HTML code execution.
 
-Limiting a distro to two or three representatives is going to make things 
-tricky for Red Hat; we have a rather large dedicated security response 
-team (as we publish over 300 advisories a year across 70 product/versions 
-and have a number of folks dealing with 'incoming' issues spread, and my 
-team is dispersed across 9 different countries).  If these representatives 
-have been very active on v-s and oss-security is there a reason to limit?
+I think you are a tad off, here. The vulnerability I discovered actually
+is only exploitable *by* a user with push access as it requires to push
+a commit that renames any file to a file with a malicious file name.
 
-Mark
+The description (and the categorization of the vulnerability, which
+definitely is a low severity one if it counts as a vulnerability at all)
+should be corrected to reflect that.
+
+> 
+> References:
+> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
