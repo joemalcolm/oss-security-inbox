@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/1
-Message-ID: <4ED34FAD.4040501@redhat.com>
-Date: Mon, 28 Nov 2011 10:09:01 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- python-celery / Celery v2.4 -- Privilege escalation due improper sanitization of --uid and --gid arguments in certain tools (CELERYSA-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/3
+Message-Id: <20110722141628.e0bd378d22e61ddb2a56c2c5@gmail.com>
+Date: Fri, 22 Jul 2011 14:16:28 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Mike O'Connor wrote:
+> It looks like you've seen the same kind of thing before:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526678
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
 
-   a privilege escalation flaw was found in the way 'celeryd-multi',
-'celeryd_detach', 'celerybeat' and 'celeryev' tools of the Celery,
-an asynchronous task queue based on distributed message passing,
-performed sanitization of --uid and --gid arguments, provided to
-the tools on the command line (only effective user id was changed,
-with the real one remaining unchanged). A local attacker could use
-this flaw to send messages via the message broker or use the Pickle
-serializer to load and execute arbitrary code with elevated privileges.
+Yes, those are CVE-2009-1573 and CVE-2009-1756.
 
-References:
-[1] http://www.celeryproject.org/news/celery-24-released/
-[2] http://docs.celeryproject.org/en/latest/changelog.html#version-2-4-4
-[3] https://github.com/ask/celery/blob/master/docs/sec/CELERYSA-0001.txt
-[4] https://github.com/ask/celery/pull/544
+> This may be worth a mention in the xauth man page.
 
-Relevant upstream patch:
-[5] 
-https://github.com/gadomski/celery/commit/2afc0ea2ea22bce25013c9867f89e41a48b9251b
+I think the vast majority aren't going to pay attention to
+seemingly pedantic man page warnings, but then again it may
+be worth it to help the few that do.
 
-Could you allocate a CVE id for this issue?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Mike
