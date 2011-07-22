@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/11
-Message-ID: <4ED7E282.8010801@redhat.com>
-Date: Thu, 01 Dec 2011 13:24:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/4
+Message-ID: <1911378042.1534633.1311364582960.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Jul 2011 15:56:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-On 12/01/2011 10:14 AM, Kurt Seifried wrote:
-> On 12/01/2011 03:16 AM, Henri Salo wrote:
->> On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
->>> Original post: http://seclists.org/bugtraq/2011/Nov/15
->>> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
->>> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
->>>
->>> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
->>>
->>> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
->>>
->>> Please notify me if this is not enough information.
->> These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
->>
->> http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
->> http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
->>
->> If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
->>
->> - Henri Salo
-> Merging these two as the fix is to update serendipity for both, the
-> plug-in appears to simply expose another avenue of attack, not create an
-> actual XSS as such.
->
-> Please use CVE-2011-4366 for this issue.
->
-My mistake, this should have been merged into CVE-2011-4090, it's the
-same vuln type (XSS) and the same version of Serendipity, CVE-2011-4366
-is a bad assignment and should be marked as a duplicate of CVE-2011-4090.
+I presume this only needs one ID
+
+Use CVE-2011-2709
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> this:
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
+> [2]
+> http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
+> [3] http://lwn.net/Alerts/449415/
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
+> 
+> doesn't seem to have CVE identifier yet (though Sebastian Krahmer
+> requested one for related fscaps issue).
+> 
+> Josh, Steve, could you allocate a CVE id for this?
+> 
+> [4] contains also further issue description + links to SUSE patches
+> (from [2]). Could not find their plaintext (*.src.rpm) version though.
+> 
+> So Sebastian, if you could share those with us, it would be
+> appreciated.
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
