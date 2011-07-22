@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/3
-Message-ID: <20110315032814.GK6691@dojo.mi.org>
-Date: Mon, 14 Mar 2011 23:28:14 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/8
+Message-ID: <20110722214235.GA9254@openwall.com>
+Date: Sat, 23 Jul 2011 01:42:35 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-[catching up on old email]
+On Fri, Jul 22, 2011 at 12:21:36AM +1000, Steffen Joeris wrote:
+> Please add me to the new closed list. As a member of the debian security 
+> team[0] I was formerly subscribed to the vendor-sec@ list via our team@ 
+> address.
+> 
+> pub   1024D/893FAD07 2004-07-12
+> uid                  Steffen Joeris <white@...ian.org>
+> uid                  Steffen Joeris (white) <Steffen.joeris@....de>
+> uid                  Steffen Joeris (white) <steffen.joeris@...lelinux.de>
+> uid                  Steffen Joeris (white) <white@....snow-crash.org>
+> uid                  Steffen Joeris <white@...lelinux.org>
+> sub   1024g/6F2AA41F 2004-07-12
+> 
+> Cheers,
+> Steffen
+> 
+> [0]: http://www.debian.org/intro/organization
 
-:> > As suggested by Josh Bressers oCERT would be favourable to providing a
-:> > system that would accept user submission and allow selection of security
-:> > contacts from our existing member database as well as other verified
-:> > contacts.
+Added.
 
-...
-
-:It all depends on how this process is going to be handled. I can see oCERT
-:helping in routing reports to the proper contacts via email to our trusted
-:member contacts as well as external ones that we can seek on a report basis.
-
-What I've observed is that some times, the reporter or coordinator
-doesn't have a good idea of the scope of their issue.  To cite some
-real-world examples involving folks who I thought would know better:
-
-  1) no, BSD networking isn't just in Free/Net/OpenBSD 
-  2) no, ONC RPC just isn't in Sun products
-  3) no, a RH-specific kernel issue is a general Linux kernel issue
-
-Scoping issues isn't always easy.  How do you know whether I backported
-some bleeding-edge fix with broken security implications into one of the
-OSes I care about last week?  Sometimes, I'll need specific info just to
-confirm that I don't care about the issue.  Scoping is one of the things
-that vendor-sec was occasionally quite helpful with.  
-
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"I'd be terrific!  Colossal!  Stupendous!  Mediocre even!"        -Babs Bunny
+Alexander
