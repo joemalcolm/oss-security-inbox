@@ -1,49 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/3
-Message-ID: <20110719101957.GA3463@flens.dfn-cert.de>
-Date: Tue, 19 Jul 2011 12:19:57 +0200
-From: dfncert@...-cert.de
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/4
+Message-ID: <1911378042.1534633.1311364582960.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Jul 2011 15:56:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 02:37:46AM +0400, Solar Designer wrote:
+I presume this only needs one ID
 
-> On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
-> > Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-> > sounds like the right thing to do.
-> 
-> This is not exactly the new vendor-sec.  As the name suggests, it is a
-> Linux distros only list.  Also, please note that the maximum acceptable
+Use CVE-2011-2709
 
-We meant to say that we are willing to provide it to all distributions
-which provide packages for FreeRadius, not only Linux vendors. Sorry.
-
-
-> distros list without prior discussion on oss-security, I would bring
-> this up and suggest that we contact *BSD's at least.  Since this is
-> already on oss-security, I assume that interested *BSD's and others may
-
-We will contact the NetBSD/FreeBSD/OpenBSD security teams about the issue.
-
-
-> -----BEGIN PGP PUBLIC KEY BLOCK-----
-[snip]
-> -----END PGP PUBLIC KEY BLOCK-----
-
-Thanks for the information.
-
-
-Are the published information sufficient to get a CVE number for the issue?
-
-
-p.s.
-Please include us in CC since we are not subscribed on the list.
+Thanks.
 
 -- 
-DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40 808077-555
-Sitz/Register: Hamburg,  AG Hamburg,  HRB 88805,  Ust-IdNr.: DE 232129737
-Sachsenstraße 5, 20097 Hamburg/Germany,  CEO: Dr. Klaus-Peter Kossakowski
+    JB
 
-Content of type "application/pgp-signature" skipped
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> this:
+> [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
+> [2]
+> http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
+> [3] http://lwn.net/Alerts/449415/
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
+> 
+> doesn't seem to have CVE identifier yet (though Sebastian Krahmer
+> requested one for related fscaps issue).
+> 
+> Josh, Steve, could you allocate a CVE id for this?
+> 
+> [4] contains also further issue description + links to SUSE patches
+> (from [2]). Could not find their plaintext (*.src.rpm) version though.
+> 
+> So Sebastian, if you could share those with us, it would be
+> appreciated.
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
