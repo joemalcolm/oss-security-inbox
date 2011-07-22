@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/13
-Message-ID: <Pine.GSO.4.64.1103031639370.11138@faron.mitre.org>
-Date: Thu, 3 Mar 2011 16:44:26 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/7
+Message-ID: <20110722203544.GA30239@blizzard>
+Date: Fri, 22 Jul 2011 22:35:44 +0200
+From: Lukas Fleischer <cgit@...ptocrack.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+> 
+>   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+> web interface for Git, displayed the file name in the rename hint. A
+> remote attacker could provide a specially-crafted web page, which once
+> visited by an authenticated Cgit user, with push access to the
+> repository, would lead to arbitrary web script or HTML code execution.
 
-On Thu, 3 Mar 2011, Kees Cook wrote:
+I think you are a tad off, here. The vulnerability I discovered actually
+is only exploitable *by* a user with push access as it requires to push
+a commit that renames any file to a file with a malicious file name.
 
-> This certainly underscores that very few flaws need vendor-sec
-> coordination, but I would suspect that out of those roughly 725 flaws,
-> many of the really critical ones came through vendor-sec.
+The description (and the categorization of the vulnerability, which
+definitely is a low severity one if it counts as a vulnerability at all)
+should be corrected to reflect that.
 
-As an outsider with limited visibility into vendor-sec, this would be my 
-impression too.  I would imagine that things like major protocol design 
-flaws or critical, hard-to-fix bugs in popular software would still need 
-coordination across multiple parties with a need for non-disclosure for a 
-relatively long period of time.  Maybe vendor-sec-2 could handle that 
-need.
-
-- Steve
+> 
+> References:
+> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
