@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/5
-Message-ID: <20110706065646.GC19469@openwall.com>
-Date: Wed, 6 Jul 2011 10:56:46 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/8
+Message-ID: <20110722214235.GA9254@openwall.com>
+Date: Sat, 23 Jul 2011 01:42:35 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 09:24:23AM +0200, Tomas Hoger wrote:
-> On Mon, 4 Jul 2011 02:52:41 +0400 Solar Designer wrote:
+On Fri, Jul 22, 2011 at 12:21:36AM +1000, Steffen Joeris wrote:
+> Please add me to the new closed list. As a member of the debian security 
+> team[0] I was formerly subscribed to the vendor-sec@ list via our team@ 
+> address.
 > 
-> > Question to OpenSSL developers: is the patch given in Billy Bob
-> > Brumley and Nicola Tuveri's paper "Remote Timing Attacks Are Still
-> > Practical" OK to be used by distros?  Basically, I am interested in
-> > its "review status" by upstream - reviewed and approved, reviewed but
-> > not approved for specific reasons, not sufficiently reviewed.  (The
-> > patch is tiny, but even tiny changes might have non-obvious
-> > implications.)
+> pub   1024D/893FAD07 2004-07-12
+> uid                  Steffen Joeris <white@...ian.org>
+> uid                  Steffen Joeris (white) <Steffen.joeris@....de>
+> uid                  Steffen Joeris (white) <steffen.joeris@...lelinux.de>
+> uid                  Steffen Joeris (white) <white@....snow-crash.org>
+> uid                  Steffen Joeris <white@...lelinux.org>
+> sub   1024g/6F2AA41F 2004-07-12
 > 
-> I'm not part of the group you directed this question too, but as I've
-> not seen any upstream developer or list in CC...
-
-Yes, I did not CC.  Maybe I should have.  I thought that we had some
-OpenSSL folks in here.
-
-> The fix from the paper was committed in openssl CVS within about a week
-> from public disclosure:
+> Cheers,
+> Steffen
 > 
-> http://cvs.openssl.org/chngview?cn=20892
-> 
-> However, there were some concerns raised regarding the extra #ifdef
-> wrapping added as part of the commit, which disable the fix by default,
-> and the name suggests #ifndef was probably intended:
-> 
-> http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+> [0]: http://www.debian.org/intro/organization
 
-This helps.
-
-Are you dealing with the issue for Red Hat products?  Perhaps you have a
-Bugzilla entry?
-
-Thank you!
+Added.
 
 Alexander
