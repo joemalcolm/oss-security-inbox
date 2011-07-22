@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/4
-Message-ID: <20110613134042.GA12258@foo.fgeek.fi>
-Date: Mon, 13 Jun 2011 16:40:42 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/3
+Message-Id: <20110722141628.e0bd378d22e61ddb2a56c2c5@gmail.com>
+Date: Fri, 22 Jul 2011 14:16:28 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: jcameron@...min.com, webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com
-Subject: CVE-request: XSS in Webmin 1.540
+Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Mike O'Connor wrote:
+> It looks like you've seen the same kind of thing before:
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526678
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
 
-I would like to receive CVE-identifier for this issue in Webmin. References:
+Yes, those are CVE-2009-1573 and CVE-2009-1756.
 
-http://seclists.org/fulldisclosure/2011/Apr/393
+> This may be worth a mention in the xauth man page.
 
-Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB. Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881 which is included to Webmin 1.550 release.
+I think the vast majority aren't going to pay attention to
+seemingly pedantic man page warnings, but then again it may
+be worth it to help the few that do.
 
-Should be 2011 identifier.
-
-Best regards,
-Henri Salo
+Mike
