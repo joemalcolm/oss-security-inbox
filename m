@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/7
-Message-ID: <709823227.88477.1302779423715.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 14 Apr 2011 07:10:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/6
+Message-ID: <1956951432.1535107.1311365646651.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 22 Jul 2011 16:14:06 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Lukas Fleischer <cgit@...ptocrack.de>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> 
-> "security updates" and "public advisories" aren't the same thing,
-> That's not just a semantic distinction. There's many s vendors who
-> release security updates, but not necessarily public advisories on
-> them. They may have constituencies that would simply get confused
-> by advisories, or they have auto-update mechanisms, or part of their
-> support model involves pushing their customers to keep up with all
-> fixes, security or otherwise. They may simply thing that advisories
-> are a waste of time because customers don't read.
-> 
-> For linux-distros, I think what you really want to go for here are
-> *timely* updates. If a distro isn't generally capable of producing a
-> security update within, say, a month of when the issue was released,
-> then their getting the issue in advance through linux-distros isn't
-> going to do them or their distro community a lot of good because they
-> have other constraints in getting fixes out the door. Focusing on how
-> you think an update ought to *look* (e.g. should the advisories be
-> public?) isn't as important as the update getting *out*. Especially
-> since you're dealing with GPL'ed code, I think that's something you
-> can measure. Just ask the constituency a month or so after some major
-> kernel issue who has released updates/fixes and who hasn't, show the
-> relevant source, and take it from there.
-> 
-
-I think the whole point comes down to how can you prove you've updated what
-you claim you have? It doesn't matter *what* is public, just as long as
-something is (and it needs to be reasonable, expecting others to dig
-through source would be silly). If someone is untrustworthy and using a
-private list inappropriately, do you really think they're going to tell the
-truth if they're asked about releasing timely updates? Clearly advisories
-are the easiest way to verify this, but if someone has a better idea that
-includes verifiable information, please speak up.
+Please use CVE-2011-2711.
 
 Thanks.
 
 -- 
     JB
+
+
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+> web interface for Git, displayed the file name in the rename hint. A
+> remote attacker could provide a specially-crafted web page, which once
+> visited by an authenticated Cgit user, with push access to the
+> repository, would lead to arbitrary web script or HTML code execution.
+> 
+> References:
+> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
