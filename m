@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/3
-Message-ID: <4EA52CF0.8060009@redhat.com>
-Date: Mon, 24 Oct 2011 17:16:32 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel; CVE-2011-2942 and CVE-2011-3209
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/2
+Message-ID: <4E29A9E6.5040902@redhat.com>
+Date: Fri, 22 Jul 2011 18:48:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Lukas Fleischer <cgit@...ptocrack.de>
+Subject: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-2942; In the br_forward_finish() function, we may call kfree()
-on the skb we are forwarding, and so, after it, we should not
-dereference skb->dev pointer. With the fix, we save skb->dev before
-calling the br_forward_finish() function, so that we can use it
-afterwards. It's a regression from a commit that we have backported to
-our kernels. It doesn't affect the upstream kernel as the code was
-rewritten.
+Hello Josh, Steve, vendors,
 
-https://bugzilla.redhat.com/CVE-2011-2942
-https://www.redhat.com/security/data/cve/CVE-2011-2942.html
+   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+web interface for Git, displayed the file name in the rename hint. A
+remote attacker could provide a specially-crafted web page, which once
+visited by an authenticated Cgit user, with push access to the
+repository, would lead to arbitrary web script or HTML code execution.
 
-CVE-2011-3209; divide error issue in the clock implementation.
+References:
+[1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
 
-http://git.kernel.org/linus/f8bd2258e2d520dff28c855658bd24bdafb5102d
-https://bugzilla.redhat.com/CVE-2011-3209
-https://www.redhat.com/security/data/cve/CVE-2011-3209.html
+Could you allocate a CVE id for this?
 
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
