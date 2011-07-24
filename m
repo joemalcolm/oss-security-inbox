@@ -1,23 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/9
-Message-ID: <20111010204148.78eb24c8@laverne>
-Date: Mon, 10 Oct 2011 20:41:48 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/6
+Message-ID: <20110724161735.GA4436@pisco.westfalen.local>
+Date: Sun, 24 Jul 2011 18:17:36 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: fluxbb before 1.4.7
+Subject: Squirrelmail CVE duplicates
 Content-Type: text/plain; charset=utf-8
 
-http://fluxbb.org/forums/viewtopic.php?id=5751
+Hi,
+there seems to be a duplicate CVE assignment for Squirrelmail?
 
-"This is a security release, however only affects anyone running FluxBB
-behind a reverse proxy, with FORUM_BEHIND_REVERSE_PROXY enabled - we
-expect this to be a small number of users."
+CVE-2010-4555 / CVE-2011-2753
 
-Whatever that means... I suggest something like
-"Unknown security vulnerability related to reverse proxying"
+Cheers,
+        Moritz
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
