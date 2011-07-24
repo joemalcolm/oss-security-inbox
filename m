@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/8
-Message-ID: <AANLkTikfKh_2M7Stg9z0PJ0fz_nXq02Rnhh39kr=9Z87@mail.gmail.com>
-Date: Wed, 5 Jan 2011 20:23:57 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/2
+Message-ID: <20110724115108.GA23390@foo.fgeek.fi>
+Date: Sun, 24 Jul 2011 14:51:08 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+Cc: bressers@...hat.com, coley@...re.org, hanno@...eck.de
+Subject: Re: CVE request: silverstripe before 2.4.4
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
-<michael.s.gilbert@...il.com> wrote:
+On Tue, Jan 04, 2011 at 11:58:32AM -0500, Josh Bressers wrote:
+> ----- Original Message -----
+> > http://www.silverstripe.org/security-releases/
+> > 
+> > Silverstripe 2.4.4 notes:
+> > SQL information disclosure, SQL injection in Translatable extension,
+> > Cross Site Request Forgery in various CMS interfaces, XSS in controller
+> > action handling
+> > 
+> > (if someone is motivated one could also assign CVEs to all the old
+> > version issues)
+> > 
+> 
+> This one is way bigger than I can handle. I shall defer it to MITRE. It's
+> going to take a lot of work and CVE ids.
+> 
+> Thanks.
+> 
+> -- 
+>     JB
 
-> The fact that this bug can lead to a denial-of-service in PHP is
-> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
-> can lead to a dos in other apps, then each should get their own CVE
-> (again in my opinion).
+Did this got responded? At least there is no replies in this thread:
 
-I think so too but in any case it would rock if I could get a CVE #
-asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
+http://seclists.org/oss-sec/2011/q1/23
 
-Cheers,
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Best regards,
+Henri Salo
