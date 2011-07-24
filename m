@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/6
-Message-ID: <20110617001432.0735f6fe@redhat.com>
-Date: Fri, 17 Jun 2011 00:14:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/4
+Message-ID: <20110724145033.GA18483@blizzard>
+Date: Sun, 24 Jul 2011 16:50:33 +0200
+From: Lukas Fleischer <cgit@...ptocrack.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 1 Jun 2011 21:51:34 +0400 Solar Designer wrote:
+On Sun, Jul 24, 2011 at 03:56:12PM +0200, Jan Lieskovsky wrote:
+> 
+> Hi Lukas,
+> 
+>   thank you for this correction.
+> 
+> On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
+> >On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
+> >>Hello Josh, Steve, vendors,
+> >>
+> >>   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+> >>web interface for Git, displayed the file name in the rename hint. A
+> >>remote attacker could provide a specially-crafted web page, which once
+> >>visited by an authenticated Cgit user, with push access to the
+> >>repository, would lead to arbitrary web script or HTML code execution.
+> >
+> >I think you are a tad off, here. The vulnerability I discovered actually
+> >is only exploitable *by* a user with push access as it requires to push
+> >a commit that renames any file to a file with a malicious file name.
+> 
+> Have updated issue description in:
+> https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
+> 
+> Hoping of it to sound better now.
 
-> This is semi-consistent with what Tomas Hoger wrote:
-> 
-> "IIRC, Oracle was subscribed to v-s more than once - the "Sun"
-> exploder that was subscribed for quite a while (originally as Solaris
-> vendor probably), and individual OEL representative, added around the
-> time Oracle was in the process of acquiring Sun and there was no
-> single security contact for all products yet."
-> 
-> However, I don't see anyone from Oracle on what was given to me as the
-> final vendor-sec members list.  There's Sun's exploder, but no Oracle,
-> nor any Oracle person.
-> 
-> I recall that Joel Becker of Oracle had briefly contributed both to
-> vendor-sec and to oss-security discussions (thanks!), e.g. here:
-> 
-> http://www.openwall.com/lists/oss-security/2010/09/30/2
-> 
-> I don't recall if Joel was on vendor-sec (perhaps he was subscribed
-> for a while, then he asked to unsubscribe? just a guess), but I don't
-> see him on the final members list, and he has since unsubscribed from
-> oss-security (which may or may not indicate anything).
+Better now. This is how I'd phrase it:
 
-I was referring to Joel in my mail.  The outcome of the discussion of
-his subscription request was to add him to the list.  I do not know why
-he does not appear on the final member list, sorry.
+----
+A cross-site scripting (XSS) vulnerability was found in cgit, a fast web
+interface for Git, allowing a remote attacker with push access to a
+repository to inject arbitrary HTML code. The new file name in rename
+hints is not escaped and can be exploited by renaming some file to a
+file with specially-crafted file name, thus leading to a permanent XSS.
+----
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+By the way, this is already fixed in current stable [1] (just because
+nobody mentioned it yet).
+
+[1] http://hjemli.net/git/cgit/commit/?id=bebe89d7
