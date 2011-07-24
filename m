@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/5
-Message-ID: <4DE8DFEF.5070407@redhat.com>
-Date: Fri, 03 Jun 2011 15:21:51 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>
-Subject: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/4
+Message-ID: <20110724145033.GA18483@blizzard>
+Date: Sun, 24 Jul 2011 16:50:33 +0200
+From: Lukas Fleischer <cgit@...ptocrack.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Jul 24, 2011 at 03:56:12PM +0200, Jan Lieskovsky wrote:
+> 
+> Hi Lukas,
+> 
+>   thank you for this correction.
+> 
+> On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
+> >On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
+> >>Hello Josh, Steve, vendors,
+> >>
+> >>   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+> >>web interface for Git, displayed the file name in the rename hint. A
+> >>remote attacker could provide a specially-crafted web page, which once
+> >>visited by an authenticated Cgit user, with push access to the
+> >>repository, would lead to arbitrary web script or HTML code execution.
+> >
+> >I think you are a tad off, here. The vulnerability I discovered actually
+> >is only exploitable *by* a user with push access as it requires to push
+> >a commit that renames any file to a file with a malicious file name.
+> 
+> Have updated issue description in:
+> https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
+> 
+> Hoping of it to sound better now.
 
-Hello, Josh, Steve, vendors,
+Better now. This is how I'd phrase it:
 
-   It was found that fabric, a simple Pythonic remote deployment tool,
-used insecure way for creation of temporary files, when uploading
-template text files and project files to a remote system. A local
-attacker could use this flaw to conduct symlink attacks to upload
-sensitive information to remote host or to overwrite certain local
-system files.
+----
+A cross-site scripting (XSS) vulnerability was found in cgit, a fast web
+interface for Git, allowing a remote attacker with push access to a
+repository to inject arbitrary HTML code. The new file name in rename
+hints is not escaped and can be exploited by renaming some file to a
+file with specially-crafted file name, thus leading to a permanent XSS.
+----
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
+By the way, this is already fixed in current stable [1] (just because
+nobody mentioned it yet).
 
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+[1] http://hjemli.net/git/cgit/commit/?id=bebe89d7
