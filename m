@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/10
-Message-ID: <20110719145520.GA25999@openwall.com>
-Date: Tue, 19 Jul 2011 18:55:20 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/1
+Message-ID: <20110724111743.GC20396@foo.fgeek.fi>
+Date: Sun, 24 Jul 2011 14:17:43 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: *BSD security contacts (was: CVE request: vulnerability in FreeRADIUS (OCSP))
+Cc: bluegenexus@...il.com, namn@...emoon.com.vn
+Subject: CVE request: PyForum backdoor BMSA-2009-07
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 09:28:51AM -0500, Tim Zingelman wrote:
-> On Tue, Jul 19, 2011 at 7:39 AM, Solar Designer <solar@...nwall.com> wrote:
-> 
-> > I've just added NetBSD pkgsrc to:
-> >
-> > http://oss-security.openwall.org/wiki/vendors
-> 
-> Thanks, but we were/are already there as simply pkgsrc.
+Could I get CVE-identifier for backdoor-issue: http://seclists.org/fulldisclosure/2009/Nov/353
 
-Oops.
+Affected product: PyForum v1.0.3 (the newest available)
 
-> Note that pkgsrc supports many OS in addition to NetBSD.
+Other vulnerabilities affecting this version:
 
-Yes, we're quite aware of that:
+XSS-vulnerability: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4408
+CSRF-vulnerability: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4407
 
-http://openwall.info/wiki/Owl/pkgsrc
+Please note that the backdoor-issue is dated as 2009. I have asked status of this issue in: http://www.pyforum.org/pyforum/default/view_topic/631
 
-Thank you!
-
-> Do you think we should combine the entries, or just make sure they
-> both contain all the information?
-
-Please combine them.  I am not sure which name is better - please make
-your own determination.  Somehow I expected to find pkgsrc under or near
-NetBSD, despite of being aware of it being usable on other systems.
-
-> p.s. I at least would be very much in support of a bsd distro's
-> restricted security mailing list if you were to create one.
-
-Sounds good.  Is anyone else interested in that as well?  Also, not
-being involved with a *BSD, perhaps I should not be on that list, but
-this brings up the issue of resolving administrative issues (e.g., not
-being on the list I would not notice spam getting through to it).
-
-Alexander
+Best regards,
+Henri Salo
