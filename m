@@ -1,35 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/2
-Message-ID: <20110519103901.GJ5100@dhcp-25-225.brq.redhat.com>
-Date: Thu, 19 May 2011 12:39:02 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, nelhage@...hage.com
-Subject: CVE-2011-1751 qemu: acpi_piix4: missing hotplug check during device removal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/3
+Message-ID: <4E2C247C.7040204@redhat.com>
+Date: Sun, 24 Jul 2011 15:56:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Lukas Fleischer <cgit@...ptocrack.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
-Writing the value 2 to I/O port 0xae08 ("PCI_EJ_BASE") initiates the
-PIIX3 PCI-ISA bridge removal. Unplugging this causes all of the ISA
-devices to be unplugged and right now the ISA (in particularly the
-RTC) devices cannot handle unplug gracefuly.
 
-During MC146818 removal RTCState structure backing the emulated RTC 
-is freed but embedded timers are not unlinked from active_timers
-list. Next time the timer fires SIGSEGV occurs. RTCState embedds
-several QEMUTimer structures that define function pointers
-(callbacks) that get called when timer expires.
+Hi Lukas,
 
-Since the memory is freed, however, it is possible, under some
-circumstances, for the guest to cause a controlled allocation into
-the freed space, which can ultimately be exploited for code execution
-in the context of the qemu or qemu-kvm process.
+   thank you for this correction.
 
-Credit: Nelson Elhage
+On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
+> On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
+>> Hello Josh, Steve, vendors,
+>>
+>>    an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+>> web interface for Git, displayed the file name in the rename hint. A
+>> remote attacker could provide a specially-crafted web page, which once
+>> visited by an authenticated Cgit user, with push access to the
+>> repository, would lead to arbitrary web script or HTML code execution.
+>
+> I think you are a tad off, here. The vulnerability I discovered actually
+> is only exploitable *by* a user with push access as it requires to push
+> a commit that renames any file to a file with a malicious file name.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=699773
-http://lists.nongnu.org/archive/html/qemu-devel/2011-05/msg01810.html
+Have updated issue description in:
+https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Hoping of it to sound better now.
+
+Thanks again && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> The description (and the categorization of the vulnerability, which
+> definitely is a low severity one if it counts as a vulnerability at all)
+> should be corrected to reflect that.
+>
+>>
+>> References:
+>> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
+>>
+>> Could you allocate a CVE id for this?
+>>
+>> Thank you&&  Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+
