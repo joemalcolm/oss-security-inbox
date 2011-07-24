@@ -1,27 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/1
-Message-ID: <20111119121858.4d373fa3@laverne>
-Date: Sat, 19 Nov 2011 12:18:58 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: ejabberd before 2.1.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/3
+Message-ID: <4E2C247C.7040204@redhat.com>
+Date: Sun, 24 Jul 2011 15:56:12 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Lukas Fleischer <cgit@...ptocrack.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-From
-http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_2.1.9
+Hi Lukas,
 
-This looks like its security-relevant:
-- Fix Denial of Service when user sends malformed publish stanza
-  (EJAB-1498)
+   thank you for this correction.
 
-Upstream bug report:
-https://support.process-one.net/browse/EJAB-1498
+On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
+> On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
+>> Hello Josh, Steve, vendors,
+>>
+>>    an cross-site scripting (XSS) flaw was found in the way cgit, a fast
+>> web interface for Git, displayed the file name in the rename hint. A
+>> remote attacker could provide a specially-crafted web page, which once
+>> visited by an authenticated Cgit user, with push access to the
+>> repository, would lead to arbitrary web script or HTML code execution.
+>
+> I think you are a tad off, here. The vulnerability I discovered actually
+> is only exploitable *by* a user with push access as it requires to push
+> a commit that renames any file to a file with a malicious file name.
 
+Have updated issue description in:
+https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Hoping of it to sound better now.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks again && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> The description (and the categorization of the vulnerability, which
+> definitely is a low severity one if it counts as a vulnerability at all)
+> should be corrected to reflect that.
+>
+>>
+>> References:
+>> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
+>> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
+>>
+>> Could you allocate a CVE id for this?
+>>
+>> Thank you&&  Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+
