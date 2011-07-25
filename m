@@ -1,69 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/8
-Message-ID: <4D23366C.9000108@redhat.com>
-Date: Tue, 04 Jan 2011 16:02:04 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Kurt Seifried <kurt@...fried.org>, Josh Bressers <bressers@...hat.com>
-CC: oss-security <oss-security@...ts.openwall.com>, "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Hyrum Wright <hwright@...che.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/12
+Message-id: <A15D21C2-8546-463B-8CBF-B87D5ECA12DE@mac.com>
+Date: Mon, 25 Jul 2011 15:39:15 -0400
+From: Jeff Johnson <n3npq@....com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Josh, vendors,
+There were a series of CVE's applied (and some withdrawn) against
+whatever happens to be called "rpm".
 
-Josh Bressers wrote:
-> 
-> ----- Original Message -----
->> Unspecified vulnerability in the server component in Apache Subversion
->> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
->> service via unknown vectors, related to a "several bug fixes,
->> including two which can cause client-initiated crashes on the server."
->>
- >> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
+The patch here was dropped when RPM was forked and the CVE was
+essentially a replay of an issue that was already fixed 5 years ago
+(and the patch was NOT dropped in @rpm5.org cvs).
 
-   Cc-ed Hyrum to shed more light into this one. [1] mentions two issues:
-<begin quote>
-...
-several bug fixes, including two which can cause client-initiated
-crashes on the server.
-</end quote>
+(aside)
+I believe there are better fixes if the link count is more carefully
+checked always and everywhere. While rpm package metadata does not
+(and SHOULD not) carry an expected value for st->st_nlinks, its
+rather easy to synthesize an expected link count given the inode
+information (which is in rpm metadata) and to warn (either with --verify,
+or perhaps always) if the link count is not as expected.
 
-Further look at:
-[2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
+There are other (and better) approaches if the actual values on
+the file system, including files not contained in packages, is
+stored in an rpmdb: its a fundamental design flaw in RPM that
+only package metadata installed in an rpmdb is ever used
+for security auditing.
 
-suggest:
+But there's no harm at all in removing SUID/SGID bits from files that are being
+removed in case there's an additional link that has been added.
 
-A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)" being the first one.
-    Upstream changeset:
-    http://svn.apache.org/viewvc?view=revision&revision=1033166
+hth
 
-and after discussion with Joe Orton, Joe suggested:
-
-B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
-    References:
-    http://svn.haxx.se/dev/archive-2010-11/0102.shtml
-    Upstream changeset:
-    http://svn.apache.org/viewvc?view=revision&revision=1032808
-
-    being the second one as denial of service attack (by memory consumption) against
-    svnserve.
-
-Questions:
-----------
-Hyrum, could you confirm A, and B, issues are those two, mentioned in [2]
-to be able to cause client-initiated crashes on the server?
-
-> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
-> We can split it if needed once more information is known.
-
-Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
-we consider CVE-2010-4539 to be a CVE identifier for A, issue
-and request yet another / second one for B, issue?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> Thanks.
-> 
-
+73 de Jeff
