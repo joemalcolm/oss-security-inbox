@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/3
-Message-ID: <20110430145116.GA30033@openwall.com>
-Date: Sat, 30 Apr 2011 18:51:16 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/5
+Message-ID: <4E2D5380.6020907@redhat.com>
+Date: Mon, 25 Jul 2011 13:29:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Squirrelmail CVE duplicates
 Content-Type: text/plain; charset=utf-8
 
-Hi Hui,
+Hi Moritz,
 
-On Thu, Apr 28, 2011 at 02:24:58PM +0800, Hui Zhu wrote:
-> Please add me to the new maillist.  I am from Wind River.
+   thank you for checking this.
 
-Wind River is not yet being added to the new list:
+On 07/24/2011 06:17 PM, Moritz Muehlenhoff wrote:
+> Hi,
+> there seems to be a duplicate CVE assignment for Squirrelmail?
+>
+> CVE-2010-4555 / CVE-2011-2753
 
-http://www.openwall.com/lists/oss-security/2011/04/24/6
+If I got it right, the CVE-2010-4555 ID has been assigned to the XSS
+flaws:
 
-Hence, I've saved your subscription request to a separate folder, to
-revisit it if a decision is made to start adding "closed" vendors to the
-list, if Wind River starts to publish advisories and updates (in other
-words, if it becomes no more closed than Red Hat), or if a suitable
-separate list is setup.
+Multiple cross-site scripting (XSS) flaws were found in the SquirrelMail
+webmail client:
+* XSS flaws in generic options inputs,
+* XSS flaw in the SquirrelSpell plug-in,
+* XSS flaw in the Index Order page.
 
-Alexander
+[1]
+https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
+
+while the CVE-2011-2753 ID has been assigned to the CSRF protection add-ons:
+
+Also protection against Cross-site Request Forgery (CSRF) flaws has
+been added to the empty trash feature and to the Index Order page.
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=722832#c0
+
+Hope this helps && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> Cheers,
+>          Moritz
+>
+
