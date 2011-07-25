@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/16
-Message-ID: <4D7661A0.7030807@mvista.com>
-Date: Tue, 08 Mar 2011 07:04:32 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-CC: R P Herrold <herrold@...river.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/5
+Message-ID: <4E2D5380.6020907@redhat.com>
+Date: Mon, 25 Jul 2011 13:29:04 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Squirrelmail CVE duplicates
 Content-Type: text/plain; charset=utf-8
 
+Hi Moritz,
 
+   thank you for checking this.
 
-On 03/08/2011 06:19 AM, R P Herrold wrote:
-> On Tue, 8 Mar 2011, Josh Bressers wrote:
-> 
-<snipped>
-> 
-> These track together -- mailman or such will cull dead email accounts
-> that bounce of course, but that is a pretty mild form of management. 
-> Absent a charter to somehow mandate some 'contribution' to remain on a
-> list, there is not a clear rule to 'weed' the list.  But is this really
-> needed except from some idea of avoiding 'too many eyes'?  Frankly
-> running a distribution is work and for non-commercial distributions,
-> unpaid work
-> 
-> If a criteria for remaining on the list is needed, it is needed to make
-> sure that eyes are still reading the content -- handle that with a
-> periodic 'tracer' piece, and drop non-responders
+On 07/24/2011 06:17 PM, Moritz Muehlenhoff wrote:
+> Hi,
+> there seems to be a duplicate CVE assignment for Squirrelmail?
+>
+> CVE-2010-4555 / CVE-2011-2753
 
-This does not work if the responder your are sending to is an internal
-mailman list. I am surprised this is even allowed.  Secondly, If I
-happen to quit, my email gets forwarded to someone else in my company
-(no bounce) and is another reason why encryption should be used.
+If I got it right, the CVE-2010-4555 ID has been assigned to the XSS
+flaws:
 
-- Armin
+Multiple cross-site scripting (XSS) flaws were found in the SquirrelMail
+webmail client:
+* XSS flaws in generic options inputs,
+* XSS flaw in the SquirrelSpell plug-in,
+* XSS flaw in the Index Order page.
+
+[1]
+https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
+
+while the CVE-2011-2753 ID has been assigned to the CSRF protection add-ons:
+
+Also protection against Cross-site Request Forgery (CSRF) flaws has
+been added to the empty trash feature and to the Index Order page.
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=722832#c0
+
+Hope this helps && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> Cheers,
+>          Moritz
+>
+
