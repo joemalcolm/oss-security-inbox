@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/3
-Message-ID: <4EBBD8A3.7090809@redhat.com>
-Date: Thu, 10 Nov 2011 14:58:59 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- ProFTPD -- Response pool use-after-free flaw (ZDI-CAN-1420)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/12
+Message-id: <A15D21C2-8546-463B-8CBF-B87D5ECA12DE@mac.com>
+Date: Mon, 25 Jul 2011 15:39:15 -0400
+From: Jeff Johnson <n3npq@....com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+There were a series of CVE's applied (and some withdrawn) against
+whatever happens to be called "rpm".
 
-   a use-after-free flaw was found in the way ProFTPD, an enhanced FTP
-server, performed retrieval of the response pool for the old command
-(when ProFTPD was in the midst of the data transfer, when new command
-arrived) used by the Response API. A remote attacker could provide a
-specially-crafted request (resulting in a need the server to handle an
-exceptional condition), leading to memory corruption and potentially
-arbitrary code execution, with the privileges of the user running the
-proftpd server.
+The patch here was dropped when RPM was forked and the CVE was
+essentially a replay of an issue that was already fixed 5 years ago
+(and the patch was NOT dropped in @rpm5.org cvs).
 
-Upstream bug report:
-[1] http://bugs.proftpd.org/show_bug.cgi?id=3711
+(aside)
+I believe there are better fixes if the link count is more carefully
+checked always and everywhere. While rpm package metadata does not
+(and SHOULD not) carry an expected value for st->st_nlinks, its
+rather easy to synthesize an expected link count given the inode
+information (which is in rpm metadata) and to warn (either with --verify,
+or perhaps always) if the link count is not as expected.
 
-Relevant upstream patch:
-[2] http://bugs.proftpd.org/show_bug.cgi?id=3711#c1
+There are other (and better) approaches if the actual values on
+the file system, including files not contained in packages, is
+stored in an rpmdb: its a fundamental design flaw in RPM that
+only package metadata installed in an rpmdb is ever used
+for security auditing.
 
-References:
-[3] https://secunia.com/advisories/46811/
-[4] https://bugs.gentoo.org/show_bug.cgi?id=390075
-[5] http://www.zerodayinitiative.com/advisories/upcoming/
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=752812
+But there's no harm at all in removing SUID/SGID bits from files that are being
+removed in case there's an additional link that has been added.
 
-Could you allocate a CVE id for this?
+hth
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: According to the upstream bug report [1], the ZDI-CAN-1420
-       issue has been disclosed 2011-10-28, thus grepped OSS
-       archives for CVE request due this proftpd deficiency,
-       and there doesn't seem to be one yet (also ZDI-CAN-1420
-       doesn't seem to reference a CVE id).
+73 de Jeff
