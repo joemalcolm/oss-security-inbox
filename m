@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/9
-Message-ID: <1623356836.120550.1304967664438.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 May 2011 15:01:06 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/3
+Message-ID: <20110725123432.03d1209c@redhat.com>
+Date: Mon, 25 Jul 2011 12:34:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
+Earlier this year, CVE-2011-0997 was assigned to ICS's dhclient and
+CVE-2011-0996 dhcpcd for an insufficient DHCP option checking.
 
------ Original Message -----
-> The kernel automatically evaluates partition tables of storage
-> devices.
-> The code for evaluating GUID partitions (in fs/partitions/efi.c)
-> contains a bug that can cause a kernel heap overflow on certain
-> corrupted GUID partition tables.
-> 
-> http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
-> http://bugzilla.redhat.com/show_bug.cgi?id=703026
-> 
+Similar issue affects busybox's udhcpc.
 
-Please use CVE-2011-1776
+dhcpv6's dhcp6c was previously mentioned and it seems also fixed in
+SUSE, but did not get its own CVE.
 
-Thanks.
+The impact for DHCPv6 clients seems significantly lower, as there's no
+support for hostname option, only domain search option.  I'm not sure
+if anyone identified any good target that handles search option
+insecurely, I've only found shtool's sh.echo that may use it in sed
+script, resulting in sed script injection with file overwrite or code
+execution impact.
+
+Given that dhclient and dhcpcd got separate CVEs, udhcpc and dhcp6c
+should probably get separate ids too.
 
 -- 
-    JB
+Tomas Hoger / Red Hat Security Response Team
