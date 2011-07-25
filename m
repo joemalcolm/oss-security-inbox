@@ -1,62 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/18
-Message-ID: <4E1CB444.6000303@redhat.com>
-Date: Tue, 12 Jul 2011 16:53:24 -0400
-From: William Cohen <wcohen@...hat.com>
-To: Jamie Strandboge <jamie@...onical.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/11
+Message-ID: <4E2DBB3A.60703@kde.org>
+Date: Mon, 25 Jul 2011 14:51:38 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
+Subject: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-On 07/07/2011 11:56 AM, Jamie Strandboge wrote:
-> On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
->> The patches mentioned in the previous email.
->>
->> -Will
-> 
-> Thanks for these patches. I was reviewing them and noticed that
-> 0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
-> 'error_if_not_basename $arg $val' for --save added in
-> 0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
-> if you apply all 4 patches, method #2 from the Debian bug[1] is no
-> longer fixed. Attached is a patch to correct this (to be applied after
-> the other 4).
-> 
-> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
-> 
+Hello,
 
-Hi Jamie,
+We've been made aware of an input validation failure affecting multiple
+KDE applications. (The details are not yet public as we're working on
+the fixes.) We'd like a CVE for this.
 
-Can you check whether this problem still exists in upstream? This patch does not apply cleanly to upstream. The upstream opcontrol has:
+The Arora and Rekonq web browsers are also vulnerable to the same attack
+vector, and other Qt-based programs may be as well. We're working with
+the Qt team to help enhance their documentation to warn developers to
+take care sanitizing their inputs, but it's not actually a Qt flaw. So
+we're a bit unsure how to proceed here. Do we get separate CVEs for
+Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
+applications? I would think the former since other applications may be
+found to be vulnerable down the line, but wanted to check.
 
+(The Rekonq team has been made aware and are currently patching their
+code; I'm in the process of trying to notify the Arora team.)
 
-			--save)
-				error_if_not_valid_savename "$arg" "$val"
-				DUMP=yes
-				SAVE_SESSION=yes
-				SAVE_NAME=$val
-				EXCLUSIVE_ARGC=`expr $EXCLUSIVE_ARGC + 1`
-				EXCLUSIVE_ARGV="$arg"
-				;;
-
-And:
-
-# check value is a base filename
-error_if_not_valid_savename()
-{
-	error_if_empty "$1" "$2"
-	bname=`basename "$2"`
-	if test "$2" !=  "$bname"; then
-		echo "Argument for $1, $2, cannot change directory." >&2
-		exit 1
-	fi
-	case "$2" in
-		# The following catches anything that is not
-		# 0-9, a-z, A-Z, an '-', ':', ',', '.', or '/'
-		*[!-[:alnum:]_:,./]*) 
-			echo "Argument for $1, $2, not allow to have special ch
-aracters" >&2
-			exit 1;;
-	esac
-}
-
+Thanks,
+Jeff
