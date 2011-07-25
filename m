@@ -1,111 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/9
-Message-ID: <20110707231331.GA30639@openwall.com>
-Date: Fri, 8 Jul 2011 03:13:31 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/13
+Message-Id: <201107252301.38073.timb@nth-dimension.org.uk>
+Date: Mon, 25 Jul 2011 23:01:31 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: Jeff Mitchell <mitchell@....org>, KDE Security Team <security@....org>, security@...nokia.com
+Subject: Re: CVE Request: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 07, 2011 at 01:33:18AM +0400, Solar Designer wrote:
-> On Tue, Jun 28, 2011 at 02:05:35PM +0200, Michael Matz wrote:
-> > If so, treating passwords containing 0xff special seems sensible.
-...
-> I gave some thought to what action to take on a would-be collision.
-> Simply failing the password hashing operation didn't sound great - it'd
-> be prone to side-channel leaks of this property of the attempted
-> password, and users wouldn't be able to set those weird passwords if the
-> system happens to use $2a$ instead of the now more correct $2y$ for new
-> hashes.  This would in turn reveal properties of system setup to a
-> non-root user.  So I chose to alter the hashing method in those cases
-> such that the collision is avoided and no other collision may be easily
-> found (without breaking Blowfish).
+On Monday 25 Jul 2011 19:51:47 Jeff Mitchell wrote:
 
-Zefram, the maintainer of Crypt::Eksblowfish, CC'ed on this message,
-expressed his disapproval for the above (via private e-mail to me).
-More specifically, Zefram approves of the new prefixes $2x$ and $2y$,
-but not of the slight deliberate deviation from OpenBSD's algorithm for
-the $2a$ prefix.
+> We've been made aware of an input validation failure affecting multiple
+> KDE applications. (The details are not yet public as we're working on
+> the fixes.) We'd like a CVE for this.
+> 
+> The Arora and Rekonq web browsers are also vulnerable to the same attack
+> vector, and other Qt-based programs may be as well. We're working with
+> the Qt team to help enhance their documentation to warn developers to
+> take care sanitizing their inputs, but it's not actually a Qt flaw. So
+> we're a bit unsure how to proceed here. Do we get separate CVEs for
+> Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
+> applications? I would think the former since other applications may be
+> found to be vulnerable down the line, but wanted to check.
+> 
+> (The Rekonq team has been made aware and are currently patching their
+> code; I'm in the process of trying to notify the Arora team.)
 
-Zefram's proposed alternative is "to reject certain passwords without
-giving much away through side channels".  This was the alternative I had
-been considering too.  However, my concern is not only information leaks
-via timings, etc., but also more direct leaks via the password hashes
-themselves - if they're ever leaked or stolen.  Another concern is
-program behavior on "rejection of certain passwords" by our library
-code.
+Without disclosing too much, I'd go for a per module based CVE.  So one per 
+affected KDE module + 1 per affected Qt module, + 1 per app that does its own 
+thing (i.e. Arora, Rekonq and others we've already identified).  I think that's 
+the most intelligent thing to do although I do think that one of the concerns 
+is that more examples will likely come out of the woodwork (it's nothing that 
+can easily be identified programatically) and each edge case is likely to be 
+fairly application unique.  As an analogy, the best I can think of is XSS via 
+PHP_SELF, do we give the CVE to PHP, frameworks that use PHP or individual 
+apps that use it badly?  From what I can tell it seems to be per app/framework 
+module.
 
-Zefram suggested a way to implement such rejection.  It's similar to
-what I had been considering - do the hashing either way, but then if we
-want to reject a password alter the output string such that it can't
-possibly match the setting string.  There are more details to this, such
-as to deal with more subtle timing leaks, but that's the gist of it.
+Tim
+-- 
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
 
-(My current code does something similar on runtime self-test failure,
-although it also indicates the error explicitly to callers who are good
-enough to check the return value.)
-
-Unfortunately, those strings would likely be trivial to identify in a
-shadow file, etc., thereby revealing that those specific users tried to
-set the affected passwords.  If the users reuse such passwords
-elsewhere, this may give an attacker a way to run more focused attacks
-on other/external accounts of those specific users (more focused in
-terms of both which users to attack and what passwords to try).
-
-Another scenario is that the rejection is somehow recognized by programs
-setting passwords and/or doing authentication (maybe not by all, but by
-some of them).  In that case we have those extra side-channel leaks
-again, and we're revealing this detail of the system setup to a non-admin.
-
-Let's suppose we could produce strings indistinguishable from normal
-hashes, but practically uncrackable (unless a real collision is hit).
-However, in order for us to fully reject risky passwords rather than
-just hash them differently (which I had implemented and which Zefram
-objects to), such strings, when re-used as setting strings and passed
-into crypt(3), would need to produce different strings.  This
-contradicts that they're indistinguishable from normal.  OK, we can
-relax this requirement to "indistinguishable from normal until the
-correct password is tested".  Perhaps we could come up with an algorithm
-that would achieve it, but another issue is that it means crypt(3) will
-have to alter the setting string, which is not indistinguishable from
-its normal behavior - so we're back to the scenario discussed above for
-some apps.  (For example, as we've just learned, mkpasswd would notice
-this difference in behavior.)
-
-Thus, it still feels like my approach with slight deviation from correct
-hashing for $2a$ might be the least evil and have the least potential
-for nasty surprises.
-
-If it were the very first deviation from the correct algorithm for $2a$,
-I would likely refrain from it (and there would be no need for it).  But
-since things were/are already far worse, this seems acceptable to me.
-
-It affects a very small fraction of passwords, and only weird ones,
-which are in practice unlikely to be seen outside of an attack.
-
-On the other hand, this is also a reason why we might find side-channel
-leaks acceptable - and go for outright rejection of such passwords, with
-explicit error indication by our library code.  Unfortunately, not all
-programs check for errors, and in fact in order to avoid surprises to
-programs that don't expect a NULL return from crypt(3) (which is allowed
-formally, but is uncommon and generally not expected in practice) the
-crypt_blowfish wrapper code includes translation of NULL returns from
-its underlying functions to "*0" / "*1" magic strings.  So with many
-systems/programs we'd get those magic strings in shadow files and the
-like, which would result in the focused attacks problem I mentioned above.
-And if we remove this wrapper code, we'd introduce a way to segfault
-many services.
-
-I'd appreciate any further comments.
-
-Thanks,
-
-Alexander
-
-P.S. My expectation is that we'd move to something substantially more
-suitable than both bcrypt and SHA-crypt in a few years from now.
-Keywords: scrypt concepts, inherent parallelism (attackers have lots of
-it anyway, but authentication servers need more of it), GPUs (fast
-SHA-crypt cracking later this year), AVX2 VSIB (faster bcrypt cracking
-in a couple of years from now).
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
