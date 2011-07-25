@@ -1,20 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/1
-Message-ID: <4DBE4AB8.2040106@redhat.com>
-Date: Mon, 02 May 2011 11:40:00 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/2
+Message-ID: <20110725065710.GB21793@suse.de>
+Date: Mon, 25 Jul 2011 08:57:10 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libmodplugin stack-buffer overflow
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-Some details and exploit at:
-http://www.exploit-db.com/exploits/17222/
 
->From an initial look, it seems that applications embedding libmodplug,
-sp gstreamer-plugins may not be affected, since it seems to be doing
-some parameter checking before hand.
+Hi
 
-Can a CVE be assigned to this please?
+You probably speak about:
+
+http://www.suse.de/~krahmer/libs-vs-fscaps/
+
+There was a discussion some months ago on OSS with more or less no result,
+so we started fixing on our own.
+The openssl patch has been posted to openssl patch list without results
+so far either:
+
+http://rt.openssl.org/Ticket/Display.html?id=2532
+
+Similar issues are inside libudev and libhal, both linked against
+suids like Xorg.
+
+-s
+
+On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
+> I presume this only needs one ID
+> 
+> Use CVE-2011-2709
+> 
+> Thanks.
+> 
+> -- 
+>     JB
+> 
+> ----- Original Message -----
+> > Hello Josh, Steve, vendors,
+> > 
+> > this:
+> > [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
+> > [2]
+> > http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
+> > [3] http://lwn.net/Alerts/449415/
+> > [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
+> > 
+> > doesn't seem to have CVE identifier yet (though Sebastian Krahmer
+> > requested one for related fscaps issue).
+> > 
+> > Josh, Steve, could you allocate a CVE id for this?
+> > 
+> > [4] contains also further issue description + links to SUSE patches
+> > (from [2]). Could not find their plaintext (*.src.rpm) version though.
+> > 
+> > So Sebastian, if you could share those with us, it would be
+> > appreciated.
+> > 
+> > Thank you && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
