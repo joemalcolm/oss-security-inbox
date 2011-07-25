@@ -1,50 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/7
-Message-ID: <4DA47197.7070809@mvista.com>
-Date: Tue, 12 Apr 2011 05:36:55 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/3
+Message-ID: <20110725123432.03d1209c@redhat.com>
+Date: Mon, 25 Jul 2011 12:34:32 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
+Earlier this year, CVE-2011-0997 was assigned to ICS's dhclient and
+CVE-2011-0996 dhcpcd for an insufficient DHCP option checking.
 
-On 04/11/2011 09:57 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> Postponed. I'd like to see any support for you getting onto the Linux
->> distros security contacts list, with reasoning, or/and any other
->> suggestions on what to do in this case. Josh - what do you think (as
->> someone who advocated the setup of a vendor-sec replacement)?
->>
-> 
-> My initial thought is that a vendor without public advisories is a
-> liability.
+Similar issue affects busybox's udhcpc.
 
-Then we has been a liability to vendor-sec ever since we first got
-accepted way-back-when. My apologies.
+dhcpv6's dhcp6c was previously mentioned and it seems also fixed in
+SUSE, but did not get its own CVE.
 
-> 
-> I don't want to get into the politics of not publishing your advisories,
+The impact for DHCPv6 clients seems significantly lower, as there's no
+support for hostname option, only domain search option.  I'm not sure
+if anyone identified any good target that handles search option
+insecurely, I've only found shtool's sh.echo that may use it in sed
+script, resulting in sed script injection with file overwrite or code
+execution impact.
 
-(I don't either)
+Given that dhclient and dhcpcd got separate CVEs, udhcpc and dhcp6c
+should probably get separate ids too.
 
-> but at the same time, public information such as this is all we have to
-> measure if a vendor is using the information at hand.
-
-Agreed.
-
-> I'm happy to draw a line in the sand and make public advisories a mandatory
-> requirement. If anyone disagrees, please speak up. This is my personal
-> opinion, other viewpoints are welcome.
-
-So publicly available advisories are a requirement.  What about access
-to the patches?
-
-Is there somewhere I can point my management to that defines these new
-requirements or is this too soon?
-
-Mahalo,
-Armin
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
