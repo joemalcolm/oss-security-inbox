@@ -1,49 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/1
-Message-ID: <4E535B19.9000601@redhat.com>
-Date: Tue, 23 Aug 2011 15:47:37 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: change in how tcp seq numbers are generated
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/9
+Message-ID: <4E2DB9BA.9000701@kde.org>
+Date: Mon, 25 Jul 2011 14:45:14 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com,  Tim Brown <timb@...-dimension.org.uk>, KDE Security Team <security@....org>
+Subject: CVE Request: Ark path traversal
 Content-Type: text/plain; charset=utf-8
 
-http://lwn.net/Articles/455135/
-Dan Kaminsky pointed out that using partial MD4 and using that to
-generate a sequence number, of which only 24-bits are truly unguessable,
-seriously undermine the goals of random sequence number generation.
+Hello,
 
-In particular, with only 24-bits being truly unguessable, packet
-injection into a session using even something like brute force is a real
-potential possibility.
+Ark contains a path traversal vulnerability allowing a
+maliciously-crafted zip file to allow for an arbitrary file to be
+displayed and, if the user has appropriate credentials, removed.
 
-We only use 24-bits because we regenerate the random number every 5
-minutes "just in case."  But what does is trade a "we don't know" kind
-of theoretical issue for a provably real one (brute force attack).
+Can we please get a CVE for this?
 
-Therefore [Dave Miller] moving us more in line with RFC1948 (as well as
-OpenBSD and Solaris), to use MD5 and a full 32-bit result in the
-generated sequence number.
-
-MD5 was selected as a compromise between performance loss and
-theoretical ability to be compromised.  Willy Tarreau did extensive
-testing and SHA1 was found to harm performance too much to be considered
-seriously at this time.
-
-We may later add a sysctl for various modes (ie. a "super secure" mode
-that uses SHA1 if people want that, and an "insecure" mode that doesn't
-use cryptographic hashing at all for people in protected environments
-where that might be safe to do).
-
-[Dave Miller] also moved the sequence number generators out of random.c
-(they never really belonged there, and are only there due to historical
-artifacts), and fixed a bug in DCCP sequence number generation (on ipv6
-the 43-bit sequence number was truncated to 32-bits).
-
-Upstream commits:
-crypto: Move md5_transform to lib/md5.c
-http://git.kernel.org/linus/bc0b96b54a21246e377122d54569eef71cec535f
-net: Compute protocol sequence numbers and fragment IDs using MD5
-http://git.kernel.org/linus/6e5714eaf77d79ae1c8b47e3e040ff5411b717ec
-
-Thanks, Eugene
+Thanks,
+Jeff
