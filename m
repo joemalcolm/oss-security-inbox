@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/11
-Message-ID: <20111115203129.GN2404@redhat.com>
-Date: Tue, 15 Nov 2011 13:31:31 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-3368 suggested patch incomplete for apache2 < 2.2.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/10
+Message-ID: <4E2DBB43.30402@kde.org>
+Date: Mon, 25 Jul 2011 14:51:47 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
+Subject: CVE Request: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-* [2011-10-26 18:02:00 +0200] Marcus Meissner wrote:
+Hello,
 
->during our QA we noticed that the mod_proxy fix for CVE-2011-3368
->was incomplete for HTTP 0.9 style requests.
->
->https://bugzilla.novell.com/show_bug.cgi?id=722545
->
->to cross check, with the RewriteRules setup as in the exploit:
->
->$ telnet testhost 80
->GET @www.otherhost/foo.png
->... should give a 400 error, and not the 404 code from www.otherhost
+We've been made aware of an input validation failure affecting multiple
+KDE applications. (The details are not yet public as we're working on
+the fixes.) We'd like a CVE for this.
 
-Did this ever get a CVE name (aka "incomplete fix of CVE-2011-3368")?
+The Arora and Rekonq web browsers are also vulnerable to the same attack
+vector, and other Qt-based programs may be as well. We're working with
+the Qt team to help enhance their documentation to warn developers to
+take care sanitizing their inputs, but it's not actually a Qt flaw. So
+we're a bit unsure how to proceed here. Do we get separate CVEs for
+Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
+applications? I would think the former since other applications may be
+found to be vulnerable down the line, but wanted to check.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+(The Rekonq team has been made aware and are currently patching their
+code; I'm in the process of trying to notify the Arora team.)
+
+Thanks,
+Jeff
