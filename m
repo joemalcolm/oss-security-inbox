@@ -1,71 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/05/1
-Message-ID: <4DEB724D.5000602@pre-sense.de>
-Date: Sun, 05 Jun 2011 14:10:53 +0200
-From: Timo Warns <warns@...-sense.de>
-To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>,  coley <coley@...re.org>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/15
+Message-ID: <20110725230222.GB23791@openwall.com>
+Date: Tue, 26 Jul 2011 03:02:22 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jeff Johnson <n3npq@....com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-On 03.06.2011 08:47, Eugene Teo wrote:
-> On 02/25/2011 04:22 AM, Josh Bressers wrote:
->>
->> ----- Original Message -----
->>> On Thu, 2011-02-24 at 09:25 +0800, Eugene Teo wrote:
->>>> On 02/24/2011 03:59 AM, Josh Bressers wrote:
->>>>> ----- Original Message -----
->>>>>>
->>>>>> The kernel automatically evaluates partition tables of storage
->>>>>> devices.  The code for evaluating LDM partitions (in
->>>>>> fs/partitions/ldm.c) contains a bug that allows to overflow the
->>>>>> kernel heap. It may be possible to escalate privileges by exploiting
->>>>>> this bug.
-> [...]
->> I would still like something along the lines of a proposed patch. I believe
->> you folks (as you're much brighter than me), but I still don't quite grasp
->> the difference. I suspect there is enough public information for MITRE to
->> public a CVE though, so please use CVE-2011-1017.
+Jeff,
+
+Thank you for your comments!
+
+On Mon, Jul 25, 2011 at 03:39:15PM -0400, Jeff Johnson wrote:
+> There were a series of CVE's applied (and some withdrawn) against
+> whatever happens to be called "rpm".
 > 
-> It was reported that the fix for this is insufficient. I have assigned
-> CVE-2011-2182 to this. See https://lkml.org/lkml/2011/5/6/407.
-> 
-> Timo, can you please post the patch here once you have submitted it to
-> lkml for review. Thanks.
+> The patch here was dropped when RPM was forked and the CVE was
+> essentially a replay of an issue that was already fixed 5 years ago
+> (and the patch was NOT dropped in @rpm5.org cvs).
 
-Greg has posted the patch to LKML (http://lkml.org/lkml/2011/6/1/119).
+I am not sure I understand what you mean here.  As I wrote, I am aware
+of two CVEs relevant to the general issue: CVE-2005-4889 (package
+removals) and CVE-2010-2059 (package upgrades).  The corresponding
+issues were in fact fixed in rpm4 at different times.  Neither fix was
+reverted in rpm4.  Neither CVE id was withdrawn.
 
-The patch:
+Are you saying that the fix for CVE-2005-4889 was somehow dropped from
+rpm5, another CVE id was assigned, and the fix was re-introduced?
+I have no idea - I am just trying to guess what you might have meant.
 
-commit cae13fe4cc3f24820ffb990c09110626837e85d4 upstream.
+> (aside)
+> I believe there are better fixes if the link count is more carefully
+> checked always and everywhere. While rpm package metadata does not
+> (and SHOULD not) carry an expected value for st->st_nlinks, its
+> rather easy to synthesize an expected link count given the inode
+> information (which is in rpm metadata) and to warn (either with --verify,
+> or perhaps always) if the link count is not as expected.
 
-As Ben Hutchings discovered [1], the patch for CVE-2011-1017 (buffer
-overflow in ldm_frag_add) is not sufficient.  The original patch in
-commit c340b1d64000 ("fs/partitions/ldm.c: fix oops caused by corrupted
-partition table") does not consider that, for subsequent fragments,
-previously allocated memory is used.
+Unfortunately, only doing the chmod() to safe perms if the link count is
+other than expected is prone to a race condition.  rpm4 actually had
+this race condition introduced, then removed:
 
-[1] http://lkml.org/lkml/2011/5/6/407
+commit 89be57ad9239c9ada0cba94a5003876b456d46bf
+Author: Panu Matilainen <pmatilai@...hat.com>
+Date:   Fri Jun 11 08:17:12 2010 +0300
 
-Reported-by: Ben Hutchings <ben@...adent.org.uk>
-Signed-off-by: Timo Warns <warns@...-sense.de>
-Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@...e.de>
+    If there are no hardlinks, dont bother with s-bit and caps removal
 
----
- fs/partitions/ldm.c |    5 +++++
- 1 file changed, 5 insertions(+)
---- a/fs/partitions/ldm.c
-+++ b/fs/partitions/ldm.c
-@@ -1335,6 +1335,11 @@ static bool ldm_frag_add (const u8 *data
+commit 26874707edfe73e153383284f9fe33cfd9879bb1
+Author: Michal Schmidt <mschmidt@...hat.com>
+Date:   Tue Jun 22 15:51:41 2010 +0200
 
- 	list_add_tail (&f->list, frags);
- found:
-+	if (rec >= f->num) {
-+		ldm_error("REC value (%d) exceeds NUM value (%d)", rec, f->num);
-+		return false;
-+	}
-+
- 	if (f->map & (1 << rec)) {
- 		ldm_error ("Duplicate VBLK, part %d.", rec);
- 		f->map &= 0x7F;			/* Mark the group as broken */
+    Revert "If there are no hardlinks, dont bother with s-bit and caps removal"
+
+    Deciding whether it is necessary to remove the SUID bit based on
+    the current link count creates an opportunity for a race condition.
+    A hardlink could be created just between lstat() and chmod().
+
+    This reverts commit 89be57ad9239c9ada0cba94a5003876b456d46bf.
+
+> There are other (and better) approaches if the actual values on
+> the file system, including files not contained in packages, is
+> stored in an rpmdb: its a fundamental design flaw in RPM that
+> only package metadata installed in an rpmdb is ever used
+> for security auditing.
+
+To me, system integrity checking for security purposes is mostly not a
+package manager task, although sometimes it is in fact useful that rpm
+can do it, even if to a very limited extent.
+
+As to having rpm check/remove some files that are closely related to a
+package being verified/removed but that didn't come from the package,
+isn't this what %ghost is for?  It won't verify those files' contents,
+but I think that maintaining a database of hashes of changing files on a
+system is not a package manager's task anyway.
+
+> But there's no harm at all in removing SUID/SGID bits from files that are being
+> removed in case there's an additional link that has been added.
+
+Yes, and it has to be done regardless of link count (as long as we don't
+have an atomic "chmod if st_nlink is ..." operation).
+
+The purpose of my posting was to suggest that a similar cleanup is also
+needed for things that are not SUID/SGID binaries, but also at least for
+device files and for regular files with world or group write permissions.
+Since it is not obvious if that list is exhaustive or not and since new
+file types may appear later, I felt that chmod'ing all files to be
+removed to 0 is a safer thing to do.
+
+Of course, even that might not reset attributes stored outside of the
+Unix permissions mask, such as fscaps.  So those need to be taken care
+of separately, which fscaps-aware builds of rpm4 already do.  Perhaps
+rpm5 does as well - I haven't looked yet.
+
+The patch that I posted was against rpm 4.2, which was not fscaps-aware.
+This is why I did not bother with that aspect of the issue there.
+
+Thanks again,
+
+Alexander
