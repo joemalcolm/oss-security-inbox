@@ -1,45 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/13
-Message-ID: <1484768598.651167.1307993291113.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:28:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/16
+Message-ID: <20110725232208.GC23791@openwall.com>
+Date: Tue, 26 Jul 2011 03:22:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Damyan Ivanov <dmn@...ian.org>, Mark Stosberg <mark@...mersault.com>, 629511@...s.debian.org, Iain Arnell <iarnell@...il.com>, Marcela Maslanova <mmaslano@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Data-FormValidator -- Reports invalid field as valid when untaint_all_constraints used
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>, Jeff Johnson <n3npq@....com>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
+Vasiliy,
 
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
+On Mon, Jul 25, 2011 at 09:30:35PM +0400, Vasiliy Kulikov wrote:
+> On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
+> >      case FSM_UNLINK:
+> > -	rc = Unlink(fsm->path);
+> > +	{
+> > +	    struct stat stb;
+> > +	    int saved_errno;
+> > +	    int saved_rc = lstat(fsm->path, &stb);
+> > +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
+> > +		saved_rc = chmod(fsm->path, 0);
 > 
-> It was found that perl-Data-FormValidator, a HTML form user input
-> validator, used to treat certain invalid fields as valid, when the
-> untaint_all_constraints directive was used (default for majority of
-> Data-FormValidator routines). A remote attacker could use this flaw to
-> bypass perl Taint mode protection mechanism via specially-crafted
-> input
-> provided to the HTML form.
-> 
-> Note: Hopefully Damyan, Mark can clarify here, if valid data from
-> Data-FormValidator are automatically marked as untainted for
-> perl Taint mode or not. If there still is perl Taint mode
-> protection check present, even on valid Data-FormValidator
-> data and it couldn't happen, that tainted data would be passed
-> further to the script processing, then this is not a security
-> issue.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629511
-> [2] https://rt.cpan.org/Public/Bug/Display.html?id=61792
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712694
-> 
+> If the directory containing the file was owned by nonroot, then the file
+> could be overwritten with a symlink.  So, there is a race between
+> lstat() and chmod(), which might lead to chmod'ing arbitrary files by
+> directory owner.
 
-Upstream seem to believe this is a security flaw.
+Right.  The same risk is present in upstream's version of the fix.
 
-Please use CVE-2011-2201.
+> Is it possible with these orphaned files (I'm not familiar with the code
+> in question)?
 
-Thanks.
+Yes, but this problem is not limited to this specific piece of code.
+rpm appears to treat the target directory tree as trusted - not only
+when it removes files, but also when it creates files, etc.  I did not
+fully verify this, though - that's just how the code looks to me.
 
--- 
-    JB
+This general issue is in fact a security risk.  For example, if the
+directory tree contains a subdirectory writable by a pseudo-user, then a
+possible compromise of this pseudo-user account might lead to worse
+things via rpm.  Here's an example of such directory on Owl:
+
+# ls -la /var/lib/dhcp/dhcpd/state/
+total 8
+drwxrwx--T 2 root dhcp 4096 Dec 14  2010 .
+drwxr-x--- 3 root dhcp 4096 Dec  8  2010 ..
+-rw------- 1 dhcp dhcp    0 Dec  8  2010 dhcpd.leases
+
+We may discuss this general issue (of rpm trusting the target tree, and
+the resulting risks) separately.
+
+Thank you for the review!
+
+BTW, another detail I thought someone might notice is that I am applying
+the chmod's not only to binary packages, like the upstream fix does, but
+I think also to source packages being removed/upgraded (I did not
+actually test this, though).  This might be excessive, or it might not,
+but I felt that it does not hurt either way.
+
+Alexander
