@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/29/3
-Message-Id: <201103291638.44993.ludwig.nussel@suse.de>
-Date: Tue, 29 Mar 2011 16:38:44 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/8
+Message-ID: <20110725173035.GB3739@albatros>
+Date: Mon, 25 Jul 2011 21:30:35 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: rsyslogd memory leaks
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Solar,
 
-The $RepeatedMsgReduction option could cause a memory leak:
-http://bugzilla.adiscon.com/show_bug.cgi?id=225
-http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=8083bd1433449fd2b1b79bf759f782e0f64c0cd2
+On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
+> diff -urp rpm-4.2.orig/lib/fsm.c rpm-4.2/lib/fsm.c
+> --- rpm-4.2.orig/lib/fsm.c	2003-03-03 19:38:32 +0000
+> +++ rpm-4.2/lib/fsm.c	2011-07-25 01:31:24 +0000
+> @@ -1990,26 +1990,54 @@ if (!(fsm->mapFlags & CPIO_ALL_HARDLINKS
+>  	/*@...reached@*/ break;
+>  
+>      case FSM_UNLINK:
+> -	rc = Unlink(fsm->path);
+> +	{
+> +	    struct stat stb;
+> +	    int saved_errno;
+> +	    int saved_rc = lstat(fsm->path, &stb);
+> +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
+> +		saved_rc = chmod(fsm->path, 0);
 
-Multiple rulesets that are used by multiple inputs could cause a
-memory leak or crash:
-http://bugzilla.adiscon.com/show_bug.cgi?id=226
-http://bugzilla.adiscon.com/show_bug.cgi?id=218
-http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=1ef709cc97d54f74d3fdeb83788cc4b01f4c6a2a
+If the directory containing the file was owned by nonroot, then the file
+could be overwritten with a symlink.  So, there is a race between
+lstat() and chmod(), which might lead to chmod'ing arbitrary files by
+directory owner.
+
+Is it possible with these orphaned files (I'm not familiar with the code
+in question)?
 
 
-cu
-Ludwig
+Thanks,
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
