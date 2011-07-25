@@ -1,39 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/5
-Message-ID: <AANLkTinoQO+2nqJcsoCY_mS61bkyAUr_t2umi63ktG8r@mail.gmail.com>
-Date: Wed, 9 Feb 2011 10:49:35 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Eugene Teo <eugene@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: btrfs heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/16
+Message-ID: <20110725232208.GC23791@openwall.com>
+Date: Tue, 26 Jul 2011 03:22:08 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>, Jeff Johnson <n3npq@....com>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-I'm not aware of any distributions that support 2.6.37 kernels, but as
-far as I know this doesn't affect CVE eligibility (please correct me
-if I'm wrong).
+Vasiliy,
 
--Dan
+On Mon, Jul 25, 2011 at 09:30:35PM +0400, Vasiliy Kulikov wrote:
+> On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
+> >      case FSM_UNLINK:
+> > -	rc = Unlink(fsm->path);
+> > +	{
+> > +	    struct stat stb;
+> > +	    int saved_errno;
+> > +	    int saved_rc = lstat(fsm->path, &stb);
+> > +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
+> > +		saved_rc = chmod(fsm->path, 0);
+> 
+> If the directory containing the file was owned by nonroot, then the file
+> could be overwritten with a symlink.  So, there is a race between
+> lstat() and chmod(), which might lead to chmod'ing arbitrary files by
+> directory owner.
 
-On Wed, Feb 9, 2011 at 10:20 AM, Eugene Teo <eugene@...hat.com> wrote:
-> On 02/09/2011 10:27 PM, Dan Rosenberg wrote:
->>
->> Commit bf5fc093c5b625e4259203f1cee7ca73488a5620 refactored
->> btrfs_ioctl_space_info() and introduced security issues.  Since they
->> were all introduced at once and fixed at the same time, one CVE should
->> suffice.
->>
->> Due to integer truncation or a signedness error in a typecasted
->> comparison, an integer overflow in an allocation size calculation, and
->> a failure to properly check bounds when copying data, it was possible
->> for an unprivileged user to cause a denial-of-service due to writing
->> to an invalid pointer (ZERO_SIZE_PTR) or cause a kernel heap overflow.
->>
->> -Dan
->>
->> [1] http://marc.info/?l=linux-kernel&m=129726078708425&w=2
->
-> Commit bf5fc093c was introduced very recently - v2.6.37-rc1 Sept last year.
-> Do we have commercially supported kernels that are affected by this?
->
-> Thanks, Eugene
->
+Right.  The same risk is present in upstream's version of the fix.
+
+> Is it possible with these orphaned files (I'm not familiar with the code
+> in question)?
+
+Yes, but this problem is not limited to this specific piece of code.
+rpm appears to treat the target directory tree as trusted - not only
+when it removes files, but also when it creates files, etc.  I did not
+fully verify this, though - that's just how the code looks to me.
+
+This general issue is in fact a security risk.  For example, if the
+directory tree contains a subdirectory writable by a pseudo-user, then a
+possible compromise of this pseudo-user account might lead to worse
+things via rpm.  Here's an example of such directory on Owl:
+
+# ls -la /var/lib/dhcp/dhcpd/state/
+total 8
+drwxrwx--T 2 root dhcp 4096 Dec 14  2010 .
+drwxr-x--- 3 root dhcp 4096 Dec  8  2010 ..
+-rw------- 1 dhcp dhcp    0 Dec  8  2010 dhcpd.leases
+
+We may discuss this general issue (of rpm trusting the target tree, and
+the resulting risks) separately.
+
+Thank you for the review!
+
+BTW, another detail I thought someone might notice is that I am applying
+the chmod's not only to binary packages, like the upstream fix does, but
+I think also to source packages being removed/upgraded (I did not
+actually test this, though).  This might be excessive, or it might not,
+but I felt that it does not hurt either way.
+
+Alexander
