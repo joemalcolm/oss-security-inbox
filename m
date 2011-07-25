@@ -1,68 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/9
-Message-ID: <4EA9D585.2060308@redhat.com>
-Date: Thu, 27 Oct 2011 16:04:53 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/14
+Message-ID: <20110725230142.GK1476@redhat.com>
+Date: Mon, 25 Jul 2011 17:01:42 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
 Content-Type: text/plain; charset=utf-8
 
-Please revoke
+This is just a heads up to notify those who are shipping systemtap that
+two flaws were found that could allow members of group stapusr to
+elevate their privileges:
 
-CVE-2011-4080
-
-On 10/27/2011 01:35 PM, Petr Matousek wrote:
-> On Wed, Oct 26, 2011 at 07:53:10PM +0400, Vasiliy Kulikov wrote:
->> Hi,
->>
->> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
->>> On 10/26/2011 09:16 AM, Petr Matousek wrote:
->>>> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
->>>> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
->>>> to reset dmesg_restrict to 0.
->>>>
->>>> This is an issue when e.g.  LXC (Linux Containers) are used and complete
->>>> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
->>>> root user can bypass the dmesg_restrict protection.
->>>>
->>>> Introduced by:
->>>> eaf06b241b091357e72b76863ba16e89610d31bd
->>>>
->>>> Fixed by:
->>>> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
->>>>
->>>> Thanks,
->>> Please use CVE-2011-4080 for this issue.
->> Why does it worth CVE?  Procfs is not ready for containers yet.  You can
->> use other sysctls for more harmful things.  E.g. kernel.core_pattern
->> allows arbitrary code execution as a full root - does it need a CVE too
->> then? :-)
-> Yes, you are right. I was aware of the procfs limitations, still it looked
-> to me that boundary explicitly defined in eaf06b2 is directly crossed in
-> this case.
->
-> Anyway I agree that it is useless to issue CVE for each procfs flaw of
-> this kind.
->
-> Kurt, could you please reject the CVE?
->
-> Sorry for the noise,
-> Petr
->
->> root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
->> root@...-ubuntu:/proc/sys/kernel# cat 
->> ^\Quit (core dumped)
->>
->> (In the root namespace)
->> $ ls /tmp/pwned
->> /tmp/pwned
->>
->> -- 
->> Vasiliy Kulikov
->> http://www.openwall.com - bringing security into open computing environments
-
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2502
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2503
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
