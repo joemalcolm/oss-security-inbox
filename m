@@ -1,78 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/23
-Message-ID: <BANLkTin0XNE-Uv8fMdt25FPe9CtbDVhKnA@mail.gmail.com>
-Date: Mon, 4 Apr 2011 14:35:30 +0100
-From: Ben Laurie <benl@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/2
+Message-ID: <20110725065710.GB21793@suse.de>
+Date: Mon, 25 Jul 2011 08:57:10 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-On 3 April 2011 22:33, Solar Designer <solar@...nwall.com> wrote:
-> Ben,
->
-> On Sun, Apr 03, 2011 at 10:06:03PM +0100, Ben Laurie wrote:
->> OK, but ... I wasn't on vendor-sec, but (IMO) am at least as qualified
->> as most of the people who were. Now what?
->
-> What do you propose?
->
-> In what capacity do you feel you're qualified?
 
-FreeBSD committer, core contributor to various "OpenSource projects
-with a large user base and/or high security exposure"
+Hi
 
-> Don't get me wrong, I have a lot of respect for you - in fact, in my
-> sysadmin role, I am flattered that you'd want to be on a list I setup.
-> I just think that you providing answers to the questions above will help
-> the discussion.  I don't know what your answers would be (I can try to
-> guess, but I might be wrong).  I do think that you might propose
-> something we have not yet thought of.
+You probably speak about:
 
-I'm not sure I have a helpful proposal, but closed security lists have
-always made me somewhat grumpy. Basically, it seems to me that there
-are two major problems with them:
+http://www.suse.de/~krahmer/libs-vs-fscaps/
 
-1. People who "ought" to have the information don't, because they're
-not on the list.
+There was a discussion some months ago on OSS with more or less no result,
+so we started fixing on our own.
+The openssl patch has been posted to openssl patch list without results
+so far either:
 
-2. People who "ought not" to have the information do, because they are
-on the list.
+http://rt.openssl.org/Ticket/Display.html?id=2532
 
-So my general inclination is to at least fix this problem for myself,
-by being on all the lists :-)
+Similar issues are inside libudev and libhal, both linked against
+suids like Xorg.
 
-Yes, this doesn't fix problem 2 - so sorry: my general stance on this
-is that it is really impossible to say who "ought" and "ought not" to
-have security info. I hear all sorts of noises about vendors being in
-the "ought" camp and end users in the "ought not", but that makes no
-sense to me: vendors only "need" to be on the "ought" list because
-they're a roadblock between the software authors and the end user.
-They should just fix that problem. In any case, who is a "vendor". I
-build all my s/w from source, pretty much. Am I therefore a vendor (to
-myself)?
+-s
 
-Alternatively, I "ought" to be on the list because history has shown
-that a) I can sometimes do something useful about the problem and b) I
-can be trusted with the information. Maybe that's a better way to run
-a list, I don't know.
+On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
+> I presume this only needs one ID
+> 
+> Use CVE-2011-2709
+> 
+> Thanks.
+> 
+> -- 
+>     JB
+> 
+> ----- Original Message -----
+> > Hello Josh, Steve, vendors,
+> > 
+> > this:
+> > [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
+> > [2]
+> > http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
+> > [3] http://lwn.net/Alerts/449415/
+> > [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
+> > 
+> > doesn't seem to have CVE identifier yet (though Sebastian Krahmer
+> > requested one for related fscaps issue).
+> > 
+> > Josh, Steve, could you allocate a CVE id for this?
+> > 
+> > [4] contains also further issue description + links to SUSE patches
+> > (from [2]). Could not find their plaintext (*.src.rpm) version though.
+> > 
+> > So Sebastian, if you could share those with us, it would be
+> > appreciated.
+> > 
+> > Thank you && Regards, Jan.
+> > --
+> > Jan iankko Lieskovsky / Red Hat Security Response Team
 
->
-> The vendor-sec membership requirement was just for the initial seed
-> membership of the new list.  Its purpose is to ensure we're not making
-> things worse in terms of pre-CRD leaks, at least not right away. ;-)
->
-> As you can see from another message I posted, I've only setup a
-> Linux distros list for now, which lets us side-step the issue of
-> comparing one security researcher vs. another for membership of that
-> list.  I'd be happy to setup a separate list with only security
-> researchers on it, and we can ask folks to CC that list whenever a
-> discussion on the Linux distros list is expected to significantly
-> benefit from participation of the researchers.
->
-> I'd be happy if you have a better proposal.
->
-> Thanks,
->
-> Alexander
->
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
