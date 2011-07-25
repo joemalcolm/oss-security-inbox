@@ -1,18 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/5
-Message-ID: <4EC9E9D2.1090404@redhat.com>
-Date: Mon, 21 Nov 2011 14:04:02 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/8
+Message-ID: <20110725173035.GB3739@albatros>
+Date: Mon, 25 Jul 2011 21:30:35 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: hfs: add sanity check for file name length
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-https://lkml.org/lkml/2011/11/9/303
-https://bugzilla.redhat.com/show_bug.cgi?id=755431
-http://git.kernel.org/linus/bc5b8a9003132ae44559edd63a1623
+Solar,
 
-On a corrupted file system the ->len field could be wrong leading to a
-buffer overflow.
+On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
+> diff -urp rpm-4.2.orig/lib/fsm.c rpm-4.2/lib/fsm.c
+> --- rpm-4.2.orig/lib/fsm.c	2003-03-03 19:38:32 +0000
+> +++ rpm-4.2/lib/fsm.c	2011-07-25 01:31:24 +0000
+> @@ -1990,26 +1990,54 @@ if (!(fsm->mapFlags & CPIO_ALL_HARDLINKS
+>  	/*@...reached@*/ break;
+>  
+>      case FSM_UNLINK:
+> -	rc = Unlink(fsm->path);
+> +	{
+> +	    struct stat stb;
+> +	    int saved_errno;
+> +	    int saved_rc = lstat(fsm->path, &stb);
+> +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
+> +		saved_rc = chmod(fsm->path, 0);
 
-Thanks, Eugene
+If the directory containing the file was owned by nonroot, then the file
+could be overwritten with a symlink.  So, there is a race between
+lstat() and chmod(), which might lead to chmod'ing arbitrary files by
+directory owner.
+
+Is it possible with these orphaned files (I'm not familiar with the code
+in question)?
+
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
