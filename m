@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/4
-Message-ID: <1911378042.1534633.1311364582960.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Jul 2011 15:56:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/7
+Message-ID: <4E2D671A.9030603@redhat.com>
+Date: Mon, 25 Jul 2011 14:52:42 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- GLPI -- Properly blacklist some sensitive fields
 Content-Type: text/plain; charset=utf-8
 
-I presume this only needs one ID
+Hello Josh, Steve, vendors,
 
-Use CVE-2011-2709
+   it was found that GLPI, the Information Resource-Manager with an 
+additional Administration-Interface, did not properly blacklist certain 
+sensitive variables (like GLPI username and password). A remote attacker 
+could use this flaw to obtain access to plaintext form of these values 
+via specially-crafted HTTP POST request.
 
-Thanks.
+References:
+[1] http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
+[2] https://forge.indepnet.net/projects/glpi/versions/605
+[3] https://forge.indepnet.net/issues/3017
 
--- 
-    JB
+Relevant patches:
+[4]  https://forge.indepnet.net/projects/glpi/repository/revisions/14951
+[5]  https://forge.indepnet.net/projects/glpi/repository/revisions/14952
+[6]  https://forge.indepnet.net/projects/glpi/repository/revisions/14954
+[7]  https://forge.indepnet.net/projects/glpi/repository/revisions/14955
+[8]  https://forge.indepnet.net/projects/glpi/repository/revisions/14956
+[9]  https://forge.indepnet.net/projects/glpi/repository/revisions/14957
+[10] https://forge.indepnet.net/projects/glpi/repository/revisions/14958
+[11] https://forge.indepnet.net/projects/glpi/repository/revisions/14960
+[12] https://forge.indepnet.net/projects/glpi/repository/revisions/14966
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> this:
-> [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
-> [2]
-> http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
-> [3] http://lwn.net/Alerts/449415/
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
-> 
-> doesn't seem to have CVE identifier yet (though Sebastian Krahmer
-> requested one for related fscaps issue).
-> 
-> Josh, Steve, could you allocate a CVE id for this?
-> 
-> [4] contains also further issue description + links to SUSE patches
-> (from [2]). Could not find their plaintext (*.src.rpm) version though.
-> 
-> So Sebastian, if you could share those with us, it would be
-> appreciated.
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
