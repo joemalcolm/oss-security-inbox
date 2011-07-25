@@ -1,46 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/18
-Message-ID: <4DA4CCD6.4060006@mvista.com>
-Date: Tue, 12 Apr 2011 12:06:14 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/4
+Message-ID: <4E2D4F6F.4070109@redhat.com>
+Date: Mon, 25 Jul 2011 13:11:43 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Herman van Rink <rink@...tfour.nl>
+CC: oss-security@...ts.openwall.com
+Subject: CVE-Request -- phpMyAdmin -- PMASA-2011-11 and PMASA-2011-12
 Content-Type: text/plain; charset=utf-8
 
-Josh,
+Hello Josh, Steve, vendors,
 
-Your initial e-mail indicated we would be part of this new group since
-we where a vendor-sec member. Now there are new requirements we have to
-meet. Is there a possibility of a probationary period so we can try to
-comply to these new requirements and still be on the closed list?
+   the following two doesn't seem to have CVE identifiers yet:
+1) http://www.phpmyadmin.net/home_page/security/PMASA-2011-11.php
 
-Mahalo,
-Armin
+A local file inclusion and arbitrary SQL code execution flaws were
+found in the way phpMyAdmin, the MySQL over WWW administration tool,
+performed 'export_type' sanitization, when retrieving and verifying
+relation schema export options. A local attacker could use this flaw to
+obtain security sensitive information or, potentially, execute
+arbitrary SQL code with the privileges of the user running the query.
 
-On 04/01/2011 08:03 AM, Josh Bressers wrote:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
-> 
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
-> 
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
-> 
-> Thanks.
-> 
+References:
+[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-11.php
+[2] http://www.phpmyadmin.net/home_page/news.php
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=725383
+
+Upstream patches:
+[4] 
+http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=3ae58f0cd6b89ad4767920f9b214c38d3f6d4393
+
+Further flaw exploitation note:
+An attacker must be logged in via phpMyAdmin to exploit this problem.
+
+Affected versions:
+Versions 3.4.0 to 3.4.3.1 are affected.
+
+2) http://www.phpmyadmin.net/home_page/security/PMASA-2011-12.php
+
+A session values manipulation flaw was found in the way phpMyAdmin, the
+MySQL over WWW administration tool, performed sanitization of the 
+user-provided query string, when the Swekey extension based 
+authentication method was enabled. A remote attacker could use this flaw 
+to manipulate the PHP session superglobal variable via specially-crafted 
+query string provided to the Swekey authentication module.
+
+References:
+[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-12.php
+[2] http://www.phpmyadmin.net/home_page/news.php
+[3] http://seclists.org/fulldisclosure/2011/Jul/300
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=725384
+
+Upstream patches:
+[5] 
+http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=e7bb42c002885c2aca7aba4d431b8c63ae4de9b7
+[6] 
+http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=571cdc6ff4bf375871b594f4e06f8ad3159d1754
+
+Patches against v3.3 branch:
+[7] 
+http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=f6f6ee3f1171addb166fa18e75a0b56599bf374c
+[8] 
+http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=630b8260be45eb9b211f5d7628dbb9e5c1b05bc6
+
+Affected Versions:
+The 3.4.3.1 and earlier versions are affected.
+Branch 2.11.x is not affected by this.
+
+3) The other two recent phpMyAdmin issues (addressed in v3.3.10.3, 
+v3.4.3.2) already have CVE identifiers:
+[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-10.php
+[2] http://www.phpmyadmin.net/home_page/security/PMASA-2011-9.php
+
+Cc-ed phpMyAdmin upstream contact, Herman van Rink, to correct me on
+the description of the 1) and 2) flaws, where appropriate.
+
+Josh, Steve, could you please allocate CVE ids for 1) PMASA-2011-11.php
+and 2) PMASA-2011-12.php issues?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
