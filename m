@@ -1,48 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/4
-Message-ID: <20110724145033.GA18483@blizzard>
-Date: Sun, 24 Jul 2011 16:50:33 +0200
-From: Lukas Fleischer <cgit@...ptocrack.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- cGit -- XSS flaw in rename hint
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/7
+Message-ID: <4E2D671A.9030603@redhat.com>
+Date: Mon, 25 Jul 2011 14:52:42 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- GLPI -- Properly blacklist some sensitive fields
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 24, 2011 at 03:56:12PM +0200, Jan Lieskovsky wrote:
-> 
-> Hi Lukas,
-> 
->   thank you for this correction.
-> 
-> On 07/22/2011 10:35 PM, Lukas Fleischer wrote:
-> >On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
-> >>Hello Josh, Steve, vendors,
-> >>
-> >>   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
-> >>web interface for Git, displayed the file name in the rename hint. A
-> >>remote attacker could provide a specially-crafted web page, which once
-> >>visited by an authenticated Cgit user, with push access to the
-> >>repository, would lead to arbitrary web script or HTML code execution.
-> >
-> >I think you are a tad off, here. The vulnerability I discovered actually
-> >is only exploitable *by* a user with push access as it requires to push
-> >a commit that renames any file to a file with a malicious file name.
-> 
-> Have updated issue description in:
-> https://bugzilla.redhat.com/show_bug.cgi?id=725042#c0
-> 
-> Hoping of it to sound better now.
+Hello Josh, Steve, vendors,
 
-Better now. This is how I'd phrase it:
+   it was found that GLPI, the Information Resource-Manager with an 
+additional Administration-Interface, did not properly blacklist certain 
+sensitive variables (like GLPI username and password). A remote attacker 
+could use this flaw to obtain access to plaintext form of these values 
+via specially-crafted HTTP POST request.
 
-----
-A cross-site scripting (XSS) vulnerability was found in cgit, a fast web
-interface for Git, allowing a remote attacker with push access to a
-repository to inject arbitrary HTML code. The new file name in rename
-hints is not escaped and can be exploited by renaming some file to a
-file with specially-crafted file name, thus leading to a permanent XSS.
-----
+References:
+[1] http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
+[2] https://forge.indepnet.net/projects/glpi/versions/605
+[3] https://forge.indepnet.net/issues/3017
 
-By the way, this is already fixed in current stable [1] (just because
-nobody mentioned it yet).
+Relevant patches:
+[4]  https://forge.indepnet.net/projects/glpi/repository/revisions/14951
+[5]  https://forge.indepnet.net/projects/glpi/repository/revisions/14952
+[6]  https://forge.indepnet.net/projects/glpi/repository/revisions/14954
+[7]  https://forge.indepnet.net/projects/glpi/repository/revisions/14955
+[8]  https://forge.indepnet.net/projects/glpi/repository/revisions/14956
+[9]  https://forge.indepnet.net/projects/glpi/repository/revisions/14957
+[10] https://forge.indepnet.net/projects/glpi/repository/revisions/14958
+[11] https://forge.indepnet.net/projects/glpi/repository/revisions/14960
+[12] https://forge.indepnet.net/projects/glpi/repository/revisions/14966
 
-[1] http://hjemli.net/git/cgit/commit/?id=bebe89d7
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
