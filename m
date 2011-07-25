@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/6
-Message-Id: <201108100947.26910.sgrubb@redhat.com>
-Date: Wed, 10 Aug 2011 09:47:26 -0400
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Yves-Alexis Perez" <corsac@...ian.org>
-Subject: Re: CVE request: perf: may parse user-controlled config file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/11
+Message-ID: <4E2DBB3A.60703@kde.org>
+Date: Mon, 25 Jul 2011 14:51:38 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
+Subject: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, August 09, 2011 09:25:24 AM Yves-Alexis Perez wrote:
-> On mar., 2011-08-09 at 09:18 -0400, Steve Grubb wrote:
-> > And in recent kernels has an executable stack:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=704296
-> 
-> We don't have access to that bug.
+Hello,
 
-Its marked as a security bug and I guess its not been reclassified. The short of it is 
-this:
+We've been made aware of an input validation failure affecting multiple
+KDE applications. (The details are not yet public as we're working on
+the fixes.) We'd like a CVE for this.
 
-/usr/bin/eu-readelf -l /usr/bin/perf  | grep STACK
+The Arora and Rekonq web browsers are also vulnerable to the same attack
+vector, and other Qt-based programs may be as well. We're working with
+the Qt team to help enhance their documentation to warn developers to
+take care sanitizing their inputs, but it's not actually a Qt flaw. So
+we're a bit unsure how to proceed here. Do we get separate CVEs for
+Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
+applications? I would think the former since other applications may be
+found to be vulnerable down the line, but wanted to check.
 
-If you get RWE for the permissions, its executable. If you get RW, then everything is 
-fine. While this itself is not exploitable, if there were any other problems then this 
-could be susceptible to putting shell code on the stack which should have been 
-banished long ago. IOW, the ease of exploit goes up since you don't need to defeat any 
-advanced security mechanisms like ASLR.
+(The Rekonq team has been made aware and are currently patching their
+code; I'm in the process of trying to notify the Arora team.)
 
-I have a number of security assessment utilities located here:
-http://people.redhat.com/sgrubb/security/
-that can scan systems looking for problems like this. Some are rpm centric because 
-once you find a problem you want to know the associated package, but they could be 
-easily modified for other packaging tools.
-
--Steve
+Thanks,
+Jeff
