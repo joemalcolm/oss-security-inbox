@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/15
-Message-ID: <704001142.77790.1302723236646.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Apr 2011 15:33:56 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/13
+Message-Id: <201107252301.38073.timb@nth-dimension.org.uk>
+Date: Mon, 25 Jul 2011 23:01:31 +0100
+From: Tim Brown <timb@...-dimension.org.uk>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, tstarling@...imedia.org
-Subject: Re: CVE request: mediawiki 1.16.3
+Cc: Jeff Mitchell <mitchell@....org>, KDE Security Team <security@....org>, security@...nokia.com
+Subject: Re: CVE Request: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
+On Monday 25 Jul 2011 19:51:47 Jeff Mitchell wrote:
 
-
------ Original Message -----
-> Mediawiki 1.16.3 has been released with three noted flaws:
+> We've been made aware of an input validation failure affecting multiple
+> KDE applications. (The details are not yet public as we're working on
+> the fixes.) We'd like a CVE for this.
 > 
-> 1) XSS with IE <= 6 due to improper handling of uploaded file names
-Use CVE-2011-1578
-
-> 2) CSS validation error in wikitext parser
-Use CVE-2011-1579
-
-> 3) transwiki import neglects to perform access control checks
-Use CVE-2011-1580
-
+> The Arora and Rekonq web browsers are also vulnerable to the same attack
+> vector, and other Qt-based programs may be as well. We're working with
+> the Qt team to help enhance their documentation to warn developers to
+> take care sanitizing their inputs, but it's not actually a Qt flaw. So
+> we're a bit unsure how to proceed here. Do we get separate CVEs for
+> Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
+> applications? I would think the former since other applications may be
+> found to be vulnerable down the line, but wanted to check.
 > 
-> Can CVE names be assigned to these issues?
-> 
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000096.html
-> 
+> (The Rekonq team has been made aware and are currently patching their
+> code; I'm in the process of trying to notify the Arora team.)
 
-Thanks.
+Without disclosing too much, I'd go for a per module based CVE.  So one per 
+affected KDE module + 1 per affected Qt module, + 1 per app that does its own 
+thing (i.e. Arora, Rekonq and others we've already identified).  I think that's 
+the most intelligent thing to do although I do think that one of the concerns 
+is that more examples will likely come out of the woodwork (it's nothing that 
+can easily be identified programatically) and each edge case is likely to be 
+fairly application unique.  As an analogy, the best I can think of is XSS via 
+PHP_SELF, do we give the CVE to PHP, frameworks that use PHP or individual 
+apps that use it badly?  From what I can tell it seems to be per app/framework 
+module.
 
+Tim
 -- 
-    JB
+Tim Brown
+<mailto:timb@...-dimension.org.uk>
+<http://www.nth-dimension.org.uk/>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
