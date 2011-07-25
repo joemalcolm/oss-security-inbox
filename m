@@ -1,60 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/10
-Message-ID: <4DBEF23C.6080500@windriver.com>
-Date: Mon, 2 May 2011 13:04:44 -0500
-From: Mark Hatle <mark.hatle@...driver.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: [security-vendor] Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/9
+Message-ID: <4E2DB9BA.9000701@kde.org>
+Date: Mon, 25 Jul 2011 14:45:14 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com,  Tim Brown <timb@...-dimension.org.uk>, KDE Security Team <security@....org>
+Subject: CVE Request: Ark path traversal
 Content-Type: text/plain; charset=utf-8
 
-On 5/2/11 12:22 PM, Solar Designer wrote:
-> On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
->> > On 05/02/2011 06:12 AM, Solar Designer wrote:
->>> > > On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
->>>> > >> Can you clarify what is meant by updates?
->>> > > 
->>> > > RHEL-like .src.rpm's or equivalent will do.  Something else might do.
->> > 
->> > Ok.. but do they need to be publicly available ( ie no service or
->> > maintenance contract to get)?
+Hello,
 
-Most embedded Linux distributors don't have any concept of src.rpm or
-equivalent.  We primarily ship patches to our build infrastructure and meta-data
-in "some format".  Be it as patch files, installer "fragements", etc.
+Ark contains a path traversal vulnerability allowing a
+maliciously-crafted zip file to allow for an arbitrary file to be
+displayed and, if the user has appropriate credentials, removed.
 
-> Per the discussion so far, yes, or you would likely be in another
-> category from the "open" Linux distro vendors.  I don't know what others
-> in here would say if you, for example, only make advisories public, but
-> not any code.  Maybe this will do (that is, folks would not oppose you
-> being on the same list with the "open" vendors), maybe not.  A better
-> option could be for you to make advisories and package metainfo public
-> (file lists, change logs, etc.), but not the packages themselves.
+Can we please get a CVE for this?
 
-This is a more reasonable approach for the Embedded Linux distributors.  But
-keep in mind that due to our IT infrastructures and such, don't expect this type
-of change overnight.  However, if it would allow our participation in the closed
-lists we are certainly interested.
-
-> I similarly don't know how that would be received by others in here.
-> On one hand, it would show that you're preparing security updates, for
-> what software, and when.  On the other, the level of openness would
-> still be less than Red Hat's.
-
-I am a bit confused though.  If I (as a non-RH customer) look to download their
-latest security updates, I don't see an obvious way of doing it based on their
-advisories.  For instance:
-
-https://rhn.redhat.com/errata/RHSA-2011-0421.html
-
-This advisory ends with:  (The unlinked packages above are only available from
-the Red Hat Network)
-
-This requires that I have a support account in order to download the update.
-This is certainly different from the "Open" distributions, such as Fedora... but
-really isn't different from what Wind River is doing -- other then perhaps the
-verbose description of the issue.
-
---Mark
-
-> Alexander
-> 
+Thanks,
+Jeff
