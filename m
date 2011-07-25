@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/7
-Message-ID: <320759649.178573.1305830835860.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 14:47:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: klibc@...or.com, coley <coley@...re.org>
-Subject: Re: [klibc] CVE request: klibc: ipconfig sh script with unescaped DHCP	options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/10
+Message-ID: <4E2DBB43.30402@kde.org>
+Date: Mon, 25 Jul 2011 14:51:47 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
+Subject: CVE Request: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Related to CVE-2011-0997
-> 
-> ipconfig vulnerability for malicious dhcpd if $DNSDOMAIN is later
-> used unquoted, than proof of concept involves
-> DNSDOMAIN="\\\"\$(echo owned; touch /tmp/owned)"
-> 
-> fix:
-> http://git.kernel.org/?p=libs/klibc/klibc.git;a=commit;h=46a0f831582629612f0ff9707ad1292887f26bff
-> will be part of the just to be released klibc-1.5.22
-> 
+Hello,
 
-Please use CVE-2011-1930.
+We've been made aware of an input validation failure affecting multiple
+KDE applications. (The details are not yet public as we're working on
+the fixes.) We'd like a CVE for this.
 
-Thanks.
+The Arora and Rekonq web browsers are also vulnerable to the same attack
+vector, and other Qt-based programs may be as well. We're working with
+the Qt team to help enhance their documentation to warn developers to
+take care sanitizing their inputs, but it's not actually a Qt flaw. So
+we're a bit unsure how to proceed here. Do we get separate CVEs for
+Arora and Rekonq? Do we lump both of those into the same CVE as the KDE
+applications? I would think the former since other applications may be
+found to be vulnerable down the line, but wanted to check.
 
--- 
-    JB
+(The Rekonq team has been made aware and are currently patching their
+code; I'm in the process of trying to notify the Arora team.)
+
+Thanks,
+Jeff
