@@ -1,167 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/6
-Message-ID: <1295950035.2935.8.camel@mochrul.balabit>
-Date: Tue, 25 Jan 2011 11:07:15 +0100
-From: SZALAY Attila <sasa@...abit.hu>
-To: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: syslog-ng wrong file permission vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/1
+Message-ID: <20110725020827.GA21561@openwall.com>
+Date: Mon, 25 Jul 2011 06:08:27 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jan Lieskovsky <jlieskov@...hat.com>
+Cc: oss-security <oss-security@...ts.openwall.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>
+Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
 Content-Type: text/plain; charset=utf-8
 
-==========================================================================
-syslog-ng 2.0, 3.0, 3.1, 3.2 OSE and PE <= Information leak, access
-                                           prevention and possible
-                                           priviledge escalation
+Hi,
 
-CVE-2011-0343
-==========================================================================
+I know I am being a year late to comment on this, but maybe better late
+than never.  I'll over-quote a little bit:
 
-1. OVERVIEW
+On Wed, Jun 02, 2010 at 01:43:03PM +0200, Jan Lieskovsky wrote:
+>    Matt McCutchen pointed out a deficiency in the way rpm handled rpm 
+>    package upgrades --
+> it failed to clear out the SUID/SGID bits of the old file by file 
+> replacement when privileged
+> user performed package upgrade. Under certain circumstances, a local, 
+> authenticated user could
+> use this flaw to escalate their privileges.
+> 
+> Red Hat Bugzilla entry:
+>   [1] https://bugzilla.redhat.com/show_bug.cgi?id=598775
+> 
+> Upstream changeset:
+>   [2] 
+>   http://rpm.org/gitweb?p=rpm.git;a=commit;h=ca2d6b2b484f1501eafdde02e1688409340d2383
+> 
+> Could you allocate CVE id for this?
 
-Versions 3.0, 3.1 and 3.2 of syslog-ng Open Source Edition (OSE) and 
-versions 3.0, 3.1 and 3.2 of syslog-ng Premium Edition (PE) create log
-files 
-with all permission bit set by default on FreeBSD and HP-UX
-architectures. 
-These permissions allow anybody with local access to read and write the
-log 
-files. The setuid and execution bits are also set, allowing the log
-files to be 
-executed.
+This was assigned CVE-2010-2059.  And there was a similar issue 5 years
+earlier, affecting package removals (rather than upgrades):
 
-2. BACKGROUND
+https://bugzilla.redhat.com/show_bug.cgi?id=125517
 
-The syslog-ng application is an enhanced version of the default Syslog
-service 
-found on FreeBSD and other UNIX and Unix-like operating systems. The
-syslog-
-ng application supports reliable and encrypted transport using TCP and
-TLS, 
-SQL support, and offers powerful message filtering, sorting,
-pre-processing and 
-log normalization capabilities. Utilizing message parsing and
-classification, 
-syslog-ng is able to correlate log messages both real-time and offline,
-making 
-it especially suited to implement the artificial ignorance principle. 
+That one was assigned CVE-2005-4889.
 
-3. VULNERABILITY DESCRIPTION
+The descriptions and fixes for these were limited to SUID/SGID bits and
+fscaps (on RPM versions/builds supporting those).  However, what about
+device files, maybe with unsafe permissions (or just extra device files
+that would need to be gone on package removal or on upgrade to a package
+version no longer providing those)?  What about regular files with world
+or group write permissions, which allow for a quota bypass?
 
-This vulnerability affects only architectures where sizeof(mod_t) is not
-equal to sizeof(int). Because of bad casts in the code and the internal 
-representation of the ``use the default permission'' setting being -1,
-this
-number in the chmod call is interpreted as 07777. This means that the
-permission 
-of the file is readable, writable and executable to all, and the setuid,
-setgid, 
-and sticky bits are set. Everybody who can see the file can read it,
-write it 
-and even run it with root permission.
+Additionally, the fix for SUID/SGID bits ignores the return value from
+chmod(), so it is fail-open.  It would not even print an error message.
+It is unclear what the best action on a partially-failed old package
+removal would be, but at the very least we can print an error message.
 
-4. VERSIONS AFFECTED
+Sure, these are relatively minor issues, yet if we're fixing things, we
+could as well fix them more fully.
 
-The following table summarizes in which product versions is the
-vulnerable code 
-present and in which versions has it been corrected.
+What I am considering is chmod()'ing everything but symlinks to 0, as
+opposed to the current fix of removing SUID/SGID bits off regular files
+with those bits set only.
 
-syslog-ng Open Source Edition (OSE):
-Branch  Vulnerable from Fixed in
-2.0.X   this branch is not vulnerable
-3.0.X   3.0.7           3.0.10
-3.1.X   3.1.3           3.1.4
-3.2.X   3.2alpha1       3.2.2?
+I've attached a patch against rpm 4.2 (yes, ancient code), which passed
+my basic tests (but more testing is needed).
 
-syslog-ng Premium Edition (PE):
-Branch  Vulnerable from Fixed in
-3.0.X   3.0.6           3.0.6a
-3.1.X   this branch is not vulnerable
-3.2.X   3.2.0           3.2.1a
+I don't care to request a third CVE id for this; I merely want to
+include a better fix.
 
+I'd appreciate any comments.
 
-5. PROOF-OF-CONCEPT/EXPLOIT
+Thanks,
 
-None. But it's easy to imagine.
+Alexander
 
-6. IMPACT
-
-This problem causes that every user can see, modify or destroy the log
-messages directly and make it difficult to detect harmful operations.
-With a 
-small trick even (shell)code execution is possible with root
-permissions, 
-causing privilege escalation.
-
-7. SOLUTION
-
-Upgrade to a newer, unaffected version.
-syslog-ng Open Source Edition (OSE):
-3.0.X  3.0.10
-3.1.X  3.1.4
-3.2.X  3.2.2
-
-syslog-ng Premium Edition (PE):
-3.0.X  3.0.6a
-3.2.X  3.2.1a
-
-8. VENDOR
-
-BalaBit IT Security Ltd.
-http://www.balabit.com
-Product page:
-http://www.balabit.com/network-security/syslog-ng/
-
-9. CREDIT
-
-This vulnerability was discovered by Steven Chamberlain steven :at: pyro
-dot eu dot org
-
-10. DISCLOSURE TIME-LINE
-
-2010-12-31: The problem reported to the debian bug tracking system
-2010-12-31: notified vendor by the debian maintainer
-2011-01-01: upstream proposed a fix
-2011-01-02: freebsd port maintainer notified
-2011-01-07: every linux port notified
-2011-01-10: PE version 3.0.6a and 3.2.1a released
-2011-01-14: OSE version 3.0.10 and 3.1.4 released
-2011-01-16: OSE version 3.2.2 released
-
-11. VENDOR RESPONSE
-
-12. REFERENCES
-
-Debian bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=608491
-Debian security track:
-http://security-tracker.debian.org/tracker/CVE-2011-0343
-upstream patch:
-http://git.balabit.hu/?p=bazsi/syslog-ng-3.0.git;a=commit;h=17531d911d544687fb9c5bd3b130dd5bf7903db0
-upstream patch:
-http://git.balabit.hu/?p=bazsi/syslog-ng-3.1.git;a=commit;h=cbcea8c95c3f07ed9eaa4d12f124db8f8ca2f74b
-upstream patch:
-http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=96af7607873e126ecee0eb51a5fff46a920c5630
-upstream announcement:
-https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000101.html
-upstream announcement:
-https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000102.html
-upstream announcement:
-https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000103.html
-upstream announcement:
-https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000104.html
-upstream announcement:
-https://lists.balabit.com/pipermail/syslog-ng-announce/2011-January/000105.html
-freebsd port:
-http://www.freshports.org/commit.php?category=sysutils&port=syslog-ng3&files=yes&message_id=201101041550.p04Fov6n028317@repoman.freebsd.org
-
--- 
-SZALAY Attila
-Support (L3) Team Leader
-
-e-mail: attila.szalay@...abit.com
-
-BalaBit IT Security
-www.balabit.com
-H-1115 Bártfai str. 54. Budapest
-
-This Communication is Confidential. We only send and receive email on
-the basis of the terms set out at http://www.balabit.com/disclaimer/.
-
+View attachment "rpm-4.2-owl-remove-unsafe-perms.diff" of type "text/plain" (2208 bytes)
