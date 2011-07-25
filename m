@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/6
-Message-ID: <4E8F0F93.8060901@oracle.com>
-Date: Fri, 07 Oct 2011 15:41:23 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/6
+Message-ID: <20110725114747.GA19113@pisco.westfalen.local>
+Date: Mon, 25 Jul 2011 13:47:47 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Squirrelmail CVE duplicates
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/11 14:03, Robert Święcki wrote:
-> On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
-> <huzaifas@...hat.com> wrote:
->> Shouldnt this be:
->>
->>        /* No path traversal */
->>        if (strstr(iface, "..") || strchr(iface, '/'))
->>                return -1;
-> FWIW, this will reject too much;
->
-> /path/to/sth..jpg
->
 
-Indeed, since I don't believe that iface can reasonably include a "/"
-its sufficient to check for that.   If not then you need to check for
-"../" at the beginning of iface and "/.." anywhere else in it.   But
-simply forbidding "/" should be fine.
+On Mon, Jul 25, 2011 at 01:29:04PM +0200, Jan Lieskovsky wrote:
+> Hi Moritz,
+> 
+>   thank you for checking this.
+> 
+> On 07/24/2011 06:17 PM, Moritz Muehlenhoff wrote:
+> >Hi,
+> >there seems to be a duplicate CVE assignment for Squirrelmail?
+> >
+> >CVE-2010-4555 / CVE-2011-2753
+> 
+> If I got it right, the CVE-2010-4555 ID has been assigned to the XSS
+> flaws:
+> 
+> Multiple cross-site scripting (XSS) flaws were found in the SquirrelMail
+> webmail client:
+> * XSS flaws in generic options inputs,
+> * XSS flaw in the SquirrelSpell plug-in,
+> * XSS flaw in the Index Order page.
+> 
+> [1]
+> https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
+> 
+> while the CVE-2011-2753 ID has been assigned to the CSRF protection add-ons:
+> 
+> Also protection against Cross-site Request Forgery (CSRF) flaws has
+> been added to the empty trash feature and to the Index Order page.
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=720694#c0
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=722832#c0
 
-jch
+That makes sense, thanks.
+
+Cheers,
+        Moritz
