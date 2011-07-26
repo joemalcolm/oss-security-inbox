@@ -1,55 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/1
-Message-ID: <BANLkTinK7bnN7Zhcg9KS5YU--Pqu+=i+Pw@mail.gmail.com>
-Date: Tue, 28 Jun 2011 17:12:13 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Andrew Morton <akpm@...ux-foundation.org>
-Cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/7
+Message-ID: <531110317.1603675.1311708269645.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:24:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: bluegenexus@...il.com, namn@...emoon.com.vn, coley <coley@...re.org>
+Subject: Re: CVE request: PyForum backdoor BMSA-2009-07
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 28, 2011 at 3:53 PM, Andrew Morton
-<akpm@...ux-foundation.org> wrote:
->
-> a) I haven't thought very hard about it, but isn't it the case that
->   fuzzifying the byte counts in this manner will still permit the
->   length of these things to be determined, albeit with a larger data
->   set?
+Please use CVE-2009-5025.
 
-Well, if we're talking things like passwords read from /dev/tty, there
-really _isn't_ a larger data set to be had. Which is why I suspect
-that it would be fine to just mask the low bits and give 1kB
-resolution in general.
+Thanks.
 
-It's not like I could imagine an app like "iotop" would ever care
-about individual bytes, so there's no reason to expose things at that
-granularity.
+-- 
+    JB
 
-> b) Where does the problem lie?  Is it with the kernel, which exposes
->   accurate accounting?  Or is it with userspace, which accidentally
->   exposes sensitive information by failing to account for the kernel's
->   exposure of accurate accounting information?
-
-Well, if you do a read of a password from a tty, there really isn't
-much you can do about the tty IO count showing up. If the rest of the
-IO is packetized some way, you can probably figure out the parts that
-are individual bytes.
-
-> c) Should this information be world-readable?  Perhaps we should add
->   more rational privileges here.  Back-compatibility issues.
-
-I already applied the /proc part. That seemed like a nobrainer. The
-taskstat part look slike it might break iotop to tighten the security,
-so there I'm thinking the granularity approach would be a sufficient
-workaround.
-
-> If rounding the counts to a 1k granularity will indeed defeat the
-> attack (I'm unsure) then I'd suggest that a fix would be to perform
-> that fuzzification if the receiving process doesn't have suitable
-> permissions.  So if the user is reading his own stats or is root, he
-> still gets byte-resolution results.  This keeps the stats as useful as
-> we can make them and reduces the back-compatibility damage.
-
-Sure.
-
-                 Linus
+----- Original Message -----
+> Could I get CVE-identifier for backdoor-issue:
+> http://seclists.org/fulldisclosure/2009/Nov/353
+> 
+> Affected product: PyForum v1.0.3 (the newest available)
+> 
+> Other vulnerabilities affecting this version:
+> 
+> XSS-vulnerability:
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4408
+> CSRF-vulnerability:
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4407
+> 
+> Please note that the backdoor-issue is dated as 2009. I have asked
+> status of this issue in:
+> http://www.pyforum.org/pyforum/default/view_topic/631
+> 
+> Best regards,
+> Henri Salo
