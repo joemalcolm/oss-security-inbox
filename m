@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/13
-Message-ID: <20110223101612.34261c43@laverne>
-Date: Wed, 23 Feb 2011 10:16:12 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Physical access vulnerabilities and auto-mounting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/3
+Message-ID: <4E2E9907.9090008@redhat.com>
+Date: Tue, 26 Jul 2011 12:37:59 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>
+Subject: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 22 Feb 2011 23:17:54 -0500
-schrieb Dan Rosenberg <dan.j.rosenberg@...il.com>:
+Hello Josh, Steve, vendors,
 
-> Should this be considered a vulnerability?  Probably.  But what should
-> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-> a vulnerability if auto-mounting is disabled only when the screen is
-> locked?  Should all filesystems have graceful error handling for every
-> possible edge case that can occur when dealing with corruption?
+   based on:
+   [1] 
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
 
-I'd say the later one. Filesystem drivers in the kernel should more or
-less be treated like just another app that is able to read some kind of
-"format". If the filesystem is corrupted, it should fail without
-security impact.
+an off-by-one error was found in the way the hash manager of Clam
+AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
+messages with certain hashes. A remote attacker could provide a message
+with specially-crafted hash signature in it, leading to denial of
+service (clamscan executable crash).
 
-As others already mentioned, the impact is not limited to automounting,
-but also an issue for virtualzation (and maybe other cases we don't
-think of yet).
+Upstream bug report:
+[2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
 
-Maybe it'd be a good idea to start a big fuzzing session on filesystems?
+Relevant patch:
+[3] 
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Other references:
+[4] https://bugzilla.novell.com/show_bug.cgi?id=708263
+[5] 
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
+[6] http://www.clamav.net/lang/en/
+[7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Note: The rest of the issues fixed in [1] seem to be just bug fixes.
+       Cc-ed upstream Clam Antivirus maintainers to confirm this (that
+       there is only one issue with security implications) and correct
+       the description of the issue, if necessary (just guessing that
+       "cli_hm_scan()" stands for
+       command_line_interface_hash_manager_scan, since it doesn't seem
+       to be described in the code anywhere).
+
+Josh, Steve, could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
