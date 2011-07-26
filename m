@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/9
-Message-ID: <BANLkTimxAVkw0Zsu2Rd=1uj15bGHvKL7DA@mail.gmail.com>
-Date: Sun, 3 Apr 2011 22:06:03 +0100
-From: Ben Laurie <benl@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/6
+Message-ID: <CAOSRhRMs7p+Q6nA7nRHPiorQ1To4A2Nfyf9FrKTWNkKLE5uDEg@mail.gmail.com>
+Date: Tue, 26 Jul 2011 11:26:29 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Cc: meskes@...ian.org
+Subject: Re: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
 Content-Type: text/plain; charset=utf-8
 
-OK, but ... I wasn't on vendor-sec, but (IMO) am at least as qualified
-as most of the people who were. Now what?
+On Tue, Jul 26, 2011 at 11:19 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+> Hi,
+> does anyone have further information on
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
+> and whether if affects the open source version of Virtual Box?
+>
 
-On 3 April 2011 18:50, Solar Designer <solar@...nwall.com> wrote:
-> On Sat, Apr 02, 2011 at 12:43:59PM +0200, Es gibt immer etwas zu tratschen wrote:
->> I also want to stay with you!
->
-> Nice try, and it sort of proves a point (let's say, that attacks on a
-> closed list may start as early as during its discussion and initial
-> member subscription, and that we can't fully trust anyone), but I think
-> that's enough, thanks.  No need to post more of these (unreasonable
-> subscription requests).
->
-> Alexander
->
+These issues were found by Tarjei Mandt, and are described in this blog post:
+http://mista.nu/blog/author/mista/
+
+CVE-2011-2300 allows gaining elevated privileges within a Windows
+guest due to a vulnerability in the Windows Guest Additions.
+CVE-2011-2305 allows executing arbitrary code on the host due to a
+vulnerability in the VirtualBox graphics stack.
+
+Tarjei found these issues via code auditing, so it follows that they
+affect the open source version of VirtualBox.
+
+-Dan
