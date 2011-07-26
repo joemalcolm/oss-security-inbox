@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/3
-Message-ID: <CANTw=MN_j=SPB8GVmWbnTBA6WYY6ASZm0+BMr8JqZ-=mdf=rCw@mail.gmail.com>
-Date: Sun, 4 Sep 2011 13:39:43 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/8
+Message-ID: <1594226822.1603980.1311708746578.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:32:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Please REJECT CVE-2011-2160 and CVE-2011-2162 in ffmpeg as duplicates (was: ffmpeg issues)
+Cc: justin@...irish.net, coley <coley@...re.org>
+Subject: Re: CVE request: Drupal Data-module multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Please REJECT CVE-2011-2160 (duplicate of CVE-2011-1198) and
-CVE-2011-2162 (duplicate of CVE-2011-0723).  See thread at [0] for
-further details.
 
-Thanks,
-Mike
 
-[0] http://lists.debian.org/debian-security-tracker/2011/09/msg00006.html
+----- Original Message -----
+> These issues does not have CVE-identifiers. Could we get one?
+> 
+> http://seclists.org/fulldisclosure/2011/Feb/219
+> 
+> I asked from Justin Klein Keane and he wasn't aware of CVE-identifier.
+> I think this needs identifier even this is an alpha release as this
+> module is used by some production instances. If I am correct two
+> identifiers should be enough. One for XSS and another for SQL
+> injections.
+> 
+> Discussion about the issue: http://drupal.org/node/1056470
+> 
+
+Please use CVE-2011-2714 for the XSS.
+
+CVE-2011-2715 is for the SQL injection.
+
+Thanks.
+
+-- 
+    JB
