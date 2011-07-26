@@ -1,29 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/3
-Message-ID: <4EF5F237.2040403@redhat.com>
-Date: Sat, 24 Dec 2011 08:39:35 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/11
+Message-ID: <1048604435.1604666.1311710254688.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:57:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request 2006: Joomla Web Link Submission title Parameter SQL injection
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- GLPI -- Properly blacklist some sensitive fields
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 08:05 AM, Henri Salo wrote:
-> Is it possible to get CVE assigned for very old Joomla-issue?
->
-> http://osvdb.org/show/osvdb/26626
-> http://secunia.com/advisories/20746/
-> http://www.exploit-db.com/exploits/1922/
-> http://www.securityfocus.com/archive/1/437496
->
-> I can see from honeypot-logs that they are still using this vulnerability. I did not yet find Joomla-references for this. If this is too old vulnerability for CVE or wrong reason please notify me.
->
-> - Henri Salo
-It's never to late for a CVE! This issue doesn't appear to be 
-CVE-2006-3481 so I guess it gets a new CVE. Please use CVE-2006-7247 for 
-this issue.
+Plese use CVE-2011-2720.
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found that GLPI, the Information Resource-Manager with an
+> additional Administration-Interface, did not properly blacklist
+> certain
+> sensitive variables (like GLPI username and password). A remote
+> attacker
+> could use this flaw to obtain access to plaintext form of these values
+> via specially-crafted HTTP POST request.
+> 
+> References:
+> [1]
+> http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
+> [2] https://forge.indepnet.net/projects/glpi/versions/605
+> [3] https://forge.indepnet.net/issues/3017
+> 
+> Relevant patches:
+> [4]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14951
+> [5]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14952
+> [6]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14954
+> [7]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14955
+> [8]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14956
+> [9]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14957
+> [10]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14958
+> [11]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14960
+> [12]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14966
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
