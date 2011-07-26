@@ -1,38 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/2
-Message-ID: <4D9C2766.7050004@redhat.com>
-Date: Wed, 06 Apr 2011 16:42:14 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/13
+Message-ID: <633189304.1604805.1311710600501.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 16:03:20 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: two issues in mpt2sas
+Cc: aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
 Content-Type: text/plain; charset=utf-8
 
-On 04/06/2011 01:00 AM, Dan Rosenberg wrote:
-> "At two points in handling device ioctls via /dev/mpt2ctl,
-> user-supplied length values are used to copy data from userspace into
-> heap buffers without bounds checking, allowing controllable heap
-> corruption and subsequently privilege escalation.
+Please use CVE-2011-2721.
 
-CVE-2011-1494
+Thanks.
 
-> Additionally, user-supplied values are used to determine the size of a
-> copy_to_user() as well as the offset into the buffer to be read, with
-> no bounds checking, allowing users to read arbitrary kernel memory."
-> [1]
-
-CVE-2011-1495
-
-> These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
-> SAS 2.0).  While the kernel creates this device file root-root 660 by
-> default, I've seen it with more open permissions on live systems, so
-> perhaps there's some common use case that requires modifying these
-> default permissions.
->
-> -Dan
->
-> [1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
-
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> based on:
+> [1]
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
+> 
+> an off-by-one error was found in the way the hash manager of Clam
+> AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
+> messages with certain hashes. A remote attacker could provide a
+> message
+> with specially-crafted hash signature in it, leading to denial of
+> service (clamscan executable crash).
+> 
+> Upstream bug report:
+> [2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
+> 
+> Relevant patch:
+> [3]
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
+> 
+> Other references:
+> [4] https://bugzilla.novell.com/show_bug.cgi?id=708263
+> [5]
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
+> [6] http://www.clamav.net/lang/en/
+> [7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
+> 
+> Note: The rest of the issues fixed in [1] seem to be just bug fixes.
+> Cc-ed upstream Clam Antivirus maintainers to confirm this (that
+> there is only one issue with security implications) and correct
+> the description of the issue, if necessary (just guessing that
+> "cli_hm_scan()" stands for
+> command_line_interface_hash_manager_scan, since it doesn't seem
+> to be described in the code anywhere).
+> 
+> Josh, Steve, could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
