@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/10
-Message-ID: <4ED7E273.5090701@redhat.com>
-Date: Thu, 01 Dec 2011 13:24:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/4
+Message-Id: <201107261658.19639.mweckbecker@suse.de>
+Date: Tue, 26 Jul 2011 16:58:19 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Subject: CVE request: hplip: insecure tmp file handling
 Content-Type: text/plain; charset=utf-8
 
-On 12/01/2011 10:12 AM, Kurt Seifried wrote:
-> On 12/01/2011 02:59 AM, Henri Salo wrote:
->> Original post: http://seclists.org/bugtraq/2011/Nov/15
->> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
->> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
->>
->> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
->>
->> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
->>
->> Please notify me if this is not enough information.
->>
->> - Henri Salo
-> Please use CVE-2011-4365 for this issue.
->
-My mistake, this should have been merged into CVE-2011-4090, it's the
-same vuln type (XSS) and the same version of Serendipity, CVE-2011-4365
-is a bad assignment and should be marked as a duplicate of CVE-2011-4090.
+Hi,
+
+hplip has a tmp file issue:
+
+  https://bugzilla.novell.com/show_bug.cgi?id=704608
+  https://bugs.launchpad.net/hplip/+bug/809904
+
+Could someone possibly assign a CVE to it, please? Thanks in advance!
+
+Matthias
+
+PS: Not too critical IMO as the code path is probably rarely used anyway.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
