@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/8
-Message-ID: <4EB803C5.3020707@redhat.com>
-Date: Mon, 07 Nov 2011 09:13:57 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/9
+Message-ID: <1588099194.1604029.1311708902599.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:35:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Ruby (OpenSSL extension) -- Insecure way of creation exponent value by private RSA key generation
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2011 08:55 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way the OpenSSL extension of the
-> Ruby programming language (of version from the Git trunk repository
-> after 2011-09-01 up to 2011-11-03) generated exponent value to be used
-> for private RSA key generation (the bug caused the exponent for the
-> generated key to be always '1'). A remote attacker could use this flaw
-> to bypass / corrupt integrity of services, depending on strong private
-> RSA keys generation mechanism.
->
-> Relevant upstream patch:
-> [1]
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=33633
->
-> References:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=751800
->
-> Could you allocate a CVE id for this?
-Please use CVE-2011-4121 for this issue.
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
 
+
+----- Original Message -----
+> Hi!
+> 
+> Earlier this year, CVE-2011-0997 was assigned to ICS's dhclient and
+> CVE-2011-0996 dhcpcd for an insufficient DHCP option checking.
+> 
+> Similar issue affects busybox's udhcpc.
+> 
+> dhcpv6's dhcp6c was previously mentioned and it seems also fixed in
+> SUSE, but did not get its own CVE.
+> 
+> The impact for DHCPv6 clients seems significantly lower, as there's no
+> support for hostname option, only domain search option. I'm not sure
+> if anyone identified any good target that handles search option
+> insecurely, I've only found shtool's sh.echo that may use it in sed
+> script, resulting in sed script injection with file overwrite or code
+> execution impact.
+> 
+> Given that dhclient and dhcpcd got separate CVEs, udhcpc and dhcp6c
+> should probably get separate ids too.
+> 
+
+Use CVE-2011-2716 for udhcpc
+CVE-2011-2717 for udhcp6c.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
