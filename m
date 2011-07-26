@@ -1,33 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/3
-Message-ID: <4EDEA159.5030005@redhat.com>
-Date: Tue, 06 Dec 2011 16:12:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/1
+Message-ID: <CAKDYTU0BZhS3OwAJWxq50JZRXS+L-xy0fK1o6gu0FrdbBaAccQ@mail.gmail.com>
+Date: Tue, 26 Jul 2011 10:41:52 +0530
+From: "Papers, Call For" <cfpt@...uritybyte.org>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: acpid
+Subject: CFP SecurityByte India
 Content-Type: text/plain; charset=utf-8
 
-On 12/06/2011 01:39 PM, Moritz Muehlenhoff wrote:
-> Hi,
-> Please assign a CVE ID for this issue fixed in acpid 2.0.11:
->
-> http://www.tedfelix.com/linux/acpid-netlink.html 
-> (The ChangeLog can only be grabbed through the tarballs):
->
-> ------
-> * Sat Jul 30 2011  Ted Felix <http://www.tedfelix.com>
->   - 2.0.11 release
->   - Set umask to 0077 for scripts run by acpid.  (event.c)  (Ted Felix)
-> ------
->
-> Discovered by Helmut Grohne and Michael Biebl.
->
-> Cheers,
->         Moritz
-Please use CVE-2011-4578 for this issue.
+Hi All,
 
--- 
+The first round of speakers have been selected for Securitybyte, please
+follow us on twitter @securitybyte to get the latest updates on speakers and
+event.
 
--Kurt Seifried / Red Hat Security Response Team
+Deral Heiland, From Printer to Owned: Leveraging Multifunction Printers
+During Penetration Testing
+Nithya Raman, Security threats on social networks
+Alexander Polyakov, A Crushing Blow At the Heart of SAP J2EE Engine
+Bishan Singh, Enabling Un-trusted Mashups
+Krzysztof Kotowicz, HTML5: Something Wicked This Way Comes
+John McColl, Hacking Corporate Telephony
+Aseem Jakhar, Runtime thread injection and execution in Linux processes
+George Nicolaou, Alternative Exploitation Vectors (A study of CVE-3333)
+Michele Orru, Securing the Browser
+Kanwal K. Mookhey, The Data Theft Epidemic in India
+Vivek Ramachandran, Enterprise Wi-Fi Worms, Backdoors and Botnets for Fun
+and Profit
+
+The 2nd round of CFP is out
+
+CFP/CTP
+
+Securitybyte is proud to announce its Second Annual International
+Information Security Conference, "Securitybyte 2011" in Bangalore, India.
+This 4-day event features two days of conferences and two days of
+post-conference hands-on Trainings & Certifications covering every aspect of
+Information Security. The Securitybyte conference features some of the most
+respected names in the Security space and is focused around new research and
+innovation. The Securitybyte Conference 2011 is planned for Sept 6th through
+9th, 2011 at The Taj Hotel in Bangalore, India.
+
+The two-day conference (Sept 6th & 7th) will have the following three
+tracks:
+
+   Deep Technical
+   Government & Governance
+   Management
+
+Submission Deadline: The first round of submission of papers for conference
+talks and trainings should be done no later than August 5th, 2011. Please
+send all your submissions to cfp@...uritybyte.org, keeping subject line as
+"SB 2011 CFP Submission".
+
+TOPICS
+
+Got a new attack against any technology or device? We want to see it.
+
+Topics of interest include, but are not limited to, the following:
+
+Management Case studies around any of the topics above of how the
+implementation was done and what were some of the lessons learned.
+
+Technology-Focused
+
+               Cloud Security
+               Electronic Device Security (Cell Phones / PDA's)
+               Defeating Biometrics
+               WLAN, RFID and Bluetooth Security
+               Data Recovery and Incident Response
+               Virtualization Security
+               Database Security
+               Forensic & Cyber security Regulatory & Law
+               Copyright infringement and anti-copyright infringement
+               enforcement technologies
+               Critical infrastructure issues
+               Data security and privacy issues
+               Identity theft, identity creation & identity fraud
+               Corporate Espionage
+
+
+National Security
+
+              Cyber forensics
+              Cyber warfare
+              Cyber Espionage
+              Next hyphenGen Cyber threats
+              Critical Infrastructure protection
+              Surveillance & counter-surveillance
+
+Speaker Submission:
+
+Please use the following submission form template to respond:
+
+   Name, title, address, email, and phone/contact number
+   Short biography, qualifications, occupation, achievements, and
+   affiliations (limit 250 words.)
+   Summary or abstract of your presentation (limit 1250 words.)
+   Technical requirements (video, internet, wireless, audio, etc.)
+   References (Contact name, title, and email address of two
+   conferences you have spoken at or comparable references.)
+
+**Please note, product or vendor pitches are not accepted. If your talk
+involves an advertisement for a new product or service your company is
+offering, please do not submit a proposal.
+
+
+Regards
+SecurityByte
 
