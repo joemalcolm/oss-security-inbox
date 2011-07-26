@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/2
-Message-ID: <4E720B41.2090806@redhat.com>
-Date: Thu, 15 Sep 2011 16:27:13 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/6
+Message-ID: <CAOSRhRMs7p+Q6nA7nRHPiorQ1To4A2Nfyf9FrKTWNkKLE5uDEg@mail.gmail.com>
+Date: Tue, 26 Jul 2011 11:26:29 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: meskes@...ian.org
+Subject: Re: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Tue, Jul 26, 2011 at 11:19 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+> Hi,
+> does anyone have further information on
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
+> and whether if affects the open source version of Virtual Box?
+>
 
-   multiple XSS flaws have been recently reported in the v3.4.4
-(and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
+These issues were found by Tarjei Mandt, and are described in this blog post:
+http://mista.nu/blog/author/mista/
 
-[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
+CVE-2011-2300 allows gaining elevated privileges within a Windows
+guest due to a vulnerability in the Windows Guest Additions.
+CVE-2011-2305 allows executing arbitrary code on the host due to a
+vulnerability in the VirtualBox graphics stack.
 
-1) An XSS flaw was found in the way phpMyAdmin processed row content,
-    containing JavaScript code, after its inline editing and saving,
+Tarjei found these issues via code auditing, so it follows that they
+affect the open source version of VirtualBox.
 
-2) It was found that phpMyAdmin did not properly sanitize the content
-    of db, table, and column names prior use of their values.
-
-A remote attacker could use these flaws to conduct XSS attacks (execute
-arbitrary HTML or web script) by tricking authenticated phpMyAdmin user 
-into visiting of a specially-crafted URL.
-
-References:
-[2] http://secunia.com/advisories/45991/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
-
-Could you allocate a CVE id for these?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-Dan
