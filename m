@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/7
-Message-ID: <1862529808.141315.1313779628800.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:47:08 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/7
+Message-ID: <531110317.1603675.1311708269645.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:24:29 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>, coley <coley@...re.org>
-Subject: Re: CVE request: coppermine gallery < 1.4.26
+Cc: bluegenexus@...il.com, namn@...emoon.com.vn, coley <coley@...re.org>
+Subject: Re: CVE request: PyForum backdoor BMSA-2009-07
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> This security issue never got CVE-identifier:
-> http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
-> 
-> Original advisory:
-> http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
-> OSVDB: http://osvdb.org/show/osvdb/62261
-> 
-
-Please use CVE-2010-4815 for this.
+Please use CVE-2009-5025.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Could I get CVE-identifier for backdoor-issue:
+> http://seclists.org/fulldisclosure/2009/Nov/353
+> 
+> Affected product: PyForum v1.0.3 (the newest available)
+> 
+> Other vulnerabilities affecting this version:
+> 
+> XSS-vulnerability:
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4408
+> CSRF-vulnerability:
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-4407
+> 
+> Please note that the backdoor-issue is dated as 2009. I have asked
+> status of this issue in:
+> http://www.pyforum.org/pyforum/default/view_topic/631
+> 
+> Best regards,
+> Henri Salo
