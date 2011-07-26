@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/9
-Message-ID: <20111007214139.GB12618@radis.liafa.jussieu.fr>
-Date: Fri, 7 Oct 2011 23:41:39 +0200
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/14
+Message-ID: <554744119.1604900.1311710729310.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 16:05:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Juliusz Chroboczek <jch@....jussieu.fr>
-Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: hplip: insecure tmp file handling
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct  7, 2011 at 23:26:13 +0200, Julien Cristau wrote:
+Please use CVE-2011-2722.
 
-> git bisect using the PoC from the RH bug suggests that was fixed by
-> https://gitweb.torproject.org/chrisd/polipo.git/commitdiff/0e2b44af619e46e365971ea52b97457bc0778cd3
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> Hi,
 > 
-However, that change is not in the master branch on github, which still
-crashes AFAICT.
-
-Cheers,
-Julien
+> hplip has a tmp file issue:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=704608
+> https://bugs.launchpad.net/hplip/+bug/809904
+> 
+> Could someone possibly assign a CVE to it, please? Thanks in advance!
+> 
+> Matthias
+> 
+> PS: Not too critical IMO as the code path is probably rarely used
+> anyway.
+> 
+> --
+> Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+> Tel: +49-911-74053-0; http://suse.com/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
