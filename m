@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/8
-Message-ID: <20111101215805.GC22739@redhat.com>
-Date: Tue, 1 Nov 2011 15:58:05 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/14
+Message-ID: <554744119.1604900.1311710729310.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 16:05:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: hplip: insecure tmp file handling
 Content-Type: text/plain; charset=utf-8
 
-* [2011-11-01 13:15:53 -0600] Kurt Seifried wrote:
+Please use CVE-2011-2722.
 
->On 11/01/2011 11:11 AM, David Black wrote:
->> y with respect to their de-serialization of YAML post
->> data. Both Piston and Tastypie used the yaml.load method, which is
->> unsafe. In certain
->Can you please send me links for Piston and Tastypie announcements/code
->commits showing the vuln please? Thanks.
-
-Can't speak for Tastypie (we don't ship it so I didn't look), but for
-Piston:
-
-https://bitbucket.org/jespern/django-piston/changeset/91bdaec89543
-https://bugzilla.redhat.com/show_bug.cgi?id=750658
-
-There is no Piston announcement that I can see.
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
+
+----- Original Message -----
+> Hi,
+> 
+> hplip has a tmp file issue:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=704608
+> https://bugs.launchpad.net/hplip/+bug/809904
+> 
+> Could someone possibly assign a CVE to it, please? Thanks in advance!
+> 
+> Matthias
+> 
+> PS: Not too critical IMO as the code path is probably rarely used
+> anyway.
+> 
+> --
+> Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+> Tel: +49-911-74053-0; http://suse.com/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
