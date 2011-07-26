@@ -1,151 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/5
-Message-ID: <20110928202228.01a03dec@redhat.com>
-Date: Wed, 28 Sep 2011 20:22:28 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/15
+Message-ID: <20110726201254.GA28754@pisco.westfalen.local>
+Date: Tue, 26 Jul 2011 22:12:55 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Cc: solar@...nwall.com, Colin Percival <cperciva@...ebsd.org>
-Subject: Re: LZW decompression issues
+Cc: cve@...re.org
+Subject: Re: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 28 Sep 2011 19:42:03 +0400 Solar Designer wrote:
-
-> FreeBSD has just released an advisory for this:
+On Tue, Jul 26, 2011 at 11:26:29AM -0400, Dan Rosenberg wrote:
+> On Tue, Jul 26, 2011 at 11:19 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+> > Hi,
+> > does anyone have further information on
+> > http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
+> > http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
+> > and whether if affects the open source version of Virtual Box?
+> >
 > 
-> http://security.freebsd.org/advisories/FreeBSD-SA-11:04.compress.asc
+> These issues were found by Tarjei Mandt, and are described in this blog post:
+> http://mista.nu/blog/author/mista/
 > 
-> To my surprise, it lists gzip as affected (and provides a patch for it
-> too), even though it was believed that neither CVE-2011-2895 nor
-> CVE-2011-2896 affected current versions of gzip (at least per Tomas'
-> off-list notification to distro vendors).
-
-That info is also noted in public comment of our CVE-2011-2895 bugzilla.
-
-> Trying to match the changes to usr.bin/gzip/zuncompress.c in
+> CVE-2011-2300 allows gaining elevated privileges within a Windows
+> guest due to a vulnerability in the Windows Guest Additions.
+> CVE-2011-2305 allows executing arbitrary code on the host due to a
+> vulnerability in the VirtualBox graphics stack.
 > 
-> http://security.freebsd.org/patches/SA-11:04/compress.patch
-> 
-> against code in gzip 1.4 tarball, it appears that FreeBSD's patch
-> actually introduces more checks than gzip upstream has - although it is
-> difficult to tell for sure because of other differences in the code.
+> Tarjei found these issues via code auditing, so it follows that they
+> affect the open source version of VirtualBox.
 
-Let me try to explain some.
+Thanks, adding MITRE to CC:, so that they can update the descriptions
+of the entries.
 
-> For example gzip-1.4/unlzw.c has:
-> 
->     if (maxbits > BITS) {
-> 
-> FreeBSD now patches it as:
-> 
-> -	if (zs->zs_maxbits > BITS) {
-> +	if (zs->zs_maxbits > BITS || zs->zs_maxbits < 12) {
-> 
-> Do we possibly want to add the "maxbits < 12" check as well?  And does
-> it matter for security?
-
-I'm not aware of any security impact of that.  Not sure if there's any
-spec that requires maxbits >= 12, if not, INIT_BITS (9) may be a safer
-lower bound.
-
-> Then there are non-obvious differences related to the "oldcode"
-> variable.  In one of those places, gzip-1.4/unlzw.c has:
-> 
-> 	    if (code >= free_ent) { /* Special case for KwKwK string. */
-> 		if (code > free_ent) {
-> 
-> whereas the FreeBSD patch has:
-> 
->  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
-> +			if (zs->u.r.zs_code > zs->zs_free_ent ||
-> +			    zs->u.r.zs_oldcode == -1) {
-> +				/* Bad stream. */
-> 
-> which adds an extra "or" condition.
-
-This is consequence of the following change:
-
--	zs->u.r.zs_finchar = zs->u.r.zs_oldcode = getcode(zs);
--	if (zs->u.r.zs_oldcode == -1)	/* EOF already? */
--		return (0);	/* Get out of here */
--
--	/* First code must be 8 bits = char. */
--	*bp++ = (u_char)zs->u.r.zs_finchar;
--	count--;
-+	zs->u.r.zs_oldcode = -1;
-
-That check ensures that the first code (in the stream or after CLEAR)
-is not >= 256.
-
-> Similarly, gzip-1.4/unlzw.c has:
-> 
-> 	    if ((code = free_ent) < maxmaxcode) { /* Generate the new entry. */
-> 
-> whereas the FreeBSD patch has:
-> 
->  		/* Generate the new entry. */
-> -		if ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode) {
-> +		if ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode &&
-> +		    zs->u.r.zs_oldcode != -1) {
-> 
-> (an extra "and" condition this time).
-
-This part is due to a CLEAR code handling change.  Note that gzip (and
-ncompress) has:
-
-  free_ent = FIRST - 1;
-
-while Joerg's patch changes that to:
-
-  zs->zs_free_ent = FIRST;
-
-The original version is quite confusing and probably another bug (unless
-it's a feature) in the original compress code.  Consequence of the CLEAR
-re-setting free_ent to FIRST-1 is that suffix/prefix tables get
-modified at CLEAR position, but those positions should never get read
-though.  However, some variants allowed accessing those tables at CLEAR
-when processing inputs with multiple subsequent CLEAR codes.  I have
-created such reproducer for freetype upstream, it may work with
-(unpatched) BSD compress/gzip.
-
-https://savannah.nongnu.org/bugs/index.php?34139
-
-gzip/ncompress resets free_ent to FIRST-1, so writes to CLEAR position,
-but never reads it AFAIK.
-
-> Are these differences only a result of other differences in the FreeBSD
-> revision of gzip?  Or are they generic hardening that could get into
-> gzip proper and into other distros' revisions of gzip?  Or are they even
-> security fixes for issues known to FreeBSD (but presumably not to others
-> yet, in gzip context)?
-
-As far as I can tell, FreeBSD gzip had the issues I reported, even
-though my mails said gzip is not affected.  If Savannah gzip git is to
-be trusted, gzip had those issue addressed in the oldest version
-available there (1.2.4, 1993):
-
-http://git.savannah.gnu.org/gitweb/?p=gzip.git;a=history;f=unlzw.c;hb=HEAD
-
-On Wed, 28 Sep 2011 19:53:29 +0400 Solar Designer wrote:
-
-> On Wed, Sep 28, 2011 at 07:42:03PM +0400, Solar Designer wrote:
-> > whereas the FreeBSD patch has:
-> > 
-> >  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
-> > +			if (zs->u.r.zs_code > zs->zs_free_ent ||
-> > +			    zs->u.r.zs_oldcode == -1) {
-> > +				/* Bad stream. */
-> 
-> Perhaps the FreeBSD "affected" statement for gzip was based on it missing
-> the "zs->u.r.zs_code > zs->zs_free_ent" check prior to this patch.  This
-> check was already added upstream before gzip 1.4, which is why gzip was
-> "not affected" this time for other distro vendors (the issue was patched
-> years ago).
-
-Without testing, I'd say it was possible to create and trigger prefix
-loop in that gzip versions via code > free_ent, first code >= 256, and
-possibly also subsequent CLEARs too.
-
-HTH
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Cheers,
+        Moritz
