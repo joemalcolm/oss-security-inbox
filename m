@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/11
-Message-Id: <201109092305.32351.timb@openvas.org>
-Date: Fri, 9 Sep 2011 23:05:24 +0100
-From: Tim Brown <timb@...nvas.org>
-To: openvas-devel@...d.intevation.org
-Cc: "Jan-Oliver Wagner" <Jan-Oliver.Wagner@...enbone.net>, Stjepan Gros <stjepan.gros@...il.com>, Bugs NotHugs <bugsnothugs@...il.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lieskovsky <jlieskov@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: [Openvas-devel] CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/16
+Message-ID: <4E2F2FBC.4050505@kde.org>
+Date: Tue, 26 Jul 2011 17:21:00 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>,  Tim Brown <timb@...-dimension.org.uk>, KDE Security Team <security@....org>
+Subject: Re: CVE Request: Ark path traversal
 Content-Type: text/plain; charset=utf-8
 
-On Friday 09 Sep 2011 22:07:34 Jan-Oliver Wagner wrote:
+On 7/26/2011 3:58 PM, Josh Bressers wrote:
+> 
+> 
+> ----- Original Message -----
+>> Hello,
+>>
+>> Ark contains a path traversal vulnerability allowing a
+>> maliciously-crafted zip file to allow for an arbitrary file to be
+>> displayed and, if the user has appropriate credentials, removed.
+>>
+>> Can we please get a CVE for this?
+>>
+> 
+> Do you have a URL or some other public information about this flaw?
 
-> What frightens me is that a security advisory about OpenVAS 2 (a already
-> deprecated version) made it even into official advisories of CERTs.
-> The review process seems to not work as it should, no one ever checked
-> back wether this version is deprecated. So it should be easy to get faked
-> security alerts about some tools you don't like into official CERT
-> advisories. Or am I getting something wrong here?
+It's not public yet as we're currently working on a fix.
 
-Jan,
+Thanks,
+Jeff
 
-Whilst it's not a default compile time configuration option and whilst the 
-conditions to exploit it are uncommon, the fact remains that there are two 
-time of check, time of use (TOCTOU) vulnerabilities present in the code.  
-Calling it fake is disingenous and does OpenVAS no credit.  Whilst a CVE might 
-be bad, a security project disputing the assignment looks even worse; 
-especially since one (and the more serious) case was picked up internally.  
-FWIW, the code concerned was present in trunk so it's not even true to say it 
-only affects deprecated versions (never mind the fact that just because we no 
-longer support something doesn't stop someone using it).
-
-Tim
--- 
-Tim Brown
-<mailto:timb@...nvas.org>
-<http://www.openvas.org/>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
