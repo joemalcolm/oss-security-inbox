@@ -1,91 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/14
-Message-ID: <345447294.443665.1299599997224.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 10:59:57 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/11
+Message-ID: <1048604435.1604666.1311710254688.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:57:34 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- GLPI -- Properly blacklist some sensitive fields
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> As suggested by Josh Bressers oCERT would be favourable to providing a
-> system that would accept user submission and allow selection of security
-> contacts from our existing member database as well as other verified
-> contacts.
-> 
-> As Josh pointed out we do this already (even if manually and not with a
-> web selection thing or whatever) and I am open to explore ways to create
-> more cooperation.
-> 
-> We would also be willing to host and maintain a closed vendor-sec style
-> mailing list like the previous one with the only condition for member
-> list to be public (not necessarily the individual contact names but at
-> least the entities represented).
-> 
-
-I've been thinking about this a bit, and here are my thoughts.
-
-I think oCERT could be a good fit here. They already have contacts, and
-such a setup would likely have a formal process of sorts for vetting
-recipients of issues. My current fears are:
-
-1) Is oCERT in a position to increase its current workload by several
-   magnitudes? I suspect you're going to have to expand your team by a fair
-   amount. I also imagine this will result in changes to the way oCERT
-   currently exists, perhaps not though, I can't see behind the curtain.
-2) Will dealing with oCERT in this manner generate extra process?
-   vendor-sec was quite process free, a little doesn't hurt, but a lot can
-   be bad.
-3) Are we going to annoy other CERTs? Will they even care?
-4) oCERT already exists, there are going to be disagreements about how to
-   do things, both sides of all issues will need to be open to ideas and
-   compromise.
-
-
-There is also the option of recreating an old style list. This is a bit
-more ad-hoc and Openwall has already offered to host such a thing (Solar
-has quite a bit already in place). I do favor this a bit, as it would make
-a nice compliment to oss-security. It also puts our destiny squarely in our
-own hands. It is more work for the involved parties though (And a lot more
-work for Openwall)
-
-The disadvantages I recall from the old list are:
-
-1) Membership management is a pain. Adding new people is annoying and
-   nobody ever leaves.
-2) Nobody is in charge, which means sometimes issues can get ignored or
-   forgotten (also see #1)
-3) The potential for leaks is probably a bit higher than using something
-   like oCERT (downstream recipients are monitored a bit more closely I
-   would hope). Perhaps a benevolent dictator type approach could help
-   prevent this.
-
-
-Whatever is decided should be done so by the groups most affected. Here is
-a collection of the top members that have contributed to the old
-vendor-sec since mid 2008 (my historic archive isn't as easy to get at, I
-can crunch it if someone wishes, I don't expect it to change much though)
-
-openwall.com
-mandriva.com
-gentoo.org
-ubuntu.com
-canonical.com
-apple.com
-debian.org
-suse.de
-redhat.com
-
-There were a handful of other people that contributed a fair amount but
-were not list members, or not part of one of the above orgs (Tavis Ormandy,
-Chris Evans, Alan Cox oCERT, and Samba for example).
-
-Once we have a vision for the future, we should try to let various groups
-know who they can contact in the future. I imagine some of them still don't
-know what happened to vendor-sec.
+Plese use CVE-2011-2720.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found that GLPI, the Information Resource-Manager with an
+> additional Administration-Interface, did not properly blacklist
+> certain
+> sensitive variables (like GLPI username and password). A remote
+> attacker
+> could use this flaw to obtain access to plaintext form of these values
+> via specially-crafted HTTP POST request.
+> 
+> References:
+> [1]
+> http://www.glpi-project.org/spip.php?page=annonce&id_breve=237&lang=en
+> [2] https://forge.indepnet.net/projects/glpi/versions/605
+> [3] https://forge.indepnet.net/issues/3017
+> 
+> Relevant patches:
+> [4]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14951
+> [5]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14952
+> [6]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14954
+> [7]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14955
+> [8]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14956
+> [9]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14957
+> [10]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14958
+> [11]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14960
+> [12]
+> https://forge.indepnet.net/projects/glpi/repository/revisions/14966
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
