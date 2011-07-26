@@ -1,66 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/5
-Message-Id: <201108221024.32846.mweckbecker@suse.de>
-Date: Mon, 22 Aug 2011 10:24:32 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/18
+Message-ID: <20110726234727.GA28271@openwall.com>
+Date: Wed, 27 Jul 2011 03:47:27 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby on rails flaws (4)
+Subject: iputils ping6 -s buffer overflow
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-maybe this issue would qualify for a CVE too(?):
+FWIW, I looked into this issue yesterday:
 
-  https://bugzilla.novell.com/show_bug.cgi?id=673010
-  http://webservsec.blogspot.com/2011/02/ruby-on-rails-vulnerability.html
+http://www.halfdog.net/Security/2011/Ping6BufferOverflow/
 
-Thanks in advance.
+It turns out it's already been patched upstream sometime in 2010, so the
+fix is included in iputils s20101006, and according to the RELNOTES file
+s20100418 already had the fix as well:
 
-On Friday 19 August 2011 21:03:52 Josh Bressers wrote:
-> ----- Original Message -----
->
-> > Could we get CVEs assigned to these flaws? Upstream had requested CVEs
-> > prior to disclosure, but didn't receive any.
-> >
-> > http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
-> >
-> > 1) Filter Skipping bugs
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >3420ac71aed312d6
-> > https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107
-> >a9552 https://bugzilla.redhat.com/show_bug.cgi?id=731432
->
-> Use CVE-2011-2929
->
-> > 2) SQL Injection issues
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >6a1e473744bc389b
-> > https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e
-> >4bf85 https://bugzilla.redhat.com/show_bug.cgi?id=731438
->
-> Use CVE-2011-2930
->
-> > 3) Parse error in strip_tags
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >2b9130749b74ea12
-> > https://github.com/rails/rails/commit/586a944ddd4d03e66dea109330614759474
-> >8037a https://bugzilla.redhat.com/show_bug.cgi?id=731436
->
-> Use CVE-2011-2931
->
-> > 4) UTF-8 escaping vulnerability
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >56bffb5923ab1195
-> > https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd
-> >306bd https://bugzilla.redhat.com/show_bug.cgi?id=731435
->
-> Use CVE-2011-2932
->
-> Thanks.
+[s20100418]
+...
+      ping6: do not allow too large packet size by -s option.
 
+ping_common.c:
 
--- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+	case 's':               /* size of packet to send */
+		datalen = atoi(optarg);
+		if (datalen < 0) {
+			fprintf(stderr, "ping: illegal negative packet size %d.\n", datalen);
+			exit(2);
+		}
+		if (datalen > maxpacket - 8) {
+			fprintf(stderr, "ping: packet size too large: %d\n",
+				datalen);
+			exit(2);
+		}
+		break;
+
+I am unhappy that there's no (redundant) bounds checking near the actual
+array writes, though:
+
+	if (!(options & F_PINGFILLED)) {
+		int i;
+		u_char *p = outpack+8;
+
+		/* Do not forget about case of small datalen,
+		 * fill timestamp area too!
+		 */
+		for (i = 0; i < datalen; ++i)
+			*p++ = i;
+	}
+
+When the bounds check is far from the actual write, the problem is too
+easy to inadvertently reintroduce in a revision of the code.
+
+...and I do find it somewhat ridiculous that an issue like this was
+still found in a ping program in 2010.  Well, at least both ping and
+ping6 are smart enough to drop root (if run SUID root and invoked by
+non-root) right after acquiring the raw socket, before parsing the
+command-line.  So even if the issue were exploitable and ping6 were
+installed SUID root, the impact would be limited.
+
+Alexander
