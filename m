@@ -1,46 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/16
-Message-ID: <1373857797.1472712.1311190971471.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 15:42:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, oss-security@...ts.openwall.com, coley <coley@...re.org>
-Subject: Re: CVE Request: ruby PRNG fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/3
+Message-ID: <4E2E9907.9090008@redhat.com>
+Date: Tue, 26 Jul 2011 12:37:59 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>
+Subject: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the confusion.
+Hello Josh, Steve, vendors,
 
------ Original Message -----
-> On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
-> 
-> > http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-> > http://redmine.ruby-lang.org/issues/4579
-> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-> 
-> Looking at the above patches, there seems to be two issues here,
-> perhaps
-> it needs two CVE ids to be assigned?
-> 
-> 1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> 
-> This one pertains to rand returning same values in forked processes.
-> http://redmine.ruby-lang.org/issues/show/4338
-> This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
-> 1.8.6-p399.
+   based on:
+   [1] 
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
 
-Let's use CVE-2011-2686 for this one.
+an off-by-one error was found in the way the hash manager of Clam
+AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
+messages with certain hashes. A remote attacker could provide a message
+with specially-crafted hash signature in it, leading to denial of
+service (clamscan executable crash).
 
-> 
-> 2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-> 
-> This is an issue in the securerandom.rb module.
-> http://redmine.ruby-lang.org/issues/4579
-> 
+Upstream bug report:
+[2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
 
-Use CVE-2011-2705 for this.
+Relevant patch:
+[3] 
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
 
-Thanks.
+Other references:
+[4] https://bugzilla.novell.com/show_bug.cgi?id=708263
+[5] 
+http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
+[6] http://www.clamav.net/lang/en/
+[7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
 
--- 
-    JB
+Note: The rest of the issues fixed in [1] seem to be just bug fixes.
+       Cc-ed upstream Clam Antivirus maintainers to confirm this (that
+       there is only one issue with security implications) and correct
+       the description of the issue, if necessary (just guessing that
+       "cli_hm_scan()" stands for
+       command_line_interface_hash_manager_scan, since it doesn't seem
+       to be described in the code anywhere).
+
+Josh, Steve, could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
