@@ -1,28 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/10
-Message-Id: <201104040814.30976.oeriksson@mandriva.com>
-Date: Mon, 4 Apr 2011 08:14:30 +0200
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/5
+Message-ID: <20110726151953.GA3363@pisco.westfalen.local>
+Date: Tue, 26 Jul 2011 17:19:53 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: meskes@...ian.org
+Subject: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
 Content-Type: text/plain; charset=utf-8
 
-fredag 01 april 2011 20:03:12 skrev  Josh Bressers:
-> Hello everyone,
+Hi,
+does anyone have further information on 
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
+and whether if affects the open source version of Virtual Box?
 
-[...]
-
-Hello, please subscibe me as well. I'm the Mandriva Linux security team 
-manager and was on vendor-sec.
-
-pub   4096R/EF5A2947 2009-12-17
-      Key fingerprint = CACF 1B05 DBE9 1B83 243A  AF73 C7B2 9DA0 EF5A 2947
-uid                  Oden Eriksson <oeriksson@...driva.com>
-
-
-Cheers.
-
--- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+Cheers,
+        Moritz
