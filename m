@@ -1,42 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/50
-Message-ID: <1489200095.372119.1301944143949.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 15:09:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/13
+Message-ID: <633189304.1604805.1311710600501.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 16:03:20 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>, coley <coley@...re.org>
-Subject: Re: CVE request: roundcube < 0.5.1 CSRF
+Cc: aCaB <acab@...mav.net>, Török Edvin <edwin@...mav.net>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Clam AntiVirus -- v0.97.2 -- Off-by-one error by scanning message hashes
 Content-Type: text/plain; charset=utf-8
 
-Thanks for sorting this Jan.
-
-> > http://trac.roundcube.net/wiki/Changelog
-> >
-> > two cross site request forgery, one additional issue fixed in 0.5.1:
-> >
-> > "Security: add optional referer check to prevent CSRF in GET
-> > requests
-> 
-> Looks this one being just security hardening with the patches:
-> [1] http://trac.roundcube.net/changeset/4503
-> [2] http://trac.roundcube.net/changeset/4504
-> 
-> For the CSRF flaws:
-> 
-> > Security: protect login form submission from CSRF
-> Patch: [3] http://trac.roundcube.net/changeset/4490
-
-Use CVE-2011-1491 for the above.
-
-> 
-> > Security: prevent from relaying malicious requests through
-> > modcss.inc"
-> Patch: [4] http://trac.roundcube.net/changeset/4488
-> 
-
-Use CVE-2011-1492 for the above.
+Please use CVE-2011-2721.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> based on:
+> [1]
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
+> 
+> an off-by-one error was found in the way the hash manager of Clam
+> AntiVirus, a GPL anti-virus toolkit for UNIX, performed scan of
+> messages with certain hashes. A remote attacker could provide a
+> message
+> with specially-crafted hash signature in it, leading to denial of
+> service (clamscan executable crash).
+> 
+> Upstream bug report:
+> [2] https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2818
+> 
+> Relevant patch:
+> [3]
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=commit;h=4842733eb3f09be61caeed83778bb6679141dbc5
+> 
+> Other references:
+> [4] https://bugzilla.novell.com/show_bug.cgi?id=708263
+> [5]
+> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97.2
+> [6] http://www.clamav.net/lang/en/
+> [7] https://bugzilla.redhat.com/show_bug.cgi?id=725694
+> 
+> Note: The rest of the issues fixed in [1] seem to be just bug fixes.
+> Cc-ed upstream Clam Antivirus maintainers to confirm this (that
+> there is only one issue with security implications) and correct
+> the description of the issue, if necessary (just guessing that
+> "cli_hm_scan()" stands for
+> command_line_interface_hash_manager_scan, since it doesn't seem
+> to be described in the code anywhere).
+> 
+> Josh, Steve, could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
