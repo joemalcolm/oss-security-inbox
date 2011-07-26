@@ -1,40 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/4
-Message-ID: <mpro.lp1gob3w5e11102h5.taviso@cmpxchg8b.com>
-Date: Thu, 28 Jul 2011 12:19:23 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/10
+Message-ID: <1799861424.1604227.1311709402267.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:43:22 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Herman van Rink <rink@...tfour.nl>
+Subject: Re: CVE-Request -- phpMyAdmin -- PMASA-2011-11 and PMASA-2011-12
 Content-Type: text/plain; charset=utf-8
 
-Huzaifa Sidhpurwala <huzaifas@...hat.com>
-wrote:
 
-> On 07/28/2011 03:34 PM, Tavis Ormandy wrote:
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> > Interesting, I also looked at systemtap and found a local root
-> > (CVE-2010-4170), but was under the impression we had agreed it should be
-> > restricted to a privileged group?
-> > 
-> > https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
-> > 
-> > I stopped looking because I concluded that had eliminated any security
-> > risk, is that no longer the case?
-> > 
-> I believe this does reduce the risk, but does not totally eliminate it.
+> the following two doesn't seem to have CVE identifiers yet:
+> 1) http://www.phpmyadmin.net/home_page/security/PMASA-2011-11.php
 > 
+> A local file inclusion and arbitrary SQL code execution flaws were
+> found in the way phpMyAdmin, the MySQL over WWW administration tool,
+> performed 'export_type' sanitization, when retrieving and verifying
+> relation schema export options. A local attacker could use this flaw
+> to
+> obtain security sensitive information or, potentially, execute
+> arbitrary SQL code with the privileges of the user running the query.
+> 
+> References:
+> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-11.php
+> [2] http://www.phpmyadmin.net/home_page/news.php
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=725383
+> 
+> Upstream patches:
+> [4]
+> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=3ae58f0cd6b89ad4767920f9b214c38d3f6d4393
+> 
+> Further flaw exploitation note:
+> An attacker must be logged in via phpMyAdmin to exploit this problem.
+> 
+> Affected versions:
+> Versions 3.4.0 to 3.4.3.1 are affected.
+> 
+> 2) http://www.phpmyadmin.net/home_page/security/PMASA-2011-12.php
+> 
+> A session values manipulation flaw was found in the way phpMyAdmin,
+> the
+> MySQL over WWW administration tool, performed sanitization of the
+> user-provided query string, when the Swekey extension based
+> authentication method was enabled. A remote attacker could use this
+> flaw
+> to manipulate the PHP session superglobal variable via
+> specially-crafted
+> query string provided to the Swekey authentication module.
+> 
+> References:
+> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-12.php
+> [2] http://www.phpmyadmin.net/home_page/news.php
+> [3] http://seclists.org/fulldisclosure/2011/Jul/300
+> [4] https://bugzilla.redhat.com/show_bug.cgi?id=725384
+> 
+> Upstream patches:
+> [5]
+> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=e7bb42c002885c2aca7aba4d431b8c63ae4de9b7
+> [6]
+> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=571cdc6ff4bf375871b594f4e06f8ad3159d1754
+> 
+> Patches against v3.3 branch:
+> [7]
+> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=f6f6ee3f1171addb166fa18e75a0b56599bf374c
+> [8]
+> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commitdiff;h=630b8260be45eb9b211f5d7628dbb9e5c1b05bc6
+> 
+> Affected Versions:
+> The 3.4.3.1 and earlier versions are affected.
+> Branch 2.11.x is not affected by this.
+> 
+> 3) The other two recent phpMyAdmin issues (addressed in v3.3.10.3,
+> v3.4.3.2) already have CVE identifiers:
+> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-10.php
+> [2] http://www.phpmyadmin.net/home_page/security/PMASA-2011-9.php
+> 
+> Cc-ed phpMyAdmin upstream contact, Herman van Rink, to correct me on
+> the description of the 1) and 2) flaws, where appropriate.
+> 
+> Josh, Steve, could you please allocate CVE ids for 1)
+> PMASA-2011-11.php
+
+Use CVE-2011-2718 for PMASA-2011-11
+
+> and 2) PMASA-2011-12.php issues?
 > 
 
-Oh I see, the group restriction is still in place, but you still support
-adding unprivileged users to the group?
+Use CVE-2011-2719 for PMASA-2011-12
 
-Understood, I think that sounds reasonable.
-
-Tavis.
-
+Thanks.
 
 -- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+    JB
