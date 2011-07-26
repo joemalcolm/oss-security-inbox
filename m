@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/4
-Message-ID: <20111021132429.GB10069@dhcp-25-225.brq.redhat.com>
-Date: Fri, 21 Oct 2011 15:24:30 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/4
+Message-Id: <201107261658.19639.mweckbecker@suse.de>
+Date: Tue, 26 Jul 2011 16:58:19 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: ext4: ext4_ext_insert_extent() kernel oops
+Subject: CVE request: hplip: insecure tmp file handling
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way splitting two extents in
-ext4_ext_convert_to_initialized() worked. Althrough ex has been updated
-in memory, it is not dirtied both in ext4_ext_convert_to_initialized()
-and ext4_ext_insert_extent(). The disk layout is corrupted. Then it
-will meet with a BUG_ON() when writting at the start of that extent
-again.
+Hi,
 
-Local unprivileged users can use this flaw to crash the system when ext4
-filesystem is in use.
+hplip has a tmp file issue:
 
-Introduced in:
-56055d3ae4cc7fa6d2b10885f20269de8a989ed7
+  https://bugzilla.novell.com/show_bug.cgi?id=704608
+  https://bugs.launchpad.net/hplip/+bug/809904
 
-Upstream fix:
-667eff35a1f56fa74ce98a0c7c29a40adc1ba4e3
+Could someone possibly assign a CVE to it, please? Thanks in advance!
 
-Credits:
-Zheng Liu
+Matthias
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=747942
+PS: Not too critical IMO as the code path is probably rarely used anyway.
 
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
