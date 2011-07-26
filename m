@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/7
-Message-ID: <20110822164349.GB3746@pisco.westfalen.local>
-Date: Mon, 22 Aug 2011 18:43:49 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/12
+Message-ID: <456517594.1604694.1311710321865.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 26 Jul 2011 15:58:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: mark@...gant.net
-Subject: Re: CVE request: Pidgin crash
+Cc: Tim Brown <timb@...-dimension.org.uk>, KDE Security Team <security@....org>
+Subject: Re: CVE Request: Ark path traversal
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
-> Hi Mark,
-> 
-> >Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
-> 
-> >http://pidgin.im/news/security/?id=53
-> 
-> Please use CVE-2011-2942 for this issue.
-> 
-> Also looking at http://pidgin.im/news/security it seems two other security issues were also
-> fixed in 2.10.0, do you want CVEs to be assigned for them as well?
 
-Please do. Since they're published in the form of upstream advisories
-we'd like to properly track them in the Debian Security Tracker.
 
-Cheers,
-        Moritz
+----- Original Message -----
+> Hello,
+> 
+> Ark contains a path traversal vulnerability allowing a
+> maliciously-crafted zip file to allow for an arbitrary file to be
+> displayed and, if the user has appropriate credentials, removed.
+> 
+> Can we please get a CVE for this?
+> 
+
+Do you have a URL or some other public information about this flaw?
+
+Thanks.
+
+-- 
+    JB
