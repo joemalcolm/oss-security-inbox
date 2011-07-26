@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/6
-Message-Id: <20110407191737.B31D25653E@rebar.astron.com>
-Date: Thu, 7 Apr 2011 15:17:37 -0400
-From: christos@...las.com (Christos Zoulas)
-To: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com,  file@...gw.com
-Subject: Re: Possible security fixes in 5.05?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/15
+Message-ID: <20110726201254.GA28754@pisco.westfalen.local>
+Date: Tue, 26 Jul 2011 22:12:55 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com
+Cc: cve@...re.org
+Subject: Re: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
 Content-Type: text/plain; charset=utf-8
 
-On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
--- Subject: Re: [oss-security] Possible security fixes in 5.05?
+On Tue, Jul 26, 2011 at 11:26:29AM -0400, Dan Rosenberg wrote:
+> On Tue, Jul 26, 2011 at 11:19 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+> > Hi,
+> > does anyone have further information on
+> > http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
+> > http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
+> > and whether if affects the open source version of Virtual Box?
+> >
+> 
+> These issues were found by Tarjei Mandt, and are described in this blog post:
+> http://mista.nu/blog/author/mista/
+> 
+> CVE-2011-2300 allows gaining elevated privileges within a Windows
+> guest due to a vulnerability in the Windows Guest Additions.
+> CVE-2011-2305 allows executing arbitrary code on the host due to a
+> vulnerability in the VirtualBox graphics stack.
+> 
+> Tarjei found these issues via code auditing, so it follows that they
+> affect the open source version of VirtualBox.
 
-| Looks like there are a few issues here:
-| 
-| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
-|      * Fix two potential buffer overruns in apprentice_list.
-| 
-| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
+Thanks, adding MITRE to CC:, so that they can update the descriptions
+of the entries.
 
-This is an order of evaluation issue, that could read memory over the allocated
-limit. The limit check is done after the read instead of before. The code
-has not been present in any release.
-
-| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
-|      * Minor security fix to softmagic.c (don't use untrusted
-|        string as printf format).
-| 
-| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
-
-The code is present in [5.00-5.04]. It should not be an issue because the desc
-printf formats are checked during parsing. It is mostly to silence a compiler
-warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
-printf(ms->desc, argument) in a ton of other places.
-
-
-christos
+Cheers,
+        Moritz
