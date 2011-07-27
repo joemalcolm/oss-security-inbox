@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/17
-Message-ID: <20111121175556.GD3573@pisco.westfalen.local>
-Date: Mon, 21 Nov 2011 18:55:56 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: drupal before 7.5 access bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/2
+Message-ID: <20110727001559.GA28555@openwall.com>
+Date: Wed, 27 Jul 2011 04:15:59 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CFP SecurityByte India
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
-> On 11/20/2011 04:14 AM, Hanno Böck wrote:
-> > http://drupal.org/node/1231510
-> >
-> > If a Drupal site is using these features on comments, and the parent
-> > node is denied access (either by a node access module or by being
-> > unpublished), the file attached to the comment can still be downloaded
-> > by non-privileged users if they know or guess its direct URL.
-> >
-> >
-> >
-> 
-> Please use CVE-2011-4323 for this issue.
+On Tue, Jul 26, 2011 at 10:41:52AM +0530, Papers, Call For wrote:
+> The first round of speakers have been selected for Securitybyte, please
+> follow us on twitter @securitybyte to get the latest updates on speakers and
+> event.
+...
 
-This has already been assigned CVE-2011-2726, see 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
+I almost rejected this CFP (for lack of Open Source focus and for being
+a cross-post), but then decided that maybe it was time to bring the
+topic up once again.
 
-Cheers,
-        Moritz
+Yes, we're still receiving CFPs once in a while, and most are of little
+relevance to the oss-security list specifically, but not of no relevance
+at all.  Ditto for announcements of new issues of various e-magazines.
+
+So far, my policy has been to selectively approve some of them - where
+some relevance to Open Source security can be seen from the posting
+itself (without having to follow any links).  Other moderators of
+oss-security appear to do nothing about them, neither approve nor
+reject, which kind of confirms the uncertainty there is regarding
+whether this kind of content is welcome in here or not.
+
+Here's my question: should we continue like that, with decisions made on
+a case-by-case basis, or should we possibly start rejecting all CFPs and
+e-magazine issue announcements unconditionally?
+
+And should this specific CFP for SecurityByte have been approved (as an
+example)?  Did anyone in here find it useful for themselves?  Please do
+let me know if you did!  If not a single person did, then perhaps it
+should have been rejected.  So if no one says they found this one
+useful, I'll likely reject a similar one arriving in the future.
+
+It does feel somewhat weird to have SecurityByte mentioned in here, yet
+not have similar announcements of larger cons (such as DEFCON), and it
+would be unreasonable to have every con's CFP posted in here (this is
+not what this list is for).
+
+Opinions are welcome.
+
+Alexander
