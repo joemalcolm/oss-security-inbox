@@ -1,34 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/9
-Message-ID: <454836448.1272235.1310495411052.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:30:11 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/9
+Message-ID: <20110727223022.GO1476@redhat.com>
+Date: Wed, 27 Jul 2011 16:30:22 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: plone privilege escalation flaw
+Subject: CVE request: drupal7 SA-CORE-2011-003 (access restriction bypass)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2528.
+Could a CVE be assigned to this issue?  This only affects 7.x as the
+features affected are new in 7.x.  It is an access bypass in private
+file fields comments.
+
+http://drupal.org/node/1231510
 
 Thanks.
 
 -- 
-    JB
-
------ Original Message -----
-> Looks like the previous fix for Plone/Zope (CVE-2011-0720) caused a
-> new
-> privilege escalation flaw in Plone 3.x and 4.x.
-> 
-> Could a CVE be assigned?
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=718824
-> http://plone.org/products/plone/security/advisories/20110622
-> http://plone.org/products/plone-hotfix/releases/20110622
-> http://secunia.com/advisories/45111
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
