@@ -1,19 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/2
-Message-ID: <4D8AE69C.9060404@redhat.com>
-Date: Thu, 24 Mar 2011 14:37:16 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/9
+Message-ID: <20110727223022.GO1476@redhat.com>
+Date: Wed, 27 Jul 2011 16:30:22 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-Subject: Re: oss-security is on twitter
+Subject: CVE request: drupal7 SA-CORE-2011-003 (access restriction bypass)
 Content-Type: text/plain; charset=utf-8
 
-On 03/24/2011 02:03 AM, Menkhus, Mark (GSE Security HP SSRT) wrote:
-> Cool! How do you do this?  Part of the mail hosting, or just a filter in
-> your email reader?
+Could a CVE be assigned to this issue?  This only affects 7.x as the
+features affected are new in 7.x.  It is an access bypass in private
+file fields comments.
 
-I used twitterfeed. It's a rss-to-twitter service.
+http://drupal.org/node/1231510
 
-Thanks, Eugene
+Thanks.
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Vincent Danen / Red Hat Security Response Team 
