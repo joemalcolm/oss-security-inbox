@@ -1,54 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/5
-Message-ID: <20111115035404.GA8377@openwall.com>
-Date: Tue, 15 Nov 2011 07:54:04 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/3
+Message-ID: <20110727013720.GA28937@openwall.com>
+Date: Wed, 27 Jul 2011 05:37:20 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
+Subject: Re: CVE request: multiple libraries getenv() misuse
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, May 31, 2011 at 10:21:33AM +0200, Sebastian Krahmer wrote:
+> While investigating the libs vs. fscaps issue [1] which showed
+> that most libs need patching in order to work properly with fscaps
+> binaries, it was also found that a lot of libs do not even honour
+> suid binaries correctly. These libs use getenv() to obtain information
+> about configuration/files or plugin directories. These info can be
+> "chosen with care" by attackers to trick the suid programs to execute
+> code as root or do harm otherwise.
+> Among these libs are libudev, libdbus, libhal, libgssglue or libcrypto
+> (openssl). libudev, libdbus, libhal are linked against suid Xorg.
+> libgssglue is linked against mount.nfs.
+> Most of these libs were probably never intented to be linked against
+> suids, but nevertheless they are.
+> 
+> Since the issues are all of the same family I would suggest to assign
+> one CVE (or two, if you want to separate missing fscaps checks from
+> euid != uid issue).
 
-The traditional DES-based crypt(3) accepts a salt string consisting of
-characters from a certain base-64 alphabet, normally encoding a 12-bit
-salt value in two characters.
+I think it'd be a good idea to keep track of these issues per-library on
+the wiki:
 
-What happens when the salt string contains characters outside of the
-usual base-64 alphabet is implementation-specific.  Typically,
-implementations map those invalid salts onto the 12-bit values in one of
-several ways.  FreeSec, an otherwise very good implementation by David
-Burren, appears to be the only widespread implementation that maps all
-invalid salt characters onto just one 6-bit value - zero.  FreeSec is
-the implementation used by FreeBSD, OpenBSD, DragonFly BSD.  The code in
-NetBSD is different, but it appears to share this problem.  Indeed,
-these systems don't use the DES-based hashes by default, and even if
-they did they'd be OK because they'd use valid salts, but the issue here
-is with third-party programs that are not as careful - especially web
-apps invoking this code via PHP's crypt() (whether the underlying
-system's crypt(3) or PHP's own code is used depends on PHP version and
-build).
+http://oss-security.openwall.org/wiki/code-reviews
 
-Thus, with poorly written programs combined with this property of
-crypt(3) on *BSD's we get effectively matching salts, which a password
-cracker aware of this property can take advantage of for much faster
-offline attacks.
+> [1] http://www.suse.de/~krahmer/libs-vs-fscaps/
 
-I patched the FreeSec code to match UFC-crypt's handling of invalid
-salts about 20 months ago:
+I got your OpenSSL changes into Owl-current yesterday (except for the
+changes to OPENSSL_issetugid() itself, which on Owl was already using
+__libc_enable_secure).  The rest of the libraries that you mention are
+not in Owl.
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.c
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.h
-
-This did not matter much for Owl because we do not actually override
-glibc's UFC-crypt for the traditional hashes (we use FreeSec for
-"extended" hashes with 24-bit salts, which are not produced by naive
-apps), however I made those changes primarily for reuse of the code in
-PHP - and the changes went into a certain version of PHP (5.3.2+, IIRC).
-
-Now I welcome *BSD's to reuse these as well.  Yes, this sort of breaks
-compatibility with existing invalid-salt hashes produced on those
-systems, but those will be easy to fix if necessary by explicitly
-changing their invalid salt characters to '.' (and thus making the
-problem even more apparent).
+Thanks,
 
 Alexander
