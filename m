@@ -1,42 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/1
-Message-ID: <4E8AC434.9090100@redhat.com>
-Date: Tue, 04 Oct 2011 10:30:44 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- phpPgAdmin -- Multiple XSS flaws fixed in v5.0.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/7
+Message-ID: <20110727094320.GD16080@suse.de>
+Date: Wed, 27 Jul 2011 11:43:20 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
 
-   multiple cross-site scripting (XSS) flaws were reported in phpPgAdmin:
+Ah ok, so the delivered scripts actually do this. Thanks
+for the pointer.
 
-1) the 'title' argument of a particular web page was not sanitized
-    properly prior displaying the page header,
+Sebastian
 
-2) the return ULR ('return_url') and return link name ('return_desc')
-    were not sanitized properly prior displaying the requested page data.
+On Wed, Jul 27, 2011 at 11:26:13AM +0200, Tomas Hoger wrote:
+> On Wed, 27 Jul 2011 10:57:39 +0200 Sebastian Krahmer wrote:
+> 
+> > Can you point us to the exact version and location in code where
+> > the vulnerability is?
+> 
+> I've not previously looked at the code more closely to find the exact
+> spot to be fixed.  However, I have successfully reproduced the issue
+> with busybox 1.15.1 at least, not sure if I looked at any older
+> version too.  It should be trivial to reproduce by running udhcpc -s
+> <script>, where script just dumps whole env.  You should see
+> server-provided options exported (hostname, domain).
+> 
+> > I remember to have checked udhcpc at that time and neither I found it
+> > setting a hostname or parsing the options for a hostname.
+> 
+> Looks like fill_envp is the place:
+> http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c#n341
+> 
+> The logic was little different in older versions:
+> http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c?id=9ac5596a#n336
+> 
+> When I talked to upstream, they did see the issue and opened the bug:
+> https://bugs.busybox.net/show_bug.cgi?id=3979
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
 
-A remote attacker could provide a specially-crafted URL, which once
-visited by an unsuspecting phpPgAdmin user could lead to arbitrary HTML
-or web script execution.
+-- 
 
-References:
-[1] https://secunia.com/advisories/46248/
-[2] https://bugs.gentoo.org/show_bug.cgi?id=385505
-[3] http://phppgadmin.sourceforge.net/doku.php?id=download
-[4] 
-http://sourceforge.net/mailarchive/forum.php?thread_name=4E897F6C.90905%40free.fr&forum_name=phppgadmin-news
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=743205
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
-Upstream patch:
-[6] 
-https://github.com/phppgadmin/phppgadmin/commit/1df248203de055f97e092b50b1dd9643ccb73842
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
