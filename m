@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/4
-Message-ID: <4DADC8E1.9050707@redhat.com>
-Date: Tue, 19 Apr 2011 19:39:45 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Richard Hughes <rhughes@...hat.com>, Ray Strode <rstrode@...hat.com>, lsof@...ata.co.uk
-Subject: CVE Request -- gnome-desktop3: Switching users dialog does not lock the screen for the original user account
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/8
+Message-ID: <Pine.GSO.4.64.1107271651010.17118@faron.mitre.org>
+Date: Wed, 27 Jul 2011 16:57:32 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
+Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
 
-Hello Josh, Steve, vendors,
+On Mon, 25 Jul 2011, Jeff Mitchell wrote:
 
-   it has been reported that using of Gnome upon using of "Switch user" dialog, log in into a
-new user account (user2), logout of new user account (user2) the desktop is returned to the
-original user account (for user1) without prompting for a password. A locally proximate
-attacker could use this flaw to access resources, which should be otherwise protected
-by authentication.
+> The Arora and Rekonq web browsers are also vulnerable to the same attack
+> vector, and other Qt-based programs may be as well. We're working with
+> the Qt team to help enhance their documentation to warn developers to
+> take care sanitizing their inputs, but it's not actually a Qt flaw. So
+> we're a bit unsure how to proceed here.
 
-Original report:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=697199
+This sounds like a limitation of the Qt API, which can be avoided by 
+programmers who are aware of the limitation.  Kind of like how strcpy() 
+can be subject to buffer overflows, *if* the programmer isn't careful. 
+Also happened with confusing return values from certain OpenSSL API 
+functions a couple years ago.  (The PHP_SELF example is similar.)  So, 
+this should probably get separate CVEs for each application/library that 
+misuses the relevant function(s).
 
-Upstream bug report:
-[2] https://bugzilla.gnome.org/show_bug.cgi?id=648234
+If Qt itself contains misuse of its own functions - which happens 
+sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE, 
+too.
 
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Steve
