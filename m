@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/10
-Message-ID: <4E129B8A.7090506@digitaloffense.net>
-Date: Tue, 05 Jul 2011 00:05:14 -0500
-From: HD Moore <hdm@...italoffense.net>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/6
+Message-ID: <20110727112613.7645881f@redhat.com>
+Date: Wed, 27 Jul 2011 11:26:13 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
-On 7/5/2011 12:02 AM, Solar Designer wrote:
-> On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
->> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
->>> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
->>> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
->>>
->>> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
->>
->> This is very helpful, thank you!  How did you find it?
->>
->> So, I failed to get this server to give me ctime (looked at HTTP headers
->> and also tried several FTP commands), and the mtime is Feb 15.  We could
->> ask the server admins for the ctime.
-> 
-> I think I got the equivalent of the ctime by listing the mtime for ".".
-> It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
-> other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
-> or +2 for Namibia.
-> 
-> So it appears that the backdoor was introduced between June 30 14:15 UTC
-> and July 1 23:35 UTC (probably before 21:35, though).
+On Wed, 27 Jul 2011 10:57:39 +0200 Sebastian Krahmer wrote:
 
-Thanks Alexander! I will update references accordingly, nice call on the
-o's, ill continue digging there, would love to unmask this asshat
-through included env :)
+> Can you point us to the exact version and location in code where
+> the vulnerability is?
 
--HD
+I've not previously looked at the code more closely to find the exact
+spot to be fixed.  However, I have successfully reproduced the issue
+with busybox 1.15.1 at least, not sure if I looked at any older
+version too.  It should be trivial to reproduce by running udhcpc -s
+<script>, where script just dumps whole env.  You should see
+server-provided options exported (hostname, domain).
+
+> I remember to have checked udhcpc at that time and neither I found it
+> setting a hostname or parsing the options for a hostname.
+
+Looks like fill_envp is the place:
+http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c#n341
+
+The logic was little different in older versions:
+http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c?id=9ac5596a#n336
+
+When I talked to upstream, they did see the issue and opened the bug:
+https://bugs.busybox.net/show_bug.cgi?id=3979
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
