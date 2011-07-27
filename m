@@ -1,29 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/1
-Message-ID: <20110302015646.GK5871@ksplice.com>
-Date: Tue, 1 Mar 2011 20:56:46 -0500
-From: Nelson Elhage <nelhage@...lice.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/5
+Message-ID: <20110727085739.GA16080@suse.de>
+Date: Wed, 27 Jul 2011 10:57:39 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: Multiple DoS issues in epoll
+Subject: Re: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
-Two requests for bugs in epoll:
 
-(1) The epoll subsystem in Linux did not prevent users from creating circular
-epoll file structures, potentially leading to a denial of service (kernel
-deadlock).
+Can you point us to the exact version and location in code where
+the vulnerability is? I remember to have checked udhcpc at that
+time and neither I found it setting a hostname or parsing
+the options for a hostname.
+The hostname it is using must be passed on the commandline
+and are rather added to the request than parsed from a reply.
 
-Reference: https://lkml.org/lkml/2011/2/5/220
-Upstream commit: http://git.kernel.org/linus/22bacca48a1755f79b7e0f192ddb9fbb7fc6e64e
+While we are on the hostname issue again, AFAIR the kernel contains
+a DHCP client and was accepting hostname options so it could
+theoretically be attacked the same way as with dhclient. However
+this seems only a use-case for thin clients with NFS-root
+or so and in such a case you can execute code on the client anyways.
+So its not really worth fixing, except for vendors which lock
+down their embedded devices before shipping it to their customers, but
+who is doing that? :)
 
-(2) The epoll subsystem allows users to create large nested epoll structures,
-which the kernel will then to walk with preemption disabled, causing a denial of
-service via excessive CPU consumption in the kernel.
+Sebastian
 
-References:
-http://thread.gmane.org/gmane.linux.kernel/1105744
-http://thread.gmane.org/gmane.linux.kernel/1105744/focus=1105888
 
-No upstream fix yet for this one.
+On Wed, Jul 27, 2011 at 09:28:48AM +0200, Tomas Hoger wrote:
+> On Tue, 26 Jul 2011 15:35:02 -0400 (EDT) Josh Bressers wrote:
+> 
+> Just to clarify...
+> 
+> > Use CVE-2011-2716 for udhcpc
+> 
+> This is dhcp client that is part of busybox.
+> 
+> > CVE-2011-2717 for udhcp6c.
+> 
+> This should say dhcp6c and is part of the (now obsolete) dhcpv6 project:
+> 
+>   https://fedorahosted.org/dhcpv6/
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
 
-- Nelson
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
