@@ -1,60 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/11
-Message-Id: <201106281421.47262.ludwig.nussel@suse.de>
-Date: Tue, 28 Jun 2011 14:21:47 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/8
+Message-ID: <Pine.GSO.4.64.1107271651010.17118@faron.mitre.org>
+Date: Wed, 27 Jul 2011 16:57:32 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
+Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> Josh Bressers wrote:
-> >----- Original Message -----
-> >> Jan Lieskovsky wrote:
-> >> > Hello Josh, Steve, vendors,
-> >> >
-> >> >    based on Debian BTS report:
-> >> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
-> >> >        (first CVE-2011-XXYY required for Debian case)
-> >> >
-> >> > looked more into original report:
-> >> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
-> >> >
-> >> > and the first paragraph of [2] suggests:
-> >> > "When starting a program via "su - user -c program" the user session
-> >> > can escape to the parent session by using the TIOCSTI ioctl to push
-> >> > characters into the input buffer. This allows for example a non-root
-> >> > session to push "chmod 666 /etc/shadow" or similarly bad commands
-> >> > into
-> >> > the input buffer such that after the end of the session they are
-> >> > executed."
-> >> >
-> >> > this should get a CVE-2005-YYZZ CVE id.
-> >> >
-> >> > Could you allocate these?
-> >>
-> >> ping! :-)
-> >
-> >I'm not sure if this should get two IDs. It's really one issue, which isn't
-> >actually fixed in su.
-> >
-> >The fundamental issue is that tools like su and sudo keep the tty open.
-> >The patch in question closes the tty for the case of su -c, but not for
-> >just running su by itself. It is incomplete.
-> 
-> I'm not worried too much about the interactive su case really. The 
-> usual direction there is user->root, not the other way around I 
-> suppose. "su -c" might be used by (%post) scripts though as seen 
-> with ikiwiki.
 
-So can we have a CVE for that issue at least?
+On Mon, 25 Jul 2011, Jeff Mitchell wrote:
 
-cu
-Ludwig
+> The Arora and Rekonq web browsers are also vulnerable to the same attack
+> vector, and other Qt-based programs may be as well. We're working with
+> the Qt team to help enhance their documentation to warn developers to
+> take care sanitizing their inputs, but it's not actually a Qt flaw. So
+> we're a bit unsure how to proceed here.
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+This sounds like a limitation of the Qt API, which can be avoided by 
+programmers who are aware of the limitation.  Kind of like how strcpy() 
+can be subject to buffer overflows, *if* the programmer isn't careful. 
+Also happened with confusing return values from certain OpenSSL API 
+functions a couple years ago.  (The PHP_SELF example is similar.)  So, 
+this should probably get separate CVEs for each application/library that 
+misuses the relevant function(s).
+
+If Qt itself contains misuse of its own functions - which happens 
+sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE, 
+too.
+
+- Steve
