@@ -1,167 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/9
-Message-ID: <AANLkTinpbdPVvb9zsfXFMX3x9PwL3uu9uVmLCguWf7Wf@mail.gmail.com>
-Date: Wed, 23 Mar 2011 23:10:12 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/5
+Message-ID: <20110727085739.GA16080@suse.de>
+Date: Wed, 27 Jul 2011 10:57:39 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: PHP-Nuke 8.x <= Cross Site Request Forgery (CSRF) / Anti-CSRF Bypass Vulnerability
+Subject: Re: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
-PHP-Nuke 8.x  <= Cross Site Request Forgery (CSRF) / Anti-CSRF Bypass
-Vulnerability
+
+Can you point us to the exact version and location in code where
+the vulnerability is? I remember to have checked udhcpc at that
+time and neither I found it setting a hostname or parsing
+the options for a hostname.
+The hostname it is using must be passed on the commandline
+and are rather added to the request than parsed from a reply.
+
+While we are on the hostname issue again, AFAIR the kernel contains
+a DHCP client and was accepting hostname options so it could
+theoretically be attacked the same way as with dhclient. However
+this seems only a use-case for thin clients with NFS-root
+or so and in such a case you can execute code on the client anyways.
+So its not really worth fixing, except for vendors which lock
+down their embedded devices before shipping it to their customers, but
+who is doing that? :)
+
+Sebastian
 
 
+On Wed, Jul 27, 2011 at 09:28:48AM +0200, Tomas Hoger wrote:
+> On Tue, 26 Jul 2011 15:35:02 -0400 (EDT) Josh Bressers wrote:
+> 
+> Just to clarify...
+> 
+> > Use CVE-2011-2716 for udhcpc
+> 
+> This is dhcp client that is part of busybox.
+> 
+> > CVE-2011-2717 for udhcp6c.
+> 
+> This should say dhcp6c and is part of the (now obsolete) dhcpv6 project:
+> 
+>   https://fedorahosted.org/dhcpv6/
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
 
-1. OVERVIEW
+-- 
 
-The PHP-Nuke version 8.x and lower versions are vulnerable to Cross
-Site Request Forgery (CSRF) because its Anti-CSRF mechanism (Referer
-Check) is found to be broken.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
-2. BACKGROUND
-
-PHP-Nuke is a Web Portal System or content management system. The goal
-of PHP-Nuke is to have an automated web site to distribute news and
-articles with users system. Each user can submit comments to discuss
-the articles. Main features include: web based admin, surveys, top
-page, access stats page with counter, user customizable box, themes
-manager for registered users, friendly administration GUI with graphic
-topic manager, option to edit or delete stories, option to delete
-comments, moderation system, Referrers page to know who link us,
-sections manager, customizable HTML blocks, user and authors edit, an
-integrated Banners Ads system, search engine, backend/headlines
-generation (RSS/RDF format), and many, many more friendly functions.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The PHP-Nuke version 8.x and lower versions contain a flaw that allows
-a remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
-exists because the application does not require multiple steps or
-explicit confirmation for sensitive transactions for majority of
-administrator functions such as adding new user, assigning user to
-administrative privilege. By using a crafted URL, an attacker may
-trick the victim into visiting to his web page to take advantage of
-the trust relationship between the authenticated victim and the
-application. Such an attack could trick the victim into executing
-arbitrary commands in the context of their session with the
-application, without further prompting or verification.
-
-
-4. VERSIONS AFFECTED
-
-8.0 and lower
-
-Tested version: 8.0
-The paid versions, 8.1 and 9.0, of PHP-Nuke may be vulnerable as well.
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-Consider the following code snippet in /mainfile.php of PHP-Nuke:
-
-//////////////////////////////////////////////////////////////////////////////
-
-109             if(!function_exists('stripos')) {
-                       function stripos_clone($haystack, $needle, $offset=0) {
-                               $return = strpos(strtoupper($haystack),
-strtoupper($needle), $offset);
-                               if ($return === false) {
-                                       return false;
-                               } else {
-                                       return true;
-                               }
-                       }
-               } else {
-                       // But when this is PHP5, we use the original function
-                       function stripos_clone($haystack, $needle, $offset=0) {
-                               $return = stripos($haystack, $needle, $offset=0);
-                               if ($return === false) {
-                                       return false;
-                               } else {
-                                       return true;
-                               }
-                       }
-128             }
-
-......
-
-206             // Posting from other servers in not allowed
-207             // Fix by Quake
-208             // Bug found by PeNdEjO
-
-210             if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                       if (isset($_SERVER['HTTP_REFERER'])) {
-212                             if
-(!stripos_clone($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'])) {
-                                       die('Posting from another
-server not allowed!');
-                               }
-                       } else {
-                               die($posttags);
-                       }
-               }
-//////////////////////////////////////////////////////////////////////////////
-
-It is clear that stripos_clone checks HTTP_REFERER value whether it
-matches the target domain or not.
-Attacker can easily bypass it by creating victim domain name under his
-web root folder like:
-
-http://attacker.in/victim.com/
-
->From there, he could effectively perform CSRF attacks against php-Nuke users.
-
-A short P0C demo video can be seen at
-http://yehg.net/lab/pr0js/training/view/misc/PHPNuke_8x_Anti-CSRF-Bypass/
-
-
-6. SOLUTION
-
-Not Available.
-Use of this product is NOT recommended because of long lack of update
-and vendor negligence about security reports.
-
-
-7. VENDOR
-
-PHP-Nuke Developers
-http://phpnuke.org/
-
-
-8. CREDIT
-
-Aung Khant, http://yehg.net, YGN Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-01-01: contacted author through emails
-2011-01-25: contacted author through web site contact form
-2010-03-23: no replies from author
-2010-03-23: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[phpnuke-8.x]_cross_site_request_forgery
-CSRF Wiki: https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
-About PHP-Nuke: http://en.wikipedia.org/wiki/PHP-Nuke
-PHP-Nuke 8.0: http://phpnuke.org/modules.php?name=Downloads&d_op=getit&lid=658
-CWE-352: http://cwe.mitre.org/data/definitions/352.html
-
-#yehg [2010-03-23]
-
-keywords: php nuke, php-nuke, phpnuke, 8.0, 8.1, csrf
-
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
