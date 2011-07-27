@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/10
-Message-ID: <Pine.LNX.4.64.1106281357430.17115@wotan.suse.de>
-Date: Tue, 28 Jun 2011 14:05:35 +0200 (CEST)
-From: Michael Matz <matz@...e.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/6
+Message-ID: <20110727112613.7645881f@redhat.com>
+Date: Wed, 27 Jul 2011 11:26:13 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 27 Jul 2011 10:57:39 +0200 Sebastian Krahmer wrote:
 
-On Mon, 27 Jun 2011, Solar Designer wrote:
+> Can you point us to the exact version and location in code where
+> the vulnerability is?
 
-> > What's this 0xff business that crept up recently?  It's all characters 
-> > with the high bit set, not just 0xff, that pose problems.  Let's be 
-> > precise with these issues.
-> 
-> We're considering the state we'll be in after upgrade to fixed code. 
-> 0xff is the only known practical way to have a correctly computed hash 
-> match one computed by the buggy code in cases where the latter was in 
-> fact computed incorrectly.  Since a large subset of such incorrectly 
-> computed hashes had some of the original passwords' characters ignored, 
-> some working passwords for them are too easy to find, including in some 
-> cases passwords that will work even after the bug in the code is fixed. 
-> Those passwords will contain specifically the 0xff character.  This is 
-> why we may want to treat the 0xff character specially.
+I've not previously looked at the code more closely to find the exact
+spot to be fixed.  However, I have successfully reproduced the issue
+with busybox 1.15.1 at least, not sure if I looked at any older
+version too.  It should be trivial to reproduce by running udhcpc -s
+<script>, where script just dumps whole env.  You should see
+server-provided options exported (hostname, domain).
 
-Thanks, so, let me see if I got this: the original password contained some 
-8bit chars (0xff or not doesn't matter), the buggy hashes lead to easily 
-finding passwords with the same hash, some of those conflicting passwords 
-might have 0xff chars in them, and _those_ then will sometimes still 
-produce a hash conflict even with the fixed blowfish code.
+> I remember to have checked udhcpc at that time and neither I found it
+> setting a hostname or parsing the options for a hostname.
 
-If so, treating passwords containing 0xff special seems sensible.
+Looks like fill_envp is the place:
+http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c#n341
 
+The logic was little different in older versions:
+http://git.busybox.net/busybox/tree/networking/udhcp/dhcpc.c?id=9ac5596a#n336
 
-Ciao,
-Michael.
+When I talked to upstream, they did see the issue and opened the bug:
+https://bugs.busybox.net/show_bug.cgi?id=3979
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
