@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/21/3
-Message-ID: <4E2864C9.2080606@redhat.com>
-Date: Thu, 21 Jul 2011 19:41:29 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/3
+Message-ID: <20110727013720.GA28937@openwall.com>
+Date: Wed, 27 Jul 2011 05:37:20 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: multiple libraries getenv() misuse
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Tue, May 31, 2011 at 10:21:33AM +0200, Sebastian Krahmer wrote:
+> While investigating the libs vs. fscaps issue [1] which showed
+> that most libs need patching in order to work properly with fscaps
+> binaries, it was also found that a lot of libs do not even honour
+> suid binaries correctly. These libs use getenv() to obtain information
+> about configuration/files or plugin directories. These info can be
+> "chosen with care" by attackers to trick the suid programs to execute
+> code as root or do harm otherwise.
+> Among these libs are libudev, libdbus, libhal, libgssglue or libcrypto
+> (openssl). libudev, libdbus, libhal are linked against suid Xorg.
+> libgssglue is linked against mount.nfs.
+> Most of these libs were probably never intented to be linked against
+> suids, but nevertheless they are.
+> 
+> Since the issues are all of the same family I would suggest to assign
+> one CVE (or two, if you want to separate missing fscaps checks from
+> euid != uid issue).
 
-   this:
-   [1] https://bugzilla.novell.com/show_bug.cgi?id=694598
-   [2] 
-http://lists.suse.com/opensuse-security-announce/2011-06/msg00013.html
-   [3] http://lwn.net/Alerts/449415/
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=724005
+I think it'd be a good idea to keep track of these issues per-library on
+the wiki:
 
-doesn't seem to have CVE identifier yet (though Sebastian Krahmer
-requested one for related fscaps issue).
+http://oss-security.openwall.org/wiki/code-reviews
 
-Josh, Steve, could you allocate a CVE id for this?
+> [1] http://www.suse.de/~krahmer/libs-vs-fscaps/
 
-[4] contains also further issue description + links to SUSE patches
-(from [2]). Could not find their plaintext (*.src.rpm) version though.
+I got your OpenSSL changes into Owl-current yesterday (except for the
+changes to OPENSSL_issetugid() itself, which on Owl was already using
+__libc_enable_secure).  The rest of the libraries that you mention are
+not in Owl.
 
-So Sebastian, if you could share those with us, it would be appreciated.
+Thanks,
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
