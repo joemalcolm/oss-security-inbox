@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/11
-Message-ID: <20110209172505.GA4081@inutil.org>
-Date: Wed, 9 Feb 2011 18:25:06 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/4
+Message-ID: <20110727092848.537e9528@redhat.com>
+Date: Wed, 27 Jul 2011 09:28:48 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: btrfs heap overflow
+Subject: Re: CVE request - dhcp clients
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 09, 2011 at 10:49:35AM -0500, Dan Rosenberg wrote:
-> I'm not aware of any distributions that support 2.6.37 kernels, but as
-> far as I know this doesn't affect CVE eligibility (please correct me
-> if I'm wrong).
+On Tue, 26 Jul 2011 15:35:02 -0400 (EDT) Josh Bressers wrote:
 
-The usual criteria for Linux kernel CVE assignments was/is if the
-issue affects a released kernel, not if it's supported by someone,
-i.e. if it had been introduced in 2.6.38-rc1 it would not receive
-a CVE ID.
+Just to clarify...
 
-Cheers,
-        Moritz
+> Use CVE-2011-2716 for udhcpc
+
+This is dhcp client that is part of busybox.
+
+> CVE-2011-2717 for udhcp6c.
+
+This should say dhcp6c and is part of the (now obsolete) dhcpv6 project:
+
+  https://fedorahosted.org/dhcpv6/
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
