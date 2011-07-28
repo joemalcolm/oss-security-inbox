@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/14
-Message-ID: <20110405123037.GA17570@openwall.com>
-Date: Tue, 5 Apr 2011 16:30:37 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/11
+Message-ID: <20110728183127.GU1476@redhat.com>
+Date: Thu, 28 Jul 2011 12:31:28 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE-2011-2524: libsoup's SoupServer directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
-> Not adding Apple to any coordination list would be plain silly. They were
-> far more active than most of the distributions.
+Hello everyone.  Just a heads up to advise about a directory traversal
+flaw in libsoup's SoupServer.  This flaw could allow any service linked
+to libsoup and using SoupServer to have a remote user traverse the local
+file system and expose unintended files.
 
-Yes.  But why do they need to be aware, say, of glibc vulnerabilities
-(ones that are in fact believed to be glibc-specific)?
+References:
 
-> I'm starting to worry we've created rules for the sake of rules, which
-> almost never has a net positive outcome.
+https://bugzilla.redhat.com/show_bug.cgi?id=720509
+https://bugzilla.gnome.org/show_bug.cgi?id=653258
+http://git.gnome.org/browse/libsoup/commit/?id=cbeeb7a0f7f0e8b16f2d382157496f9100218dea
+http://git.gnome.org/browse/libsoup/commit/?h=gnome-3-0&id=51eb8798c3965b49f3010db82009d36429f28514
 
-What do you propose?  Go back to a vendor-sec style list, open to
-anyone who is approved by other list members, and accept the accusations
-of being subjective in who we subscribe?  I can set one up alongside the
-Linux distros list... then let the senders decide which list they want.
-
-Alexander
+-- 
+Vincent Danen / Red Hat Security Response Team 
