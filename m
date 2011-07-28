@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/2
-Message-ID: <20111115023502.GA8095@openwall.com>
-Date: Tue, 15 Nov 2011 06:35:02 +0400
-From: Solar Designer <solar@...nwall.com>
-To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: weird crypt-sha* in DragonFly BSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/6
+Message-ID: <20110728124154.GE9382@foo.fgeek.fi>
+Date: Thu, 28 Jul 2011 15:41:54 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>, Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Mar 03, 2011 at 03:38:32PM -0500, Josh Bressers wrote:
+> ----- Original Message -----
+> > Can I get CVE-identifier for this vulnerability? It's old one :)
+> > 
+> > Software gri is vulnerable to insecure temp file generation.
+> > 
+> > References:
+> > http://gri.sourceforge.net/gridoc/html/Version_2_12.html
+> > http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
+> > note that this URL is not meant for public use as it is temporary)
+> > 
+> 
+> Steve,
+> 
+> Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
+> is here:
+> https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
+> 
+> Thanks.
+> 
+> -- 
+>     JB
 
-Matthew - when I read that DragonFly moved to using SHA-256 for
-passwords by default, I thought this was referring to the SHA-256 based
-flavor of Ulrich Drepper's SHA-crypt.  This would not be the best choice
-to make, in my opinion, but it would not be that bad.  However, I just
-found this:
+This is still unhandled. What is the status?
 
-http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/lib/libcrypt
-
-Are these crypt-sha256.c and/or crypt-sha512.c files actually in use?
-I hope not...  They do not include any password stretching, resulting in
-password hashes that are much quicker to crack than MD5-crypt's.
-
-There's also minor weirdness in the code - such as two local pointer
-variables being declared static seemingly for no reason, and only
-"final" but not "ctx" being zeroized in the end.  But even this lack of
-proper cleanup is very minor compared to the lack of stretching.
-
-Oh, also the "$3$" prefix was apparently previously used for NTLM:
-
-http://en.wikipedia.org/wiki/Crypt_(Unix)#NT_Hash_Scheme
-
-"FreeBSD used the $3$ prefix for this."
-
-http://search.cpan.org/~zefram/Authen-Passphrase/lib/Authen/Passphrase/NTHash.pm
-
-"... crypt string must consist of "$3$$" (note the extra "$") followed
-by the hash in lowercase hexadecimal."
-
-BTW, I looked at DragonFly's code while analyzing a more subtle issue
-with Ulrich's SHA-crypt:
-
-http://www.openwall.com/lists/oss-security/2011/11/15/1
-
-I thought that maybe you reimplemented it in a better fashion avoiding
-that issue, but I found this... %-)
-
-Alexander
+Best regards,
+Henri Salo
