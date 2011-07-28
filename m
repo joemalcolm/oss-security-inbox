@@ -1,25 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/3
-Message-ID: <20110430145116.GA30033@openwall.com>
-Date: Sat, 30 Apr 2011 18:51:16 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/13
+Message-ID: <20110728223035.GG4946@outflux.net>
+Date: Thu, 28 Jul 2011 15:30:35 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: kernel: gro: Only reset frag0 when skb can be pulled
 Content-Type: text/plain; charset=utf-8
 
-Hi Hui,
+Hi,
 
-On Thu, Apr 28, 2011 at 02:24:58PM +0800, Hui Zhu wrote:
-> Please add me to the new maillist.  I am from Wind River.
+This fixes a remote crasher under certain network device configurations:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=17dd759c67f21e34f2156abcf415e1f60605a188
 
-Wind River is not yet being added to the new list:
+Thanks,
 
-http://www.openwall.com/lists/oss-security/2011/04/24/6
+-Kees
 
-Hence, I've saved your subscription request to a separate folder, to
-revisit it if a decision is made to start adding "closed" vendors to the
-list, if Wind River starts to publish advisories and updates (in other
-words, if it becomes no more closed than Red Hat), or if a suitable
-separate list is setup.
-
-Alexander
+-- 
+Kees Cook
+Ubuntu Security Team
