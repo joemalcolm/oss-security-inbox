@@ -1,67 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/16
-Message-ID: <1741420034.507249.1307382130192.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:42:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/7
+Message-ID: <20110728124719.GF9382@foo.fgeek.fi>
+Date: Thu, 28 Jul 2011 15:47:19 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Bernhard Reiter <bernhard@...evation.de>, Tomas Mraz <tmraz@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- dirmngr -- Improper dealing with blocking system calls, when verifying a certificate
+Subject: CVE-request Tribiq CMS path disclosure HTB22857
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello, Josh, Steve, Bernhard, vendors,
-> 
-> based on:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377
-> [2] https://bugs.g10code.com/gnupg/issue1313
-> (upstream bug report)
-> [3] https://bugs.g10code.com/gnupg/file324/DTAG_Issuing_CA_i01.der
-> (public PoC)
-> [4] http://cvs.gnupg.org/cgi-bin/viewcvs.cgi?root=Dirmngr&view=rev
-> (relevant upstream patch)
-> 
-> it concluded:
-> [5] https://bugzilla.redhat.com/show_bug.cgi?id=710529
-> 
-> i.e.:
-> "Dirmngr, server/client tool for managing and downloading CRLS, used user
-> land threads implementation (Pth) for wrapping up of system calls, that
-> may potentially block. A remote attacker could use this flaw to cause a
-> hang of an end-user application, relying of the proper services of the
-> dirmngr daemon, via a request to verify a specially-crafted certificate."
-> 
-> But simultaneously with filling that Red Hat Bugzilla issue tracking
-> system entry performed some basic investigation, results of which can
-> be seen at:
-> [6] https://bugzilla.redhat.com/show_bug.cgi?id=710529#c2
-> 
-> IOW was not able to reproduce the complete / indefinite dirmngr-client
-> hang (thus blocking other clients from access). As noted in [6], it is
-> true that during small time period running 'dirmngr' daemon instance is
-> unresponsive also for '--ping' (dirmngr-client --ping) commands, but
-> after finite time (~21 seconds in my test) the connection ends up with
-> timeout.
-> 
-> Though Bernard in:
-> [7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377#5
-> 
-> mentions "For example the KMail hung when trying to verify a signature
-> which has the certificate in the chain." which would suggest there may
-> exist clients / end-user application not able to recover from this bug
-> properly. Bernhard, hopefully here, you could clarify / list such
-> applications and provide also time details, how long that hang of such
-> applications took.
-> 
-> Based on your reply, this may not / may be worthy (in case there are
-> such end-user applications) of an CVE identifier.
-> 
+Can I get CVE-identifier for this issue? Verified that this is a valid bug.
 
-Is this expected to only be used by end user applications? It seems to me
-that if an attacker can DoS a client, it's not a security issue, especially
-when you consider the use (if a bad guy can interact with dirmngr, there
-are probably bigger potential issues).
+Best regards,
+Henri Salo
 
-Thanks.
+----- Forwarded message from advisory@...ridge.ch -----
 
--- 
-    JB
+Date: Thu, 3 Mar 2011 12:50:21 +0100 (CET)
+From: advisory@...ridge.ch
+To: bugtraq@...urityfocus.com
+Subject: HTB22857: Path disclosure in Tribiq CMS
+
+Vulnerability ID: HTB22857
+Reference: http://www.htbridge.ch/advisory/full_path_disclosure_in_tribiq_cms.html
+Product: Tribiq CMS
+Vendor: Tribal Limited ( http://tribiq.com/ ) 
+Vulnerable Version: 5.2.7b and probably prior versions
+Vendor Notification: 17 February 2011 
+Vulnerability Type: Path disclosure
+Status: Fixed by Vendor
+Risk level: Low 
+Credit: High-Tech Bridge SA - Ethical Hacking & Penetration Testing (http://www.htbridge.ch/) 
+
+Vulnerability Details:
+The vulnerability exists due to failure in the "templatewrap/templatefoot.php", "cmsjs/plugin.js.php", "cmsincludes/cms_plugin_api_link.inc.php" scripts, it's possible to generate an error that will reveal the full path of the script.
+A remote user can determine the full path to the web root directory and other potentially sensitive information.
+
+
+http://host/templatewrap/templatefoot.php
+http://host/cmsjs/plugin.js.php
+http://host/cmsincludes/cms_plugin_api_link.inc.php
+
+Solution: Upgrade to the most recent version
+
+
+----- End forwarded message -----
