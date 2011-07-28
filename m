@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/3
-Message-ID: <CAPQRN=WDpuBC82mODSbCPokYso04StaxUMrBQB_KTrYzC7Kq3Q@mail.gmail.com>
-Date: Mon, 28 Nov 2011 21:18:50 -0200
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/3
+Message-ID: <4E31366F.4010704@redhat.com>
+Date: Thu, 28 Jul 2011 15:44:07 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ckware.com
-Subject: Fwd: Bug script install slackware
+Subject: Re: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
-Date: 2011/10/28
-Subject: Bug script install slackware
-To: volkerdi@...ckware.com
+On 07/28/2011 03:34 PM, Tavis Ormandy wrote:
+
+> Interesting, I also looked at systemtap and found a local root
+> (CVE-2010-4170), but was under the impression we had agreed it should be
+> restricted to a privileged group?
+> 
+> https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
+> 
+> I stopped looking because I concluded that had eliminated any security risk,
+> is that no longer the case?
+> 
+I believe this does reduce the risk, but does not totally eliminate it.
 
 
-Take a look.... this is the correction sugest to script "SeTpartitions".
 
-EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
-
-livecd setup # cat -n  SeTpartitions |grep T_PX
-  10  T_PX=/mnt
- 374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1> $REDIR 2> $REDIR
- 495        if [ ! -d $T_PX/$MTPT ]; then
- 496           mkdir -p $T_PX/$MTPT
- 503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
-$REDIR 2> $REDIR
-
-
-Att,
-Raphael Bastos aka chemonz
-
-===============================================
-Bastos Service Manutenção Industrial Ltda.
-www.bastosservice.com.br
-Linux Reg. User: 388431  //  LPI ID: LPI000214711
-email:~> $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
-'s/(.)/chr(ord($1)-2)/ge'
-===============================================
-
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
