@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/3
-Message-ID: <4DA3C023.3030900@redhat.com>
-Date: Tue, 12 Apr 2011 10:59:47 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE requests: Three Linux kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/1
+Message-ID: <20110728112115.25a6df2f@redhat.com>
+Date: Thu, 28 Jul 2011 11:21:15 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request: hplip/foomatic-filters
 Content-Type: text/plain; charset=utf-8
 
-> [1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
->
-> | PATCH] char: briq_panel: fix TOCTOU bug
-> |
-> | There is a TOCTOU bug in briq_panel_write() code:
-> |
-> |     if (vfd_cursor>  39)<<<
-> |             scroll_vfd();
-> |     vfd[vfd_cursor++] = c;<<<
-> |
-> | It's possible to write to arbitrary memory location in case of more than
-> | one process tries to call write() simultaneously.
+On Mon, 18 Jul 2011 14:35:28 +0200 Jan Lieskovsky wrote:
 
-This shouldn't happen as this is protected using tty_lock to only allow 
-single access to it at any one time. So having more than one processes 
-writing to it is unlikely. No CVE for this one.
+> > The foomatic filters of the hplip package allow remote users
+> > to execute arbitrary commands as the lp user. The flaw allows
+> > hosts which are listed in the printing ACL or local users to
+> > pass PPD file arguments to the foomatic filters. A PoC was
+> > demonstrated using the CUPS server.
+> >
+> > More info and patches are here:
+> >
+> > https://bugzilla.novell.com/show_bug.cgi?id=698451
+> 
+> Please use CVE-2011-2697 for this.
 
-> [2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
->
-> | [PATCH] char: genrtc: fix infoleak to userspace
-> |
-> | struct pll is copied to userspace.  It is filled in "multiplexing" function
-> | get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
-> | fill .pll_ctrl field.  It's hard to understand whether either the caller
-> | or the callee must zero the unused struct fields, however, on another
-> | ioctl commands the caller already zeroes the structure.  So, let's the
-> | caller use memset().
+According to SUSE bug, there are two different implementations of the
+filter - one in perl and one in c - in different foomatic versions.
+Both are affected by the same kind of problem, even though they don't
+share vulnerable code.  Is one CVE sufficient here, or is Mitre likely
+to split and assign another when this is processed? Steven?
 
-No CVE for this one too; /dev/rtc is root read/write only.
-
-Thanks.
-
-Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Tomas Hoger / Red Hat Security Response Team
