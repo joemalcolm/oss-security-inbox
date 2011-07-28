@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/15
-Message-ID: <667287819.1024512.1309377483164.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:58:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/2
+Message-ID: <mpro.lp1g063w5e11102h5.taviso@cmpxchg8b.com>
+Date: Thu, 28 Jul 2011 12:04:54 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: qemu-kvm: OOB memory access caused by negative vq notifies
+Subject: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2512.
+Vincent Danen <vdanen@...hat.com> wrote:
 
-Thanks.
+> This is just a heads up to notify those who are shipping systemtap that
+> two flaws were found that could allow members of group stapusr to elevate
+> their privileges:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2502
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2503
+> 
+
+Interesting, I also looked at systemtap and found a local root
+(CVE-2010-4170), but was under the impression we had agreed it should be
+restricted to a privileged group?
+
+https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
+
+I stopped looking because I concluded that had eliminated any security risk,
+is that no longer the case?
+
+(I dont have an up to date RHEL machine to check)
+
+
+Tavis.
+
 
 -- 
-    JB
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
------ Original Message -----
-> The virtio_queue_notify() function checks that the virtqueue number is
-> less than the maximum number of virtqueues. A signed comparison is
-> used but the virtqueue number could be negative if a buggy or
-> malicious
-> guest is run. This results in memory accesses outside of the virtqueue
-> array.
-> 
-> To trigger this issue the attacker needs to issue 32bit write to Queue
-> Notify field of Virtio Header in the virtio pci config space even
-> though
-> the field is 16bit only by specs. Qemu-kvm allows that for the moment
-> and provides whole 32bit value to the underlying functions.
-> 
-> Unprivileged guest user could use this flaw to crash the guest (denial
-> of service) or, possibly, escalate their privileges on the host.
-> 
-> Upstream patch:
-> http://patchwork.ozlabs.org/patch/94604/
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=717399
-> http://patchwork.ozlabs.org/patch/94604/
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
