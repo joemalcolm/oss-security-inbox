@@ -1,39 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/7
-Message-ID: <20111007161110.GT12557@redhat.com>
-Date: Fri, 7 Oct 2011 10:11:10 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Juliusz Chroboczek <jch@....jussieu.fr>
-Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/12
+Message-ID: <20110728212420.GZ4946@outflux.net>
+Date: Thu, 28 Jul 2011 14:24:20 -0700
+From: Kees Cook <kees@...ntu.com>
+To: miniupnp@...e.fr
+Cc: oss-security@...ts.openwall.com
+Subject: multiple flaws in minissdpd
 Content-Type: text/plain; charset=utf-8
 
-* [2011-10-06 18:37:01 +0200] Juliusz Chroboczek wrote:
+Hi!
 
->>   a denial of service flaw was found in the way Polipo, a lightweight
->> caching web proxy, processed certain HTTP POST / PUT requests. If
->> polipo was configured to allow remote client connections and particular
->> host was allowed to connect to polipo server instance, a remote
->> attacker could use this flaw to cause denial of service (polipo daemon
->> abort due to assertion failure) via specially-crafted HTTP POST / PUT
->> request.
->
->Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
->it is fixed in the Git trunk, which is unfortunately not ready to be
->released (and might never be unless a maintainer is found).
+I recently did an audit[1] of minissdpd for Ubuntu, and found a lot of issues,
+unfortunately. There may be more hiding that I didn't notice, but here
+are the security bits of my notes:
 
-Do you have a link to the commit, or a commit id?  I can't see anything
-on github that looks relevant or recent.
 
-We do ship this in Fedora, so it would be nice to have the patch that we
-could apply to what we are already shipping if no releases are
-forthcoming.
+Denial of Service:
 
-Thanks.
+- off-by-one in packet parsing can trigger crashes on unluckily alignment
+    minissdpd.c line ~290
 
->At any rate, I do not recommend running Polipo as a publicly accessible
->proxy.  While I have made reasonable efforts to ensure that this is
->safe, Polipo was not designed for that.
+- walk off end of memory without length check in "cache-control" packet
+    minissdpd.c line ~314
+
+- some unchecked malloc uses could lead to crash
+
+- does not clean up /var/run files on crash
+
+
+Corruption, possible manipulation of responses:
+
+- linefeed injection in service requests
+
+- unchecked write lengths (could get interrupted, lead to corruption)
+
+
+Memory corruption, with execution control likely:
+
+- multiple buffer overflows in processRequest
+    - unchecked decoded lengths
+    - unchecked buffer creation length
+    - integer overflows in decoded lengths
+    - write null byte arbitrarily in heap
+    - could read stack memory out on requests (including canary if OS
+      used stack protector canary that wasn't null-started). e.g.:
+      - add bogus service with giant coded-length "location" entry
+      - read back with type==1 and matching "st"
+
+
+General Safety:
+
+- does not drop privileges
+
+
+Hopefully all of this can get fixed up, it looks like a useful service. :)
+
+Thanks,
+
+-Kees
+
+[1] https://bugs.launchpad.net/ubuntu/+source/minissdpd/+bug/813313
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Kees Cook
+Ubuntu Security Team
