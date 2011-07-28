@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/14/2
-Message-ID: <1297727697.2930.17.camel@localhost>
-Date: Mon, 14 Feb 2011 18:54:57 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/7
+Message-ID: <20110728124719.GF9382@foo.fgeek.fi>
+Date: Thu, 28 Jul 2011 15:47:19 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: aircrack-ng
+Subject: CVE-request Tribiq CMS path disclosure HTB22857
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Can I get CVE-identifier for this issue? Verified that this is a valid bug.
 
-I can't seem to locate a CVE for this issue:
+Best regards,
+Henri Salo
 
-"Remote buffer overflow in aircrack-ng causes DOS and possible code
-execution"
-http://seclists.org/bugtraq/2010/Mar/236
-http://pyrit.wordpress.com/2010/03/28/remote-exploit-against-aircrack-ng/
+----- Forwarded message from advisory@...ridge.ch -----
 
-version 1.1 was released with the following fix:
-http://trac.aircrack-ng.org/changeset/1676
+Date: Thu, 3 Mar 2011 12:50:21 +0100 (CET)
+From: advisory@...ridge.ch
+To: bugtraq@...urityfocus.com
+Subject: HTB22857: Path disclosure in Tribiq CMS
 
-This bug was then opened stating the fix was incomplete:
-http://trac.aircrack-ng.org/ticket/728
-https://bugzilla.redhat.com/show_bug.cgi?id=577654
+Vulnerability ID: HTB22857
+Reference: http://www.htbridge.ch/advisory/full_path_disclosure_in_tribiq_cms.html
+Product: Tribiq CMS
+Vendor: Tribal Limited ( http://tribiq.com/ ) 
+Vulnerable Version: 5.2.7b and probably prior versions
+Vendor Notification: 17 February 2011 
+Vulnerability Type: Path disclosure
+Status: Fixed by Vendor
+Risk level: Low 
+Credit: High-Tech Bridge SA - Ethical Hacking & Penetration Testing (http://www.htbridge.ch/) 
 
-And then the following commits were done post-1.1:
-http://trac.aircrack-ng.org/changeset/1683
-http://trac.aircrack-ng.org/changeset/1687
-http://trac.aircrack-ng.org/changeset/1699
-http://trac.aircrack-ng.org/changeset/1701
-http://trac.aircrack-ng.org/changeset/1702
-
-Thanks,
-
-Marc.
+Vulnerability Details:
+The vulnerability exists due to failure in the "templatewrap/templatefoot.php", "cmsjs/plugin.js.php", "cmsincludes/cms_plugin_api_link.inc.php" scripts, it's possible to generate an error that will reveal the full path of the script.
+A remote user can determine the full path to the web root directory and other potentially sensitive information.
 
 
+http://host/templatewrap/templatefoot.php
+http://host/cmsjs/plugin.js.php
+http://host/cmsincludes/cms_plugin_api_link.inc.php
+
+Solution: Upgrade to the most recent version
+
+
+----- End forwarded message -----
