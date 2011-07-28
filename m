@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/4
-Message-ID: <4E0411C3.4040905@redhat.com>
-Date: Fri, 24 Jun 2011 12:25:39 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/13
+Message-ID: <20110728223035.GG4946@outflux.net>
+Date: Thu, 28 Jul 2011 15:30:35 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: ext4: init timer earlier to avoid a kernel panic in __save_error_info
+Subject: CVE request: kernel: gro: Only reset frag0 when skb can be pulled
 Content-Type: text/plain; charset=utf-8
 
-On 06/24/2011 05:38 AM, Kees Cook wrote:
-> This came to our attention:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=0449641130f5
-> by way of https://bugs.launchpad.net/ubuntu/+source/linux/+bug/801087 and
-> https://bugzilla.kernel.org/show_bug.cgi?id=32082
-> 
-> "During mount, when we fail to open journal inode or root inode, the
-> __save_error_info will mod_timer. But actually s_err_report isn't
-> initialized yet and the kernel oops."
+Hi,
 
-Please use this CVE-2011-2493.
+This fixes a remote crasher under certain network device configurations:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=17dd759c67f21e34f2156abcf415e1f60605a188
 
-Thanks, Eugene
+Thanks,
+
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
