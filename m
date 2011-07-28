@@ -1,34 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/3
-Message-Id: <20110218120421.26f58633.michael.s.gilbert@gmail.com>
-Date: Fri, 18 Feb 2011 12:04:21 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/2
+Message-ID: <mpro.lp1g063w5e11102h5.taviso@cmpxchg8b.com>
+Date: Thu, 28 Jul 2011 12:04:54 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Webkit Dupes
+Subject: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 17 Feb 2011 13:10:21 -0500 (EST) Steven M. Christey wrote:
+Vincent Danen <vdanen@...hat.com> wrote:
 
+> This is just a heads up to notify those who are shipping systemtap that
+> two flaws were found that could allow members of group stapusr to elevate
+> their privileges:
 > 
-> On Sat, 5 Feb 2011, Michael Gilbert wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2502
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2503
 > 
-> > Hi,
-> >
-> > The following issues are duplicate CVE assignments for webkit.  Please
-> > merge and reject these as appropriate.
-> 
-> I will handle these accordingly.  As you've noticed, a lot of CVE 
-> descriptions don't have detailed information, so sometimes it's hard to be 
-> certain when there are dupes.
-> 
-> > Would it be possible to force Google and Apple to coordinate better to 
-> > avoid these dupes?  This is creating unnecessary work and making it 
-> > appear that webkit has a lot more issues than it really does.
-> 
-> I started this conversation with both organizations a while ago, and your 
-> findings (plus a separate effort by Josh Bressers) are renewing this 
-> conversation.  That is, I'm working on it :)
 
-Thanks for your wizardry behind the curtain Steve ;)
+Interesting, I also looked at systemtap and found a local root
+(CVE-2010-4170), but was under the impression we had agreed it should be
+restricted to a privileged group?
 
-Mike
+https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
+
+I stopped looking because I concluded that had eliminated any security risk,
+is that no longer the case?
+
+(I dont have an up to date RHEL machine to check)
+
+
+Tavis.
+
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
+
