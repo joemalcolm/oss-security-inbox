@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/20
-Message-ID: <20110404134024.GC12101@openwall.com>
-Date: Mon, 4 Apr 2011 17:40:24 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/3
+Message-ID: <4E31366F.4010704@redhat.com>
+Date: Thu, 28 Jul 2011 15:44:07 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 02:07:16PM +0200, Nico Golde wrote:
-> I can understand that you want to keep the list of subscribers low in order to 
-> prevent leaks. But from a practical point of view I see really no difference 
-> if a mail is passed to a team exploder of a distro by one of the allowed 
-> subscribers or directly sent to these members, at least in terms of attack 
-> surface/leaking risks.
+On 07/28/2011 03:34 PM, Tavis Ormandy wrote:
 
-I was thinking that only a subset of issues discussed on the list will
-be relevant to a given distro, and only a subset of those will need to
-be communicated to the distro's entire security team right away.  Maybe
-this is not true for large distros, which package almost all software
-that Linux distros package at all.
-
-> That being said, my key data (I was added as part of Debian):
-> pub   1024D/73647CFF 2003-11-15
->       Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
-> uid                  Nico Golde <nion@...ian.org>
-> uid                  Nico Golde <nico@...lde.de>
-> uid                  Nico Golde <nion@....net>
-> uid                  Nico Golde <nion@...tu-berlin.de>
-> sub   2048g/F774030E 2003-11-15
+> Interesting, I also looked at systemtap and found a local root
+> (CVE-2010-4170), but was under the impression we had agreed it should be
+> restricted to a privileged group?
 > 
-> or alternatively a stronger key:
-> pub   4096R/A0A0AAAA 2009-06-01
->       Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
-> uid                  Nico Golde <nion@...ian.org>
-> uid                  Nico Golde <nico@...lde.de>
-> uid                  Nico Golde <nion@...tu-berlin.de>
-> uid                  Nico Golde <nion@....net>
-> sub   4096R/E89CCA30 2009-06-02
+> https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
+> 
+> I stopped looking because I concluded that had eliminated any security risk,
+> is that no longer the case?
+> 
+I believe this does reduce the risk, but does not totally eliminate it.
 
-Please suggest a specific e-mail address and key combination.  And if
-you suggest other than your @debian.org address, please suggest a way to
-verify that the address is really "yours" (the Debian security person's).
 
-Thanks,
 
-Alexander
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
