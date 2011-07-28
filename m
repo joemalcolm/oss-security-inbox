@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/8
-Message-ID: <4EB16CE2.8030609@redhat.com>
-Date: Wed, 02 Nov 2011 10:16:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/11
+Message-ID: <20110728183127.GU1476@redhat.com>
+Date: Thu, 28 Jul 2011 12:31:28 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Subject: CVE-2011-2524: libsoup's SoupServer directory traversal flaw
 Content-Type: text/plain; charset=utf-8
 
-On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
->> Fixes a security issue where using ~/.Xauthority as a symlink would
->> cause LightDM to set the destination of the link to user ownership.
->> All users of 1.0.4 or 1.0.5 should upgrade immediately.
->>
->> Overview of changes in lightdm 1.0.6
->>
->>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
->
-> Could a CVE be assigned for this?
->
-> Regards,
-Can you send me the link to this announcement so I can confirm it? Thanks.
+Hello everyone.  Just a heads up to advise about a directory traversal
+flaw in libsoup's SoupServer.  This flaw could allow any service linked
+to libsoup and using SoupServer to have a remote user traverse the local
+file system and expose unintended files.
+
+References:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=720509
+https://bugzilla.gnome.org/show_bug.cgi?id=653258
+http://git.gnome.org/browse/libsoup/commit/?id=cbeeb7a0f7f0e8b16f2d382157496f9100218dea
+http://git.gnome.org/browse/libsoup/commit/?h=gnome-3-0&id=51eb8798c3965b49f3010db82009d36429f28514
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
