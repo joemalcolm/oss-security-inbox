@@ -1,64 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/3
-Message-ID: <4EE1F864.7040609@redhat.com>
-Date: Fri, 09 Dec 2011 13:00:36 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Asterisk Development Team <asteriskteam@...ium.com>
-Subject: CVE Request -- Asterisk -- AST-2011-013 and AST-2011-014
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/12
+Message-ID: <20110728212420.GZ4946@outflux.net>
+Date: Thu, 28 Jul 2011 14:24:20 -0700
+From: Kees Cook <kees@...ntu.com>
+To: miniupnp@...e.fr
+Cc: oss-security@...ts.openwall.com
+Subject: multiple flaws in minissdpd
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Hi!
 
-   the following two security flaws have been recently fixed:
-   http://www.asterisk.org/node/51693
+I recently did an audit[1] of minissdpd for Ubuntu, and found a lot of issues,
+unfortunately. There may be more hiding that I didn't notice, but here
+are the security bits of my notes:
 
-in Asterisk:
 
-1) AST-2011-013 Possible to enumerate SIP usernames when general and user/peer NAT settings differed
+Denial of Service:
 
-    An information disclosure flaw was found in the way Asterisk handled UDP
-    requests in configurations using network address translation (NAT) for the SIP
-    protocol. When the general configuration file section and user / peer
-    configuration file section NAT settings differed, it was possible to enumerate
-    SIP usernames if the request was sent to different port as that, specified in
-    the Via header.
+- off-by-one in packet parsing can trigger crashes on unluckily alignment
+    minissdpd.c line ~290
 
-    References:
-    [1] http://www.asterisk.org/node/51693
-    [2] http://downloads.asterisk.org/pub/security/AST-2011-013.pdf
-    [3] http://lists.digium.com/pipermail/asterisk-dev/2011-November/thread.html#52191
-    [4] https://bugs.gentoo.org/show_bug.cgi?id=394095
-    [5] https://bugzilla.redhat.com/show_bug.cgi?id=765773
+- walk off end of memory without length check in "cache-control" packet
+    minissdpd.c line ~314
 
-    Upstream bug report:
-    [6] https://issues.asterisk.org/jira/browse/ASTERISK-18862
+- some unchecked malloc uses could lead to crash
 
-    Upstream review board request:
-    [7] https://reviewboard.asterisk.org/r/1591/
+- does not clean up /var/run files on crash
 
-    Upstream patch (for 1.8 branch):
-    [8] http://svnview.digium.com/svn/asterisk?view=revision&sortby=date&revision=345828
 
-2) AST-2011-014 NULL pointer dereference (crash) when processing INFO automon message
-    with no channel
+Corruption, possible manipulation of responses:
 
-    A NULL pointer dereference flaw was found in the way Asterisk handled INFO
-    requests, when the 'automon' feature was enabled. If no channel had been
-    created yet, a remote attacker could use this flaw to cause a denial of service
-    (asterisk crash) by sending an INFO request.
+- linefeed injection in service requests
 
-    References:
-    [9]  http://www.asterisk.org/node/51693
-    [10] http://downloads.asterisk.org/pub/security/AST-2011-014.pdf
-    [11] https://bugs.gentoo.org/show_bug.cgi?id=394095
-    [12] https://bugzilla.redhat.com/show_bug.cgi?id=765776
+- unchecked write lengths (could get interrupted, lead to corruption)
 
-    Upstream patch (for 1.8 branch):
-    [13] http://svnview.digium.com/svn/asterisk?view=revision&sortby=date&revision=347533
 
-Could you allocate CVE ids for these?
+Memory corruption, with execution control likely:
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- multiple buffer overflows in processRequest
+    - unchecked decoded lengths
+    - unchecked buffer creation length
+    - integer overflows in decoded lengths
+    - write null byte arbitrarily in heap
+    - could read stack memory out on requests (including canary if OS
+      used stack protector canary that wasn't null-started). e.g.:
+      - add bogus service with giant coded-length "location" entry
+      - read back with type==1 and matching "st"
+
+
+General Safety:
+
+- does not drop privileges
+
+
+Hopefully all of this can get fixed up, it looks like a useful service. :)
+
+Thanks,
+
+-Kees
+
+[1] https://bugs.launchpad.net/ubuntu/+source/minissdpd/+bug/813313
+
+-- 
+Kees Cook
+Ubuntu Security Team
