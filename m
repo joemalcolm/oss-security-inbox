@@ -1,65 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/14
-Message-ID: <20110404120716.GK543@ngolde.de>
-Date: Mon, 4 Apr 2011 14:07:16 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/9
+Message-ID: <4E317978.6010709@redhat.com>
+Date: Thu, 28 Jul 2011 17:00:08 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Marcus Meissner <meissner@...e.de> [2011-04-04 13:24]:
-> On Mon, Apr 04, 2011 at 09:42:37AM +0100, Mark J Cox wrote:
-> > >I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-> > >and Josh).
-> > 
-> > Limiting a distro to two or three representatives is going to make things 
-> > tricky for Red Hat; we have a rather large dedicated security response 
-> > team (as we publish over 300 advisories a year across 70 product/versions 
-> > and have a number of folks dealing with 'incoming' issues spread, and my 
-> > team is dispersed across 9 different countries).  If these representatives 
-> > have been very active on v-s and oss-security is there a reason to limit?
-> 
-> Similar for SUSE. We currently have 3 engineers rotating through the incident
-> manager role (and myself).
+Hello Josh, Steve, vendors,
 
-Same for Debian. We are currently cycling through a one week "front desk" 
-period. Limiting that access to 2-3 people of the team would make that 
-approach a bit unpractical for us in terms of handling undisclosed issues.
-I also would welcome it if people who have been active on oss-sec and v-sec 
-before should be allowed back to this list.
+   by further investigation of hplip CVE-2011-2722 issue:
+   [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
 
-I can understand that you want to keep the list of subscribers low in order to 
-prevent leaks. But from a practical point of view I see really no difference 
-if a mail is passed to a team exploder of a distro by one of the allowed 
-subscribers or directly sent to these members, at least in terms of attack 
-surface/leaking risks. The only practical difference I see is who would be responsible
-for such an incident. But if it's just about moving the responsibility out of
-the list itself to the vendor while keeping the number of subscribers low you could as
-well subscribe our team@ alias and encrypt mails with the team key.
+Tim Waugh noticed the similar issue being present also in foomatic-rip
+universal print filter, when debug mode is enabled. Further details:
 
-That being said, my key data (I was added as part of Debian):
-pub   1024D/73647CFF 2003-11-15
-      Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
-uid                  Nico Golde <nion@...ian.org>
-uid                  Nico Golde <nico@...lde.de>
-uid                  Nico Golde <nion@....net>
-uid                  Nico Golde <nion@...tu-berlin.de>
-sub   2048g/F774030E 2003-11-15
+It was found that foomatic-rip filter used insecurely created temporary
+file for storage of PostScript data by rendering the data, intended to 
+be sent to the PostScript filter, when the debug mode was enabled. A 
+local attacker could use this flaw to conduct symlink attacks (overwrite 
+arbitrary file accessible with the privileges of the user running the 
+foomatic-rip universal print filter).
 
-or alternatively a stronger key:
-pub   4096R/A0A0AAAA 2009-06-01
-      Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
-uid                  Nico Golde <nion@...ian.org>
-uid                  Nico Golde <nico@...lde.de>
-uid                  Nico Golde <nion@...tu-berlin.de>
-uid                  Nico Golde <nion@....net>
-sub   4096R/E89CCA30 2009-06-02
+Relevant source code part (Perl script part / foomatic-rip.in):
+===============================================================
+    100 my $logfile = "/tmp/foomatic-rip";
+   ..
+   3454  # In debug mode save the data supposed to be fed
+           into the
+   3455  # renderer also into a file
+   3456  if ($debug) {
+   3457    $commandline = "tee -a ${logfile}.ps | ( $commandline )";
+   3458  }
 
-Cheers
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Note: The $logfile variable declaration (line #100) is not an insecure
+       temporary file use issue itself, since this danger (and its proper
+       usage) is documented in /etc/foomatic/filters.conf file.
 
-Content of type "application/pgp-signature" skipped
+Relevant source code part (C script part / renderer.c):
+========================================================
+    436  /* Save the data supposed to be fed into the renderer
+           also int        o a file*/
+    437  dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
+    438  dstrcat(commandline, ")");
+    439  }
+
+Note: The LOG_FILE variable declaration by itself is not an insecure
+       temporary file use, since this danger (and its proper usage)
+       is documented in /etc/foomatic/filters.conf file.
+
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
+
+Credit: Issue discovered by Tim Waugh
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
