@@ -1,57 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/4
-Message-ID: <20110601140708.GA15031@openwall.com>
-Date: Wed, 1 Jun 2011 18:07:08 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/8
+Message-ID: <20110728132251.GA16357@suse.de>
+Date: Thu, 28 Jul 2011 15:22:51 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, veillard@...hat.com, billy.rios@...il.com
+Subject: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-CERT, Thomas, Josh, all -
+Hi folks, Billy, Daniel,
 
-On Tue, May 31, 2011 at 03:44:40PM -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > looks like this following has not CVE-ID assigned yet:
-> > http://www.kb.cert.org/vuls/id/536044
-> 
-> Please use CVE-2011-1945.
+On
+http://support.apple.com/kb/HT4808
+there is a libxml security issue listed:
 
-Thanks!
+-----------------------------------------
+libxml
 
-The CERT Vulnerability Note says: "Date Public:	2011-05-17", yet this
-was only brought to oss-security on the 31st.  According to the
-Vulnerability Note, CERT notified a handful of distros, but definitely
-by far not all those shipping OpenSSL (which would be unrealistic) and
-not all those CERT had been notifying of similar issues before (which
-was realistic).  I am not too concerned about the issue itself and about
-the more restricted advance notification, but I am concerned about the
-delay between CERT making a Vulnerability Note public and us (as well as
-many others) learning of it (via oss-security in this case).  Maybe
-there's something to improve in this area.
+Available for: Windows 7, Vista, XP SP2 or later
 
-I went to http://www.us-cert.gov/cas/signup.html to see if there's a
-public CERT mailing list I should be on in order to receive new
-Vulnerability Notes (that are being made public) with no delay (or at
-least with less delay).  Unfortunately, for Vulnerability Notes there
-appears to be an Atom feed only, no mailing list (which I'd prefer).
-Perhaps set one up?
+Impact: Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution
 
-Also, do we possibly want all Open Source software security issues to be
-brought to oss-security, even if they already have CVE IDs assigned?
-For example, don't we want all issues discussed on the Linux distros
-closed list to eventually be mentioned in here (in addition to the
-distro vendor advisories)?  I think we do.  Ditto for stuff handled via
-US-CERT and other CERTs.
+Description: A one-byte heap buffer overflow existed in libxml's handling of XML data. Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution.
 
-Once again, I am not too concerned about the specific OpenSSL issue,
-which even the OpenSSL team does not find important enough to warrant a
-security fix release (according to their vendor statement to CERT),
-although I like the research behind it.  I just think that it's an
-opportunity for us to learn to avoid such two-week post-disclosure
-delays in the future, potentially for more severe issues.
+CVE-ID
 
-I'd appreciate any comments.
+CVE-2011-0216 : Billy Rios of the Google Security Team
+-----------------------------------------
 
-Thanks,
+I suspect this is libxml2 and it likely also affects Linux?
 
-Alexander
+If this is correct, could you identify the commit fixing this issue?
+
+Ciao, Marcus
