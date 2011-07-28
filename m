@@ -1,19 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/1
-Message-ID: <20110302230559.GA24630@nashi.nerv.fi>
-Date: Thu, 3 Mar 2011 01:05:59 +0200
-From: henri@...v.fi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/4
+Message-ID: <mpro.lp1gob3w5e11102h5.taviso@cmpxchg8b.com>
+Date: Thu, 28 Jul 2011 12:19:23 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: gri < 2.12.18 insecure temp file generation
+Subject: Re: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this vulnerability? It's old one :)
+Huzaifa Sidhpurwala <huzaifas@...hat.com>
+wrote:
 
-Software gri is vulnerable to insecure temp file generation.
+> On 07/28/2011 03:34 PM, Tavis Ormandy wrote:
+> 
+> > Interesting, I also looked at systemtap and found a local root
+> > (CVE-2010-4170), but was under the impression we had agreed it should be
+> > restricted to a privileged group?
+> > 
+> > https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
+> > 
+> > I stopped looking because I concluded that had eliminated any security
+> > risk, is that no longer the case?
+> > 
+> I believe this does reduce the risk, but does not totally eliminate it.
+> 
+> 
 
-References:
-http://gri.sourceforge.net/gridoc/html/Version_2_12.html
-http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please note that this URL is not meant for public use as it is temporary)
+Oh I see, the group restriction is still in place, but you still support
+adding unprivileged users to the group?
 
-Best regards,
-Henri Salo
+Understood, I think that sounds reasonable.
+
+Tavis.
+
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
+
