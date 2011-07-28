@@ -1,87 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/4
-Message-ID: <20110629111107.GA29236@albatros>
-Date: Wed, 29 Jun 2011 15:11:07 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/10
+Message-ID: <Pine.GSO.4.64.1107281118250.20828@faron.mitre.org>
+Date: Thu, 28 Jul 2011 11:18:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 28, 2011 at 17:49 -0700, Linus Torvalds wrote:
-> Actually, due to the whole netlink thing, it's not obvious who the
-> data goes to,
 
-In send_cpu_listeners() there is a loop over all listeners,
-genlmsg_unicast() is called for exclusively for each listening socket.
-It's possible to make 2 taskstats structs, one with precise information,
-one with rouned information.
+Use CVE-2008-7291
+
+- Steve
 
 
-> If you want the exact thing, you can use /proc/<pid>/io, which now
-> does the security checking as per Vasiliy.
+On Thu, 28 Jul 2011, Henri Salo wrote:
 
-The patch lacks proper locking against a race with exec (noticed by
-KOSAKI).  task->signal->cred_guard_mutex should be fine, but I hesitate
-whether it's fine to mix it with lock_task_sighand() and if mix then in
-what order.  If keeping ->cred_guard_mutex prevents theads from exiting
-then sighand is redundant.
-
-
-> So some patch like the appended?
-
-1) The filtering on exit looks OK, but fill_stats_for_tgid() is not filtered:
-
-	if (first->signal->stats)
-		memcpy(stats, first->signal->stats, sizeof(*stats));
-	else
-		memset(stats, 0, sizeof(*stats));
-
-2) syscalls counts is probably needs another rounding constant, it is
-not measures in kbs.  However, 1024 might be OK if round char number by
-1024.
-
-
-> Vasiliy, this is different from your
-> 2/2, but it's simpler and I think sufficient. And shouldn't break
-> iotop. What do you think? I agree that it's not perfect, but it seems
-> to be sufficient at least for the particular passwd attack, no?
-
-Indeed, such rounding does break this specific exploit.
-
-
-> Or is
-> there some way you can fool sshd to read some other user-supplied data
-> so that you can trick it into giving multiple values that you control,
-> and thus see exactly when the IO counts overflow..
-
-I'm trying to find a way to bypass 1k rounding.  I see 2 abstract ways:
-
-1) a program generates X bytes io traffic for every 1 byte of sensitive
-information.  X should be as close to kb boundary as possible.
-
-2) as you say here:
-
-READ = CONST + SENSITIVE + CONTROLLABLE
-
-If CONST is known and CONTROLLABLE is controlled by an attacker then he
-may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
-respectively, revealing len(SENSITIVE).
-
-
-I cannot find vulnerable programs now, but I believe there are some of them
-among widespread programs.
-
-
-The core problem here is that by giving *some part* of information about
-internal task activity the kernel violating the task privacy, strictly
-speaking.  A program doing IO expects this activity to be kept private.
-This revealted part may or may not reveal sensible information, depends
-on the specific program.
-
-
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+> On Thu, Mar 03, 2011 at 03:38:32PM -0500, Josh Bressers wrote:
+>> ----- Original Message -----
+>>> Can I get CVE-identifier for this vulnerability? It's old one :)
+>>>
+>>> Software gri is vulnerable to insecure temp file generation.
+>>>
+>>> References:
+>>> http://gri.sourceforge.net/gridoc/html/Version_2_12.html
+>>> http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
+>>> note that this URL is not meant for public use as it is temporary)
+>>>
+>>
+>> Steve,
+>>
+>> Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
+>> is here:
+>> https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
+>>
+>> Thanks.
+>>
+>> --
+>>     JB
+>
+> This is still unhandled. What is the status?
+>
+> Best regards,
+> Henri Salo
+>
