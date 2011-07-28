@@ -1,73 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/8
-Message-ID: <4EA59F39.7060707@redhat.com>
-Date: Mon, 24 Oct 2011 10:24:09 -0700
-From: Elio Maldonado <emaldona@...hat.com>
-To: Robert Relyea <rrelyea@...hat.com>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Reed Loden <reed@...dloden.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/10
+Message-ID: <Pine.GSO.4.64.1107281118250.20828@faron.mitre.org>
+Date: Thu, 28 Jul 2011 11:18:40 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+cc: Josh Bressers <bressers@...hat.com>
+Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
 Content-Type: text/plain; charset=utf-8
 
-On 10/24/2011 10:01 AM, Robert Relyea wrote:
-> On 10/24/2011 03:42 AM, Jan Lieskovsky wrote:
->> Cc-ing Reed on this post yet, so he could clarify
->> if Mozilla (Security) Team has already assigned a CVE identifier
->> for this one or not.
->>
->> Reed?
->>
->> Thanks&&  Regards, Jan.
-> It's likely the Mozilla security team hasn't assigned a CVE. The issue
-> only affects applications initializing NSS with NSS_NoDB_Init(). Usually
-> the application specifies the actual path to these files. In particular
-> Mozilla apps always specify (though some corner cases it may fall back
-> to NSS_NoDB_Init(). I think that's rare at this point because
-> NSS_NoDB_Init() does not provide any trust information, which all
-> Mozilla apps need.).
->
-> In general NSS applications on Linux should be initializing with
-> /etc/pki/nssdb.
->
-> bob
->
-> NOTE: the patch is in FIPS related code.  Elio, please get a 6.2 Bug
-> created for this ASAP. The patch is already upstream. Component is
-> nss-softokn.
-Done, https://bugzilla.redhat.com/show_bug.cgi?id=748524 and set various 
-flags.
-Will start back-porting the patch to our 3.12.9 softoken right away.
 
-Elio
->
-> bob
->> -- 
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->>
->> On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
->>> Hello Josh, Steve, vendors,
->>>
->>> a security flaw was found in the way nss, the Network Security
->>> Services (NSS) set of libraries, performed their initialization (the
->>> file path for "pkcs11.txt" configuration file was constructed
->>> incorrectly). When that configuration file was loaded from remote WebDAV
->>> or Samba CIFS share, it could lead to arbitrary security module
->>> load, potentially leading to execution of arbitrary code (execution of
->>> code from untrusted security module).
->>>
->>> Upstream bug report:
->>> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
->>>
->>> Other references:
->>> [2] https://secunia.com/advisories/46557/
->>> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
->>> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
->>> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
->>>
->>> Could you allocate a CVE id for this? (as it looks there isn't one
->>> for this deficiency yet)
->>>
->>> Thank you&&  Regards, Jan.
->>> -- 
->>> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+Use CVE-2008-7291
 
+- Steve
+
+
+On Thu, 28 Jul 2011, Henri Salo wrote:
+
+> On Thu, Mar 03, 2011 at 03:38:32PM -0500, Josh Bressers wrote:
+>> ----- Original Message -----
+>>> Can I get CVE-identifier for this vulnerability? It's old one :)
+>>>
+>>> Software gri is vulnerable to insecure temp file generation.
+>>>
+>>> References:
+>>> http://gri.sourceforge.net/gridoc/html/Version_2_12.html
+>>> http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
+>>> note that this URL is not meant for public use as it is temporary)
+>>>
+>>
+>> Steve,
+>>
+>> Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
+>> is here:
+>> https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
+>>
+>> Thanks.
+>>
+>> --
+>>     JB
+>
+> This is still unhandled. What is the status?
+>
+> Best regards,
+> Henri Salo
+>
