@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/3
-Message-ID: <20110107112033.GA19236@steve.org.uk>
-Date: Fri, 7 Jan 2011 11:20:33 +0000
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/12
+Message-ID: <20110729163415.GW1476@redhat.com>
+Date: Fri, 29 Jul 2011 10:34:16 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - pimd - Insecure file creation in /var/tmp
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE mistake in libsoup release notes
 Content-Type: text/plain; charset=utf-8
 
+Upstream mistakenly used the wrong CVE name in the recent libsoup
+releases.  They should have used CVE-2011-2524, but used CVE-2011-2054
+instead.
 
-  We received this report recently:
+I don't know who's pool CVE-2011-2054 might be in, but I would recommend
+rejecting that CVE name and duping it against CVE-2011-2524.
+
+I've seen both Gentoo and Novell reference the wrong CVE name in
+bugzilla entries, so I thought I should bring this up.
+
+See:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=720509#c15 and it's
+follow-up comment from upstream (they've made the appropriate changes in
+git now to reflect the correct CVE name).
+
+So CVE-2011-2524 is the correct CVE, and CVE-2011-2054 is the _wrong_
+CVE.
+
+Thanks.
 
 -- 
-
-Hi!
-
-There is a simple security hole in pimd allowing a user to destroy any
-file in the filesystem. On USR1, pimd will write to /var/tmp/pimd.dump
-a dump of the multicast route table. Since /var/tmp is writable by any
-user, a user can create a symlink to any file he wants to destroy with
-the content of the multicast routing table.
-
-Attached is a simple patch that will instruct pimd to write the dump
-to /var/lib/misc which is writable by root only and seems a valid
-target according to the FHS (state files that don't need a
-subdirectory).
-
-This patch may cause tools that were sending USR1 and waiting for a
-/var/tmp/pimd.dump file fail. I don't have a solution for this.
-
-The patch also applies to /var/tmp/pimd.cache which is not implemented
-yet but still creates the file when receiving USR2 signal. Despite its
-name, this is also a state file, not a cache. The patch also just
-drops the possibility to use /usr/tmp/pimd.dump based on some C
-preprocessor conditions since I don't know if the preconditions would
-work correctly on Debian/kFreeBSD.
-
-
-
-View attachment "pimd-insecure-file-creation.patch" of type "text/x-diff" (1807 bytes)
+Vincent Danen / Red Hat Security Response Team 
