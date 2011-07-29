@@ -1,20 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/02/1
-Message-ID: <AANLkTi=KauzUkRm6MMoOYajm7LD+ptynYP_qXdCR+3oU@mail.gmail.com>
-Date: Sun, 2 Jan 2011 15:23:21 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/8
+Message-ID: <4E327DFF.5060803@redhat.com>
+Date: Fri, 29 Jul 2011 11:31:43 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
+CC: Eugene Teo <eugene@...hat.com>, Josh Bressers <bressers@...hat.com>, Chris Evans <scarybeasts@...il.com>, Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-Unspecified vulnerability in the server component in Apache Subversion
-1.6.x before 1.6.15 allows remote attackers to cause a denial of
-service via unknown vectors, related to a "several bug fixes,
-including two which can cause client-initiated crashes on the server."
 
-http://svn.haxx.se/dev/archive-2010-11/0475.shtml
+Hello Greg,
 
--- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+   you earlier mentioned this has been already fixed in newer kernels:
+
+> This should already be fixed in the kernel, it looks like it's just
+> older kernels that has the issue, if the distro enabled that specific
+> option, so there's really nothing that needs to be done here, or a CVE
+> assigned that I can tell, right?
+>
+> thanks,
+>
+> greg k-h
+
+So the solution you describe above would be just disabling the net_ns
+or some other fix? If the latter holds, could you point us to the 
+relevant commit?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On 07/29/2011 10:37 AM, Eugene Teo wrote:
+> On 06/07/2011 02:28 AM, Josh Bressers wrote:
+>>
+>> ----- Original Message -----
+>>> Hello, Josh, Steve, vendors,
+>>>
+>>> It was found that vsftpd, Very Secure FTP daemon, when the network
+>>> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+>>> create a new network namespace per connection. A remote attacker could
+>>> use this flaw to cause a memory pressure and denial of the vsftpd
+>>> service.
+>>>
+>>> References:
+>>> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+>>> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+>>> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+>>>
+>>> This one being a bit tricky one -- from my understanding of the issue,
+>>> vsftpd doesn't necessarily have a security flaw on its side. It's
+>>> kernel issue / bug, which allows this to be used for vsftpd DoS:
+>>> [4]
+>>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+>>> [5]
+>>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+>>>
+>>> Short-term solution would be probably to address this on the vsftpd
+>>> side, the long-term one then being to get this fixed in kernel.
+>>>
+>>> Though not sure, how it would be wrt to CVE identifier(s) assignment.
+>>>
+>>
+>> I'm going to assign CVE-2011-2189 for the kernel. There are numerous
+>> vendors shipping this bug.
+>>
+>> I'll leave it up to MITRE if they think vsftpd should get an ID. I don't
+>> think it should myself, but they understand these corner cases better than
+>> I.
+>
+> Kees, how are you guys fixing this? Disable net_ns and fix vsftpd? I
+> wonder how other distros approach this. Any suggestions?
+>
+> Thanks, Eugene
+
