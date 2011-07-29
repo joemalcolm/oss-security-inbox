@@ -1,154 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/7
-Message-ID: <4D24BAE4.8030108@summersault.com>
-Date: Wed, 05 Jan 2011 13:39:32 -0500
-From: Mark Stosberg <mark@...mersault.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>, Max Kanat-Alexander <mkanat@...zilla.org>
-Subject: Re: CGI.pm 3.51 released (revised)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/5
+Message-ID: <4E325959.1060008@free.fr>
+Date: Fri, 29 Jul 2011 08:55:21 +0200
+From: miniupnp <miniupnp@...e.fr>
+To: Kees Cook <kees@...ntu.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: multiple flaws in minissdpd
 Content-Type: text/plain; charset=utf-8
 
-On 01/05/2011 01:33 PM, Mark Stosberg wrote:
-> 
-> As discussed, CGI.pm 3.51 was released today, including the related
-> security fix. It is available here:
-> 
-> http://cpan.cpantesters.org/authors/id/M/MA/MARKSTOS/CGI.pm-3.51.tar.gz
+Thanks for the report, I'm having a look at theses issues.
 
-Now having announced that, I was notified that while I have permission
-to upload in the "CGI" name space, there are several other parts of the
-distribution which I don't have permission to upload to, so the release
-many not become "official" and be downloadable by the "cpan" client
-until this is resolved.
+Le 28/07/2011 23:24, Kees Cook a écrit :
+> Hi!
+>
+> I recently did an audit[1] of minissdpd for Ubuntu, and found a lot of issues,
+> unfortunately. There may be more hiding that I didn't notice, but here
+> are the security bits of my notes:
+>
+>
+> Denial of Service:
+>
+> - off-by-one in packet parsing can trigger crashes on unluckily alignment
+>     minissdpd.c line ~290
+>
+> - walk off end of memory without length check in "cache-control" packet
+>     minissdpd.c line ~314
+>
+> - some unchecked malloc uses could lead to crash
+>
+> - does not clean up /var/run files on crash
+>
+>
+> Corruption, possible manipulation of responses:
+>
+> - linefeed injection in service requests
+>
+> - unchecked write lengths (could get interrupted, lead to corruption)
+>
+>
+> Memory corruption, with execution control likely:
+>
+> - multiple buffer overflows in processRequest
+>     - unchecked decoded lengths
+>     - unchecked buffer creation length
+>     - integer overflows in decoded lengths
+>     - write null byte arbitrarily in heap
+>     - could read stack memory out on requests (including canary if OS
+>       used stack protector canary that wasn't null-started). e.g.:
+>       - add bogus service with giant coded-length "location" entry
+>       - read back with type==1 and matching "st"
+>
+>
+> General Safety:
+>
+> - does not drop privileges
+>
+>
+> Hopefully all of this can get fixed up, it looks like a useful service. :)
+>
+> Thanks,
+>
+> -Kees
+>
+> [1] https://bugs.launchpad.net/ubuntu/+source/minissdpd/+bug/813313
+>
+>   
 
-I will work with Lincoln Stein on making this release official so that
-the bits available at the link above will eventually be deemed official
-as the 3.51 release.
-
-If for some reason the release needs to be changed, I will be sure to
-move the version number further forward so there is no confusion.
-
-Details about the permission issue are below (of possible interest to
-those who are also CPAN authors)
-
-   Mark
-
-###
-
-The following report has been written by the PAUSE namespace indexer.
-Please contact modules@...l.org if there are any open questions.
-  Id
-
-               User: MARKSTOS (Mark Stosberg)
-  Distribution file: CGI.pm-3.51.tar.gz
-    Number of files: 77
-         *.pm files: 9
-             README: CGI.pm-3.51/README
-           META.yml: CGI.pm-3.51/META.yml
-        YAML-Parser: YAML::XS 0.32
-  META-driven index: no
-  Timestamp of file: Wed Jan  5 18:28:41 2011 UTC
-   Time of this run: Wed Jan  5 18:30:23 2011 UTC
-
-Status of this distro: Permission missing
-=========================================
-
-The following packages (grouped by status) have been found in the distro:
-
-Status: Permission missing
-==========================
-
-     module: CGI::Apache
-    version: 1.01
-    in file: CGI.pm-3.51/lib/CGI/Apache.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is P5P. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGI::Carp
-    version: 3.51
-    in file: CGI.pm-3.51/lib/CGI/Carp.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is CGIP. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGI::Cookie
-    version: 1.30
-    in file: CGI.pm-3.51/lib/CGI/Cookie.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is LDS. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGI::Fast
-    version: 1.08
-    in file: CGI.pm-3.51/lib/CGI/Fast.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is LDS. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGI::Pretty
-    version: 3.46
-    in file: CGI.pm-3.51/lib/CGI/Pretty.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is LDS. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGI::Push
-    version: 1.05
-    in file: CGI.pm-3.51/lib/CGI/Push.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is P5P. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGI::Switch
-    version: 1.01
-    in file: CGI.pm-3.51/lib/CGI/Switch.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is LDS. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGI::Util
-    version: 3.51
-    in file: CGI.pm-3.51/lib/CGI/Util.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is LDS. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: CGITempFile
-    version: 3.51
-    in file: CGI.pm-3.51/lib/CGI.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is LDS. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: Fh
-    version: 3.51
-    in file: CGI.pm-3.51/lib/CGI.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is LDS. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: MultipartBuffer
-    version: 3.51
-    in file: CGI.pm-3.51/lib/CGI.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is P5P. Hint: you can always find the
-             legitimate maintainer(s) on PAUSE under "View Permissions".
-
-     module: utf8
-    version: 3.51
-    in file: CGI.pm-3.51/lib/CGI/Util.pm
-     status: Not indexed because permission missing. Current registered
-             primary maintainer is NWCLARK. Hint: you can always find
-             the legitimate maintainer(s) on PAUSE under "View
-             Permissions".
-
-Status: Successfully indexed
-============================
-
-     module: CGI
-    version: 3.51
-    in file: CGI.pm-3.51/lib/CGI.pm
-     status: indexed
-
-__END__
