@@ -1,53 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/2
-Message-ID: <4EFF7C81.3050308@redhat.com>
-Date: Sat, 31 Dec 2011 14:20:01 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/12
+Message-ID: <20110729163415.GW1476@redhat.com>
+Date: Fri, 29 Jul 2011 10:34:16 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: Elxis CMS two XSS-vulnerabilities
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE mistake in libsoup release notes
 Content-Type: text/plain; charset=utf-8
 
-On 12/30/2011 04:49 AM, Henri Salo wrote:
-> 1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-> http://osvdb.org/show/osvdb/77563
->
-> 2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-> http://osvdb.org/show/osvdb/77564
-Merging these two issues as per ADT4:
+Upstream mistakenly used the wrong CVE name in the recent libsoup
+releases.  They should have used CVE-2011-2524, but used CVE-2011-2054
+instead.
 
-At this stage, X and Y are the same bug type, affect the same versions,
-and affect the same products.
+I don't know who's pool CVE-2011-2054 might be in, but I would recommend
+rejecting that CVE name and duping it against CVE-2011-2524.
 
-Do X and Y have any of the following characteristics?
+I've seen both Gentoo and Novell reference the wrong CVE name in
+bugzilla entries, so I thought I should bring this up.
 
-  * X appears in a different DLL, library, or program than Y (e.g. X
-    affects LIB1.DLL and Y affects LIB2.DLL)
-  * X has more serious impact than Y (e.g. code execution as root versus
-    leak of system pathname)
-  * X takes a different input parameter/argument than Y (e.g. SQL
-    injection in both the "user" and "password" parameters)
-  * X is exploitable locally, but Y is not.
-  * X requires stronger authentication than Y.
-  * X can be exploited by a certain user that Y can not (e.g. a guest
-    user vs. an admin)
+See:
 
-*Yes:* *MERGE
+https://bugzilla.redhat.com/show_bug.cgi?id=720509#c15 and it's
+follow-up comment from upstream (they've made the appropriate changes in
+git now to reflect the correct CVE name).
 
-*Please use CVE-2011-4918 for these two issues
-*
-*
->
-> http://secunia.com/advisories/47073/
->
-> Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
->
-> - Henri Salo
-Does anyone have a contact name for Secunia with respect to
-co-ordinating CVE assignments better?
+So CVE-2011-2524 is the correct CVE, and CVE-2011-2054 is the _wrong_
+CVE.
+
+Thanks.
 
 -- 
-
--- Kurt Seifried / Red Hat Security Response Team
-
-
+Vincent Danen / Red Hat Security Response Team 
