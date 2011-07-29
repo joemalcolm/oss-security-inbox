@@ -1,21 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/17
-Message-ID: <20110411220903.GE25772@ngolde.de>
-Date: Tue, 12 Apr 2011 00:09:03 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/6
+Message-ID: <4E327148.5030100@redhat.com>
+Date: Fri, 29 Jul 2011 16:37:28 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: vlc
+CC: Josh Bressers <bressers@...hat.com>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-http://www.videolan.org/security/sa1103.html
-has no CVE id yet.
-Can I get one please?
+On 06/07/2011 02:28 AM, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+>> Hello, Josh, Steve, vendors,
+>>
+>> It was found that vsftpd, Very Secure FTP daemon, when the network
+>> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+>> create a new network namespace per connection. A remote attacker could
+>> use this flaw to cause a memory pressure and denial of the vsftpd
+>> service.
+>>
+>> References:
+>> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+>> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+>> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+>>
+>> This one being a bit tricky one -- from my understanding of the issue,
+>> vsftpd doesn't necessarily have a security flaw on its side. It's
+>> kernel issue / bug, which allows this to be used for vsftpd DoS:
+>> [4]
+>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+>> [5]
+>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+>>
+>> Short-term solution would be probably to address this on the vsftpd
+>> side, the long-term one then being to get this fixed in kernel.
+>>
+>> Though not sure, how it would be wrt to CVE identifier(s) assignment.
+>>
+> 
+> I'm going to assign CVE-2011-2189 for the kernel. There are numerous
+> vendors shipping this bug.
+> 
+> I'll leave it up to MITRE if they think vsftpd should get an ID. I don't
+> think it should myself, but they understand these corner cases better than
+> I.
 
-Cheers
-Nico
+Kees, how are you guys fixing this? Disable net_ns and fix vsftpd? I
+wonder how other distros approach this. Any suggestions?
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
