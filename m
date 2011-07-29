@@ -1,28 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/2
-Message-Id: <201110181503.17556.mweckbecker@suse.de>
-Date: Tue, 18 Oct 2011 15:03:15 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/15
+Message-ID: <915205642.1685717.1311969545367.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 Jul 2011 15:59:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
+Cc: coley <coley@...re.org>
+Subject: Re: CVE-request Tribiq CMS path disclosure HTB22857
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 12 October 2011 23:37:29 Kurt Seifried wrote:
-> Got my Ruby/Ruby on rails mixed up.
->
-[...]
->
-> https://redmine.ruby-lang.org/issues/5418
->
-> Can we get a CVE for this please?
->
+Please use CVE-2011-2727
 
-I think this is already covered by CVE-2011-3187.
-
-> -Kurt Seifried / Red Hat Security Response Team
+Thanks
 
 -- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+    JB
+
+
+----- Original Message -----
+> Can I get CVE-identifier for this issue? Verified that this is a valid
+> bug.
+> 
+> Best regards,
+> Henri Salo
+> 
+> ----- Forwarded message from advisory@...ridge.ch -----
+> 
+> Date: Thu, 3 Mar 2011 12:50:21 +0100 (CET)
+> From: advisory@...ridge.ch
+> To: bugtraq@...urityfocus.com
+> Subject: HTB22857: Path disclosure in Tribiq CMS
+> 
+> Vulnerability ID: HTB22857
+> Reference:
+> http://www.htbridge.ch/advisory/full_path_disclosure_in_tribiq_cms.html
+> Product: Tribiq CMS
+> Vendor: Tribal Limited ( http://tribiq.com/ )
+> Vulnerable Version: 5.2.7b and probably prior versions
+> Vendor Notification: 17 February 2011
+> Vulnerability Type: Path disclosure
+> Status: Fixed by Vendor
+> Risk level: Low
+> Credit: High-Tech Bridge SA - Ethical Hacking & Penetration Testing
+> (http://www.htbridge.ch/)
+> 
+> Vulnerability Details:
+> The vulnerability exists due to failure in the
+> "templatewrap/templatefoot.php", "cmsjs/plugin.js.php",
+> "cmsincludes/cms_plugin_api_link.inc.php" scripts, it's possible to
+> generate an error that will reveal the full path of the script.
+> A remote user can determine the full path to the web root directory
+> and other potentially sensitive information.
+> 
+> 
+> http://host/templatewrap/templatefoot.php
+> http://host/cmsjs/plugin.js.php
+> http://host/cmsincludes/cms_plugin_api_link.inc.php
+> 
+> Solution: Upgrade to the most recent version
+> 
+> 
+> ----- End forwarded message -----
