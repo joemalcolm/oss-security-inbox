@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/1
-Message-ID: <20110728112115.25a6df2f@redhat.com>
-Date: Thu, 28 Jul 2011 11:21:15 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: hplip/foomatic-filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/6
+Message-ID: <4E327148.5030100@redhat.com>
+Date: Fri, 29 Jul 2011 16:37:28 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 18 Jul 2011 14:35:28 +0200 Jan Lieskovsky wrote:
-
-> > The foomatic filters of the hplip package allow remote users
-> > to execute arbitrary commands as the lp user. The flaw allows
-> > hosts which are listed in the printing ACL or local users to
-> > pass PPD file arguments to the foomatic filters. A PoC was
-> > demonstrated using the CUPS server.
-> >
-> > More info and patches are here:
-> >
-> > https://bugzilla.novell.com/show_bug.cgi?id=698451
+On 06/07/2011 02:28 AM, Josh Bressers wrote:
 > 
-> Please use CVE-2011-2697 for this.
+> ----- Original Message -----
+>> Hello, Josh, Steve, vendors,
+>>
+>> It was found that vsftpd, Very Secure FTP daemon, when the network
+>> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
+>> create a new network namespace per connection. A remote attacker could
+>> use this flaw to cause a memory pressure and denial of the vsftpd
+>> service.
+>>
+>> References:
+>> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
+>> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
+>> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+>>
+>> This one being a bit tricky one -- from my understanding of the issue,
+>> vsftpd doesn't necessarily have a security flaw on its side. It's
+>> kernel issue / bug, which allows this to be used for vsftpd DoS:
+>> [4]
+>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
+>> [5]
+>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+>>
+>> Short-term solution would be probably to address this on the vsftpd
+>> side, the long-term one then being to get this fixed in kernel.
+>>
+>> Though not sure, how it would be wrt to CVE identifier(s) assignment.
+>>
+> 
+> I'm going to assign CVE-2011-2189 for the kernel. There are numerous
+> vendors shipping this bug.
+> 
+> I'll leave it up to MITRE if they think vsftpd should get an ID. I don't
+> think it should myself, but they understand these corner cases better than
+> I.
 
-According to SUSE bug, there are two different implementations of the
-filter - one in perl and one in c - in different foomatic versions.
-Both are affected by the same kind of problem, even though they don't
-share vulnerable code.  Is one CVE sufficient here, or is Mitre likely
-to split and assign another when this is processed? Steven?
+Kees, how are you guys fixing this? Disable net_ns and fix vsftpd? I
+wonder how other distros approach this. Any suggestions?
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Thanks, Eugene
