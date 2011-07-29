@@ -1,63 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/18
-Message-ID: <20110726234727.GA28271@openwall.com>
-Date: Wed, 27 Jul 2011 03:47:27 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/2
+Message-ID: <4E3236AC.6000100@redhat.com>
+Date: Fri, 29 Jul 2011 09:57:24 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: iputils ping6 -s buffer overflow
+CC: Marcus Meissner <meissner@...e.de>, veillard@...hat.com, billy.rios@...il.com
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 07/28/2011 06:52 PM, Marcus Meissner wrote:
+> Hi folks, Billy, Daniel,
+> 
+> On
+> http://support.apple.com/kb/HT4808
+> there is a libxml security issue listed:
+> 
+> -----------------------------------------
+> libxml
+> 
+> Available for: Windows 7, Vista, XP SP2 or later
+> 
+> Impact: Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution
+> 
+> Description: A one-byte heap buffer overflow existed in libxml's handling of XML data. Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution.
+> 
+> CVE-ID
+> 
+> CVE-2011-0216 : Billy Rios of the Google Security Team
+> -----------------------------------------
+> 
+> I suspect this is libxml2 and it likely also affects Linux?
+> 
+> If this is correct, could you identify the commit fixing this issue?
+> 
 
-FWIW, I looked into this issue yesterday:
+As far as i know, this does not affect linux
 
-http://www.halfdog.net/Security/2011/Ping6BufferOverflow/
 
-It turns out it's already been patched upstream sometime in 2010, so the
-fix is included in iputils s20101006, and according to the RELNOTES file
-s20100418 already had the fix as well:
-
-[s20100418]
-...
-      ping6: do not allow too large packet size by -s option.
-
-ping_common.c:
-
-	case 's':               /* size of packet to send */
-		datalen = atoi(optarg);
-		if (datalen < 0) {
-			fprintf(stderr, "ping: illegal negative packet size %d.\n", datalen);
-			exit(2);
-		}
-		if (datalen > maxpacket - 8) {
-			fprintf(stderr, "ping: packet size too large: %d\n",
-				datalen);
-			exit(2);
-		}
-		break;
-
-I am unhappy that there's no (redundant) bounds checking near the actual
-array writes, though:
-
-	if (!(options & F_PINGFILLED)) {
-		int i;
-		u_char *p = outpack+8;
-
-		/* Do not forget about case of small datalen,
-		 * fill timestamp area too!
-		 */
-		for (i = 0; i < datalen; ++i)
-			*p++ = i;
-	}
-
-When the bounds check is far from the actual write, the problem is too
-easy to inadvertently reintroduce in a revision of the code.
-
-...and I do find it somewhat ridiculous that an issue like this was
-still found in a ping program in 2010.  Well, at least both ping and
-ping6 are smart enough to drop root (if run SUID root and invoked by
-non-root) right after acquiring the raw socket, before parsing the
-command-line.  So even if the issue were exploitable and ping6 were
-installed SUID root, the impact would be limited.
-
-Alexander
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
