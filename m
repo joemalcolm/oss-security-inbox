@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/11
-Message-ID: <2135733167.299402.1298926534401.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 15:55:34 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/14
+Message-ID: <1266197184.1685454.1311969185062.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 Jul 2011 15:53:05 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: cve request: eglibc memory corruption
+Cc: KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
 ----- Original Message -----
-> Hi,
+> On 07/27/2011 04:57 PM, Steven M. Christey wrote:
+> >
+> > On Mon, 25 Jul 2011, Jeff Mitchell wrote:
+> >
+> >> The Arora and Rekonq web browsers are also vulnerable to the same
+> >> attack vector, and other Qt-based programs may be as well. We're
+> >> working with the Qt team to help enhance their documentation to warn
+> >> developers to take care sanitizing their inputs, but it's not actually
+> >> a Qt flaw.  So we're a bit unsure how to proceed here.
+> >
+> > This sounds like a limitation of the Qt API, which can be avoided by
+> > programmers who are aware of the limitation. Kind of like how strcpy()
+> > can be subject to buffer overflows, *if* the programmer isn't careful.
+> > Also happened with confusing return values from certain OpenSSL API
+> > functions a couple years ago. (The PHP_SELF example is similar.) So,
+> > this should probably get separate CVEs for each application/library
+> > that misuses the relevant function(s).
 > 
-> An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
-> it.
+> That sounds good. On the KDE side, this is kdelibs, Kleopatra, and
+> Konqueror.
 > 
-> Thanks,
-> Mike
+> > If Qt itself contains misuse of its own functions - which happens
+> > sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE,
+> > too.
 > 
-> [0] http://seclists.org/fulldisclosure/2011/Feb/635
-> [1] http://bugs.debian.org/615120
+> As far as I'm aware Qt itself is not affected, but we've not done an
+> exhaustive analysis.
+> 
 
-It should be noted this also affects glibc.
-Does anyone know when this was fixed in glibc by chance? The bug has no details.
+OK, this one is going to get messy. If you folks want to keep this under
+embargo, please contact me in private for IDs (I don't want to try and keep
+track on a public list, I'm already unsure what all needs IDs).
 
-Use CVE-2011-1071
+If this isn't terribly serious, it may make the most sense to publish
+details so we can figure out how many IDs are needed.
 
 Thanks.
 
