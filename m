@@ -1,30 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/2
-Message-ID: <4E89AB0B.2090200@kde.org>
-Date: Mon, 03 Oct 2011 08:31:07 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com,  Tim Brown <timb@...-dimension.org.uk>
-Subject: KDE Security Advisory 20111003-1 published
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/16
+Message-ID: <1232707585.1685834.1311969852095.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 Jul 2011 16:04:12 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
+Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Steve,
 
-KDE Security Advisory 20111003-1 has been published and is available at
-http://www.kde.org/info/security/advisory-20111003-1.txt.
+Can you weigh in on how to assign this one. I'm thinking we want two IDs,
+but I know in the past one ID has been used for catchall type IDs (I'm not
+sure if that's simply done due to lack of details).
 
-This advisory concerns input validation failures affecting kdelibs and
-Rekonq, due to using the default QLabel::AutoText behavior to display
-externally-provided strings. This can be abused to show certificate
-dialogs with spoofed Common Names (CNs), among other things.
+Thanks.
 
-The vulnerability and technical information about the exploit were
-provided by Tim Brown of Nth Dimension. We thank them for their
-responsible disclosure and cooperative handling of the matter.
+-- 
+    JB
 
-The relevant CVEs are: CVE-2011-3365 KSSL and CVE-2011-3366 Rekonq
-
-Thanks,
-Jeff
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> by further investigation of hplip CVE-2011-2722 issue:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
+> 
+> Tim Waugh noticed the similar issue being present also in foomatic-rip
+> universal print filter, when debug mode is enabled. Further details:
+> 
+> It was found that foomatic-rip filter used insecurely created
+> temporary
+> file for storage of PostScript data by rendering the data, intended to
+> be sent to the PostScript filter, when the debug mode was enabled. A
+> local attacker could use this flaw to conduct symlink attacks
+> (overwrite
+> arbitrary file accessible with the privileges of the user running the
+> foomatic-rip universal print filter).
+> 
+> Relevant source code part (Perl script part / foomatic-rip.in):
+> ===============================================================
+> 100 my $logfile = "/tmp/foomatic-rip";
+> ..
+> 3454 # In debug mode save the data supposed to be fed
+> into the
+> 3455 # renderer also into a file
+> 3456 if ($debug) {
+> 3457 $commandline = "tee -a ${logfile}.ps | ( $commandline )";
+> 3458 }
+> 
+> Note: The $logfile variable declaration (line #100) is not an insecure
+> temporary file use issue itself, since this danger (and its proper
+> usage) is documented in /etc/foomatic/filters.conf file.
+> 
+> Relevant source code part (C script part / renderer.c):
+> ========================================================
+> 436 /* Save the data supposed to be fed into the renderer
+> also int o a file*/
+> 437 dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
+> 438 dstrcat(commandline, ")");
+> 439 }
+> 
+> Note: The LOG_FILE variable declaration by itself is not an insecure
+> temporary file use, since this danger (and its proper usage)
+> is documented in /etc/foomatic/filters.conf file.
+> 
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
+> 
+> Credit: Issue discovered by Tim Waugh
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
