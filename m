@@ -1,19 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/1
-Message-ID: </WTtvnPaOhy09Y0pKwQoORG6itg@fEEwdAuY7Lvf1o+SaK2fw+gdbpE>
-Date: Mon, 10 Jan 2011 20:38:55 +0300
-From: Eygene Ryabinkin <rea-sec@...elabs.ru>
-To: oss-security@...ts.openwall.com
-Cc: kalle@....net, felipe@....net, cellog@....net, pajoye@....net
-Subject: Re: Re: CVE-2010-2094: PECL's phar code is vulnerable too
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/5
+Message-ID: <4E325959.1060008@free.fr>
+Date: Fri, 29 Jul 2011 08:55:21 +0200
+From: miniupnp <miniupnp@...e.fr>
+To: Kees Cook <kees@...ntu.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: multiple flaws in minissdpd
 Content-Type: text/plain; charset=utf-8
 
-Felipe, good day.
+Thanks for the report, I'm having a look at theses issues.
 
-Sun, Dec 26, 2010 at 05:26:29PM -0200, Felipe Pena wrote:
-> Yes, I will contact anyone to do it... (I'm not the ext/phar maintainer)
+Le 28/07/2011 23:24, Kees Cook a écrit :
+> Hi!
+>
+> I recently did an audit[1] of minissdpd for Ubuntu, and found a lot of issues,
+> unfortunately. There may be more hiding that I didn't notice, but here
+> are the security bits of my notes:
+>
+>
+> Denial of Service:
+>
+> - off-by-one in packet parsing can trigger crashes on unluckily alignment
+>     minissdpd.c line ~290
+>
+> - walk off end of memory without length check in "cache-control" packet
+>     minissdpd.c line ~314
+>
+> - some unchecked malloc uses could lead to crash
+>
+> - does not clean up /var/run files on crash
+>
+>
+> Corruption, possible manipulation of responses:
+>
+> - linefeed injection in service requests
+>
+> - unchecked write lengths (could get interrupted, lead to corruption)
+>
+>
+> Memory corruption, with execution control likely:
+>
+> - multiple buffer overflows in processRequest
+>     - unchecked decoded lengths
+>     - unchecked buffer creation length
+>     - integer overflows in decoded lengths
+>     - write null byte arbitrarily in heap
+>     - could read stack memory out on requests (including canary if OS
+>       used stack protector canary that wasn't null-started). e.g.:
+>       - add bogus service with giant coded-length "location" entry
+>       - read back with type==1 and matching "st"
+>
+>
+> General Safety:
+>
+> - does not drop privileges
+>
+>
+> Hopefully all of this can get fixed up, it looks like a useful service. :)
+>
+> Thanks,
+>
+> -Kees
+>
+> [1] https://bugs.launchpad.net/ubuntu/+source/minissdpd/+bug/813313
+>
+>   
 
-Any news on this?  http://pecl.php.net/package/phar shows no
-revisions :((
--- 
-Eygene
