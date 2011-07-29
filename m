@@ -1,32 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/8
-Message-ID: <Pine.GSO.4.64.1107271651010.17118@faron.mitre.org>
-Date: Wed, 27 Jul 2011 16:57:32 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/4
+Message-Id: <201107290952.42084.thomas@suse.de>
+Date: Fri, 29 Jul 2011 09:52:41 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-cc: KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
-Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+Cc: Billy Rios <billy.rios@...il.com>
+Subject: Re: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
 
-On Mon, 25 Jul 2011, Jeff Mitchell wrote:
+Hello,
+if the code executed is the same on Windows and on Linux I would assume
+this affects Linux too. That the bug is not "seen" during fuzzing
+means nothing.
 
-> The Arora and Rekonq web browsers are also vulnerable to the same attack
-> vector, and other Qt-based programs may be as well. We're working with
-> the Qt team to help enhance their documentation to warn developers to
-> take care sanitizing their inputs, but it's not actually a Qt flaw. So
-> we're a bit unsure how to proceed here.
+Cheers,
+Thomas
 
-This sounds like a limitation of the Qt API, which can be avoided by 
-programmers who are aware of the limitation.  Kind of like how strcpy() 
-can be subject to buffer overflows, *if* the programmer isn't careful. 
-Also happened with confusing return values from certain OpenSSL API 
-functions a couple years ago.  (The PHP_SELF example is similar.)  So, 
-this should probably get separate CVEs for each application/library that 
-misuses the relevant function(s).
+Am Freitag, 29. Juli 2011, 06:59:22 schrieb Billy Rios:
+> The crash was indeed in libxml2, but I could not get the bug to repro in
+> Linux.  We took the crash file and fuzzed a bit more on Linux, but no
+> crashes were observed.
+> 
+> BK
+> 
+> 
+> On Thu, Jul 28, 2011 at 6:22 AM, Marcus Meissner <meissner@...e.de> wrote:
+> 
+> > Hi folks, Billy, Daniel,
+> >
+> > On
+> > http://support.apple.com/kb/HT4808
+> > there is a libxml security issue listed:
+> >
+> > -----------------------------------------
+> > libxml
+> >
+> > Available for: Windows 7, Vista, XP SP2 or later
+> >
+> > Impact: Visiting a maliciously crafted website may lead to an unexpected
+> > application termination or arbitrary code execution
+> >
+> > Description: A one-byte heap buffer overflow existed in libxml's handling
+> > of XML data. Visiting a maliciously crafted website may lead to an
+> > unexpected application termination or arbitrary code execution.
+> >
+> > CVE-ID
+> >
+> > CVE-2011-0216 : Billy Rios of the Google Security Team
+> > -----------------------------------------
+> >
+> > I suspect this is libxml2 and it likely also affects Linux?
+> >
+> > If this is correct, could you identify the commit fixing this issue?
+> >
+> > Ciao, Marcus
+> >
+> 
 
-If Qt itself contains misuse of its own functions - which happens 
-sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE, 
-too.
 
-- Steve
+-- 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
