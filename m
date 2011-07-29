@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/4
-Message-ID: <1317166265.2853.6.camel@mdlinux>
-Date: Tue, 27 Sep 2011 19:31:05 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: coley@...us.mitre.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: CVE Request: ffmpeg/libav
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/9
+Message-ID: <4E32CD19.6010608@redhat.com>
+Date: Fri, 29 Jul 2011 17:09:13 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Jeffrey Layton <jlayton@...hat.com>
+Subject: CVE-2011-2724 assignment notification -- samba -- incomplete fix for CVE-2010-0547 issue
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Josh, Steve, vendors,
 
-I can't seem to find a CVE for the following:
+   during creation of automated test case for samba CVE-2010-0547 issue 
+I have noticed still to be possible mount.cifs to succeed to mount Samba 
+share to specially-crafted mount point (containing newline character), 
+potentially resulting into mtab corruption (on systems, where glibc 
+package was not patched against CVE-2010-0296 flaw yet).
 
-http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
+The new CVE identifier of CVE-2011-2724 has been assigned to this issue
+(as an incomplete fix for CVE-2010-0547 issue).
 
-"Fix several security issues in matroskadec.c (MSVR-11-0080)."
+Kudos to Tomas Hoger and Jeffrey Layton for their analysis of the issue:
 
-Thanks,
+check_mtab() calls check_newline() to check device and directory name.
+check_newline() returns EX_USAGE (1) when error is detected, while 
+check_mtab() expects -1 to indicate an error.
 
-Marc.
+and to Jeffrey Layton again for providing the patch almost immediately:
+[1] http://comments.gmane.org/gmane.linux.kernel.cifs/3827
 
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2724
 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
