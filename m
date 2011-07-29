@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/4
-Message-ID: <20110414101413.28823b71@orphan>
-Date: Thu, 14 Apr 2011 10:14:13 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/14
+Message-ID: <1266197184.1685454.1311969185062.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 Jul 2011 15:53:05 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 13 Apr 2011 19:02:05 -0400 Mike O'Connor wrote:
+----- Original Message -----
+> On 07/27/2011 04:57 PM, Steven M. Christey wrote:
+> >
+> > On Mon, 25 Jul 2011, Jeff Mitchell wrote:
+> >
+> >> The Arora and Rekonq web browsers are also vulnerable to the same
+> >> attack vector, and other Qt-based programs may be as well. We're
+> >> working with the Qt team to help enhance their documentation to warn
+> >> developers to take care sanitizing their inputs, but it's not actually
+> >> a Qt flaw.  So we're a bit unsure how to proceed here.
+> >
+> > This sounds like a limitation of the Qt API, which can be avoided by
+> > programmers who are aware of the limitation. Kind of like how strcpy()
+> > can be subject to buffer overflows, *if* the programmer isn't careful.
+> > Also happened with confusing return values from certain OpenSSL API
+> > functions a couple years ago. (The PHP_SELF example is similar.) So,
+> > this should probably get separate CVEs for each application/library
+> > that misuses the relevant function(s).
+> 
+> That sounds good. On the KDE side, this is kdelibs, Kleopatra, and
+> Konqueror.
+> 
+> > If Qt itself contains misuse of its own functions - which happens
+> > sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE,
+> > too.
+> 
+> As far as I'm aware Qt itself is not affected, but we've not done an
+> exhaustive analysis.
+> 
 
-> Focusing on how you think an update ought to *look* (e.g. should the
-> advisories be public?) isn't as important as the update getting
-> *out*.  Especially since you're dealing with GPL'ed code, I think
-> that's something you can measure.  Just ask the constituency a month
-> or so after some major kernel issue who has released updates/fixes
-> and who hasn't, show the relevant source, and take it from there.
+OK, this one is going to get messy. If you folks want to keep this under
+embargo, please contact me in private for IDs (I don't want to try and keep
+track on a public list, I'm already unsure what all needs IDs).
 
-Even though it's GPL'ed code, some vendors may not make their sources
-publicly available to "random strangers" and rather only restrict them
-to their customers.  Given the current context of this discussion,
-public visibility of their source packages may not be better than the
-visibility of their binary packages or "advisories" (whatever form you
-expect them to be).
+If this isn't terribly serious, it may make the most sense to publish
+details so we can figure out how many IDs are needed.
+
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
