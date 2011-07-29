@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/4
-Message-ID: <20110516180956.GC2430@redhat.com>
-Date: Mon, 16 May 2011 12:09:56 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE requests; issues fixed in MySQL 5.1.52
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/3
+Message-ID: <CAM4uigfMzY+ZZA2_CXMvzv9wT8hD6pk-mSHv_pcZPTbqE5Sp+w@mail.gmail.com>
+Date: Thu, 28 Jul 2011 21:59:22 -0700
+From: Billy Rios <billy.rios@...il.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, veillard@...hat.com
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-I see the following changes as fixed in MySQL 5.1.52, but cannot find
-any CVEs for them:
+The crash was indeed in libxml2, but I could not get the bug to repro in
+Linux.  We took the crash file and fuzzed a bit more on Linux, but no
+crashes were observed.
 
-InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
-examining the same table's information in the INFORMATION_SCHEMA
-database at the same time could cause a crash in the debug version of
-the server. (Bug #54678)
+BK
 
-Security Fix: The server crashed for assignment of values of types other
-than Geometry to items of type GeometryCollection (MultiPoint,
-MultiCurve, MultiSurface). Now the server checks the field type and
-fails with bad geometry value if it detects incorrect parameters. (Bug
-#55531)
 
-Security Fix: EXPLAIN EXTENDED caused a server crash with some prepared
-statements. (Bug #54494)
+On Thu, Jul 28, 2011 at 6:22 AM, Marcus Meissner <meissner@...e.de> wrote:
 
-Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
-derived table caused a server crash. (Bug #54488)
+> Hi folks, Billy, Daniel,
+>
+> On
+> http://support.apple.com/kb/HT4808
+> there is a libxml security issue listed:
+>
+> -----------------------------------------
+> libxml
+>
+> Available for: Windows 7, Vista, XP SP2 or later
+>
+> Impact: Visiting a maliciously crafted website may lead to an unexpected
+> application termination or arbitrary code execution
+>
+> Description: A one-byte heap buffer overflow existed in libxml's handling
+> of XML data. Visiting a maliciously crafted website may lead to an
+> unexpected application termination or arbitrary code execution.
+>
+> CVE-ID
+>
+> CVE-2011-0216 : Billy Rios of the Google Security Team
+> -----------------------------------------
+>
+> I suspect this is libxml2 and it likely also affects Linux?
+>
+> If this is correct, could you identify the commit fixing this issue?
+>
+> Ciao, Marcus
+>
 
-There are a whole bunch of other crash-type bugs corrected in 5.1.52
-that upstream did not explicitly flag as security, which might be
-considered security-relevant as well:
-
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
-
--- 
-Vincent Danen / Red Hat Security Response Team 
