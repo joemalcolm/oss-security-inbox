@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/1
-Message-ID: <4EF32046.9030805@redhat.com>
-Date: Thu, 22 Dec 2011 13:19:18 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Rainer Gerhards <rgerhards@...scon.com>, Tomas Heinrich <theinric@...hat.com>
-Subject: CVE Request -- rsyslog -- DoS due integer signedness error while extending rsyslog counted string buffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/1
+Message-ID: <4E32093F.1020401@redhat.com>
+Date: Fri, 29 Jul 2011 09:13:35 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Kees Cook <kees@...ntu.com>
+Subject: Re: CVE request: kernel: gro: Only reset frag0 when skb can be pulled
 Content-Type: text/plain; charset=utf-8
 
+On 07/29/2011 06:30 AM, Kees Cook wrote:
+> Hi,
+> 
+> This fixes a remote crasher under certain network device configurations:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=17dd759c67f21e34f2156abcf415e1f60605a188
 
-An integer signedness error, leading to heap based buffer overflow was found in
-the way the imfile module of rsyslog, an enhanced system logging and kernel
-message trapping daemon, processed text files larger than 64 KB. When the
-imfile rsyslog module was enabled, a local attacker could use this flaw to
-cause denial of service (rsyslogd daemon hang) via specially-crafted message,
-to be logged.
+I'm looking at this too.
 
-Upstream bug report:
-[1] http://bugzilla.adiscon.com/show_bug.cgi?id=221
+CVE-2011-2723
 
-Upstream patch:
-[2] http://git.adiscon.com/?p=rsyslog.git;a=commit;h=6bad782f154b7f838c7371bf99c13f6dc4ec4101
-
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=769822
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Eugene
