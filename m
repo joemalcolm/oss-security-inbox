@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/20/2
-Message-ID: <CAPZ8mV5HBmTNYJKq-pnAWUbTKeZ4cDYNs47zymiCbVagC+A1+g@mail.gmail.com>
-Date: Sat, 20 Aug 2011 10:59:50 -0700
-From: Mark Doliner <mark@...gant.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/7
+Message-ID: <20110729085608.GA3681@pisco.westfalen.local>
+Date: Fri, 29 Jul 2011 10:56:09 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Pidgin crash
+Cc: Billy Rios <billy.rios@...il.com>
+Subject: Re: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
+Thomas Biege wrote:
+ 
+> Hello,
+> if the code executed is the same on Windows and on Linux I would assume
+> this affects Linux too. That the bug is not "seen" during fuzzing
+> means nothing.
 
-"Certain characters in the nicknames of IRC users can trigger a null
-pointer dereference in the IRC protocol plugin's handling of responses
-to WHO requests. This can cause a crash on some operating systems.
-Clients based on libpurple 2.8.0 through 2.9.0 are affected."
-http://pidgin.im/news/security/?id=53
+Grepping through the codebase show quite a few _WIN32 ifdefs, though.
 
-The crash was discovered by Djego Ibanez.
+But of course we need to see the patch applied by Apple.
 
-Thanks,
-Mark
+Cheers,
+        Moritz
