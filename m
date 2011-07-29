@@ -1,46 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/10
-Message-ID: <Pine.GSO.4.64.1107281118250.20828@faron.mitre.org>
-Date: Thu, 28 Jul 2011 11:18:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/10
+Message-ID: <20110729172844.0658456d@redhat.com>
+Date: Fri, 29 Jul 2011 17:28:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
+Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-Use CVE-2008-7291
+Can you add me to the list?  I've been on the vendor-sec@ via Red Hat
+expander.
 
-- Steve
+key id: 7BF4A180
+fingerprint: E0B1 2194 B60C 4DD5 77DA  59A8 C0A3 D1DC 7BF4 A180
 
+Thank you!
 
-On Thu, 28 Jul 2011, Henri Salo wrote:
-
-> On Thu, Mar 03, 2011 at 03:38:32PM -0500, Josh Bressers wrote:
->> ----- Original Message -----
->>> Can I get CVE-identifier for this vulnerability? It's old one :)
->>>
->>> Software gri is vulnerable to insecure temp file generation.
->>>
->>> References:
->>> http://gri.sourceforge.net/gridoc/html/Version_2_12.html
->>> http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
->>> note that this URL is not meant for public use as it is temporary)
->>>
->>
->> Steve,
->>
->> Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
->> is here:
->> https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
->>
->> Thanks.
->>
->> --
->>     JB
->
-> This is still unhandled. What is the status?
->
-> Best regards,
-> Henri Salo
->
+-- 
+Tomas Hoger / Red Hat Security Response Team
