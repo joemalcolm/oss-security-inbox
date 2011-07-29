@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/2
-Message-ID: <4DDB512A.5040301@redhat.com>
-Date: Tue, 24 May 2011 08:33:14 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Zend Framework -- SQL injection when using PDO_MySql
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/13
+Message-ID: <50513892.1685297.1311968802612.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 29 Jul 2011 15:46:42 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: drupal7 SA-CORE-2011-003 (access restriction bypass)
 Content-Type: text/plain; charset=utf-8
 
 
-Hello, Josh, Steve, vendors,
 
-   a possibility of SQL injection flaw has been reported in Zend 
-Framework, when MySQL PDO driver was used:
-[1] http://framework.zend.com/security/advisory/ZF2011-02
+----- Original Message -----
+> Could a CVE be assigned to this issue? This only affects 7.x as the
+> features affected are new in 7.x. It is an access bypass in private
+> file fields comments.
+> 
+> http://drupal.org/node/1231510
+> 
 
-Could you allocate a CVE id for this?
+Please use CVE-2011-2726
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thanks.
+
+-- 
+    JB
