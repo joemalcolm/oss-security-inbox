@@ -1,31 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/3
-Message-ID: <777693093.44058.1295542633717.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Jan 2011 11:57:13 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/2
+Message-ID: <4E3236AC.6000100@redhat.com>
+Date: Fri, 29 Jul 2011 09:57:24 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: heap corruption in VLC media player
+CC: Marcus Meissner <meissner@...e.de>, veillard@...hat.com, billy.rios@...il.com
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-This should only need one ID. Please use CVE-2011-0021.
+On 07/28/2011 06:52 PM, Marcus Meissner wrote:
+> Hi folks, Billy, Daniel,
+> 
+> On
+> http://support.apple.com/kb/HT4808
+> there is a libxml security issue listed:
+> 
+> -----------------------------------------
+> libxml
+> 
+> Available for: Windows 7, Vista, XP SP2 or later
+> 
+> Impact: Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution
+> 
+> Description: A one-byte heap buffer overflow existed in libxml's handling of XML data. Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution.
+> 
+> CVE-ID
+> 
+> CVE-2011-0216 : Billy Rios of the Google Security Team
+> -----------------------------------------
+> 
+> I suspect this is libxml2 and it likely also affects Linux?
+> 
+> If this is correct, could you identify the commit fixing this issue?
+> 
 
-Thanks.
+As far as i know, this does not affect linux
+
 
 -- 
-    JB
-
-
------ Original Message -----
-> From upstream git [1]:
-> 
-> "This patch resolves two heap corruption vulnerabilities in the CDG
-> decoder for VLC media player. In both cases, a failure to properly
-> validate indexes into statically-sized arrays on the heap allows a
-> maliciously crafted CDG video to corrupt the heap in a controlled
-> manner, potentially leading to code execution."
-> 
-> -Dan
-> 
-> [1]
-> http://git.videolan.org/?p=vlc.git;a=commit;h=f9b664eac0e1a7bceed9d7b5854fd9fc351b4aab
+Huzaifa Sidhpurwala / Red Hat Security Response Team
