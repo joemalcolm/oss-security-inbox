@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/16
-Message-ID: <CAOSRhRMYs921N+a5zJAv7sqGkr2C5tka7-PdaKJXt62rBJfnyA@mail.gmail.com>
-Date: Wed, 26 Oct 2011 13:43:16 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/9
+Message-ID: <4E32CD19.6010608@redhat.com>
+Date: Fri, 29 Jul 2011 17:09:13 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Jeffrey Layton <jlayton@...hat.com>
+Subject: CVE-2011-2724 assignment notification -- samba -- incomplete fix for CVE-2010-0547 issue
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
-> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-> to reset dmesg_restrict to 0.
->
+Hello Josh, Steve, vendors,
 
-Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
-with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
-correct that CAP_SYS_ADMIN is now required to modify the sysctl.
+   during creation of automated test case for samba CVE-2010-0547 issue 
+I have noticed still to be possible mount.cifs to succeed to mount Samba 
+share to specially-crafted mount point (containing newline character), 
+potentially resulting into mtab corruption (on systems, where glibc 
+package was not patched against CVE-2010-0296 flaw yet).
 
-I also agree with Vasiliy's point that LXC security boundaries in the
-mainline kernel are not well defined at this point, so the whole thing
-is a bit silly.
+The new CVE identifier of CVE-2011-2724 has been assigned to this issue
+(as an incomplete fix for CVE-2010-0547 issue).
 
--Dan
+Kudos to Tomas Hoger and Jeffrey Layton for their analysis of the issue:
+
+check_mtab() calls check_newline() to check device and directory name.
+check_newline() returns EX_USAGE (1) when error is detected, while 
+check_mtab() expects -1 to indicate an error.
+
+and to Jeffrey Layton again for providing the patch almost immediately:
+[1] http://comments.gmane.org/gmane.linux.kernel.cifs/3827
+
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2724
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
