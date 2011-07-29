@@ -1,20 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/32
-Message-ID: <20110404171359.GB5146@genesis.frugalware.org>
-Date: Mon, 4 Apr 2011 19:13:59 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/10
+Message-ID: <20110729172844.0658456d@redhat.com>
+Date: Fri, 29 Jul 2011 17:28:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: Closed list
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 12:44:33AM +0400, Solar Designer <solar@...nwall.com> wrote:
-> Yet you're on the list for now.  Perhaps try to evaluate your use of the
-> info that will be arriving to you through the list and ask to be
-> unsubscribed if you determine that you're not making timely use of the
-> info anyway.
+Hi!
 
-That's exactly what I will do.
+Can you add me to the list?  I've been on the vendor-sec@ via Red Hat
+expander.
 
-Thanks.
+key id: 7BF4A180
+fingerprint: E0B1 2194 B60C 4DD5 77DA  59A8 C0A3 D1DC 7BF4 A180
 
-Content of type "application/pgp-signature" skipped
+Thank you!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
