@@ -1,22 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/2
-Message-ID: <4E0403C7.2040608@redhat.com>
-Date: Fri, 24 Jun 2011 11:25:59 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: bluetooth: l2cap and rfcomm: fix 1 byte infoleak to userspace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/3
+Message-ID: <CAM4uigfMzY+ZZA2_CXMvzv9wT8hD6pk-mSHv_pcZPTbqE5Sp+w@mail.gmail.com>
+Date: Thu, 28 Jul 2011 21:59:22 -0700
+From: Billy Rios <billy.rios@...il.com>
+To: Marcus Meissner <meissner@...e.de>
+Cc: OSS Security List <oss-security@...ts.openwall.com>, veillard@...hat.com
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
->From Marek Kroemeke and Filip Palian, structures "l2cap_conninfo" and
-"rfcomm_conninfo" have one padding byte each. This byte in "cinfo" is
-copied to userspace uninitialized.
+The crash was indeed in libxml2, but I could not get the bug to repro in
+Linux.  We took the crash file and fuzzed a bit more on Linux, but no
+crashes were observed.
 
-l2cap: since 99f4808d (v2.6.39-rc1), also in l2cap.c prior to that
-history:e9df2323 (v2.5.14)
-rfcomm: since history:9363d05d (v2.6.11-rc2)
+BK
 
-http://git.kernel.org/linus/8d03e971cf403305217b8e62db3a2e5ad2d6263f
-https://bugzilla.redhat.com/show_bug.cgi?id=703019
 
-Thanks, Eugene
+On Thu, Jul 28, 2011 at 6:22 AM, Marcus Meissner <meissner@...e.de> wrote:
+
+> Hi folks, Billy, Daniel,
+>
+> On
+> http://support.apple.com/kb/HT4808
+> there is a libxml security issue listed:
+>
+> -----------------------------------------
+> libxml
+>
+> Available for: Windows 7, Vista, XP SP2 or later
+>
+> Impact: Visiting a maliciously crafted website may lead to an unexpected
+> application termination or arbitrary code execution
+>
+> Description: A one-byte heap buffer overflow existed in libxml's handling
+> of XML data. Visiting a maliciously crafted website may lead to an
+> unexpected application termination or arbitrary code execution.
+>
+> CVE-ID
+>
+> CVE-2011-0216 : Billy Rios of the Google Security Team
+> -----------------------------------------
+>
+> I suspect this is libxml2 and it likely also affects Linux?
+>
+> If this is correct, could you identify the commit fixing this issue?
+>
+> Ciao, Marcus
+>
+
