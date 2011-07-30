@@ -1,62 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/6
-Message-ID: <20110516185637.GA30099@openwall.com>
-Date: Mon, 16 May 2011 22:56:37 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/3
+Message-ID: <20110730172731.GA17353@openwall.com>
+Date: Sat, 30 Jul 2011 21:27:31 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Cc: Abhijeet Patil <getabhijeetpatil@...il.com>
+Subject: Re: CFP open for ClubHack2011
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
-> Its probably about time to review libraries that are commonly
-> linked to (formerly-) suid programs, such as
-> libldap, libssl etc. In near future, in the advent of file caps
-> they are often lacking proper checks.
+Hi all,
 
-Good idea.
+I made an exception and approved this one CFP for the following reasons:
 
-> They usually just compare uid against euid (not even gid sometimes)
-> and do not check the dumpable flag or AT_SECURE (dont know whether
-> glibc exports a proper function to easily check that at all).
+1. To show what's coming to the list, and to make sure everyone in here
+approves that we reject these things unconditionally going forward.
 
-glibc exports the __libc_enable_secure variable, which is initialized
-based on AT_* including AT_SECURE.  It also exports __secure_getenv().
+If anyone in here wants to see these on the list, please let me know.
+Otherwise, I'll assume that we've voted unanimously to have them rejected.
 
-> The libraries that I had a quick look at and which were found
-> "vulnerable" are:
-> 
-> - openssl-1.0.0c
+Ditto for e-magazine issue announcements - that is, unless anyone tells
+me they want to see those in here, I'll be rejecting any and all of them
+without having to analyze them for content relevant to both security and
+Open Source at once.
 
-We've been patching OpenSSL to use __libc_enable_secure for over 10
-years now. ;-)  The patch is in use at least in Owl and ALT Linux.
+2. Not to give the other Indian conference a competitive advantage,
+since I had similarly approved their CFP:
 
-* Sun Apr 22 2001 Solar Designer <solar-at-owl.openwall.com>
-...
-- Use glibc's __libc_enable_secure for the new OPENSSL_issetugid().
+http://www.openwall.com/lists/oss-security/2011/07/27/2
 
-I've attached our patches for OpenSSL, ncurses, S-Lang, termcap, rpm's
-popt.  Of these, OpenSSL and ncurses apply to recent versions, termcap
-is old by itself, whereas the rest might be obsoleted by changes made
-upstream (and they're not strictly for the problem you brought up).
-
-For OpenSSL, there's another problem: it looks like some getenv()'s
-were added after the initial introduction of OPENSSL_issetugid() and
-without consideration for possible security implications.  Some of those
-should be patched.  This got on my to-do when we updated to OpenSSL
-1.0.0d earlier this year - to do myself or delegate, but I never got
-around to...  Maybe you're the one to look into this and come up with a
-patch now? ;-)
+No one appeared to care about the issues I raised when approving that
+previous CFP, which to me means that no one cared to see the CFP itself
+as well - so we got very close to the decision to be rejecting these
+unconditionally, which would make things easy for me as a moderator. :-)
 
 Thanks,
 
 Alexander
 
-View attachment "openssl-1.0.0b-owl-alt-issetugid.diff" of type "text/plain" (345 bytes)
-
-View attachment "ncurses-5.7-owl-glibc-enable_secure.diff" of type "text/plain" (930 bytes)
-
-View attachment "slang-1.4.6-owl-fixes.diff" of type "text/plain" (7525 bytes)
-
-View attachment "termcap-2.0.8-owl-TERMCAP.diff" of type "text/plain" (406 bytes)
-
-View attachment "rpm-4.2-owl-popt-sgid.diff" of type "text/plain" (1987 bytes)
+On Sat, Jul 30, 2011 at 10:06:17PM +0530, Abhijeet Patil wrote:
+> Its time for hackers across the globe to gather in India.
+> ClubHack announces its CFP open for ClubHack2011. See
+> http://clubhack.com/2011/cfp
+...
