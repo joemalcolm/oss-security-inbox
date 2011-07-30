@@ -1,33 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/11
-Message-ID: <854174179.216810.1298573420094.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 13:50:20 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/2
+Message-ID: <CANbgwsFy5SQO_Q7YwyMJmjKA3DOVzdY-PtoaOjV4eSHD+sVwqQ@mail.gmail.com>
+Date: Sat, 30 Jul 2011 22:06:17 +0530
+From: Abhijeet Patil <getabhijeetpatil@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
+Subject: CFP open for ClubHack2011
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1016
+Hey,
+Its time for hackers across the globe to gather in India.
+ClubHack announces its CFP open for ClubHack2011. See
+http://clubhack.com/2011/cfp
 
-Thanks.
+ClubHack2011 is expecting a good deep knowledge technical
+presentations/demonstrations on topics from the world of Information
+Security. These presentations are expected to be of 40 minutes each. The
+schedule time for each presenter would be 50 minutes out of which 40 minutes
+are for the presentation & 10 for the question-answer sessions. We’d request
+you to submit the papers keeping the time constraint in mind.
 
--- 
-    JB
+:: Event ::
+Date: 3rd & 4th December (As Usual the first weekend of December)
 
------ Original Message -----
-> Check values passed in to AARESOLVE_OFFSET on r300. It can be used to
-> write arbitrary data to VRAM, GTT, etc. This is specific to a range of
-> GPUs only.
-> 
-> drm/radeon/kms: check AA resolve registers on r300
-> http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
-> 
-> [PATCH] drm/radeon: fix regression with AA resolve checking
-> https://patchwork.kernel.org/patch/576101/
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=680000
-> 
-> Eugene
-> --
-> Eugene Teo / Red Hat Security Response Team
+
+:: Scope ::
+(includes, but not limited to)
+
+# Cloud Application Security
+# Mobile Security (cellular technologies)
+# Mobile platform attacks (iOS, Android, BB, Win7, Symbian)
+# Cyber Intelligence
+# Cyber warfare
+# Hardware mods
+# Critical Infrastructure Attack & Protection
+# Protocol based vulnerability in networks and computers
+# Firewall Evasion techniques
+# Data Recovery and Incident Response
+# WLAN and Bluetooth Security
+# Cryptography and Cryptanalysis
+# Computer forensics
+# Open source hacking toolkit
+# Cyber Crime & law
+
+:: Exclusion ::
+# Sales Pitch
+
+
+:: Deadlines ::
+Opening: 30th July 2011
+Abstract Submission: 15th October 2011
+Announcement of selected papers: 5th November 2011
+Full Paper Submission: 12th November 2011
+
+:: Speakers' Privileges ::
+# 100% Travel reimbursement of economy return tickets for all Indian speaker
+# Travel arrangement (not reimbursement) for all foreign speakers
+# Accommodation for 2
+# Complementary passes for event & party for 2
+# Gift hampers & freebies
+
+
+:: Sponsors ::
+That reminds, if you are interested in supporting the event in any
+possible way, please write to us sponsor@...bhack.com
+
+
+:: Other details ::
+All other details are available at
+Event website: http://clubhack.com/2011.
+
+See previous years websites at
+    http://clubhack.com/2007
+    http://clubhack.com/2008
+    http://clubhack.com/2009
+    http://clubhack.com/2010
+
+
+:: Submission ::
+Check submission details at http://clubhack.com/2011/cfp & send it to
+cfp@...bhack.com
+
+
+See you in India this winter.
+
+Thanks
+team ClubHack
+
