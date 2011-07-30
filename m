@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/2
-Message-ID: <4EA924B0.5080208@redhat.com>
-Date: Thu, 27 Oct 2011 15:00:24 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/4
+Message-id: <7C39A549-C1DA-410D-8B75-8CC0B9D04F06@apple.com>
+Date: Sat, 30 Jul 2011 13:50:40 -0700
+From: Jeffrey Czerniak <jeffcz@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: crypto: ghash: null pointer deref if no key is set
+Subject: Re: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-On 10/27/2011 02:40 PM, Eugene Teo wrote:
-> Description from the commit: The ghash_update function passes a pointer
-> to gf128mul_4k_lle which will be NULL if ghash_setkey is not called or
-> if the most recent call to ghash_setkey failed to allocate memory.  This
-> causes an oops.  Fix this up by returning an error code in the null case.
->
-> This is trivially triggered from unprivileged userspace through the
-> AF_ALG interface by simply writing to the socket without setting a key.
->
-> The ghash_final function has a similar issue, but triggering it requires
-> a memory allocation failure in ghash_setkey _after_ at least one
-> successful call to ghash_update.
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=749475
-> https://secunia.com/advisories/46584/
-> https://bugs.gentoo.org/show_bug.cgi?id=388581
->
-> Upstream commit:
-> http://git.kernel.org/linus/7ed47b7d142ec99ad6880bbbec51e9f12b3af74c
->
-> +config CRYPTO_GHASH
-> was added in commit 2cdc6899, v2.6.32-rc1.
->
-
-This has been assigned CVE-2011-4081
+On Jul 29, 2011, at 1:56 AM, Moritz Muehlenhoff wrote:
+> Thomas Biege wrote:
+> 
+>> Hello,
+>> if the code executed is the same on Windows and on Linux I would assume
+>> this affects Linux too. That the bug is not "seen" during fuzzing
+>> means nothing.
+> 
+> Grepping through the codebase show quite a few _WIN32 ifdefs, though.
+> 
+> But of course we need to see the patch applied by Apple.
+> 
+> Cheers,
+>        Moritz
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Hello Moritz,
+
+The patch we applied has been shared with Daniel Veillard of the libxml2 project.
+
+We understand this issue may affect other distributors of libxml2, and we have not seen evidence that our patch has been applied upstream.  We do not feel it is prudent to share the patch on a public mailing list such as oss-security, as we do not wish to inadvertently facilitate exploitation of the issue if other distributors are affected.
+
+We would like to cooperate with other downstream distributors of free and open source software on security issues, as Apple is a major distributor of such software.  However, our previous attempts to engage the community have not been successful.  One-way disclosure of information related to security issues subjects our customers to non-trivial risk without providing any added security benefit.  This is particularly pertinent if the disclosure were to occur in advance of the release of fixed software.
+
+Best regards,
+
+----------------
+Jeffrey Czerniak
+Apple Product Security Response
+jeffcz@...le.com
+----------------
+
+
+
+
+
+
