@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/2
-Message-ID: <4ED6CA83.6050301@redhat.com>
-Date: Wed, 30 Nov 2011 17:29:55 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/4
+Message-id: <7C39A549-C1DA-410D-8B75-8CC0B9D04F06@apple.com>
+Date: Sat, 30 Jul 2011 13:50:40 -0700
+From: Jeffrey Czerniak <jeffcz@...le.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
+Subject: Re: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-On 11/30/2011 05:11 PM, Solar Designer wrote:
-
-> > All -
-> >
-> > On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
->> >> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
->> >> scripter framework.
-> > We do not have a strict policy on whether security tool announcements
-> > are appropriate in here or not.  My current stance on it is that
-> > one-time announcements of tools with specific relevance to Open Source
-> > are OK, whereas repeated new version announcements are not.  Thus, I
-> > approved the announcement of XSSer this one time, but I don't intend to
-> > approve an announcement of the next version of XSSer.  Please let me
-> > know if you'd like this approach changed in some way.
-> >
-Agreed. Random thought: or if a project makes a major
-breakthrough/update/change/once a year type of announcement is probably
-sane too? I like hearing about new tools and definitely don't have time
-to go through Google/etc any more =).
+On Jul 29, 2011, at 1:56 AM, Moritz Muehlenhoff wrote:
+> Thomas Biege wrote:
+> 
+>> Hello,
+>> if the code executed is the same on Windows and on Linux I would assume
+>> this affects Linux too. That the bug is not "seen" during fuzzing
+>> means nothing.
+> 
+> Grepping through the codebase show quite a few _WIN32 ifdefs, though.
+> 
+> But of course we need to see the patch applied by Apple.
+> 
+> Cheers,
+>        Moritz
 
 
-> > Meanwhile, the various CFPs and e-magazine issue announcements that are
-> > arriving to oss-security are being rejected - as we decided previously.
-> >
-+1
+Hello Moritz,
 
-> > Alexander
--- -Kurt Seifried / Red Hat Security Response Team
+The patch we applied has been shared with Daniel Veillard of the libxml2 project.
+
+We understand this issue may affect other distributors of libxml2, and we have not seen evidence that our patch has been applied upstream.  We do not feel it is prudent to share the patch on a public mailing list such as oss-security, as we do not wish to inadvertently facilitate exploitation of the issue if other distributors are affected.
+
+We would like to cooperate with other downstream distributors of free and open source software on security issues, as Apple is a major distributor of such software.  However, our previous attempts to engage the community have not been successful.  One-way disclosure of information related to security issues subjects our customers to non-trivial risk without providing any added security benefit.  This is particularly pertinent if the disclosure were to occur in advance of the release of fixed software.
+
+Best regards,
+
+----------------
+Jeffrey Czerniak
+Apple Product Security Response
+jeffcz@...le.com
+----------------
+
+
+
+
 
 
