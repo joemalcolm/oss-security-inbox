@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/4
-Message-Id: <201105311441.44989.thomas@suse.de>
-Date: Tue, 31 May 2011 14:41:44 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/3
+Message-ID: <20110730172731.GA17353@openwall.com>
+Date: Sat, 30 Jul 2011 21:27:31 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
+Cc: Abhijeet Patil <getabhijeetpatil@...il.com>
+Subject: Re: CFP open for ClubHack2011
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-found this in RH's bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=709165
+Hi all,
 
-Vincent Danen 2011-05-30 18:38:43 EDT
+I made an exception and approved this one CFP for the following reasons:
 
-A Debian bug report [1] indicated that Firefox 4.0.x handled the
-validation/revalidation of SSL certificates improperly.  If a user were to
-visit a site with an untrusted certificate, Firefox would correctly display the
-warning about the untrusted connection.  If a user were to confirm the security
-exception for a single session (not check off the "permanently store this
-exception"), then restart the browser and re-load the page, the contents of the
-page would be displayed from the Firefox cache.  Upon reloading the page, the
-security warning would appear, but incorrectly indicates that the site provides
-a valid, verified certificate and there is no way to confirm the exception.
-[...]
+1. To show what's coming to the list, and to make sure everyone in here
+approves that we reject these things unconditionally going forward.
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+If anyone in here wants to see these on the list, please let me know.
+Otherwise, I'll assume that we've voted unanimously to have them rejected.
+
+Ditto for e-magazine issue announcements - that is, unless anyone tells
+me they want to see those in here, I'll be rejecting any and all of them
+without having to analyze them for content relevant to both security and
+Open Source at once.
+
+2. Not to give the other Indian conference a competitive advantage,
+since I had similarly approved their CFP:
+
+http://www.openwall.com/lists/oss-security/2011/07/27/2
+
+No one appeared to care about the issues I raised when approving that
+previous CFP, which to me means that no one cared to see the CFP itself
+as well - so we got very close to the decision to be rejecting these
+unconditionally, which would make things easy for me as a moderator. :-)
+
+Thanks,
+
+Alexander
+
+On Sat, Jul 30, 2011 at 10:06:17PM +0530, Abhijeet Patil wrote:
+> Its time for hackers across the globe to gather in India.
+> ClubHack announces its CFP open for ClubHack2011. See
+> http://clubhack.com/2011/cfp
+...
