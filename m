@@ -1,87 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/2
-Message-ID: <AANLkTin6sP-Jsszzsxr06H5rLSSCvfa9wWT8cb-rS_p7@mail.gmail.com>
-Date: Thu, 27 Jan 2011 18:00:20 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request:Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/5
+Message-ID: <20110730212721.GA18333@openwall.com>
+Date: Sun, 31 Jul 2011 01:27:21 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jeffrey Czerniak <jeffcz@...le.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-===========================================
-Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
-===========================================
+Jeffrey,
 
+On Sat, Jul 30, 2011 at 01:50:40PM -0700, Jeffrey Czerniak wrote:
+> We would like to cooperate with other downstream distributors of free and open source software on security issues, as Apple is a major distributor of such software.  However, our previous attempts to engage the community have not been successful.  One-way disclosure of information related to security issues subjects our customers to non-trivial risk without providing any added security benefit.  This is particularly pertinent if the disclosure were to occur in advance of the release of fixed software.
 
-1. OVERVIEW
+Is this a reference to the "closed list", which is currently Linux-only?
 
-The Vanilla Forums 2.0.16 and lower versions were vulnerable to Cross
-Site Scripting.
+If so, are you saying that you would not share vulnerability information
+with such a list ("one-way"), even for issues that you think are
+relevant to Linux distro vendors, when Apple is not a member of the list?
 
+I am merely asking for clarification because this is important info on
+what communication channels should or should not exist and be in use.
+I do not express any opinion.
 
-2. BACKGROUND
+FYI, my intent as linux-distros list admin has always been to have
+specific non-Linux vendors informed if an issue is brought up that is
+relevant to those vendors.  That's regardless of whether those vendors
+similarly inform the Linux vendors or not.
 
-Vanilla Forums are open-source, standards-compliant, customizable
-discussion forums.
-It is specially made to help small communities grow larger through SEO
-mojo, totally customizable social tools,
-and great user experience. Vanilla is also built with integration at
-the forefront, so it can
-seamlessly integrate with your existing website, blog, or custom-built
-application.
+I do recall and partially agree with Apple's argument that we would not
+know which of the issues affect your products, though.
 
+For example, when the libsoup issue was brought up recently, I insisted
+that the reporter would also inform *BSD's.  I think that issue did not
+affect Apple, did it?  No GNOME in your products, right?  (Not counting
+third-party/unofficial builds.)
 
-3. VULNERABILITY DESCRIPTION
+Thanks,
 
-The 'Target' parameter was not properly sanitized after user logs in,
-which allows attacker to conduct Cross Site Scripting attack.
-An attacker could prepare a link in a forum post that includes a link
-to a file which seems to require authentication.
-Upon logging in, user will get XSSed.
-
-
-4. VERSIONS AFFECTED
-
-2.0.16 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://vanilla/index.php?p=/entry/signin&Target=javascript:alert(document.cookie)//http://
-
-
-6. SOLUTION
-
-Upgrade to Vanilla Forums 2.0.17 or higher
-
-
-7. VENDOR
-
-Vanilla Forums Development Team
-http://vanillaforums.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-14: notified vendor
-2011-01-18: vendor released fix
-2011-01-27: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.16]_cross_site_scripting
-What XSS Can Do: http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
-XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
-XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
-XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2011-01-27]
+Alexander
