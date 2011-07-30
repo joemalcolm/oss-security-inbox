@@ -1,80 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/05/2
-Message-Id: <20110205183517.39b7fb56.michael.s.gilbert@gmail.com>
-Date: Sat, 5 Feb 2011 18:35:17 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/2
+Message-ID: <CANbgwsFy5SQO_Q7YwyMJmjKA3DOVzdY-PtoaOjV4eSHD+sVwqQ@mail.gmail.com>
+Date: Sat, 30 Jul 2011 22:06:17 +0530
+From: Abhijeet Patil <getabhijeetpatil@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Webkit Dupes
+Subject: CFP open for ClubHack2011
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hey,
+Its time for hackers across the globe to gather in India.
+ClubHack announces its CFP open for ClubHack2011. See
+http://clubhack.com/2011/cfp
 
-The following issues are duplicate CVE assignments for webkit.  Please
-merge and reject these as appropriate.
+ClubHack2011 is expecting a good deep knowledge technical
+presentations/demonstrations on topics from the world of Information
+Security. These presentations are expected to be of 40 minutes each. The
+schedule time for each presenter would be 50 minutes out of which 40 minutes
+are for the presentation & 10 for the question-answer sessions. We’d request
+you to submit the papers keeping the time constraint in mind.
 
-CVE-2010-2902 and CVE-2010-1793:
-webkit commit #62662
-http://code.google.com/p/chromium/issues/detail?id=48284
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+:: Event ::
+Date: 3rd & 4th December (As Usual the first weekend of December)
 
-CVE-2010-2647 and CVE-2010-1786:
-webkit commit #61667
-http://code.google.com/p/chromium/issues/detail?id=43488
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
 
-CVE-2010-2302 and CVE-2010-1771:
-webkit commit #59876
-http://code.google.com/p/chromium/issues/detail?id=44740
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1771
+:: Scope ::
+(includes, but not limited to)
 
-CVE-2010-2301 and CVE-2010-1762:
-webkit commit #59241 and #59242
-http://code.google.com/p/chromium/issues/detail?id=43902
+# Cloud Application Security
+# Mobile Security (cellular technologies)
+# Mobile platform attacks (iOS, Android, BB, Win7, Symbian)
+# Cyber Intelligence
+# Cyber warfare
+# Hardware mods
+# Critical Infrastructure Attack & Protection
+# Protocol based vulnerability in networks and computers
+# Firewall Evasion techniques
+# Data Recovery and Incident Response
+# WLAN and Bluetooth Security
+# Cryptography and Cryptanalysis
+# Computer forensics
+# Open source hacking toolkit
+# Cyber Crime & law
 
-CVE-2010-2300 and CVE-2010-1759:
-webkit commit #59109
-http://code.google.com/p/chromium/issues/detail?id=43315
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1759
+:: Exclusion ::
+# Sales Pitch
 
-CVE-2010-2902 and CVE-2010-1793:
-webkit commit #62662 and #62482
-http://code.google.com/p/chromium/issues/detail?id=48284
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
 
-CVE-2010-2647 and CVE-2010-1786:
-webkit commit #61667
-http://code.google.com/p/chromium/issues/detail?id=43488
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+:: Deadlines ::
+Opening: 30th July 2011
+Abstract Submission: 15th October 2011
+Announcement of selected papers: 5th November 2011
+Full Paper Submission: 12th November 2011
 
-CVE-2010-2899 and CVE-2010-1783:
-webkit commit #62134
-http://code.google.com/p/chromium/issues/detail?id=42736
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1793
+:: Speakers' Privileges ::
+# 100% Travel reimbursement of economy return tickets for all Indian speaker
+# Travel arrangement (not reimbursement) for all foreign speakers
+# Accommodation for 2
+# Complementary passes for event & party for 2
+# Gift hampers & freebies
 
-CVE-2010-1769 and CVE-2010-1774:
-webkit commit #59495
-both are apple announcements, and the only difference in the CVE
-descriptions is "itunes" vs "safari"
 
-CVE-2010-2441 and CVE-2010-1757
-webkit commit #58829
-i'm not 100% sure about this one since there is no useful info in
-CVE-2010-1757. the descriptions sound very much the same issue, but
-descriptions differ by "webkit on apple" vs "webkit"
+:: Sponsors ::
+That reminds, if you are interested in supporting the event in any
+possible way, please write to us sponsor@...bhack.com
 
-CVE-2010-1665 and CVE-2010-1417:
-webkit commit #58201
-http://code.google.com/p/chromium/issues/detail?id=42294
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-1417
 
-CVE-2010-0651 and CVE-2010-0051:
-webkit commit #52784
-http://code.google.com/p/chromium/issues/detail?id=9877
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2010-0051
+:: Other details ::
+All other details are available at
+Event website: http://clubhack.com/2011.
 
-Would it be possible to force Google and Apple to coordinate better to
-avoid these dupes?  This is creating unnecessary work and making it
-appear that webkit has a lot more issues than it really does.
+See previous years websites at
+    http://clubhack.com/2007
+    http://clubhack.com/2008
+    http://clubhack.com/2009
+    http://clubhack.com/2010
 
-Thanks,
-Mike
+
+:: Submission ::
+Check submission details at http://clubhack.com/2011/cfp & send it to
+cfp@...bhack.com
+
+
+See you in India this winter.
+
+Thanks
+team ClubHack
+
