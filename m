@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/19/4
-Message-ID: <4DADC8E1.9050707@redhat.com>
-Date: Tue, 19 Apr 2011 19:39:45 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Richard Hughes <rhughes@...hat.com>, Ray Strode <rstrode@...hat.com>, lsof@...ata.co.uk
-Subject: CVE Request -- gnome-desktop3: Switching users dialog does not lock the screen for the original user account
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/5
+Message-ID: <20110730212721.GA18333@openwall.com>
+Date: Sun, 31 Jul 2011 01:27:21 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Jeffrey Czerniak <jeffcz@...le.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
+Jeffrey,
 
-Hello Josh, Steve, vendors,
+On Sat, Jul 30, 2011 at 01:50:40PM -0700, Jeffrey Czerniak wrote:
+> We would like to cooperate with other downstream distributors of free and open source software on security issues, as Apple is a major distributor of such software.  However, our previous attempts to engage the community have not been successful.  One-way disclosure of information related to security issues subjects our customers to non-trivial risk without providing any added security benefit.  This is particularly pertinent if the disclosure were to occur in advance of the release of fixed software.
 
-   it has been reported that using of Gnome upon using of "Switch user" dialog, log in into a
-new user account (user2), logout of new user account (user2) the desktop is returned to the
-original user account (for user1) without prompting for a password. A locally proximate
-attacker could use this flaw to access resources, which should be otherwise protected
-by authentication.
+Is this a reference to the "closed list", which is currently Linux-only?
 
-Original report:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=697199
+If so, are you saying that you would not share vulnerability information
+with such a list ("one-way"), even for issues that you think are
+relevant to Linux distro vendors, when Apple is not a member of the list?
 
-Upstream bug report:
-[2] https://bugzilla.gnome.org/show_bug.cgi?id=648234
+I am merely asking for clarification because this is important info on
+what communication channels should or should not exist and be in use.
+I do not express any opinion.
 
-Could you allocate a CVE id for this?
+FYI, my intent as linux-distros list admin has always been to have
+specific non-Linux vendors informed if an issue is brought up that is
+relevant to those vendors.  That's regardless of whether those vendors
+similarly inform the Linux vendors or not.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+I do recall and partially agree with Apple's argument that we would not
+know which of the issues affect your products, though.
+
+For example, when the libsoup issue was brought up recently, I insisted
+that the reporter would also inform *BSD's.  I think that issue did not
+affect Apple, did it?  No GNOME in your products, right?  (Not counting
+third-party/unofficial builds.)
+
+Thanks,
+
+Alexander
