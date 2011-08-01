@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/5
-Message-ID: <BANLkTikiLGrEGf9b+4noCSV-vhqJxKQHDw@mail.gmail.com>
-Date: Mon, 20 Jun 2011 09:57:56 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/2
+Message-Id: <201108011351.40404.thomas@suse.de>
+Date: Mon, 1 Aug 2011 13:51:37 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+Subject: Re: CFP open for ClubHack2011
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 15, 2011 at 8:19 PM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> NetBSD has committed a fix for an issue in the 802.11 stack [1].
-> FreeBSD is also affected and should release a fix shortly.  Due to a
-> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
-> unprivileged user could cause the kernel to copy large amounts of
-> kernel memory back to the user, disclosing potentially sensitive
-> information.  The issue only affects certain non-x86 architectures,
-> such as SPARC.
->
-> -Dan
->
-> [1] http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
->
+Am Samstag, 30. Juli 2011, 19:27:31 schrieb Solar Designer:
+> Hi all,
+> 
+> I made an exception and approved this one CFP for the following reasons:
+> 
+> 1. To show what's coming to the list, and to make sure everyone in here
+> approves that we reject these things unconditionally going forward.
+> 
+> If anyone in here wants to see these on the list, please let me know.
+> Otherwise, I'll assume that we've voted unanimously to have them rejected.
 
-FreeBSD has commited a fix:
-http://svnweb.freebsd.org/base?view=revision&revision=223145
+Yes, please continue to reject them. :-)
+
+Cheers,
+Thomas
+
+-- 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
