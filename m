@@ -1,56 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/1
-Message-ID: <20110305161642.GA2007@albatros>
-Date: Sat, 5 Mar 2011 19:16:43 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/3
+Message-ID: <20110801153130.3f1df34a@redhat.com>
+Date: Mon, 1 Aug 2011 15:31:30 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: modules_disabled policy
+Subject: Re: CVE Request: hplip/foomatic-filters
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, 28 Jul 2011 11:21:15 +0200 Tomas Hoger wrote:
 
-I'd like to bring this subject to the list to receive some comments.
-The thing is that there is a sysctl parameter in Linux kernel to control
-whether it is possible to load/unload LKMs, kernel.modules_disabled.  It
-was originally created because since the removal of system global capability
-set there was no way to globally drop CAP_SYS_MODULE.  It was committed
-as 3d43321b by Kees Cook in Apr 2009:
+> > > https://bugzilla.novell.com/show_bug.cgi?id=698451
+> > 
+> > Please use CVE-2011-2697 for this.
+> 
+> According to SUSE bug, there are two different implementations of the
+> filter - one in perl and one in c - in different foomatic versions.
+> Both are affected by the same kind of problem, even though they don't
+> share vulnerable code.  Is one CVE sufficient here, or is Mitre likely
+> to split and assign another when this is processed? Steven?
 
-"Implement a sysctl file that disables module-loading system-wide since
-there is no longer a viable way to remove CAP_SYS_MODULE after the system
-bounding capability set was removed in 2.6.25."
-
-It is one way ticket, there is no defined interface to enable LKM
-loading after disabling it.  The sticking point is that it gives an idea
-that using it prevents loading rootkits to the kernel:
-
-https://wiki.ubuntu.com/Security/Features#block-modules
-
-"This was another layer of protection to stop kernel rootkits from being
-installed." 
-
-But does it really stop rootkits or is it gives a false sence of security?
-There are other ways to write to arbitrary kernel memory location being
-full root, e.g. via hibernation:
-
-http://comments.gmane.org/gmane.linux.kernel/1108853
-
-LKML folks responds that modules_disabled does nothing with protecting
-the kernel from root.
-
-
-So, I'd be happy to hear an answer to the question:
-
-Is it possible to implement strict do-not-touch-the-kernel policy for
-root via disabling LKM loading and _all_ other indirect places with write
-access that allows root to do something, but being too relaxed and
-allows to write to [almost] arbitrary kernel location?  This would make
-root the Boss Of Userland, but as to the kernel it would be but just a
-privileged client.  Or such policy would be incomplete and there is
-almost always a way to by-pass it due to the system design?
-
-Thanks,
+For posterity: there are 2 CVEs now - CVE-2011-2697 for perl-based
+filter in foomatic 3.x, and CVE-2011-2964 for C-based filter in
+foomatic 4.x.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Tomas Hoger / Red Hat Security Response Team
