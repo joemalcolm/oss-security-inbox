@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/3
-Message-ID: <4EE63C66.5070003@redhat.com>
-Date: Mon, 12 Dec 2011 10:39:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/1
+Message-ID: <4E3616C9.1070406@kde.org>
+Date: Sun, 31 Jul 2011 23:00:25 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: rocksndiamonds world-writable working/config directory
+CC: Josh Bressers <bressers@...hat.com>,  KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-On 12/12/2011 09:24 AM, Vincent Danen wrote:
-> rocksndiamonds creates its ~/.rocksndiamonds/ directory as
-> world-writable.  This could allow a local attacker to replace a cache
-> file with a symbolic link to a file they would not otherwise have access
-> to, and the next time the victim loaded the game, it would be
-> overwritten.
->
-> Could a CVE be assigned to this please?
->
-> References:
->
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=651620
-> https://bugzilla.redhat.com/show_bug.cgi?id=766805
->
-Please use CVE-2011-4606 for this issue.
+On 07/29/2011 03:53 PM, Josh Bressers wrote:
+> OK, this one is going to get messy. If you folks want to keep this under
+> embargo, please contact me in private for IDs (I don't want to try and keep
+> track on a public list, I'm already unsure what all needs IDs).
+> 
+> If this isn't terribly serious, it may make the most sense to publish
+> details so we can figure out how many IDs are needed.
 
--- 
+Hi Josh,
 
--Kurt Seifried / Red Hat Security Response Team
+As patches are either being worked on currently or finished for the
+various affected products that we're aware of, I think we'll get those
+committed, give the packagers a 48-hour heads-up, and then we'll just
+put the details on this list. Then you can assign CVEs as appropriate
+and we can reference those in the various security advisories.
 
+Does that sound good?
+
+Thanks,
+Jeff
