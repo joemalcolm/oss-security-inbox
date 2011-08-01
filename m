@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/5
-Message-ID: <20110818125325.262655ae@laverne>
-Date: Thu, 18 Aug 2011 12:53:25 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, coley@...us.mitre.org
-Subject: CVE request: roundcube XSS before 0.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/3
+Message-ID: <20110801153130.3f1df34a@redhat.com>
+Date: Mon, 1 Aug 2011 15:31:30 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: hplip/foomatic-filters
 Content-Type: text/plain; charset=utf-8
 
-See:
+On Thu, 28 Jul 2011 11:21:15 +0200 Tomas Hoger wrote:
 
-http://sourceforge.net/news/?group_id=139281&id=302769
+> > > https://bugzilla.novell.com/show_bug.cgi?id=698451
+> > 
+> > Please use CVE-2011-2697 for this.
+> 
+> According to SUSE bug, there are two different implementations of the
+> filter - one in perl and one in c - in different foomatic versions.
+> Both are affected by the same kind of problem, even though they don't
+> share vulnerable code.  Is one CVE sufficient here, or is Mitre likely
+> to split and assign another when this is processed? Steven?
 
-"We just published a new release which fixes a recently reported XSS
-vulnerability as an update to the stable 0.5 branch."
+For posterity: there are 2 CVEs now - CVE-2011-2697 for perl-based
+filter in foomatic 3.x, and CVE-2011-2964 for C-based filter in
+foomatic 4.x.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Tomas Hoger / Red Hat Security Response Team
