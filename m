@@ -1,60 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/25/1
-Message-ID: <20110625174359.GA3439@albatros>
-Date: Sat, 25 Jun 2011 21:44:22 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/1
+Message-ID: <4E3616C9.1070406@kde.org>
+Date: Sun, 31 Jul 2011 23:00:25 -0400
+From: Jeff Mitchell <mitchell@....org>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org
-Subject: Re: CVE request: kernel: taskstats/procfs io infoleak
+CC: Josh Bressers <bressers@...hat.com>,  KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>,  "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 24, 2011 at 16:34 +0400, Vasiliy Kulikov wrote:
-> It can be used to learn ssh and ftp password length.  If privsep is
-> enabled in openssh and vsftpd, the unprivileged process' activity very
-> precisely shows password information.
+On 07/29/2011 03:53 PM, Josh Bressers wrote:
+> OK, this one is going to get messy. If you folks want to keep this under
+> embargo, please contact me in private for IDs (I don't want to try and keep
+> track on a public list, I'm already unsure what all needs IDs).
 > 
-> For vsftpd read characters count is strlen("USER username\r\n") +
-> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
-> related to a privileged parent.  If measure statistics between user and
-> passwords commands, actual password length and username length can be
-> gathered.
-> 
-> For ssh, vice versa, networking activity is constant in packets length,
-> but interprocess communications, specifically passwords, depend on
-> user input.
-> 
-> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars - CONST.
-> 
-> Another daemons with more or less constant io activity might be
-> vulnerable too.  PAM greatly complicates precise measurements.
+> If this isn't terribly serious, it may make the most sense to publish
+> details so we can figure out how many IDs are needed.
 
-Based on the code review, OpenVZ containers limit the threat of
-information gathering to a single container.  E.g. a process in CT 101
-cannot gather any io information of a process in CT 102.  Some other
-restricting policies might limit the information too, e.g. grsecurity
-chroot protection denies sending taskstats commands (if the socket is
-already opened and TASKSTATS_CMD_ATTR_REGISTER_CPUMASK is handled before
-chroot(2), it doesn't help).
+Hi Josh,
 
+As patches are either being worked on currently or finished for the
+various affected products that we're aware of, I think we'll get those
+committed, give the packagers a 48-hour heads-up, and then we'll just
+put the details on this list. Then you can assign CVEs as appropriate
+and we can reference those in the various security advisories.
 
-BTW, I'd appreciate if somebody points me how information stored in
-sched, schedstats, stat, and status files can be exploited.  I suspect
-it can be used similar way.
-
-
-Other thoughts:
-
-Files mountinfo, mounts store information related to the process' fs
-namespace.  I feel this information can be somewhat private, e.g. mount
-points can reveal private file pathes in case of separate namespaces
-where this information cannot be learned by reading /proc/self/mountinfo.
-
-Files limits and status store process related restrictions.  I dunno
-whether this can be considered as a private information in some
-situations.
+Does that sound good?
 
 Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Jeff
