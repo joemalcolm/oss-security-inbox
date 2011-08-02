@@ -1,48 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/3
-Message-ID: <4EF00C64.8010205@redhat.com>
-Date: Mon, 19 Dec 2011 21:17:40 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/3
+Message-Id: <201108021734.28433.thomas@suse.de>
+Date: Tue, 2 Aug 2011 17:34:28 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Tim Sammut <underling@...too.org>
-Subject: Re: CVE assignment from previous years
+Subject: CVE request: GIF loader buffer overflow when initializing decompression tables
 Content-Type: text/plain; charset=utf-8
 
+Hi folks,
+this one might need a CVE-ID...
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+https://bugzilla.redhat.com/show_bug.cgi?id=727081
 
-On 12/19/2011 07:52 PM, Tim Sammut wrote:
-> Hi,
->
-> Is there a general guideline that is commonly used when deciding to
-> issue a CVE name from the pool of a previous year versus the current
-> year's pool?
->
-> thanks and hope all is well
-> tim
->
-Generally speaking the year the vuln was found or reported is the year
-that gets used for the CVE. Example: I just assigned a CVE-2005.
+Tomas Hoger 2011-08-01 05:48:32 EDT
 
-- -- 
+GDK's GIF image reader is based on David Koblas' code that is also used in
+several other GIF image readers.  This code contained an input validation flaw.
+ Input code size was read from input GIF file and used to initialize decoding
+tables without checking the value, leading to buffer overflow.  Relevant GDK
+code is:
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+  941 static int
+  942 gif_prepare_lzw (GifContext *context)
+  943 {
+    ...
+  946   if (!gif_read (context, &(context->lzw_set_code_size), 1)) {
+  947       /*g_message (_("GIF: EOF / read error on image data\n"));*/
+  948       return -1;
+  949   }
+    ...
+  952   context->lzw_clear_code = 1 << context->lzw_set_code_size;
+    ...
+  962   for (i = 0; i < context->lzw_clear_code; ++i) {
+  963       context->lzw_table[0][i] = 0;
+  964       context->lzw_table[1][i] = i;
+  965   }
 
-iQIcBAEBAgAGBQJO8AxkAAoJEBYNRVNeJnmTxqsP/R5Zo+nEt1ks1qlVe2zT1b/v
-3OBhXhwGlzFvEHjiWb3+4PPvTc3qQBrnt+CySl5ZsIePJ4XObtwSDY6QKoP41Uvx
-CvatEQsAtAX/RN04t3B8RlB3Q4SJviin9MdaaTs7pKimNrR9ZrwiBYW0Nf/7RFG0
-r0BYhHlEr7oxTSW7ni1O80s9UFqxJvJwe36NyJPIPXEYsgZYhsYdI+8zMnxNufGP
-NKg3ZGH7CJ7vcVNbqx+EjKn2Qoi/g3VE1zCPjFdL3kX/lAD5GuN/CRAn/TlLRchZ
-R3Y2YaserNMRku/GjvBi6Fj+t1neqOrXdmH6OoUKNimMdtt7oqGZe9pe9gcr4S/K
-NHqR18t5LDJfwUphGwa62+s78CH5x2UP78hrxOf2JtI2SJkXj3t9/mg5b1RGXmae
-zge9gnO9zBE1BonR0j+llIPtG7zd0GEASq97TnGalsipsQkuNx1Yf8pTZI46Jea9
-CQyP4X+aF1+ZNNzzEiRPyQyzXMh93xLHlNOrPX7Oj9pF6sI1qpoJYgGr5TZYy4FK
-0n7Z4WSuKwUlVNMd/koW6wGIoEvAi1F6hvjBpZTUIB+iUXTBQF526Y2ikIgJZw0L
-h7J9VI//0oLZ/76yEDk0zeV1IZyh08SwlttCQJtt/f4T7r5IzAFjH7eZ0J0zupsX
-syNxyLPeENLlA83aB+Pm
-=Srqi
------END PGP SIGNATURE-----
+The same flaw was previously reported for several other components that include
+GIF reading code based on David Koblas' parser, such as: gd (CVE-2006-4484),
+SDL_image (CVE-2007-6697), tk (CVE-2008-0553), netbpm (CVE-2008-0554), cups
+(CVE-2008-1373).
 
+This problem was corrected upstream long ago:
+
+http://git.gnome.org/browse/gdk-pixbuf/commit/gdk-pixbuf/io-gif.c?id=3bac204e0d0241a0d68586ece7099e6acf0e9bea
+
+The fix can be found in all gdk-pixbuf versions embedded in gtk2 packages, but
+it seems it never got it to stand-alone gdk-pixbuf version for gtk+ 1.x.
+
+Gimp corrected this bug ~2 years after GDK:
+
+http://git.gnome.org/browse/gimp/commit/plug-ins/common/gifload.c?id=cac290d093d0c318bbe33a4ff290c2abbd9698d3
