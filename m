@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/12/2
-Message-ID: <4EBDF7DC.7020106@redhat.com>
-Date: Fri, 11 Nov 2011 21:36:44 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/1
+Message-Id: <201108021058.31390.thomas@suse.de>
+Date: Tue, 2 Aug 2011 10:58:31 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
+Subject: Re: CVE request: webkit ZDI-11-138 and ZDI-11-139
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/2011 09:48 AM, Petr Matousek wrote:
-> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
-> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
-> request.
->
-> While the NFS client only asks for one attribute (FATTR4_ACL) in the
-> first bitmap word, the NFSv4 protocol allows for the server to return
-> unbounded bitmaps (more than two)."
->
-> Upstream commit:
-> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
-> case when 2 words are expected and 3 are returned
->
-> Proposed complete upstream patch:
-> http://www.spinics.net/lists/linux-nfs/msg25288.html
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=747106
->
-> Credit: Andy Adamson
->
-> Thanks,
-Please use CVE-2011-4132 for this issue.
+Am Donnerstag, 14. Juli 2011, 17:02:10 schrieb Thomas Biege:
+> Looks like the following two issus have no CVE-ID assigned:
+> 
+> 
+> http://www.zerodayinitiative.com/advisories/ZDI-11-138/
+> Webkit Undefined DOM Prototype Attach Remote Code Execution Vulnerability
+> ZDI-11-138: April 19th, 2011 
+
+CVE-2011-0234
+ 
+> http://www.zerodayinitiative.com/advisories/ZDI-11-139/
+> Webkit Anonymous Frame Remote Code Execution Vulnerability
+> ZDI-11-139: April 19th, 2011 
+
+none yet...
+
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
