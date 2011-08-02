@@ -1,22 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/3
-Message-ID: <817711553.357399.1299713822024.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Mar 2011 18:37:02 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/2
+Message-ID: <1793976656.580420.1312277587730.JavaMail.root@zmail07.collab.prod.int.phx2.redhat.com>
+Date: Tue, 2 Aug 2011 05:33:07 -0400 (EDT)
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request: libvirt: several API calls do not honour read-only connection
+Subject: Re: CVE request: webkit ZDI-11-138 and ZDI-11-139
 Content-Type: text/plain; charset=utf-8
 
-"It has been found that several libvirt API calls (virNodeDeviceDettach,
-virNodeDeviceReset, virDomainRevertToSnapshot, virDomainSnapshotDelete) did not
-honour read-only connection. Remote attacker could use this flaw to crash the
-host server (DoS)."
+On 08/02/2011 02:28 PM, Thomas Biege wrote:
+>> http://www.zerodayinitiative.com/advisories/ZDI-11-139/
+>> Webkit Anonymous Frame Remote Code Execution Vulnerability
+>> ZDI-11-139: April 19th, 2011 
+> 
 
-Reference: 
-https://bugzilla.redhat.com/show_bug.cgi?id=683650
+This should really be CVE-2011-1442, but there is every possibility that there may be may be a duplicate CVE since, it was reported by two researchers independently.
 
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
 
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team 
