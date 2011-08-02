@@ -1,77 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/8
-Message-ID: <4ED4DD48.3010403@lighttpd.net>
-Date: Tue, 29 Nov 2011 14:25:28 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/3
+Message-Id: <201108021734.28433.thomas@suse.de>
+Date: Tue, 2 Aug 2011 17:34:28 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: security@...httpd.net, Xi Wang <xi.wang@...il.com>
-Subject: CVE Request: lighttpd/mod_auth out-of-bounds read due to signedness error
+Subject: CVE request: GIF loader buffer overflow when initializing decompression tables
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi folks,
+this one might need a CVE-ID...
 
-Xi Wang discovered the following issue in lighttpd:
+https://bugzilla.redhat.com/show_bug.cgi?id=727081
 
-for http auth we need to base64-decode user input; the allowed character 
-range includes non ASCII characters above 0x7f.
+Tomas Hoger 2011-08-01 05:48:32 EDT
 
-The function to decode this string takes a "const char *in"; and reads
-each character into an "int ch", which is used as offset in the table.
+GDK's GIF image reader is based on David Koblas' code that is also used in
+several other GIF image readers.  This code contained an input validation flaw.
+ Input code size was read from input GIF file and used to initialize decoding
+tables without checking the value, leading to buffer overflow.  Relevant GDK
+code is:
 
-So characters above 0x7f lead to negative indices (as char is signed on 
-most platforms).
+  941 static int
+  942 gif_prepare_lzw (GifContext *context)
+  943 {
+    ...
+  946   if (!gif_read (context, &(context->lzw_set_code_size), 1)) {
+  947       /*g_message (_("GIF: EOF / read error on image data\n"));*/
+  948       return -1;
+  949   }
+    ...
+  952   context->lzw_clear_code = 1 << context->lzw_set_code_size;
+    ...
+  962   for (i = 0; i < context->lzw_clear_code; ++i) {
+  963       context->lzw_table[0][i] = 0;
+  964       context->lzw_table[1][i] = i;
+  965   }
 
-Here the vulnerable code (src/http_auth.c:67)
+The same flaw was previously reported for several other components that include
+GIF reading code based on David Koblas' parser, such as: gd (CVE-2006-4484),
+SDL_image (CVE-2007-6697), tk (CVE-2008-0553), netbpm (CVE-2008-0554), cups
+(CVE-2008-1373).
 
----
-static const short base64_reverse_table[256] = ...;
-static unsigned char * base64_decode(buffer *out, const char *in) {
-	...
-	int ch, ...;
-	size_t i;
-	...
-	
-		ch = in[i];
-		...
-		ch = base64_reverse_table[ch];
-	...
-}
----
+This problem was corrected upstream long ago:
 
-It doesn't matter if "broken" data is read - it just may allow more
-encodings of the correct login information.
+http://git.gnome.org/browse/gdk-pixbuf/commit/gdk-pixbuf/io-gif.c?id=3bac204e0d0241a0d68586ece7099e6acf0e9bea
 
-The only possible impact is a segfault, leading to DoS.
+The fix can be found in all gdk-pixbuf versions embedded in gtk2 packages, but
+it seems it never got it to stand-alone gdk-pixbuf version for gtk+ 1.x.
 
-I had a look at some debian and openSUSE binaryies, and it looks like 
-there is always enough data (>= 256 bytes) in the .rodata section 
-before the base64_reverse_table table, so these binaries are not 
-vulnerable afaict.
+Gimp corrected this bug ~2 years after GDK:
 
-we plan to release 1.4.30 soon, including the fix for this issue.
-
-regards,
-stefan
-
-bug tracked as:
-   http://redmine.lighttpd.net/issues/2370
-announcement (not complete yet):
-   http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2011_01.txt
-
-proposed patch
-===
-diff --git a/src/http_auth.c b/src/http_auth.c
-index f2f86dd..33adf71 100644
---- a/src/http_auth.c
-+++ b/src/http_auth.c
-@@ -99,7 +99,7 @@ static unsigned char * base64_decode(buffer *out, 
-const char *in) {
-  	ch = in[0];
-  	/* run through the whole string, converting as we go */
-  	for (i = 0; i < in_len; i++) {
--		ch = in[i];
-+		ch = (unsigned char) in[i];
-
-  		if (ch == '\0') break;
-
-===
+http://git.gnome.org/browse/gimp/commit/plug-ins/common/gifload.c?id=cac290d093d0c318bbe33a4ff290c2abbd9698d3
