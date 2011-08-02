@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/7
-Message-ID: <20110209005015.66cccfec@laverne>
-Date: Wed, 9 Feb 2011 00:50:15 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/1
+Message-Id: <201108021058.31390.thomas@suse.de>
+Date: Tue, 2 Aug 2011 10:58:31 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: wordpress before 3.0.5
+Subject: Re: CVE request: webkit ZDI-11-138 and ZDI-11-139
 Content-Type: text/plain; charset=utf-8
 
-http://wordpress.org/news/2011/02/wordpress-3-0-5/
+Am Donnerstag, 14. Juli 2011, 17:02:10 schrieb Thomas Biege:
+> Looks like the following two issus have no CVE-ID assigned:
+> 
+> 
+> http://www.zerodayinitiative.com/advisories/ZDI-11-138/
+> Webkit Undefined DOM Prototype Attach Remote Code Execution Vulnerability
+> ZDI-11-138: April 19th, 2011 
 
-From release announcement, I'm unsure which of them deserves CVEs:
+CVE-2011-0234
+ 
+> http://www.zerodayinitiative.com/advisories/ZDI-11-139/
+> Webkit Anonymous Frame Remote Code Execution Vulnerability
+> ZDI-11-139: April 19th, 2011 
 
-"Two moderate security issues were fixed that could have allowed a
-Contributor- or Author-level user to gain further access to the site.
-
-One information disclosure issue was addressed that could have allowed
-an Author-level user to view contents of posts they should not be able
-to see, such as draft or private posts.
-
-Two security enhancements were added. One improved the security of any
-plugins which were not properly leveraging our security API. The other
-offers additional defense in depth against a vulnerability that was
-fixed in previous release."
-
+none yet...
 
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
