@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/10
-Message-ID: <20110401201710.GA30886@openwall.com>
-Date: Sat, 2 Apr 2011 00:17:10 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/8
+Message-ID: <972812882.1798855.1312404342488.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 3 Aug 2011 16:45:42 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-Reed, all -
+Please use CVE-2011-2899
 
-On Fri, Apr 01, 2011 at 11:09:50AM -0700, Reed Loden wrote:
-> I'm a (now former) vendor-sec member who would like to be added to the
-> new closed list.
+Thanks.
 
-When posting statements like the above, please also list the project(s)
-that you represent.
+-- 
+    JB
 
-It is not yet decided whether and how this may affect who is accepted
-and onto which of the new lists (if there's more than one), but I'd like
-to have the information readily available.
-
-Thanks,
-
-Alexander
+----- Original Message -----
+> Hello,
+> 
+> foomatic-gui improperly escapes certain hostnames, resulting in a
+> remote
+> arbitrary command execution vulnerability.
+> 
+> Ref.:
+> https://bugs.launchpad.net/ubuntu/+source/foomatic-gui/+bug/811119
+> http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
+> http://packages.debian.org/changelogs/pool/main/f/foomatic-gui/foomatic-gui_0.7.9.5/changelog
+> 
+> Could a CVE please be assigned to this issue?
+> 
+> Thanks,
+> 
+> Marc.
+> 
+> 
+> --
+> Marc Deslauriers
+> Ubuntu Security Engineer | http://www.ubuntu.com/
+> Canonical Ltd. | http://www.canonical.com/
