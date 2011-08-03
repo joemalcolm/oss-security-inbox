@@ -1,35 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/8
-Message-Id: <20110412195818.0fcf0534.onur@pardus.org.tr>
-Date: Tue, 12 Apr 2011 19:58:18 +0300
-From: Onur Küçük <onur@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/9
+Message-ID: <22819575.1799200.1312405217097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 3 Aug 2011 17:00:17 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: shttpd/mongoose/yassl embedded webserver
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-2900.
 
-On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
-...
-> Initial members will have had to be a vendor-sec member (no exploders
-> this time around). You must reply to this thread, in public (on
-> oss-security). We want this to be very public, we have nothing to
-> hide. You must have a public gpg key ID included in your reply. The
-> new list will gpg encrypt all mail (it does accept plaintext messages
-> though).
-
- Sorry for the late reply, we had to resolve some issues on our side
-about who should join. I was a subscriber of vendor-sec as a
-representitive of Pardus, please add me to the new list(s).
-
-
-pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
-     Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
-uid                  Onur Küçük <onur@...dus.org.tr>
-sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
-
+Thanks.
 
 -- 
- Onur Küçük                                      Knowledge speaks,
- <onur.--.-.pardus.org.tr>                       but wisdom listens
+    JB
 
+
+----- Original Message -----
+> Hi,
+> I found a buffer overflow in the PUT processing of
+> shttpd/mongoose/yassl
+> embedded webserver (all based on the same source code).
+> 
+> Can someone assign a CVE id to this?
+> Upstream fix:
+> https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
+> 
+> The bug:
+> _shttpd_put_dir()/put_dir() function:
+> 26 for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
+> 27 len = p - path;
+> 28 assert(len < sizeof(buf));
+> 29 (void) memcpy(buf, path, len);
+> 30 buf[len] = '\0';
+> 31
+> 32 /* Try to create intermediate directory */
+> 33 if (_shttpd_stat(buf, &st) == -1 &&
+> 34 _shttpd_mkdir(buf, 0755) != 0)
+> 35 return (-1);
+> 36
+> 37 /* Is path itself a directory ? */
+> 38 if (p[1] == '\0')
+> 39 return (0);
+> 40 }
+> 
+> The only guard here to avoid a buffer overflow with a long path is
+> the assert call in line 28. Unfortunately this is disabled if
+> you compile with -DNDEBUG and from what I see quite a lot of people
+> are doing that in order to reduce the binary size (those are embedded
+> webservers intended to be used in embedded environments).
+> 
+> It seems quite some projects actually do that, including a
+> deployed product embedded product I'm currently
+> looking at (and that was rooted because of this bug).
+> From what I see -DNDEBUG in the mongoose makefile this is also the
+> default for the mingw
+> binary.
+> 
+> If this is not the case, this is still a DoS bug.
+> 
+> Kind regards
+> Nico
+> --
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
+> 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
