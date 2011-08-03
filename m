@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/8
-Message-ID: <20111229230026.GT27039@core.inversepath.com>
-Date: Fri, 30 Dec 2011 00:00:26 +0100
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/6
+Message-ID: <20110803160324.GA6791@openwall.com>
+Date: Wed, 3 Aug 2011 20:03:24 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 29, 2011 at 05:55:43PM -0500, David Jorm wrote:
+On Sun, Jul 17, 2011 at 10:30:33PM +0400, Solar Designer wrote:
+> On Sun, Jul 17, 2011 at 05:48:21PM +0400, Solar Designer wrote:
+> > I've just released crypt_blowfish 1.2:
+> > 
+> > http://www.openwall.com/crypt/
+> > 
+> > All projects using crypt_blowfish should upgrade to this newer code.
 > 
-> > Kurt or other CVE assigners, can you please assign a bunch for
-> > python,
-> > java, tomcat etc. pp.
+> Patches for PHP 5.3 and 5.4:
 > 
-> Tomcat has been assigned CVE-2011-4084.
->
+> http://news.php.net/php.internals/54000
 
-Indeed, this was referenced in our advisory Timeline but missing in the CVE
-list. I just fixed that, sorry for that.
+In case anyone is backporting these to PHP 5.3.0 - 5.3.6, you also need
+to apply one of the patches from:
 
-Cheers
+http://news.php.net/php.internals/54098
 
-> Thanks
-> --
-> David Jorm / Red Hat Security Response Team
+These add support for the new prefixes to crypt.c (initially overlooked)
+and they add more tests.
 
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Alexander
