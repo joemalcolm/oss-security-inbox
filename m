@@ -1,34 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/10
-Message-ID: <1300275632.4549.4.camel@macbook.infradead.org>
-Date: Wed, 16 Mar 2011 11:40:32 +0000
-From: David Woodhouse <dwmw2@...radead.org>
-To: David King <amigadave@...gadave.com>
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/9
+Message-ID: <22819575.1799200.1312405217097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 3 Aug 2011 17:00:17 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: shttpd/mongoose/yassl embedded webserver
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-03-16 at 12:02 +0100, David King wrote:
-> It should be noted that the UPnP feature is disabled by default, so the 
-> user has the option to *enable* it. I concede that the string presented 
-> in the UI needs improvement. 
+Please use CVE-2011-2900.
 
-That isn't CVE-worthy, though, surely?
-
-> Of course, I agree that indication of the consequences would be
-> appropriate, 
-
-That's CVE-2011-1164.
-
-> and also disallowing the 'none' authentication method if UPnP is enabled. 
-
-And that, again, is not at all specific to UPnP.
-
-Disallowing the 'none' authentication method is would be appropriate
-whenever the machine is accessible from the outside world, whether
-that's through UPnP or just by listening on a publicly-available IP
-address.
+Thanks.
 
 -- 
-dwmw2
+    JB
 
+
+----- Original Message -----
+> Hi,
+> I found a buffer overflow in the PUT processing of
+> shttpd/mongoose/yassl
+> embedded webserver (all based on the same source code).
+> 
+> Can someone assign a CVE id to this?
+> Upstream fix:
+> https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
+> 
+> The bug:
+> _shttpd_put_dir()/put_dir() function:
+> 26 for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
+> 27 len = p - path;
+> 28 assert(len < sizeof(buf));
+> 29 (void) memcpy(buf, path, len);
+> 30 buf[len] = '\0';
+> 31
+> 32 /* Try to create intermediate directory */
+> 33 if (_shttpd_stat(buf, &st) == -1 &&
+> 34 _shttpd_mkdir(buf, 0755) != 0)
+> 35 return (-1);
+> 36
+> 37 /* Is path itself a directory ? */
+> 38 if (p[1] == '\0')
+> 39 return (0);
+> 40 }
+> 
+> The only guard here to avoid a buffer overflow with a long path is
+> the assert call in line 28. Unfortunately this is disabled if
+> you compile with -DNDEBUG and from what I see quite a lot of people
+> are doing that in order to reduce the binary size (those are embedded
+> webservers intended to be used in embedded environments).
+> 
+> It seems quite some projects actually do that, including a
+> deployed product embedded product I'm currently
+> looking at (and that was rooted because of this bug).
+> From what I see -DNDEBUG in the mongoose makefile this is also the
+> default for the mingw
+> binary.
+> 
+> If this is not the case, this is still a DoS bug.
+> 
+> Kind regards
+> Nico
+> --
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
+> 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
