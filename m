@@ -1,101 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/5
-Message-ID: <1020481912.531586.1314732315350.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 30 Aug 2011 15:25:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/3
+Message-ID: <20110803152114.72d1c2d4@redhat.com>
+Date: Wed, 3 Aug 2011 15:21:14 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Jcow CMS 4.2 <= | Cross Site Scripting
+Cc: security@...me.org
+Subject: Re: CVE request: GIF loader buffer overflow when initializing decompression tables
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3202
+On Tue, 2 Aug 2011 17:34:28 +0200 Thomas Biege wrote:
 
-Thanks.
+> https://bugzilla.redhat.com/show_bug.cgi?id=727081
+
+...
+
+> This problem was corrected upstream long ago:
+> 
+> http://git.gnome.org/browse/gdk-pixbuf/commit/gdk-pixbuf/io-gif.c?id=3bac204e0d0241a0d68586ece7099e6acf0e9bea
+
+I'm being told that even if this is 2001 fix, it's ok to use 2011 CVE
+if this was not called security before.  Hence use CVE-2011-2897 if you
+plan to fix.
+
+> The fix can be found in all gdk-pixbuf versions embedded in gtk2
+> packages, but it seems it never got it to stand-alone gdk-pixbuf
+> version for gtk+ 1.x.
+
+Just to clarify, the above was about RHEL gtk2 packages.  For most
+distros, that implies they don't really need to look at their gtk2
+packages if it's fixed in the oldest supported RHEL.  I've not really
+tried to figure out if there was any upstream gtk2 version that did not
+have the fix though.
+
+I'm FYI CCing gnome security to reduce the amount of confusion this can
+possibly cause.  This is follow-up on:
+
+http://www.openwall.com/lists/oss-security/2011/08/02/3
 
 -- 
-    JB
-
-
------ Original Message -----
-> Jcow CMS 4.2 <= | Cross Site Scripting
-> 
-> 
-> 1. OVERVIEW
-> 
-> Jcow CMS 4.2 and lower versions are vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Jcow is a flexible Social Networking software written in PHP. It can
-> help you to build a social network for your interests and passions, a
-> member community for your existing website and a social networking
-> site like facebook/myspace/twitter.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The parameter "g" is not properly sanitized upon submission to
-> /index.php, which allows attacker to conduct Cross Site Scripting
-> attack. This may allow an attacker to create a specially crafted URL
-> that would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Jcow CMS 4.2 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> File : /includes/libs/member.module.php:
-> Line 605: <input type="hidden" name="g" value="'.$_REQUEST['g'].'" />
-> 
-> http://[target]/index.php?p=member/signup&email=&username=&password=&fullname=&birthyear=1991&birthmonth=01&birthday=01&gender=0&location=Myanmar++&about_me=&recaptcha_challenge_field=03AHJ_Vuvk8U6zCeSdrjB0GPDuwaRP-tPJ2G7u3Nm5LpmVSGmZs_CIP9I_C0PYZ1zYY6F42zpzGKQkxSiUhhyu-QhhwZA6oTlLNntgAgmRkDjfZpu3j4-bMeQNpOVh1afb4fZ4qwaIxHpP1wL8-8-LgkEBE5auAFmF_w&recaptcha_response_field=&g=%22%3E%3Cscript%3Ealert%28/XSS/%29%3C/script%3E&onpost=1&agree_rules=1
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 4.3.1 or higher.
-> The commercial version 5.x.x is not vulnerable.
-> 
-> 
-> 7. VENDOR
-> 
-> Jcow CMS Development Team
-> http://www.jcow.net
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-06-03: notified vendor
-> 2010-06-03: vendor replied fix would be available within 48hrs
-> 2011-08-24: vendor released fixed version, jcow.4.3.1.ce
-> 2011-08-26: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[jcow_4.2]_cross_site_scripting
-> Jcow CMS:
-> http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
-> 
-> 
-> #yehg [2011-08-26]
-> 
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+Tomas Hoger / Red Hat Security Response Team
