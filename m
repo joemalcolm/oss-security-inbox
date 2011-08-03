@@ -1,34 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/8
-Message-ID: <20110728132251.GA16357@suse.de>
-Date: Thu, 28 Jul 2011 15:22:51 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, veillard@...hat.com, billy.rios@...il.com
-Subject: libxml security fix from apple ... any information?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/5
+Message-ID: <20110803155646.GA26540@ngolde.de>
+Date: Wed, 3 Aug 2011 17:56:46 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: shttpd/mongoose/yassl embedded webserver
 Content-Type: text/plain; charset=utf-8
 
-Hi folks, Billy, Daniel,
+Hi,
+I found a buffer overflow in the PUT processing of shttpd/mongoose/yassl 
+embedded webserver (all based on the same source code).
 
-On
-http://support.apple.com/kb/HT4808
-there is a libxml security issue listed:
+Can someone assign a CVE id to this?
+Upstream fix: https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
 
------------------------------------------
-libxml
+The bug:
+_shttpd_put_dir()/put_dir() function:
+26         for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
+27                 len = p - path;
+28                 assert(len < sizeof(buf));
+29                 (void) memcpy(buf, path, len);
+30                 buf[len] = '\0';
+31
+32                 /* Try to create intermediate directory */
+33                 if (_shttpd_stat(buf, &st) == -1 &&
+34                     _shttpd_mkdir(buf, 0755) != 0)
+35                         return (-1);
+36
+37                 /* Is path itself a directory ? */
+38                 if (p[1] == '\0')
+39                         return (0);
+40         }
 
-Available for: Windows 7, Vista, XP SP2 or later
+The only guard here to avoid a buffer overflow with a long path is
+the assert call in line 28. Unfortunately this is disabled if
+you compile with -DNDEBUG and from what I see quite a lot of people
+are doing that in order to reduce the binary size (those are embedded
+webservers intended to be used in embedded environments).
 
-Impact: Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution
+It seems quite some projects actually do that, including a
+deployed product embedded product I'm currently
+looking at (and that was rooted because of this bug).
+From what I see -DNDEBUG in the mongoose makefile this is also the default for the mingw
+binary.
 
-Description: A one-byte heap buffer overflow existed in libxml's handling of XML data. Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution.
+If this is not the case, this is still a DoS bug.
 
-CVE-ID
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-CVE-2011-0216 : Billy Rios of the Google Security Team
------------------------------------------
-
-I suspect this is libxml2 and it likely also affects Linux?
-
-If this is correct, could you identify the commit fixing this issue?
-
-Ciao, Marcus
+Content of type "application/pgp-signature" skipped
