@@ -1,51 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/10
-Message-ID: <CAPQRN=X27pir9Jsn6vaNWWzAQywYPcrSrFLkNFd6PV654FMS-Q@mail.gmail.com>
-Date: Tue, 29 Nov 2011 12:45:23 -0200
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
-To: "Patrick J. Volkerding" <security@...ckware.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/4
+Message-ID: <1312378156.3096.8.camel@localhost.localdomain>
+Date: Wed, 03 Aug 2011 14:29:13 +0100
+From: Tim Waugh <twaugh@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org, security@...ntu.com
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-2011/11/29 Patrick J. Volkerding <security@...ckware.com>
+On Wed, 2011-08-03 at 09:13 -0400, Marc Deslauriers wrote:
+> http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
 
-> Hello,
->
-> While I'm sure there are a number of bugs in the crufty old installer
-> scripts, I'll need to know how there's a security impact before notifying
-> everyone that the sky has fallen.  I'd also like to note that if running
-> the installer requires physical access to the machine I'm liable to
-> consider security to already be non-existent at that time.
->
-> Please clarify what is wrong with examples of how to reproduce the issue,
-> and I'll look into it.
->
-> Thanks.
->
+Actually foomatic-gui is not the origin of pysmb.py -- that came from
+system-config-printer prior to 1.1.0.
+
+Tim.
+*/
 
 
-Hello Pat,
-
-It would be a security flaw .... Patrick I only report here on the list
-because I sent an email to 30 days and getting no return. It would be
-a bug that
-affected the slackware developers.
-
-But if you want to play a scenario, okay. Simply just change the variable mount
-point to a directory other than / mnt and try to run the default
-installation of Slackware, so you have a broken installation.
-
-Thank you for your attention.
-
-Att,
-Raphael Bastos aka chemonz
-
-===============================================
-Bastos Service Manutenção Industrial Ltda.
-www.bastosservice.com.br
-Linux Reg. User: 388431  //  LPI ID: LPI000214711
-email:~> $ echo "vgepqnqikcBdcuvquugtxkeg0eqo0dt" | perl -pe \
-'s/(.)/chr(ord($1)-2)/ge'
-===============================================
-
+Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
