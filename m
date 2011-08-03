@@ -1,99 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/06/3
-Message-ID: <4DC443DC.3080008@halfdog.net>
-Date: Fri, 06 May 2011 18:54:20 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/3
+Message-ID: <20110803152114.72d1c2d4@redhat.com>
+Date: Wed, 3 Aug 2011 15:21:14 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Symlinks and filesystem recursion vulnerabilities: Action needed or ignore?
+Cc: security@...me.org
+Subject: Re: CVE request: GIF loader buffer overflow when initializing decompression tables
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, 2 Aug 2011 17:34:28 +0200 Thomas Biege wrote:
 
-Steven M. Christey wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=727081
+
+...
+
+> This problem was corrected upstream long ago:
 > 
-> Assuming I understand the issue correctly, there is precedent in CVE
-> for this kind of problem, or at least the exploitation of recursive 
-> backup/archive programs as they process files (many seem related to 
-> setting insecure permissions during the copy, and only setting the 
-> secure permissions afterward, a la CWE-689).
+> http://git.gnome.org/browse/gdk-pixbuf/commit/gdk-pixbuf/io-gif.c?id=3bac204e0d0241a0d68586ece7099e6acf0e9bea
 
-No, it is not a permission problem. Even with correct permissions, that
-disallow user x to access a file, he can make a recursion program of
-another user holding that permissions to access the file. Since backup
-is usually run as root, permissions will not stop that from happening.
+I'm being told that even if this is 2001 fix, it's ok to use 2011 CVE
+if this was not called security before.  Hence use CVE-2011-2897 if you
+plan to fix.
 
-> CVE-2009-4411 is the only example I can easily find.
+> The fix can be found in all gdk-pixbuf versions embedded in gtk2
+> packages, but it seems it never got it to stand-alone gdk-pixbuf
+> version for gtk+ 1.x.
 
-As I understand it, this one is slightly different to this problem,
-because application simply does not check against symlinks correctly and
-hence may fail, even in a single-user environment. The problem with tar
-et. al is, that they correctly follow only physical path when run on
-single-user environment, but may fail, when run on untrusted directory
-controlled by malicious user due to TOCTOU.
+Just to clarify, the above was about RHEL gtk2 packages.  For most
+distros, that implies they don't really need to look at their gtk2
+packages if it's fixed in the oldest supported RHEL.  I've not really
+tried to figure out if there was any upstream gtk2 version that did not
+have the fix though.
 
-> There is a "risk" of sorts to the community that a large number of
-> these issues could get disclosed for different packages in a short
-> timeframe, but this happens with any discovery of a new "class" of
-> security problems or attacks (look at the untrusted path stuff that
-> happened last year with Windows and Linux).  But IMO, better sooner
-> rather than later.  Linux is a multi-user OS and should be treated as
-> such, which means local file-writing/privilege attacks matter, even
-> though they might not be as severe as other kinds of attacks.
-> Somebody audited simpler symlink problems in Debian packages a couple
-> years ago, but while it must have been very painful and there were
-> dozens (hundreds?) of separate issues, most of those problems seemed
-> to get fixed in a relatively quick amount of time.
+I'm FYI CCing gnome security to reduce the amount of confusion this can
+possibly cause.  This is follow-up on:
 
-Well, the read problem is fixable, but might cause regressions. I'm not
-sure if the numerous regressions after the tar fix were the cause of the
-symlink fix itself (or due to unrelated cleanup also happening during
-larger code rewrites), but there were some quite annoying problems, some
-of them still exist. The question is, if the regression risk is higher
-than the security risk.
+http://www.openwall.com/lists/oss-security/2011/08/02/3
 
-The write example, that is leading to immediate root priv escalation, is
-caused by admin error. But since nearly no admin knows, that it is
-nearly impossible to securely restore a backup to a live system, they
-are not really to blame. This issue could be "fixed" creating awareness.
-
-A final fix would be much simpler, if a safe open call is provided by
-the OS. I do not know, if there are some flag bits available to modify
-current open or if a new SecureOps-Syscall (could be used as generic
-gateway for various sec-related calls) could be implemented. From my
-point of view, kernel implementation should be rather simple, user space
-would also be technically simple (libsecureio.so or addon to libc). But
-I do not know, if such a change would ever be accepted by community and
-standardization boards.
-
-> Maybe the appropriate strategy is for the community to agree on a
-> good way of solving these problems before announcing all the
-> different packages that are affected, but it's just a thought.
-> Ultimately this decision is up to the researcher, affected
-> developers, and customers.
-
-Where could be the right place to find that decision? CERT said, that
-they do not plan any advisories, which does not mean that they do
-nothing on the problem, but I think, they see it low risk/low priority,
-which I can understand in some parts.
-
-hd
-
-
-PS: Has someone windows knowledge and programing skills to see if only
-linux-OS is affected? Would require existence of symlink-analoge
-structure, and would be more effective if inotify-like calls would be
-possible. Could the profile synchronization at login be used to take
-over a windows box at system level? Would also require sync to run at
-elevated privs.
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFNxEMdxFmThv7tq+4RAgAvAJ93fv3c9r0tZjYrcNAcGJYL6ux71gCcCnEO
-rotufy+xVYEzBRIZVTjJFRQ=
-=K218
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
