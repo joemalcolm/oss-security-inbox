@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/3
-Message-ID: <4EEF6776.7010900@redhat.com>
-Date: Mon, 19 Dec 2011 09:33:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: python-virtualenv
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/2
+Message-ID: <1312377180.2576.3.camel@mdlinux>
+Date: Wed, 03 Aug 2011 09:13:00 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+foomatic-gui improperly escapes certain hostnames, resulting in a remote
+arbitrary command execution vulnerability.
 
-On 12/19/2011 09:21 AM, Nico Golde wrote:
-> An insecure /tmp file handling was found in python-virtualenv:
-> https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
->
-> Can someone assign a CVE id for this?
->
-> Kind regards
-> Nico
-Link is 404
+Ref.:
+https://bugs.launchpad.net/ubuntu/+source/foomatic-gui/+bug/811119
+http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
+http://packages.debian.org/changelogs/pool/main/f/foomatic-gui/foomatic-gui_0.7.9.5/changelog
 
-- -- 
+Could a CVE please be assigned to this issue?
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+Thanks,
 
-iQIcBAEBAgAGBQJO72d1AAoJEBYNRVNeJnmTpNAQAINiKQVnIoi+jHQ7Mlb+nCUz
-6dbHgJnM9aQ9hhq0YbSDb7g8uYJxcbtehXQ6MYyv6mSH+utq6ynQEdZi/RzizYIR
-NC4tD/+7jOiHubX/NKVDwVMkKEM/xObrUrkCtM5icnj9K5hkyxbji/TmmYc0mYBH
-7eeg3g6CsAkPHbfmhZz40LHh50yuWIn99LUOcgs7mGs9xsei/d1/PSNOONCMDpma
-LHLyjNQwekiEt3r3ERHwSiUJKYGn5i065W0UpDuL9NU2E/LsnESQtgniOCjNj524
-s7VYDgR9WVZKXX7BHkcDOWYTewI69Sz7gnNiJLhrFMYSCXLzK7CAoaqho6hEKnRV
-4GF+cfMtbTBn84c/Iiu8Oq4afPQo9Z7lAqK7vRvZrzib4lXrU4XUogWE57sHTmaD
-uSjHH0DYOH7ZDgWIRHUGFprxPb+vc8POWS2zkZ7M6F7Id+h/t/Omhom6qhs+LTOD
-LRmGwtP1put+NZB+Jxgm1NPJdwISxRWWw6VUWXDxPdw6zN8uteVOdZE5ZLtjEHNS
-hXQpgkAYCxtnU9sSAQ5ZseIVmv009T5+nuGj8nlhaKf7+snAyBmLB0EnO0Ly6RnS
-pZu17TnN7xo+RhN3ESL4Znu3lSPKEQtcy58fkP9tqBzptzT7W6khQ3hJ6Gu43X26
-2kfsHlqO6fTtfL8zvOn2
-=mNKu
------END PGP SIGNATURE-----
+Marc.
+
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
