@@ -1,90 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/5
-Message-Id: <201106141624.52899.jnareb@gmail.com>
-Date: Tue, 14 Jun 2011 16:24:52 +0200
-From: Jakub Narebski <jnareb@...il.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
-Subject: [CVE-2011-2186] [PATCH] gitweb: Enable $prevent_xss by default
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/2
+Message-ID: <1312377180.2576.3.camel@mdlinux>
+Date: Wed, 03 Aug 2011 09:13:00 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 14 June 2011, Jakub Narebski wrote:
-> On Tue, 14 June 2011, Ludwig Nussel wrote:
-> > Jakub Narebski wrote:
-> 
-> > > [...] it is enough to enable XSS prevention by adding
-> > > 
-> > >   our $prevent_xss = 1;
-> > > 
-> > > in gitweb configuration file.
-> > 
-> > What about making that the default?
-> 
-> I'll come up with a patch...
+Hello,
 
-And here it is (though I am not sure if it is the correct form
-of including attributions / acknowledgements):
+foomatic-gui improperly escapes certain hostnames, resulting in a remote
+arbitrary command execution vulnerability.
 
-Based on 'maint', applies to 'master'.
--- >8 --
-From: Jakub Narebski <jnareb@...il.com>
-Subject: [PATCH] gitweb: Enable $prevent_xss by default
+Ref.:
+https://bugs.launchpad.net/ubuntu/+source/foomatic-gui/+bug/811119
+http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
+http://packages.debian.org/changelogs/pool/main/f/foomatic-gui/foomatic-gui_0.7.9.5/changelog
 
-This fixes issue CVE-2011-2186 originally reported in
-https://launchpad.net/bugs/777804
+Could a CVE please be assigned to this issue?
 
-Reported-by: dave b <db.pub.mail@...il.com>
-Signed-off-by: Jakub Narebski <jnareb@...il.com>
----
- git-instaweb.sh    |    4 ++++
- gitweb/README      |    5 +++--
- gitweb/gitweb.perl |    2 +-
- 3 files changed, 8 insertions(+), 3 deletions(-)
+Thanks,
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 8bfa8a0..e541164 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -583,6 +583,10 @@ our \$projectroot = "$(dirname "$fqgitdir")";
- our \$git_temp = "$fqgitdir/gitweb/tmp";
- our \$projects_list = \$projectroot;
- 
-+# we can trust our own repository, so disable XSS prevention
-+# to enable some extra features
-+our \$prevent_xss = 0;
-+
- \$feature{'remote_heads'}{'default'} = [1];
- EOF
- }
-diff --git a/gitweb/README b/gitweb/README
-index a92bde7..9ae5d84 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -236,8 +236,9 @@ not include variables usually directly set during build):
-  * $prevent_xss
-    If true, some gitweb features are disabled to prevent content in
-    repositories from launching cross-site scripting (XSS) attacks.  Set this
--   to true if you don't trust the content of your repositories. The default
--   is false.
-+   to false if you trust the content of your repositories, and want to use
-+   per-repository README.html, or use gitweb as deployment platform
-+   via 'blob_plain' view and path_info links. The default is true.
-  * $maxload
-    Used to set the maximum load that we will still respond to gitweb queries.
-    If server load exceed this value then return "503 Service Unavailable" error.
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f8db40a..0351338 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -162,7 +162,7 @@ our @diff_opts = ('-M'); # taken from git_commit
- 
- # Disables features that would allow repository owners to inject script into
- # the gitweb domain.
--our $prevent_xss = 0;
-+our $prevent_xss = 1;
- 
- # Path to the highlight executable to use (must be the one from
- # http://www.andre-simon.de due to assumptions about parameters and output).
+Marc.
+
+
 -- 
-1.7.5
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
