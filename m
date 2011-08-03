@@ -1,101 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/11
-Message-ID: <1590681786.217054.1314043264474.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 16:01:04 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/6
+Message-ID: <20110803160324.GA6791@openwall.com>
+Date: Wed, 3 Aug 2011 20:03:24 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Concrete CMS 5.4.1.1 <= Cross Site Scripting
+Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3183 for this.
+On Sun, Jul 17, 2011 at 10:30:33PM +0400, Solar Designer wrote:
+> On Sun, Jul 17, 2011 at 05:48:21PM +0400, Solar Designer wrote:
+> > I've just released crypt_blowfish 1.2:
+> > 
+> > http://www.openwall.com/crypt/
+> > 
+> > All projects using crypt_blowfish should upgrade to this newer code.
+> 
+> Patches for PHP 5.3 and 5.4:
+> 
+> http://news.php.net/php.internals/54000
 
-Thanks.
+In case anyone is backporting these to PHP 5.3.0 - 5.3.6, you also need
+to apply one of the patches from:
 
--- 
-    JB
+http://news.php.net/php.internals/54098
 
+These add support for the new prefixes to crypt.c (initially overlooked)
+and they add more tests.
 
------ Original Message -----
-> Concrete CMS 5.4.1.1 <= Cross Site Scripting
-> 
-> 
-> 1. OVERVIEW
-> 
-> Concrete CMS 5.4.1.1 and lower versions are vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Concrete5 makes running a website easy. Go to any page in your site,
-> and a editing toolbar gives you all the controls you need to update
-> your website. No intimidating manuals, no complicated administration
-> interfaces - just point and click.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The rcID parameter is not properly sanitized, which allows attacker to
-> conduct Cross Site Scripting attack. This may allow an attacker to
-> create a specially crafted URL that would execute arbitrary script
-> code in a victim's browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> CMS 5.4.1.1 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> 
-> vulnerable parameter: rcID
-> 
-> <form action="http://[target]/Concrete/index.php/login/do_login/"
-> method="post">
-> <input type="hidden" name="uName" value="test" />
-> <input type="hidden" name="uPassword" value="test" />
-> <input type="hidden" name="rcID" value='"
-> style=display:block;color:red;width:9999;height:9999;z-index:9999;top:0;left:0;background-image:url(javascript:alert(/XSS/));width:expression(alert(/XSS/));
-> onmouseover="alert(/XSS/)' />
-> <input type="submit" name="submit" value="Get Concrete CMS 5.4.1.1
-> XSS" />
-> </form>
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 5.4.2 or higher.
-> 
-> 
-> 7. VENDOR
-> 
-> Concrete CMS Developers
-> http://www.concrete5.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-04-14: vulnerability reported
-> 2011-08-04: vendor released fixed version
-> 2011-08-23: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[concrete_5.4.1.1]_cross_site_scripting
-> Project Home: http://www.concrete5.org/
-> Vendor Release Note:
-> http://www.concrete5.org/documentation/background/version_history/5-4-2-release-notes/
-> 
-> 
-> 
-> #yehg [2011-08-23]
+Alexander
