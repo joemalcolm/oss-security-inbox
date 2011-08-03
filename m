@@ -1,20 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/17
-Message-ID: <20110403221354.GG9516@openwall.com>
-Date: Mon, 4 Apr 2011 02:13:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/5
+Message-ID: <20110803155646.GA26540@ngolde.de>
+Date: Wed, 3 Aug 2011 17:56:46 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE id request: shttpd/mongoose/yassl embedded webserver
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 11:31:07AM +0200, Moritz Muehlenhoff wrote:
-> I was subscribed through the team@...urity.debian.org exploder. My key:
-> 
-> pub   1024D/4E2ECA5A 2004-09-08
-> uid                  Moritz Muehlenhoff <jmm@...ian.org>
-> uid                  Moritz Muehlenhoff <jmm@...til.org>
-> sub   2048g/8D1BA24D 2004-09-08
+Hi,
+I found a buffer overflow in the PUT processing of shttpd/mongoose/yassl 
+embedded webserver (all based on the same source code).
 
-Subscribed.
+Can someone assign a CVE id to this?
+Upstream fix: https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
 
-Alexander
+The bug:
+_shttpd_put_dir()/put_dir() function:
+26         for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
+27                 len = p - path;
+28                 assert(len < sizeof(buf));
+29                 (void) memcpy(buf, path, len);
+30                 buf[len] = '\0';
+31
+32                 /* Try to create intermediate directory */
+33                 if (_shttpd_stat(buf, &st) == -1 &&
+34                     _shttpd_mkdir(buf, 0755) != 0)
+35                         return (-1);
+36
+37                 /* Is path itself a directory ? */
+38                 if (p[1] == '\0')
+39                         return (0);
+40         }
+
+The only guard here to avoid a buffer overflow with a long path is
+the assert call in line 28. Unfortunately this is disabled if
+you compile with -DNDEBUG and from what I see quite a lot of people
+are doing that in order to reduce the binary size (those are embedded
+webservers intended to be used in embedded environments).
+
+It seems quite some projects actually do that, including a
+deployed product embedded product I'm currently
+looking at (and that was rooted because of this bug).
+From what I see -DNDEBUG in the mongoose makefile this is also the default for the mingw
+binary.
+
+If this is not the case, this is still a DoS bug.
+
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
