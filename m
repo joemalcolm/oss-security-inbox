@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/13
-Message-ID: <20110228210202.GB4669@outflux.net>
-Date: Mon, 28 Feb 2011 13:02:02 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: OOM-killer via argv expansion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/2
+Message-Id: <20110803220257.16c8a84205602adcc08fada4@gmail.com>
+Date: Wed, 3 Aug 2011 22:02:57 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com, coley@...-smtp.mitre.org
+Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
-> I think the flaw[1] with argv-expansion triggering the OOM-killer
-> incorrectly needs its own CVE.
+Michael Gilbert wrote:
+
+> Hi,
 > 
-> While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-> improved things, argv expansion can still be tricked into OOM-killing the
-> entire system. Solutions were discussed on the original thread, but
-> were not finished. Recently a set of patches[3] has been re-proposed to fix
-> this issue. Regardless, it should probably get its own CVE assigned.
-> 
-> Thanks,
-> 
-> -Kees
-> 
-> [1] https://lkml.org/lkml/2010/8/27/429
-> [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-> [3] https://lkml.org/lkml/2011/2/25/227
+> This may be an odd request.  The proprietary fglrx driver has an
+> info disclosure flaw in one of it's shell scripts [0].  It passes the
+> xauth secret cookie in an insecure manner (such that it's exposed to
+> prying eyes in the output of ps for example).
 
-Sorry, Nelson Elhage pointed out to me that I missed the fix for this
-issue. The issue was been fixed with:
-http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
+Ping, can we get an id for this one?
 
-This was already assigned as CVE-2010-4243
-
-Sorry for the noise, and thanks!
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+Thanks,
+Mike
