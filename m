@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/2
-Message-ID: <4E1D232C.9070507@redhat.com>
-Date: Wed, 13 Jul 2011 10:16:36 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Security issues fixed in libpng 1.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/9
+Message-ID: <20110804145720.GF30625@redhat.com>
+Date: Thu, 4 Aug 2011 22:57:20 +0800
+From: Daniel Veillard <veillard@...hat.com>
+To: Billy Rios <billy.rios@...il.com>
+Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Jul 28, 2011 at 09:59:22PM -0700, Billy Rios wrote:
+> The crash was indeed in libxml2, but I could not get the bug to repro in
+> Linux.  We took the crash file and fuzzed a bit more on Linux, but no
+> crashes were observed.
 
-There are three security issues which are fixed in libpng 1.5.4 [1].
-The following CVE ids are assigned for those issues:
+  Just wondering, are you by chance changing the libxml2 buffer allocation
+strategy in the application code (function xmlSetBufferAllocationScheme())
+and associated global variable (I know I know ...) xmlBufferAllocScheme.
+That may explain if you switched to an exact allocation policy why
+you hit the buffer overrun while it usually doesn't show up,
 
-1. buffer overwrite in png_rgb_to_gray
-CVE: CVE-2011-2690
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720607
-
-2. Crash in png_default_error due to use of NULL Pointer
-CVE: CVE-2011-2691
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720608
-
-3. Memory corruption when handling empty sCAL chunks
-CVE: CVE-2011-2692
-Reference: https://bugzilla.redhat.com/show_bug.cgi?id=720612
-
-Thanks.
-
-[1] http://libpng.org/pub/png/libpng.html
+Daniel
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Daniel Veillard      | libxml Gnome XML XSLT toolkit  http://xmlsoft.org/
+daniel@...llard.com  | Rpmfind RPM search engine http://rpmfind.net/
+http://veillard.com/ | virtualization library  http://libvirt.org/
