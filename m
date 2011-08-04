@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/3
-Message-ID: <20110517115829.763068f3@redhat.com>
-Date: Tue, 17 May 2011 11:58:29 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/13
+Message-ID: <20110804191323.GB41331@dojo.mi.org>
+Date: Thu, 4 Aug 2011 15:13:24 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 30 Apr 2011 19:26:14 +0400 Solar Designer wrote:
+:Can I get 2010 CVE-ID for this issue? I am not sure if other distributions/operating systems need their own IDs. If I am correct one ID should be enough.
+:
+:Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
+:Bug report to FreeBSD: http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
+:NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
+:Reported to OpenBSD (and patched), but can't find references.
 
-> > We were members of vendor-sec as Sun Microsystems team, and now
-> > represent all of Oracle software and hardware products including but
-> > not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
-> > Open Office.
-> 
-> Of these, only Oracle Enterprise Linux may qualify you for the list
-> that has been setup so far.  As you say, Oracle got onto vendor-sec
-> through the acquisition of Sun.  Although formally this satisfies
-> "must be a vendor-sec member" for the initial seed membership of the
-> new list, it does feel like a bypass of the intent of this
-> requirement.  Oracle was never actually accepted to vendor-sec for
-> Oracle Enterprise Linux.
+FWIW, a reference for OpenBSD is:
 
-IIRC, Oracle was subscribed to v-s more than once - the "Sun" exploder
-that was subscribed for quite a while (originally as Solaris vendor
-probably), and individual OEL representative, added around the time
-Oracle was in the process of acquiring Sun and there was no single
-security contact for all products yet.
+ftp://ftp.openbsd.org/pub/OpenBSD/patches/4.5/common/013_ftpd.patch
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"All my autopsies have been performed on dead people."     -Anguished English
+
+Content of type "application/pgp-signature" skipped
