@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/9
-Message-ID: <20110606164014.GA6305@kroah.com>
-Date: Mon, 6 Jun 2011 09:40:14 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Chris Evans <scarybeasts@...il.com>, Kees Cook <kees@...ntu.com>
-Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/7
+Message-ID: <20110804143326.GC6651@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 17:33:26 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: security@...bb.co.uk, C.Trapt@...il.com
+Subject: CVE-request: KaiBB security vulnerabilities without CVE-IDs
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 06, 2011 at 06:19:45PM +0200, Jan Lieskovsky wrote:
-> Hello, Josh, Steve, vendors,
-> 
->   It was found that vsftpd, Very Secure FTP daemon, when the network
-> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
-> create a new network namespace per connection. A remote attacker could
-> use this flaw to cause a memory pressure and denial of the vsftpd
-> service.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
-> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
-> 
-> This one being a bit tricky one -- from my understanding of the issue,
-> vsftpd doesn't necessarily have a security flaw on its side. It's
-> kernel issue / bug, which allows this to be used for vsftpd DoS:
-> [4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
-> [5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
-> 
-> Short-term solution would be probably to address this on the vsftpd
-> side, the long-term one then being to get this fixed in kernel.
+Please assign CVE-IDs for following KaiBB issues:
 
-This should already be fixed in the kernel, it looks like it's just
-older kernels that has the issue, if the distro enabled that specific
-option, so there's really nothing that needs to be done here, or a CVE
-assigned that I can tell, right?
+2011:
+http://osvdb.org/show/osvdb/71068 - HTB22793
+2010:
+http://osvdb.org/show/osvdb/69346
+http://osvdb.org/show/osvdb/71885 - HTB22746
+http://osvdb.org/show/osvdb/70210 - HTB22747, HTB22748
+http://osvdb.org/show/osvdb/70211 - HTB22749
+http://osvdb.org/show/osvdb/69347
+http://osvdb.org/show/osvdb/69345
 
-thanks,
+Haven't tested any of these in actual installation. I can do it if someone requests it.
 
-greg k-h
+Vendor/project www-pages:
+1) http://code.google.com/p/kaibb/
+2) http://www.kaibb.co.uk/
+
+Best regards,
+Henri Salo
