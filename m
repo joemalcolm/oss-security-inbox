@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/18/1
-Message-ID: <20111218094528.GA22411@foo.fgeek.fi>
-Date: Sun, 18 Dec 2011 11:45:28 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-request: WordPress advanced-text-widget XSS advancedtext.php?page=
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/2
+Message-Id: <20110803220257.16c8a84205602adcc08fada4@gmail.com>
+Date: Wed, 3 Aug 2011 22:02:57 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com, coley@...-smtp.mitre.org
+Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue?
+Michael Gilbert wrote:
 
-Original report: http://seclists.org/bugtraq/2011/Nov/133
-Vendor report: http://wordpress.org/support/topic/wordpress-advanced-text-widget-plugin-cross-site-scripting-vulnerabilities
-Fixed in 2.0.2
-Vulnerable versions: 2.0.1 and all below
-One example: advancedtext.php?page=
+> Hi,
+> 
+> This may be an odd request.  The proprietary fglrx driver has an
+> info disclosure flaw in one of it's shell scripts [0].  It passes the
+> xauth secret cookie in an insecure manner (such that it's exposed to
+> prying eyes in the output of ps for example).
 
-http://wordpress.org/extend/plugins/advanced-text-widget/changelog/
-------------------------------------------------------------------------
-r466102 | maxchirkov | 2011-11-22 19:32:02 +0200 (Tue, 22 Nov 2011) | 2 lines
+Ping, can we get an id for this one?
 
-Committing version 2.0.2
-- Updated all instances of $_GET method with esc_attr() to improve security.
-------------------------------------------------------------------------
-
-- Henri Salo
+Thanks,
+Mike
