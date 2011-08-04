@@ -1,17 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/1
-Message-ID: <4E02BA3A.5080403@redhat.com>
-Date: Thu, 23 Jun 2011 09:29:54 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/5
+Message-ID: <CANoWnERMy8WEAL_Tb=aVCYQq3o60QOCjMTgnmBLM9xH9-r-2KQ@mail.gmail.com>
+Date: Fri, 5 Aug 2011 00:17:14 +1000
+From: dave bl <db.pub.mail@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: NetworkManager: did not honour PolicyKit auth_admin action element by creation of Ad-Hoc wireless networks
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
-
-https://bugzilla.redhat.com/show_bug.cgi?id=709662
-
-This has been assigned CVE-2011-2176.
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+So while there aren't that many "users" of the old
+system-config-printer - it appears that debian old-stable (lenny)
+maybe vulnerable (where python-smbc is not available) ... is it worth
+while giving system-config-printer a 2008 CVE as well (if none
+currently exists).
+@Tim any thoughts?
