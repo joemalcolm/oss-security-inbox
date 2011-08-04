@@ -1,72 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/1
-Message-ID: <20110725020827.GA21561@openwall.com>
-Date: Mon, 25 Jul 2011 06:08:27 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/6
+Message-ID: <20110804142314.GB6651@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 17:23:14 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Aug 05, 2011 at 12:17:14AM +1000, dave bl wrote:
+> So while there aren't that many "users" of the old
+> system-config-printer - it appears that debian old-stable (lenny)
+> maybe vulnerable (where python-smbc is not available) ... is it worth
+> while giving system-config-printer a 2008 CVE as well (if none
+> currently exists).
+> @Tim any thoughts?
 
-I know I am being a year late to comment on this, but maybe better late
-than never.  I'll over-quote a little bit:
+I'll bet there is still lot of system-config-printer installations: http://qa.debian.org/popcon.php?package=system-config-printer
 
-On Wed, Jun 02, 2010 at 01:43:03PM +0200, Jan Lieskovsky wrote:
->    Matt McCutchen pointed out a deficiency in the way rpm handled rpm 
->    package upgrades --
-> it failed to clear out the SUID/SGID bits of the old file by file 
-> replacement when privileged
-> user performed package upgrade. Under certain circumstances, a local, 
-> authenticated user could
-> use this flaw to escalate their privileges.
-> 
-> Red Hat Bugzilla entry:
->   [1] https://bugzilla.redhat.com/show_bug.cgi?id=598775
-> 
-> Upstream changeset:
->   [2] 
->   http://rpm.org/gitweb?p=rpm.git;a=commit;h=ca2d6b2b484f1501eafdde02e1688409340d2383
-> 
-> Could you allocate CVE id for this?
-
-This was assigned CVE-2010-2059.  And there was a similar issue 5 years
-earlier, affecting package removals (rather than upgrades):
-
-https://bugzilla.redhat.com/show_bug.cgi?id=125517
-
-That one was assigned CVE-2005-4889.
-
-The descriptions and fixes for these were limited to SUID/SGID bits and
-fscaps (on RPM versions/builds supporting those).  However, what about
-device files, maybe with unsafe permissions (or just extra device files
-that would need to be gone on package removal or on upgrade to a package
-version no longer providing those)?  What about regular files with world
-or group write permissions, which allow for a quota bypass?
-
-Additionally, the fix for SUID/SGID bits ignores the return value from
-chmod(), so it is fail-open.  It would not even print an error message.
-It is unclear what the best action on a partially-failed old package
-removal would be, but at the very least we can print an error message.
-
-Sure, these are relatively minor issues, yet if we're fixing things, we
-could as well fix them more fully.
-
-What I am considering is chmod()'ing everything but symlinks to 0, as
-opposed to the current fix of removing SUID/SGID bits off regular files
-with those bits set only.
-
-I've attached a patch against rpm 4.2 (yes, ancient code), which passed
-my basic tests (but more testing is needed).
-
-I don't care to request a third CVE id for this; I merely want to
-include a better fix.
-
-I'd appreciate any comments.
-
-Thanks,
-
-Alexander
-
-View attachment "rpm-4.2-owl-remove-unsafe-perms.diff" of type "text/plain" (2208 bytes)
+Best regards,
+Henri Salo
