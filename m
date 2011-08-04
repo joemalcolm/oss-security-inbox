@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/12
-Message-ID: <546725954.122104.1304971046150.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 May 2011 15:57:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/8
+Message-ID: <1312468508.4532.9.camel@localhost.localdomain>
+Date: Thu, 04 Aug 2011 15:35:06 +0100
+From: Tim Waugh <twaugh@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libarchive, multiple overflows
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello,
-> our maintainer found the following patches:
-> -----------
-> I was doing some maintainance on bsdtar package and noticed that there
-> was a buffer overflow fix upstream, see
-> http://code.google.com/p/libarchive/source/detail?r=3158&path=/trunk/libarchive/archive_read_support_format_iso9660.c
+On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
+> So while there aren't that many "users" of the old
+> system-config-printer - it appears that debian old-stable (lenny)
+> maybe vulnerable (where python-smbc is not available) ... is it worth
+> while giving system-config-printer a 2008 CVE as well (if none
+> currently exists).
 
-Use CVE-2011-1777
+Yes, I think it is worth doing that.
 
-> 
-> Also SUSE package does not include the
-> http://pkgs.fedoraproject.org/gitweb/?p=libarchive.git;a=blob_plain;f=libarchive-2.8.4-iso9660-data-types.patch;hb=HEAD
-> patch which seems to be security sensitive also.
+Tim.
+*/
 
-I'm not sure I'd call this one security. It's a crash only from what I can
-see:
 
-https://code.google.com/p/libarchive/source/detail?r=1984&path=/trunk/libarchive/archive_read_support_format_iso9660.c
-
-It's just silly input to a format string. If you want one I'll assign it
-though.
-
-> More overflow fixes:
-> 
-> http://code.google.com/p/libarchive/source/detail?r=2842
-
-This one needs a 2010 ID.
-Use CVE-2010-4666
-
-> http://code.google.com/p/libarchive/source/detail?r=3160
-
-Use CVE-2011-1778
-
-> 
-> Use-after-free fix (not sure if exploitable):
-> 
-> http://code.google.com/p/libarchive/source/detail?r=3038
-
-I'm going to give this an ID, I'd rather have it revoked than not assigned.
-
-Use CVE-2011-1779
-
-Thanks.
-
--- 
-    JB
+Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
