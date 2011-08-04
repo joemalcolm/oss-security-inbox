@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/16
-Message-ID: <BANLkTimxm84Qm+31Hab7QwLhrVEurkKQNA@mail.gmail.com>
-Date: Mon, 20 Jun 2011 15:16:52 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/9
+Message-ID: <20110804145720.GF30625@redhat.com>
+Date: Thu, 4 Aug 2011 22:57:20 +0800
+From: Daniel Veillard <veillard@...hat.com>
+To: Billy Rios <billy.rios@...il.com>
+Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: libxml security fix from apple ... any information?
 Content-Type: text/plain; charset=utf-8
 
->> Also make sure each instruction is aligned on 4 bytes boundary, to avoid
->> unaligned accesses.
->
-> Should this get a seperate ID?
->
+On Thu, Jul 28, 2011 at 09:59:22PM -0700, Billy Rios wrote:
+> The crash was indeed in libxml2, but I could not get the bug to repro in
+> Linux.  We took the crash file and fuzzed a bit more on Linux, but no
+> crashes were observed.
 
-AFAIK, on some architectures, unaligned accesses will generate a
-fault, which will be handled by emulating the access via byte-size
-loads and stores (for example).  So while unaligned accesses like this
-should be avoided, I don't think there's a security impact.  Anyone
-who knows better, please correct me if I'm wrong.
+  Just wondering, are you by chance changing the libxml2 buffer allocation
+strategy in the application code (function xmlSetBufferAllocationScheme())
+and associated global variable (I know I know ...) xmlBufferAllocScheme.
+That may explain if you switched to an exact allocation policy why
+you hit the buffer overrun while it usually doesn't show up,
 
--Dan
+Daniel
+
+-- 
+Daniel Veillard      | libxml Gnome XML XSLT toolkit  http://xmlsoft.org/
+daniel@...llard.com  | Rpmfind RPM search engine http://rpmfind.net/
+http://veillard.com/ | virtualization library  http://libvirt.org/
