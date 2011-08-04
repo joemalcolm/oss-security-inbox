@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/3
-Message-ID: <20110517115829.763068f3@redhat.com>
-Date: Tue, 17 May 2011 11:58:29 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/8
+Message-ID: <1312468508.4532.9.camel@localhost.localdomain>
+Date: Thu, 04 Aug 2011 15:35:06 +0100
+From: Tim Waugh <twaugh@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 30 Apr 2011 19:26:14 +0400 Solar Designer wrote:
+On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
+> So while there aren't that many "users" of the old
+> system-config-printer - it appears that debian old-stable (lenny)
+> maybe vulnerable (where python-smbc is not available) ... is it worth
+> while giving system-config-printer a 2008 CVE as well (if none
+> currently exists).
 
-> > We were members of vendor-sec as Sun Microsystems team, and now
-> > represent all of Oracle software and hardware products including but
-> > not limited to Oracle Enterprise Linux, Solaris, Java, MySQL and
-> > Open Office.
-> 
-> Of these, only Oracle Enterprise Linux may qualify you for the list
-> that has been setup so far.  As you say, Oracle got onto vendor-sec
-> through the acquisition of Sun.  Although formally this satisfies
-> "must be a vendor-sec member" for the initial seed membership of the
-> new list, it does feel like a bypass of the intent of this
-> requirement.  Oracle was never actually accepted to vendor-sec for
-> Oracle Enterprise Linux.
+Yes, I think it is worth doing that.
 
-IIRC, Oracle was subscribed to v-s more than once - the "Sun" exploder
-that was subscribed for quite a while (originally as Solaris vendor
-probably), and individual OEL representative, added around the time
-Oracle was in the process of acquiring Sun and there was no single
-security contact for all products yet.
+Tim.
+*/
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
