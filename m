@@ -1,37 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/12/1
-Message-ID: <4EBDF7C4.9060407@redhat.com>
-Date: Fri, 11 Nov 2011 21:36:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/4
+Message-ID: <20110804141632.GA6443@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 17:16:32 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: CVE request: coppermine gallery < 1.4.26
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/2011 09:48 AM, Petr Matousek wrote:
-> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
-> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
-> request.
->
-> While the NFS client only asks for one attribute (FATTR4_ACL) in the
-> first bitmap word, the NFSv4 protocol allows for the server to return
-> unbounded bitmaps (more than two)."
->
-> Upstream commit:
-> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
-> case when 2 words are expected and 3 are returned
->
-> Proposed complete upstream patch:
-> http://www.spinics.net/lists/linux-nfs/msg25288.html
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=747106
->
-> Credit: Andy Adamson
->
-> Thanks,
-Please use CVE-2011-4131 for this issue
+This security issue never got CVE-identifier: http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
 
--- 
+Original advisory: http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
+OSVDB: http://osvdb.org/show/osvdb/62261
 
--Kurt Seifried / Red Hat Security Response Team
-
+Best regards,
+Henri Salo
