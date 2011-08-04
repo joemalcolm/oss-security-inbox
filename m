@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/5
-Message-ID: <4ECFD2C6.9030704@redhat.com>
-Date: Fri, 25 Nov 2011 18:39:18 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- yaws -- Directory traversal flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/11
+Message-ID: <20110804155530.GB7292@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 18:55:30 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: pithos symlink vulnerability CWE-61
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+Can I get 2010 CVE-ID for Pithos symlink attack vulnerability: https://bugs.launchpad.net/pithos/+bug/667896
 
-   a directory traversal flaw was found in the way yaws, web server
-for dynamic content written in Erlang, processed certain URLs. A
-remote, authenticated yaws user could use this flaw to obtain content
-of arbitrary local file, available to the yaws server user via
-specially-crafted URL request.
+Software web-page: https://launchpad.net/pithos
+Found by: lfaraone <https://launchpad.net/~lfaraone>
+Found at: 2010-10-30 (fix released same day)
+"Predictable file- or directory-names in /tmp/-directory can lead to symlink attack."
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650009
-[2] https://github.com/klacke/yaws/issues/69
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=757181
+Fixed in Debian:
 
-Could you allocate a CVE id for this?
+http://packages.debian.org/changelogs/pool/main/p/pithos/current/changelog says:
+pithos (0.3.5-1) unstable; urgency=high
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+   * New upstream version.
+     - SECURITY UPDATE: fixes overwriting of arbitrary file via symlinks
+       (LP: #667896)
+Can be still found from DST: http://security-tracker.debian.org/tracker/TEMP-0000000-14D1F9
 
-P.S.: As of right now, according to [2], there doesn't seem
-       to be an upstream patch for this issue available yet.
+And in Ubuntu: http://changelogs.ubuntu.com/changelogs/pool/universe/p/pithos/pithos_0.3.8-1/changelog
+
+Best regards,
+Henri Salo
