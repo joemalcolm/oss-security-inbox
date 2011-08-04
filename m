@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/12
-Message-id: <A15D21C2-8546-463B-8CBF-B87D5ECA12DE@mac.com>
-Date: Mon, 25 Jul 2011 15:39:15 -0400
-From: Jeff Johnson <n3npq@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/12
+Message-ID: <123634419.1821504.1312480424402.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Aug 2011 13:53:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-There were a series of CVE's applied (and some withdrawn) against
-whatever happens to be called "rpm".
 
-The patch here was dropped when RPM was forked and the CVE was
-essentially a replay of an issue that was already fixed 5 years ago
-(and the patch was NOT dropped in @rpm5.org cvs).
 
-(aside)
-I believe there are better fixes if the link count is more carefully
-checked always and everywhere. While rpm package metadata does not
-(and SHOULD not) carry an expected value for st->st_nlinks, its
-rather easy to synthesize an expected link count given the inode
-information (which is in rpm metadata) and to warn (either with --verify,
-or perhaps always) if the link count is not as expected.
+----- Original Message -----
+> On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
+> > So while there aren't that many "users" of the old
+> > system-config-printer - it appears that debian old-stable (lenny)
+> > maybe vulnerable (where python-smbc is not available) ... is it
+> > worth
+> > while giving system-config-printer a 2008 CVE as well (if none
+> > currently exists).
+> 
+> Yes, I think it is worth doing that.
+> 
 
-There are other (and better) approaches if the actual values on
-the file system, including files not contained in packages, is
-stored in an rpmdb: its a fundamental design flaw in RPM that
-only package metadata installed in an rpmdb is ever used
-for security auditing.
+This request doesn't really make any sense. It deserves a 2011 ID, that's
+when the flaw was discovered.
 
-But there's no harm at all in removing SUID/SGID bits from files that are being
-removed in case there's an additional link that has been added.
+My impression is that the code is the same, which means they will share the
+same ID. If the code is totally different, we will want to split. Time, you
+know best, is the code in question the same, or is it different?
 
-hth
+Thanks.
 
-73 de Jeff
+-- 
+    JB
