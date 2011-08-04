@@ -1,51 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/12
-Message-ID: <20110125165739.GV4979@outflux.net>
-Date: Tue, 25 Jan 2011 08:57:39 -0800
-From: Kees Cook <kees@...flux.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/5
+Message-ID: <CANoWnERMy8WEAL_Tb=aVCYQq3o60QOCjMTgnmBLM9xH9-r-2KQ@mail.gmail.com>
+Date: Fri, 5 Aug 2011 00:17:14 +1000
+From: dave bl <db.pub.mail@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: libxml2 heap contents leak
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-If it's a requirement that "xmlChar *" be valid null-terminated utf8, then
-I'd agree it seems this is PHP's responsibility. Are there perhaps other
-places where this needs to be checked besides just with
-xmlTextWriterWriteAttribute()?
-
-On Tue, Jan 25, 2011 at 05:45:48PM +0100, Pierre Joye wrote:
-> Btw, I re opened the php one as Daniel seems to think that it is the
-> application responsibility and not libxml. I'm not totally convinced
-> and I asked Rob to check this problem again.
-> 
-> On Mon, Jan 24, 2011 at 10:41 PM, Kees Cook <kees@...ntu.com> wrote:
-> > Hello,
-> >
-> > I'd like to get a CVE assigned for a minor heap contents leak in
-> > libxml2. I reported that it is possible to leak heap memory contents
-> > from libxml2 (and things linked against it, for example PHP[1], or things
-> > written in PHP[2]):
-> >
-> > https://bugzilla.gnome.org/show_bug.cgi?id=631551
-> >
-> > Thanks,
-> >
-> > -Kees
-> >
-> > [1] http://bugs.php.net/bug.php?id=52998
-> > [2] http://status.net/open-source/issues/2798
-> >
-> > --
-> > Kees Cook
-> > Ubuntu Security Team
-> >
-> 
-> 
-> 
-> -- 
-> Pierre
-> 
-> @pierrejoye | http://blog.thepimp.net | http://www.libgd.org
-
--- 
-Kees Cook                                            @outflux.net
+So while there aren't that many "users" of the old
+system-config-printer - it appears that debian old-stable (lenny)
+maybe vulnerable (where python-smbc is not available) ... is it worth
+while giving system-config-printer a 2008 CVE as well (if none
+currently exists).
+@Tim any thoughts?
