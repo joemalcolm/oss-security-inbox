@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/7
-Message-ID: <1672938819.396907.1306869466564.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 15:17:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/3
+Message-ID: <20110804065903.GA23489@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 09:59:03 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: NetworkManager-openvpn logs cert password
+Cc: Josh Bressers <bressers@...hat.com>, Coley <coley@...re.org>, Moritz Mühlenhoff <jmm@...til.org>
+Subject: CVE-request: clamav floating point exception in OLE2 scanner DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1943 for this.
+Can I get CVE-2007-* identifier for ScanOLE2 issue? RFC2397-issue is CVE-2007-4510. I don't know if there are CVEs for other fixed issues, but I will try to find out.
 
-Thanks.
+"""
+clamav (0.91.2-1) unstable; urgency=low
 
--- 
-    JB
+  * New upstream version
+    - fix call to tolower() which led to a crash in libclamav
+    - fix possible NULL dereference, e.g. when parsing email with RFC2397
+      URI
+    - fix floating point exception when using ScanOLE2
+    - fix possible NULL dereference in rtf.c
 
------ Original Message -----
-> and another one from RH bz:
-> https://bugzilla.redhat.com/show_bug.cgi?id=708876
-> 
-> Robert Marcano 2011-05-29 20:28:01 EDT
-> 
-> Description of problem:
-> 
-> Password to unlock certificate is logged to /var/log/messages
-> 
-> May 29 19:46:42 localhost NetworkManager[4791]: destroy_one_secret:
-> destroying
-> ********
-> 
-> Version-Release number of selected component (if applicable):
-> 
-> NetworkManager-openvpn-0.8.999-1.fc15.x86_64
-> 
-> 
-> Additional info:
-> 
-> I would love to have the option to type the password at connection
-> time instead
-> of it being stored, but adding the password to the system log is wrong
-> 
-> --
-> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-> 21284 (AG Nürnberg
-> --
-> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> -- Marie von Ebner-Eschenbach
+ -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
+"""
+
+Related information:
+- Temporary ID: http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
+- http://www.debian.org/security/2007/dsa-1366
+
+Best regards,
+Henri Salo
