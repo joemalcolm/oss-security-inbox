@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/10
-Message-ID: <4E7F5910.2080508@php.net>
-Date: Sun, 25 Sep 2011 18:38:40 +0200
-From: Rasmus Lerdorf <rasmus@....net>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Zeev Suraski <zeev@...d.com>, Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/1
+Message-Id: <20110803220213.1db17e033728296366bede71@gmail.com>
+Date: Wed, 3 Aug 2011 22:02:13 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: cve request: xpdf: insecure tempfile usage in zxpdf script
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/2011 04:10 PM, Pierre Joye wrote:
-> On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
-> 
->> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
->> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
->>
->> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
-> 
-> The whole point is that some code was not having any issue before this
-> change. If the check was done earlier using is_a then this unexpected
-> behavior will happen, and that actually causes a security issue in
-> existing working code. The example in the blog post is very good one,
-> it clearly shows that the impact on existing code is not only about
-> wrongly implemented autoloader, or someone not disabling
-> allow_url_fopen (I can imagine local file include being an issue as
-> well under some circumstances).
-> 
-> All in all, there is no shame or bad image to get a new CVE for
-> something like that, I even see it as a good thing as it will:
+Hi,
 
-I didn't read the thread from the beginning, but is there an actual
-exploit here? Presumably the autoloader code in question isn't doing an
-fopen/eval to execute the code and since allow_url_include is disabled
-by default, remote includes aren't an issue in the default install. So
-are we talking about the tiny number of people who have explicitly
-enabled allow_url_include and are running the code with this bad autoloader?
+It was recently discovered that the compressed pdf handler script
+(zxpdf) that shipped in the Debian xpdf package handles tempfiles
+insecurely.  Due to this flaw, a specifically-crafted pdf file name can
+be used to delete files from the user's system (by taking advantage of
+the tempfile cleanup trap; i.e. "rm -f <part of crafted file name>").  
 
--Rasmus
+Note that as of version 3.02-13 (uploaded to Debian unstable on March
+4th, 2011), the zxpdf became the default xpdf pdf file handler. With
+this being a default, the problem was promulgated to a much wider user
+base; thus precipitating discovery of the flaw. I've now fixed the
+problem in version 3.02-19 (uploaded to unstable on July 29th, 2011, and
+entered testing on July 31st).
+
+Credit goes to Chung-chieh Shan from Harvard for discovering the issue.
+See his bug report for more background and details:
+http://bugs.debian.org/635849.
+
+Please assign an id.
+
+Thanks,
+Mike
