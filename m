@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/9
-Message-ID: <20110812212750.GP4930@lupin.home.powdarrmonkey.net>
-Date: Fri, 12 Aug 2011 22:27:50 +0100
-From: Jonathan Wiltshire <jmw@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/12
+Message-ID: <123634419.1821504.1312480424402.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 4 Aug 2011 13:53:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org, zigo@...ian.org
-Subject: Re: CVE request: multiple vulnerabilities in dtc
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-I should have added: please keep me in CC, I am not subscribed to the list
-(although I do receive mail at the team@ address).
 
-Thanks,
+
+----- Original Message -----
+> On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
+> > So while there aren't that many "users" of the old
+> > system-config-printer - it appears that debian old-stable (lenny)
+> > maybe vulnerable (where python-smbc is not available) ... is it
+> > worth
+> > while giving system-config-printer a 2008 CVE as well (if none
+> > currently exists).
+> 
+> Yes, I think it is worth doing that.
+> 
+
+This request doesn't really make any sense. It deserves a 2011 ID, that's
+when the flaw was discovered.
+
+My impression is that the code is the same, which means they will share the
+same ID. If the code is totally different, we will want to split. Time, you
+know best, is the code in question the same, or is it different?
+
+Thanks.
 
 -- 
-Jonathan Wiltshire                                      jmw@...ian.org
-Debian Developer                         http://people.debian.org/~jmw
-
-4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
