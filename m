@@ -1,27 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/13
-Message-ID: <587430679.157372.1305757169621.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 18 May 2011 18:19:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/4
+Message-ID: <20110804141632.GA6443@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 17:16:32 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Several Moodle issues
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: CVE request: coppermine gallery < 1.4.26
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi Steve,
-> (since I assume Josh will pass this on to you :-) )
-> 
-> http://www.moodle.org/security/ lists more than a dozen
-> vulnerabilities requiring a CVE assignment:
-> MSA-11-0002 to MSA-11-0017 require CVE assignments.
-> 
-> (Some issues might be amalgamated to a single CVE)
-> 
+This security issue never got CVE-identifier: http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
 
-Yeah, I'll let this one through. I don't have the time to sort it out right now.
+Original advisory: http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
+OSVDB: http://osvdb.org/show/osvdb/62261
 
-Sorry.
-
--- 
-    JB
+Best regards,
+Henri Salo
