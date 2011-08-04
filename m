@@ -1,34 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/9
-Message-ID: <20110705050219.GA14223@openwall.com>
-Date: Tue, 5 Jul 2011 09:02:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/10
+Message-ID: <20110804152350.GA7292@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 18:23:50 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
-> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
-> > This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-> > when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
-> > 
-> > http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
-> 
-> This is very helpful, thank you!  How did you find it?
-> 
-> So, I failed to get this server to give me ctime (looked at HTTP headers
-> and also tried several FTP commands), and the mtime is Feb 15.  We could
-> ask the server admins for the ctime.
+Can I get 2010 CVE-ID for this issue? I am not sure if other distributions/operating systems need their own IDs. If I am correct one ID should be enough.
 
-I think I got the equivalent of the ctime by listing the mtime for ".".
-It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
-other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
-or +2 for Namibia.
+Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
+Bug report to FreeBSD: http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
+NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
+Reported to OpenBSD (and patched), but can't find references.
+Does not affect Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572813
+Not listed in OSVDB, but I can handle it.
 
-So it appears that the backdoor was introduced between June 30 14:15 UTC
-and July 1 23:35 UTC (probably before 21:35, though).
-
-I think I'll stop wasting time on this...
-
-Alexander
+Best regards,
+Henri Salo
