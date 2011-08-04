@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/1
-Message-Id: <201104151143.58257.ludwig.nussel@suse.de>
-Date: Fri, 15 Apr 2011 11:43:57 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/11
+Message-ID: <20110804155530.GB7292@foo.fgeek.fi>
+Date: Thu, 4 Aug 2011 18:55:30 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Jeff Layton <jlayton@...hat.com>, Steve French <sfrench@...ibm.com>, Suresh Jayaraman <sjayaraman@...ell.com>
-Subject: CVE Request: cifs session reuse
+Subject: CVE-request: pithos symlink vulnerability CWE-61
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Can I get 2010 CVE-ID for Pithos symlink attack vulnerability: https://bugs.launchpad.net/pithos/+bug/667896
 
-When one user has mounted a cifs share that requires authentication,
-another user could mount the same share without knowing the
-correct password. The following kernel commits fix that:
+Software web-page: https://launchpad.net/pithos
+Found by: lfaraone <https://launchpad.net/~lfaraone>
+Found at: 2010-10-30 (fix released same day)
+"Predictable file- or directory-names in /tmp/-directory can lead to symlink attack."
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4ff67b720c02c36e54d55b88c2931879b7db1cd2
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=fc87a40677bbe0937e2ff0642c7e83c9a4813f3d
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=24e6cf92fde1f140d8eb0bf7cd24c2c78149b6b2
+Fixed in Debian:
 
-A way to exploit this would be through mount.cifs if it's
-installed setuid root.
+http://packages.debian.org/changelogs/pool/main/p/pithos/current/changelog says:
+pithos (0.3.5-1) unstable; urgency=high
 
-cu
-Ludwig
+   * New upstream version.
+     - SECURITY UPDATE: fixes overwriting of arbitrary file via symlinks
+       (LP: #667896)
+Can be still found from DST: http://security-tracker.debian.org/tracker/TEMP-0000000-14D1F9
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+And in Ubuntu: http://changelogs.ubuntu.com/changelogs/pool/universe/p/pithos/pithos_0.3.8-1/changelog
+
+Best regards,
+Henri Salo
