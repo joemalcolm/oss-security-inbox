@@ -1,23 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/7
-Message-ID: <20110729085608.GA3681@pisco.westfalen.local>
-Date: Fri, 29 Jul 2011 10:56:09 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/05/1
+Message-ID: <1312532620.2261.7.camel@localhost.localdomain>
+Date: Fri, 05 Aug 2011 09:23:35 +0100
+From: Tim Waugh <twaugh@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Billy Rios <billy.rios@...il.com>
-Subject: Re: Re: libxml security fix from apple ... any information?
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-Thomas Biege wrote:
- 
-> Hello,
-> if the code executed is the same on Windows and on Linux I would assume
-> this affects Linux too. That the bug is not "seen" during fuzzing
-> means nothing.
+On Thu, 2011-08-04 at 13:53 -0400, Josh Bressers wrote:
+> My impression is that the code is the same, which means they will share the
+> same ID. If the code is totally different, we will want to split. Time, you
+> know best, is the code in question the same, or is it different?
 
-Grepping through the codebase show quite a few _WIN32 ifdefs, though.
+Oh, it's largely the same by the look of it, but there may be some
+differences.
 
-But of course we need to see the patch applied by Apple.
+Tim.
+*/
 
-Cheers,
-        Moritz
+
+Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
