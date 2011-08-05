@@ -1,99 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/9
-Message-ID: <127847674.298986.1298925647709.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 28 Feb 2011 15:40:47 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/05/2
+Message-ID: <CANoWnESGd+f8-d9LVnJMSyR7gNtnK4MBckD8_pu45PmbyJQ6Mw@mail.gmail.com>
+Date: Fri, 5 Aug 2011 19:53:15 +1000
+From: dave bl <db.pub.mail@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: PHPShop 0.8.1 <= | Cross Site Scripting Vulnerability
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1069.
+On 5 August 2011 03:53, Josh Bressers <bressers@...hat.com> wrote:
+>
+>
+> ----- Original Message -----
+>> On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
+>> > So while there aren't that many "users" of the old
+>> > system-config-printer - it appears that debian old-stable (lenny)
+>> > maybe vulnerable (where python-smbc is not available) ... is it
+>> > worth
+>> > while giving system-config-printer a 2008 CVE as well (if none
+>> > currently exists).
+>>
+>> Yes, I think it is worth doing that.
+>>
+>
+> This request doesn't really make any sense. It deserves a 2011 ID, that's
+> when the flaw was discovered.
 
-Thanks.
-
--- 
-    JB
-
-
------ Original Message -----
-> 1. OVERVIEW
-> 
-> The PHPShop 0.8.1 and lower versions are currently vulnerable to Cross
-> Site Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> PHPShop is a PHP-powered shopping cart application. It is released
-> under the GNU General Public License.
-> The primary purpose of PHPShop is to provide a simple shopping cart
-> solution that is easy to customize to suit any purpose. PHPShop has
-> less features that many other shopping cart applications, but is
-> generally easier to customize.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The Query String was not properly sanitized upon submission to the
-> /index.php url, which allows attacker to conduct Cross Site Scripting
-> attack.
-> This may allow an attacker to create a specially crafted URL that
-> would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> PHP 0.8.1 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/phpshop0_8_1/?page=store/XSS&%26%26%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E%3d1
-> 
-> 
-> 6. SOLUTION
-> 
-> The vendor has discontinued this product.
-> It is recommended that an alternate software package be used in its
-> place.
-> 
-> 
-> 7. VENDOR
-> 
-> PHPShop Development Team
-> http://phpshop.org
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-02-25: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[phpshop_0.8.1]_cross_site_scripting
-> Project Home: http://code.google.com/p/phpshop/,
-> http://sourceforge.net/projects/phpshop/
-> PHPShop Download Stats:
-> http://sourceforge.net/projects/phpshop/files/phpshop/0.8.1/stats/timeline?dates=2010-01-01+to+2010-01-01
-> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-02-25]
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+Ah ok, this why I asked  ^ ^.
