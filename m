@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/13
-Message-ID: <20110228210202.GB4669@outflux.net>
-Date: Mon, 28 Feb 2011 13:02:02 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/05/2
+Message-ID: <CANoWnESGd+f8-d9LVnJMSyR7gNtnK4MBckD8_pu45PmbyJQ6Mw@mail.gmail.com>
+Date: Fri, 5 Aug 2011 19:53:15 +1000
+From: dave bl <db.pub.mail@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: OOM-killer via argv expansion
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
-> I think the flaw[1] with argv-expansion triggering the OOM-killer
-> incorrectly needs its own CVE.
-> 
-> While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-> improved things, argv expansion can still be tricked into OOM-killing the
-> entire system. Solutions were discussed on the original thread, but
-> were not finished. Recently a set of patches[3] has been re-proposed to fix
-> this issue. Regardless, it should probably get its own CVE assigned.
-> 
-> Thanks,
-> 
-> -Kees
-> 
-> [1] https://lkml.org/lkml/2010/8/27/429
-> [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-> [3] https://lkml.org/lkml/2011/2/25/227
+On 5 August 2011 03:53, Josh Bressers <bressers@...hat.com> wrote:
+>
+>
+> ----- Original Message -----
+>> On Fri, 2011-08-05 at 00:17 +1000, dave bl wrote:
+>> > So while there aren't that many "users" of the old
+>> > system-config-printer - it appears that debian old-stable (lenny)
+>> > maybe vulnerable (where python-smbc is not available) ... is it
+>> > worth
+>> > while giving system-config-printer a 2008 CVE as well (if none
+>> > currently exists).
+>>
+>> Yes, I think it is worth doing that.
+>>
+>
+> This request doesn't really make any sense. It deserves a 2011 ID, that's
+> when the flaw was discovered.
 
-Sorry, Nelson Elhage pointed out to me that I missed the fix for this
-issue. The issue was been fixed with:
-http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
-
-This was already assigned as CVE-2010-4243
-
-Sorry for the noise, and thanks!
-
--Kees
-
--- 
-Kees Cook
-Ubuntu Security Team
+Ah ok, this why I asked  ^ ^.
