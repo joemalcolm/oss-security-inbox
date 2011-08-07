@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/13
-Message-ID: <50513892.1685297.1311968802612.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 29 Jul 2011 15:46:42 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/08/3
+Message-ID: <20110807173438.GA14534@dannf.org>
+Date: Sun, 7 Aug 2011 11:34:38 -0600
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: drupal7 SA-CORE-2011-003 (access restriction bypass)
+Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
+Subject: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
+This was reported by Christian Ohm at:
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
 
-
------ Original Message -----
-> Could a CVE be assigned to this issue? This only affects 7.x as the
-> features affected are new in 7.x. It is an access bypass in private
-> file fields comments.
-> 
-> http://drupal.org/node/1231510
-> 
-
-Please use CVE-2011-2726
-
-Thanks.
-
--- 
-    JB
+The perf command, provided as part of the Linux kernel source, looks
+for and honors configuration settings in ./config. A local user could
+obtain elevated privileges by convincing a superuser to run the perf
+command from a directory the user controls.
