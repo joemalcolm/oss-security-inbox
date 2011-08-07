@@ -1,36 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/29
-Message-ID: <Pine.GSO.4.64.1103041254480.3265@faron.mitre.org>
-Date: Fri, 4 Mar 2011 13:02:38 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/08/3
+Message-ID: <20110807173438.GA14534@dannf.org>
+Date: Sun, 7 Aug 2011 11:34:38 -0600
+From: dann frazier <dannf@...ian.org>
 To: oss-security@...ts.openwall.com
-cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
+Subject: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
+This was reported by Christian Ohm at:
+  http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
 
-On Fri, 4 Mar 2011, Solar Designer wrote:
-
-> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
->>
->> We will sometimes write the CVE description more as an "adminisrator
->> practice" than as "fault of the software."
->
-> Oh, this is something I did not realize.  A lot of people assume that
-> CVEs "blame" the software and its authors for having made an error.
-
-We do this *if* we are aware of the subtleties.  But this often requires 
-an understanding of the expected software behavior, and CVE covers 
-thousands of different applications each year.  Unfortunately, we can't 
-have that level of understanding about each app.
-
-> It felt wrong, say, to blame a text editor for being unsafe to use on 
-> files in untrusted directories when such unsafety was the typical and 
-> expected situation for text editors in general.
-
-Some items can be assigned a CVE without deep thought about the larger 
-context.  This may happen due to volume, time constraints, or an 
-under-specified attack scenario by the requester.  That may be the case 
-with the case you're talking about here, but I don't remember it.
-
-- Steve
+The perf command, provided as part of the Linux kernel source, looks
+for and honors configuration settings in ./config. A local user could
+obtain elevated privileges by convincing a superuser to run the perf
+command from a directory the user controls.
