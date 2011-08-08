@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/5
-Message-ID: <1446881210.43074.1303157015086.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 18 Apr 2011 16:03:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/08/1
+Message-ID: <20110808172435.GD1514@redhat.com>
+Date: Mon, 8 Aug 2011 11:24:36 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: mediawiki 1.16.4, incomplete fix of CVE-2011-1578
+Subject: CVE request: heap overflow in tcptrack < 1.4.2
 Content-Type: text/plain; charset=utf-8
 
+A heap overflow in the parsing of tcptrack's command line was found.
+The details are pretty sparse, but here are some references:
 
+http://www.rhythm.cx/~steve/devel/tcptrack/#news
+https://bugs.gentoo.org/show_bug.cgi?id=377917
+https://bugzilla.redhat.com/show_bug.cgi?id=729096
 
------ Original Message -----
-> Looks as though Mediawiki 1.16.3 did not fully fix the CVE-2011-1578
-> issue (XSS), so 1.16.4 has been released:
-> 
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-April/000097.html
-> 
-> Could a CVE name get assigned to this?
-> 
-
-Please use CVE-2011-1587.
-
-Thanks.
+Could a CVE be assigned to this please?  Thanks.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
