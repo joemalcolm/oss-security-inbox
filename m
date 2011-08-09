@@ -1,72 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/3
-Message-ID: <20110906214043.GC1845@suse.de>
-Date: Tue, 6 Sep 2011 23:40:43 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/7
+Message-ID: <20110809204226.GA5178@inutil.org>
+Date: Tue, 9 Aug 2011 22:42:26 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-
 Hi,
+the following two issues also seem to warrant a CVE assignment:
 
-One of our customers reported an issue in the "ib_sdp" module in the
-ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
-1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
-does not have it).
+1. staging: comedi: fix infoleak to userspace
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
 
-Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
-
-/proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
-triggered by users on machines with infiniband stack.
-
-While there is report of stack corruption and overflow on process (cat
-/proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
-I can't see where it actually comes from but perhaps the per_cpu vs
-single variable printing does something to the stack and not just reads
-over arrays.
-
-ofed 1.5.3.2 has a different stat printing algorith according to our developer,
-so it no longer is affected.
-
-Patch below. Please assign a CVE.
-
-Ciao, Marcus
-
-From: Goldwyn Rodrigues <rgoldwyn@...e.de>
-Subject: [PATCH] Correct /proc/net/sdpstats variables
-
-A couple of variables are treated as arrays while printing 
-/proc/net/sdpstats, while they are actually single variables.
-This leads to stack/memory corruption and a kernel crash.
-Correct dealing of these variables in sdpstats_seq_show()
-
----
- drivers/infiniband/ulp/sdp/sdp_proc.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
-
-Index: ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c
-===================================================================
---- ofa_kernel-1.5.2.orig/drivers/infiniband/ulp/sdp/sdp_proc.c	2010-09-21 17:51:32.000000000 +0200
-+++ ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c	2011-07-22 15:09:14.000000000 +0200
-@@ -341,6 +341,7 @@ static int sdpstats_seq_show(struct seq_
- 	seq_printf(seq, "- RX int queue  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_queue));
- 	seq_printf(seq, "- RX int no op  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_no_op));
- 	seq_printf(seq, "- RX cq modified\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_cq_modified));
-+	seq_printf(seq, "- RX wq\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_wq));
+(It's a staging driver and I'm unsure whether we have assigned
+ CVE IDs for staging drivers in the past. OTOH, this driver
+ is enabled in the Debian 6.0 kernel)
  
- 	seq_printf(seq, "- TX irq armed\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_arm));
- 	seq_printf(seq, "- TX interrupts\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_count));
-@@ -352,12 +353,6 @@ static int sdpstats_seq_show(struct seq_
- 	seq_printf(seq, "- TX error\t\t: %d\n", SDPSTATS_COUNTER_GET(zcopy_tx_error));
- 	seq_printf(seq, "- FMR alloc error\t: %d\n", SDPSTATS_COUNTER_GET(fmr_alloc_error));
- 
--	__sdpstats_seq_hist_pcpu(seq, "CPU sendmsg", sendmsg);
--	__sdpstats_seq_hist_pcpu(seq, "CPU recvmsg", recvmsg);
--	__sdpstats_seq_hist_pcpu(seq, "CPU rx_irq", rx_int_count);
--	__sdpstats_seq_hist_pcpu(seq, "CPU rx_wq", rx_wq);
--	__sdpstats_seq_hist_pcpu(seq, "CPU tx_irq", tx_int_count);
--
- 	return 0;
- }
- 
+2. [SCSI] pmcraid: reject negative request size
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+
+Cheers,
+        Moritz
