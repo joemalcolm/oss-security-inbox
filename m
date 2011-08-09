@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/16
-Message-ID: <4D9CA711.8090108@mvista.com>
-Date: Wed, 06 Apr 2011 07:46:57 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/5
+Message-ID: <1066905529.1926362.1312919496886.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 9 Aug 2011 15:51:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: zabbix XSS flaw
 Content-Type: text/plain; charset=utf-8
 
 
 
-On 04/06/2011 06:57 AM, Solar Designer wrote:
-> On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
->> Please subscribe me to the new list. I was a vendor-sec subscriber for
->> MontaVista Software.
->>
->> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
->> uid Armin Kuster <akuster@...sta.com>
->> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
+----- Original Message -----
+> Could a CVE be assigned to the following Zabbix < 1.8.6 security flaw?
 > 
-> Looks like you forgot to make this public key available.  Please provide
-> it to me and I'll subscribe you.
-
-I hit one server, guess I need to hit them all. Please try again with
-same key.
-
+> http://secunia.com/advisories/45502
+> https://support.zabbix.com/browse/ZBX-3835
+> http://www.zabbix.com/rn1.8.6.php
+> https://bugzilla.redhat.com/show_bug.cgi?id=729162
 > 
-> While we're at it, the MontaVista Software entry at:
-> 
-> http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
-> 
-> says: "The process for distribution of security advisories is currently
-> under discussion."  Perhaps this has already been discussed and decided
-> upon?  If so, please update the wiki page with specific link(s) to your
-> security advisories, updates, relevant mailing list archive - or
-> whatever you have.  
 
-Our advisories are via a paid subscription service so they are not public.
+Please use CVE-2011-2904.
 
-Without this info, it is unclear whether you would
-> be making timely intended use of the advance notifications or not.
+Thanks.
 
-Our customers require vulnerabilities to be addressed in a timely manner.
-
-will revisit the wiki issue soon.
-
-- Armin
-
+-- 
+    JB
