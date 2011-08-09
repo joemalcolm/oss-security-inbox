@@ -1,106 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/5
-Message-ID: <AANLkTinYfbsmRk+Qc74JQLMMyeT-vBHKMxdjPz8J1XPu@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:16:01 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/1
+Message-Id: <201108090918.08245.sgrubb@redhat.com>
+Date: Tue, 9 Aug 2011 09:18:07 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.5.20 <= Cross Site Scripting (XSS) Vulnerability
+Cc: dann frazier <dannf@...ian.org>, Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
+Subject: Re: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On Sunday, August 07, 2011 01:34:38 PM dann frazier wrote:
+> This was reported by Christian Ohm at:
+>   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
+> 
+> The perf command, provided as part of the Linux kernel source, looks
+> for and honors configuration settings in ./config. A local user could
+> obtain elevated privileges by convincing a superuser to run the perf
+> command from a directory the user controls.
 
-The Joomla! web application was vulnerable to Cross Site Scripting
-vulnerability.
+And in recent kernels has an executable stack:
+https://bugzilla.redhat.com/show_bug.cgi?id=704296
 
-
-2. PRODUCT DESCRIPTION
-
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Some URLs in Joomla! do not properly escape encoded user inputs that
-lead to cross site scripting vulnerability.
-For more information about this kind of vulnerability, see OWASP Top
-10 - A2, WASC-8 and
-CWE-79: Improper Neutralization of Input During Web Page Generation
-('Cross-site Scripting').
-
-
-4. VERSIONS AFFECTED
-
-Joomla! 1.5.20  and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-Exploit: /index.php?option=com_content&view=section&id=&%2522%253e%253cscript%253ealert(0)%253c/script%253e=XSS
-		 /index.php?option=com_weblinks&view=category&id=2&filter_order_Dir=&filter_order=asc&%2522%253e%253cscript%253ealert(0)%253c/script%253e=XSS
-
-Demo: http://yehg.net/lab/pr0js/training/view/misc/joomla-1.5.20_encoded-xss/
-
-
-6. IMPACT
-
-Attackers can compromise currently logged-in user/administrator
-session and impersonate arbitrary user actions available under
-/administrator/ functions.
-
-
-7. SOLUTION
-
-Upgrade to Joomla! 1.5.21
-
-
-8. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-2010-10-04: vulnerability discovered
-2010-10-06: notified vendor
-2010-10-09: vendor released fix
-2010-10-09: vulnerability disclosed
-
-
-11. REFERENCES
-
-Vendor Advisory URL:
-http://developer.joomla.org/security/news/9-security/10-core-security/322-20101001-core-xss-vulnerabilities.html
-http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_id=32&tracker_item_id=22767
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5.20]_cross_site_scripting(XSS)
-XSS FAQ: http://www.cgisecurity.com/xss-faq.html
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2010-10-09]
-
-last updated: 2010-12-24
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+-Steve
