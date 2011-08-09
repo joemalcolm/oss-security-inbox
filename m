@@ -1,57 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/2
-Message-ID: <4D6C3E1F.5020307@redhat.com>
-Date: Tue, 01 Mar 2011 08:30:23 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/3
+Message-ID: <271749804.1926232.1312919290718.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 9 Aug 2011 15:48:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Nelson Elhage <nelhage@...lice.com>
-Subject: Re: CVE request: kernel: OOM-killer via argv expansion
+Cc: coley <coley@...re.org>
+Subject: Re: cve request: xpdf: insecure tempfile usage in zxpdf script
 Content-Type: text/plain; charset=utf-8
 
-On 03/01/2011 08:13 AM, Nelson Elhage wrote:
-> On Mon, Feb 28, 2011 at 03:28:47PM -0800, Kees Cook wrote:
->> On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
->>> On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
->>>> I think the flaw[1] with argv-expansion triggering the OOM-killer
->>>> incorrectly needs its own CVE.
->>>>
->>>> While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
->>>> improved things, argv expansion can still be tricked into OOM-killing the
->>>> entire system. Solutions were discussed on the original thread, but
->>>> were not finished. Recently a set of patches[3] has been re-proposed to fix
->>>> this issue. Regardless, it should probably get its own CVE assigned.
->>>>
->>>> Thanks,
->>>>
->>>> -Kees
->>>>
->>>> [1] https://lkml.org/lkml/2010/8/27/429
->>>> [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
->>>> [3] https://lkml.org/lkml/2011/2/25/227
->>>
->>> Sorry, Nelson Elhage pointed out to me that I missed the fix for this
->>> issue. The issue was been fixed with:
->>> http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
->>>
->>> This was already assigned as CVE-2010-4243
->>>
->>> Sorry for the noise, and thanks!
->>
->> Wait, I will continue to make more noise. The upstream commit
->> 3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
->> which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
->
-> upstream looks to have handled the compat case with:
-> http://git.kernel.org/linus/114279be2120a916e8a04feeb2ac976a10016f2f
->
->  From skimming the LKML thread, I think that upstream believes the issue to be
-> fixed, but is trying to clean up the code, since the above two commits were
-> considered quick-and-dirty bandaid fixes.
+Please use CVE-2011-2902.
 
-Kees, for CVE-2010-4243, we are backporting both 3c77f845 and 114279be, 
-so unless there are other patches that we have missed, we won't be 
-assigning a new CVE name for it.
+Thanks.
 
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
+
+----- Original Message -----
+> Hi,
+> 
+> It was recently discovered that the compressed pdf handler script
+> (zxpdf) that shipped in the Debian xpdf package handles tempfiles
+> insecurely. Due to this flaw, a specifically-crafted pdf file name can
+> be used to delete files from the user's system (by taking advantage of
+> the tempfile cleanup trap; i.e. "rm -f <part of crafted file name>").
+> 
+> Note that as of version 3.02-13 (uploaded to Debian unstable on March
+> 4th, 2011), the zxpdf became the default xpdf pdf file handler. With
+> this being a default, the problem was promulgated to a much wider user
+> base; thus precipitating discovery of the flaw. I've now fixed the
+> problem in version 3.02-19 (uploaded to unstable on July 29th, 2011,
+> and
+> entered testing on July 31st).
+> 
+> Credit goes to Chung-chieh Shan from Harvard for discovering the
+> issue.
+> See his bug report for more background and details:
+> http://bugs.debian.org/635849.
+> 
+> Please assign an id.
+> 
+> Thanks,
+> Mike
