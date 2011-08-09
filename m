@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/5
-Message-ID: <1321036033.22556.12.camel@mdlinux>
-Date: Fri, 11 Nov 2011 13:27:13 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/8
+Message-ID: <4E41B997.5080506@redhat.com>
+Date: Wed, 10 Aug 2011 06:49:59 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+CC: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
-> On 11/11/11 08:06, Guido Berhoerster wrote:
-> > Replacing the file between the lstat and the open would change
-> > its inode and then be caught by the check before the fchown, no?
+On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> the following two issues also seem to warrant a CVE assignment:
 > 
-> Nope.   There is no reason why the same inode should not be reused.
+> 1. staging: comedi: fix infoleak to userspace
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
 > 
-> On ext4 (btrfs seems to be different):
-> 
-> $ touch test; ls -i test; rm test; touch test; ls -i test
-> 656078 test
-> 656078 test
-> 
-> jch
+> (It's a staging driver and I'm unsure whether we have assigned
+>  CVE IDs for staging drivers in the past. OTOH, this driver
+>  is enabled in the Debian 6.0 kernel)
 
-How about the attached patch?
+We don't as code from the staging drivers are usually are substandard
+and usually not supported.
 
-Marc.
+Btw, can you please mail me a copy of the /boot/config of the most
+recent Debian kernel for my reference?
 
+> 2. [SCSI] pmcraid: reject negative request size
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
 
+I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
+the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
+CVE-2011-2906 for this issue.
 
-
-View attachment "04_CVE-2011-4105.patch" of type "text/x-patch" (1512 bytes)
+Thanks, Eugene
