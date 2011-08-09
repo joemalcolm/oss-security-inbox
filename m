@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/23/1
-Message-ID: <20110523063951.GA2611@suse.de>
-Date: Mon, 23 May 2011 08:39:51 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/6
+Message-ID: <1649708043.1926401.1312919589034.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 9 Aug 2011 15:53:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org, coley <coley@...re.org>
+Subject: Re: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
 
-On Thu, May 19, 2011 at 12:45:23AM +0400, Solar Designer wrote:
-> On Tue, May 17, 2011 at 01:18:33PM +0200, Sebastian Krahmer wrote:
-> > I uploaded a openssl-1.0.0d patch to
-> > 
-> > http://suse.de/~krahmer/libs-vs-fscaps
-> 
-> Thank you!
-> 
-> > The prefered way is to check the dumpable flag via prctl() which
-> > is detected by the config script.
-> 
-> This is fail-open (at build time).  If the -e "/usr/include/sys/prctl.h"
-> check somehow fails, we silently get an insecure build.  Of course,
 
-Honestly, that was the easiest I could do in that time frame. The openssl
-config is a bit weird to me and the openssl project is not even providing
-distclean source tarballs for download (they contain symlinks etc.).
-It is also rather meant as a help for upstream which they could use as a base.
-I am sure they know better how to combine it with their config scripts
-and I am happy with changes as long as our resulting binary contains
-the hardening. I will try to ping the openssl developers about it.
+----- Original Message -----
+> This was reported by Christian Ohm at:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
+> 
+> The perf command, provided as part of the Linux kernel source, looks
+> for and honors configuration settings in ./config. A local user could
+> obtain elevated privileges by convincing a superuser to run the perf
+> command from a directory the user controls.
 
-Sebastian
+Please use CVE-2011-2905.
 
+Thanks.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+    JB
