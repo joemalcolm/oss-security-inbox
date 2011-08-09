@@ -1,88 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/1
-Message-ID: <20110907073920.GB17727@dhcp-25-225.brq.redhat.com>
-Date: Wed, 7 Sep 2011 09:39:21 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/1
+Message-Id: <201108090918.08245.sgrubb@redhat.com>
+Date: Tue, 9 Aug 2011 09:18:07 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
+Cc: dann frazier <dannf@...ian.org>, Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
+Subject: Re: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 06, 2011 at 11:40:43PM +0200, Marcus Meissner wrote:
-> One of our customers reported an issue in the "ib_sdp" module in the
-> ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
-> 1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
-> does not have it).
+On Sunday, August 07, 2011 01:34:38 PM dann frazier wrote:
+> This was reported by Christian Ohm at:
+>   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
 > 
-> Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
-> 
-> /proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
-> triggered by users on machines with infiniband stack.
-> 
-> While there is report of stack corruption and overflow on process (cat
-> /proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
-> I can't see where it actually comes from but perhaps the per_cpu vs
-> single variable printing does something to the stack and not just reads
-> over arrays.
+> The perf command, provided as part of the Linux kernel source, looks
+> for and honors configuration settings in ./config. A local user could
+> obtain elevated privileges by convincing a superuser to run the perf
+> command from a directory the user controls.
 
-#define __sdpstats_seq_hist_pcpu(seq, msg, hist) ({             \
-        u32 h[NR_CPUS];                                         \
-        unsigned int __i;                                       \
-        memset(h, 0, sizeof(h));                                \
+And in recent kernels has an executable stack:
+https://bugzilla.redhat.com/show_bug.cgi?id=704296
 
-NR_CPUS can be big (4096 on RHEL6@..._64) and the array is located on
-the stack.
- 
-> ofed 1.5.3.2 has a different stat printing algorith according to our developer,
-> so it no longer is affected.
-
-The array ^^^ is no longer allocated from the stack but via vmalloc().
-
-> Patch below. Please assign a CVE.
-
-Please use CVE-2011-3345.
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
-
-> 
-> Ciao, Marcus
-> 
-> From: Goldwyn Rodrigues <rgoldwyn@...e.de>
-> Subject: [PATCH] Correct /proc/net/sdpstats variables
-> 
-> A couple of variables are treated as arrays while printing 
-> /proc/net/sdpstats, while they are actually single variables.
-> This leads to stack/memory corruption and a kernel crash.
-> Correct dealing of these variables in sdpstats_seq_show()
-> 
-> ---
->  drivers/infiniband/ulp/sdp/sdp_proc.c |    7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
-> 
-> Index: ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c
-> ===================================================================
-> --- ofa_kernel-1.5.2.orig/drivers/infiniband/ulp/sdp/sdp_proc.c	2010-09-21 17:51:32.000000000 +0200
-> +++ ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c	2011-07-22 15:09:14.000000000 +0200
-> @@ -341,6 +341,7 @@ static int sdpstats_seq_show(struct seq_
->  	seq_printf(seq, "- RX int queue  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_queue));
->  	seq_printf(seq, "- RX int no op  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_no_op));
->  	seq_printf(seq, "- RX cq modified\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_cq_modified));
-> +	seq_printf(seq, "- RX wq\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_wq));
->  
->  	seq_printf(seq, "- TX irq armed\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_arm));
->  	seq_printf(seq, "- TX interrupts\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_count));
-> @@ -352,12 +353,6 @@ static int sdpstats_seq_show(struct seq_
->  	seq_printf(seq, "- TX error\t\t: %d\n", SDPSTATS_COUNTER_GET(zcopy_tx_error));
->  	seq_printf(seq, "- FMR alloc error\t: %d\n", SDPSTATS_COUNTER_GET(fmr_alloc_error));
->  
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU sendmsg", sendmsg);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU recvmsg", recvmsg);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU rx_irq", rx_int_count);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU rx_wq", rx_wq);
-> -	__sdpstats_seq_hist_pcpu(seq, "CPU tx_irq", tx_int_count);
-> -
->  	return 0;
->  }
->  
+-Steve
