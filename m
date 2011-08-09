@@ -1,50 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/7
-Message-ID: <20111229225821.GS27039@core.inversepath.com>
-Date: Thu, 29 Dec 2011 23:58:21 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/3
+Message-ID: <271749804.1926232.1312919290718.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 9 Aug 2011 15:48:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: cve request: xpdf: insecure tempfile usage in zxpdf script
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-2902.
 
-Hi Solar,
-
-> I think this is a rare exception to oCERT's policy, too.  It says:
->
-> "- under extremely exceptional circumstances, if the oCERT Team and all
-> the parties involved feel the need for longer time, a 2 months embargo
-> can be applied, in this case we would clearly document the decision for
-> public review"
-
-> Andrea - you could want to "clearly document the decision for public
-> review" now, although I guess your rationale was similar to mine (when I
-> decided not to object to the unusually long embargo period this time).
-
-As stated in our timeline the embargo date was requested by reporters:
-"2011-09-25: vulnerability report received, reporters set embargo date to December 27th"
-
-Our disclosure policy also says:
-"- in any circumstance reporter preference will always be honoured in case a
-joint agreement is not reached, as oCERT would be anyway unable to force its
-embargo"
-
-We tried to negotiate an earlier embargo time as, obviously, many complained
-about the unfortunate timing considering xmas holidays but the reporters really
-wanted to release this after the CCC talk.
-
-It is oCERT policy to not leak reports before the desired date set by the
-reporters if a more favourable one is not agreed upon.
-
-Hope this clarifies the exception.
-
-Cheers
+Thanks.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
+    JB
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+----- Original Message -----
+> Hi,
+> 
+> It was recently discovered that the compressed pdf handler script
+> (zxpdf) that shipped in the Debian xpdf package handles tempfiles
+> insecurely. Due to this flaw, a specifically-crafted pdf file name can
+> be used to delete files from the user's system (by taking advantage of
+> the tempfile cleanup trap; i.e. "rm -f <part of crafted file name>").
+> 
+> Note that as of version 3.02-13 (uploaded to Debian unstable on March
+> 4th, 2011), the zxpdf became the default xpdf pdf file handler. With
+> this being a default, the problem was promulgated to a much wider user
+> base; thus precipitating discovery of the flaw. I've now fixed the
+> problem in version 3.02-19 (uploaded to unstable on July 29th, 2011,
+> and
+> entered testing on July 31st).
+> 
+> Credit goes to Chung-chieh Shan from Harvard for discovering the
+> issue.
+> See his bug report for more background and details:
+> http://bugs.debian.org/635849.
+> 
+> Please assign an id.
+> 
+> Thanks,
+> Mike
