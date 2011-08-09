@@ -1,154 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/18
-Message-ID: <20110308195656.GH26611@core.inversepath.com>
-Date: Tue, 8 Mar 2011 20:56:56 +0100
-From: Andrea Barisani <lcars@...rt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/6
+Message-ID: <1649708043.1926401.1312919589034.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 9 Aug 2011 15:53:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org, coley <coley@...re.org>
+Subject: Re: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 08, 2011 at 10:59:57AM -0500, Josh Bressers wrote:
-> ----- Original Message -----
-> > 
-> > As suggested by Josh Bressers oCERT would be favourable to providing a
-> > system that would accept user submission and allow selection of security
-> > contacts from our existing member database as well as other verified
-> > contacts.
-> > 
-> > As Josh pointed out we do this already (even if manually and not with a
-> > web selection thing or whatever) and I am open to explore ways to create
-> > more cooperation.
-> > 
-> > We would also be willing to host and maintain a closed vendor-sec style
-> > mailing list like the previous one with the only condition for member
-> > list to be public (not necessarily the individual contact names but at
-> > least the entities represented).
-> > 
+
+
+----- Original Message -----
+> This was reported by Christian Ohm at:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
 > 
-> I've been thinking about this a bit, and here are my thoughts.
-> 
-> I think oCERT could be a good fit here. They already have contacts, and
-> such a setup would likely have a formal process of sorts for vetting
-> recipients of issues. My current fears are:
-> 
-> 1) Is oCERT in a position to increase its current workload by several
->    magnitudes? I suspect you're going to have to expand your team by a fair
->    amount. I also imagine this will result in changes to the way oCERT
->    currently exists, perhaps not though, I can't see behind the curtain.
-> 2) Will dealing with oCERT in this manner generate extra process?
->    vendor-sec was quite process free, a little doesn't hurt, but a lot can
->    be bad.
+> The perf command, provided as part of the Linux kernel source, looks
+> for and honors configuration settings in ./config. A local user could
+> obtain elevated privileges by convincing a superuser to run the perf
+> command from a directory the user controls.
 
+Please use CVE-2011-2905.
 
-It all depends on how this process is going to be handled. I can see oCERT
-helping in routing reports to the proper contacts via email to our trusted
-member contacts as well as external ones that we can seek on a report basis.
-
-Once the report is routed to the contact list I don't expect the handling
-process to be different from what was happening on vendor-sec already. (if
-you think about it, it would just be like creating ad-hoc aliases list where
-we just make sure only affected parties are included, unlike vendor-sec used
-to work).
-
-Of course we would monitor handling and try to be a pain :) in case we see
-things progressing slowly and, more importantly for us, we would eventually
-disclose the information like we do already once the report is handled.
-
-So I don't think 2) is going to be too much of a concern also because putting
-a lot of extra process would become a problem re 1).
-
-It is true that we would need to expand our team and we would be happy to do
-that, it just requires an evaluation process as clearly only trusted contacts
-can be accepted (there are several from the old vendor-sec that we would be
-really happy to work with actually).
-
-This is a simplified approach compared to what we do now, which is contacting
-project maintainers first, negotiating embargo as well as requesting a patch
-that we can verify and relay to vendors, spread the patch to affected parties
-along with embargo information and coordinate disclosure. This is a
-time-consuming process that worked very well with oCERT because the number of
-reports was limited, it helped solving complex bugs or vulnerabilities that
-affected a large number of projects.
-
-I think we can continue to do this for selected cases but it would be hard to
-scale enough to support this "tailored" approach for every single report if
-we expand our visibility, additionally I think everyone would favour less
-extra process as pointed out already.
-
-> 3) Are we going to annoy other CERTs? Will they even care?
-
-I don't think this is an issue. We positively worked with other CERTs when that
-was applicable anyway.
-
-> 4) oCERT already exists, there are going to be disagreements about how to
->    do things, both sides of all issues will need to be open to ideas and
->    compromise.
-> 
-> 
-> There is also the option of recreating an old style list. This is a bit
-> more ad-hoc and Openwall has already offered to host such a thing (Solar
-> has quite a bit already in place). I do favor this a bit, as it would make
-> a nice compliment to oss-security. It also puts our destiny squarely in our
-> own hands. It is more work for the involved parties though (And a lot more
-> work for Openwall)
-> 
-> The disadvantages I recall from the old list are:
-> 
-> 1) Membership management is a pain. Adding new people is annoying and
->    nobody ever leaves.
-> 2) Nobody is in charge, which means sometimes issues can get ignored or
->    forgotten (also see #1)
-> 3) The potential for leaks is probably a bit higher than using something
->    like oCERT (downstream recipients are monitored a bit more closely I
->    would hope). Perhaps a benevolent dictator type approach could help
->    prevent this.
->
-
-I agree, all of these are some of the reasons that made us creating oCERT in
-the first place.
-
-Above all things we value having a published member list and having an open
-disclosure process of what happened once the reports have been handled
-opposed to the "opacity" that vendor-sec had in the past.
-
-If eventually recreating the old list is going to be the favoured option I
-hope that we can find a way to address these concerns.
-
-Cheers
-
-> 
-> Whatever is decided should be done so by the groups most affected. Here is
-> a collection of the top members that have contributed to the old
-> vendor-sec since mid 2008 (my historic archive isn't as easy to get at, I
-> can crunch it if someone wishes, I don't expect it to change much though)
-> 
-> openwall.com
-> mandriva.com
-> gentoo.org
-> ubuntu.com
-> canonical.com
-> apple.com
-> debian.org
-> suse.de
-> redhat.com
-> 
-> There were a handful of other people that contributed a fair amount but
-> were not list members, or not part of one of the above orgs (Tavis Ormandy,
-> Chris Evans, Alan Cox oCERT, and Samba for example).
-> 
-> Once we have a vision for the future, we should try to let various groups
-> know who they can contact in the future. I imagine some of them still don't
-> know what happened to vendor-sec.
-> 
-> Thanks.
-> 
-> -- 
->     JB
+Thanks.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | Open Source Computer Emergency Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+    JB
