@@ -1,44 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/10
-Message-ID: <20110315143004.GN6691@dojo.mi.org>
-Date: Tue, 15 Mar 2011 10:30:04 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/8
+Message-ID: <4E41B997.5080506@redhat.com>
+Date: Wed, 10 Aug 2011 06:49:59 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+CC: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-:On 03/15/2011 11:01 AM, Mike O'Connor wrote:
-:>[catching up on older emails]
-:>
-:>:>  >  They do this already today, that's what security@...nel.org is for, 
-:>and
-:>:>  >  it gets a bit of traffic like this every week.
-:>:>
-:>:>  Is this list open to the public?  It doesn't seem to be available on
-:>:>  http://vger.kernel.org/vger-lists.html.
-:>:
-:>:No, it is closed, as it should be as potential security problems are
-:>:mailed there.  You don't want that to be totally open, right?
-:>
-:>One suggestion I've made in the past is to have the list _archives_ be
-:>open.  So anything older than, say, a month is made public.  That way,
-:>folks can see how issues were disclosed, how decisions were reached,
-:>etc.  for old issues that are no longer under embargo.  The way I see
-:>it, if we don't publish the list archive on our own terms, miscreants
-:>will get around to publishing it for us.
-:
-:Any fixes for the issues reported in s@k.o will be committed to the 
-:upstream kernel immediately. The "disclosures" of those fixes are shared 
-:in this list. Keep a look out for my emails.
+On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> the following two issues also seem to warrant a CVE assignment:
+> 
+> 1. staging: comedi: fix infoleak to userspace
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
+> 
+> (It's a staging driver and I'm unsure whether we have assigned
+>  CVE IDs for staging drivers in the past. OTOH, this driver
+>  is enabled in the Debian 6.0 kernel)
 
-That shows the ultimate results, but not the process.  Sometimes, the
-process is important.  Sometimes you want to know who said what and
-when.  Let people see what's going on for themselves (eventually) and
-draw their own conclusions.
+We don't as code from the staging drivers are usually are substandard
+and usually not supported.
 
-(And yeah, I do keep an eye out for your emails.  Thanks!  :) )
+Btw, can you please mail me a copy of the /boot/config of the most
+recent Debian kernel for my reference?
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Hindsight, after all, is caused by lack of foresight."    -Non Campus Mentis
+> 2. [SCSI] pmcraid: reject negative request size
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+
+I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
+the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
+CVE-2011-2906 for this issue.
+
+Thanks, Eugene
