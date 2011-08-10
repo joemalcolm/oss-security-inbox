@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/6
-Message-ID: <899476003.61142.1304624656567.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 5 May 2011 15:44:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/3
+Message-ID: <CAOSRhRN4fz7L1ZiD4T7Pinbt6KWr-Ou0ng4=Aag9ArTn3tUaOA@mail.gmail.com>
+Date: Tue, 9 Aug 2011 23:33:04 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel network vulns
+Cc: csmall@...ian.org
+Subject: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 02/18/2010 01:12 PM, Eugene Teo wrote:
-> > 1) gre: fix netns vs proto registration ordering
-> > http://patchwork.ozlabs.org/patch/45553/
-> >
-> > "GRE protocol receive hook can be called right after protocol addition
-> > is done. If netns stuff is not yet initialized, we're going to oops in
-> > net_generic().
-> >
-> > This is remotely oopsable if ip_gre is compiled as module and packet
-> > comes at unfortunate moment of module loading."
+The AX.25 daemon (ax25d), typically provided in the ax25-tools
+package, allows administrators to associate incoming AX.25, NET/ROM,
+and ROSE traffic with the execution of an endpoint program (most
+commonly "node"), which is run under a specified user account.
+Because ax25d is missing a check on the return code for a setuid call
+responsible for dropping privileges to the specified user, it may be
+possible to cause setuid to fail, after which the chosen program will
+be executed with root privileges.  In other words, if you're in the
+business of handing out unprivileged shells over amateur radio (don't
+we all? :p ), this would allow for remote compromise.
 
-Use CVE-2011-1767
-
-> >
-> > 2) tunnels: fix netns vs proto registration ordering
-> > http://patchwork.ozlabs.org/patch/45554/
-> >
-> > "Same stuff as in ip_gre patch: receive hook can be called before netns
-> > setup is done, oopsing in net_generic()."
-> 
-
-Use CVE-2011-1768
-
-Thanks.
-
--- 
-    JB
+-Dan
