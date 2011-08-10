@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/7
-Message-ID: <1295971348.3101.180.camel@localhost>
-Date: Tue, 25 Jan 2011 11:02:27 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: VLC Subtitle StripTags heap corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/9
+Message-ID: <20110810172320.GA8187@inutil.org>
+Date: Wed, 10 Aug 2011 19:23:20 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Aug 10, 2011 at 06:49:59AM +0800, Eugene Teo wrote:
+> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
+> > Hi,
+> > the following two issues also seem to warrant a CVE assignment:
+> > 
+> > 1. staging: comedi: fix infoleak to userspace
+> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
+> > 
+> > (It's a staging driver and I'm unsure whether we have assigned
+> >  CVE IDs for staging drivers in the past. OTOH, this driver
+> >  is enabled in the Debian 6.0 kernel)
+> 
+> We don't as code from the staging drivers are usually are substandard
+> and usually not supported.
 
-I couldn't find a CVE for this one:
+I agree on that approach for new drivers in the works (e.g. gma500), but
+the Comedi driver is quite old and in use outside the kernel/staging
+version as well. (Debian is providing a separate comedi source package 
+since 2002.).
 
-"Subtitle StripTags heap corruption, potentially exploitable."
+> Btw, can you please mail me a copy of the /boot/config of the most
+> recent Debian kernel for my reference?
 
-http://mailman.videolan.org/pipermail/vlc-devel/2011-January/078607.html
+Please let me know if you need anything in addition to the files
+Yves-Alexis sent you.
 
-http://git.videolan.org/gitweb.cgi?p=vlc/vlc-1.1.git;a=commit;h=dc14617f39c03bbe80c3cc4f92799dca840966eb
-
-Thanks,
-
-Marc.
-
-
+Cheers,
+        Moritz
