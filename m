@@ -1,60 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/2
-Message-ID: <20111117010045.GA18158@openwall.com>
-Date: Thu, 17 Nov 2011 05:00:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/6
+Message-Id: <201108100947.26910.sgrubb@redhat.com>
+Date: Wed, 10 Aug 2011 09:47:26 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
+Cc: "Yves-Alexis Perez" <corsac@...ian.org>
+Subject: Re: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 16, 2011 at 11:43:25PM +0400, Solar Designer wrote:
-> http://www.isc.org/software/bind/advisories/cve-2011-4313
+On Tuesday, August 09, 2011 09:25:24 AM Yves-Alexis Perez wrote:
+> On mar., 2011-08-09 at 09:18 -0400, Steve Grubb wrote:
+> > And in recent kernels has an executable stack:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=704296
 > 
-> "Versions affected:
-> All currently supported versions of BIND, 9.4-ESV, 9.6-ESV, 9.7.x, 9.8.x"
-> 
-> Does anyone readily know if BIND 9.3.x is affected as well?
+> We don't have access to that bug.
 
-So I downloaded bind-9.4-ESV-R5-P1.tar.gz and bind-9.4-ESV-R5.tar.gz,
-verified signatures, diff'ed these two trees, and then tried to apply
-the resulting patch to 9.3.5 (just whatever version we happen to need a
-patch for - obviously, only in case it is actually affected).  The
-result of this is inconclusive.  On one hand, the code being patched is
-mostly present in 9.3.5 as well, but on the other the checks that the
-patch adds to lib/dns/rbtdb.c use the NEGATIVE() macro, which is not
-present in 9.3.5.  While back-porting this macro definition is trivial,
-and I've done just that, this source file in 9.3.5 lacks other likely
-relevant pieces of code, including this one present in 9.4-ESV-R5's
-lib/dns/rbtdb.c: addrdataset():
+Its marked as a security bug and I guess its not been reclassified. The short of it is 
+this:
 
-			newheader->attributes |= RDATASET_ATTR_NEGATIVE;
+/usr/bin/eu-readelf -l /usr/bin/perf  | grep STACK
 
-If 9.3.5 can't set this flag, then perhaps not checking for it was not a
-problem.  Then the question becomes whether the fixes to
-bin/named/query.c are required even when lib/dns/rbtdb.c did not have
-the problem.  In other words, are these a security fix for a separate
-attack vector (even if a similar one) or merely a hardening measure?
-Or are the changes to lib/dns/rbtdb.c merely a hardening measure?  I am
-not familiar with this code and with the specific attack(s), so I don't
-know the answers.
+If you get RWE for the permissions, its executable. If you get RW, then everything is 
+fine. While this itself is not exploitable, if there were any other problems then this 
+could be susceptible to putting shell code on the stack which should have been 
+banished long ago. IOW, the ease of exploit goes up since you don't need to defeat any 
+advanced security mechanisms like ASLR.
 
-I've attached the 9.4-ESV-R5 to 9.4-ESV-R5-P1 diffs, and a "patch"
-against 9.3.5 - even though in the latter the changes to lib/dns/rbtdb.c
-are almost certainly not needed, as I explained above.
+I have a number of security assessment utilities located here:
+http://people.redhat.com/sgrubb/security/
+that can scan systems looking for problems like this. Some are rpm centric because 
+once you find a problem you want to know the associated package, but they could be 
+easily modified for other packaging tools.
 
-Also, is BIND built without DNSSEC support affected?  The ISC advisory
-does not mention DNSSEC and RRSIG, but bind-9.4-ESV-R5-P1/CHANGES
-mentions RRSIG, which is a DNSSEC thing.  (Yes, we build BIND without
-DNSSEC on Owl currently since DNSSEC proved to be more of a risk than a
-solution so far - and it looks like we have yet another example here.
-This is going to change, though, as DNSSEC gets deployed in more places.
-So we might have to revert that temporary decision and re-include DNSSEC
-support already in our next release.)
-
-I am still looking for more conclusive info and more detail on this.
-
-Alexander
-
-View attachment "bind-9.4-ESV-R5-P1.diff" of type "text/plain" (3831 bytes)
-
-View attachment "bind-9.3.5-up-CVE-2011-4313.diff" of type "text/plain" (2513 bytes)
+-Steve
