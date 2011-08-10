@@ -1,32 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/10
-Message-ID: <20110810202220.66890fea@redhat.com>
-Date: Wed, 10 Aug 2011 20:22:20 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/5
+Message-ID: <20110810131939.GC23625@core.inversepath.com>
+Date: Wed, 10 Aug 2011 15:19:39 +0200
+From: Daniele Bianco <danbia@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2011-002] libavcodec insufficient boundary check
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-We've recently came across an issue in commonly re-used LZW
-decompression implementations - original BSD compress and GIF reader
-written by David Koblas.  Due to an insufficient input checking, invalid
-LZW stream can create a loop in the decompression table, leading to the
-decompression stack buffer overflow.
+#2011-002 libavcodec insufficient boundary check
 
-Following bugzillas list various code bases that were checked for the
-issue and if they are affected or not:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
+Description:
 
-Many code bases are unaffected as the problem was fixed in the past,
-so this is probably like N-th re-discovery of the issue.  Some previous
-fixes were called security (CVE-2006-1168), some were not.  The problem
-may not be security relevant, or have much security impact in all
-currently affected code bases, though please mail the list if you come
-across any other affected code base that is not already mentioned and
-that may be worth fixing.
+The libavcodec library, an open source video encoding/decoding library part
+of the FFmpeg and Libav projects, performs insufficient boundary check
+against a buffer index. The missing check can result in arbitrary read/write
+of data outside a destination buffer boundaries.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+The vulnerability affects the Chinese AVS video (CAVS) file format decoder,
+specially crafted CAVS files may lead to arbitrary code execution during
+decoding.
+
+Affected version:
+
+FFmpeg <= 0.7.2, <= 0.8.1
+
+Libav <= 0.7.1
+
+The following packages were identified as affected as they statically
+include libavcodec in their own packages.
+
+MPlayer <= 1.0_rc4
+
+Fixed version:
+
+FFmpeg >= 0.7.3, >= 0.8.2
+
+Libav, N/A
+
+MPlayer, N/A
+
+Credit: vulnerability report received from Emmanouel Kellinis.
+
+CVE: N/A
+
+Timeline:
+2011-07-14: vulnerability report received
+2011-07-15: contacted ffmpeg maintainers
+2011-07-15: ffmpeg maintainer confirms the issue, preliminary patch is
+            provided
+2011-07-21: patch approved by reporter
+2011-07-23: contacted affected vendors
+2011-08-10: advisory release
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2011-002.html
+
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@...rt.org>                                  http://www.ocert.org
+
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
