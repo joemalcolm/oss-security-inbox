@@ -1,172 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/2
-Message-id: <283D194E-2AAB-432D-9CBE-A33EC5DC0FA3@mac.com>
-Date: Mon, 25 Jul 2011 21:49:46 -0400
-From: Jeff Johnson <n3npq@....com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/5
+Message-ID: <20110810131939.GC23625@core.inversepath.com>
+Date: Wed, 10 Aug 2011 15:19:39 +0200
+From: Daniele Bianco <danbia@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2011-002] libavcodec insufficient boundary check
 Content-Type: text/plain; charset=utf-8
 
 
-On Jul 25, 2011, at 7:22 PM, Solar Designer wrote:
+#2011-002 libavcodec insufficient boundary check
 
-> Vasiliy,
-> 
-> On Mon, Jul 25, 2011 at 09:30:35PM +0400, Vasiliy Kulikov wrote:
->> On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
->>>     case FSM_UNLINK:
->>> -	rc = Unlink(fsm->path);
->>> +	{
->>> +	    struct stat stb;
->>> +	    int saved_errno;
->>> +	    int saved_rc = lstat(fsm->path, &stb);
->>> +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
->>> +		saved_rc = chmod(fsm->path, 0);
->> 
->> If the directory containing the file was owned by nonroot, then the file
->> could be overwritten with a symlink.  So, there is a race between
->> lstat() and chmod(), which might lead to chmod'ing arbitrary files by
->> directory owner.
-> 
-> Right.  The same risk is present in upstream's version of the fix.
-> 
+Description:
 
-Is there really any risk factor when the operation at the end of the
-possible raciness is removing all mode related privilege?
+The libavcodec library, an open source video encoding/decoding library part
+of the FFmpeg and Libav projects, performs insufficient boundary check
+against a buffer index. The missing check can result in arbitrary read/write
+of data outside a destination buffer boundaries.
 
->> Is it possible with these orphaned files (I'm not familiar with the code
->> in question)?
-> 
-> Yes, but this problem is not limited to this specific piece of code.
-> rpm appears to treat the target directory tree as trusted - not only
-> when it removes files, but also when it creates files, etc.  I did not
-> fully verify this, though - that's just how the code looks to me.
-> 
+The vulnerability affects the Chinese AVS video (CAVS) file format decoder,
+specially crafted CAVS files may lead to arbitrary code execution during
+decoding.
 
-Here is what is implemented:
+Affected version:
 
-	RPM opens file paths based on paths in the metadata, not based on
-	dynamic state in a directory whatsoever.
+FFmpeg <= 0.7.2, <= 0.8.1
 
-	The paths are appended with a uniqifier called a "transaction ID"
-	which is essentially a time(2) stamp.
+Libav <= 0.7.1
 
-	The file is written, the file is renamed into place, and chmod/chown/utimes
-	(only lchown for symlinks, whose type was determined from metadata)
-	are applied.
+The following packages were identified as affected as they statically
+include libavcodec in their own packages.
 
-Directories are checked to see if they exist (in which case the operation is skipped),
-and are otherwise treated as above. Parent directories were checked and created
-as needed before attempting to write file content, with default 755 root:root.
-There's some speshul painfulness when rpm attempts to attach SELinux file contexts
-to orphan directories somehow: my personal belief is that this is a fool's
-errand that would be better dealt with using zero tolerance, like an assertion,
-or QA to ensure that there are no "orphan" directories, but is the behavior
-that was requested at the time that RPM was made responsible for attaching
-SELinux file contexts on every installed path.
+MPlayer <= 1.0_rc4
 
-Devices are created by mknod(2) and otherwise renamed into place as above.
+Fixed version:
 
-Exotica like FIFO's and sockets have no business in *.rpm packages imho:
-all code I've ever seen that uses FIFO's/sockets is perfectly prepared
-to create the fifo/socket where/when needed at runtime, and there is no reason to
-"package" these types of files other than a fetishism for "packaging". But
-RPM handles these similarly to devices: unique path created, renamed into place,
-and then chmod/chown/utimes.
+FFmpeg >= 0.7.3, >= 0.8.2
 
-While one might argue that uniqifier is predictable, and hence
-vulnerable to raciness, one would have to already have root in order
-to modify the content being written.
+Libav, N/A
 
-SHow me the flaw in the above, and I will instantly fix. I have a harder
-time attempting to guess precisely with phrases like
-	rpm appears to treat the target directory tree as trusted
-because it uses imprecise terms like "appears" and "trusted". All content
-is installed by a state machine with strict behavior. If the behavior is racy,
-then the time ordered state transitions have an hole (and the state transitions
-placing content onto the file system are fairly predictable).
+MPlayer, N/A
 
-Please: I'm not trying to be obscure or obtuse, merely trying to
-get the best possible implementation in place in RPM code.
+Credit: vulnerability report received from Emmanouel Kellinis.
 
-> This general issue is in fact a security risk.  For example, if the
-> directory tree contains a subdirectory writable by a pseudo-user, then a
-> possible compromise of this pseudo-user account might lead to worse
-> things via rpm.  Here's an example of such directory on Owl:
-> 
-> # ls -la /var/lib/dhcp/dhcpd/state/
-> total 8
-> drwxrwx--T 2 root dhcp 4096 Dec 14  2010 .
-> drwxr-x--- 3 root dhcp 4096 Dec  8  2010 ..
-> -rw------- 1 dhcp dhcp    0 Dec  8  2010 dhcpd.leases
-> 
+CVE: N/A
 
-I'm not sure I follow the example, but perhaps I'm tracking too closely
-with what is typically done in packaging semantics for the given example.
+Timeline:
+2011-07-14: vulnerability report received
+2011-07-15: contacted ffmpeg maintainers
+2011-07-15: ffmpeg maintainer confirms the issue, preliminary patch is
+            provided
+2011-07-21: patch approved by reporter
+2011-07-23: contacted affected vendors
+2011-08-10: advisory release
 
-I would expect that dhcpd.leases either would be left purely as a side
-effect (and unpackaged) or be added as %ghost so that it would be
-removed when the package is erased. A path in %ghost is never touched
-while installing iirc (I wrote this code years ago, can easily re-read
-if necessary, but nothing much has been changed in the file state machine
-code since forever, the CVE being one of the only changes I recall in years.
+Permalink:
+http://www.ocert.org/advisories/ocert-2011-002.html
 
-So if I understand the threat vector you see then I would say
-that a file like dhcpd.leases isn't typically touched by rpm
-and so even if the pseudo-user account is compromised, and that directory
-were writable so that races might be attempted, that this is a
-packaging flaw, not otherwise. Yes in the general case rpm SHOULD
-handle this operation somehow, and there might well be better examples
-that illustrate the attack that you are describing.
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@...rt.org>                                  http://www.ocert.org
 
-The state machine used to touch the file system is quite clear if
-you add
-	rpm -Uvv --fsmdebug
-and examine the debugging output. If you can point me at the
-specific point in the debugging output where a race exists,
-I will have a fix checked in within 24 hours (I promise).
-
-> We may discuss this general issue (of rpm trusting the target tree, and
-> the resulting risks) separately.
-> 
-> Thank you for the review!
-> 
-> BTW, another detail I thought someone might notice is that I am applying
-> the chmod's not only to binary packages, like the upstream fix does, but
-> I think also to source packages being removed/upgraded (I did not
-> actually test this, though).  This might be excessive, or it might not,
-> but I felt that it does not hurt either way.
-> 
-
-The handling of source RPM's and the exploits that might exist on
-build systems, have never really been thought through.
-
-Here is one exploit that comes alarmingly close to tricking rpm into
-removing one's home directory:
-
-	Name: foo;rm -rf ~
-
-I will leave it as an exercise how to get the spaces past rpmbuild's
-parser, not hard.
-
-The flaws has been addressed both at @rpm5.org and @rpm.org
-18 or 30 months ago (I forget), basically by restricting the character set permitted
-in certain tags like Name:.
-
-I point the flaw out to show that the risks and attacks of SRPM's and build systems
-are rather different than binary RPM's on client machines.
-
-And in the hope that someone will look more deeply at build machine security issues.
-The usual argument for NOT looking at build machine security goes something like this
-	Build machines are usually well protected in order to avoid trojans
-	in source code. So there's less need of examining rpmbuild or the
-	installation of SRPM's.
-
-hth
-
-73 de Jeff
-
-
-> Alexander
-
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
