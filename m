@@ -1,52 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/4
-Message-ID: <20110711162254.GB14118@openwall.com>
-Date: Mon, 11 Jul 2011 20:22:54 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/11
+Message-ID: <20110810202646.6702240a@redhat.com>
+Date: Wed, 10 Aug 2011 20:26:46 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 11, 2011 at 04:39:08PM +0200, Ludwig Nussel wrote:
-> Solar Designer wrote:
-> >[...]
-> >Also, it brings up the question: why merely use $2a$ running the new
-> >code rather than fully emulate the bug even for newly set passwords,
-> >which would make all passwords work, even on other networked machines?
-> >Sure, that would be even nastier for security, so maybe you managed to
-> >strike a balance well.  But nevertheless the question is there.  One of
-> >your options results in full backwards compatibility at a security cost
-> >(for the local system), but the other somehow chooses to strike a
-> >balance between compatibility and security without achieving either of
-> >these fully (for a network of systems).
-> >
-> >Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
-> >I imagine that people won't know to enable this option unless/until they
-> >have already run into an issue anyway (that is, someone is already
-> >unable to log in).  At this point, they could likely upgrade the rest of
-> >their networked systems as well... or downgrade this one. ;-(
-> 
-> I'm not sure I understand what you are suggesting.
+On Wed, 10 Aug 2011 10:27:18 +0200 Thomas Biege wrote:
 
-I am not exactly suggesting anything specific as I don't know your
-priorities, but I point out the inconsistency.
+> The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
 
-My preference would be that you don't implement that BLOWFISH_2y option -
-always have new hashes generated as 2y, even though this means that
-networked systems need to be upgraded to new package versions in sync.
+...
 
-> Keep using the buggy
-> algorithm for new passwords and keep storing them as 2a
+> 2) Boundary errors within the "CSoundFile::ReadS3M()" function
+> (src/load_s3m.cpp) when processing S3M files can be exploited to cause
+> stack-based buffer overflows by tricking a user into opening a
+> specially crafted S3M file.
 
-I'd be unhappy about that, but it's a valid option to provide if you
-want to minimize user annoyance, including for networked systems that
-are not upgraded in sync (but are manually configured for this...)
+Any specific reason to believe these two are the same?  CVE-2011-1574
+links:
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
 
-> as long as BLOWFISH_2a2x is turned on?
+while commit related to SA45131/2 seems to be this one:
 
-No, you'd need a separate option (or a tri-state option) such that
-there's a way for non-networked systems to gradually migrate to 2y
-hashes without annoying any users.
+> [3]
+> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
 
-Alexander
+-- 
+Tomas Hoger / Red Hat Security Response Team
