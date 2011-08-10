@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/2
-Message-ID: <4ED6CA83.6050301@redhat.com>
-Date: Wed, 30 Nov 2011 17:29:55 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/2
+Message-ID: <4E41D0A6.4000908@redhat.com>
+Date: Wed, 10 Aug 2011 08:28:22 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-On 11/30/2011 05:11 PM, Solar Designer wrote:
+On 08/10/2011 08:14 AM, Dan Rosenberg wrote:
+> On Tue, Aug 9, 2011 at 6:49 PM, Eugene Teo <eugene@...hat.com> wrote:
+>> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:>
+>>> 2. [SCSI] pmcraid: reject negative request size
+>>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+>>
+>> I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
+>> the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
+>> CVE-2011-2906 for this issue.
+>>
+>> Thanks, Eugene
+>>
+> 
+> This isn't a security issue because there's a check for CAP_SYS_ADMIN
+> on pmcraid_chr_open(), which is necessary to obtain a file descriptor
+> to the device file in order to call the affected ioctl.  Which is why
+> I didn't bother CC'ing security@...nel.org. ;-)
 
-> > All -
-> >
-> > On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
->> >> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
->> >> scripter framework.
-> > We do not have a strict policy on whether security tool announcements
-> > are appropriate in here or not.  My current stance on it is that
-> > one-time announcements of tools with specific relevance to Open Source
-> > are OK, whereas repeated new version announcements are not.  Thus, I
-> > approved the announcement of XSSer this one time, but I don't intend to
-> > approve an announcement of the next version of XSSer.  Please let me
-> > know if you'd like this approach changed in some way.
-> >
-Agreed. Random thought: or if a project makes a major
-breakthrough/update/change/once a year type of announcement is probably
-sane too? I like hearing about new tools and definitely don't have time
-to go through Google/etc any more =).
+Awesome. Rejecting CVE. Back to my holidays :)
 
-
-> > Meanwhile, the various CFPs and e-magazine issue announcements that are
-> > arriving to oss-security are being rejected - as we decided previously.
-> >
-+1
-
-> > Alexander
--- -Kurt Seifried / Red Hat Security Response Team
-
-
+Eugene
