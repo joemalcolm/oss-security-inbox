@@ -1,45 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/1
-Message-ID: <CAD_8n+QMfYXNrxzGHhfA35trvjoCsPYNws+Q9xx_UyDzSw2r6w@mail.gmail.com>
-Date: Tue, 11 Oct 2011 23:26:55 -0700
-From: Reuben Hawkins <reubenhwk@...il.com>
-To: Vasiliy Kulikov <segoon@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/4
+Message-Id: <201108101027.18631.thomas@suse.de>
+Date: Wed, 10 Aug 2011 10:27:18 +0200
+From: Thomas Biege <thomas@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> On Fri, Oct 07, 2011 at 15:41 +0100, John Haxby wrote:
->> On 07/10/11 14:03, Robert Święcki wrote:
->> > On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
->> > <huzaifas@...hat.com> wrote:
->> >> Shouldnt this be:
->> >>
->> >>        /* No path traversal */
->> >>        if (strstr(iface, "..") || strchr(iface, '/'))
->> >>                return -1;
->> > FWIW, this will reject too much;
->> >
->> > /path/to/sth..jpg
->> >
->>
->> Indeed, since I don't believe that iface can reasonably include a "/"
->> its sufficient to check for that.   If not then you need to check for
->> "../" at the beginning of iface and "/.." anywhere else in it.   But
->> simply forbidding "/" should be fine.
->
-> Crap, thank you for noticing it, guys.  The fix should be:
->
-> https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
->
-> Now, "", "..", "." and filenames with "/" inside are denied.
->
->
-> Thanks,
->
-> --
-> Vasiliy Kulikov
-> http://www.openwall.com - bringing security into open computing environments
->
+Hi ppl,
 
-Are y'all waiting on me to release 1.8.3 with the latest fix?
+from RH bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=728371
+
+The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
+
+-------------------------------------------------------------------------------
+Vincent Danen 2011-08-04 16:42:51 EDT
+
+A number of vulnerabilities were reported in libmodplug, which can be exploited
+to cause a DoS or possibly compromise an application using the library [1]:
+
+1) An integer overflow error exists within the "CSoundFile::ReadWav()" function
+(src/load_wav.cpp) when processing certain WAV files. This can be exploited to
+cause a heap-based buffer overflow by tricking a user into opening a specially
+crafted WAV file.
+
+2) Boundary errors within the "CSoundFile::ReadS3M()" function
+(src/load_s3m.cpp) when processing S3M files can be exploited to cause
+stack-based buffer overflows by tricking a user into opening a specially
+crafted S3M file.
+
+3) An off-by-one error within the "CSoundFile::ReadAMS()" function
+(src/load_ams.cpp) can be exploited to cause a stack corruption by tricking a
+user into opening a specially crafted AMS file.
+
+4) An off-by-one error within the "CSoundFile::ReadDSM()" function
+(src/load_dms.cpp) can be exploited to cause a memory corruption by tricking a
+user into opening a specially crafted DSM file.
+
+5) An off-by-one error within the "CSoundFile::ReadAMS2()" function
+(src/load_ams.cpp) can be exploited to cause a memory corruption by tricking a
+user into opening a specially crafted AMS file.
+
+Upstream patches are available to correct the flaws [2],[3],[4],[5]
+
+While older gstreamer-plugins contains an embedded copy of libmodplug, it is
+not yet known to what extent it is affected by these flaws.
+
+[1] http://secunia.com/advisories/45131
+[2]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=2d4c56de314ab13e4437bd8b609f0b751066eee8
+[3]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
+[4]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=26243ab9fe1171f70053e9aec4b20e9f7de9e4ef
+[5]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=16d7a78efe14d345a6c5b241f88422ad0ee483ea
+-------------------------------------------------------------------------------
+
+-- 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
