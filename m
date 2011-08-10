@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/10
-Message-ID: <4EC52F2A.2020001@redhat.com>
-Date: Thu, 17 Nov 2011 08:58:34 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/3
+Message-ID: <CAOSRhRN4fz7L1ZiD4T7Pinbt6KWr-Ou0ng4=Aag9ArTn3tUaOA@mail.gmail.com>
+Date: Tue, 9 Aug 2011 23:33:04 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: nginx resolver heap overflow
+Cc: csmall@...ian.org
+Subject: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-On 11/17/2011 08:37 AM, Kurt Seifried wrote:
-> On 11/16/2011 10:50 PM, Ben Hawkes wrote:
->> Hi,
->>
->> The nginx team have released stable version 1.0.10, which includes a fix 
->> for a heap overflow bug in the custom DNS resolver:
->>
->> http://trac.nginx.org/nginx/changeset/4268/nginx
->>
->> The resolver is most commonly used with the proxy and fastcgi modules,
->> which are not enabled by default.
->>
->> In order to trigger this condition an attacker would need to be in
->> control of an upstream resolver host, or be in a position to brute-force
->> the weakly generated 16-bit transaction identifier.
->>
->> Thanks,
->> Ben Hawkes
-> Do you need a CVE # for this issue?
->
-And this is why coffee is a popular morning drink (and Kurt should have
-some =).
+The AX.25 daemon (ax25d), typically provided in the ax25-tools
+package, allows administrators to associate incoming AX.25, NET/ROM,
+and ROSE traffic with the execution of an endpoint program (most
+commonly "node"), which is run under a specified user account.
+Because ax25d is missing a check on the return code for a setuid call
+responsible for dropping privileges to the specified user, it may be
+possible to cause setuid to fail, after which the chosen program will
+be executed with root privileges.  In other words, if you're in the
+business of handing out unprivileged shells over amateur radio (don't
+we all? :p ), this would allow for remote compromise.
 
-Please use CVE-2011-4315 for this issue.
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+-Dan
