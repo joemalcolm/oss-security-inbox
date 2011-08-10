@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/4
-Message-ID: <CAOSRhRM8Ct2UMkcp-cAX=RBcVaWe4Q4ktiJ4jKdi8Yi-DkPJWQ@mail.gmail.com>
-Date: Fri, 15 Jul 2011 06:49:52 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/1
+Message-ID: <CAOSRhRMiAK_K1kTtGkHy8_tq9AmN4ncRgpWRP=ehjYX96yKGuA@mail.gmail.com>
+Date: Tue, 9 Aug 2011 20:14:42 -0400
 From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>,  Secunia Research <vuln@...unia.com>
-Subject: Re: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+Cc: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Aug 9, 2011 at 6:49 PM, Eugene Teo <eugene@...hat.com> wrote:
+> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:>
+>> 2. [SCSI] pmcraid: reject negative request size
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
 >
-> In terms of ease of exploitation, this one has to be in the very difficult
-> basket.
+> I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
+> the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
+> CVE-2011-2906 for this issue.
+>
+> Thanks, Eugene
 >
 
-I agree, this would be difficult to exploit.
-
->> It's better to be safe than sorry.
->
-> That's why I rushed out a new release. I do take this seriously, but
-> I do not like to see the threat exaggerated beyond reason.
->
-
-I didn't mean to imply we should be panicking and running for the
-hills. Just that the assessment that this is *potentially* exploitable
-for code execution is accurate and is most helpful to distributions
-and users when gauging risk and determining when to release and apply
-updates.
+This isn't a security issue because there's a check for CAP_SYS_ADMIN
+on pmcraid_chr_open(), which is necessary to obtain a file descriptor
+to the device file in order to call the affected ioctl.  Which is why
+I didn't bother CC'ing security@...nel.org. ;-)
 
 -Dan
-
-> Erik
-> --
-> ----------------------------------------------------------------------
-> Erik de Castro Lopo
-> http://www.mega-nerd.com/
->
