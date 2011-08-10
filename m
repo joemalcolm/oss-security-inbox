@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/5
-Message-Id: <20110902173629.09a0e8d97973aa82e7b27703@gmail.com>
-Date: Fri, 2 Sep 2011 17:36:29 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/6
+Message-Id: <201108100947.26910.sgrubb@redhat.com>
+Date: Wed, 10 Aug 2011 09:47:26 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: ffmpeg issues
+Cc: "Yves-Alexis Perez" <corsac@...ian.org>
+Subject: Re: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
-Steven M. Christey wrote:
-
+On Tuesday, August 09, 2011 09:25:24 AM Yves-Alexis Perez wrote:
+> On mar., 2011-08-09 at 09:18 -0400, Steve Grubb wrote:
+> > And in recent kernels has an executable stack:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=704296
 > 
-> For context, CVE-2011-2162 was assigned because of Mandriva's reference to 
-> "several additional vulnerabilites originally discovered by Google Chrome 
-> developers were also fixed with this advisory" without any reference to a 
-> CVE identifier.
+> We don't have access to that bug.
 
-Isn't this just CVE-2011-1198 then (which is suspiciously missing from
-that set of security announcements)?   CVE-2011-1198 was assigned on
-March 30th, which certainly could have been referenced in the Mandriva
-advisories, they just missed it I guess?  Given this kind of
-carelessness, I think we should err on the side of not issuing new
-ids based on ill-defined text like this future Mandriva advisories.
+Its marked as a security bug and I guess its not been reclassified. The short of it is 
+this:
 
-> For CVE-2011-2160, http://ffmpeg.mplayerhq.hu/ includes a changelog. 
-> CVE-2011-2160 was built from the March 17, 2011 entry:
-> 
->    "Reinhard Tartler
->    backported several security fixes to the 0.5 release branch and made
->    another point release, that is 0.5.4. Note, 0.5 is quite old and this
->    release is mostly for those stuck with the 0.5 branch, and not so
->    interesting for end users. ... Changelog between 0.5.3 and 0.5.4 ...
->    Fix invalid reads in VC-1 decoding (related to CVE-2011-0723)."
-> 
-> This suggests that the vendor may have fixed an issue related to 
-> CVE-2011-0723, but not CVE-2011-0723 itself. The other items in the 
-> 20110317 changelog map directly the CVE names, without a "related to" 
-> qualifier. This triggers a SPLIT.
+/usr/bin/eu-readelf -l /usr/bin/perf  | grep STACK
 
-This may just be a wording choice.  We have more discussion going on
-right now [0], so hopefully we'll get it resolved there.
+If you get RWE for the permissions, its executable. If you get RW, then everything is 
+fine. While this itself is not exploitable, if there were any other problems then this 
+could be susceptible to putting shell code on the stack which should have been 
+banished long ago. IOW, the ease of exploit goes up since you don't need to defeat any 
+advanced security mechanisms like ASLR.
 
-Best wishes,
-Mike
+I have a number of security assessment utilities located here:
+http://people.redhat.com/sgrubb/security/
+that can scan systems looking for problems like this. Some are rpm centric because 
+once you find a problem you want to know the associated package, but they could be 
+easily modified for other packaging tools.
 
-[0] http://lists.debian.org/debian-security-tracker/2011/08/msg00009.html
+-Steve
