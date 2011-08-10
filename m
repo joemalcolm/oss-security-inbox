@@ -1,60 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/11
-Message-Id: <201106281421.47262.ludwig.nussel@suse.de>
-Date: Tue, 28 Jun 2011 14:21:47 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/1
+Message-ID: <CAOSRhRMiAK_K1kTtGkHy8_tq9AmN4ncRgpWRP=ehjYX96yKGuA@mail.gmail.com>
+Date: Tue, 9 Aug 2011 20:14:42 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> Josh Bressers wrote:
-> >----- Original Message -----
-> >> Jan Lieskovsky wrote:
-> >> > Hello Josh, Steve, vendors,
-> >> >
-> >> >    based on Debian BTS report:
-> >> >    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
-> >> >        (first CVE-2011-XXYY required for Debian case)
-> >> >
-> >> > looked more into original report:
-> >> > [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
-> >> >
-> >> > and the first paragraph of [2] suggests:
-> >> > "When starting a program via "su - user -c program" the user session
-> >> > can escape to the parent session by using the TIOCSTI ioctl to push
-> >> > characters into the input buffer. This allows for example a non-root
-> >> > session to push "chmod 666 /etc/shadow" or similarly bad commands
-> >> > into
-> >> > the input buffer such that after the end of the session they are
-> >> > executed."
-> >> >
-> >> > this should get a CVE-2005-YYZZ CVE id.
-> >> >
-> >> > Could you allocate these?
-> >>
-> >> ping! :-)
-> >
-> >I'm not sure if this should get two IDs. It's really one issue, which isn't
-> >actually fixed in su.
-> >
-> >The fundamental issue is that tools like su and sudo keep the tty open.
-> >The patch in question closes the tty for the case of su -c, but not for
-> >just running su by itself. It is incomplete.
-> 
-> I'm not worried too much about the interactive su case really. The 
-> usual direction there is user->root, not the other way around I 
-> suppose. "su -c" might be used by (%post) scripts though as seen 
-> with ikiwiki.
+On Tue, Aug 9, 2011 at 6:49 PM, Eugene Teo <eugene@...hat.com> wrote:
+> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:>
+>> 2. [SCSI] pmcraid: reject negative request size
+>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+>
+> I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
+> the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
+> CVE-2011-2906 for this issue.
+>
+> Thanks, Eugene
+>
 
-So can we have a CVE for that issue at least?
+This isn't a security issue because there's a check for CAP_SYS_ADMIN
+on pmcraid_chr_open(), which is necessary to obtain a file descriptor
+to the device file in order to call the affected ioctl.  Which is why
+I didn't bother CC'ing security@...nel.org. ;-)
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+-Dan
