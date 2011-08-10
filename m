@@ -1,23 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/2
-Message-ID: <4EC13E0C.4010402@redhat.com>
-Date: Mon, 14 Nov 2011 09:13:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/4
+Message-Id: <201108101027.18631.thomas@suse.de>
+Date: Wed, 10 Aug 2011 10:27:18 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
+Subject: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
 Content-Type: text/plain; charset=utf-8
 
-On 11/13/2011 04:12 AM, Hanno Böck wrote:
-> http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
->
-> "Today we have released CMSMS 1.9.4.3, a minor release that fixes a
-> single security issue in the news module. Essentially, a malicious
-> person could via accessing a sincle URL corrupt your news articles."
->
-Please use CVE-2011-4310 for this issue.
+Hi ppl,
+
+from RH bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=728371
+
+The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
+
+-------------------------------------------------------------------------------
+Vincent Danen 2011-08-04 16:42:51 EDT
+
+A number of vulnerabilities were reported in libmodplug, which can be exploited
+to cause a DoS or possibly compromise an application using the library [1]:
+
+1) An integer overflow error exists within the "CSoundFile::ReadWav()" function
+(src/load_wav.cpp) when processing certain WAV files. This can be exploited to
+cause a heap-based buffer overflow by tricking a user into opening a specially
+crafted WAV file.
+
+2) Boundary errors within the "CSoundFile::ReadS3M()" function
+(src/load_s3m.cpp) when processing S3M files can be exploited to cause
+stack-based buffer overflows by tricking a user into opening a specially
+crafted S3M file.
+
+3) An off-by-one error within the "CSoundFile::ReadAMS()" function
+(src/load_ams.cpp) can be exploited to cause a stack corruption by tricking a
+user into opening a specially crafted AMS file.
+
+4) An off-by-one error within the "CSoundFile::ReadDSM()" function
+(src/load_dms.cpp) can be exploited to cause a memory corruption by tricking a
+user into opening a specially crafted DSM file.
+
+5) An off-by-one error within the "CSoundFile::ReadAMS2()" function
+(src/load_ams.cpp) can be exploited to cause a memory corruption by tricking a
+user into opening a specially crafted AMS file.
+
+Upstream patches are available to correct the flaws [2],[3],[4],[5]
+
+While older gstreamer-plugins contains an embedded copy of libmodplug, it is
+not yet known to what extent it is affected by these flaws.
+
+[1] http://secunia.com/advisories/45131
+[2]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=2d4c56de314ab13e4437bd8b609f0b751066eee8
+[3]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
+[4]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=26243ab9fe1171f70053e9aec4b20e9f7de9e4ef
+[5]
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=16d7a78efe14d345a6c5b241f88422ad0ee483ea
+-------------------------------------------------------------------------------
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
