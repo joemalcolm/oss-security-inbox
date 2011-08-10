@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/1
-Message-ID: <4DBC02E1.2070901@kde.org>
-Date: Sat, 30 Apr 2011 08:38:57 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/9
+Message-ID: <20110810172320.GA8187@inutil.org>
+Date: Wed, 10 Aug 2011 19:23:20 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: Eugene Teo <eugene@...hat.com>
+Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-On 04/26/2011 12:02 PM, Jeff Mitchell wrote:
-> On 4/12/2011 4:58 PM, Solar Designer wrote:
->> On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
->>> pub   4096R/C44977CA 2011-04-12
->>>       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
->>> uid                  Petr Matousek <pmatouse@...hat.com>
->>> uid                  Petr Matousek <pm@...p.org>
->>
->> Added.
->>
->> Alexander
+On Wed, Aug 10, 2011 at 06:49:59AM +0800, Eugene Teo wrote:
+> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
+> > Hi,
+> > the following two issues also seem to warrant a CVE assignment:
+> > 
+> > 1. staging: comedi: fix infoleak to userspace
+> > http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
+> > 
+> > (It's a staging driver and I'm unsure whether we have assigned
+> >  CVE IDs for staging drivers in the past. OTOH, this driver
+> >  is enabled in the Debian 6.0 kernel)
 > 
-> Hi there,
-> 
-> Please add me as a KDE security contact.
-> 
-> sec   1024D/D0AE1825 2009-01-19
-> Key fingerprint = EAB8 A2AC 64A4 434E E79C  E454 00D6 1DA8 D0AE 1825
-> uid                  Jeff Mitchell <mitchell@....org>
-> 
-> Thanks,
-> Jeff
+> We don't as code from the staging drivers are usually are substandard
+> and usually not supported.
 
-Hi,
+I agree on that approach for new drivers in the works (e.g. gma500), but
+the Comedi driver is quite old and in use outside the kernel/staging
+version as well. (Debian is providing a separate comedi source package 
+since 2002.).
 
-I didn't hear back about this -- can someone confirm?
+> Btw, can you please mail me a copy of the /boot/config of the most
+> recent Debian kernel for my reference?
 
-Thanks,
-Jeff
+Please let me know if you need anything in addition to the files
+Yves-Alexis sent you.
+
+Cheers,
+        Moritz
