@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/7
-Message-ID: <20110502172230.GA19876@openwall.com>
-Date: Mon, 2 May 2011 21:22:30 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/11
+Message-ID: <20110810202646.6702240a@redhat.com>
+Date: Wed, 10 Aug 2011 20:26:46 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 07:03:55AM -1000, akuster wrote:
-> On 05/02/2011 06:12 AM, Solar Designer wrote:
-> > On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
-> >> Can you clarify what is meant by updates?
-> > 
-> > RHEL-like .src.rpm's or equivalent will do.  Something else might do.
-> 
-> Ok.. but do they need to be publicly available ( ie no service or
-> maintenance contract to get)?
+On Wed, 10 Aug 2011 10:27:18 +0200 Thomas Biege wrote:
 
-Per the discussion so far, yes, or you would likely be in another
-category from the "open" Linux distro vendors.  I don't know what others
-in here would say if you, for example, only make advisories public, but
-not any code.  Maybe this will do (that is, folks would not oppose you
-being on the same list with the "open" vendors), maybe not.  A better
-option could be for you to make advisories and package metainfo public
-(file lists, change logs, etc.), but not the packages themselves.
-I similarly don't know how that would be received by others in here.
-On one hand, it would show that you're preparing security updates, for
-what software, and when.  On the other, the level of openness would
-still be less than Red Hat's.
+> The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
 
-Alexander
+...
+
+> 2) Boundary errors within the "CSoundFile::ReadS3M()" function
+> (src/load_s3m.cpp) when processing S3M files can be exploited to cause
+> stack-based buffer overflows by tricking a user into opening a
+> specially crafted S3M file.
+
+Any specific reason to believe these two are the same?  CVE-2011-1574
+links:
+http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
+
+while commit related to SA45131/2 seems to be this one:
+
+> [3]
+> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
