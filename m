@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/4
-Message-ID: <4D7F2AB3.3010007@redhat.com>
-Date: Tue, 15 Mar 2011 17:00:35 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Mike O'Connor" <mjo@...o.mi.org>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/10
+Message-ID: <20110810202220.66890fea@redhat.com>
+Date: Wed, 10 Aug 2011 20:22:20 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2011 11:01 AM, Mike O'Connor wrote:
-> [catching up on older emails]
->
-> :>  >  They do this already today, that's what security@...nel.org is for, and
-> :>  >  it gets a bit of traffic like this every week.
-> :>
-> :>  Is this list open to the public?  It doesn't seem to be available on
-> :>  http://vger.kernel.org/vger-lists.html.
-> :
-> :No, it is closed, as it should be as potential security problems are
-> :mailed there.  You don't want that to be totally open, right?
->
-> One suggestion I've made in the past is to have the list _archives_ be
-> open.  So anything older than, say, a month is made public.  That way,
-> folks can see how issues were disclosed, how decisions were reached,
-> etc.  for old issues that are no longer under embargo.  The way I see
-> it, if we don't publish the list archive on our own terms, miscreants
-> will get around to publishing it for us.
+Hi!
 
-Any fixes for the issues reported in s@k.o will be committed to the 
-upstream kernel immediately. The "disclosures" of those fixes are shared 
-in this list. Keep a look out for my emails.
+We've recently came across an issue in commonly re-used LZW
+decompression implementations - original BSD compress and GIF reader
+written by David Koblas.  Due to an insufficient input checking, invalid
+LZW stream can create a loop in the decompression table, leading to the
+decompression stack buffer overflow.
 
-Eugene
+Following bugzillas list various code bases that were checked for the
+issue and if they are affected or not:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
+
+Many code bases are unaffected as the problem was fixed in the past,
+so this is probably like N-th re-discovery of the issue.  Some previous
+fixes were called security (CVE-2006-1168), some were not.  The problem
+may not be security relevant, or have much security impact in all
+currently affected code bases, though please mail the list if you come
+across any other affected code base that is not already mentioned and
+that may be worth fixing.
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Tomas Hoger / Red Hat Security Response Team
