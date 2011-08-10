@@ -1,63 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/10
-Message-ID: <20110812214302.GA28654@suse.de>
-Date: Fri, 12 Aug 2011 23:43:03 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/8
+Message-ID: <20110810142649.GH23625@core.inversepath.com>
+Date: Wed, 10 Aug 2011 16:26:49 +0200
+From: Daniele Bianco <danbia@...rt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+Subject: Re: [oCERT-2011-002] libavcodec insufficient boundary check
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 12, 2011 at 09:37:19PM +0200, Tomas Hoger wrote:
-> On Mon, 25 Jul 2011 08:57:10 +0200 Sebastian Krahmer wrote:
+On Wed, Aug 10, 2011 at 10:04:34AM -0400, Dan Rosenberg wrote:
+> On Wed, Aug 10, 2011 at 9:19 AM, Daniele Bianco <danbia@...rt.org> wrote:
+> >
+> > #2011-002 libavcodec insufficient boundary check
+> >
+> > Description:
+> >
+> > The libavcodec library, an open source video encoding/decoding library part
+> > of the FFmpeg and Libav projects, performs insufficient boundary check
+> > against a buffer index. The missing check can result in arbitrary read/write
+> > of data outside a destination buffer boundaries.
+> >
+> > The vulnerability affects the Chinese AVS video (CAVS) file format decoder,
+> > specially crafted CAVS files may lead to arbitrary code execution during
+> > decoding.
+> >
 > 
-> > On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
-> > > I presume this only needs one ID
-> > > 
-> > > Use CVE-2011-2709
-> > 
-> > You probably speak about:
-> > 
-> > http://www.suse.de/~krahmer/libs-vs-fscaps/
+> While you're at it, here are a couple more:
 > 
-> I believe Josh was referring to libgssapi and libgssglue mentioned in
-> the subject.  It's the same code in both, libgssglue is libgssapi
-> renamed.
+> * Out-of-bounds read on lines 166-171 due to signedness error
+> * Out-of-bounds read on lines 224-240 due to signedness error
 > 
-> Would you mind sharing the patch you used in SLE packages?  It does not
-> seem to have been fixed in OpenSUSE yet.  Thanks!
+> Line numbers based on upstream git:
+> http://git.videolan.org/?p=ffmpeg.git;a=blob;f=libavcodec/cavsdec.c;h=acf040788c9a4c34807ba2efa10312b5b8e84f02;hb=6481a36010d8f7d834676f17ba555d0a3815c760
+> 
+> 
+> Hint to distributions and software developers: if you're going to use
+> libavcodec (or libavformat, etc.) for your project, consider
+> restricting the default build to include only *commonly* used codecs
+> and demuxers.  The code quality of many of the more obscure formats is
+> questionable at best.
+> 
+> Regards,
+> Dan
 
-I just did a basic uid check.
+Hi Dan,
+just forwarded this to the maintainer.
 
-Index: libgssglue-0.1/src/g_initialize.c
-===================================================================
---- libgssglue-0.1.orig/src/g_initialize.c
-+++ libgssglue-0.1/src/g_initialize.c
-@@ -34,6 +34,8 @@
- #include <ctype.h>
- #include <errno.h>
- #include <syslog.h>
-+#include <unistd.h>
-+#include <sys/types.h>
- 
- #ifdef USE_SOLARIS_SHARED_LIBRARIES
- #include <dlfcn.h>
-@@ -195,7 +197,8 @@ static void solaris_initialize ()
-     void *dl;
-     gss_mechanism (*sym)(void), mech;
- 
--    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
-+    if ((getuid() != geteuid()) ||
-+        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
- 	filename = MECH_CONF;
- 
-     if ((conffile = fopen(filename, "r")) == NULL) {
-@@ -270,7 +273,8 @@ static void linux_initialize ()
-     void *dl;
-     gss_mechanism (*sym)(void), mech;
- 
--    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
-+    if ((getuid() != geteuid()) ||
-+        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
- 	filename = MECH_CONF;
- 
-     if ((conffile = fopen(filename, "r")) == NULL) {
+Cheers,
+Daniele
+
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@...rt.org>                                  http://www.ocert.org
+
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
