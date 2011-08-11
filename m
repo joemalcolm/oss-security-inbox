@@ -1,35 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/5
-Message-ID: <4EDBDEAF.9020105@redhat.com>
-Date: Sun, 04 Dec 2011 13:57:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/7
+Message-ID: <1313072471.19030.0.camel@localhost.localdomain>
+Date: Thu, 11 Aug 2011 10:21:11 -0400
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+Cc: Thomas Osterried <thomas@...erried.de>, Eren Türkay <eren@...dus.org.tr>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2011 12:07 PM, Hanno Böck wrote:
-> Am Thu, 01 Dec 2011 13:24:19 -0700
-> schrieb Kurt Seifried <kseifried@...hat.com>:
->
->> My mistake, this should have been merged into CVE-2011-4090, it's the
->> same vuln type (XSS) and the same version of Serendipity,
->> CVE-2011-4365 is a bad assignment and should be marked as a duplicate
->> of CVE-2011-4090.
-> I'd disagree on that.
->
-> CVE-2011-4090 is in an (optional) plugin, while CVE-2011-4365 is an
-> issue in the main s9y code.
->
-> Although the plugin is shipped with the core s9y, the impact is quite
-> different. For 4090, you only need to care if you do something with the
-> karma-plugin.
->
-Correct me if I'm wrong though but in the plugin advisory it says the
-fix is to upgrade serendipity to 1.6? If so then it looks like the
-problem is more back end than plugin.
+On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
+> On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
+> 
+> > Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> > > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > > > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > > > and ROSE traffic with the execution of an endpoint program (most
+> > > > commonly "node"), which is run under a specified user account.
+> > > > Because ax25d is missing a check on the return code for a setuid call
+> > > > responsible for dropping privileges to the specified user, it may be
+> > > > possible to cause setuid to fail, after which the chosen program will
+> > > > be executed with root privileges.  In other words, if you're in the
+> > > > business of handing out unprivileged shells over amateur radio (don't
+> > > > we all? :p ), this would allow for remote compromise.
+> > > 
+> > > Hello,
+> > > 
+> > > Thank you for your investigation on the topic. Although this issue seems
+> > > to be low-priority, it's good to let the maintainers know.
+> > > 
+> > > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> > > linux-ac25 site, are the maintainers of ax25 utilities.
+> > 
+> > thank you for your information.
+> > 
+> > I know that code fragment, but I never imagined that if root calls
+> > setuid/setgid that this could fail, because root has by definition enough
+> > rights.
+> 
+> Welcome to the new world where things are more complicated ...
+> 
+> These days setuid and similar syscalls need to allocate memory for the
+> credentials of a process and memory allocations may fail.  A system could
+> even be put under massive memory pressure with the intend to make this
+> allocation fail.
+
+The important vector is RLIMIT_NPROC.
+
+Regards,
+Jon Oberheide
 
 -- 
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
 
--Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
