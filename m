@@ -1,111 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/2
-Message-ID: <4EFAA673.9040404@redhat.com>
-Date: Tue, 27 Dec 2011 22:17:39 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/5
+Message-Id: <201108111413.27056.thomas@osterried.de>
+Date: Thu, 11 Aug 2011 14:13:23 +0200
+From: Thomas Osterried <thomas@...erried.de>
+To: Eren Türkay <eren@...dus.org.tr>
+Cc: oss-security@...ts.openwall.com, Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-Ok finally got this ironed out:
+Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > and ROSE traffic with the execution of an endpoint program (most
+> > commonly "node"), which is run under a specified user account.
+> > Because ax25d is missing a check on the return code for a setuid call
+> > responsible for dropping privileges to the specified user, it may be
+> > possible to cause setuid to fail, after which the chosen program will
+> > be executed with root privileges.  In other words, if you're in the
+> > business of handing out unprivileged shells over amateur radio (don't
+> > we all? :p ), this would allow for remote compromise.
+> 
+> Hello,
+> 
+> Thank you for your investigation on the topic. Although this issue seems
+> to be low-priority, it's good to let the maintainers know.
+> 
+> I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> linux-ac25 site, are the maintainers of ax25 utilities.
 
->
-> -------- Original Message --------
-> Subject: Re: [oss-security] CVE request: kernel: multiple issues in ROSE
-> Date: Tue, 5 Apr 2011 11:37:37 -0400
-> From: Dan Rosenberg<dan.j.rosenberg@...il.com>
-> Reply-To: oss-security@...ts.openwall.com
-> To: oss-security@...ts.openwall.com
-> CC: Steven M. Christey<coley@...us.mitre.org>,        Josh Bressers
-> <bressers@...hat.com>, Eugene Teo<eugene@...hat.com>
->
-> Hi,
->
-> This breakdown seems to make sense.  I'll do my best to break up the
-> issues below.
->
->> Dan, could you confirm that this breakdown makes sense?
->>
->> 1) buffer overflows (not validating length is<= the maximum)
->>
-> 1) When parsing the FAC_NATIONAL_DIGIS facilities field, it's possible
-> for a remote host to provide more digipeaters than expected, resulting
-> in heap corruption.  Check against ROSE_MAX_DIGIS to prevent
-> overflows, and abort facilities parsing on failure.  It looks like
-> this will be CVE-2011-1493.
-This was assigned CVE-2011-1493, please continue to use.
+thank you for your information.
 
-============================
->
-> 2) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
-> facilities fields, a remote host can provide a length of greater than
-> 20, resulting in a stack overflow of the callsign array.
->> 2) use of negative signed integers in memcpy() and other operations 
->> where
->>    conversion creates a large unsigned integer, referred to as
->>    "underflow"
->>
-> 3) When parsing the FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP
-> facilities fields, a remote host can provide a length
-> of less than 10, resulting in an underflow in a memcpy size, causing a
-> kernel panic due to massive heap corruption.
->
-> Note that 2) and 3) are solved by validating a single length field, so
-> maybe they should be grouped together?  The above three issues were
-> all found by me.
+I know that code fragment, but I never imagined that if root calls setuid/setgid that this could fail, because root has by definition enough rights.
 
-For the issues 2) and 3) in FAC_CCITT_DEST_NSAP and FAC_CCITT_SRC_NSAP 
-please use CVE-2011-4913
+We'l corect lines 617-619 asap.
 
-============================
->
->> 3) any other types of problems that aren't covered by those two?  (The
->>    length validation checks don't always have enough context in the 
->> source
->>    code).
->>
-> 4) Ben Hutchings' fixes addressed multiple cases where the ROSE
-> protocol did not ensure that socket data being parsed wasn't being
-> read in from beyond the boundaries of the incoming socket buffer.  For
-> example, a received packet might provide a length field longer than
-> the amount of remaining data in the socket buffer.
->
-> Looking at the patch, it doesn't appear that any memory corruption
-> would be caused by this, since the out-of-bounds data is still
-> validated by the parsing code.  I'd say the impact is likely limited
-> to possible information disclosure, if the contents of the
-> out-of-bounds memory could be inferred by the behavior of the protocol
-> during parsing.  It's theoretically possible (but very unlikely) that
-> this could cause read accesses to unmapped memory, which would cause a
-> DOS.
->
-> -Dan
-
-For this please use CVE-2011-4914
-
-============================
-
->
->> We would need separate CVE's for the issues found by Dan versus the 
->> issues
->> found by Ben Hutchings.
->>
->> Arguably, #2 could probably be broken down further, but without enough
->> source code context in the patches, it's not immediately clear.
->>
->> - Steve
->>
-
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
+Kind regards,
+	- Thomas  dl9sau
