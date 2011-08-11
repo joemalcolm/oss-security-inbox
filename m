@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/6
-Message-ID: <609827013.370354.1297266931389.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 9 Feb 2011 10:55:31 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/1
+Message-ID: <20110811015232.GH1360@redhat.com>
+Date: Wed, 10 Aug 2011 19:52:32 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Django multiple flaws (CVEs inside)
+Subject: CVE-2011-2907: authentication bypass in torque
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Just a heads up on a security flaw in torque that can makes it
+vulnerable to an authorization bypass.
 
-I received a request to assign Django some IDs for three new issues:
-http://www.djangoproject.com/weblog/2011/feb/08/security/
+The gory details are available here:
 
-CVE-2011-0696 django Flaw in CSRF handling
-CVE-2011-0697 django Potential XSS in file field rendering
-CVE-2011-0698 django Directory-traversal vulnerability on Windows
+http://www.clusterresources.com/pipermail/torqueusers/2011-August/013194.html
+https://bugzilla.redhat.com/show_bug.cgi?id=713090
 
-Thanks.
+The long and short of it is that if you ship torque compiled with munge
+support, you are not vulnerable.
+
+This issue was assigned the name CVE-2011-2907.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
