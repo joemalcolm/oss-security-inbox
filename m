@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/10/3
-Message-ID: <411266069.30501.1294694524342.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Jan 2011 16:22:04 -0500 (EST)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/3
+Message-Id: <201108111026.36876.thomas@suse.de>
+Date: Thu, 11 Aug 2011 10:26:36 +0200
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
+Cc: Tomas Hoger <thoger@...hat.com>
+Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
 Content-Type: text/plain; charset=utf-8
 
-"The semantics of the ',password' option to -vnc are that it enables the VNC
-auth scheme. If the VNC server password is unset or empty string, all attempts
-to authenticate with the server will be explicitly blocked.
+Am Mittwoch, 10. August 2011, 20:26:46 schrieb Tomas Hoger:
+> On Wed, 10 Aug 2011 10:27:18 +0200 Thomas Biege wrote:
+> 
+> > The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
+> 
+> ...
+> 
+> > 2) Boundary errors within the "CSoundFile::ReadS3M()" function
+> > (src/load_s3m.cpp) when processing S3M files can be exploited to cause
+> > stack-based buffer overflows by tricking a user into opening a
+> > specially crafted S3M file.
+> 
+> Any specific reason to believe these two are the same?  CVE-2011-1574
+> links:
+> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
+> 
+> while commit related to SA45131/2 seems to be this one:
+> 
+> > [3]
+> > http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
 
-This allows applications to enable and selectively allow access for a period of
-time, before clearing the password again to prevent further access.
+Then this one also needs a new CVE-ID.
 
-Upstream changes have introduced a flaw by disabling all authentication when
-the password was cleared with upstream commit [1].
 
-[1]
-http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+Thanks for clarifying this,
+Thomas
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=668589
 
-Thanks,
+-- 
+Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
 --
-Petr Matousek / Red Hat Security Response Team
-
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
