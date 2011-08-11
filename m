@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/3
-Message-ID: <1319897055.21316.25.camel@scapa>
-Date: Sat, 29 Oct 2011 16:04:15 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/7
+Message-ID: <1313072471.19030.0.camel@localhost.localdomain>
+Date: Thu, 11 Aug 2011 10:21:11 -0400
+From: Jon Oberheide <jon@...rheide.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
+Cc: Thomas Osterried <thomas@...erried.de>, Eren Türkay <eren@...dus.org.tr>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-On sam., 2011-10-29 at 15:50 +0200, Yves-Alexis Perez wrote:
-> On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
-> > Please use CVE-2011-3362.
-> > 
-> > Thanks.
-> > 
+On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
+> On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
 > 
-> It seems that CVE-2011-3973 has been assigned as a duplicate to this
-> issue. Is there a way to know who assigned it and have it rejected?
+> > Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> > > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > > > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > > > and ROSE traffic with the execution of an endpoint program (most
+> > > > commonly "node"), which is run under a specified user account.
+> > > > Because ax25d is missing a check on the return code for a setuid call
+> > > > responsible for dropping privileges to the specified user, it may be
+> > > > possible to cause setuid to fail, after which the chosen program will
+> > > > be executed with root privileges.  In other words, if you're in the
+> > > > business of handing out unprivileged shells over amateur radio (don't
+> > > > we all? :p ), this would allow for remote compromise.
+> > > 
+> > > Hello,
+> > > 
+> > > Thank you for your investigation on the topic. Although this issue seems
+> > > to be low-priority, it's good to let the maintainers know.
+> > > 
+> > > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> > > linux-ac25 site, are the maintainers of ax25 utilities.
+> > 
+> > thank you for your information.
+> > 
+> > I know that code fragment, but I never imagined that if root calls
+> > setuid/setgid that this could fail, because root has by definition enough
+> > rights.
+> 
+> Welcome to the new world where things are more complicated ...
+> 
+> These days setuid and similar syscalls need to allocate memory for the
+> credentials of a process and memory allocations may fail.  A system could
+> even be put under massive memory pressure with the intend to make this
+> allocation fail.
 
-Sorry for that, it looks that 3973 and 3974 are indeed in the same files
-but are a different vulnerability.
+The important vector is RLIMIT_NPROC.
 
 Regards,
--- 
-Yves-Alexis
+Jon Oberheide
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-- 
+Jon Oberheide <jon@...rheide.org>
+GnuPG Key: 1024D/F47C17FE
+Fingerprint: B716 DA66 8173 6EDD 28F6  F184 5842 1C89 F47C 17FE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
