@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/9
-Message-ID: <1212107829.27653.1302550973039.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 11 Apr 2011 15:42:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/2
+Message-ID: <20110811052041.GB2043@mutt-is@awesome>
+Date: Thu, 11 Aug 2011 08:20:41 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests : Liferay 6.0.6
+Cc: Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Sorry for the delay, this one was bigger than a breadbox so I needed
-> to
-> find a block of time to handle it.
+On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> package, allows administrators to associate incoming AX.25, NET/ROM,
+> and ROSE traffic with the execution of an endpoint program (most
+> commonly "node"), which is run under a specified user account.
+> Because ax25d is missing a check on the return code for a setuid call
+> responsible for dropping privileges to the specified user, it may be
+> possible to cause setuid to fail, after which the chosen program will
+> be executed with root privileges.  In other words, if you're in the
+> business of handing out unprivileged shells over amateur radio (don't
+> we all? :p ), this would allow for remote compromise.
+
+Hello,
+
+Thank you for your investigation on the topic. Although this issue seems
+to be low-priority, it's good to let the maintainers know.
+
+I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+linux-ac25 site, are the maintainers of ax25 utilities.
+
 > 
-> ----- Original Message -----
-> > Hello,
-> >
-> > version 6.0.6 of Liferay correct 3 security vulnerabilities related
-> > to
-> > the processing of XSLT content and 2 XSS.
-> >
-> > The full 6.0.6 Changelog :
-> > http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&styleName=Html&projectId=10952
-> >
-> > Remote command execution :
-> > http://issues.liferay.com/browse/LPS-14726
-> 
-> Use CVE-2011-1501
-> 
-
-
-Due to an error on my part, CVE-2011-1501 is a dupe. Please use
-CVE-2011-1571 for the above issue instead.
-
-Steve, can MITRE mark CVE-2011-1501 as not used.
-
-Thanks.
+> -Dan
 
 -- 
-    JB
+        . 73! DE TA1AET
+
+Content of type "application/pgp-signature" skipped
