@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/2
-Message-ID: <1441798244.1020639.1315588834916.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 13:20:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/1
+Message-ID: <20110811015232.GH1360@redhat.com>
+Date: Wed, 10 Aug 2011 19:52:32 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Sebastian Krahmer <krahmer@...e.de>, Guido Berhoerster <gber@...nsuse.org>
-Subject: Re: Re: lightdm issues
+Subject: CVE-2011-2907: authentication bypass in torque
 Content-Type: text/plain; charset=utf-8
 
-Here you go:
+Just a heads up on a security flaw in torque that can makes it
+vulnerable to an authorization bypass.
 
-CVE-2011-3349 lightdm files written as root to user-controlled folders
+The gory details are available here:
 
-Thanks.
+http://www.clusterresources.com/pipermail/torqueusers/2011-August/013194.html
+https://bugzilla.redhat.com/show_bug.cgi?id=713090
+
+The long and short of it is that if you ship torque compiled with munge
+support, you are not vulnerable.
+
+This issue was assigned the name CVE-2011-2907.
 
 -- 
-    JB
-
------ Original Message -----
-> On ven., 2011-08-26 at 14:51 +1000, Robert Ancell wrote:
-> > Hi Sebastian,
-> >
-> > Thanks for doing this review, this issue is now being tracked in the
-> > LightDM issue tracker:
-> > https://bugs.launchpad.net/lightdm/+bug/834079
-> 
-> Could a CVE be assigned? Sebastian didn't really asked for it but as
-> it
-> can indeed be used to overwrite root-owned files (with non-controlled
-> content afaict) I guess it deserves ones?
-> 
-> Regards,
-> --
-> Yves-Alexis
+Vincent Danen / Red Hat Security Response Team 
