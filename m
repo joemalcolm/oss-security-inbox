@@ -1,20 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/47
-Message-ID: <20110404190319.GD14209@openwall.com>
-Date: Mon, 4 Apr 2011 23:03:19 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/8
+Message-ID: <20110811174948.GN1360@redhat.com>
+Date: Thu, 11 Aug 2011 11:49:49 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: improper permissions on ~/.qtnx/*.nxml
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 08:14:30AM +0200, Oden Eriksson wrote:
-> Hello, please subscibe me as well. I'm the Mandriva Linux security team 
-> manager and was on vendor-sec.
-> 
-> pub   4096R/EF5A2947 2009-12-17
->       Key fingerprint = CACF 1B05 DBE9 1B83 243A  AF73 C7B2 9DA0 EF5A 2947
-> uid                  Oden Eriksson <oeriksson@...driva.com>
+A Debian bug report noted that qtnx stores its configuration file
+insecurely.  If a non-default SSH key is used, the key is stored in this
+world-readable file (~/.qtnx/*.nxml) in a world-readable directory
+(~/.qtnx/).
 
-Added.
+Could a CVE be assigned to this please?
 
-Alexander
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=637439
+https://bugzilla.redhat.com/show_bug.cgi?id=730081
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
