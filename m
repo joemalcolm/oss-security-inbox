@@ -1,86 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/2
-Message-ID: <20064.47993.850551.693023@mariner.uk.xensource.com>
-Date: Fri, 2 Sep 2011 12:18:17 +0100
-From: Xen.org security team <security@....org>
-To: xen-devel@...ts.xensource.com
-CC: oss-security@...ts.openwall.com
-Subject: Xen Security Advisory 4 (CVE-2011-2901) - Xen 3.3 vaddr validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/4
+Message-ID: <20110811064811.GG32249@dannf.org>
+Date: Thu, 11 Aug 2011 00:48:11 -0600
+From: dann frazier <dannf@...nf.org>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com, Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
+Subject: Re: CVE request: perf: may parse user-controlled config file
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Aug 09, 2011 at 09:18:07AM -0400, Steve Grubb wrote:
+> On Sunday, August 07, 2011 01:34:38 PM dann frazier wrote:
+> > This was reported by Christian Ohm at:
+> >   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
+> > 
+> > The perf command, provided as part of the Linux kernel source, looks
+> > for and honors configuration settings in ./config. A local user could
+> > obtain elevated privileges by convincing a superuser to run the perf
+> > command from a directory the user controls.
+> 
+> And in recent kernels has an executable stack:
+> https://bugzilla.redhat.com/show_bug.cgi?id=704296
 
-             Xen Security Advisory CVE-2011-2901 / XSA-4
-                        revision no.2
-        Xen <= 3.3 DoS due to incorrect virtual address validation
-
-ISSUE DESCRIPTION
-=================
-
-The x86_64 __addr_ok() macro intends to ensure that the checked
-address is either in the positive half of the 48-bit virtual address
-space, or above the Xen-reserved area. However, the current shift
-count is off-by-one, allowing full access to the "negative half" too,
-via certain hypercalls which ignore virtual-address bits [63:48].
-Vulnerable hypercalls exist only in very old versions of the
-hypervisor.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems running a Xen 3.3 or earlier hypervisor with 64-bit PV
-guests with untrusted administrators are vulnerable.
-
-IMPACT
-======
-
-A malicious guest administrator on a vulnerable system is able to
-crash the host.
-
-There are no known further exploits but these have not been ruled out.
-
-RESOLUTION
-==========
-
-The attached patch resolves the issue.
-
-Alternatively, users may choose to upgrade to a more recent hypervisor
-
-PATCHES
-=======
-
-The following patch resolves this issue.
-
-Filename: fix-__addr_ok-limit.patch
-SHA1: f18bde8d276110451c608a16f577865aa1226b4f
-SHA256: 2da5aac72e1ac4849c34d38374ae456795905fd9512eef94b48fc31383c21636
-
-This patch should apply cleanly, and fix the problem, for all affected
-versions of Xen.
-
-It is harmless when applied to later hypervisors and will be included
-in the Xen unstable branch in due course.
-
-VERSION HISTORY
-===============
-
-Analysis following version 1 of this advisory (sent out to the
-predisclosure list during the embargo period) indicates that the
-actual DoS vulnerability only exists in very old hypervisors, Xen 3.3
-and earlier, contrary to previous reports.
-
-This advisory is no longer embargoed.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iQEcBAEBAgAGBQJOYLq2AAoJEIP+FMlX6CvZLegH/26/oJBkd/WM/yYhXkzlbnIP
-MxF6Fgy96Omu8poQTanD7g1vEcM0TOLY+Kk3GGsfj4aDdEJ5Nq4ZOW8ooI0VnVcD
-7VXQqFsXPxre+eZ6g+G0AsmzdsG45C3qujUTRfGKqzYwXqjWjt9nNsdIy1Mrz8/4
-zG1uLDkN0LXnBG2Te4q8ZckYwMq8gFXHHnH35RfQ5Besu6pvJmtK3rFXETdlP12A
-JjBh7t5jsCfzvYWFQehVp8mJupuftiOBPClmVh4vrvN9gYd5rzEgB4Q9Ioiqz2qT
-2bE1zegR8NeOKBOi9xriTU8F530OdFzeWAbo7D5gyEbYdc60eNwbadcgNGLbzMg=
-=09T8
------END PGP SIGNATURE-----
-
-View attachment "fix-__addr_ok-limit.patch" of type "text/plain" (1040 bytes)
+fyi, that bug appears to be locked
