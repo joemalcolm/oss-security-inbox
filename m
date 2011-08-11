@@ -1,21 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/3
-Message-Id: <201105311052.23603.thomas@suse.de>
-Date: Tue, 31 May 2011 10:52:23 +0200
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: openssl timing attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/5
+Message-Id: <201108111413.27056.thomas@osterried.de>
+Date: Thu, 11 Aug 2011 14:13:23 +0200
+From: Thomas Osterried <thomas@...erried.de>
+To: Eren Türkay <eren@...dus.org.tr>
+Cc: oss-security@...ts.openwall.com, Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-looks like this following has not CVE-ID assigned yet:
-http://www.kb.cert.org/vuls/id/536044
+Hello,
 
-Cheers
-Thomas
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > and ROSE traffic with the execution of an endpoint program (most
+> > commonly "node"), which is run under a specified user account.
+> > Because ax25d is missing a check on the return code for a setuid call
+> > responsible for dropping privileges to the specified user, it may be
+> > possible to cause setuid to fail, after which the chosen program will
+> > be executed with root privileges.  In other words, if you're in the
+> > business of handing out unprivileged shells over amateur radio (don't
+> > we all? :p ), this would allow for remote compromise.
+> 
+> Hello,
+> 
+> Thank you for your investigation on the topic. Although this issue seems
+> to be low-priority, it's good to let the maintainers know.
+> 
+> I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> linux-ac25 site, are the maintainers of ax25 utilities.
+
+thank you for your information.
+
+I know that code fragment, but I never imagined that if root calls setuid/setgid that this could fail, because root has by definition enough rights.
+
+We'l corect lines 617-619 asap.
+
+Kind regards,
+	- Thomas  dl9sau
