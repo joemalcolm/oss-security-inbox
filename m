@@ -1,63 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/1
-Message-ID: <20110929003808.GA13305@openwall.com>
-Date: Thu, 29 Sep 2011 04:38:08 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Tavis Ormandy <taviso@...xchg8b.com>
-Cc: oss-security@...ts.openwall.com, joerg@...bsd.org
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/6
+Message-ID: <20110811140533.GB1641@linux-mips.org>
+Date: Thu, 11 Aug 2011 15:05:33 +0100
+From: Ralf Baechle <ralf@...ux-mips.org>
+To: Thomas Osterried <thomas@...erried.de>
+Cc: Eren Türkay <eren@...dus.org.tr>, oss-security@...ts.openwall.com, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis,
+On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
 
-On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
-> I believe I wrote that patch,
+> Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > > and ROSE traffic with the execution of an endpoint program (most
+> > > commonly "node"), which is run under a specified user account.
+> > > Because ax25d is missing a check on the return code for a setuid call
+> > > responsible for dropping privileges to the specified user, it may be
+> > > possible to cause setuid to fail, after which the chosen program will
+> > > be executed with root privileges.  In other words, if you're in the
+> > > business of handing out unprivileged shells over amateur radio (don't
+> > > we all? :p ), this would allow for remote compromise.
+> > 
+> > Hello,
+> > 
+> > Thank you for your investigation on the topic. Although this issue seems
+> > to be low-priority, it's good to let the maintainers know.
+> > 
+> > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> > linux-ac25 site, are the maintainers of ax25 utilities.
+> 
+> thank you for your information.
+> 
+> I know that code fragment, but I never imagined that if root calls
+> setuid/setgid that this could fail, because root has by definition enough
+> rights.
 
-I believe you wrote a different patch, or two:
+Welcome to the new world where things are more complicated ...
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+These days setuid and similar syscalls need to allocate memory for the
+credentials of a process and memory allocations may fail.  A system could
+even be put under massive memory pressure with the intend to make this
+allocation fail.
 
-(these are in Attic because we've since updated to gzip 1.4).
+Also setuid requires the capability CAP_SETUID which a process - running
+as root or not may not have.
 
-As far as I can see, the sanity checks in
-gzip-1.3.5-google-owl-bound.diff do not overlap with those in FreeBSD's
-latest patch.  These are different sets of checks.
+Finally a the Linux security subsystem has its say and while it's odd to
+configure an LSM to reject the attempt to drop privileges it's entirely
+possible.
 
-> I found a lot of vulnerabilities in gzip a few
-> years ago, and added lots of additional sanity checks.
-
-Right.  Thank you!
-
-> FreeBSD went with my patch, which I think was much safer.
-
-Good.  But apparently FreeBSD did not patch even older issues at the
-same time - obviously, you wouldn't have spotted an issue that was
-already non-existent in upstream gzip at the time, so you didn't report
-it to them.
-
-As to who originally added the "maxbits < 12" check, when, and why
-exactly (and why this value), I still don't know.  In NetBSD, it is
-added with a commit made 6 weeks ago:
-
-http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/gzip/zuncompress.c?only_with_tag=MAIN
-
-The commit message is merely "Do proper input validation without
-penalizing performance", and it makes several other changes as well
-(FreeBSD in fact reused essentially the same patch).
-
-NetBSD's advisory is here:
-
-http://ftp.netbsd.org/pub/NetBSD/security/advisories/NetBSD-SA2011-007.txt.asc
-
-and it also (correctly) says that NetBSD's gzip was affected.
-
-Joerg - any comments?  For context:
-http://www.openwall.com/lists/oss-security/2011/09/28/5
-
-OpenBSD doesn't have gzip since 2003 - "Our compress, linked against
-libz, now does everything gzip does." (from Theo's commit message)
-
-Thanks,
-
-Alexander
+  Ralf
