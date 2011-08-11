@@ -1,21 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/5
-Message-ID: <20110424114525.GA32498@openwall.com>
-Date: Sun, 24 Apr 2011 15:45:25 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/9
+Message-ID: <20110811185513.GA1924@openwall.com>
+Date: Thu, 11 Aug 2011 22:55:13 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <thomas@...erried.de>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 24, 2011 at 03:30:29PM +0400, Solar Designer wrote:
-> Personally, I'd be happy to invite Apple, *BSD's, and Google security
-> folks to have a sit at the table.  Since Google doesn't release a Linux
-> distro for others to use, ...
+On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
+> These days setuid and similar syscalls need to allocate memory for the
+> credentials of a process and memory allocations may fail.  A system could
+> even be put under massive memory pressure with the intend to make this
+> allocation fail.
 
-Oh, I was too quick to say that.  Android, Chromium OS, and Chrome OS
-_might_ qualify once we lift the "was a vendor-sec member" requirement.
+Per the discussion on kernel-hardening, this specific allocation
+currently can't fail, but my opinion is that we need to harden the
+kernel code to kill the process if the allocation does fail (which might
+become possible in a future revision of the code).  I introduced such
+process-killing into Owl-current recently (although, as I said, this
+code path is believed to be never reached).
 
-These are very different from typical Linux distros, which is why it did
-not occur to me to consider them in this context.
+On Thu, Aug 11, 2011 at 10:21:11AM -0400, Jon Oberheide wrote:
+> The important vector is RLIMIT_NPROC.
+
+Right.  This one will be gone in Linux 3.1 (patch applied today, after a
+lengthy discussion and several revisions):
+
+http://www.openwall.com/lists/kernel-hardening/2011/08/11/3
+http://www.openwall.com/lists/kernel-hardening/2011/08/08/2
+
+This is also in Owl-current.
+
+Even though we're hardening the kernel in this respect, userspace
+programs should continue to check return value from setuid() anyway, as
+well as from syscalls in general.  And we should continue to treat
+missing setuid() return value checks as security bugs, even if they
+would normally not be triggerable on Linux 3.1+ (except in case the
+process is running with lowered capabilities).
 
 Alexander
