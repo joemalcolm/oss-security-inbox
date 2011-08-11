@@ -1,32 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/6
-Message-ID: <479180174.64225.1302695479209.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Apr 2011 07:51:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/6
+Message-ID: <20110811140533.GB1641@linux-mips.org>
+Date: Thu, 11 Aug 2011 15:05:33 +0100
+From: Ralf Baechle <ralf@...ux-mips.org>
+To: Thomas Osterried <thomas@...erried.de>
+Cc: Eren Türkay <eren@...dus.org.tr>, oss-security@...ts.openwall.com, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
+
+> Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > > and ROSE traffic with the execution of an endpoint program (most
+> > > commonly "node"), which is run under a specified user account.
+> > > Because ax25d is missing a check on the return code for a setuid call
+> > > responsible for dropping privileges to the specified user, it may be
+> > > possible to cause setuid to fail, after which the chosen program will
+> > > be executed with root privileges.  In other words, if you're in the
+> > > business of handing out unprivileged shells over amateur radio (don't
+> > > we all? :p ), this would allow for remote compromise.
+> > 
+> > Hello,
+> > 
+> > Thank you for your investigation on the topic. Although this issue seems
+> > to be low-priority, it's good to let the maintainers know.
+> > 
+> > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> > linux-ac25 site, are the maintainers of ax25 utilities.
 > 
-> Your initial e-mail indicated we would be part of this new group since we
-> where a vendor-sec member. Now there are new requirements we have to
-> meet. Is there a possibility of a probationary period so we can try to
-> comply to these new requirements and still be on the closed list?
+> thank you for your information.
 > 
+> I know that code fragment, but I never imagined that if root calls
+> setuid/setgid that this could fail, because root has by definition enough
+> rights.
 
-I don't want to start arguing technicalities, semantics, or politics. Here
-is my current view, I'm going to leave the final decision up to Solar
-Designer, I view this as Openwall's list.
+Welcome to the new world where things are more complicated ...
 
-We have rejected certain membership requests because they are not currently
-releasing security updates. I agree with this policy, I would say my
-initial mail was too vague. This instance is no different. It's clear that
-one of the membership requirements is now producing security updates.  If
-you can show you're doing this, that's grounds for membership in my
-opinion.
+These days setuid and similar syscalls need to allocate memory for the
+credentials of a process and memory allocations may fail.  A system could
+even be put under massive memory pressure with the intend to make this
+allocation fail.
 
-Thanks.
+Also setuid requires the capability CAP_SETUID which a process - running
+as root or not may not have.
 
--- 
-    JB
+Finally a the Linux security subsystem has its say and while it's odd to
+configure an LSM to reject the attempt to drop privileges it's entirely
+possible.
+
+  Ralf
