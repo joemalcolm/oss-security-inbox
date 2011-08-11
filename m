@@ -1,59 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/37
-Message-ID: <BANLkTi=DjKb69mUQ_=H7_Wcfye2MnCnmAQ@mail.gmail.com>
-Date: Sun, 3 Apr 2011 19:32:52 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/2
+Message-ID: <20110811052041.GB2043@mutt-is@awesome>
+Date: Thu, 11 Aug 2011 08:20:41 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Cc: Benji <me@...ji.com>
-Subject: Re: Closed list
+Cc: Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 3, 2011 at 6:58 PM, Benji <me@...ji.com> wrote:
-> This is pathetic. You've all just made your personal and 'work' email
-> addresses targets by having a ridiculous public 'signup' system, and
-> the fact you all feel the need to hide behind some sort of veil for
-> security issues.
->
->
+On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> package, allows administrators to associate incoming AX.25, NET/ROM,
+> and ROSE traffic with the execution of an endpoint program (most
+> commonly "node"), which is run under a specified user account.
+> Because ax25d is missing a check on the return code for a setuid call
+> responsible for dropping privileges to the specified user, it may be
+> possible to cause setuid to fail, after which the chosen program will
+> be executed with root privileges.  In other words, if you're in the
+> business of handing out unprivileged shells over amateur radio (don't
+> we all? :p ), this would allow for remote compromise.
 
-Do you really think anyone is gaining new information by discovering
-that, say, a member of the security team for a major distro will be on
-this mailing list?  Such information seems pretty obvious to me.
+Hello,
 
-I think this thread is useful in the interest of transparency, which
-was sorely lacking with the previous incarnation of vendor-sec.  And
-with regards to enforcing embargoes for security issues, I'd think you
-would have better people to complain to a security community that
-tends to only enforce embargoes for days or occasionally weeks, and
-only for more serious issues, as opposed to the months or years that
-issues may go unfixed in the commercial software world.  While
-delaying security fixes unnecessarily is harmful to users,
-coordinating fixing over a short timeframe such that major
-distributions can release updates simultaneously seems like common
-sense, not "hiding being some sort of veil".
+Thank you for your investigation on the topic. Although this issue seems
+to be low-priority, it's good to let the maintainers know.
 
--Dan
+I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+linux-ac25 site, are the maintainers of ax25 utilities.
 
->
-> On 4/3/11, Solar Designer <solar@...nwall.com> wrote:
->> Mike,
->>
->> On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
->>> pub    512R/205BBF7D 2001-12-30
->>>       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
->>>       C1
->>> uid                  Michael J. O'Connor <mjo@...o.mi.org>
->>
->> I've subscribed you with this key for now, but you really ought to
->> upgrade to a larger key, and I'd appreciate a statement on what Linux
->> distro you represent on the new list.
->>
->> All: my decision is based on some info known to me, but I'd prefer to
->> base it on Mike's posting to oss-security.  I am saying this to explain
->> that there's a reason why I subscribed Mike, whereas I would not
->> subscribe another "random" person posting the same kind of message from
->> a personal address. ;-)
->>
->> Alexander
->>
->
+> 
+> -Dan
+
+-- 
+        . 73! DE TA1AET
+
+Content of type "application/pgp-signature" skipped
