@@ -1,96 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/4
-Message-ID: <4ED698F1.1050907@redhat.com>
-Date: Wed, 30 Nov 2011 13:58:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, fx@...urity-lab.com
-Subject: Re: CVE id request: ffmpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/6
+Message-ID: <410971781.2044468.1313174909659.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Aug 2011 14:48:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Mambo CMS 4.6.x (4.6.5) | SQL Injection
 Content-Type: text/plain; charset=utf-8
 
-On 11/30/2011 05:38 AM, Nico Golde wrote:
-> Hello,
-> it seems the new ffmpeg issue described in 
-> http://www.usenix.org/events/woot11/tech/final_files/Yamaguchi.pdf has fallen 
-> through the cracks. Can someone assign a CVE id to the described issue in 
-> vmd_decode (see see page 6, Extrapolation. page 7 contains the vulnerable code)?
->
-> Please note that this is not CVE-2010-3429. The paper is about finding bugs 
-> similar to a given one and CVE-2010-3429 is the original bug, while the one in 
-> vmd_decode is similar.
->
-> Kind regards
-> Nico
->
-Looks that way. CC;ing FX so he's aware of this (not seeing the other
-authors since I don't know their emails offhand =).
+Please use CVE-2011-2917
 
-Quoting the paper (excuse the format mangling, but I want the text for
-reference):
-
-===========================
-The original vulnerability. In September 2010, the
-open source CERT reported a security vulnerability
-(CVE-2010-3429) in FFmpeg attributed to Cesar Bernardini, which allows
-an attacker to write data to arbitrary
-locations in memory relative to a pointer on the heap
-via crafted FLIC media frames [1]. The vulnerability
-is contained in the function flic decode frame 8BPP
-displayed in Figure 4, which is called for each frame of
-an 8 bit-per-pixel video.
-The critical write operation is performed on line 29,
-where the least signiﬁcant byte of the user-supplied
-integer line packets is written to a location rela-
-tive to the heap-based buffer pixels. It has been
-overlooked that the offset is dependent on y ptr and
-s->frame.linesize[0], both of which can be controlled by an attacker. In
-fact, due to the loop starting at
-line 18, it is possible to assign an arbitrary value to y ptr
-independent of the last value stored in line packets
-and no check is performed to verify whether the offset
-remains within the conﬁned regions of the buffer. It is
-thus possible for an attacker to write arbitrary bytes to
-arbitrary locations in memory.
-Extrapolation. For discovery of similar vulnerabilities, we apply our
-method to the code base of FFmpeg consisting of 6,778 functions. For
-PCA, we choose
-d = 200 and thereby project the embedded functions
-to a subspace capturing up to 200 unique API usage
-patterns. Table 1 lists the 20 most similar functions to
-flic decode frame 8BPP in this subspace. Note that
-we have found 20 to be a reasonable number of functions to consider in
-one batch and, as we will see shortly,
-sufﬁciently large for identiﬁcation of vulnerabilities.
-Inspecting the functions listed in Table 1, we ﬁrst spot
-a similar ﬂaw in flic decode frame 15 16BPP, where
-our method reports a similarity of 96%. This vulnerability has been
-discovered previously and is patched in
-the current versions of FFmpeg.
-
-************************************
-Surprisingly however,
-another similar bug in function vmd decode located in a
-different source ﬁle has not discovered by the developers.
-Our method reports a similarity of 72% for vmd decode
-leading us almost instantly to this unknown vulnerability.
-The vulnerability is shown in Figure 5 and 6.
-************************************
-
-Just like the original function, vmd decode reads the
-frame dimensions and offsets speciﬁed by the individual
-frame on line 8 to 11 and then calculates an offset into the
-pixel buffer based on these values on line 34. The function fails to
-validate whether the given offset references
-a location within the buffer. Therefore, as user-supplied
-data is copied to the speciﬁed location on line 43, an attacker can
-corrupt memory by choosing an offset outside
-of the buffer
-
-===========================
-
-
-Please use CVE-2011-4364 for this issue (the section enclosed in *'s).
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
 
+----- Original Message -----
+> Mambo CMS 4.6.x (4.6.5) | SQL Injection
+> 
+> 
+> 1. OVERVIEW
+> 
+> Mambo CMS 4.6.5 and lower versions are vulnerable to SQL Injection.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Mambo is a full-featured, award-winning content management system that
+> can
+> be used for everything from simple websites to complex corporate
+> applications. It is used all over the world to power government
+> portals,
+> corporate intranets and extranets, ecommerce sites, nonprofit
+> outreach,
+> schools, church, and community sites. Mambo's "power in simplicity"
+> also
+> makes it the CMS of choice for many small businesses and personal
+> sites.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The "zorder" parameter was not properly sanitized upon submission to
+> the
+> administrator/index2.php url, which allows attacker to conduct SQL
+> Injection attack. This could an attacker to inject or manipulate SQL
+> queries
+> in the back-end database, allowing for the manipulation or disclosure
+> of
+> arbitrary data.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> Tested on Mambo CMS 4.6.5
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> http://localhost/mambo/administrator/index2.php?limit=10&order[]=11&boxchecked=0&toggle=on&search=sqli&task=&limitstart=0&cid[]=on&zorder=-1OR
+> (SELECT 9999 FROM(SELECT
+> COUNT(*),CONCAT(CHAR(58,98,112,101,58),(SELECT
+> (CASE WHEN (9999=9999) THEN 1 ELSE 0
+> END)),CHAR(58,110,100,107,58),FLOOR(RAND(0)*2))x FROM
+> INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY
+> x)a)&filter_authorid=62&hidemainmenu=0&option=com_typedcontent
+> 
+> 
+> 6. SOLUTION
+> 
+> The vendor seems to discontinue the development. It is recommended to
+> use
+> another CMS in active development.
+> 
+> 
+> 7. VENDOR
+> 
+> Mambo CMS Development Team
+> http://mambo-developer.org
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-11-31: notified vendor through bug tracker
+> 2011-08-12: no patched version released up to date
+> 2011-08-12: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[mambo4.6_x]_sql_injection
+> Mambo CMS:
+> http://mambo-code.org/gf/download/frsrelease/388/791/MamboV4.6.5.zip
+> 
+> 
+> #yehg [2011-08-12]
