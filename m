@@ -1,86 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/19
-Message-ID: <4D7106A7.907@redhat.com>
-Date: Fri, 04 Mar 2011 16:35:03 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/9
+Message-ID: <20110812212750.GP4930@lupin.home.powdarrmonkey.net>
+Date: Fri, 12 Aug 2011 22:27:50 +0100
+From: Jonathan Wiltshire <jmw@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: team@...urity.debian.org, zigo@...ian.org
+Subject: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-Hi Solar,
+I should have added: please keep me in CC, I am not subscribed to the list
+(although I do receive mail at the team@ address).
 
-   thank you for your reaction.
+Thanks,
 
-Solar Designer wrote:
-> On Fri, Mar 04, 2011 at 03:08:31PM +0100, Jan Lieskovsky wrote:
->>   we have been contacted by Stefan Fritsch of Debian Security Team
->> about presence of nine security flaws in the logrotate utility
->> (the list is provided below).
-> 
-> I've just skimmed over the list, and I only see one issue that I'd call
-> a vulnerability in logrotate, issue #8.  And we need more info on #5.
+-- 
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
 
-For issue #5:
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
 
-If the mail configuration directive is used, an attacker can trick
-logrotate into sending arbitrary files by mail, by creating
-appropriate hard or soft links.
-
-Hope that's enough, let me know if not.
-
-For the second part:
-
-> 
-> The rest, as described, appear to rely on sysadmin error and to assume
-> security properties that logrotate never advertised it had.  Specifically,
-> logrotate was never declared to be safe to use on untrusted directories,
-> and it was an error for a sysadmin to make such an assumption.
-
-We don't mind documenting of this behavior in appropriate places.
-
-Wouldn't like to condescend further into particulars, what is and what
-is not a security issue (as this is beyond this post), but according
-to our opinion even non-documented incorrect behavior, allowing
-malicious actions to be performed on the system, should be considered
-a security flaw (regardless if it's advertised or not). Because by applying
-your above approach, most of the open source project could just say
-'this software is not intended to be run like that.'
-
-Not trying to argue, just saying the disclination like the above
-doesn't help anyone.
-
-Either the software has the issues, and they should be fixed,
-or it has the issues, and they can't be fixed. Then the software
-should not be used and an alternative one should be found.
-
-This is not you would shoot yourself into the foot by accident
-(by performing some action). This is about local users', aware
-of the deficiencies, ability to conduct such actions on the system,
-so they would reach some higher privilege, damage or different
-kind of benefit for them.
-
-Hope this helps.
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-> 
-> I don't mind logrotate being enhanced/hardened in this respect, but to
-> call these vulnerabilities sounds like a stretch.  Also, even if
-> logrotate is hardened, it should not be declared to be safe to use on
-> untrusted directories.  It'd be better to explicitly state that it is
-> not, to avoid this sort of confusion.
-> 
->> 5) Issue #5: logrotate: Information disclosure by performing email
->>              notifications
-> ...
->> 8) Issue #8: logrotate: TOCTOU race condition by creation of new files 
->> (between
->>              opening the file and moment, final permissions have been 
->>              applied)
->>              [information disclosure]
-> 
-> Alexander
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
