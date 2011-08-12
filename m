@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/18
-Message-ID: <4E1CB444.6000303@redhat.com>
-Date: Tue, 12 Jul 2011 16:53:24 -0400
-From: William Cohen <wcohen@...hat.com>
-To: Jamie Strandboge <jamie@...onical.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/5
+Message-ID: <338770148.2044325.1313174583926.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Aug 2011 14:43:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: improper permissions on ~/.qtnx/*.nxml
 Content-Type: text/plain; charset=utf-8
 
-On 07/07/2011 11:56 AM, Jamie Strandboge wrote:
-> On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
->> The patches mentioned in the previous email.
->>
->> -Will
+
+
+----- Original Message -----
+> A Debian bug report noted that qtnx stores its configuration file
+> insecurely. If a non-default SSH key is used, the key is stored in
+> this
+> world-readable file (~/.qtnx/*.nxml) in a world-readable directory
+> (~/.qtnx/).
 > 
-> Thanks for these patches. I was reviewing them and noticed that
-> 0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
-> 'error_if_not_basename $arg $val' for --save added in
-> 0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
-> if you apply all 4 patches, method #2 from the Debian bug[1] is no
-> longer fixed. Attached is a patch to correct this (to be applied after
-> the other 4).
+> Could a CVE be assigned to this please?
 > 
-> [1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=637439
+> https://bugzilla.redhat.com/show_bug.cgi?id=730081
 > 
 
-Hi Jamie,
+Please use CVE-2011-2916
 
-Can you check whether this problem still exists in upstream? This patch does not apply cleanly to upstream. The upstream opcontrol has:
+Thanks.
 
-
-			--save)
-				error_if_not_valid_savename "$arg" "$val"
-				DUMP=yes
-				SAVE_SESSION=yes
-				SAVE_NAME=$val
-				EXCLUSIVE_ARGC=`expr $EXCLUSIVE_ARGC + 1`
-				EXCLUSIVE_ARGV="$arg"
-				;;
-
-And:
-
-# check value is a base filename
-error_if_not_valid_savename()
-{
-	error_if_empty "$1" "$2"
-	bname=`basename "$2"`
-	if test "$2" !=  "$bname"; then
-		echo "Argument for $1, $2, cannot change directory." >&2
-		exit 1
-	fi
-	case "$2" in
-		# The following catches anything that is not
-		# 0-9, a-z, A-Z, an '-', ':', ',', '.', or '/'
-		*[!-[:alnum:]_:,./]*) 
-			echo "Argument for $1, $2, not allow to have special ch
-aracters" >&2
-			exit 1;;
-	esac
-}
-
+-- 
+    JB
