@@ -1,88 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/7
-Message-ID: <AANLkTi=r7_eqdzMwknS8VSMStj+aP7b38NR1ve+7wAzA@mail.gmail.com>
-Date: Fri, 25 Feb 2011 13:12:28 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/4
+Message-ID: <1155877538.2043879.1313173472436.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Aug 2011 14:24:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: PHPShop 0.8.1 <= | Cross Site Scripting Vulnerability
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+> 
+> 1) An integer overflow error exists within the "CSoundFile::ReadWav()"
+> function (src/load_wav.cpp) when processing certain WAV files. This can
+> be exploited to cause a heap-based buffer overflow by tricking a user
+> into opening a specially crafted WAV file.
 
-The PHPShop 0.8.1 and lower versions are currently vulnerable to Cross
-Site Scripting.
-
-
-2. BACKGROUND
-
-PHPShop is a PHP-powered shopping cart application. It is released
-under the GNU General Public License.
-The primary purpose of PHPShop is to provide a simple shopping cart
-solution that is easy to customize to suit any purpose. PHPShop has
-less features that many other shopping cart applications, but is
-generally easier to customize.
+CVE-2011-2911
 
 
-3. VULNERABILITY DESCRIPTION
+> 
+> 2) Boundary errors within the "CSoundFile::ReadS3M()" function
+> (src/load_s3m.cpp) when processing S3M files can be exploited to cause
+> stack-based buffer overflows by tricking a user into opening a specially
+> crafted S3M file.
 
-The Query String was not properly sanitized upon submission to the
-/index.php url, which allows attacker to conduct Cross Site Scripting
-attack.
-This may allow an attacker to create a specially crafted URL that
-would execute arbitrary script code in a victim's browser.
-
-
-4. VERSIONS AFFECTED
-
-PHP 0.8.1 <=
+CVE-2011-2912
 
 
-5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> 3) An off-by-one error within the "CSoundFile::ReadAMS()" function
+> (src/load_ams.cpp) can be exploited to cause a stack corruption by
+> tricking a user into opening a specially crafted AMS file.
 
-http://localhost/phpshop0_8_1/?page=store/XSS&%26%26%22%3E%3Cscript%3Ealert%28/xss/%29%3C/script%3E%3d1
-
-
-6. SOLUTION
-
-The vendor has discontinued this product.
-It is recommended that an alternate software package be used in its place.
+CVE-2011-2913
 
 
-7. VENDOR
+> 
+> 4) An off-by-one error within the "CSoundFile::ReadDSM()" function
+> (src/load_dms.cpp) can be exploited to cause a memory corruption by
+> tricking a user into opening a specially crafted DSM file.
 
-PHPShop Development Team
-http://phpshop.org
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
+CVE-2011-2914
 
 
-9. DISCLOSURE TIME-LINE
+> 
+> 5) An off-by-one error within the "CSoundFile::ReadAMS2()" function
+> (src/load_ams.cpp) can be exploited to cause a memory corruption by
+> tricking a user into opening a specially crafted AMS file.
 
-2011-02-25: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[phpshop_0.8.1]_cross_site_scripting
-Project Home: http://code.google.com/p/phpshop/,
-http://sourceforge.net/projects/phpshop/
-PHPShop Download Stats:
-http://sourceforge.net/projects/phpshop/files/phpshop/0.8.1/stats/timeline?dates=2010-01-01+to+2010-01-01
-XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
+CVE-2011-2915
 
 
-#yehg [2011-02-25]
+I could have grouped the off-by-one flaws together, but I decided not to
+since you mention that old gstreamer-plugins contains embedded copies,
+which I suspect is also going to mean those will affect different things in
+different ways.
 
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+Thanks.
+
+-- 
+    JB
