@@ -1,18 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/2
-Message-ID: <230448c4-11a5-4384-b901-ce3a84a03a5a@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Thu, 01 Dec 2011 22:54:23 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/2
+Message-ID: <4E44BF8F.1070007@redhat.com>
+Date: Fri, 12 Aug 2011 11:22:15 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: DOM based XSS in the JBoss AS 7 administration console - CVE-2011-3606
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-3606 has been assigned to a DOM based XSS in the JBoss AS 7 administration console. This issue was embargoed until today, with a fix now available in the latest release of AS 7. Details are in Red Hat Bugzilla:
+On 08/04/2011 11:23 PM, Josh Bressers wrote:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3606
+> My impression is that the code is the same, which means they will share the
+> same ID. If the code is totally different, we will want to split. Time, you
+> know best, is the code in question the same, or is it different?
+> 
 
-Thanks to David Black for reporting this flaw.
+I agree, it does really look like the same code-base to me.
+
+
 
 -- 
-David Jorm / Red Hat Security Response Team
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
