@@ -1,78 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/12
-Message-Id: <201107201023.05570.aboudreault@mapgears.com>
-Date: Wed, 20 Jul 2011 10:23:05 -0400
-From: Alan Boudreault <aboudreault@...gears.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/5
+Message-ID: <338770148.2044325.1313174583926.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Aug 2011 14:43:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Even Rouault <even.rouault@...es-paris.org>, "Steven M. Christey" <coley@...us.mitre.org>, Pavel  Lisý <pavel.lisy@...il.com>
-Subject: Re: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: improper permissions on ~/.qtnx/*.nxml
 Content-Type: text/plain; charset=utf-8
 
-Looks like the issue is already on oss-security? Who created it ?
 
-Alan
 
-On July 19, 2011 12:28:53 pm Jan Lieskovsky wrote:
-> Alan, Even, thanks for your replies.
+----- Original Message -----
+> A Debian bug report noted that qtnx stores its configuration file
+> insecurely. If a non-default SSH key is used, the key is stored in
+> this
+> world-readable file (~/.qtnx/*.nxml) in a world-readable directory
+> (~/.qtnx/).
 > 
-> Just to clarify this one a bit yet. Two CVE identifiers (one for the
-> multiple SQL injection flaws, the other for the stack based buffer
-> overflow issue) seem to be necessary in this case (due different
-> versions affected):
+> Could a CVE be assigned to this please?
 > 
-> [1] http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=637439
+> https://bugzilla.redhat.com/show_bug.cgi?id=730081
 > 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> On 07/19/2011 05:32 PM, Alan Boudreault wrote:
-> > I got new from the debian security guy yesterday. I should get the CVE id
-> > soon.
-> > 
-> > Thanks,
-> > Alan
-> > 
-> > On July 19, 2011 11:28:29 am Even Rouault wrote:
-> >> Selon Jan Lieskovsky<jlieskov@...hat.com>:
-> >> 
-> >> Jan,
-> >> 
-> >> I believe Alan Boudreault (MapServer team member that I've added to the
-> >> CC list) has already asked the Debian security team to request for a
-> >> CVE number, but without any result for now. Maybe he can confirm.
-> >> 
-> >> Best regards,
-> >> 
-> >> Even
-> >> 
-> >>> Hello Josh, Steve, vendors,
-> >>> 
-> >>>     the following has been brought to our attention:
-> >>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
-> >>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
-> >>> 
-> >>> More from [2]:
-> >>> 
-> >>> This ticket is to track fixes to prevent SQL injections through OGC
-> >>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
-> >>> injection in WMS time support.
-> >>> 
-> >>> Your system may be vulnerable if it has MapServer with OGC protocols
-> >>> enabled, with layers connecting to an SQL RDBMS backend, either
-> >>> natively or via OGR.
-> >>> 
-> >>> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
-> >>> All users are ** strongly encouraged ** to upgrade to one of the latest
-> >>> releases with the fixes.
-> >>> 
-> >>> Could you allocate a CVE id for this?
-> >>> 
-> >>> Thank you&&  Regards, Jan.
-> >>> --
-> >>> Jan iankko Lieskovsky / Red Hat Security Response Team
+
+Please use CVE-2011-2916
+
+Thanks.
 
 -- 
-Alan Boudreault
-Mapgears
-http://www.mapgears.com
+    JB
