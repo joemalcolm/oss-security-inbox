@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/5
-Message-ID: <20110629131030.GA30811@albatros>
-Date: Wed, 29 Jun 2011 17:10:30 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/9
+Message-ID: <20110812212750.GP4930@lupin.home.powdarrmonkey.net>
+Date: Fri, 12 Aug 2011 22:27:50 +0100
+From: Jonathan Wiltshire <jmw@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: team@...urity.debian.org, zigo@...ian.org
+Subject: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 29, 2011 at 15:11 +0400, Vasiliy Kulikov wrote:
-> 2) as you say here:
-> 
-> READ = CONST + SENSITIVE + CONTROLLABLE
-> 
-> If CONST is known and CONTROLLABLE is controlled by an attacker then he
-> may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
+I should have added: please keep me in CC, I am not subscribed to the list
+(although I do receive mail at the team@ address).
 
-(X+1) kb - 1 and (X+1) kb of course, they are rounded to X and X+1 kbs,
-respectively.
-
-> respectively, revealing len(SENSITIVE).
+Thanks,
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
+
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
