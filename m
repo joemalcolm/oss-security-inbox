@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/27/4
-Message-ID: <BANLkTikfpkfzan2e7+v8nbGygyVBi+qngg@mail.gmail.com>
-Date: Wed, 27 Apr 2011 14:19:43 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com,  Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/7
+Message-ID: <20110812213719.53839a8d@redhat.com>
+Date: Fri, 12 Aug 2011 21:37:19 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
->
-> Steve, it seems CVE-2011-1676 should get marked as rejected or disputed.
->
+On Mon, 25 Jul 2011 08:57:10 +0200 Sebastian Krahmer wrote:
 
-I currently only have CVE-2011-1089, which seems to be for glibc not
-indicating failure of addmntent() calls.  Were additional CVEs
-assigned to some of the individual issues?  If so, would you mind
-posting them here to avoid duplicate requests?
+> On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
+> > I presume this only needs one ID
+> > 
+> > Use CVE-2011-2709
+> 
+> You probably speak about:
+> 
+> http://www.suse.de/~krahmer/libs-vs-fscaps/
 
-Thanks,
-Dan
+I believe Josh was referring to libgssapi and libgssglue mentioned in
+the subject.  It's the same code in both, libgssglue is libgssapi
+renamed.
 
-> Thanks!
->
-> --
-> Tomas Hoger / Red Hat Security Response Team
->
+Would you mind sharing the patch you used in SLE packages?  It does not
+seem to have been fixed in OpenSUSE yet.  Thanks!
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
