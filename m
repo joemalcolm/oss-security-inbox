@@ -1,46 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/16
-Message-ID: <1373857797.1472712.1311190971471.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 15:42:51 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, oss-security@...ts.openwall.com, coley <coley@...re.org>
-Subject: Re: CVE Request: ruby PRNG fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/10
+Message-ID: <20110812214302.GA28654@suse.de>
+Date: Fri, 12 Aug 2011 23:43:03 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-Sorry for the confusion.
+On Fri, Aug 12, 2011 at 09:37:19PM +0200, Tomas Hoger wrote:
+> On Mon, 25 Jul 2011 08:57:10 +0200 Sebastian Krahmer wrote:
+> 
+> > On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
+> > > I presume this only needs one ID
+> > > 
+> > > Use CVE-2011-2709
+> > 
+> > You probably speak about:
+> > 
+> > http://www.suse.de/~krahmer/libs-vs-fscaps/
+> 
+> I believe Josh was referring to libgssapi and libgssglue mentioned in
+> the subject.  It's the same code in both, libgssglue is libgssapi
+> renamed.
+> 
+> Would you mind sharing the patch you used in SLE packages?  It does not
+> seem to have been fixed in OpenSUSE yet.  Thanks!
 
------ Original Message -----
-> On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
-> 
-> > http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-> > http://redmine.ruby-lang.org/issues/4579
-> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> > http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-> 
-> Looking at the above patches, there seems to be two issues here,
-> perhaps
-> it needs two CVE ids to be assigned?
-> 
-> 1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> 
-> This one pertains to rand returning same values in forked processes.
-> http://redmine.ruby-lang.org/issues/show/4338
-> This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
-> 1.8.6-p399.
+I just did a basic uid check.
 
-Let's use CVE-2011-2686 for this one.
-
-> 
-> 2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-> 
-> This is an issue in the securerandom.rb module.
-> http://redmine.ruby-lang.org/issues/4579
-> 
-
-Use CVE-2011-2705 for this.
-
-Thanks.
-
--- 
-    JB
+Index: libgssglue-0.1/src/g_initialize.c
+===================================================================
+--- libgssglue-0.1.orig/src/g_initialize.c
++++ libgssglue-0.1/src/g_initialize.c
+@@ -34,6 +34,8 @@
+ #include <ctype.h>
+ #include <errno.h>
+ #include <syslog.h>
++#include <unistd.h>
++#include <sys/types.h>
+ 
+ #ifdef USE_SOLARIS_SHARED_LIBRARIES
+ #include <dlfcn.h>
+@@ -195,7 +197,8 @@ static void solaris_initialize ()
+     void *dl;
+     gss_mechanism (*sym)(void), mech;
+ 
+-    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
++    if ((getuid() != geteuid()) ||
++        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
+ 	filename = MECH_CONF;
+ 
+     if ((conffile = fopen(filename, "r")) == NULL) {
+@@ -270,7 +273,8 @@ static void linux_initialize ()
+     void *dl;
+     gss_mechanism (*sym)(void), mech;
+ 
+-    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
++    if ((getuid() != geteuid()) ||
++        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
+ 	filename = MECH_CONF;
+ 
+     if ((conffile = fopen(filename, "r")) == NULL) {
