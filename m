@@ -1,28 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/4
-Message-ID: <20110830181140.GE26298@redhat.com>
-Date: Tue, 30 Aug 2011 12:11:46 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/10
+Message-ID: <20110812214302.GA28654@suse.de>
+Date: Fri, 12 Aug 2011 23:43:03 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request(?): squid: buffer overflow in Gopher reply parser
+Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
 Content-Type: text/plain; charset=utf-8
 
-* [2011-08-29 13:48:17 +0200] Matthias Weckbecker wrote:
+On Fri, Aug 12, 2011 at 09:37:19PM +0200, Tomas Hoger wrote:
+> On Mon, 25 Jul 2011 08:57:10 +0200 Sebastian Krahmer wrote:
+> 
+> > On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
+> > > I presume this only needs one ID
+> > > 
+> > > Use CVE-2011-2709
+> > 
+> > You probably speak about:
+> > 
+> > http://www.suse.de/~krahmer/libs-vs-fscaps/
+> 
+> I believe Josh was referring to libgssapi and libgssglue mentioned in
+> the subject.  It's the same code in both, libgssglue is libgssapi
+> renamed.
+> 
+> Would you mind sharing the patch you used in SLE packages?  It does not
+> seem to have been fixed in OpenSUSE yet.  Thanks!
 
->Hi,
->
->squid 3.x seems to have re-introduced a security issue found by Ben Hawkes of
->the Google Security Team in 2005,
->
->  2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
->  2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt (CVE-2005-0094)
->
->Will there be a new CVE required? Not quite sure how such "special" cases are
->handled usually.
+I just did a basic uid check.
 
-Does anyone know when this was re-introduced?  The upstream advisory
-indicates all 3.0 releases are affected, but doesn't indicate if 2.x
-(after 2.5.STABLE7) was at any point vulnerable.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Index: libgssglue-0.1/src/g_initialize.c
+===================================================================
+--- libgssglue-0.1.orig/src/g_initialize.c
++++ libgssglue-0.1/src/g_initialize.c
+@@ -34,6 +34,8 @@
+ #include <ctype.h>
+ #include <errno.h>
+ #include <syslog.h>
++#include <unistd.h>
++#include <sys/types.h>
+ 
+ #ifdef USE_SOLARIS_SHARED_LIBRARIES
+ #include <dlfcn.h>
+@@ -195,7 +197,8 @@ static void solaris_initialize ()
+     void *dl;
+     gss_mechanism (*sym)(void), mech;
+ 
+-    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
++    if ((getuid() != geteuid()) ||
++        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
+ 	filename = MECH_CONF;
+ 
+     if ((conffile = fopen(filename, "r")) == NULL) {
+@@ -270,7 +273,8 @@ static void linux_initialize ()
+     void *dl;
+     gss_mechanism (*sym)(void), mech;
+ 
+-    if ((filename = getenv("GSSAPI_MECH_CONF")) == NULL)
++    if ((getuid() != geteuid()) ||
++        (filename = getenv("GSSAPI_MECH_CONF")) == NULL)
+ 	filename = MECH_CONF;
+ 
+     if ((conffile = fopen(filename, "r")) == NULL) {
