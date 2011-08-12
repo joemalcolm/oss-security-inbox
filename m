@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/9
-Message-ID: <4D8859F9.3090605@xiscosoft.es>
-Date: Tue, 22 Mar 2011 09:12:41 +0100
-From: klondike <klondike@...cosoft.es>
-To: Eugene Teo <eugene@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Security advisory: local DOS attack affecting non updated PaX patched kernels.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/11
+Message-ID: <1313187126.25152.3.camel@scapa>
+Date: Sat, 13 Aug 2011 00:12:06 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
+Cc: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-El 22/03/11 08:17, Eugene Teo escribió:
-> Nice find Francisco.
->
-> Is this only affecting the PaX patchset?
-Seems so since the changes were added by The PaX Team (according to them).
-> Do you have the patches that addressed the issue?
-The last version patches addressed the issue, we coordinated so the
-advisory was out once patches were published:
-http://www.grsecurity.net/~paxguy1/
-Look at the ones for 2.6.38, 2.6.37 and 2.6.32
-> And will you be able to share with me the poc to reproduce this issue?
-You have another private mail.
+On ven., 2011-08-12 at 13:31 +0800, Eugene Teo wrote:
+> >> Btw, can you please mail me a copy of the /boot/config of the most
+> >> recent Debian kernel for my reference?
+> > 
+> > Please let me know if you need anything in addition to the files
+> > Yves-Alexis sent you.
+> 
+> I didn't receive his mail.
 
+For some reason Evolution “reply-all” stripped you from the recipients
+(maybe because of the reply-to header). I've bounced you the mail I sent
+before (it didn't reach the list either because it was too large, sorry
+for that).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (263 bytes)
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
