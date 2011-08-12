@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/15
-Message-ID: <20110401183502.GA57923@dojo.mi.org>
-Date: Fri, 1 Apr 2011 14:35:02 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/3
+Message-ID: <604670952.2041759.1313172438084.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 12 Aug 2011 14:07:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: csmall@...ian.org, coley <coley@...re.org>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-:Hello everyone,
-:
-:This topic has lost focus lately. Rather than let it slip away, I think we
-:should go ahead with the simplest solution right now, we can always do
-:something different at a future date.
-:
-:Openwall has graciously volunteered to run a new list, and they currently
-:have some infrastructure in place to do this. The new list can start up
-:right away. In this instance, I fear perfect is the enemy of the good. I'd
-:rather see something functional in place than nothing.
-:
-:Here is the plan for initial membership (this is also approved by
-:Openwall).
-:
-:Initial members will have had to be a vendor-sec member (no exploders this
-:time around). You must reply to this thread, in public (on oss-security).
-:We want this to be very public, we have nothing to hide. You must have a
-:public gpg key ID included in your reply. The new list will gpg encrypt all
-:mail (it does accept plaintext messages though).
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
-mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
-b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
-D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
-8LMz3gjrgSXMOxuep/Ui
-=elKt
------END PGP PUBLIC KEY BLOCK-----
 
 
-Content of type "application/pgp-signature" skipped
+----- Original Message -----
+> The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> package, allows administrators to associate incoming AX.25, NET/ROM,
+> and ROSE traffic with the execution of an endpoint program (most
+> commonly "node"), which is run under a specified user account.
+> Because ax25d is missing a check on the return code for a setuid call
+> responsible for dropping privileges to the specified user, it may be
+> possible to cause setuid to fail, after which the chosen program will
+> be executed with root privileges. In other words, if you're in the
+> business of handing out unprivileged shells over amateur radio (don't
+> we all? :p ), this would allow for remote compromise.
+> 
+
+Please use CVE-2011-2910
+
+Thanks.
+
+-- 
+    JB
