@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/4
-Message-ID: <4EDF93A8.2080105@redhat.com>
-Date: Wed, 07 Dec 2011 09:26:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/2
+Message-ID: <4E44BF8F.1070007@redhat.com>
+Date: Fri, 12 Aug 2011 11:22:15 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Disputing CVE-2011-4122
+Subject: Re: CVE Request: foomatic-gui
 Content-Type: text/plain; charset=utf-8
 
-On 12/07/2011 07:26 AM, Jeff Mitchell wrote:
-> Hello,
->
-> I've been asked by the kcheckpass maintainer to lodge a dispute of
-> CVE-2011-4122.
->
-> As explained in the blog entry linked from the CVE[1], the problem is
-> that neither kcheckpass nor OpenPAM validate the 'service_name' input
-> argument of pam_start(). This hole can be used to make PAM load
-> arbitrary shared libraries, which can be used to execute arbitrary code
-> as root, as kcheckpass is setuid root.
->
-> One could assume that kcheckpass should do the validation. However, the
-> PAM documentation makes no mention of what a service name is supposed to
-> look like, and consequently it must be treated as opaque by the
-> application code. Therefore all validation must be expected to be done
-> by the library, and failure to do so must be seen as a bug in the
-> library exclusively.
+On 08/04/2011 11:23 PM, Josh Bressers wrote:
 
-Can you provide a link to the documentation?
-> As a result, it is correct to list kcheckpass as an affected
-> application, but not as the origin of the vulnerability. The linked
-> advisories from ISS and Secunia are clearer about that.
->
-> Thanks,
-> Jeff
->
-> [1]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4122
->
-This is a good point/question. Steve?
+> My impression is that the code is the same, which means they will share the
+> same ID. If the code is totally different, we will want to split. Time, you
+> know best, is the code in question the same, or is it different?
+> 
+
+I agree, it does really look like the same code-base to me.
+
+
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
