@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/1
-Message-ID: <AANLkTinofL+U6LepV6kahhUCdJZ+Df9fpvShY4zu5YZ8@mail.gmail.com>
-Date: Mon, 10 Jan 2011 17:42:43 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/13/2
+Message-ID: <4E46B53E.5050201@debian.org>
+Date: Sat, 13 Aug 2011 12:32:46 -0500
+From: John Lightsey <lightsey@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: two vulnerabilities in ktsuss 1.4 and earlier
 Content-Type: text/plain; charset=utf-8
 
-> Upstream changes have introduced a flaw by disabling all authentication when
-> the password was cleared with upstream commit [1].
->
-> [1]
-> http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Confirmed vulnerable in qemu-kvm source code 0.10.6, fixed in 0.11.0
+I reported these bugs privately to the Debian security team and the
+upstream author some time ago, but it does not appear that any CVE was
+created as a result.
 
-http://sourceforge.net/projects/kvm/files/qemu-kvm/
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626178
 
--- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+The 1.3 and 1.4 versions of ktsuss which include a setuid ktsuss binary
+suffered from two separate security bugs which can be used for local
+root exploits.
+
+The "1.314" version which does not include a setuid ktsuss binary and
+uses "su" for privilege escalation does not suffer from these problems.
+
+
+1) When the target UID is the same as the real UID ktsuss skips
+authentication. Under these circumstances, ktsuss fails to change the
+effective UID back to the real UID. (line 118 of src/ktsuss.c in version
+1.3.)
+
+$ ktsuss -u `whoami` whoami
+root
+
+
+2) The setuid ktsuss binary executes a GTK interface subprocess to
+prompt for username and password. This GTK interface runs as root and
+allows arbitrary code execution via the GTK_MODULES environmental variable.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJORrU3AAoJEORPgBbTYw+J7gkP/361/sJwrIi/k/ETubWfNffe
+HtEoYtJJ6WuCtsA/lcHqSHQ8zdCk18NISEuGEu5i239Tw3OxVQjFnu5Hqit3xIZW
+5B2enCnm10mjN0YtnjS2ihG4nj6heWQeCGDyM3odTrMGWVk6bx0T5DwoP7IW4ZtG
+nR2ZNrgOM0at5SIUqqxGJyA25EHeDqdKj9k4RgBI+247tCRmcG0dYrxK7izf/nlg
+/42++1hQ/iGugtb+QSGrWqsSkutdJZs6zLmOwEC9SMRLC/SEORF89wM7X7ntPQ0m
+EoJ9TaJikwaowQqsC4ey+VlPbhJYKcbD2GiS0ir+6RO38BF4AiYnI0MMwBt845D1
+TJXCVb1PbWM8LObT4HnoJ42JpFwtZ7YnnHSyB9AJ/f5K52svRLGg1Fa32/EHw5Ju
+8qp7/S2a0qVJLWXwqBBa1d5hVjkb/iItNU53a1ymzlAu+1N6mPhwLSRRRIP97Xe2
+apb1TRV9esH8l2AsK9MEkbp7poihkf+8IwGMpy+1jqsJKuJIAKP7t8MM0VLADCH6
+EozEskqFr5ZhN7FBpqWYWx9O78gskQmLdx3zju62VJT3QZRgy9y8+AulxAMhDrRf
+/mAobPgxRrTcrELM7+Z7H1R2g1Zh1h63ksF7OnSUcdFDZOVOr2ZwrdoZy+GD9f8S
+RN/8Ra1lMG/9l2Jm5Vv+
+=G44E
+-----END PGP SIGNATURE-----
