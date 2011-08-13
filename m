@@ -1,38 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/2
-Message-ID: <20110424104339.GB32078@openwall.com>
-Date: Sun, 24 Apr 2011 14:43:39 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/13/1
+Message-ID: <4E45D873.2000901@goirand.fr>
+Date: Sat, 13 Aug 2011 09:50:43 +0800
+From: Thomas Goirand <thomas@...rand.fr>
+To: Jonathan Wiltshire <jmw@...ian.org>
+CC: oss-security@...ts.openwall.com,  Debian Security Team <team@...urity.debian.org>
+Subject: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 13, 2011 at 11:11:07AM -0600, Vincent Danen wrote:
-> Please add me to the new list.
+We are discussing the issues with Philippe Kern. While there are issues
+that were discovered, I am claiming that some of what you see below
+shouldn't be in the list.
+
+On 08/13/2011 05:26 AM, Jonathan Wiltshire wrote:
+> #566654
+> dtc saves the administrator password in plain text in
+> /var/lib/dtc/saved_install_config under the variable name conf_adm_pass.
+> It remains there even after initial configuration.
+
+That's not more a security vulnerability than /etc/mysql/debian.cnf
+(both file are readable by root only). This has been in the BTS for a
+long time, and it makes no sense to assign a CVE now.
+
+> #611680
+> dtc-xen includes several command executions as root that use unchecked
+> user input in dtc-soap-server.
+
+That's not relevant and isn't a vulnerability. I have closed the bug a
+long time ago, writing that I wont fix it, and explaining why. Please
+see the BTS entry for it. dtc-xen isn't supposed to run stand-alone, and
+the only client for dtc-xen is dtc itself. If you gain access to it,
+then there is an issue somewhere else, and "fixing" things here wont
+make things better.
+
+> #614304
+> dtc stores user passwords and passwords for various services in unencrypted
+> form in the database.
+
+This is fixed in the Git, and has already been discussed. While it's a
+serious issue (which has been carefully worked on), it didn't deserve a
+CVE 6 months ago, and it shouldn't right now.
+
+> #637477
+> Insufficient input checking in /shared/inc/sql/lists.php
+>
+> #637485
+> The setup script for dtc writes the password for the MySQL user in the
+> world-readable file /etc/apache2/apache2.conf.
 > 
-> pub   3072R/E8B86CAB 2011-04-12
->       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
-> uid                  Vincent Danen <vdanen linsec.ca>
-> uid                  Vincent Danen <vdanen annvix.org>
-> uid                  Vincent Danen <vdanen redhat.com>
-> sub   3072R/8BBA24C6 2011-04-12
+> #637487
+> Insufficient input checking leads to a SQL injection vulnerability in
+> shared/inc/forms/domain_info.php.
+> 
+> #637498
+> A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
+> files as the MySQL system user.
+> 
+> #637537
+> dtc passes passwords to htpasswd using command line arguments, which can be
+> read by a local user.
+> 
+> #637584
+> dtc does not escape variables in HTML output in many places; for example
+> in the "Domain root TXT record:" field on the "DNS and MX" page where
+> JavaScript can be injected.
 
-Added.
+The above should be fixed and are real issues, but what I commented
+don't deserve a CVE.
 
-BTW, people eligible and wishing to join the list don't have to post the
-specific e-mail addresses and PGP key info in here.  As I wrote in:
+> Note that these descriptions are mostly taken from the bug reports and may
+> not be suitable for direct publication without editing. I have checked as
+> far as possible that none of these were previously assigned CVEs but they
+> could be duplicates. There are often mitigating factors such as
+> user or administrator authentication.
 
-http://www.openwall.com/lists/oss-security/2011/04/04/40
+Absolutely all of them need a user to be logged indeed.
 
-"That said, I agree that having specific e-mail addresses and key IDs
-posted to a public list is excessive.  If anyone else wishes to join
-(and qualifies), please state so in the "Closed list" thread and justify
-your request (currently that would mean info on the Linux distro you're
-a security contact for), then e-mail the specific e-mail address and PGP
-key info to me off-list.  I'll continue to reply on the list, but the
-specific e-mail addresses and keys will be exposed a little bit less."
-
-Of course, for active participants of oss-security and/or other public
-lists this shouldn't matter much (they're "exposed" anyway).
-
-Alexander
+Thomas
