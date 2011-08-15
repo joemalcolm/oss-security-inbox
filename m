@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/7
-Message-ID: <4E12920D.6090805@freebsd.org>
-Date: Mon, 04 Jul 2011 21:24:45 -0700
-From: Colin Percival <cperciva@...ebsd.org>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/1
+Message-ID: <4E48A8B2.90600@redhat.com>
+Date: Mon, 15 Aug 2011 13:03:46 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Yves-Alexis Perez <corsac@...ian.org>
+CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
-On 07/04/11 16:09, Solar Designer wrote:
-> I'd be interested in more detail on this bug.  So far, the closest to a
-> description of the bug that I saw is this:
-> 
-> http://lists.openwall.net/full-disclosure/2011/07/01/4
-> 
-> but it's not enough.
-> 
-> I'd like to learn not only on my own, but also on others' mistakes. ;-)
-> And for this purpose it does not matter how old the software is and
-> whether it is still supported or not.
-> 
-> Colin - any comments from you?  I realize the bug is not yours, but
-> perhaps you're one of the few people who have figured it out now, for a
-> reason similar to mine.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I haven't had time to investigate, in part because I don't have any systems
-running that ancient openssh any more.  I'm interested to hear if anyone has
-tracked down exactly where the bug was, though.
+On 08/13/2011 06:12 AM, Yves-Alexis Perez wrote:
+> On ven., 2011-08-12 at 13:31 +0800, Eugene Teo wrote:
+>>>> Btw, can you please mail me a copy of the /boot/config of the
+>>>> most recent Debian kernel for my reference?
+>>> 
+>>> Please let me know if you need anything in addition to the files 
+>>> Yves-Alexis sent you.
+>> 
+>> I didn't receive his mail.
+> 
+> For some reason Evolution “reply-all” stripped you from the
+> recipients (maybe because of the reply-to header). I've bounced you
+> the mail I sent before (it didn't reach the list either because it
+> was too large, sorry for that).
 
--- 
-Colin Percival
-Security Officer, FreeBSD | freebsd.org | The power to serve
-Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
+No problem. Thanks.
+
+Eugene
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBCAAGBQJOSKisAAoJEP9zwVVRv27zTfUP/jp6SMU7MsEgGXHx/IBY0bOo
+P0Q105rLPp+//WT69Lj3Mt58K2TheTTOgHh4fOGkEtFDC3Gueo8TZPe8/qothfXA
+TtSLFxCVZ3M3ZIYYPE/bG/8isZm5LmrnDSn8AasEzTusv4RC+Ly8XFkiYIKoN5VE
+PbDTfqXhVJJ8K4+ZtCQ+MbvjQAOS/LPBjaH4HzyBqFZXvDZIa6utrBZbvWiX3wdc
+0OphiaTBNcnK7L+iBrmkpx3AR4MDFYJl9phVWPoAqdlxQkTXB8/X867+Xjrk7NFj
+1693uDiQufCVK1jjMSpT7d0Dm7InCdBjAq5MO9z4xRoWagMGlOSrALVRp0Br0w+z
+suML7F/kQxEjS1rVYCbWmsuGt5afC7J87AC6miAx6wHdm9iuEERXgKbL9txhQv45
+tg+nNzb4GRiw/9zsdu1VqvitaGmDgjkjJsDj91vnq9gCd3aTXjJRd8ONvC0mB/eZ
+/SoCXEAQ91c6ImOkPN20MEzVk4Cui1+T0DTz1mzqindISpJU5ae6c7MIIk0dnRPh
+ofoQE/dgae5fPqr7w/WyhzR+gDlWb4Bf8iwUzh0InU6Hn76PbUrmtYndCpwQA9iD
+USNheyIoB/0Y03de1PrDZtUrXOrEKQbJsQELf7CXbrEkB66GFkoXGquIBYLYj6LY
+gtQnZrIudyyG9Y30bSUu
+=cTUV
+-----END PGP SIGNATURE-----
