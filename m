@@ -1,19 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/4
-Message-ID: <20110217114507.GK13313@ngolde.de>
-Date: Thu, 17 Feb 2011 12:45:07 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/3
+Message-ID: <4E48BB0D.5020400@redhat.com>
+Date: Mon, 15 Aug 2011 14:22:05 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: telepathy-gabble
+Subject: kernel: ext3/4: ext3/4_symlink lock oops
 Content-Type: text/plain; charset=utf-8
 
-Can I get a CVE id for:
-https://bugs.freedesktop.org/show_bug.cgi?id=34048
+Some fun with long symlinks on ext3/4 fs with selinux on. This issue was
+introduced in upstream commits ae54870a and df5e6223 (v3.0-rc1). I'm not
+requesting a CVE name as I don't think anyone is affected by this issue
+(I hope).
 
-Thanks!
+Upstream commits:
+ext3: http://git.kernel.org/linus/d2db60df1e7eb39cf0f378dfc4dd8813666d46ef
+ext4: http://git.kernel.org/linus/8c20871998c082f6fbc963f1449a5ba5140ee39a
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Thanks, Eugene
