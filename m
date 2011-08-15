@@ -1,49 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/4
-Message-ID: <20110406093321.13e480ef@0xC0FF33>
-Date: Wed, 6 Apr 2011 09:33:21 +0200
-From: Milan Berger <m.berger@...ject-mindstorm.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/1
+Message-ID: <4E48A8B2.90600@redhat.com>
+Date: Mon, 15 Aug 2011 13:03:46 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: Yves-Alexis Perez <corsac@...ian.org>
+CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE requests: Two kernel issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-Hello,
+On 08/13/2011 06:12 AM, Yves-Alexis Perez wrote:
+> On ven., 2011-08-12 at 13:31 +0800, Eugene Teo wrote:
+>>>> Btw, can you please mail me a copy of the /boot/config of the
+>>>> most recent Debian kernel for my reference?
+>>> 
+>>> Please let me know if you need anything in addition to the files 
+>>> Yves-Alexis sent you.
+>> 
+>> I didn't receive his mail.
+> 
+> For some reason Evolution “reply-all” stripped you from the
+> recipients (maybe because of the reply-to header). I've bounced you
+> the mail I sent before (it didn't reach the list either because it
+> was too large, sorry for that).
 
-I want to subscribe for Project-Mindstorm
-Please add:
+No problem. Thanks.
 
-pub   1024D/E1EFD422 2010-01-18
-uid   Milan Berger <m.berger@...ject-mindstorm.net>
-sub   2048g/A7C4369B 2010-01-18
-
-
-
-
-- -- 
-Kind Regards
-
-Milan Berger
-Project-Mindstorm Technical Engineer
-
-- --
-project-mindstorm.net
-Fruehlingstrasse 4 
-90537 Feucht
-Germany
-
-Mob.: +49 176 22 98 76 02
-
-http://www.androcom.net
-http://www.project-mindstorm.net
-
-twitter: http://twitter.com/twit4c
+Eugene
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.11 (GNU/Linux)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
-iEYEARECAAYFAk2cF0kACgkQUKNzQuHv1CIP6wCgiQvRKZzmbHkcMHwxlwuwOgNf
-KwcAoJj4pKtwiI8HA+8nAZR3atEl2pFx
-=eZJZ
+iQIcBAEBCAAGBQJOSKisAAoJEP9zwVVRv27zTfUP/jp6SMU7MsEgGXHx/IBY0bOo
+P0Q105rLPp+//WT69Lj3Mt58K2TheTTOgHh4fOGkEtFDC3Gueo8TZPe8/qothfXA
+TtSLFxCVZ3M3ZIYYPE/bG/8isZm5LmrnDSn8AasEzTusv4RC+Ly8XFkiYIKoN5VE
+PbDTfqXhVJJ8K4+ZtCQ+MbvjQAOS/LPBjaH4HzyBqFZXvDZIa6utrBZbvWiX3wdc
+0OphiaTBNcnK7L+iBrmkpx3AR4MDFYJl9phVWPoAqdlxQkTXB8/X867+Xjrk7NFj
+1693uDiQufCVK1jjMSpT7d0Dm7InCdBjAq5MO9z4xRoWagMGlOSrALVRp0Br0w+z
+suML7F/kQxEjS1rVYCbWmsuGt5afC7J87AC6miAx6wHdm9iuEERXgKbL9txhQv45
+tg+nNzb4GRiw/9zsdu1VqvitaGmDgjkjJsDj91vnq9gCd3aTXjJRd8ONvC0mB/eZ
+/SoCXEAQ91c6ImOkPN20MEzVk4Cui1+T0DTz1mzqindISpJU5ae6c7MIIk0dnRPh
+ofoQE/dgae5fPqr7w/WyhzR+gDlWb4Bf8iwUzh0InU6Hn76PbUrmtYndCpwQA9iD
+USNheyIoB/0Y03de1PrDZtUrXOrEKQbJsQELf7CXbrEkB66GFkoXGquIBYLYj6LY
+gtQnZrIudyyG9Y30bSUu
+=cTUV
 -----END PGP SIGNATURE-----
