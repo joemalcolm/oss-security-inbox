@@ -1,21 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/46
-Message-ID: <20110404190008.GC14209@openwall.com>
-Date: Mon, 4 Apr 2011 23:00:08 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/5
+Message-ID: <Pine.GSO.4.64.1108151359420.4004@faron.mitre.org>
+Date: Mon, 15 Aug 2011 14:02:21 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 12:05:18AM -0500, Micah Gersten wrote:
-> Please add me to the new list, I was a member through the Ubuntu exploder:
-> pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
->       Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
-> uid                  Micah Gersten <micah@...ntu.com>
-> sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
 
-Added.
+This was a strange one.  Since it's pretty clear there are two 
+implementations (due to 2 different languages, and 2 upstream 
+maintainers), we treated these as separate codebases and went with two 
+separate CVEs.  (You could argue this was the same core design problem, 
+but this issue wasn't due to a protocol that required such behavior.)
 
-(We'll need to revisit the member list for Ubuntu later.)
+See below.
 
-Alexander
+- Steve
+
+
+======================================================
+Name: CVE-2011-2697
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2697
+Reference: MLIST:[oss-security] 20110713 CVE Request: hplip/foomatic-filters
+Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/13/3
+Reference: MLIST:[oss-security] 20110718 Re: CVE Request: hplip/foomatic-filters
+Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/18/3
+Reference: MLIST:[oss-security] 20110728 Re: CVE Request: hplip/foomatic-filters
+Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/28/1
+Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=698451
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=721001
+Reference: XF:hplinuxprinting-foomaticriphplip-code-exec(68993)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/68993
+
+foomatic-rip-hplip in HP Linux Imaging and Printing (HPLIP) 3.11.5
+allows remote attackers to execute arbitrary code via a crafted
+*FoomaticRIPCommandLine field in a .ppd file.
+
+
+======================================================
+Name: CVE-2011-2964
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2964
+Reference: MLIST:[oss-security] 20110713 CVE Request: hplip/foomatic-filters
+Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/13/3
+Reference: MLIST:[oss-security] 20110718 Re: CVE Request: hplip/foomatic-filters
+Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/18/3
+Reference: MLIST:[oss-security] 20110728 Re: CVE Request: hplip/foomatic-filters
+Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/28/1
+Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=698451
+Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=721001
+Reference: REDHAT:RHSA-2011:1110
+Reference: URL:http://www.redhat.com/support/errata/RHSA-2011-1110.html
+Reference: XF:foomatic-foomatic-code-execution(68994)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/68994
+
+foomaticrip.c in foomatic-rip in foomatic-filters in Foomatic 4.0.6
+allows remote attackers to execute arbitrary code via a crafted
+*FoomaticRIPCommandLine field in a .ppd file, a different
+vulnerability than CVE-2011-2697.
+
+
