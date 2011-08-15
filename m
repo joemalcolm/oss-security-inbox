@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/3
-Message-ID: <20110604200313.GA5687@openwall.com>
-Date: Sun, 5 Jun 2011 00:03:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/3
+Message-ID: <4E48BB0D.5020400@redhat.com>
+Date: Mon, 15 Aug 2011 14:22:05 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Subject: kernel: ext3/4: ext3/4_symlink lock oops
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 04, 2011 at 02:53:29PM -0400, Michael Gilbert wrote:
-> As a practical matter, you could follow the Debian
-> secure-testing-commits mailing list [0] or check out the svn repo [1].
-> Updates to Mitre's CVE database are synced there twice a day.
+Some fun with long symlinks on ext3/4 fs with selinux on. This issue was
+introduced in upstream commits ae54870a and df5e6223 (v3.0-rc1). I'm not
+requesting a CVE name as I don't think anyone is affected by this issue
+(I hope).
 
-This is very nice, thanks.  Many of the commits have Debian-specific
-info, though, which would be a bit distracting, and the Subjects are not
-specific (just "data/CVE" or "data/DSA"), yet this may be helpful.
+Upstream commits:
+ext3: http://git.kernel.org/linus/d2db60df1e7eb39cf0f378dfc4dd8813666d46ef
+ext4: http://git.kernel.org/linus/8c20871998c082f6fbc963f1449a5ba5140ee39a
 
-I downloaded
-http://lists.alioth.debian.org/pipermail/secure-testing-commits/2011-May.txt.gz
-and grepped it for SSL (case-insensitive).  Didn't find the OpenSSL
-issue that started this thread.  This is not surprising: apparently, the
-issue did not receive a CVE ID in May, even though CERT published a
-Vulnerability Note on it.
-
-> [0]http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/secure-testing-commits
-> [1]svn://svn.debian.org/svn/secure-testing
-
-Perhaps add these to
-http://oss-security.openwall.org/wiki/distro-patches#debian ?
-And, while you're at it, fix the many broken links currently in the
-Debian section there (I counted at least three broken links).
-
-Thanks,
-
-Alexander
+Thanks, Eugene
