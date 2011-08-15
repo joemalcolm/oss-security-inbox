@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/23/1
-Message-ID: <4D3B7803.4090806@kernel.org>
-Date: Sun, 23 Jan 2011 08:36:19 +0800
-From: Eugene Teo <eugeneteo@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/2
+Message-ID: <4E48B1DC.7070401@redhat.com>
+Date: Mon, 15 Aug 2011 11:12:52 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
+Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
 Content-Type: text/plain; charset=utf-8
 
-On 01/23/2011 04:13 AM, Steven M. Christey wrote:
->
-> On Fri, 21 Jan 2011, Eugene Teo wrote:
->
->> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
->>> File position is not controlled, it may lead to overwrites of arbitrary
->>> kernel memory. Also the code may kfree() the same pointer multiple
->>> times.
->>
->> http://lkml.org/lkml/2011/1/20/348
->> https://bugzilla.redhat.com/CVE-2011-0023
->>
->> Please use CVE-2011-0023 (this does not include the unresolved flaw
->> described in the following paragraph below).
->
-> There seem to be 2 types of issues described above - the uncontrolled
-> file position / memory overwrite, and a "double free". So there should
-> probably be 2 separate CVEs, not one. Am I missing something?
+On 07/30/2011 01:34 AM, Josh Bressers wrote:
+> Steve,
+> 
+> Can you weigh in on how to assign this one. I'm thinking we want two IDs,
+> but I know in the past one ID has been used for catchall type IDs (I'm not
+> sure if that's simply done due to lack of details).
+> 
+> Thanks.
+> 
 
-Sorry about it. Please see http://seclists.org/oss-sec/2011/q1/106.
+Any updates on this one?
 
-Eugene
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
