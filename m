@@ -1,22 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/2
-Message-ID: <4DE7B9AA.40908@redhat.com>
-Date: Thu, 02 Jun 2011 18:26:18 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Cherokee -- server admin vulnerable to csrf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/4
+Message-ID: <20110815134300.GB2774@dhcp-25-225.brq.redhat.com>
+Date: Mon, 15 Aug 2011 15:43:01 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: CVE request -- kernel: perf: fix software event overflow
 Content-Type: text/plain; charset=utf-8
 
+Hello Steve, vendors.
 
-Hello, Josh, Steve, vendors,
+Description:
+Under certain circumstances software event overflows go wrong and
+deadlock. Avoid trying to delete a timer from the timer callback.
 
-   this doesn't seem to have a CVE identifier yet:
-   [1] http://seclists.org/fulldisclosure/2011/Jun/0
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=730706
+https://lkml.org/lkml/2011/7/27/337 (reproducer)
+https://lkml.org/lkml/2011/7/28/284 (fix)
 
-Though not sure, how much probable it is, it would get fixed,
-since upstream looks to consider this not to be an issue.
+Upstream fix:
+a8b0ca17b80e92faab46ee7179ba9e99ccb61233 (much larger patch that
+contains the hunk referenced above)
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Thank you,
+-- 
+Petr Matousek / Red Hat Security Response Team
