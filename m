@@ -1,19 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/26
-Message-ID: <20110403225847.GC10158@openwall.com>
-Date: Mon, 4 Apr 2011 02:58:47 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/2
+Message-ID: <2039889913.22716.1313526873673.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 16 Aug 2011 16:34:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: two vulnerabilities in ktsuss 1.4 and earlier
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 11:52:29PM +0200, Marcus Meissner wrote:
-> pub   1024D/0175623E 2003-11-21
->       Key fingerprint = D33B C5C3 C0CC 59B6 3989  D77B EA7B F397 0175 623E
-> uid                  Marcus Meissner <meissner@...e.de>
-> uid                  Marcus Meissner <meissner@...ell.com>
-> sub   1024g/EA43E05E 2003-11-21
 
-Added.
 
-Alexander
+----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> I reported these bugs privately to the Debian security team and the
+> upstream author some time ago, but it does not appear that any CVE was
+> created as a result.
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626178
+> 
+> The 1.3 and 1.4 versions of ktsuss which include a setuid ktsuss binary
+> suffered from two separate security bugs which can be used for local root
+> exploits.
+> 
+> The "1.314" version which does not include a setuid ktsuss binary and
+> uses "su" for privilege escalation does not suffer from these problems.
+> 
+> 
+> 1) When the target UID is the same as the real UID ktsuss skips
+> authentication. Under these circumstances, ktsuss fails to change the
+> effective UID back to the real UID. (line 118 of src/ktsuss.c in version
+> 1.3.)
+> 
+> $ ktsuss -u `whoami` whoami
+> root
+
+Use CVE-2011-2921 for the above issue.
+
+> 
+> 
+> 2) The setuid ktsuss binary executes a GTK interface subprocess to prompt
+> for username and password. This GTK interface runs as root and allows
+> arbitrary code execution via the GTK_MODULES environmental variable.
+
+Use CVE-2011-2922 for this issue.
+
+Thanks.
+
+-- 
+    JB
