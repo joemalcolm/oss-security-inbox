@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/2
-Message-ID: <20110727001559.GA28555@openwall.com>
-Date: Wed, 27 Jul 2011 04:15:59 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CFP SecurityByte India
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/1
+Message-ID: <4E49C306.6000202@redhat.com>
+Date: Tue, 16 Aug 2011 09:08:22 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: perf: fix software event overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 26, 2011 at 10:41:52AM +0530, Papers, Call For wrote:
-> The first round of speakers have been selected for Securitybyte, please
-> follow us on twitter @securitybyte to get the latest updates on speakers and
-> event.
-...
+On 08/15/2011 09:43 PM, Petr Matousek wrote:
+> Hello Steve, vendors.
+> 
+> Description:
+> Under certain circumstances software event overflows go wrong and
+> deadlock. Avoid trying to delete a timer from the timer callback.
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=730706
+> https://lkml.org/lkml/2011/7/27/337 (reproducer)
+> https://lkml.org/lkml/2011/7/28/284 (fix)
+> 
+> Upstream fix:
+> a8b0ca17b80e92faab46ee7179ba9e99ccb61233 (much larger patch that
+> contains the hunk referenced above)
 
-I almost rejected this CFP (for lack of Open Source focus and for being
-a cross-post), but then decided that maybe it was time to bring the
-topic up once again.
+Use CVE-2011-2918.
 
-Yes, we're still receiving CFPs once in a while, and most are of little
-relevance to the oss-security list specifically, but not of no relevance
-at all.  Ditto for announcements of new issues of various e-magazines.
-
-So far, my policy has been to selectively approve some of them - where
-some relevance to Open Source security can be seen from the posting
-itself (without having to follow any links).  Other moderators of
-oss-security appear to do nothing about them, neither approve nor
-reject, which kind of confirms the uncertainty there is regarding
-whether this kind of content is welcome in here or not.
-
-Here's my question: should we continue like that, with decisions made on
-a case-by-case basis, or should we possibly start rejecting all CFPs and
-e-magazine issue announcements unconditionally?
-
-And should this specific CFP for SecurityByte have been approved (as an
-example)?  Did anyone in here find it useful for themselves?  Please do
-let me know if you did!  If not a single person did, then perhaps it
-should have been rejected.  So if no one says they found this one
-useful, I'll likely reject a similar one arriving in the future.
-
-It does feel somewhat weird to have SecurityByte mentioned in here, yet
-not have similar announcements of larger cons (such as DEFCON), and it
-would be unreasonable to have every con's CFP posted in here (this is
-not what this list is for).
-
-Opinions are welcome.
-
-Alexander
+Thanks, Eugene
