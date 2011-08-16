@@ -1,24 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/1
-Message-Id: <201102181532.12697.thomas@suse.de>
-Date: Fri, 18 Feb 2011 15:32:12 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/2
+Message-ID: <2039889913.22716.1313526873673.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 16 Aug 2011 16:34:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: avahi daemon remote denial of service by sending NULL UDP
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: two vulnerabilities in ktsuss 1.4 and earlier
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-does the following need a CVE-ID or already has one assigned?
-
-https://bugzilla.redhat.com/show_bug.cgi?id=667187
 
 
-Thanks,
-Thomas
+----- Original Message -----
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> I reported these bugs privately to the Debian security team and the
+> upstream author some time ago, but it does not appear that any CVE was
+> created as a result.
+> 
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626178
+> 
+> The 1.3 and 1.4 versions of ktsuss which include a setuid ktsuss binary
+> suffered from two separate security bugs which can be used for local root
+> exploits.
+> 
+> The "1.314" version which does not include a setuid ktsuss binary and
+> uses "su" for privilege escalation does not suffer from these problems.
+> 
+> 
+> 1) When the target UID is the same as the real UID ktsuss skips
+> authentication. Under these circumstances, ktsuss fails to change the
+> effective UID back to the real UID. (line 118 of src/ktsuss.c in version
+> 1.3.)
+> 
+> $ ktsuss -u `whoami` whoami
+> root
+
+Use CVE-2011-2921 for the above issue.
+
+> 
+> 
+> 2) The setuid ktsuss binary executes a GTK interface subprocess to prompt
+> for username and password. This GTK interface runs as root and allows
+> arbitrary code execution via the GTK_MODULES environmental variable.
+
+Use CVE-2011-2922 for this issue.
+
+Thanks.
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+    JB
