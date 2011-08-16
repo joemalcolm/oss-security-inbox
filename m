@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/5
-Message-ID: <1218575187.225841.1296508508966.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 31 Jan 2011 16:15:08 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: puppet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/16/1
+Message-ID: <4E49C306.6000202@redhat.com>
+Date: Tue, 16 Aug 2011 09:08:22 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: perf: fix software event overflow
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0528.
-
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> Hi,
-> please assign a CVE ID for this vulnerability in the Puppet
-> configuration
-> management system:
-> http://www.mail-archive.com/puppet-users@googlegroups.com/msg16429.html
+On 08/15/2011 09:43 PM, Petr Matousek wrote:
+> Hello Steve, vendors.
 > 
-> Cheers,
-> Moritz
+> Description:
+> Under certain circumstances software event overflows go wrong and
+> deadlock. Avoid trying to delete a timer from the timer callback.
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=730706
+> https://lkml.org/lkml/2011/7/27/337 (reproducer)
+> https://lkml.org/lkml/2011/7/28/284 (fix)
+> 
+> Upstream fix:
+> a8b0ca17b80e92faab46ee7179ba9e99ccb61233 (much larger patch that
+> contains the hunk referenced above)
+
+Use CVE-2011-2918.
+
+Thanks, Eugene
