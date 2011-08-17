@@ -1,24 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/3
-Message-ID: <20111009104736.12de0a08@laverne>
-Date: Sun, 9 Oct 2011 10:47:36 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/17/2
+Message-ID: <477818420.63568.1313609227803.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 17 Aug 2011 15:27:07 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: simple machines forum before 2.0.1 and 1.1.15
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
+Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
 Content-Type: text/plain; charset=utf-8
 
-http://www.simplemachines.org/community/index.php?P=adfcf10856d3f74172b76dd384b6ade6&topic=452888.0
+Based on the comments from MITRE, this deserves two IDs.
 
-"Critical security issues have been identified and fixed with this
-patch, therefore it is highly recommended to make sure you update your
-forums immediately."
+Use CVE-2011-2923 for the perl variant.
 
+CVE-2011-2924 for the C variant.
 
-That probably qualifies as "unknown security issue in simple machines
-forum" ;-)
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> by further investigation of hplip CVE-2011-2722 issue:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
+> 
+> Tim Waugh noticed the similar issue being present also in foomatic-rip
+> universal print filter, when debug mode is enabled. Further details:
+> 
+> It was found that foomatic-rip filter used insecurely created
+> temporary
+> file for storage of PostScript data by rendering the data, intended to
+> be sent to the PostScript filter, when the debug mode was enabled. A
+> local attacker could use this flaw to conduct symlink attacks
+> (overwrite
+> arbitrary file accessible with the privileges of the user running the
+> foomatic-rip universal print filter).
+> 
+> Relevant source code part (Perl script part / foomatic-rip.in):
+> ===============================================================
+> 100 my $logfile = "/tmp/foomatic-rip";
+> ..
+> 3454 # In debug mode save the data supposed to be fed
+> into the
+> 3455 # renderer also into a file
+> 3456 if ($debug) {
+> 3457 $commandline = "tee -a ${logfile}.ps | ( $commandline )";
+> 3458 }
+> 
+> Note: The $logfile variable declaration (line #100) is not an insecure
+> temporary file use issue itself, since this danger (and its proper
+> usage) is documented in /etc/foomatic/filters.conf file.
+> 
+> Relevant source code part (C script part / renderer.c):
+> ========================================================
+> 436 /* Save the data supposed to be fed into the renderer
+> also int o a file*/
+> 437 dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
+> 438 dstrcat(commandline, ")");
+> 439 }
+> 
+> Note: The LOG_FILE variable declaration by itself is not an insecure
+> temporary file use, since this danger (and its proper usage)
+> is documented in /etc/foomatic/filters.conf file.
+> 
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
+> 
+> Credit: Issue discovered by Tim Waugh
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
