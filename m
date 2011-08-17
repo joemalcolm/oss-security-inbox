@@ -1,34 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/8
-Message-ID: <20110316110228.GA4109@netbookdave>
-Date: Wed, 16 Mar 2011 12:02:28 +0100
-From: David King <amigadave@...gadave.com>
-To: David Woodhouse <dwmw2@...radead.org>
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/17/2
+Message-ID: <477818420.63568.1313609227803.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 17 Aug 2011 15:27:07 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
+Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
 Content-Type: text/plain; charset=utf-8
 
-On 2011-03-16 10:47, David Woodhouse <dwmw2@...radead.org> wrote:
->On Tue, 2011-03-15 at 17:10 -0400, Josh Bressers wrote:
->>
->> Issue #2
->>
->> Vino can open ports via uPnP without alerting the user.
->> https://bugzilla.redhat.com/show_bug.cgi?id=678846
->>
->> Use CVE-2011-1165
+Based on the comments from MITRE, this deserves two IDs.
 
-[snip]
+Use CVE-2011-2923 for the perl variant.
 
->There *is* an option to disable this feature, if the user really wants
->to. And of course it should be clearly indicated that the service is
->available to the public; but *that* is what CVE-2011-1164 is for.
+CVE-2011-2924 for the C variant.
 
-It should be noted that the UPnP feature is disabled by default, so the 
-user has the option to *enable* it. I concede that the string presented 
-in the UI needs improvement. Of course, I agree that indication of the 
-consequences would be appropriate, and also disallowing the 'none' 
-authentication method if UPnP is enabled.
+Thanks.
 
 -- 
-http://amigadave.com/
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> by further investigation of hplip CVE-2011-2722 issue:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2722
+> 
+> Tim Waugh noticed the similar issue being present also in foomatic-rip
+> universal print filter, when debug mode is enabled. Further details:
+> 
+> It was found that foomatic-rip filter used insecurely created
+> temporary
+> file for storage of PostScript data by rendering the data, intended to
+> be sent to the PostScript filter, when the debug mode was enabled. A
+> local attacker could use this flaw to conduct symlink attacks
+> (overwrite
+> arbitrary file accessible with the privileges of the user running the
+> foomatic-rip universal print filter).
+> 
+> Relevant source code part (Perl script part / foomatic-rip.in):
+> ===============================================================
+> 100 my $logfile = "/tmp/foomatic-rip";
+> ..
+> 3454 # In debug mode save the data supposed to be fed
+> into the
+> 3455 # renderer also into a file
+> 3456 if ($debug) {
+> 3457 $commandline = "tee -a ${logfile}.ps | ( $commandline )";
+> 3458 }
+> 
+> Note: The $logfile variable declaration (line #100) is not an insecure
+> temporary file use issue itself, since this danger (and its proper
+> usage) is documented in /etc/foomatic/filters.conf file.
+> 
+> Relevant source code part (C script part / renderer.c):
+> ========================================================
+> 436 /* Save the data supposed to be fed into the renderer
+> also int o a file*/
+> 437 dstrprepend(commandline, "tee -a " LOG_FILE ".ps | ( ");
+> 438 dstrcat(commandline, ")");
+> 439 }
+> 
+> Note: The LOG_FILE variable declaration by itself is not an insecure
+> temporary file use, since this danger (and its proper usage)
+> is documented in /etc/foomatic/filters.conf file.
+> 
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=726426
+> 
+> Credit: Issue discovered by Tim Waugh
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
