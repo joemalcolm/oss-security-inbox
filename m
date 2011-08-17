@@ -1,27 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/2
-Message-ID: <4E29A9E6.5040902@redhat.com>
-Date: Fri, 22 Jul 2011 18:48:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Lukas Fleischer <cgit@...ptocrack.de>
-Subject: CVE Request -- cGit -- XSS flaw in rename hint
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/17/1
+Message-ID: <20110817165247.GW1360@redhat.com>
+Date: Wed, 17 Aug 2011 10:52:47 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: To:  Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: ruby on rails flaws (4)
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+Could we get CVEs assigned to these flaws?  Upstream had requested CVEs
+prior to disclosure, but didn't receive any.
 
-   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
-web interface for Git, displayed the file name in the rename hint. A
-remote attacker could provide a specially-crafted web page, which once
-visited by an authenticated Cgit user, with push access to the
-repository, would lead to arbitrary web script or HTML code execution.
+http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
 
-References:
-[1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
+1) Filter Skipping bugs
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
+https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
+https://bugzilla.redhat.com/show_bug.cgi?id=731432
 
-Could you allocate a CVE id for this?
+2) SQL Injection issues
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
+https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
+https://bugzilla.redhat.com/show_bug.cgi?id=731438
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+3) Parse error in strip_tags
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
+https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
+https://bugzilla.redhat.com/show_bug.cgi?id=731436
+
+4) UTF-8 escaping vulnerability
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
+https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
+https://bugzilla.redhat.com/show_bug.cgi?id=731435
+
+Thanks!
+
+-- 
+Vincent Danen / Red Hat Security Response Team 
