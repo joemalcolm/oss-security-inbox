@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/1
-Message-ID: <20111130123814.GK5089@ngolde.de>
-Date: Wed, 30 Nov 2011 13:38:14 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/7
+Message-ID: <1313683700.15727.27.camel@localhost.localdomain>
+Date: Fri, 19 Aug 2011 02:08:17 +1000
+From: David Hicks <d@...id.au>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: ffmpeg
+Subject: CVE request: MantisBT <1.2.7 search.php multiple XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-it seems the new ffmpeg issue described in 
-http://www.usenix.org/events/woot11/tech/final_files/Yamaguchi.pdf has fallen 
-through the cracks. Can someone assign a CVE id to the described issue in 
-vmd_decode (see see page 6, Extrapolation. page 7 contains the vulnerable code)?
+Original vulnerability report by Net.Edit0r (Net.Edit0r@....net) from
+BlACK Hat Group [http://black-hg.org] is available at:
+http://packetstormsecurity.org/files/104149
 
-Please note that this is not CVE-2010-3429. The paper is about finding bugs 
-similar to a given one and CVE-2010-3429 is the original bug, while the one in 
-vmd_decode is similar.
+MantisBT bug report for full details of the issue:
+http://www.mantisbt.org/bugs/view.php?id=13245
 
-Kind regards
-Nico
+Please note that the second SQL injection vulnerability identified by
+Net.Edit0r is not reproducible (refer to the MantisBT bug report above
+for reasons why).
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+A patch for 1.2.6 is available at:
+https://github.com/mantisbt/mantisbt/commit/317f3db3a3c68775de3acf3b15f55b1e3c18f93b
 
-Content of type "application/pgp-signature" skipped
+MantisBT 1.2.7 is currently being packaged and will be available shortly
+through usual channels for distributions and standalone users to pick
+up.
+
+Bug reports cross-posted elsewhere:
+Gentoo: https://bugs.gentoo.org/show_bug.cgi?id=379739
+Fedora/Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=731777
+Debian: Submitted (queued)
+Ubuntu: https://bugs.launchpad.net/ubuntu/+source/mantis/+bug/828857
+
+Thanks,
+
+David Hicks
+MantisBT Developer
+mantisbt.org, #mantishelp on freenode
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
