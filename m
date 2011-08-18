@@ -1,30 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/1
-Message-ID: <4E898853.4010305@redhat.com>
-Date: Mon, 03 Oct 2011 12:02:59 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Juliusz Chroboczek <jch@....jussieu.fr>
-CC: oss-security@...ts.openwall.com
-Subject: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/1
+Message-ID: <CAPYM6VxVh4mtW4B_SBSTZnOj4dW2c0uDghh1=7T6SRweD9JJHg@mail.gmail.com>
+Date: Thu, 18 Aug 2011 14:14:15 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: WebsiteBaker 2.8.1 <= Arbitrary File Upload Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+1. OVERVIEW
 
-   a denial of service flaw was found in the way Polipo, a lightweight
-caching web proxy, processed certain HTTP POST / PUT requests. If
-polipo was configured to allow remote client connections and particular
-host was allowed to connect to polipo server instance, a remote
-attacker could use this flaw to cause denial of service (polipo daemon
-abort due to assertion failure) via specially-crafted HTTP POST / PUT
-request.
+WebsiteBaker 2.8.1 and lower versions are vulnerable to Arbitrary File Upload.
 
-References:
-[1] http://seclists.org/fulldisclosure/2011/Oct/10
-[2] https://bugs.gentoo.org/show_bug.cgi?id=385307
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=742891
 
-Could you allocate a CVE id for this?
+2. BACKGROUND
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+WebsiteBaker helps you to create the website you want: A free, easy
+and secure, flexible and extensible open source content management
+system (CMS). Create new templates within minutes - powered by
+(X)HTML, CSS and jQuery. With WebsiteBaker it's quite natural your
+site is W3C-valid, SEO-friendly and accessible - there are no
+limitations at all.
+
+
+3. VULNERABILITY DESCRIPTION
+
+WebsiteBaker 2.8.1 and lower versions contain a flaw related to the
+/admin/media/upload.php script failing to restrict uploaded files with
+extensions - .htaccess, .php4, .php5, .phtml. This may allow an
+attacker to execute arbitrary PHP code. User account to WebsiteBaker
+admin backend is required. Attacker could gain access it by way of
+either brute force or CSRFing to currently-logged in admin users.
+
+
+4. VERSIONS AFFECTED
+
+2.8.1 <=
+
+
+5. SOLUTION
+
+Upgrade to 2.8.2 or higher
+
+
+6. VENDOR
+
+WebsiteBaker Org e. V.
+http://www.websitebaker2.org/
+
+
+7. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+8. DISCLOSURE TIME-LINE
+
+2011-01-26: notified vendor
+2011-08-01: vendor released fix
+2011-08-13: vulnerability disclosed
+
+
+9. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_arbitrary_file_upload
+http://www.gnucitizen.org/blog/cross-site-file-upload-attacks/
+
+
+#yehg [2011-08-13]
