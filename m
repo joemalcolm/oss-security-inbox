@@ -1,106 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/5
-Message-ID: <AANLkTinYfbsmRk+Qc74JQLMMyeT-vBHKMxdjPz8J1XPu@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:16:01 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/2
+Message-ID: <CAPYM6VyPBhgLUHc4X8bchXTCEhLuwxnTBLXM_x-FbFBxOy-z1g@mail.gmail.com>
+Date: Thu, 18 Aug 2011 14:15:59 +0800
 From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.5.20 <= Cross Site Scripting (XSS) Vulnerability
+Subject: CVE Request: WebsiteBaker 2.8.1 <= Cross Site Request Forgery (CSRF) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 1. OVERVIEW
 
-The Joomla! web application was vulnerable to Cross Site Scripting
-vulnerability.
+WebsiteBaker 2.8.1 and lower versions are vulnerable to Cross Site
+Request Forgery (CSRF).
 
 
-2. PRODUCT DESCRIPTION
+2. BACKGROUND
 
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
+WebsiteBaker is a PHP-based Content Management System (CMS) designed
+with one goal in mind: to enable its users to produce websites with
+ease.
 
 
 3. VULNERABILITY DESCRIPTION
 
-Some URLs in Joomla! do not properly escape encoded user inputs that
-lead to cross site scripting vulnerability.
-For more information about this kind of vulnerability, see OWASP Top
-10 - A2, WASC-8 and
-CWE-79: Improper Neutralization of Input During Web Page Generation
-('Cross-site Scripting').
+WebsiteBaker 2.8.1 and lower versions contain a flaw that allows a
+remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
+exists because the application does not require multiple steps or
+explicit confirmation for sensitive transactions for majority of
+administrator functions such as adding new user. By using a crafted
+URL, an attacker may trick the victim into visiting to his web page to
+take advantage of the trust relationship between the authenticated
+victim and the application. Such an attack could trick the victim into
+executing arbitrary commands in the context of their session with the
+application, without further prompting or verification.
 
 
 4. VERSIONS AFFECTED
 
-Joomla! 1.5.20  and lower
+2.8.1 <=
 
 
 5. PROOF-OF-CONCEPT/EXPLOIT
 
-Exploit: /index.php?option=com_content&view=section&id=&%2522%253e%253cscript%253ealert(0)%253c/script%253e=XSS
-		 /index.php?option=com_weblinks&view=category&id=2&filter_order_Dir=&filter_order=asc&%2522%253e%253cscript%253ealert(0)%253c/script%253e=XSS
+The following request adds an administrator.
 
-Demo: http://yehg.net/lab/pr0js/training/view/misc/joomla-1.5.20_encoded-xss/
+[REQUEST]
+POST /admin/users/add.php HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 193
 
-
-6. IMPACT
-
-Attackers can compromise currently logged-in user/administrator
-session and impersonate arbitrary user actions available under
-/administrator/ functions.
+user_id=&username_fieldname=username_abcdefg&username_abcdefg=test&password=test&password2=test&display_name=test&email=tester%40yehg.net&home_folder=&groups%5B%5D=1&active%5B%5D=1&submit=Add
+[/REQUEST]
 
 
-7. SOLUTION
+6. SOLUTION
 
-Upgrade to Joomla! 1.5.21
-
-
-8. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
+Upgrade to 2.8.2 or higher
 
 
-9. CREDIT
+7. VENDOR
+
+WebsiteBaker Org e. V.
+http://www.websitebaker2.org/
+
+
+8. CREDIT
 
 This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
 Ethical Hacker Group, Myanmar.
 
 
-10. DISCLOSURE TIME-LINE
+9. DISCLOSURE TIME-LINE
 
-2010-10-04: vulnerability discovered
-2010-10-06: notified vendor
-2010-10-09: vendor released fix
-2010-10-09: vulnerability disclosed
+2011-01-26: notified vendor
+2011-08-01: vendor released fix
+2011-08-13: vulnerability disclosed
 
 
-11. REFERENCES
+10. REFERENCES
 
-Vendor Advisory URL:
-http://developer.joomla.org/security/news/9-security/10-core-security/322-20101001-core-xss-vulnerabilities.html
-http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_id=32&tracker_item_id=22767
 Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5.20]_cross_site_scripting(XSS)
-XSS FAQ: http://www.cgisecurity.com/xss-faq.html
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
+http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_cross_site_request_forgery
 
 
-#yehg [2010-10-09]
-
-last updated: 2010-12-24
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+#yehg [2011-08-13]
