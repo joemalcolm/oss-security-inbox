@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/10
-Message-ID: <20110621180916.GK1952@redhat.com>
-Date: Tue, 21 Jun 2011 12:09:16 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/7
+Message-ID: <1313683700.15727.27.camel@localhost.localdomain>
+Date: Fri, 19 Aug 2011 02:08:17 +1000
+From: David Hicks <d@...id.au>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: CVE request: MantisBT <1.2.7 search.php multiple XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-* [2011-06-21 21:55:26 +0400] Solar Designer wrote:
+Original vulnerability report by Net.Edit0r (Net.Edit0r@....net) from
+BlACK Hat Group [http://black-hg.org] is available at:
+http://packetstormsecurity.org/files/104149
 
->On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
->> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
->> know why that is?
->
->It is based on the same code, but the author made changes when merging
->the code.  Specifically, he switched to using "unsigned char *".
->
->> I can't promise I will have time to look at it, but I will try if I can
->> find the time.
->
->Thanks!
+MantisBT bug report for full details of the issue:
+http://www.mantisbt.org/bugs/view.php?id=13245
 
-Ok, so taking a quick look at php-suhosin, we have:
+Please note that the second SQL injection vulnerability identified by
+Net.Edit0r is not reproducible (refer to the MantisBT bug report above
+for reasons why).
 
-...
-  61 typedef unsigned int BF_word;
-...
-558     BF_word tmp;
-559 
-560     for (i = 0; i < BF_N + 2; i++) {
-561         tmp = 0;
-562         for (j = 0; j < 4; j++) {
-563             tmp <<= 8;
-564             tmp |= *ptr;
+A patch for 1.2.6 is available at:
+https://github.com/mantisbt/mantisbt/commit/317f3db3a3c68775de3acf3b15f55b1e3c18f93b
 
-I'm assuming the above means it is vulnerable (unsigned int vs unsigned
-char).
+MantisBT 1.2.7 is currently being packaged and will be available shortly
+through usual channels for distributions and standalone users to pick
+up.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Bug reports cross-posted elsewhere:
+Gentoo: https://bugs.gentoo.org/show_bug.cgi?id=379739
+Fedora/Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=731777
+Debian: Submitted (queued)
+Ubuntu: https://bugs.launchpad.net/ubuntu/+source/mantis/+bug/828857
+
+Thanks,
+
+David Hicks
+MantisBT Developer
+mantisbt.org, #mantishelp on freenode
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
