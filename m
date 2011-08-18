@@ -1,28 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/10
-Message-ID: <20110304025613.GA22405@altlinux.org>
-Date: Fri, 4 Mar 2011 05:56:13 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/4
+Message-Id: <201108181246.48471.thomas@osterried.de>
+Date: Thu, 18 Aug 2011 12:46:47 +0200
+From: Thomas Osterried <thomas@...erried.de>
+To: Jon Oberheide <jon@...rheide.org>
+Cc: oss-security@...ts.openwall.com, Eren Türkay <eren@...dus.org.tr>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 09:42:17PM -0500, Dan Rosenberg wrote:
-[...]
-> I discovered that essentially every suid mount helper that uses
-> addmntent() (or invokes util-linux mount, which in turn calls
-> addmntent()) to add entries to /etc/mtab fails to anticipate a low
-> value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
-> /etc/mtab and possibly manipulate mountpoint options.  Affected
-> software includes at least:
-[...]
-> There are a few possible options
+Thank you for your information.
 
-One more option is to replace /etc/mtab regular file with a symlink to
-/proc/mounts, thus making any /etc/mtab editing unneeded.
+The issue is now fixed in the upstream version.
 
+vy 73,
+	- Thomas  dl9sau
 
--- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+Am Donnerstag, den 11. August 2011 um 16:21:11 Uhr, schrieb Jon Oberheide <jon@...rheide.org> in <1313072471.19030.0.camel@...alhost.localdomain>:
+> On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
+> > On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
+> > 
+> > > Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> > > > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > > > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > > > > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > > > > and ROSE traffic with the execution of an endpoint program (most
+> > > > > commonly "node"), which is run under a specified user account.
+> > > > > Because ax25d is missing a check on the return code for a setuid call
+> > > > > responsible for dropping privileges to the specified user, it may be
+> > > > > possible to cause setuid to fail, after which the chosen program will
+> > > > > be executed with root privileges.  In other words, if you're in the
+> > > > > business of handing out unprivileged shells over amateur radio (don't
+> > > > > we all? :p ), this would allow for remote compromise.
+> > > > 
+> > > > Hello,
+> > > > 
+> > > > Thank you for your investigation on the topic. Although this issue seems
+> > > > to be low-priority, it's good to let the maintainers know.
+> > > > 
+> > > > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> > > > linux-ac25 site, are the maintainers of ax25 utilities.
+> > > 
+> > > thank you for your information.
+> > > 
+> > > I know that code fragment, but I never imagined that if root calls
+> > > setuid/setgid that this could fail, because root has by definition enough
+> > > rights.
+> > 
+> > Welcome to the new world where things are more complicated ...
+> > 
+> > These days setuid and similar syscalls need to allocate memory for the
+> > credentials of a process and memory allocations may fail.  A system could
+> > even be put under massive memory pressure with the intend to make this
+> > allocation fail.
+> 
+> The important vector is RLIMIT_NPROC.
+> 
+> Regards,
+> Jon Oberheide
+> 
+> 
