@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/8
-Message-ID: <BANLkTi=8ofrzud2DVhus0VD0M1tdqmfF7A@mail.gmail.com>
-Date: Wed, 29 Jun 2011 10:32:40 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Vasiliy Kulikov <segoon@...nwall.com>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/5
+Message-ID: <20110818125325.262655ae@laverne>
+Date: Thu, 18 Aug 2011 12:53:25 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: CVE request: roundcube XSS before 0.5.4
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 29, 2011 at 10:21 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
->
-> So, with rounded read_characters value it's possible to learn privkey
-> length.
+See:
 
-Umm. You can trivially figure that out from the public key lenth
-already, can't you?
+http://sourceforge.net/news/?group_id=139281&id=302769
 
-So that's not very special, afaik.
+"We just published a new release which fixes a recently reported XSS
+vulnerability as an update to the stable 0.5 branch."
 
-                    Linus
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
