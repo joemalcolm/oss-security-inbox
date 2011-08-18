@@ -1,62 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/20
-Message-ID: <1442922131.340102.1301701329967.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 1 Apr 2011 19:42:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/4
+Message-Id: <201108181246.48471.thomas@osterried.de>
+Date: Thu, 18 Aug 2011 12:46:47 +0200
+From: Thomas Osterried <thomas@...erried.de>
+To: Jon Oberheide <jon@...rheide.org>
+Cc: oss-security@...ts.openwall.com, Eren Türkay <eren@...dus.org.tr>, Thomas Osterried <ax25@...erg.in-berlin.de>
+Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
+Thank you for your information.
+
+The issue is now fixed in the upstream version.
+
+vy 73,
+	- Thomas  dl9sau
+
+Am Donnerstag, den 11. August 2011 um 16:21:11 Uhr, schrieb Jon Oberheide <jon@...rheide.org> in <1313072471.19030.0.camel@...alhost.localdomain>:
+> On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
+> > On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
+> > 
+> > > Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
+> > > > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
+> > > > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
+> > > > > package, allows administrators to associate incoming AX.25, NET/ROM,
+> > > > > and ROSE traffic with the execution of an endpoint program (most
+> > > > > commonly "node"), which is run under a specified user account.
+> > > > > Because ax25d is missing a check on the return code for a setuid call
+> > > > > responsible for dropping privileges to the specified user, it may be
+> > > > > possible to cause setuid to fail, after which the chosen program will
+> > > > > be executed with root privileges.  In other words, if you're in the
+> > > > > business of handing out unprivileged shells over amateur radio (don't
+> > > > > we all? :p ), this would allow for remote compromise.
+> > > > 
+> > > > Hello,
+> > > > 
+> > > > Thank you for your investigation on the topic. Although this issue seems
+> > > > to be low-priority, it's good to let the maintainers know.
+> > > > 
+> > > > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
+> > > > linux-ac25 site, are the maintainers of ax25 utilities.
+> > > 
+> > > thank you for your information.
+> > > 
+> > > I know that code fragment, but I never imagined that if root calls
+> > > setuid/setgid that this could fail, because root has by definition enough
+> > > rights.
+> > 
+> > Welcome to the new world where things are more complicated ...
+> > 
+> > These days setuid and similar syscalls need to allocate memory for the
+> > credentials of a process and memory allocations may fail.  A system could
+> > even be put under massive memory pressure with the intend to make this
+> > allocation fail.
 > 
-> I'd prefer if any private replacement for vendor-sec were either:
+> The important vector is RLIMIT_NPROC.
 > 
-> 1. Strictly limited to vendor coordination of embargoed security issues
-> (with membership reflecting this purpose), or
+> Regards,
+> Jon Oberheide
 > 
-> 2. Opened up to researchers who have contributed knowledge and findings
-> in this area, and are deemed trustworthy by other list subscribers or
-> some other community opinion.
 > 
-> In other words, it doesn't make sense to me to use "member of the old
-> vendor-sec" as the only requirement for subscription, as some of the old
-> members may not be eligible depending on the purpose of the new list. I
-> understand that this is just a preliminary solution, but I think the
-> question of membership should be sorted out sooner rather than later.
-> 
-
-I agree, the membership requirements are a bit vague. IIRC Chris Evans was
-the only researcher on the list, the rest represented a vendor in some
-manner. Sadly it was about the only thing I could think of that wasn't
-going to piss someone off (which it probably does anyway ) ;)
-
-Long term I'd like to see two lists, one for purpose #1, and another geared
-toward #2. I think having a trusted venue for knowledge sharing would be
-very useful, and we likely don't want the list clogged with coordination
-details. This will of course rely heavily on what Openwall is willing to
-take on. They're already taking on a lot of risk and responsibility, I
-don't want to spoil the good will.
-
-Now that I see all these requests coming in, I'm quite certain I was too
-vague. All gpg keys should really live on a public server (I've not checked
-to see if this is the case). If someone needs to mail you directly, your
-key should be easy to find.
-
-Should we require members use a mail address from their vendor? Letting
-people use personal addresses creates an opportunity for people to remain
-on a list when they are no longer a part of a given vendor (it also makes
-it quite easy to know who represents a vendor).
-
-Also, for those of you interested, I picked up a couple of OpenPGP cards
-for myself (kernel concepts sells them for a reasonable price). Using gpg
-on a regular basis with keys stored on disk creates an opportunity for key
-theft. If you have a smartcard, this isn't an issue (it's certainly not
-without its own set of potential problems though). As a warning, key
-creation on the gemalto and omnikey usb sim sized readers has been
-problematic. I hear full sized readers work (at least the folks I've
-discussed this with say they do).
-
-Thanks.
-
--- 
-    JB
