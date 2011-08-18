@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/8
-Message-ID: <4EB16CE2.8030609@redhat.com>
-Date: Wed, 02 Nov 2011 10:16:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/8
+Message-ID: <20110818165844.GA1360@redhat.com>
+Date: Thu, 18 Aug 2011 10:58:44 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Subject: CVE request: heap overflow in perl while decoding Unicode string
 Content-Type: text/plain; charset=utf-8
 
-On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
->> Fixes a security issue where using ~/.Xauthority as a symlink would
->> cause LightDM to set the destination of the link to user ownership.
->> All users of 1.0.4 or 1.0.5 should upgrade immediately.
->>
->> Overview of changes in lightdm 1.0.6
->>
->>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
->
-> Could a CVE be assigned for this?
->
-> Regards,
-Can you send me the link to this announcement so I can confirm it? Thanks.
+Does anyone know more about this flaw?  It's in perl and the Encode
+module:
+
+http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
+
+! Unicode/Unicode.xs
+   Addressed the following:
+     Date: Fri, 22 Jul 2011 13:58:43 +0200
+     From: Robert Zacek <zacek@...st.com>
+     To: perl5-security-report@...l.org
+     Subject: Unicode.xs!decode_xs n-byte heap-overflow
+
+It's been fixed in perl:
+
+http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
+
+Seems to be in all versions of perl since 5.10.0.
+
+There isn't really information on the impact of this though.  I don't
+know enough to determine whether this is something that can cause
+arbitrary code execution, whether some gcc/glibc hardening prevents or
+minimizes the impact, whether it's a crash-only, etc.  It has been asked
+on the perl5-porters list, but no response was given:
+
+http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
+
+Does anyone know anything more about this flaw?  Could a CVE be assigned
+to it as well?
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
