@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/2
-Message-ID: <20110706034815.GB18345@openwall.com>
-Date: Wed, 6 Jul 2011 07:48:15 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/6
+Message-ID: <CABeokRdp3LAkfrHhbDfQeGdLgiMEqu8DXrMn1o6b2nneyfqyZQ@mail.gmail.com>
+Date: Thu, 18 Aug 2011 10:15:08 -0400
+From: Sergey Chernyshev <sergey.chernyshev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Bind incident
+Subject: Start(up) API project security
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 07:17:32PM +0800, Eugene Teo wrote:
-> You might have read about AusCert's accidental disclosure of the ISC
-> Bind advisories today. If you have more information about this, please
-> share. AFAICS, the bind source packages are still not available at the
-> ISC website.
-> 
-> https://bugzilla.redhat.com/CVE-2011-2464
-> https://bugzilla.redhat.com/CVE-2011-2465
-> http://risky.biz/auscert-bind
-> http://pastebin.com/9NUt8Pk0
+Hello from fellow Open Sourcerer.
 
-Here are the ISC advisories:
+I'm working on a project to help people build web apps, called Startup API
+(thinking of renaming it to Start API to make it less cool, but more
+useful).
 
-http://www.isc.org/software/bind/advisories/cve-2011-2464
-http://www.isc.org/software/bind/advisories/cve-2011-2465
+Having seen too many startups keeping the passwords in clear
+and committing many similar security "crimes", I'm very much concerned about
+it and want to establish some security process around building the apps.
+I've started gathering information about security-related issues on the
+project's wiki (not only for Startup API software itself, but for best
+practice collection in general):
+http://startupapi.org/Security
 
-The oldest affected version is 9.6'ish, and the advisories explicitly
-say that "Other versions of BIND 9 not listed in this advisory are not
-vulnerable to this problem."  So those of us with older BIND 9 appear to
-have nothing to do on this. ;-)  (Of course, we might have other/older
-issues to patch.)
+Right now, I'm trying to understand what are the most common and / or most
+dangerous security issues surrounding web apps.
+I feel that this group should have a pretty good experience tracking those
+down and I'd love any thoughts you might want to share.
 
-Alexander
+If you have any links to good articles or videos about web app security, I'd
+really appreciate that too.
+
+Thank you,
+
+         Sergey
+
+
+--
+Sergey Chernyshev
+http://www.sergeychernyshev.com/
+http://www.meetup.com/Web-Performance-NY/
+http://www.showslow.com/
+
