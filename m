@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/4
-Message-ID: <2055440471.142325.1298316732631.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 21 Feb 2011 14:32:12 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/8
+Message-ID: <20110818165844.GA1360@redhat.com>
+Date: Thu, 18 Aug 2011 10:58:44 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: clamav 0.97
+Subject: CVE request: heap overflow in perl while decoding Unicode string
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> A new clamav version is out and as usual, they don't mention if it's
-> security-relevant.
-> 
-> Though from the changelog
-> http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97
-> 
-> at least this sounds like security:
-> * libclamav/vba_extract.c: fix error path double free (bb#2486)
-> 
+Does anyone know more about this flaw?  It's in perl and the Encode
+module:
 
-The details here are pretty slim:
-https://wwws.clamav.net/bugzilla/show_bug.cgi?id=2486
+http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
 
-But since it's been reqeusted, let's use CVE-2011-1003.
+! Unicode/Unicode.xs
+   Addressed the following:
+     Date: Fri, 22 Jul 2011 13:58:43 +0200
+     From: Robert Zacek <zacek@...st.com>
+     To: perl5-security-report@...l.org
+     Subject: Unicode.xs!decode_xs n-byte heap-overflow
+
+It's been fixed in perl:
+
+http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
+
+Seems to be in all versions of perl since 5.10.0.
+
+There isn't really information on the impact of this though.  I don't
+know enough to determine whether this is something that can cause
+arbitrary code execution, whether some gcc/glibc hardening prevents or
+minimizes the impact, whether it's a crash-only, etc.  It has been asked
+on the perl5-porters list, but no response was given:
+
+http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
+
+Does anyone know anything more about this flaw?  Could a CVE be assigned
+to it as well?
 
 Thanks.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
