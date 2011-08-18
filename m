@@ -1,52 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/31/3
-Message-ID: <AANLkTikYP58xWQwjZtVxcYFSxpSiruKo1qQnm7WyYcOG@mail.gmail.com>
-Date: Thu, 31 Mar 2011 09:43:29 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>,  Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/3
+Message-ID: <CAPYM6Vz4ut13bCZU+jEYGFeu6wcf0ThYW6h8hSBUgC2MDxBwBQ@mail.gmail.com>
+Date: Thu, 18 Aug 2011 14:18:27 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Elgg 1.7.10 <= | Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
->> Do you plan to open bug in glibc bugzilla for this issue?
->>
->
-> Sure, I'll open one today.
->
+1. OVERVIEW
 
-"Today" ended up meaning "next week", but there's now a glibc bugzilla
-entry for this:
-http://sourceware.org/bugzilla/show_bug.cgi?id=12625
-
-As indicated in my previous email, some of the helpers will need fixes
-to completely resolve this issue.  In particular:
-
-* util-linux mount should modify its custom addmntent function to
-behave as suggested in the glibc bug report, and should improve its
-error handling on addmntent failure to remove lockfiles and temporary
-files.
-
-* If mount.cifs is still shipped by anyone as setuid (I know there was
-discussion of removing its suid bit), then it will need to be altered
-to edit a temp file instead of /etc/mtab directly and clean up on
-addmntent failure.
-
-* If ncpfs is still supported by anyone (it's orphaned in a number of
-distributions), it should be fixed to have ncpmount edit a temp file
-instead of /etc/mtab directly and have both ncpmount and ncpumount
-clean up properly on addmntent failure.
+The Elgg 1.7.10 and lower versions are vulnerable to Cross Site
+Scripting and SQL Injection.
 
 
-Alternatively, I'd be happy to see mount.cifs and the ncpfs utils no
-longer ship with a suid bit, since they've had security issues in the
-past and I don't think there's many situations where unprivileged
-users need the ability to mount filesystems other than FUSE.  I'd also
-like to see distributions migrating away from /etc/mtab in general,
-since /proc/mounts seems like a much better replacement.
+2. BACKGROUND
 
-The above issues will probably need CVE identifiers of their own, but
-I'd hold off on assigning them until it's clear that glibc is amicable
-to the proposed solution.  Otherwise, there may need to be other fixes
-involving raising resource limits (I hope not).
+Elgg is an award-winning social networking engine, delivering the
+building blocks that enable businesses, schools, universities and
+associations to create their own fully-featured social networks and
+applications. Well-known Organizations with networks powered by Elgg
+include: Australian Government, British Government, Federal Canadian
+Government, MITRE, The World Bank, UNESCO, NASA, Stanford University,
+Johns Hopkins University and more (http://elgg.org/powering.php)
 
--Dan
+
+3. VULNERABILITY DESCRIPTION
+
+The "internalname" parameter is not properly sanitized, which allows
+attacker to conduct Cross Site Scripting attack. This may allow an
+attacker to create a specially crafted URL that would execute
+arbitrary script code in a victim's browser. The "tag_names" is not
+properly sanitized, which allows attacker to conduct SQL Injection
+attack.
+
+
+4. VERSIONS AFFECTED
+
+Elgg 1.7.10 <=
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+- Cross Site Scripting
+
+http://localhost/pg/embed/media?internalname=%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
+
+- SQL Injection > Info Disclosure
+
+http://localhost/pg/search/?q=SQLin&search_type=tags&tag_names=location%27
+
+
+6. SOLUTION
+
+Upgrade to 1.7.11 or higher.
+
+
+7. VENDOR
+
+Curverider Ltd
+http://www.curverider.co.uk/
+http://elgg.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-08-01: vulnerability reported
+2011-08-15: vendor released fixed version
+2011-08-18: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[elgg_1710]_xss_sqlin
+Project Home: http://elgg.org/
+Vendor Release Note:
+http://blog.elgg.org/pg/blog/brett/read/189/elgg-1711-released
+
+
+
+#yehg [2011-08-18]
