@@ -1,96 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/9
-Message-ID: <AANLkTi=8ceECMMGgw=L9buzeTKbBnCu_r_W4LqaRgG6V@mail.gmail.com>
-Date: Fri, 1 Apr 2011 12:30:17 -0700
-From: Charles Blas <cblas@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/3
+Message-ID: <CAPYM6Vz4ut13bCZU+jEYGFeu6wcf0ThYW6h8hSBUgC2MDxBwBQ@mail.gmail.com>
+Date: Thu, 18 Aug 2011 14:18:27 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE Request: Elgg 1.7.10 <= | Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello, please subscribe me also, was on vendor-sec.  Thanks!
-Charles Blas, CISSP-ISSAP <cblas@....org>
+1. OVERVIEW
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v1.4.10 (MingW32)
-
-mQINBEx8GvEBEADQLqkeO332iHohX5KMGZKv+cPbeL75rboQj/61/+QpOW9VM3/F
-WY/yaVqS+iKlP+iE9a3VSGGwj8Uh2WfRvprxvAsb6X97XsAOAkZDpv1ElbvKWCyn
-JMl3agh+H4GJVlKistT/Ob8oCgj/vAnT1nLK6tQegDa39hk4nOiedzs9QkJTGsuL
-L6NQITpX5GahShoKFLbq0sPqIr1y2B4FQu0JXg+w/qa7HBPosmxaB/uRvwfCSVrr
-/EWch/Cc2bC1HKsq9A3HUIVShGxGBI3hD2q2ZvWxAn2WB1w7gfULReM84RTxj+gC
-4D5/XiBNalmuwspz3MjeodWuPi6EHoJ0R7D3d0CyblDzxkTXohp8Mkgd6lZfEIWq
-RruAccPvDVnxBFgFv34vypnC9k7ncNIzYGtfV78Rb6bEhcd+sf1vxsn5zFoV589G
-lAD1Y105W1NfACFnGmHtrLgUszgBmZRgABw6jw+LkrV8w9ZbNLDeGglljfBrtGoC
-dRfq4Ba71v0CDIfi7B/gjkViwO6ekbzxEgfT8vbhugE9xmiiIFY68mu6nHrWLy9j
-GKOsaWKTPBYIIZpTltIyfjQmqDuovytvl7frdF5kC83pyOuofniR3aKoPNf+YW4R
-fAxprGFR1exNFPN+jQgFr2hz/8xgHHe94rSBlQ5rsBmOfED4Bzw60XPihwARAQAB
-tCJDaGFybGVzIEJsYXMgKEJTQykgPGNibGFzQGFjbS5vcmc+iQI+BBMBAgAoBQJM
-fBrxAhsDBQkEWLIABgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCgVGTqX69B
-lhOWD/0TzsGC9AtI8WIwkFmkisduBzdzXocxZEuQOwJE1uXty2pbj2lWyNufjdjB
-Yjmon5q4vyAa5M3lH3DlIxEV2M+rfIZh8M1h6fdZyehz3kwTI3kk7aqEpDT7/Uis
-w59F/go0KIthy2hnozajJhWZ1xIxheKa9A8EtJGGPYxMP9dRBz1KjfjxT/ucHcpP
-qx69qAW9fqK05pCG6KOcSD2s176glxhR2ATtBWURbqSnd7I+O0S7F7WzyNfEdrtO
-LaJWSJh92dBZW0ZXOt4Zx4GNp1zOpj9P4Gb3D755kYbN5bCh7VwTwHor1XUqv8uc
-yS5JOUTSlSoLIT7u2g8Pu6b1GZ4LY7/KychivG8kJgxL0ZzQ9BMEjP1Va5ukN5Lp
-0Pn7HhhE4rwW+7zGfVnlYIFZDyckCL9dh3JTjBrTBBC48gsysx8SqN9IjLG5cLyV
-8bEMQqNHWEbfFndz1h3Q//1jPo9wKmqWyGJM6AfwMDvb89PmlAqdlJv1t0L8eCnz
-QNdxOH0cNbp7gtgiUUc5odRu9z9w0RLS6+0C1jDz3FwovFssPudwvOFaJWksm77I
-Lh0VupAOyyGrlURcNO0peOpR2+0aWG8qHnRe/0rvGF/ZlrT/BSLW2CFWOD9UCP/T
-7H3l3yWVDXGCT5VIbgg2SDvQFqNidfDhXNp8I8eg+0S6AuAwErkCDQRMfBrxARAA
-txwKR/PUu/JPPf4dSYcu0c7yv+JGnCQZeQFRPPRpRhalTJVogfLHvWjkKl37gT/v
-//fSiN77NtYA6+apmFehq+4rOwliBGHhcYBJgnwVyW69CalwbUILpQfXuFUVzxB/
-zqCsSm4ewdqF0AfSw4SaU9WtvpYirlm4o9dg15P7S4GZFQFQkHGuAl3x94z4oh/1
-E6W9fB84sZZY2f+05fAzThFqoWG4tj1a0ZuLub7rdVOiEFJ2a8yOgT8a6/1pry+A
-2AY336QQGlqbVQbQQwD2bdiyCnd8TY19Nj6gxkcG91rXttOp52bnQXgiCq+w/lQk
-Vl8LgOJIrANwtLcNR25Q2hG6MX4Mvux17viGA4+aw6qQNmhiTg66Wt0tMRt23ei0
-M33hCXZuvFKEp6vAy6D0icfDxnmKkkR0S7tM6LIszRd9EBgJdtQXkHl9BSnKvGBu
-njor4kI1jPRHOb3JgaAAABpEoiAfedvO0k899UZdbVs5+/Qhcp0VHI3wx0Ql8FrY
-MI2mwy+U/jVYbtBg3Re9na+jxdGtSpbL2fdqSmFkZamRQBqNTZ2c20dfA0tbyj4I
-IUJjqsYCHjmxON2TRcoyRU2As3m//SovDUc2dPHxFx+bB94fZWSSOoYTqLOmbibZ
-Y9NDkCur8/J00vRlJNQ/tfvZcwnuLEr9Uh+yksVbMsEAEQEAAYkCJQQYAQIADwUC
-THwa8QIbDAUJBFiyAAAKCRCgVGTqX69BllNgD/9ZyVsNz1I6pzjwLkYCmWFBsJkF
-dyKIGWXUMiHe/18Yj7lv1HOyHZslxseqweeGO+yAR6tN772v/2Ec1U7BMzz2MVq7
-Nb6NkwUEmLcl0cXBsIxFFXuArtHllqXMEDlwTxlfvLfipTlRx1dZCo/n9XspMKc6
-GCXEVDFb4rEmTvG9+mjR4mUj4IECg3229H11jBvMRSJqwt/0g6utdnVHSuvkMbO8
-ktTTnb8FiACGoRfolRbXSFiQxE1LG9b61ALsynCUVvpBjGoR1KE3MEAXSHXGcBsQ
-51hR3KwRJCUObGSkop7sP7/7ZaU5Q3V80FkgoOkLc8em4/Gesc4yXPSGKvfwNOe2
-lPLNfxzTEM2+ea5opVyUT2c27kUyJiCNIkWGM1T63eH0uqSRPUSu87DPuLnyyUro
-16Lw0DQ5S8M1Ox1qHbVFvbO6OY6R1FqCfv5vyA1yV2qoN1A0FeR2fj3+Agg0nLoW
-AHuQ05X64XmX0x/pazv0IgtCjHvWUR5sQpnyx+8nBxwB2NgxiBT7xfbonS6I0w5q
-A1tTRS6NchmUexkc/WwDve9tAIB0IkK7o0OAYPXkxXDOm4hvR17xxi80CiMINup6
-sLHt4mRHIzJDlS0h8U8FargZNEYf0Bfmbx6gCx/3qJN1uEAn7wVn6Pq6f1EXQWge
-VzYa0iOjyvty/flfsQ==
-=7q6c
------END PGP PUBLIC KEY BLOCK-----
+The Elgg 1.7.10 and lower versions are vulnerable to Cross Site
+Scripting and SQL Injection.
 
 
-On Fri, Apr 1, 2011 at 11:48 AM, Marc Deslauriers <
-marc.deslauriers@...onical.com> wrote:
+2. BACKGROUND
 
-> Hello,
->
-> On Fri, 2011-04-01 at 14:03 -0400, Josh Bressers wrote:
-> > Initial members will have had to be a vendor-sec member (no exploders
-> this
-> > time around). You must reply to this thread, in public (on oss-security).
-> > We want this to be very public, we have nothing to hide. You must have a
-> > public gpg key ID included in your reply. The new list will gpg encrypt
-> all
-> > mail (it does accept plaintext messages though).
->
-> Please subscribe me to the new list. I was a vendor-sec subscriber.
->
-> pub  4096R/A744BE93 2010-09-30
-> uid Marc Deslauriers <marc.deslauriers@...onical.com>
-> Fingerprint 50C4 A0DD CF31 E452 CEB1 9B51 6569 D855 A744 BE93
->
-> Thanks,
->
-> Marc.
->
-> --
-> Marc Deslauriers
-> Ubuntu Security Engineer     | http://www.ubuntu.com/
-> Canonical Ltd.               | http://www.canonical.com/
->
+Elgg is an award-winning social networking engine, delivering the
+building blocks that enable businesses, schools, universities and
+associations to create their own fully-featured social networks and
+applications. Well-known Organizations with networks powered by Elgg
+include: Australian Government, British Government, Federal Canadian
+Government, MITRE, The World Bank, UNESCO, NASA, Stanford University,
+Johns Hopkins University and more (http://elgg.org/powering.php)
 
+
+3. VULNERABILITY DESCRIPTION
+
+The "internalname" parameter is not properly sanitized, which allows
+attacker to conduct Cross Site Scripting attack. This may allow an
+attacker to create a specially crafted URL that would execute
+arbitrary script code in a victim's browser. The "tag_names" is not
+properly sanitized, which allows attacker to conduct SQL Injection
+attack.
+
+
+4. VERSIONS AFFECTED
+
+Elgg 1.7.10 <=
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+- Cross Site Scripting
+
+http://localhost/pg/embed/media?internalname=%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
+
+- SQL Injection > Info Disclosure
+
+http://localhost/pg/search/?q=SQLin&search_type=tags&tag_names=location%27
+
+
+6. SOLUTION
+
+Upgrade to 1.7.11 or higher.
+
+
+7. VENDOR
+
+Curverider Ltd
+http://www.curverider.co.uk/
+http://elgg.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-08-01: vulnerability reported
+2011-08-15: vendor released fixed version
+2011-08-18: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[elgg_1710]_xss_sqlin
+Project Home: http://elgg.org/
+Vendor Release Note:
+http://blog.elgg.org/pg/blog/brett/read/189/elgg-1711-released
+
+
+
+#yehg [2011-08-18]
