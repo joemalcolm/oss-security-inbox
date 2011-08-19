@@ -1,33 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/04/3
-Message-ID: <4EDBBE38.5040204@redhat.com>
-Date: Sun, 04 Dec 2011 11:38:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/16
+Message-ID: <1476048552.143760.1313782823697.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:40:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: dishix <dishix@...glemail.com>
-Subject: Re: CVE request: CSRF in xt:commerce 3.04 SP2.1
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: MantisBT <1.2.7 search.php multiple XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 12/03/2011 01:38 AM, dishix wrote:
-> Hi,
->
-> Can I get CVE-identifier for this:
->
-> xt:commerce 3.04 SP2.1 is prone to CSRF. An attacker can exploit this
-> vulnerability to escalate his/her privileges to gain administrator access.
->
-> >
-> http://dishix.blogspot.com/2011/11/exploiting-xtcommerce-v304-sp21-cross.html
-> >
-> http://dishix.blogspot.com/p/xtcommerce-v304-sp21-cross-site-request_29.html
->
-The second link is 404. Also can you provide links to the project and
-the affected source code so I can verify this issue? Thanks.
->
-> Best regards,
-> dishix
+Please use CVE-2011-2938 for the multiple XSS issues.
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
 
+----- Original Message -----
+> Original vulnerability report by Net.Edit0r (Net.Edit0r@....net) from
+> BlACK Hat Group [http://black-hg.org] is available at:
+> http://packetstormsecurity.org/files/104149
+> 
+> MantisBT bug report for full details of the issue:
+> http://www.mantisbt.org/bugs/view.php?id=13245
+> 
+> Please note that the second SQL injection vulnerability identified by
+> Net.Edit0r is not reproducible (refer to the MantisBT bug report above
+> for reasons why).
+> 
+> A patch for 1.2.6 is available at:
+> https://github.com/mantisbt/mantisbt/commit/317f3db3a3c68775de3acf3b15f55b1e3c18f93b
+> 
+> MantisBT 1.2.7 is currently being packaged and will be available
+> shortly
+> through usual channels for distributions and standalone users to pick
+> up.
+> 
+> Bug reports cross-posted elsewhere:
+> Gentoo: https://bugs.gentoo.org/show_bug.cgi?id=379739
+> Fedora/Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=731777
+> Debian: Submitted (queued)
+> Ubuntu: https://bugs.launchpad.net/ubuntu/+source/mantis/+bug/828857
+> 
+> Thanks,
+> 
+> David Hicks
+> MantisBT Developer
+> mantisbt.org, #mantishelp on freenode
