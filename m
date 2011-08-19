@@ -1,31 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/5
-Message-ID: <20110306122606.GA892@openwall.com>
-Date: Sun, 6 Mar 2011 15:26:06 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/17
+Message-ID: <1579872259.144003.1313783381867.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:49:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: CVE request: heap overflow in perl while decoding Unicode string
 Content-Type: text/plain; charset=utf-8
 
-Pavel,
+I'm going to assign this CVE-2011-2939. It looks like a single byte
+overflow. It's probably not exploitable (even as a DoS), but to play it
+safe, I'm assigning this ID.
 
-On Sun, Mar 06, 2011 at 04:19:04PM +0700, Pavel Labushev wrote:
-> 06.03.2011 02:21, Solar Designer пишет:
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> Does anyone know more about this flaw? It's in perl and the Encode
+> module:
 > 
-> >> At least in Gentoo there are packages
-> >> (ebuilds and eclasses) that create user/group-writable directories in
-> >> /var/log and enable logrotate to handle the log files there.
-> > 
-> > Is this something you can get fixed?
+> http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
 > 
-> I hope it will be fixed soon. Would be nice to have CVEs assigned for these
-> issues anyway, just to make people aware. If even package maintainers got it
-> wrong, I bet there's a legion of users who also did.
-
-For this to happen, you need to post info on the specific issues and
-request CVEs for them.  Will you do this, please?  (Perhaps start a new
-thread, or even a thread per package - that's up to you.)
-
-Thanks!
-
-Alexander
+> ! Unicode/Unicode.xs
+> Addressed the following:
+> Date: Fri, 22 Jul 2011 13:58:43 +0200
+> From: Robert Zacek <zacek@...st.com>
+> To: perl5-security-report@...l.org
+> Subject: Unicode.xs!decode_xs n-byte heap-overflow
+> 
+> It's been fixed in perl:
+> 
+> http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
+> 
+> Seems to be in all versions of perl since 5.10.0.
+> 
+> There isn't really information on the impact of this though. I don't
+> know enough to determine whether this is something that can cause
+> arbitrary code execution, whether some gcc/glibc hardening prevents or
+> minimizes the impact, whether it's a crash-only, etc. It has been
+> asked
+> on the perl5-porters list, but no response was given:
+> 
+> http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
+> 
+> Does anyone know anything more about this flaw? Could a CVE be
+> assigned
+> to it as well?
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
