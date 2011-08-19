@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/1
-Message-ID: <20110728112115.25a6df2f@redhat.com>
-Date: Thu, 28 Jul 2011 11:21:15 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: hplip/foomatic-filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/3
+Message-ID: <30557829.A2gxmV9TRs@neon>
+Date: Fri, 19 Aug 2011 13:36:31 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: BusyBox unpack_Z_stream() buffer underflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 18 Jul 2011 14:35:28 +0200 Jan Lieskovsky wrote:
+Hi,
 
-> > The foomatic filters of the hplip package allow remote users
-> > to execute arbitrary commands as the lp user. The flaw allows
-> > hosts which are listed in the printing ACL or local users to
-> > pass PPD file arguments to the foomatic filters. A PoC was
-> > demonstrated using the CUPS server.
-> >
-> > More info and patches are here:
-> >
-> > https://bugzilla.novell.com/show_bug.cgi?id=698451
-> 
-> Please use CVE-2011-2697 for this.
+Secunia [1] reported a fix in BusyBox for a flaw similar to CVE-2006-1168:
 
-According to SUSE bug, there are two different implementations of the
-filter - one in perl and one in c - in different foomatic versions.
-Both are affected by the same kind of problem, even though they don't
-share vulnerable code.  Is one CVE sufficient here, or is Mitre likely
-to split and assign another when this is processed? Steven?
+"The vulnerability is caused due to a boundary error within the 
+"unpack_Z_stream()" function (archival/libarchive/decompress_uncompress.c) and 
+can be exploited to cause a buffer underflow via a specially crafted 
+datastream."
+
+Patch is available at [2], our bug is [3].
+
+Please assign a CVE.
+
+Thanks,
+Alex
+
+[1] http://secunia.com/advisories/45702/
+[2] 
+http://git.busybox.net/busybox/diff/archival/libarchive/decompress_uncompress.c?id=251fc70e9722f931eec23a34030d05ba5f747b0e
+[3] https://bugs.gentoo.org/show_bug.cgi?id=379857
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Alex Legler <a3li@...too.org>
+Gentoo Security / Ruby
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
