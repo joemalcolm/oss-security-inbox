@@ -1,44 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/8
-Message-ID: <ab2adc9a-dfc4-466e-8687-6b1ebbd815d5@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 30 Sep 2011 13:43:00 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/6
+Message-ID: <20110819170835.GH1360@redhat.com>
+Date: Fri, 19 Aug 2011 11:08:35 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
+Subject: CVE request: stunnel 4.4x heap overflow flaw
 Content-Type: text/plain; charset=utf-8
 
-Sorry this took so long, it's been a wild couple of weeks.
+As noted in the stunnel changelog, 4.42 corrects a heap overflow flaw
+that could lead to a DoS or remote execution of arbitrary code.
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
->    multiple XSS flaws have been recently reported in the v3.4.4 (and
->    earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
-> 
-> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
-> 
-> 1) An XSS flaw was found in the way phpMyAdmin processed row content,
-> containing JavaScript code, after its inline editing and saving,
+References:
 
-Use CVE-2011-3591
+http://stunnel.org/?page=sdf_ChangeLog
+https://bugzilla.redhat.com/show_bug.cgi?id=732068
 
-> 
-> 2) It was found that phpMyAdmin did not properly sanitize the content of
-> db, table, and column names prior use of their values.
-
-Use CVE-2011-3592
-
-> 
-> A remote attacker could use these flaws to conduct XSS attacks (execute
-> arbitrary HTML or web script) by tricking authenticated phpMyAdmin user
-> into visiting of a specially-crafted URL.
-> 
-> References:
-> [2] http://secunia.com/advisories/45991/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
+Could a CVE be assigned for this?
 
 Thanks.
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
