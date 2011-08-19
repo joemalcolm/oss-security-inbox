@@ -1,53 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/9
-Message-ID: <1333010105.397553.1306870978932.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 15:42:58 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/4
+Message-ID: <20110819145226.6da97b47@redhat.com>
+Date: Fri, 19 Aug 2011 14:52:26 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Reed Loden <reed@...dloden.com>, coley <coley@...re.org>
-Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
+Subject: Re: CVE request: BusyBox unpack_Z_stream() buffer underflow
 Content-Type: text/plain; charset=utf-8
 
-I'm going to save this one for upstream. It's possible they've already
-assigned something (Mozilla is a CNA).
+On Fri, 19 Aug 2011 13:36:31 +0200 Alex Legler wrote:
 
-I've CC'd Reed in the rare event he doesn't know about this.
+> Secunia [1] reported a fix in BusyBox for a flaw similar to
+> CVE-2006-1168:
 
-Thanks.
+We had that mentioned here:
+  https://bugzilla.redhat.com/show_bug.cgi?id=727624#c8
+
+> Please assign a CVE.
+
+Given that busybox embeds ncompress code, I believe old CVE can /
+should be used for busybox too.  I'm happy to be corrected if I'm wrong.
 
 -- 
-    JB
-
------ Original Message -----
-> Hi,
-> found this in RH's bugzilla:
-> https://bugzilla.redhat.com/show_bug.cgi?id=709165
-> 
-> Vincent Danen 2011-05-30 18:38:43 EDT
-> 
-> A Debian bug report [1] indicated that Firefox 4.0.x handled the
-> validation/revalidation of SSL certificates improperly. If a user were
-> to
-> visit a site with an untrusted certificate, Firefox would correctly
-> display the
-> warning about the untrusted connection. If a user were to confirm the
-> security
-> exception for a single session (not check off the "permanently store
-> this
-> exception"), then restart the browser and re-load the page, the
-> contents of the
-> page would be displayed from the Firefox cache. Upon reloading the
-> page, the
-> security warning would appear, but incorrectly indicates that the site
-> provides
-> a valid, verified certificate and there is no way to confirm the
-> exception.
-> [...]
-> 
-> --
-> Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-> 21284 (AG Nürnberg
-> --
-> Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> -- Marie von Ebner-Eschenbach
+Tomas Hoger / Red Hat Security Response Team
