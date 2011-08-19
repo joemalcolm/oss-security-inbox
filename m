@@ -1,26 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/1
-Message-ID: <4DABB470.7060407@redhat.com>
-Date: Mon, 18 Apr 2011 11:48:00 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/12
+Message-ID: <1383647632.141993.1313780931833.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:08:51 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: WebsiteBaker 2.8.1 <= Arbitrary File Upload Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 04/16/2011 03:51 AM, akuster wrote:
->
-> Does affected code have to be in the main K.O repo or can it be in any
-> of the other git kernel repos to get a CVE #?
->
-> We have least one product possible affected in
-> arch/arm/mach-omap2/debobs.c but this file does not exist in K.O, maybe
-> somewhere else (our paper trail on this is coming up cold so I don't
-> know where is came from).
+Please use CVE-2011-2933
 
-The affected code need not be in the mainline kernel. You may request a 
-name even if it only affects the version of kernel as shipped by mvista.
+Thanks.
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+
+
+----- Original Message -----
+> 1. OVERVIEW
+> 
+> WebsiteBaker 2.8.1 and lower versions are vulnerable to Arbitrary File
+> Upload.
+> 
+> 
+> 2. BACKGROUND
+> 
+> WebsiteBaker helps you to create the website you want: A free, easy
+> and secure, flexible and extensible open source content management
+> system (CMS). Create new templates within minutes - powered by
+> (X)HTML, CSS and jQuery. With WebsiteBaker it's quite natural your
+> site is W3C-valid, SEO-friendly and accessible - there are no
+> limitations at all.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> WebsiteBaker 2.8.1 and lower versions contain a flaw related to the
+> /admin/media/upload.php script failing to restrict uploaded files with
+> extensions - .htaccess, .php4, .php5, .phtml. This may allow an
+> attacker to execute arbitrary PHP code. User account to WebsiteBaker
+> admin backend is required. Attacker could gain access it by way of
+> either brute force or CSRFing to currently-logged in admin users.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 2.8.1 <=
+> 
+> 
+> 5. SOLUTION
+> 
+> Upgrade to 2.8.2 or higher
+> 
+> 
+> 6. VENDOR
+> 
+> WebsiteBaker Org e. V.
+> http://www.websitebaker2.org/
+> 
+> 
+> 7. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 8. DISCLOSURE TIME-LINE
+> 
+> 2011-01-26: notified vendor
+> 2011-08-01: vendor released fix
+> 2011-08-13: vulnerability disclosed
+> 
+> 
+> 9. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_arbitrary_file_upload
+> http://www.gnucitizen.org/blog/cross-site-file-upload-attacks/
+> 
+> 
+> #yehg [2011-08-13]
