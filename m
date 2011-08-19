@@ -1,39 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/6
-Message-ID: <4D65EACA.5010803@lordepsylon.net>
-Date: Thu, 24 Feb 2011 06:21:14 +0100
-From: psy <root@...depsylon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/10
+Message-ID: <777583052.141545.1313780108648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 14:55:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: XSSer v1.5 -beta- aka "Swarm Edition!" released.
+Cc: coley <coley@...re.org>
+Subject: Re: CVE-request: pithos symlink vulnerability CWE-61
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-I am very happy to present a new version of *XSSer* (v1.5-beta-) - the
-cross site scripter framework.
-
-Take a look to the XSSer website to see new features implemented,
-screenshoots, documentation, etc...
-
-http://xsser.sf.net
-
-You can download new code directly from here:
-
-http://sourceforge.net/projects/xsser/files/xsser_1.5-1.tar.gz/download
-
-There is one package pre-compiled for Ubuntu/Debian here:
-
-http://xsser.sourceforge.net/xsser/xsser_1.5-1_all.deb.tar.gz
-
-And here, you have a video demostration:
-
-http://blip.tv/file/4806587/
-
-"Remeber, now mosquitos... are swarm!"
-
-Happy cross hacking.
-
-psy.
 
 
+----- Original Message -----
+> Can I get 2010 CVE-ID for Pithos symlink attack vulnerability:
+> https://bugs.launchpad.net/pithos/+bug/667896
+> 
+> Software web-page: https://launchpad.net/pithos
+> Found by: lfaraone <https://launchpad.net/~lfaraone>
+> Found at: 2010-10-30 (fix released same day)
+> "Predictable file- or directory-names in /tmp/-directory can lead to
+> symlink attack."
+> 
+> Fixed in Debian:
+> 
+> http://packages.debian.org/changelogs/pool/main/p/pithos/current/changelog
+> says:
+> pithos (0.3.5-1) unstable; urgency=high
+> 
+> * New upstream version.
+> - SECURITY UPDATE: fixes overwriting of arbitrary file via symlinks
+> (LP: #667896)
+> Can be still found from DST:
+> http://security-tracker.debian.org/tracker/TEMP-0000000-14D1F9
+> 
+> And in Ubuntu:
+> http://changelogs.ubuntu.com/changelogs/pool/universe/p/pithos/pithos_0.3.8-1/changelog
+> 
 
+Please use CVE-2010-4817.
+
+Thanks.
+
+-- 
+    JB
