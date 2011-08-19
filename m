@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/3
-Message-ID: <4EF5F237.2040403@redhat.com>
-Date: Sat, 24 Dec 2011 08:39:35 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/7
+Message-ID: <1862529808.141315.1313779628800.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 14:47:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request 2006: Joomla Web Link Submission title Parameter SQL injection
+Cc: Hanno Böck <hanno@...eck.de>, coley <coley@...re.org>
+Subject: Re: CVE request: coppermine gallery < 1.4.26
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 08:05 AM, Henri Salo wrote:
-> Is it possible to get CVE assigned for very old Joomla-issue?
->
-> http://osvdb.org/show/osvdb/26626
-> http://secunia.com/advisories/20746/
-> http://www.exploit-db.com/exploits/1922/
-> http://www.securityfocus.com/archive/1/437496
->
-> I can see from honeypot-logs that they are still using this vulnerability. I did not yet find Joomla-references for this. If this is too old vulnerability for CVE or wrong reason please notify me.
->
-> - Henri Salo
-It's never to late for a CVE! This issue doesn't appear to be 
-CVE-2006-3481 so I guess it gets a new CVE. Please use CVE-2006-7247 for 
-this issue.
+
+
+----- Original Message -----
+> This security issue never got CVE-identifier:
+> http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
+> 
+> Original advisory:
+> http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
+> OSVDB: http://osvdb.org/show/osvdb/62261
+> 
+
+Please use CVE-2010-4815 for this.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
