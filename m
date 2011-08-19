@@ -1,25 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/1
-Message-ID: <2c6dddd706b56bbbbca633dc1566c014.squirrel@wm.kinkhorst.nl>
-Date: Tue, 17 May 2011 10:38:20 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/16
+Message-ID: <1476048552.143760.1313782823697.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:40:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: nbd-server 
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: MantisBT <1.2.7 search.php multiple XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please use CVE-2011-2938 for the multiple XSS issues.
 
-In Debian the following was reported:
-nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
-phase, which allows unauthenticated users to DoS the server by causing
-the negotiation to fail (e.g., by specifying a non-existing name for an
-export).
+Thanks.
 
-Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so for us
-goes that only our unstable distribution is affected.
-
-We'd like to have a CVE name for this.
+-- 
+    JB
 
 
-Cheers,
-Thijs
+----- Original Message -----
+> Original vulnerability report by Net.Edit0r (Net.Edit0r@....net) from
+> BlACK Hat Group [http://black-hg.org] is available at:
+> http://packetstormsecurity.org/files/104149
+> 
+> MantisBT bug report for full details of the issue:
+> http://www.mantisbt.org/bugs/view.php?id=13245
+> 
+> Please note that the second SQL injection vulnerability identified by
+> Net.Edit0r is not reproducible (refer to the MantisBT bug report above
+> for reasons why).
+> 
+> A patch for 1.2.6 is available at:
+> https://github.com/mantisbt/mantisbt/commit/317f3db3a3c68775de3acf3b15f55b1e3c18f93b
+> 
+> MantisBT 1.2.7 is currently being packaged and will be available
+> shortly
+> through usual channels for distributions and standalone users to pick
+> up.
+> 
+> Bug reports cross-posted elsewhere:
+> Gentoo: https://bugs.gentoo.org/show_bug.cgi?id=379739
+> Fedora/Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=731777
+> Debian: Submitted (queued)
+> Ubuntu: https://bugs.launchpad.net/ubuntu/+source/mantis/+bug/828857
+> 
+> Thanks,
+> 
+> David Hicks
+> MantisBT Developer
+> mantisbt.org, #mantishelp on freenode
