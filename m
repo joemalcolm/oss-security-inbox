@@ -1,19 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/3
-Message-ID: <20110307090738.782d2ac0@orphan>
-Date: Mon, 7 Mar 2011 09:07:38 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: Jim Meyering <meyering@...hat.com>
-Subject: cgit convert_query_hexchar infinite loop (CVE-2011-1027)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/17
+Message-ID: <1579872259.144003.1313783381867.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:49:41 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: heap overflow in perl while decoding Unicode string
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+I'm going to assign this CVE-2011-2939. It looks like a single byte
+overflow. It's probably not exploitable (even as a DoS), but to play it
+safe, I'm assigning this ID.
 
-Jim Meyering discovered an infinite loop flaw in cgit.  The issue was
-fixed upstream in 0.9 and 0.8.3.5.  Upstream commit has all the details:
-
-http://hjemli.net/git/cgit/commit/?id=fc384b16fb9787380746000d3cea2d53fccc548e
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+----- Original Message -----
+> Does anyone know more about this flaw? It's in perl and the Encode
+> module:
+> 
+> http://cpansearch.perl.org/src/DANKOGAI/Encode-2.44/Changes
+> 
+> ! Unicode/Unicode.xs
+> Addressed the following:
+> Date: Fri, 22 Jul 2011 13:58:43 +0200
+> From: Robert Zacek <zacek@...st.com>
+> To: perl5-security-report@...l.org
+> Subject: Unicode.xs!decode_xs n-byte heap-overflow
+> 
+> It's been fixed in perl:
+> 
+> http://perl5.git.perl.org/perl.git/commitdiff/e46d973584785af1f445c4dedbee4243419cb860#patch5
+> 
+> Seems to be in all versions of perl since 5.10.0.
+> 
+> There isn't really information on the impact of this though. I don't
+> know enough to determine whether this is something that can cause
+> arbitrary code execution, whether some gcc/glibc hardening prevents or
+> minimizes the impact, whether it's a crash-only, etc. It has been
+> asked
+> on the perl5-porters list, but no response was given:
+> 
+> http://permalink.gmane.org/gmane.comp.lang.perl.perl5.porters/98004
+> 
+> Does anyone know anything more about this flaw? Could a CVE be
+> assigned
+> to it as well?
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
