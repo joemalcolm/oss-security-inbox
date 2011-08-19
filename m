@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/01/2
-Message-Id: <201108011351.40404.thomas@suse.de>
-Date: Mon, 1 Aug 2011 13:51:37 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/1
+Message-ID: <4E4E0E35.60609@pre-sense.de>
+Date: Fri, 19 Aug 2011 09:18:13 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CFP open for ClubHack2011
+Subject: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
 Content-Type: text/plain; charset=utf-8
 
-Am Samstag, 30. Juli 2011, 19:27:31 schrieb Solar Designer:
-> Hi all,
-> 
-> I made an exception and approved this one CFP for the following reasons:
-> 
-> 1. To show what's coming to the list, and to make sure everyone in here
-> approves that we reject these things unconditionally going forward.
-> 
-> If anyone in here wants to see these on the list, please let me know.
-> Otherwise, I'll assume that we've voted unanimously to have them rejected.
+The Linux kernel contains a vulnerability in the driver for Be file
+systems that may lead to a kernel oops via a corrupted Be file system.
 
-Yes, please continue to reject them. :-)
+In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
+a long symlink from a data stream of a Be file system.
 
-Cheers,
-Thomas
+    befs_data_stream *data = &befs_ino->i_data.ds;
+    befs_off_t len = data->size;
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+The data->size / len value is not validated and can be 0 on a corrupted
+file system.
+
+befs_follow_link() allocates some memory based on len. Effectively,
+kmalloc returns ZERO_SIZE_PTR in this case.
+
+        link = kmalloc(len, GFP_NOFS);
+
+Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
+oops:
+
+			link[len - 1] = '\0';
+
+A patch is available at
+http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
+
