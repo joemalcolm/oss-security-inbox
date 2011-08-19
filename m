@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/9
-Message-ID: <35944480.187794.1303486798522.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Apr 2011 11:39:58 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/18
+Message-ID: <1252659521.144256.1313783933183.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:58:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: stunnel 4.4x heap overflow flaw
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-2940.
+
+Thanks.
+
+-- 
+    JB
+
+
 ----- Original Message -----
-> From: "Vasiliy Kulikov" <segoon@...nwall.com>
-> To: "Petr Matousek" <pmatouse@...hat.com>
-> Cc: oss-security@...ts.openwall.com
-> Sent: Friday, April 22, 2011 5:32:51 PM
-> Subject: Re: [oss-security] CVE request: kernel: buffer overflow and DoS issues in agp
-> In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-> "Reference and patch:", but there is no patch for the issue (as I said
-> in the patch description). I have no agp hardware and I cannot test
-> whether forcing the requested pid to the current pid is a good idea
-> (it might not).
-
-Right, copy and paste issue. Fixed.
-
-Petr
+> As noted in the stunnel changelog, 4.42 corrects a heap overflow flaw
+> that could lead to a DoS or remote execution of arbitrary code.
+> 
+> References:
+> 
+> http://stunnel.org/?page=sdf_ChangeLog
+> https://bugzilla.redhat.com/show_bug.cgi?id=732068
+> 
+> Could a CVE be assigned for this?
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
