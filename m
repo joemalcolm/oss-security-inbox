@@ -1,75 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/10
-Message-ID: <AANLkTi=3tF6zHvTRy-fVSKHE6sbEXJYeq1MrJD7ntdPH@mail.gmail.com>
-Date: Tue, 4 Jan 2011 10:19:39 -0500
-From: Hyrum Wright <hwright@...che.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Kurt Seifried <kurt@...fried.org>, Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>,  Subversion Development <dev@...version.apache.org>
-Subject: Re: CVE request for subversion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/1
+Message-ID: <4E4E0E35.60609@pre-sense.de>
+Date: Fri, 19 Aug 2011 09:18:13 +0200
+From: Timo Warns <warns@...-sense.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 4, 2011 at 10:02 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
-> Hello Kurt, Josh, vendors,
->
-> Josh Bressers wrote:
->>
->> ----- Original Message -----
->>>
->>> Unspecified vulnerability in the server component in Apache Subversion
->>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
->>> service via unknown vectors, related to a "several bug fixes,
->>> including two which can cause client-initiated crashes on the server."
->>>
->>> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
->
->  Cc-ed Hyrum to shed more light into this one. [1] mentions two issues:
-> <begin quote>
-> ...
-> several bug fixes, including two which can cause client-initiated
-> crashes on the server.
-> </end quote>
->
-> Further look at:
-> [2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
->
-> suggest:
->
-> A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
-> being the first one.
->   Upstream changeset:
->   http://svn.apache.org/viewvc?view=revision&revision=1033166
->
-> and after discussion with Joe Orton, Joe suggested:
->
-> B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
->   References:
->   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
->   Upstream changeset:
->   http://svn.apache.org/viewvc?view=revision&revision=1032808
->
->   being the second one as denial of service attack (by memory consumption)
-> against
->   svnserve.
->
-> Questions:
-> ----------
-> Hyrum, could you confirm A, and B, issues are those two, mentioned in [2]
-> to be able to cause client-initiated crashes on the server?
+The Linux kernel contains a vulnerability in the driver for Be file
+systems that may lead to a kernel oops via a corrupted Be file system.
 
-I can confirm that A and B are the two issues mentioned in [2].
+In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
+a long symlink from a data stream of a Be file system.
 
->> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
->> We can split it if needed once more information is known.
->
-> Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
-> we consider CVE-2010-4539 to be a CVE identifier for A, issue
-> and request yet another / second one for B, issue?
+    befs_data_stream *data = &befs_ino->i_data.ds;
+    befs_off_t len = data->size;
 
-We didn't initially reserve CVEs for these vulnerabilities, but will
-be happy to update our documentation to reflect them.  (See
-http://subversion.apache.org/security/ )   The two issues really are
-orthogonal, so B should probably  not be included in a CVE for A.
+The data->size / len value is not validated and can be 0 on a corrupted
+file system.
 
-I've CC'd dev@...version.apache.org to help coordinate advisory authoring.
+befs_follow_link() allocates some memory based on len. Effectively,
+kmalloc returns ZERO_SIZE_PTR in this case.
 
--Hyrum
+        link = kmalloc(len, GFP_NOFS);
+
+Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
+oops:
+
+			link[len - 1] = '\0';
+
+A patch is available at
+http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
+
