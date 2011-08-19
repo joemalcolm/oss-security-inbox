@@ -1,65 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/05/1
-Message-ID: <20110905012403.GC31987@openwall.com>
-Date: Mon, 5 Sep 2011 05:24:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/5
+Message-ID: <4E4E811F.3060307@redhat.com>
+Date: Fri, 19 Aug 2011 23:28:31 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+CC: Timo Warns <warns@...-sense.de>
+Subject: Re: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 29, 2011 at 01:40:16PM +0200, Yves-Alexis Perez wrote:
-> By the way, would you know some kind of lib for ???safe privileges
-> dropping??? for that kind of usage. I quickly looked at glib and while
-> they do have some primitives for process spawning, there's nothing
-> related to dropping privs. It looks like something which might be
-> useful.
+On 08/19/2011 03:18 PM, Timo Warns wrote:
+> The Linux kernel contains a vulnerability in the driver for Be file
+> systems that may lead to a kernel oops via a corrupted Be file system.
+> 
+> In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
+> a long symlink from a data stream of a Be file system.
+> 
+>     befs_data_stream *data = &befs_ino->i_data.ds;
+>     befs_off_t len = data->size;
+> 
+> The data->size / len value is not validated and can be 0 on a corrupted
+> file system.
+> 
+> befs_follow_link() allocates some memory based on len. Effectively,
+> kmalloc returns ZERO_SIZE_PTR in this case.
+> 
+>         link = kmalloc(len, GFP_NOFS);
+> 
+> Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
+> oops:
+> 
+> 			link[len - 1] = '\0';
+> 
+> A patch is available at
+> http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
 
-No, I am not aware of a generic library with functionality like that.
+Please use CVE-2011-2928.
 
-Additionally, while effective credentials switching for accessing users'
-files feels like the obvious best thing to do in a program, things are
-less obvious when you need to do that from a library.  One issue is
-threads.  Switching only fsuid/fsgid/groups or switching
-euid/egid/groups with direct kernel syscalls (not thread-aware at least
-on Linux) rather than with library functions (thread-aware at least on
-glibc) helps with this (but is non-portable or makes assumptions).
-But then what about signals?  Signal handlers installed by the main
-program or by other libraries may not expect to be invoked with
-temporarily changed effective credentials.  Should our library block all
-signals before it switches credentials, then unblock after it has
-restored the old credentials?  Maybe.  But this does get complicated,
-dirty, risky.
+Eugene
 
-To give credit where it's due, the above concern regarding signals
-originates (for me) from an off-list discussion I had with Rich Felker -
-the author of musl, a new lightweight libc for Linux:
-
-http://www.etalabs.net/musl/
-
-In Openwall's "tcb suite" (specifically, in libtcb, which is used by
-libnss_tcb), we switch fsuid/fsgid/groups before accessing
-/etc/tcb/*/shadow files, because the /etc/tcb/* directories have users
-as their owners:
-
-http://www.openwall.com/tcb/
-
-We don't block/unblock signals.
-
-musl supports our tcb password shadowing scheme too, but instead of
-credential switching, it takes precautions when accessing those files as
-root.  Either approach has its pros and cons.  I've already mentioned
-the signals issue with credential switching.  And an issue with trying
-to access files as root safely is that even when you do everything you
-can, a race condition remains: an attacker may replace the file to read
-with a hard link to a tape device, which would rewind the tape on
-open(2).  (There might be other devices with side-effects on open, too.)
-Arguably, this is purely theoretical and thus acceptable.  I'd say it's
-more acceptable when accessing /etc/tcb/*/shadow than when accessing
-dot-files in a user's home directory, because /etc/tcb (this directory
-itself) is normally root:shadow, mode 710, so it'd take a group shadow
-compromise before this DoS attack may be attempted.
-
-I hope these examples are helpful, and I hope you don't mind me plugging
-these two pieces of software. ;-)
-
-Alexander
