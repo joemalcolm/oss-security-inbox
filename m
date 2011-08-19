@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/6
-Message-ID: <4EB321F1.7050706@redhat.com>
-Date: Thu, 03 Nov 2011 17:21:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/10
+Message-ID: <777583052.141545.1313780108648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 14:55:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for Calibre
+Cc: coley <coley@...re.org>
+Subject: Re: CVE-request: pithos symlink vulnerability CWE-61
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/2011 05:14 AM, Dan Rosenberg wrote:
->> Oh, and I suppose there's a very obvious but critical #6:
->>
->> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
->> root permissions. Danger.
->>
->> This may help to "confirm":
->> https://bugs.launchpad.net/calibre/+bug/885027/
->>
->>
->> As well, the maintainer has already issued a fix. From the bug report:
->> "Fixed in branch lp:calibre. The fix will be in the next release.
->> calibre is usually released every Friday.", which means the above
->> source link, that went to the trunk, now shows the fixed result. The
->> old broken code is still available here:
->> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
->>
->> Note that the maintainer has chosen only to address #5.
->>
-> I'd recommend holding off on the CVE assignments for now, since these
-> issues are currently in progress and the final tally of issues isn't
-> complete.
->
-> -Dan
-I took a quick look at that, I'm not clear on which ones have
-beenaddressed , if you could comment on the original issues, which are
-addressed and link to code commit I can start assigning CVEs.
+
+
+----- Original Message -----
+> Can I get 2010 CVE-ID for Pithos symlink attack vulnerability:
+> https://bugs.launchpad.net/pithos/+bug/667896
+> 
+> Software web-page: https://launchpad.net/pithos
+> Found by: lfaraone <https://launchpad.net/~lfaraone>
+> Found at: 2010-10-30 (fix released same day)
+> "Predictable file- or directory-names in /tmp/-directory can lead to
+> symlink attack."
+> 
+> Fixed in Debian:
+> 
+> http://packages.debian.org/changelogs/pool/main/p/pithos/current/changelog
+> says:
+> pithos (0.3.5-1) unstable; urgency=high
+> 
+> * New upstream version.
+> - SECURITY UPDATE: fixes overwriting of arbitrary file via symlinks
+> (LP: #667896)
+> Can be still found from DST:
+> http://security-tracker.debian.org/tracker/TEMP-0000000-14D1F9
+> 
+> And in Ubuntu:
+> http://changelogs.ubuntu.com/changelogs/pool/universe/p/pithos/pithos_0.3.8-1/changelog
+> 
+
+Please use CVE-2010-4817.
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
