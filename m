@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/9
-Message-ID: <20111121155455.GA7800@dhcp-25-225.brq.redhat.com>
-Date: Mon, 21 Nov 2011 16:54:56 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/7
+Message-ID: <1862529808.141315.1313779628800.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 14:47:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: wrong headroom check in udp6_ufo_fragment()
+Cc: Hanno Böck <hanno@...eck.de>, coley <coley@...re.org>
+Subject: Re: CVE request: coppermine gallery < 1.4.26
 Content-Type: text/plain; charset=utf-8
 
-"A bug was found in the way headroom check was performed in
-udp6_ufo_fragment() function. A remote attacker could use this flaw to
-crash the system."
 
-Details:
-http://bugzilla.redhat.com/show_bug.cgi?id=755584#c1
 
-Upstream commit:
-a9cf73ea7ff78f52662c8658d93c226effbbedde
+----- Original Message -----
+> This security issue never got CVE-identifier:
+> http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
+> 
+> Original advisory:
+> http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
+> OSVDB: http://osvdb.org/show/osvdb/62261
+> 
 
-References:
-http://bugzilla.redhat.com/show_bug.cgi?id=755584
-http://bugzilla.redhat.com/show_bug.cgi?id=682066
+Please use CVE-2010-4815 for this.
 
-Thanks,
+Thanks.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+    JB
