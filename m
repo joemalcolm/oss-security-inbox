@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/4
-Message-ID: <BANLkTikYhbyJs=42misf5JjtFsTAK5CM6A@mail.gmail.com>
-Date: Sun, 26 Jun 2011 19:57:23 -0700
-From: Linus Torvalds <torvalds@...ux-foundation.org>
-To: Vasiliy Kulikov <segoon@...nwall.com>, Andrew Morton <akpm@...ux-foundation.org>
-Cc: oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/9
+Message-ID: <2003613449.141475.1313779943068.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 14:52:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: Re: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 24, 2011 at 5:34 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
->
-> I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
+----- Original Message -----
+> Can I get 2010 CVE-ID for this issue? I am not sure if other
+> distributions/operating systems need their own IDs. If I am correct
+> one ID should be enough.
+> 
+> Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
+> Bug report to FreeBSD:
+> http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
+> NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
+> Reported to OpenBSD (and patched), but can't find references.
+> Does not affect Debian:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572813
+> Not listed in OSVDB, but I can handle it.
+> 
 
-Hmm. Should we just round them down to 1kB boundaries or something?
-People *do* want to know about IO accounting, but I agree that giving
-things at a byte granularity ends up giving way too much information.
-When you can see how many bytes something read off a tty, that's a
-problem.
+Please use CVE-2010-4816. It appears these are all the same codebase, so
+one ID will do.
 
-Returning accounting information at a 1k granularity should make it
-impractical to use that to guess keys etc. It still gives *some*
-information (and enough for rough statistics), but it doesn't give the
-level of detail required for any simple attack.
+Thanks.
 
-Sometimes excessive precision isn't a good thing.
-
-Andrew - the IO_ACCT stuff went through you (back in 2006), the
-taskstats did too, methinks. Comments?
-
-                     Linus
+-- 
+    JB
