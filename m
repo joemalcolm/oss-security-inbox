@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/2
-Message-ID: <4ECAF783.2050107@redhat.com>
-Date: Mon, 21 Nov 2011 18:14:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/2
+Message-ID: <20110819102534.2ea3e9be@redhat.com>
+Date: Fri, 19 Aug 2011 10:25:34 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: XSS in Tiki Wiki CMS Groupware (HTB23027)
+Subject: Re: CVE request: GIF loader buffer overflow when initializing decompression tables
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 02:26 PM, Henri Salo wrote:
-> Can I get CVE-identifier for this issue:
->
-> https://www.htbridge.ch/advisory/xss_in_tiki_wiki_cms_groupware.html
-> http://secunia.com/advisories/45283/
->
-> Best regards,
-> Henri Salo
-Please use CVE-2011-4336 for this issue.
+On Tue, 2 Aug 2011 17:34:28 +0200 Thomas Biege wrote:
+
+> The same flaw was previously reported for several other components
+> that include GIF reading code based on David Koblas' parser, such as:
+> gd (CVE-2006-4484), SDL_image (CVE-2007-6697), tk (CVE-2008-0553),
+> netbpm (CVE-2008-0554), cups (CVE-2008-1373).
+
+The similar was spotted in XPCE when reviewing upstream
+fix for CVE-2011-2896:
+
+http://www.swi-prolog.org/bugzilla/show_bug.cgi?id=7#c2
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Tomas Hoger / Red Hat Security Response Team
