@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/1
-Message-ID: <4EF12420.6070605@redhat.com>
-Date: Tue, 20 Dec 2011 17:11:12 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/5
+Message-ID: <4E4E811F.3060307@redhat.com>
+Date: Fri, 19 Aug 2011 23:28:31 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment from previous years
+CC: Timo Warns <warns@...-sense.de>
+Subject: Re: CVE request: Linux: ZERO_SIZE_PTR dereference for long symlinks in Be FS
 Content-Type: text/plain; charset=utf-8
 
-On 12/20/2011 11:07 AM, Steven M. Christey wrote:
->
-> Note that the year does NOT include when the vuln was found (and if it 
-> was silently fixed, that's not a factor either).
->
-> The year is almost always obtained from either:
->
-> 1) When the CVE was first privately reserved.  We already have more than
->    two hundred CVE-2012-XXXX numbers reserved for various CNAs who are
->    using them to coordinate disclosures that are scheduled to
->    happen in 2012.  This date often correlates with the year that the 
-> vuln
->    was found, but not always.
->
-> 2) When the issue was first made public.  There can be some disagreement
->    about when a vuln is first published (e.g. a bug report may lie
->    unresolved, technically viewable by anybody, for a few years before it
->    reaches general awareness, or something might be published on December
->    31 in one part of the world when it is January 1 in another part of 
-> the
->    world.)
->
-> Some CNAs who have a pool of CVEs from one year, will continue to use 
-> that pool in the next year if there are any CVEs left over, though I 
-> generally discourage it.
->
-> In January and February 2012, you will probably still see a fairly 
-> large number of new CVE-2011-xxxx identifiers released, as MITRE/etc. 
-> assign CVEs to issues that were first published in 2011.
->
-> - Steve
->
+On 08/19/2011 03:18 PM, Timo Warns wrote:
+> The Linux kernel contains a vulnerability in the driver for Be file
+> systems that may lead to a kernel oops via a corrupted Be file system.
+> 
+> In fs/befs/linuxvfs.c, befs_follow_link() reads a length attribute for
+> a long symlink from a data stream of a Be file system.
+> 
+>     befs_data_stream *data = &befs_ino->i_data.ds;
+>     befs_off_t len = data->size;
+> 
+> The data->size / len value is not validated and can be 0 on a corrupted
+> file system.
+> 
+> befs_follow_link() allocates some memory based on len. Effectively,
+> kmalloc returns ZERO_SIZE_PTR in this case.
+> 
+>         link = kmalloc(len, GFP_NOFS);
+> 
+> Subsequently, an assignment dereferences ZERO_SIZE_PTR causing a kernel
+> oops:
+> 
+> 			link[len - 1] = '\0';
+> 
+> A patch is available at
+> http://git.kernel.org/linus/338d0f0a6fbc82407864606f5b64b75aeb3c70f2
 
-Steven is correct and I was wrong (as usual =)  Please ignore what I 
-said previously.
+Please use CVE-2011-2928.
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
+Eugene
 
