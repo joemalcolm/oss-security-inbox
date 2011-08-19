@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/9
-Message-ID: <CAAsmaPZhdCoJzK66L3h9VtjAj3ENZcm08G3tz9Dxj_EtC_QY=w@mail.gmail.com>
-Date: Tue, 19 Jul 2011 09:28:51 -0500
-From: Tim Zingelman <tez@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/2
+Message-ID: <20110819102534.2ea3e9be@redhat.com>
+Date: Fri, 19 Aug 2011 10:25:34 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+Subject: Re: CVE request: GIF loader buffer overflow when initializing decompression tables
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2011 at 7:39 AM, Solar Designer <solar@...nwall.com> wrote:
+On Tue, 2 Aug 2011 17:34:28 +0200 Thomas Biege wrote:
 
-> I've just added NetBSD pkgsrc to:
->
-> http://oss-security.openwall.org/wiki/vendors
+> The same flaw was previously reported for several other components
+> that include GIF reading code based on David Koblas' parser, such as:
+> gd (CVE-2006-4484), SDL_image (CVE-2007-6697), tk (CVE-2008-0553),
+> netbpm (CVE-2008-0554), cups (CVE-2008-1373).
 
-Thanks, but we were/are already there as simply pkgsrc.  Note that
-pkgsrc supports many OS in addition to NetBSD.
+The similar was spotted in XPCE when reviewing upstream
+fix for CVE-2011-2896:
 
-Do you think we should combine the entries, or just make sure they
-both contain all the information?
+http://www.swi-prolog.org/bugzilla/show_bug.cgi?id=7#c2
 
-Thanks,
-
- - Tim
-
-p.s. I at least would be very much in support of a bsd distro's
-restricted security mailing list if you were to create one.
+-- 
+Tomas Hoger / Red Hat Security Response Team
