@@ -1,41 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/12
-Message-ID: <BANLkTimu=a4QACapwQn75n1dx2YB74fA0A@mail.gmail.com>
-Date: Mon, 20 Jun 2011 15:07:54 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/8
+Message-ID: <615251549.141401.1313779783256.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 14:49:43 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+Cc: security@...bb.co.uk, C Trapt <C.Trapt@...il.com>, coley <coley@...re.org>
+Subject: Re: CVE-request: KaiBB security vulnerabilities without CVE-IDs
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com> wrote:
->
->
-> ----- Original Message -----
->> NetBSD has committed a fix for an issue in the 802.11 stack [1].
->> FreeBSD is also affected and should release a fix shortly. Due to a
->> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
->> unprivileged user could cause the kernel to copy large amounts of
->> kernel memory back to the user, disclosing potentially sensitive
->> information. The issue only affects certain non-x86 architectures,
->> such as SPARC.
->>
->> -Dan
->>
->> [1]
->> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
->
-> I'm not entirely sure how to assign CVE ids for this. Is the code in
-> question shared between FreeBSD and NetBSD, or is it different codebases
-> but the same flaw?
->
+I don't have enough IDs for this, nor do I have the time to go through all these.
 
-Most of the 802.11 code, including the vulnerable code, is shared
-between FreeBSD and NetBSD.
+Steve, can MITRE take this one.
 
--Dan
+Thanks and sorry.
 
-> Thanks.
->
-> --
->    JB
->
+-- 
+    JB
+
+
+----- Original Message -----
+> Please assign CVE-IDs for following KaiBB issues:
+> 
+> 2011:
+> http://osvdb.org/show/osvdb/71068 - HTB22793
+> 2010:
+> http://osvdb.org/show/osvdb/69346
+> http://osvdb.org/show/osvdb/71885 - HTB22746
+> http://osvdb.org/show/osvdb/70210 - HTB22747, HTB22748
+> http://osvdb.org/show/osvdb/70211 - HTB22749
+> http://osvdb.org/show/osvdb/69347
+> http://osvdb.org/show/osvdb/69345
+> 
+> Haven't tested any of these in actual installation. I can do it if
+> someone requests it.
+> 
+> Vendor/project www-pages:
+> 1) http://code.google.com/p/kaibb/
+> 2) http://www.kaibb.co.uk/
+> 
+> Best regards,
+> Henri Salo
