@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/6
-Message-ID: <1320853637.3014.123.camel@mdlinux>
-Date: Wed, 09 Nov 2011 10:47:17 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/3
+Message-ID: <30557829.A2gxmV9TRs@neon>
+Date: Fri, 19 Aug 2011 13:36:31 +0200
+From: Alex Legler <a3li@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: BusyBox unpack_Z_stream() buffer underflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
-> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
-> >>>> cause LightDM to set the destination of the link to user ownership.
-> >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> >>>>
-> >>>> Overview of changes in lightdm 1.0.6
-> >>>>
-> >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> >>> Could a CVE be assigned for this?
-> >>>
-> >>> Regards,
-> >> Can you send me the link to this announcement so I can confirm it? Thanks.
-> >>
-> > Here's the link to the mailing list mail:
-> > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
-> >
-> > Regards,
-> Thanks, confirmed (first hand info is much better). Please use
-> CVE-2011-4105 for this issue.
-> 
+Hi,
 
-BTW, the fix that is in 1.0.6 is probably not enough for distros that
-don't implement hard link restrictions, such as the Yama LSM that is
-used in Ubuntu.
+Secunia [1] reported a fix in BusyBox for a flaw similar to CVE-2006-1168:
 
-Marc.
+"The vulnerability is caused due to a boundary error within the 
+"unpack_Z_stream()" function (archival/libarchive/decompress_uncompress.c) and 
+can be exploited to cause a buffer underflow via a specially crafted 
+datastream."
 
+Patch is available at [2], our bug is [3].
+
+Please assign a CVE.
+
+Thanks,
+Alex
+
+[1] http://secunia.com/advisories/45702/
+[2] 
+http://git.busybox.net/busybox/diff/archival/libarchive/decompress_uncompress.c?id=251fc70e9722f931eec23a34030d05ba5f747b0e
+[3] https://bugs.gentoo.org/show_bug.cgi?id=379857
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
+Alex Legler <a3li@...too.org>
+Gentoo Security / Ruby
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
