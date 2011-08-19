@@ -1,33 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/13
-Message-ID: <2116114525.241894.1298650688611.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 25 Feb 2011 11:18:08 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/12
+Message-ID: <1383647632.141993.1313780931833.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:08:51 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: WebsiteBaker 2.8.1 <= Arbitrary File Upload Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> looks like the following two issues did not get a CVE identifiers yet:
-> [1] http://secunia.com/advisories/43331/
-
-The above advisory covers both bugs below.
-
-
-> [2] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6607
-
-CVE-2011-1024 openldap forwarded bind failure messages cause success
-
-
-> [3] http://www.openldap.org/its/index.cgi/Software%20Bugs?id=6661
-
-CVE-2011-1025 openldap rootpw is not verified with slapd.conf
-
+Please use CVE-2011-2933
 
 Thanks.
 
 -- 
     JB
+
+
+
+----- Original Message -----
+> 1. OVERVIEW
+> 
+> WebsiteBaker 2.8.1 and lower versions are vulnerable to Arbitrary File
+> Upload.
+> 
+> 
+> 2. BACKGROUND
+> 
+> WebsiteBaker helps you to create the website you want: A free, easy
+> and secure, flexible and extensible open source content management
+> system (CMS). Create new templates within minutes - powered by
+> (X)HTML, CSS and jQuery. With WebsiteBaker it's quite natural your
+> site is W3C-valid, SEO-friendly and accessible - there are no
+> limitations at all.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> WebsiteBaker 2.8.1 and lower versions contain a flaw related to the
+> /admin/media/upload.php script failing to restrict uploaded files with
+> extensions - .htaccess, .php4, .php5, .phtml. This may allow an
+> attacker to execute arbitrary PHP code. User account to WebsiteBaker
+> admin backend is required. Attacker could gain access it by way of
+> either brute force or CSRFing to currently-logged in admin users.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 2.8.1 <=
+> 
+> 
+> 5. SOLUTION
+> 
+> Upgrade to 2.8.2 or higher
+> 
+> 
+> 6. VENDOR
+> 
+> WebsiteBaker Org e. V.
+> http://www.websitebaker2.org/
+> 
+> 
+> 7. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 8. DISCLOSURE TIME-LINE
+> 
+> 2011-01-26: notified vendor
+> 2011-08-01: vendor released fix
+> 2011-08-13: vulnerability disclosed
+> 
+> 
+> 9. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_arbitrary_file_upload
+> http://www.gnucitizen.org/blog/cross-site-file-upload-attacks/
+> 
+> 
+> #yehg [2011-08-13]
