@@ -1,21 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/2
-Message-ID: <20111219162106.GA13534@ngolde.de>
-Date: Mon, 19 Dec 2011 17:21:06 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/11
+Message-ID: <1093098424.141863.1313780632015.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 19 Aug 2011 15:03:52 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: python-virtualenv
+Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ruby on rails flaws (4)
 Content-Type: text/plain; charset=utf-8
 
-An insecure /tmp file handling was found in python-virtualenv:
-https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
 
-Can someone assign a CVE id for this?
 
-Kind regards
-Nico
+----- Original Message -----
+> Could we get CVEs assigned to these flaws? Upstream had requested CVEs
+> prior to disclosure, but didn't receive any.
+> 
+> http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
+> 
+> 1) Filter Skipping bugs
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
+> https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
+> https://bugzilla.redhat.com/show_bug.cgi?id=731432
+
+Use CVE-2011-2929
+
+
+> 
+> 2) SQL Injection issues
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
+> https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
+> https://bugzilla.redhat.com/show_bug.cgi?id=731438
+
+Use CVE-2011-2930
+
+
+> 
+> 3) Parse error in strip_tags
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
+> https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
+> https://bugzilla.redhat.com/show_bug.cgi?id=731436
+
+Use CVE-2011-2931
+
+
+> 
+> 4) UTF-8 escaping vulnerability
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
+> https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
+> https://bugzilla.redhat.com/show_bug.cgi?id=731435
+
+Use CVE-2011-2932
+
+Thanks.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+    JB
