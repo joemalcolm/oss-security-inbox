@@ -1,24 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/3
-Message-ID: <4E07F77C.7070301@redhat.com>
-Date: Mon, 27 Jun 2011 11:22:36 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/20/1
+Message-ID: <1387428885.2901743.1313814595534.JavaMail.root@zmail04.collab.prod.int.phx2.redhat.com>
+Date: Sat, 20 Aug 2011 00:29:55 -0400 (EDT)
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: remote buffer overflow in bluetooth
+Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ruby on rails flaws (4)
 Content-Type: text/plain; charset=utf-8
 
-On 06/25/2011 07:15 AM, Dan Rosenberg wrote:
-> A remote user can provide a small value for the command size field in
-> the command header of an l2cap configuration request, resulting in an
-> integer underflow when subtracting the size of the configuration request
-> header.  This results in copying a very large amount of data via
-> memcpy() and destroying the kernel heap. [1]
-> 
-> -Dan
-> 
-> [1] http://marc.info/?l=linux-kernel&m=130891911909436&w=2
+Sorry, there is one more flaw that needs a CVE assignment:
 
-Please use CVE-2011-2497.
+Response splitting flaw in 2.3.x (3.0.0 and later not affected).
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6ffc93bde0298768
+https://github.com/rails/rails/commit/11dafeaa7533be26441a63618be93a03869c83a9
+https://bugzilla.redhat.com/show_bug.cgi?id=732156
 
-Eugene
+Sorry I missed this one earlier, I was looking at the 3.x advisory page and missed this one.
+
+----- Original Message -----
+> ----- Original Message -----
+> > Could we get CVEs assigned to these flaws? Upstream had requested
+> > CVEs
+> > prior to disclosure, but didn't receive any.
+> >
+> > http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
+> >
+> > 1) Filter Skipping bugs
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
+> > https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
+> > https://bugzilla.redhat.com/show_bug.cgi?id=731432
+> 
+> Use CVE-2011-2929
+> 
+> 
+> >
+> > 2) SQL Injection issues
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
+> > https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
+> > https://bugzilla.redhat.com/show_bug.cgi?id=731438
+> 
+> Use CVE-2011-2930
+> 
+> 
+> >
+> > 3) Parse error in strip_tags
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
+> > https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
+> > https://bugzilla.redhat.com/show_bug.cgi?id=731436
+> 
+> Use CVE-2011-2931
+> 
+> 
+> >
+> > 4) UTF-8 escaping vulnerability
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
+> > https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
+> > https://bugzilla.redhat.com/show_bug.cgi?id=731435
+> 
+> Use CVE-2011-2932
+
+-- 
+Vincent Danen / Red Hat Security Response Team
