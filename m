@@ -1,93 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/1
-Message-ID: <20110323003509.GA4595@openwall.com>
-Date: Wed, 23 Mar 2011 03:35:09 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/6
+Message-Id: <201108221043.24093.mweckbecker@suse.de>
+Date: Mon, 22 Aug 2011 10:43:23 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel proactive security hardening
+Subject: CVE request: libqt4: two memory issues
 Content-Type: text/plain; charset=utf-8
 
-Hi all -
+Hi,
 
-On Sun, Nov 07, 2010 at 02:16:32PM -0800, Kees Cook wrote:
-> A push has started to try to get as much as possible upstream into the
-> Linux kernel from the various hardening patches that exist in PaX,
-> grsecurity, OpenWall, etc. I've got some details here:
-> 
-> http://www.outflux.net/blog/archives/2010/11/07/security-is-more-than-bug-fixing/
-> 
-> And there's a sign-up list here, for people interested in helping out:
-> 
-> https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#Upstream%20Hardening
-> 
-> We could use the help. :)
+A) buffer overflow (looks only like an off-by-one from a very quick look)
+http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
 
-Here's another way to help out: Openwall is a mentoring organization for
-Google Summer of Code 2011 (GSoC), and one of our "ideas" is this:
+B) buffer overflow on greyscale images with multiple samples per pixel
+https://bugzilla.novell.com/show_bug.cgi?id=637275
+http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
 
-http://openwall.info/wiki/ideas
+Could there possibly be CVEs assign, please? Thanks in advance.
 
-"Linux kernel hardening - extract security hardening changes from various
-patches (which the mentor will point out), forward-port them to the
-latest mainstream kernels, make it easy to enable/disable the hardening
-measures (both compile- and runtime), add documentation, properly submit
-to and work with LKML (make proposals and own discussions to completion:
-either rejection or acceptance).  This is a noble but thankless job to
-do, so be prepared!  The authors of those changes did not submit them
-"properly" and did not "own discussions to completion" precisely because
-the job is so thankless. ;-)
+ciao,
+Matthias
 
-This may optionally involve work with other kernel branches and other
-upstreams as well (OpenVZ, Red Hat, Ubuntu)."
-
-Under Owl tasks, we also have:
-
-"The rhel6 branch OpenVZ kernel that we'd update to will need to be
-security-hardened, in part by reviewing, extracting, cleaning up,
-porting, and documenting/commenting individual changes from grsecurity
-and PaX (some of which have originated from Openwall's patches for older
-kernels), and in part by implementing new security-related
-changes/features, some of those specific to container-based
-virtualization (purpose-specific restrictions to be applied on
-per-container basis).  We expect help/consulting/mentoring from the
-author of PaX on portions that are PaX (some of these are difficult to
-understand from the code alone, especially the rationale behind things
-being done in a certain way), whereas the rest are not too complicated
-for a capable person to fully figure out on their own.
-
-We should work with upstreams - OpenVZ and Red Hat - to try and get some
-of these enhancements accepted."
-
-Students wishing to spend their summer like that, be paid by Google, and
-get more involved in the relevant communities - please apply.
-
-We'd like to hear from prospective (co-)mentors too since our mentoring
-capacity is limited (and may affect the number of slots we request).
-
-Here's our GSoC 2011 organization profile:
-
-http://www.google-melange.com/gsoc/org/show/google/gsoc2011/openwall
-
-For those not familiar with Google Summer of Code:
-
-http://en.wikipedia.org/wiki/Google_Summer_of_Code
-http://code.google.com/soc/
-http://socghop.appspot.com
-
-Nmap project (http://nmap.org/soc/) summarizes GSoC as follows:
-"This innovative and extraordinarily generous program provides $5,000
-stipends to 1,000+ college and graduate students to create and enhance
-open source software during their summer break.  Students gain valuable
-experience, get paid, strengthen their resume, and write code which will
-be distributed freely and used by millions of people!"
-
-http://www.google-melange.com/document/show/gsoc_program/google/gsoc2011/timeline
-
-March 18-27:
-Would-be student participants discuss application ideas with mentoring
-organizations.
-
-March 28:
-Student application period opens.
-
-Alexander
+--
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
