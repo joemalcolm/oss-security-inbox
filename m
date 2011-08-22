@@ -1,50 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/16/3
-Message-ID: <4EEBC570.2060100@redhat.com>
-Date: Fri, 16 Dec 2011 15:25:52 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/6
+Message-Id: <201108221043.24093.mweckbecker@suse.de>
+Date: Mon, 22 Aug 2011 10:43:23 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: zabbix persistent XSS flaw
+Subject: CVE request: libqt4: two memory issues
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A) buffer overflow (looks only like an off-by-one from a very quick look)
+http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
 
-On 12/16/2011 03:16 PM, Vincent Danen wrote:
-> Could a CVE be assigned to this flaw?
->
-> Zabbix 1.8.10rc1 was released to correct persistant cross-site
-> scripting vulnerabilities due to improper sanitization of the gname
-> variable when creating user and host groups.
->
-> References:
->
-> http://www.zabbix.com/rn1.8.10rc1.php
-> https://support.zabbix.com/browse/ZBX-4015
-> https://bugzilla.redhat.com/show_bug.cgi?id=768525
->
-Please use CVE-2011-4615 for this issue.
+B) buffer overflow on greyscale images with multiple samples per pixel
+https://bugzilla.novell.com/show_bug.cgi?id=637275
+http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
 
-- -- 
+Could there possibly be CVEs assign, please? Thanks in advance.
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
+ciao,
+Matthias
 
-iQIcBAEBAgAGBQJO68VwAAoJEBYNRVNeJnmT+4oP/jiCMcsybieFQ4Ds4IEsH52k
-+8lGLSWER6vchRhjJZs7LNcHalsrGJTbnQtBPAAHF89m8kgYEE5jcaGuVzwaRmkP
-IygrCyIBLKNguKUniwD7eUbkYXIJK3zKLqiYGIRKSet3T539foGzCo+4nYueTQZr
-nI7dJeXdsyZe+2Z3AtYWfqtk7srNXAMf4KCRyITfcpDZt1iR4b2UQHuL/D/pcBJI
-l4+q+QL1wnfXXYGzIELDga4WnOCWHyMa5IU9PRv0DFKnXLk4qxzyDrgbLRdw0OvB
-m6mVj41eUe5zePUqEgWgeuLZ1aWzv2nGYsiNJOCSupD2loa1Lvh+7rrGbNJfS14W
-SEP8FjLvqX+nYexyclt3wPQleLAw3CobjpUOVmdysFXxh7oUlEiS0mROkDflzz0F
-Xqr6d8Jk9DysWhJ5E2Ciz466/0X53GXa7gD7Lk88ecZUTg+w0jCpci0z+Q887Mup
-tgl4fbD/Rk/DhkJz35QBbnLp8oeAQIwnwO0iWkZC8wkGjQxuaOPqM2xEjIxNfn9f
-bu8eqNJLoWrAy0lahnFhBrNm67YnJ3XAHK65/9IMhVnt+KufC9A44isknn/P7Iwl
-diAjaOWwn4aWKjmuiGKLaguIaGzUql1tJQlFwVHXr36WQePuaIX/a3xkvSWLGefb
-/zC7tkRNt2CnPAEnATur
-=4mxv
------END PGP SIGNATURE-----
-
+--
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
