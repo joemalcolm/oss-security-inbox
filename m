@@ -1,36 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/12
-Message-ID: <452032790.415058.1302111849489.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 6 Apr 2011 13:44:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/5
+Message-Id: <201108221024.32846.mweckbecker@suse.de>
+Date: Mon, 22 Aug 2011 10:24:32 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: tmux (debian specific)
+Subject: Re: CVE request: ruby on rails flaws (4)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1496
+Hi,
 
-Thanks.
+maybe this issue would qualify for a CVE too(?):
+
+  https://bugzilla.novell.com/show_bug.cgi?id=673010
+  http://webservsec.blogspot.com/2011/02/ruby-on-rails-vulnerability.html
+
+Thanks in advance.
+
+On Friday 19 August 2011 21:03:52 Josh Bressers wrote:
+> ----- Original Message -----
+>
+> > Could we get CVEs assigned to these flaws? Upstream had requested CVEs
+> > prior to disclosure, but didn't receive any.
+> >
+> > http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
+> >
+> > 1) Filter Skipping bugs
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
+> >3420ac71aed312d6
+> > https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107
+> >a9552 https://bugzilla.redhat.com/show_bug.cgi?id=731432
+>
+> Use CVE-2011-2929
+>
+> > 2) SQL Injection issues
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
+> >6a1e473744bc389b
+> > https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e
+> >4bf85 https://bugzilla.redhat.com/show_bug.cgi?id=731438
+>
+> Use CVE-2011-2930
+>
+> > 3) Parse error in strip_tags
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
+> >2b9130749b74ea12
+> > https://github.com/rails/rails/commit/586a944ddd4d03e66dea109330614759474
+> >8037a https://bugzilla.redhat.com/show_bug.cgi?id=731436
+>
+> Use CVE-2011-2931
+>
+> > 4) UTF-8 escaping vulnerability
+> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
+> >56bffb5923ab1195
+> > https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd
+> >306bd https://bugzilla.redhat.com/show_bug.cgi?id=731435
+>
+> Use CVE-2011-2932
+>
+> Thanks.
+
 
 -- 
-    JB
-
-
------ Original Message -----
-> Hey,
-> due to a patch that was introduced to our tmux package, tmux is not
-> properly
-> dropping group privileges anymore when invoked with -S (tmux is
-> installed
-> setgid).
-> 
-> Bug report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=620304
-> Can I get a CVE id for this?
-> 
-> Cheers
-> Nico
-> 
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
