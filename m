@@ -1,45 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/17
-Message-ID: <1434241886.291160.1304364270167.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 15:24:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/9
+Message-ID: <1231476421.212930.1314038372136.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Aug 2011 14:39:32 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, William Cohen <wcohen@...hat.com>, Robert Richter <robert.richter@....com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+Subject: CVE assignment php NULL pointer dereference - CVE-2011-3182
 Content-Type: text/plain; charset=utf-8
 
+This message was sent to the full-disclosure mailing list:
+http://marc.info/?l=full-disclosure&m=131373057621672&w=2
 
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> It was found that oprofile profiling system did not properly sanitize
-> the content of event argument, provided to oprofile profiling control
-> utility (opcontrol). If a local unprivileged user was authorized by
-> sudoers file to run the opcontrol utility, they could use the flaw
-> to escalate their privileges (execute arbitrary code with the
-> privileges
-> of the privileged system user, root). Different vulnerability than
-> CVE-2006-0576.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Oprofile is not encouraged to be run under sudo, but still
-> should not allow escalation of privileges.
-
-
-I'm giving this an ID. oprofile is one of those tools that is likely to be
-run as a privileged user.
-
-Please use CVE-2011-1760
+>From what I can tell, this is a plausible problem. The advisory doesn't
+show any specific places where this could be exploited, but there are quite
+a few unchecked calls to malloc(). Rather than go through them all, I'm
+assigning the ID CVE-2011-3182 to be safe.
 
 Thanks.
 
