@@ -1,70 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/1
-Message-ID: <20111018123959.46b52f7c@laverne>
-Date: Tue, 18 Oct 2011 12:39:59 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/13
+Message-ID: <801301764.218205.1314044786894.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Aug 2011 16:26:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: recursion level crash in clamav before 0.97.3
+Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: ruby on rails flaws (4)
 Content-Type: text/plain; charset=utf-8
 
-Sadly, as we know, upstream clamav doesn't care about publishing
-security advisories. They even seem to have stopped to publish new
-versions on their -announce-list, so the only way to see changes is to
-dig into the tar-file and see the Changelog.
 
-This one here sounds like security relevant:
-Sat Oct  8 12:10:13 EEST 2011 (edwin)
--------------------------------------
- * libclamav/bytecode.c,bytecode_api.c: fix recursion level crash (bb
-   #3706).
-Upstream bug is invisible to the public. Please assign CVE
+----- Original Message -----
+> Sorry, there is one more flaw that needs a CVE assignment:
+> 
+> Response splitting flaw in 2.3.x (3.0.0 and later not affected).
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6ffc93bde0298768
+> https://github.com/rails/rails/commit/11dafeaa7533be26441a63618be93a03869c83a9
+> https://bugzilla.redhat.com/show_bug.cgi?id=732156
+> 
 
+Use CVE-2011-3186
 
-
-Maybe others have a look at the full Changelog, but I think the rest
-sounds non-security-relevant:
-Mon Oct 17 18:04:30 CEST 2011 (tk)
-----------------------------------
- * V 0.97.3
-
-Mon Oct 10 14:41:48 CEST 2011 (tk)
-----------------------------------
- * freshclam/manager.c: fix error when compiling without DNS support
-(bb#3056)
-
-Sat Oct  8 12:19:49 EEST 2011 (edwin)
--------------------------------------
- * libclamav/pdf.c: flag and dump PDF objects with /Launch (bb #3514)
-
-Sat Oct  8 12:10:13 EEST 2011 (edwin)
--------------------------------------
- * libclamav/bytecode.c,bytecode_api.c: fix recursion level crash (bb
-#3706).
-
-Tue Aug  2 17:03:33 CEST 2011 (tk)
-----------------------------------
- * docs: clarify behavior of --scan-*/Scan* options (bb#3134)
-
-Mon Jul 25 16:09:19 EEST 2011 (edwin)
--------------------------------------
- * libclamav/bytecode_vm.c: fix opcode 20 error (bb #3100)
-
-Thu Sep 15 14:44:11 CEST 2011 (tk)
-----------------------------------
- * freshclam: fix pidfile removal (bb#3499)
-
-Sun Aug 21 17:05:24 EEST 2011 (edwin)
--------------------------------------
- * libclamav/pdf.c:  fix incorrect blocking of some encrypted PDF with
-empty user passwords. (bb #3364)
-
-Wed Aug  3 15:41:28 CEST 2011 (tk)
-----------------------------------
- * sigtool/sigtool.c: fix calculation of max signature length
-
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
