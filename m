@@ -1,91 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/8
-Message-ID: <AANLkTimjB3W-0DW5ZF8ChJxac5dLFHHfDu+sPk8WZfqL@mail.gmail.com>
-Date: Wed, 23 Feb 2011 00:18:51 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/1
+Message-ID: <1297945425.870762.1313996134579.JavaMail.root@zmail07.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Aug 2011 02:55:34 -0400 (EDT)
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Vanilla Forums 2.0.17.1 ~ 2.0.17.5 <= Cross Site Scripting Vulnerability
+Cc: mark@...gant.net
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Hi Mark,
 
-The Vanilla Forums 2.0.17.1 till 2.0.17.5  were vulnerable to Cross
-Site Scripting.
+>Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
 
+>http://pidgin.im/news/security/?id=53
 
-2. BACKGROUND
+Please use CVE-2011-2942 for this issue.
 
-Vanilla Forums are open-source, standards-compliant, customizable
-discussion forums.
-It is specially made to help small communities grow larger through SEO
-mojo, totally customizable social tools,
-and great user experience. Vanilla is also built with integration at
-the forefront, so it can
-seamlessly integrate with your existing website, blog, or custom-built
-application.
+Also looking at http://pidgin.im/news/security it seems two other security issues were also
+fixed in 2.10.0, do you want CVEs to be assigned for them as well?
 
+Thanks.
 
-3. VULNERABILITY DESCRIPTION
+--
 
-The 'p' parameter  was not properly sanitized upon submission to the
-/index.php url, which allows attacker to conduct Cross Site Scripting
-attack.
-This may allow an attacker to create a specially crafted URL that
-would execute arbitrary script code in a victim's browser.
+Huzaifa Sidhpurwala / Red Hat Security Response Team.
 
-
-4. VERSIONS AFFECTED
-
-2.0.17.1 ~ 2.0.17.5
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://localhost/vanilla/index.php?p=/entry/"><script>alert(/XSS/)</script>
-
-
-6. SOLUTION
-
-Upgrade to Vanilla Forums 2.0.17.6 or higher
-
-
-7. VENDOR
-
-Vanilla Forums Development Team
-http://vanillaforums.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-01-25: notified vendor
-2011-01-27: vendor released fix
-2011-02-22: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.17.5]_cross_site_scripting
-Github Issue Report:
-https://github.com/vanillaforums/Garden/issuesearch?state=closed&q=xss#issue/750
-Vendor Commit: https://github.com/vanillaforums/Garden/commit/0a22506c76ac419d390d5d1bde5ec5f48b195358
-Vendor Release:
-http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released/
-XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-CWE-79: http://cwe.mitre.org/data/definitions/79.html
-
-
-#yehg [2011-02-22]
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
