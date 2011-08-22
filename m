@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/9
-Message-ID: <20110224172834.GI30355@redhat.com>
-Date: Thu, 24 Feb 2011 10:28:34 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/14
+Message-ID: <661619212.218334.1314045085973.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Aug 2011 16:31:25 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: ruby on rails flaws (4)
 Content-Type: text/plain; charset=utf-8
 
-* [2011-02-24 18:02:06 +0100] Ralf Corsepius wrote:
+----- Original Message -----
+> Hi,
+> 
+> maybe this issue would qualify for a CVE too(?):
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=673010
+> http://webservsec.blogspot.com/2011/02/ruby-on-rails-vulnerability.html
+> 
 
->On 02/24/2011 05:45 PM, Vincent Danen wrote:
->>* [2011-02-23 14:06:58 -0500] Josh Bressers wrote:
->>
->>>>Is Redhat packaging RT now, or are you just handling the CVEs?
->>>
->>>I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
->>>public issues.
->>
->Folks, my feel is you all are picking on words and details.
+This looks like it should also get one. Use CVE-2011-3187
 
-It is possible that Josh didn't realize it was packaged in Fedora and
-EPEL (we do package quite a few things).
-
->>RT3 is packaged in Fedora and EPEL.
->>
->Correct. rt3 is community maintained in Fedora and RHEL. I am doing 
->so for Fedora and other people do for RHEL.
->So, strictly speaking it's not "Red Hat packaged", but 
->community-contributed to "Red Hat owned products" (Fedora rsp. Fedora 
->EPEL) and some folks @RH are filing CVS against it, for reasons I 
->don't know.
-
-I'm not sure what you mean by that last statement (filing CVS against
-it).  Do you mean filing bugs?
+Thanks.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
