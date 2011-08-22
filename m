@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/1
-Message-ID: <9f039f38-a3f2-473a-a751-3c8e5a7da73b@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Sep 2011 08:31:36 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request? etherape remote crash (denial of service)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/10
+Message-ID: <CAPZ8mV610770z8PMHf8qoM+abxf=2rueX_HTji0RwQvZfRE-3g@mail.gmail.com>
+Date: Mon, 22 Aug 2011 12:38:28 -0700
+From: Mark Doliner <mark@...gant.net>
+To: Moritz Mühlenhoff <jmm@...til.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> The authors of Etherape, a network traffic overview tool, fixed a remote
-> denial of service (NULL ptr dereference) fixed in etherape 0.9.12.
-> 
-> http://etherape.sourceforge.net/
-> http://sourceforge.net/tracker/?func=detail&aid=3309061&group_id=2712&atid=102712
-> 
-> This tool is in the same area as wireshark, so this probably needs a CVE.
-> 
+2011/8/22 Moritz Mühlenhoff <jmm@...til.org>:
+> On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
+>> Hi Mark,
+>>
+>> >Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
+>>
+>> >http://pidgin.im/news/security/?id=53
+>>
+>> Please use CVE-2011-2942 for this issue.
+>>
+>> Also looking at http://pidgin.im/news/security it seems two other security issues were also
+>> fixed in 2.10.0, do you want CVEs to be assigned for them as well?
+>
+> Please do. Since they're published in the form of upstream advisories
+> we'd like to properly track them in the Debian Security Tracker.
 
-Please use CVE-2011-3369.
+That's fine by me.  As an upstream developer I don't feel like I have
+a strong incentive to obtain a CVE.  But if it's helpful to packagers,
+than sure.
 
-Thanks.
+The two issues in question are discussed here:
+http://pidgin.im/news/security/?id=54
+http://pidgin.im/news/security/?id=55
 
--- 
-    JB
+The second one only affects Pidgin on Microsoft Windows.
+
+--Mark
