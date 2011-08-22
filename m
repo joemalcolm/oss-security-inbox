@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/6
-Message-ID: <1310054195.2993.93.camel@localhost>
-Date: Thu, 07 Jul 2011 10:56:35 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: William Cohen <wcohen@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/1
+Message-ID: <1297945425.870762.1313996134579.JavaMail.root@zmail07.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Aug 2011 02:55:34 -0400 (EDT)
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: mark@...gant.net
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
-> The patches mentioned in the previous email.
-> 
-> -Will
+Hi Mark,
 
-Thanks for these patches. I was reviewing them and noticed that
-0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
-'error_if_not_basename $arg $val' for --save added in
-0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
-if you apply all 4 patches, method #2 from the Debian bug[1] is no
-longer fixed. Attached is a patch to correct this (to be applied after
-the other 4).
+>Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
 
-[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
+>http://pidgin.im/news/security/?id=53
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+Please use CVE-2011-2942 for this issue.
 
-View attachment "0005-add-back-error_if_not_basename.patch" of type "text/x-patch" (506 bytes)
+Also looking at http://pidgin.im/news/security it seems two other security issues were also
+fixed in 2.10.0, do you want CVEs to be assigned for them as well?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks.
+
+--
+
+Huzaifa Sidhpurwala / Red Hat Security Response Team.
+
