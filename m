@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/14
-Message-ID: <1271379951.19443.1300222715834.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:58:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/7
+Message-ID: <20110822164349.GB3746@pisco.westfalen.local>
+Date: Mon, 22 Aug 2011 18:43:49 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: kernel: fs/partitions: Corrupted OSF partition table can cause information disclosure
+Cc: mark@...gant.net
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1163.
-
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> The kernel automatically evaluates partition tables of storage
-> devices.
-> The code for evaluating OSF partitions (in fs/partitions/osf.c)
-> contains a bug that leaks data from kernel heap memory to userspace
-> for
-> certain corrupted OSF partitions.
+On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
+> Hi Mark,
 > 
-> See http://www.spinics.net/lists/mm-commits/msg82737.html for a patch.
+> >Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
 > 
-> Cheers, Timo
+> >http://pidgin.im/news/security/?id=53
 > 
-> --
-> Dr. Timo Warns warns@...-sense.de
-> Tel. +49 - 40 - 244 2407 - 16
-> Fax +49 - 40 - 244 2407 - 24
-> PRESENSE Technologies GmbH Sachsenstr. 5, D-20097 HH
-> USt-IdNr.: DE263765024
-> Geschäftsführer/Managing Directors AG Hamburg, HRB 107844
-> Till Dörges Jürgen Sander Axel Theilmann
+> Please use CVE-2011-2942 for this issue.
+> 
+> Also looking at http://pidgin.im/news/security it seems two other security issues were also
+> fixed in 2.10.0, do you want CVEs to be assigned for them as well?
+
+Please do. Since they're published in the form of upstream advisories
+we'd like to properly track them in the Debian Security Tracker.
+
+Cheers,
+        Moritz
