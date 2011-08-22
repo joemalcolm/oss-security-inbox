@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/8
-Message-Id: <20110412195818.0fcf0534.onur@pardus.org.tr>
-Date: Tue, 12 Apr 2011 19:58:18 +0300
-From: Onur Küçük <onur@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/4
+Message-ID: <CAPZ8mV5azdsSFw0_O3gKae86irswX7j-OgVggG0DFtump45tkA@mail.gmail.com>
+Date: Mon, 22 Aug 2011 00:05:18 -0700
+From: Mark Doliner <mark@...gant.net>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Aug 21, 2011 at 11:55 PM, Huzaifa Sidhpurwala
+<huzaifas@...hat.com> wrote:
+> Also looking at http://pidgin.im/news/security it seems two other security issues were also
+> fixed in 2.10.0, do you want CVEs to be assigned for them as well?
 
-On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
-...
-> Initial members will have had to be a vendor-sec member (no exploders
-> this time around). You must reply to this thread, in public (on
-> oss-security). We want this to be very public, we have nothing to
-> hide. You must have a public gpg key ID included in your reply. The
-> new list will gpg encrypt all mail (it does accept plaintext messages
-> though).
+I'd say no.  The other two issues are both pretty minor.  I think it's
+very unlikely either of them would result in users being harmed.
 
- Sorry for the late reply, we had to resolve some issues on our side
-about who should join. I was a subscriber of vendor-sec as a
-representitive of Pardus, please add me to the new list(s).
-
-
-pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
-     Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
-uid                  Onur Küçük <onur@...dus.org.tr>
-sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
-
-
--- 
- Onur Küçük                                      Knowledge speaks,
- <onur.--.-.pardus.org.tr>                       but wisdom listens
-
+--Mark
