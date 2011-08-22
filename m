@@ -1,56 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/4
-Message-ID: <4E6144D2.4070905@icosahedron.de>
-Date: Fri, 02 Sep 2011 23:04:18 +0200
-From: Michael Lutz <michi+openttd@...sahedron.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/12
+Message-ID: <52972005.217119.1314043426149.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Aug 2011 16:03:46 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: rubidium@...nttd.org
-Subject: CVE request for OpenTTD
+Cc: Moritz Mühlenhoff <jmm@...til.org>, coley <coley@...re.org>
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
-Hello folks,
-
-the OpenTTD team and contributors have discovered several security
-vulnerabilities in OpenTTD. Please be so kind to allocate a CVE id for
-each of the issues detailed below:
-
-1.) Denial of service via improperly validated commands
-
-In multiple places in-game commands are not properly validated that allow
-remote attackers to cause a denial of service (crash) and possibly execute
-arbitrary code via unspecified vectors.
-
-Vulnerability is present since 0.3.5 and will be fixed in the upcoming
-1.1.3 release. Issue report at http://bugs.openttd.org/task/4745
-
-2.) Buffer overflows in savegame loading
-
-In multiple places indices in savegames are not properly validated that
-allow (remote) attackers to cause a denial of service (crash) and possibly
-execute arbitrary code via unspecified vectors.
-
-Vulnerability is present since 0.1.0 and will be fixed in the upcoming
-1.1.3 release. Issue reports at http://bugs.openttd.org/task/4717 and
-http://bugs.openttd.org/task/4748
-
-3.) Multiple buffer overflows in validation of external data
-
-In multiple places external data from the local file system isn't properly
-checked before allocating memory, which could lead to buffer overflows and
-arbitrary code execution.
-
-Vulnerability is present since 0.3.4 and will be fixed in the upcoming
-1.1.3 release. Issue reports at http://bugs.openttd.org/task/4746 and
-http://bugs.openttd.org/task/4747
 
 
-Once the CVE ids are allocated, each issue will be fully documented at
-http://security.openttd.org/en/CVE-2011-xxxx
+----- Original Message -----
+> 2011/8/22 Moritz Mühlenhoff <jmm@...til.org>:
+> > On Mon, Aug 22, 2011 at 02:55:34AM -0400, Huzaifa Sidhpurwala wrote:
+> >> Hi Mark,
+> >>
+> >> >Hi! Would it be possible to issue a CVE for a new crash in Pidgin?
+> >>
+> >> >http://pidgin.im/news/security/?id=53
+> >>
+> >> Please use CVE-2011-2942 for this issue.
+> >>
+> >> Also looking at http://pidgin.im/news/security it seems two other
+> >> security issues were also fixed in 2.10.0, do you want CVEs to be
+> >> assigned for them as well?
+> >
+> > Please do. Since they're published in the form of upstream advisories
+> > we'd like to properly track them in the Debian Security Tracker.
+> 
+> That's fine by me. As an upstream developer I don't feel like I have a
+> strong incentive to obtain a CVE. But if it's helpful to packagers, than
+> sure.
+> 
+> The two issues in question are discussed here:
+> http://pidgin.im/news/security/?id=54
 
-Thanks,
-Michael Lutz
-
-[Please CC me, I'm not subscribed.]
+This is a MSN crash. Use CVE-2011-3184
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+> http://pidgin.im/news/security/?id=55
+> 
+> The second one only affects Pidgin on Microsoft Windows.
+> 
+
+Use CVE-2011-3185 for this.
+
+Thanks.
+
+-- 
+    JB
