@@ -1,47 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/4
-Message-Id: <201106141514.25397.jnareb@gmail.com>
-Date: Tue, 14 Jun 2011 15:14:24 +0200
-From: Jakub Narebski <jnareb@...il.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
-Subject: Re: [CVE-2011-2186] XSS security issue in gitweb for 'blob_plain' view with HTML files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/2
+Message-ID: <660770731.870791.1313996413954.JavaMail.root@zmail07.collab.prod.int.phx2.redhat.com>
+Date: Mon, 22 Aug 2011 03:00:13 -0400 (EDT)
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: mark@...gant.net
+Subject: Re: CVE request: Pidgin crash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 14 June 2011, Ludwig Nussel wrote:
-> Jakub Narebski wrote:
+Hi,
 
-> > [...] it is enough to enable XSS prevention by adding
-> > 
-> >   our $prevent_xss = 1;
-> > 
-> > in gitweb configuration file.
-> 
-> What about making that the default?
+> Please use CVE-2011-2942 for this issue.
 
-I'll come up with a patch... though I am not sure if it shouldn't be
-done by distributions, which usually ship their own system-wide
-gitweb config file.
+Ok, i think i messed up a bit, this should have been CVE-2011-2943.
 
-Note that with $prevent_xss enabled gitweb is a bit poorer in features:
-no support for $GIT_DIR/README.html, no using gitweb as deploy platform.
-XSS threat level for gitweb isn't high, I think - there is nothing to
-steal.
+Thanks.
 
-> For convenience it may make sense to s!text/.*!text/plain! and allow
-> to display that inline.
+--
 
-Already done in
+Huzaifa Sidhpurwala / Red Hat Security Response Team.
 
-  [PATCH] gitweb: Make $prevent_xss protection for 'blob_plain' more usable
-  http://article.gmane.org/gmane.comp.version-control.git/175604
-  http://thread.gmane.org/gmane.comp.version-control.git/175057/focus=175604
 
-It is in git repository as
-
-  fb76adb (gitweb: Make $prevent_xss protection for 'blob_plain' more usable, 2011-06-10)
-
-currently in 'pu' (proposed updates) patch.
--- 
-Jakub Narebski
-Poland
