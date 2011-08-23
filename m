@@ -1,37 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/28
-Message-ID: <20110304175214.GA26198@openwall.com>
-Date: Fri, 4 Mar 2011 20:52:14 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/3
+Message-ID: <20110823093209.GA18198@suse.de>
+Date: Tue, 23 Aug 2011 11:32:09 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: daniel.lezcano@...e.fr
+Subject: lxc + fscaps
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
-> 
-> If there's a common usage scenario that doesn't stem from blatant 
-> administrator negligence, then a CVE is probably still appropriate. 
-> ("blatant admin negligence" might be, say, if an admin arbitrarily makes a 
-> script setuid, or modifies the perms for an executable or config file to 
-> be world-writable.)
 
-I think that "chmod 777 /var/log" is "blatant admin negligence".  As to,
-say, "chown nginx /var/log/nginx", it could be negligence or it could be
-lack of familiarity with the risks involved.  So I am willing to admit
-that it's not necessarily negligence that turns those issues into
-vulnerabilities on specific systems.
+Hi Daniel, oss-sec,
 
-> We will sometimes write the CVE description more as an "adminisrator 
-> practice" than as "fault of the software."
+I was checking the lxc container framework for some use-cases
+and found that it supports usage of containers by users.
+It is installed with file caps in this case. (and a lot
+of caps indeed, so actually you have almost all caps distributed
+across the binaries). Particular interesting of course is
+cap_dac_override and it looks like most lxc- binaries are
+not really prepared to handle such cases:
 
-Oh, this is something I did not realize.  A lot of people assume that
-CVEs "blame" the software and its authors for having made an error.
+linux:~> /sbin/getcap /usr/local/bin/lxc-start
+/usr/local/bin/lxc-start = cap_dac_override,cap_fowner,cap_setpcap,\
+cap_net_admin,cap_net_raw,cap_sys_chroot,cap_sys_admin+ep
+linux:~> /usr/local/bin/lxc-start -n foo -c /etc/foo /usr/bin/id
+lxc-start: failed to spawn 'foo'
+linux:~> ls -la /etc/foo
+-rw------- 1 jim users 0 Aug 23 09:38 /etc/foo
+linux:~>
 
-It felt wrong, say, to blame a text editor for being unsafe to use on
-files in untrusted directories when such unsafety was the typical and
-expected situation for text editors in general.
+That means you have a trivial root exploit if lxc is installed for users.
+There is a lxc-setuid script too but I guess that the lxc binaries
+are similarily not intended for such use.
+I dont know whether any distributor ships lxc with file caps, but
+probably the tools need some hardening if you want to allow
+lxc for users at all. I checked the latest 0.7.5 version.
 
-Thank you for your responses!
+regards,
+Sebastian
 
-Alexander
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
