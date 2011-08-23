@@ -1,36 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/4
-Message-ID: <4D7F2AB3.3010007@redhat.com>
-Date: Tue, 15 Mar 2011 17:00:35 +0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/1
+Message-ID: <4E535B19.9000601@redhat.com>
+Date: Tue, 23 Aug 2011 15:47:37 +0800
 From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Mike O'Connor" <mjo@...o.mi.org>
-Subject: Re: Vendor-sec hosting and future of closed lists
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: change in how tcp seq numbers are generated
 Content-Type: text/plain; charset=utf-8
 
-On 03/15/2011 11:01 AM, Mike O'Connor wrote:
-> [catching up on older emails]
->
-> :>  >  They do this already today, that's what security@...nel.org is for, and
-> :>  >  it gets a bit of traffic like this every week.
-> :>
-> :>  Is this list open to the public?  It doesn't seem to be available on
-> :>  http://vger.kernel.org/vger-lists.html.
-> :
-> :No, it is closed, as it should be as potential security problems are
-> :mailed there.  You don't want that to be totally open, right?
->
-> One suggestion I've made in the past is to have the list _archives_ be
-> open.  So anything older than, say, a month is made public.  That way,
-> folks can see how issues were disclosed, how decisions were reached,
-> etc.  for old issues that are no longer under embargo.  The way I see
-> it, if we don't publish the list archive on our own terms, miscreants
-> will get around to publishing it for us.
+http://lwn.net/Articles/455135/
+Dan Kaminsky pointed out that using partial MD4 and using that to
+generate a sequence number, of which only 24-bits are truly unguessable,
+seriously undermine the goals of random sequence number generation.
 
-Any fixes for the issues reported in s@k.o will be committed to the 
-upstream kernel immediately. The "disclosures" of those fixes are shared 
-in this list. Keep a look out for my emails.
+In particular, with only 24-bits being truly unguessable, packet
+injection into a session using even something like brute force is a real
+potential possibility.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+We only use 24-bits because we regenerate the random number every 5
+minutes "just in case."  But what does is trade a "we don't know" kind
+of theoretical issue for a provably real one (brute force attack).
+
+Therefore [Dave Miller] moving us more in line with RFC1948 (as well as
+OpenBSD and Solaris), to use MD5 and a full 32-bit result in the
+generated sequence number.
+
+MD5 was selected as a compromise between performance loss and
+theoretical ability to be compromised.  Willy Tarreau did extensive
+testing and SHA1 was found to harm performance too much to be considered
+seriously at this time.
+
+We may later add a sysctl for various modes (ie. a "super secure" mode
+that uses SHA1 if people want that, and an "insecure" mode that doesn't
+use cryptographic hashing at all for people in protected environments
+where that might be safe to do).
+
+[Dave Miller] also moved the sequence number generators out of random.c
+(they never really belonged there, and are only there due to historical
+artifacts), and fixed a bug in DCCP sequence number generation (on ipv6
+the 43-bit sequence number was truncated to 32-bits).
+
+Upstream commits:
+crypto: Move md5_transform to lib/md5.c
+http://git.kernel.org/linus/bc0b96b54a21246e377122d54569eef71cec535f
+net: Compute protocol sequence numbers and fragment IDs using MD5
+http://git.kernel.org/linus/6e5714eaf77d79ae1c8b47e3e040ff5411b717ec
+
+Thanks, Eugene
