@@ -1,19 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/1
-Message-ID: <20110302230559.GA24630@nashi.nerv.fi>
-Date: Thu, 3 Mar 2011 01:05:59 +0200
-From: henri@...v.fi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/4
+Message-ID: <1492152511.248709.1314112876635.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 23 Aug 2011 11:21:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: gri < 2.12.18 insecure temp file generation
+Cc: coley <coley@...re.org>
+Subject: CVE assignment - PHP salt flaw CVE-2011-3189
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this vulnerability? It's old one :)
+I'm assigning CVE-2011-3189 to the recent PHP crypt issue in 3.5.7
 
-Software gri is vulnerable to insecure temp file generation.
+https://bugs.php.net/bug.php?id=55439
+https://secunia.com/advisories/45678/
+https://bugs.gentoo.org/show_bug.cgi?id=380261
 
-References:
-http://gri.sourceforge.net/gridoc/html/Version_2_12.html
-http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please note that this URL is not meant for public use as it is temporary)
+Thanks.
 
-Best regards,
-Henri Salo
+-- 
+    JB
