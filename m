@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/6
-Message-ID: <87834720.1022071.1315591310297.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 14:01:50 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/5
+Message-ID: <20110824144944.3251fb79@redhat.com>
+Date: Wed, 24 Aug 2011 14:49:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- kernel: fuse: check size of FUSE_NOTIFY_INVAL_ENTRY message
+Subject: Re: CVE request: libqt4: two memory issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3353
+On Mon, 22 Aug 2011 10:43:23 +0200 Matthias Weckbecker wrote:
 
-Thanks.
+> A) buffer overflow (looks only like an off-by-one from a very quick
+> look)
+> http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+
+The fix is for 3rdparty/harfbuzz, any reason to prefer calling it Qt,
+rather than harfbuzz / pango issue.  The code even seems to be based on
+some FreeType code, though it's not obvious if FreeType was affected by
+that.  Is that more than over-read?
+
+> B) buffer overflow on greyscale images with multiple samples per pixel
+> https://bugzilla.novell.com/show_bug.cgi?id=637275
+> http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
+
+The bug is not public.
 
 -- 
-    JB
-
-
------ Original Message -----
-> FUSE_NOTIFY_INVAL_ENTRY didn't check the length of the write so the
-> message processing could overrun and result in a BUG_ON() in
-> fuse_copy_fill().
-> 
-> User able to mount FUSE filesystems can use this flaw to crash the
-> system.
-> 
-> References:
-> http://permalink.gmane.org/gmane.linux.kernel.commits.head/313266
-> http://sourceforge.net/mailarchive/forum.php?thread_name=87liut4i7w.fsf%40tucsk.pomaz.szeredi.hu&forum_name=fuse-devel
-> 
-> Upstream fix:
-> c2183d1e9b3f313dd8ba2b1b0197c8d9fb86a7ae
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
