@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/5
-Message-ID: <4DECEC03.3020205@gmx.de>
-Date: Mon, 06 Jun 2011 17:02:27 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/1
+Message-ID: <4E546390.9030503@redhat.com>
+Date: Wed, 24 Aug 2011 10:36:00 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: fetchmail 6.3.20 release to fix CVE-2011-1947 (was: CVE request for fetchmail STARTTLS hang (Denial of Service))
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+The name_len variable in CIFSFindNext is a signed int that gets set to
+the resume_name_len in the cifs_search_info. The resume_name_len however
+is unsigned and for some infolevels is populated directly from a 32 bit
+value sent by the server.
 
-I've just released fetchmail 6.3.20 to fix the STARTTLS
-denial-of-service problem present in all earlier fetchmail releases,
-CVE-2011-1947.
+If the server sends a very large value for this, then that value could
+look negative when converted to a signed int. That would make that value
+pass the PATH_MAX check later in CIFSFindNext. The name_len would then
+be used as a length value for a memcpy. It would then be treated as
+unsigned again, and the memcpy scribbles over a ton of memory.
 
-Note that distributors are advised to thoroughly check the NEWS file and
-consider doing a stable release update rather than just backporting the
-security fixes, there were several notable bug fixes.
+Fix this by making the name_len an unsigned value in CIFSFindNext.
 
-At least do note <http://www.fetchmail.info/fetchmail-EN-2010-03.txt> -
-it's a good opportunity to fix this, too...
+http://www.spinics.net/lists/linux-cifs/msg03950.html
+https://bugzilla.redhat.com/show_bug.cgi?id=732869
 
-Changelog:
-https://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/NEWS
-
-Homepage:
-http://www.fetchmail.info/
-
-Downloads:
-http://developer.berlios.de/project/showfiles.php?group_id=1824&release_id=18583
-
-Best regards,
-Matthias Andree
-Hat: fetchmail maintainer
+Thanks, Eugene
