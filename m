@@ -1,27 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/4
-Message-ID: <4D81EB8F.50605@redhat.com>
-Date: Thu, 17 Mar 2011 19:07:59 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/3
+Message-ID: <1108241017100.21645@mjc.redhat.com>
+Date: Wed, 24 Aug 2011 10:22:18 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>, Lars Kurth <lars.kurth@....org>
-Subject: Re: CVE Request: xen DoS
+Subject: CVE assignment Apache httpd multiple-range DoS ("Apache Killer") - CVE-2011-3192
 Content-Type: text/plain; charset=utf-8
 
-On 03/17/2011 03:09 PM, Ludwig Nussel wrote:
-> Hi,
->
-> http://xenbits.xen.org/hg/staging/xen-unstable.hg/rev/c79aae866ad8
->
-> Citing https://bugzilla.novell.com/show_bug.cgi?id=679344:
-> "The problem is that a 64-bit guest can get one of its vcpus into
-> non-kernel mode without first providing a valid non-kernel pagetable.
-> The iret-into-userspace path has the right checks, but just setting the
-> context on a fresh vcpu doesn't. :(  The observed failure mode is
-> usually a hard lockup of the host."
+This thread is on the full-disclosure mailing list:
+http://marc.info/?t=131379269200002&r=1&w=2
+leading to this upstream discussion:
+http://marc.info/?t=131409787700005&r=1&w=2
 
-Please use CVE-2011-1166.
+It is an escalation of server memory usage, and a plausible candidate 
+for a CVE, so I've assigned CVE-2011-3192.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Thanks, Mark
