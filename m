@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/3
-Message-ID: <4E242890.9050101@redhat.com>
-Date: Mon, 18 Jul 2011 14:35:28 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Sebastian Krahmer <krahmer@...e.de>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request: hplip/foomatic-filters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/2
+Message-ID: <4E549126.2000309@redhat.com>
+Date: Wed, 24 Aug 2011 13:50:30 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
+Subject: Re: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
 Content-Type: text/plain; charset=utf-8
 
-On 07/13/2011 12:53 PM, Sebastian Krahmer wrote:
-> Hi
->
-> The foomatic filters of the hplip package allow remote users
-> to execute arbitrary commands as the lp user. The flaw allows
-> hosts which are listed in the printing ACL or local users to
-> pass PPD file arguments to the foomatic filters. A PoC was
-> demonstrated using the CUPS server.
->
-> More info and patches are here:
->
-> https://bugzilla.novell.com/show_bug.cgi?id=698451
+On 08/24/2011 10:36 AM, Eugene Teo wrote:
+> The name_len variable in CIFSFindNext is a signed int that gets set to
+> the resume_name_len in the cifs_search_info. The resume_name_len however
+> is unsigned and for some infolevels is populated directly from a 32 bit
+> value sent by the server.
+> 
+> If the server sends a very large value for this, then that value could
+> look negative when converted to a signed int. That would make that value
+> pass the PATH_MAX check later in CIFSFindNext. The name_len would then
+> be used as a length value for a memcpy. It would then be treated as
+> unsigned again, and the memcpy scribbles over a ton of memory.
+> 
+> Fix this by making the name_len an unsigned value in CIFSFindNext.
+> 
+> http://www.spinics.net/lists/linux-cifs/msg03950.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=732869
 
-Please use CVE-2011-2697 for this.
+David Jorm from my team assigned CVE-2011-3191 to this.
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
->
-> Sebastian
->
+Thanks, Eugene
 
