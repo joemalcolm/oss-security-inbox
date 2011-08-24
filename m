@@ -1,87 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/12
-Message-ID: <20110627165848.GA6954@openwall.com>
-Date: Mon, 27 Jun 2011 20:58:48 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/10
+Message-ID: <183364929.302425.1314218070898.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Aug 2011 16:34:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: Debian Security Team <team@...urity.debian.org>, Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
+Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 27, 2011 at 04:59:05PM +0200, Ludwig Nussel wrote:
-> I think we cannot risk locking out users (which might include the
-> admin) with a security update on a released product. So existing
-> hashes have to keep working. My fear is that most systems just stay
-> in that compat mode forever if we don't make some component complain
-> though.
+----- Original Message -----
+> 
+> > #637477
+> > Insufficient input checking in /shared/inc/sql/lists.php
 
-This makes sense.  For Owl, I think we'll accept this lockout risk, but
-warn our admins that they should make sure they're able to log in after
-installing the update.  In fact, it is a good practice to do this after
-any upgrade to relevant components, such as to glibc, not only this time.
+CVE-2011-3195
 
-What about having a warning printed from %post in a relevant package?
-Oh, I guess this won't achieve anything with automated updates.
 
-> Ok, so we'd need two config options, one to toggle signedness bug
-> compat mode (2a=2x) and one to disallow 0xff if compat mode is off.
+> > #637485
+> > The setup script for dtc writes the password for the MySQL user in the
+> > world-readable file /etc/apache2/apache2.conf.
 
-I think you could do with just one option.  When the compat mode is
-enabled, you treat 2a in existing hashes as 2x.  When it is disabled,
-you stop doing that and you disallow 0xff chars in passwords being
-authenticated against 2a hashes.  In either mode, any new hashes are
-marked with 2y, as long as the self-test is not disabled.
+CVE-2011-3196
 
-The 2y is certification of proper operation at least for the specific
-test vector, which includes both 7- and 8-bit chars.  This should catch
-most miscompiles in the future, in case we get anything similar to the
-gcc 4.1.0 bug that caused such a miscompile in JtR, but by pure luck not
-in crypt_blowfish.  I want some safety from that, hence I think the
-self-test on every hash computation must not be disabled.
 
-I am seriously considering making special treatment of 0xff with 2a the
-default in crypt_blowfish itself.  So you wouldn't need to have it in
-your code, and I am the one to take care of timing issues.  Yes, this
-means that I deliberately break 2a somewhat vs. OpenBSD's, but this
-might be the best way to resolve the situation we got into.  The reality
-is that right now 2a means "unknown correctness", unfortunately, and
-treating only 0xff chars differently from OpenBSD is far less incorrect
-than having the sign extension bug was.
+> > #637487
+> > Insufficient input checking leads to a SQL injection vulnerability in
+> > shared/inc/forms/domain_info.php.
+> >
+> > #637498
+> > A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
+> > files as the MySQL system user.
 
-> Default for for the security update would be bug compat mode on.
+I'm grouping the above two together.
+CVE-2011-3197
 
-That's up to you to decide.
 
-> In that mode new passwords would get the 2y prefix. The 0xff option
-> has no effect. Over time the number of 2a passwords decreases. Once
-> /etc/shadow contains no 2a passwords on important accounts anymore
-> the admin could switch off bug compat mode
+> > #637537
+> > dtc passes passwords to htpasswd using command line arguments, which
+> > can be read by a local user.
 
-Right.
+CVE-2011-3198
 
-> and s/2y/2a/.
 
-No.  I think these should stay as-is.
+> > #637584
+> > dtc does not escape variables in HTML output in many places; for
+> > example in the "Domain root TXT record:" field on the "DNS and MX" page
+> > where JavaScript can be injected.
 
-> More nervous admins could disable bug compat mode right away. That
-> would lock out affected users unless the admin also does s/2a/2x/.
+Let's call this "multiple XSS flaws"
+CVE-2011-3199
 
-Right.
+Thanks for sorting the original list.
 
-> The really paranoid could additionally enable the 0xff option. New
-> passwords would get 2a.
-
-No, and no.  I see no reason for either of these (assuming that you
-implement what was discussed above).
-
-> I suppose crypt_blowfish is not meant to parse some config file, so
-> we'd have to implement the options in the pam modules.
-
-Yes, but I think it'd be just one option, and its behavior will be as
-trivial as to treat 2a on existing hashes as 2x.  It shouldn't do
-anything else.  The 0xff thing will be in crypt_blowfish itself, per my
-current proposal above - which I'd appreciate comments on.
-
-Thanks,
-
-Alexander
+-- 
+    JB
