@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/11
-Message-ID: <474027225.118091.1300738565939.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 21 Mar 2011 16:16:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/2
+Message-ID: <4E549126.2000309@redhat.com>
+Date: Wed, 24 Aug 2011 13:50:30 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Re: CVE request for python-feedparser
+CC: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
+Subject: Re: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+On 08/24/2011 10:36 AM, Eugene Teo wrote:
+> The name_len variable in CIFSFindNext is a signed int that gets set to
+> the resume_name_len in the cifs_search_info. The resume_name_len however
+> is unsigned and for some infolevels is populated directly from a 32 bit
+> value sent by the server.
+> 
+> If the server sends a very large value for this, then that value could
+> look negative when converted to a signed int. That would make that value
+> pass the PATH_MAX check later in CIFSFindNext. The name_len would then
+> be used as a length value for a memcpy. It would then be treated as
+> unsigned again, and the memcpy scribbles over a ton of memory.
+> 
+> Fix this by making the name_len an unsigned value in CIFSFindNext.
+> 
+> http://www.spinics.net/lists/linux-cifs/msg03950.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=732869
 
-This one will need a 2009 ID.
+David Jorm from my team assigned CVE-2011-3191 to this.
 
-Thanks.
+Thanks, Eugene
 
--- 
-    JB
-
------ Original Message -----
-> Please allocate a CVE for a further XSS vulnerability:
-> 
-> http://code.google.com/p/feedparser/issues/detail?id=195
-> 
-> It's an old bug, but I couldn't find any reference of a CVE ID. I'm
-> not
-> subscribed so I'd appreciate a CC.
-> 
-> Thanks,
-> 
-> --
-> Jonathan Wiltshire jmw@...ian.org
-> Debian Developer http://people.debian.org/~jmw
-> 
-> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
