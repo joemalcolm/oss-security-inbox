@@ -1,66 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/28
-Message-ID: <Pine.GSO.4.64.1103141755470.14482@faron.mitre.org>
-Date: Mon, 14 Mar 2011 18:09:45 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/4
+Message-ID: <20110824111313.GW25099@lupin.home.powdarrmonkey.net>
+Date: Wed, 24 Aug 2011 12:13:13 +0100
+From: Jonathan Wiltshire <jmw@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
+> Hi,
+> 
+> A number of problems have been found recently in dtc (Domain Technologie
+> Control) and reported to the Debian BTS. These are the bugs that affect
+> upstream code; please assign CVEs as you feel appropriate:
 
-On Mon, 14 Mar 2011, Jan Lieskovsky wrote:
+any updates here?
 
->  this is due the following vino deficiency:
->  [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
->  [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
->
-> As noted in [1] Vino may incorrectly report, that relevant user desktop
-> is reachable only over local network, when in fact it's reachable from 
-> everywhere.
->
-> As this is issue slightly on the border, not sure it should receive a 
-> CVE identifier,
-
-It should, for the reasons you gave:
-
-> it is wrongly reported to the user, they have a secure setup, when they 
-> do not have it and otherwise would perform steps to correct the 
-> settings).
-
-There are various precedents in CVE.  For example, when a browser shows a 
-lock icon (or some other indicator of connection 
-confidentiality/integrity) when the connection isn't actually encrypted 
-(e.g. CVE-2010-3312, CVE-2009-1107).
+Thanks,
 
 
-Regarding UPnP warning for vino - it's a little more difficult to clearly 
-define when a product doesn't give "enough warning" to a user, but there 
-are precedents (e.g. CVE-2010-0497, CVE-2008-4234, CVE-2000-0277, 
-CVE-1999-1055).
+-- 
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
 
-FYI, people interested in security issues related to the UI could look at 
-CWE-445, CWE-357, and CWE-355 for starters.  It doesn't seem like a very 
-well-explored area.
-
-- Steve
-
-
-
-> What are the thoughts of the others? Should this one get a CVE identifier or 
-> not?
->
-> Upstream bug report:
-> [3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
->
-> Ubuntu bug report (IPv6 specific):
-> [4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
->
-> To David King -- David, what are the upstream plans for this issue? Is there 
-> by any
-> chance upstream patch for the bug [3] yet?
->
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
