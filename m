@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/16/1
-Message-ID: <4651786d-e56e-4e05-a9f0-49642fe6f1d4@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Nov 2011 04:43:28 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/5
+Message-ID: <20110824144944.3251fb79@redhat.com>
+Date: Wed, 24 Aug 2011 14:49:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: openid4java not properly verifying the signature of Attribute Exchange (AX) information
+Subject: Re: CVE request: libqt4: two memory issues
 Content-Type: text/plain; charset=utf-8
 
-It was found that openid4java was not checking that all Attribute Exchange (AX) information passed to it was signed. This is a security concern if AX is being used to receive information that an application only trusts the identity provider to assert.
+On Mon, 22 Aug 2011 10:43:23 +0200 Matthias Weckbecker wrote:
 
-Upstream advisory: http://openid.net/2011/05/05/attribute-exchange-security-alert/
-Patch commit: http://code.google.com/p/openid4java/source/detail?r=661
-Secunia advisory: http://secunia.com/advisories/44496/
+> A) buffer overflow (looks only like an off-by-one from a very quick
+> look)
+> http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
 
-Thanks
+The fix is for 3rdparty/harfbuzz, any reason to prefer calling it Qt,
+rather than harfbuzz / pango issue.  The code even seems to be based on
+some FreeType code, though it's not obvious if FreeType was affected by
+that.  Is that more than over-read?
+
+> B) buffer overflow on greyscale images with multiple samples per pixel
+> https://bugzilla.novell.com/show_bug.cgi?id=637275
+> http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
+
+The bug is not public.
+
 -- 
-David Jorm / Red Hat Security Response Team
-
+Tomas Hoger / Red Hat Security Response Team
