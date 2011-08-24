@@ -1,28 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/3
-Message-ID: <20110914140926.GC25572@dhcp-25-225.brq.redhat.com>
-Date: Wed, 14 Sep 2011 16:09:27 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/3
+Message-ID: <1108241017100.21645@mjc.redhat.com>
+Date: Wed, 24 Aug 2011 10:22:18 +0100 (BST)
+From: Mark J Cox <mjc@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
+Subject: CVE assignment Apache httpd multiple-range DoS ("Apache Killer") - CVE-2011-3192
 Content-Type: text/plain; charset=utf-8
 
-"Currently, we skip doing the is_path_accessible check in cifs_mount if
-there is no prefixpath. There is a report of at least one server however
-that allows a TREE_CONNECT to a share that has a DFS referral at its
-root. UNC that had no prefixpath was used in that case, so the
-is_path_accessible check was not triggered and the box later hit
-a BUG() because we were chasing a DFS referral on the root dentry for
-the mount."
+This thread is on the full-disclosure mailing list:
+http://marc.info/?t=131379269200002&r=1&w=2
+leading to this upstream discussion:
+http://marc.info/?t=131409787700005&r=1&w=2
 
-Upstream fix:
-70945643722ffeac779d2529a348f99567fa5c33
+It is an escalation of server memory usage, and a plausible candidate 
+for a CVE, so I've assigned CVE-2011-3192.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=682829
-https://github.com/mirrors/linux/commit/70945643722ffeac779d2529a348f99567fa5c33
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Thanks, Mark
