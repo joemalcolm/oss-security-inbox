@@ -1,51 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/5
-Message-ID: <20110407173728.GA3934@redhat.com>
-Date: Thu, 7 Apr 2011 11:37:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com, file@...gw.com
-Cc: christos@...las.com
-Subject: Re: Possible security fixes in 5.05?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/10
+Message-ID: <183364929.302425.1314218070898.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Aug 2011 16:34:30 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Debian Security Team <team@...urity.debian.org>, Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
+Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-21 23:16:15 -0600] Raphael Geissert wrote:
+----- Original Message -----
+> 
+> > #637477
+> > Insufficient input checking in /shared/inc/sql/lists.php
 
->Hi,
->
->>From file's 5.05 changelog[1] it seems like some security-relevant changes were
->made, but I'm unable to find further information. I saw a git repository being
->mentioned in a message but I can't find it either.
->
->Can anyone please shed some light to the security-related changes?
->
->I would like to encourage developers to communicate such kind of issues openly
->in this list, as it helps getting them fixed in distributions.
->
->Thanks in advance.
->
->[1]http://mx.gw.com/pipermail/file/2011/000690.html
-
-Looks like there are a few issues here:
+CVE-2011-3195
 
 
-2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
-     * Fix two potential buffer overruns in apprentice_list.
+> > #637485
+> > The setup script for dtc writes the password for the MySQL user in the
+> > world-readable file /etc/apache2/apache2.conf.
 
-https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
-
-
-2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
-     * Minor security fix to softmagic.c (don't use untrusted
-       string as printf format).
-
-https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+CVE-2011-3196
 
 
-I have not looked at them in more depth to see how much of a problem they are,
-or when they were introduced (in order to know which versions are affected),
-etc.
+> > #637487
+> > Insufficient input checking leads to a SQL injection vulnerability in
+> > shared/inc/forms/domain_info.php.
+> >
+> > #637498
+> > A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
+> > files as the MySQL system user.
 
-I'm cc'ing Christos to see if he can perhaps enlighten us.
+I'm grouping the above two together.
+CVE-2011-3197
+
+
+> > #637537
+> > dtc passes passwords to htpasswd using command line arguments, which
+> > can be read by a local user.
+
+CVE-2011-3198
+
+
+> > #637584
+> > dtc does not escape variables in HTML output in many places; for
+> > example in the "Domain root TXT record:" field on the "DNS and MX" page
+> > where JavaScript can be injected.
+
+Let's call this "multiple XSS flaws"
+CVE-2011-3199
+
+Thanks for sorting the original list.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+    JB
