@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/7
-Message-ID: <20111007161110.GT12557@redhat.com>
-Date: Fri, 7 Oct 2011 10:11:10 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/4
+Message-ID: <20110824111313.GW25099@lupin.home.powdarrmonkey.net>
+Date: Wed, 24 Aug 2011 12:13:13 +0100
+From: Jonathan Wiltshire <jmw@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Juliusz Chroboczek <jch@....jussieu.fr>
-Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
+Subject: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-* [2011-10-06 18:37:01 +0200] Juliusz Chroboczek wrote:
+On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
+> Hi,
+> 
+> A number of problems have been found recently in dtc (Domain Technologie
+> Control) and reported to the Debian BTS. These are the bugs that affect
+> upstream code; please assign CVEs as you feel appropriate:
 
->>   a denial of service flaw was found in the way Polipo, a lightweight
->> caching web proxy, processed certain HTTP POST / PUT requests. If
->> polipo was configured to allow remote client connections and particular
->> host was allowed to connect to polipo server instance, a remote
->> attacker could use this flaw to cause denial of service (polipo daemon
->> abort due to assertion failure) via specially-crafted HTTP POST / PUT
->> request.
->
->Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
->it is fixed in the Git trunk, which is unfortunately not ready to be
->released (and might never be unless a maintainer is found).
+any updates here?
 
-Do you have a link to the commit, or a commit id?  I can't see anything
-on github that looks relevant or recent.
+Thanks,
 
-We do ship this in Fedora, so it would be nice to have the patch that we
-could apply to what we are already shipping if no releases are
-forthcoming.
-
-Thanks.
-
->At any rate, I do not recommend running Polipo as a publicly accessible
->proxy.  While I have made reasonable efforts to ensure that this is
->safe, Polipo was not designed for that.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
+
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
