@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/11
-Message-ID: <CAEZPtU7mj+gD_sb_4UKKqt2qdk9_pKZ8DhPcdoV-AxOHjvuQ8A@mail.gmail.com>
-Date: Sun, 25 Sep 2011 19:22:19 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Rasmus Lerdorf <rasmus@....net>
-Cc: Zeev Suraski <zeev@...d.com>, Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/9
+Message-ID: <1772343402.302040.1314217408278.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Aug 2011 16:23:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
-> So
-> are we talking about the tiny number of people who have explicitly
-> enabled allow_url_include and are running the code with this bad autoloader?
 
-Yes, and that's why it is a very very minor problem. However it was
-not happening before the code change. The few cases where the class
-names&co have been sanitize before and the developer did not think
-about cases like the one describe in the blog post. I think it is even
-more rare combination, but it was not happening before our change.
 
+----- Original Message -----
+> On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
+> > Hi,
+> >
+> > A number of problems have been found recently in dtc (Domain
+> > Technologie Control) and reported to the Debian BTS. These are the bugs
+> > that affect upstream code; please assign CVEs as you feel appropriate:
+> 
+> any updates here?
+> 
+
+I hope to have this sorted out shortly. It's a big report.
+
+Do you know if these are fixed in an upstream version?
+
+Thanks.
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+    JB
