@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/12
-Message-ID: <456517594.1604694.1311710321865.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 26 Jul 2011 15:58:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/6
+Message-ID: <loom.20110824T050953-567@post.gmane.org>
+Date: Wed, 24 Aug 2011 03:12:36 +0000 (UTC)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Tim Brown <timb@...-dimension.org.uk>, KDE Security Team <security@....org>
-Subject: Re: CVE Request: Ark path traversal
+Subject: Re: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
 Content-Type: text/plain; charset=utf-8
 
+Eugene Teo <eugene@...> writes:
 
-
------ Original Message -----
-> Hello,
+> Fix this by making the name_len an unsigned value in CIFSFindNext.
 > 
-> Ark contains a path traversal vulnerability allowing a
-> maliciously-crafted zip file to allow for an arbitrary file to be
-> displayed and, if the user has appropriate credentials, removed.
+> http://www.spinics.net/lists/linux-cifs/msg03950.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=732869
 > 
-> Can we please get a CVE for this?
+> Thanks, Eugene
+> 
 > 
 
-Do you have a URL or some other public information about this flaw?
+Please use CVE-2011-3191.
 
-Thanks.
+Thanks
+--
+David Jorm / Red Hat Security Response Team
 
--- 
-    JB
