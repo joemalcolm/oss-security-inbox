@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/1
-Message-ID: <4E1E8E16.9050107@redhat.com>
-Date: Thu, 14 Jul 2011 08:35:02 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Erik de Castro Lopo <erikd@...a-nerd.com>, Secunia Research <vuln@...unia.com>
-Subject: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/9
+Message-ID: <1772343402.302040.1314217408278.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Aug 2011 16:23:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
-
-   an integer overflow, leading to heap-based buffer overflow flaw was
-found in the way libsndfile, library for reading and writing of sound
-files, processed certain PARIS Audio Format (PAF) audio files with
-crafted count of channels in the PAF file header. A remote attacker
-could provided a specially-crafted PAF audio file, which once opened by
-a local, unsuspecting user in an application, linked against libsndfile,
-could lead to that particular application crash (denial of service),
-or, potentially arbitrary code execution with the privileges of the
-user running the application.
-
-References:
-[1] https://bugs.gentoo.org/show_bug.cgi?id=375125
-[2] http://www.securelist.com/en/advisories/45125
-[3] http://secunia.com/advisories/45125/
-[4] http://www.mega-nerd.com/libsndfile/
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=721234
-
-Relevant upstream patch (from Bzr log):
----------------------------------------
-
-revno: 1610
-committer: Erik de Castro Lopo <erikd@...a-nerd.com>
-branch nick: libsndfile-dev
-timestamp: Wed 2011-07-06 19:40:05 +1000
-message:
-   Fix for Secunia Advisory SA45125, heap overflow in PAF file handler.
 
 
-Could you allocate a CVE identifier for this?
+----- Original Message -----
+> On Fri, Aug 12, 2011 at 10:26:04PM +0100, Jonathan Wiltshire wrote:
+> > Hi,
+> >
+> > A number of problems have been found recently in dtc (Domain
+> > Technologie Control) and reported to the Debian BTS. These are the bugs
+> > that affect upstream code; please assign CVEs as you feel appropriate:
+> 
+> any updates here?
+> 
 
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+I hope to have this sorted out shortly. It's a big report.
+
+Do you know if these are fixed in an upstream version?
+
+Thanks.
+
+-- 
+    JB
