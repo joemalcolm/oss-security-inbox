@@ -1,26 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/2
-Message-ID: <1315382565.19972.2.camel@scapa>
-Date: Wed, 07 Sep 2011 10:02:41 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/7
+Message-ID: <20110824140827.GA1477@suse.de>
+Date: Wed, 24 Aug 2011 16:08:27 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Sebastian Krahmer <krahmer@...e.de>, Guido Berhoerster <gber@...nsuse.org>
-Subject: Re: Re: lightdm issues
+Cc: robert.ancell@...onical.com
+Subject: lightdm issues
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-26 at 14:51 +1000, Robert Ancell wrote:
-> Hi Sebastian,
-> 
-> Thanks for doing this review, this issue is now being tracked in the 
-> LightDM issue tracker:
-> https://bugs.launchpad.net/lightdm/+bug/834079 
+Hi,
 
-Could a CVE be assigned? Sebastian didn't really asked for it but as it
-can indeed be used to overwrite root-owned files (with non-controlled
-content afaict) I guess it deserves ones?
+lightdm (0.9.2) which aims to be a xdm replacement seems to
+fall into the same pitfalls like kdm and gdm recently. There is
+a lot of uid 0 code creating and chown()ing files in user dirs such as
+for ~/.dmrc and ~/.Xauthority. Probably more, depending on
+how the permissions of cache and log directories are set up. For example
+process_start() also creates and chown()s logfiles on users behalf.
 
-Regards,
+There is also one thing that I dont understand about the lightdm
+user itself and why pam sessions seem to be started for it inside
+the greeter session code.
+
+The xdmcp code seems to be OK so far, after a quick review.
+
+l8er,
+-s
+
+
 -- 
-Yves-Alexis
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
