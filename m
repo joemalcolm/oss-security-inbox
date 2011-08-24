@@ -1,82 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/1
-Message-ID: <20110304001151.GA2187@kroah.com>
-Date: Thu, 3 Mar 2011 16:11:51 -0800
-From: Greg KH <greg@...ah.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Cc: oss-security@...ts.openwall.com, Kees Cook <kees@...ntu.com>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/1
+Message-ID: <4E546390.9030503@redhat.com>
+Date: Wed, 24 Aug 2011 10:36:00 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 06:59:20PM -0500, Dan Rosenberg wrote:
-> Hi all,
-> 
-> >
-> > Then, as I have always said, someone needs to step up and actually do
-> > this type of communication work.  I personally don't have the time to, I
-> > am swamped with just getting the stable updates out in a semi-timely
-> > fashion.  Digging through every patch in these releases and properly
-> > conveying the real, or percieved reason why they are needed, is a lot of
-> > thankless work.  Jon at lwn.net tried it for just one release, and we
-> > are averaging about one a week (total number of kernels released that
-> > is).  No one else has yet tried to do that, but if they will, I will be
-> > _glad_ to point my release notifications at that summary.
-> >
-> > So in other words, help is gladly accepted :)
-> >
-> 
-> Rather than requiring individuals to perform substantial amounts of
-> digging through patches, which I agree is infeasible, perhaps it would
-> be more reasonable to establish a general policy that bug reporters
-> and maintainers can use to work with distro security teams and the
-> rest of the security community.
-> 
-> For example, a public or private list could be established for all
-> *potential* kernel security issues, and just as is the case with
-> CC'ing stable, a policy could be developed where maintainers are
-> expected to CC this list for fixes that might possibly have security
-> relevance, with a tendency towards erring on the safe side if security
-> impact is unclear.
+The name_len variable in CIFSFindNext is a signed int that gets set to
+the resume_name_len in the cifs_search_info. The resume_name_len however
+is unsigned and for some infolevels is populated directly from a 32 bit
+value sent by the server.
 
-This proposal just fell down right there, as it has been rightly pointed
-out that numerous bug fixes in the kernel in the past have later been
-deemed "security fixes".  So what you are asking for is for _all_
-bugfixes to be sent to such a list.
+If the server sends a very large value for this, then that value could
+look negative when converted to a signed int. That would make that value
+pass the PATH_MAX check later in CIFSFindNext. The name_len would then
+be used as a length value for a memcpy. It would then be treated as
+unsigned again, and the memcpy scribbles over a ton of memory.
 
-Well, we have that already, we have mailing lists that get every single
-patch that is merged into the kernel, and there's the big lkml list as
-well with hundreds of fixes posted every week.
+Fix this by making the name_len an unsigned value in CIFSFindNext.
 
-> I think security communication needs to be
-> improved at the commit level (as opposed to the reporting), since
-> maintainers are often much more knowledgeable and better able to
-> understand security impact than the users who are often presenting
-> issues.
+http://www.spinics.net/lists/linux-cifs/msg03950.html
+https://bugzilla.redhat.com/show_bug.cgi?id=732869
 
-I don't think you understand the rate of change in the kernel and how
-trying to do this for every commit is unfeasable and unworkable.  You do
-know how fast it goes, right?
-
-> Criteria could be set up for what kinds of issues would be
-> candidates for being sent to this list.  I don't think this would
-> require substantially more work on anyone's part, but by creating a
-> culture where potential security issues are treated seriously, it
-> would at least stop some of the silent patching that's been going on.
-> 
-> Once potential security issues have been submitted to such a list, I'm
-> sure there would be no shortage of people willing and able to analyze
-> security impact for each issue, including assigning CVEs.  While
-> digging through every kernel patch might be too much work, with the
-> cooperation of maintainers this can be reduced to a much smaller
-> subset that would be easily dealt with.
-
-I would be happy if someone could just document the patches that _are_
-applied to stable kernel releases.  I bet you can't keep up with that,
-they are moving so fast.
-
-Sorry, I don't think this is workable as you are proposing, but feel
-free to prove me wrong :)
-
-thanks,
-
-greg k-h
+Thanks, Eugene
