@@ -1,49 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/7
-Message-ID: <977272446.96885.1305574633976.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 16 May 2011 15:37:13 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/8
+Message-ID: <1187053605.301058.1314215357677.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 24 Aug 2011 15:49:17 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Martin Zobel-Helas <zobel@...ian.org>, 626281@...s.debian.org, coley <coley@...re.org>
-Subject: Re: CVE request: keepalived pid file permissions issue
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: libqt4: two memory issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1784 for this.
+
+
+----- Original Message -----
+> Hi,
+> 
+> A) buffer overflow (looks only like an off-by-one from a very quick
+> look)
+> http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+
+Use CVE-2011-3193 for this.
+
+I couldn't find this code in Harfbuzz-ng or pango. Has someone looked into
+this further?
+
+> 
+> B) buffer overflow on greyscale images with multiple samples per pixel
+> https://bugzilla.novell.com/show_bug.cgi?id=637275
+> http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
+> 
+
+Use CVE-2011-3194
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> Hey,
-> 
-> it was reported that keepalived (and some other daemons) store their
-> pid
-> file with permission 666. A bug was opened for keepalived in Debian,
-> could a CVE be assigned to the issue?
-> 
-> Bug text was:
-> 
-> On mar., 2011-05-10 at 16:33 +0200, Martin Zobel-Helas wrote:
-> > Package: keepalived
-> > Version: 1.1.12-1
-> > Severity: grave
-> > Tags: security
-> >
-> > Hi,
-> >
-> > keepalive writes a public writeable pid file to /var/run
-> >
-> > -rw-rw-rw- 1 root root 5 2011-02-08 13:00 keepalived.pid
-> >
-> > Cheers,
-> > Martin
-> >
-> >
-> > reference:
-> > http://lists.debian.org/05578BFF-44FC-41B3-9E8E-C11B5B9A6C11@gmail.com
-> 
-> Thanks,
-> --
-> Yves-Alexis
