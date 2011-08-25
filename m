@@ -1,30 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/5
-Message-ID: <20110916205422.GS6573@outflux.net>
-Date: Fri, 16 Sep 2011 13:54:22 -0700
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/2
+Message-ID: <1314287667.1902.16.camel@scapa>
+Date: Thu, 25 Aug 2011 17:54:23 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: 639151@...s.debian.org
+Cc: Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com,  Sebastian Krahmer <krahmer@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 16, 2011 at 10:14:42PM +0200, Yves-Alexis Perez wrote:
-> On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
-> > My last day with Canonical is today. Starting on Sep 19th, I will be
-> > working for Google on ChromeOS. I'd like to transition my closed-list
-> > membership based on the fact that ChromeOS is also a distro, and I'll
-> > still have security responsibilities with it. How should this be
-> > handled? 
-> 
-> I don't have closed-list membership or anything, but I assume you'll
-> keep going on Ubuntu security team anyway, even from Google, so it might
-> make sense that you keep the membership anyway?
+On mer., 2011-08-24 at 20:55 +0200, Yves-Alexis Perez wrote:
+> And, out of curiosity, how would you achieve privilege escalation? You
+> should be able to erase/rewrite arbitrary files, including /etc/shadow,
+> but you don't really have control on what's written there. 
 
-I don't mind it, but traditionally, only Canonical employees have had
-access to the embargoed Ubuntu security information (and, as a result,
-access to the closed list).
+In gdm (CVE-2011-0727 I guess) the issue was that a g_file_copy() was
+run as root from files under user control (.dmrc and the avatar), to a
+cache dir with write permissions (afaict). So it was easy to put
+whatever stuff you need in the original file and make a symlink
+to /etc/shadow in the destination folder so the g_file_copy() would
+erase that:
 
--Kees
+                 res = g_file_copy (src_file,
+                                    dst_file,
+                                    G_FILE_COPY_OVERWRITE |
+                                    G_FILE_COPY_NOFOLLOW_SYMLINKS,
+                                    NULL,
+                                    NULL,
+                                    NULL,
+                                    &error);
 
+
+I'm not too sure what G_FILE_COPY_OVERWRITE means, if it truncate()s and
+write over of if it unlink()s and start fresh (digging in glib to find
+out). Apparenlty in the fallback case (not sure if it's the case here)
+it ends up doing a g_file_replace()).
+
+In any case, in lightdm case, for .Xauthority file it uses
+g_file_replace() which creates a temporary file and then rename over the
+new file, so in the worst case you overwrite a system file with
+xauthority data.
+
+Same thing for .dmrc, you can overwrite system files but with dmrc data
+which look like 
+
+[Desktop]
+Session=xfce
+Lang=fr_FR.UTF-8
+
+so it doesn't look easy to gain root access with that.
+
+LightDM maintains a cache for dmrc files in /var/cache/lightdm but the
+folder is created 0700 so it doesn't look like one can put symlinks
+there and have it use a user-controled .dmrc.
+
+All in all, I'm not too sure there's a privilege escalation for
+Xauthority/.dmrc files (but if one exists, I'm interested in how to do
+it, by curiosity). But you still damage pretty much any arbitrary file,
+which is still an easy DoS.
+
+Regards,
 -- 
-Kees Cook
-Ubuntu Security Team
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
