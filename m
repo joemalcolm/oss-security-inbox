@@ -1,42 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/4
-Message-ID: <20110621143441.GA7449@suse.de>
-Date: Tue, 21 Jun 2011 16:34:41 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/2
+Message-ID: <1314287667.1902.16.camel@scapa>
+Date: Thu, 25 Aug 2011 17:54:23 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: 639151@...s.debian.org
+Cc: Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com,  Sebastian Krahmer <krahmer@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
->Returning to the crypt_blowfish topic, I am considering keeping 
->support
->for the broken hashes under another prefix - say, "$2x$" (where the "x"
->would stand for "sign eXtension bug") instead of the usual "$2a$".  For
->typical passwords, they'd be the same (except for this one letter in the
->prefix).  Their potential use would be by a sysadmin wishing to avoid
->any service disruption for anyone (even if that means potentially
->staying with weaker passwords than what some users might have expected;
->maybe password changes would then be recommended or forced over time).
->That sysadmin would replace "$2a$" with "$2x$" in existing hashes on the
->system right before upgrade to corrected software (such as PHP or glibc
->with crypt_blowfish).  Alternatively, say, a custom web app could be
->making this replacement for crypt() calls only, on hashes created before
->upgrade date.
+On mer., 2011-08-24 at 20:55 +0200, Yves-Alexis Perez wrote:
+> And, out of curiosity, how would you achieve privilege escalation? You
+> should be able to erase/rewrite arbitrary files, including /etc/shadow,
+> but you don't really have control on what's written there. 
 
-I wonder whether it would make sense to patch pam_unix (resp 
-pam_unix2 in our case) to detect the problem and activate the 
-workaround automatically. pam_unix has the clear text password so 
-knows when it contains 8bit characters. It also has the shadow entry 
-which tells when the password was set. If that date is before the 
-update was installed the 2x method could be tried if 2a failed and a 
-warning could be logged to syslog.
+In gdm (CVE-2011-0727 I guess) the issue was that a g_file_copy() was
+run as root from files under user control (.dmrc and the avatar), to a
+cache dir with write permissions (afaict). So it was easy to put
+whatever stuff you need in the original file and make a symlink
+to /etc/shadow in the destination folder so the g_file_copy() would
+erase that:
 
-cu
-Ludwig
+                 res = g_file_copy (src_file,
+                                    dst_file,
+                                    G_FILE_COPY_OVERWRITE |
+                                    G_FILE_COPY_NOFOLLOW_SYMLINKS,
+                                    NULL,
+                                    NULL,
+                                    NULL,
+                                    &error);
 
+
+I'm not too sure what G_FILE_COPY_OVERWRITE means, if it truncate()s and
+write over of if it unlink()s and start fresh (digging in glib to find
+out). Apparenlty in the fallback case (not sure if it's the case here)
+it ends up doing a g_file_replace()).
+
+In any case, in lightdm case, for .Xauthority file it uses
+g_file_replace() which creates a temporary file and then rename over the
+new file, so in the worst case you overwrite a system file with
+xauthority data.
+
+Same thing for .dmrc, you can overwrite system files but with dmrc data
+which look like 
+
+[Desktop]
+Session=xfce
+Lang=fr_FR.UTF-8
+
+so it doesn't look easy to gain root access with that.
+
+LightDM maintains a cache for dmrc files in /var/cache/lightdm but the
+folder is created 0700 so it doesn't look like one can put symlinks
+there and have it use a user-controled .dmrc.
+
+All in all, I'm not too sure there's a privilege escalation for
+Xauthority/.dmrc files (but if one exists, I'm interested in how to do
+it, by curiosity). But you still damage pretty much any arbitrary file,
+which is still an easy DoS.
+
+Regards,
 -- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
