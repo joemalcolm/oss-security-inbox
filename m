@@ -1,21 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/1
-Message-ID: <20110405232557.GB714@dojo.mi.org>
-Date: Tue, 5 Apr 2011 19:25:57 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/1
+Message-ID: <20110825081847.0bee10d8@redhat.com>
+Date: Thu, 25 Aug 2011 08:18:47 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: libqt4: two memory issues
 Content-Type: text/plain; charset=utf-8
 
-:There are also userland tools specific to the Linux kernel, there's
-:Linux-PAM, there are package managers that are rarely used on non-Linux.
+On Wed, 24 Aug 2011 15:49:17 -0400 (EDT) Josh Bressers wrote:
 
-Linux-PAM (well, a fair subset of it from several years back) was ported
-to IRIX.  In most notable cases, it's bug-for-bug compatible.  
+> > A) buffer overflow (looks only like an off-by-one from a very quick
+> > look)
+> > http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+> 
+> Use CVE-2011-3193 for this.
+> 
+> I couldn't find this code in Harfbuzz-ng or pango. Has someone looked
+> into this further?
+
+In both harfbuzz and pango git, history of the file ends with "Remove
+old code!" removal:
+
+http://git.gnome.org/browse/pango/log/pango/opentype/harfbuzz-gpos.c
+http://cgit.freedesktop.org/harfbuzz/log/src/harfbuzz-gpos.c
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Villains always have antidotes.  They're funny that way."          -The Tick
-
-Content of type "application/pgp-signature" skipped
+Tomas Hoger / Red Hat Security Response Team
