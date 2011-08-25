@@ -1,46 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/10
-Message-ID: <Pine.GSO.4.64.1107281118250.20828@faron.mitre.org>
-Date: Thu, 28 Jul 2011 11:18:40 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/25/1
+Message-ID: <20110825081847.0bee10d8@redhat.com>
+Date: Thu, 25 Aug 2011 08:18:47 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
+Subject: Re: CVE request: libqt4: two memory issues
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 24 Aug 2011 15:49:17 -0400 (EDT) Josh Bressers wrote:
 
-Use CVE-2008-7291
+> > A) buffer overflow (looks only like an off-by-one from a very quick
+> > look)
+> > http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+> 
+> Use CVE-2011-3193 for this.
+> 
+> I couldn't find this code in Harfbuzz-ng or pango. Has someone looked
+> into this further?
 
-- Steve
+In both harfbuzz and pango git, history of the file ends with "Remove
+old code!" removal:
 
+http://git.gnome.org/browse/pango/log/pango/opentype/harfbuzz-gpos.c
+http://cgit.freedesktop.org/harfbuzz/log/src/harfbuzz-gpos.c
 
-On Thu, 28 Jul 2011, Henri Salo wrote:
-
-> On Thu, Mar 03, 2011 at 03:38:32PM -0500, Josh Bressers wrote:
->> ----- Original Message -----
->>> Can I get CVE-identifier for this vulnerability? It's old one :)
->>>
->>> Software gri is vulnerable to insecure temp file generation.
->>>
->>> References:
->>> http://gri.sourceforge.net/gridoc/html/Version_2_12.html
->>> http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
->>> note that this URL is not meant for public use as it is temporary)
->>>
->>
->> Steve,
->>
->> Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
->> is here:
->> https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
->>
->> Thanks.
->>
->> --
->>     JB
->
-> This is still unhandled. What is the status?
->
-> Best regards,
-> Henri Salo
->
+-- 
+Tomas Hoger / Red Hat Security Response Team
