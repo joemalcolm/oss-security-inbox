@@ -1,40 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/5
-Message-ID: <4EB2BA04.7020908@redhat.com>
-Date: Thu, 03 Nov 2011 09:57:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/3
+Message-ID: <1314349640.23138.14.camel@scapa>
+Date: Fri, 26 Aug 2011 11:07:20 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, phpMyAdmin Security Team <security@...myadmin.net>
-Subject: Re: CVE Request -- phpMyAdmin -- Arbitrary local file read flaw by loading XML strings / importing XML files
+Cc: Sebastian Krahmer <krahmer@...e.de>, 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com
+Subject: Re: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/2011 09:01 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors, phpMyAdmin Security Team,
->
->   a local file inclusion flaw was found in the way XML import plug-in of
-> phpMyAdmin, a tool written in PHP intended to handle the administration
-> of MySQL over the World Wide Web, performed import of malformed XML
-> files. A remote attacker could provide a specially-crafted XML file,
-> which once imported into the phpMyAdmin service instance would lead to
-> arbitrary local file (accessible with the privileges of the phpMyAdmin
-> user) read / retrieval.
->
-> References:
-> [1] http://seclists.org/fulldisclosure/2011/Nov/21
-> [2] http://www.wooyun.org/bugs/wooyun-2010-03185
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=751112
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Cc-ed phpMyAdmin security team to clarify upstream patch status.
->
-Please use CVE-2011-4107 for this issue.
+On ven., 2011-08-26 at 10:58 +0200, Yves-Alexis Perez wrote:
+> > However I didnt dig deep enough into it to write an exploit as I dont have
+> > a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
+> > to that of the user if doing anything with his files.
+> 
+> Yeah, I'm currently cooking patches doing that, though they'll need
+> review before apply. 
 
+Would something like:
+
+diff --git a/src/dmrc.c b/src/dmrc.c
+index bff1da8..9f38faf 100644
+--- a/src/dmrc.c
++++ b/src/dmrc.c
+@@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar *username)
+     /* Update the users .dmrc */
+     if (user)
+     {
++      /* write the file as the user itself */
++      pid_t pid;
++      pid = fork();
++
++      if (pid == 0)
++      {
++        if (setuid (user_get_uid(user)) < 0)
++        {
++          g_warning("Error changing uid for %s: %s", username, g_strerror(errno));
++          _exit(EXIT_FAILURE);
++        }
+         path = g_build_filename (user_get_home_directory (user), ".dmrc", NULL);
+         g_file_set_contents (path, data, length, NULL);
+-        if (getuid () == 0 && chown (path, user_get_uid (user), user_get_gid (user)) < 0)
+-            g_warning ("Error setting ownership on %s: %s", path, strerror (errno));
+         g_free (path);
++        _exit(EXIT_SUCCESS);
++
++      }
++      if (pid > 0)
++        wait(NULL);
+     }
+ 
+     /* Update the .dmrc cache */
+
+do the job (untested, it's more like a RFC right now).
+
+Regards,
 -- 
+Yves-Alexis
 
--Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
