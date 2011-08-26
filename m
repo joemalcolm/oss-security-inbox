@@ -1,33 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/1
-Message-ID: <20110622071707.GA4282@albatros>
-Date: Wed, 22 Jun 2011 11:17:07 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/7
+Message-ID: <CAPYM6Vx5ZXrsFOMuNoc+QcKbBdj0+R-m5AAhuLZM4-nJm_ZHsg@mail.gmail.com>
+Date: Sat, 27 Aug 2011 00:00:20 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: taskstats local DoS
+Subject: CVE Request: Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
 Content-Type: text/plain; charset=utf-8
 
-"Currently a single process may register exit handlers unlimited times.
-It may lead to a bloated listeners chain and very slow process terminations.
-E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
-kernel memory is stolen for the handlers chain and "time id" shows 2-7
-seconds instead of normal 0.003.  It makes it possible to exhaust all
-kernel memory and to eat much of CPU time by triggerring numerous exits
-on a single CPU.
-
-The patch limits the number of times a single process may register
-itself on a single CPU to one."
-
-It makes it possible for unprivileged user eat kernel memory and CPU
-without triggering OOM killer.
-
-Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
-
-http://lists.openwall.net/linux-kernel/2011/06/16/605
+Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
 
 
-Thanks,
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+1. OVERVIEW
+
+Jcow CMS versions  (4.x: 4.2 and lower, 5.x: 5.2 and lower) are
+vulnerable to Arbitrary Code Execution.
+
+
+2. BACKGROUND
+
+Jcow is a flexible Social Networking software written in PHP. It can
+help you to build a social network for your interests and passions, a
+member community for your existing website and a social networking
+site like facebook/myspace/twitter.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The parameter "attachment" is not properly sanitized upon submission
+to /index.php, which allows attacker to execute arbitrary PHP code of
+his own.
+
+
+4. VERSIONS AFFECTED
+
+Free version:  4.x: 4.2 and lower
+Commercial version:  5.x: 5.2 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://dev.metasploit.com/redmine/attachments/1660/jcow_eval.rb
+
+jcow 4.2.1:
+file: /includes/libs/ss.inc.php
+line: 167
+
+       $app = $_POST['attachment'];
+   if (strlen($app) && $app != 'status') {
+       include_once('modules/'.$app.'/'.$app.'.php');
+       $c_run = $app.'::ajax_post();';
+       eval($c_run);
+       exit;
+   }
+
+
+jcow 5.2.0:
+file: /includes/libs/ss.inc.php
+line: 45
+
+ $Vd2a57dc1 = $_POST['attachment']; if (strlen($Vd2a57dc1) &&
+$Vd2a57dc1 != 'status') {
+ include_once('modules/'.$Vd2a57dc1.'/'.$Vd2a57dc1.'.php'); $Ve8200cee
+= $Vd2a57dc1.'::ajax_post();';
+eval($Ve8200cee); exit; }
+
+
+
+6. SOLUTION
+
+Free version users can upgrade to 4.3.1 or higher.
+Commercial users can upgrade to 5.3 or higher.
+
+
+7. VENDOR
+
+Jcow CMS Development Team
+http://www.jcow.net
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-06-03: notified vendor
+2010-06-03: vendor replied fix would be available within 48hrs
+2011-08-24: vendor released fixed versions for 4.x and 5.x,
+                       4.3.1 for free release
+                       5.3 for commercial release
+2011-08-26: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[jcow_4.2,5.2]_arbitrary_code_execution
+Jcow CMS: http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
+
+
+#yehg [2011-08-26]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
