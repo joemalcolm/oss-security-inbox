@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/26/1
-Message-ID: <20110426153729.GB2160@redhat.com>
-Date: Tue, 26 Apr 2011 09:37:29 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/9
+Message-ID: <1314389676.10232.22.camel@localhost>
+Date: Fri, 26 Aug 2011 15:14:33 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: geoff@...ttered.org, dwyer@...lab.ee.mu.oz.au, jgifford@...ksmart.net
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Security issue in hammerhead
 Content-Type: text/plain; charset=utf-8
 
-* [2011-04-24 14:43:39 +0400] Solar Designer wrote:
+A security bug was reported against hammerhead in Ubuntu. You are being
+emailed as the upstream contact. Please keep
+oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
 
->On Wed, Apr 13, 2011 at 11:11:07AM -0600, Vincent Danen wrote:
->> Please add me to the new list.
->>
->> pub   3072R/E8B86CAB 2011-04-12
->>       Key fingerprint = 765E 89FE E95B F0FE 16E4  10CD 94BE 833C E8B8 6CAB
->> uid                  Vincent Danen <vdanen linsec.ca>
->> uid                  Vincent Danen <vdanen annvix.org>
->> uid                  Vincent Danen <vdanen redhat.com>
->> sub   3072R/8BBA24C6 2011-04-12
->
->Added.
->
->BTW, people eligible and wishing to join the list don't have to post the
->specific e-mail addresses and PGP key info in here.  As I wrote in:
->
->http://www.openwall.com/lists/oss-security/2011/04/04/40
->
->"That said, I agree that having specific e-mail addresses and key IDs
->posted to a public list is excessive.  If anyone else wishes to join
->(and qualifies), please state so in the "Closed list" thread and justify
->your request (currently that would mean info on the Linux distro you're
->a security contact for), then e-mail the specific e-mail address and PGP
->key info to me off-list.  I'll continue to reply on the list, but the
->specific e-mail addresses and keys will be exposed a little bit less."
->
->Of course, for active participants of oss-security and/or other public
->lists this shouldn't matter much (they're "exposed" anyway).
+This issue should be considered public and has not yet been assigned a CVE.
 
-Yeah, I wasn't too concerned.  My email address is everywhere, and
-having my public key everywhere is a good thing.  If I could do the
-latter without the former, I'd be really happy.  =)
+Details from the public bug follow:
+https://launchpad.net/bugs/826679
+
+----
+From the reporter:
+
+"hammerhead blindly writes to to /tmp/hammer.log without prior checks.
+It is possible to put a symbolic link at /tmp/hammer.log pointing at
+another file - that hammerhead will then end up appending data into.
+(it appears that hammerhead uses the file location as specified
+in /etc/hammerhead/hh.conf - which in debian/ubuntu
+is /tmp/hammer.log)."
+----
+
+A quick check shows that HH_LOG and REPORT_LOG are indeed being
+unconditionally opened with 'fopen(..., "a+")' in src/hammerhead.cc. 
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
+
+Jamie Strandboge
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
+
+PS - I couldn't find a security contact for hammerhead, so emailed to
+those I could find in AUTHORS.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
