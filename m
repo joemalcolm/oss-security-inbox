@@ -1,23 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/7
-Message-ID: <4EB16C66.6060603@redhat.com>
-Date: Wed, 02 Nov 2011 10:14:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: David Black <disclosure@....org>
-Subject: Re: Re: CVE request for Django-piston and Tastypie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/1
+Message-ID: <20110826084355.GB27079@suse.de>
+Date: Fri, 26 Aug 2011 10:43:55 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com, oss-security@...ts.openwall.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On 11/01/2011 07:35 PM, David Black wrote:
-> The Tastypie announcement can be found at
-> http://groups.google.com/group/django-tastypie/browse_thread/thread/8b668d1831d35012
->
-> and the patch to fix this bug can be found at
-> https://github.com/toastdriven/django-tastypie/commit/e8af315211b07c8f48f32a063233cc3f76dd5bc2
-Thanks, first hand info is much better. Please use CVE-2011-4104 for
-this issue.
+
+Hi,
+
+You probably dont take into account the chown() that happens in lightdm.
+Just unlink the created ~/.dmrc or ~/.Xauthority files after creation and make a symlink
+to /etc/passwd to chown it to yourself.
+However I didnt dig deep enough into it to write an exploit as I dont have
+a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
+to that of the user if doing anything with his files.
+
+The PAM issue that I was curious about was that a pam_start() etc is done
+for the greeter-user (which I expect to be some "lightdm" user)?
+
+I would expect all pam_ calls are only done for the user who is actually
+about to login. The question that came up to me was whether pam_environment
+from the user would have impact on uid-0 called programs/scripts since
+you transfer the PAM env to the process env.
+
+Sebastian
+
+On Thu, Aug 25, 2011 at 05:54:23PM +0200, Yves-Alexis Perez wrote:
+> On mer., 2011-08-24 at 20:55 +0200, Yves-Alexis Perez wrote:
+> > And, out of curiosity, how would you achieve privilege escalation? You
+> > should be able to erase/rewrite arbitrary files, including /etc/shadow,
+> > but you don't really have control on what's written there. 
+> 
+> In gdm (CVE-2011-0727 I guess) the issue was that a g_file_copy() was
+> run as root from files under user control (.dmrc and the avatar), to a
+> cache dir with write permissions (afaict). So it was easy to put
+> whatever stuff you need in the original file and make a symlink
+> to /etc/shadow in the destination folder so the g_file_copy() would
+> erase that:
+> 
+>                  res = g_file_copy (src_file,
+>                                     dst_file,
+>                                     G_FILE_COPY_OVERWRITE |
+>                                     G_FILE_COPY_NOFOLLOW_SYMLINKS,
+>                                     NULL,
+>                                     NULL,
+>                                     NULL,
+>                                     &error);
+> 
+> 
+> I'm not too sure what G_FILE_COPY_OVERWRITE means, if it truncate()s and
+> write over of if it unlink()s and start fresh (digging in glib to find
+> out). Apparenlty in the fallback case (not sure if it's the case here)
+> it ends up doing a g_file_replace()).
+> 
+> In any case, in lightdm case, for .Xauthority file it uses
+> g_file_replace() which creates a temporary file and then rename over the
+> new file, so in the worst case you overwrite a system file with
+> xauthority data.
+> 
+> Same thing for .dmrc, you can overwrite system files but with dmrc data
+> which look like 
+> 
+> [Desktop]
+> Session=xfce
+> Lang=fr_FR.UTF-8
+> 
+> so it doesn't look easy to gain root access with that.
+> 
+> LightDM maintains a cache for dmrc files in /var/cache/lightdm but the
+> folder is created 0700 so it doesn't look like one can put symlinks
+> there and have it use a user-controled .dmrc.
+> 
+> All in all, I'm not too sure there's a privilege escalation for
+> Xauthority/.dmrc files (but if one exists, I'm interested in how to do
+> it, by curiosity). But you still damage pretty much any arbitrary file,
+> which is still an easy DoS.
+> 
+> Regards,
+> -- 
+> Yves-Alexis
+
+
 
 -- 
 
--Kurt Seifried / Red Hat Security Response Team
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
 
