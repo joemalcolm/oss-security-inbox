@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/19
-Message-ID: <20110314190345.GA4114@netbookdave>
-Date: Mon, 14 Mar 2011 20:03:45 +0100
-From: David King <amigadave@...gadave.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/4
+Message-ID: <4E57263C.7040308@canonical.com>
+Date: Fri, 26 Aug 2011 14:51:08 +1000
+From: Robert Ancell <robert.ancell@...onical.com>
+To: Sebastian Krahmer <krahmer@...e.de>
+CC: oss-security@...ts.openwall.com,  Guido Berhoerster <gber@...nsuse.org>
+Subject: Re: lightdm issues
 Content-Type: text/plain; charset=utf-8
 
-On 2011-03-14 16:00, Jan Lieskovsky <jlieskov@...hat.com> wrote:
->Hello Josh, Steve, David, vendors,
+On 25/08/11 00:08, Sebastian Krahmer wrote:
+> Hi,
 >
->   this is due the following vino deficiency:
->   [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
->   [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+> lightdm (0.9.2) which aims to be a xdm replacement seems to
+> fall into the same pitfalls like kdm and gdm recently. There is
+> a lot of uid 0 code creating and chown()ing files in user dirs such as
+> for ~/.dmrc and ~/.Xauthority. Probably more, depending on
+> how the permissions of cache and log directories are set up. For example
+> process_start() also creates and chown()s logfiles on users behalf.
 >
->As noted in [1] Vino may incorrectly report, that relevant user desktop
->is reachable only over local network, when in fact it's reachable from everywhere.
-
-[snip]
-
->Upstream bug report:
->[3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
+> There is also one thing that I dont understand about the lightdm
+> user itself and why pam sessions seem to be started for it inside
+> the greeter session code.
 >
->Ubuntu bug report (IPv6 specific):
->[4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
+> The xdmcp code seems to be OK so far, after a quick review.
 >
->To David King -- David, what are the upstream plans for this issue? Is there by any
->chance upstream patch for the bug [3] yet?
+> l8er,
+> -s
+>
+>
+Hi Sebastian,
 
-I only took over the Vino maintainership 10 days ago, so I am not 
-familiar with all parts of the code yet, including this one. Now that I 
-have been notified of the issue, I will work on fixing it, but for the 
-next stable release (GNOME 3.0), due in a few weeks, I think that it 
-will be safest to disable this functionality.
+Thanks for doing this review, this issue is now being tracked in the 
+LightDM issue tracker:
+https://bugs.launchpad.net/lightdm/+bug/834079
 
-As for the UPnP issue listed at [2], I was planning to fix this during 
-the GNOME 3.2 release cycle, as it will require changing translatable 
-strings, and the project is already in a string freeze. The upstream bug 
-has some more details:
+Not sure what you mean in your question about the PAM sessions.  The 
+greeter object inside the daemon creates PAMSession objects which 
+attempt to be authenticated, then passes the successful one to the 
+session code which starts the PAM session.  Might just be bad naming 
+causing confusion?  (I've been meaning to split this into 
+PAMAuthentication and PAMSession objects).
 
-https://bugzilla.gnome.org/show_bug.cgi?id=594521
+--Robert
 
-I could also disable this functionality as a workaround.
-
->Thanks && Regards, Jan.
-
--- 
-http://amigadave.com/
