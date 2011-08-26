@@ -1,37 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/4
-Message-ID: <CANbgwsF=HwpvdRAAiM7A5ox+O6bvYeuH5hPoFStfkaV844uZhA@mail.gmail.com>
-Date: Tue, 12 Jul 2011 21:19:33 +0530
-From: Abhijeet Patil <getabhijeetpatil@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/7
+Message-ID: <CAPYM6Vx5ZXrsFOMuNoc+QcKbBdj0+R-m5AAhuLZM4-nJm_ZHsg@mail.gmail.com>
+Date: Sat, 27 Aug 2011 00:00:20 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: [Announcement] ClubHack Magazine Issue 18-July2011 Released
+Subject: CVE Request: Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
 Content-Type: text/plain; charset=utf-8
 
-Dear All, here we are with issue18 of ClubHack Mag for the month of
-July2011. Like most of the times, this issue is also theme based and the
-theme for issue18 is Metasploit.
+Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
 
-We have some good news for our readers. CHMag is now partners with Hakin9
-and PenTestMag. Also starting from June 2011, CHMag is available in ePUB
-format also for eBook readers like Kindle & iPad.
 
-This issue covers following articles:-
 
-0x00 Tech Gyan - Using Metasploit with Nessus Bridge on Ubuntu
-0x01 Tool Gyan - Armitage – The Ultimate Attack Platform for Metasploit
-0x02 Mom's Guide - Penetration Testing with Metasploit Framework
-0x03 Legal Gyan - Trademark Law and Cyberspace
-0x04 Matriux Vibhag - The Exploitation Ka Baap MSF
+1. OVERVIEW
 
-Check http://chmag.in for articles.
-PDF version can be download from:- http://chmag.in/issue/jul2011.pdf
+Jcow CMS versions  (4.x: 4.2 and lower, 5.x: 5.2 and lower) are
+vulnerable to Arbitrary Code Execution.
 
-Hope you'll enjoy the magazine. Please send your suggestions, feedback to
-info@...ag.in
 
-Regards,
-Abhijeet Patil,
-Co-Founder, CHMag
-URLs: http://chmag.in, http://clubhack.com
-Email: abhijeet@...bhack.com
+2. BACKGROUND
 
+Jcow is a flexible Social Networking software written in PHP. It can
+help you to build a social network for your interests and passions, a
+member community for your existing website and a social networking
+site like facebook/myspace/twitter.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The parameter "attachment" is not properly sanitized upon submission
+to /index.php, which allows attacker to execute arbitrary PHP code of
+his own.
+
+
+4. VERSIONS AFFECTED
+
+Free version:  4.x: 4.2 and lower
+Commercial version:  5.x: 5.2 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+http://dev.metasploit.com/redmine/attachments/1660/jcow_eval.rb
+
+jcow 4.2.1:
+file: /includes/libs/ss.inc.php
+line: 167
+
+       $app = $_POST['attachment'];
+   if (strlen($app) && $app != 'status') {
+       include_once('modules/'.$app.'/'.$app.'.php');
+       $c_run = $app.'::ajax_post();';
+       eval($c_run);
+       exit;
+   }
+
+
+jcow 5.2.0:
+file: /includes/libs/ss.inc.php
+line: 45
+
+ $Vd2a57dc1 = $_POST['attachment']; if (strlen($Vd2a57dc1) &&
+$Vd2a57dc1 != 'status') {
+ include_once('modules/'.$Vd2a57dc1.'/'.$Vd2a57dc1.'.php'); $Ve8200cee
+= $Vd2a57dc1.'::ajax_post();';
+eval($Ve8200cee); exit; }
+
+
+
+6. SOLUTION
+
+Free version users can upgrade to 4.3.1 or higher.
+Commercial users can upgrade to 5.3 or higher.
+
+
+7. VENDOR
+
+Jcow CMS Development Team
+http://www.jcow.net
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-06-03: notified vendor
+2010-06-03: vendor replied fix would be available within 48hrs
+2011-08-24: vendor released fixed versions for 4.x and 5.x,
+                       4.3.1 for free release
+                       5.3 for commercial release
+2011-08-26: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[jcow_4.2,5.2]_arbitrary_code_execution
+Jcow CMS: http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
+
+
+#yehg [2011-08-26]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
