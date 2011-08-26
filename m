@@ -1,20 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/5
-Message-ID: <20111009182839.GA4474@pisco.westfalen.local>
-Date: Sun, 9 Oct 2011 20:28:39 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/5
+Message-ID: <1849403901.384299.1314370023764.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 26 Aug 2011 10:47:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: Tahoe-LAFS and atop
+Cc: coley <coley@...re.org>
+Subject: CVE Assignment - evolution CVE-2011-3201
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign CVE IDs for the following issues:
+Matt McCutchen reported a flaw in the way handles mailto: urls.
 
-1. Tahoe-LAFS
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641540
+A malicious site can specify an attach= parameter to the URL, which can
+attach arbitrary files to a mail message.
 
-2. atop
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
+I've assigned CVE-2011-3201 to the issue.
 
-Cheers,
-        Moritz
+Our bug contains what we currently know:
+https://bugzilla.redhat.com/show_bug.cgi?id=733504
+
+Thanks.
+
+-- 
+    JB
