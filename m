@@ -1,29 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/7
-Message-Id: <201107141702.10704.thomas@suse.de>
-Date: Thu, 14 Jul 2011 17:02:10 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/6
+Message-ID: <CAPYM6VxpaoOB2pjR7iXV43Ui0V-s1YdSWHPqbmHEbAJgBhUsHA@mail.gmail.com>
+Date: Fri, 26 Aug 2011 23:59:33 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: webkit ZDI-11-138 and ZDI-11-139
+Subject: CVE Request: Jcow CMS 4.2 <= | Cross Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-Looks like the following two issus have no CVE-ID assigned:
+Jcow CMS 4.2 <= | Cross Site Scripting
 
 
-http://www.zerodayinitiative.com/advisories/ZDI-11-138/
-Webkit Undefined DOM Prototype Attach Remote Code Execution Vulnerability
-ZDI-11-138: April 19th, 2011 
+1. OVERVIEW
 
-http://www.zerodayinitiative.com/advisories/ZDI-11-139/
-Webkit Anonymous Frame Remote Code Execution Vulnerability
-ZDI-11-139: April 19th, 2011 
+Jcow CMS 4.2 and lower versions are vulnerable to Cross Site Scripting.
 
 
-Cheers
-Thomas
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+2. BACKGROUND
+
+Jcow is a flexible Social Networking software written in PHP. It can
+help you to build a social network for your interests and passions, a
+member community for your existing website and a social networking
+site like facebook/myspace/twitter.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The parameter "g" is not properly sanitized upon submission to
+/index.php, which allows attacker to conduct Cross Site Scripting
+attack. This may allow an attacker to create a specially crafted URL
+that would execute arbitrary script code in a victim's browser.
+
+
+4. VERSIONS AFFECTED
+
+Jcow CMS 4.2 and lower
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+File    : /includes/libs/member.module.php:
+Line 605: <input type="hidden" name="g" value="'.$_REQUEST['g'].'" />
+
+http://[target]/index.php?p=member/signup&email=&username=&password=&fullname=&birthyear=1991&birthmonth=01&birthday=01&gender=0&location=Myanmar++&about_me=&recaptcha_challenge_field=03AHJ_Vuvk8U6zCeSdrjB0GPDuwaRP-tPJ2G7u3Nm5LpmVSGmZs_CIP9I_C0PYZ1zYY6F42zpzGKQkxSiUhhyu-QhhwZA6oTlLNntgAgmRkDjfZpu3j4-bMeQNpOVh1afb4fZ4qwaIxHpP1wL8-8-LgkEBE5auAFmF_w&recaptcha_response_field=&g=%22%3E%3Cscript%3Ealert%28/XSS/%29%3C/script%3E&onpost=1&agree_rules=1
+
+
+6. SOLUTION
+
+Upgrade to 4.3.1 or higher.
+The commercial version 5.x.x is not vulnerable.
+
+
+7. VENDOR
+
+Jcow CMS Development Team
+http://www.jcow.net
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-06-03: notified vendor
+2010-06-03: vendor replied fix would be available within 48hrs
+2011-08-24: vendor released fixed version, jcow.4.3.1.ce
+2011-08-26: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/[jcow_4.2]_cross_site_scripting
+Jcow CMS: http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
+
+
+#yehg [2011-08-26]
+
+
+---------------------------------
+Best regards,
+YGN Ethical Hacker Group
+Yangon, Myanmar
+http://yehg.net
+Our Lab | http://yehg.net/lab
+Our Directory | http://yehg.net/hwd
