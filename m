@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/7
-Message-ID: <4DC9A887.4030309@redhat.com>
-Date: Tue, 10 May 2011 17:05:11 -0400
-From: William Cohen <wcohen@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/5
+Message-ID: <1849403901.384299.1314370023764.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 26 Aug 2011 10:47:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley <coley@...re.org>
+Subject: CVE Assignment - evolution CVE-2011-3201
 Content-Type: text/plain; charset=utf-8
 
-On 05/03/2011 05:36 AM, Huzaifa Sidhpurwala wrote:
-> Hi William,
-> On 05/01/2011 07:30 AM, William Cohen wrote:
->>
->> I don't know if this is the best way to fix this issue, but attached is a patch that filters out all but alpha numeric characters and '_'. Feedback on the patch would be appreciated.
->>
-> 
-> It appears from the debian bug, that there may be others way to exploit
-> this issue as well. hence i think we need a revised patch?
-> 
-> 
-> 
+Matt McCutchen reported a flaw in the way handles mailto: urls.
 
-The patches mentioned in the previous email.
+A malicious site can specify an attach= parameter to the URL, which can
+attach arbitrary files to a mail message.
 
--Will
+I've assigned CVE-2011-3201 to the issue.
 
-View attachment "0001-Sanitize-Event-Names.patch" of type "text/x-patch" (911 bytes)
+Our bug contains what we currently know:
+https://bugzilla.redhat.com/show_bug.cgi?id=733504
 
-View attachment "0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch" of type "text/x-patch" (1092 bytes)
+Thanks.
 
-View attachment "0003-Avoid-blindly-source-SETUP_FILE-with.patch" of type "text/x-patch" (1482 bytes)
-
-View attachment "0004-Do-additional-checks-on-user-supplied-arguments.patch" of type "text/x-patch" (4241 bytes)
+-- 
+    JB
