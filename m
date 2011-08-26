@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/6
-Message-ID: <Pine.GSO.4.64.1103281054270.7261@faron.mitre.org>
-Date: Mon, 28 Mar 2011 11:00:00 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libpng memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/2
+Message-ID: <1314349111.23138.13.camel@scapa>
+Date: Fri, 26 Aug 2011 10:58:26 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: Sebastian Krahmer <krahmer@...e.de>
+Cc: 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>,  robert.ancell@...onical.com, oss-security@...ts.openwall.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
+On ven., 2011-08-26 at 10:43 +0200, Sebastian Krahmer wrote:
+> Hi,
+> 
+> You probably dont take into account the chown() that happens in lightdm.
+> Just unlink the created ~/.dmrc or ~/.Xauthority files after creation and make a symlink
+> to /etc/passwd to chown it to yourself.
 
-On Tue, 22 Mar 2011, Ludwig Nussel wrote:
+The chown will be applied to the symlink, not the target. I've tried to
+make .Xauthority a symlink to a root-owned file and the destination was
+indeed destroyed, but it's still root-owned.
 
-> libpng has this in it's changelog¹:
-> version 1.2.39beta05 [August 1, 2009]
->  Reject attempt to write iCCP chunk with negative embedded profile length
->    (JD Chen)
->
-> As it turned out this fixes a DoS (memory consumption on x86_64 and
-> a segfault on i386) if e.g. GraphicsMagick is used to convert certain
-> jpeg files to png.
-> The bug was introduced in 1.2.13beta1:
-> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=0ff85c6923d2c4fca4ac0bad28e387e3b1777d7a#patch19
+> However I didnt dig deep enough into it to write an exploit as I dont have
+> a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
+> to that of the user if doing anything with his files.
 
-> Then an incomplete attempt to fix it in 1.2.15beta3, due to 
-> http://bugs.gentoo.org/159216:
+Yeah, I'm currently cooking patches doing that, though they'll need
+review before apply.
+> 
+> The PAM issue that I was curious about was that a pam_start() etc is done
+> for the greeter-user (which I expect to be some "lightdm" user)?
 
-> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=948ee23a2a400672b1751cfc646a7467741e9b2e#patch18
+Yes
+> 
+> I would expect all pam_ calls are only done for the user who is actually
+> about to login. The question that came up to me was whether pam_environment
+> from the user would have impact on uid-0 called programs/scripts since
+> you transfer the PAM env to the process env.
 
-This gets CVE-2006-7244
+Yeah, that looks fishy, though I have no idea how it's exactly cooked
+that way, we'll have to wait for an answer from Robert.
 
-> And finally fixed in 1.2.39beta5:
-> http://libpng.git.sourceforge.net/git/gitweb.cgi?p=libpng/libpng;a=commitdiff;h=9e88fcd58c8ce7f2183bc2045e5180cba0043f09#patch19
+Regards,
+-- 
+Yves-Alexis
 
-Since CVE-2006-7244 was a partial fix, this final fix should probably get 
-its own ID.
-
-So, use CVE-2009-5063.
-
-- Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
