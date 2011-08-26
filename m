@@ -1,34 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/2
-Message-ID: <4D65B37F.3000408@redhat.com>
-Date: Thu, 24 Feb 2011 09:25:19 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/3
+Message-ID: <1314349640.23138.14.camel@scapa>
+Date: Fri, 26 Aug 2011 11:07:20 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+Cc: Sebastian Krahmer <krahmer@...e.de>, 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com
+Subject: Re: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/2011 03:59 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> The kernel automatically evaluates partition tables of storage devices.
->> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
->> a bug that allows to overflow the kernel heap. It may be possible to
->> escalate privileges by exploiting this bug.
->>
->> (This bug is distinct from the LDM bug reported by Eugene Teo on
->> 2011-02-23.)
->>
->> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
->> CONFIG_LDM_PARTITION needs to be set.
->>
->
-> Can you point to a commit message or something else that is public? It's
-> not clear how this differs from Eugene's request.
+On ven., 2011-08-26 at 10:58 +0200, Yves-Alexis Perez wrote:
+> > However I didnt dig deep enough into it to write an exploit as I dont have
+> > a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
+> > to that of the user if doing anything with his files.
+> 
+> Yeah, I'm currently cooking patches doing that, though they'll need
+> review before apply. 
 
-As far as I can tell, it's not public yet. Timo will follow-up once his 
-patch is accepted.
+Would something like:
 
-Eugene
+diff --git a/src/dmrc.c b/src/dmrc.c
+index bff1da8..9f38faf 100644
+--- a/src/dmrc.c
++++ b/src/dmrc.c
+@@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar *username)
+     /* Update the users .dmrc */
+     if (user)
+     {
++      /* write the file as the user itself */
++      pid_t pid;
++      pid = fork();
++
++      if (pid == 0)
++      {
++        if (setuid (user_get_uid(user)) < 0)
++        {
++          g_warning("Error changing uid for %s: %s", username, g_strerror(errno));
++          _exit(EXIT_FAILURE);
++        }
+         path = g_build_filename (user_get_home_directory (user), ".dmrc", NULL);
+         g_file_set_contents (path, data, length, NULL);
+-        if (getuid () == 0 && chown (path, user_get_uid (user), user_get_gid (user)) < 0)
+-            g_warning ("Error setting ownership on %s: %s", path, strerror (errno));
+         g_free (path);
++        _exit(EXIT_SUCCESS);
++
++      }
++      if (pid > 0)
++        wait(NULL);
+     }
+ 
+     /* Update the .dmrc cache */
+
+do the job (untested, it's more like a RFC right now).
+
+Regards,
 -- 
-Eugene Teo / Red Hat Security Response Team
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
