@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/8
-Message-ID: <20110519185232.GM32435@foo.fgeek.fi>
-Date: Thu, 19 May 2011 21:52:32 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Dovecot releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/9
+Message-ID: <1314389676.10232.22.camel@localhost>
+Date: Fri, 26 Aug 2011 15:14:33 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: geoff@...ttered.org, dwyer@...lab.ee.mu.oz.au, jgifford@...ksmart.net
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Security issue in hammerhead
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 19, 2011 at 02:43:51PM -0400, Josh Bressers wrote:
-> 
-> 
-> ----- Original Message -----
-> > Henri Salo wrote:
-> > > Should these two get CVE-identifier(s)?
-> > >
-> > > http://dovecot.org/pipermail/dovecot/2011-May/059085.html
-> > > http://dovecot.org/pipermail/dovecot/2011-May/059086.html
-> > 
-> > http://hg.dovecot.org/dovecot-1.1/rev/3698dfe0f21c
-> > 
-> 
-> As best as I can tell, just the header NULL issue deserves a CVE id.
-> CVE-2011-1929
-> 
-> Thanks.
-> 
-> -- 
->     JB
+A security bug was reported against hammerhead in Ubuntu. You are being
+emailed as the upstream contact. Please keep
+oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
 
-Thank you for your response. I wonder why Dovecot-project does not request these by themselves. I notified the mailing-list about new CVE-identifier.
+This issue should be considered public and has not yet been assigned a CVE.
 
-Best regards,
-Henri Salo
+Details from the public bug follow:
+https://launchpad.net/bugs/826679
+
+----
+From the reporter:
+
+"hammerhead blindly writes to to /tmp/hammer.log without prior checks.
+It is possible to put a symbolic link at /tmp/hammer.log pointing at
+another file - that hammerhead will then end up appending data into.
+(it appears that hammerhead uses the file location as specified
+in /etc/hammerhead/hh.conf - which in debian/ubuntu
+is /tmp/hammer.log)."
+----
+
+A quick check shows that HH_LOG and REPORT_LOG are indeed being
+unconditionally opened with 'fopen(..., "a+")' in src/hammerhead.cc. 
+
+Thanks in advance for your cooperation in coordinating a fix for this
+issue,
+
+Jamie Strandboge
+
+[1] oss-security@...ts.openwall.com is a public mailing list for
+    people to collaborate on security vulnerabilities and coordinate
+    security updates.
+
+PS - I couldn't find a security contact for hammerhead, so emailed to
+those I could find in AUTHORS.
+
+-- 
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
