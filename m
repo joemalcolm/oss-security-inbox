@@ -1,100 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/51
-Message-ID: <22823352.372690.1301945640254.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 15:34:00 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/1
+Message-ID: <20110826084355.GB27079@suse.de>
+Date: Fri, 26 Aug 2011 10:43:55 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com, oss-security@...ts.openwall.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-One it is then. Thanks.
 
-Use CVE-2011-1493.
+Hi,
+
+You probably dont take into account the chown() that happens in lightdm.
+Just unlink the created ~/.dmrc or ~/.Xauthority files after creation and make a symlink
+to /etc/passwd to chown it to yourself.
+However I didnt dig deep enough into it to write an exploit as I dont have
+a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
+to that of the user if doing anything with his files.
+
+The PAM issue that I was curious about was that a pam_start() etc is done
+for the greeter-user (which I expect to be some "lightdm" user)?
+
+I would expect all pam_ calls are only done for the user who is actually
+about to login. The question that came up to me was whether pam_environment
+from the user would have impact on uid-0 called programs/scripts since
+you transfer the PAM env to the process env.
+
+Sebastian
+
+On Thu, Aug 25, 2011 at 05:54:23PM +0200, Yves-Alexis Perez wrote:
+> On mer., 2011-08-24 at 20:55 +0200, Yves-Alexis Perez wrote:
+> > And, out of curiosity, how would you achieve privilege escalation? You
+> > should be able to erase/rewrite arbitrary files, including /etc/shadow,
+> > but you don't really have control on what's written there. 
+> 
+> In gdm (CVE-2011-0727 I guess) the issue was that a g_file_copy() was
+> run as root from files under user control (.dmrc and the avatar), to a
+> cache dir with write permissions (afaict). So it was easy to put
+> whatever stuff you need in the original file and make a symlink
+> to /etc/shadow in the destination folder so the g_file_copy() would
+> erase that:
+> 
+>                  res = g_file_copy (src_file,
+>                                     dst_file,
+>                                     G_FILE_COPY_OVERWRITE |
+>                                     G_FILE_COPY_NOFOLLOW_SYMLINKS,
+>                                     NULL,
+>                                     NULL,
+>                                     NULL,
+>                                     &error);
+> 
+> 
+> I'm not too sure what G_FILE_COPY_OVERWRITE means, if it truncate()s and
+> write over of if it unlink()s and start fresh (digging in glib to find
+> out). Apparenlty in the fallback case (not sure if it's the case here)
+> it ends up doing a g_file_replace()).
+> 
+> In any case, in lightdm case, for .Xauthority file it uses
+> g_file_replace() which creates a temporary file and then rename over the
+> new file, so in the worst case you overwrite a system file with
+> xauthority data.
+> 
+> Same thing for .dmrc, you can overwrite system files but with dmrc data
+> which look like 
+> 
+> [Desktop]
+> Session=xfce
+> Lang=fr_FR.UTF-8
+> 
+> so it doesn't look easy to gain root access with that.
+> 
+> LightDM maintains a cache for dmrc files in /var/cache/lightdm but the
+> folder is created 0700 so it doesn't look like one can put symlinks
+> there and have it use a user-controled .dmrc.
+> 
+> All in all, I'm not too sure there's a privilege escalation for
+> Xauthority/.dmrc files (but if one exists, I'm interested in how to do
+> it, by curiosity). But you still damage pretty much any arbitrary file,
+> which is still an easy DoS.
+> 
+> Regards,
+> -- 
+> Yves-Alexis
+
+
 
 -- 
-    JB
 
------ Original Message -----
-> On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com>
-> wrote:
-> > How do we want this broken down? If nobody complains, I'll just give
-> > it one.
-> >
-> 
-> I think one makes sense, since all the problems were in a single
-> protocol and were addressed at the same time.
-> 
-> -Dan
-> 
-> > Thanks.
-> >
-> > --
-> >    JB
-> >
-> > ----- Original Message -----
-> >> Any update on this?
-> >>
-> >> Thanks,
-> >> Dan
-> >>
-> >> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
-> >> wrote:
-> >> > On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
-> >> >>
-> >> >> I sent in a patch [1] resolving two issues in ROSE:
-> >> >>
-> >> >> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
-> >> >> possible
-> >> >> for a remote host to provide more digipeaters than expected,
-> >> >> resulting
-> >> >> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
-> >> >> overflows, and abort facilities parsing on failure.
-> >> >>
-> >> >> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
-> >> >> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide
-> >> >> a
-> >> >> length of less than 10, resulting in an underflow in a memcpy
-> >> >> size,
-> >> >> causing a kernel panic due to massive heap corruption. A length
-> >> >> of
-> >> >> greater than 20 results in a stack overflow of the callsign
-> >> >> array.
-> >> >> Abort facilities parsing on these invalid length values."
-> >> >>
-> >> >> These issues may both result in code execution. They may be
-> >> >> triggered
-> >> >> by a remote attacker if the victim has a listening ROSE socket,
-> >> >> or
-> >> >> by
-> >> >> a local attacker (for privilege escalation) if a ROSE device
-> >> >> exists
-> >> >> (e.g. rose0).
-> >> >>
-> >> >> Ben Hutchings followed up with a patch [2] that resolves a
-> >> >> number
-> >> >> of
-> >> >> other ROSE issues related to lack of size field validation, some
-> >> >> of
-> >> >> which may also result in heap corruption.
-> >> >>
-> >> >> Not sure about the proper CVE breakdown for all these issues,
-> >> >> since
-> >> >> the entire protocol was quite broken. Perhaps one is enough to
-> >> >> cover
-> >> >> everything.
-> >> >
-> >> > I am not sure. I would just assign one for the collection of
-> >> > issues
-> >> > here but
-> >> > I will let Steve decide instead.
-> >> >
-> >> >> [1] http://marc.info/?l=linux-netdev&m=130060344616926
-> >> >> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
-> >> >
-> >> > Thanks, Eugene
-> >> > --
-> >> > main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
-> >> > main(++i); }
-> >> >
-> >
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
