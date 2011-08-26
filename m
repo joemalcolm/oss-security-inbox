@@ -1,41 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/5
-Message-Id: <201108111413.27056.thomas@osterried.de>
-Date: Thu, 11 Aug 2011 14:13:23 +0200
-From: Thomas Osterried <thomas@...erried.de>
-To: Eren Türkay <eren@...dus.org.tr>
-Cc: oss-security@...ts.openwall.com, Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <ax25@...erg.in-berlin.de>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/2
+Message-ID: <1314349111.23138.13.camel@scapa>
+Date: Fri, 26 Aug 2011 10:58:26 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: Sebastian Krahmer <krahmer@...e.de>
+Cc: 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>,  robert.ancell@...onical.com, oss-security@...ts.openwall.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
-> On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
-> > The AX.25 daemon (ax25d), typically provided in the ax25-tools
-> > package, allows administrators to associate incoming AX.25, NET/ROM,
-> > and ROSE traffic with the execution of an endpoint program (most
-> > commonly "node"), which is run under a specified user account.
-> > Because ax25d is missing a check on the return code for a setuid call
-> > responsible for dropping privileges to the specified user, it may be
-> > possible to cause setuid to fail, after which the chosen program will
-> > be executed with root privileges.  In other words, if you're in the
-> > business of handing out unprivileged shells over amateur radio (don't
-> > we all? :p ), this would allow for remote compromise.
+On ven., 2011-08-26 at 10:43 +0200, Sebastian Krahmer wrote:
+> Hi,
 > 
-> Hello,
+> You probably dont take into account the chown() that happens in lightdm.
+> Just unlink the created ~/.dmrc or ~/.Xauthority files after creation and make a symlink
+> to /etc/passwd to chown it to yourself.
+
+The chown will be applied to the symlink, not the target. I've tried to
+make .Xauthority a symlink to a root-owned file and the destination was
+indeed destroyed, but it's still root-owned.
+
+> However I didnt dig deep enough into it to write an exploit as I dont have
+> a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
+> to that of the user if doing anything with his files.
+
+Yeah, I'm currently cooking patches doing that, though they'll need
+review before apply.
 > 
-> Thank you for your investigation on the topic. Although this issue seems
-> to be low-priority, it's good to let the maintainers know.
+> The PAM issue that I was curious about was that a pam_start() etc is done
+> for the greeter-user (which I expect to be some "lightdm" user)?
+
+Yes
 > 
-> I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
-> linux-ac25 site, are the maintainers of ax25 utilities.
+> I would expect all pam_ calls are only done for the user who is actually
+> about to login. The question that came up to me was whether pam_environment
+> from the user would have impact on uid-0 called programs/scripts since
+> you transfer the PAM env to the process env.
 
-thank you for your information.
+Yeah, that looks fishy, though I have no idea how it's exactly cooked
+that way, we'll have to wait for an answer from Robert.
 
-I know that code fragment, but I never imagined that if root calls setuid/setgid that this could fail, because root has by definition enough rights.
+Regards,
+-- 
+Yves-Alexis
 
-We'l corect lines 617-619 asap.
-
-Kind regards,
-	- Thomas  dl9sau
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
