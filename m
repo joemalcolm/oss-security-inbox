@@ -1,96 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/20
-Message-ID: <1592273896.87389.1300135013097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 14 Mar 2011 16:36:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: bbPress 1.0.2 <= Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/8
+Message-ID: <20110826171430.GA1883@openwall.com>
+Date: Fri, 26 Aug 2011 21:14:30 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, Sebastian Krahmer <krahmer@...e.de>, 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1150
+Hi,
 
-Thanks.
+I haven't been watching this discussion closely, but here are some
+comments that might be of help:
 
--- 
-    JB
+On Fri, Aug 26, 2011 at 11:07:20AM +0200, Yves-Alexis Perez wrote:
+> Would something like:
+> 
+> diff --git a/src/dmrc.c b/src/dmrc.c
+> index bff1da8..9f38faf 100644
+> --- a/src/dmrc.c
+> +++ b/src/dmrc.c
+> @@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar *username)
+>      /* Update the users .dmrc */
+>      if (user)
+>      {
+> +      /* write the file as the user itself */
+> +      pid_t pid;
+> +      pid = fork();
+> +
+> +      if (pid == 0)
+> +      {
+> +        if (setuid (user_get_uid(user)) < 0)
+> +        {
+> +          g_warning("Error changing uid for %s: %s", username, g_strerror(errno));
+> +          _exit(EXIT_FAILURE);
+> +        }
 
+You also need to switch gid and groups, and you do not have to fork() if
+you only switch euid/egid/groups or fsuid/fsgid/groups.  The latter may
+be less portable, but at least on Linux it affects only the current
+thread in a multi-threaded process.  Probably this difference is
+irrelevant in your case, though.
 
------ Original Message -----
-> 1. OVERVIEW
-> 
-> bbPress 1.0.2 and lower versions were vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. APPLICATION DESCRIPTION
-> 
-> bbPress is plain and simple forum software, plain and simple with a
-> twist from the creators of WordPress.
-> It is focused on web standards, ease of use, ease of integration, and
-> speed.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The "re" parameter was not properly sanitized upon submission to the
-> /bb-login.php url, which allows attacker to conduct Cross Site
-> Scripting attack.
-> This may allow an attacker to create a specially crafted URL that
-> would execute arbitrary script code in a victim's browser.
-> If a user has already logged in to the application, an XSS attack will
-> execute promptly.
-> If not, it will execute after the user's successful logging in.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> bbPress 1.0.2 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/bb-login.php?re=data%3Atext%2Fhtml%3Bbase64%2CPHNjcmlwdD5hbGVydCgiWFNTXG4iK2RvY3VtZW50LmNvb2tpZSk8L3NjcmlwdD4%3D
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 1.0.3 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> bbPress Development Team
-> http://bbpress.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-12-23: notified vendor
-> 2011-02-24: vendor released fixed version
-> 2011-03-13: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[bbpress-1.0.2]_cross_site_scripting
-> About bbPress: http://bbpress.org/about/
-> 
-> 
-> #yehg [2011-03-13]
-> 
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+Here's an example:
+
+http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
+
+A tricky part is what to do when you have partially switched credentials
+and one of the syscalls fails (e.g., you've switched the gid but not yet
+the uid).  The code referenced above (Linux-PAM commit) tries to restore
+the old credentials, but ignores possible failure to do so.  A better
+action might be to terminate the current process on failure to restore
+old credentials.
+
+>          path = g_build_filename (user_get_home_directory (user), ".dmrc", NULL);
+>          g_file_set_contents (path, data, length, NULL);
+> -        if (getuid () == 0 && chown (path, user_get_uid (user), user_get_gid (user)) < 0)
+> -            g_warning ("Error setting ownership on %s: %s", path, strerror (errno));
+>          g_free (path);
+> +        _exit(EXIT_SUCCESS);
+> +
+> +      }
+> +      if (pid > 0)
+> +        wait(NULL);
+>      }
+
+You're lucky that you don't seem to need to pass the result of
+g_file_set_contents() back to the parent process.  If you were reading
+rather than writing a file, you'd have difficulty using the fork()
+approach.  However, in your case fork() may actually be fine (but you do
+need to drop gid and groups as well).
+
+I hope this helps.
+
+Alexander
