@@ -1,82 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/16
-Message-ID: <AANLkTi=KyDve19Xu7w1i1kkc7WOSB6U5dzme7rs5tF7T@mail.gmail.com>
-Date: Mon, 14 Mar 2011 12:31:18 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/8
+Message-ID: <20110826171430.GA1883@openwall.com>
+Date: Fri, 26 Aug 2011 21:14:30 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, Sebastian Krahmer <krahmer@...e.de>, 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>, robert.ancell@...onical.com
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-I've done some further investigation, and have found one of the
-underlying problems.  addmntent() will return 0 (success) even if the
-write was truncated:
+Hi,
 
-  return (fprintf (stream, "%s %s %s %s %d %d\n",
-                   mntcopy.mnt_fsname,
-                   mntcopy.mnt_dir,
-                   mntcopy.mnt_type,
-                   mntcopy.mnt_opts,
-                   mntcopy.mnt_freq,
-                   mntcopy.mnt_passno)
-          < 0 ? 1 : 0);
+I haven't been watching this discussion closely, but here are some
+comments that might be of help:
 
-Of course, this only matters if the process is catching the SIGXFSZ
-that gets thrown if the resource limit is exceeded, but nearly all
-suid mount helpers block or ignore signals (if they don't, that's an
-additional problem, because the process could be terminated mid-write,
-corrupting /etc/mtab or leaving a stale lockfile, for example).
+On Fri, Aug 26, 2011 at 11:07:20AM +0200, Yves-Alexis Perez wrote:
+> Would something like:
+> 
+> diff --git a/src/dmrc.c b/src/dmrc.c
+> index bff1da8..9f38faf 100644
+> --- a/src/dmrc.c
+> +++ b/src/dmrc.c
+> @@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar *username)
+>      /* Update the users .dmrc */
+>      if (user)
+>      {
+> +      /* write the file as the user itself */
+> +      pid_t pid;
+> +      pid = fork();
+> +
+> +      if (pid == 0)
+> +      {
+> +        if (setuid (user_get_uid(user)) < 0)
+> +        {
+> +          g_warning("Error changing uid for %s: %s", username, g_strerror(errno));
+> +          _exit(EXIT_FAILURE);
+> +        }
 
-So, I think the first step is to patch glibc to return success in
-these functions if and only if the *full* contents have been written.
-Then, it will be possible to have proper error handling in these
-helper utilities.  Currently, there's really no way for these programs
-to know whether or not their calls to addmntent() actually succeeded
-besides installing a special signal handler for SIGXFSZ (ugly).
+You also need to switch gid and groups, and you do not have to fork() if
+you only switch euid/egid/groups or fsuid/fsgid/groups.  The latter may
+be less portable, but at least on Linux it affects only the current
+thread in a multi-threaded process.  Probably this difference is
+irrelevant in your case, though.
 
-After some further thinking and discussion, I think what needs to be
-done is ensuring that all helpers make mtab edits to a temporary file,
-and have proper error handling that cleans up correctly without
-copying over to the actual /etc/mtab if anything bad happens.
-Currently, some mount helpers edit /etc/mtab directly, and others use
-a temporary file but don't have the proper error handling.
+Here's an example:
 
-I think this one's going to fall into the hands of package maintainers
-and distros, I don't have time to fix all of these.
+http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
 
--Dan
+A tricky part is what to do when you have partially switched credentials
+and one of the syscalls fails (e.g., you've switched the gid but not yet
+the uid).  The code referenced above (Linux-PAM commit) tries to restore
+the old credentials, but ignores possible failure to do so.  A better
+action might be to terminate the current process on failure to restore
+old credentials.
 
-On Mon, Mar 14, 2011 at 8:32 AM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> Sigh.  Unfortunately I think this is the truth - I just wish there
-> were an easier way of addressing this besides patching every affected
-> helper individually.  Unless anyone else has any ideas, I'll write up
-> some patches for affected programs later today.
->
-> -Dan
->
-> On Mon, Mar 14, 2011 at 8:14 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
->> Dan Rosenberg wrote:
->>> There are a few possible options   We could patch glibc to try to
->>> raise the rlimit in addmntent(). [...]
->>
->> Citing our glibc maintainer Petr Baudis via Bugzilla:
->>
->> | I have been thinking about it and I'm not at all sure the proposed solution
->> | makes sense. First, this may also concern the obscure interfaces like
->> | putspent() (not sure if anyone uses these, moreover in security relevant
->> | contexts). Second, messing with RLIMIT_FSIZE within library routine is just
->> | evil. The caller may be multi-threaded or just do something else between
->> | setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
->> | programs must sanitize things like this, on their own terms.
->>
->> cu
->> Ludwig
->>
->> --
->>  (o_   Ludwig Nussel
->>  //\
->>  V_/_  http://www.suse.de/
->> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->>
->
+>          path = g_build_filename (user_get_home_directory (user), ".dmrc", NULL);
+>          g_file_set_contents (path, data, length, NULL);
+> -        if (getuid () == 0 && chown (path, user_get_uid (user), user_get_gid (user)) < 0)
+> -            g_warning ("Error setting ownership on %s: %s", path, strerror (errno));
+>          g_free (path);
+> +        _exit(EXIT_SUCCESS);
+> +
+> +      }
+> +      if (pid > 0)
+> +        wait(NULL);
+>      }
+
+You're lucky that you don't seem to need to pass the result of
+g_file_set_contents() back to the parent process.  If you were reading
+rather than writing a file, you'd have difficulty using the fork()
+approach.  However, in your case fork() may actually be fine (but you do
+need to drop gid and groups as well).
+
+I hope this helps.
+
+Alexander
