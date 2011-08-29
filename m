@@ -1,29 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/14
-Message-ID: <1924498187.325698.1299013690930.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 1 Mar 2011 16:08:10 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/29/1
+Message-ID: <1314618021.2424.3.camel@scapa>
+Date: Mon, 29 Aug 2011 13:40:16 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Atlassian JIRA Parameter-Based Redirection	Vulnerability
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Can I get CVE-identifier for this issue:
+On ven., 2011-08-26 at 21:14 +0400, Solar Designer wrote:
+> On Fri, Aug 26, 2011 at 11:07:20AM +0200, Yves-Alexis Perez wrote:
+> > Would something like:
+> > 
+> > diff --git a/src/dmrc.c b/src/dmrc.c
+> > index bff1da8..9f38faf 100644
+> > --- a/src/dmrc.c
+> > +++ b/src/dmrc.c
+> > @@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar
+> *username)
+> >      /* Update the users .dmrc */
+> >      if (user)
+> >      {
+> > +      /* write the file as the user itself */
+> > +      pid_t pid;
+> > +      pid = fork();
+> > +
+> > +      if (pid == 0)
+> > +      {
+> > +        if (setuid (user_get_uid(user)) < 0)
+> > +        {
+> > +          g_warning("Error changing uid for %s: %s", username,
+> g_strerror(errno));
+> > +          _exit(EXIT_FAILURE);
+> > +        }
 > 
-> http://confluence.atlassian.com/display/JIRA/JIRA+Security+Advisory+2011-02-21
-> http://secunia.com/advisories/43384
+> You also need to switch gid and groups, and you do not have to fork()
+> if
+> you only switch euid/egid/groups or fsuid/fsgid/groups.  The latter
+> may
+> be less portable, but at least on Linux it affects only the current
+> thread in a multi-threaded process.  Probably this difference is
+> irrelevant in your case, though.
+
+Well, I don't think lightdm is linux-only and at least in Debian it'd be
+nice to have it available and safe on kfreebsd (and hurd, haha).
 > 
+> Here's an example:
+> 
+> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
+> 
+> A tricky part is what to do when you have partially switched
+> credentials
+> and one of the syscalls fails (e.g., you've switched the gid but not
+> yet
+> the uid).  The code referenced above (Linux-PAM commit) tries to
+> restore
+> the old credentials, but ignores possible failure to do so.  A better
+> action might be to terminate the current process on failure to restore
+> old credentials.
 
-JIRA is not open source, this request is out of the scope of this list.
+Yeah, right now with the fork() approach, I think it's safe to exit with
+EXIT_FAILURE if anything goes bad and not try too hard to fall our feet.
+> 
+> >          path = g_build_filename (user_get_home_directory (user),
+> ".dmrc", NULL);
+> >          g_file_set_contents (path, data, length, NULL);
+> > -        if (getuid () == 0 && chown (path, user_get_uid (user),
+> user_get_gid (user)) < 0)
+> > -            g_warning ("Error setting ownership on %s: %s", path,
+> strerror (errno));
+> >          g_free (path);
+> > +        _exit(EXIT_SUCCESS);
+> > +
+> > +      }
+> > +      if (pid > 0)
+> > +        wait(NULL);
+> >      }
+> 
+> You're lucky that you don't seem to need to pass the result of
+> g_file_set_contents() back to the parent process.  If you were reading
+> rather than writing a file, you'd have difficulty using the fork()
+> approach.  However, in your case fork() may actually be fine (but you
+> do
+> need to drop gid and groups as well).
 
-I know I gave JIRA an ID in the past, but that was in the context of the
-trouble it caused the Apache group.
+By the way, would you know some kind of lib for “safe privileges
+dropping” for that kind of usage. I quickly looked at glib and while
+they do have some primitives for process spawning, there's nothing
+related to dropping privs. It looks like something which might be
+useful.
 
-You should contact MITRE directly (cve@...re.org) with this request.
-
-Sorry.
-
+Regards,
 -- 
-    JB
+Yves-Alexis
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
