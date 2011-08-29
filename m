@@ -1,192 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/8
-Message-ID: <AANLkTinK4GrwrNAimNsGZDqwfgPKAgPHReWHCDqqcr8Q@mail.gmail.com>
-Date: Fri, 25 Feb 2011 13:23:11 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/29/1
+Message-ID: <1314618021.2424.3.camel@scapa>
+Date: Mon, 29 Aug 2011 13:40:16 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE Request for phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS) Vulnerability
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve
+On ven., 2011-08-26 at 21:14 +0400, Solar Designer wrote:
+> On Fri, Aug 26, 2011 at 11:07:20AM +0200, Yves-Alexis Perez wrote:
+> > Would something like:
+> > 
+> > diff --git a/src/dmrc.c b/src/dmrc.c
+> > index bff1da8..9f38faf 100644
+> > --- a/src/dmrc.c
+> > +++ b/src/dmrc.c
+> > @@ -80,11 +80,25 @@ dmrc_save (GKeyFile *dmrc_file, const gchar
+> *username)
+> >      /* Update the users .dmrc */
+> >      if (user)
+> >      {
+> > +      /* write the file as the user itself */
+> > +      pid_t pid;
+> > +      pid = fork();
+> > +
+> > +      if (pid == 0)
+> > +      {
+> > +        if (setuid (user_get_uid(user)) < 0)
+> > +        {
+> > +          g_warning("Error changing uid for %s: %s", username,
+> g_strerror(errno));
+> > +          _exit(EXIT_FAILURE);
+> > +        }
+> 
+> You also need to switch gid and groups, and you do not have to fork()
+> if
+> you only switch euid/egid/groups or fsuid/fsgid/groups.  The latter
+> may
+> be less portable, but at least on Linux it affects only the current
+> thread in a multi-threaded process.  Probably this difference is
+> irrelevant in your case, though.
 
-Thanks for the explanation.
+Well, I don't think lightdm is linux-only and at least in Debian it'd be
+nice to have it available and safe on kfreebsd (and hurd, haha).
+> 
+> Here's an example:
+> 
+> http://git.altlinux.org/people/ldv/packages/?p=pam.git;a=commitdiff;h=pam_modutil_priv
+> 
+> A tricky part is what to do when you have partially switched
+> credentials
+> and one of the syscalls fails (e.g., you've switched the gid but not
+> yet
+> the uid).  The code referenced above (Linux-PAM commit) tries to
+> restore
+> the old credentials, but ignores possible failure to do so.  A better
+> action might be to terminate the current process on failure to restore
+> old credentials.
 
-Concerning with this XSS flaw, Attacker can combine this flaw with
-CSRF (phpAdmin's anti-CSRF doesn't include prevention from GET-based
-direct Request)  for the successful modification/manipulation of
-database while a victim user is logged in.
+Yeah, right now with the fork() approach, I think it's safe to exit with
+EXIT_FAILURE if anything goes bad and not try too hard to fall our feet.
+> 
+> >          path = g_build_filename (user_get_home_directory (user),
+> ".dmrc", NULL);
+> >          g_file_set_contents (path, data, length, NULL);
+> > -        if (getuid () == 0 && chown (path, user_get_uid (user),
+> user_get_gid (user)) < 0)
+> > -            g_warning ("Error setting ownership on %s: %s", path,
+> strerror (errno));
+> >          g_free (path);
+> > +        _exit(EXIT_SUCCESS);
+> > +
+> > +      }
+> > +      if (pid > 0)
+> > +        wait(NULL);
+> >      }
+> 
+> You're lucky that you don't seem to need to pass the result of
+> g_file_set_contents() back to the parent process.  If you were reading
+> rather than writing a file, you'd have difficulty using the fork()
+> approach.  However, in your case fork() may actually be fine (but you
+> do
+> need to drop gid and groups as well).
 
-Vulnerabilities are common in administration backend of web
-applications where web app authors overlook these backend. They've
-been attackers' choice of successful exploitation.
+By the way, would you know some kind of lib for “safe privileges
+dropping” for that kind of usage. I quickly looked at glib and while
+they do have some primitives for process spawning, there's nothing
+related to dropping privs. It looks like something which might be
+useful.
 
-According to Steven's explanation, we guess that CVE is not asssigned
-to vulnerabilities that require user/admin privilege.
+Regards,
+-- 
+Yves-Alexis
 
 
-
-On Thu, Feb 3, 2011 at 3:33 AM, Steven M. Christey
-<coley@...-smtp.mitre.org> wrote:
->
-> I'm not sure about this one.
->
-> My read of the situation is that the attack depends entirely on the
-> successful exploitation of another issue that gives the attacker privileges
-> to modify the database.  This would rarely be a vulnerability to me unless
-> the problem was in some protection mechanism.
->
-> It seems likely that phpMyAdmin's "intended" security policy is that anybody
-> with privileges to directly modify the DB (e.g. to create or rename the DB)
-> is a "trusted" user who also has privileges to generate HTML/scripting code.
->  If that's the case, then this XSS is only available to a privileged user -
-> even if it happens to be someone who got the privileges through some other
-> attack.
->
-> Consequently, the XSS is "resultant" from some other vulnerability, and
-> would not be worthy of a CVE itself.
->
-> If there's some specific vulnerability that gives someone the privileges to
-> modify the DB when they shouldn't be able to, then a CVE could be assigned
-> for that specific issue.
->
-> If there's more than one user with privileges to modify the DB, then one
-> user could XSS the other, so I suppose that would get a CVE.
->
-> If I'm mis-understanding the advisory and the attacker (or the XSS victim)
-> does not have privileges to modify DB names or create a DB, then it gets a
-> CVE.
->
-> If phpMyAdmin's "intended" security policy is that the application should be
-> safe from XSS injected into a compromised DB, then it gets a CVE.
->
-> - Steve
->
->
->
-> On Thu, 27 Jan 2011, Josh Bressers wrote:
->
->> Steve,
->>
->> Can MITRE comment on this? The advisory suggests that in order to exploit
->> this, you already have to have access to the user's account in some way.
->> I'm not sure what the precedent is for such a situation.
->>
->> Thanks.
->>
->> --
->>   JB
->>
->> ----- Original Message -----
->>>
->>> http://seclists.org/fulldisclosure/2011/Jan/486
->>>
->>>
->>>
->>> ===================================================================================
->>> phpMyAdmin 3.4.x, 3.4.0 beta 2 <= Stored Cross Site Scripting (XSS)
->>> Vulnerability
->>>
->>> ===================================================================================
->>>
->>>
->>> 1. OVERVIEW
->>>
->>> The phpMyAdmin web application 3.4.0 beta 2 and lower versions of
->>> 3.4.x were vulnerable to Cross Site Scripting.
->>>
->>>
->>> 2. PRODUCT DESCRIPTION
->>>
->>> phpMyAdmin is a free software tool written in PHP intended to handle
->>> the administration of MySQL over the World Wide Web.
->>> phpMyAdmin supports a wide range of operations with MySQL.
->>> The most frequently used operations are supported by the user
->>> interface (managing databases, tables, fields, relations,
->>> indexes, users, permissions, etc), while you still have the ability to
->>> directly execute any SQL statement.
->>>
->>>
->>> 3. VULNERABILITY DESCRIPTION
->>>
->>> The 'db' parameter in phpMyAdmin was not sanitized and an attacker can
->>> inject XSS string in 'db' field when creating or renaming a database.
->>> An attacker can create new database name or rename database name
->>> through several means like SQL Injection in user's vulnerable web
->>> applications or
->>> compromise of user account through brute-force or bypassing CSRF
->>> protection.
->>> Even though the phpMyAdmin uses httpOnly as a protection against
->>> cookie theft via XSS, attacker could use XSS tunneling proxy to
->>> manipulate database names and fields. From it, he could execute
->>> arbitrary database commands to allow him higher access to the server.
->>>
->>>
->>> 4. VERSIONS AFFECTED
->>>
->>> phpMyAdmin 3.4.0 beta 2 and lower versions of 3.4.x
->>>
->>> Vendor confirmed this flaw did not exist before the 3.4 version
->>> family.
->>> Thus, it is assumed 2.x and 3.3 <= versions are not affected.
->>>
->>>
->>> 5. PROOF-OF-CONCEPT/EXPLOIT
->>>
->>>
->>> http://demo.phpmyadmin.net/trunk-config/index.php?db=%27%22--%3E%3C%2Fscript%3E%3Cscript%3Ealert%28%2FXSS%2F%29%3C%2Fscript%3E
->>> http://yehg.net/lab/pr0js/advisories/phpmyadmin/3.4.0-b2-xss.jpg
->>>
->>>
->>> 6. IMPACT
->>>
->>> Attackers can compromise currently logged-in user session, plant xss
->>> backdoors and inject arbitrary SQL statements
->>> (CREATE,INSERT,UPDATE,DELETE)
->>> via crafted XSS payloads.
->>>
->>>
->>> 7. SOLUTION
->>>
->>> For those who're using version phpMyAdmin 3.4.0 beta 2 and lower,
->>> check out the latest commit (git pull).
->>>
->>>
->>> 8. VENDOR
->>>
->>> phpMyAdmin (http://www.phpmyadmin.net)
->>>
->>>
->>> 9. CREDIT
->>>
->>> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
->>> Ethical Hacker Group, Myanmar.
->>>
->>>
->>> 10. DISCLOSURE TIME-LINE
->>>
->>> 2011-01-26: notified vendor
->>> 2011-01-26: vendor released fix
->>> 2011-01-27: vulnerability disclosed
->>>
->>>
->>> 11. REFERENCES
->>>
->>> Vendor Commit:
->>>
->>> http://phpmyadmin.git.sourceforge.net/git/gitweb.cgi?p=phpmyadmin/phpmyadmin;a=commit;h=f57daa0a59a0058a4b3be1bbdf1577b59d7d697a
->>> Original Advisory URL:
->>>
->>> http://yehg.net/lab/pr0js/advisories/phpmyadmin/[phpmyadmin-3.4.0-beta2]_cross_site_scripting(XSS)
->>> CWE-79: http://cwe.mitre.org/data/definitions/79.html
->>> Previous Releases:
->>> http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
->>> http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
->>> http://www.phpmyadmin.net/home_page/security/PMASA-2008-5.php
->>> http://www.phpmyadmin.net/home_page/security/PMASA-2008-6.php
->>>
->>>
->>>
->>> #yehg [2011-01-27]
->>
->
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
