@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/14
-Message-ID: <20110321214927.GF11269@uio.no>
-Date: Mon, 21 Mar 2011 22:49:27 +0100
-From: "Steinar H. Gunderson" <sgunderson@...foot.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, team@...urity.debian.org
-Subject: Re: CVE request: MPM-ITK module for Apache HTTPD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/29/2
+Message-Id: <201108291348.18241.mweckbecker@suse.de>
+Date: Mon, 29 Aug 2011 13:48:17 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request(?): squid: buffer overflow in Gopher reply parser
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 21, 2011 at 04:24:38PM -0400, Josh Bressers wrote:
->> In certain configurations, the MPM-ITK module for Apache HTTPD serves
->> a
->> request as root user instead of the run user configured in the HTTPD
->> configuration:
->> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=618857
-> Please use CVE-2011-1176
+Hi,
 
-Thanks. Here are the relevant announcements (with patches):
+squid 3.x seems to have re-introduced a security issue found by Ben Hawkes of 
+the Google Security Team in 2005,
 
-http://lists.err.no/pipermail/mpm-itk/2011-March/000393.html
-http://lists.err.no/pipermail/mpm-itk/2011-March/000394.html
+  2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
+  2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt (CVE-2005-0094)
 
-/* Steinar */
+Will there be a new CVE required? Not quite sure how such "special" cases are 
+handled usually.
+
+Thanks,
+Matthias
+
 -- 
-Homepage: http://www.sesse.net/
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
