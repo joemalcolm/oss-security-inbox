@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/5
-Message-ID: <4EE66A4D.5090204@redhat.com>
-Date: Mon, 12 Dec 2011 13:55:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/29/2
+Message-Id: <201108291348.18241.mweckbecker@suse.de>
+Date: Mon, 29 Aug 2011 13:48:17 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request: putty does not wipe keyboard-interactive replies from memory after authentication
+Subject: CVE-request(?): squid: buffer overflow in Gopher reply parser
 Content-Type: text/plain; charset=utf-8
 
-On 12/12/2011 10:47 AM, Vincent Danen wrote:
-> Putty 0.59-0.61 does not wipe keyboard-interactive replies from memory
-> after authentication.  If malware is installed on the system and can
-> access arbitrary memory locations, or if the memory is swapped to disk
-> or written in a crash dump file, it can expose sensitive authentication
-> information like passwords, public-key passphrases, etc.
->
-> This is fixed upstream in 0.62.
->
-> Could a CVE be assigned to this?
->
-> References:
->
-> http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/password-not-wiped.html
->
-> http://svn.tartarus.org/sgt?view=rev&revision=9357
-> https://bugzilla.redhat.com/show_bug.cgi?id=766865
-> http://bugs.gentoo.org/show_bug.cgi?id=394429
->
-> Thanks.
->
-Please use CVE-2011-4607 for this issue.
+Hi,
+
+squid 3.x seems to have re-introduced a security issue found by Ben Hawkes of 
+the Google Security Team in 2005,
+
+  2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
+  2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt (CVE-2005-0094)
+
+Will there be a new CVE required? Not quite sure how such "special" cases are 
+handled usually.
+
+Thanks,
+Matthias
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
