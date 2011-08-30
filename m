@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/3
-Message-ID: <20110424110003.GA32248@openwall.com>
-Date: Sun, 24 Apr 2011 15:00:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/10
+Message-Id: <C953571F-C402-4B61-94D8-A68E555A4D4D@oracle.com>
+Date: Tue, 30 Aug 2011 21:25:34 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Closed List
 Content-Type: text/plain; charset=utf-8
 
-Jason -
 
-On Thu, Apr 21, 2011 at 08:20:48AM -0400, Jason A. Donenfeld wrote:
-> Likewise,
+On 30 Aug 2011, at 20:51, Solar Designer wrote:
+
+> Hi John,
 > 
-> pub   4096R/A5DE03AE 2011-01-15
->       Key fingerprint = AB99 42E6 D4A4 CFC3 4126  20A7 49FC 7012 A5DE 03AE
-> uid                  Jason A. Donenfeld <Jason@...c4.com>
-> sub   4096R/FB1EFB7F 2011-01-15
+> On Tue, Aug 30, 2011 at 05:06:37PM +0100, John Haxby wrote:
+>> I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
+>> actually in the Linux sustaining team, the team actually responsible for
+>> fixing most of the bugs.
+>> 
+>> Could you please add me to the closed list?   There is one other person
+>> on the list for Oracle, but none, yet, from the Linux group.
+> 
+> I've just added you.
 
-What Linux distro are you a security contact for, how do we verify that,
-and how were you receiving vendor-sec mail before?  (These are some of
-the eligibility criteria for the initial seed membership of the new
-list.  The requirement "was a vendor-sec member" is likely to be lifted
-after a while.)
 
-All -
+Many thanks.
 
-The moderators of oss-security approved all subscription requests and
-criticism to be posted to this thread so far, but perhaps it's time to
-start rejecting unjustified requests to keep the noise down, asking the
-senders to re-post with due justification included.  This is what we
-will likely start doing should more requests without justification be
-sent to the list address.  I don't view this as censorship; it's merely
-getting people to include all info in one message, which reduces noise.
-
-This doesn't apply to messages with criticism and/or suggestions, which
-we will continue to approve.
-
-I am pleased to see that this thread is calming down, letting us focus
-on discussing actual software security issues (in other/new threads).
-Although the thread was/is noisy, I think it also helped us highlight
-several real issues, some of which we don't have good solutions for.
-
-Alexander
+jch
