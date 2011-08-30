@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/1
-Message-ID: <4E23D8DC.208@redhat.com>
-Date: Mon, 18 Jul 2011 12:25:24 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/2
+Message-ID: <20110830155918.GH9091@dhcp-25-225.brq.redhat.com>
+Date: Tue, 30 Aug 2011 17:59:18 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+Subject: kernel: xen: CVE-2011-2901
 Content-Type: text/plain; charset=utf-8
 
-On 07/14/2011 12:05 PM, Jan Lieskovsky wrote:
-> 
-> Could you allocate a CVE identifier for this?
-> 
+CVE-2011-2901 kernel: xen: off-by-one shift in x86_64 __addr_ok()
 
-This has been assigned CVE-2011-2696
+The x86_64 __addr_ok() macro intends to ensure that the checked address
+is either in the positive half of the 48-bit virtual address space, or
+above the Xen-reserved area. However, the current shift count is
+off-by-one, allowing full access to the "negative half" too, via
+certain hypercalls which ignore virtual-address bits [63:48]. 
 
+As a result, a malicious guest administrator on a vulnerable system is
+able to crash the host.
+
+Upstream status: 
+This issue only affects very old hypervisors, Xen 3.3 and earlier.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=728042
+
+Thanks,
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
