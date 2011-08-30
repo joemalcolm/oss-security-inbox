@@ -1,14 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/27
-Message-ID: <20110223211807.GA4066@pisco.westfalen.local>
-Date: Wed, 23 Feb 2011 22:18:08 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/2
+Message-ID: <20110830155918.GH9091@dhcp-25-225.brq.redhat.com>
+Date: Tue, 30 Aug 2011 17:59:18 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Information disclosure in CGIHTTPServer from Python
+Subject: kernel: xen: CVE-2011-2901
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-please assign a CVE ID for http://bugs.python.org/issue2254
+CVE-2011-2901 kernel: xen: off-by-one shift in x86_64 __addr_ok()
 
-Cheers,
-        Moritz
+The x86_64 __addr_ok() macro intends to ensure that the checked address
+is either in the positive half of the 48-bit virtual address space, or
+above the Xen-reserved area. However, the current shift count is
+off-by-one, allowing full access to the "negative half" too, via
+certain hypercalls which ignore virtual-address bits [63:48]. 
+
+As a result, a malicious guest administrator on a vulnerable system is
+able to crash the host.
+
+Upstream status: 
+This issue only affects very old hypervisors, Xen 3.3 and earlier.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=728042
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
