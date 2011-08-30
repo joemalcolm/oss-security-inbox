@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/19
-Message-ID: <BANLkTimyqOw-JneVzgvu5AvusX=q6tF42A@mail.gmail.com>
-Date: Tue, 31 May 2011 17:40:36 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/4
+Message-ID: <20110830181140.GE26298@redhat.com>
+Date: Tue, 30 Aug 2011 12:11:46 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for Wireshark 1.4.5 TCP DoS issue
+Subject: Re: CVE-request(?): squid: buffer overflow in Gopher reply parser
 Content-Type: text/plain; charset=utf-8
 
-This wasn't put on the security announce page for some reason (DoS,
-any TCP dissector):
+* [2011-08-29 13:48:17 +0200] Matthias Weckbecker wrote:
 
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5837
+>Hi,
+>
+>squid 3.x seems to have re-introduced a security issue found by Ben Hawkes of
+>the Google Security Team in 2005,
+>
+>  2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
+>  2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt (CVE-2005-0094)
+>
+>Will there be a new CVE required? Not quite sure how such "special" cases are
+>handled usually.
 
-Affects Wireshark 1.4.5 only
+Does anyone know when this was re-introduced?  The upstream advisory
+indicates all 3.0 releases are affected, but doesn't indicate if 2.x
+(after 2.5.STABLE7) was at any point vulnerable.
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: (206) 905-9462
+Vincent Danen / Red Hat Security Response Team 
