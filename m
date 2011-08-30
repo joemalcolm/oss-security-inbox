@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/11
-Message-ID: <4EAAA0C4.7030704@tokidev.fr>
-Date: Fri, 28 Oct 2011 14:32:04 +0200
-From: Benjamin Renaut <benml@...idev.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/1
+Message-ID: <4E5C60F7.8060602@redhat.com>
+Date: Tue, 30 Aug 2011 12:03:03 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: kernel: CVE-2011-2482/2519
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2011-2482 sctp DoS
+This does not affect the upstream kernel. Our kernel left out a chunk of
+upstream ea2bc483ff5 that was not needed at the time of the backport,
+but was later required for a feature that we introduced in the kernel.
 
-I do not believe gzexe is affected, as it doesn't use ln but instead 
-create a temporary directory with umask 77 - preventing any race condition.
+https://bugzilla.redhat.com/CVE-2011-2482
+http://git.kernel.org/linus/ea2bc483ff5caada7c4aa0d5fbf87d3a6590273d
 
-Best regards,
-Benjamin Renaut.
+CVE-2011-2519 xen: x86_emulate: fix SAHF emulation
+This has been addressed in the upstream xen implementation. The patched
+code would cause a hypervisor crash due to dereferencing a bogus address
+(in the first 4 MBs of address space, as EFLAGS bits above bit 21 are
+always 0, but more likely in the first page).
 
-On 28/10/11 14:22, Hanno Böck wrote:
-> Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
-> schrieb Ramon de C Valle<rcvalle@...hat.com>:
->
->> This is a security issue reported by vladz in bzexe. This is a low
->> impact security issue, since bzexe is rarely used and the race
->> condition window is very narrow, but still exploitable.
-> Have you checked if this also affects gzexe? It is pretty much the same
-> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
->
+http://xenbits.xen.org/hg/xen-3.1-testing.hg/rev/15644
+https://bugzilla.redhat.com/CVE-2011-2519
 
+Thanks, Eugene
