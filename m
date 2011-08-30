@@ -1,63 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/8
-Message-ID: <4DE90A03.1060900@redhat.com>
-Date: Fri, 03 Jun 2011 18:21:23 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Bernhard Reiter <bernhard@...evation.de>, Tomas Mraz <tmraz@...hat.com>
-Subject: CVE Request / Discussion -- dirmngr -- Improper dealing with blocking system calls, when verifying a certificate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/9
+Message-ID: <20110830195129.GA15630@openwall.com>
+Date: Tue, 30 Aug 2011 23:51:29 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Closed List
 Content-Type: text/plain; charset=utf-8
 
+Hi John,
 
-Hello, Josh, Steve, Bernhard, vendors,
+On Tue, Aug 30, 2011 at 05:06:37PM +0100, John Haxby wrote:
+> I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
+> actually in the Linux sustaining team, the team actually responsible for
+> fixing most of the bugs.
+> 
+> Could you please add me to the closed list?   There is one other person
+> on the list for Oracle, but none, yet, from the Linux group.
 
-   based on:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377
-   [2] https://bugs.g10code.com/gnupg/issue1313
-       (upstream bug report)
-   [3] https://bugs.g10code.com/gnupg/file324/DTAG_Issuing_CA_i01.der
-       (public PoC)
-   [4] http://cvs.gnupg.org/cgi-bin/viewcvs.cgi?root=Dirmngr&view=rev
-       (relevant upstream patch)
+I've just added you.
 
-it concluded:
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=710529
-
-i.e.:
-"Dirmngr, server/client tool for managing and downloading CRLS, used
-user land threads implementation (Pth) for wrapping up of system calls,
-that may potentially block. A remote attacker could use this flaw to
-cause a hang of an end-user application, relying of the proper services
-of the dirmngr daemon, via a request to verify a specially-crafted
-certificate."
-
-But simultaneously with filling that Red Hat Bugzilla issue tracking
-system entry performed some basic investigation, results of which can
-be seen at:
-[6] https://bugzilla.redhat.com/show_bug.cgi?id=710529#c2
-
-IOW was not able to reproduce the complete / indefinite dirmngr-client
-hang (thus blocking other clients from access). As noted in [6], it
-is true that during small time period running 'dirmngr' daemon instance
-is unresponsive also for '--ping' (dirmngr-client --ping) commands, but
-after finite time (~21 seconds in my test) the connection ends up with
-timeout.
-
-Though Bernard in:
-[7] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627377#5
-
-mentions "For example the KMail hung when trying to verify a signature
-which has the certificate in the chain." which would suggest there may
-exist clients / end-user application not able to recover from this bug
-properly. Bernhard, hopefully here, you could clarify / list such
-applications and provide also time details, how long that hang of such
-applications took.
-
-Based on your reply, this may not / may be worthy (in case there are
-such end-user applications) of an CVE identifier.
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-
+Alexander
