@@ -1,28 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/5
-Message-ID: <4D66FFF5.5030703@redhat.com>
-Date: Fri, 25 Feb 2011 09:03:49 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/5
+Message-ID: <1020481912.531586.1314732315350.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 30 Aug 2011 15:25:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
+Cc: coley <coley@...re.org>
+Subject: Re: CVE Request: Jcow CMS 4.2 <= | Cross Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 08:32 AM, Kees Cook wrote:
-> Hi,
->
-> While CVE-2010-4347 covers the unprivileged to fully privileged escalation
-> issue, this interface still allows an unprivileged root user to gain
-> back all their capabilities.
->
-> Having a system with acpi and debugfs built into the kernel allows
-> a uid=0 user (without capabilities, e.g. in containers) to write to
-> arbitrary kernel memory, likely resulting in escalated capability
-> privileges[1], or unlocking an otherwise modules-disabled kernel by
-> changing /proc/sys/kernel/modules_disabled back to 0.
+Please use CVE-2011-3202
 
-Use CVE-2011-1021.
+Thanks.
 
-Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> Jcow CMS 4.2 <= | Cross Site Scripting
+> 
+> 
+> 1. OVERVIEW
+> 
+> Jcow CMS 4.2 and lower versions are vulnerable to Cross Site
+> Scripting.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Jcow is a flexible Social Networking software written in PHP. It can
+> help you to build a social network for your interests and passions, a
+> member community for your existing website and a social networking
+> site like facebook/myspace/twitter.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> The parameter "g" is not properly sanitized upon submission to
+> /index.php, which allows attacker to conduct Cross Site Scripting
+> attack. This may allow an attacker to create a specially crafted URL
+> that would execute arbitrary script code in a victim's browser.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> Jcow CMS 4.2 and lower
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> File : /includes/libs/member.module.php:
+> Line 605: <input type="hidden" name="g" value="'.$_REQUEST['g'].'" />
+> 
+> http://[target]/index.php?p=member/signup&email=&username=&password=&fullname=&birthyear=1991&birthmonth=01&birthday=01&gender=0&location=Myanmar++&about_me=&recaptcha_challenge_field=03AHJ_Vuvk8U6zCeSdrjB0GPDuwaRP-tPJ2G7u3Nm5LpmVSGmZs_CIP9I_C0PYZ1zYY6F42zpzGKQkxSiUhhyu-QhhwZA6oTlLNntgAgmRkDjfZpu3j4-bMeQNpOVh1afb4fZ4qwaIxHpP1wL8-8-LgkEBE5auAFmF_w&recaptcha_response_field=&g=%22%3E%3Cscript%3Ealert%28/XSS/%29%3C/script%3E&onpost=1&agree_rules=1
+> 
+> 
+> 6. SOLUTION
+> 
+> Upgrade to 4.3.1 or higher.
+> The commercial version 5.x.x is not vulnerable.
+> 
+> 
+> 7. VENDOR
+> 
+> Jcow CMS Development Team
+> http://www.jcow.net
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-06-03: notified vendor
+> 2010-06-03: vendor replied fix would be available within 48hrs
+> 2011-08-24: vendor released fixed version, jcow.4.3.1.ce
+> 2011-08-26: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[jcow_4.2]_cross_site_scripting
+> Jcow CMS:
+> http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
+> 
+> 
+> #yehg [2011-08-26]
+> 
+> 
+> ---------------------------------
+> Best regards,
+> YGN Ethical Hacker Group
+> Yangon, Myanmar
+> http://yehg.net
+> Our Lab | http://yehg.net/lab
+> Our Directory | http://yehg.net/hwd
