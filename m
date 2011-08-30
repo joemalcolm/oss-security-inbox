@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/3
-Message-ID: <4EDEA159.5030005@redhat.com>
-Date: Tue, 06 Dec 2011 16:12:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/4
+Message-ID: <20110830181140.GE26298@redhat.com>
+Date: Tue, 30 Aug 2011 12:11:46 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: acpid
+Subject: Re: CVE-request(?): squid: buffer overflow in Gopher reply parser
 Content-Type: text/plain; charset=utf-8
 
-On 12/06/2011 01:39 PM, Moritz Muehlenhoff wrote:
-> Hi,
-> Please assign a CVE ID for this issue fixed in acpid 2.0.11:
+* [2011-08-29 13:48:17 +0200] Matthias Weckbecker wrote:
+
+>Hi,
 >
-> http://www.tedfelix.com/linux/acpid-netlink.html 
-> (The ChangeLog can only be grabbed through the tarballs):
+>squid 3.x seems to have re-introduced a security issue found by Ben Hawkes of
+>the Google Security Team in 2005,
 >
-> ------
-> * Sat Jul 30 2011  Ted Felix <http://www.tedfelix.com>
->   - 2.0.11 release
->   - Set umask to 0077 for scripts run by acpid.  (event.c)  (Ted Felix)
-> ------
+>  2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
+>  2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt (CVE-2005-0094)
 >
-> Discovered by Helmut Grohne and Michael Biebl.
->
-> Cheers,
->         Moritz
-Please use CVE-2011-4578 for this issue.
+>Will there be a new CVE required? Not quite sure how such "special" cases are
+>handled usually.
+
+Does anyone know when this was re-introduced?  The upstream advisory
+indicates all 3.0 releases are affected, but doesn't indicate if 2.x
+(after 2.5.STABLE7) was at any point vulnerable.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Vincent Danen / Red Hat Security Response Team 
