@@ -1,20 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/3
-Message-ID: <4D735188.6060300@gmail.com>
-Date: Sun, 06 Mar 2011 16:19:04 +0700
-From: Pavel Labushev <p.labushev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/8
+Message-ID: <1001842782.533346.1314733464377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 30 Aug 2011 15:44:24 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: coley <coley@...re.org>
+Subject: Re: CVE-request(?): squid: buffer overflow in Gopher reply parser
 Content-Type: text/plain; charset=utf-8
 
-06.03.2011 02:21, Solar Designer пишет:
+This needs a 2011 CVE id.
 
->> At least in Gentoo there are packages
->> (ebuilds and eclasses) that create user/group-writable directories in
->> /var/log and enable logrotate to handle the log files there.
+Use CVE-2011-3205.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> Hi,
 > 
-> Is this something you can get fixed?
-
-I hope it will be fixed soon. Would be nice to have CVEs assigned for these
-issues anyway, just to make people aware. If even package maintainers got it
-wrong, I bet there's a legion of users who also did.
+> squid 3.x seems to have re-introduced a security issue found by Ben
+> Hawkes of
+> the Google Security Team in 2005,
+> 
+> 2011: http://www.squid-cache.org/Advisories/SQUID-2011_3.txt
+> 2005: http://www.squid-cache.org/Advisories/SQUID-2005_1.txt
+> (CVE-2005-0094)
+> 
+> Will there be a new CVE required? Not quite sure how such "special"
+> cases are
+> handled usually.
+> 
+> Thanks,
+> Matthias
+> 
+> --
+> Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+> SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+> Tel: +49-911-74053-0; http://suse.com/
+> SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg)
