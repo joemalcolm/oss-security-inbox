@@ -1,18 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/18/1
-Message-ID: <20110918163648.GA13173@foo.fgeek.fi>
-Date: Sun, 18 Sep 2011 19:36:48 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/1
+Message-ID: <4E5C60F7.8060602@redhat.com>
+Date: Tue, 30 Aug 2011 12:03:03 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PunBB multiple XSS issues
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: kernel: CVE-2011-2482/2519
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier for this issue.
+CVE-2011-2482 sctp DoS
+This does not affect the upstream kernel. Our kernel left out a chunk of
+upstream ea2bc483ff5 that was not needed at the time of the backport,
+but was later required for a feature that we introduced in the kernel.
 
-Original post: http://seclists.org/fulldisclosure/2011/Sep/158
-Bug-report to developers: http://punbb.informer.com/forums/topic/24427/multiple-xss-vulnerabilities/
-Fixed on: https://github.com/punbb/punbb/commit/dd50a50a2760f10bd2d09814e30af4b36052ca6d
-PunBB 1.3.6 released: https://github.com/downloads/punbb/punbb/punbb-1.3.6.zip
+https://bugzilla.redhat.com/CVE-2011-2482
+http://git.kernel.org/linus/ea2bc483ff5caada7c4aa0d5fbf87d3a6590273d
 
-Best regards,
-Henri Salo
+CVE-2011-2519 xen: x86_emulate: fix SAHF emulation
+This has been addressed in the upstream xen implementation. The patched
+code would cause a hypervisor crash due to dereferencing a bogus address
+(in the first 4 MBs of address space, as EFLAGS bits above bit 21 are
+always 0, but more likely in the first page).
+
+http://xenbits.xen.org/hg/xen-3.1-testing.hg/rev/15644
+https://bugzilla.redhat.com/CVE-2011-2519
+
+Thanks, Eugene
