@@ -1,31 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/11
-Message-ID: <20110810202646.6702240a@redhat.com>
-Date: Wed, 10 Aug 2011 20:26:46 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/7
+Message-ID: <1260331906.531698.1314732529761.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 30 Aug 2011 15:28:49 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+Cc: security@...ntu.com, geoff@...ttered.org, dwyer@...lab.ee.mu.oz.au, jgifford@...ksmart.net, coley <coley@...re.org>
+Subject: Re: Security issue in hammerhead
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 10 Aug 2011 10:27:18 +0200 Thomas Biege wrote:
+Please use CVE-2011-3204 for this.
 
-> The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
-
-...
-
-> 2) Boundary errors within the "CSoundFile::ReadS3M()" function
-> (src/load_s3m.cpp) when processing S3M files can be exploited to cause
-> stack-based buffer overflows by tricking a user into opening a
-> specially crafted S3M file.
-
-Any specific reason to believe these two are the same?  CVE-2011-1574
-links:
-http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
-
-while commit related to SA45131/2 seems to be this one:
-
-> [3]
-> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
+
+----- Original Message -----
+> A security bug was reported against hammerhead in Ubuntu. You are
+> being
+> emailed as the upstream contact. Please keep
+> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+> 
+> This issue should be considered public and has not yet been assigned a
+> CVE.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/826679
+> 
+> ----
+> From the reporter:
+> 
+> "hammerhead blindly writes to to /tmp/hammer.log without prior checks.
+> It is possible to put a symbolic link at /tmp/hammer.log pointing at
+> another file - that hammerhead will then end up appending data into.
+> (it appears that hammerhead uses the file location as specified
+> in /etc/hammerhead/hh.conf - which in debian/ubuntu
+> is /tmp/hammer.log)."
+> ----
+> 
+> A quick check shows that HH_LOG and REPORT_LOG are indeed being
+> unconditionally opened with 'fopen(..., "a+")' in src/hammerhead.cc.
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
+> 
+> Jamie Strandboge
+> 
+> [1] oss-security@...ts.openwall.com is a public mailing list for
+> people to collaborate on security vulnerabilities and coordinate
+> security updates.
+> 
+> PS - I couldn't find a security contact for hammerhead, so emailed to
+> those I could find in AUTHORS.
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
