@@ -1,25 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/11
-Message-ID: <e705ce83-fa29-4608-a25e-f387eb9769a8@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 05 Oct 2011 15:34:32 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/7
+Message-ID: <1260331906.531698.1314732529761.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 30 Aug 2011 15:28:49 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Ramon de C Valle <rcvalle@...hat.com>
-Subject: Re: Request for CVE identifier: Libvoikko NULL Character Improper Input Validation
+To: oss-security@...ts.openwall.com
+Cc: security@...ntu.com, geoff@...ttered.org, dwyer@...lab.ee.mu.oz.au, jgifford@...ksmart.net, coley <coley@...re.org>
+Subject: Re: Security issue in hammerhead
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Do we already have a CVE identifier assigned to this issue?
-> 
-> http://www.openwall.com/lists/oss-security/2011/06/13/3
-> 
-
-I'd like MITRE to weigh in on this one:
-
-http://www.openwall.com/lists/oss-security/2011/06/13/17
+Please use CVE-2011-3204 for this.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> A security bug was reported against hammerhead in Ubuntu. You are
+> being
+> emailed as the upstream contact. Please keep
+> oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+> 
+> This issue should be considered public and has not yet been assigned a
+> CVE.
+> 
+> Details from the public bug follow:
+> https://launchpad.net/bugs/826679
+> 
+> ----
+> From the reporter:
+> 
+> "hammerhead blindly writes to to /tmp/hammer.log without prior checks.
+> It is possible to put a symbolic link at /tmp/hammer.log pointing at
+> another file - that hammerhead will then end up appending data into.
+> (it appears that hammerhead uses the file location as specified
+> in /etc/hammerhead/hh.conf - which in debian/ubuntu
+> is /tmp/hammer.log)."
+> ----
+> 
+> A quick check shows that HH_LOG and REPORT_LOG are indeed being
+> unconditionally opened with 'fopen(..., "a+")' in src/hammerhead.cc.
+> 
+> Thanks in advance for your cooperation in coordinating a fix for this
+> issue,
+> 
+> Jamie Strandboge
+> 
+> [1] oss-security@...ts.openwall.com is a public mailing list for
+> people to collaborate on security vulnerabilities and coordinate
+> security updates.
+> 
+> PS - I couldn't find a security contact for hammerhead, so emailed to
+> those I could find in AUTHORS.
+> 
+> --
+> Jamie Strandboge | http://www.canonical.com
