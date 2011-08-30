@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/3
-Message-ID: <20111201003946.GG21767@foo.fgeek.fi>
-Date: Thu, 1 Dec 2011 02:39:46 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/3
+Message-ID: <4E5D0A8D.4020002@oracle.com>
+Date: Tue, 30 Aug 2011 17:06:37 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
+Subject: Closed List
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 30, 2011 at 05:29:55PM -0700, Kurt Seifried wrote:
-> On 11/30/2011 05:11 PM, Solar Designer wrote:
-> 
-> > > All -
-> > >
-> > > On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
-> >> >> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
-> >> >> scripter framework.
-> > > We do not have a strict policy on whether security tool announcements
-> > > are appropriate in here or not.  My current stance on it is that
-> > > one-time announcements of tools with specific relevance to Open Source
-> > > are OK, whereas repeated new version announcements are not.  Thus, I
-> > > approved the announcement of XSSer this one time, but I don't intend to
-> > > approve an announcement of the next version of XSSer.  Please let me
-> > > know if you'd like this approach changed in some way.
-> > >
-> Agreed. Random thought: or if a project makes a major
-> breakthrough/update/change/once a year type of announcement is probably
-> sane too? I like hearing about new tools and definitely don't have time
-> to go through Google/etc any more =).
-> 
-> 
-> > > Meanwhile, the various CFPs and e-magazine issue announcements that are
-> > > arriving to oss-security are being rejected - as we decided previously.
-> > >
-> +1
-> 
-> > > Alexander
-> -- -Kurt Seifried / Red Hat Security Response Team
+Hello,
 
-Advisories of major improvements is good limit in my opinion and I really do mean major improvements. +1 for e-magazine case also. I don't see a point of spamming list yearly if nothing interesting has happened. Software vendors/developers should create their own mailing lists and/or RSS-feeds.
+I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
+actually in the Linux sustaining team, the team actually responsible for
+fixing most of the bugs.
 
-- Henri Salo
+Could you please add me to the closed list?   There is one other person
+on the list for Oracle, but none, yet, from the Linux group.
+
+My public key can be found on the keyservers, and this is its fingerprint:
+
+pub   2048D/942FA3C8 2010-03-31
+      Key fingerprint = FEA7 1BDB D750 8559 490D  48E5 450B BB7E 942F A3C8
+uid                  John Haxby <john.haxby@...cle.com>
+sub   2048R/0F52B75D 2011-06-23
+
