@@ -1,30 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/6
-Message-ID: <4EAA8F3F.7070601@gmail.com>
-Date: Fri, 28 Oct 2011 07:17:19 -0400
-From: Sean Amoss <failedtosync@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/31/1
+Message-ID: <Pine.GSO.4.64.1108311823180.26123@faron.mitre.org>
+Date: Wed, 31 Aug 2011 18:35:45 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- Opera Manipulating fonts in SVG can allow execution of arbitrary code
+Subject: Re: CVE request: heap overflow in tcptrack < 1.4.2
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-Can a CVE be assigned for the below issue?
+I'm wondering if this should have received a CVE.
 
-"Certain font manipulations inside a dynamically added and specifically
-embedded SVG image can cause Opera to crash. Additional techniques can
-reliably be used in combination with this crash to allow execution of
-arbitrary code.
+https://bugs.gentoo.org/show_bug.cgi?id=377917 quotes upstream:
 
-Opera Software has released Opera 11.52, where this issue has been fixed."
+    "This fixes a heap overflow in the parsing of the command line...
+     this may have security repercussions if
+     tcptrack is configured as a handler for other applications that can
+     pass user-supplied command line input to tcptrack."
 
-http://www.opera.com/support/kb/view/1002/
-http://spa-s3c.blogspot.com/2011/10/spas3c-sv-006opera-browser-101112-0-day.html
+The "attack" is through a command line argument.  While it's listed as a 
+sniffer, the above text suggests that tcptrack might not be 
+setuid/privileged, since the only given scenario is "as a handler for 
+other applications."  Unless this is a typical/known scenario, this seems 
+like just another unprivileged application, in which case the control over 
+a command line argument would not directly cross privilege boundaries, 
+thus falling into the realm of "bug" and not "vulnerability."
+
+- Steve
 
 
-Thank you
-Sean
+On Tue, 9 Aug 2011, Josh Bressers wrote:
 
-
--- 
-Sean Amoss
+>
+>
+> ----- Original Message -----
+>> A heap overflow in the parsing of tcptrack's command line was found.
+>> The details are pretty sparse, but here are some references:
+>>
+>> http://www.rhythm.cx/~steve/devel/tcptrack/#news
+>> https://bugs.gentoo.org/show_bug.cgi?id=377917
+>> https://bugzilla.redhat.com/show_bug.cgi?id=729096
+>>
+>
+> Please use CVE-2011-2903.
+>
+> Thanks.
+>
+> --
+>    JB
+>
