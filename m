@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/3
-Message-ID: <20110111225246.GU9238@redhat.com>
-Date: Tue, 11 Jan 2011 15:52:46 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/01/1
+Message-ID: <20110901210026.GB28347@lupin.home.powdarrmonkey.net>
+Date: Thu, 1 Sep 2011 22:00:26 +0100
+From: Jonathan Wiltshire <jmw@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: sudo does not ask for password on GID changes
+Subject: CVE request for bcfg2 (remote root)
 Content-Type: text/plain; charset=utf-8
 
-A Debian bug report noted that sudo does not access for a password on
-GID changes, like it does for UID changes.  This could allow a user to
-execute commands using '-g [group]' without being prompted for their
-password.
+Hi,
 
-It uses a (newer?) syntax; on 1.6.7p5 at least the '(ALL:ALL)'
-specification gives a syntax error; I'm not sure when this behaviour was
-introduced.
+A bug report in Debian has come to light for which I can find no other
+information, and therefore I do not believe it has a CVE - but probably
+should.
 
-References:
+From http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=640028 :
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=609641
-http://www.sudo.ws/repos/sudo/rev/fe8a94f96542
-http://www.sudo.ws/repos/sudo/rev/07d1b0ce530e
-https://bugzilla.redhat.com/show_bug.cgi?id=668879
+"All released stable versions of the bcfg2-server contain several cases
+where data from the client is used in a shell command without properly
+escaping it first. The 1.2 prerelease series has been fixed.
 
-Could a CVE name be assigned to this please?
+"At least the SSHbase plugin has been confirmed as being exploitable.
+This is a remote root hole, which requires that the SSHbase plugin is
+enabled and that the attacker has control of a bcfg2 client machine."
 
-Thanks.
+A patch for the problem has been commited [1] upstream and backported [2] to
+the 1.1 series.
+
+1: https://github.com/solj/bcfg2/commit/f4a35efec1b6a1e54d61cf1b8bfc83dd1d89eef7
+2: https://github.com/solj/bcfg2/commit/46795ae451ca6ede55a0edeb726978aef4684b53
+
+Please CC me, I am not subscribed.
+
+Thanks,
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Jonathan Wiltshire                                      jmw@...ian.org
+Debian Developer                         http://people.debian.org/~jmw
+
+4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC  74C3 5394 479D D352 4C51
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
