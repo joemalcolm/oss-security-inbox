@@ -1,26 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/17
-Message-ID: <1323016410.1472978.1311191421600.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 15:50:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/4
+Message-ID: <4E6144D2.4070905@icosahedron.de>
+Date: Fri, 02 Sep 2011 23:04:18 +0200
+From: Michael Lutz <michi+openttd@...sahedron.de>
 To: oss-security@...ts.openwall.com
-Cc: minhbq@...v.com.vn, coley <coley@...re.org>
-Subject: Re: CVE request: sNews 1.7.1 XSS in reorder
+CC: rubidium@...nttd.org
+Subject: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2706.
+Hello folks,
 
-Thanks.
+the OpenTTD team and contributors have discovered several security
+vulnerabilities in OpenTTD. Please be so kind to allocate a CVE id for
+each of the issues detailed below:
 
--- 
-    JB
+1.) Denial of service via improperly validated commands
 
------ Original Message -----
-> This vulnerability does not seem to have CVE-identifier assigned. Can
-> I get one? :)
-> 
-> Bkis page: http://security.bkis.com/snews-1-7-1-xss-vulnerability/
-> Original report: http://seclists.org/fulldisclosure/2011/May/300
-> 
-> Best regards,
-> Henri Salo
+In multiple places in-game commands are not properly validated that allow
+remote attackers to cause a denial of service (crash) and possibly execute
+arbitrary code via unspecified vectors.
+
+Vulnerability is present since 0.3.5 and will be fixed in the upcoming
+1.1.3 release. Issue report at http://bugs.openttd.org/task/4745
+
+2.) Buffer overflows in savegame loading
+
+In multiple places indices in savegames are not properly validated that
+allow (remote) attackers to cause a denial of service (crash) and possibly
+execute arbitrary code via unspecified vectors.
+
+Vulnerability is present since 0.1.0 and will be fixed in the upcoming
+1.1.3 release. Issue reports at http://bugs.openttd.org/task/4717 and
+http://bugs.openttd.org/task/4748
+
+3.) Multiple buffer overflows in validation of external data
+
+In multiple places external data from the local file system isn't properly
+checked before allocating memory, which could lead to buffer overflows and
+arbitrary code execution.
+
+Vulnerability is present since 0.3.4 and will be fixed in the upcoming
+1.1.3 release. Issue reports at http://bugs.openttd.org/task/4746 and
+http://bugs.openttd.org/task/4747
+
+
+Once the CVE ids are allocated, each issue will be fully documented at
+http://security.openttd.org/en/CVE-2011-xxxx
+
+Thanks,
+Michael Lutz
+
+[Please CC me, I'm not subscribed.]
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
