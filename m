@@ -1,114 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/31
-Message-ID: <20110405165615.GE3934@redhat.com>
-Date: Tue, 5 Apr 2011 10:56:15 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/2
+Message-ID: <20064.47993.850551.693023@mariner.uk.xensource.com>
+Date: Fri, 2 Sep 2011 12:18:17 +0100
+From: Xen.org security team <security@....org>
+To: xen-devel@...ts.xensource.com
+CC: oss-security@...ts.openwall.com
+Subject: Xen Security Advisory 4 (CVE-2011-2901) - Xen 3.3 vaddr validation
 Content-Type: text/plain; charset=utf-8
 
-* [2011-04-05 18:02:54 +0200] Andrea Barisani wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->On Tue, Apr 05, 2011 at 09:40:13AM -0600, Vincent Danen wrote:
->> * [2011-04-05 08:43:29 -0400] Josh Bressers wrote:
->>
->> >
->> >----- Original Message -----
->> >>On Tue, Apr 05, 2011 at 07:19:08AM -0400, Josh Bressers wrote:
->> >>> Not adding Apple to any coordination list would be plain silly. They
->> >>> were far more active than most of the distributions.
->> >>
->> >>Yes. But why do they need to be aware, say, of glibc vulnerabilities
->> >>(ones that are in fact believed to be glibc-specific)?
->> >
->> >This is an excellent point. It's a hard problem to solve honestly. I guess
->> >the question really comes down to this. Do the disadvantages of one list
->> >outweigh the benefits? I'm not sure what the answer is. There probably
->> >isn't an "answer" though, just lots of opinions.
->>
->> Just throwing this out there (I've read the thread but haven't
->> contributed at all yet).
->>
->> A lot of userland stuff is shared between BSD and Linux, and probably
->> some other operating systems.  About the only things that differ between
->> a lot of these are the Linux kernel, and the *libc.  There is a lot of
->> cross-over with other stuff, which means there will likely be a lot of
->> cc'ing going on (which I imagine might be complicated due to encryption
->> requirements).
->>
->> Where does the line get drawn?  If vendor A ships with exim, and another
->> with postfix, which one belongs on the "Linux list"?  Obviously
->> discussions of exim don't matter to the postfix shipper, and vice versa.
->> Pick any other software that has a competing open source alternative.
->> Does Debian not get on the list because they don't technically ship
->> firefox?
->>
->> I think if the disqualifier to Apple is that they don't ship a Linux
->> kernel and glibc, then we're doing them (and ourselves) a disservice.
->> Apple contributed a lot to vendor-sec (and I'm not going all pro-Apple
->> here, just stating a fact).
->>
->> I think it would be reasonable to s/Linux list/open source vendor list/,
->> like vendor-sec used to be.  Yes, Apple will see some glibc stuff and
->> some Linux kernel stuff.  So what?  They may also see some exim stuff
->> that doesn't apply to them, and (hopefully!) the Linux vendors may seem
->> some stuff that isn't applicable to them, but it is useful for the *BSD
->> vendors who would (hopefully!) be on the list and feel welcome enough to
->> use it.  Who knows, it might even be beneficial to have a glibc issue
->> and someone from Apple or FreeBSD or whatever pipes up and indicates
->> that the BSD libc once had a similar problem and tells us how they fixed
->> it.
->>
->> I think getting hung up on "Linux vendors only" and "BSD vendors can
->> have their own list" and we end up cross-posting 90% of the issues is
->> going to be an exercise in frustration.
->>
->> Either that, or we start to work more closely with a *CERT and deal with
->> their process for passing along information to other vendors for
->> userland things that are shared; no offence to oCERT or anyone else, but
->> that seems like more of a headache than just letting
->> Apple/FreeBSD/OpenBSD/etc. have a seat at our table.
->>
->> Just my $0.02.
->>
->
->None taken :)
->
->Some random reasons about why we value coordination over a "catch all" list
->(which was considered at oCERT beginning):
->
->- some vendors/projects got annoyed by reports not relevant to them, in the
->  long run it tends to lower the "attention level" when some matters are
->  really meaningful to them, that's why having a trusted purposed channel
->  often worked
->
->- it is not feasible to have every single OSS project on such a list and at
->  some point there is the need to address individual maintainers in a timely
->  fashion along with the affected parties, using a list + cc for that often
->  doesn't work as the communication level greatly differs most of the times
->  (unfortunately).
->
->  We found out the hard way that the usual level of technicality that was
->  happening with most vendors or lists like vendor-sec was perceived as
->  "threatening" or absolutely obscure to some developers/maintainers.
->
->I am not suggesting that coordination ala oCERT is the only true way of
->course, and I am not trying to pitch our project here, just wanted to give
->some elements for the discussion.
+             Xen Security Advisory CVE-2011-2901 / XSA-4
+                        revision no.2
+        Xen <= 3.3 DoS due to incorrect virtual address validation
 
-Thanks for that Andrea.  I get where you're coming from, but also keep
-in mind that the *CERTs also deal with upstream and issues that cover a
-multitude of potential upstreams (think protocol-level issues).  For
-that, absolutely the *CERTs have their place.
+ISSUE DESCRIPTION
+=================
 
-I don't think anyone is suggesting this list is a replacement for the
-work that the *CERTs can do in coordinating with various upstreams and
-vendors.  I think rather they can often be complimentary.
+The x86_64 __addr_ok() macro intends to ensure that the checked
+address is either in the positive half of the 48-bit virtual address
+space, or above the Xen-reserved area. However, the current shift
+count is off-by-one, allowing full access to the "negative half" too,
+via certain hypercalls which ignore virtual-address bits [63:48].
+Vulnerable hypercalls exist only in very old versions of the
+hypervisor.
 
->I personally think that we need a blend of both approaches in the long term,
->it is just a matter of using the right tool for the job.
+VULNERABLE SYSTEMS
+==================
 
-Absolutely agree with this.
+All systems running a Xen 3.3 or earlier hypervisor with 64-bit PV
+guests with untrusted administrators are vulnerable.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+IMPACT
+======
+
+A malicious guest administrator on a vulnerable system is able to
+crash the host.
+
+There are no known further exploits but these have not been ruled out.
+
+RESOLUTION
+==========
+
+The attached patch resolves the issue.
+
+Alternatively, users may choose to upgrade to a more recent hypervisor
+
+PATCHES
+=======
+
+The following patch resolves this issue.
+
+Filename: fix-__addr_ok-limit.patch
+SHA1: f18bde8d276110451c608a16f577865aa1226b4f
+SHA256: 2da5aac72e1ac4849c34d38374ae456795905fd9512eef94b48fc31383c21636
+
+This patch should apply cleanly, and fix the problem, for all affected
+versions of Xen.
+
+It is harmless when applied to later hypervisors and will be included
+in the Xen unstable branch in due course.
+
+VERSION HISTORY
+===============
+
+Analysis following version 1 of this advisory (sent out to the
+predisclosure list during the embargo period) indicates that the
+actual DoS vulnerability only exists in very old hypervisors, Xen 3.3
+and earlier, contrary to previous reports.
+
+This advisory is no longer embargoed.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOYLq2AAoJEIP+FMlX6CvZLegH/26/oJBkd/WM/yYhXkzlbnIP
+MxF6Fgy96Omu8poQTanD7g1vEcM0TOLY+Kk3GGsfj4aDdEJ5Nq4ZOW8ooI0VnVcD
+7VXQqFsXPxre+eZ6g+G0AsmzdsG45C3qujUTRfGKqzYwXqjWjt9nNsdIy1Mrz8/4
+zG1uLDkN0LXnBG2Te4q8ZckYwMq8gFXHHnH35RfQ5Besu6pvJmtK3rFXETdlP12A
+JjBh7t5jsCfzvYWFQehVp8mJupuftiOBPClmVh4vrvN9gYd5rzEgB4Q9Ioiqz2qT
+2bE1zegR8NeOKBOi9xriTU8F530OdFzeWAbo7D5gyEbYdc60eNwbadcgNGLbzMg=
+=09T8
+-----END PGP SIGNATURE-----
+
+View attachment "fix-__addr_ok-limit.patch" of type "text/plain" (1040 bytes)
