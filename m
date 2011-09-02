@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/9
-Message-ID: <1843790166.178934.1305831605642.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 19 May 2011 15:00:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/5
+Message-Id: <20110902173629.09a0e8d97973aa82e7b27703@gmail.com>
+Date: Fri, 2 Sep 2011 17:36:29 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: viewvc DoS
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: ffmpeg issues
 Content-Type: text/plain; charset=utf-8
 
+Steven M. Christey wrote:
 
-
------ Original Message -----
-> Hi,
 > 
-> cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row
-> limit:
-> http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
-> http://viewvc.tigris.org/issues/show_bug.cgi?id=433
-> http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
+> For context, CVE-2011-2162 was assigned because of Mandriva's reference to 
+> "several additional vulnerabilites originally discovered by Google Chrome 
+> developers were also fixed with this advisory" without any reference to a 
+> CVE identifier.
+
+Isn't this just CVE-2011-1198 then (which is suspiciously missing from
+that set of security announcements)?   CVE-2011-1198 was assigned on
+March 30th, which certainly could have been referenced in the Mandriva
+advisories, they just missed it I guess?  Given this kind of
+carelessness, I think we should err on the side of not issuing new
+ids based on ill-defined text like this future Mandriva advisories.
+
+> For CVE-2011-2160, http://ffmpeg.mplayerhq.hu/ includes a changelog. 
+> CVE-2011-2160 was built from the March 17, 2011 entry:
 > 
+>    "Reinhard Tartler
+>    backported several security fixes to the 0.5 release branch and made
+>    another point release, that is 0.5.4. Note, 0.5 is quite old and this
+>    release is mostly for those stuck with the 0.5 branch, and not so
+>    interesting for end users. ... Changelog between 0.5.3 and 0.5.4 ...
+>    Fix invalid reads in VC-1 decoding (related to CVE-2011-0723)."
+> 
+> This suggests that the vendor may have fixed an issue related to 
+> CVE-2011-0723, but not CVE-2011-0723 itself. The other items in the 
+> 20110317 changelog map directly the CVE names, without a "related to" 
+> qualifier. This triggers a SPLIT.
 
-This one needs a 2009 ID:
+This may just be a wording choice.  We have more discussion going on
+right now [0], so hopefully we'll get it resolved there.
 
-CVE-2009-5024
+Best wishes,
+Mike
 
-My understanding is that the fix prevents a user from getting viewvc from
-displaying a really big request that easy CPU and RAM.
-
-Thanks.
-
--- 
-    JB
+[0] http://lists.debian.org/debian-security-tracker/2011/08/msg00009.html
