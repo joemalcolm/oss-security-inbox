@@ -1,23 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/15
-Message-ID: <4D3F52CA.8070204@redhat.com>
-Date: Wed, 26 Jan 2011 06:46:34 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/3
+Message-ID: <Pine.GSO.4.64.1109021135030.7465@faron.mitre.org>
+Date: Fri, 2 Sep 2011 11:39:12 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2010-4238 xen dom0 issue
+Subject: Re: ffmpeg issues
 Content-Type: text/plain; charset=utf-8
 
-A missing sanity check was found in vbd_create() in the Xen hypervisor
-implementation. As CD-ROM drives are not supported by the blkback 
-back-end driver, attempting to use a virtual CD-ROM drive with blkback 
-could trigger a denial of service (crash) on the host system running the 
-Xen hypervisor.
 
-https://bugzilla.redhat.com/CVE-2010-4238
+For context, CVE-2011-2162 was assigned because of Mandriva's reference to 
+"several additional vulnerabilites originally discovered by Google Chrome 
+developers were also fixed with this advisory" without any reference to a 
+CVE identifier.
 
-This affects Red Hat Enterprise Linux 5 only. There's no upstream patch.
+For CVE-2011-2160, http://ffmpeg.mplayerhq.hu/ includes a changelog. 
+CVE-2011-2160 was built from the March 17, 2011 entry:
 
-https://bugzilla.redhat.com/CVE-2010-4238
+   "Reinhard Tartler
+   backported several security fixes to the 0.5 release branch and made
+   another point release, that is 0.5.4. Note, 0.5 is quite old and this
+   release is mostly for those stuck with the 0.5 branch, and not so
+   interesting for end users. ... Changelog between 0.5.3 and 0.5.4 ...
+   Fix invalid reads in VC-1 decoding (related to CVE-2011-0723)."
 
-Eugene
+This suggests that the vendor may have fixed an issue related to 
+CVE-2011-0723, but not CVE-2011-0723 itself. The other items in the 
+20110317 changelog map directly the CVE names, without a "related to" 
+qualifier. This triggers a SPLIT.
+
+- Steve
+
+
+
+On Fri, 2 Sep 2011, Michael Gilbert wrote:
+
+> Hi,
+>
+> We're trying to figure out the status of ffmpeg in debian [0].  Does
+> anyone have any real info on CVE-2011-2160 (whose CVE page is in
+> essence completely empty) [1].  BTW, how is a link to the software's
+> homepage considered a confirmation of the issue?
+>
+> Also, CVE-2011-2162 [2] seems to be a rehash of a bunch of CVE ids
+> that happened to be in the recent dump of Mandriva advisories.
+> Shouldn't this get REJECTED since its just a collection of already
+> known and tracked issues?
+>
+> Thanks,
+> Mike
+>
+> [0] http://lists.debian.org/debian-security-tracker/2011/08/msg00009.html
+> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2160
+> [2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2162
+>
