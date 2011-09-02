@@ -1,38 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/41
-Message-ID: <597164508.370300.1301941390217.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 14:23:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: rsyslogd memory leaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/2
+Message-ID: <20064.47993.850551.693023@mariner.uk.xensource.com>
+Date: Fri, 2 Sep 2011 12:18:17 +0100
+From: Xen.org security team <security@....org>
+To: xen-devel@...ts.xensource.com
+CC: oss-security@...ts.openwall.com
+Subject: Xen Security Advisory 4 (CVE-2011-2901) - Xen 3.3 vaddr validation
 Content-Type: text/plain; charset=utf-8
 
-It would seem this needs three IDs (due to version differences).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> 
-> The $RepeatedMsgReduction option could cause a memory leak:
-> http://bugzilla.adiscon.com/show_bug.cgi?id=225
-> http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=8083bd1433449fd2b1b79bf759f782e0f64c0cd2
+             Xen Security Advisory CVE-2011-2901 / XSA-4
+                        revision no.2
+        Xen <= 3.3 DoS due to incorrect virtual address validation
 
-The above is fixed in versions 5.6.4 ad 5.7.6
-CVE-2011-1488
+ISSUE DESCRIPTION
+=================
 
-> 
-> Multiple rulesets that are used by multiple inputs could cause a
-> memory leak or crash:
-> http://bugzilla.adiscon.com/show_bug.cgi?id=226
+The x86_64 __addr_ok() macro intends to ensure that the checked
+address is either in the positive half of the 48-bit virtual address
+space, or above the Xen-reserved area. However, the current shift
+count is off-by-one, allowing full access to the "negative half" too,
+via certain hypercalls which ignore virtual-address bits [63:48].
+Vulnerable hypercalls exist only in very old versions of the
+hypervisor.
 
-The above bug claims it's fixed in versions 5.6.3 and 5.7.6
-CVE-2011-1489
+VULNERABLE SYSTEMS
+==================
 
-> http://bugzilla.adiscon.com/show_bug.cgi?id=218
-> http://git.adiscon.com/?p=rsyslog.git;a=commitdiff;h=1ef709cc97d54f74d3fdeb83788cc4b01f4c6a2a
+All systems running a Xen 3.3 or earlier hypervisor with 64-bit PV
+guests with untrusted administrators are vulnerable.
 
-The above bug is fixed in versions 5.6.4, 5.7.6, and 6.1.5
-CVE-2011-1490
+IMPACT
+======
 
-Thanks.
+A malicious guest administrator on a vulnerable system is able to
+crash the host.
 
--- 
-    JB
+There are no known further exploits but these have not been ruled out.
+
+RESOLUTION
+==========
+
+The attached patch resolves the issue.
+
+Alternatively, users may choose to upgrade to a more recent hypervisor
+
+PATCHES
+=======
+
+The following patch resolves this issue.
+
+Filename: fix-__addr_ok-limit.patch
+SHA1: f18bde8d276110451c608a16f577865aa1226b4f
+SHA256: 2da5aac72e1ac4849c34d38374ae456795905fd9512eef94b48fc31383c21636
+
+This patch should apply cleanly, and fix the problem, for all affected
+versions of Xen.
+
+It is harmless when applied to later hypervisors and will be included
+in the Xen unstable branch in due course.
+
+VERSION HISTORY
+===============
+
+Analysis following version 1 of this advisory (sent out to the
+predisclosure list during the embargo period) indicates that the
+actual DoS vulnerability only exists in very old hypervisors, Xen 3.3
+and earlier, contrary to previous reports.
+
+This advisory is no longer embargoed.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQEcBAEBAgAGBQJOYLq2AAoJEIP+FMlX6CvZLegH/26/oJBkd/WM/yYhXkzlbnIP
+MxF6Fgy96Omu8poQTanD7g1vEcM0TOLY+Kk3GGsfj4aDdEJ5Nq4ZOW8ooI0VnVcD
+7VXQqFsXPxre+eZ6g+G0AsmzdsG45C3qujUTRfGKqzYwXqjWjt9nNsdIy1Mrz8/4
+zG1uLDkN0LXnBG2Te4q8ZckYwMq8gFXHHnH35RfQ5Besu6pvJmtK3rFXETdlP12A
+JjBh7t5jsCfzvYWFQehVp8mJupuftiOBPClmVh4vrvN9gYd5rzEgB4Q9Ioiqz2qT
+2bE1zegR8NeOKBOi9xriTU8F530OdFzeWAbo7D5gyEbYdc60eNwbadcgNGLbzMg=
+=09T8
+-----END PGP SIGNATURE-----
+
+View attachment "fix-__addr_ok-limit.patch" of type "text/plain" (1040 bytes)
