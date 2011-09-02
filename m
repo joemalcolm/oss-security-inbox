@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/7
-Message-ID: <6894f7c9-a6ca-46dd-9bd4-be8542d11081@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 12:22:37 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/4
+Message-ID: <4E6144D2.4070905@icosahedron.de>
+Date: Fri, 02 Sep 2011 23:04:18 +0200
+From: Michael Lutz <michi+openttd@...sahedron.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mplayer RDT parsing integer underlow
+CC: rubidium@...nttd.org
+Subject: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2009-5027
+Hello folks,
 
-Thanks.
+the OpenTTD team and contributors have discovered several security
+vulnerabilities in OpenTTD. Please be so kind to allocate a CVE id for
+each of the issues detailed below:
 
--- 
-    JB
+1.) Denial of service via improperly validated commands
 
------ Original Message -----
-> Hi,
-> 
-> Please assign a CVE for this issue from 2009. From [1]:
-> 
-> "Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
-> (Real Data Transport) chunks headers from the network and after that
-> it
-> will parse them. A controled variable is used to allocate a buffer
-> and
-> later passed on to the rtsp_read_data() function in order to specify
-> the
-> length of an RDT chunk data to read from the network. An integer
-> underflow can be triggered when parsing a malformed RDT header chunk,
-> a remote attacker can exploit it to execute arbitrary code in the
-> context of the application."
-> 
-> [1] http://seclists.org/fulldisclosure/2009/Jul/418
-> [2] https://secunia.com/advisories/36041/3/
-> 
-> thank you
-> tim
-> 
-> --
-> Tim Sammut ~ Gentoo Security Team
-> underling@...too.org ~ C2375493
-> 
-> 
+In multiple places in-game commands are not properly validated that allow
+remote attackers to cause a denial of service (crash) and possibly execute
+arbitrary code via unspecified vectors.
+
+Vulnerability is present since 0.3.5 and will be fixed in the upcoming
+1.1.3 release. Issue report at http://bugs.openttd.org/task/4745
+
+2.) Buffer overflows in savegame loading
+
+In multiple places indices in savegames are not properly validated that
+allow (remote) attackers to cause a denial of service (crash) and possibly
+execute arbitrary code via unspecified vectors.
+
+Vulnerability is present since 0.1.0 and will be fixed in the upcoming
+1.1.3 release. Issue reports at http://bugs.openttd.org/task/4717 and
+http://bugs.openttd.org/task/4748
+
+3.) Multiple buffer overflows in validation of external data
+
+In multiple places external data from the local file system isn't properly
+checked before allocating memory, which could lead to buffer overflows and
+arbitrary code execution.
+
+Vulnerability is present since 0.3.4 and will be fixed in the upcoming
+1.1.3 release. Issue reports at http://bugs.openttd.org/task/4746 and
+http://bugs.openttd.org/task/4747
+
+
+Once the CVE ids are allocated, each issue will be fully documented at
+http://security.openttd.org/en/CVE-2011-xxxx
+
+Thanks,
+Michael Lutz
+
+[Please CC me, I'm not subscribed.]
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
