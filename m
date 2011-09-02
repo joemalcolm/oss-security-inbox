@@ -1,61 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/16
-Message-ID: <20110725232208.GC23791@openwall.com>
-Date: Tue, 26 Jul 2011 03:22:08 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/5
+Message-Id: <20110902173629.09a0e8d97973aa82e7b27703@gmail.com>
+Date: Fri, 2 Sep 2011 17:36:29 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>, Jeff Johnson <n3npq@....com>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Re: ffmpeg issues
 Content-Type: text/plain; charset=utf-8
 
-Vasiliy,
+Steven M. Christey wrote:
 
-On Mon, Jul 25, 2011 at 09:30:35PM +0400, Vasiliy Kulikov wrote:
-> On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
-> >      case FSM_UNLINK:
-> > -	rc = Unlink(fsm->path);
-> > +	{
-> > +	    struct stat stb;
-> > +	    int saved_errno;
-> > +	    int saved_rc = lstat(fsm->path, &stb);
-> > +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
-> > +		saved_rc = chmod(fsm->path, 0);
 > 
-> If the directory containing the file was owned by nonroot, then the file
-> could be overwritten with a symlink.  So, there is a race between
-> lstat() and chmod(), which might lead to chmod'ing arbitrary files by
-> directory owner.
+> For context, CVE-2011-2162 was assigned because of Mandriva's reference to 
+> "several additional vulnerabilites originally discovered by Google Chrome 
+> developers were also fixed with this advisory" without any reference to a 
+> CVE identifier.
 
-Right.  The same risk is present in upstream's version of the fix.
+Isn't this just CVE-2011-1198 then (which is suspiciously missing from
+that set of security announcements)?   CVE-2011-1198 was assigned on
+March 30th, which certainly could have been referenced in the Mandriva
+advisories, they just missed it I guess?  Given this kind of
+carelessness, I think we should err on the side of not issuing new
+ids based on ill-defined text like this future Mandriva advisories.
 
-> Is it possible with these orphaned files (I'm not familiar with the code
-> in question)?
+> For CVE-2011-2160, http://ffmpeg.mplayerhq.hu/ includes a changelog. 
+> CVE-2011-2160 was built from the March 17, 2011 entry:
+> 
+>    "Reinhard Tartler
+>    backported several security fixes to the 0.5 release branch and made
+>    another point release, that is 0.5.4. Note, 0.5 is quite old and this
+>    release is mostly for those stuck with the 0.5 branch, and not so
+>    interesting for end users. ... Changelog between 0.5.3 and 0.5.4 ...
+>    Fix invalid reads in VC-1 decoding (related to CVE-2011-0723)."
+> 
+> This suggests that the vendor may have fixed an issue related to 
+> CVE-2011-0723, but not CVE-2011-0723 itself. The other items in the 
+> 20110317 changelog map directly the CVE names, without a "related to" 
+> qualifier. This triggers a SPLIT.
 
-Yes, but this problem is not limited to this specific piece of code.
-rpm appears to treat the target directory tree as trusted - not only
-when it removes files, but also when it creates files, etc.  I did not
-fully verify this, though - that's just how the code looks to me.
+This may just be a wording choice.  We have more discussion going on
+right now [0], so hopefully we'll get it resolved there.
 
-This general issue is in fact a security risk.  For example, if the
-directory tree contains a subdirectory writable by a pseudo-user, then a
-possible compromise of this pseudo-user account might lead to worse
-things via rpm.  Here's an example of such directory on Owl:
+Best wishes,
+Mike
 
-# ls -la /var/lib/dhcp/dhcpd/state/
-total 8
-drwxrwx--T 2 root dhcp 4096 Dec 14  2010 .
-drwxr-x--- 3 root dhcp 4096 Dec  8  2010 ..
--rw------- 1 dhcp dhcp    0 Dec  8  2010 dhcpd.leases
-
-We may discuss this general issue (of rpm trusting the target tree, and
-the resulting risks) separately.
-
-Thank you for the review!
-
-BTW, another detail I thought someone might notice is that I am applying
-the chmod's not only to binary packages, like the upstream fix does, but
-I think also to source packages being removed/upgraded (I did not
-actually test this, though).  This might be excessive, or it might not,
-but I felt that it does not hurt either way.
-
-Alexander
+[0] http://lists.debian.org/debian-security-tracker/2011/08/msg00009.html
