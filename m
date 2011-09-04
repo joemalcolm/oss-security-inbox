@@ -1,20 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/2
-Message-ID: <20111230114950.GC20236@foo.fgeek.fi>
-Date: Fri, 30 Dec 2011 13:49:50 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/2
+Message-ID: <1315116323.9806.72@d.hx.id.au>
+Date: Sun, 04 Sep 2011 16:05:20 +1000
+From: David Hicks <d@...id.au>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Elxis CMS two XSS-vulnerabilities
+Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
 Content-Type: text/plain; charset=utf-8
 
-1) Input passed to the "task" parameter in index.php (when "option" is set to "com_content") is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-http://osvdb.org/show/osvdb/77563
+On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
+> Request #2: LFI and XSS via bug_actiongroup_ext_page.php
 
-2) Input passed via the URL to administrator/index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
-http://osvdb.org/show/osvdb/77564
+I don't think my earlier message conveyed the severity of this bug well
+enough.
 
-http://secunia.com/advisories/47073/
+MantisBT allows users to upload attachments to bug reports. These
+attachments are commonly stored on the disk in an 'attachments'
+directory that should be stored outside the web root (but are still
+accessible to MantisBT for retrieval).
 
-Fixed in same version "2009.3 Aphrodite rev2684" so one CVE-identifier might be enough.
+This LFI vulnerbility therefore allows arbitrary remote code execution
+on a target server (as the web user ID). This level of access could be
+used to connect to the MantisBT database and access files and
+configuration of other web applications operating under the same uid/gid
+as the MantisBT installation.
 
-- Henri Salo
+For example, this LFI vulnerability may allow an attacker to call:
+require_once('../var/www/example.com/data/mantisbt/attachments/123456-malicious_attachment.php')
+
+Note that as per the earlier notice, some users (such as those using
+nginx) may not be impacted at all.
+
+release-1.2.8 has been tagged at
+https://github.com/mantisbt/mantisbt/tree/release-1.2.8 and should be
+packaged and distributed via usual channels shortly. Distributors and
+users are advised not to wait - patch ASAP or put workarounds in place
+such as disallowing attachment uploads ($g_allow_file_upload = OFF in
+config_inc.php) if you're using $g_file_upload_method = DISK.
+
+Thanks,
+
+David Hicks
+MantisBT Developer
+mantisbt.org, #mantishelp irc.freenode.net
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
