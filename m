@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/12
-Message-ID: <20110412210137.GB16400@openwall.com>
-Date: Wed, 13 Apr 2011 01:01:37 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/2
+Message-ID: <1315116323.9806.72@d.hx.id.au>
+Date: Sun, 04 Sep 2011 16:05:20 +1000
+From: David Hicks <d@...id.au>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 12, 2011 at 09:04:05AM +0000, Zhao, Zhenfeng wrote:
-> Sorry for the late response. Please add me with the mail address as the member of the vendor-sec . Thanks.
-> 
-> pub   2048R/66FBA52A 2011-04-12
->       Key fingerprint = BF45 878D 7941 567D 732C  D153 F997 3E81 66FB A52A
-> uid                  Zhenfeng Zhao (Wind River) <security-vendor@...driver.com>
-> sub   2048R/BD99FF83 2011-04-12
+On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
+> Request #2: LFI and XSS via bug_actiongroup_ext_page.php
 
-Given the discussion around MontaVista, can you please start by adding
-Wind River info to:
+I don't think my earlier message conveyed the severity of this bug well
+enough.
 
-http://oss-security.openwall.org/wiki/vendors
-http://oss-security.openwall.org/wiki/distro-patches
+MantisBT allows users to upload attachments to bug reports. These
+attachments are commonly stored on the disk in an 'attachments'
+directory that should be stored outside the web root (but are still
+accessible to MantisBT for retrieval).
+
+This LFI vulnerbility therefore allows arbitrary remote code execution
+on a target server (as the web user ID). This level of access could be
+used to connect to the MantisBT database and access files and
+configuration of other web applications operating under the same uid/gid
+as the MantisBT installation.
+
+For example, this LFI vulnerability may allow an attacker to call:
+require_once('../var/www/example.com/data/mantisbt/attachments/123456-malicious_attachment.php')
+
+Note that as per the earlier notice, some users (such as those using
+nginx) may not be impacted at all.
+
+release-1.2.8 has been tagged at
+https://github.com/mantisbt/mantisbt/tree/release-1.2.8 and should be
+packaged and distributed via usual channels shortly. Distributors and
+users are advised not to wait - patch ASAP or put workarounds in place
+such as disallowing attachment uploads ($g_allow_file_upload = OFF in
+config_inc.php) if you're using $g_file_upload_method = DISK.
 
 Thanks,
 
-Alexander
+David Hicks
+MantisBT Developer
+mantisbt.org, #mantishelp irc.freenode.net
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
