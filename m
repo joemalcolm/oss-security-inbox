@@ -1,33 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/14
-Message-ID: <18104020.1024492.1309377425735.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:57:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/3
+Message-ID: <CANTw=MN_j=SPB8GVmWbnTBA6WYY6ASZm0+BMr8JqZ-=mdf=rCw@mail.gmail.com>
+Date: Sun, 4 Sep 2011 13:39:43 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: libvirt: integer overflow in VirDomainGetVcpus
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Please REJECT CVE-2011-2160 and CVE-2011-2162 in ffmpeg as duplicates (was: ffmpeg issues)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2511.
+Please REJECT CVE-2011-2160 (duplicate of CVE-2011-1198) and
+CVE-2011-2162 (duplicate of CVE-2011-0723).  See thread at [0] for
+further details.
 
-Thanks.
+Thanks,
+Mike
 
--- 
-    JB
-
-
------ Original Message -----
-> It has been found that calling VirDomainGetVcpus with bogus parameters
-> can lead to integer overflow and subsequent heap corruption. A remote
-> attacker could use this flaw to crash libvirtd (DoS).
-> 
-> Upstream patch:
-> https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=717199
-> https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+[0] http://lists.debian.org/debian-security-tracker/2011/09/msg00006.html
