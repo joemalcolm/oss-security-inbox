@@ -1,56 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/7
-Message-ID: <1307117712.8176.17.camel@localhost>
-Date: Fri, 03 Jun 2011 11:15:12 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: akub Narebski <jnareb@...il.com>, Junio C Hamano <gitster@...ox.com>
-Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>
-Subject: Security issue in gitweb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/3
+Message-ID: <CANTw=MN_j=SPB8GVmWbnTBA6WYY6ASZm0+BMr8JqZ-=mdf=rCw@mail.gmail.com>
+Date: Sun, 4 Sep 2011 13:39:43 -0400
+From: Michael Gilbert <michael.s.gilbert@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
+Subject: Please REJECT CVE-2011-2160 and CVE-2011-2162 in ffmpeg as duplicates (was: ffmpeg issues)
 Content-Type: text/plain; charset=utf-8
 
-A security bug was reported by 'dave b' (in CC) against gitweb in
-Ubuntu. You are being emailed as the upstream contact. Please keep
-oss-security[1] CC'd for any updates on this issue.
+Please REJECT CVE-2011-2160 (duplicate of CVE-2011-1198) and
+CVE-2011-2162 (duplicate of CVE-2011-0723).  See thread at [0] for
+further details.
 
-This issue should be considered public, but has not yet been assigned a
-CVE. Once a CVE is assigned, please mention it in any changelogs.
+Thanks,
+Mike
 
-Details from the public bug follow:
-https://launchpad.net/bugs/777804
-
-From the reporter:
-----
-I am reporting a persistent xss vector in gitweb, note this requires a
-user to have commit access to a repository that gitweb is configured
-to display. The vector is the fact that gitweb "serves" up xml files -
-which can (just as gitweb does) embed html that could be used to
-perform a cross-site scripting attack.
-
-e.g. (lol.xml).
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
-lang="en-US">
-<head>
-</head>
-<script>alert(1);</script>
-</html>
-
-and viewed at
-http://$HOSTNAME/$PATH_TO_GITWEB/?p=lolok;a=blob_plain;f=lol.xml
-----
-
-Thanks in advance for your cooperation in coordinating a fix for this
-issue,
-
-Jamie Strandboge
-
-[1] oss-security@...ts.openwall.com is a public mailing list for
-    people to collaborate on security vulnerabilities and coordinate
-    security updates.
-
--- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+[0] http://lists.debian.org/debian-security-tracker/2011/09/msg00006.html
