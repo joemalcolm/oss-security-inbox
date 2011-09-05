@@ -1,95 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/5
-Message-ID: <2025608634.170697.1296160616674.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 27 Jan 2011 15:36:56 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/05/1
+Message-ID: <20110905012403.GC31987@openwall.com>
+Date: Mon, 5 Sep 2011 05:24:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request:Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
+Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0526. Thanks.
+On Mon, Aug 29, 2011 at 01:40:16PM +0200, Yves-Alexis Perez wrote:
+> By the way, would you know some kind of lib for ???safe privileges
+> dropping??? for that kind of usage. I quickly looked at glib and while
+> they do have some primitives for process spawning, there's nothing
+> related to dropping privs. It looks like something which might be
+> useful.
 
--- 
-    JB
+No, I am not aware of a generic library with functionality like that.
 
------ Original Message -----
-> ===========================================
-> Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
-> ===========================================
-> 
-> 
-> 1. OVERVIEW
-> 
-> The Vanilla Forums 2.0.16 and lower versions were vulnerable to Cross
-> Site Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Vanilla Forums are open-source, standards-compliant, customizable
-> discussion forums.
-> It is specially made to help small communities grow larger through SEO
-> mojo, totally customizable social tools,
-> and great user experience. Vanilla is also built with integration at
-> the forefront, so it can
-> seamlessly integrate with your existing website, blog, or custom-built
-> application.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The 'Target' parameter was not properly sanitized after user logs in,
-> which allows attacker to conduct Cross Site Scripting attack.
-> An attacker could prepare a link in a forum post that includes a link
-> to a file which seems to require authentication.
-> Upon logging in, user will get XSSed.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.0.16 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://vanilla/index.php?p=/entry/signin&Target=javascript:alert(document.cookie)//http://
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to Vanilla Forums 2.0.17 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> Vanilla Forums Development Team
-> http://vanillaforums.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-12-14: notified vendor
-> 2011-01-18: vendor released fix
-> 2011-01-27: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.16]_cross_site_scripting
-> What XSS Can Do:
-> http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
-> XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
-> XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
-> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-01-27]
+Additionally, while effective credentials switching for accessing users'
+files feels like the obvious best thing to do in a program, things are
+less obvious when you need to do that from a library.  One issue is
+threads.  Switching only fsuid/fsgid/groups or switching
+euid/egid/groups with direct kernel syscalls (not thread-aware at least
+on Linux) rather than with library functions (thread-aware at least on
+glibc) helps with this (but is non-portable or makes assumptions).
+But then what about signals?  Signal handlers installed by the main
+program or by other libraries may not expect to be invoked with
+temporarily changed effective credentials.  Should our library block all
+signals before it switches credentials, then unblock after it has
+restored the old credentials?  Maybe.  But this does get complicated,
+dirty, risky.
+
+To give credit where it's due, the above concern regarding signals
+originates (for me) from an off-list discussion I had with Rich Felker -
+the author of musl, a new lightweight libc for Linux:
+
+http://www.etalabs.net/musl/
+
+In Openwall's "tcb suite" (specifically, in libtcb, which is used by
+libnss_tcb), we switch fsuid/fsgid/groups before accessing
+/etc/tcb/*/shadow files, because the /etc/tcb/* directories have users
+as their owners:
+
+http://www.openwall.com/tcb/
+
+We don't block/unblock signals.
+
+musl supports our tcb password shadowing scheme too, but instead of
+credential switching, it takes precautions when accessing those files as
+root.  Either approach has its pros and cons.  I've already mentioned
+the signals issue with credential switching.  And an issue with trying
+to access files as root safely is that even when you do everything you
+can, a race condition remains: an attacker may replace the file to read
+with a hard link to a tape device, which would rewind the tape on
+open(2).  (There might be other devices with side-effects on open, too.)
+Arguably, this is purely theoretical and thus acceptable.  I'd say it's
+more acceptable when accessing /etc/tcb/*/shadow than when accessing
+dot-files in a user's home directory, because /etc/tcb (this directory
+itself) is normally root:shadow, mode 710, so it'd take a group shadow
+compromise before this DoS attack may be attempted.
+
+I hope these examples are helpful, and I hope you don't mind me plugging
+these two pieces of software. ;-)
+
+Alexander
