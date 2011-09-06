@@ -1,56 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/8
-Message-ID: <20110620151913.GA31770@openwall.com>
-Date: Mon, 20 Jun 2011 19:19:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/2
+Message-ID: <1401696469.859521.1315341953859.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 6 Sep 2011 16:45:53 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Cc: rubidium@...nttd.org, Michael Lutz <michi+openttd@...sahedron.de>, coley <coley@...re.org>
+Subject: Re: CVE request for OpenTTD
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 20, 2011 at 02:56:28PM +0000, The Fungi wrote:
-> Would it make sense to include transitional compatability calls
-> which preserve the original behavior?
+----- Original Message -----
+> Hello folks,
+> 
+> the OpenTTD team and contributors have discovered several security
+> vulnerabilities in OpenTTD. Please be so kind to allocate a CVE id for
+> each of the issues detailed below:
+> 
+> 1.) Denial of service via improperly validated commands
+> 
+> In multiple places in-game commands are not properly validated that allow
+> remote attackers to cause a denial of service (crash) and possibly
+> execute arbitrary code via unspecified vectors.
+> 
+> Vulnerability is present since 0.3.5 and will be fixed in the upcoming
+> 1.1.3 release. Issue report at http://bugs.openttd.org/task/4745
 
-Maybe, but this sounds worse than my "$2x$" proposal, which allows for
-the same and more (it also lets one access the backwards compat
-functionality without patching any code, by patching the hash encodings
-in a database instead).
+Use CVE-2011-3341 for the above.
 
-If an app knows what it is doing (and you're talking solely about such
-apps above), it can simply replace 'a' with 'x' before its call to
-crypt() or the like.
+> 
+> 2.) Buffer overflows in savegame loading
+> 
+> In multiple places indices in savegames are not properly validated that
+> allow (remote) attackers to cause a denial of service (crash) and
+> possibly execute arbitrary code via unspecified vectors.
+> 
+> Vulnerability is present since 0.1.0 and will be fixed in the upcoming
+> 1.1.3 release. Issue reports at http://bugs.openttd.org/task/4717 and
+> http://bugs.openttd.org/task/4748
 
-> Then applications using the
-> library can be adjusted to fall back on the buggy version if the
-> supplied data has 8-bit characters and the corrected calls don't
-> result in a match.
+Use CVE-2011-3342 for the above.
 
-This doubles the CPU time that a DoS attacker can consume per
-authentication attempt, thereby halving the maximum iteration count that
-an admin can reasonably set for new password hashes to use.  On the
-other hand, if the iteration count was set significantly below the
-affordable maximum for whatever reason, which is the common case, then
-this is acceptable.  Then there's also the remotely measurable timing
-difference, but that leak may be acceptable (telling an observer roughly
-what goes on).
+> 
+> 3.) Multiple buffer overflows in validation of external data
+> 
+> In multiple places external data from the local file system isn't
+> properly checked before allocating memory, which could lead to buffer
+> overflows and arbitrary code execution.
+> 
+> Vulnerability is present since 0.3.4 and will be fixed in the upcoming
+> 1.1.3 release. Issue reports at http://bugs.openttd.org/task/4746 and
+> http://bugs.openttd.org/task/4747
+> 
 
-> This would allow tools to regenerate and replace
-> non-conforming hashes if they were the result of this bug, and might
-> make it easier to audit existing lists for them as well.
+Use CVE-2011-3343 for the above.
 
-This is possible with my proposal as well.  The difference is that with
-your proposal all hashes would remain listed as "$2a$", and only the
-affected ones would be replaced (still remaining at "$2a$", which is
-important not to leak any extra info about the passwords via the hash
-encodings).  However, if one wants to implement your approach (or
-similar), they can do so via my proposed interface (with "$2x$") as
-well, by changing the 'a' to 'x' for just one function call (rather than
-in the database).  The choice is theirs.
+Thanks.
 
-That said, I appreciate you posting this suggestion, and I'd be happy to
-consider some more.  It is always possible that there's some brilliant
-idea I had not thought of...
-
-Thanks,
-
-Alexander
+-- 
+    JB
