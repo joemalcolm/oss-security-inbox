@@ -1,38 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/4
-Message-ID: <4EFAAD13.8010800@redhat.com>
-Date: Tue, 27 Dec 2011 22:45:55 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eteo@...hat.com>, Moritz Muehlenhoff <jmm@...ian.org>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/3
+Message-ID: <20110906214043.GC1845@suse.de>
+Date: Tue, 6 Sep 2011 23:40:43 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
 Content-Type: text/plain; charset=utf-8
 
-My mistake, the /proc/interupts and /proc/stat should be two separate 
-CVE's, I misunderstood the issue.
 
-===========
->> IIRC, it's an issue but there's no resolution as existing code may 
->> break.
->>
->> There are also,
->> /proc/{interrupts, stat}
->> https://lkml.org/lkml/2011/11/7/340 
+Hi,
 
-Please use CVE-2011-4915 for the /proc/interupts issue
+One of our customers reported an issue in the "ib_sdp" module in the
+ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
+1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
+does not have it).
 
-Please use CVE-2011-4917 for the /proc/stat issue
+Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
 
+/proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
+triggered by users on machines with infiniband stack.
 
+While there is report of stack corruption and overflow on process (cat
+/proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
+I can't see where it actually comes from but perhaps the per_cpu vs
+single variable printing does something to the stack and not just reads
+over arrays.
 
->>
->> /dev/pts/, /dev/tty*
->> https://lkml.org/lkml/2011/11/7/355
-> Please use CVE-2011-4916 for this issue.
->
+ofed 1.5.3.2 has a different stat printing algorith according to our developer,
+so it no longer is affected.
 
+Patch below. Please assign a CVE.
 
--- 
+Ciao, Marcus
 
--Kurt Seifried / Red Hat Security Response Team
+From: Goldwyn Rodrigues <rgoldwyn@...e.de>
+Subject: [PATCH] Correct /proc/net/sdpstats variables
 
+A couple of variables are treated as arrays while printing 
+/proc/net/sdpstats, while they are actually single variables.
+This leads to stack/memory corruption and a kernel crash.
+Correct dealing of these variables in sdpstats_seq_show()
+
+---
+ drivers/infiniband/ulp/sdp/sdp_proc.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+Index: ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c
+===================================================================
+--- ofa_kernel-1.5.2.orig/drivers/infiniband/ulp/sdp/sdp_proc.c	2010-09-21 17:51:32.000000000 +0200
++++ ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c	2011-07-22 15:09:14.000000000 +0200
+@@ -341,6 +341,7 @@ static int sdpstats_seq_show(struct seq_
+ 	seq_printf(seq, "- RX int queue  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_queue));
+ 	seq_printf(seq, "- RX int no op  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_no_op));
+ 	seq_printf(seq, "- RX cq modified\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_cq_modified));
++	seq_printf(seq, "- RX wq\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_wq));
+ 
+ 	seq_printf(seq, "- TX irq armed\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_arm));
+ 	seq_printf(seq, "- TX interrupts\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_count));
+@@ -352,12 +353,6 @@ static int sdpstats_seq_show(struct seq_
+ 	seq_printf(seq, "- TX error\t\t: %d\n", SDPSTATS_COUNTER_GET(zcopy_tx_error));
+ 	seq_printf(seq, "- FMR alloc error\t: %d\n", SDPSTATS_COUNTER_GET(fmr_alloc_error));
+ 
+-	__sdpstats_seq_hist_pcpu(seq, "CPU sendmsg", sendmsg);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU recvmsg", recvmsg);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU rx_irq", rx_int_count);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU rx_wq", rx_wq);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU tx_irq", tx_int_count);
+-
+ 	return 0;
+ }
+ 
