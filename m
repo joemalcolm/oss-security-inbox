@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/12
-Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A71185095@GVW0671EXC.americas.hpqcorp.net>
-Date: Wed, 16 Mar 2011 16:26:53 +0000
-From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-To: Eugene Teo <eugene@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/1
+Message-ID: <41870251.859383.1315341696513.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 6 Sep 2011 16:41:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
+Subject: Re: CVE request for bcfg2 (remote root)
 Content-Type: text/plain; charset=utf-8
 
-Thanks Eugene,
+Please use CVE-2011-3211
 
-I have been looking at how to contribute in FOSS and security, and for me
-it's been in the area of how to understand what vulnerabilities are already
-documented.  I might think about looking more at the kernel changelogs and
-LKML lists.
+Thanks.
 
-For sure, I'll look for some bugs while I am at it, tho.
+-- 
+    JB
 
-Mark
-> -----Original Message-----
-> From: Eugene Teo [mailto:eugene@...hat.com]
-> Sent: Tuesday, March 15, 2011 11:45 PM
-> To: oss-security@...ts.openwall.com
-> Cc: Menkhus, Mark (GSE Security HP SSRT)
-> Subject: Re: [oss-security] Vendor-sec hosting and future of closed
-> lists
+
+----- Original Message -----
+> Hi,
 > 
-> On 03/16/2011 12:07 PM, Menkhus, Mark (GSE Security HP SSRT) wrote:
-> [...]
-> > Not being the one fixing the code for our kernel left me with little
-> to
-> > immediately contribute, but I requested and coordinated with several
-> folks
-> > who got vendor sec for HP.  Likely, we would still want to be part of
-> > vendor-sec.new.
+> A bug report in Debian has come to light for which I can find no other
+> information, and therefore I do not believe it has a CVE - but
+> probably
+> should.
 > 
-> Many of the kernel vulnerabilities I have seen over the past two years
-> at least, were reported and fixed upstream. Only a handful of them were
-> reported privately. I can't remember when was the last time we had a
-> kernel issue reported via vendor-sec. There were, but it must have been
-> quite some time ago. LKML is still one of the better places to find
-> vulnerabilities :) Contributions welcomed.
+> From http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=640028 :
 > 
-> Eugene
+> "All released stable versions of the bcfg2-server contain several
+> cases
+> where data from the client is used in a shell command without properly
+> escaping it first. The 1.2 prerelease series has been fixed.
+> 
+> "At least the SSHbase plugin has been confirmed as being exploitable.
+> This is a remote root hole, which requires that the SSHbase plugin is
+> enabled and that the attacker has control of a bcfg2 client machine."
+> 
+> A patch for the problem has been commited [1] upstream and backported
+> [2] to
+> the 1.1 series.
+> 
+> 1:
+> https://github.com/solj/bcfg2/commit/f4a35efec1b6a1e54d61cf1b8bfc83dd1d89eef7
+> 2:
+> https://github.com/solj/bcfg2/commit/46795ae451ca6ede55a0edeb726978aef4684b53
+> 
+> Please CC me, I am not subscribed.
+> 
+> Thanks,
+> 
 > --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
-
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
+> Jonathan Wiltshire jmw@...ian.org
+> Debian Developer http://people.debian.org/~jmw
+> 
+> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
