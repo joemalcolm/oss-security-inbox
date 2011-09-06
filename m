@@ -1,26 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/9
-Message-ID: <4D993F7C.1080001@redhat.com>
-Date: Mon, 04 Apr 2011 09:18:12 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/1
+Message-ID: <41870251.859383.1315341696513.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 6 Sep 2011 16:41:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
+Subject: Re: CVE request for bcfg2 (remote root)
 Content-Type: text/plain; charset=utf-8
 
-On 04/01/2011 11:33 PM, Josh Bressers wrote:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
+Please use CVE-2011-3211
 
-Please subscribe me as well:
-
-pub  1024D/DA5BDAE5 2006-08-25
-Huzaifa S. Sidhpurwala <huzaifas@...hat.com>
-
-key: http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCC70DCF2DA5BDAE5
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> Hi,
+> 
+> A bug report in Debian has come to light for which I can find no other
+> information, and therefore I do not believe it has a CVE - but
+> probably
+> should.
+> 
+> From http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=640028 :
+> 
+> "All released stable versions of the bcfg2-server contain several
+> cases
+> where data from the client is used in a shell command without properly
+> escaping it first. The 1.2 prerelease series has been fixed.
+> 
+> "At least the SSHbase plugin has been confirmed as being exploitable.
+> This is a remote root hole, which requires that the SSHbase plugin is
+> enabled and that the attacker has control of a bcfg2 client machine."
+> 
+> A patch for the problem has been commited [1] upstream and backported
+> [2] to
+> the 1.1 series.
+> 
+> 1:
+> https://github.com/solj/bcfg2/commit/f4a35efec1b6a1e54d61cf1b8bfc83dd1d89eef7
+> 2:
+> https://github.com/solj/bcfg2/commit/46795ae451ca6ede55a0edeb726978aef4684b53
+> 
+> Please CC me, I am not subscribed.
+> 
+> Thanks,
+> 
+> --
+> Jonathan Wiltshire jmw@...ian.org
+> Debian Developer http://people.debian.org/~jmw
+> 
+> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
