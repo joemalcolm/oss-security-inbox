@@ -1,78 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/8
-Message-Id: <201110192230.p9JMUVMC026416@linus.mitre.org>
-Date: Wed, 19 Oct 2011 18:30:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, security@...ngoproject.com
-Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/3
+Message-ID: <20110906214043.GC1845@suse.de>
+Date: Tue, 6 Sep 2011 23:40:43 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
->Date: Sun, 11 Sep 2011 16:09:44 +0200
+Hi,
 
->multiple security flaws have been recently addressed in the v1.3.1
->and v1.2.7 versions of the Django Python Web framework ...
+One of our customers reported an issue in the "ib_sdp" module in the
+ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
+1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
+does not have it).
 
-This maps to 6 CVE identifiers (5 new ones); they're now on the CVE
-web site.
+Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
 
-> 1, Session manipulation,
+/proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
+triggered by users on machines with infiniband stack.
 
-CVE-2011-4136
+While there is report of stack corruption and overflow on process (cat
+/proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
+I can't see where it actually comes from but perhaps the per_cpu vs
+single variable printing does something to the stack and not just reads
+over arrays.
 
-> 2, Denial of service attack via URLField,
+ofed 1.5.3.2 has a different stat printing algorith according to our developer,
+so it no longer is affected.
 
-CVE-2011-4137
+Patch below. Please assign a CVE.
 
-> 3, URLField redirection,
+Ciao, Marcus
 
-3a. "no validation of the resulting redirected URL is performed,
-    including basic checks for supported protocols (HTTP, HTTPS
-    and FTP) ... This issue is ultimately rooted in a bug in
-    Python itself"
+From: Goldwyn Rodrigues <rgoldwyn@...e.de>
+Subject: [PATCH] Correct /proc/net/sdpstats variables
 
-    CVE-2011-1521
+A couple of variables are treated as arrays while printing 
+/proc/net/sdpstats, while they are actually single variables.
+This leads to stack/memory corruption and a kernel crash.
+Correct dealing of these variables in sdpstats_seq_show()
 
-3b. "although the initial request issued by Django uses the HEAD
-    method for HTTP/HTTPS, the request to the target of the
-    redirect is issued using GET. This may create further issues
-    for systems which implicitly trust GET requests from the
-    local machine/network."
+---
+ drivers/infiniband/ulp/sdp/sdp_proc.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-    CVE-2011-4138
-
-> 4, Host header cache poisoning,
-
-CVE-2011-4139
-
-> 5, Host header and CSRF,
-
-CVE-2011-4140
-
-> 6, Cross-subdomain CSRF attacks,
-
-This one is not a vulnerability for CVE.
-
-> 7, DEBUG pages and sensitive POST data
-
-This one is also not a vulnerability for CVE.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S S145
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through keyserver.pgp.com or pgp.mit.edu ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (SunOS)
-
-iQEcBAEBAgAGBQJOn00KAAoJEGvefgSNfHMdulcH/2CnWceFdH+bWZ6gFeC/qjU4
-Q0G/tGXZC7/lUdsnABAdxzsiI91hrT17RY5s1wkSFORf+yXI0OceqxQrZdrIE15g
-2YqHvDP/oN74yulVfXjr8olgSsxYtSFXVIHq3HGsydQATTFtRpgnTXbfLPb++1Qx
-m25y/51U4BmdyE5GYJUjQgvuo70cYAJ7G68VHJFTWtGOPzEYtGFqHXPeXr8s4y/m
-w4Fl4zAyI0FpNqskHy9XMQFHd3aobGzWKRKbgqZVbibkD3EaDuIKx3zGJ7uNbR3Z
-P6rDvY++DX4SE0TVX+5IYrCbv5GsjTaq1Rf48lwGJEYHiT+F+UnulBLXw6l6N4Q=
-=zq5f
------END PGP SIGNATURE-----
+Index: ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c
+===================================================================
+--- ofa_kernel-1.5.2.orig/drivers/infiniband/ulp/sdp/sdp_proc.c	2010-09-21 17:51:32.000000000 +0200
++++ ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c	2011-07-22 15:09:14.000000000 +0200
+@@ -341,6 +341,7 @@ static int sdpstats_seq_show(struct seq_
+ 	seq_printf(seq, "- RX int queue  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_queue));
+ 	seq_printf(seq, "- RX int no op  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_no_op));
+ 	seq_printf(seq, "- RX cq modified\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_cq_modified));
++	seq_printf(seq, "- RX wq\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_wq));
+ 
+ 	seq_printf(seq, "- TX irq armed\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_arm));
+ 	seq_printf(seq, "- TX interrupts\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_count));
+@@ -352,12 +353,6 @@ static int sdpstats_seq_show(struct seq_
+ 	seq_printf(seq, "- TX error\t\t: %d\n", SDPSTATS_COUNTER_GET(zcopy_tx_error));
+ 	seq_printf(seq, "- FMR alloc error\t: %d\n", SDPSTATS_COUNTER_GET(fmr_alloc_error));
+ 
+-	__sdpstats_seq_hist_pcpu(seq, "CPU sendmsg", sendmsg);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU recvmsg", recvmsg);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU rx_irq", rx_int_count);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU rx_wq", rx_wq);
+-	__sdpstats_seq_hist_pcpu(seq, "CPU tx_irq", tx_int_count);
+-
+ 	return 0;
+ }
+ 
