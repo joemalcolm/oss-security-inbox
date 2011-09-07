@@ -1,83 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/1
-Message-ID: <4EE55A67.3010809@redhat.com>
-Date: Sun, 11 Dec 2011 18:35:35 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/5
+Message-ID: <20110907133058.GA18544@ngolde.de>
+Date: Wed, 7 Sep 2011 15:30:58 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Re: cve request: bat_socket_read memory corruption
+Subject: CVE id request: masqmail
 Content-Type: text/plain; charset=utf-8
 
-Please USE CVE-2011-4604 for this issue.
+Hi,
+a misuse of the seteuid function from glibc prevents masqmail from properly 
+dropping root privileges.
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638002
+http://article.gmane.org/gmane.mail.masqmail/303
 
--------- Original Message --------
-Subject: 	Re: [oss-security] cve request: bat_socket_read memory corruption
-Date: 	Sat, 10 Dec 2011 20:35:33 +0100
-From: 	Paul <pawlkt@...il.com>
-To: 	kseifried@...hat.com
+Can you assign a CVE id to this?
 
-
-
-On 2011-12-10 20:30, Kurt Seifried wrote:
-> On 12/10/2011 09:13 AM, Paul wrote:
->> Hi
->>
->> can I get a CVE for this:
->> https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005904.html
->> ?
->>
->> If root does read() on a specific socket, it's possible to corrupt
->> (kernel) memory over network, with an ICMP packet, if B.A.T.M.A.N. mesh
->> protocol is used.
->>
-> I'm going to need first hand source information, i.e. links to the
-> code/commits/project stating it's an issue or something similar.
-> 
-
-https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005908.html
-
-Modified patch from Sven Eckelmann, one of project's managers.
-
+Kind regards
+Nico
 -- 
-Regards,
-Paul
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-
-===========================
-
-Don't write more than the requested number of bytes of an batman-adv icmp
-packet to the userspace buffer. Otherwise unrelated userspace memory might get
-overwritten by the kernel.
-
-Reported-by: Paul Kot <pawlkt at gmail.com <https://lists.open-mesh.org/mm/listinfo/b.a.t.m.a.n>>
-Signed-off-by: Sven Eckelmann <sven at narfation.org <https://lists.open-mesh.org/mm/listinfo/b.a.t.m.a.n>>
----
-Marek pointed out that it is better to merge patch 1 and 2. I think it doesn't
-make sense to leave Paul Kot as author because it doesn't look like his patch
-at all.
-
-And thanks to Andrew for s/overridden/overwritten/
-
- icmp_socket.c |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/icmp_socket.c b/icmp_socket.c
-index 5bc8649..66923d2 100644
---- a/icmp_socket.c
-+++ b/icmp_socket.c
-@@ -136,10 +136,9 @@ static ssize_t bat_socket_read(struct file *file, char __user *buf,
- 
- 	spin_unlock_bh(&socket_client->lock);
- 
--	error = __copy_to_user(buf, &socket_packet->icmp_packet,
--			       socket_packet->icmp_len);
-+	packet_len = min(count, socket_packet->icmp_len);
-+	error = copy_to_user(buf, &socket_packet->icmp_packet, packet_len);
- 
--	packet_len = socket_packet->icmp_len;
- 	kfree(socket_packet);
- 
- 	if (error)
--- 
-1.7.7.3
-
-
+Content of type "application/pgp-signature" skipped
