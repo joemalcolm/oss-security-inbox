@@ -1,20 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/15
-Message-ID: <4E12F2CC.4060307@redhat.com>
-Date: Tue, 05 Jul 2011 19:17:32 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/6
+Message-ID: <CAPXEBz5CVuSeHE1vX3V_Y-Y-KQtaChp8R0LTCq_AZQ5R7AV-Vg@mail.gmail.com>
+Date: Wed, 7 Sep 2011 14:29:24 +0200
+From: Henri Doreau <henri.doreau@...enbone.net>
 To: oss-security@...ts.openwall.com
-Subject: The Bind incident
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Bugs NotHugs <bugsnothugs@...il.com>,  Stjepan Gros <stjepan.gros@...il.com>
+Subject: Re: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
 Content-Type: text/plain; charset=utf-8
 
-You might have read about AusCert's accidental disclosure of the ISC
-Bind advisories today. If you have more information about this, please
-share. AFAICS, the bind source packages are still not available at the
-ISC website.
+2011/9/7 Jan Lieskovsky <jlieskov@...hat.com>:
+> Hello Josh, Steve, vendors,
+>
+>  it was reported that the scanner module for the Open Vulnerability
+> Assessment System (OpenVAS) used insecure way for creation of a
+> temporary file, when generating OVAL system characteristics document
+> from the knowledge base data available, with the ovaldi integrated tool
+> enabled. A local attacker could use this flaw to conduct symlink
+> attacks to overwrite arbitrary files on the system, accessible with the
+> privileges of the user running the SLAD daemon and / or the ovaldi OVAL
+> interpreter.
+>
+> References:
+> [1] http://archives.neohapsis.com/archives/fulldisclosure/2011-09/0057.html
+> [2] http://secunia.com/advisories/45836/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=736317
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
 
-https://bugzilla.redhat.com/CVE-2011-2464
-https://bugzilla.redhat.com/CVE-2011-2465
-http://risky.biz/auscert-bind
-http://pastebin.com/9NUt8Pk0
+Hello,
 
-Thanks, Eugene
+I am not sure if a CVE would make sense for this issue, according to
+M. Wiegand's analysis posted on the openvas-devel mailing list [1].
+
+Regards.
+
+[1] http://seclists.org/openvas/2011/q3/233
+
+
+-- 
+Henri Doreau |  Greenbone Networks GmbH  |  http://www.greenbone.net
+Neuer Graben 17, 49074 Osnabrueck, Germany | AG Osnabrueck, HR B 202460
+Executive Directors: Lukas Grunwald, Dr. Jan-Oliver Wagner
