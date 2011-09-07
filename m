@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/15/1
-Message-ID: <CAD_8n+RGZQ0A4q5n2yskpupdo7Mg93rWMw0vrMa=ehwy4YhG0g@mail.gmail.com>
-Date: Fri, 14 Oct 2011 06:58:56 -0700
-From: Reuben Hawkins <reubenhwk@...il.com>
-To: Vasiliy Kulikov <segoon@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/5
+Message-ID: <20110907133058.GA18544@ngolde.de>
+Date: Wed, 7 Sep 2011 15:30:58 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE id request: masqmail
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 12, 2011 at 3:09 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> On Tue, Oct 11, 2011 at 23:26 -0700, Reuben Hawkins wrote:
->> On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
->> > Crap, thank you for noticing it, guys.  The fix should be:
->> >
->> > https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
->> >
->> > Now, "", "..", "." and filenames with "/" inside are denied.
->
-> In case someone didn't fully track the discussion thread, I'll sum it up -
->
-> In the original patch the variable name is typoed/confused - the check
-> should be against "iface" instead of "name".  The check against "name"
-> is totally wrong as it checks a static hint string, which always passes
-> the check.
->
-> The confused blacklisted iface set is a bug, but not a security bug;
-> the confused variable name is indeed a security bug (not a flaw per se,
-> but it greatly weakens the privsep model).
->
->
-> Thanks to Solar Designer for pointing out that this thing is probably
-> not clear to everybody.
->
-> --
-> Vasiliy Kulikov
-> http://www.openwall.com - bringing security into open computing environments
->
+Hi,
+a misuse of the seteuid function from glibc prevents masqmail from properly 
+dropping root privileges.
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638002
+http://article.gmane.org/gmane.mail.masqmail/303
 
-radvd-1.8.3 posted.
+Can you assign a CVE id to this?
+
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
