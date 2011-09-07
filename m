@@ -1,27 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/2
-Message-ID: <20111020091016.GC23346@dhcp-25-225.brq.redhat.com>
-Date: Thu, 20 Oct 2011 11:10:17 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/3
+Message-ID: <20110907082301.GD2141@suse.de>
+Date: Wed, 7 Sep 2011 10:23:01 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: qemu: CVE-2011-3346
+Subject: Re: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-3346 qemu: local DoS with SCSI CD-ROM
+On Wed, Sep 07, 2011 at 09:39:21AM +0200, Petr Matousek wrote:
+> On Tue, Sep 06, 2011 at 11:40:43PM +0200, Marcus Meissner wrote:
+> > One of our customers reported an issue in the "ib_sdp" module in the
+> > ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
+> > 1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
+> > does not have it).
+> > 
+> > Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
+> > 
+> > /proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
+> > triggered by users on machines with infiniband stack.
+> > 
+> > While there is report of stack corruption and overflow on process (cat
+> > /proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
+> > I can't see where it actually comes from but perhaps the per_cpu vs
+> > single variable printing does something to the stack and not just reads
+> > over arrays.
+> 
+> #define __sdpstats_seq_hist_pcpu(seq, msg, hist) ({             \
+>         u32 h[NR_CPUS];                                         \
+>         unsigned int __i;                                       \
+>         memset(h, 0, sizeof(h));                                \
+> 
+> NR_CPUS can be big (4096 on RHEL6@..._64) and the array is located on
+> the stack.
+>  
+> > ofed 1.5.3.2 has a different stat printing algorith according to our developer,
+> > so it no longer is affected.
+> 
+> The array ^^^ is no longer allocated from the stack but via vmalloc().
+> 
+> > Patch below. Please assign a CVE.
+> 
+> Please use CVE-2011-3345.
 
-Paolo Bonzini of Red Hat found a buffer overflow in QEMU's SCSI
-subsystem. hw/scsi-disk.c tries to zero a user-provided number of
-bytes in a fixed-size buffer. An unprivileged local guest user
-can potentially use this flaw to crash the guest.
+Thanks!
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=736038
-https://bugzilla.redhat.com/show_bug.cgi?id=736038#c1
+So the issue is not actually the wrong array iterator, but that there
+is a implicit too huge stack usage caused by the helper.
 
-Upstream patches:
-http://repo.or.cz/w/qemu.git/commit/7285477ab11831b1cf56e45878a89170dd06d9b9
-http://repo.or.cz/w/qemu.git/commit/103b40f51e4012b3b0ad20f615562a1806d7f49a
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Ciao, Marcus
