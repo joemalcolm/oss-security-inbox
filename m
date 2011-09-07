@@ -1,55 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/14/2
-Message-ID: <4E1E9ADD.7060400@redhat.com>
-Date: Thu, 14 Jul 2011 09:29:33 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Erik de Castro Lopo <erikd@...a-nerd.com>
-CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/7
+Message-Id: <201109071358.55036.timb@openvas.org>
+Date: Wed, 7 Sep 2011 13:57:05 +0100
+From: Tim Brown <timb@...nvas.org>
+To: oss-security@...ts.openwall.com
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Bugs NotHugs <bugsnothugs@...il.com>, Stjepan Gros <stjepan.gros@...il.com>, openvas-devel@...d.intevation.org
+Subject: Re: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
 Content-Type: text/plain; charset=utf-8
 
+On Wednesday 07 Sep 2011 13:13:45 Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+> 
+>    it was reported that the scanner module for the Open Vulnerability
+> Assessment System (OpenVAS) used insecure way for creation of a
+> temporary file, when generating OVAL system characteristics document
+> from the knowledge base data available, with the ovaldi integrated tool
+> enabled. A local attacker could use this flaw to conduct symlink
+> attacks to overwrite arbitrary files on the system, accessible with the
+> privileges of the user running the SLAD daemon and / or the ovaldi OVAL
+> interpreter.
+> 
 
-Hello Erik,
+Whilst having a look at the code with regard to the recently reported f-d 
+issue with OpenVAS, the handling of sc-out.xml in the very same function also 
+looks insecure.  It also doesn't appear to care about races either and I'm 
+also curious as to whether you can control the contents at all (think attacks 
+against the ovaldi XML parser).  I would suggest that this code needs properly 
+auditing or removing.
 
-On 07/14/2011 08:49 AM, Erik de Castro Lopo wrote:
-> Jan Lieskovsky wrote:
->
->>     an integer overflow, leading to heap-based buffer overflow flaw was
->> found in the way libsndfile, library for reading and writing of sound
->> files, processed certain PARIS Audio Format (PAF) audio files with
->> crafted count of channels in the PAF file header. A remote attacker
->> could provided a specially-crafted PAF audio file, which once opened by
->> a local, unsuspecting user in an application, linked against libsndfile,
->> could lead to that particular application crash (denial of service),
->
-> I agree with everything up to here.
->
->> or, potentially arbitrary code execution with the privileges of the
->> user running the application.
->
-> but this is rubbish. The heap gets overwritten with zeros which would
-> certainly lead to the application segfaulting. However, there is
-> no way for arbitrary code to be executed on amy sane OS with proper
-> memory protection.
+Unfortunately the interaction with sc-out.xml happens before privileges are 
+dropped so the malicious activitity occurs as the openvas-scanner user 
+(normally root) rather than nobody as in the case of results.xml - The call to 
+unlink referenced in the f-d email is actually a misnomer as it will actually 
+only delete the file from /tmp and not whatever it may or may not have pointed 
+to and the actual writing to the newly race created symlink actually happens 
+within the ovaldi binary which is spawned as nobody AFAIK.
 
-Thank you for the clarification regarding this. To be honest didn't have
-chance to prepare reproducer for this issue yet, thus the initial 
-description was based only on information from those references and 
-upstream Bzr Changelog message.
+Josh/oss-security folk, can I get a CVE for both bugs please.  Will we need to 
+split out the two race conditions as separate CVE?  The OpenVAS advisory will 
+cover both the originally reported nobody case as well as the root case 
+referenced above.
 
-Thanks for that correction, it's appreciated.
+Tim
+-- 
+Tim Brown
+<mailto:timb@...nvas.org>
+<http://www.openvas.org/>
 
-Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> Furthermore, Secunia when they contacted me about this said they would
-> release information about this vulernability on the 18th and then ended
-> up releasing it on the 12th instead which means I had to rush out the
-> release I was working on (and would have easily had ready for the
-> 18th). That is not the way to win friends and influence people.
->
-> Regards,
-> Erik
-
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
