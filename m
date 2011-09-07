@@ -1,43 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/21
-Message-ID: <1051637035.451757.1299619488131.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 16:24:48 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/1
+Message-ID: <20110907073920.GB17727@dhcp-25-225.brq.redhat.com>
+Date: Wed, 7 Sep 2011 09:39:21 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: glibc locale escaping issue
+Cc: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: OFED 1.5.2 /proc/net/sdpstats reading local denial of service/crash
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi!
+On Tue, Sep 06, 2011 at 11:40:43PM +0200, Marcus Meissner wrote:
+> One of our customers reported an issue in the "ib_sdp" module in the
+> ofa_kernel package of the Open Fabrics OFED Infiband driverstack, version
+> 1.5.2 (and potentially older, I did not check in detail, at least 1.4.2
+> does not have it).
 > 
-> Following glibc upstream and gentoo bug reports describe a bug in the
-> way locale command escapes its output.
+> Module is drivers/infiniband/ulp/sdp/ib_sdp.ko
 > 
-> http://sources.redhat.com/bugzilla/show_bug.cgi?id=11904
-> http://bugs.gentoo.org/show_bug.cgi?id=330923
+> /proc/net/sdpstats is user readable (S_IRUGO | S_IWUGO), so it can be
+> triggered by users on machines with infiniband stack.
 > 
-> Gentoo bug points out possible security implications. I've not managed to
-> find an example where the locale command is used in a problematic way and
-> where this may cross trust boundaries, so I wonder if this is worth
-> handling as security fix vs. security enhancement. Comments are welcome.
-> 
-> The issue was fixed in GLSA 201011-01, but its text really only mentions
-> Tavis' issues.
-> 
+> While there is report of stack corruption and overflow on process (cat
+> /proc/net/sdpstats) exit ("Thread overran stack, or stack corrupted"),
+> I can't see where it actually comes from but perhaps the per_cpu vs
+> single variable printing does something to the stack and not just reads
+> over arrays.
 
-I think this deserves an ID: CVE-2011-1095
+#define __sdpstats_seq_hist_pcpu(seq, msg, hist) ({             \
+        u32 h[NR_CPUS];                                         \
+        unsigned int __i;                                       \
+        memset(h, 0, sizeof(h));                                \
 
-The documentation clearly states that the output of this command will be
-properly quoted. Even if we can't find a bad usage, there is quite likely a
-shell script doing this in the universe.
+NR_CPUS can be big (4096 on RHEL6@..._64) and the array is located on
+the stack.
+ 
+> ofed 1.5.3.2 has a different stat printing algorith according to our developer,
+> so it no longer is affected.
 
-I think the line between fix vs enhancement is crossed when we're talking
-about documented behavior.
+The array ^^^ is no longer allocated from the stack but via vmalloc().
 
-Thanks.
+> Patch below. Please assign a CVE.
 
+Please use CVE-2011-3345.
+
+Thanks,
 -- 
-    JB
+Petr Matousek / Red Hat Security Response Team
+
+> 
+> Ciao, Marcus
+> 
+> From: Goldwyn Rodrigues <rgoldwyn@...e.de>
+> Subject: [PATCH] Correct /proc/net/sdpstats variables
+> 
+> A couple of variables are treated as arrays while printing 
+> /proc/net/sdpstats, while they are actually single variables.
+> This leads to stack/memory corruption and a kernel crash.
+> Correct dealing of these variables in sdpstats_seq_show()
+> 
+> ---
+>  drivers/infiniband/ulp/sdp/sdp_proc.c |    7 +------
+>  1 file changed, 1 insertion(+), 6 deletions(-)
+> 
+> Index: ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c
+> ===================================================================
+> --- ofa_kernel-1.5.2.orig/drivers/infiniband/ulp/sdp/sdp_proc.c	2010-09-21 17:51:32.000000000 +0200
+> +++ ofa_kernel-1.5.2/drivers/infiniband/ulp/sdp/sdp_proc.c	2011-07-22 15:09:14.000000000 +0200
+> @@ -341,6 +341,7 @@ static int sdpstats_seq_show(struct seq_
+>  	seq_printf(seq, "- RX int queue  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_queue));
+>  	seq_printf(seq, "- RX int no op  \t\t: %d\n", SDPSTATS_COUNTER_GET(rx_int_no_op));
+>  	seq_printf(seq, "- RX cq modified\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_cq_modified));
+> +	seq_printf(seq, "- RX wq\t\t: %d\n", SDPSTATS_COUNTER_GET(rx_wq));
+>  
+>  	seq_printf(seq, "- TX irq armed\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_arm));
+>  	seq_printf(seq, "- TX interrupts\t\t: %d\n", SDPSTATS_COUNTER_GET(tx_int_count));
+> @@ -352,12 +353,6 @@ static int sdpstats_seq_show(struct seq_
+>  	seq_printf(seq, "- TX error\t\t: %d\n", SDPSTATS_COUNTER_GET(zcopy_tx_error));
+>  	seq_printf(seq, "- FMR alloc error\t: %d\n", SDPSTATS_COUNTER_GET(fmr_alloc_error));
+>  
+> -	__sdpstats_seq_hist_pcpu(seq, "CPU sendmsg", sendmsg);
+> -	__sdpstats_seq_hist_pcpu(seq, "CPU recvmsg", recvmsg);
+> -	__sdpstats_seq_hist_pcpu(seq, "CPU rx_irq", rx_int_count);
+> -	__sdpstats_seq_hist_pcpu(seq, "CPU rx_wq", rx_wq);
+> -	__sdpstats_seq_hist_pcpu(seq, "CPU tx_irq", tx_int_count);
+> -
+>  	return 0;
+>  }
+>  
