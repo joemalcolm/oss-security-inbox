@@ -1,53 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/10
-Message-ID: <20110518204523.GB5221@openwall.com>
-Date: Thu, 19 May 2011 00:45:23 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/7
+Message-Id: <201109071358.55036.timb@openvas.org>
+Date: Wed, 7 Sep 2011 13:57:05 +0100
+From: Tim Brown <timb@...nvas.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Bugs NotHugs <bugsnothugs@...il.com>, Stjepan Gros <stjepan.gros@...il.com>, openvas-devel@...d.intevation.org
+Subject: Re: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 17, 2011 at 01:18:33PM +0200, Sebastian Krahmer wrote:
-> I uploaded a openssl-1.0.0d patch to
+On Wednesday 07 Sep 2011 13:13:45 Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
 > 
-> http://suse.de/~krahmer/libs-vs-fscaps
+>    it was reported that the scanner module for the Open Vulnerability
+> Assessment System (OpenVAS) used insecure way for creation of a
+> temporary file, when generating OVAL system characteristics document
+> from the knowledge base data available, with the ovaldi integrated tool
+> enabled. A local attacker could use this flaw to conduct symlink
+> attacks to overwrite arbitrary files on the system, accessible with the
+> privileges of the user running the SLAD daemon and / or the ovaldi OVAL
+> interpreter.
+> 
 
-Thank you!
+Whilst having a look at the code with regard to the recently reported f-d 
+issue with OpenVAS, the handling of sc-out.xml in the very same function also 
+looks insecure.  It also doesn't appear to care about races either and I'm 
+also curious as to whether you can control the contents at all (think attacks 
+against the ovaldi XML parser).  I would suggest that this code needs properly 
+auditing or removing.
 
-> The prefered way is to check the dumpable flag via prctl() which
-> is detected by the config script.
+Unfortunately the interaction with sc-out.xml happens before privileges are 
+dropped so the malicious activitity occurs as the openvas-scanner user 
+(normally root) rather than nobody as in the case of results.xml - The call to 
+unlink referenced in the f-d email is actually a misnomer as it will actually 
+only delete the file from /tmp and not whatever it may or may not have pointed 
+to and the actual writing to the newly race created symlink actually happens 
+within the ovaldi binary which is spawned as nobody AFAIK.
 
-This is fail-open (at build time).  If the -e "/usr/include/sys/prctl.h"
-check somehow fails, we silently get an insecure build.  Of course,
-risks of this nature are extremely common, but we're trying to deal with
-them.  In our package of rpm, we have the configure-presets script,
-which looks like:
+Josh/oss-security folk, can I get a CVE for both bugs please.  Will we need to 
+split out the two race conditions as separate CVE?  The OpenVAS advisory will 
+cover both the originally reported nobody case as well as the root case 
+referenced above.
 
-#!/bin/sh
-# These autoconf variables are predefined to harden configure checks for
-# security sensitive functions, and to speedup configure checks for
-# most popular functions.
-export ac_cv_func_alloca=yes
-export ac_cv_func_asprintf=yes
-export ac_cv_func_atexit=yes
-export ac_cv_func_bcopy=yes
-export ac_cv_func_dcgettext=yes
-export ac_cv_func_fchdir=yes
-...
-export ac_cv_func_utimes=yes
-export ac_cv_func_vasprintf=yes
-export ac_cv_func_vfork=yes
-export ac_cv_func_vprintf=yes
-export ac_cv_func_vsnprintf=yes
-export ac_cv_func_waitpid=yes
-export ac_cv_func_wcslen=yes
-export ac_cv_func_wcwidth=yes
+Tim
+-- 
+Tim Brown
+<mailto:timb@...nvas.org>
+<http://www.openvas.org/>
 
-This script is sourced in our %___build_pre macro.
-
-Maybe you should simply drop the -e "/usr/include/sys/prctl.h" check,
-leaving only the $target =~ /^linux/i check?
-
-Thanks again,
-
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
