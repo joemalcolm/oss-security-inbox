@@ -1,49 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/1
-Message-Id: <20110424164429.c07d917f.michael.s.gilbert@gmail.com>
-Date: Sun, 24 Apr 2011 16:44:29 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/6
+Message-ID: <CAPXEBz5CVuSeHE1vX3V_Y-Y-KQtaChp8R0LTCq_AZQ5R7AV-Vg@mail.gmail.com>
+Date: Wed, 7 Sep 2011 14:29:24 +0200
+From: Henri Doreau <henri.doreau@...enbone.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Bugs NotHugs <bugsnothugs@...il.com>,  Stjepan Gros <stjepan.gros@...il.com>
+Subject: Re: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
+2011/9/7 Jan Lieskovsky <jlieskov@...hat.com>:
+> Hello Josh, Steve, vendors,
+>
+>  it was reported that the scanner module for the Open Vulnerability
+> Assessment System (OpenVAS) used insecure way for creation of a
+> temporary file, when generating OVAL system characteristics document
+> from the knowledge base data available, with the ovaldi integrated tool
+> enabled. A local attacker could use this flaw to conduct symlink
+> attacks to overwrite arbitrary files on the system, accessible with the
+> privileges of the user running the SLAD daemon and / or the ovaldi OVAL
+> interpreter.
+>
+> References:
+> [1] http://archives.neohapsis.com/archives/fulldisclosure/2011-09/0057.html
+> [2] http://secunia.com/advisories/45836/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=736317
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
 
-> On Wed, Apr 20, 2011 at 10:19:01PM -0700, Drew Yao wrote:
-> > It seems that you're not opposed to Apple's inclusion on the list. Would you reconsider and allow us on the list?
-> 
-> Personally, I'd be happy to invite Apple, *BSD's, and Google security
-> folks to have a sit at the table.  Since Google doesn't release a Linux
-> distro for others to use, this precedent probably means subscribing
-> MontaVista and Wind River without any requirements on them making
-> advisories, updates, or whatever public.
+Hello,
 
-I know that there is increasing momentum for the new setup, but I
-think this solution is wrong.  Its starting to look a lot like the old
-vendor-sec (too many participants), and drawing an appropriate line for
-participation is impossible and seems wrong.
+I am not sure if a CVE would make sense for this issue, according to
+M. Wiegand's analysis posted on the openvas-devel mailing list [1].
 
-The ideal solution to the "too many eyes" problem would be to empower
-the researcher (issue submitter) to choose exactly which eyes they want
-involved.  A way to achieve this would be a ml that accepts only
-encrypted messages for participants (participation would be unlimited)
-and an "archive participant".  The list of participants is open to all
-(for the purpose of the researcher seeing which keys they want to
-encrypt for).
+Regards.
 
-When sending a message to the list, the researcher has to encrypt the
-message for archive key and at least one other valid participant (if
-not the message should be rejected, and instructions sent with a list of
-valid participant key fingerprints). In order to make sure the message
-was validly received, a checksum of the message should be published to
-an open list (probably oss-sec).  The researcher can check this right
-away.
+[1] http://seclists.org/openvas/2011/q3/233
 
-Finally, the cleartext message should be posted to an open list after a
-period of time (probably two months max) so that the entire community
-can see and validate the closed discussion .  This eliminates the
-possibility of a secret cabal forming or at least empowers the outside
-world to see the true reality (although with a delay).
 
-Best wishes,
-Mike
+-- 
+Henri Doreau |  Greenbone Networks GmbH  |  http://www.greenbone.net
+Neuer Graben 17, 49074 Osnabrueck, Germany | AG Osnabrueck, HR B 202460
+Executive Directors: Lukas Grunwald, Dr. Jan-Oliver Wagner
