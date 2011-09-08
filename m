@@ -1,49 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/15
-Message-ID: <346627832.815232.1308597155134.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 20 Jun 2011 15:12:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: FreeBSD/NetBSD 802.11 kernel memory disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/1
+Message-ID: <4E687DAF.6000904@redhat.com>
+Date: Thu, 08 Sep 2011 10:32:47 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Ferdinand <debbug@...tplaza.com>, Russ Allbery <rra@...ian.org>, Sven Verdoolaege <skimo@...net.org>, Chris Weyl <cweyl@...mni.drew.edu>
+Subject: CVE Request -- libfcgi-perl / perl-FCGI: Certain environment variables shared between first and subsequent HTTP requests
 Content-Type: text/plain; charset=utf-8
 
+Hello Josh, Steve, vendors,
 
+   it was found that the perl Fast CGI module did not properly clean up
+certain environment variables, related to a particular HTTP request,
+between subsequent incoming requests. Any environment variable set in
+the first pass through the code by processing the first request, that
+wasn't set in some subsequent request, has been added to the hash
+containing environment variables for that subsequent request. A remote
+attacker could use this flaw to bypass the authentication process and
+obtain access to resources, which would be otherwise protected by
+authentication.
 
------ Original Message -----
-> On Mon, Jun 20, 2011 at 3:05 PM, Josh Bressers <bressers@...hat.com>
-> wrote:
-> >
-> >
-> > ----- Original Message -----
-> >> NetBSD has committed a fix for an issue in the 802.11 stack [1].
-> >> FreeBSD is also affected and should release a fix shortly. Due to a
-> >> signedness error in the IEEE80211_IOC_CHANINFO ioctl, a local
-> >> unprivileged user could cause the kernel to copy large amounts of
-> >> kernel memory back to the user, disclosing potentially sensitive
-> >> information. The issue only affects certain non-x86 architectures,
-> >> such as SPARC.
-> >>
-> >> -Dan
-> >>
-> >> [1]
-> >> http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/net80211/ieee80211_ioctl.c?rev=1.56&content-type=text/x-cvsweb-markup&only_with_tag=MAIN
-> >
-> > I'm not entirely sure how to assign CVE ids for this. Is the code in
-> > question shared between FreeBSD and NetBSD, or is it different
-> > codebases
-> > but the same flaw?
-> >
-> 
-> Most of the 802.11 code, including the vulnerable code, is shared
-> between FreeBSD and NetBSD.
-> 
+References:
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=736604
 
-One ID will work then.
+Russ Allbery of Debian (Cc-ed) provides further elaborated analysis
+of the reasons of the issue:
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479#10
 
-Please use CVE-2011-2480.
+Cc-ed also Sven Verdoolaege, the perl FCGI module author (as noted
+on CPAN) for his opinion too.
 
-Thanks.
+Could you allocate a CVE id for this issue?
 
--- 
-    JB
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Though the issue has been reported Sat, 18 Dec 2010 22:13:40 +0100
+       already, only Russ's analysis (Wed, 07 Sep 2011 20:24:00 -0700)
+       unveiled the full security implications of this issue. So I
+       assume, the CVE-2011-* identifier would be sufficient to cover
+       this issue. But feel free to correct me if I am wrong here.
+       Thanks, Jan.
