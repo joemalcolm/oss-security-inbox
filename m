@@ -1,22 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/8
-Message-ID: <20110701223621.34a99e20@redhat.com>
-Date: Fri, 1 Jul 2011 22:36:21 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cxib@...urityreason.com
-Subject: Re: Re: php ZipArchive::addGlob() crashes on invalid flags
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/5
+Message-ID: <4E68C0D1.8070206@redhat.com>
+Date: Thu, 08 Sep 2011 15:19:13 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 01 Jul 2011 18:34:51 +0200 Maksymilian Arciemowicz wrote:
+Hello Josh, Steve, vendors,
 
-> Using glob(3) with invalid flag may give unexpected results. Try
-> glob(3) of netbsd implementations and use flags 0x39 0x40..
+   it was found that the Zikula web application framework did not
+properly sanitize the 'themename' parameter, while setting particular
+theme as a default one, modifying the theme or deleting it. A remote
+attacker, with Zikula administrator privilege, could use this flaw to
+execute arbitrary HTML or web script code in the context of the
+affected website.
 
-I don't have an easy way to test on netbsd, but looking at glob.h in
-netbsd cvs, 0x40 is GLOB_ALTDIRFUNC, and 0x39 contains GLOB_APPEND,
-which were problematic on glibc as well.  Both due to uninitialized
-glob_t members.
+References:
+[1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
+[2] https://www.htbridge.ch/advisory/xss_in_zikula.html
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Relevant upstream patch:
+[4] 
+https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
+
+Vulnerable Zikula versions: Development versions prior to patch [4].
+Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
+                          code in question yet.
+
+Provided PoC (from [1], [2]):
+=============================
+http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu 
+ment.cookie%29%3C/script%3E
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
