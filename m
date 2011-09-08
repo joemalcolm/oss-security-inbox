@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/2
-Message-ID: <1307457439.2599.12.camel@mdlinux>
-Date: Tue, 07 Jun 2011 10:37:19 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/3
+Message-ID: <20110908122634.GK11236@ngolde.de>
+Date: Thu, 8 Sep 2011 14:26:34 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: vlc
+Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
 Content-Type: text/plain; charset=utf-8
 
->From http://www.videolan.org/vlc/releases/1.1.10.html :
+Hi,
+* David Hicks <d@...id.au> [2011-09-04 16:11]:
+> On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
+> > Request #2: LFI and XSS via bug_actiongroup_ext_page.php
+> 
+> I don't think my earlier message conveyed the severity of this bug well
+> enough.
+> 
+> MantisBT allows users to upload attachments to bug reports. These
+> attachments are commonly stored on the disk in an 'attachments'
+> directory that should be stored outside the web root (but are still
+> accessible to MantisBT for retrieval).
+[...]
+In case this slipped through the cracks... Can someone assign ids to these 
+issues?
 
-"Security update regarding an integer overflow in xspf demuxer"
+Kind regards
+Nico
+-- 
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
 
-Looks like it's the following commit:
-
-http://repo.or.cz/w/vlc.git/commitdiff/cd929923ff49175a501bb3e9553a683bc42ff61c
-
-
-Thanks,
-
-Marc.
-
-
+Content of type "application/pgp-signature" skipped
