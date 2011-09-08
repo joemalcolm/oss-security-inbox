@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/9
-Message-ID: <04023c2b-77dd-4c62-a3e8-cbfd9cff6a71@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 05 Oct 2011 15:23:53 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/7
+Message-ID: <2179836.0NOP2RJeYK@neon>
+Date: Thu, 08 Sep 2011 22:14:25 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- perl-Crypt-DSA -- Cryptographically insecure method used for random numbers generation on systems without /dev/random
+Subject: CVE request: Quassel < 0.7.3 CTCP request core DoS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3599 for this.
+Hi,
 
-Thanks.
+please assign a CVE for the following issue:
+CtcpParser::packedReply in src/core/ctcpparser.cpp in Quassel does not process
+certain CTCP requests correctly, allowing a remote attacker connected to the
+same IRC network as the victim to cause a Denial of Service condition by
+sending specially crafted CTCP requests. This was demonstrated in various
+exploits on freenode today.
+
+Gentoo tracks the issue in [1], upstream fix is [2].
+
+Thanks,
+Alex
+
+[1] https://bugs.gentoo.org/show_bug.cgi?id=382313
+[2] http://git.quassel-
+irc.org/?p=quassel.git;a=commit;h=da215fcb9cd3096a3e223c87577d5d4ab8f8518b
 
 -- 
-    JB
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
->    it has been reported that Crypt::DSA, a Perl module for DSA
-> signatures and key generation, used cryptographically weak / insecure
-> method for random numbers generation on systems, where /dev/random
-> file
-> was not present. Due this flaw an attacker could be able to discover
-> some portions of / whole secret DSA key, which has been created on
-> such
-> system.
-> 
-> References:
-> [1] http://secunia.com/advisories/46275/
-> [2] https://rt.cpan.org/Public/Bug/Display.html?id=71421
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=743567
-> 
-> Proposed upstream patch is to remove the affected fallback code part:
-> [4] https://rt.cpan.org/Public/Bug/Display.html?id=71421#txn-984052
->      (though not approved yet)
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
+Alex Legler <a3li@...too.org>
+Gentoo Security / Ruby
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
