@@ -1,20 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/10
-Message-ID: <20110804152350.GA7292@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 18:23:50 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/6
+Message-ID: <20110908161725.GP17727@dhcp-25-225.brq.redhat.com>
+Date: Thu, 8 Sep 2011 18:17:26 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: FreeBSD/NetBSD/OpenBSD(?) ftpd remote crash (2010)
+Cc: coley@...us.mitre.org
+Subject: CVE request -- kernel: fuse: check size of FUSE_NOTIFY_INVAL_ENTRY message
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2010 CVE-ID for this issue? I am not sure if other distributions/operating systems need their own IDs. If I am correct one ID should be enough.
+FUSE_NOTIFY_INVAL_ENTRY didn't check the length of the write so the
+message processing could overrun and result in a BUG_ON() in
+fuse_copy_fill().
 
-Original discussion: http://seclists.org/fulldisclosure/2010/Mar/117
-Bug report to FreeBSD: http://www.freebsd.org/cgi/query-pr.cgi?pr=144761
-NetBSD: http://www.netbsd.org/cgi-bin/query-pr-single.pl?number=43023
-Reported to OpenBSD (and patched), but can't find references.
-Does not affect Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=572813
-Not listed in OSVDB, but I can handle it.
+User able to mount FUSE filesystems can use this flaw to crash the
+system.
 
-Best regards,
-Henri Salo
+References:
+http://permalink.gmane.org/gmane.linux.kernel.commits.head/313266
+http://sourceforge.net/mailarchive/forum.php?thread_name=87liut4i7w.fsf%40tucsk.pomaz.szeredi.hu&forum_name=fuse-devel
+
+Upstream fix:
+c2183d1e9b3f313dd8ba2b1b0197c8d9fb86a7ae
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
