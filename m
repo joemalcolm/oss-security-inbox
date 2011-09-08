@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/26/1
-Message-ID: <1306408152.20221.12.camel@mochrul.balabit>
-Date: Thu, 26 May 2011 13:09:12 +0200
-From: Szalay Attila <sasa@...abit.hu>
-To: Open Source Software Security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- syslog-ng -- Possible DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/5
+Message-ID: <4E68C0D1.8070206@redhat.com>
+Date: Thu, 08 Sep 2011 15:19:13 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hello Josh, Steve, vendors,
 
-In syslog-ng if a recent enough libpcre is installed (ie. 8.12 or newer)
-there is a possible Denial of Service.
-
-In our (BalaBit) opinion tis is not a big security issue, because if you
-use the vulnerable setting you will run into the DoS for sure without
-any malicious attack.
-
-The attack vector is that the attacker send a message which the regexp
-not match. 
-
-But because of this bug get this amount of attention, it' may worth the
-CVE id.
+   it was found that the Zikula web application framework did not
+properly sanitize the 'themename' parameter, while setting particular
+theme as a default one, modifying the theme or deleting it. A remote
+attacker, with Zikula administrator privilege, could use this flaw to
+execute arbitrary HTML or web script code in the context of the
+affected website.
 
 References:
-http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=09710c0b105e579d35c7b5f6c66d1ea5e3a3d3ff
-http://www.securityfocus.com/bid/47800/
+[1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
+[2] https://www.htbridge.ch/advisory/xss_in_zikula.html
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
 
+Relevant upstream patch:
+[4] 
+https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
 
--- 
-Szalay Attila
-BalaBit IT Kft.
-Security Team Leader
+Vulnerable Zikula versions: Development versions prior to patch [4].
+Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
+                          code in question yet.
 
+Provided PoC (from [1], [2]):
+=============================
+http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu 
+ment.cookie%29%3C/script%3E
+
+Could you allocate a CVE id for this?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
