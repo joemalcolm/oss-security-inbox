@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/1
-Message-ID: <4EA1428D.4020109@redhat.com>
-Date: Fri, 21 Oct 2011 15:29:41 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/6
+Message-ID: <20110908161725.GP17727@dhcp-25-225.brq.redhat.com>
+Date: Thu, 8 Sep 2011 18:17:26 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Cc: coley@...us.mitre.org
+Subject: CVE request -- kernel: fuse: check size of FUSE_NOTIFY_INVAL_ENTRY message
 Content-Type: text/plain; charset=utf-8
 
-On 10/20/2011 08:27 PM, Josh Bressers wrote:
+FUSE_NOTIFY_INVAL_ENTRY didn't check the length of the write so the
+message processing could overrun and result in a BUG_ON() in
+fuse_copy_fill().
 
->> The hardlink(1) program from Fedora is susceptible to buffer overflows of
->> fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
->> nested directories and/or with long directory or file names.  I was able
->> to reproduce the problem (got a segfault) by running the program on a
->> directory containing 20 nested directories with 250-character names.
->>
->
-> CVE-2011-3630 hardlink buffer overflows
-> https://bugzilla.redhat.com/show_bug.cgi?id=746709
->
+User able to mount FUSE filesystems can use this flaw to crash the
+system.
 
-FORTIFY_SOURCE should really be able to catch this buffer overflow.
-The buffer being overflown here in in BSS, But strcat() is used to 
-append to this buffer and __builtin___strcat_chk catches it, resulting 
-in the program being terminated.
+References:
+http://permalink.gmane.org/gmane.linux.kernel.commits.head/313266
+http://sourceforge.net/mailarchive/forum.php?thread_name=87liut4i7w.fsf%40tucsk.pomaz.szeredi.hu&forum_name=fuse-devel
 
-Nice one though!
+Upstream fix:
+c2183d1e9b3f313dd8ba2b1b0197c8d9fb86a7ae
 
-
+Thanks,
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
