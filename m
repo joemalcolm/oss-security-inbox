@@ -1,105 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/6
-Message-ID: <410971781.2044468.1313174909659.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Aug 2011 14:48:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/2
+Message-ID: <20110908122534.GA2939@inutil.org>
+Date: Thu, 8 Sep 2011 14:25:34 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Mambo CMS 4.6.x (4.6.5) | SQL Injection
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Ferdinand <debbug@...tplaza.com>, Russ Allbery <rra@...ian.org>, Sven Verdoolaege <skimo@...net.org>, Chris Weyl <cweyl@...mni.drew.edu>
+Subject: Re: CVE Request -- libfcgi-perl / perl-FCGI: Certain environment variables shared between first and subsequent HTTP requests
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2917
+On Thu, Sep 08, 2011 at 10:32:47AM +0200, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+>
+>   it was found that the perl Fast CGI module did not properly clean up
+> certain environment variables, related to a particular HTTP request,
+> between subsequent incoming requests. Any environment variable set in
+> the first pass through the code by processing the first request, that
+> wasn't set in some subsequent request, has been added to the hash
+> containing environment variables for that subsequent request. A remote
+> attacker could use this flaw to bypass the authentication process and
+> obtain access to resources, which would be otherwise protected by
+> authentication.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=736604
+>
+> Russ Allbery of Debian (Cc-ed) provides further elaborated analysis
+> of the reasons of the issue:
+> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479#10
+>
+> Cc-ed also Sven Verdoolaege, the perl FCGI module author (as noted
+> on CPAN) for his opinion too.
+>
+> Could you allocate a CVE id for this issue?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: Though the issue has been reported Sat, 18 Dec 2010 22:13:40 +0100
+>       already, only Russ's analysis (Wed, 07 Sep 2011 20:24:00 -0700)
+>       unveiled the full security implications of this issue. So I
+>       assume, the CVE-2011-* identifier would be sufficient to cover
+>       this issue. But feel free to correct me if I am wrong here.
+>       Thanks, Jan.
 
-Thanks.
+FYI: Debian already allocated CVE-2011-2766 to this.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=19;bug=607479
 
--- 
-    JB
-
-
------ Original Message -----
-> Mambo CMS 4.6.x (4.6.5) | SQL Injection
-> 
-> 
-> 1. OVERVIEW
-> 
-> Mambo CMS 4.6.5 and lower versions are vulnerable to SQL Injection.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Mambo is a full-featured, award-winning content management system that
-> can
-> be used for everything from simple websites to complex corporate
-> applications. It is used all over the world to power government
-> portals,
-> corporate intranets and extranets, ecommerce sites, nonprofit
-> outreach,
-> schools, church, and community sites. Mambo's "power in simplicity"
-> also
-> makes it the CMS of choice for many small businesses and personal
-> sites.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The "zorder" parameter was not properly sanitized upon submission to
-> the
-> administrator/index2.php url, which allows attacker to conduct SQL
-> Injection attack. This could an attacker to inject or manipulate SQL
-> queries
-> in the back-end database, allowing for the manipulation or disclosure
-> of
-> arbitrary data.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Tested on Mambo CMS 4.6.5
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://localhost/mambo/administrator/index2.php?limit=10&order[]=11&boxchecked=0&toggle=on&search=sqli&task=&limitstart=0&cid[]=on&zorder=-1OR
-> (SELECT 9999 FROM(SELECT
-> COUNT(*),CONCAT(CHAR(58,98,112,101,58),(SELECT
-> (CASE WHEN (9999=9999) THEN 1 ELSE 0
-> END)),CHAR(58,110,100,107,58),FLOOR(RAND(0)*2))x FROM
-> INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY
-> x)a)&filter_authorid=62&hidemainmenu=0&option=com_typedcontent
-> 
-> 
-> 6. SOLUTION
-> 
-> The vendor seems to discontinue the development. It is recommended to
-> use
-> another CMS in active development.
-> 
-> 
-> 7. VENDOR
-> 
-> Mambo CMS Development Team
-> http://mambo-developer.org
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-11-31: notified vendor through bug tracker
-> 2011-08-12: no patched version released up to date
-> 2011-08-12: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[mambo4.6_x]_sql_injection
-> Mambo CMS:
-> http://mambo-code.org/gf/download/frsrelease/388/791/MamboV4.6.5.zip
-> 
-> 
-> #yehg [2011-08-12]
+Cheers,
+        Moritz
