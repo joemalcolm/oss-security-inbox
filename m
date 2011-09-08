@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/1
-Message-ID: <4EC44F0B.6020909@redhat.com>
-Date: Wed, 16 Nov 2011 17:02:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/7
+Message-ID: <2179836.0NOP2RJeYK@neon>
+Date: Thu, 08 Sep 2011 22:14:25 +0200
+From: Alex Legler <a3li@...too.org>
 To: oss-security@...ts.openwall.com
-CC: David Jorm <djorm@...hat.com>
-Subject: Re: CVE Request: openid4java not properly verifying the signature of Attribute Exchange (AX) information
+Subject: CVE request: Quassel < 0.7.3 CTCP request core DoS
 Content-Type: text/plain; charset=utf-8
 
-On 11/16/2011 02:43 AM, David Jorm wrote:
-> It was found that openid4java was not checking that all Attribute Exchange (AX) information passed to it was signed. This is a security concern if AX is being used to receive information that an application only trusts the identity provider to assert.
->
-> Upstream advisory: http://openid.net/2011/05/05/attribute-exchange-security-alert/
-> Patch commit: http://code.google.com/p/openid4java/source/detail?r=661
-> Secunia advisory: http://secunia.com/advisories/44496/
->
-> Thanks
-Please use CVE-2011-4314 for this issue.
+Hi,
+
+please assign a CVE for the following issue:
+CtcpParser::packedReply in src/core/ctcpparser.cpp in Quassel does not process
+certain CTCP requests correctly, allowing a remote attacker connected to the
+same IRC network as the victim to cause a Denial of Service condition by
+sending specially crafted CTCP requests. This was demonstrated in various
+exploits on freenode today.
+
+Gentoo tracks the issue in [1], upstream fix is [2].
+
+Thanks,
+Alex
+
+[1] https://bugs.gentoo.org/show_bug.cgi?id=382313
+[2] http://git.quassel-
+irc.org/?p=quassel.git;a=commit;h=da215fcb9cd3096a3e223c87577d5d4ab8f8518b
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Alex Legler <a3li@...too.org>
+Gentoo Security / Ruby
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
