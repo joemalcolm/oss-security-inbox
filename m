@@ -1,79 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/13/1
-Message-ID: <4E45D873.2000901@goirand.fr>
-Date: Sat, 13 Aug 2011 09:50:43 +0800
-From: Thomas Goirand <thomas@...rand.fr>
-To: Jonathan Wiltshire <jmw@...ian.org>
-CC: oss-security@...ts.openwall.com,  Debian Security Team <team@...urity.debian.org>
-Subject: Re: CVE request: multiple vulnerabilities in dtc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/2
+Message-ID: <20110908122534.GA2939@inutil.org>
+Date: Thu, 8 Sep 2011 14:25:34 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>, Ferdinand <debbug@...tplaza.com>, Russ Allbery <rra@...ian.org>, Sven Verdoolaege <skimo@...net.org>, Chris Weyl <cweyl@...mni.drew.edu>
+Subject: Re: CVE Request -- libfcgi-perl / perl-FCGI: Certain environment variables shared between first and subsequent HTTP requests
 Content-Type: text/plain; charset=utf-8
 
-We are discussing the issues with Philippe Kern. While there are issues
-that were discovered, I am claiming that some of what you see below
-shouldn't be in the list.
-
-On 08/13/2011 05:26 AM, Jonathan Wiltshire wrote:
-> #566654
-> dtc saves the administrator password in plain text in
-> /var/lib/dtc/saved_install_config under the variable name conf_adm_pass.
-> It remains there even after initial configuration.
-
-That's not more a security vulnerability than /etc/mysql/debian.cnf
-(both file are readable by root only). This has been in the BTS for a
-long time, and it makes no sense to assign a CVE now.
-
-> #611680
-> dtc-xen includes several command executions as root that use unchecked
-> user input in dtc-soap-server.
-
-That's not relevant and isn't a vulnerability. I have closed the bug a
-long time ago, writing that I wont fix it, and explaining why. Please
-see the BTS entry for it. dtc-xen isn't supposed to run stand-alone, and
-the only client for dtc-xen is dtc itself. If you gain access to it,
-then there is an issue somewhere else, and "fixing" things here wont
-make things better.
-
-> #614304
-> dtc stores user passwords and passwords for various services in unencrypted
-> form in the database.
-
-This is fixed in the Git, and has already been discussed. While it's a
-serious issue (which has been carefully worked on), it didn't deserve a
-CVE 6 months ago, and it shouldn't right now.
-
-> #637477
-> Insufficient input checking in /shared/inc/sql/lists.php
+On Thu, Sep 08, 2011 at 10:32:47AM +0200, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
 >
-> #637485
-> The setup script for dtc writes the password for the MySQL user in the
-> world-readable file /etc/apache2/apache2.conf.
-> 
-> #637487
-> Insufficient input checking leads to a SQL injection vulnerability in
-> shared/inc/forms/domain_info.php.
-> 
-> #637498
-> A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
-> files as the MySQL system user.
-> 
-> #637537
-> dtc passes passwords to htpasswd using command line arguments, which can be
-> read by a local user.
-> 
-> #637584
-> dtc does not escape variables in HTML output in many places; for example
-> in the "Domain root TXT record:" field on the "DNS and MX" page where
-> JavaScript can be injected.
+>   it was found that the perl Fast CGI module did not properly clean up
+> certain environment variables, related to a particular HTTP request,
+> between subsequent incoming requests. Any environment variable set in
+> the first pass through the code by processing the first request, that
+> wasn't set in some subsequent request, has been added to the hash
+> containing environment variables for that subsequent request. A remote
+> attacker could use this flaw to bypass the authentication process and
+> obtain access to resources, which would be otherwise protected by
+> authentication.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=736604
+>
+> Russ Allbery of Debian (Cc-ed) provides further elaborated analysis
+> of the reasons of the issue:
+> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479#10
+>
+> Cc-ed also Sven Verdoolaege, the perl FCGI module author (as noted
+> on CPAN) for his opinion too.
+>
+> Could you allocate a CVE id for this issue?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: Though the issue has been reported Sat, 18 Dec 2010 22:13:40 +0100
+>       already, only Russ's analysis (Wed, 07 Sep 2011 20:24:00 -0700)
+>       unveiled the full security implications of this issue. So I
+>       assume, the CVE-2011-* identifier would be sufficient to cover
+>       this issue. But feel free to correct me if I am wrong here.
+>       Thanks, Jan.
 
-The above should be fixed and are real issues, but what I commented
-don't deserve a CVE.
+FYI: Debian already allocated CVE-2011-2766 to this.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=19;bug=607479
 
-> Note that these descriptions are mostly taken from the bug reports and may
-> not be suitable for direct publication without editing. I have checked as
-> far as possible that none of these were previously assigned CVEs but they
-> could be duplicates. There are often mitigating factors such as
-> user or administrator authentication.
-
-Absolutely all of them need a user to be logged indeed.
-
-Thomas
+Cheers,
+        Moritz
