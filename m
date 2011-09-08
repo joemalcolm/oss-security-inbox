@@ -1,26 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/3
-Message-ID: <656741753.185619.1303463295393.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Apr 2011 05:08:15 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- qemu-kvm: virtio-blk: heap buffer overflow caused by unaligned requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/1
+Message-ID: <4E687DAF.6000904@redhat.com>
+Date: Thu, 08 Sep 2011 10:32:47 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Ferdinand <debbug@...tplaza.com>, Russ Allbery <rra@...ian.org>, Sven Verdoolaege <skimo@...net.org>, Chris Weyl <cweyl@...mni.drew.edu>
+Subject: CVE Request -- libfcgi-perl / perl-FCGI: Certain environment variables shared between first and subsequent HTTP requests
 Content-Type: text/plain; charset=utf-8
 
-"It was found that virtio-blk driver in qemu-kvm did not properly validate 
-read and write requests from the guest. A privileged guest user could use
-this flaw to cause heap corruption, causing the guest to crash (denial of
-service) or, possibly, resulting in the privileged guest user escalating
-their privileges on the host."
+Hello Josh, Steve, vendors,
+
+   it was found that the perl Fast CGI module did not properly clean up
+certain environment variables, related to a particular HTTP request,
+between subsequent incoming requests. Any environment variable set in
+the first pass through the code by processing the first request, that
+wasn't set in some subsequent request, has been added to the hash
+containing environment variables for that subsequent request. A remote
+attacker could use this flaw to bypass the authentication process and
+obtain access to resources, which would be otherwise protected by
+authentication.
 
 References:
-http://www.spinics.net/lists/kvm/msg51877.html
-https://bugzilla.redhat.com/show_bug.cgi?id=698906
+[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=736604
 
-Upstream commit:
-http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=52c050236eaa4f0b5e1d160cd66dc18106445c4d
+Russ Allbery of Debian (Cc-ed) provides further elaborated analysis
+of the reasons of the issue:
+[3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479#10
 
-Thanks,
+Cc-ed also Sven Verdoolaege, the perl FCGI module author (as noted
+on CPAN) for his opinion too.
+
+Could you allocate a CVE id for this issue?
+
+Thank you && Regards, Jan.
 --
-Petr Matousek / Red Hat Security Response Team
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Though the issue has been reported Sat, 18 Dec 2010 22:13:40 +0100
+       already, only Russ's analysis (Wed, 07 Sep 2011 20:24:00 -0700)
+       unveiled the full security implications of this issue. So I
+       assume, the CVE-2011-* identifier would be sufficient to cover
+       this issue. But feel free to correct me if I am wrong here.
+       Thanks, Jan.
