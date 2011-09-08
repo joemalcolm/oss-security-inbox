@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/10
-Message-ID: <CABqVa39kjp6ROj=SBYGRHQBxYEy4kvHXvQKn9VNtaYHzVj+tJA@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:07:49 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/3
+Message-ID: <20110908122634.GK11236@ngolde.de>
+Date: Thu, 8 Sep 2011 14:26:34 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: wrong headroom check in udp6_ufo_fragment()
+Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 8:54 AM, Petr Matousek <pmatouse@...hat.com> wrote:
-> "A bug was found in the way headroom check was performed in
-> udp6_ufo_fragment() function. A remote attacker could use this flaw to
-> crash the system."
->
-> Details:
-> http://bugzilla.redhat.com/show_bug.cgi?id=755584#c1
->
-> Upstream commit:
-> a9cf73ea7ff78f52662c8658d93c226effbbedde
->
-> References:
-> http://bugzilla.redhat.com/show_bug.cgi?id=755584
-> http://bugzilla.redhat.com/show_bug.cgi?id=682066
->
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
->
+Hi,
+* David Hicks <d@...id.au> [2011-09-04 16:11]:
+> On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
+> > Request #2: LFI and XSS via bug_actiongroup_ext_page.php
+> 
+> I don't think my earlier message conveyed the severity of this bug well
+> enough.
+> 
+> MantisBT allows users to upload attachments to bug reports. These
+> attachments are commonly stored on the disk in an 'attachments'
+> directory that should be stored outside the web root (but are still
+> accessible to MantisBT for retrieval).
+[...]
+In case this slipped through the cracks... Can someone assign ids to these 
+issues?
 
-Sorry having some laptop/email issues. Please use CVE-2011-4326 for this issue.
-
+Kind regards
+Nico
 -- 
-Kurt Seifried
-kurt@...fried.org
+Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+For security reasons, all text in this mail is double-rot13 encrypted.
+
+Content of type "application/pgp-signature" skipped
