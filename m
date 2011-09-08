@@ -1,27 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/4
-Message-ID: <20111115032305.GA8310@openwall.com>
-Date: Tue, 15 Nov 2011 07:23:05 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/4
+Message-ID: <20110908130146.GF25304@foo.fgeek.fi>
+Date: Thu, 8 Sep 2011 16:01:46 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+Subject: Re: CVE requests: <mantisbt-1.2.8 multiple vulnerabilities (1xLFI+XSS, 2xXSS)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
-> 3. Maybe glibc and the SHA-crypt reference code should stop using
-> alloca() in favor of having the underlying MD5, SHA-256, and SHA-512
-> implementations accepting potentially unaligned buffers like e.g.
-> OpenSSL's implementations do.  Unfortunately, this might have
-> performance impact.
+On Thu, Sep 08, 2011 at 02:26:34PM +0200, Nico Golde wrote:
+> Hi,
+> * David Hicks <d@...id.au> [2011-09-04 16:11]:
+> > On Sun, 2011-09-04 at 15:18 +1000, David Hicks wrote:
+> > > Request #2: LFI and XSS via bug_actiongroup_ext_page.php
+> > 
+> > I don't think my earlier message conveyed the severity of this bug well
+> > enough.
+> > 
+> > MantisBT allows users to upload attachments to bug reports. These
+> > attachments are commonly stored on the disk in an 'attachments'
+> > directory that should be stored outside the web root (but are still
+> > accessible to MantisBT for retrieval).
+> [...]
+> In case this slipped through the cracks... Can someone assign ids to these 
+> issues?
+> 
+> Kind regards
+> Nico
+> -- 
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
 
-This is what FreeBSD's revision of the code does, but it still has two
-alloca()s per function (the alignment-unrelated ones):
+Related information about this issue:
 
-http://svnweb.freebsd.org/base/head/lib/libcrypt/
+http://lists.debian.org/debian-security-tracker/2011/09/msg00012.html
+https://www.htbridge.ch/advisory/multiple_vulnerabilities_in_mantisbt.html
 
-More context:
-
-http://www.openwall.com/lists/oss-security/2011/11/15/1
-
-Alexander
+Best regards,
+Henri Salo
