@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/1
-Message-ID: <20111029143748.21b577ee@laverne>
-Date: Sat, 29 Oct 2011 14:37:48 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/5
+Message-ID: <597760943.1021587.1315590644281.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 13:50:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
 Content-Type: text/plain; charset=utf-8
 
-Am Fri, 28 Oct 2011 09:04:43 -0600
-schrieb Kurt Seifried <kseifried@...hat.com>:
+Please use CVE-2011-3352
 
-> Can you please send more details, i.e. which file is responsible/or a
-> link to a commit fixing this? Thanks.
-
-Commit is here:
-https://github.com/s9y/Serendipity/commit/a7861fabd328c3c468f0853355686dd7e39cc4ac#plugins/serendipity_event_karma/serendipity_event_karma.php
-
-Responsible file:
-plugins/serendipity_event_karma/serendipity_event_karma.php
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found that the Zikula web application framework did not
+> properly sanitize the 'themename' parameter, while setting particular
+> theme as a default one, modifying the theme or deleting it. A remote
+> attacker, with Zikula administrator privilege, could use this flaw to
+> execute arbitrary HTML or web script code in the context of the
+> affected website.
+> 
+> References:
+> [1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
+> [2] https://www.htbridge.ch/advisory/xss_in_zikula.html
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
+> 
+> Relevant upstream patch:
+> [4]
+> https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
+> 
+> Vulnerable Zikula versions: Development versions prior to patch [4].
+> Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
+> code in question yet.
+> 
+> Provided PoC (from [1], [2]):
+> =============================
+> http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu
+> ment.cookie%29%3C/script%3E
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
