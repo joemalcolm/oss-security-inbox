@@ -1,48 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/18
-Message-ID: <BANLkTimHFG4vSbr_RXtmwDraLzERHJzTfQ@mail.gmail.com>
-Date: Mon, 11 Apr 2011 18:54:15 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/3
+Message-ID: <362325010.1020838.1315589241518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 13:27:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE requests: Three Linux kernel issues
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: masqmail
 Content-Type: text/plain; charset=utf-8
 
-This made me chuckle.
+Please use CVE-2011-3350.
 
->
-> [1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
->
-> | PATCH] char: briq_panel: fix TOCTOU bug
-> |
-> | There is a TOCTOU bug in briq_panel_write() code:
-> |
-> |     if (vfd_cursor > 39)   <<<
-> |             scroll_vfd();
-> |     vfd[vfd_cursor++] = c; <<<
-> |
-> | It's possible to write to arbitrary memory location in case of more than
-> | one process tries to call write() simultaneously.
->
+Thanks.
 
-Firstly, this driver has locking that only allows one open file
-descriptor at once.
+-- 
+    JB
 
-Even if you can work around this, you'd have a race window of about
-two instructions, with basically no possibility of being preempted
-since there's no blocking or potentially faulting operation.  And
-that's assuming it's even possible, since it may be the case that this
-index is in a register, which would render this completely
-unexploitable.
 
-Assuming this isn't the case, and you're running an SMP system and
-spent countless hours (days? weeks?) spinning to hit this extremely
-narrow race, you then get to write a single byte past the end of this
-array, into the vfd_is_open integer, which is already set to 1 (it's
-treated as a boolean value).  Even if due to magical powers you manage
-to hit the race window simultaneously on four cores (and the assembly
-works perfectly in your favor), you still don't achieve anything. :p
-
-But it'll get a CVE anyways, so I'm not sure what my point is. :)
-
--Dan
+----- Original Message -----
+> Hi,
+> a misuse of the seteuid function from glibc prevents masqmail from
+> properly
+> dropping root privileges.
+> References:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638002
+> http://article.gmane.org/gmane.mail.masqmail/303
+> 
+> Can you assign a CVE id to this?
+> 
+> Kind regards
+> Nico
+> --
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
+> 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
