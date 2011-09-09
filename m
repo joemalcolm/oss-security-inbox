@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/17
-Message-ID: <60589402.652548.1307994431175.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:47:11 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/2
+Message-ID: <1441798244.1020639.1315588834916.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 13:20:34 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Ville-Pekka Vainio <vpivaini@...helsinki.fi>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- libvoikko -- DoS of application linked against libvoikko due improper handling of embedded null characters in input strings
+Cc: Sebastian Krahmer <krahmer@...e.de>, Guido Berhoerster <gber@...nsuse.org>
+Subject: Re: Re: lightdm issues
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+Here you go:
 
-Can MITRE comment on this one? I'm not really sure what to do.
-
-The core issue, embedded null characters seems to be the same for both Java and Python, but the fix covers two different bits of code.
-
-My guess is it's just one ID, but I'd like to be certain.
+CVE-2011-3349 lightdm files written as root to user-controlled folders
 
 Thanks.
 
 -- 
     JB
 
-
 ----- Original Message -----
-> Hello, Josh, Steve, vendors,
+> On ven., 2011-08-26 at 14:51 +1000, Robert Ancell wrote:
+> > Hi Sebastian,
+> >
+> > Thanks for doing this review, this issue is now being tracked in the
+> > LightDM issue tracker:
+> > https://bugs.launchpad.net/lightdm/+bug/834079
 > 
-> A denial of service flaw was found in the way Python and Java
-> interfaces of libvoikko, a library for spellcheckers and hyphenators,
-> processed embedded null characters in input strings. If a specially-
-> crafted input string was provided to an application linked against
-> libvoikko, it could lead to that particular application termination.
+> Could a CVE be assigned? Sebastian didn't really asked for it but as
+> it
+> can indeed be used to overwrite root-owned files (with non-controlled
+> content afaict) I guess it deserves ones?
 > 
-> References:
-> [1] http://voikko.sourceforge.net/releases.html
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=712863
-> 
-> Upstream patches:
-> [3]
-> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3901
-> [4]
-> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3902
-> [5]
-> http://voikko.svn.sourceforge.net/viewvc/voikko?view=revision&revision=3903
-> 
-> Could you allocate a CVE identifier for this?
-> 
-> Thank you && Regards, Jan.
+> Regards,
 > --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+> Yves-Alexis
