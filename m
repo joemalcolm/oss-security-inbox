@@ -1,61 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/4
-Message-ID: <1155877538.2043879.1313173472436.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Aug 2011 14:24:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/11
+Message-Id: <201109092305.32351.timb@openvas.org>
+Date: Fri, 9 Sep 2011 23:05:24 +0100
+From: Tim Brown <timb@...nvas.org>
+To: openvas-devel@...d.intevation.org
+Cc: "Jan-Oliver Wagner" <Jan-Oliver.Wagner@...enbone.net>, Stjepan Gros <stjepan.gros@...il.com>, Bugs NotHugs <bugsnothugs@...il.com>, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jan Lieskovsky <jlieskov@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: [Openvas-devel] CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
 Content-Type: text/plain; charset=utf-8
 
-> 
-> 1) An integer overflow error exists within the "CSoundFile::ReadWav()"
-> function (src/load_wav.cpp) when processing certain WAV files. This can
-> be exploited to cause a heap-based buffer overflow by tricking a user
-> into opening a specially crafted WAV file.
+On Friday 09 Sep 2011 22:07:34 Jan-Oliver Wagner wrote:
 
-CVE-2011-2911
+> What frightens me is that a security advisory about OpenVAS 2 (a already
+> deprecated version) made it even into official advisories of CERTs.
+> The review process seems to not work as it should, no one ever checked
+> back wether this version is deprecated. So it should be easy to get faked
+> security alerts about some tools you don't like into official CERT
+> advisories. Or am I getting something wrong here?
 
+Jan,
 
-> 
-> 2) Boundary errors within the "CSoundFile::ReadS3M()" function
-> (src/load_s3m.cpp) when processing S3M files can be exploited to cause
-> stack-based buffer overflows by tricking a user into opening a specially
-> crafted S3M file.
+Whilst it's not a default compile time configuration option and whilst the 
+conditions to exploit it are uncommon, the fact remains that there are two 
+time of check, time of use (TOCTOU) vulnerabilities present in the code.  
+Calling it fake is disingenous and does OpenVAS no credit.  Whilst a CVE might 
+be bad, a security project disputing the assignment looks even worse; 
+especially since one (and the more serious) case was picked up internally.  
+FWIW, the code concerned was present in trunk so it's not even true to say it 
+only affects deprecated versions (never mind the fact that just because we no 
+longer support something doesn't stop someone using it).
 
-CVE-2011-2912
-
-
-> 
-> 3) An off-by-one error within the "CSoundFile::ReadAMS()" function
-> (src/load_ams.cpp) can be exploited to cause a stack corruption by
-> tricking a user into opening a specially crafted AMS file.
-
-CVE-2011-2913
-
-
-> 
-> 4) An off-by-one error within the "CSoundFile::ReadDSM()" function
-> (src/load_dms.cpp) can be exploited to cause a memory corruption by
-> tricking a user into opening a specially crafted DSM file.
-
-CVE-2011-2914
-
-
-> 
-> 5) An off-by-one error within the "CSoundFile::ReadAMS2()" function
-> (src/load_ams.cpp) can be exploited to cause a memory corruption by
-> tricking a user into opening a specially crafted AMS file.
-
-CVE-2011-2915
-
-
-I could have grouped the off-by-one flaws together, but I decided not to
-since you mention that old gstreamer-plugins contains embedded copies,
-which I suspect is also going to mean those will affect different things in
-different ways.
-
-Thanks.
-
+Tim
 -- 
-    JB
+Tim Brown
+<mailto:timb@...nvas.org>
+<http://www.openvas.org/>
+
+Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
