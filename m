@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/9
-Message-ID: <1300272457.17730.19.camel@macbook.infradead.org>
-Date: Wed, 16 Mar 2011 10:47:37 +0000
-From: David Woodhouse <dwmw2@...radead.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, David King <amigadave@...gadave.com>,  Mark McLoughlin <mark@...net.ie>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/1
+Message-ID: <4E6A385A.4030904@redhat.com>
+Date: Fri, 09 Sep 2011 18:01:30 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Matthew Barnes <mbarnes@...hat.com>, Milan Crha <mcrha@...hat.com>
+Subject: CVE Request -- evolution -- Uses insecure (non-SSL) connection when storing the sent message into the Sent folder
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2011-03-15 at 17:10 -0400, Josh Bressers wrote:
-> 
-> Issue #2
-> 
-> Vino can open ports via uPnP without alerting the user.
-> https://bugzilla.redhat.com/show_bug.cgi?id=678846
-> 
-> Use CVE-2011-1165 
+Hello Josh, Steve, vendors,
 
-I strongly disagree that this is CVE-worthy, or even a bug.
+   it was found that Evolution, mail and calendar client, used insecure
+(non-SSL) connection when attempting to store sent email message into
+the Sent folder, when the Sent folder was located on the remote server.
+An attacker on the adjacent network, able to intercept the underlying
+communication could use this flaw to obtain login credentials of the
+victim.
 
-That's what uPnP is *for*.
+References:
+[1] https://bugzilla.gnome.org/show_bug.cgi?id=648277
+     (upstream bug report)
+[2] 
+http://git.gnome.org/browse/evolution-data-server/commit/?id=e0ac4d79705c
+     (upstream patch)
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=697904
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=707848
 
-Opening a port with uPnP, in a NAT-afflicted situation, is identical to
-binding to and listening on INADDR_ANY when you have real network
-connectivity. It's the moral equivalent to automatically using SOCKS to
-make outbound connections, if you're afflicted with a network that needs
-that.
+Could you allocate a CVE id for this issue?
 
-There *is* an option to disable this feature, if the user really wants
-to. And of course it should be clearly indicated that the service is
-available to the public; but *that* is what CVE-2011-1164 is for.
-
-There is also some merit in arguing that connections from outside the
-local network should not be permitted without a password. But again,
-there's nothing specific to uPnP in that.
-
--- 
-David Woodhouse                            Open Source Technology Centre
-David.Woodhouse@...el.com                              Intel Corporation
-
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
