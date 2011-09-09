@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/1
-Message-ID: <CAH5b-BVOY7gD-tAzjXFnPEm2Lo2i1mRLeiHpW=L2jWQB17MC0w@mail.gmail.com>
-Date: Wed, 28 Sep 2011 13:07:58 +0200
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com, taviso@...xchg8b.com
-Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/1
+Message-ID: <4E6A385A.4030904@redhat.com>
+Date: Fri, 09 Sep 2011 18:01:30 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Matthew Barnes <mbarnes@...hat.com>, Milan Crha <mcrha@...hat.com>
+Subject: CVE Request -- evolution -- Uses insecure (non-SSL) connection when storing the sent message into the Sent folder
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 27, 2011 at 8:52 PM, Tavis Ormandy <taviso@...xchg8b.com> wrote:
+Hello Josh, Steve, vendors,
 
->
-> Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
-> rpm signature verification. Some trivial bitflipping found a few memory
-> corruption issues.
->
-> Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
-> native module wrapper that exports librpm to python. I'll step through the
-> signature verification logic when I get a chance.
->
-> Obviously we need the sections of rpm code touched before signature
-> verification to be bulletproof, as most distributions rely on public mirror
-> services that may or may not be trusted. Any volunteers who know crypto
-> better than me appreciated, I'll be primarily looking for memory
-> corruption.
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=741606
-> https://bugzilla.redhat.com/show_bug.cgi?id=741612
->
-> These bugs don't affect IMHO rpm5 : i have updated the bugzilla with these
-infos. Best Regards
+   it was found that Evolution, mail and calendar client, used insecure
+(non-SSL) connection when attempting to store sent email message into
+the Sent folder, when the Sent folder was located on the remote server.
+An attacker on the adjacent network, able to intercept the underlying
+communication could use this flaw to obtain login credentials of the
+victim.
 
-> Tavis.
->
-> --
-> -------------------------------------
-> taviso@...xchg8b.com | pgp encrypted mail preferred
-> -------------------------------------------------------
->
->
+References:
+[1] https://bugzilla.gnome.org/show_bug.cgi?id=648277
+     (upstream bug report)
+[2] 
+http://git.gnome.org/browse/evolution-data-server/commit/?id=e0ac4d79705c
+     (upstream patch)
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=697904
+[4] https://bugzilla.redhat.com/show_bug.cgi?id=707848
 
+Could you allocate a CVE id for this issue?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
