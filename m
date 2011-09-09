@@ -1,78 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/10
-Message-ID: <20111107174619.GB27092@foo.fgeek.fi>
-Date: Mon, 7 Nov 2011 19:46:19 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/2
+Message-ID: <1441798244.1020639.1315588834916.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 13:20:34 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: jmm@...ian.org
-Subject: Fwd: DSA 2338-1 moodle security update
+Cc: Sebastian Krahmer <krahmer@...e.de>, Guido Berhoerster <gber@...nsuse.org>
+Subject: Re: Re: lightdm issues
 Content-Type: text/plain; charset=utf-8
 
-Has someone requested CVE-identifiers for these already?
+Here you go:
 
-- Henri
+CVE-2011-3349 lightdm files written as root to user-controlled folders
 
------ Forwarded message from Moritz Muehlenhoff <jmm@...ian.org> -----
+Thanks.
 
-Date: Mon, 7 Nov 2011 18:18:55 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: debian-security-announce@...ts.debian.org
-Subject: [Full-disclosure] [SECURITY] [DSA 2338-1] moodle security update
-User-Agent: Mutt/1.5.21 (2010-09-15)
+-- 
+    JB
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-- -------------------------------------------------------------------------
-Debian Security Advisory DSA-2338-1                   security@...ian.org
-http://www.debian.org/security/                        Moritz Muehlenhoff
-November 07, 2011                      http://www.debian.org/security/faq
-- -------------------------------------------------------------------------
-
-Package        : moodle
-Vulnerability  : several
-Problem type   : remote
-Debian-specific: no
-CVE ID         : not yet available
-
-Several cross-site scripting and information disclosure issues have
-been fixed in Moodle, a course management system for online learning:
-
-* MSA-11-0020 Continue links in error messages can lead offsite
-* MSA-11-0024 Recaptcha images were being authenticated from an older 
-              server
-* MSA-11-0025 Group names in user upload CSV not escaped
-* MSA-11-0026 Fields in user upload CSV not escaped
-* MSA-11-0031 Forms API constant issue
-* MSA-11-0032 MNET SSL validation issue
-* MSA-11-0036 Messaging refresh vulnerability
-* MSA-11-0037 Course section editing injection vulnerability
-* MSA-11-0038 Database injection protection strengthened
-
-For the stable distribution (squeeze), this problem has been fixed in
-version 1.9.9.dfsg2-2.1+squeeze2.
-
-For the unstable distribution (sid), this problem has been fixed in
-version 1.9.9.dfsg2-4.
-
-We recommend that you upgrade your moodle packages.
-
-Further information about Debian Security Advisories, how to apply
-these updates to your system and frequently asked questions can be
-found at: http://www.debian.org/security/
-
-Mailing list: debian-security-announce@...ts.debian.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAk64EswACgkQXm3vHE4uylqZjQCg4xG5p108miVitHbsEiagUhvQ
-KJ0AniojypPOT9jDQ+ICyBa5+AoCI1xk
-=adle
------END PGP SIGNATURE-----
-
-_______________________________________________
-Full-Disclosure - We believe in it.
-Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-Hosted and sponsored by Secunia - http://secunia.com/
-
------ End forwarded message -----
+----- Original Message -----
+> On ven., 2011-08-26 at 14:51 +1000, Robert Ancell wrote:
+> > Hi Sebastian,
+> >
+> > Thanks for doing this review, this issue is now being tracked in the
+> > LightDM issue tracker:
+> > https://bugs.launchpad.net/lightdm/+bug/834079
+> 
+> Could a CVE be assigned? Sebastian didn't really asked for it but as
+> it
+> can indeed be used to overwrite root-owned files (with non-controlled
+> content afaict) I guess it deserves ones?
+> 
+> Regards,
+> --
+> Yves-Alexis
