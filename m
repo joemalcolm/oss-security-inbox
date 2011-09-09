@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/17
-Message-ID: <20110304145232.GA25390@openwall.com>
-Date: Fri, 4 Mar 2011 17:52:32 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/10
+Message-Id: <201109092308.11859.Jan-Oliver.Wagner@greenbone.net>
+Date: Fri, 9 Sep 2011 23:07:34 +0200
+From: "Jan-Oliver Wagner" <Jan-Oliver.Wagner@...enbone.net>
+To: openvas-devel@...d.intevation.org
+Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Stjepan Gros <stjepan.gros@...il.com>, Bugs NotHugs <bugsnothugs@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: [Openvas-devel] CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2011 at 03:08:31PM +0100, Jan Lieskovsky wrote:
->   we have been contacted by Stefan Fritsch of Debian Security Team
-> about presence of nine security flaws in the logrotate utility
-> (the list is provided below).
+Hello,
 
-I've just skimmed over the list, and I only see one issue that I'd call
-a vulnerability in logrotate, issue #8.  And we need more info on #5.
+On Friday 09 September 2011 19:45:03 Josh Bressers wrote:
+> Let's go with one ID. I don't see a reason to split these.
+> Use CVE-2011-3351
 
-The rest, as described, appear to rely on sysadmin error and to assume
-security properties that logrotate never advertised it had.  Specifically,
-logrotate was never declared to be safe to use on untrusted directories,
-and it was an error for a sysadmin to make such an assumption.
+I think it should be clarified:
+_No one_ who is properly using OpenVAS with OpenVAS Feed or with the
+Greenbone Feed is affected.
 
-I don't mind logrotate being enhanced/hardened in this respect, but to
-call these vulnerabilities sounds like a stretch.  Also, even if
-logrotate is hardened, it should not be declared to be safe to use on
-untrusted directories.  It'd be better to explicitly state that it is
-not, to avoid this sort of confusion.
+No OVAL script is even tried to be executed: no OVAL file is in the feed and
+if you/someone copies one into your feed copy it is not being executed because
+it has no valid signature.
 
-> 5) Issue #5: logrotate: Information disclosure by performing email
->              notifications
-...
-> 8) Issue #8: logrotate: TOCTOU race condition by creation of new files 
-> (between
->              opening the file and moment, final permissions have been 
->              applied)
->              [information disclosure]
+So you need to switch to unsecure mode, then place OVAL files into your
+feed copy, install ovaldi etc, etc.
 
-Alexander
+Of course the OpenVAS developers will be fixing the problem regardless
+of the practical relevance!
+
+What frightens me is that a security advisory about OpenVAS 2 (a already
+deprecated version) made it even into official advisories of CERTs.
+The review process seems to not work as it should, no one ever checked
+back wether this version is deprecated. So it should be easy to get faked
+security alerts about some tools you don't like into official CERT advisories.
+Or am I getting something wrong here?
+
+Best
+
+	Jan
+
+-- 
+Dr. Jan-Oliver Wagner |  ++49-541-335084-0  |  http://www.greenbone.net/
+Greenbone Networks GmbH, Neuer Graben 17, 49074 Osnabrück | AG Osnabrück, HR B 202460
+Geschäftsführer: Lukas Grunwald, Dr. Jan-Oliver Wagner
