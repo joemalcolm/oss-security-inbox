@@ -1,55 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/4
-Message-ID: <4ECFC769.5000304@redhat.com>
-Date: Fri, 25 Nov 2011 09:50:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/7
+Message-ID: <1272861971.1022175.1315591442202.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 14:04:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: CVE Request: colord sql injections
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Quassel < 0.7.3 CTCP request core DoS
 Content-Type: text/plain; charset=utf-8
 
-On 11/25/2011 08:13 AM, Jan Lieskovsky wrote:
-> Hi Ludwig,
->
->   thank you for the report.
->
-> On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
->> Hi,
->>
->> colord did not quote user supplied strings which made it prone to
->> SQL injections:
->> https://bugs.freedesktop.org/show_bug.cgi?id=42904
->> https://bugzilla.novell.com/show_bug.cgi?id=698250
->
-> Just to have this one sorted out wrt to the patches, the relevant
-> upstream patches are these two:
-> [1]
-> http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
-> [2]
-> http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
->
-> right?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
->>
->> When colord runs as root and local active users are allowed to
->> create new devices (both are the defaults AFAIK) this allows not
->> only to corrupt colord's own database but also to leverage it to
->> modify other databases in the system (PackageKit for example also
->> uses sqlite).
->>
->> PoC available on request.
->>
->> cu
->> Ludwig
->>
->
-Please use CVE-2011-4349 for these SQL injection issues.
+Please use CVE-2011-3354.
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
+----- Original Message -----
+> Hi,
+> 
+> please assign a CVE for the following issue:
+> CtcpParser::packedReply in src/core/ctcpparser.cpp in Quassel does not
+> process
+> certain CTCP requests correctly, allowing a remote attacker connected
+> to the
+> same IRC network as the victim to cause a Denial of Service condition
+> by
+> sending specially crafted CTCP requests. This was demonstrated in
+> various
+> exploits on freenode today.
+> 
+> Gentoo tracks the issue in [1], upstream fix is [2].
+> 
+> Thanks,
+> Alex
+> 
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=382313
+> [2] http://git.quassel-
+> irc.org/?p=quassel.git;a=commit;h=da215fcb9cd3096a3e223c87577d5d4ab8f8518b
+> 
+> --
+> Alex Legler <a3li@...too.org>
+> Gentoo Security / Ruby
