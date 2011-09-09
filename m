@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/6
-Message-ID: <4EEF765B.8030700@redhat.com>
-Date: Mon, 19 Dec 2011 10:37:31 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/5
+Message-ID: <597760943.1021587.1315590644281.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 13:50:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: WordPress advanced-text-widget XSS advancedtext.php?page=
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zikula (v1.3.x) -- XSS flaw due improper sanitization of 'themename' parameter by setting default, modifying and deleting themes
 Content-Type: text/plain; charset=utf-8
 
-On 12/18/2011 02:45 AM, Henri Salo wrote:
-> Can I get CVE-identifier for this issue?
->
-> Original report: http://seclists.org/bugtraq/2011/Nov/133
-> Vendor report: http://wordpress.org/support/topic/wordpress-advanced-text-widget-plugin-cross-site-scripting-vulnerabilities
-> Fixed in 2.0.2
-> Vulnerable versions: 2.0.1 and all below
-> One example: advancedtext.php?page=
->
-> http://wordpress.org/extend/plugins/advanced-text-widget/changelog/
-> ------------------------------------------------------------------------
-> r466102 | maxchirkov | 2011-11-22 19:32:02 +0200 (Tue, 22 Nov 2011) | 2 lines
->
-> Committing version 2.0.2
-> - Updated all instances of $_GET method with esc_attr() to improve security.
-> ------------------------------------------------------------------------
->
-> - Henri Salo
-Please use CVE-2011-4618 for this issue.
+Please use CVE-2011-3352
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
 
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found that the Zikula web application framework did not
+> properly sanitize the 'themename' parameter, while setting particular
+> theme as a default one, modifying the theme or deleting it. A remote
+> attacker, with Zikula administrator privilege, could use this flaw to
+> execute arbitrary HTML or web script code in the context of the
+> affected website.
+> 
+> References:
+> [1] http://www.securityfocus.com/archive/1/519565/30/0/threaded
+> [2] https://www.htbridge.ch/advisory/xss_in_zikula.html
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=736707
+> 
+> Relevant upstream patch:
+> [4]
+> https://github.com/zikula/core/commit/c27dc3ddce8c9ff519ed57397e3bdf8f281aade6
+> 
+> Vulnerable Zikula versions: Development versions prior to patch [4].
+> Not vulnerable versions: Zikula v1.2.7 (stable). Doesn't contain
+> code in question yet.
+> 
+> Provided PoC (from [1], [2]):
+> =============================
+> http://host/index.php?module=theme&type=admin&func=setasdefault&themename=%3Cscript%3Ealert%28docu
+> ment.cookie%29%3C/script%3E
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thanks && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
