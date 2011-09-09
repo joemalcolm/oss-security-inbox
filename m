@@ -1,20 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/1
-Message-ID: <4DCA2A97.1070706@redhat.com>
-Date: Wed, 11 May 2011 11:50:07 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/7
+Message-ID: <1272861971.1022175.1315591442202.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 14:04:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: William Cohen <wcohen@...hat.com>, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, Robert Richter <robert.richter@....com>
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+Cc: coley <coley@...re.org>
+Subject: Re: CVE request: Quassel < 0.7.3 CTCP request core DoS
 Content-Type: text/plain; charset=utf-8
 
-On 05/11/2011 02:35 AM, William Cohen wrote:
+Please use CVE-2011-3354.
 
-Hi William,
-
-> The patches mentioned in the previous email.
-Thanks for the patches, they seem to work for me.
-
+Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+    JB
+
+----- Original Message -----
+> Hi,
+> 
+> please assign a CVE for the following issue:
+> CtcpParser::packedReply in src/core/ctcpparser.cpp in Quassel does not
+> process
+> certain CTCP requests correctly, allowing a remote attacker connected
+> to the
+> same IRC network as the victim to cause a Denial of Service condition
+> by
+> sending specially crafted CTCP requests. This was demonstrated in
+> various
+> exploits on freenode today.
+> 
+> Gentoo tracks the issue in [1], upstream fix is [2].
+> 
+> Thanks,
+> Alex
+> 
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=382313
+> [2] http://git.quassel-
+> irc.org/?p=quassel.git;a=commit;h=da215fcb9cd3096a3e223c87577d5d4ab8f8518b
+> 
+> --
+> Alex Legler <a3li@...too.org>
+> Gentoo Security / Ruby
