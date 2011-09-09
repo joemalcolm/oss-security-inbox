@@ -1,58 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/1
-Message-ID: <Pine.GSO.4.64.1110272304280.21599@faron.mitre.org>
-Date: Thu, 27 Oct 2011 23:38:47 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-cc: cve-assign@...re.org
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/6
+Message-ID: <87834720.1022071.1315591310297.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 14:01:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: fuse: check size of FUSE_NOTIFY_INVAL_ENTRY message
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-3353
 
-All,
+Thanks.
 
-There was some discussion in January 2011 regarding CAP_SYS_ADMIN and how 
-security boundaries are defined:
+-- 
+    JB
 
-   http://openwall.com/lists/oss-security/2011/01/07/1
 
-By this kind of logic, even though it's "silly" and a very low risk 
-because it requires such high privileges to exploit, the ability for an 
-attacker to bypass CAP_SYS_ADMIN by modifying dmesg_restrict so that the 
-attacker can read the kernel ring buffer, seems to bypass an intended 
-security policy, at least as the policy as it's currently implemented.
-
-There are a couple other statements worth considering:
-
-1) Vasiliy (with Dan's agreement) saying that "LXC security boundaries in
-    the mainline kernel are not well defined at this point."
-    http://openwall.com/lists/oss-security/2011/10/26/11
-
-2) Vasiliy's statement that "Procfs is not ready for containers yet."
-    I'm not sure what this means, exactly - is procfs code being modified
-    to support containers, and development isn't complete?
-
-3) Vasiliy's statement that an attacker can "use other sysctls for
-    more harmful things."  If a user already has legitimate, "acceptable"
-    privileges to perform an action that is equivalent to
-    CAP_SYS_ADMIN/dmesg_restrict, then the bypass does not cross security
-    boundaries.
-
-If we can get agreement that there isn't a well-defined security policy 
-yet (at least by the kernel people who are on oss-security), and if 
-there's agreement that procfs isn't being advertised to conform to any 
-such policy in the first place, then there could be some collective 
-community decision to decide that these kinds of issues don't (yet) 
-represent any violation of an explicit security policy.  This could then 
-shape future decisions for whether we continue to assign CVEs for these 
-kinds of issues, at least until some more explicit policy is defined.
-
-So, I'll repeat my subtle request in January for someone to try and define 
-what the acceptable security boundaries are at this stage, and then it 
-should make it easier to interpret what needs a CVE (or not).  It sounds 
-like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
-blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
-great start; based on my (limited) understanding, this suggests that 
-CAP_SYS_ADMIN can legitimately transition to full root.
-
-- Steve
+----- Original Message -----
+> FUSE_NOTIFY_INVAL_ENTRY didn't check the length of the write so the
+> message processing could overrun and result in a BUG_ON() in
+> fuse_copy_fill().
+> 
+> User able to mount FUSE filesystems can use this flaw to crash the
+> system.
+> 
+> References:
+> http://permalink.gmane.org/gmane.linux.kernel.commits.head/313266
+> http://sourceforge.net/mailarchive/forum.php?thread_name=87liut4i7w.fsf%40tucsk.pomaz.szeredi.hu&forum_name=fuse-devel
+> 
+> Upstream fix:
+> c2183d1e9b3f313dd8ba2b1b0197c8d9fb86a7ae
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
