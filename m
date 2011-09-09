@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/3
-Message-Id: <20110722141628.e0bd378d22e61ddb2a56c2c5@gmail.com>
-Date: Fri, 22 Jul 2011 14:16:28 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/6
+Message-ID: <87834720.1022071.1315591310297.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 14:01:50 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve id request: insecure xauth cookie handling in fglrx (ati catalyst) driver
+Cc: coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: fuse: check size of FUSE_NOTIFY_INVAL_ENTRY message
 Content-Type: text/plain; charset=utf-8
 
-Mike O'Connor wrote:
-> It looks like you've seen the same kind of thing before:
+Please use CVE-2011-3353
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> FUSE_NOTIFY_INVAL_ENTRY didn't check the length of the write so the
+> message processing could overrun and result in a BUG_ON() in
+> fuse_copy_fill().
 > 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=526678
+> User able to mount FUSE filesystems can use this flaw to crash the
+> system.
 > 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529306
-
-Yes, those are CVE-2009-1573 and CVE-2009-1756.
-
-> This may be worth a mention in the xauth man page.
-
-I think the vast majority aren't going to pay attention to
-seemingly pedantic man page warnings, but then again it may
-be worth it to help the few that do.
-
-Mike
+> References:
+> http://permalink.gmane.org/gmane.linux.kernel.commits.head/313266
+> http://sourceforge.net/mailarchive/forum.php?thread_name=87liut4i7w.fsf%40tucsk.pomaz.szeredi.hu&forum_name=fuse-devel
+> 
+> Upstream fix:
+> c2183d1e9b3f313dd8ba2b1b0197c8d9fb86a7ae
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
