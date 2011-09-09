@@ -1,51 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/2
-Message-ID: <20111111080607.GA2585@wopr.local.invalid>
-Date: Fri, 11 Nov 2011 09:06:08 +0100
-From: Guido Berhoerster <gber@...nsuse.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/4
+Message-ID: <141632136.1021400.1315590303458.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 13:45:03 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Cc: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Bugs NotHugs <bugsnothugs@...il.com>, Stjepan Gros <stjepan.gros@...il.com>, openvas-devel@...d.intevation.org
+Subject: Re: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
 Content-Type: text/plain; charset=utf-8
 
-* Robert Ancell <robert.ancell@...onical.com> [2011-11-11 07:21]:
-> On 10/11/11 23:57, Guido Berhoerster wrote:
-> > * Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
-> >> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
-> >>> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> >>>> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> >>>>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> >>>>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> >>>>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
-> >>>>>>> cause LightDM to set the destination of the link to user ownership.
-> >>>>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> >>>>>>>
-> >>>>>>> Overview of changes in lightdm 1.0.6
-> >>>>>>>
-> >>>>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> >>>>>> Could a CVE be assigned for this?
-> >>>>>>
-> >>>>>> Regards,
-> >>>>> Can you send me the link to this announcement so I can confirm it? Thanks.
-> >>>>>
-> >>>> Here's the link to the mailing list mail:
-> >>>> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
-> >>>>
-> >>>> Regards,
-> >>> Thanks, confirmed (first hand info is much better). Please use
-> >>> CVE-2011-4105 for this issue.
-> >>>
-> >> BTW, the fix that is in 1.0.6 is probably not enough for distros that
-> >> don't implement hard link restrictions, such as the Yama LSM that is
-> >> used in Ubuntu.
-> > Does an incomplete fix in a released version warrant a new CVE?
-> >
-> > I've attached a suggested fix.
-> Note the attached patch can still be exploited; if the file changes from
-> a standard file to a hard link / symlink between the lstat and the
-> fchown then lightdm can be fooled into thinking it's safe when it's
+Let's go with one ID. I don't see a reason to split these.
 
-Replacing the file between the lstat and the open would change
-its inode and then be caught by the check before the fchown, no?
+Use CVE-2011-3351
+
+Thanks.
 
 -- 
-Guido Berhoerster
+    JB
+
+
+----- Original Message -----
+> On Wednesday 07 Sep 2011 13:13:45 Jan Lieskovsky wrote:
+> > Hello Josh, Steve, vendors,
+> >
+> >    it was reported that the scanner module for the Open
+> >    Vulnerability
+> > Assessment System (OpenVAS) used insecure way for creation of a
+> > temporary file, when generating OVAL system characteristics document
+> > from the knowledge base data available, with the ovaldi integrated
+> > tool
+> > enabled. A local attacker could use this flaw to conduct symlink
+> > attacks to overwrite arbitrary files on the system, accessible with
+> > the
+> > privileges of the user running the SLAD daemon and / or the ovaldi
+> > OVAL
+> > interpreter.
+> >
+> 
+> Whilst having a look at the code with regard to the recently reported
+> f-d
+> issue with OpenVAS, the handling of sc-out.xml in the very same
+> function also
+> looks insecure. It also doesn't appear to care about races either and
+> I'm
+> also curious as to whether you can control the contents at all (think
+> attacks
+> against the ovaldi XML parser). I would suggest that this code needs
+> properly
+> auditing or removing.
+> 
+> Unfortunately the interaction with sc-out.xml happens before
+> privileges are
+> dropped so the malicious activitity occurs as the openvas-scanner user
+> (normally root) rather than nobody as in the case of results.xml - The
+> call to
+> unlink referenced in the f-d email is actually a misnomer as it will
+> actually
+> only delete the file from /tmp and not whatever it may or may not have
+> pointed
+> to and the actual writing to the newly race created symlink actually
+> happens
+> within the ovaldi binary which is spawned as nobody AFAIK.
+> 
+> Josh/oss-security folk, can I get a CVE for both bugs please. Will we
+> need to
+> split out the two race conditions as separate CVE? The OpenVAS
+> advisory will
+> cover both the originally reported nobody case as well as the root
+> case
+> referenced above.
+> 
+> Tim
+> --
+> Tim Brown
+> <mailto:timb@...nvas.org>
+> <http://www.openvas.org/>
