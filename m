@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/1
-Message-ID: <20110706034112.GA18345@openwall.com>
-Date: Wed, 6 Jul 2011 07:41:12 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/3
+Message-ID: <362325010.1020838.1315589241518.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 9 Sep 2011 13:27:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: vsftpd download backdoored
+Cc: coley <coley@...re.org>
+Subject: Re: CVE id request: masqmail
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 08:30:57PM +0800, Eugene Teo wrote:
-> On 07/05/2011 01:25 AM, Solar Designer wrote:
-> > On Mon, Jul 04, 2011 at 06:56:57PM +0200, Moritz Muehlenhoff wrote:
-> >> IIRC for such backdoored downloads CVE IDs were assigned in the past
-> >> to properly track the status of distributions providing the affected 
-> >> piece of code.
-> > 
-> > I suspect that no distributions provide the affected code this time.
-> > So if affected distributions is the only reason for CVE ID assignment in
-> > this case, it might make sense to postpone CVE ID allocation until we
-> > learn of an affected distribution (which we probably won't).
+Please use CVE-2011-3350.
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> Hi,
+> a misuse of the seteuid function from glibc prevents masqmail from
+> properly
+> dropping root privileges.
+> References:
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=638002
+> http://article.gmane.org/gmane.mail.masqmail/303
 > 
-> But with a CVE name, it is easier for people to refer to this issue, and
-> also easier for distributions to publish an official statement.
-
-Your reasoning makes sense to me.
-
-I have no objections to having a CVE ID assigned to this issue, but I
-have no idea what the policy is on such assignments.
-
-Alexander
+> Can you assign a CVE id to this?
+> 
+> Kind regards
+> Nico
+> --
+> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
+> 0xA0A0AAAA
+> For security reasons, all text in this mail is double-rot13 encrypted.
