@@ -1,26 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/2
-Message-ID: <20111019064509.GI5009@hall.aurel32.net>
-Date: Wed, 19 Oct 2011 08:45:09 +0200
-From: Aurelien Jarno <aurel32@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/10/1
+Message-ID: <20110910062759.GG1350@mutt-is@awesome>
+Date: Sat, 10 Sep 2011 09:28:00 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: FreeBSD kernel
+Subject: D-Link DCS-2121 Semicolon Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 Hello,
 
-As far as I know the FreeBSD-SA-11:05.unix didn't get any CVE entry
-assigned. Would it be possible to get one assigned?
+I've come up with this [0] blog post which, accordingly to author,
+describes a 0day vulnerability within D-Link DCS-2121 camera.
 
-See:
+In summary, the data posted from the web configuration interface to samba is
+directly used as a parameter without proper sanitization. This leads to
+an unwanted system call.
 
-   http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+Although the author says that the vulnerability can only be used by
+authenticated users via web interface, it would be dangerous together
+with CSRF on authenticated user. I think that it's worth looking, or, at
+least let the vendor know.
 
-Thanks,
-Aurelien
+"""
+Disclaimer (for not-so-funny people): yes this is "0day", unreported to
+the vendor. I even suspect the whole D-Link product line is vulnerable
+to the same bug (if not the whole world of low-end embedded systems (and
+even business class products)). However, since Web access requires
+authentication, this bug might be exploitable by administrators only, so
+it is only useful for people who would like to gain a shell on their own
+systems. Do not panic :)
+"""
+
+[0] http://newsoft-tech.blogspot.com/2010/09/d-link-dcs-2121-and-state-of-embedded.html
+
+Regards,
 
 -- 
-Aurelien Jarno	                        GPG: 1024D/F1BCDB73
-aurelien@...el32.net                 http://www.aurel32.net
+        . 73! DE TA1AET
 
-Download attachment "signature.asc" of type "application/pgp-signature" (191 bytes)
+Content of type "application/pgp-signature" skipped
