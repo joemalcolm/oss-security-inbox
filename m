@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/8
-Message-ID: <4EE131EA.8060701@redhat.com>
-Date: Thu, 08 Dec 2011 14:53:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/10/1
+Message-ID: <20110910062759.GG1350@mutt-is@awesome>
+Date: Sat, 10 Sep 2011 09:28:00 +0300
+From: Eren Türkay <eren@...dus.org.tr>
 To: oss-security@...ts.openwall.com
-CC: Jeff Mitchell <mitchell@....org>
-Subject: Re: Disputing CVE-2011-4122
+Subject: D-Link DCS-2121 Semicolon Vulnerability
 Content-Type: text/plain; charset=utf-8
 
- 
->
-> The documentation you linked to above is for LinuxPAM, not OpenPAM.
-> They're different systems and the bug only affects OpenPAM.
->
-> --Jeff
->
-Right, my thought/comment is more around the point that this isn't
-defined in general very well anywhere (that I can find, and I assume
-OpenPAM and Linux PAM are going to implement things in a roughly similar
-manner) and that it probably should be defined better. In the meantime
-though it is likely that restrictions/filtering can be implemented but
-it needs to be done carefully since there is the potential for weirdness.
+Hello,
+
+I've come up with this [0] blog post which, accordingly to author,
+describes a 0day vulnerability within D-Link DCS-2121 camera.
+
+In summary, the data posted from the web configuration interface to samba is
+directly used as a parameter without proper sanitization. This leads to
+an unwanted system call.
+
+Although the author says that the vulnerability can only be used by
+authenticated users via web interface, it would be dangerous together
+with CSRF on authenticated user. I think that it's worth looking, or, at
+least let the vendor know.
+
+"""
+Disclaimer (for not-so-funny people): yes this is "0day", unreported to
+the vendor. I even suspect the whole D-Link product line is vulnerable
+to the same bug (if not the whole world of low-end embedded systems (and
+even business class products)). However, since Web access requires
+authentication, this bug might be exploitable by administrators only, so
+it is only useful for people who would like to gain a shell on their own
+systems. Do not panic :)
+"""
+
+[0] http://newsoft-tech.blogspot.com/2010/09/d-link-dcs-2121-and-state-of-embedded.html
+
+Regards,
 
 -- 
+        . 73! DE TA1AET
 
--Kurt Seifried / Red Hat Security Response Team
-
-
+Content of type "application/pgp-signature" skipped
