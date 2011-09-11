@@ -1,51 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/9
-Message-ID: <CAPQRN=UZoJgd71qfzAEKdJC37mT4+2hPmzs6=zz9hCXArbZmoA@mail.gmail.com>
-Date: Tue, 29 Nov 2011 11:35:30 -0200
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, security@...ckware.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/11/1
+Message-ID: <4E6CC128.7070302@redhat.com>
+Date: Sun, 11 Sep 2011 16:09:44 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Django project security team <security@...ngoproject.com>
+Subject: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-2011/11/29 Solar Designer <solar@...nwall.com>
+Hello Josh, Steve, vendors,
 
-> Raphael -
->
-> On Mon, Nov 28, 2011 at 09:18:50PM -0200, Raphael Bastos wrote:
-> > Take a look.... this is the correction sugest to script "SeTpartitions".
->
-> As Kurt said, you definitely need to provide more information.  I found
-> your posting cryptic and I was unsure about approving it for
-> distribution to the list (yet I did), because it could at best result in
-> a request for more info.  Security relevance of your finding is unclear
-> from what you posted.
->
-> Please clarify.
->
-> Thanks,
->
-> Alexander
->
+   multiple security flaws have been recently addressed in the v1.3.1
+and v1.2.7 versions of the Django Python Web framework (from [1]):
+1, Session manipulation,
+2, Denial of service attack via URLField,
+3, URLField redirection,
+4, Host header cache poisoning,
+5, Host header and CSRF,
+6, Cross-subdomain CSRF attacks,
+7, DEBUG pages and sensitive POST data
 
+References:
+[1] https://www.djangoproject.com/weblog/2011/sep/09/
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=737366
 
-Sorry for my bad English, I am Brazilian. kkkkkkkkk
-I am quoting a bug in the script "SeTpartitions," the official Slackware
-installer. I suggested a correction in lines 374, 495, 496, 503, where
-instead of using / mnt, which is used for the variable mountpoint '$ T_PX'.
+Could you allocate a CVE ids for these flaws?
 
-I found this bug since 2002 used the installer for my Slackware Linux
-distribution based on Gentoo. After modifying the installer could normally
-use.
-PS: I use a different mount point / mnt as used by Pat use another LiveCD, also
-created by me.
-
-Thank you for listening. I tried to send this email to Patrick, but
-went 30 days
-without response, so headed here for the list.
-
-Any other questions just give me a report.
-
-Sds,
-Raphael Bastos aka chemonz
-
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
