@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/4
-Message-ID: <1254955020.94867.1303332352648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Apr 2011 16:45:52 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Richard Hughes <rhughes@...hat.com>, Ray Strode <rstrode@...hat.com>, lsof@...ata.co.uk, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- gnome-desktop3: Switching users dialog does not lock the screen for the original user account
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/11/1
+Message-ID: <4E6CC128.7070302@redhat.com>
+Date: Sun, 11 Sep 2011 16:09:44 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Django project security team <security@...ngoproject.com>
+Subject: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1596
+Hello Josh, Steve, vendors,
 
-Thanks.
+   multiple security flaws have been recently addressed in the v1.3.1
+and v1.2.7 versions of the Django Python Web framework (from [1]):
+1, Session manipulation,
+2, Denial of service attack via URLField,
+3, URLField redirection,
+4, Host header cache poisoning,
+5, Host header and CSRF,
+6, Cross-subdomain CSRF attacks,
+7, DEBUG pages and sensitive POST data
 
--- 
-    JB
+References:
+[1] https://www.djangoproject.com/weblog/2011/sep/09/
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=737366
 
+Could you allocate a CVE ids for these flaws?
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it has been reported that using of Gnome upon using of "Switch user"
-> dialog, log in into a
-> new user account (user2), logout of new user account (user2) the
-> desktop is returned to the
-> original user account (for user1) without prompting for a password. A
-> locally proximate
-> attacker could use this flaw to access resources, which should be
-> otherwise protected
-> by authentication.
-> 
-> Original report:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=697199
-> 
-> Upstream bug report:
-> [2] https://bugzilla.gnome.org/show_bug.cgi?id=648234
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
