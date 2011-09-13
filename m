@@ -1,53 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/10
-Message-ID: <441323329.125085.1305660435298.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 15:27:15 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/1
+Message-ID: <4E6EE979.9080200@redhat.com>
+Date: Tue, 13 Sep 2011 10:56:17 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
+CC: Gerald Combs <gerald@...eshark.org>
+Subject: CVE Request: Multiple issues fixed in wireshark 1.6.2
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+Hi,
+Multiple issues were were fixed in wireshark 1.6.2, out of which 4 of 
+them do not have any CVEs assigned.
 
-Can MITRE deal with this one (also, have you folks assigned this yet?).
+1, Wireshark CSN.1 dissector vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-16.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737783
 
-I'm not sure how you've handled the crashes historically.
+2. Wireshark Lua script execution vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-15.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737784
+
+3. Wireshark buffer exception handling vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-14.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737785
+
+4. Wireshark OpenSafety dissector vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-12.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737787
+
+Can CVE be assigned to the above issues please?
 
 Thanks.
 
+
 -- 
-    JB
-
-
------ Original Message -----
-> I see the following changes as fixed in MySQL 5.1.52, but cannot find
-> any CVEs for them:
-> 
-> InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
-> examining the same table's information in the INFORMATION_SCHEMA
-> database at the same time could cause a crash in the debug version of
-> the server. (Bug #54678)
-> 
-> Security Fix: The server crashed for assignment of values of types
-> other
-> than Geometry to items of type GeometryCollection (MultiPoint,
-> MultiCurve, MultiSurface). Now the server checks the field type and
-> fails with bad geometry value if it detects incorrect parameters. (Bug
-> #55531)
-> 
-> Security Fix: EXPLAIN EXTENDED caused a server crash with some
-> prepared
-> statements. (Bug #54494)
-> 
-> Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from a
-> derived table caused a server crash. (Bug #54488)
-> 
-> There are a whole bunch of other crash-type bugs corrected in 5.1.52
-> that upstream did not explicitly flag as security, which might be
-> considered security-relevant as well:
-> 
-> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+Huzaifa Sidhpurwala / Red Hat Security Response Team
