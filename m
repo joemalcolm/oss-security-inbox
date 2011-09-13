@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/3
-Message-ID: <20110311141748.GA14348@openwall.com>
-Date: Fri, 11 Mar 2011 17:17:48 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Florian Zumbiehl <florz@...rz.de>
-Cc: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/3
+Message-ID: <9da534f7f2949a36b808938d1a6111a3.squirrel@wm.kinkhorst.nl>
+Date: Tue, 13 Sep 2011 16:24:17 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cbarratt@...rs.sourceforge.net
+Subject: CVE Request: BackupPC 3.2.1 fixes cross site scripting
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 10, 2011 at 10:32:43PM +0100, Florian Zumbiehl wrote:
-> > > | However, I think that still #6 (shell injection) and #7 (logrotate
-> > > | DoS with strange characters in file names) should be considered
-> > > | vulnerabilities in logrotate: ...
-[...]
-> I was thinking more in the direction of an existing config that includes
-> a wildcard and software that uses user input to construct file names
-> that would be matched by that wildcard. An example of such software
-> would be samba, which tends to create per-client-host log files named
-> after those hosts. I don't have a clue whether samba could be made to
-> include any shell meta characters (does it even do reverse lookups for
-> that?), but I guess you get the idea.
+Hi,
 
-This makes sense, and I agree that it's a reason for logrotate to treat
-log filenames as potentially untrusted input.  It's probably also a
-reason to get CVE ids assigned.
+BackupPC 3.2.1 was released back in April and fixed an XSS problem:
 
-Thank you for explaining the attack vector here!
+http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
 
-Alexander
+This is upstream's patch:
+
+http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
+
+The same code is present at least since BackupPC 3.1.0, which is the
+oldest version we support. It seems no CVE id has been issued to date. Can
+a CVE id please be assigned?
+
+
+thanks,
+Thijs
