@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/1
-Message-ID: <20111118023657.GA24321@openwall.com>
-Date: Fri, 18 Nov 2011 06:36:57 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/2
+Message-ID: <efbf462124262d44df4bfc0bbbb677ca.squirrel@wm.kinkhorst.nl>
+Date: Tue, 13 Sep 2011 10:58:09 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: linux-distros list setup update
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-Not surprisingly, we started receiving spam to the linux-distros list.
-PGP-encrypted spam is fun, yet I decided to introduce an anti-spam
-measure, now documented on this new wiki page:
+On Sun, September 11, 2011 16:09, Jan Lieskovsky wrote:
+>    multiple security flaws have been recently addressed in the v1.3.1
+> and v1.2.7 versions of the Django Python Web framework (from [1]):
 
-http://oss-security.openwall.org/wiki/mailing-lists/linux-distros
+> References:
+> [1] https://www.djangoproject.com/weblog/2011/sep/09/
 
-"Be sure to include [vs] (four characters) in the Subject line, or your
-message will most likely be rejected by the mail server."
+For those that are going to prepare updates it may be useful to note that
+a correction release to the original announcement has been posted a day
+later:
+https://www.djangoproject.com/weblog/2011/sep/10/127/
 
-Some kinds of messages should pass despite of lacking [vs] in the
-Subject - for example, this should be the case for most PGP-encrypted or
-PGP-signed messages - but to be safe, please use the [vs] thing even if
-you encrypt and/or sign.  The rejected messages are rejected at SMTP
-level, so senders should receive bounces from their own mail relays.
 
-Alexander
+Cheers,
+Thijs
