@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/4
-Message-ID: <20111030161606.GA11526@albatros>
-Date: Sun, 30 Oct 2011 20:16:06 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Armin Burgmeier <armin@...ur.net>
-Cc: oss-security@...ts.openwall.com, Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
-Subject: Re: CVE request: 3 flaws in libobby and libnet6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/5
+Message-ID: <20110913193647.GB17038@inutil.org>
+Date: Tue, 13 Sep 2011 21:36:47 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: heap overflow in tcptrack < 1.4.2
 Content-Type: text/plain; charset=utf-8
 
-Armin,
+On Wed, Aug 31, 2011 at 06:35:45PM -0400, Steven M. Christey wrote:
+>
+> I'm wondering if this should have received a CVE.
+>
+> https://bugs.gentoo.org/show_bug.cgi?id=377917 quotes upstream:
+>
+>    "This fixes a heap overflow in the parsing of the command line...
+>     this may have security repercussions if
+>     tcptrack is configured as a handler for other applications that can
+>     pass user-supplied command line input to tcptrack."
+>
+> The "attack" is through a command line argument.  While it's listed as a  
+> sniffer, the above text suggests that tcptrack might not be  
+> setuid/privileged, since the only given scenario is "as a handler for  
+> other applications."  Unless this is a typical/known scenario, this seems 
+> like just another unprivileged application, in which case the control 
+> over a command line argument would not directly cross privilege 
+> boundaries, thus falling into the realm of "bug" and not "vulnerability."
 
-On Sun, Oct 30, 2011 at 17:20 +0100, Armin Burgmeier wrote:
-> I have fixed the issues 1+3 in git [1,2]. It would be great if you could
-> confirm the patches to really fix the issues you raised.
+FWIW, we're treating it as a non-security issue in Debian.
 
-Looks like they do.  FWIW, the counter overflow could be fixed by simply
-using uint_64, which would overflow in 20 billion years :)
-
-
-> As for the second issue, I do not think it is worth the effort to
-> implement SSL certificate handling in obby. Both net6 and obby are
-> replaced by libinfinity in the current development version of Gobby.
-> libinfinity makes use of SSL certificates.
-
-Some distros probably don't want to switch to the development version of
-Gobby (which also uses a different dependency), but to fix the bugs of
-their own stable versions.
-
-As personally I am not a maintainer of a distro with the official Gobby
-support, I don't care about maintaining old versions much, though.  I'm
-happy with the fixes in the dev version.
-
-
-> We would be pleased if you could check for similar flaws in libinfinity
-> though I admit that it is much more code and probably more complicated
-> to analyze.
-
-OK, I'll probably look at libinfinity at my spare time as I did it with obby.
-
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Cheers,
+        Moritz
