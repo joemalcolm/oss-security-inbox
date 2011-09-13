@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/5
-Message-ID: <4EB2BA04.7020908@redhat.com>
-Date: Thu, 03 Nov 2011 09:57:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/3
+Message-ID: <9da534f7f2949a36b808938d1a6111a3.squirrel@wm.kinkhorst.nl>
+Date: Tue, 13 Sep 2011 16:24:17 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, phpMyAdmin Security Team <security@...myadmin.net>
-Subject: Re: CVE Request -- phpMyAdmin -- Arbitrary local file read flaw by loading XML strings / importing XML files
+Cc: cbarratt@...rs.sourceforge.net
+Subject: CVE Request: BackupPC 3.2.1 fixes cross site scripting
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/2011 09:01 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors, phpMyAdmin Security Team,
->
->   a local file inclusion flaw was found in the way XML import plug-in of
-> phpMyAdmin, a tool written in PHP intended to handle the administration
-> of MySQL over the World Wide Web, performed import of malformed XML
-> files. A remote attacker could provide a specially-crafted XML file,
-> which once imported into the phpMyAdmin service instance would lead to
-> arbitrary local file (accessible with the privileges of the phpMyAdmin
-> user) read / retrieval.
->
-> References:
-> [1] http://seclists.org/fulldisclosure/2011/Nov/21
-> [2] http://www.wooyun.org/bugs/wooyun-2010-03185
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=751112
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Cc-ed phpMyAdmin security team to clarify upstream patch status.
->
-Please use CVE-2011-4107 for this issue.
+Hi,
 
--- 
+BackupPC 3.2.1 was released back in April and fixed an XSS problem:
 
--Kurt Seifried / Red Hat Security Response Team
+http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
 
+This is upstream's patch:
+
+http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
+
+The same code is present at least since BackupPC 3.1.0, which is the
+oldest version we support. It seems no CVE id has been issued to date. Can
+a CVE id please be assigned?
+
+
+thanks,
+Thijs
