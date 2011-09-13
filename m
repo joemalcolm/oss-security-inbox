@@ -1,28 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/24
-Message-ID: <20110403224959.GA10158@openwall.com>
-Date: Mon, 4 Apr 2011 02:49:59 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/4
+Message-ID: <20110913164254.GA32407@inutil.org>
+Date: Tue, 13 Sep 2011 18:42:55 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: ffmpeg/libav insufficuent boundary check in CAVS decoding
 Content-Type: text/plain; charset=utf-8
 
-Mike,
+Hi,
+this oCert advisory never seems to have received a CVE
+assignment: http://www.ocert.org/advisories/ocert-2011-002.html
 
-On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
-> pub    512R/205BBF7D 2001-12-30
->       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
->       C1
-> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+Upstream fix in ffmpeg:
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=c5cbda50793e311aa73489d12184ffd6761c9fbf
 
-I've subscribed you with this key for now, but you really ought to
-upgrade to a larger key, and I'd appreciate a statement on what Linux
-distro you represent on the new list.
-
-All: my decision is based on some info known to me, but I'd prefer to
-base it on Mike's posting to oss-security.  I am saying this to explain
-that there's a reason why I subscribed Mike, whereas I would not
-subscribe another "random" person posting the same kind of message from
-a personal address. ;-)
-
-Alexander
+Cheers,
+        Moritz
