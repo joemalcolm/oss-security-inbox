@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/11
-Message-ID: <1300279733.4549.8.camel@macbook.infradead.org>
-Date: Wed, 16 Mar 2011 12:48:53 +0000
-From: David Woodhouse <dwmw2@...radead.org>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, Mark McLoughlin <mark@...net.ie>,  "Steven M. Christey" <coley@...us.mitre.org>, David King <amigadave@...gadave.com>
-Subject: Re: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/1
+Message-ID: <4E6EE979.9080200@redhat.com>
+Date: Tue, 13 Sep 2011 10:56:17 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Gerald Combs <gerald@...eshark.org>
+Subject: CVE Request: Multiple issues fixed in wireshark 1.6.2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-03-16 at 07:58 -0400, Josh Bressers wrote:
-> I probably should have been more clear here. I was under the impression the
-> CVE id applied to instances where it would use UPnP and no auth, which is
-> dangerous and should probably include a big warning with a button that says
-> "I know what I'm doing (but probably not really)". 
+Hi,
+Multiple issues were were fixed in wireshark 1.6.2, out of which 4 of 
+them do not have any CVEs assigned.
 
+1, Wireshark CSN.1 dissector vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-16.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737783
 
-Right. So that CVE should apply to the case of it listening on a
-publicly available IP address with no auth, whether it uses uPnP or not.
+2. Wireshark Lua script execution vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-15.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737784
 
-If it just listens on the socket and is usable from the outside world
-without a password, that's the *same* problem.
+3. Wireshark buffer exception handling vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-14.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737785
 
-The CVE really has nothing to do with uPnP; it's about the lack of
-authentication on a publicly-available service.
+4. Wireshark OpenSafety dissector vulnerability
+http://www.wireshark.org/security/wnpa-sec-2011-12.html
+https://bugzilla.redhat.com/show_bug.cgi?id=737787
+
+Can CVE be assigned to the above issues please?
+
+Thanks.
+
 
 -- 
-dwmw2
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
