@@ -1,16 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/3
-Message-ID: <20111126121211.GA15385@openwall.com>
-Date: Sat, 26 Nov 2011 16:12:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/2
+Message-ID: <efbf462124262d44df4bfc0bbbb677ca.squirrel@wm.kinkhorst.nl>
+Date: Tue, 13 Sep 2011 10:58:09 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Nov 26, 2011 at 12:53:17PM +0100, Joost Hoogendoorn wrote:
-> I'm also interested. Thanks.
+Hi all,
 
-What OS distribution are you a security contact for?  And how do we
-verify that?
+On Sun, September 11, 2011 16:09, Jan Lieskovsky wrote:
+>    multiple security flaws have been recently addressed in the v1.3.1
+> and v1.2.7 versions of the Django Python Web framework (from [1]):
 
-Alexander
+> References:
+> [1] https://www.djangoproject.com/weblog/2011/sep/09/
+
+For those that are going to prepare updates it may be useful to note that
+a correction release to the original announcement has been posted a day
+later:
+https://www.djangoproject.com/weblog/2011/sep/10/127/
+
+
+Cheers,
+Thijs
