@@ -1,61 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/4
-Message-ID: <1155877538.2043879.1313173472436.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 12 Aug 2011 14:24:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/13/5
+Message-ID: <20110913193647.GB17038@inutil.org>
+Date: Tue, 13 Sep 2011 21:36:47 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+Subject: Re: CVE request: heap overflow in tcptrack < 1.4.2
 Content-Type: text/plain; charset=utf-8
 
-> 
-> 1) An integer overflow error exists within the "CSoundFile::ReadWav()"
-> function (src/load_wav.cpp) when processing certain WAV files. This can
-> be exploited to cause a heap-based buffer overflow by tricking a user
-> into opening a specially crafted WAV file.
+On Wed, Aug 31, 2011 at 06:35:45PM -0400, Steven M. Christey wrote:
+>
+> I'm wondering if this should have received a CVE.
+>
+> https://bugs.gentoo.org/show_bug.cgi?id=377917 quotes upstream:
+>
+>    "This fixes a heap overflow in the parsing of the command line...
+>     this may have security repercussions if
+>     tcptrack is configured as a handler for other applications that can
+>     pass user-supplied command line input to tcptrack."
+>
+> The "attack" is through a command line argument.  While it's listed as a  
+> sniffer, the above text suggests that tcptrack might not be  
+> setuid/privileged, since the only given scenario is "as a handler for  
+> other applications."  Unless this is a typical/known scenario, this seems 
+> like just another unprivileged application, in which case the control 
+> over a command line argument would not directly cross privilege 
+> boundaries, thus falling into the realm of "bug" and not "vulnerability."
 
-CVE-2011-2911
+FWIW, we're treating it as a non-security issue in Debian.
 
-
-> 
-> 2) Boundary errors within the "CSoundFile::ReadS3M()" function
-> (src/load_s3m.cpp) when processing S3M files can be exploited to cause
-> stack-based buffer overflows by tricking a user into opening a specially
-> crafted S3M file.
-
-CVE-2011-2912
-
-
-> 
-> 3) An off-by-one error within the "CSoundFile::ReadAMS()" function
-> (src/load_ams.cpp) can be exploited to cause a stack corruption by
-> tricking a user into opening a specially crafted AMS file.
-
-CVE-2011-2913
-
-
-> 
-> 4) An off-by-one error within the "CSoundFile::ReadDSM()" function
-> (src/load_dms.cpp) can be exploited to cause a memory corruption by
-> tricking a user into opening a specially crafted DSM file.
-
-CVE-2011-2914
-
-
-> 
-> 5) An off-by-one error within the "CSoundFile::ReadAMS2()" function
-> (src/load_ams.cpp) can be exploited to cause a memory corruption by
-> tricking a user into opening a specially crafted AMS file.
-
-CVE-2011-2915
-
-
-I could have grouped the off-by-one flaws together, but I decided not to
-since you mention that old gstreamer-plugins contains embedded copies,
-which I suspect is also going to mean those will affect different things in
-different ways.
-
-Thanks.
-
--- 
-    JB
+Cheers,
+        Moritz
