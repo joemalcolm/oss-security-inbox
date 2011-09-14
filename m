@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/3
-Message-ID: <4EF4E865.3080907@redhat.com>
-Date: Fri, 23 Dec 2011 13:45:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/12
+Message-ID: <1254374822.1262221.1316026288551.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:51:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: simplesamlphp / Typo3
+Cc: coley@...us.mitre.org, cve-assign@...re.org
+Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
 Content-Type: text/plain; charset=utf-8
 
-On 12/23/2011 01:20 PM, Moritz Muehlenhoff wrote:
-> Hi,
->
-> 1. Please assign a CVE ID for this issue in simplesamlphp we fixed in a DSA
-> a while ago:
-> http://lists.debian.org/debian-security-announce/2011/msg00206.html
-Please use CVE-2011-4625 for this issue
+Please use CVE-2011-3363 for this.
 
-> 2. Please assign a CVE ID for these issues in Typo3 we fixed in a DSA
-> a while ago:
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-001/
-> http://lists.debian.org/debian-security-announce/2011/msg00163.html
-
-Argh. This one will have to wait since 1) I need to assign CVE's for ALL 
-the typo3 issues for 2011 and 2) I don't have enough spare CVE' right 
-now (here's hoping someone at Mitre is still in the office this 
-afternoon =). Once I get the CVE #'s I'll do an email like I did for moodle.
-
-> Cheers,
->          Moritz
+Thanks.
 
 -- 
--Kurt Seifried / Red Hat Security Response Team
+    JB
+
+
+----- Original Message -----
+> "Currently, we skip doing the is_path_accessible check in cifs_mount
+> if
+> there is no prefixpath. There is a report of at least one server
+> however
+> that allows a TREE_CONNECT to a share that has a DFS referral at its
+> root. UNC that had no prefixpath was used in that case, so the
+> is_path_accessible check was not triggered and the box later hit
+> a BUG() because we were chasing a DFS referral on the root dentry for
+> the mount."
+> 
+> Upstream fix:
+> 70945643722ffeac779d2529a348f99567fa5c33
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=682829
+> https://github.com/mirrors/linux/commit/70945643722ffeac779d2529a348f99567fa5c33
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
