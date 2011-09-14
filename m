@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/8
-Message-ID: <4EE131EA.8060701@redhat.com>
-Date: Thu, 08 Dec 2011 14:53:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/8
+Message-ID: <472217203.1261673.1316025180193.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:33:00 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jeff Mitchell <mitchell@....org>
-Subject: Re: Disputing CVE-2011-4122
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
 Content-Type: text/plain; charset=utf-8
 
- 
->
-> The documentation you linked to above is for LinuxPAM, not OpenPAM.
-> They're different systems and the bug only affects OpenPAM.
->
-> --Jeff
->
-Right, my thought/comment is more around the point that this isn't
-defined in general very well anywhere (that I can find, and I assume
-OpenPAM and Linux PAM are going to implement things in a roughly similar
-manner) and that it probably should be defined better. In the meantime
-though it is likely that restrictions/filtering can be implemented but
-it needs to be done carefully since there is the potential for weirdness.
+Please use CVE-2011-3362.
+
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
-
+----- Original Message -----
+> Hi,
+> this oCert advisory never seems to have received a CVE
+> assignment: http://www.ocert.org/advisories/ocert-2011-002.html
+> 
+> Upstream fix in ffmpeg:
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=c5cbda50793e311aa73489d12184ffd6761c9fbf
+> 
+> Cheers,
+> Moritz
