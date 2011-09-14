@@ -1,28 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/6
-Message-ID: <4D875F90.7020905@redhat.com>
-Date: Mon, 21 Mar 2011 15:24:16 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, John Bailey <rekkanoryo@...kanoryo.org>
-Subject: CVE Request (minor) -- Pidgin / libpurple -- Cipher API information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/9
+Message-ID: <Pine.GSO.4.64.1109141428170.18631@faron.mitre.org>
+Date: Wed, 14 Sep 2011 14:35:54 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
+Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
 Content-Type: text/plain; charset=utf-8
 
 
-Hello Josh, Steve, vendors,
+> Are the below worth assigning CVE ids to? The advisory seems to suggest 
+> they are crash only fixes. Do those deserve CVE IDs? I know we've been 
+> fairly generous with wireshark in the past, but I'm wondering if we need 
+> to draw a line somewhere.
 
-   the following:
-   [1] http://pidgin.im/news/security/?id=50
+Crash-only issues are always/typically worth a CVE when it can prevent a 
+product from working in a security context.  Wireshark monitors network 
+traffic, sometimes live; therefore, in some reasonable/common usage 
+scenarios, attackers can cause a crash and prevent network activities from 
+being detected.
 
-   Upstream patch:
-   [2] http://developer.pidgin.im/viewmtn/revision/info/16f4c309528b82961b169edb8b74b9061db6c471
+We apply similar logic in forensics and other scenarios.  Therefore a CVE 
+is needed for both wnpa-sec-2011-12 (crash reading live packets) as well 
+as wnpa-sec-2011-14 (by only reading a packet trace file) - in the latter, 
+analysis of a packet trace could be hampered/delayed because the 
+investigator can't use the product without it crashing.
 
-Doesn't seem to have a CVE identifier yet.
+Wireshark does not get any more "preference" than any other tool, except 
+indirectly because it gets more attention.
 
-Could you allocate one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+- Steve
 
 
+
+On Wed, 14 Sep 2011, Josh Bressers wrote:
+
+> ----- Original Message -----
+>
+>> 2. Wireshark Lua script execution vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-15.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737784
+>
+> Use CVE-2011-3360 for the above.
+>
+>
+>>
+>> 1, Wireshark CSN.1 dissector vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-16.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737783
+>>
+>> 3. Wireshark buffer exception handling vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-14.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737785
+>>
+>> 4. Wireshark OpenSafety dissector vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-12.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737787
+>>
+>
+> Thanks.
+>
+> --
+>    JB
+>
