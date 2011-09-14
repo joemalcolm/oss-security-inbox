@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/2
-Message-ID: <20111028065606.GC14711@foo.fgeek.fi>
-Date: Fri, 28 Oct 2011 09:56:06 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/3
+Message-ID: <20110914140926.GC25572@dhcp-25-225.brq.redhat.com>
+Date: Wed, 14 Sep 2011 16:09:27 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwik before 1.6
+Cc: coley@...us.mitre.org
+Subject: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2011 at 12:28:02PM -0400, Josh Bressers wrote:
-> Steve,
-> 
-> Can MITRE take this thread. I'm a bit fearful as to what this one is going to become.
-> 
-> Thanks.
-> 
-> ----- Original Message -----
-> > p.s. I see a CVE ID hasn't been issued for:
-> > 
-> > http://piwik.org/blog/2011/06/piwik-1-5-security-advisory/
-> > 
-> 
-> -- 
->     JB
+"Currently, we skip doing the is_path_accessible check in cifs_mount if
+there is no prefixpath. There is a report of at least one server however
+that allows a TREE_CONNECT to a share that has a DFS referral at its
+root. UNC that had no prefixpath was used in that case, so the
+is_path_accessible check was not triggered and the box later hit
+a BUG() because we were chasing a DFS referral on the root dentry for
+the mount."
 
-Did MITRE respond?
+Upstream fix:
+70945643722ffeac779d2529a348f99567fa5c33
 
-Best regards,
-Henri Salo
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=682829
+https://github.com/mirrors/linux/commit/70945643722ffeac779d2529a348f99567fa5c33
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
