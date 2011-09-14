@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/09/1
-Message-ID: <4D76D06E.4030405@redhat.com>
-Date: Wed, 09 Mar 2011 08:57:18 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/7
+Message-ID: <1785682857.1261431.1316024738643.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:25:38 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Petr Matousek <pmatouse@...hat.com>, coley@...us.mitre.org
-Subject: Re: CVE-2011-0714 kernel: deficiency in handling of invalid data packets in lockd
+Cc: cbarratt@...rs.sourceforge.net, cve-assign@...re.org
+Subject: Re: CVE Request: BackupPC 3.2.1 fixes cross site scripting
 Content-Type: text/plain; charset=utf-8
 
-On 03/09/2011 03:41 AM, Petr Matousek wrote:
-> Hello,
->
-> Josh Bressers has assigned a CVE id CVE-2011-0714 to the following bug:
->
-> "It was found that lockd did not properly handle data packets that contained
-> invalid data. This could be possibly exploited by remote user to crash the
-> server (DoS)."
->
-> Please note that this issue only affects Red Hat Enterprise Linux 6 as a
-> result of an incomplete upstream commit backport.
->
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=678144
+Please use CVE-2011-3361 for this.
 
-http://rhn.redhat.com/errata/RHSA-2011-0329.html
+Thanks.
 
-Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+----- Original Message -----
+> Hi,
+> 
+> BackupPC 3.2.1 was released back in April and fixed an XSS problem:
+> 
+> http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
+> 
+> This is upstream's patch:
+> 
+> http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
+> 
+> The same code is present at least since BackupPC 3.1.0, which is the
+> oldest version we support. It seems no CVE id has been issued to date.
+> Can
+> a CVE id please be assigned?
+> 
+> 
+> thanks,
+> Thijs
