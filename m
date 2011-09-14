@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/10
-Message-ID: <183364929.302425.1314218070898.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Aug 2011 16:34:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/7
+Message-ID: <1785682857.1261431.1316024738643.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:25:38 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Debian Security Team <team@...urity.debian.org>, Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
-Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
+Cc: cbarratt@...rs.sourceforge.net, cve-assign@...re.org
+Subject: Re: CVE Request: BackupPC 3.2.1 fixes cross site scripting
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> > #637477
-> > Insufficient input checking in /shared/inc/sql/lists.php
+Please use CVE-2011-3361 for this.
 
-CVE-2011-3195
-
-
-> > #637485
-> > The setup script for dtc writes the password for the MySQL user in the
-> > world-readable file /etc/apache2/apache2.conf.
-
-CVE-2011-3196
-
-
-> > #637487
-> > Insufficient input checking leads to a SQL injection vulnerability in
-> > shared/inc/forms/domain_info.php.
-> >
-> > #637498
-> > A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
-> > files as the MySQL system user.
-
-I'm grouping the above two together.
-CVE-2011-3197
-
-
-> > #637537
-> > dtc passes passwords to htpasswd using command line arguments, which
-> > can be read by a local user.
-
-CVE-2011-3198
-
-
-> > #637584
-> > dtc does not escape variables in HTML output in many places; for
-> > example in the "Domain root TXT record:" field on the "DNS and MX" page
-> > where JavaScript can be injected.
-
-Let's call this "multiple XSS flaws"
-CVE-2011-3199
-
-Thanks for sorting the original list.
+Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Hi,
+> 
+> BackupPC 3.2.1 was released back in April and fixed an XSS problem:
+> 
+> http://sourceforge.net/mailarchive/forum.php?thread_name=f1f1ef74-716d-4af8-b1bf-c1ba6d9a98a1%40SC1EXHC-02.global.atheros.com&forum_name=backuppc-devel
+> 
+> This is upstream's patch:
+> 
+> http://backuppc.cvs.sourceforge.net/viewvc/backuppc/BackupPC/lib/BackupPC/CGI/Browse.pm?r1=1.23&r2=1.24
+> 
+> The same code is present at least since BackupPC 3.1.0, which is the
+> oldest version we support. It seems no CVE id has been issued to date.
+> Can
+> a CVE id please be assigned?
+> 
+> 
+> thanks,
+> Thijs
