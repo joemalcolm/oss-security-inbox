@@ -1,55 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/3
-Message-ID: <Pine.GSO.4.64.1109021135030.7465@faron.mitre.org>
-Date: Fri, 2 Sep 2011 11:39:12 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/9
+Message-ID: <Pine.GSO.4.64.1109141428170.18631@faron.mitre.org>
+Date: Wed, 14 Sep 2011 14:35:54 -0400 (EDT)
 From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: ffmpeg issues
+To: Josh Bressers <bressers@...hat.com>
+cc: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
+Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
 Content-Type: text/plain; charset=utf-8
 
 
-For context, CVE-2011-2162 was assigned because of Mandriva's reference to 
-"several additional vulnerabilites originally discovered by Google Chrome 
-developers were also fixed with this advisory" without any reference to a 
-CVE identifier.
+> Are the below worth assigning CVE ids to? The advisory seems to suggest 
+> they are crash only fixes. Do those deserve CVE IDs? I know we've been 
+> fairly generous with wireshark in the past, but I'm wondering if we need 
+> to draw a line somewhere.
 
-For CVE-2011-2160, http://ffmpeg.mplayerhq.hu/ includes a changelog. 
-CVE-2011-2160 was built from the March 17, 2011 entry:
+Crash-only issues are always/typically worth a CVE when it can prevent a 
+product from working in a security context.  Wireshark monitors network 
+traffic, sometimes live; therefore, in some reasonable/common usage 
+scenarios, attackers can cause a crash and prevent network activities from 
+being detected.
 
-   "Reinhard Tartler
-   backported several security fixes to the 0.5 release branch and made
-   another point release, that is 0.5.4. Note, 0.5 is quite old and this
-   release is mostly for those stuck with the 0.5 branch, and not so
-   interesting for end users. ... Changelog between 0.5.3 and 0.5.4 ...
-   Fix invalid reads in VC-1 decoding (related to CVE-2011-0723)."
+We apply similar logic in forensics and other scenarios.  Therefore a CVE 
+is needed for both wnpa-sec-2011-12 (crash reading live packets) as well 
+as wnpa-sec-2011-14 (by only reading a packet trace file) - in the latter, 
+analysis of a packet trace could be hampered/delayed because the 
+investigator can't use the product without it crashing.
 
-This suggests that the vendor may have fixed an issue related to 
-CVE-2011-0723, but not CVE-2011-0723 itself. The other items in the 
-20110317 changelog map directly the CVE names, without a "related to" 
-qualifier. This triggers a SPLIT.
+Wireshark does not get any more "preference" than any other tool, except 
+indirectly because it gets more attention.
 
 - Steve
 
 
 
-On Fri, 2 Sep 2011, Michael Gilbert wrote:
+On Wed, 14 Sep 2011, Josh Bressers wrote:
 
-> Hi,
+> ----- Original Message -----
 >
-> We're trying to figure out the status of ffmpeg in debian [0].  Does
-> anyone have any real info on CVE-2011-2160 (whose CVE page is in
-> essence completely empty) [1].  BTW, how is a link to the software's
-> homepage considered a confirmation of the issue?
+>> 2. Wireshark Lua script execution vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-15.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737784
 >
-> Also, CVE-2011-2162 [2] seems to be a rehash of a bunch of CVE ids
-> that happened to be in the recent dump of Mandriva advisories.
-> Shouldn't this get REJECTED since its just a collection of already
-> known and tracked issues?
+> Use CVE-2011-3360 for the above.
 >
-> Thanks,
-> Mike
 >
-> [0] http://lists.debian.org/debian-security-tracker/2011/08/msg00009.html
-> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2160
-> [2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2162
+>>
+>> 1, Wireshark CSN.1 dissector vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-16.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737783
+>>
+>> 3. Wireshark buffer exception handling vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-14.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737785
+>>
+>> 4. Wireshark OpenSafety dissector vulnerability
+>> http://www.wireshark.org/security/wnpa-sec-2011-12.html
+>> https://bugzilla.redhat.com/show_bug.cgi?id=737787
+>>
+>
+> Thanks.
+>
+> --
+>    JB
 >
