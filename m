@@ -1,20 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/2
-Message-ID: <20111017100229.GA27461@vermeer.pre-sense.de>
-Date: Mon, 17 Oct 2011 12:02:29 +0200
-From: Timo Warns <Warns@...-Sense.DE>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/6
+Message-ID: <1775331776.1261332.1316024579422.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:22:59 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: double-free vulnerability in logsurfer
+Cc: Django project security team <security@...ngoproject.com>, "Steven M. Christey" <coley@...us.mitre.org>, cve-assign@...re.org
+Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
-Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
-an insufficient treatment of an error condition that is returned by the
-function get_word() when it is unable to correctly parse its input.
+Steve,
 
-The following versions of logsurfer are affected:
+Can MITRE deal with this one? I lack time to properly work through this list right now.
 
- Logsurfer 1.5b and previous versions
- Logsurfer+ 1.7 and previous versions
+Thanks.
 
-A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
+-- 
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> multiple security flaws have been recently addressed in the v1.3.1
+> and v1.2.7 versions of the Django Python Web framework (from [1]):
+> 1, Session manipulation,
+> 2, Denial of service attack via URLField,
+> 3, URLField redirection,
+> 4, Host header cache poisoning,
+> 5, Host header and CSRF,
+> 6, Cross-subdomain CSRF attacks,
+> 7, DEBUG pages and sensitive POST data
+> 
+> References:
+> [1] https://www.djangoproject.com/weblog/2011/sep/09/
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=737366
+> 
+> Could you allocate a CVE ids for these flaws?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
