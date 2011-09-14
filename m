@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/04/2
-Message-Id: <20110604145329.d5e87709.michael.s.gilbert@gmail.com>
-Date: Sat, 4 Jun 2011 14:53:29 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/6
+Message-ID: <1775331776.1261332.1316024579422.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:22:59 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Cc: Django project security team <security@...ngoproject.com>, "Steven M. Christey" <coley@...us.mitre.org>, cve-assign@...re.org
+Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> I went to http://www.us-cert.gov/cas/signup.html to see if there's a
-> public CERT mailing list I should be on in order to receive new
-> Vulnerability Notes (that are being made public) with no delay (or at
-> least with less delay).  Unfortunately, for Vulnerability Notes there
-> appears to be an Atom feed only, no mailing list (which I'd prefer).
-> Perhaps set one up?
+Steve,
 
-As a practical matter, you could follow the Debian
-secure-testing-commits mailing list [0] or check out the svn repo [1].
-Updates to Mitre's CVE database are synced there twice a day.
+Can MITRE deal with this one? I lack time to properly work through this list right now.
 
+Thanks.
 
-Unfortunately, Mitre's databases pushes tend to have a couple day delay
-built in.  I've been intending to convert to the NVD database, which
-seems to get updated on exactly the disclosure date, but I haven't
-gotten around to that yet.
+-- 
+    JB
 
-Best wishes,
-Mike
-
-[0]http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/secure-testing-commits
-[1]svn://svn.debian.org/svn/secure-testing
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> multiple security flaws have been recently addressed in the v1.3.1
+> and v1.2.7 versions of the Django Python Web framework (from [1]):
+> 1, Session manipulation,
+> 2, Denial of service attack via URLField,
+> 3, URLField redirection,
+> 4, Host header cache poisoning,
+> 5, Host header and CSRF,
+> 6, Cross-subdomain CSRF attacks,
+> 7, DEBUG pages and sensitive POST data
+> 
+> References:
+> [1] https://www.djangoproject.com/weblog/2011/sep/09/
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=737366
+> 
+> Could you allocate a CVE ids for these flaws?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
