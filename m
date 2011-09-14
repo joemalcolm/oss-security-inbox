@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/27
-Message-ID: <4ECAC6CD.2090901@redhat.com>
-Date: Mon, 21 Nov 2011 14:46:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, cve@...re.org
-Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/2
+Message-ID: <4E708F02.2030801@redhat.com>
+Date: Wed, 14 Sep 2011 19:24:50 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: b43: allocate receive buffers big enough for max frame len + offset
 Content-Type: text/plain; charset=utf-8
 
- 
-> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
->  
->
-> Best regards,
-> Henri Salo
+On 09/14/2011 06:43 PM, Petr Matousek wrote:
+> "A flaw has been found in a way b43 driver processed incoming frames. An
+> attacker able to send frames to the systems with Broadcom 43xx series
+> wireless devices could use this flaw to crash those systems."
+> 
+> Upstream patch:
+> c85ce65ecac078ab1a1835c87c4a6319cf74660a
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=738202
+> https://bugzilla.kernel.org/show_bug.cgi?id=32042
+> https://github.com/mirrors/linux/commit/c85ce65ecac078ab1a1835c87c4a6319cf74660a
 
-Ok CVE-2011-2710 is public in CVE and NVD:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
-CVE-2011-2708 is still marked as reserved so we should probably quietly
-take CVE-2011-2708 out back and shoot it.
+Please use CVE-2011-3359.
 
-CC'ing mitre.
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
+Thanks, Eugene
 
