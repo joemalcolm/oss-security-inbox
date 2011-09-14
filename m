@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/3
-Message-ID: <20110324102431.50e9aba2@laverne>
-Date: Thu, 24 Mar 2011 10:24:31 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/4
+Message-ID: <733775406.1261153.1316024118779.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:15:18 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: roundcube < 0.5.1 CSRF
+Cc: cve-assign@...re.org
+Subject: Re: D-Link DCS-2121 Semicolon Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-http://trac.roundcube.net/wiki/Changelog
+I'm going to leave this one to MITRE. I want to stick with the current list policy of only assigning IDs to open source projects.
 
-two cross site request forgery, one additional issue fixed in 0.5.1:
-
-"Security: add optional referer check to prevent CSRF in GET requests
-Security: protect login form submission from CSRF
-Security: prevent from relaying malicious requests through modcss.inc"
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+----- Original Message -----
+> Hello,
+> 
+> I've come up with this [0] blog post which, accordingly to author,
+> describes a 0day vulnerability within D-Link DCS-2121 camera.
+> 
+> In summary, the data posted from the web configuration interface to
+> samba is
+> directly used as a parameter without proper sanitization. This leads
+> to
+> an unwanted system call.
+> 
+> Although the author says that the vulnerability can only be used by
+> authenticated users via web interface, it would be dangerous together
+> with CSRF on authenticated user. I think that it's worth looking, or,
+> at
+> least let the vendor know.
+> 
+> """
+> Disclaimer (for not-so-funny people): yes this is "0day", unreported
+> to
+> the vendor. I even suspect the whole D-Link product line is vulnerable
+> to the same bug (if not the whole world of low-end embedded systems
+> (and
+> even business class products)). However, since Web access requires
+> authentication, this bug might be exploitable by administrators only,
+> so
+> it is only useful for people who would like to gain a shell on their
+> own
+> systems. Do not panic :)
+> """
+> 
+> [0]
+> http://newsoft-tech.blogspot.com/2010/09/d-link-dcs-2121-and-state-of-embedded.html
+> 
+> Regards,
+> 
+> --
+> . 73! DE TA1AET
