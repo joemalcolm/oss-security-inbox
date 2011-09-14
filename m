@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/10
-Message-ID: <1121601387.397594.1306871080122.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 15:44:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: openssl timing attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/2
+Message-ID: <4E708F02.2030801@redhat.com>
+Date: Wed, 14 Sep 2011 19:24:50 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com, coley@...us.mitre.org
+Subject: Re: CVE request -- kernel: b43: allocate receive buffers big enough for max frame len + offset
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi,
-> looks like this following has not CVE-ID assigned yet:
-> http://www.kb.cert.org/vuls/id/536044
+On 09/14/2011 06:43 PM, Petr Matousek wrote:
+> "A flaw has been found in a way b43 driver processed incoming frames. An
+> attacker able to send frames to the systems with Broadcom 43xx series
+> wireless devices could use this flaw to crash those systems."
 > 
+> Upstream patch:
+> c85ce65ecac078ab1a1835c87c4a6319cf74660a
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=738202
+> https://bugzilla.kernel.org/show_bug.cgi?id=32042
+> https://github.com/mirrors/linux/commit/c85ce65ecac078ab1a1835c87c4a6319cf74660a
 
-Please use CVE-2011-1945.
+Please use CVE-2011-3359.
 
-Thanks.
+Thanks, Eugene
 
--- 
-    JB
