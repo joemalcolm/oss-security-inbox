@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/4
-Message-ID: <292716918.35874.1299787377615.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 10 Mar 2011 15:02:57 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/1
+Message-ID: <20110914104332.GB25572@dhcp-25-225.brq.redhat.com>
+Date: Wed, 14 Sep 2011 12:43:32 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: buffer overflow in unixODBC's SQLDriverConnect()
+Cc: coley@...us.mitre.org
+Subject: CVE request -- kernel: b43: allocate receive buffers big enough for max frame len + offset
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
-> Please assign CVE id for a possible buffer overflow in unixODBC's
-> SQLDriverConnect() function by specifying a large value for SAVEFILE
-> parameter in the connection string.
-> 
-> A fix has been committed in the SVN addressing the issue:
-> http://unixodbc.svn.sourceforge.net/viewvc/unixodbc/trunk/DriverManager/SQLDriverConnect.c?r1=23&r2=27
-> 
+"A flaw has been found in a way b43 driver processed incoming frames. An
+attacker able to send frames to the systems with Broadcom 43xx series
+wireless devices could use this flaw to crash those systems."
 
-Please use CVE-2011-1145.
+Upstream patch:
+c85ce65ecac078ab1a1835c87c4a6319cf74660a
 
-Thanks.
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=738202
+https://bugzilla.kernel.org/show_bug.cgi?id=32042
+https://github.com/mirrors/linux/commit/c85ce65ecac078ab1a1835c87c4a6319cf74660a
 
+Thanks,
 -- 
-    JB
+Petr Matousek / Red Hat Security Response Team
