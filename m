@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/6
-Message-ID: <1956951432.1535107.1311365646651.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Jul 2011 16:14:06 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/11
+Message-ID: <651729557.1262135.1316026161955.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:49:21 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Lukas Fleischer <cgit@...ptocrack.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
+Cc: Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
+Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2711.
+----- Original Message -----
+> > Are the below worth assigning CVE ids to? The advisory seems to suggest
+> > they are crash only fixes. Do those deserve CVE IDs? I know we've been
+> > fairly generous with wireshark in the past, but I'm wondering if we
+> > need to draw a line somewhere.
+> 
+> Crash-only issues are always/typically worth a CVE when it can prevent a
+> product from working in a security context. Wireshark monitors network
+> traffic, sometimes live; therefore, in some reasonable/common usage
+> scenarios, attackers can cause a crash and prevent network activities
+> from being detected.
+> 
+> We apply similar logic in forensics and other scenarios. Therefore a CVE
+> is needed for both wnpa-sec-2011-12 (crash reading live packets) as well
+> as wnpa-sec-2011-14 (by only reading a packet trace file) - in the
+> latter, analysis of a packet trace could be hampered/delayed because the
+> investigator can't use the product without it crashing.
+> 
+> Wireshark does not get any more "preference" than any other tool, except
+> indirectly because it gets more attention.
+> 
+
+I wasn't thinking in the sense of live monitoring. You're right of course,
+which also means previous crash IDs were needed.
+
+Sorry for the confusion.
 
 Thanks.
 
 -- 
     JB
-
-
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> an cross-site scripting (XSS) flaw was found in the way cgit, a fast
-> web interface for Git, displayed the file name in the rename hint. A
-> remote attacker could provide a specially-crafted web page, which once
-> visited by an authenticated Cgit user, with push access to the
-> repository, would lead to arbitrary web script or HTML code execution.
-> 
-> References:
-> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
