@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/12
-Message-ID: <218169400.125543.1305661630405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 15:47:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/1
+Message-ID: <20110914104332.GB25572@dhcp-25-225.brq.redhat.com>
+Date: Wed, 14 Sep 2011 12:43:32 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: polarssl
+Cc: coley@...us.mitre.org
+Subject: CVE request -- kernel: b43: allocate receive buffers big enough for max frame len + offset
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1923
+"A flaw has been found in a way b43 driver processed incoming frames. An
+attacker able to send frames to the systems with Broadcom 43xx series
+wireless devices could use this flaw to crash those systems."
 
-Thanks.
+Upstream patch:
+c85ce65ecac078ab1a1835c87c4a6319cf74660a
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=738202
+https://bugzilla.kernel.org/show_bug.cgi?id=32042
+https://github.com/mirrors/linux/commit/c85ce65ecac078ab1a1835c87c4a6319cf74660a
+
+Thanks,
 -- 
-    JB
-
-
------ Original Message -----
-> Could a CVE be assigned to this issue?
-> 
-> http://polarssl.org/trac/wiki/SecurityAdvisory201101
-> https://bugzilla.redhat.com/show_bug.cgi?id=705187
-> 
-> Possible man-in-the-middle in Diffie Hellman key exchange, fixed in
-> 0.14.2.
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
