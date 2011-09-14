@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/1
-Message-ID: <20111106164932.GA394@devzero.fr>
-Date: Sun, 6 Nov 2011 17:49:32 +0100
-From: vladz <vladz@...zero.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/11
+Message-ID: <651729557.1262135.1316026161955.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:49:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: benml@...idev.fr
-Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
+Cc: Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
+Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> > Are the below worth assigning CVE ids to? The advisory seems to suggest
+> > they are crash only fixes. Do those deserve CVE IDs? I know we've been
+> > fairly generous with wireshark in the past, but I'm wondering if we
+> > need to draw a line somewhere.
+> 
+> Crash-only issues are always/typically worth a CVE when it can prevent a
+> product from working in a security context. Wireshark monitors network
+> traffic, sometimes live; therefore, in some reasonable/common usage
+> scenarios, attackers can cause a crash and prevent network activities
+> from being detected.
+> 
+> We apply similar logic in forensics and other scenarios. Therefore a CVE
+> is needed for both wnpa-sec-2011-12 (crash reading live packets) as well
+> as wnpa-sec-2011-14 (by only reading a packet trace file) - in the
+> latter, analysis of a packet trace could be hampered/delayed because the
+> investigator can't use the product without it crashing.
+> 
+> Wireshark does not get any more "preference" than any other tool, except
+> indirectly because it gets more attention.
+> 
 
-Hi,
+I wasn't thinking in the sense of live monitoring. You're right of course,
+which also means previous crash IDs were needed.
 
-Here is a PoC for this race condition.  It uses the Inotify API and
-always succeed on my Dual-core CPU.  
+Sorry for the confusion.
 
-  http://vladz.devzero.fr/other/bzexe_PoC.c.html
+Thanks.
 
-Regards,
 -- 
-http://vladz.devzero.fr
-PGP key 8F7E2D3C from pgp.mit.edu
-
+    JB
