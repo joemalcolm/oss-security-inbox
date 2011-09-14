@@ -1,19 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/17
-Message-ID: <20110222225256.2f684e4d@laverne>
-Date: Tue, 22 Feb 2011 22:52:56 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/12
+Message-ID: <1254374822.1262221.1316026288551.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 14 Sep 2011 14:51:28 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: simple machines forum before 1.1.13
+Cc: coley@...us.mitre.org, cve-assign@...re.org
+Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
 Content-Type: text/plain; charset=utf-8
 
-http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
+Please use CVE-2011-3363 for this.
 
-No useful info on the kind of vulnerability, just states "Several
-security-related fixes"
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+----- Original Message -----
+> "Currently, we skip doing the is_path_accessible check in cifs_mount
+> if
+> there is no prefixpath. There is a report of at least one server
+> however
+> that allows a TREE_CONNECT to a share that has a DFS referral at its
+> root. UNC that had no prefixpath was used in that case, so the
+> is_path_accessible check was not triggered and the box later hit
+> a BUG() because we were chasing a DFS referral on the root dentry for
+> the mount."
+> 
+> Upstream fix:
+> 70945643722ffeac779d2529a348f99567fa5c33
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=682829
+> https://github.com/mirrors/linux/commit/70945643722ffeac779d2529a348f99567fa5c33
+> 
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
