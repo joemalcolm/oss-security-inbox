@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/7
-Message-ID: <2179836.0NOP2RJeYK@neon>
-Date: Thu, 08 Sep 2011 22:14:25 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/3
+Message-ID: <20110915144040.GB1593@foo.fgeek.fi>
+Date: Thu, 15 Sep 2011 17:40:40 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Quassel < 0.7.3 CTCP request core DoS
+Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Sep 14, 2011 at 02:22:59PM -0400, Josh Bressers wrote:
+> Steve,
+> 
+> Can MITRE deal with this one? I lack time to properly work through this list right now.
+> 
+> Thanks.
 
-please assign a CVE for the following issue:
-CtcpParser::packedReply in src/core/ctcpparser.cpp in Quassel does not process
-certain CTCP requests correctly, allowing a remote attacker connected to the
-same IRC network as the victim to cause a Denial of Service condition by
-sending specially crafted CTCP requests. This was demonstrated in various
-exploits on freenode today.
+What information do you need? I can figure it out and inform this list.
 
-Gentoo tracks the issue in [1], upstream fix is [2].
-
-Thanks,
-Alex
-
-[1] https://bugs.gentoo.org/show_bug.cgi?id=382313
-[2] http://git.quassel-
-irc.org/?p=quassel.git;a=commit;h=da215fcb9cd3096a3e223c87577d5d4ab8f8518b
-
--- 
-Alex Legler <a3li@...too.org>
-Gentoo Security / Ruby
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Best regards,
+Henri Salo
