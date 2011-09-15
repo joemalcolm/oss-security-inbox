@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/02/4
-Message-ID: <4E6144D2.4070905@icosahedron.de>
-Date: Fri, 02 Sep 2011 23:04:18 +0200
-From: Michael Lutz <michi+openttd@...sahedron.de>
-To: oss-security@...ts.openwall.com
-CC: rubidium@...nttd.org
-Subject: CVE request for OpenTTD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/2
+Message-ID: <4E720B41.2090806@redhat.com>
+Date: Thu, 15 Sep 2011 16:27:13 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
 Content-Type: text/plain; charset=utf-8
 
-Hello folks,
+Hello Josh, Steve, vendors,
 
-the OpenTTD team and contributors have discovered several security
-vulnerabilities in OpenTTD. Please be so kind to allocate a CVE id for
-each of the issues detailed below:
+   multiple XSS flaws have been recently reported in the v3.4.4
+(and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
 
-1.) Denial of service via improperly validated commands
+[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
 
-In multiple places in-game commands are not properly validated that allow
-remote attackers to cause a denial of service (crash) and possibly execute
-arbitrary code via unspecified vectors.
+1) An XSS flaw was found in the way phpMyAdmin processed row content,
+    containing JavaScript code, after its inline editing and saving,
 
-Vulnerability is present since 0.3.5 and will be fixed in the upcoming
-1.1.3 release. Issue report at http://bugs.openttd.org/task/4745
+2) It was found that phpMyAdmin did not properly sanitize the content
+    of db, table, and column names prior use of their values.
 
-2.) Buffer overflows in savegame loading
+A remote attacker could use these flaws to conduct XSS attacks (execute
+arbitrary HTML or web script) by tricking authenticated phpMyAdmin user 
+into visiting of a specially-crafted URL.
 
-In multiple places indices in savegames are not properly validated that
-allow (remote) attackers to cause a denial of service (crash) and possibly
-execute arbitrary code via unspecified vectors.
+References:
+[2] http://secunia.com/advisories/45991/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
 
-Vulnerability is present since 0.1.0 and will be fixed in the upcoming
-1.1.3 release. Issue reports at http://bugs.openttd.org/task/4717 and
-http://bugs.openttd.org/task/4748
+Could you allocate a CVE id for these?
 
-3.) Multiple buffer overflows in validation of external data
-
-In multiple places external data from the local file system isn't properly
-checked before allocating memory, which could lead to buffer overflows and
-arbitrary code execution.
-
-Vulnerability is present since 0.3.4 and will be fixed in the upcoming
-1.1.3 release. Issue reports at http://bugs.openttd.org/task/4746 and
-http://bugs.openttd.org/task/4747
-
-
-Once the CVE ids are allocated, each issue will be fully documented at
-http://security.openttd.org/en/CVE-2011-xxxx
-
-Thanks,
-Michael Lutz
-
-[Please CC me, I'm not subscribed.]
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
