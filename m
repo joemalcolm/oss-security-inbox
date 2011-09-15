@@ -1,26 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/5
-Message-ID: <20110629131030.GA30811@albatros>
-Date: Wed, 29 Jun 2011 17:10:30 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/1
+Message-ID: <1316093008.17867.139.camel@new-desktop>
+Date: Thu, 15 Sep 2011 15:23:28 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+To: oss-security@...ts.openwall.com
+Subject: Is there a maintainer for librsvg ?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 29, 2011 at 15:11 +0400, Vasiliy Kulikov wrote:
-> 2) as you say here:
-> 
-> READ = CONST + SENSITIVE + CONTROLLABLE
-> 
-> If CONST is known and CONTROLLABLE is controlled by an attacker then he
-> may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
+Hello,
 
-(X+1) kb - 1 and (X+1) kb of course, they are rounded to X and X+1 kbs,
-respectively.
+librsvg is a SVG rendering library hosted at librsvg.sourceforge.net. No
+new version was published since 2005, and a (security) bug that I
+reported via bugzilla.gnome.org 6 weeks ago wasn't even triaged.
 
-> respectively, revealing len(SENSITIVE).
+Given that this lib is used by a lot of distros, what can I do in order
+to get this bug (and others) patched ?
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Regards,
+Nicolas
+
