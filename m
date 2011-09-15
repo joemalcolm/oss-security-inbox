@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/11/3
-Message-ID: <20110511155606.GA10784@openwall.com>
-Date: Wed, 11 May 2011 19:56:06 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/2
+Message-ID: <4E720B41.2090806@redhat.com>
+Date: Thu, 15 Sep 2011 16:27:13 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 02:56:16PM -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > On Mon, May 02, 2011 at 02:09:08PM -0400, Josh Bressers wrote:
-> > > I think this is suitable. The goal here is to ensure that a vendor is
-> > > actually producing updates and aren't just a potential leak.
-> > 
-> > OK, so do you propose that we subscribe Wind River, and wait for
-> > MontaVista to setup something similar to these RSS feeds before we also
-> > subscribe them?
-> 
-> I'm OK with this action.
+Hello Josh, Steve, vendors,
 
-I've just subscribed Zhenfeng(Jeffrey) Zhao and Hui Zhu, both of Wind River.
+   multiple XSS flaws have been recently reported in the v3.4.4
+(and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
 
-Alexander
+[1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
+
+1) An XSS flaw was found in the way phpMyAdmin processed row content,
+    containing JavaScript code, after its inline editing and saving,
+
+2) It was found that phpMyAdmin did not properly sanitize the content
+    of db, table, and column names prior use of their values.
+
+A remote attacker could use these flaws to conduct XSS attacks (execute
+arbitrary HTML or web script) by tricking authenticated phpMyAdmin user 
+into visiting of a specially-crafted URL.
+
+References:
+[2] http://secunia.com/advisories/45991/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
+
+Could you allocate a CVE id for these?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
