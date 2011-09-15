@@ -1,27 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/5
-Message-ID: <1066905529.1926362.1312919496886.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 9 Aug 2011 15:51:36 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/4
+Message-ID: <Pine.GSO.4.64.1109151042530.22571@faron.mitre.org>
+Date: Thu, 15 Sep 2011 10:43:57 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: zabbix XSS flaw
+Subject: Re: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
 Content-Type: text/plain; charset=utf-8
 
 
+Josh,
 
------ Original Message -----
-> Could a CVE be assigned to the following Zabbix < 1.8.6 security flaw?
-> 
-> http://secunia.com/advisories/45502
-> https://support.zabbix.com/browse/ZBX-3835
-> http://www.zabbix.com/rn1.8.6.php
-> https://bugzilla.redhat.com/show_bug.cgi?id=729162
-> 
+This actually requires two different CVEs because there are different 
+researchers for each one.
 
-Please use CVE-2011-2904.
+- Steve
 
-Thanks.
 
--- 
-    JB
+
+
+
+
+
+
+On Thu, 15 Sep 2011, Jan Lieskovsky wrote:
+
+> Hello Josh, Steve, vendors,
+>
+>  multiple XSS flaws have been recently reported in the v3.4.4
+> (and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
+>
+> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
+>
+> 1) An XSS flaw was found in the way phpMyAdmin processed row content,
+>   containing JavaScript code, after its inline editing and saving,
+>
+> 2) It was found that phpMyAdmin did not properly sanitize the content
+>   of db, table, and column names prior use of their values.
+>
+> A remote attacker could use these flaws to conduct XSS attacks (execute
+> arbitrary HTML or web script) by tricking authenticated phpMyAdmin user into 
+> visiting of a specially-crafted URL.
+>
+> References:
+> [2] http://secunia.com/advisories/45991/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
+>
+> Could you allocate a CVE id for these?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
