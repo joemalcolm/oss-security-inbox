@@ -1,54 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/7
-Message-ID: <4D96176E.8090905@slackware.com>
-Date: Fri, 01 Apr 2011 13:20:30 -0500
-From: "Patrick J. Volkerding" <security@...ckware.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/4
+Message-ID: <Pine.GSO.4.64.1109151042530.22571@faron.mitre.org>
+Date: Thu, 15 Sep 2011 10:43:57 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
 Content-Type: text/plain; charset=utf-8
 
-On 04/01/2011 01:03 PM, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
 
-Good hello,
+Josh,
 
-I've been on board since close to the beginning, and would be pleased to 
-participate again.  Here's the public GPG key for this address.  It 
-expires on 2012-12-21, but presumably that won't be a problem.  ;-)
+This actually requires two different CVEs because there are different 
+researchers for each one.
 
-Take care,
-
-Pat
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v1.2.1 (GNU/Linux)
-
-mQGiBD5dIFQRBADB31WinbXdaGk/8RNkpnZclu1w3Xmd5ItACDLB2FhOhArw35EA
-MOYzxI0gRtDNWN4pn9n74q4HbFzyRWElThWRtBTYLEpImzrk7HYVCjMxjw5A0fTr
-88aiHOth5aS0vPAoq+3TYn6JDSipf2bR03G2JVwgj3Iu066pX4naivNm8wCgldHG
-F3y9vT3UPYh3QFgEUlCalt0D/3n6NopRYy0hMN6BPu+NarXwv6NQ9g0GV5FNjEEr
-igkrD/htqCyWAUl8zyCKKUFZZx4UGBRZ5guCdNzwgYH3yn3aVMhJYQ6tcSlLsj3f
-JIz4LAZ3+rI77rbn7gHHdp7CSAuV+QHv3aNanUD/KGz5SPSvF4w+5qRM4PfPNT1h
-LMV8BACzxiyX7vzeE4ZxNYvcuCtv0mvEHl9yD66NFA35RvXaO0QiRVYeoUa5JOQZ
-gwq+fIB0zgsEYDhXFkC1hM/QL4NccMRk8C09nFn4eiz4dAEnwKt4rLCJKhkLl1DW
-TSoXHe/dOXaLnFyLzB1J8hEYmUvw3SwPt//wMqDiVBLeZfFcdLQwU2xhY2t3YXJl
-IExpbnV4IFByb2plY3QgPHNlY3VyaXR5QHNsYWNrd2FyZS5jb20+iF8EExECAB8F
-Aj5dIFQFCRJ3owAECwcDAgMVAgMDFgIBAh4BAheAAAoJEGpEY8BAECIzee0An3My
-boalJ5nLePD0HCzMuf8Ix8gPAJ9lnU1wqNVGza0t89ACTurDoppQ2rkBDQQ+XSBV
-EAQA3VYlpPyRKdOKoM6t1SwNG0YgVFSvxy/eiratBf7misDBsJeH86Pf8H9OfVHO
-cqscLiC+iqvDgqeTUX9vASjlnvcoS/3H5TDPlxiifIDggqd2euNtJ8+lyXRBV6yP
-sBIA6zki9cR4zphe48hKpSsDfj7uL5sfyc2UmKKboSu3x7cAAwUD/1jmoLQs9bIt
-bTosoy+5+Uzrl0ShRlv+iZV8RPzAMFuRJNxUJkUmmThowtXRaPKFI9AVd+pP44aA
-J+zxCPtS2isiW20AxubJoBPpXcVatJWi4sG+TM5Z5VRoLg7tIDNVWsyHGXPAhIG2
-Y8Z1kyWwb4P8A/W2b1ZCqS7Fx4yEhTikiEwEGBECAAwFAj5dIFUFCRJ3owAACgkQ
-akRjwEAQIjM1uwCdE7V4mPCqdby/nV699NxKX0iW/OsAniaVhEip8Ptff74Sv4JV
-tb+Sth2l
-=H5uu
------END PGP PUBLIC KEY BLOCK-----
+- Steve
 
 
 
+
+
+
+
+
+On Thu, 15 Sep 2011, Jan Lieskovsky wrote:
+
+> Hello Josh, Steve, vendors,
+>
+>  multiple XSS flaws have been recently reported in the v3.4.4
+> (and earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
+>
+> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
+>
+> 1) An XSS flaw was found in the way phpMyAdmin processed row content,
+>   containing JavaScript code, after its inline editing and saving,
+>
+> 2) It was found that phpMyAdmin did not properly sanitize the content
+>   of db, table, and column names prior use of their values.
+>
+> A remote attacker could use these flaws to conduct XSS attacks (execute
+> arbitrary HTML or web script) by tricking authenticated phpMyAdmin user into 
+> visiting of a specially-crafted URL.
+>
+> References:
+> [2] http://secunia.com/advisories/45991/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
+>
+> Could you allocate a CVE id for these?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
