@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/8
-Message-ID: <Pine.GSO.4.64.1107271651010.17118@faron.mitre.org>
-Date: Wed, 27 Jul 2011 16:57:32 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/1
+Message-ID: <1316093008.17867.139.camel@new-desktop>
+Date: Thu, 15 Sep 2011 15:23:28 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-cc: KDE Security Team <security@....org>, security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
-Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+Subject: Is there a maintainer for librsvg ?
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-On Mon, 25 Jul 2011, Jeff Mitchell wrote:
+librsvg is a SVG rendering library hosted at librsvg.sourceforge.net. No
+new version was published since 2005, and a (security) bug that I
+reported via bugzilla.gnome.org 6 weeks ago wasn't even triaged.
 
-> The Arora and Rekonq web browsers are also vulnerable to the same attack
-> vector, and other Qt-based programs may be as well. We're working with
-> the Qt team to help enhance their documentation to warn developers to
-> take care sanitizing their inputs, but it's not actually a Qt flaw. So
-> we're a bit unsure how to proceed here.
+Given that this lib is used by a lot of distros, what can I do in order
+to get this bug (and others) patched ?
 
-This sounds like a limitation of the Qt API, which can be avoided by 
-programmers who are aware of the limitation.  Kind of like how strcpy() 
-can be subject to buffer overflows, *if* the programmer isn't careful. 
-Also happened with confusing return values from certain OpenSSL API 
-functions a couple years ago.  (The PHP_SELF example is similar.)  So, 
-this should probably get separate CVEs for each application/library that 
-misuses the relevant function(s).
+Regards,
+Nicolas
 
-If Qt itself contains misuse of its own functions - which happens 
-sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE, 
-too.
-
-- Steve
