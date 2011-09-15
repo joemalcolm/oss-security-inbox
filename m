@@ -1,27 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/9
-Message-ID: <140667935.425455.1306959505978.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 1 Jun 2011 16:18:25 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/15/3
+Message-ID: <20110915144040.GB1593@foo.fgeek.fi>
+Date: Thu, 15 Sep 2011 17:40:40 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for Wireshark 1.4.5 TCP DoS issue
+Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> This wasn't put on the security announce page for some reason (DoS,
-> any TCP dissector):
+On Wed, Sep 14, 2011 at 02:22:59PM -0400, Josh Bressers wrote:
+> Steve,
 > 
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5837
+> Can MITRE deal with this one? I lack time to properly work through this list right now.
 > 
-> Affects Wireshark 1.4.5 only
-> 
+> Thanks.
 
-Please use CVE-2011-1956.
+What information do you need? I can figure it out and inform this list.
 
-Thanks.
-
--- 
-    JB
+Best regards,
+Henri Salo
