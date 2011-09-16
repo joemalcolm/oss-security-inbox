@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/6
-Message-ID: <210a6f1d-f909-403d-9753-7f37e9ec305e@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Dec 2011 17:55:43 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/2
+Message-ID: <1316154511.17824.5.camel@scapa>
+Date: Fri, 16 Sep 2011 08:28:31 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+Cc: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: Is there a maintainer for librsvg ?
 Content-Type: text/plain; charset=utf-8
 
+On jeu., 2011-09-15 at 15:23 +0200, Nicolas Grégoire wrote:
+> Hello,
+> 
+> librsvg is a SVG rendering library hosted at librsvg.sourceforge.net. No
+> new version was published since 2005, and a (security) bug that I
+> reported via bugzilla.gnome.org 6 weeks ago wasn't even triaged.
+> 
+> Given that this lib is used by a lot of distros, what can I do in order
+> to get this bug (and others) patched ?
 
-> Kurt or other CVE assigners, can you please assign a bunch for
-> python,
-> java, tomcat etc. pp.
+It seems that librsvg is hosted on GNOME since quite some time, see
+http://git.gnome.org/browse/librsvg/ and
+http://ftp.gnome.org/pub/GNOME/sources/librsvg/2.34/ (and
+https://bugzilla.gnome.org/buglist.cgi?quicksearch=librsvg)
 
-Tomcat has been assigned CVE-2011-4084.
+Regards,
+-- 
+Yves-Alexis
 
-Thanks
---
-David Jorm / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
