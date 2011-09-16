@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/16
-Message-ID: <83248561.77842.1302723474926.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 13 Apr 2011 15:37:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/4
+Message-ID: <1316204088.5747.1.camel@scapa>
+Date: Fri, 16 Sep 2011 22:14:42 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: bonding: Incorrect TX queue offset
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1581
+On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
+> My last day with Canonical is today. Starting on Sep 19th, I will be
+> working for Google on ChromeOS. I'd like to transition my closed-list
+> membership based on the fact that ChromeOS is also a distro, and I'll
+> still have security responsibilities with it. How should this be
+> handled? 
 
-Thanks.
+I don't have closed-list membership or anything, but I assume you'll
+keep going on Ubuntu security team anyway, even from Google, so it might
+make sense that you keep the membership anyway?
 
+Regards,
 -- 
-    JB
+Yves-Alexis
 
-
------ Original Message -----
-> Backport of upstream commit:
-> fd0e435b0fe85622f167b84432552885a4856ac8 bonding: Incorrect TX queue
-> offset
-> 
-> By default bonding only allocates 16 queues. Devices that have more
-> than
-> 16 receive queues will exceed the tx queue index for the bonding
-> device,
-> resulting in at least a denial of service (BUG: unable to handle
-> kernel
-> paging request at...).
-> 
-> For proper queue allocation, in the bonding driver and down to the
-> devices, they should probably add the following line to one of the
-> files
-> in /etc/modprobe.d/
-> 
-> options bonding tx_queues=N
-> 
-> where N>= number of processors that show up in /proc/cpuinfo.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=696029
-> http://git.kernel.org/linus/fd0e435b0fe85622f167b84432552885a4856ac8
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
