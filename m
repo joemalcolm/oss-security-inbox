@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/3
-Message-Id: <20110218120421.26f58633.michael.s.gilbert@gmail.com>
-Date: Fri, 18 Feb 2011 12:04:21 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/3
+Message-ID: <20110916175340.GR6573@outflux.net>
+Date: Fri, 16 Sep 2011 10:53:40 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Webkit Dupes
+Subject: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 17 Feb 2011 13:10:21 -0500 (EST) Steven M. Christey wrote:
+Hello,
 
-> 
-> On Sat, 5 Feb 2011, Michael Gilbert wrote:
-> 
-> > Hi,
-> >
-> > The following issues are duplicate CVE assignments for webkit.  Please
-> > merge and reject these as appropriate.
-> 
-> I will handle these accordingly.  As you've noticed, a lot of CVE 
-> descriptions don't have detailed information, so sometimes it's hard to be 
-> certain when there are dupes.
-> 
-> > Would it be possible to force Google and Apple to coordinate better to 
-> > avoid these dupes?  This is creating unnecessary work and making it 
-> > appear that webkit has a lot more issues than it really does.
-> 
-> I started this conversation with both organizations a while ago, and your 
-> findings (plus a separate effort by Josh Bressers) are renewing this 
-> conversation.  That is, I'm working on it :)
+My last day with Canonical is today. Starting on Sep 19th, I will be
+working for Google on ChromeOS. I'd like to transition my closed-list
+membership based on the fact that ChromeOS is also a distro, and I'll
+still have security responsibilities with it. How should this be handled?
 
-Thanks for your wizardry behind the curtain Steve ;)
+Thanks,
 
-Mike
+-Kees
+
+-- 
+Kees Cook
+Ubuntu Security Team
