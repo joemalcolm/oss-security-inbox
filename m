@@ -1,72 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/7
-Message-ID: <4EA599EC.9080706@REDHAT.COM>
-Date: Mon, 24 Oct 2011 10:01:32 -0700
-From: Robert Relyea <rrelyea@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/5
+Message-ID: <20110916205422.GS6573@outflux.net>
+Date: Fri, 16 Sep 2011 13:54:22 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Reed Loden <reed@...dloden.com>, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>
-Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-On 10/24/2011 03:42 AM, Jan Lieskovsky wrote:
->
-> Cc-ing Reed on this post yet, so he could clarify
-> if Mozilla (Security) Team has already assigned a CVE identifier
-> for this one or not.
->
-> Reed?
->
-> Thanks && Regards, Jan.
+On Fri, Sep 16, 2011 at 10:14:42PM +0200, Yves-Alexis Perez wrote:
+> On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
+> > My last day with Canonical is today. Starting on Sep 19th, I will be
+> > working for Google on ChromeOS. I'd like to transition my closed-list
+> > membership based on the fact that ChromeOS is also a distro, and I'll
+> > still have security responsibilities with it. How should this be
+> > handled? 
+> 
+> I don't have closed-list membership or anything, but I assume you'll
+> keep going on Ubuntu security team anyway, even from Google, so it might
+> make sense that you keep the membership anyway?
 
-It's likely the Mozilla security team hasn't assigned a CVE. The issue
-only affects applications initializing NSS with NSS_NoDB_Init(). Usually
-the application specifies the actual path to these files. In particular
-Mozilla apps always specify (though some corner cases it may fall back
-to NSS_NoDB_Init(). I think that's rare at this point because
-NSS_NoDB_Init() does not provide any trust information, which all
-Mozilla apps need.).
+I don't mind it, but traditionally, only Canonical employees have had
+access to the embargoed Ubuntu security information (and, as a result,
+access to the closed list).
 
-In general NSS applications on Linux should be initializing with
-/etc/pki/nssdb.
+-Kees
 
-bob
-
-NOTE: the patch is in FIPS related code.  Elio, please get a 6.2 Bug
-created for this ASAP. The patch is already upstream. Component is
-nss-softokn.
-
-bob
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
->> Hello Josh, Steve, vendors,
->>
->> a security flaw was found in the way nss, the Network Security
->> Services (NSS) set of libraries, performed their initialization (the
->> file path for "pkcs11.txt" configuration file was constructed
->> incorrectly). When that configuration file was loaded from remote WebDAV
->> or Samba CIFS share, it could lead to arbitrary security module
->> load, potentially leading to execution of arbitrary code (execution of
->> code from untrusted security module).
->>
->> Upstream bug report:
->> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
->>
->> Other references:
->> [2] https://secunia.com/advisories/46557/
->> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
->> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
->> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
->>
->> Could you allocate a CVE id for this? (as it looks there isn't one
->> for this deficiency yet)
->>
->> Thank you && Regards, Jan.
->> -- 
->> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6276 bytes)
+-- 
+Kees Cook
+Ubuntu Security Team
