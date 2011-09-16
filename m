@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/21
-Message-ID: <913844253.189413.1298487178820.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 13:52:58 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/2
+Message-ID: <1316154511.17824.5.camel@scapa>
+Date: Fri, 16 Sep 2011 08:28:31 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: Corrupted LDM partition table issues
+Cc: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
+Subject: Re: Is there a maintainer for librsvg ?
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1012.
+On jeu., 2011-09-15 at 15:23 +0200, Nicolas Grégoire wrote:
+> Hello,
+> 
+> librsvg is a SVG rendering library hosted at librsvg.sourceforge.net. No
+> new version was published since 2005, and a (security) bug that I
+> reported via bugzilla.gnome.org 6 weeks ago wasn't even triaged.
+> 
+> Given that this lib is used by a lot of distros, what can I do in order
+> to get this bug (and others) patched ?
 
-Thanks.
+It seems that librsvg is hosted on GNOME since quite some time, see
+http://git.gnome.org/browse/librsvg/ and
+http://ftp.gnome.org/pub/GNOME/sources/librsvg/2.34/ (and
+https://bugzilla.gnome.org/buglist.cgi?quicksearch=librsvg)
 
+Regards,
 -- 
-    JB
+Yves-Alexis
 
-
------ Original Message -----
-> Reported by Timo Warns, "The kernel automatically evaluates partition
-> tables of storage devices. The code for evaluating LDM partitions (in
-> fs/partitions/ldm.c) contains a bug that causes a kernel oops on
-> certain
-> corrupted LDM partitions. A kernel subsystem seems to crash, because,
-> after the oops, the kernel no longer recognizes newly connected
-> storage
-> devices."
-> 
-> http://www.spinics.net/lists/mm-commits/msg82429.html
-> 
-> This should affect kernels version v2.6.27-rc1 and above. Of course,
-> CONFIG_LDM_PARTITION needs to be set.
-> 
-> Thanks, Eugene
-> --
-> Eugene Teo / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
