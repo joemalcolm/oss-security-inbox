@@ -1,74 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/9
-Message-Id: <201106271659.06078.ludwig.nussel@suse.de>
-Date: Mon, 27 Jun 2011 16:59:05 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/4
+Message-ID: <1316204088.5747.1.camel@scapa>
+Date: Fri, 16 Sep 2011 22:14:42 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> On Wed, Jun 22, 2011 at 02:02:53PM +0200, Ludwig Nussel wrote:
-> > [...] 
-> > and log a message for the admin that tells him to run "passwd -e" 
-> > on the account.
-> 
-> This is even worse: you'd be storing some info about the password itself
-> in plaintext!  Yes, that's just one bit, yet it may allow for more
-> focused attacks.  If an intruder retrieves not only the shadow file, but
-> also the log file, they'd be able to attack those hashes faster.
-> Similarly, if another user has read access to the log file, but not to
-> the shadow file, they'd know which accounts (not) to target with 8-bit
-> chars in an online password guessing attack.
->
-> So please don't do that.  If you need to make things mostly transparent
-> for admins and users, here's my suggestion:
-> 
-> Add an option to treat 2a in existing hashes as 2x.  Maybe this should
-> even be the default.
+On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
+> My last day with Canonical is today. Starting on Sep 19th, I will be
+> working for Google on ChromeOS. I'd like to transition my closed-list
+> membership based on the fact that ChromeOS is also a distro, and I'll
+> still have security responsibilities with it. How should this be
+> handled? 
 
-I think we cannot risk locking out users (which might include the
-admin) with a security update on a released product. So existing
-hashes have to keep working. My fear is that most systems just stay
-in that compat mode forever if we don't make some component complain
-though.
+I don't have closed-list membership or anything, but I assume you'll
+keep going on Ubuntu security team anyway, even from Google, so it might
+make sense that you keep the membership anyway?
 
-> For new hashes, produced by crypt_blowfish 1.1+ with the mandatory
-> self-test in it, use a new prefix - 2y.  When checking, treat it as 2a
-> (and I may make it official and transparent in 1.1.1+).
-> 
-> How does this sound to you?
-> 
-> Additionally, for the paranoid, when the option to treat 2a as 2x is
-> disabled, disallow logins with passwords containing 0xff chars (possible
-> attack).  Maybe only for 2a hashes, but not for 2y.  In order not to
-> leak this fact via timings, perform the hashing anyway.  (I'll consider
-> making this built-in in a new version of crypt_blowfish, which should
-> let us be more careful with timings.)
-
-Ok, so we'd need two config options, one to toggle signedness bug
-compat mode (2a=2x) and one to disallow 0xff if compat mode is off.
-
-Default for for the security update would be bug compat mode on.
-In that mode new passwords would get the 2y prefix. The 0xff option
-has no effect. Over time the number of 2a passwords decreases. Once
-/etc/shadow contains no 2a passwords on important accounts anymore
-the admin could switch off bug compat mode and s/2y/2a/.
-
-More nervous admins could disable bug compat mode right away. That
-would lock out affected users unless the admin also does s/2a/2x/.
-The really paranoid could additionally enable the 0xff option. New
-passwords would get 2a.
-
-I suppose crypt_blowfish is not meant to parse some config file, so
-we'd have to implement the options in the pam modules.
-
-cu
-Ludwig
-
+Regards,
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
