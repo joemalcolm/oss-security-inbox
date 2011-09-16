@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/27
-Message-ID: <20110405180652.694a643b@orphan>
-Date: Tue, 5 Apr 2011 18:06:52 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/5
+Message-ID: <20110916205422.GS6573@outflux.net>
+Date: Fri, 16 Sep 2011 13:54:22 -0700
+From: Kees Cook <kees@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Apr 2011 13:26:50 -0400 (EDT) R P Herrold wrote:
-
-> > Given the aim to keep the subscriber list very limited, this
-> > probably falls into a tentatively subscribed category too.  AFAIK,
-> > CentOS has rather few components that are not rebuilds of the RHEL
-> > SRPMs, the question is how often a v-s info was useful in the past
-> > in providing security updates for those extra packages.
+On Fri, Sep 16, 2011 at 10:14:42PM +0200, Yves-Alexis Perez wrote:
+> On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
+> > My last day with Canonical is today. Starting on Sep 19th, I will be
+> > working for Google on ChromeOS. I'd like to transition my closed-list
+> > membership based on the fact that ChromeOS is also a distro, and I'll
+> > still have security responsibilities with it. How should this be
+> > handled? 
 > 
-> Thanks for the post furthering the marketing goals of your 
-> corporate master; perhaps the security goal of making sure the 
-> Linux server space is well-secured in a timely fashion was 
-> overlooked by you as you framed your thought
+> I don't have closed-list membership or anything, but I assume you'll
+> keep going on Ubuntu security team anyway, even from Google, so it might
+> make sense that you keep the membership anyway?
 
-Damn, my corporatish evilness unveiled after all... ;)
+I don't mind it, but traditionally, only Canonical employees have had
+access to the embargoed Ubuntu security information (and, as a result,
+access to the closed list).
 
-The request was meant to be in the same spirit as Alexander's questions
-to rPath or Frugalware folks to see if the membership provides the
-expected benefits, and seemed natural given the specific development
-mode used by CentOS.  You're free to view it however you want, of
-course.
-
-> Seemingly (you mention 'AFAIK'), you do not follow the 
-> 'extras' archive, nor the 'testing' where extensions are 
-> found, past what Red Hat ships by default in its enterprise 
-> product
-
-I certainly do not follow.  I did check extras and centosplus though
-and referred to them as those components that are not rebuilds.  Not
-many components there seemed to be an obvious candidates that can
-benefit from v-s info, imo.
-
-EOF
+-Kees
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Kees Cook
+Ubuntu Security Team
