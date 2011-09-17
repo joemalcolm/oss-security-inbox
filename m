@@ -1,110 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/3
-Message-ID: <ad8b91d5-0aec-4f4d-9fef-b31d655d4072@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 30 Sep 2011 10:38:33 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/17/1
+Message-ID: <20110917055353.GB19260@openwall.com>
+Date: Sat, 17 Sep 2011 09:53:53 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery (CSRF) Vulnerability
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3582
+On Fri, Sep 16, 2011 at 10:53:40AM -0700, Kees Cook wrote:
+> My last day with Canonical is today. Starting on Sep 19th, I will be
+> working for Google on ChromeOS. I'd like to transition my closed-list
+> membership based on the fact that ChromeOS is also a distro, and I'll
+> still have security responsibilities with it. How should this be handled?
 
-Thanks.
+The initial seed membership for the closed list was limited to distros
+who were on the old vendor-sec (and additionally limited to Linux only).
 
--- 
-    JB
+I think it's in fact time for us to start accepting other qualifying
+Linux distros.
 
------ Original Message -----
-> Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery
-> (CSRF) Vulnerability
-> 
-> 
-> 
-> 1. OVERVIEW
-> 
-> The Advanced Electron Forums (AEF)  1.0.9 <= versions are vulnerable
-> to Cross Site Request Forgery (CSRF).
-> 
-> 
-> 2. BACKGROUND
-> 
-> AEF has a very simple and easy to use Administration Panel and
-> installing this software is a piece of cake! You can install new
-> themes, customize themes the way you want. The User Control Panel has
-> a simple yet beautiful interface where users can set their
-> preferences
-> for the board.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> Advanced Electron Forums (AEF) 1.0.9 <=  versions contain a flaw that
-> allows a remote Cross-site Request Forgery (CSRF / XSRF) attack. The
-> flaw exists because the application does not require multiple steps
-> or
-> explicit confirmation for sensitive transactions for majority of
-> administrator functions such as adding new user, assigning user to
-> administrative privilege. By using a crafted URL, an attacker may
-> trick the victim into visiting to his web page to take advantage of
-> the trust relationship between the authenticated victim and the
-> application. Such an attack could trick the victim into executing
-> arbitrary commands in the context of their session with the
-> application, without further prompting or verification.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 1.0.9 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> The following request ecalates a normal user to an administrator.
-> 
-> [REQUEST]
-> POST /aef/index.php?act=editprofile&uid=2 HTTP/1.1
-> 
-> username=tester&email=tester%40yehg.net&u_member_group=1&realname=&title=&location=&gender=1&privatetext=&icq=&yim=&msn=&aim=&www=&sig=&editprofile=Edit+Profile
-> [/REQUEST]
-> 
-> 
-> 6. SOLUTION
-> 
-> Partial fix is available.
-> The vendor released a single patch for the provided vulnerable
-> EditProfile functionality.
-> http://www.anelectron.com/downloads/index.php?act=downloadattach&atid=59
-> 
-> 
-> 7. VENDOR
-> 
-> Electron Inc.
-> http://www.anelectron.com/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-12-14: notified vendor through email, website contact form
-> submission
-> 2011-05-17: vendor released aef 1.0.9 without the CSRF fix
-> 2011-09-06: vendor released separate patch about the CSRF fix
-> 2011-09-26: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[aef-1.x]_cross_site_request_forgery
-> CSRF Wiki:
-> https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
-> 
-> 
-> 
-> #yehg [2011-09-26]
-> 
+One of the criteria should be that the distro is generally available
+(not limited to just one organization).  Another is that it should be
+issuing timely security updates.  And, without the "was on vendor-sec"
+requirement, we'll need someone to vouch for each new distro member and
+first person to subscribe from that new distro.  (Then that person can
+nominate additional contact persons for the distro.)
+
+I think that Chrome OS qualifies.  As far as I can see, it's generally
+available now: http://getchrome.eu/download.php
+
+Also, I am happy to vouch for Kees.  (I would vouch for other Chrome OS
+security people I know as well, but this specific request is from Kees.)
+
+So I'd like Chrome OS and Kees in particular to be on the closed Linux
+distros list, to receive advance notification of up to 14 days on medium
+severity issues (this is what the list is for).
+
+I'd appreciate any comments on any of the above (support, objections,
+anything else).
+
+Thanks,
+
+Alexander
