@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/1
-Message-ID: <4D79BC8D.7080004@redhat.com>
-Date: Fri, 11 Mar 2011 14:09:17 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/17/1
+Message-ID: <20110917055353.GB19260@openwall.com>
+Date: Sat, 17 Sep 2011 09:53:53 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-0695 kernel: panic in ib_cm:cm_work_handler
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-This was reported by a customer, Jens Kuehnel.
+On Fri, Sep 16, 2011 at 10:53:40AM -0700, Kees Cook wrote:
+> My last day with Canonical is today. Starting on Sep 19th, I will be
+> working for Google on ChromeOS. I'd like to transition my closed-list
+> membership based on the fact that ChromeOS is also a distro, and I'll
+> still have security responsibilities with it. How should this be handled?
 
-[PATCH 1/2] rdma/cm: Fix crash in request handlers
-http://www.spinics.net/lists/linux-rdma/msg07447.html
-[PATCH 2/2] ib/cm: Bump reference count on cm_id before invoking callback
-http://www.spinics.net/lists/linux-rdma/msg07448.html
+The initial seed membership for the closed list was limited to distros
+who were on the old vendor-sec (and additionally limited to Linux only).
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=653648
+I think it's in fact time for us to start accepting other qualifying
+Linux distros.
 
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+One of the criteria should be that the distro is generally available
+(not limited to just one organization).  Another is that it should be
+issuing timely security updates.  And, without the "was on vendor-sec"
+requirement, we'll need someone to vouch for each new distro member and
+first person to subscribe from that new distro.  (Then that person can
+nominate additional contact persons for the distro.)
+
+I think that Chrome OS qualifies.  As far as I can see, it's generally
+available now: http://getchrome.eu/download.php
+
+Also, I am happy to vouch for Kees.  (I would vouch for other Chrome OS
+security people I know as well, but this specific request is from Kees.)
+
+So I'd like Chrome OS and Kees in particular to be on the closed Linux
+distros list, to receive advance notification of up to 14 days on medium
+severity issues (this is what the list is for).
+
+I'd appreciate any comments on any of the above (support, objections,
+anything else).
+
+Thanks,
+
+Alexander
