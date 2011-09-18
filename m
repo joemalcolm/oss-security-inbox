@@ -1,34 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/8
-Message-ID: <4ED3BC91.7000608@redhat.com>
-Date: Mon, 28 Nov 2011 09:53:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/18/1
+Message-ID: <20110918163648.GA13173@foo.fgeek.fi>
+Date: Sun, 18 Sep 2011 19:36:48 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE assigned for gdb: arbitrary code execution via .debug_gdb_scripts
+Subject: CVE request: PunBB multiple XSS issues
 Content-Type: text/plain; charset=utf-8
 
-This issue is now public.
+Can I get CVE-identifier for this issue.
 
-gdb: arbitrary code execution via .debug_gdb_scripts
+Original post: http://seclists.org/fulldisclosure/2011/Sep/158
+Bug-report to developers: http://punbb.informer.com/forums/topic/24427/multiple-xss-vulnerabilities/
+Fixed on: https://github.com/punbb/punbb/commit/dd50a50a2760f10bd2d09814e30af4b36052ca6d
+PunBB 1.3.6 released: https://github.com/downloads/punbb/punbb/punbb-1.3.6.zip
 
-https://bugzilla.redhat.com/show_bug.cgi?id=703238
-
-Vincent Danen 
-It was discovered [1],[2] the the GNU Debugger (gdb) would load
-untrusted files
-from the current working directory when .debug_gdb_scripts was defined. 
-While
-this was a design decision, it is an insecure one and users who do not
-pre-inspect untrusted files may execute arbitrary code with their
-privileges.
-
-[1] http://sourceware.org/ml/gdb-patches/2011-04/msg00559.html
-[2] http://sourceware.org/ml/gdb-patches/2011-05/msg00202.html
-
-This issue has been assigned CVE-2011-4355
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
+Best regards,
+Henri Salo
