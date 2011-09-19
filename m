@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/5
-Message-ID: <180567066.183928.1294315826808.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 07:10:26 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/1
+Message-ID: <4E76F739.9030709@suse.de>
+Date: Mon, 19 Sep 2011 10:03:05 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: possible flaw in widely used strtod.c implementation
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
+Solar Designer wrote:
+> [...]
+> I think that Chrome OS qualifies.  As far as I can see, it's generally
+> available now: http://getchrome.eu/download.php
 
+That's something different. Apparently just some guy who used SUSE
+Studio to create a live CD based on openSUSE. Anyone could do that
+with a few mouse clicks.
 
------ Original Message -----
-> On Wed, Jan 5, 2011 at 8:23 PM, Pierre Joye <pierre.php@...il.com>
-> wrote:
-> > On Wed, Jan 5, 2011 at 5:52 PM, Michael Gilbert
-> > <michael.s.gilbert@...il.com> wrote:
-> >
-> >> The fact that this bug can lead to a denial-of-service in PHP is
-> >> sufficient to warrant a CVE for PHP, but nothing else (I think). If
-> >> it
-> >> can lead to a dos in other apps, then each should get their own CVE
-> >> (again in my opinion).
-> >
-> > I think so too but in any case it would rock if I could get a CVE #
-> > asap, we are going to release 5.2.17/5.3.5 tomorrow (packaging now).
-> 
-> Anyone?
-
-Please use CVE-2010-4645
-
-Thanks.
+cu
+Ludwig
 
 -- 
-    JB
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
