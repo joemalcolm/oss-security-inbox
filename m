@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/1
-Message-ID: <4EEFF851.6030003@gentoo.org>
-Date: Mon, 19 Dec 2011 18:52:01 -0800
-From: Tim Sammut <underling@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE assignment from previous years
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/4
+Message-ID: <20110919145305.GC20121@suse.de>
+Date: Mon, 19 Sep 2011 16:53:05 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request? etherape remote crash (denial of service)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Is there a general guideline that is commonly used when deciding to
-issue a CVE name from the pool of a previous year versus the current
-year's pool?
+The authors of Etherape, a network traffic overview tool, fixed a remote
+denial of service (NULL ptr dereference) fixed in etherape 0.9.12.
 
-thanks and hope all is well
-tim
+http://etherape.sourceforge.net/
+http://sourceforge.net/tracker/?func=detail&aid=3309061&group_id=2712&atid=102712
 
--- 
-Tim Sammut ~ Gentoo Security Team
-underling@...too.org ~ C2375493
+This tool is in the same area as wireshark, so this probably needs a CVE.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
+Ciao, Marcus
