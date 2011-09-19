@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/6
-Message-ID: <4E268A67.9070707@redhat.com>
-Date: Wed, 20 Jul 2011 13:27:27 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/1
+Message-ID: <4E76F739.9030709@suse.de>
+Date: Mon, 19 Sep 2011 10:03:05 +0200
+From: Ludwig Nussel <ludwig.nussel@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: si4713-i2c: avoid potential buffer overflow on si4713
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-On 07/20/2011 12:52 PM, Eugene Teo wrote:
-> "While compiling it with Fedora 15, [Mauro Carvalho Chehab] noticed this
-> issue:
-> 
-> inlined from ‘si4713_write_econtrol_string’ at
-> drivers/media/radio/si4713-i2c.c:1065:24:
-> /home/v4l/work_trees/linus/arch/x86/include/asm/uaccess_32.h:211:26:
-> error: call to ‘copy_from_user_overflow’ declared with attribute error:
-> copy_from_user() buffer size is not provably correct"
-> 
-> http://git.kernel.org/?p=linux/kernel/git/longterm/longterm-queue-2.6.33.git;a=blob;f=queue-2.6.33/si4713-i2c-avoid-potential-buffer-overflow-on-si4713.patch;h=d99c471980a074cf4ef55fb4428d5f2fec66bffb;hb=29be9ef5e43df840fb19af1d4b3dfa51b3a956c8
-> 
-> AFAIK, only N900 uses this.
-> 
-> Thanks, Eugene
+Solar Designer wrote:
+> [...]
+> I think that Chrome OS qualifies.  As far as I can see, it's generally
+> available now: http://getchrome.eu/download.php
 
-Please use CVE-2011-2700
+That's something different. Apparently just some guy who used SUSE
+Studio to create a live CD based on openSUSE. Anyone could do that
+with a few mouse clicks.
+
+cu
+Ludwig
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+ (o_   Ludwig Nussel
+ //\
+ V_/_  http://www.suse.de/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
