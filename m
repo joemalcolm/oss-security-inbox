@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/11
-Message-ID: <4DB1A993.8070309@mvista.com>
-Date: Fri, 22 Apr 2011 06:15:15 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/3
+Message-ID: <20110919103634.GA26967@openwall.com>
+Date: Mon, 19 Sep 2011 14:36:34 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Vasiliy Kulikov <segoon@...nwall.com>,  Petr Matousek <pmatouse@...hat.com>
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-
-I am a bit confused.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=698999 references
-https://lkml.org/lkml/2011/4/14/294
-
- which is assigned to CVE-2011-1746 not CVE-2011-1747.
-
-is there a patch for CVE-2011-1747?
-
-- Armin
-
-On 04/22/2011 05:32 AM, Vasiliy Kulikov wrote:
-> On Fri, Apr 22, 2011 at 11:11 -0400, Petr Matousek wrote:
->>> Another problem in agp code is not addressed in the patch - kernel
->>> memory
->>> exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
->>> checked
->>> whether requested pid is a pid of the caller (no check in
->>> agpioc_reserve_wrap()).
->>> Each allocation is limited to 16KB, though, there is no per-process
->>> limit.
->>> This might lead to OOM situation, which is not even solved in case of
->>> the
->>> caller death by OOM killer - the memory is allocated for another
->>> (faked)
->>> process."
->>
->> Please use CVE-2011-1747.
+On Mon, Sep 19, 2011 at 10:03:05AM +0200, Ludwig Nussel wrote:
+> Solar Designer wrote:
+> > [...]
+> > I think that Chrome OS qualifies.  As far as I can see, it's generally
+> > available now: http://getchrome.eu/download.php
 > 
-> In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-> "Reference and patch:", but there is no patch for the issue (as I said
-> in the patch description).  I have no agp hardware and I cannot test
-> whether forcing the requested pid to the current pid is a good idea (it
-> might not).
-> 
-> Thanks,
-> 
+> That's something different. Apparently just some guy who used SUSE
+> Studio to create a live CD based on openSUSE. Anyone could do that
+> with a few mouse clicks.
+
+Oops.  Thank you for this crucial correction.
+
+That's weird naming, apparently based on inclusion of the Chrome web
+browser only.
+
+OK, I read up some more on Chrome OS and Chromium OS.
+
+Per the Chromium OS FAQ:
+
+http://www.chromium.org/chromium-os/chromium-os-faq
+
+it appears that Chrome OS is only available with a Chromebook purchase,
+but those may be purchased from multiple OEMs.  I think this latter fact
+qualifies Chrome OS for the closed list since it's similar to how
+multiple hardware product vendors redistribute the distros of MontaVista
+Software and Wind River, who we accepted (thereby setting a precedent).
+
+"Multiple" is the keyword here.  (We might have difficulty making a
+determination in case a distro is only used by a very low and fixed
+number of hardware vendors, though - like just two.)
+
+Also, Chromium OS is generally available, albeit not in a form suitable
+for end-users (there's a public git repository, but no images ready to
+boot/install).  Arguably, this makes Chromium OS eligible too, and I
+guess the security team behind Chrome OS and Chromium OS is the same.
+
+Any other comments?
+
+Alexander
