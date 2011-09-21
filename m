@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/16
-Message-ID: <20110228232847.GF4669@outflux.net>
-Date: Mon, 28 Feb 2011 15:28:47 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/21/1
+Message-ID: <20110921171211.GB15869@albatros>
+Date: Wed, 21 Sep 2011 21:12:12 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: OOM-killer via argv expansion
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 28, 2011 at 01:02:02PM -0800, Kees Cook wrote:
-> On Mon, Feb 28, 2011 at 12:32:55PM -0800, Kees Cook wrote:
-> > I think the flaw[1] with argv-expansion triggering the OOM-killer
-> > incorrectly needs its own CVE.
-> > 
-> > While the stack guard page and the fixes[2] for CVE-2010-3858 certainly
-> > improved things, argv expansion can still be tricked into OOM-killing the
-> > entire system. Solutions were discussed on the original thread, but
-> > were not finished. Recently a set of patches[3] has been re-proposed to fix
-> > this issue. Regardless, it should probably get its own CVE assigned.
-> > 
-> > Thanks,
-> > 
-> > -Kees
-> > 
-> > [1] https://lkml.org/lkml/2010/8/27/429
-> > [2] http://git.kernel.org/linus/1b528181b2ffa14721fb28ad1bd539fe1732c583
-> > [3] https://lkml.org/lkml/2011/2/25/227
-> 
-> Sorry, Nelson Elhage pointed out to me that I missed the fix for this
-> issue. The issue was been fixed with:
-> http://git.kernel.org/linus/3c77f845722158206a7209c45ccddc264d19319c
-> 
-> This was already assigned as CVE-2010-4243
-> 
-> Sorry for the noise, and thanks!
+Hi,
 
-Wait, I will continue to make more noise. The upstream commit
-3c77f845722158206a7209c45ccddc264d19319c does not handle the compat case,
-which https://lkml.org/lkml/2011/2/25/227 is trying to handle.
+On Mon, Jun 27, 2011 at 11:21 +0800, Eugene Teo wrote:
+> On 06/24/2011 08:34 PM, Vasiliy Kulikov wrote:
+> procfs io - CVE-2011-2495
 
-Does this need its own CVE?
+Fixed in:
+
+https://github.com/torvalds/linux/commit/1d1221f375c94ef961ba8574ac4f85c8870ddd51
+https://github.com/torvalds/linux/commit/293eb1e7772b25a93647c798c7b89bf26c2da2e0
+
+> taskstats - CVE-2011-2494
+
+Finally fixed in:
+
+https://github.com/torvalds/linux/commit/1a51410abe7d0ee4b1d112780f46df87d3621043
 
 Thanks,
 
--Kees
-
 -- 
-Kees Cook
-Ubuntu Security Team
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
