@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/2
-Message-ID: <4E41D0A6.4000908@redhat.com>
-Date: Wed, 10 Aug 2011 08:28:22 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/21/1
+Message-ID: <20110921171211.GB15869@albatros>
+Date: Wed, 21 Sep 2011 21:12:12 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+Subject: Re: CVE request: kernel: taskstats/procfs io infoleak
 Content-Type: text/plain; charset=utf-8
 
-On 08/10/2011 08:14 AM, Dan Rosenberg wrote:
-> On Tue, Aug 9, 2011 at 6:49 PM, Eugene Teo <eugene@...hat.com> wrote:
->> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:>
->>> 2. [SCSI] pmcraid: reject negative request size
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
->>
->> I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
->> the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
->> CVE-2011-2906 for this issue.
->>
->> Thanks, Eugene
->>
-> 
-> This isn't a security issue because there's a check for CAP_SYS_ADMIN
-> on pmcraid_chr_open(), which is necessary to obtain a file descriptor
-> to the device file in order to call the affected ioctl.  Which is why
-> I didn't bother CC'ing security@...nel.org. ;-)
+Hi,
 
-Awesome. Rejecting CVE. Back to my holidays :)
+On Mon, Jun 27, 2011 at 11:21 +0800, Eugene Teo wrote:
+> On 06/24/2011 08:34 PM, Vasiliy Kulikov wrote:
+> procfs io - CVE-2011-2495
 
-Eugene
+Fixed in:
+
+https://github.com/torvalds/linux/commit/1d1221f375c94ef961ba8574ac4f85c8870ddd51
+https://github.com/torvalds/linux/commit/293eb1e7772b25a93647c798c7b89bf26c2da2e0
+
+> taskstats - CVE-2011-2494
+
+Finally fixed in:
+
+https://github.com/torvalds/linux/commit/1a51410abe7d0ee4b1d112780f46df87d3621043
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
