@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/15
-Message-ID: <1006511880.143408.1313782089079.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:28:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: roundcube XSS before 0.5.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/4
+Message-ID: <4E7B3006.4000401@redhat.com>
+Date: Thu, 22 Sep 2011 14:54:30 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Drupal Security Team <security@...pal.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- drupal6-views_bulk_operations: XSS due improper escaping of a vocabulary help (SA-CONTRIB-2011-042)
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> See:
-> 
-> http://sourceforge.net/news/?group_id=139281&id=302769
-> 
-> "We just published a new release which fixes a recently reported XSS
-> vulnerability as an update to the stable 0.5 branch."
-> 
+Hello Josh, Steve, vendors,
 
-Please use CVE-2011-2937.
+   it was found in the way Drupal Views Builk Operations (VBO) module
+did not escape the vocabulary help properly, when the vocabulary has
+had user tagging enabled and "Modify node taxonomy terms" action was
+used for modification of the taxonomy. A remote attacker could provide
+a specially-crafted URL, which once visited by unsuspecting Drupal
+user, disposing with the 'administer taxonomy' permission / privilege,
+could lead to arbitrary HTML or web script execution (cross-site
+scripting [XSS] attack).
 
-Thanks.
+References:
+[1] http://drupal.org/node/1286844
+[2] http://secunia.com/advisories/46114/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=740553
 
--- 
-    JB
+Upstream solution:
+
+Upgrage to 6.x-1.11:
+[4] http://drupal.org/node/1286778
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
