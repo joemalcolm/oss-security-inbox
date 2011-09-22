@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/3
-Message-ID: <4DC27695.5030104@redhat.com>
-Date: Thu, 05 May 2011 18:06:13 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel network vulns
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/7
+Message-ID: <20110922162611.GC4095@suse.de>
+Date: Thu, 22 Sep 2011 18:26:11 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Missing input sanitation in various X GLX calls
 Content-Type: text/plain; charset=utf-8
 
-On 02/18/2010 01:12 PM, Eugene Teo wrote:
-> 1) gre: fix netns vs proto registration ordering
-> http://patchwork.ozlabs.org/patch/45553/
->
-> "GRE protocol receive hook can be called right after protocol addition
-> is done. If netns stuff is not yet initialized, we're going to oops in
-> net_generic().
->
-> This is remotely oopsable if ip_gre is compiled as module and packet
-> comes at unfortunate moment of module loading."
->
-> 2) tunnels: fix netns vs proto registration ordering
-> http://patchwork.ozlabs.org/patch/45554/
->
-> "Same stuff as in ip_gre patch: receive hook can be called before netns
-> setup is done, oopsing in net_generic()."
+Hi,
 
-Josh, can you please assign two CVEs for these? Thanks.
+https://bugs.freedesktop.org/show_bug.cgi?id=28823 
+is a tracker bug for input sanitation lacking in various GLX X calls.
 
-Eugene
+Reporter is me@...fdog.net
+
+These can probably allow a attacker with access to the GLX calls
+(typically just the logged in user) to crash the X server or execute
+code within it.
+
+(Not thought about WebGL introduced crash potential here.)
+
+The lacking checks were reported and fixed in x.org git in 2010, so they
+probably need a 2010 CVE id. (Single one should be sufficient I guess.)
+
+Ciao, Marcus
