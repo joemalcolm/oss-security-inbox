@@ -1,17 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/6
-Message-ID: <20110724161735.GA4436@pisco.westfalen.local>
-Date: Sun, 24 Jul 2011 18:17:36 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Squirrelmail CVE duplicates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/8
+Message-ID: <20110922163236.GD4095@suse.de>
+Date: Thu, 22 Sep 2011 18:32:36 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: X.org ProcRenderGlyps input sanitation issue
 Content-Type: text/plain; charset=utf-8
 
 Hi,
-there seems to be a duplicate CVE assignment for Squirrelmail?
 
-CVE-2010-4555 / CVE-2011-2753
+Also from 2010 and me@...fdog.net and the x.org bugtracker:
 
-Cheers,
-        Moritz
+https://bugs.freedesktop.org/show_bug.cgi?id=28801
 
+Adam in comment #c2 thinks this might just discloses memory
+but could not overwrite arbitrary x server memory ... 
+However the comment #c0 has a x.org server crash, so I am unsure
+about code execution possibilities.
+
+Needs one 2010 CVE id I guess.
+
+Ciao, Marcus
