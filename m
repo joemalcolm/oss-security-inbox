@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/4
-Message-Id: <201103230930.25261.ludwig.nussel@suse.de>
-Date: Wed, 23 Mar 2011 09:30:24 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/1
+Message-ID: <9f039f38-a3f2-473a-a751-3c8e5a7da73b@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Sep 2011 08:31:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE  Request: perl: regex causes assertion fail
+Subject: Re: CVE Request? etherape remote crash (denial of service)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- Original Message -----
+> 
+> The authors of Etherape, a network traffic overview tool, fixed a remote
+> denial of service (NULL ptr dereference) fixed in etherape 0.9.12.
+> 
+> http://etherape.sourceforge.net/
+> http://sourceforge.net/tracker/?func=detail&aid=3309061&group_id=2712&atid=102712
+> 
+> This tool is in the same area as wireshark, so this probably needs a CVE.
+> 
 
-Certain regular expressions cause perl to abort():
-http://rt.perl.org/rt3/Public/Bug/Display.html?id=76538
+Please use CVE-2011-3369.
 
-That's an issue e.g. for spamassassin:
-https://listi.jpberlin.de/pipermail/postfixbuch-users/2011-February/055885.html
-
-cu
-Ludwig
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+    JB
