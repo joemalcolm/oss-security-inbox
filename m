@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/5
-Message-ID: <20110415165002.16c6806b@orphan>
-Date: Fri, 15 Apr 2011 16:50:02 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/2
+Message-ID: <71543c91-47fb-41fb-9af2-7e87261df950@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Sep 2011 08:35:56 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Thunar (format string errors)
+Subject: Re: CVE request: XSS in status.net before 0.9.9 and 1.0.0beta2
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 15 Apr 2011 15:54:08 +0200 Yves-Alexis Perez wrote:
+----- Original Message -----
+> See
+> http://status.net/2011/08/02/security-alert-for-all-versions-of-statusnet
+> 
+> "Incorrectly sanitized input from the URL for "tag stream" pages,
+> combined with incorrect encoding of dynamically-generated JavaScript,
+> allows an attacker to create a carefully-crafted URL that will execute
+> arbitrary JavaScript code on other users' browsers."
 
-> The first one is
-> http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74
-> (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in
-> Thunar 1.2.1) and triggers when creating file from templates and
-> calling it with a format string.
+Please use CVE-2011-3370.
 
-Does this have real attack vector where trust boundary is crossed?
-This sounds like a bug.
-
-> The second is
-> http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa
-> and is triggered when copy/pasting a file named from a format string.
-> There's no released version including the fix right now.
-
-This would probably qualify.
-
-> As a side note, I do use -Wformat -Wformat-security
-> -Werror=format-security (thanks to hardening-includes) for my Debian
-> builds, but as those function are wrappers of wrappers of wrappers to
-> printf() and stuff like that, -Wformat-security won't help. Is there a
-> way to work around that?
-
-Fortify source should block code execution even in this case, I'd
-expect.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
