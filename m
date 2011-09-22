@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/6
-Message-ID: <935531799.25619.1295039260525.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 14 Jan 2011 16:07:40 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/2
+Message-ID: <71543c91-47fb-41fb-9af2-7e87261df950@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Sep 2011 08:35:56 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: proftpd before 1.3.3d
+Subject: Re: CVE request: XSS in status.net before 0.9.9 and 1.0.0beta2
 Content-Type: text/plain; charset=utf-8
 
-I could have swore this flaw got an ID, but I can't find it.
+----- Original Message -----
+> See
+> http://status.net/2011/08/02/security-alert-for-all-versions-of-statusnet
+> 
+> "Incorrectly sanitized input from the URL for "tag stream" pages,
+> combined with incorrect encoding of dynamically-generated JavaScript,
+> allows an attacker to create a carefully-crafted URL that will execute
+> arbitrary JavaScript code on other users' browsers."
 
-Use CVE-2010-4652
+Please use CVE-2011-3370.
 
 Thanks.
 
 -- 
     JB
-
------ Original Message -----
-> See:
-> http://www.securityfocus.com/bid/44933
-> http://phrack.org/issues.html?issue=67&id=7#article
-> http://bugs.gentoo.org/show_bug.cgi?id=348998
-> 
-> Quote from securityfocus:
-> "ProFTPD is prone to a remote heap-based buffer-overflow
-> vulnerability.
-> 
-> Attackers can exploit this vulnerability to execute arbitrary code
-> with
-> SYSTEM-level privileges. Failed exploit attempts will result in a
-> denial-of-service condition."
-> 
-> Please assign CVE (a 2010 / last year one).
-> 
-> --
-> Hanno Böck mail/jabber: hanno@...eck.de
-> GPG: BBB51E42 http://www.hboeck.de/
