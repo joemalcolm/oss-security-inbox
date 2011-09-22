@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/7
-Message-ID: <887697103.140954.1294149892279.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 4 Jan 2011 09:04:52 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/6
+Message-ID: <1316704429.3222.4.camel@localhost>
+Date: Thu, 22 Sep 2011 10:13:47 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request for buffer overflows in gimp
+Cc: security@...ntu.com
+Subject: Re: CVE Request -- apt
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello Steve, Vendors,
+On Thu, 2011-09-22 at 10:11 -0500, Jamie Strandboge wrote:
+> apt-key in Ubuntu is not verifying the key correctly when it is fetched
+> via 'apt-key net-update'. This was reported here:
 > 
-> This one is from the debian bug tracker [1], there are four buffer
-> overflows in gimp plugins.
+> http://seclists.org/fulldisclosure/2011/Sep/221
 > 
-> I am not sure if this would need one CVE or four?
+> and tracked here:
+> https://launchpad.net/bugs/856489
 > 
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=608497
-> 
-> 
+> Based on the man page, Debian should not be affected. Derivatives of
+> Ubuntu probably are.
 
-I'm going to give this four. We *might* be able to get away with two, but
-since they're all in quite different bits of code, I'm betting the affected
-versions are different, and it's likely upstream is going to fix these all
-at different times in their SCM.
-
-CVE-2010-4540 gimp LIGHTING EFFECTS > LIGHT plugin stack buffer overflow
-CVE-2010-4541 gimp SPHERE DESIGNER plugin stack buffer overflow
-CVE-2010-4542 gimp GFIG plugin stack buffer overflow
-CVE-2010-4543 gimp heap overflow read_channel_data() in file-psp.c
-
-Thanks.
+Forgot to CC security@...ntu.com
 
 -- 
-    JB
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
