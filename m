@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/14
-Message-ID: <20110401205635.GA31625@openwall.com>
-Date: Sat, 2 Apr 2011 00:56:35 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/1
+Message-ID: <9f039f38-a3f2-473a-a751-3c8e5a7da73b@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Sep 2011 08:31:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request? etherape remote crash (denial of service)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 04:37:53PM -0400, zardoz@...h.com wrote:
-> I previously had a backdoor on the vendor-sec box and would like to 
-> be included in the new vendor-sec list.  If you could migrate my 
-> backdoor to the new infrastructure, it would be much appreciated.
+----- Original Message -----
 > 
-> My public key should still be in /root/.ssh/authorized_keys.
+> The authors of Etherape, a network traffic overview tool, fixed a remote
+> denial of service (NULL ptr dereference) fixed in etherape 0.9.12.
+> 
+> http://etherape.sourceforge.net/
+> http://sourceforge.net/tracker/?func=detail&aid=3309061&group_id=2712&atid=102712
+> 
+> This tool is in the same area as wireshark, so this probably needs a CVE.
+> 
 
-Oh, you forgot to post a fingerprint and a DNA sample for verification.
+Please use CVE-2011-3369.
 
-> - Zardoz
+Thanks.
 
-This reminder is very nice, and timely.
-
-http://en.wikipedia.org/wiki/Zardoz_(computer_security)
-http://securitydigest.org/zardoz/
-
-Obviously, history repeats itself.  It's the same tradeoff, and we're
-(maybe) just a little bit wiser now.
-
-Alexander
+-- 
+    JB
