@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/03/10
-Message-ID: <4DE91968.7060901@redhat.com>
-Date: Fri, 03 Jun 2011 19:27:04 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- xscreensaver -- exits when activated
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/5
+Message-ID: <1316704309.3222.2.camel@localhost>
+Date: Thu, 22 Sep 2011 10:11:42 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- apt
 Content-Type: text/plain; charset=utf-8
 
+apt-key in Ubuntu is not verifying the key correctly when it is fetched
+via 'apt-key net-update'. This was reported here:
 
-Hello, Josh, Steve, vendors,
+http://seclists.org/fulldisclosure/2011/Sep/221
 
-   it was found that xscreensaver terminated, when it was activated upon 
-launch. A local proximate attacker could use this deficiency to access
-resources, which should be otherwise protected by authentication.
+and tracked here:
+https://launchpad.net/bugs/856489
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=627382
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=703483
+Based on the man page, Debian should not be affected. Derivatives of
+Ubuntu probably are.
 
-Could you allocate a CVE id for this?
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
