@@ -1,82 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/1
-Message-Id: <20110715104744.9f8428bf.erikd@mega-nerd.com>
-Date: Fri, 15 Jul 2011 10:47:44 +1000
-From: Erik de Castro Lopo <erikd@...a-nerd.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Secunia Research <vuln@...unia.com>
-Subject: Re: CVE Request -- libsndfile -- Integer overflow by processing certain PAF files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/3
+Message-ID: <b603fa5f-571c-451f-ae31-ea1391b83ef2@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 22 Sep 2011 08:44:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: PunBB multiple XSS issues
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-3371.
 
-Please CC me on all mails regarding this bug. I am not on the list
-where Dan Rosenberg wrote:
+Thanks.
 
-> On Thu, Jul 14, 2011 at 2:49 AM, Erik de Castro Lopo
-> <erikd (AT) mega-nerd (DOT) com> wrote:
-> > Jan Lieskovsky wrote:
-> >
-> >> * *an integer overflow, leading to heap-based buffer overflow flaw was
-> >> found in the way libsndfile, library for reading and writing of sound
-> >> files, processed certain PARIS Audio Format (PAF) audio files with
-> >> crafted count of channels in the PAF file header. A remote attacker
-> >> could provided a specially-crafted PAF audio file, which once opened by
-> >> a local, unsuspecting user in an application, linked against libsndfile,
-> >> could lead to that particular application crash (denial of service),
-> >
-> > I agree with everything up to here.
-> >
-> >> or, potentially arbitrary code execution with the privileges of the
-> >> user running the application.
-> >
-> > but this is rubbish. The heap gets overwritten with zeros which would
-> > certainly lead to the application segfaulting. However, there is
-> > no way for arbitrary code to be executed on amy sane OS with proper
-> > memory protection.
->
-> This is not a sound assumption. Any sort of partially controlled heap
-> corruption, even if the data that's being written isn't controllable
-> by an attacker, should be considered potentially exploitable. Modern
-> heap exploitation is alive and well - it's worth pointing out that a
-> recent remote vulnerability in Microsoft IIS FTPD that allowed for a
-> heap overflow of strictly 0xff bytes was shown to be exploitable,
-> contradicting Microsoft's claims that it could only cause denial of
-> service.
-
-The code which caused the heap overflow was this:
-
-    memset (ppaf24->samples, 0, ppaf24->samplesperblock * ppaf24->channels) ;
-
-where it was the ppaf24->channels value that was not validated (and
-ppaf24->samplesperblock is always 10). In future versions of libsndfile
-ppaf24->samplesperblock will be replaced by a compile time constant
-value.
-
-That means that the heap is overwritten in blocks that are a multiple
-of 10 bytes which makes it significatly more difficult to exploit.
-
-> Think about partially overwriting certain elements of heap
-> metadata, or even heap data, with zeroes. Suppose an application with
-> heavy function pointer usage was linked against libsndfile, and this
-> overflow allowed overwriting the least significant bytes of a function
-> pointer with zeroes and ultimately allowed for controlling execution
-> flow.
-
-For this instance of heap overflow (overwritten in multiples of 10 bytes
-with the base being 4 byte aligned), its only possible to zero the lowest
-2 bytes of a function pointer (assuming a little endian machine) if it
-happens to lie in exactly the right place.
-
-In terms of ease of exploitation, this one has to be in the very difficult
-basket.
-
-> It's better to be safe than sorry.
-
-That's why I rushed out a new release. I do take this seriously, but
-I do not like to see the threat exaggerated beyond reason.
-
-Erik
 -- 
-----------------------------------------------------------------------
-Erik de Castro Lopo
-http://www.mega-nerd.com/
+    JB
+
+
+----- Original Message -----
+> Can I get CVE-identifier for this issue.
+> 
+> Original post: http://seclists.org/fulldisclosure/2011/Sep/158
+> Bug-report to developers:
+> http://punbb.informer.com/forums/topic/24427/multiple-xss-vulnerabilities/
+> Fixed on:
+> https://github.com/punbb/punbb/commit/dd50a50a2760f10bd2d09814e30af4b36052ca6d
+> PunBB 1.3.6 released:
+> https://github.com/downloads/punbb/punbb/punbb-1.3.6.zip
+> 
+> Best regards,
+> Henri Salo
+> 
