@@ -1,66 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/5
-Message-Id: <201108221024.32846.mweckbecker@suse.de>
-Date: Mon, 22 Aug 2011 10:24:32 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ruby on rails flaws (4)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/7
+Message-ID: <20110922162611.GC4095@suse.de>
+Date: Thu, 22 Sep 2011 18:26:11 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Missing input sanitation in various X GLX calls
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-maybe this issue would qualify for a CVE too(?):
+https://bugs.freedesktop.org/show_bug.cgi?id=28823 
+is a tracker bug for input sanitation lacking in various GLX X calls.
 
-  https://bugzilla.novell.com/show_bug.cgi?id=673010
-  http://webservsec.blogspot.com/2011/02/ruby-on-rails-vulnerability.html
+Reporter is me@...fdog.net
 
-Thanks in advance.
+These can probably allow a attacker with access to the GLX calls
+(typically just the logged in user) to crash the X server or execute
+code within it.
 
-On Friday 19 August 2011 21:03:52 Josh Bressers wrote:
-> ----- Original Message -----
->
-> > Could we get CVEs assigned to these flaws? Upstream had requested CVEs
-> > prior to disclosure, but didn't receive any.
-> >
-> > http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
-> >
-> > 1) Filter Skipping bugs
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >3420ac71aed312d6
-> > https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107
-> >a9552 https://bugzilla.redhat.com/show_bug.cgi?id=731432
->
-> Use CVE-2011-2929
->
-> > 2) SQL Injection issues
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >6a1e473744bc389b
-> > https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e
-> >4bf85 https://bugzilla.redhat.com/show_bug.cgi?id=731438
->
-> Use CVE-2011-2930
->
-> > 3) Parse error in strip_tags
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >2b9130749b74ea12
-> > https://github.com/rails/rails/commit/586a944ddd4d03e66dea109330614759474
-> >8037a https://bugzilla.redhat.com/show_bug.cgi?id=731436
->
-> Use CVE-2011-2931
->
-> > 4) UTF-8 escaping vulnerability
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/
-> >56bffb5923ab1195
-> > https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd
-> >306bd https://bugzilla.redhat.com/show_bug.cgi?id=731435
->
-> Use CVE-2011-2932
->
-> Thanks.
+(Not thought about WebGL introduced crash potential here.)
 
+The lacking checks were reported and fixed in x.org git in 2010, so they
+probably need a 2010 CVE id. (Single one should be sufficient I guess.)
 
--- 
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Ciao, Marcus
