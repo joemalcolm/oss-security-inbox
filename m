@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/19/3
-Message-ID: <20110919103634.GA26967@openwall.com>
-Date: Mon, 19 Sep 2011 14:36:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/6
+Message-ID: <1316704429.3222.4.camel@localhost>
+Date: Thu, 22 Sep 2011 10:13:47 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Cc: security@...ntu.com
+Subject: Re: CVE Request -- apt
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 19, 2011 at 10:03:05AM +0200, Ludwig Nussel wrote:
-> Solar Designer wrote:
-> > [...]
-> > I think that Chrome OS qualifies.  As far as I can see, it's generally
-> > available now: http://getchrome.eu/download.php
+On Thu, 2011-09-22 at 10:11 -0500, Jamie Strandboge wrote:
+> apt-key in Ubuntu is not verifying the key correctly when it is fetched
+> via 'apt-key net-update'. This was reported here:
 > 
-> That's something different. Apparently just some guy who used SUSE
-> Studio to create a live CD based on openSUSE. Anyone could do that
-> with a few mouse clicks.
+> http://seclists.org/fulldisclosure/2011/Sep/221
+> 
+> and tracked here:
+> https://launchpad.net/bugs/856489
+> 
+> Based on the man page, Debian should not be affected. Derivatives of
+> Ubuntu probably are.
 
-Oops.  Thank you for this crucial correction.
+Forgot to CC security@...ntu.com
 
-That's weird naming, apparently based on inclusion of the Chrome web
-browser only.
+-- 
+Jamie Strandboge             | http://www.canonical.com
 
-OK, I read up some more on Chrome OS and Chromium OS.
-
-Per the Chromium OS FAQ:
-
-http://www.chromium.org/chromium-os/chromium-os-faq
-
-it appears that Chrome OS is only available with a Chromebook purchase,
-but those may be purchased from multiple OEMs.  I think this latter fact
-qualifies Chrome OS for the closed list since it's similar to how
-multiple hardware product vendors redistribute the distros of MontaVista
-Software and Wind River, who we accepted (thereby setting a precedent).
-
-"Multiple" is the keyword here.  (We might have difficulty making a
-determination in case a distro is only used by a very low and fixed
-number of hardware vendors, though - like just two.)
-
-Also, Chromium OS is generally available, albeit not in a form suitable
-for end-users (there's a public git repository, but no images ready to
-boot/install).  Arguably, this makes Chromium OS eligible too, and I
-guess the security team behind Chrome OS and Chromium OS is the same.
-
-Any other comments?
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
