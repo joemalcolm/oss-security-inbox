@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/9
-Message-ID: <4D233932.2080509@summersault.com>
-Date: Tue, 04 Jan 2011 10:13:54 -0500
-From: Mark Stosberg <mark@...mersault.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>
-Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/1
+Message-ID: <53126a5a-83dd-40fd-ad0c-3792600bdcf3@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Sep 2011 11:22:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Drupal Security Team <security@...pal.org>
+Subject: Re: CVE Request -- drupal6-views_bulk_operations: XSS due improper escaping of a vocabulary help (SA-CONTRIB-2011-042)
 Content-Type: text/plain; charset=utf-8
 
-
->   Are there some patches to come yet wrt to Perl's CPAN CGI-Simple module
-> and those two CVE ids yet?
-
-Yes, this one. It is not currently applied in the master branch yet:
-
-https://github.com/markstos/CGI--Simple/commit/e811ab874a5e0ac8a99e76b645a0e537d8f714da
-
-> I can see latest CGi-Simple-v113 released on Monday, 27-th December 2010:
-> [1] http://search.cpan.org/dist/CGI-Simple/
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> Does it contain fixes for both CVE issues (so it is possible to rebase
-> to new
-> version) or anything else to be done in this part of the world yet?
+> it was found in the way Drupal Views Builk Operations (VBO) module did
+> not escape the vocabulary help properly, when the vocabulary has had user
+> tagging enabled and "Modify node taxonomy terms" action was used for
+> modification of the taxonomy. A remote attacker could provide a
+> specially-crafted URL, which once visited by unsuspecting Drupal user,
+> disposing with the 'administer taxonomy' permission / privilege, could
+> lead to arbitrary HTML or web script execution (cross-site scripting
+> [XSS] attack).
+> 
+> References:
+> [1] http://drupal.org/node/1286844
+> [2] http://secunia.com/advisories/46114/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=740553
+> 
+> Upstream solution:
+> 
+> Upgrage to 6.x-1.11:
+> [4] http://drupal.org/node/1286778
+> 
+> Could you allocate a CVE id for this?
+> 
 
-It contains only a partial fix, mirroring what happened with CGI.pm.
+Please use CVE-2011-3373.
 
-> Is the fix, we were waiting for on the CGI-Simple side:
-> [2]
-> https://github.com/AndyA/CGI--Simple/commit/5a861280ef524661105e132536ff7d1a9084941f
+Thanks.
 
-That's not it, that's separate.
-
-Lincoln is the primary maintainer of CGI.pm, but I have upload rights.
-However, we haven't heard from recently. A week ago I asked again for
-his input and notified him that I would upload a new release myself I
-hadn't heard from him in another week. That time has come now-- I will
-plan to upload a new release of CGI.pm in the next 24 hours.
-
-   Mark
+-- 
+    JB
