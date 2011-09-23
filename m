@@ -1,51 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/2
-Message-ID: <20110621124211.GA5938@openwall.com>
-Date: Tue, 21 Jun 2011 16:42:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/5
+Message-ID: <78370d3f-0d25-4d90-988b-681368766450@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Sep 2011 14:41:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: CVE Request: X.org ProcRenderGlyps input sanitation issue
 Content-Type: text/plain; charset=utf-8
 
-Steve -
+Please use CVE-2010-4819
 
-Can I have a CVE id, please?  ASAP, or I am releasing without referring
-to a CVE id.
+Thanks.
 
-On Mon, Jun 20, 2011 at 03:43:20PM +0000, The Fungi wrote:
-> No, I agree your proposed approach lends a more general solution
-> which could be applied to the use cases I was considering. I saw you
-> mention it over on the crypto list as well, but it sounded like you
-> were trying to find ways to avoid a new hash encoding identifier in
-> the wild which could conflict with something OpenBSD might consider
-> assigning for some other purpose at a later date (though assuming
-> this workaround makes it onto their radar, that seems an unlikely
-> situation anyway).
+-- 
+    JB
 
-Of course, I need to inform them that we're taking "$2x$" for our
-backwards compatibility feature.
-
-Here's how I am dealing with the issue in code:
-
-Bug fix, plus a backwards compatibility feature:
-
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.9;r2=1.10
-
-8-bit test vectors added, for both modes (correct and buggy):
-
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/wrapper.c.diff?r1=1.9;r2=1.10
-
-These are only used by "make check", which I felt was not enough - many
-people are taking just the main C file and use it in their programs.
-Obviously, my "make check" would not exist in their source code trees.
-So if those programs are ever miscompiled or otherwise broken, it might
-not be detected.  To deal with this, I added:
-
-Quick self-test on every use:
-
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_blowfish/crypt_blowfish.c.diff?r1=1.10;r2=1.11
-
-I am likely to go ahead and release this.
-
-Alexander
+----- Original Message -----
+> Hi,
+> 
+> Also from 2010 and me@...fdog.net and the x.org bugtracker:
+> 
+> https://bugs.freedesktop.org/show_bug.cgi?id=28801
+> 
+> Adam in comment #c2 thinks this might just discloses memory
+> but could not overwrite arbitrary x server memory ...
+> However the comment #c0 has a x.org server crash, so I am unsure
+> about code execution possibilities.
+> 
+> Needs one 2010 CVE id I guess.
+> 
+> Ciao, Marcus
+> 
