@@ -1,115 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/28
-Message-ID: <158386739.192316.1298496233717.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 16:23:53 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/4
+Message-ID: <a9fa49fc-b7fc-4182-ac6e-913a15637aab@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Sep 2011 14:00:13 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: Re: CVE Request: Missing input sanitation in various X GLX calls
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the list. I don't have enough CVE ids for this, I've grouped
-them by type and version for MITRE to assign IDs.
+I'm assign this as "X.org multiple input sanitization flaws"
 
-******** procfs ******
-
-[PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
-https://lkml.org/lkml/2011/2/4/73
-8040835760adf0ef66876c063d47f79f015fb55d
-1da177e4, real commit is older than kernel git epoch.
-
-
-****** sysfs *******
-
-[PATCH 07/20] video: sn9c102: world-wirtable sysfs files
-https://lkml.org/lkml/2011/2/4/85
-1da177e4, real commit is older than kernel git epoch.
-
-
-[PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg file
-https://lkml.org/lkml/2011/2/4/79
-b80b168f918bba4b847e884492415546b340e19d
-745a5d21 v2.6.25-rc1
-
-[PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless and jogdial files
-https://lkml.org/lkml/2011/2/4/78
-8a6a142c1286797978e4db266d22875a5f424897
-dd8cd779 v2.6.25-rc1
-
-[PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
-https://lkml.org/lkml/2011/2/4/74
-8f26795a v2.6.25-rc1
-
-[PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
-https://lkml.org/lkml/2011/2/4/75
-1237c98d v2.6.25-rc1
-
-
-[PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
-https://lkml.org/lkml/2011/2/4/83
-ef12379f v2.6.32-rc1
-
-
-[PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
-https://lkml.org/lkml/2011/2/4/76
-introduced in fe4f0bde v2.6.36-rc1
-
-
-[PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
-https://lkml.org/lkml/2011/2/4/69 arm arch
-38cdfe06 v2.6.37-rc1
-
-
-[PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
-https://lkml.org/lkml/2011/2/4/70
-500fe141 v2.6.37-rc2
-
-[PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
-https://lkml.org/lkml/2011/2/4/81
-0efba16c v2.6.37-rc2
-
-
-[PATCH 12/20] net: can: at91_can: world-writable sysfs files
-https://lkml.org/lkml/2011/2/4/80
-fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
-introduced in 3a5655a5 v2.6.38-rc3
-
-****** debugfs ********
-
-[PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
-https://lkml.org/lkml/2011/2/4/77
-552ff317 v2.6.29-rc1
-
-
-[PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
-https://lkml.org/lkml/2011/2/4/82
-14fa5691 v2.6.31-rc1
-
-
-[PATCH 01/20] mach-omap2: mux: world-writable debugfs files
-https://lkml.org/lkml/2011/2/4/66 arm arch
-4b715efc v2.6.33-rc1
-
-
-[PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
-https://lkml.org/lkml/2011/2/4/84
-introduced in 09bcb3f3 v2.6.35-rc1
-
-
-[PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
-https://lkml.org/lkml/2011/2/4/67 arm arch
-315e2556 v2.6.37-rc1
-
-[PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
-https://lkml.org/lkml/2011/2/4/71
-introduced in 5814fc35 v2.6.37-rc1
-
-
-[PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage files
-https://lkml.org/lkml/2011/2/4/68 arm arch
-984aa6db v2.6.38-rc1
+Use CVE-2010-4818
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> Hi,
+> 
+> https://bugs.freedesktop.org/show_bug.cgi?id=28823
+> is a tracker bug for input sanitation lacking in various GLX X calls.
+> 
+> Reporter is me@...fdog.net
+> 
+> These can probably allow a attacker with access to the GLX calls
+> (typically just the logged in user) to crash the X server or execute
+> code within it.
+> 
+> (Not thought about WebGL introduced crash potential here.)
+> 
+> The lacking checks were reported and fixed in x.org git in 2010, so
+> they
+> probably need a 2010 CVE id. (Single one should be sufficient I
+> guess.)
+> 
+> Ciao, Marcus
+> 
