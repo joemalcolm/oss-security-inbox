@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/9
-Message-ID: <1320251483.8441.27.camel@scapa>
-Date: Wed, 02 Nov 2011 17:31:23 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/3
+Message-ID: <4E7CA343.4050401@mvista.com>
+Date: Fri, 23 Sep 2011 05:18:27 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>, coley@...us.mitre.org,  cve-assign@...re.org
+Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
 Content-Type: text/plain; charset=utf-8
 
-On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> > On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> >> Fixes a security issue where using ~/.Xauthority as a symlink would
-> >> cause LightDM to set the destination of the link to user ownership.
-> >> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> >>
-> >> Overview of changes in lightdm 1.0.6
-> >>
-> >>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> >
-> > Could a CVE be assigned for this?
-> >
-> > Regards,
-> Can you send me the link to this announcement so I can confirm it? Thanks.
+so this was introduced by e4cce94c9c8797b08faf6a79396df4d175e377fa ?
+
+- Armin
+
+On 09/14/2011 08:51 AM, Josh Bressers wrote:
+> Please use CVE-2011-3363 for this.
 > 
-
-Here's the link to the mailing list mail:
-http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
-
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+> Thanks.
+> 
