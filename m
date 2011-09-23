@@ -1,20 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/7
-Message-ID: <Pine.GSO.4.64.1110171456060.2890@faron.mitre.org>
-Date: Mon, 17 Oct 2011 15:01:23 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/1
+Message-ID: <53126a5a-83dd-40fd-ad0c-3792600bdcf3@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Sep 2011 11:22:48 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Wrong MLIST link in CVE-2011-3783
+Cc: Drupal Security Team <security@...pal.org>
+Subject: Re: CVE Request -- drupal6-views_bulk_operations: XSS due improper escaping of a vocabulary help (SA-CONTRIB-2011-042)
 Content-Type: text/plain; charset=utf-8
 
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+> it was found in the way Drupal Views Builk Operations (VBO) module did
+> not escape the vocabulary help properly, when the vocabulary has had user
+> tagging enabled and "Modify node taxonomy terms" action was used for
+> modification of the taxonomy. A remote attacker could provide a
+> specially-crafted URL, which once visited by unsuspecting Drupal user,
+> disposing with the 'administer taxonomy' permission / privilege, could
+> lead to arbitrary HTML or web script execution (cross-site scripting
+> [XSS] attack).
+> 
+> References:
+> [1] http://drupal.org/node/1286844
+> [2] http://secunia.com/advisories/46114/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=740553
+> 
+> Upstream solution:
+> 
+> Upgrage to 6.x-1.11:
+> [4] http://drupal.org/node/1286778
+> 
+> Could you allocate a CVE id for this?
+> 
 
-We generally strive to include the first public announcement from the 
-researcher as a reference in all CVEs.  In this case, 
-http://www.openwall.com/lists/oss-security/2011/06/27/6 was the first 
-(vague) announcement that a lot of path-disclosure issues existed in 
-multiple products, so it is included in the various CVEs that were created 
-as a result of examining the 
-http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln 
-that was mentioned in that MLIST.
+Please use CVE-2011-3373.
 
-- Steve
+Thanks.
+
+-- 
+    JB
