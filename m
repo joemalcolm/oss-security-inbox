@@ -1,14 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/15
-Message-ID: <1265265450.219398.1298581061714.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 24 Feb 2011 15:57:41 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/5
+Message-ID: <78370d3f-0d25-4d90-988b-681368766450@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 23 Sep 2011 14:41:54 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Mike Tremaine <mgt@...llarcore.net>, Karel Klic <kklic@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- logwatch: Privilege escalation due improper sanitization of special characters in log file names
+Subject: Re: CVE Request: X.org ProcRenderGlyps input sanitation issue
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1018
+Please use CVE-2010-4819
 
 Thanks.
 
@@ -16,31 +15,18 @@ Thanks.
     JB
 
 ----- Original Message -----
-> Hello Josh, Steve, vendors,
+> Hi,
 > 
-> a security flaw was found in the way logwatch, a log file
-> analysis program, pre-processed log files, containing certain
-> special characters in their names. A remote attacker could
-> use this flaw to execute arbitrary code with the privileges
-> of the privileged system user (root) by creating a
-> specially-crafted log file, subsequently analyzed by the
-> logwatch script.
+> Also from 2010 and me@...fdog.net and the x.org bugtracker:
 > 
-> Upstream bug report:
-> [1]
-> http://sourceforge.net/tracker/?func=detail&aid=3184223&group_id=312875&atid=1316824
+> https://bugs.freedesktop.org/show_bug.cgi?id=28801
 > 
-> Related patch:
-> [2]
-> http://logwatch.svn.sourceforge.net/viewvc/logwatch?view=revision&revision=26
+> Adam in comment #c2 thinks this might just discloses memory
+> but could not overwrite arbitrary x server memory ...
+> However the comment #c0 has a x.org server crash, so I am unsure
+> about code execution possibilities.
 > 
-> Other references:
-> [3]
-> http://sourceforge.net/mailarchive/forum.php?thread_name=4D604843.7040303%40mblmail.net&forum_name=logwatch-devel
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=680237
+> Needs one 2010 CVE id I guess.
 > 
-> Could you allocate a CVE id for this issue?
+> Ciao, Marcus
 > 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
