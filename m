@@ -1,72 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/02/1
-Message-ID: <000101ccb02a$fceae7f0$f6c0b7d0$@secunia.com>
-Date: Thu, 1 Dec 2011 14:13:16 +0100
-From: "Secunia Research" <vuln@...unia.com>
-To: <oss-security@...ts.openwall.com>
-Cc: <henri@...v.fi>, <vuln@...unia.com>
-Subject: RE: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/3
+Message-ID: <4E7CA343.4050401@mvista.com>
+Date: Fri, 23 Sep 2011 05:18:27 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Josh Bressers <bressers@...hat.com>, coley@...us.mitre.org,  cve-assign@...re.org
+Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
 Content-Type: text/plain; charset=utf-8
 
-Henri,
+so this was introduced by e4cce94c9c8797b08faf6a79396df4d175e377fa ?
 
-The GIT commit referenced by the Secunia advisory [1] is the correct fix for
-this issue.
+- Armin
 
-The fix removed a line in the code that displayed an unsanitised variable in
-one of the template files. This variable was inside a JavaScript comment
-block, but this does not prevent exploitation when the payload is prefixed
-with a </script> tag.
-
-[1]
-https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518
-ad4711
-
---
-
-Med venlig hilsen / Kind Regards,
- 
-Jon Butler
-Junior Security Specialist
-  
-Secunia
-Mikado House
-Rued Langgaardsvej 8
-2300 Copenhagen S
-Denmark 
-
-Phone +45 3338 5726
-
-Please visit our corporate website:
-www.secunia.com
-   
-Follow us on Twitter:
-http://twitter.com/secunia
-
-
------Original Message-----
-From: Henri Salo [mailto:henri@...v.fi] 
-Sent: 1. december 2011 10:59
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] CVE-request: Serendipity
-'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
-
-Original post: http://seclists.org/bugtraq/2011/Nov/15
-Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
-New version announcement:
-http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
-
-I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but
-they changed from SVN to Git so can't really refer to proper commit. Secunia
-is linking in http://secunia.com/advisories/46666/ to
-https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518
-ad4711, which has nothing to do with the actual issue. Shame on Secunia.
-
-This is one of logs, which can act like proof:
-https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec1
-22a4fd
-
-Please notify me if this is not enough information.
-
-- Henri Salo
-
+On 09/14/2011 08:51 AM, Josh Bressers wrote:
+> Please use CVE-2011-3363 for this.
+> 
+> Thanks.
+> 
