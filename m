@@ -1,82 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/16
-Message-ID: <AANLkTi=KyDve19Xu7w1i1kkc7WOSB6U5dzme7rs5tF7T@mail.gmail.com>
-Date: Mon, 14 Mar 2011 12:31:18 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, Petr Baudis <pasky@...e.cz>
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/2
+Message-ID: <4E7E6623.5090408@sugarcrm.com>
+Date: Sat, 24 Sep 2011 16:22:11 -0700
+From: Stas Malyshev <smalyshev@...arcrm.com>
+To: Vincent Danen <vdanen@...hat.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-I've done some further investigation, and have found one of the
-underlying problems.  addmntent() will return 0 (success) even if the
-write was truncated:
+Hi!
 
-  return (fprintf (stream, "%s %s %s %s %d %d\n",
-                   mntcopy.mnt_fsname,
-                   mntcopy.mnt_dir,
-                   mntcopy.mnt_type,
-                   mntcopy.mnt_opts,
-                   mntcopy.mnt_freq,
-                   mntcopy.mnt_passno)
-          < 0 ? 1 : 0);
+On 9/24/11 6:56 AM, Vincent Danen wrote:
+> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
+> function worked, and as a result it could allow for remote arbitrary
+> code execution if certain specific conditions are met (the blog post
+> referenced below has a good writeup of the flaw).
 
-Of course, this only matters if the process is catching the SIGXFSZ
-that gets thrown if the resource limit is exceeded, but nearly all
-suid mount helpers block or ignore signals (if they don't, that's an
-additional problem, because the process could be terminated mid-write,
-corrupting /etc/mtab or leaving a stale lockfile, for example).
+I don't see what is to assign CVE to. Almost any function dealing with 
+classes as strings (including new $foo operator) can result in 
+autoloader call. If your autoloader is broken and your security 
+practices are non-existant, this can cause remote code execution. Just 
+as if you write in your script eval($_GET['hackme']), it can lead to 
+remote code execution. It is not a flaw in PHP, _GET or eval() function 
+- it is a flaw in how you use them. You should not be using them this 
+way, and if you have autoloader that does includes, you should check 
+what are you including and set allow_url_includes to Off.
 
-So, I think the first step is to patch glibc to return success in
-these functions if and only if the *full* contents have been written.
-Then, it will be possible to have proper error handling in these
-helper utilities.  Currently, there's really no way for these programs
-to know whether or not their calls to addmntent() actually succeeded
-besides installing a special signal handler for SIGXFSZ (ugly).
-
-After some further thinking and discussion, I think what needs to be
-done is ensuring that all helpers make mtab edits to a temporary file,
-and have proper error handling that cleans up correctly without
-copying over to the actual /etc/mtab if anything bad happens.
-Currently, some mount helpers edit /etc/mtab directly, and others use
-a temporary file but don't have the proper error handling.
-
-I think this one's going to fall into the hands of package maintainers
-and distros, I don't have time to fix all of these.
-
--Dan
-
-On Mon, Mar 14, 2011 at 8:32 AM, Dan Rosenberg
-<dan.j.rosenberg@...il.com> wrote:
-> Sigh.  Unfortunately I think this is the truth - I just wish there
-> were an easier way of addressing this besides patching every affected
-> helper individually.  Unless anyone else has any ideas, I'll write up
-> some patches for affected programs later today.
+> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+> https://bugs.php.net/bug.php?id=55475
+> https://bugzilla.redhat.com/show_bug.cgi?id=741020
 >
-> -Dan
+> It looks like this is the fix:
 >
-> On Mon, Mar 14, 2011 at 8:14 AM, Ludwig Nussel <ludwig.nussel@...e.de> wrote:
->> Dan Rosenberg wrote:
->>> There are a few possible options   We could patch glibc to try to
->>> raise the rlimit in addmntent(). [...]
->>
->> Citing our glibc maintainer Petr Baudis via Bugzilla:
->>
->> | I have been thinking about it and I'm not at all sure the proposed solution
->> | makes sense. First, this may also concern the obscure interfaces like
->> | putspent() (not sure if anyone uses these, moreover in security relevant
->> | contexts). Second, messing with RLIMIT_FSIZE within library routine is just
->> | evil. The caller may be multi-threaded or just do something else between
->> | setpwent() and endpwent() too and RLIMIT_FSIZE is just evil. All setuid
->> | programs must sanitize things like this, on their own terms.
->>
->> cu
->> Ludwig
->>
->> --
->>  (o_   Ludwig Nussel
->>  //\
->>  V_/_  http://www.suse.de/
->> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
->>
->
+> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+
+This is not a "fix"  - it is a reversal of BC break because it should 
+not be introduced in 5.3 version. However, that does not fix broken 
+autoloaders that accept any string as class name and try to load them. 
+It removes one specific code path that people misusing one specific 
+function were taking. If their autoloader is broken, they still can be 
+in trouble in other ways, and they need to fix their code.
+-- 
+Stanislav Malyshev, Software Architect
+SugarCRM: http://www.sugarcrm.com/
+(408)454-6900 ext. 227
