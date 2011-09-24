@@ -1,101 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/11
-Message-ID: <1590681786.217054.1314043264474.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 16:01:04 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/3
+Message-ID: <20110924140819.GR1502@redhat.com>
+Date: Sat, 24 Sep 2011 08:08:19 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: Concrete CMS 5.4.1.1 <= Cross Site Scripting
+Subject: CVE request: heap-based buffer overflow in ldns
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3183 for this.
+Could a CVE be assigned to this flaw?  A boundary error in
+ldns_rr_new_frm_str_internal() could lead to a heap-based buffer overfow
+when processing RR records.
+
+http://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=403
+https://secunia.com/advisories/46153/
+https://bugzilla.redhat.com/show_bug.cgi?id=741024
 
 Thanks.
 
 -- 
-    JB
-
-
------ Original Message -----
-> Concrete CMS 5.4.1.1 <= Cross Site Scripting
-> 
-> 
-> 1. OVERVIEW
-> 
-> Concrete CMS 5.4.1.1 and lower versions are vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Concrete5 makes running a website easy. Go to any page in your site,
-> and a editing toolbar gives you all the controls you need to update
-> your website. No intimidating manuals, no complicated administration
-> interfaces - just point and click.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The rcID parameter is not properly sanitized, which allows attacker to
-> conduct Cross Site Scripting attack. This may allow an attacker to
-> create a specially crafted URL that would execute arbitrary script
-> code in a victim's browser.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> CMS 5.4.1.1 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> 
-> vulnerable parameter: rcID
-> 
-> <form action="http://[target]/Concrete/index.php/login/do_login/"
-> method="post">
-> <input type="hidden" name="uName" value="test" />
-> <input type="hidden" name="uPassword" value="test" />
-> <input type="hidden" name="rcID" value='"
-> style=display:block;color:red;width:9999;height:9999;z-index:9999;top:0;left:0;background-image:url(javascript:alert(/XSS/));width:expression(alert(/XSS/));
-> onmouseover="alert(/XSS/)' />
-> <input type="submit" name="submit" value="Get Concrete CMS 5.4.1.1
-> XSS" />
-> </form>
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 5.4.2 or higher.
-> 
-> 
-> 7. VENDOR
-> 
-> Concrete CMS Developers
-> http://www.concrete5.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-04-14: vulnerability reported
-> 2011-08-04: vendor released fixed version
-> 2011-08-23: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[concrete_5.4.1.1]_cross_site_scripting
-> Project Home: http://www.concrete5.org/
-> Vendor Release Note:
-> http://www.concrete5.org/documentation/background/version_history/5-4-2-release-notes/
-> 
-> 
-> 
-> #yehg [2011-08-23]
+Vincent Danen / Red Hat Security Response Team 
