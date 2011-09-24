@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/2
-Message-ID: <4E0D8815.5090002@redhat.com>
-Date: Fri, 01 Jul 2011 14:10:53 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: Please reject CVE-2011-0705
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/2
+Message-ID: <20110924135634.GQ1502@redhat.com>
+Date: Sat, 24 Sep 2011 07:56:34 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: security@....net
+Subject: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
+Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
+function worked, and as a result it could allow for remote arbitrary
+code execution if certain specific conditions are met (the blog post
+referenced below has a good writeup of the flaw).
 
-Can you please reject CVE-2011-0705.
+http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+https://bugs.php.net/bug.php?id=55475
+https://bugzilla.redhat.com/show_bug.cgi?id=741020
 
-This is not a bug.
+It looks like this is the fix:
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=696082#c6
+http://svn.php.net/viewvc/?view=revision&amp;revision=317183
 
 Thanks.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Vincent Danen / Red Hat Security Response Team 
