@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/6
-Message-ID: <1797174353.449927.1307045180893.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 2 Jun 2011 16:06:20 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/1
+Message-ID: <20110924074749.GA17242@foo.fgeek.fi>
+Date: Sat, 24 Sep 2011 10:47:49 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: XSS in nagios
+Cc: bressers@...hat.com, coley@...re.org, jmm@...til.org
+Subject: Re: CVE-request: clamav floating point exception in OLE2 scanner DoS
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> An XSS was reported in Nagios today. Could a CVE be assigned to this
-> issue? Thanks.
+On Thu, Aug 04, 2011 at 09:59:03AM +0300, Henri Salo wrote:
+> Can I get CVE-2007-* identifier for ScanOLE2 issue? RFC2397-issue is CVE-2007-4510. I don't know if there are CVEs for other fixed issues, but I will try to find out.
 > 
-> References:
+> """
+> clamav (0.91.2-1) unstable; urgency=low
 > 
-> http://tracker.nagios.org/view.php?id=224
-> http://seclists.org/bugtraq/2011/Jun/17
-> https://bugzilla.redhat.com/show_bug.cgi?id=709871
+>   * New upstream version
+>     - fix call to tolower() which led to a crash in libclamav
+>     - fix possible NULL dereference, e.g. when parsing email with RFC2397
+>       URI
+>     - fix floating point exception when using ScanOLE2
+>     - fix possible NULL dereference in rtf.c
 > 
+>  -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
+> """
+> 
+> Related information:
+> - Temporary ID: http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
+> - http://www.debian.org/security/2007/dsa-1366
 
-Please use CVE-2011-2179.
+Never got assigned. Is it possible to get 2007 ID for this?
 
-Thanks.
-
--- 
-    JB
+Best regards,
+Henri Salo
