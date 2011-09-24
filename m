@@ -1,77 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/8
-Message-ID: <4ED4DD48.3010403@lighttpd.net>
-Date: Tue, 29 Nov 2011 14:25:28 +0100
-From: Stefan Bühler <stbuehler@...httpd.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/1
+Message-ID: <20110924074749.GA17242@foo.fgeek.fi>
+Date: Sat, 24 Sep 2011 10:47:49 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: security@...httpd.net, Xi Wang <xi.wang@...il.com>
-Subject: CVE Request: lighttpd/mod_auth out-of-bounds read due to signedness error
+Cc: bressers@...hat.com, coley@...re.org, jmm@...til.org
+Subject: Re: CVE-request: clamav floating point exception in OLE2 scanner DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Aug 04, 2011 at 09:59:03AM +0300, Henri Salo wrote:
+> Can I get CVE-2007-* identifier for ScanOLE2 issue? RFC2397-issue is CVE-2007-4510. I don't know if there are CVEs for other fixed issues, but I will try to find out.
+> 
+> """
+> clamav (0.91.2-1) unstable; urgency=low
+> 
+>   * New upstream version
+>     - fix call to tolower() which led to a crash in libclamav
+>     - fix possible NULL dereference, e.g. when parsing email with RFC2397
+>       URI
+>     - fix floating point exception when using ScanOLE2
+>     - fix possible NULL dereference in rtf.c
+> 
+>  -- Stephen Gran <sgran@...ian.org>  Tue, 21 Aug 2007 11:17:01 +0100
+> """
+> 
+> Related information:
+> - Temporary ID: http://security-tracker.debian.org/tracker/TEMP-0000000-6B8835
+> - http://www.debian.org/security/2007/dsa-1366
 
-Xi Wang discovered the following issue in lighttpd:
+Never got assigned. Is it possible to get 2007 ID for this?
 
-for http auth we need to base64-decode user input; the allowed character 
-range includes non ASCII characters above 0x7f.
-
-The function to decode this string takes a "const char *in"; and reads
-each character into an "int ch", which is used as offset in the table.
-
-So characters above 0x7f lead to negative indices (as char is signed on 
-most platforms).
-
-Here the vulnerable code (src/http_auth.c:67)
-
----
-static const short base64_reverse_table[256] = ...;
-static unsigned char * base64_decode(buffer *out, const char *in) {
-	...
-	int ch, ...;
-	size_t i;
-	...
-	
-		ch = in[i];
-		...
-		ch = base64_reverse_table[ch];
-	...
-}
----
-
-It doesn't matter if "broken" data is read - it just may allow more
-encodings of the correct login information.
-
-The only possible impact is a segfault, leading to DoS.
-
-I had a look at some debian and openSUSE binaryies, and it looks like 
-there is always enough data (>= 256 bytes) in the .rodata section 
-before the base64_reverse_table table, so these binaries are not 
-vulnerable afaict.
-
-we plan to release 1.4.30 soon, including the fix for this issue.
-
-regards,
-stefan
-
-bug tracked as:
-   http://redmine.lighttpd.net/issues/2370
-announcement (not complete yet):
-   http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2011_01.txt
-
-proposed patch
-===
-diff --git a/src/http_auth.c b/src/http_auth.c
-index f2f86dd..33adf71 100644
---- a/src/http_auth.c
-+++ b/src/http_auth.c
-@@ -99,7 +99,7 @@ static unsigned char * base64_decode(buffer *out, 
-const char *in) {
-  	ch = in[0];
-  	/* run through the whole string, converting as we go */
-  	for (i = 0; i < in_len; i++) {
--		ch = in[i];
-+		ch = (unsigned char) in[i];
-
-  		if (ch == '\0') break;
-
-===
+Best regards,
+Henri Salo
