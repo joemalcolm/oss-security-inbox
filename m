@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/6
-Message-ID: <20110617001432.0735f6fe@redhat.com>
-Date: Fri, 17 Jun 2011 00:14:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/2
+Message-ID: <4E7E6623.5090408@sugarcrm.com>
+Date: Sat, 24 Sep 2011 16:22:11 -0700
+From: Stas Malyshev <smalyshev@...arcrm.com>
+To: Vincent Danen <vdanen@...hat.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 1 Jun 2011 21:51:34 +0400 Solar Designer wrote:
+Hi!
 
-> This is semi-consistent with what Tomas Hoger wrote:
-> 
-> "IIRC, Oracle was subscribed to v-s more than once - the "Sun"
-> exploder that was subscribed for quite a while (originally as Solaris
-> vendor probably), and individual OEL representative, added around the
-> time Oracle was in the process of acquiring Sun and there was no
-> single security contact for all products yet."
-> 
-> However, I don't see anyone from Oracle on what was given to me as the
-> final vendor-sec members list.  There's Sun's exploder, but no Oracle,
-> nor any Oracle person.
-> 
-> I recall that Joel Becker of Oracle had briefly contributed both to
-> vendor-sec and to oss-security discussions (thanks!), e.g. here:
-> 
-> http://www.openwall.com/lists/oss-security/2010/09/30/2
-> 
-> I don't recall if Joel was on vendor-sec (perhaps he was subscribed
-> for a while, then he asked to unsubscribe? just a guess), but I don't
-> see him on the final members list, and he has since unsubscribed from
-> oss-security (which may or may not indicate anything).
+On 9/24/11 6:56 AM, Vincent Danen wrote:
+> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
+> function worked, and as a result it could allow for remote arbitrary
+> code execution if certain specific conditions are met (the blog post
+> referenced below has a good writeup of the flaw).
 
-I was referring to Joel in my mail.  The outcome of the discussion of
-his subscription request was to add him to the list.  I do not know why
-he does not appear on the final member list, sorry.
+I don't see what is to assign CVE to. Almost any function dealing with 
+classes as strings (including new $foo operator) can result in 
+autoloader call. If your autoloader is broken and your security 
+practices are non-existant, this can cause remote code execution. Just 
+as if you write in your script eval($_GET['hackme']), it can lead to 
+remote code execution. It is not a flaw in PHP, _GET or eval() function 
+- it is a flaw in how you use them. You should not be using them this 
+way, and if you have autoloader that does includes, you should check 
+what are you including and set allow_url_includes to Off.
 
+> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+> https://bugs.php.net/bug.php?id=55475
+> https://bugzilla.redhat.com/show_bug.cgi?id=741020
+>
+> It looks like this is the fix:
+>
+> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+
+This is not a "fix"  - it is a reversal of BC break because it should 
+not be introduced in 5.3 version. However, that does not fix broken 
+autoloaders that accept any string as class name and try to load them. 
+It removes one specific code path that people misusing one specific 
+function were taking. If their autoloader is broken, they still can be 
+in trouble in other ways, and they need to fix their code.
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Stanislav Malyshev, Software Architect
+SugarCRM: http://www.sugarcrm.com/
+(408)454-6900 ext. 227
