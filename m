@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/31/4
-Message-ID: <4EFF8DD5.6050500@pipping.org>
-Date: Sat, 31 Dec 2011 23:33:57 +0100
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/24/2
+Message-ID: <20110924135634.GQ1502@redhat.com>
+Date: Sat, 24 Sep 2011 07:56:34 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: mpack 1.6 allows eavesdropping on mails sent by other users
+Cc: security@....net
+Subject: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On 12/31/2011 10:26 PM, Kurt Seifried wrote:
-> It's a vuln so yup. Please use CVE-2011-4919 for this issue. As for
-> getting it fixed FreeBSD/Debian/etc monitor this list, if anyone thinks
-> additional notification is needed please forward this email to the
-> appropriate parties I guess.
+Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
+function worked, and as a result it could allow for remote arbitrary
+code execution if certain specific conditions are met (the blog post
+referenced below has a good writeup of the flaw).
 
-Alright, thanks.
+http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+https://bugs.php.net/bug.php?id=55475
+https://bugzilla.redhat.com/show_bug.cgi?id=741020
 
+It looks like this is the fix:
 
-> Happy new years!
+http://svn.php.net/viewvc/?view=revision&amp;revision=317183
 
-Same to you!
+Thanks.
 
-Best,
-
-
-
-Sebastian
+-- 
+Vincent Danen / Red Hat Security Response Team 
