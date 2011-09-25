@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/5
-Message-ID: <4EF64D5D.90605@redhat.com>
-Date: Sun, 25 Dec 2011 06:08:29 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/3
+Message-ID: <4E7EECDB.6080106@sugarcrm.com>
+Date: Sun, 25 Sep 2011 01:56:59 -0700
+From: Stas Malyshev <smalyshev@...arcrm.com>
+To: Pierre Joye <pierre.php@...il.com>
+CC: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 04:52 AM, Kurt Seifried wrote:
-> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
->> Hi,
->> there were a two Linux-related CVE requests/discussions, which
->> didn't end up in an assignment:
->>
->> 1: rose: Add length checks to CALL_REQUEST parsing
->> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
->>
->> It was decided that this should be split, but without a final
->> resulting CVE assignment:
->> http://www.openwall.com/lists/oss-security/2011/04/12/1
-> 
-> Can anyone shed more light on this for me? (links to fixes/etc.?).
+Hi!
 
-I have forwarded you the email thread. This patch refers to the changes
-made by Ben Hutchings.
+On 9/25/11 1:28 AM, Pierre Joye wrote:
+> It breaks the checks which leads to autoloader to accept bad input.
+> Yes, the autoloader should have sanity check in place but this BC
+> break changes the behavior and introduced this issue as well on top of
+> it.
+>
+> I'm not sure either if we need a CVE as it is not a flaw in php itself
+> per se. However the BC break introduces flaws in working codes, and
+> that's a gray zone now.
 
-Eugene
+Yes, it is a behavior change, and it shouldn't have happened in 5.3, the 
+fact that it happened was a bad mistake, it is clear now.
+However, the security flaw is squarely in the code that a) misuses is_a 
+b) doesn't have security checks and c) does not follow recommended best 
+practices about PHP settings.
+As such, telling people that it was a flaw in PHP and that BC break 
+reversal "fixed" it only gives them wrong ideas that their code was just 
+fine. But in fact their code was broken and only by luck (and due to the 
+haphazard way things were done in PHP where nobody bothered correlating 
+function signatures with one another) in might have not been 
+malfunctioning in this specific scenario. They need to fix that code 
+ASAP, as they can not rely on luck anymore and they way is_a was changed 
+is actually they way it should have worked from the start and the way 
+is_subclass_of works right now.
+-- 
+Stanislav Malyshev, Software Architect
+SugarCRM: http://www.sugarcrm.com/
+(408)454-6900 ext. 227
