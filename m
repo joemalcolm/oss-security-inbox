@@ -1,89 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/15
-Message-ID: <1019797868.1472632.1311190821123.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 15:40:21 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/7
+Message-ID: <CAEZPtU4v33T5fhqV=pUc6vVpj83ThJ2xdRqD4DnTqG4hbUO1UA@mail.gmail.com>
+Date: Sun, 25 Sep 2011 14:28:13 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Pavel Lisý <pavel.lisy@...il.com>, Alan Boudreault <aboudreault@...gears.com>, Even Rouault <even.rouault@...es-paris.org>
-Subject: Re: CVE Request -- MapServer -- Stack based buffer overflow [was: Re: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.]
+Cc: security@....net
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-I'm assigning IDs as such:
+hi,
 
-CVE-2011-2703 mapserver SQL injection flaws
-CVE-2011-2704 mapserver stack based buffer overflows
+Btw, the correct fix (and less restrictive) is to disable
+allow_url_include, not  allow_url_fopen.
 
-Thanks.
+Cheers,
+
+On Sat, Sep 24, 2011 at 3:56 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
+> function worked, and as a result it could allow for remote arbitrary
+> code execution if certain specific conditions are met (the blog post
+> referenced below has a good writeup of the flaw).
+>
+> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+> https://bugs.php.net/bug.php?id=55475
+> https://bugzilla.redhat.com/show_bug.cgi?id=741020
+>
+> It looks like this is the fix:
+>
+> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+>
+> Thanks.
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
+
+
 
 -- 
-    JB
+Pierre
 
------ Original Message -----
-> Alan, Even, thanks for your replies.
-> 
-> Just to clarify this one a bit yet. Two CVE identifiers (one for the
-> multiple SQL injection flaws, the other for the stack based buffer
-> overflow issue) seem to be necessary in this case (due different
-> versions affected):
-> 
-> [1]
-> http://lists.osgeo.org/pipermail/mapserver-users/2011-July/069430.html
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> On 07/19/2011 05:32 PM, Alan Boudreault wrote:
-> > I got new from the debian security guy yesterday. I should get the
-> > CVE id
-> > soon.
-> >
-> > Thanks,
-> > Alan
-> >
-> > On July 19, 2011 11:28:29 am Even Rouault wrote:
-> >> Selon Jan Lieskovsky<jlieskov@...hat.com>:
-> >>
-> >> Jan,
-> >>
-> >> I believe Alan Boudreault (MapServer team member that I've added to
-> >> the CC
-> >> list) has already asked the Debian security team to request for a
-> >> CVE
-> >> number, but without any result for now. Maybe he can confirm.
-> >>
-> >> Best regards,
-> >>
-> >> Even
-> >>
-> >>> Hello Josh, Steve, vendors,
-> >>>
-> >>>     the following has been brought to our attention:
-> >>>     [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
-> >>>     [2] http://trac.osgeo.org/mapserver/ticket/3903
-> >>>
-> >>> More from [2]:
-> >>>
-> >>> This ticket is to track fixes to prevent SQL injections through
-> >>> OGC
-> >>> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
-> >>> injection in WMS time support.
-> >>>
-> >>> Your system may be vulnerable if it has MapServer with OGC
-> >>> protocols
-> >>> enabled, with layers connecting to an SQL RDBMS backend, either
-> >>> natively
-> >>> or via OGR.
-> >>>
-> >>> All versions of MapServer 4.x, 5.x and 6.x are potentially
-> >>> vulnerable.
-> >>> All users are ** strongly encouraged ** to upgrade to one of the
-> >>> latest
-> >>> releases with the fixes.
-> >>>
-> >>> Could you allocate a CVE id for this?
-> >>>
-> >>> Thank you&& Regards, Jan.
-> >>> --
-> >>> Jan iankko Lieskovsky / Red Hat Security Response Team
-> >
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
