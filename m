@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/12
-Message-ID: <1674131055.506851.1307381083352.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:24:43 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Steve Kemp <steve@...ve.org.uk>, Silas Sewell <silas@...ell.ch>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- fabric -- Use of insecure temporary file by uploading templates and projects to remote hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/11
+Message-ID: <CAEZPtU7mj+gD_sb_4UKKqt2qdk9_pKZ8DhPcdoV-AxOHjvuQ8A@mail.gmail.com>
+Date: Sun, 25 Sep 2011 19:22:19 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Rasmus Lerdorf <rasmus@....net>
+Cc: Zeev Suraski <zeev@...d.com>, Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
+> So
+> are we talking about the tiny number of people who have explicitly
+> enabled allow_url_include and are running the code with this bad autoloader?
 
+Yes, and that's why it is a very very minor problem. However it was
+not happening before the code change. The few cases where the class
+names&co have been sanitize before and the developer did not think
+about cases like the one describe in the blog post. I think it is even
+more rare combination, but it was not happening before our change.
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> It was found that fabric, a simple Pythonic remote deployment tool,
-> used insecure way for creation of temporary files, when uploading
-> template text files and project files to a remote system. A local
-> attacker could use this flaw to conduct symlink attacks to upload
-> sensitive information to remote host or to overwrite certain local
-> system files.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629003
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=710462
-> 
-
-Please use CVE-2011-2185.
-
-Thanks.
 
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
