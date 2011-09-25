@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/6
-Message-ID: <20110516185637.GA30099@openwall.com>
-Date: Mon, 16 May 2011 22:56:37 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/8
+Message-ID: <887FE7CFF6F8DE4BB3A9535F53AFD06A6F670AB2@il-ex2.zend.net>
+Date: Sun, 25 Sep 2011 13:47:29 +0000
+From: Zeev Suraski <zeev@...d.com>
+To: Pierre Joye <pierre.php@...il.com>
+CC: Vincent Danen <vdanen@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>, Stas Malyshev <smalyshev@...arcrm.com>
+Subject: RE: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
-> Its probably about time to review libraries that are commonly
-> linked to (formerly-) suid programs, such as
-> libldap, libssl etc. In near future, in the advent of file caps
-> they are often lacking proper checks.
 
-Good idea.
 
-> They usually just compare uid against euid (not even gid sometimes)
-> and do not check the dumpable flag or AT_SECURE (dont know whether
-> glibc exports a proper function to easily check that at all).
-
-glibc exports the __libc_enable_secure variable, which is initialized
-based on AT_* including AT_SECURE.  It also exports __secure_getenv().
-
-> The libraries that I had a quick look at and which were found
-> "vulnerable" are:
+> -----Original Message-----
+> From: Pierre Joye [mailto:pierre.php@...il.com]
+> Sent: Sunday, September 25, 2011 12:02 PM
+> To: Stas Malyshev
+> Cc: Vincent Danen; oss-security@...ts.openwall.com; security@....net
+> Subject: Re: CVE request: is_a() function may allow arbitrary code execution
+> in PHP 5.3.7/5.3.8
 > 
-> - openssl-1.0.0c
+> hi Stas,
+> 
+> I tend to disagree here. One of the CVE goal is not about declaring one or the
+> other guilty of bad practice(s) but about informing users about security issues
+> in the software they use and how to act correctly to fix these issues.
 
-We've been patching OpenSSL to use __libc_enable_secure for over 10
-years now. ;-)  The patch is in use at least in Owl and ALT Linux.
+There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
+It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
+So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
 
-* Sun Apr 22 2001 Solar Designer <solar-at-owl.openwall.com>
-...
-- Use glibc's __libc_enable_secure for the new OPENSSL_issetugid().
-
-I've attached our patches for OpenSSL, ncurses, S-Lang, termcap, rpm's
-popt.  Of these, OpenSSL and ncurses apply to recent versions, termcap
-is old by itself, whereas the rest might be obsoleted by changes made
-upstream (and they're not strictly for the problem you brought up).
-
-For OpenSSL, there's another problem: it looks like some getenv()'s
-were added after the initial introduction of OPENSSL_issetugid() and
-without consideration for possible security implications.  Some of those
-should be patched.  This got on my to-do when we updated to OpenSSL
-1.0.0d earlier this year - to do myself or delegate, but I never got
-around to...  Maybe you're the one to look into this and come up with a
-patch now? ;-)
-
-Thanks,
-
-Alexander
-
-View attachment "openssl-1.0.0b-owl-alt-issetugid.diff" of type "text/plain" (345 bytes)
-
-View attachment "ncurses-5.7-owl-glibc-enable_secure.diff" of type "text/plain" (930 bytes)
-
-View attachment "slang-1.4.6-owl-fixes.diff" of type "text/plain" (7525 bytes)
-
-View attachment "termcap-2.0.8-owl-TERMCAP.diff" of type "text/plain" (406 bytes)
-
-View attachment "rpm-4.2-owl-popt-sgid.diff" of type "text/plain" (1987 bytes)
+Zeev
