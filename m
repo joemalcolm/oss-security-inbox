@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/16
-Message-ID: <4D9CA711.8090108@mvista.com>
-Date: Wed, 06 Apr 2011 07:46:57 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/4
+Message-ID: <CAEZPtU7JmsUt5pTkK5BvZxZnop8PomYPvNHeX7qr5enzN5Rpnw@mail.gmail.com>
+Date: Sun, 25 Sep 2011 11:02:17 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Stas Malyshev <smalyshev@...arcrm.com>
+Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
+hi Stas,
+
+I tend to disagree here. One of the CVE goal is not about declaring
+one or the other guilty of bad practice(s) but about informing users
+about security issues in the software they use and how to act
+correctly to fix these issues.
+
+The is_a change is typically one of these security issues. While being
+a minor one (recommended ini settings or good code practices would
+avoid it easily), it is still one. That's why I'd to go with assigning
+one and link it to the bug.
+
+On Sun, Sep 25, 2011 at 10:56 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
+
+> Yes, it is a behavior change, and it shouldn't have happened in 5.3, the
+> fact that it happened was a bad mistake, it is clear now.
+> However, the security flaw is squarely in the code that a) misuses is_a b)
+> doesn't have security checks and c) does not follow recommended best
+> practices about PHP settings.
+> As such, telling people that it was a flaw in PHP and that BC break reversal
+> "fixed" it only gives them wrong ideas that their code was just fine. But in
+> fact their code was broken and only by luck (and due to the haphazard way
+> things were done in PHP where nobody bothered correlating function
+> signatures with one another) in might have not been malfunctioning in this
+> specific scenario. They need to fix that code ASAP, as they can not rely on
+> luck anymore and they way is_a was changed is actually they way it should
+> have worked from the start and the way is_subclass_of works right now.
 
 
-On 04/06/2011 06:57 AM, Solar Designer wrote:
-> On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
->> Please subscribe me to the new list. I was a vendor-sec subscriber for
->> MontaVista Software.
->>
->> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
->> uid Armin Kuster <akuster@...sta.com>
->> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
-> 
-> Looks like you forgot to make this public key available.  Please provide
-> it to me and I'll subscribe you.
+-- 
+Pierre
 
-I hit one server, guess I need to hit them all. Please try again with
-same key.
-
-> 
-> While we're at it, the MontaVista Software entry at:
-> 
-> http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
-> 
-> says: "The process for distribution of security advisories is currently
-> under discussion."  Perhaps this has already been discussed and decided
-> upon?  If so, please update the wiki page with specific link(s) to your
-> security advisories, updates, relevant mailing list archive - or
-> whatever you have.  
-
-Our advisories are via a paid subscription service so they are not public.
-
-Without this info, it is unclear whether you would
-> be making timely intended use of the advance notifications or not.
-
-Our customers require vulnerabilities to be addressed in a timely manner.
-
-will revisit the wiki issue soon.
-
-- Armin
-
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
