@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/22/3
-Message-ID: <b603fa5f-571c-451f-ae31-ea1391b83ef2@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 22 Sep 2011 08:44:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PunBB multiple XSS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/3
+Message-ID: <4E7EECDB.6080106@sugarcrm.com>
+Date: Sun, 25 Sep 2011 01:56:59 -0700
+From: Stas Malyshev <smalyshev@...arcrm.com>
+To: Pierre Joye <pierre.php@...il.com>
+CC: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3371.
+Hi!
 
-Thanks.
+On 9/25/11 1:28 AM, Pierre Joye wrote:
+> It breaks the checks which leads to autoloader to accept bad input.
+> Yes, the autoloader should have sanity check in place but this BC
+> break changes the behavior and introduced this issue as well on top of
+> it.
+>
+> I'm not sure either if we need a CVE as it is not a flaw in php itself
+> per se. However the BC break introduces flaws in working codes, and
+> that's a gray zone now.
 
+Yes, it is a behavior change, and it shouldn't have happened in 5.3, the 
+fact that it happened was a bad mistake, it is clear now.
+However, the security flaw is squarely in the code that a) misuses is_a 
+b) doesn't have security checks and c) does not follow recommended best 
+practices about PHP settings.
+As such, telling people that it was a flaw in PHP and that BC break 
+reversal "fixed" it only gives them wrong ideas that their code was just 
+fine. But in fact their code was broken and only by luck (and due to the 
+haphazard way things were done in PHP where nobody bothered correlating 
+function signatures with one another) in might have not been 
+malfunctioning in this specific scenario. They need to fix that code 
+ASAP, as they can not rely on luck anymore and they way is_a was changed 
+is actually they way it should have worked from the start and the way 
+is_subclass_of works right now.
 -- 
-    JB
-
-
------ Original Message -----
-> Can I get CVE-identifier for this issue.
-> 
-> Original post: http://seclists.org/fulldisclosure/2011/Sep/158
-> Bug-report to developers:
-> http://punbb.informer.com/forums/topic/24427/multiple-xss-vulnerabilities/
-> Fixed on:
-> https://github.com/punbb/punbb/commit/dd50a50a2760f10bd2d09814e30af4b36052ca6d
-> PunBB 1.3.6 released:
-> https://github.com/downloads/punbb/punbb/punbb-1.3.6.zip
-> 
-> Best regards,
-> Henri Salo
-> 
+Stanislav Malyshev, Software Architect
+SugarCRM: http://www.sugarcrm.com/
+(408)454-6900 ext. 227
