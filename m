@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/14
-Message-ID: <1271379951.19443.1300222715834.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:58:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: kernel: fs/partitions: Corrupted OSF partition table can cause information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/11
+Message-ID: <CAEZPtU7mj+gD_sb_4UKKqt2qdk9_pKZ8DhPcdoV-AxOHjvuQ8A@mail.gmail.com>
+Date: Sun, 25 Sep 2011 19:22:19 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Rasmus Lerdorf <rasmus@....net>
+Cc: Zeev Suraski <zeev@...d.com>, Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1163.
+On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
+> So
+> are we talking about the tiny number of people who have explicitly
+> enabled allow_url_include and are running the code with this bad autoloader?
 
-Thanks.
+Yes, and that's why it is a very very minor problem. However it was
+not happening before the code change. The few cases where the class
+names&co have been sanitize before and the developer did not think
+about cases like the one describe in the blog post. I think it is even
+more rare combination, but it was not happening before our change.
+
 
 -- 
-    JB
+Pierre
 
------ Original Message -----
-> The kernel automatically evaluates partition tables of storage
-> devices.
-> The code for evaluating OSF partitions (in fs/partitions/osf.c)
-> contains a bug that leaks data from kernel heap memory to userspace
-> for
-> certain corrupted OSF partitions.
-> 
-> See http://www.spinics.net/lists/mm-commits/msg82737.html for a patch.
-> 
-> Cheers, Timo
-> 
-> --
-> Dr. Timo Warns warns@...-sense.de
-> Tel. +49 - 40 - 244 2407 - 16
-> Fax +49 - 40 - 244 2407 - 24
-> PRESENSE Technologies GmbH Sachsenstr. 5, D-20097 HH
-> USt-IdNr.: DE263765024
-> Geschäftsführer/Managing Directors AG Hamburg, HRB 107844
-> Till Dörges Jürgen Sander Axel Theilmann
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
