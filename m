@@ -1,22 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/2
-Message-ID: <4E44BF8F.1070007@redhat.com>
-Date: Fri, 12 Aug 2011 11:22:15 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: foomatic-gui
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/6
+Message-ID: <CAEZPtU4m6e7ibQa2BnQPasBwJZXG2eW6_kg0xTOvrUiFVoFxmw@mail.gmail.com>
+Date: Sun, 25 Sep 2011 11:49:41 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Stas Malyshev <smalyshev@...arcrm.com>
+Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On 08/04/2011 11:23 PM, Josh Bressers wrote:
+On Sun, Sep 25, 2011 at 11:18 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
 
-> My impression is that the code is the same, which means they will share the
-> same ID. If the code is totally different, we will want to split. Time, you
-> know best, is the code in question the same, or is it different?
-> 
+> I'm concerned that if we do it this way people would take it as "PHP has
+> security bug in is_a and it was fixed in this version, so as long as we run
+> updated version we're OK", not "my code has gaping security hole which by
+> pure luck wasn't exploitable but minor change made it exploitable". If we
+> don't make it crystal clear the latter and not the former is the case, we'd
+> have same problem with 5.4.
 
-I agree, it does really look like the same code-base to me.
+That's a valid concern however it is another matter.
 
+My suggestion would be:
 
+- get a CVE and assign it to the bug
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+- be sure to get the right information in the CVE
+  .  about why it is not a flaw in php itself per se but a behavior
+change that could introduce a flaw in existing php scripts
+     . these php scripts were not following our guidance or good practice guide
+
+- Be sure we update the upgrade guide, the NEWS file, the
+documentation and the announce to clearly explain and define this
+problem and its consequences
+
+Cheers,
+--
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
