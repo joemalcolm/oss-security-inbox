@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/7
-Message-ID: <1779019949.374858.1299183916473.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 15:25:16 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: cve request for smoothwall & openfiler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/9
+Message-ID: <CAEZPtU5smwcEAhWaBXx=Za7yJuGpK4gEwvanoC_7uEP7OfOUkw@mail.gmail.com>
+Date: Sun, 25 Sep 2011 16:10:12 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Zeev Suraski <zeev@...d.com>
+Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
 
+> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
+> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
+>
+> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
 
------ Original Message -----
-> Hi can someone allocate a cve for smoothwall express 3 regarding the
-> csrf and xss issue raised in [1].
-> Also if someone could allocate a cve for an xss in Openfiler - see
-> [2].
-> 
-> 
-> [1] http://secunia.com/advisories/42897/
-> [2] http://secunia.com/advisories/42507/
+The whole point is that some code was not having any issue before this
+change. If the check was done earlier using is_a then this unexpected
+behavior will happen, and that actually causes a security issue in
+existing working code. The example in the blog post is very good one,
+it clearly shows that the impact on existing code is not only about
+wrongly implemented autoloader, or someone not disabling
+allow_url_fopen (I can imagine local file include being an issue as
+well under some circumstances).
 
-Here goes:
+All in all, there is no shame or bad image to get a new CVE for
+something like that, I even see it as a good thing as it will:
 
-http://secunia.com/advisories/42897/
-CVE-2011-1084 smoothwall xss
-CVE-2011-1085 smoothwall csrf
+1. clearly explain the is_a issue and how it can impact existing code
+(with the hope that our users will review/fix their code)
+2. bring to the light again some good practices
 
-http://secunia.com/advisories/42507/
-CVE-2011-1086 openfilter xss
-
-Thanks.
-
+Cheers,
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
