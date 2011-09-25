@@ -1,28 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/32
-Message-ID: <BANLkTin90UYuUuGFuB3eUNbeaZC740p72w@mail.gmail.com>
-Date: Tue, 5 Apr 2011 13:00:28 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: two issues in mpt2sas
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/1
+Message-ID: <CAEZPtU4PsNUFyHTGkRca9w7H_u-ZiZ0Yi3KKkBKD-t_iGOrOFQ@mail.gmail.com>
+Date: Sun, 25 Sep 2011 10:28:30 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Stas Malyshev <smalyshev@...arcrm.com>
+Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-"At two points in handling device ioctls via /dev/mpt2ctl,
-user-supplied length values are used to copy data from userspace into
-heap buffers without bounds checking, allowing controllable heap
-corruption and subsequently privilege escalation.
+hi,
 
-Additionally, user-supplied values are used to determine the size of a
-copy_to_user() as well as the offset into the buffer to be read, with
-no bounds checking, allowing users to read arbitrary kernel memory."
-[1]
+On Sun, Sep 25, 2011 at 1:22 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
+> Hi!
+>
+> On 9/24/11 6:56 AM, Vincent Danen wrote:
+>>
+>> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
+>> function worked, and as a result it could allow for remote arbitrary
+>> code execution if certain specific conditions are met (the blog post
+>> referenced below has a good writeup of the flaw).
+>
+> I don't see what is to assign CVE to. Almost any function dealing with
+> classes as strings (including new $foo operator) can result in autoloader
+> call. If your autoloader is broken and your security practices are
+> non-existant, this can cause remote code execution. Just as if you write in
+> your script eval($_GET['hackme']), it can lead to remote code execution. It
+> is not a flaw in PHP, _GET or eval() function - it is a flaw in how you use
+> them. You should not be using them this way, and if you have autoloader that
+> does includes, you should check what are you including and set
+> allow_url_includes to Off.
+>
+>>
+>> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+>> https://bugs.php.net/bug.php?id=55475
+>> https://bugzilla.redhat.com/show_bug.cgi?id=741020
+>>
+>> It looks like this is the fix:
+>>
+>> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+>
+> This is not a "fix"  - it is a reversal of BC break because it should not be
+> introduced in 5.3 version.
 
-These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
-SAS 2.0).  While the kernel creates this device file root-root 660 by
-default, I've seen it with more open permissions on live systems, so
-perhaps there's some common use case that requires modifying these
-default permissions.
+It breaks the checks which leads to autoloader to accept bad input.
+Yes, the autoloader should have sanity check in place but this BC
+break changes the behavior and introduced this issue as well on top of
+it.
 
--Dan
+I'm not sure either if we need a CVE as it is not a flaw in php itself
+per se. However the BC break introduces flaws in working codes, and
+that's a gray zone now.
 
-[1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
+Cheers,
+-- 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
