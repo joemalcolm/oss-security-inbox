@@ -1,21 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/2
-Message-ID: <20111120120712.00d358d8@laverne>
-Date: Sun, 20 Nov 2011 12:07:12 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/7
+Message-ID: <CAEZPtU4v33T5fhqV=pUc6vVpj83ThJ2xdRqD4DnTqG4hbUO1UA@mail.gmail.com>
+Date: Sun, 25 Sep 2011 14:28:13 +0200
+From: Pierre Joye <pierre.php@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: websitebaker 2.8.1 and earlier: authentication error in backup module
+Cc: security@....net
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-http://www.websitebaker2.org/posts/security-vulnerability-backup-module-in-wb-core-13.php
+hi,
 
-Extended information: Everybody can use the backup module from anywhere
-and download the backup directly on every PC the "exploiter" likes
-without any noticing by you.
+Btw, the correct fix (and less restrictive) is to disable
+allow_url_include, not  allow_url_fopen.
+
+Cheers,
+
+On Sat, Sep 24, 2011 at 3:56 PM, Vincent Danen <vdanen@...hat.com> wrote:
+> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the is_a()
+> function worked, and as a result it could allow for remote arbitrary
+> code execution if certain specific conditions are met (the blog post
+> referenced below has a good writeup of the flaw).
+>
+> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+> https://bugs.php.net/bug.php?id=55475
+> https://bugzilla.redhat.com/show_bug.cgi?id=741020
+>
+> It looks like this is the fix:
+>
+> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+>
+> Thanks.
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
+
 
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Pierre
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
