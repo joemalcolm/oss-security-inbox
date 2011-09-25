@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/9
-Message-ID: <1324808920.1453877.1311165648958.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 08:40:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, dfncert@...-cert.de
-Cc: aland@...eradius.org
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/10
+Message-ID: <4E7F5910.2080508@php.net>
+Date: Sun, 25 Sep 2011 18:38:40 +0200
+From: Rasmus Lerdorf <rasmus@....net>
+To: Pierre Joye <pierre.php@...il.com>
+CC: Zeev Suraski <zeev@...d.com>, Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-Please assign this issue CVE-2011-2701. We can split that ID if more are
-needed once we understand the issue.
+On 09/25/2011 04:10 PM, Pierre Joye wrote:
+> On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
+> 
+>> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
+>> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
+>>
+>> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
+> 
+> The whole point is that some code was not having any issue before this
+> change. If the check was done earlier using is_a then this unexpected
+> behavior will happen, and that actually causes a security issue in
+> existing working code. The example in the blog post is very good one,
+> it clearly shows that the impact on existing code is not only about
+> wrongly implemented autoloader, or someone not disabling
+> allow_url_fopen (I can imagine local file include being an issue as
+> well under some circumstances).
+> 
+> All in all, there is no shame or bad image to get a new CVE for
+> something like that, I even see it as a good thing as it will:
 
-Thanks.
+I didn't read the thread from the beginning, but is there an actual
+exploit here? Presumably the autoloader code in question isn't doing an
+fopen/eval to execute the code and since allow_url_include is disabled
+by default, remote includes aren't an issue in the default install. So
+are we talking about the tiny number of people who have explicitly
+enabled allow_url_include and are running the code with this bad autoloader?
 
--- 
-    JB
-
------ Original Message -----
-> On Tue, Jul 19, 2011 at 03:13:00PM +0200, Tomas Hoger wrote:
-> 
-> > > Are the published information sufficient to get a CVE number for
-> > > the
-> > > issue?
-> >
-> > Was your intention to request a CVE for a still-to-remain-non-public
-> > issue to be disclosed in the future, or actually make the issue
-> > public?
-> 
-> We plan to make the issue public as soon as we have a CVE and can
-> publish
-> our advisory. However, almost every detail of the vulnerability has
-> been
-> already discussed on this list.
-> (Summary: the status of the certificate will not be checked)
-> 
-> Thus, the patch does not reveal any further aspects of the
-> vulnerability and
-> the only reason that we do not want to publish it publicly is that the
-> fact
-> that it may be incomplete and/or introduce side effects because we do
-> not have a complete test environment.
-> 
-> 
-> > I'm CCing upstream (Alan DeKok), as it seems this thread may be
-> > giving
-> > out more info than expected. Alan, this is part of the following
-> 
-> Good idea.
-> 
-> 
-> p.s.
-> Please include us in CC since we are not subscribed on the list.
-> 
-> --
-> DFN-CERT Services GmbH, https://www.dfn-cert.de/, Phone +49 40
-> 808077-555
-> Sitz/Register: Hamburg, AG Hamburg, HRB 88805, Ust-IdNr.: DE 232129737
-> Sachsenstraße 5, 20097 Hamburg/Germany, CEO: Dr. Klaus-Peter
-> Kossakowski
+-Rasmus
