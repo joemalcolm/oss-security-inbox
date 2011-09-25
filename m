@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/16
-Message-ID: <20110318181115.GS5174@redhat.com>
-Date: Fri, 18 Mar 2011 12:11:15 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: list@...adns.org, 610834@...s.debian.org, geissert@...ian.org, atomo64@...il.com, bressers@...hat.com, coley@...re.org
-Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/4
+Message-ID: <CAEZPtU7JmsUt5pTkK5BvZxZnop8PomYPvNHeX7qr5enzN5Rpnw@mail.gmail.com>
+Date: Sun, 25 Sep 2011 11:02:17 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Stas Malyshev <smalyshev@...arcrm.com>
+Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-* [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
+hi Stas,
 
->In 2002, when I rewrote the compression code for MaraDNS for the first
->time, I made a mistake in allocating an array of integers, allocating
->it in bytes instead of sizeof(int) units.  The resulted in a buffer
->being too small, allowing it to be overwritten.
->
->The impact of this programming error is that MaraDNS can be crashed by
->sending MaraDNS a single "packet of death".  Since the data placed in
->the overwritten array can not be remotely controlled (it is a list of
->increasing integers), there is no way to increase privileges
->exploiting this bug.
->
->The attached patch resolves this issue by allocating in sizeof(int)
->units instead of byte-sized units for an integer array.  In addition,
->it uses a smaller array because a DNS name can only have, at most, 128
->labels.
+I tend to disagree here. One of the CVE goal is not about declaring
+one or the other guilty of bad practice(s) but about informing users
+about security issues in the software they use and how to act
+correctly to fix these issues.
 
-Was a CVE name ever assigned to this issue?
+The is_a change is typically one of these security issues. While being
+a minor one (recommended ini settings or good code practices would
+avoid it easily), it is still one. That's why I'd to go with assigning
+one and link it to the bug.
+
+On Sun, Sep 25, 2011 at 10:56 AM, Stas Malyshev <smalyshev@...arcrm.com> wrote:
+
+> Yes, it is a behavior change, and it shouldn't have happened in 5.3, the
+> fact that it happened was a bad mistake, it is clear now.
+> However, the security flaw is squarely in the code that a) misuses is_a b)
+> doesn't have security checks and c) does not follow recommended best
+> practices about PHP settings.
+> As such, telling people that it was a flaw in PHP and that BC break reversal
+> "fixed" it only gives them wrong ideas that their code was just fine. But in
+> fact their code was broken and only by luck (and due to the haphazard way
+> things were done in PHP where nobody bothered correlating function
+> signatures with one another) in might have not been malfunctioning in this
+> specific scenario. They need to fix that code ASAP, as they can not rely on
+> luck anymore and they way is_a was changed is actually they way it should
+> have worked from the start and the way is_subclass_of works right now.
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
