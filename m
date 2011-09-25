@@ -1,57 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/1
-Message-ID: <4EB74C76.20606@redhat.com>
-Date: Sun, 06 Nov 2011 20:11:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Jason A. Donenfeld" <Jason@...c4.com>
-Subject: Re: Re: CVE request for Calibre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/9
+Message-ID: <CAEZPtU5smwcEAhWaBXx=Za7yJuGpK4gEwvanoC_7uEP7OfOUkw@mail.gmail.com>
+Date: Sun, 25 Sep 2011 16:10:12 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Zeev Suraski <zeev@...d.com>
+Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2011 02:45 PM, Jason A. Donenfeld wrote:
-> Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
-> current version that has been out for quite some time now. These require a
-> CVE. Issues 8 through 14 are ones introduced only during development and
-So to confirm these issues will be assigned a CVE (double checking since
-this has been quite the mess):
-> were not released, and do not need a CVE.
->
-> So where does that leave us with the CVEs? Well, there are the issues that
-> were "released" with a "version" of Calibre, and then the trove of bugs he
-> introduced in the middle. I'll try to recap and separate which is which:
->
-> 1. Ability to create root owned directory anywhere. The mount helper calls
-> mkdir(argv[3], ...).
->
-> 2. Ability to remove any empty directory on the system.
->
-> 3. Ability to create user_controlled_dir/.created_by_calibre_mount_helper
-> anywhere on the filesystem.
->
-> 4. Ability to delete user_controlled_dir/.created_by_calibre_mount_helper
-> anywhere on the filesystem.
->
-> 5. Ability to inject arguments into 'mount' being exec'd. On lines 78, 81,
-> and 83, the final two arguments to mount are user controlled. On lines
-> 1033, 106, 108, 139, and 141, the last argument to unmount/eject is user
-> controlled. The "exists()" check can be subverted via race condition or by
-> creating an existing file in the working directory with a filename equal to
-> the desired injected argument.
->
-> 6. Ability to execute any program as root. The mount helper makes use of
-> execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the first
-> argument does not start with a / character. Because of this, execlp will
-> search PATH for the executable to run. PATH is user controlled, and thus it
-> is trivial to write a program that spawns a shell and give it "mount" as a
-> filename, and direct PATH to its directory.
->
-> 7. Ability to mount any device to anywhere. This leads to local root, since
-> you can mount over /etc/ or /etc/pam.d/ or choose-your-own-adventure.
->
-> 7.1. Ability to unmount any device.
+On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
 
+> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
+> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
+>
+> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
 
+The whole point is that some code was not having any issue before this
+change. If the check was done earlier using is_a then this unexpected
+behavior will happen, and that actually causes a security issue in
+existing working code. The example in the blog post is very good one,
+it clearly shows that the impact on existing code is not only about
+wrongly implemented autoloader, or someone not disabling
+allow_url_fopen (I can imagine local file include being an issue as
+well under some circumstances).
+
+All in all, there is no shame or bad image to get a new CVE for
+something like that, I even see it as a good thing as it will:
+
+1. clearly explain the is_a issue and how it can impact existing code
+(with the hope that our users will review/fix their code)
+2. bring to the light again some good practices
+
+Cheers,
 -- 
+Pierre
 
--Kurt Seifried / Red Hat Security Response Team
-
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
