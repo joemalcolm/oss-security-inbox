@@ -1,69 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/1
-Message-ID: <20111108121412.GA14450@albatros>
-Date: Tue, 8 Nov 2011 16:14:12 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: multiple flaws allowing to sniff keystrokes timings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/5
+Message-ID: <4E7EF1CA.5030603@sugarcrm.com>
+Date: Sun, 25 Sep 2011 02:18:02 -0700
+From: Stas Malyshev <smalyshev@...arcrm.com>
+To: Pierre Joye <pierre.php@...il.com>
+CC: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi!
 
-I don't know whether these need several CVEs, but they allow to do
-roughly the same thing: monitor the time when users push keys on the
-keyboard/ttys and get at least password length or with a more
-sophisticated technique learn the precise input characters sequence by
-matching the timings against the statistical information.
+On 9/25/11 2:02 AM, Pierre Joye wrote:
+> I tend to disagree here. One of the CVE goal is not about declaring
+> one or the other guilty of bad practice(s) but about informing users
+> about security issues in the software they use and how to act
+> correctly to fix these issues.
+>
+> The is_a change is typically one of these security issues. While being
+> a minor one (recommended ini settings or good code practices would
+> avoid it easily), it is still one. That's why I'd to go with assigning
+> one and link it to the bug.
 
-
-1) https://lkml.org/lkml/2011/11/7/340 
-
-"/proc/interrupts contains the number of emitted interrupts, which
-should not be world readable.  The information about keyboard
-interrupts number may be used to learn the precise number of characters
-in users' passwords by simply watching the changes of number of emitted
-interrupts during the life of gksu-like programs."
-
-PoC: http://www.openwall.com/lists/oss-security/2011/11/07/9
-
-Vulnerable: all Linux versions, all distros with procfs mounted.
-
-(The patch misses the same infoleak via /proc/stat, which must be
-closed too.)
-
-
-2) https://lkml.org/lkml/2011/11/7/355
-
-The same as (1), but via tty devices' atime and mtime.
-
-"You can still figure it out by watching the files in /dev/pts/ and
-/dev/tty* for changes in last-modify time."
-
-Vulnerable: all Linux versions, all distros with world readable
-directories containing tty and pts device files.
-
-
-3) https://lkml.org/lkml/2011/11/8/136
-
-"/proc/$PID/{sched,schedstat} contain debugging scheduler counters, which
-should not be world readable.  They may be used to gather private information
-about processes' activity.  E.g. it can be used to count the number of
-characters typed in gksu dialog."
-
-PoC: http://www.openwall.com/lists/oss-security/2011/11/05/3
-
-Vulnerable: all Linux >= 2.6.9, all distros with procfs mounted.
-
-
-These are not fixed yet, the solution might be introducing revoke() with
-permission restrictions, see the first link in (1) with the discussion.
-
-
-Also, security@...nel.org is unavailable, is there any substitution of
-this email?
-
-Thanks,
-
+I'm concerned that if we do it this way people would take it as "PHP has 
+security bug in is_a and it was fixed in this version, so as long as we 
+run updated version we're OK", not "my code has gaping security hole 
+which by pure luck wasn't exploitable but minor change made it 
+exploitable". If we don't make it crystal clear the latter and not the 
+former is the case, we'd have same problem with 5.4.
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Stanislav Malyshev, Software Architect
+SugarCRM: http://www.sugarcrm.com/
+(408)454-6900 ext. 227
