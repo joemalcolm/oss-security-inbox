@@ -1,110 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/1
-Message-ID: <CAKDYTU0BZhS3OwAJWxq50JZRXS+L-xy0fK1o6gu0FrdbBaAccQ@mail.gmail.com>
-Date: Tue, 26 Jul 2011 10:41:52 +0530
-From: "Papers, Call For" <cfpt@...uritybyte.org>
-To: oss-security@...ts.openwall.com
-Subject: CFP SecurityByte India
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/10
+Message-ID: <4E7F5910.2080508@php.net>
+Date: Sun, 25 Sep 2011 18:38:40 +0200
+From: Rasmus Lerdorf <rasmus@....net>
+To: Pierre Joye <pierre.php@...il.com>
+CC: Zeev Suraski <zeev@...d.com>, Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On 09/25/2011 04:10 PM, Pierre Joye wrote:
+> On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
+> 
+>> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
+>> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
+>>
+>> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
+> 
+> The whole point is that some code was not having any issue before this
+> change. If the check was done earlier using is_a then this unexpected
+> behavior will happen, and that actually causes a security issue in
+> existing working code. The example in the blog post is very good one,
+> it clearly shows that the impact on existing code is not only about
+> wrongly implemented autoloader, or someone not disabling
+> allow_url_fopen (I can imagine local file include being an issue as
+> well under some circumstances).
+> 
+> All in all, there is no shame or bad image to get a new CVE for
+> something like that, I even see it as a good thing as it will:
 
-The first round of speakers have been selected for Securitybyte, please
-follow us on twitter @securitybyte to get the latest updates on speakers and
-event.
+I didn't read the thread from the beginning, but is there an actual
+exploit here? Presumably the autoloader code in question isn't doing an
+fopen/eval to execute the code and since allow_url_include is disabled
+by default, remote includes aren't an issue in the default install. So
+are we talking about the tiny number of people who have explicitly
+enabled allow_url_include and are running the code with this bad autoloader?
 
-Deral Heiland, From Printer to Owned: Leveraging Multifunction Printers
-During Penetration Testing
-Nithya Raman, Security threats on social networks
-Alexander Polyakov, A Crushing Blow At the Heart of SAP J2EE Engine
-Bishan Singh, Enabling Un-trusted Mashups
-Krzysztof Kotowicz, HTML5: Something Wicked This Way Comes
-John McColl, Hacking Corporate Telephony
-Aseem Jakhar, Runtime thread injection and execution in Linux processes
-George Nicolaou, Alternative Exploitation Vectors (A study of CVE-3333)
-Michele Orru, Securing the Browser
-Kanwal K. Mookhey, The Data Theft Epidemic in India
-Vivek Ramachandran, Enterprise Wi-Fi Worms, Backdoors and Botnets for Fun
-and Profit
-
-The 2nd round of CFP is out
-
-CFP/CTP
-
-Securitybyte is proud to announce its Second Annual International
-Information Security Conference, "Securitybyte 2011" in Bangalore, India.
-This 4-day event features two days of conferences and two days of
-post-conference hands-on Trainings & Certifications covering every aspect of
-Information Security. The Securitybyte conference features some of the most
-respected names in the Security space and is focused around new research and
-innovation. The Securitybyte Conference 2011 is planned for Sept 6th through
-9th, 2011 at The Taj Hotel in Bangalore, India.
-
-The two-day conference (Sept 6th & 7th) will have the following three
-tracks:
-
-   Deep Technical
-   Government & Governance
-   Management
-
-Submission Deadline: The first round of submission of papers for conference
-talks and trainings should be done no later than August 5th, 2011. Please
-send all your submissions to cfp@...uritybyte.org, keeping subject line as
-"SB 2011 CFP Submission".
-
-TOPICS
-
-Got a new attack against any technology or device? We want to see it.
-
-Topics of interest include, but are not limited to, the following:
-
-Management Case studies around any of the topics above of how the
-implementation was done and what were some of the lessons learned.
-
-Technology-Focused
-
-               Cloud Security
-               Electronic Device Security (Cell Phones / PDA's)
-               Defeating Biometrics
-               WLAN, RFID and Bluetooth Security
-               Data Recovery and Incident Response
-               Virtualization Security
-               Database Security
-               Forensic & Cyber security Regulatory & Law
-               Copyright infringement and anti-copyright infringement
-               enforcement technologies
-               Critical infrastructure issues
-               Data security and privacy issues
-               Identity theft, identity creation & identity fraud
-               Corporate Espionage
-
-
-National Security
-
-              Cyber forensics
-              Cyber warfare
-              Cyber Espionage
-              Next hyphenGen Cyber threats
-              Critical Infrastructure protection
-              Surveillance & counter-surveillance
-
-Speaker Submission:
-
-Please use the following submission form template to respond:
-
-   Name, title, address, email, and phone/contact number
-   Short biography, qualifications, occupation, achievements, and
-   affiliations (limit 250 words.)
-   Summary or abstract of your presentation (limit 1250 words.)
-   Technical requirements (video, internet, wireless, audio, etc.)
-   References (Contact name, title, and email address of two
-   conferences you have spoken at or comparable references.)
-
-**Please note, product or vendor pitches are not accepted. If your talk
-involves an advertisement for a new product or service your company is
-offering, please do not submit a proposal.
-
-
-Regards
-SecurityByte
-
+-Rasmus
