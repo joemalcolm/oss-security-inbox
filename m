@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/6
-Message-Id: <201108221043.24093.mweckbecker@suse.de>
-Date: Mon, 22 Aug 2011 10:43:23 +0200
-From: Matthias Weckbecker <mweckbecker@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/4
+Message-ID: <20110926165743.GB14748@inutil.org>
+Date: Mon, 26 Sep 2011 18:57:43 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libqt4: two memory issues
+Subject: CVE requests: Typo3
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+please assign CVE IDs for two new Typo3 issues:
 
-A) buffer overflow (looks only like an off-by-one from a very quick look)
-http://qt.gitorious.org/qt/qt/commit/9ae6f2f9a57f0c3096d5785913e437953fa6775c
+1. TYPO3-CORE-SA-2011-002: Potential SQL injection vulnerability in TYPO3
+Core
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-002/
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641682
 
-B) buffer overflow on greyscale images with multiple samples per pixel
-https://bugzilla.novell.com/show_bug.cgi?id=637275
-http://qt.gitorious.org/qt/qt/commit/cb6380beb81ab9571c547270c144988781fed465
+2. TYPO3-CORE-SA-2011-003: Improper error handling could lead to cache
+   flooding in TYPO3 Core
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-003/
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641683
 
-Could there possibly be CVEs assign, please? Thanks in advance.
-
-ciao,
-Matthias
-
---
-Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
-SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
-Tel: +49-911-74053-0;  http://suse.com/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
+Cheers,
+        Moritz
