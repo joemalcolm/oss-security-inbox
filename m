@@ -1,29 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/9
-Message-ID: <20110223061818.GA22747@openwall.com>
-Date: Wed, 23 Feb 2011 09:18:18 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Physical access vulnerabilities and auto-mounting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/5
+Message-ID: <1317076730.3606.58.camel@guybrush>
+Date: Tue, 27 Sep 2011 00:38:50 +0200
+From: Johannes Schlüter <johannes@...lueters.de>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: oss-security@...ts.openwall.com, Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, security@....net, Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 23, 2011 at 12:46:47AM -0500, Nelson Elhage wrote:
-> I don't have any definite opinions here about where to draw which
-> lines, but I want to point out that in addition to physical attack
-> vectors, virtualization tools are also potentially affected by these
-> kinds of bugs. If you try to mount an untrusted VM's virtual disk
-> image from somewhere, you're also vulnerable to that VM triggering
-> bugs in the filesystem or other layers.
+On Mon, 2011-09-26 at 09:05 -0600, Vincent Danen wrote:
+> * [2011-09-25 19:22:19 +0200] Pierre Joye wrote:
+> 
+> >On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
+> >> So
+> >> are we talking about the tiny number of people who have explicitly
+> >> enabled allow_url_include and are running the code with this bad autoloader?
+> >
+> >Yes, and that's why it is a very very minor problem. However it was
+> >not happening before the code change. The few cases where the class
+> >names&co have been sanitize before and the developer did not think
+> >about cases like the one describe in the blog post. I think it is even
+> >more rare combination, but it was not happening before our change.
+> 
+> Thanks for all the discussion around this.
+> 
+> Pierre has it right... prior to the change, whether it was intended or
+> not, documented or not, PHP did things a certain way and users could
+> (for better or worse) rely on a certain behaviour to do "the right
+> thing" (right in the context of their application, even if it is wrong
+> in the context of writing good PHP code).  5.3.7 changed that, which
+> left applications that used this "feature" in a vulnerable state.
 
-Excellent point.
+The old code didn't make code secure. There was still a high chance that
+an attacker might exploit such a broken __autoload() function. If there
+is an security issue it is the existence of allow_url_include.
 
-Arguably, that would indicate improper design of the virtualization tool
-or an inappropriate action by a sysadmin, though.  Here's an example:
+> It's unfortunate for everyone that PHP gets so many CVEs assigned to it
+> for trivial little things.  I look at every CVE assigned for safemode
+> or open_basedir bypass flaws... technically speaking, I would never
+> consider those to be flaws because those functions are not meant to be
+> sandboxing features or high security features, as outlined on PHP's
+> page, however they do get CVEs assigned.
+> 
+> Even though PHP does not consider those features to be security
+> protection features, CVEs are still assigned.  You would expect that
+> most people would not rely on those features as security features, which
+> means those "bypass" flaws should never really affect people in a
+> security context, but the sad reality is that they do.  CVE does not
+> distinguish between good programming habits or bad ones.  Flaws like
+> this, that are only exposed due to bad programming in applications,
+> still end up with CVEs assigned at the language level.
 
-http://www.linode.com/backups/
+Well, I accept most of the safe_mode things. safe_mode is a way to also
+limit "bad people" with local file access. Which is a different level.
+(While nowadays virtualization etc. can be used to solve that need)
 
-"The backup system must be able to mount your disk images on the host."
+johannes
 
-I wonder if they realize the risk they're taking...
+> I don't think those CVEs reflect poorly on PHP -- I think most people
+> who know PHP, realize that people do dumb stuff and that a language like
+> PHP makes it easier to do dumb stuff.
+> 
+> In this case, I think this particular issue is more worthy of a CVE than
+> the open_basedir/safemode-related CVEs (and there are _lots_ of those).
+> 
+> ref: http://www.php.net/security-note.php
+> 
 
-Alexander
+
