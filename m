@@ -1,68 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/3
-Message-ID: <20110622120253.GA17388@suse.de>
-Date: Wed, 22 Jun 2011 14:02:53 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/1
+Message-ID: <4E7FE264.1080603@redhat.com>
+Date: Mon, 26 Sep 2011 10:24:36 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, coley@...us.mitre.org, cve-assign@...re.org
+Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
->On Tue, Jun 21, 2011 at 04:34:41PM +0200, Ludwig Nussel wrote:
->> I wonder whether it would make sense to patch pam_unix (resp
->> pam_unix2 in our case) to detect the problem and activate the
->> workaround automatically. pam_unix has the clear text password so
->> knows when it contains 8bit characters. It also has the shadow entry
->> which tells when the password was set. If that date is before the
->> update was installed the 2x method could be tried if 2a failed and a
->> warning could be logged to syslog.
->
->This is tricky.  When implementing things like that, we need to consider
->timing leaks (do we care if an observer of ssh traffic is able to
->tell whether the password contained 8-bit chars or not? perhaps we do)
->and leaks via the hash encodings themselves (if only some are changed to
->a certain type, this may leak some info about the corresponding
->passwords, thereby speeding up offline attacks on the hashes).
+On 09/23/2011 11:18 PM, akuster wrote:
+> so this was introduced by e4cce94c9c8797b08faf6a79396df4d175e377fa ?
 
-For SUSE Linux we're not that paranoid I guess :-) The extra time 
-would only hit accounts that are not converted yet. I suppose there 
-are not too many anyways and there will be less over time.
+Yes,
 
->My response above is generic, not focused on your specific proposed
->approach.  Overall, I think we'll need to give this more thought.
->
->One idea is to allocate yet another prefix, which will mean the same
->thing as 2a, but "certified" as passing a certain specific test suite
->(which will include 8-bit chars).  So we'll have:
->
->2a - unknown correctness (may be correct, may be buggy)
->2x - sign extension bug
->2y - definitely correct
->
->Newly set/changed passwords will be getting the new prefix.
->
->Then we'll be able to do things such as optionally have a PAM module
->deny logins with 8-bit char passwords to accounts that have 2a or/and
->2x hashes.  (Rationale for the admin: passwords weaker than expected.)
->With another option, we'll be able to have 2a treated as 2x.  (Rationale
->for the admin: minimum inconvenience to the users.)  Perhaps there can
->be other reasonable settings as well.
->
->What do you think?
+[CIFS] Prevent OOPs when mounting with remote prefixpath.
+e4cce94c9c8797b08faf6a79396df4d175e377fa
 
-I'm not sure we can expect admins to put that much thought into the 
-issue and expect them to configure things. I think for the system 
-logins we can get away with patching pam_unix2 to have a fallback to 
-2x and log a message for the admin that tells him to run "passwd -e" 
-on the account. Theoretically it could even issue a PAM_TEXT_INFO 
-message to the user. That might confuse some applications though.
+If you have this, you might also want
+cifs: add fallback in is_path_accessible for old servers
+221d1d797202984cb874e3ed9f1388593d34ee22
 
-cu
-Ludwig
+Thanks, Eugene
 
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+> - Armin
+> 
+> On 09/14/2011 08:51 AM, Josh Bressers wrote:
+>> Please use CVE-2011-3363 for this.
+>>
+>> Thanks.
+>>
+
