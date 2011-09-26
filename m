@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/4
-Message-ID: <1312378156.3096.8.camel@localhost.localdomain>
-Date: Wed, 03 Aug 2011 14:29:13 +0100
-From: Tim Waugh <twaugh@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, security@...ntu.com
-Subject: Re: CVE Request: foomatic-gui
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/6
+Message-ID: <CAEZPtU7ixC8g-Jy-uFz+7WW4yu5DBFWttSimuybrVqd2eRdmQw@mail.gmail.com>
+Date: Tue, 27 Sep 2011 01:27:23 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Johannes Schlüter <johannes@...lueters.de>
+Cc: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com,  Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, security@....net,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-08-03 at 09:13 -0400, Marc Deslauriers wrote:
-> http://cvs.savannah.gnu.org/viewvc/foomatic-gui/foomatic/pysmb.py?root=foomatic-gui&r1=1.2&r2=1.3
+2011/9/27 Johannes Schlüter <johannes@...lueters.de>:
 
-Actually foomatic-gui is not the origin of pysmb.py -- that came from
-system-config-printer prior to 1.1.0.
+> The old code didn't make code secure. There was still a high chance that
+> an attacker might exploit such a broken __autoload() function.
 
-Tim.
-*/
+With this change, it is not a chance anymore but a fact. And that's
+the whole point.
 
+-- 
+Pierre
 
-Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
