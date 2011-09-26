@@ -1,16 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/3
-Message-ID: <87k4800w1o.fsf@mid.deneb.enyo.de>
-Date: Thu, 20 Oct 2011 12:58:11 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/1
+Message-ID: <4E7FE264.1080603@redhat.com>
+Date: Mon, 26 Sep 2011 10:24:36 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: PR attack against XML Encryption
+CC: akuster <akuster@...sta.com>, Josh Bressers <bressers@...hat.com>, coley@...us.mitre.org, cve-assign@...re.org
+Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
 Content-Type: text/plain; charset=utf-8
 
-A German university has released a press release, alleging a
-vulnerability in the W3C XML Encryption standard.  Apparently, error
-reporting from existing implementations can be used as an oracle to
-recover information from messages encrypted in CBC mode.
+On 09/23/2011 11:18 PM, akuster wrote:
+> so this was introduced by e4cce94c9c8797b08faf6a79396df4d175e377fa ?
 
-Details have not been published, as far as I know.  Does anybody know
-more?
+Yes,
+
+[CIFS] Prevent OOPs when mounting with remote prefixpath.
+e4cce94c9c8797b08faf6a79396df4d175e377fa
+
+If you have this, you might also want
+cifs: add fallback in is_path_accessible for old servers
+221d1d797202984cb874e3ed9f1388593d34ee22
+
+Thanks, Eugene
+
+> - Armin
+> 
+> On 09/14/2011 08:51 AM, Josh Bressers wrote:
+>> Please use CVE-2011-3363 for this.
+>>
+>> Thanks.
+>>
+
