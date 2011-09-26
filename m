@@ -1,42 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/4
-Message-ID: <1408065980.896976.1308858392489.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 23 Jun 2011 15:46:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: incidents@...rt.org, henri@...v.fi
-Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/6
+Message-ID: <CAEZPtU7ixC8g-Jy-uFz+7WW4yu5DBFWttSimuybrVqd2eRdmQw@mail.gmail.com>
+Date: Tue, 27 Sep 2011 01:27:23 +0200
+From: Pierre Joye <pierre.php@...il.com>
+To: Johannes Schlüter <johannes@...lueters.de>
+Cc: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com,  Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, security@....net,  Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
+2011/9/27 Johannes Schlüter <johannes@...lueters.de>:
 
+> The old code didn't make code secure. There was still a high chance that
+> an attacker might exploit such a broken __autoload() function.
 
------ Original Message -----
-> Couldn't find a CVE-identifier for this issue. Joomla does have too
-> many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may
-> lead to an unauthorized information disclosure. Should this one get a
-> 2010 or 2011 identifier?
-> 
-> Reported: 2010-12-08
-> Joomla advisory: 2011-04-01
-> Release with a fix (version 1.5.23): 2011-04-04
-> 
-> References:
-> http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
-> http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
-> http://osvdb.org/show/osvdb/71587
-> http://secunia.com/advisories/44028/
-> 
-> I hope this request isn't duplicate. I included oCERT to this email as
-> Joomla is part of that group. Please notify me and mailing-list if
-> this issue already has a CVE-identifier.
-> 
-
-I'm giving this CVE-2011-2488.
-
-While the flaw was reported in 2010 they claim, I consider 2011 when
-it went public.
-
-Thanks.
+With this change, it is not a chance anymore but a fact. And that's
+the whole point.
 
 -- 
-    JB
+Pierre
+
+@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
