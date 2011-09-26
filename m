@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/18
-Message-ID: <20110502192825.GA21926@rh.iggy.bress.home>
-Date: Mon, 2 May 2011 15:29:29 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/3
+Message-ID: <20110926150521.GE1528@redhat.com>
+Date: Mon, 26 Sep 2011 09:05:21 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, cyril.jaquier@...l2ban.org, Tomasz Papszun <tomek@...z.tpsa.pl>, Yaroslav Halchenko <debian@...russian.com>
-Subject: Re: CVE Request -- fail2ban -- Use of insecure default temporary file when unbanning an IP (tmpfile = /tmp/fail2ban-mail.txt)
+Cc: Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, "security@....net" <security@....net>, Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 29, 2011 at 01:02:04PM +0200, Jan Lieskovsky wrote:
-> 
-> Hello Josh, Steve, vendors,
-> 
->   It was found that fail2ban IPs banner used insecure default temporary file
-> when unbanning an IP address. A local attacker could use this flaw to conduct
-> symlink attacks in order to gain access to sensitive information or potentially
-> to overwrite arbitrary file on the system.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=544232
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700763
-> 
-> Patch applied by Debian distribution:
-> [3] http://git.onerussian.com/?p=deb/fail2ban.git;a=commitdiff;h=ea7d352616b1e2232fcaa99b11807a86ce29ed8b
-> 
-> Could you allocate a CVE id for this? (Note: It should CVE-2009-* identifier)
-> 
+* [2011-09-25 19:22:19 +0200] Pierre Joye wrote:
 
-Please use CVE-2009-5023
+>On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
+>> So
+>> are we talking about the tiny number of people who have explicitly
+>> enabled allow_url_include and are running the code with this bad autoloader?
+>
+>Yes, and that's why it is a very very minor problem. However it was
+>not happening before the code change. The few cases where the class
+>names&co have been sanitize before and the developer did not think
+>about cases like the one describe in the blog post. I think it is even
+>more rare combination, but it was not happening before our change.
 
-Thanks.
+Thanks for all the discussion around this.
+
+Pierre has it right... prior to the change, whether it was intended or
+not, documented or not, PHP did things a certain way and users could
+(for better or worse) rely on a certain behaviour to do "the right
+thing" (right in the context of their application, even if it is wrong
+in the context of writing good PHP code).  5.3.7 changed that, which
+left applications that used this "feature" in a vulnerable state.
+
+It's unfortunate for everyone that PHP gets so many CVEs assigned to it
+for trivial little things.  I look at every CVE assigned for safemode
+or open_basedir bypass flaws... technically speaking, I would never
+consider those to be flaws because those functions are not meant to be
+sandboxing features or high security features, as outlined on PHP's
+page, however they do get CVEs assigned.
+
+Even though PHP does not consider those features to be security
+protection features, CVEs are still assigned.  You would expect that
+most people would not rely on those features as security features, which
+means those "bypass" flaws should never really affect people in a
+security context, but the sad reality is that they do.  CVE does not
+distinguish between good programming habits or bad ones.  Flaws like
+this, that are only exposed due to bad programming in applications,
+still end up with CVEs assigned at the language level.
+
+I don't think those CVEs reflect poorly on PHP -- I think most people
+who know PHP, realize that people do dumb stuff and that a language like
+PHP makes it easier to do dumb stuff.
+
+In this case, I think this particular issue is more worthy of a CVE than
+the open_basedir/safemode-related CVEs (and there are _lots_ of those).
+
+ref: http://www.php.net/security-note.php
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
