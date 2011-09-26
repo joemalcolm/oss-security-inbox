@@ -1,33 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/4
-Message-ID: <237823109.466832.1302293950604.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 8 Apr 2011 16:19:10 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/26/3
+Message-ID: <20110926150521.GE1528@redhat.com>
+Date: Mon, 26 Sep 2011 09:05:21 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for pithos information disclosure
+Cc: Rasmus Lerdorf <rasmus@....net>, Zeev Suraski <zeev@...d.com>, "security@....net" <security@....net>, Stas Malyshev <smalyshev@...arcrm.com>
+Subject: Re: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
+* [2011-09-25 19:22:19 +0200] Pierre Joye wrote:
 
+>On Sun, Sep 25, 2011 at 6:38 PM, Rasmus Lerdorf <rasmus@....net> wrote:
+>> So
+>> are we talking about the tiny number of people who have explicitly
+>> enabled allow_url_include and are running the code with this bad autoloader?
+>
+>Yes, and that's why it is a very very minor problem. However it was
+>not happening before the code change. The few cases where the class
+>names&co have been sanitize before and the developer did not think
+>about cases like the one describe in the blog post. I think it is even
+>more rare combination, but it was not happening before our change.
 
------ Original Message -----
-> Ian Daniher discovered that 'pithos' stores the username and password
-> for external services in plain text in a configuration file. This
-> configuration file is world-readable by defualt, resulting in a loss
-> of
-> user privacy.
-> 
-> Reference: http://pad.lv/733307
-> 
-> Can I get a CVE identifier for this flaw?
-> 
+Thanks for all the discussion around this.
 
-The real URL is:
-https://bugs.launchpad.net/pithos/+bug/733307
+Pierre has it right... prior to the change, whether it was intended or
+not, documented or not, PHP did things a certain way and users could
+(for better or worse) rely on a certain behaviour to do "the right
+thing" (right in the context of their application, even if it is wrong
+in the context of writing good PHP code).  5.3.7 changed that, which
+left applications that used this "feature" in a vulnerable state.
 
-Please use CVE-2011-1500.
+It's unfortunate for everyone that PHP gets so many CVEs assigned to it
+for trivial little things.  I look at every CVE assigned for safemode
+or open_basedir bypass flaws... technically speaking, I would never
+consider those to be flaws because those functions are not meant to be
+sandboxing features or high security features, as outlined on PHP's
+page, however they do get CVEs assigned.
 
-Thanks.
+Even though PHP does not consider those features to be security
+protection features, CVEs are still assigned.  You would expect that
+most people would not rely on those features as security features, which
+means those "bypass" flaws should never really affect people in a
+security context, but the sad reality is that they do.  CVE does not
+distinguish between good programming habits or bad ones.  Flaws like
+this, that are only exposed due to bad programming in applications,
+still end up with CVEs assigned at the language level.
+
+I don't think those CVEs reflect poorly on PHP -- I think most people
+who know PHP, realize that people do dumb stuff and that a language like
+PHP makes it easier to do dumb stuff.
+
+In this case, I think this particular issue is more worthy of a CVE than
+the open_basedir/safemode-related CVEs (and there are _lots_ of those).
+
+ref: http://www.php.net/security-note.php
 
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
