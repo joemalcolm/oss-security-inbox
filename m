@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/5
-Message-ID: <4D22F2A6.2080604@redhat.com>
-Date: Tue, 04 Jan 2011 11:12:54 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Mark Stosberg <mark@...mersault.com>, Andy Armstrong <andy@...ten.net>
-CC: oss-security@...ts.openwall.com, Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>, "Chris 'BinGOs' Williams" <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>, Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>, Tom spot Callaway <tcallawa@...hat.com>
-Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/2
+Message-ID: <c95a1a9e-b5f9-46ff-b9eb-324858da6e74@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 27 Sep 2011 14:26:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: security@....net
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-Hi Mark, Andy,
+Let's use CVE-2011-3379 for this.
 
-Ludwig Nussel wrote:
-> Mark Stosberg wrote:
->> Yes, it is. However, later testing found that the issue wasn't
->> completely fixed in 3.50. A new patch has been developed, and is
->> currently pending review and acceptance by the primary CGI.pm author,
->> Lincoln Stein. (Now CC'ed).
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the
+> is_a()
+> function worked, and as a result it could allow for remote arbitrary
+> code execution if certain specific conditions are met (the blog post
+> referenced below has a good writeup of the flaw).
 > 
-> Any update on this? What are the remaining issues?
-
-   Are there some patches to come yet wrt to Perl's CPAN CGI-Simple module
-and those two CVE ids yet?
-
-I can see latest CGi-Simple-v113 released on Monday, 27-th December 2010:
-[1] http://search.cpan.org/dist/CGI-Simple/
-
-Does it contain fixes for both CVE issues (so it is possible to rebase to new
-version) or anything else to be done in this part of the world yet?
-
-Is the fix, we were waiting for on the CGI-Simple side:
-[2] https://github.com/AndyA/CGI--Simple/commit/5a861280ef524661105e132536ff7d1a9084941f
-
-or yet another one?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+> https://bugs.php.net/bug.php?id=55475
+> https://bugzilla.redhat.com/show_bug.cgi?id=741020
 > 
-> cu
-> Ludwig
+> It looks like this is the fix:
 > 
-
+> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
+> 
