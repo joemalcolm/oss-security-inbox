@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/4
-Message-ID: <1320228187.13156.157.camel@spiral.ashpool.org>
-Date: Wed, 02 Nov 2011 10:03:07 +0000
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/3
+Message-ID: <mpro.ls732t0w2f6ps06u2.taviso@cmpxchg8b.com>
+Date: Tue, 27 Sep 2011 20:52:05 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: kiwi shell meta char injection
+Subject: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-my colleagues found the following:
-https://github.com/openSUSE/kiwi/commit/f0f74b3f6ac6d47f7919aa9db380c0ad41ffe55f
 
-CVE-2011-3180: The path of overlay files was not escaped which allowed
-shell meta character injection via the chown(1) command-line.
+Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
+rpm signature verification. Some trivial bitflipping found a few memory
+corruption issues.
 
-https://github.com/openSUSE/kiwi/commit/88bf491d16942766016c606e4210b4e072c1019f
-CVE-2011-4195: The image name was not escaped properly and can be used
-in conjunction with other applications to execute arbitrary shell
-commands.
+Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
+native module wrapper that exports librpm to python. I'll step through the
+signature verification logic when I get a chance.
 
-Cheers,
-Thomas
+Obviously we need the sections of rpm code touched before signature
+verification to be bulletproof, as most distributions rely on public mirror
+services that may or may not be trusted. Any volunteers who know crypto
+better than me appreciated, I'll be primarily looking for memory corruption.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=741606
+https://bugzilla.redhat.com/show_bug.cgi?id=741612
+
+Tavis.
+
 -- 
-Thomas Biege <thomas@...e.de>, Project Manager IT-Security
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-21284 (AG Nürnberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
-
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
 
