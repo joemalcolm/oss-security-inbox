@@ -1,18 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/11
-Message-ID: <20110412205856.GA16400@openwall.com>
-Date: Wed, 13 Apr 2011 00:58:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/2
+Message-ID: <c95a1a9e-b5f9-46ff-b9eb-324858da6e74@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 27 Sep 2011 14:26:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: security@....net
+Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 12, 2011 at 04:27:58PM -0400, Petr Matousek wrote:
-> pub   4096R/C44977CA 2011-04-12
->       Key fingerprint = 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
-> uid                  Petr Matousek <pmatouse@...hat.com>
-> uid                  Petr Matousek <pm@...p.org>
+Let's use CVE-2011-3379 for this.
 
-Added.
+Thanks.
 
-Alexander
+-- 
+    JB
+
+
+----- Original Message -----
+> Could a CVE be assigned for this flaw?  PHP 5.3.7 changed how the
+> is_a()
+> function worked, and as a result it could allow for remote arbitrary
+> code execution if certain specific conditions are met (the blog post
+> referenced below has a good writeup of the flaw).
+> 
+> http://www.byte.nl/blog/2011/09/23/security-bug-in-is_a-function-in-php-5-3-7-5-3-8/
+> https://bugs.php.net/bug.php?id=55475
+> https://bugzilla.redhat.com/show_bug.cgi?id=741020
+> 
+> It looks like this is the fix:
+> 
+> http://svn.php.net/viewvc/?view=revision&amp;revision=317183
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
+> 
