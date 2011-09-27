@@ -1,42 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/7
-Message-Id: <201103061614.58209.sgrubb@redhat.com>
-Date: Sun, 6 Mar 2011 16:14:58 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: kernel: modules_disabled policy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/4
+Message-ID: <1317166265.2853.6.camel@mdlinux>
+Date: Tue, 27 Sep 2011 19:31:05 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: ffmpeg/libav
 Content-Type: text/plain; charset=utf-8
 
-On Saturday, March 05, 2011 11:16:43 am Vasiliy Kulikov wrote:
-> Is it possible to implement strict do-not-touch-the-kernel policy for
-> root via disabling LKM loading and _all_ other indirect places with write
-> access that allows root to do something, but being too relaxed and
-> allows to write to [almost] arbitrary kernel location?  This would make
-> root the Boss Of Userland, but as to the kernel it would be but just a
-> privileged client.  Or such policy would be incomplete and there is
-> almost always a way to by-pass it due to the system design?
+Hello,
 
-There's been some discussion on this here:
-http://marc.info/?l=linux-security-module&m=129613936129293&w=2
+I can't seem to find a CVE for the following:
 
-As root, you could modify /etc/modprobe.d/  and add your root kit and issue a system 
-reboot. That might get attention, but its possible to load modules by rebooting. Along 
-the same lines, you could regenerate the initramfs with your module being loaded 
-there.
+http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
 
-What was proposed was another kind of deployment module where the initramfs and kernel 
-is on readonly media so any kernel updates have no effect. The initramfs has all the 
-kernel modules that wil ever be loaded and anything that manages to live in 
-/lib/modules will not be used for anything. Since root is in control of user space, he 
-could change any program that the kernel calls out to load modules. So in the 
-initramfs we want to drop 2 capabilities so that all kernel helpers are not able to 
-run with CAP_SYS_MODULE or CAP_SYS_RAWIO.
+"Fix several security issues in matroskadec.c (MSVR-11-0080)."
 
-There are lots of loose ends. I think you found another place where root in the 
-traditional sense was perfectly fine doing a snapshot. But if you want to allow anyone 
-to have root, but not be able to get arbitrary code running at ring0, there will be 
-quite a bit of looking for these uncontrolled places and getting them under some 
-capability check that can be excluded without diminishing roots abilities too much.
+Thanks,
 
--Steve
+Marc.
+
+
