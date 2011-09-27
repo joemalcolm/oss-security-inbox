@@ -1,18 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/3
-Message-ID: <1108241017100.21645@mjc.redhat.com>
-Date: Wed, 24 Aug 2011 10:22:18 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE assignment Apache httpd multiple-range DoS ("Apache Killer") - CVE-2011-3192
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/4
+Message-ID: <1317166265.2853.6.camel@mdlinux>
+Date: Tue, 27 Sep 2011 19:31:05 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: ffmpeg/libav
 Content-Type: text/plain; charset=utf-8
 
-This thread is on the full-disclosure mailing list:
-http://marc.info/?t=131379269200002&r=1&w=2
-leading to this upstream discussion:
-http://marc.info/?t=131409787700005&r=1&w=2
+Hello,
 
-It is an escalation of server memory usage, and a plausible candidate 
-for a CVE, so I've assigned CVE-2011-3192.
+I can't seem to find a CVE for the following:
 
-Thanks, Mark
+http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
+
+"Fix several security issues in matroskadec.c (MSVR-11-0080)."
+
+Thanks,
+
+Marc.
+
+
