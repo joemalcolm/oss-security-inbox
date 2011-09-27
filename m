@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/2
-Message-ID: <20110706034815.GB18345@openwall.com>
-Date: Wed, 6 Jul 2011 07:48:15 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/3
+Message-ID: <mpro.ls732t0w2f6ps06u2.taviso@cmpxchg8b.com>
+Date: Tue, 27 Sep 2011 20:52:05 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Bind incident
+Subject: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 07:17:32PM +0800, Eugene Teo wrote:
-> You might have read about AusCert's accidental disclosure of the ISC
-> Bind advisories today. If you have more information about this, please
-> share. AFAICS, the bind source packages are still not available at the
-> ISC website.
-> 
-> https://bugzilla.redhat.com/CVE-2011-2464
-> https://bugzilla.redhat.com/CVE-2011-2465
-> http://risky.biz/auscert-bind
-> http://pastebin.com/9NUt8Pk0
 
-Here are the ISC advisories:
+Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
+rpm signature verification. Some trivial bitflipping found a few memory
+corruption issues.
 
-http://www.isc.org/software/bind/advisories/cve-2011-2464
-http://www.isc.org/software/bind/advisories/cve-2011-2465
+Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
+native module wrapper that exports librpm to python. I'll step through the
+signature verification logic when I get a chance.
 
-The oldest affected version is 9.6'ish, and the advisories explicitly
-say that "Other versions of BIND 9 not listed in this advisory are not
-vulnerable to this problem."  So those of us with older BIND 9 appear to
-have nothing to do on this. ;-)  (Of course, we might have other/older
-issues to patch.)
+Obviously we need the sections of rpm code touched before signature
+verification to be bulletproof, as most distributions rely on public mirror
+services that may or may not be trusted. Any volunteers who know crypto
+better than me appreciated, I'll be primarily looking for memory corruption.
 
-Alexander
+https://bugzilla.redhat.com/show_bug.cgi?id=741606
+https://bugzilla.redhat.com/show_bug.cgi?id=741612
+
+Tavis.
+
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
+
