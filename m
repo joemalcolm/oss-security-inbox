@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/29
-Message-ID: <Pine.GSO.4.64.1103041254480.3265@faron.mitre.org>
-Date: Fri, 4 Mar 2011 13:02:38 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-cc: Florian Zumbiehl <florz@...rz.de>, "Steven M. Christey" <coley@...-smtp.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/27/1
+Message-ID: <1317132688.2799.27.camel@mdlinux>
+Date: Tue, 27 Sep 2011 10:11:28 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: samba, cifs-utils
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-On Fri, 4 Mar 2011, Solar Designer wrote:
+I don't think this ever got a CVE:
 
-> On Fri, Mar 04, 2011 at 12:05:02PM -0500, Steven M. Christey wrote:
->>
->> We will sometimes write the CVE description more as an "adminisrator
->> practice" than as "fault of the software."
->
-> Oh, this is something I did not realize.  A lot of people assume that
-> CVEs "blame" the software and its authors for having made an error.
+https://bugzilla.samba.org/show_bug.cgi?id=7179
 
-We do this *if* we are aware of the subtleties.  But this often requires 
-an understanding of the expected software behavior, and CVE covers 
-thousands of different applications each year.  Unfortunately, we can't 
-have that level of understanding about each app.
+http://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=810f7e4e0f2dbcbee0294d9b371071cb08268200
 
-> It felt wrong, say, to blame a text editor for being unsafe to use on 
-> files in untrusted directories when such unsafety was the typical and 
-> expected situation for text editors in general.
 
-Some items can be assigned a CVE without deep thought about the larger 
-context.  This may happen due to volume, time constraints, or an 
-under-specified attack scenario by the requester.  That may be the case 
-with the case you're talking about here, but I don't remember it.
+When mount.cifs is setuid, unprivileged users can kill it, resulting in
+a denial of service from a stale lock file.
 
-- Steve
+Thanks,
+
+Marc.
+
+
