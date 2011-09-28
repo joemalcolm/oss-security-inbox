@@ -1,61 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/9
-Message-ID: <4EB06CB5.50807@redhat.com>
-Date: Tue, 01 Nov 2011 16:03:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/3
+Message-ID: <20110928155329.GA10472@openwall.com>
+Date: Wed, 28 Sep 2011 19:53:29 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE request for wireshark flaws
+Cc: Colin Percival <cperciva@...ebsd.org>
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-For the record: this is a *perfect* CVE request =). It's descriptive, it
-has versions, it has all the links to verify it with the original
-sources, all that good stuff.
+Here's a guess:
 
-On 11/01/2011 03:51 PM, Vincent Danen wrote:
-> Can I get CVEs assigned to the following wireshark flaws?
->
->
-> 1) An uninitialized variable in the CSN.1 dissector could cause a crash.
->
-> Affects: 1.6.0 to 1.6.2, fixed in 1.6.3
->
-> References:
-> http://www.wireshark.org/security/wnpa-sec-2011-17.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6351
-> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39140
-> https://bugzilla.redhat.com/show_bug.cgi?id=750643
->
-Please use CVE-2011-4100 for this.
+On Wed, Sep 28, 2011 at 07:42:03PM +0400, Solar Designer wrote:
+> whereas the FreeBSD patch has:
+> 
+>  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
+> +			if (zs->u.r.zs_code > zs->zs_free_ent ||
+> +			    zs->u.r.zs_oldcode == -1) {
+> +				/* Bad stream. */
 
->
-> 2) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered that
-> the Infiniband dissector could dereference a NULL pointer.
->
-> Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
->
-> References:
-> http://www.wireshark.org/security/wnpa-sec-2011-18.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6476
-> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39500
-> https://bugzilla.redhat.com/show_bug.cgi?id=750645
->
-Please use CVE-2011-4101 for this.
->
-> 3) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered a
-> buffer overflow in the ERF file reader.
->
-> Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
->
-> References:
-> http://www.wireshark.org/security/wnpa-sec-2011-19.html
-> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6479
-> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39508
-> https://bugzilla.redhat.com/show_bug.cgi?id=750648
->
-Please use CVE-2011-4102 for this.
+Perhaps the FreeBSD "affected" statement for gzip was based on it missing
+the "zs->u.r.zs_code > zs->zs_free_ent" check prior to this patch.  This
+check was already added upstream before gzip 1.4, which is why gzip was
+"not affected" this time for other distro vendors (the issue was patched
+years ago).
 
--- 
+The rest of the changes are probably for detection of some corrupted
+archives that were of no security risk.  But that's just a guess, which
+I did not confirm.
 
--Kurt Seifried / Red Hat Security Response Team
-
+Alexander
