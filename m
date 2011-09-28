@@ -1,41 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/10/1
-Message-ID: <20110910062759.GG1350@mutt-is@awesome>
-Date: Sat, 10 Sep 2011 09:28:00 +0300
-From: Eren Türkay <eren@...dus.org.tr>
-To: oss-security@...ts.openwall.com
-Subject: D-Link DCS-2121 Semicolon Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/4
+Message-ID: <4E8359CB.1050904@freebsd.org>
+Date: Wed, 28 Sep 2011 10:30:51 -0700
+From: Colin Percival <cperciva@...ebsd.org>
+To: Solar Designer <solar@...nwall.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 09/28/11 08:42, Solar Designer wrote:
+> Colin - any comments?
 
-I've come up with this [0] blog post which, accordingly to author,
-describes a 0day vulnerability within D-Link DCS-2121 camera.
-
-In summary, the data posted from the web configuration interface to samba is
-directly used as a parameter without proper sanitization. This leads to
-an unwanted system call.
-
-Although the author says that the vulnerability can only be used by
-authenticated users via web interface, it would be dangerous together
-with CSRF on authenticated user. I think that it's worth looking, or, at
-least let the vendor know.
-
-"""
-Disclaimer (for not-so-funny people): yes this is "0day", unreported to
-the vendor. I even suspect the whole D-Link product line is vulnerable
-to the same bug (if not the whole world of low-end embedded systems (and
-even business class products)). However, since Web access requires
-authentication, this bug might be exploitable by administrators only, so
-it is only useful for people who would like to gain a shell on their own
-systems. Do not panic :)
-"""
-
-[0] http://newsoft-tech.blogspot.com/2010/09/d-link-dcs-2121-and-state-of-embedded.html
-
-Regards,
+To be honest, we didn't dig into these in great detail; our patch came from
+NetBSD, which we share this historical code with.
 
 -- 
-        . 73! DE TA1AET
-
-Content of type "application/pgp-signature" skipped
+Colin Percival
+Security Officer, FreeBSD | freebsd.org | The power to serve
+Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
