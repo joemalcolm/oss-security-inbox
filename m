@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/3
-Message-ID: <4E7CA343.4050401@mvista.com>
-Date: Fri, 23 Sep 2011 05:18:27 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/7
+Message-ID: <87fwjg7a8r.fsf@mid.deneb.enyo.de>
+Date: Wed, 28 Sep 2011 21:11:32 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, coley@...us.mitre.org,  cve-assign@...re.org
-Subject: Re: CVE request -- kernel: cifs: always do is_path_accessible check in cifs_mount
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-so this was introduced by e4cce94c9c8797b08faf6a79396df4d175e377fa ?
+* Tomas Hoger:
 
-- Armin
+> Following bugzillas list various code bases that were checked for the
+> issue and if they are affected or not:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
 
-On 09/14/2011 08:51 AM, Josh Bressers wrote:
-> Please use CVE-2011-3363 for this.
-> 
-> Thanks.
-> 
+Not good. 8-(
+
+Looking at <http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/usr.bin/compress/compress.c>,
+it seems that these constants
+
+| char_type lmask[9] = {0xff, 0xfe, 0xfc, 0xf8, 0xf0, 0xe0, 0xc0, 0x80, 0x00};
+| char_type rmask[9] = {0x00, 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff};
+
+can be used to build signatures to spot candidate binaries.
