@@ -1,61 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/16
-Message-ID: <20110725232208.GC23791@openwall.com>
-Date: Tue, 26 Jul 2011 03:22:08 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>, Jeff Johnson <n3npq@....com>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/1
+Message-ID: <CAH5b-BVOY7gD-tAzjXFnPEm2Lo2i1mRLeiHpW=L2jWQB17MC0w@mail.gmail.com>
+Date: Wed, 28 Sep 2011 13:07:58 +0200
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com, taviso@...xchg8b.com
+Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-Vasiliy,
+On Tue, Sep 27, 2011 at 8:52 PM, Tavis Ormandy <taviso@...xchg8b.com> wrote:
 
-On Mon, Jul 25, 2011 at 09:30:35PM +0400, Vasiliy Kulikov wrote:
-> On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
-> >      case FSM_UNLINK:
-> > -	rc = Unlink(fsm->path);
-> > +	{
-> > +	    struct stat stb;
-> > +	    int saved_errno;
-> > +	    int saved_rc = lstat(fsm->path, &stb);
-> > +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
-> > +		saved_rc = chmod(fsm->path, 0);
-> 
-> If the directory containing the file was owned by nonroot, then the file
-> could be overwritten with a symlink.  So, there is a race between
-> lstat() and chmod(), which might lead to chmod'ing arbitrary files by
-> directory owner.
+>
+> Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
+> rpm signature verification. Some trivial bitflipping found a few memory
+> corruption issues.
+>
+> Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
+> native module wrapper that exports librpm to python. I'll step through the
+> signature verification logic when I get a chance.
+>
+> Obviously we need the sections of rpm code touched before signature
+> verification to be bulletproof, as most distributions rely on public mirror
+> services that may or may not be trusted. Any volunteers who know crypto
+> better than me appreciated, I'll be primarily looking for memory
+> corruption.
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=741606
+> https://bugzilla.redhat.com/show_bug.cgi?id=741612
+>
+> These bugs don't affect IMHO rpm5 : i have updated the bugzilla with these
+infos. Best Regards
 
-Right.  The same risk is present in upstream's version of the fix.
+> Tavis.
+>
+> --
+> -------------------------------------
+> taviso@...xchg8b.com | pgp encrypted mail preferred
+> -------------------------------------------------------
+>
+>
 
-> Is it possible with these orphaned files (I'm not familiar with the code
-> in question)?
-
-Yes, but this problem is not limited to this specific piece of code.
-rpm appears to treat the target directory tree as trusted - not only
-when it removes files, but also when it creates files, etc.  I did not
-fully verify this, though - that's just how the code looks to me.
-
-This general issue is in fact a security risk.  For example, if the
-directory tree contains a subdirectory writable by a pseudo-user, then a
-possible compromise of this pseudo-user account might lead to worse
-things via rpm.  Here's an example of such directory on Owl:
-
-# ls -la /var/lib/dhcp/dhcpd/state/
-total 8
-drwxrwx--T 2 root dhcp 4096 Dec 14  2010 .
-drwxr-x--- 3 root dhcp 4096 Dec  8  2010 ..
--rw------- 1 dhcp dhcp    0 Dec  8  2010 dhcpd.leases
-
-We may discuss this general issue (of rpm trusting the target tree, and
-the resulting risks) separately.
-
-Thank you for the review!
-
-BTW, another detail I thought someone might notice is that I am applying
-the chmod's not only to binary packages, like the upstream fix does, but
-I think also to source packages being removed/upgraded (I did not
-actually test this, though).  This might be excessive, or it might not,
-but I felt that it does not hurt either way.
-
-Alexander
