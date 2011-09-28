@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/10
-Message-ID: <4E129B8A.7090506@digitaloffense.net>
-Date: Tue, 05 Jul 2011 00:05:14 -0500
-From: HD Moore <hdm@...italoffense.net>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/7
+Message-ID: <87fwjg7a8r.fsf@mid.deneb.enyo.de>
+Date: Wed, 28 Sep 2011 21:11:32 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-On 7/5/2011 12:02 AM, Solar Designer wrote:
-> On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
->> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
->>> This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
->>> when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
->>>
->>> http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
->>
->> This is very helpful, thank you!  How did you find it?
->>
->> So, I failed to get this server to give me ctime (looked at HTTP headers
->> and also tried several FTP commands), and the mtime is Feb 15.  We could
->> ask the server admins for the ctime.
-> 
-> I think I got the equivalent of the ctime by listing the mtime for ".".
-> It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
-> other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
-> or +2 for Namibia.
-> 
-> So it appears that the backdoor was introduced between June 30 14:15 UTC
-> and July 1 23:35 UTC (probably before 21:35, though).
+* Tomas Hoger:
 
-Thanks Alexander! I will update references accordingly, nice call on the
-o's, ill continue digging there, would love to unmask this asshat
-through included env :)
+> Following bugzillas list various code bases that were checked for the
+> issue and if they are affected or not:
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
 
--HD
+Not good. 8-(
+
+Looking at <http://minnie.tuhs.org/cgi-bin/utree.pl?file=4.3BSD-Reno/src/usr.bin/compress/compress.c>,
+it seems that these constants
+
+| char_type lmask[9] = {0xff, 0xfe, 0xfc, 0xf8, 0xf0, 0xe0, 0xc0, 0x80, 0x00};
+| char_type rmask[9] = {0x00, 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff};
+
+can be used to build signatures to spot candidate binaries.
