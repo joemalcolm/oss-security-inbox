@@ -1,45 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/19
-Message-ID: <20110401225852.GA62551@dojo.mi.org>
-Date: Fri, 1 Apr 2011 18:58:52 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/5
+Message-ID: <20110928202228.01a03dec@redhat.com>
+Date: Wed, 28 Sep 2011 20:22:28 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: solar@...nwall.com, Colin Percival <cperciva@...ebsd.org>
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-::Hello everyone,
-::
-::This topic has lost focus lately. Rather than let it slip away, I think we
-::should go ahead with the simplest solution right now, we can always do
-::something different at a future date.
-::
-::Openwall has graciously volunteered to run a new list, and they currently
-::have some infrastructure in place to do this. The new list can start up
-::right away. In this instance, I fear perfect is the enemy of the good. I'd
-::rather see something functional in place than nothing.
-::
-::Here is the plan for initial membership (this is also approved by
-::Openwall).
-::
-::Initial members will have had to be a vendor-sec member (no exploders this
-::time around). You must reply to this thread, in public (on oss-security).
-::We want this to be very public, we have nothing to hide. You must have a
-::public gpg key ID included in your reply. The new list will gpg encrypt all
-::mail (it does accept plaintext messages though).
-:
-:-----BEGIN PGP PUBLIC KEY BLOCK-----
-:
-:mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
-:mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
-:b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
-:D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
-:8LMz3gjrgSXMOxuep/Ui
-:=elKt
-:-----END PGP PUBLIC KEY BLOCK-----
+On Wed, 28 Sep 2011 19:42:03 +0400 Solar Designer wrote:
 
-pub    512R/205BBF7D 2001-12-30
-      Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
-      C1
-uid                  Michael J. O'Connor <mjo@...o.mi.org>
+> FreeBSD has just released an advisory for this:
+> 
+> http://security.freebsd.org/advisories/FreeBSD-SA-11:04.compress.asc
+> 
+> To my surprise, it lists gzip as affected (and provides a patch for it
+> too), even though it was believed that neither CVE-2011-2895 nor
+> CVE-2011-2896 affected current versions of gzip (at least per Tomas'
+> off-list notification to distro vendors).
 
-Content of type "application/pgp-signature" skipped
+That info is also noted in public comment of our CVE-2011-2895 bugzilla.
+
+> Trying to match the changes to usr.bin/gzip/zuncompress.c in
+> 
+> http://security.freebsd.org/patches/SA-11:04/compress.patch
+> 
+> against code in gzip 1.4 tarball, it appears that FreeBSD's patch
+> actually introduces more checks than gzip upstream has - although it is
+> difficult to tell for sure because of other differences in the code.
+
+Let me try to explain some.
+
+> For example gzip-1.4/unlzw.c has:
+> 
+>     if (maxbits > BITS) {
+> 
+> FreeBSD now patches it as:
+> 
+> -	if (zs->zs_maxbits > BITS) {
+> +	if (zs->zs_maxbits > BITS || zs->zs_maxbits < 12) {
+> 
+> Do we possibly want to add the "maxbits < 12" check as well?  And does
+> it matter for security?
+
+I'm not aware of any security impact of that.  Not sure if there's any
+spec that requires maxbits >= 12, if not, INIT_BITS (9) may be a safer
+lower bound.
+
+> Then there are non-obvious differences related to the "oldcode"
+> variable.  In one of those places, gzip-1.4/unlzw.c has:
+> 
+> 	    if (code >= free_ent) { /* Special case for KwKwK string. */
+> 		if (code > free_ent) {
+> 
+> whereas the FreeBSD patch has:
+> 
+>  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
+> +			if (zs->u.r.zs_code > zs->zs_free_ent ||
+> +			    zs->u.r.zs_oldcode == -1) {
+> +				/* Bad stream. */
+> 
+> which adds an extra "or" condition.
+
+This is consequence of the following change:
+
+-	zs->u.r.zs_finchar = zs->u.r.zs_oldcode = getcode(zs);
+-	if (zs->u.r.zs_oldcode == -1)	/* EOF already? */
+-		return (0);	/* Get out of here */
+-
+-	/* First code must be 8 bits = char. */
+-	*bp++ = (u_char)zs->u.r.zs_finchar;
+-	count--;
++	zs->u.r.zs_oldcode = -1;
+
+That check ensures that the first code (in the stream or after CLEAR)
+is not >= 256.
+
+> Similarly, gzip-1.4/unlzw.c has:
+> 
+> 	    if ((code = free_ent) < maxmaxcode) { /* Generate the new entry. */
+> 
+> whereas the FreeBSD patch has:
+> 
+>  		/* Generate the new entry. */
+> -		if ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode) {
+> +		if ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode &&
+> +		    zs->u.r.zs_oldcode != -1) {
+> 
+> (an extra "and" condition this time).
+
+This part is due to a CLEAR code handling change.  Note that gzip (and
+ncompress) has:
+
+  free_ent = FIRST - 1;
+
+while Joerg's patch changes that to:
+
+  zs->zs_free_ent = FIRST;
+
+The original version is quite confusing and probably another bug (unless
+it's a feature) in the original compress code.  Consequence of the CLEAR
+re-setting free_ent to FIRST-1 is that suffix/prefix tables get
+modified at CLEAR position, but those positions should never get read
+though.  However, some variants allowed accessing those tables at CLEAR
+when processing inputs with multiple subsequent CLEAR codes.  I have
+created such reproducer for freetype upstream, it may work with
+(unpatched) BSD compress/gzip.
+
+https://savannah.nongnu.org/bugs/index.php?34139
+
+gzip/ncompress resets free_ent to FIRST-1, so writes to CLEAR position,
+but never reads it AFAIK.
+
+> Are these differences only a result of other differences in the FreeBSD
+> revision of gzip?  Or are they generic hardening that could get into
+> gzip proper and into other distros' revisions of gzip?  Or are they even
+> security fixes for issues known to FreeBSD (but presumably not to others
+> yet, in gzip context)?
+
+As far as I can tell, FreeBSD gzip had the issues I reported, even
+though my mails said gzip is not affected.  If Savannah gzip git is to
+be trusted, gzip had those issue addressed in the oldest version
+available there (1.2.4, 1993):
+
+http://git.savannah.gnu.org/gitweb/?p=gzip.git;a=history;f=unlzw.c;hb=HEAD
+
+On Wed, 28 Sep 2011 19:53:29 +0400 Solar Designer wrote:
+
+> On Wed, Sep 28, 2011 at 07:42:03PM +0400, Solar Designer wrote:
+> > whereas the FreeBSD patch has:
+> > 
+> >  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
+> > +			if (zs->u.r.zs_code > zs->zs_free_ent ||
+> > +			    zs->u.r.zs_oldcode == -1) {
+> > +				/* Bad stream. */
+> 
+> Perhaps the FreeBSD "affected" statement for gzip was based on it missing
+> the "zs->u.r.zs_code > zs->zs_free_ent" check prior to this patch.  This
+> check was already added upstream before gzip 1.4, which is why gzip was
+> "not affected" this time for other distro vendors (the issue was patched
+> years ago).
+
+Without testing, I'd say it was possible to create and trigger prefix
+loop in that gzip versions via code > free_ent, first code >= 256, and
+possibly also subsequent CLEARs too.
+
+HTH
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
