@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/4
-Message-ID: <20110305192106.GB31605@openwall.com>
-Date: Sat, 5 Mar 2011 22:21:06 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/3
+Message-ID: <20110928155329.GA10472@openwall.com>
+Date: Wed, 28 Sep 2011 19:53:29 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: Colin Percival <cperciva@...ebsd.org>
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 05, 2011 at 03:17:57AM +0700, Pavel Labushev wrote:
-> 04.03.2011 21:52, Solar Designer пишет:
+Here's a guess:
+
+On Wed, Sep 28, 2011 at 07:42:03PM +0400, Solar Designer wrote:
+> whereas the FreeBSD patch has:
 > 
-> > I've just skimmed over the list, and I only see one issue that I'd call
-> > a vulnerability in logrotate, issue #8.  And we need more info on #5.
-> > 
-> > The rest, as described, appear to rely on sysadmin error and to assume
-> 
-> Or on package maintainer error.
+>  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
+> +			if (zs->u.r.zs_code > zs->zs_free_ent ||
+> +			    zs->u.r.zs_oldcode == -1) {
+> +				/* Bad stream. */
 
-Right.
+Perhaps the FreeBSD "affected" statement for gzip was based on it missing
+the "zs->u.r.zs_code > zs->zs_free_ent" check prior to this patch.  This
+check was already added upstream before gzip 1.4, which is why gzip was
+"not affected" this time for other distro vendors (the issue was patched
+years ago).
 
-> At least in Gentoo there are packages
-> (ebuilds and eclasses) that create user/group-writable directories in
-> /var/log and enable logrotate to handle the log files there.
-
-Is this something you can get fixed?
+The rest of the changes are probably for detection of some corrupted
+archives that were of no security risk.  But that's just a guess, which
+I did not confirm.
 
 Alexander
