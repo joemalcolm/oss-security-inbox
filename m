@@ -1,61 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/8
-Message-ID: <AANLkTindXDTxdQgFUatKbPw2ZFUvQRALS5B4tMXuWQ0Z@mail.gmail.com>
-Date: Mon, 14 Mar 2011 08:56:45 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Stephan Mueller <stephan.mueller@...ec.com>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/1
+Message-ID: <CAH5b-BVOY7gD-tAzjXFnPEm2Lo2i1mRLeiHpW=L2jWQB17MC0w@mail.gmail.com>
+Date: Wed, 28 Sep 2011 13:07:58 +0200
+From: yersinia <yersinia.spiros@...il.com>
+To: oss-security@...ts.openwall.com, taviso@...xchg8b.com
+Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 14, 2011 at 4:12 AM, Stephan Mueller
-<stephan.mueller@...ec.com> wrote:
-> Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
+On Tue, Sep 27, 2011 at 8:52 PM, Tavis Ormandy <taviso@...xchg8b.com> wrote:
+
 >
-> Therefore, if you consider a file system untrusted, a simple flag "untrusted"
-> which disables some high-level logic (like symlinks across partitions or funky
-> file names) may just be window-dressing until the entire parsing of the
-> physical data structure layout is hardened.
+> Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
+> rpm signature verification. Some trivial bitflipping found a few memory
+> corruption issues.
+>
+> Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
+> native module wrapper that exports librpm to python. I'll step through the
+> signature verification logic when I get a chance.
+>
+> Obviously we need the sections of rpm code touched before signature
+> verification to be bulletproof, as most distributions rely on public mirror
+> services that may or may not be trusted. Any volunteers who know crypto
+> better than me appreciated, I'll be primarily looking for memory
+> corruption.
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=741606
+> https://bugzilla.redhat.com/show_bug.cgi?id=741612
+>
+> These bugs don't affect IMHO rpm5 : i have updated the bugzilla with these
+infos. Best Regards
+
+> Tavis.
+>
+> --
+> -------------------------------------
+> taviso@...xchg8b.com | pgp encrypted mail preferred
+> -------------------------------------------------------
+>
 >
 
-I'd like to add that while this kind of hardening would be nice in
-theory, there is little urgency in making these improvements since the
-proposed attack vectors are extremely limited.  As I see it, there are
-four scenarios where this might matter:
-
-1. An attacker convinces a victim to download an evil filesystem image
-and manually mount it.
-
-2. An attacker with physical access leverages automounting features to
-cause the mounting of evil filesystems residing on external media.
-
-3. An attacker wishes to escalate from CAP_SYS_ADMIN to full root by
-mounting a malformed an evil filesystem.
-
-4. An attacker leverages a setuid mount helper to mount an evil
-filesystem image.
-
-The first case is clearly unlikely.  The second case can be addressed
-by restricting automounting in circumstances where it is
-inappropriate, such as when the screen is locked.  The third case is
-silly, since being able to mount arbitrary filesystems can easily get
-you root without having to trick someone into doing something
-inappropriate with an evil filesystem (e.g. mount over /etc/pam.d).
-
-The final case is something distros can do something about now.  It
-should be solved by restricting the usage of setuid root mount
-helpers.  There have been far too many vulnerabilities in these types
-of utilities to be worth the risk - I think distros should strip the
-setuid bits from these helpers when possible, and otherwise ship these
-helpers with 4750 permissions and restrict their execution to trusted
-groups.  I understand that FUSE must be an exception on some
-distributions (such as Ubuntu), but other helpers (cifs, ncpfs, hgfs,
-etc.) can probably be restricted a bit more.
-
-So while improving this aspect of the kernel is on my longterm
-wishlist, I think once the actual threat model is considered, these
-kinds of attacks pose little security risk in real life that can't be
-handled by fixing problems outside the kernel.
-
-Regards,
-Dan
