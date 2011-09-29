@@ -1,39 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/07/3
-Message-ID: <4EDF77A4.50600@kde.org>
-Date: Wed, 07 Dec 2011 09:26:44 -0500
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com
-CC: cve@...re.org
-Subject: Disputing CVE-2011-4122
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/1
+Message-ID: <20110929003808.GA13305@openwall.com>
+Date: Thu, 29 Sep 2011 04:38:08 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Tavis Ormandy <taviso@...xchg8b.com>
+Cc: oss-security@...ts.openwall.com, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Tavis,
 
-I've been asked by the kcheckpass maintainer to lodge a dispute of
-CVE-2011-4122.
+On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
+> I believe I wrote that patch,
 
-As explained in the blog entry linked from the CVE[1], the problem is
-that neither kcheckpass nor OpenPAM validate the 'service_name' input
-argument of pam_start(). This hole can be used to make PAM load
-arbitrary shared libraries, which can be used to execute arbitrary code
-as root, as kcheckpass is setuid root.
+I believe you wrote a different patch, or two:
 
-One could assume that kcheckpass should do the validation. However, the
-PAM documentation makes no mention of what a service name is supposed to
-look like, and consequently it must be treated as opaque by the
-application code. Therefore all validation must be expected to be done
-by the library, and failure to do so must be seen as a bug in the
-library exclusively.
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
 
-As a result, it is correct to list kcheckpass as an affected
-application, but not as the origin of the vulnerability. The linked
-advisories from ISS and Secunia are clearer about that.
+(these are in Attic because we've since updated to gzip 1.4).
+
+As far as I can see, the sanity checks in
+gzip-1.3.5-google-owl-bound.diff do not overlap with those in FreeBSD's
+latest patch.  These are different sets of checks.
+
+> I found a lot of vulnerabilities in gzip a few
+> years ago, and added lots of additional sanity checks.
+
+Right.  Thank you!
+
+> FreeBSD went with my patch, which I think was much safer.
+
+Good.  But apparently FreeBSD did not patch even older issues at the
+same time - obviously, you wouldn't have spotted an issue that was
+already non-existent in upstream gzip at the time, so you didn't report
+it to them.
+
+As to who originally added the "maxbits < 12" check, when, and why
+exactly (and why this value), I still don't know.  In NetBSD, it is
+added with a commit made 6 weeks ago:
+
+http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/gzip/zuncompress.c?only_with_tag=MAIN
+
+The commit message is merely "Do proper input validation without
+penalizing performance", and it makes several other changes as well
+(FreeBSD in fact reused essentially the same patch).
+
+NetBSD's advisory is here:
+
+http://ftp.netbsd.org/pub/NetBSD/security/advisories/NetBSD-SA2011-007.txt.asc
+
+and it also (correctly) says that NetBSD's gzip was affected.
+
+Joerg - any comments?  For context:
+http://www.openwall.com/lists/oss-security/2011/09/28/5
+
+OpenBSD doesn't have gzip since 2003 - "Our compress, linked against
+libz, now does everything gzip does." (from Theo's commit message)
 
 Thanks,
-Jeff
 
-[1]: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-4122
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
+Alexander
