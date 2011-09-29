@@ -1,62 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/16
-Message-ID: <20110411213813.GA2919@pisco.westfalen.local>
-Date: Mon, 11 Apr 2011 23:38:13 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE requests: Three Linux kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/7
+Message-ID: <20110929152542.GA14652@openwall.com>
+Date: Thu, 29 Sep 2011 19:25:42 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Joerg Sonnenberger <joerg@...tannica.bec.de>
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I noticed the following reports by Vasiliy Kulikov on on linux-kernel. 
+On Thu, Sep 29, 2011 at 02:50:22PM +0200, Joerg Sonnenberger wrote:
+> This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
+> name. The corresponding NetBSD advisory explicitly lists GNU gzip and
+> libarchive as not vulnerable.
 
-Josh/Eugene, please assign CVE IDs:
+Thanks!  My current understanding is that both the NetBSD/FreeBSD gzip
+and GNU gzip reuse mid-1980's code from compress, which was in the
+public domain.  Those revisions thus could use different licenses (BSD
+vs. GPL), and indeed the code is quite different by now.  (Also there's
+a lot of code that is not from compress.)
 
-[1] http://permalink.gmane.org/gmane.linux.kernel/1124411 :
+Tomas, Tim - thank you for explaining the "maxbits < 12" check.  It
+appears that we don't need it for GNU gzip, and NetBSD/FreeBSD gzip
+could want to relax the check too.
 
-| PATCH] char: briq_panel: fix TOCTOU bug
-|
-| There is a TOCTOU bug in briq_panel_write() code:
-|
-|     if (vfd_cursor > 39)   <<<
-|             scroll_vfd();
-|     vfd[vfd_cursor++] = c; <<<
-|
-| It's possible to write to arbitrary memory location in case of more than
-| one process tries to call write() simultaneously.
-
-[2] http://permalink.gmane.org/gmane.linux.kernel/1124410 :
-
-| [PATCH] char: genrtc: fix infoleak to userspace
-|
-| struct pll is copied to userspace.  It is filled in "multiplexing" function
-| get_rtc_pll().  At least one implementator, q40_get_rtc_pll(), doesn't
-| fill .pll_ctrl field.  It's hard to understand whether either the caller
-| or the callee must zero the unused struct fields, however, on another
-| ioctl commands the caller already zeroes the structure.  So, let's the
-| caller use memset().
-
-[3] http://permalink.gmane.org/gmane.linux.kernel/1124409 :
-
-| [PATCH] char: istallion: fix arbitrary kernel memory reads/writes
-|
-| stli_brdstats is defined as global variable.  After de-BKL-ization in
-| the patch b4eda9cb48eac1b7 an access to the variable is not serialized
-| anymore.  This leads to the TOCTOU in stli_getbrdstats():
-|
-|        if (copy_from_user(&stli_brdstats, bp, sizeof(combrd_t)))
-|                return -EFAULT;
-|        if (stli_brdstats.brd >= STL_MAXBRDS)  <<<<
-|                return -ENODEV;
-|        brdp = stli_brds[stli_brdstats.brd];   <<<<
-|
-| If one process calls COM_GETBRDSTATS ioctl() with sane .brd, second
-| process calls COM_GETBRDSTATS ioctl() with invalid .brd, and the
-| second process' copy_from_user() executes exactly between the check and
-| stli_brds[] indexation of the first process, then the first process gets
-| contents of memory at *stli_brds[stli_brdstats.brd] address.  Also
-| the resulting .nrpanels field may be too big, in this case
-| stli_brdstats.panels array overflows.
-
-Cheers,
-        Moritz
+Alexander
