@@ -1,33 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/17
-Message-ID: <4D650888.9050604@pre-sense.de>
-Date: Wed, 23 Feb 2011 14:15:52 +0100
-From: Timo Warns <warns@...-sense.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Physical access vulnerabilities and auto-mounting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/1
+Message-ID: <20110929003808.GA13305@openwall.com>
+Date: Thu, 29 Sep 2011 04:38:08 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Tavis Ormandy <taviso@...xchg8b.com>
+Cc: oss-security@...ts.openwall.com, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Am 23.02.2011 12:07, schrieb Steve Grubb:
-> On Wednesday, February 23, 2011 12:11:56 am Eugene Teo wrote:
->> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
->>> Should auto-mounting be disabled entirely? 
-> 
-> You should be able to turn it off. You can also block the loading of any kernel modules 
-> for file systems that you know you don't want to load.
+Hi Tavis,
 
-To a certain extent, this is what makes the recent issues in partition
-handling special: The current kernels do not allow to turn off the
-evaluation of partition tables.
-(However, some patches allow to do so:
-https://patchwork.kernel.org/patch/47067/)
+On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
+> I believe I wrote that patch,
 
-Best regards, Timo
+I believe you wrote a different patch, or two:
 
--- 
-Dr. Timo Warns                               warns@...-sense.de
-                                  Tel. +49 - 40 - 244 2407 - 16
-                                  Fax  +49 - 40 - 244 2407 - 24
-PRESENSE Technologies GmbH            Sachsenstr. 5, D-20097 HH
-                                         USt-IdNr.: DE263765024
-Geschäftsführer/Managing Directors       AG Hamburg, HRB 107844
-Till Dörges           Jürgen Sander              Axel Theilmann
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+
+(these are in Attic because we've since updated to gzip 1.4).
+
+As far as I can see, the sanity checks in
+gzip-1.3.5-google-owl-bound.diff do not overlap with those in FreeBSD's
+latest patch.  These are different sets of checks.
+
+> I found a lot of vulnerabilities in gzip a few
+> years ago, and added lots of additional sanity checks.
+
+Right.  Thank you!
+
+> FreeBSD went with my patch, which I think was much safer.
+
+Good.  But apparently FreeBSD did not patch even older issues at the
+same time - obviously, you wouldn't have spotted an issue that was
+already non-existent in upstream gzip at the time, so you didn't report
+it to them.
+
+As to who originally added the "maxbits < 12" check, when, and why
+exactly (and why this value), I still don't know.  In NetBSD, it is
+added with a commit made 6 weeks ago:
+
+http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/gzip/zuncompress.c?only_with_tag=MAIN
+
+The commit message is merely "Do proper input validation without
+penalizing performance", and it makes several other changes as well
+(FreeBSD in fact reused essentially the same patch).
+
+NetBSD's advisory is here:
+
+http://ftp.netbsd.org/pub/NetBSD/security/advisories/NetBSD-SA2011-007.txt.asc
+
+and it also (correctly) says that NetBSD's gzip was affected.
+
+Joerg - any comments?  For context:
+http://www.openwall.com/lists/oss-security/2011/09/28/5
+
+OpenBSD doesn't have gzip since 2003 - "Our compress, linked against
+libz, now does everything gzip does." (from Theo's commit message)
+
+Thanks,
+
+Alexander
