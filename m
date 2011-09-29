@@ -1,78 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/10
-Message-ID: <20111107174619.GB27092@foo.fgeek.fi>
-Date: Mon, 7 Nov 2011 19:46:19 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: jmm@...ian.org
-Subject: Fwd: DSA 2338-1 moodle security update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/9
+Message-ID: <4E8495EA.4010803@redhat.com>
+Date: Thu, 29 Sep 2011 17:59:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Plone Security Team <security@...ne.org>
+Subject: CVE Request -- Zope/Plone -- Unspecified vulnerability in Zope v2.12.x and Zope v2.13.x allowing arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-Has someone requested CVE-identifiers for these already?
+Hello Josh, Steve, vendors,
 
-- Henri
+   Plone upstream has published a pre-announcement about a security
+flaw, present in Zope v2.12.x and Zope v2.13.x, which could allow
+execution of arbitrary code by anonymous users. An authenticated
+attacker could provide a specially-crafted web page, which once
+visited by an unsuspecting Zope user would lead to arbitrary commands
+execution with the privileges of the Zope/Plone service.
 
------ Forwarded message from Moritz Muehlenhoff <jmm@...ian.org> -----
+References:
+[1] http://plone.org/products/plone/security/advisories/20110928
+[2] http://secunia.com/advisories/46221/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=742297
 
-Date: Mon, 7 Nov 2011 18:18:55 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: debian-security-announce@...ts.debian.org
-Subject: [Full-disclosure] [SECURITY] [DSA 2338-1] moodle security update
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Note: The vendor announced the final version of the advisory and
+       the patch to be available at 2011-10-04 15:00 UTC at the
+       following location:
+       [4] http://plone.org/products/plone/security/advisories/20110928
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Could you allocate a CVE id for this?
 
-- -------------------------------------------------------------------------
-Debian Security Advisory DSA-2338-1                   security@...ian.org
-http://www.debian.org/security/                        Moritz Muehlenhoff
-November 07, 2011                      http://www.debian.org/security/faq
-- -------------------------------------------------------------------------
-
-Package        : moodle
-Vulnerability  : several
-Problem type   : remote
-Debian-specific: no
-CVE ID         : not yet available
-
-Several cross-site scripting and information disclosure issues have
-been fixed in Moodle, a course management system for online learning:
-
-* MSA-11-0020 Continue links in error messages can lead offsite
-* MSA-11-0024 Recaptcha images were being authenticated from an older 
-              server
-* MSA-11-0025 Group names in user upload CSV not escaped
-* MSA-11-0026 Fields in user upload CSV not escaped
-* MSA-11-0031 Forms API constant issue
-* MSA-11-0032 MNET SSL validation issue
-* MSA-11-0036 Messaging refresh vulnerability
-* MSA-11-0037 Course section editing injection vulnerability
-* MSA-11-0038 Database injection protection strengthened
-
-For the stable distribution (squeeze), this problem has been fixed in
-version 1.9.9.dfsg2-2.1+squeeze2.
-
-For the unstable distribution (sid), this problem has been fixed in
-version 1.9.9.dfsg2-4.
-
-We recommend that you upgrade your moodle packages.
-
-Further information about Debian Security Advisories, how to apply
-these updates to your system and frequently asked questions can be
-found at: http://www.debian.org/security/
-
-Mailing list: debian-security-announce@...ts.debian.org
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iEYEARECAAYFAk64EswACgkQXm3vHE4uylqZjQCg4xG5p108miVitHbsEiagUhvQ
-KJ0AniojypPOT9jDQ+ICyBa5+AoCI1xk
-=adle
------END PGP SIGNATURE-----
-
-_______________________________________________
-Full-Disclosure - We believe in it.
-Charter: http://lists.grok.org.uk/full-disclosure-charter.html
-Hosted and sponsored by Secunia - http://secunia.com/
-
------ End forwarded message -----
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
