@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/15
-Message-ID: <05281b73-1904-47da-bf14-4794d660b2f4@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:24:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: Re: CVE Request: pam
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/6
+Message-ID: <20110929125022.GA14031@britannica.bec.de>
+Date: Thu, 29 Sep 2011 14:50:22 +0200
+From: Joerg Sonnenberger <joerg@...tannica.bec.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello,
+On Thu, Sep 29, 2011 at 04:38:08AM +0400, Solar Designer wrote:
+> Hi Tavis,
 > 
-> Could a CVE please be assigned to the following issue:
+> On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
+> > I believe I wrote that patch,
 > 
-> A Debian/Ubuntu specific patch in pam, update-motd, calls the scripts
-> in /etc/update-motd.d as root without sanitizing the environment.
+> I believe you wrote a different patch, or two:
 > 
-> See:
-> 
-> https://bugs.launchpad.net/ubuntu/+source/pam/+bug/610125
-> 
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
 
-Please use CVE-2011-3628.
+This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
+name. The corresponding NetBSD advisory explicitly lists GNU gzip and
+libarchive as not vulnerable.
 
-Thanks.
-
--- 
-    JB
+Joerg
