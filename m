@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/3
-Message-ID: <AANLkTi=94Z4TaO71mp2GVr-HjgxHc+dDkkjQ6ujxw2nt@mail.gmail.com>
-Date: Mon, 24 Jan 2011 20:09:57 -0700
-From: Kurt Seifried <kurt@...fried.org>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: linux kernel heap issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/2
+Message-ID: <20110929004153.GB13305@openwall.com>
+Date: Thu, 29 Sep 2011 04:41:53 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Colin Percival <cperciva@...ebsd.org>
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-> Hello,
->
-> I don't think these minor issues I reported to the Linux Kernel have
-> had CVEs assigned to them:
->
-> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
->
-> iowarrior usb device heap overflow
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+Tomas -
 
+On Wed, Sep 28, 2011 at 08:22:28PM +0200, Tomas Hoger wrote:
+> Let me try to explain some.
 
-Just a note: both fixed in  Kernel 2.6.37:
+Thank you!  This is very helpful.
 
-[root@...ver v2.6]# grep 3ed780117dbe5acb64280d218f0347f238dafed0 *
-ChangeLog-2.6.37:commit 3ed780117dbe5acb64280d218f0347f238dafed0
-[root@...ver v2.6]# grep 3ed780117dbe5acb64280d218f0347f238dafed0 *
-ChangeLog-2.6.37:commit 3ed780117dbe5acb64280d218f0347f238dafed0
+> > Do we possibly want to add the "maxbits < 12" check as well?  And does
+> > it matter for security?
+> 
+> I'm not aware of any security impact of that.  Not sure if there's any
+> spec that requires maxbits >= 12, if not, INIT_BITS (9) may be a safer
+> lower bound.
 
+I am asking Joerg about it in another message.
 
+Colin - thank you for your prompt response (redirecting us to NetBSD).
+Some further postings went without CC to you, I hope that's OK.
 
->
-> Thanks,
->
-> -Kees
-
--- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+Alexander
