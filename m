@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/18
-Message-ID: <20110304151400.GJ24629@florz.florz.dyndns.org>
-Date: Fri, 4 Mar 2011 16:14:00 +0100
-From: Florian Zumbiehl <florz@...rz.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/5
+Message-ID: <20110929132540.GJ21938@mars-attacks.org>
+Date: Thu, 29 Sep 2011 15:25:40 +0200
+From: nicolas vigier <boklm@...s-attacks.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 27 Sep 2011, Tavis Ormandy wrote:
 
-> The rest, as described, appear to rely on sysadmin error and to assume
-> security properties that logrotate never advertised it had.  Specifically,
-> logrotate was never declared to be safe to use on untrusted directories,
-> and it was an error for a sysadmin to make such an assumption.
 > 
-> I don't mind logrotate being enhanced/hardened in this respect, but to
-> call these vulnerabilities sounds like a stretch.  Also, even if
-> logrotate is hardened, it should not be declared to be safe to use on
-> untrusted directories.  It'd be better to explicitly state that it is
-> not, to avoid this sort of confusion.
+> Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
+> rpm signature verification. Some trivial bitflipping found a few memory
+> corruption issues.
+> 
+> Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
+> native module wrapper that exports librpm to python. I'll step through the
+> signature verification logic when I get a chance.
+> 
+> Obviously we need the sections of rpm code touched before signature
+> verification to be bulletproof, as most distributions rely on public mirror
+> services that may or may not be trusted. Any volunteers who know crypto
+> better than me appreciated, I'll be primarily looking for memory corruption.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=741606
+> https://bugzilla.redhat.com/show_bug.cgi?id=741612
 
-In which scenarios exactly logrotate is supposed to be safe to use is
-mostly undefined.
+Patches on rpm git :
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=11a7e5d95a8ca8c7d4eaff179094afd8bb74fc3f
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=a48f0e20cbe2ababc88b2fc52fb7a281d6fc1656
 
-However, it is currently a common setup (as in: what distributions do out
-of the box) to have a daily logrotate cron job run as root that rotates
-the logs of all the services and to have log directories owned by service
-users (so they can create missing log files, for example).
-
-In such setups, the service user can elevate its privileges to root
-or corrupt root-owned files using the various bugs.
-
-Florian
