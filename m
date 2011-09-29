@@ -1,35 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/3
-Message-Id: <201103080046.20318.tmb@65535.com>
-Date: Tue, 8 Mar 2011 00:46:05 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/3
+Message-ID: <20110929090657.1136981d@redhat.com>
+Date: Thu, 29 Sep 2011 09:06:57 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ldd can execute an app unexpectedly
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 08 March 2011 00:00:11 Dmitry V. Levin wrote:
+On Thu, 29 Sep 2011 04:38:08 +0400 Solar Designer wrote:
 
-> In June of 2002, I suggested to change ldd to avoid invoking programs
-> directly, even when it seems like that would work, and invoke the dynamic
-> linker as a program instead.
-> This change was implemented at least in Owl and ALT Linux:
-> http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/gli
-> bc-2.3.6-owl-alt-ldd.diff
-> http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=78857
-> 7027d2950e9508a434475e04c3af864d169
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+> 
+> (these are in Attic because we've since updated to gzip 1.4).
+> 
+> As far as I can see, the sanity checks in
+> gzip-1.3.5-google-owl-bound.diff do not overlap with those in FreeBSD's
+> latest patch.  These are different sets of checks.
 
-A slight tangent to this but IIRC there was some suggestion that allowing files 
-to be mapped to memory with execute permissions when called in this manner was 
-something that should be considered a bug/feature to be fixed in order to bring 
-ld.so in to line with how execution happens more generally.  I think Tavis or 
-stealth mentioned it to me regarding the suggestion in my paper that an 
-attacker could execute binaries in this manner to bypass situations when the 
-binary didn't, for whatever reason have +x.  I guess it should be possible to 
-fix both cases but it's something that needs to be considered.
+Tavis also reported an issue in ncompress - CVE-2006-1168 - with the
+following fix added to ncompress:
 
-Tim
+http://ncompress.git.sourceforge.net/git/gitweb.cgi?p=ncompress/ncompress;a=commitdiff;h=e21aad4a5a3ba0b6c2279b28a80f85b0b226a175
+
+It's rather closely related to CVE-2011-2895, as it was also creating
+prefix loop, via bogus first code.  At the time that was reported, the
+case that I originally started to look at (code > free_ent) was already
+fixed in ncompress, afaics.
+
+> As to who originally added the "maxbits < 12" check, when, and why
+> exactly (and why this value), I still don't know.  In NetBSD, it is
+> added with a commit made 6 weeks ago:
+> 
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/gzip/zuncompress.c?only_with_tag=MAIN
+> 
+> The commit message is merely "Do proper input validation without
+> penalizing performance", and it makes several other changes as well
+> (FreeBSD in fact reused essentially the same patch).
+
+The "without penalizing performance" is reference to my original
+libXfont one-liner fix that did not prevent loops, only blocked their
+impact by checking for stack buffer overflow.  The same kind of fix
+Tavis proposed for ncompress to address CVE-2006-1168.
+
+As for < 12, I'm guessing it comes from libXfont too, which had it
+before because of this:
+
+    if (maxbits > BITS || maxbits < 12)
+	return 0;
+    hsize = hsize_table[maxbits - 12];
+
+where:
+
+static int hsize_table[] = {
+    5003,	/* 12 bits - 80% occupancy */
+    9001,	/* 13 bits - 91% occupancy */
+    18013,	/* 14 bits - 91% occupancy */
+    35023,	/* 15 bits - 94% occupancy */
+    69001	/* 16 bits - 95% occupancy */
+};
+
+This seems to be a re-write of the original:
+
+#if BITS == 16
+# define HSIZE	69001		/* 95% occupancy */
+#endif
+#if BITS == 15
+# define HSIZE	35023		/* 94% occupancy */
+#endif
+#if BITS == 14
+# define HSIZE	18013		/* 91% occupancy */
+#endif
+#if BITS == 13
+# define HSIZE	9001		/* 91% occupancy */
+#endif
+#if BITS <= 12
+# define HSIZE	5003		/* 80% occupancy */
+#endif
+
+The original seems to allow maxbits < 12.
+
+NetBSD / FreeBSD uses following:
+
+#define	BITS		16		/* Default bits. */
+#define	HSIZE		69001		/* 95% occupancy */
+
+hence maxbits < 12 is probably not needed for the same reason it's
+needed in libXfont.
+
+Anyway, there seems to be an easy way to test.  Can anyone with updated
+NetBSD or FreeBSD try this:
+
+  echo test | compress -b 10 | uncompress
+
+?
+
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
-
-Download attachment "signature.asc " of type "application/pgp-signature" (837 bytes)
+Tomas Hoger / Red Hat Security Response Team
