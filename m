@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/4
-Message-ID: <2102528121.13641.1294430082647.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 7 Jan 2011 14:54:42 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/5
+Message-ID: <20110929132540.GJ21938@mars-attacks.org>
+Date: Thu, 29 Sep 2011 15:25:40 +0200
+From: nicolas vigier <boklm@...s-attacks.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request - pimd - Insecure file creation in /var/tmp
+Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0007
+On Tue, 27 Sep 2011, Tavis Ormandy wrote:
 
-Thanks.
+> 
+> Hey, after the scary flaws Georgi spotted in apt-get, I had a quick look at
+> rpm signature verification. Some trivial bitflipping found a few memory
+> corruption issues.
+> 
+> Originally I didn't think yum used rpm, but i was wrong, rpm-python is a
+> native module wrapper that exports librpm to python. I'll step through the
+> signature verification logic when I get a chance.
+> 
+> Obviously we need the sections of rpm code touched before signature
+> verification to be bulletproof, as most distributions rely on public mirror
+> services that may or may not be trusted. Any volunteers who know crypto
+> better than me appreciated, I'll be primarily looking for memory corruption.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=741606
+> https://bugzilla.redhat.com/show_bug.cgi?id=741612
 
--- 
-    JB
+Patches on rpm git :
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=11a7e5d95a8ca8c7d4eaff179094afd8bb74fc3f
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=a48f0e20cbe2ababc88b2fc52fb7a281d6fc1656
 
------ Original Message -----
-> We received this report recently:
-> 
-> --
-> 
-> Hi!
-> 
-> There is a simple security hole in pimd allowing a user to destroy any
-> file in the filesystem. On USR1, pimd will write to /var/tmp/pimd.dump
-> a dump of the multicast route table. Since /var/tmp is writable by any
-> user, a user can create a symlink to any file he wants to destroy with
-> the content of the multicast routing table.
-> 
-> Attached is a simple patch that will instruct pimd to write the dump
-> to /var/lib/misc which is writable by root only and seems a valid
-> target according to the FHS (state files that don't need a
-> subdirectory).
-> 
-> This patch may cause tools that were sending USR1 and waiting for a
-> /var/tmp/pimd.dump file fail. I don't have a solution for this.
-> 
-> The patch also applies to /var/tmp/pimd.cache which is not implemented
-> yet but still creates the file when receiving USR2 signal. Despite its
-> name, this is also a state file, not a cache. The patch also just
-> drops the possibility to use /usr/tmp/pimd.dump based on some C
-> preprocessor conditions since I don't know if the preconditions would
-> work correctly on Debian/kFreeBSD.
