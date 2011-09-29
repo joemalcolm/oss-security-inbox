@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/11
-Message-ID: <474027225.118091.1300738565939.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 21 Mar 2011 16:16:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Re: CVE request for python-feedparser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/6
+Message-ID: <20110929125022.GA14031@britannica.bec.de>
+Date: Thu, 29 Sep 2011 14:50:22 +0200
+From: Joerg Sonnenberger <joerg@...tannica.bec.de>
+To: Solar Designer <solar@...nwall.com>
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+On Thu, Sep 29, 2011 at 04:38:08AM +0400, Solar Designer wrote:
+> Hi Tavis,
+> 
+> On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
+> > I believe I wrote that patch,
+> 
+> I believe you wrote a different patch, or two:
+> 
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
 
-This one will need a 2009 ID.
+This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
+name. The corresponding NetBSD advisory explicitly lists GNU gzip and
+libarchive as not vulnerable.
 
-Thanks.
-
--- 
-    JB
-
------ Original Message -----
-> Please allocate a CVE for a further XSS vulnerability:
-> 
-> http://code.google.com/p/feedparser/issues/detail?id=195
-> 
-> It's an old bug, but I couldn't find any reference of a CVE ID. I'm
-> not
-> subscribed so I'd appreciate a CC.
-> 
-> Thanks,
-> 
-> --
-> Jonathan Wiltshire jmw@...ian.org
-> Debian Developer http://people.debian.org/~jmw
-> 
-> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
+Joerg
