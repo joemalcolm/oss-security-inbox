@@ -1,33 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/8
-Message-ID: <4E099406.9050501@initfour.nl>
-Date: Tue, 28 Jun 2011 10:42:46 +0200
-From: Herman van Rink <rink@...tfour.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/3
+Message-ID: <20110929090657.1136981d@redhat.com>
+Date: Thu, 29 Sep 2011 09:06:57 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, Mango <h@...r.se>,  phpMyAdmin Security Team <security@...myadmin.net>
-Subject: Re: [Phpmyadmin-security] CVE Request: phpMyAdmin 3.4 Multiple Vulnerabilities
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-On 28-06-11 09:36, Jan Lieskovsky wrote:
-> Hello Mango,
->
->    thank you for your report.
+On Thu, 29 Sep 2011 04:38:08 +0400 Solar Designer wrote:
 
-Thanks for the info, we'll investigate.
-Mango, could you provide some more details, off-list preferably, on the
-exact methods you used?
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+> 
+> (these are in Attic because we've since updated to gzip 1.4).
+> 
+> As far as I can see, the sanity checks in
+> gzip-1.3.5-google-owl-bound.diff do not overlap with those in FreeBSD's
+> latest patch.  These are different sets of checks.
 
+Tavis also reported an issue in ncompress - CVE-2006-1168 - with the
+following fix added to ncompress:
 
-> Wondering if you have contacted phpMyAdmin Security Team first (Cc-ed
-> too) for their review, opinion and actions planned regarding the issues
-> below? ( http://www.phpmyadmin.net/home_page/security/ )
+http://ncompress.git.sourceforge.net/git/gitweb.cgi?p=ncompress/ncompress;a=commitdiff;h=e21aad4a5a3ba0b6c2279b28a80f85b0b226a175
 
-This had not yet been reported to us, thanks for cc'ing.
+It's rather closely related to CVE-2011-2895, as it was also creating
+prefix loop, via bogus first code.  At the time that was reported, the
+case that I originally started to look at (code > free_ent) was already
+fixed in ncompress, afaics.
+
+> As to who originally added the "maxbits < 12" check, when, and why
+> exactly (and why this value), I still don't know.  In NetBSD, it is
+> added with a commit made 6 weeks ago:
+> 
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/gzip/zuncompress.c?only_with_tag=MAIN
+> 
+> The commit message is merely "Do proper input validation without
+> penalizing performance", and it makes several other changes as well
+> (FreeBSD in fact reused essentially the same patch).
+
+The "without penalizing performance" is reference to my original
+libXfont one-liner fix that did not prevent loops, only blocked their
+impact by checking for stack buffer overflow.  The same kind of fix
+Tavis proposed for ncompress to address CVE-2006-1168.
+
+As for < 12, I'm guessing it comes from libXfont too, which had it
+before because of this:
+
+    if (maxbits > BITS || maxbits < 12)
+	return 0;
+    hsize = hsize_table[maxbits - 12];
+
+where:
+
+static int hsize_table[] = {
+    5003,	/* 12 bits - 80% occupancy */
+    9001,	/* 13 bits - 91% occupancy */
+    18013,	/* 14 bits - 91% occupancy */
+    35023,	/* 15 bits - 94% occupancy */
+    69001	/* 16 bits - 95% occupancy */
+};
+
+This seems to be a re-write of the original:
+
+#if BITS == 16
+# define HSIZE	69001		/* 95% occupancy */
+#endif
+#if BITS == 15
+# define HSIZE	35023		/* 94% occupancy */
+#endif
+#if BITS == 14
+# define HSIZE	18013		/* 91% occupancy */
+#endif
+#if BITS == 13
+# define HSIZE	9001		/* 91% occupancy */
+#endif
+#if BITS <= 12
+# define HSIZE	5003		/* 80% occupancy */
+#endif
+
+The original seems to allow maxbits < 12.
+
+NetBSD / FreeBSD uses following:
+
+#define	BITS		16		/* Default bits. */
+#define	HSIZE		69001		/* 95% occupancy */
+
+hence maxbits < 12 is probably not needed for the same reason it's
+needed in libXfont.
+
+Anyway, there seems to be an easy way to test.  Can anyone with updated
+NetBSD or FreeBSD try this:
+
+  echo test | compress -b 10 | uncompress
+
+?
 
 -- 
-Met vriendelijke groet / Regards,
-
-Herman van Rink 
-Initfour websolutions
-
-
+Tomas Hoger / Red Hat Security Response Team
