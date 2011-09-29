@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/23
-Message-ID: <2080726178.190661.1298490943072.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 14:55:43 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: pmwiki before 2.2.21
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/8
+Message-ID: <20110929155100.GP4635@cmpxchg8b.com>
+Date: Thu, 29 Sep 2011 17:51:00 +0200
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: Joerg Sonnenberger <joerg@...tannica.bec.de>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4662.
+On Thu, Sep 29, 2011 at 02:50:22PM +0200, Joerg Sonnenberger wrote:
+> On Thu, Sep 29, 2011 at 04:38:08AM +0400, Solar Designer wrote:
+> > Hi Tavis,
+> > 
+> > On Wed, Sep 28, 2011 at 08:42:56PM +0200, Tavis Ormandy wrote:
+> > > I believe I wrote that patch,
+> > 
+> > I believe you wrote a different patch, or two:
+> > 
+> > http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+> > http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+> 
+> This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
+> name. The corresponding NetBSD advisory explicitly lists GNU gzip and
+> libarchive as not vulnerable.
+> 
+> Joerg
 
-Thanks.
+I see, apologies for misunderstanding.
+
+Tavis.
 
 -- 
-    JB
-
------ Original Message -----
-> http://www.securelist.com/en/advisories/42608
-> http://www.pmwiki.org/wiki/PmWiki/ChangeLog
-> "Fix potential XSS vulnerability, reported by DFaure."
-> 
-> --
-> Hanno Böck mail/jabber: hanno@...eck.de
-> GPG: BBB51E42 http://www.hboeck.de/
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
