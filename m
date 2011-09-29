@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/1
-Message-ID: <20111126081651.GA14242@openwall.com>
-Date: Sat, 26 Nov 2011 12:16:51 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/7
+Message-ID: <20110929152542.GA14652@openwall.com>
+Date: Thu, 29 Sep 2011 19:25:42 +0400
 From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+To: Joerg Sonnenberger <joerg@...tannica.bec.de>
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-Hi Tim,
+On Thu, Sep 29, 2011 at 02:50:22PM +0200, Joerg Sonnenberger wrote:
+> This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
+> name. The corresponding NetBSD advisory explicitly lists GNU gzip and
+> libarchive as not vulnerable.
 
-On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
-> On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
-> 
-> > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
-> > specific people that they're interested.  So please reply to this
-> > message to indicate your interest and we'll proceed.
-> 
-> I am interested.  Thanks for doing this.
+Thanks!  My current understanding is that both the NetBSD/FreeBSD gzip
+and GNU gzip reuse mid-1980's code from compress, which was in the
+public domain.  Those revisions thus could use different licenses (BSD
+vs. GPL), and indeed the code is quite different by now.  (Also there's
+a lot of code that is not from compress.)
 
-Please send me (off-list is OK) your PGP key and e-mail address to
-subscribe to the new list.
-
-I thought there would be more interest in this, but I don't mind setting
-this up as just pkgsrc + Linux distros initially.
-
-(And, like I said, the Linux distros list will also continue to exist on
-its own, letting message senders decide on who to notify.)
-
-Thanks,
+Tomas, Tim - thank you for explaining the "maxbits < 12" check.  It
+appears that we don't need it for GNU gzip, and NetBSD/FreeBSD gzip
+could want to relax the check too.
 
 Alexander
