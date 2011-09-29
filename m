@@ -1,76 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/10
-Message-ID: <20110707235456.GA30957@openwall.com>
-Date: Fri, 8 Jul 2011 03:54:56 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/4
+Message-ID: <CAAsmaPYN3qSJKfdsc+CL0c0UYibCq5GaUVww0oXyASf=mcej7g@mail.gmail.com>
+Date: Thu, 29 Sep 2011 07:53:55 -0500
+From: Tim Zingelman <tez@...bsd.org>
+To: oss-security@...ts.openwall.com
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, joerg@...bsd.org
+Subject: Re: LZW decompression issues
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 07, 2011 at 04:41:17PM +0200, Ludwig Nussel wrote:
-> So here is a first draft of a pam_unix2 patch for discussion. The
+On Thu, Sep 29, 2011 at 2:06 AM, Tomas Hoger <thoger@...hat.com> wrote:
+> On Thu, 29 Sep 2011 04:38:08 +0400 Solar Designer wrote:
+>
+>> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-google-owl-bound.diff
+>> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/gzip/Attic/gzip-1.3.5-gentoo-huft_build-return.diff
+>>
+>> (these are in Attic because we've since updated to gzip 1.4).
+>>
+>> As far as I can see, the sanity checks in
+>> gzip-1.3.5-google-owl-bound.diff do not overlap with those in FreeBSD's
+>> latest patch.  These are different sets of checks.
+>
+> Tavis also reported an issue in ncompress - CVE-2006-1168 - with the
+> following fix added to ncompress:
+>
+> http://ncompress.git.sourceforge.net/git/gitweb.cgi?p=ncompress/ncompress;a=commitdiff;h=e21aad4a5a3ba0b6c2279b28a80f85b0b226a175
+>
+> It's rather closely related to CVE-2011-2895, as it was also creating
+> prefix loop, via bogus first code.  At the time that was reported, the
+> case that I originally started to look at (code > free_ent) was already
+> fixed in ncompress, afaics.
+>
+>> As to who originally added the "maxbits < 12" check, when, and why
+>> exactly (and why this value), I still don't know.  In NetBSD, it is
+>> added with a commit made 6 weeks ago:
+>>
+>> http://cvsweb.netbsd.org/bsdweb.cgi/src/usr.bin/gzip/zuncompress.c?only_with_tag=MAIN
+>>
+>> The commit message is merely "Do proper input validation without
+>> penalizing performance", and it makes several other changes as well
+>> (FreeBSD in fact reused essentially the same patch).
+>
+> The "without penalizing performance" is reference to my original
+> libXfont one-liner fix that did not prevent loops, only blocked their
+> impact by checking for stack buffer overflow.  The same kind of fix
+> Tavis proposed for ncompress to address CVE-2006-1168.
+>
+> As for < 12, I'm guessing it comes from libXfont too, which had it
+> before because of this:
+>
+>    if (maxbits > BITS || maxbits < 12)
+>        return 0;
+>    hsize = hsize_table[maxbits - 12];
+>
+> where:
+>
+> static int hsize_table[] = {
+>    5003,       /* 12 bits - 80% occupancy */
+>    9001,       /* 13 bits - 91% occupancy */
+>    18013,      /* 14 bits - 91% occupancy */
+>    35023,      /* 15 bits - 94% occupancy */
+>    69001       /* 16 bits - 95% occupancy */
+> };
+>
+> This seems to be a re-write of the original:
+>
+> #if BITS == 16
+> # define HSIZE  69001           /* 95% occupancy */
+> #endif
+> #if BITS == 15
+> # define HSIZE  35023           /* 94% occupancy */
+> #endif
+> #if BITS == 14
+> # define HSIZE  18013           /* 91% occupancy */
+> #endif
+> #if BITS == 13
+> # define HSIZE  9001            /* 91% occupancy */
+> #endif
+> #if BITS <= 12
+> # define HSIZE  5003            /* 80% occupancy */
+> #endif
+>
+> The original seems to allow maxbits < 12.
+>
+> NetBSD / FreeBSD uses following:
+>
+> #define BITS            16              /* Default bits. */
+> #define HSIZE           69001           /* 95% occupancy */
+>
+> hence maxbits < 12 is probably not needed for the same reason it's
+> needed in libXfont.
+>
+> Anyway, there seems to be an easy way to test.  Can anyone with updated
+> NetBSD or FreeBSD try this:
+>
+>  echo test | compress -b 10 | uncompress
+>
 
-Thanks!
+$ uname -a
+FreeBSD XXXXXX 7.4-RELEASE-p3 FreeBSD 7.4-RELEASE-p3 #0: Wed Sep 28
+14:58:24 CDT 2011     toor@...XXX:/usr/obj/usr/src/sys/GENERIC  i386
+$ echo test | compress -b 10 | uncompress
+uncompress: /dev/stdin: Inappropriate file type or format
 
-> password function of pam_unix2 already reads /etc/default/passwd
-> and /etc/login.defs, now the auth function also does.
-> 
-> The new option BLOWFISH_2a2x=yes/no toggles the compat mode to treat
-> 2a as 2x as discussed before.
+(on an unpatched FreeBSD it returns 'test' with no error)
 
-OK.
-
-> I've also added a second option BLOWFISH_2y=yes/no (default yes) as
-> safeguard. When set to 'no' new passwords are still stored as 2a
-> instead of 2y. I've been thinking about networked environments where
-> not all systems might get patched at the same time. If some user on
-> a patched system changes the password and gets 2y he can not log in
-> on other systems anymore, even if no 8bit characters are used. So if
-> that use case is important it may be better to risk locking out a
-> few users with umlauts in the password rather than having 2y not
-> accepted by unpatched systems.
-
-That's a nasty problem I had not thought of.  I am unhappy about your
-workaround for it.  With such a workaround, we'll have more uncertainty
-of what $2a$ hashes are on SUSE systems.  (Before this point, you could
-have more confidence that all of those were computed with the sign
-extension bug, so treating them as $2x$ would allow all users to log in
-with no issues if that's what's desired despite of the security risk.)
-
-Also, it brings up the question: why merely use $2a$ running the new
-code rather than fully emulate the bug even for newly set passwords,
-which would make all passwords work, even on other networked machines?
-Sure, that would be even nastier for security, so maybe you managed to
-strike a balance well.  But nevertheless the question is there.  One of
-your options results in full backwards compatibility at a security cost
-(for the local system), but the other somehow chooses to strike a
-balance between compatibility and security without achieving either of
-these fully (for a network of systems).
-
-Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
-I imagine that people won't know to enable this option unless/until they
-have already run into an issue anyway (that is, someone is already
-unable to log in).  At this point, they could likely upgrade the rest of
-their networked systems as well... or downgrade this one. ;-(
-
-BTW, this problem is a reason for us to possibly use the magic salt
-substring approach instead of $2y$, although it has its drawbacks too.
-
-> +#ifdef CRYPT_BLOWFISH_SIGNEDNESS_BUG_WORKAROUNDS
-> +  /* if compat mode is turned on treat all 2a hashes as affected by
-> +     signess bug, ie 2x */
-> +  if (options->blowfish_2a2x && !strncmp(hash, "$2a$", 4))
-> +    {
-> +      char* h = strdupa(hash);
-> +      h[2] = 'x';
-> +      hash = h;
-> +    }
-> +#endif
-> +
-> +  return (strcmp (hash, crypt_r (pass, hash, &output)) == 0);
-
-You probably want to wipe and free your altered copy of the hash here
-(after strcmp(), but before return).
-
-Alexander
+ - Tim
