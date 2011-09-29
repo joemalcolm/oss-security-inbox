@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/4
-Message-ID: <20110620131336.GH17967@nb.net.home>
-Date: Mon, 20 Jun 2011 15:13:36 +0200
-From: Karel Zak <kzak@...hat.com>
-To: Ondrej Vasik <ovasik@...hat.com>
-Cc: Ludwig Nussel <ludwig.nussel@...e.de>, oss-security@...ts.openwall.com, Nicolas François <nekral.lists@...il.com>
-Subject: Re: /bin/su (was: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/9
+Message-ID: <4E8495EA.4010803@redhat.com>
+Date: Thu, 29 Sep 2011 17:59:38 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Plone Security Team <security@...ne.org>
+Subject: CVE Request -- Zope/Plone -- Unspecified vulnerability in Zope v2.12.x and Zope v2.13.x allowing arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 15, 2011 at 12:50:47PM +0200, Ondrej Vasik wrote:
-> On Wed, 2011-06-15 at 09:49 +0200, Ludwig Nussel wrote:
-> > Bernhard Rosenkraenzer wrote:
-> > > On Friday, June 10, 2011 11:55 CEST, Ludwig Nussel <ludwig.nussel@...e.de> wrote: 
-> > >  
-> > > > The issue also reminds me that there are several su implemenations.
-> > > > On Fedora and SUSE we have a patched coreutils version, Debian uses
-> > > > the one from shadow-utils and then there's also a su from
-> > > > SimplePAMApps, used by e.g. Owl. Of course each one has it's own
-> > > > quirks and weird features. Does anyone still remember why a
-> > > > particular implementation was chosen? :-)
-> > > 
-> > > 
-> > > In Ark Linux, we switched from the coreutils one to the shadow-utils one
-> > > about 2 years ago because the shadow-utils one does what we need (incl. PAM
-> > > support) without having to port the PAM patch on every new coreutils release.
-> > 
-> > Upstream coreutils indicated that they consider su in coreutils kind
-> > of deprecated, basically only kept for legacy reasons on non-Linux
-> > OSes. They would accept the PAM patch though so distros don't need
-> > to maintain it.
-> > 
-> > Is there actually any serious distro that doesn't use PAM though?
-> > Those #ifdefs to keep old shadow compatibility makes the code rather
-> > ugly and hard to read. Maybe it's time to just rip out the old code
-> > and submit a clean, PAM only su to util-linux.
+Hello Josh, Steve, vendors,
 
- No problem. I agree with the change.
+   Plone upstream has published a pre-announcement about a security
+flaw, present in Zope v2.12.x and Zope v2.13.x, which could allow
+execution of arbitrary code by anonymous users. An authenticated
+attacker could provide a specially-crafted web page, which once
+visited by an unsuspecting Zope user would lead to arbitrary commands
+execution with the privileges of the Zope/Plone service.
 
-> For me, having it in coreutils, shadow-utils, SimplePAMApps and possibly
-> - in util-linux - could only cause a lot of confusion. Some
-> consolidation might be better.
+References:
+[1] http://plone.org/products/plone/security/advisories/20110928
+[2] http://secunia.com/advisories/46221/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=742297
 
- Some consolidation is necessary for many of your utils. I think that
- a lot code in shadow-utils is currently unnecessary -- with PAM-only
- utils we can probably simplify many things.
+Note: The vendor announced the final version of the advisory and
+       the patch to be available at 2011-10-04 15:00 UTC at the
+       following location:
+       [4] http://plone.org/products/plone/security/advisories/20110928
 
-> Adding util-linux upstream maintainer to CC.
+Could you allocate a CVE id for this?
 
- Thanks.
-
-    Karel
-
--- 
- Karel Zak  <kzak@...hat.com>
- http://karelzak.blogspot.com
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
