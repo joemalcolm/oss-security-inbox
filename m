@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/5
-Message-ID: <20110730212721.GA18333@openwall.com>
-Date: Sun, 31 Jul 2011 01:27:21 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jeffrey Czerniak <jeffcz@...le.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: libxml security fix from apple ... any information?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/6
+Message-ID: <0c24db98-0af6-4fba-91bb-897eeb0c27a2@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 11:55:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: ffmpeg/libav
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey,
 
-On Sat, Jul 30, 2011 at 01:50:40PM -0700, Jeffrey Czerniak wrote:
-> We would like to cooperate with other downstream distributors of free and open source software on security issues, as Apple is a major distributor of such software.  However, our previous attempts to engage the community have not been successful.  One-way disclosure of information related to security issues subjects our customers to non-trivial risk without providing any added security benefit.  This is particularly pertinent if the disclosure were to occur in advance of the release of fixed software.
 
-Is this a reference to the "closed list", which is currently Linux-only?
+----- Original Message -----
+> Hello,
+> 
+> I can't seem to find a CVE for the following:
+> 
+> http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
+> 
+> "Fix several security issues in matroskadec.c (MSVR-11-0080)."
+> 
 
-If so, are you saying that you would not share vulnerability information
-with such a list ("one-way"), even for issues that you think are
-relevant to Linux distro vendors, when Apple is not a member of the list?
+I can't figure these out, so let's use CVE-2011-3586 as one of those
+"unknown security issues" catchall IDs.
 
-I am merely asking for clarification because this is important info on
-what communication channels should or should not exist and be in use.
-I do not express any opinion.
+Thanks.
 
-FYI, my intent as linux-distros list admin has always been to have
-specific non-Linux vendors informed if an issue is brought up that is
-relevant to those vendors.  That's regardless of whether those vendors
-similarly inform the Linux vendors or not.
-
-I do recall and partially agree with Apple's argument that we would not
-know which of the issues affect your products, though.
-
-For example, when the libsoup issue was brought up recently, I insisted
-that the reporter would also inform *BSD's.  I think that issue did not
-affect Apple, did it?  No GNOME in your products, right?  (Not counting
-third-party/unofficial builds.)
-
-Thanks,
-
-Alexander
+-- 
+    JB
