@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/5
-Message-ID: <20110617000422.541ea4f3@redhat.com>
-Date: Fri, 17 Jun 2011 00:04:22 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/6
+Message-ID: <0c24db98-0af6-4fba-91bb-897eeb0c27a2@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 11:55:27 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: list archive
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: ffmpeg/libav
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander!
 
-On Wed, 25 May 2011 21:33:29 +0400 Solar Designer wrote:
 
-> abc and I have enhanced the official/local archive of oss-security
-> today (as well as of other Openwall-hosted mailing lists):
+----- Original Message -----
+> Hello,
 > 
-> http://www.openwall.com/lists/oss-security/
+> I can't seem to find a CVE for the following:
 > 
-> Now these have month and day index pages with message Subjects and
-> Froms on them (finally).
+> http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
+> 
+> "Fix several security issues in matroskadec.c (MSVR-11-0080)."
+> 
 
-This certainly is a nice enhancement, that makes it a lot easier to find
-specific mail in the web archive.
+I can't figure these out, so let's use CVE-2011-3586 as one of those
+"unknown security issues" catchall IDs.
 
-> Suggestions/votes for further enhancements are welcome (we have a
-> to-do list for blists internally, but we're unsure of what to work on
-> next).
-
-Thread view is what other archive managers tend to provide.  It's
-usually more convenient for navigating through longer / more complex
-threads than only thread-prev / thread-next.  Most archive managers
-split archive on the month boundary, which breaks threads view, but,
-guessing from what you've written, it seems blists should not suffer
-form such problem.
-
-For oss-security, there's also a gmane hosted archive which already
-offers a rather nice thread view.  It also provides short links to
-views that only show specific thread, with option to focus on a
-particular post. I'd expect you don't plan to compete with gmane
-feature set, but there surely is some inspiration to be found there if
-you're after ideas.
+Thanks.
 
 -- 
-Tomas Hoger
+    JB
