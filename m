@@ -1,28 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/3
-Message-ID: <4D86DB49.4010009@redhat.com>
-Date: Mon, 21 Mar 2011 12:59:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/3
+Message-ID: <ad8b91d5-0aec-4f4d-9fef-b31d655d4072@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 10:38:33 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: heap corruption in IrDA
+Subject: Re: CVE Request: Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery (CSRF) Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
-> When providing an invalid IrDA nickname for an IrNET peer, a local
-> attacker can cause a kernel panic due to an underflow in a memcpy()
-> size calculation or cause a controllable heap overflow that may lead
-> to privilege escalation.  Write access to the /dev/irnet device file
-> is required to trigger the vulnerability.
->
-> Reference:
-> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
+Please use CVE-2011-3582
 
-The default permissions for /dev/irnet is root-read/write only. In the 
-past I have ignored such issues that can only be triggered by root, even 
-though the permissions can be changed. I wouldn't assign a CVE name for 
-this. CC'ed Steve.
+Thanks.
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+    JB
+
+----- Original Message -----
+> Advanced Electron Forums (AEF) 1.0.9 <= Cross Site Request Forgery
+> (CSRF) Vulnerability
+> 
+> 
+> 
+> 1. OVERVIEW
+> 
+> The Advanced Electron Forums (AEF)  1.0.9 <= versions are vulnerable
+> to Cross Site Request Forgery (CSRF).
+> 
+> 
+> 2. BACKGROUND
+> 
+> AEF has a very simple and easy to use Administration Panel and
+> installing this software is a piece of cake! You can install new
+> themes, customize themes the way you want. The User Control Panel has
+> a simple yet beautiful interface where users can set their
+> preferences
+> for the board.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Advanced Electron Forums (AEF) 1.0.9 <=  versions contain a flaw that
+> allows a remote Cross-site Request Forgery (CSRF / XSRF) attack. The
+> flaw exists because the application does not require multiple steps
+> or
+> explicit confirmation for sensitive transactions for majority of
+> administrator functions such as adding new user, assigning user to
+> administrative privilege. By using a crafted URL, an attacker may
+> trick the victim into visiting to his web page to take advantage of
+> the trust relationship between the authenticated victim and the
+> application. Such an attack could trick the victim into executing
+> arbitrary commands in the context of their session with the
+> application, without further prompting or verification.
+> 
+> 
+> 4. VERSIONS AFFECTED
+> 
+> 1.0.9 <=
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> The following request ecalates a normal user to an administrator.
+> 
+> [REQUEST]
+> POST /aef/index.php?act=editprofile&uid=2 HTTP/1.1
+> 
+> username=tester&email=tester%40yehg.net&u_member_group=1&realname=&title=&location=&gender=1&privatetext=&icq=&yim=&msn=&aim=&www=&sig=&editprofile=Edit+Profile
+> [/REQUEST]
+> 
+> 
+> 6. SOLUTION
+> 
+> Partial fix is available.
+> The vendor released a single patch for the provided vulnerable
+> EditProfile functionality.
+> http://www.anelectron.com/downloads/index.php?act=downloadattach&atid=59
+> 
+> 
+> 7. VENDOR
+> 
+> Electron Inc.
+> http://www.anelectron.com/
+> 
+> 
+> 8. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 9. DISCLOSURE TIME-LINE
+> 
+> 2010-12-14: notified vendor through email, website contact form
+> submission
+> 2011-05-17: vendor released aef 1.0.9 without the CSRF fix
+> 2011-09-06: vendor released separate patch about the CSRF fix
+> 2011-09-26: vulnerability disclosed
+> 
+> 
+> 10. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/[aef-1.x]_cross_site_request_forgery
+> CSRF Wiki:
+> https://secure.wikimedia.org/wikipedia/en/wiki/Cross-site_request_forgery
+> 
+> 
+> 
+> #yehg [2011-09-26]
+> 
