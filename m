@@ -1,47 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/2
-Message-ID: <20111110125714.GA8669@wopr.local.invalid>
-Date: Thu, 10 Nov 2011 13:57:15 +0100
-From: Guido Berhoerster <gber@...nsuse.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/7
+Message-ID: <cec6ff3d-0bf8-4e07-9baa-0da4e1455238@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 12:04:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Robert Ancell <robert.ancell@...onical.com>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Cc: Plone Security Team <security@...ne.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zope/Plone -- Unspecified vulnerability in Zope v2.12.x and Zope v2.13.x allowing arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-* Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
-> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
-> > On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
-> > > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
-> > >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
-> > >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
-> > >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
-> > >>>> cause LightDM to set the destination of the link to user ownership.
-> > >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
-> > >>>>
-> > >>>> Overview of changes in lightdm 1.0.6
-> > >>>>
-> > >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
-> > >>> Could a CVE be assigned for this?
-> > >>>
-> > >>> Regards,
-> > >> Can you send me the link to this announcement so I can confirm it? Thanks.
-> > >>
-> > > Here's the link to the mailing list mail:
-> > > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
-> > >
-> > > Regards,
-> > Thanks, confirmed (first hand info is much better). Please use
-> > CVE-2011-4105 for this issue.
-> > 
+
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> BTW, the fix that is in 1.0.6 is probably not enough for distros that
-> don't implement hard link restrictions, such as the Yama LSM that is
-> used in Ubuntu.
+>    Plone upstream has published a pre-announcement about a security
+> flaw, present in Zope v2.12.x and Zope v2.13.x, which could allow
+> execution of arbitrary code by anonymous users. An authenticated
+> attacker could provide a specially-crafted web page, which once
+> visited by an unsuspecting Zope user would lead to arbitrary commands
+> execution with the privileges of the Zope/Plone service.
+> 
+> References:
+> [1] http://plone.org/products/plone/security/advisories/20110928
+> [2] http://secunia.com/advisories/46221/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=742297
+> 
+> Note: The vendor announced the final version of the advisory and
+>        the patch to be available at 2011-10-04 15:00 UTC at the
+>        following location:
+>        [4]
+>        http://plone.org/products/plone/security/advisories/20110928
+> 
 
-Does an incomplete fix in a released version warrant a new CVE?
+Please use CVE-2011-3587 for this.
 
-I've attached a suggested fix.
+Thanks.
+
 -- 
-Guido Berhoerster
-
-View attachment "fix-xauthority-ownership-fix.patch" of type "text/x-patch" (1555 bytes)
+    JB
