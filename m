@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/30/3
-Message-ID: <4ED695ED.80808@redhat.com>
-Date: Wed, 30 Nov 2011 13:45:33 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/8
+Message-ID: <ab2adc9a-dfc4-466e-8687-6b1ebbd815d5@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 13:43:00 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: CVE request: Proc::ProcessTable perl module
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
 Content-Type: text/plain; charset=utf-8
 
-On 11/30/2011 10:44 AM, Moritz Muehlenhoff wrote:
-> Hi,
-> please assign a CVE ID for this:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=650500 
->
-> Cheers,
->         Moritz
-Please use CVE-2011-4363 for this issue.
+Sorry this took so long, it's been a wild couple of weeks.
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+>    multiple XSS flaws have been recently reported in the v3.4.4 (and
+>    earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
+> 
+> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
+> 
+> 1) An XSS flaw was found in the way phpMyAdmin processed row content,
+> containing JavaScript code, after its inline editing and saving,
+
+Use CVE-2011-3591
+
+> 
+> 2) It was found that phpMyAdmin did not properly sanitize the content of
+> db, table, and column names prior use of their values.
+
+Use CVE-2011-3592
+
+> 
+> A remote attacker could use these flaws to conduct XSS attacks (execute
+> arbitrary HTML or web script) by tricking authenticated phpMyAdmin user
+> into visiting of a specially-crafted URL.
+> 
+> References:
+> [2] http://secunia.com/advisories/45991/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
+
+Thanks.
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+    JB
