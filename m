@@ -1,17 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/1
-Message-ID: <1104080808070.9792@mjc.redhat.com>
-Date: Fri, 8 Apr 2011 08:08:31 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
-To: oss-security@...ts.openwall.com
-cc: CERT Coordination Center <cert@...t.org>
-Subject: Re: Apache HttpClient CVE request  [VU#153049]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/1
+Message-ID: <20110930054632.GA29071@inutil.org>
+Date: Fri, 30 Sep 2011 07:46:32 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com, coley@...re.org
+Subject: Firefox: CVE-2011-3867 a dupe of CVE-2011-2998
 Content-Type: text/plain; charset=utf-8
 
-> * [HTTPCLIENT-1061] Fixed critical bug causing Proxy-Authorization header to 
-> be sent to the target host when tunneling requests through a proxy server 
-> that requires authentication.
+Hi,
+When http://www.mozilla.org/security/announce/2011/mfsa2011-37.html
+went live it initially listed "CVE-2011-XXXX" as the CVE ID. However,
+since it was obvious that CVE-2011-2998 was missing in the block of
+Mozilla IDs I asked the Mozilla security group for confirmation if
+MFSA 2011-37 is in fact CVE-2011-2998, which they confirmed  and 
+fixed on the website later the day.
 
-Use CVE-2011-1498 for this issue
+MITRE then seems to have assigned CVE-2011-3867 to this issue:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3867, which
+links to the MFSA page, which itself mentions CVE-2011-2998.
 
-Thanks, Mark
+Beside Debian CVE-2011-2998 was also used by Red Hat:
+https://rhn.redhat.com/errata/RHSA-2011-1341.html and since it's also 
+mentioned on the Mozilla page my recommendation would be to reject 
+CVE-2011-3867, before it gets used more widely.
+
+Cheers,
+        Moritz
+
+
