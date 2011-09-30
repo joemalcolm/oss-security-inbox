@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/12
-Message-ID: <20110308150730.66b2591c@orphan>
-Date: Tue, 8 Mar 2011 15:07:30 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/5
+Message-ID: <194b0fad-7580-4425-b474-9487cf6f3475@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 11:05:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request, php's shm
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: samba, cifs-utils
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 8 Mar 2011 14:36:49 +0100 Pierre Joye wrote:
 
-> This flaw has been discovered by Jose Carlos Norte, already fixed in
-> SVN by Felipe Pena (felipe@....net), see
-> http://svn.php.net/viewvc/?view=revision&revision=309018
 
-It may be more readable to use the check as:
+----- Original Message -----
+> Hello,
+> 
+> I don't think this ever got a CVE:
+> 
+> https://bugzilla.samba.org/show_bug.cgi?id=7179
+> 
+> http://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=810f7e4e0f2dbcbee0294d9b371071cb08268200
+> 
+> 
+> When mount.cifs is setuid, unprivileged users can kill it, resulting in a
+> denial of service from a stale lock file.
+> 
 
-  if (count < 0 || count > shmop->size - size)
+Please use CVE-2011-3585.
 
-Previous size check gives you guarantees regarding shmop->size - size
-result.
-
-Just my 2c.
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
