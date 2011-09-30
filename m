@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/7
-Message-ID: <20110706125139.3e4b6d0f@redhat.com>
-Date: Wed, 6 Jul 2011 12:51:39 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/5
+Message-ID: <194b0fad-7580-4425-b474-9487cf6f3475@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 11:05:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl timing attack
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: samba, cifs-utils
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 6 Jul 2011 10:56:46 +0400 Solar Designer wrote:
 
-> > The fix from the paper was committed in openssl CVS within about a
-> > week from public disclosure:
-> > 
-> > http://cvs.openssl.org/chngview?cn=20892
-> > 
-> > However, there were some concerns raised regarding the extra #ifdef
-> > wrapping added as part of the commit, which disable the fix by
-> > default, and the name suggests #ifndef was probably intended:
-> > 
-> > http://www.mail-archive.com/openssl-dev@openssl.org/msg29283.html
+
+----- Original Message -----
+> Hello,
 > 
-> This helps.
+> I don't think this ever got a CVE:
 > 
-> Are you dealing with the issue for Red Hat products?  Perhaps you
-> have a Bugzilla entry?
+> https://bugzilla.samba.org/show_bug.cgi?id=7179
+> 
+> http://git.samba.org/?p=cifs-utils.git;a=commitdiff;h=810f7e4e0f2dbcbee0294d9b371071cb08268200
+> 
+> 
+> When mount.cifs is setuid, unprivileged users can kill it, resulting in a
+> denial of service from a stale lock file.
+> 
 
-We have bugzilla (as usual, use CVE as a bug id), but not too useful
-for other distros, as it only says we're not affected.  All EC crypto is
-one of the "patent or otherwise encumbered" code pieces that are removed
-and not compiled in.
+Please use CVE-2011-3585.
 
-http://pkgs.fedoraproject.org/gitweb/?p=openssl.git;a=blob;f=hobble-openssl;h=a8be844f6ba7654b5738ae0e27e192a38797bd74;hb=master
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
