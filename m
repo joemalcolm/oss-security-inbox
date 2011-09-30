@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/3
-Message-ID: <4DBB0086.10601@redhat.com>
-Date: Fri, 29 Apr 2011 20:16:38 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, William Cohen <wcohen@...hat.com>, Robert Richter <robert.richter@....com>
-Subject: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/2
+Message-ID: <785033fe-2bbf-4880-b471-7dde04bc926a@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 10:36:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: heap-based buffer overflow in ldns
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-3581 for this.
 
-Hello Josh, Steve, vendors,
+Thanks.
 
-   It was found that oprofile profiling system did not properly sanitize
-the content of event argument, provided to oprofile profiling control
-utility (opcontrol). If a local unprivileged user was authorized by
-sudoers file to run the opcontrol utility, they could use the flaw
-to escalate their privileges (execute arbitrary code with the privileges
-of the privileged system user, root). Different vulnerability than
-CVE-2006-0576.
+-- 
+    JB
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
-
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: Oprofile is not encouraged to be run under sudo, but still
-       should not allow escalation of privileges.
+----- Original Message -----
+> Could a CVE be assigned to this flaw?  A boundary error in
+> ldns_rr_new_frm_str_internal() could lead to a heap-based buffer
+> overfow
+> when processing RR records.
+> 
+> http://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=403
+> https://secunia.com/advisories/46153/
+> https://bugzilla.redhat.com/show_bug.cgi?id=741024
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
+> 
