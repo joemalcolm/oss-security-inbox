@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/7
-Message-ID: <20110124213827.GC4979@outflux.net>
-Date: Mon, 24 Jan 2011 13:38:27 -0800
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/7
+Message-ID: <cec6ff3d-0bf8-4e07-9baa-0da4e1455238@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 12:04:54 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE request: multiple status.net issues
+Cc: Plone Security Team <security@...ne.org>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Zope/Plone -- Unspecified vulnerability in Zope v2.12.x and Zope v2.13.x allowing arbitrary code execution
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-I wanted to get some CVEs assigned for some minor issues that I reported to
-status.net.
 
-    syslog message spoofing via newline injections into logging
-    http://status.net/open-source/issues/2795
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+>    Plone upstream has published a pre-announcement about a security
+> flaw, present in Zope v2.12.x and Zope v2.13.x, which could allow
+> execution of arbitrary code by anonymous users. An authenticated
+> attacker could provide a specially-crafted web page, which once
+> visited by an unsuspecting Zope user would lead to arbitrary commands
+> execution with the privileges of the Zope/Plone service.
+> 
+> References:
+> [1] http://plone.org/products/plone/security/advisories/20110928
+> [2] http://secunia.com/advisories/46221/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=742297
+> 
+> Note: The vendor announced the final version of the advisory and
+>        the patch to be available at 2011-10-04 15:00 UTC at the
+>        following location:
+>        [4]
+>        http://plone.org/products/plone/security/advisories/20110928
+> 
 
-    limited XSS in error message contents
-    http://status.net/open-source/issues/2796 (fixed)
+Please use CVE-2011-3587 for this.
 
-    unsafe use of addslashes for SQL string escapes
-    http://status.net/open-source/issues/2797 (fixed)
-
-Thanks,
-
--Kees
+Thanks.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+    JB
