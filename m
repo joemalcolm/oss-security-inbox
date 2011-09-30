@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/7
-Message-ID: <4E9DCFF3.8060804@redhat.com>
-Date: Tue, 18 Oct 2011 13:13:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/9
+Message-ID: <1317405384.2907.11.camel@mdlinux>
+Date: Fri, 30 Sep 2011 13:56:24 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: MySQL executable comment execution on MySQL slave server (from 2009)
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: ffmpeg/libav
 Content-Type: text/plain; charset=utf-8
 
-This is an old one that slipped through in 2009:
+On Fri, 2011-09-30 at 11:55 -0400, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+> > Hello,
+> > 
+> > I can't seem to find a CVE for the following:
+> > 
+> > http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
+> > 
+> > "Fix several security issues in matroskadec.c (MSVR-11-0080)."
+> > 
+> 
+> I can't figure these out, so let's use CVE-2011-3586 as one of those
+> "unknown security issues" catchall IDs.
 
-The executable comment capability in MySQL before 5.1.50 and 5.0.93
-can be used to execute arbitrary SQL commands as a privileged user.
-This occurs on MySQL servers configured as slaves in a MySQL
-replication environment where the slave server is running a newer
-version of MySQL than the server. The attacker would need the ability
-to add custom comments to a database on the MySQL server.
+My apologies, it seems that it's a dupe of CVE-2011-3504...
 
-http://bugs.mysql.com/bug.php?id=49124
-http://dev.mysql.com/doc/refman/5.1/en/news-5-1-50.html
-http://dev.mysql.com/doc/refman/5.0/en/news-5-0-93.html
+The MSVR reference in the commit is wrong.
 
--- 
+Marc.
 
--Kurt Seifried / Red Hat Security Response Team
 
