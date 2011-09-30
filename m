@@ -1,76 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/23/8
-Message-ID: <4ECD6048.4090802@redhat.com>
-Date: Wed, 23 Nov 2011 14:06:16 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/2
+Message-ID: <785033fe-2bbf-4880-b471-7dde04bc926a@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 10:36:04 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request --  1) Namazu v2.0.21: XSS flaw by processing HTTP cookies 2) Namazu v2.0.20: Stack-based buffer overflow by replacing blank "uri" field value
+Subject: Re: CVE request: heap-based buffer overflow in ldns
 Content-Type: text/plain; charset=utf-8
 
-On 11/23/2011 04:16 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   based on:
->   [1] https://bugs.gentoo.org/show_bug.cgi?id=391259
->   [2] http://www.namazu.org/security.html.en
->
-> the following two issues (when compared against [3]) doesn't
-> seem to have CVE ids yet:
-> I) There is cross-site scripting vulnerability for IE 6,7 in version
-> 2.0.20 or older.
->
->    References:
->    http://www.namazu.org/#stable
->    http://www.namazu.org/security.html#cross-site-scripting
->
->    Further issue details are described in:
->    https://bugzilla.redhat.com/show_bug.cgi?id=756348
->
->    Note: A CVE-2011-* identifier should be assigned for this.
->    =====
-Please use CVE-2011-4345 for this issue.
+Please use CVE-2011-3581 for this.
 
->
-> II) To 2.0.19 or a version that is older than 2.0.19, there is a
-> vulnerability of overrunning in the buffer. It recommends since Namazu
-> 2.0.20 to be used.
->
->    References:
->    http://www.namazu.org/#stable
->    http://www.namazu.org/security.html.en
->
->    Further issue details are described in:
->    https://bugzilla.redhat.com/show_bug.cgi?id=756341
->
->    Note: A CVE-2009-* identifier should be assigned to this.
->    =====
-
-Please use CVE-2009-5028 for this issue
->
-> Could you allocate two CVE ids (one CVE-2011-*, the other CVE-2009-*)
-> for these two flaws?
->
-> According to:
-> [3] http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=namazu
->
-> the last CVE id, assigned for Namazu, was CVE-2008-1468 for the
-> "XSS UTF-7" issue, which corresponds to:
->
-> "To 2.0.17 or a version that is older than 2.0.17 There is a weakness
-> of retrieval type by the misidentification of the encode automatic
-> operation recognition of Web browser that is the UTF-7 encoding. It
-> recommends since 2.0.18 as much as possible to be used." record
-> from [2].
->
-> Should you need any further details due these two, let me know.
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-
+Thanks.
 
 -- 
+    JB
 
--Kurt Seifried / Red Hat Security Response Team
-
+----- Original Message -----
+> Could a CVE be assigned to this flaw?  A boundary error in
+> ldns_rr_new_frm_str_internal() could lead to a heap-based buffer
+> overfow
+> when processing RR records.
+> 
+> http://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=403
+> https://secunia.com/advisories/46153/
+> https://bugzilla.redhat.com/show_bug.cgi?id=741024
+> 
+> Thanks.
+> 
+> --
+> Vincent Danen / Red Hat Security Response Team
+> 
