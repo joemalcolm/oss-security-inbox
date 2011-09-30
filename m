@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/10
-Message-ID: <20110519192445.GB2430@redhat.com>
-Date: Thu, 19 May 2011 13:24:45 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/9
+Message-ID: <1317405384.2907.11.camel@mdlinux>
+Date: Fri, 30 Sep 2011 13:56:24 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: DoS in apr due to CVE-2011-0419 fix
+Cc: security@...ntu.com, coley@...us.mitre.org
+Subject: Re: CVE Request: ffmpeg/libav
 Content-Type: text/plain; charset=utf-8
 
-* [2011-05-19 12:35:24 -0600] Vincent Danen wrote:
+On Fri, 2011-09-30 at 11:55 -0400, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+> > Hello,
+> > 
+> > I can't seem to find a CVE for the following:
+> > 
+> > http://git.videolan.org/gitweb.cgi?p=ffmpeg.git;a=commit;h=956c901c68eff78288f40e3c8f41ee2fa081d4a8
+> > 
+> > "Fix several security issues in matroskadec.c (MSVR-11-0080)."
+> > 
+> 
+> I can't figure these out, so let's use CVE-2011-3586 as one of those
+> "unknown security issues" catchall IDs.
 
->This was posted today:
->
->http://mail-archives.apache.org/mod_mbox/httpd-announce/201105.mbox/%3C4DD55092.3030403@apache.org%3E
->
->Essentially the fix for CVE-2011-0419 in apr caused another security
->flaw.
->
->Could a CVE be assigned to this?
->
->Thanks.
+My apologies, it seems that it's a dupe of CVE-2011-3504...
 
-Answering my own question.  This was pre-assigned CVE-2011-1928.
+The MSVR reference in the commit is wrong.
 
-Thanks.
+Marc.
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+
