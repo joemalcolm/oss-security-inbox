@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/8
-Message-ID: <4DECFE21.6010609@redhat.com>
-Date: Mon, 06 Jun 2011 18:19:45 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
-Subject: CVE Request -- vsftpd -- Do not create network namespace per connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/4
+Message-ID: <7ddd8d80-91f0-4203-95de-382c5935c433@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Fri, 30 Sep 2011 10:58:42 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: Typo3
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
 
-   It was found that vsftpd, Very Secure FTP daemon, when the network
-namespace (CONFIG_NET_NS) support was activated in the kernel, used to
-create a new network namespace per connection. A remote attacker could
-use this flaw to cause a memory pressure and denial of the vsftpd
-service.
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
-[2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+----- Original Message -----
+> Hi,
+> please assign CVE IDs for two new Typo3 issues:
+> 
+> 1. TYPO3-CORE-SA-2011-002: Potential SQL injection vulnerability in TYPO3
+> Core
+> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-002/
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641682
 
-This one being a bit tricky one -- from my understanding of the issue,
-vsftpd doesn't necessarily have a security flaw on its side. It's
-kernel issue / bug, which allows this to be used for vsftpd DoS:
-[4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
-[5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+Use CVE-2011-3583 for this.
 
-Short-term solution would be probably to address this on the vsftpd
-side, the long-term one then being to get this fixed in kernel.
+> 
+> 2. TYPO3-CORE-SA-2011-003: Improper error handling could lead to cache
+> flooding in TYPO3 Core
+> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-003/
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641683
+> 
 
-Though not sure, how it would be wrt to CVE identifier(s) assignment.
+Use CVE-2011-3584 for this.
 
-Steve, could you advice here?
+Thanks.
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+-- 
+    JB
