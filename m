@@ -1,31 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/5
-Message-ID: <1295444206.15884.32.camel@solo.digium.internal>
-Date: Wed, 19 Jan 2011 07:36:46 -0600
-From: Matthew Nicholson <mnicholson@...ium.com>
-To: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/01/1
+Message-ID: <20111001204800.GC30933@colt>
+Date: Sat, 1 Oct 2011 16:48:00 -0400
+From: Ethan Blanton <elb@....com>
+To: oss-security@...ts.openwall.com
+Cc: security@...gin.im
+Subject: libpurple vulnerability disclosure and fix
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-01-19 at 07:21 -0500, Steven M. Christey wrote:
-> On Wed, 19 Jan 2011, Jan Lieskovsky wrote:
-> 
-> >  Asterisk upstream yesterday released AST-2011-001, also with patches for 
-> > supported versions.
-> >  References:
-> >  [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
-> >  [2] http://seclists.org/fulldisclosure/2011/Jan/297
-> >  [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
-> >  [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
-> 
-> Use CVE-2011-0495
-> 
-> - Steve
+Hello all,
 
-Our website has been updated with this information.
+A libpurple vulnerability was made known to the Pidgin developers via
+our public bug tracker which affects the SILC protocol plugin and all
+software which uses SILC via libpurple.  The original identification
+of the vulnerability and bug report was made by Diego Bauche Madero
+from IOActive <diego.madero@...ctive.com>, and can be seen on the
+Pidgin bug tracker as Bug #14636:
 
--- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
+    http://developer.pidgin.im/ticket/14636
 
+The vulnerability lies in calling g_markup_escape_text() on strings
+which have not been verified as valid UTF-8.  This function is not
+required to do anything reasonable with invalid UTF-8, and indeed
+reads past the end of the string and will eventually segfault for
+certain sequences in some versions of Glib 2.  Because the behavior of
+this function is undefined, and depends on the particular version of
+Glib 2 in use, the complete ramifications of this bug are unknown.
+Remote crashing of a libpurple client by untrusted users via
+specifically crafted SILC messages is a verified vulnerability.
+
+This bug is believed to affect all releases of libpurple up to and
+including version 2.10.0.
+
+The correct fix for this bug is UTF-8 validation (and correction if
+necessary) of the incoming string before passing it to Glib.  A patch
+which provides this fix has been applied to the Pidgin sources in
+revision 7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8 and will appear in
+all future Pidgin releases.  For reference, it is:
+
+    http://developer.pidgin.im/viewmtn/revision/diff/be5e66abad2af29604bc794cc4c6600ab12751f3/with/7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8
+
+All packagers of libpurple (including monolithic Pidgin and/or finch
+packages) who have not already done so are encouraged to apply this
+change to their packages immediately.
+
+We would also like to request a CVE number for this issue.
+
+Any sensitive follow-ups to this issue, or any other Pidgin, finch, or
+libpurple issue, may be directed to security@...gin.im.
+
+Thank you,
+Ethan
+
+Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
