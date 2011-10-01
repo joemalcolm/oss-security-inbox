@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/12
-Message-ID: <AANLkTinVt1yLTS5UpiJwDXZoV6CmFn3atJZtgiV9OCAd@mail.gmail.com>
-Date: Tue, 22 Mar 2011 16:29:10 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/01/2
+Message-ID: <20111001211802.GA22063@openwall.com>
+Date: Sun, 2 Oct 2011 01:18:02 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: irda/decnet issues
+Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 22, 2011 at 4:03 PM, Josh Bressers <bressers@...hat.com> wrote:
->
->
-> ----- Original Message -----
->> Both are reported by Dan Rosenberg. Description of the issues can be
->> found in the following links:-
->>
->> irda: validate peer name and attribute lengths
->> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
->
-> Use CVE-2011-1180
->
->
->>
->> DECnet: need to validate user data and access data?
->> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
->>
->
-> Use CVE-2011-1181
->
+On Thu, Sep 29, 2011 at 03:25:40PM +0200, nicolas vigier wrote:
+> On Tue, 27 Sep 2011, Tavis Ormandy wrote:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=741606
+> > https://bugzilla.redhat.com/show_bug.cgi?id=741612
+> 
+> Patches on rpm git :
+> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=11a7e5d95a8ca8c7d4eaff179094afd8bb74fc3f
+> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=a48f0e20cbe2ababc88b2fc52fb7a281d6fc1656
 
-There is no DECnet security issue:
-http://marc.info/?l=linux-netdev&m=130078511604840&w=2
+Thanks!  Now there's also:
 
-> Thanks.
->
-> --
->    JB
->
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=30635dd4330a192fa2b6e202a0e2490eba599a93
+
+...and still no info on whether any of these issues were usable for more
+than just DoS?
+
+Alexander
