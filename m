@@ -1,42 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/8
-Message-ID: <20110725173035.GB3739@albatros>
-Date: Mon, 25 Jul 2011 21:30:35 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/01/1
+Message-ID: <20111001204800.GC30933@colt>
+Date: Sat, 1 Oct 2011 16:48:00 -0400
+From: Ethan Blanton <elb@....com>
 To: oss-security@...ts.openwall.com
-Cc: Jan Lieskovsky <jlieskov@...hat.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+Cc: security@...gin.im
+Subject: libpurple vulnerability disclosure and fix
 Content-Type: text/plain; charset=utf-8
 
-Solar,
+Hello all,
 
-On Mon, Jul 25, 2011 at 06:08 +0400, Solar Designer wrote:
-> diff -urp rpm-4.2.orig/lib/fsm.c rpm-4.2/lib/fsm.c
-> --- rpm-4.2.orig/lib/fsm.c	2003-03-03 19:38:32 +0000
-> +++ rpm-4.2/lib/fsm.c	2011-07-25 01:31:24 +0000
-> @@ -1990,26 +1990,54 @@ if (!(fsm->mapFlags & CPIO_ALL_HARDLINKS
->  	/*@...reached@*/ break;
->  
->      case FSM_UNLINK:
-> -	rc = Unlink(fsm->path);
-> +	{
-> +	    struct stat stb;
-> +	    int saved_errno;
-> +	    int saved_rc = lstat(fsm->path, &stb);
-> +	    if (!saved_rc && !S_ISLNK(stb.st_mode))
-> +		saved_rc = chmod(fsm->path, 0);
+A libpurple vulnerability was made known to the Pidgin developers via
+our public bug tracker which affects the SILC protocol plugin and all
+software which uses SILC via libpurple.  The original identification
+of the vulnerability and bug report was made by Diego Bauche Madero
+from IOActive <diego.madero@...ctive.com>, and can be seen on the
+Pidgin bug tracker as Bug #14636:
 
-If the directory containing the file was owned by nonroot, then the file
-could be overwritten with a symlink.  So, there is a race between
-lstat() and chmod(), which might lead to chmod'ing arbitrary files by
-directory owner.
+    http://developer.pidgin.im/ticket/14636
 
-Is it possible with these orphaned files (I'm not familiar with the code
-in question)?
+The vulnerability lies in calling g_markup_escape_text() on strings
+which have not been verified as valid UTF-8.  This function is not
+required to do anything reasonable with invalid UTF-8, and indeed
+reads past the end of the string and will eventually segfault for
+certain sequences in some versions of Glib 2.  Because the behavior of
+this function is undefined, and depends on the particular version of
+Glib 2 in use, the complete ramifications of this bug are unknown.
+Remote crashing of a libpurple client by untrusted users via
+specifically crafted SILC messages is a verified vulnerability.
 
+This bug is believed to affect all releases of libpurple up to and
+including version 2.10.0.
 
-Thanks,
+The correct fix for this bug is UTF-8 validation (and correction if
+necessary) of the incoming string before passing it to Glib.  A patch
+which provides this fix has been applied to the Pidgin sources in
+revision 7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8 and will appear in
+all future Pidgin releases.  For reference, it is:
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+    http://developer.pidgin.im/viewmtn/revision/diff/be5e66abad2af29604bc794cc4c6600ab12751f3/with/7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8
+
+All packagers of libpurple (including monolithic Pidgin and/or finch
+packages) who have not already done so are encouraged to apply this
+change to their packages immediately.
+
+We would also like to request a CVE number for this issue.
+
+Any sensitive follow-ups to this issue, or any other Pidgin, finch, or
+libpurple issue, may be directed to security@...gin.im.
+
+Thank you,
+Ethan
+
+Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
