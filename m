@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/6
-Message-ID: <1323976628.3281.82.camel@localhost>
-Date: Thu, 15 Dec 2011 13:17:08 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: icecast-dev@...h.org
-Cc: security@...itz-naumann.com, security@...ntu.com, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: RE: [Icecast-dev] Security issue in icecast
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/01/2
+Message-ID: <20111001211802.GA22063@openwall.com>
+Date: Sun, 2 Oct 2011 01:18:02 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: rpm/librpm/rpm-python memory corruption pre-verification
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-12-15 at 20:31 +0200, Thomas.Rucker@...to.com wrote:
-> *snip*
-> Sending this to a public mailing list might not have been the smartest idea.
-
-I considered this a low impact vulnerability and therefore followed the
-procedures for reporting to oss-security. Additionally, I looked for a
-security contact at http://www.icecast.org/contact.php but could not
-find one, so I sent to the list since it said this was a valid way to
-submit bugs. If the issue were more severe, I would have followed a
-different procedure. I apologize for the inconvenience.
-
-> We're already aware of Moritz's finding and are working on a fix.
+On Thu, Sep 29, 2011 at 03:25:40PM +0200, nicolas vigier wrote:
+> On Tue, 27 Sep 2011, Tavis Ormandy wrote:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=741606
+> > https://bugzilla.redhat.com/show_bug.cgi?id=741612
 > 
-> Expect icecast release 2.3.3 soon.
+> Patches on rpm git :
+> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=11a7e5d95a8ca8c7d4eaff179094afd8bb74fc3f
+> http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=a48f0e20cbe2ababc88b2fc52fb7a281d6fc1656
 
-Glad to hear. Thanks!
+Thanks!  Now there's also:
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+http://rpm.org/gitweb?p=rpm.git;a=commitdiff;h=30635dd4330a192fa2b6e202a0e2490eba599a93
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+...and still no info on whether any of these issues were usable for more
+than just DoS?
+
+Alexander
