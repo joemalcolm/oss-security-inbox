@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/1
-Message-ID: <4E6A385A.4030904@redhat.com>
-Date: Fri, 09 Sep 2011 18:01:30 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/1
+Message-ID: <4E898853.4010305@redhat.com>
+Date: Mon, 03 Oct 2011 12:02:59 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Matthew Barnes <mbarnes@...hat.com>, Milan Crha <mcrha@...hat.com>
-Subject: CVE Request -- evolution -- Uses insecure (non-SSL) connection when storing the sent message into the Sent folder
+To: "Steven M. Christey" <coley@...us.mitre.org>, Juliusz Chroboczek <jch@....jussieu.fr>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
 Hello Josh, Steve, vendors,
 
-   it was found that Evolution, mail and calendar client, used insecure
-(non-SSL) connection when attempting to store sent email message into
-the Sent folder, when the Sent folder was located on the remote server.
-An attacker on the adjacent network, able to intercept the underlying
-communication could use this flaw to obtain login credentials of the
-victim.
+   a denial of service flaw was found in the way Polipo, a lightweight
+caching web proxy, processed certain HTTP POST / PUT requests. If
+polipo was configured to allow remote client connections and particular
+host was allowed to connect to polipo server instance, a remote
+attacker could use this flaw to cause denial of service (polipo daemon
+abort due to assertion failure) via specially-crafted HTTP POST / PUT
+request.
 
 References:
-[1] https://bugzilla.gnome.org/show_bug.cgi?id=648277
-     (upstream bug report)
-[2] 
-http://git.gnome.org/browse/evolution-data-server/commit/?id=e0ac4d79705c
-     (upstream patch)
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=697904
-[4] https://bugzilla.redhat.com/show_bug.cgi?id=707848
+[1] http://seclists.org/fulldisclosure/2011/Oct/10
+[2] https://bugs.gentoo.org/show_bug.cgi?id=385307
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=742891
 
-Could you allocate a CVE id for this issue?
+Could you allocate a CVE id for this?
 
 Thank you && Regards, Jan.
 --
