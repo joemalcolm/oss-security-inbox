@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/2
-Message-ID: <822284632.282461.1296749025708.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Feb 2011 11:03:45 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: glibc CVE-2010-3847 fix regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/1
+Message-ID: <4E898853.4010305@redhat.com>
+Date: Mon, 03 Oct 2011 12:02:59 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>, Juliusz Chroboczek <jch@....jussieu.fr>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0536.
+Hello Josh, Steve, vendors,
 
-Thanks.
+   a denial of service flaw was found in the way Polipo, a lightweight
+caching web proxy, processed certain HTTP POST / PUT requests. If
+polipo was configured to allow remote client connections and particular
+host was allowed to connect to polipo server instance, a remote
+attacker could use this flaw to cause denial of service (polipo daemon
+abort due to assertion failure) via specially-crafted HTTP POST / PUT
+request.
 
--- 
-    JB
+References:
+[1] http://seclists.org/fulldisclosure/2011/Oct/10
+[2] https://bugs.gentoo.org/show_bug.cgi?id=385307
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=742891
 
------ Original Message -----
-> Hi!
-> 
-> It seems this does not have any CVE assigned yet...
-> 
-> The original patch for CVE-2010-3847, as used by multiple vendors,
-> introduced a bug in the way $ORIGIN is (not-)expanded when used in ELF
-> R*PATH. This could allow a local user to escalate privileges via
-> privileged program using a library with $ORIGIN in R*PATH (such as
-> certain glibc iconv modules).
-> 
-> There are at least Debian and Ubuntu advisories addressing this issue:
-> http://lists.debian.org/debian-security-announce/2011/msg00005.html
-> https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-January/001226.html
-> 
-> Note that privileged programs that themselves have $ORIGIN in R*PATH
-> could have been abused before and are not addressed in the above
-> advisories. It's unclear if any distro provides any privileged program
-> with such R*PATH though.
-> 
-> --
-> Tomas Hoger / Red Hat Security Response Team
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
