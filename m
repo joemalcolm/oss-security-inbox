@@ -1,64 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/5
-Message-ID: <Pine.GSO.4.64.1108151359420.4004@faron.mitre.org>
-Date: Mon, 15 Aug 2011 14:02:21 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/2
+Message-ID: <4E89AB0B.2090200@kde.org>
+Date: Mon, 03 Oct 2011 08:31:07 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com,  Tim Brown <timb@...-dimension.org.uk>
+Subject: KDE Security Advisory 20111003-1 published
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-This was a strange one.  Since it's pretty clear there are two 
-implementations (due to 2 different languages, and 2 upstream 
-maintainers), we treated these as separate codebases and went with two 
-separate CVEs.  (You could argue this was the same core design problem, 
-but this issue wasn't due to a protocol that required such behavior.)
+KDE Security Advisory 20111003-1 has been published and is available at
+http://www.kde.org/info/security/advisory-20111003-1.txt.
 
-See below.
+This advisory concerns input validation failures affecting kdelibs and
+Rekonq, due to using the default QLabel::AutoText behavior to display
+externally-provided strings. This can be abused to show certificate
+dialogs with spoofed Common Names (CNs), among other things.
 
-- Steve
+The vulnerability and technical information about the exploit were
+provided by Tim Brown of Nth Dimension. We thank them for their
+responsible disclosure and cooperative handling of the matter.
 
+The relevant CVEs are: CVE-2011-3365 KSSL and CVE-2011-3366 Rekonq
 
-======================================================
-Name: CVE-2011-2697
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2697
-Reference: MLIST:[oss-security] 20110713 CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/13/3
-Reference: MLIST:[oss-security] 20110718 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/18/3
-Reference: MLIST:[oss-security] 20110728 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/28/1
-Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=698451
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=721001
-Reference: XF:hplinuxprinting-foomaticriphplip-code-exec(68993)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/68993
-
-foomatic-rip-hplip in HP Linux Imaging and Printing (HPLIP) 3.11.5
-allows remote attackers to execute arbitrary code via a crafted
-*FoomaticRIPCommandLine field in a .ppd file.
+Thanks,
+Jeff
 
 
-======================================================
-Name: CVE-2011-2964
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2964
-Reference: MLIST:[oss-security] 20110713 CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/13/3
-Reference: MLIST:[oss-security] 20110718 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/18/3
-Reference: MLIST:[oss-security] 20110728 Re: CVE Request: hplip/foomatic-filters
-Reference: URL:http://www.openwall.com/lists/oss-security/2011/07/28/1
-Reference: CONFIRM:https://bugzilla.novell.com/show_bug.cgi?id=698451
-Reference: CONFIRM:https://bugzilla.redhat.com/show_bug.cgi?id=721001
-Reference: REDHAT:RHSA-2011:1110
-Reference: URL:http://www.redhat.com/support/errata/RHSA-2011-1110.html
-Reference: XF:foomatic-foomatic-code-execution(68994)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/68994
-
-foomaticrip.c in foomatic-rip in foomatic-filters in Foomatic 4.0.6
-allows remote attackers to execute arbitrary code via a crafted
-*FoomaticRIPCommandLine field in a .ppd file, a different
-vulnerability than CVE-2011-2697.
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
