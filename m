@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/7
-Message-ID: <20110411171917.GL714@dojo.mi.org>
-Date: Mon, 11 Apr 2011 13:19:17 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/4
+Message-ID: <ace357d3-def6-4a4a-8e2f-69bef3a481d6@zmail02.collab.prod.int.phx2.redhat.com>
+Date: Mon, 03 Oct 2011 18:07:50 -0400 (EDT)
+From: Ramon de C Valle <rcvalle@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pure-ftpd STARTTLS command injection / new CVE?
+Subject: Request for CVE Identifier for perl code injection vulnerability in Digest->new()
 Content-Type: text/plain; charset=utf-8
 
-:http://www.pureftpd.org/project/pure-ftpd/news
-:
-:states that pure-ftpd is affected by the same STARTTLS
-:injection bug as postifx's CVE-2011-0411.
-:
-:Is this CVE postfix-specific or can it be used for
-:pure-ftpd as well? If needed, can someone assign a new CVE?
+Hi,
 
-It should get its own CVE assignment.  Other products with the
-same STARTTLS issue have gotten unique CVE assignments for them
--- see CVE-2011-143[012].
+I'd like to request a CVE Identifier for the following bug:
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"You can't destroy everything.  Where would you sit?"               -The Tick
+https://bugzilla.redhat.com/show_bug.cgi?id=743010
 
-Content of type "application/pgp-signature" skipped
+Thanks,
+--
+Ramon de C Valle / Red Hat Security Response Team
+
