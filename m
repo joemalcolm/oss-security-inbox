@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/4
-Message-ID: <20111028100225.30092af1@laverne>
-Date: Fri, 28 Oct 2011 10:02:25 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: serendipity before 1.6 backend XSS in karma plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/2
+Message-ID: <4E89AB0B.2090200@kde.org>
+Date: Mon, 03 Oct 2011 08:31:07 -0400
+From: Jeff Mitchell <mitchell@....org>
+To: oss-security@...ts.openwall.com,  Tim Brown <timb@...-dimension.org.uk>
+Subject: KDE Security Advisory 20111003-1 published
 Content-Type: text/plain; charset=utf-8
 
-http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+Hello,
 
-"Fixes a backend XSS issue in the karma plugin and media database
-filtering, thanks to Stefan Schurtz!"
+KDE Security Advisory 20111003-1 has been published and is available at
+http://www.kde.org/info/security/advisory-20111003-1.txt.
 
-If anyone asks: Backend XSS are a security issue in multiuser webapps,
-one less priviliged user can use them to gain more privilege.
+This advisory concerns input validation failures affecting kdelibs and
+Rekonq, due to using the default QLabel::AutoText behavior to display
+externally-provided strings. This can be abused to show certificate
+dialogs with spoofed Common Names (CNs), among other things.
 
-Please assign CVE.
+The vulnerability and technical information about the exploit were
+provided by Tim Brown of Nth Dimension. We thank them for their
+responsible disclosure and cooperative handling of the matter.
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+The relevant CVEs are: CVE-2011-3365 KSSL and CVE-2011-3366 Rekonq
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thanks,
+Jeff
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
