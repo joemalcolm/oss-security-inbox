@@ -1,33 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/8
-Message-ID: <682433666.58305.1297863848820.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 16 Feb 2011 08:44:08 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/4
+Message-ID: <ace357d3-def6-4a4a-8e2f-69bef3a481d6@zmail02.collab.prod.int.phx2.redhat.com>
+Date: Mon, 03 Oct 2011 18:07:50 -0400 (EDT)
+From: Ramon de C Valle <rcvalle@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request - kernel: bridge br_multicast NULL pointer dereference
+Subject: Request for CVE Identifier for perl code injection vulnerability in Digest->new()
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+I'd like to request a CVE Identifier for the following bug:
 
------ Original Message -----
-> "Somewhere along the line the NULL check in br_mdb_ip_get went AWOL,
-> causing crashes when we receive an IGMP packet with no multicast table
-> allocated.
-> 
-> This patch restores it and ensures all br_mdb_*_get functions use it."
-> 
-> http://git.kernel.org/linus/7f285fa78d4b81b8458f05e77fb6b46245121b4e
-> 
-> Did a quick check: net/bridge/br_multicast.c was introduced in
-> eb1d1641
-> (2.6.34-rc1), the check was removed in 8ef2a9a5 (v2.6.35-rc1), and
-> subsequently restored in 7f285fa78d (v2.6.35-rc5).
-> 
+https://bugzilla.redhat.com/show_bug.cgi?id=743010
 
-Please use CVE-2011-0709.
+Thanks,
+--
+Ramon de C Valle / Red Hat Security Response Team
 
-Thanks.
-
--- 
-    JB
