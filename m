@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/1
-Message-ID: <20110622071707.GA4282@albatros>
-Date: Wed, 22 Jun 2011 11:17:07 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/3
+Message-ID: <1317659212.8058.24.camel@localhost>
+Date: Mon, 03 Oct 2011 11:26:52 -0500
+From: Jamie Strandboge <jamie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: taskstats local DoS
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Security issue in OpenStack (nova)
 Content-Type: text/plain; charset=utf-8
 
-"Currently a single process may register exit handlers unlimited times.
-It may lead to a bloated listeners chain and very slow process terminations.
-E.g. after 10KK sent TASKSTATS_CMD_ATTR_REGISTER_CPUMASKs ~300 Mb of
-kernel memory is stolen for the handlers chain and "time id" shows 2-7
-seconds instead of normal 0.003.  It makes it possible to exhaust all
-kernel memory and to eat much of CPU time by triggerring numerous exits
-on a single CPU.
+Scott Moser discovered that OpenStack's nova did not do sanity checking
+when importing qcow2 files, which could result in unintended access to
+the host filesystem via qemu's backing store functionality.
+CVE-2011-3147 has been assigned for this issue. For more information,
+please see:
 
-The patch limits the number of times a single process may register
-itself on a single CPU to one."
-
-It makes it possible for unprivileged user eat kernel memory and CPU
-without triggering OOM killer.
-
-Was introduced in f9fd8914c1acca0d98b69d831b128d5b52f03c51.
-
-http://lists.openwall.net/linux-kernel/2011/06/16/605
-
-
-Thanks,
+https://launchpad.net/bugs/853330
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Jamie Strandboge             | http://www.canonical.com
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
