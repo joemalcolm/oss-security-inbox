@@ -1,44 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/21/4
-Message-ID: <20110421140130.GA7825@albatros>
-Date: Thu, 21 Apr 2011 18:01:31 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: buffer overflow and DoS issues in agp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/9
+Message-ID: <f4401ed0-7452-4a74-b9c9-76d4d24d51d5@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 04 Oct 2011 14:19:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Ramon de C Valle <rcvalle@...hat.com>
+Subject: Re: Request for CVE Identifier for perl code injection vulnerability in Digest->new()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-https://lkml.org/lkml/2011/4/14/293
-
-"pg_start is copied from userspace on AGPIOC_BIND and AGPIOC_UNBIND ioctl
-cmds of agp_ioctl() and passed to agpioc_bind_wrap().  As said in the
-comment, (pg_start + mem->page_count) may wrap in case of AGPIOC_BIND,
-and it is not checked at all in case of AGPIOC_UNBIND.  As a result, user
-with sufficient privileges (usually "video" group) may generate either
-local DoS or privilege escalation."
 
 
-https://lkml.org/lkml/2011/4/14/294
-https://lkml.org/lkml/2011/4/19/400
+----- Original Message -----
+> Hi,
+> 
+> I'd like to request a CVE Identifier for the following bug:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=743010
+> 
 
-"page_count is copied from userspace.  agp_allocate_memory() tries to
-check whether this number is too big, but doesn't take into account the
-wrap case.  Also agp_create_user_memory() doesn't check whether
-alloc_size is calculated from num_agp_pages variable without overflow.
-This may lead to allocation of too small buffer with following buffer
-overflow.
+Please use CVE-2011-3597
 
-Another problem in agp code is not addressed in the patch - kernel memory
-exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls).  It is not checked
-whether requested pid is a pid of the caller (no check in agpioc_reserve_wrap()).
-Each allocation is limited to 16KB, though, there is no per-process limit.
-This might lead to OOM situation, which is not even solved in case of the
-caller death by OOM killer - the memory is allocated for another (faked)
-process."
+Thanks.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    JB
