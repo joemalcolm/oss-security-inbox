@@ -1,27 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/1
-Message-ID: <4D7D6349.8020004@redhat.com>
-Date: Mon, 14 Mar 2011 08:37:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/5
+Message-ID: <20111004151657.GA29894@openwall.com>
+Date: Tue, 4 Oct 2011 19:16:57 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <michael.s.gilbert@...il.com>, mark@...gant.net, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Please REJECT CVE-2008-2956
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On 03/14/2011 12:12 AM, Michael Gilbert wrote:
-> According to upstream, this is not a real issue.  See the following for
-> discussion:
-> http://developer.pidgin.im/ticket/11470
-> https://bugzilla.redhat.com/show_bug.cgi?id=453739
-> http://bugs.debian.org/488632
->
-> Please REJECT this issue.
->
-> Thanks,
-> Mike
+On Tue, Oct 04, 2011 at 09:24:29AM -0500, Tyler Hicks wrote:
+> Hello - I recently joined the Ubuntu Security team and request
+> membership to the closed linux-distros list so that I may participate
+> fully in reporting and fixing vulnerabilities in Ubuntu and FOSS.
 
-Cc'ed Steve.
+I've just subscribed Tyler.
 
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Alexander
