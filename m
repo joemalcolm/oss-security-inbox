@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/3
-Message-Id: <201108111026.36876.thomas@suse.de>
-Date: Thu, 11 Aug 2011 10:26:36 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/4
+Message-ID: <20111004142428.GA32532@boyd>
+Date: Tue, 4 Oct 2011 09:24:29 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Tomas Hoger <thoger@...hat.com>
-Subject: Re: CVE request: libmodplug: multiple vulnerabilities reported in <= 0.8.8.3
+Subject: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Am Mittwoch, 10. August 2011, 20:26:46 schrieb Tomas Hoger:
-> On Wed, 10 Aug 2011 10:27:18 +0200 Thomas Biege wrote:
-> 
-> > The 2nd issue seems to be CVE-2011-1574 other seem to be untracked.
-> 
-> ...
-> 
-> > 2) Boundary errors within the "CSoundFile::ReadS3M()" function
-> > (src/load_s3m.cpp) when processing S3M files can be exploited to cause
-> > stack-based buffer overflows by tricking a user into opening a
-> > specially crafted S3M file.
-> 
-> Any specific reason to believe these two are the same?  CVE-2011-1574
-> links:
-> http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=aecef259828a89bb00c2e6f78e89de7363b2237b
-> 
-> while commit related to SA45131/2 seems to be this one:
-> 
-> > [3]
-> > http://modplug-xmms.git.sourceforge.net/git/gitweb.cgi?p=modplug-xmms/modplug-xmms;a=commitdiff;h=f4e5295658fff000379caa122e75c9200205fe20
+Hello - I recently joined the Ubuntu Security team and request
+membership to the closed linux-distros list so that I may participate
+fully in reporting and fixing vulnerabilities in Ubuntu and FOSS.
 
-Then this one also needs a new CVE-ID.
+Here is my GPG fingerprint:
 
+pub   4096R/AA02C70A 2011-09-01
+      Key fingerprint = 3E05 3E70 DE40 B13A DE91  3E7E D692 003D AA02 C70A
+uid                  Tyler Hicks <tyhicks@...icks.net>
+uid                  Tyler Hicks <tyhicks@...nel.org>
+uid                  Tyler Hicks <tyhicks@...il.com>
+uid                  Tyler Hicks <tyhicks@...onical.com>
+uid                  Tyler Hicks <tyler.hicks@...onical.com>
+uid                  Tyler Hicks <tyhicks@...ntu.com>
+uid                  Tyler Hicks <tyler.hicks@...ntu.com>
+uid                  Tyler Hicks <tyhicks@...edu>
+sub   4096R/CB16CDD4 2011-09-01
 
-Thanks for clarifying this,
-Thomas
+I appreciate your consideration!
 
+Tyler
 
--- 
-Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 21284 (AG Nürnberg
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
