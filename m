@@ -1,29 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/24/5
-Message-ID: <4EF64D5D.90605@redhat.com>
-Date: Sun, 25 Dec 2011 06:08:29 +0800
-From: Eugene Teo <eteo@...hat.com>
-To: kseifried@...hat.com
-CC: oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/10
+Message-ID: <da870ab4-5c14-4a75-8001-d46dbdbd1a05@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 04 Oct 2011 14:50:19 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- phpPgAdmin -- Multiple XSS flaws fixed in v5.0.3
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 04:52 AM, Kurt Seifried wrote:
-> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
->> Hi,
->> there were a two Linux-related CVE requests/discussions, which
->> didn't end up in an assignment:
->>
->> 1: rose: Add length checks to CALL_REQUEST parsing
->> e0bccd315db0c2f919e7fcf9cb60db21d9986f52 in mainline
->>
->> It was decided that this should be split, but without a final
->> resulting CVE assignment:
->> http://www.openwall.com/lists/oss-security/2011/04/12/1
+Please use CVE-2011-3598
+
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> Can anyone shed more light on this for me? (links to fixes/etc.?).
-
-I have forwarded you the email thread. This patch refers to the changes
-made by Ben Hutchings.
-
-Eugene
+>    multiple cross-site scripting (XSS) flaws were reported in
+>    phpPgAdmin:
+> 
+> 1) the 'title' argument of a particular web page was not sanitized
+>     properly prior displaying the page header,
+> 
+> 2) the return ULR ('return_url') and return link name ('return_desc')
+>     were not sanitized properly prior displaying the requested page
+>     data.
+> 
+> A remote attacker could provide a specially-crafted URL, which once
+> visited by an unsuspecting phpPgAdmin user could lead to arbitrary
+> HTML
+> or web script execution.
+> 
+> References:
+> [1] https://secunia.com/advisories/46248/
+> [2] https://bugs.gentoo.org/show_bug.cgi?id=385505
+> [3] http://phppgadmin.sourceforge.net/doku.php?id=download
+> [4]
+> http://sourceforge.net/mailarchive/forum.php?thread_name=4E897F6C.90905%40free.fr&forum_name=phppgadmin-news
+> 
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=743205
+> 
+> Upstream patch:
+> [6]
+> https://github.com/phppgadmin/phppgadmin/commit/1df248203de055f97e092b50b1dd9643ccb73842
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
