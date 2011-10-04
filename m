@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/13
-Message-ID: <20110705093636.GA18917@suse.de>
-Date: Tue, 5 Jul 2011 11:36:36 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/8
+Message-ID: <cf622826-4695-4ee2-9a6d-e9ba08523080@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 04 Oct 2011 14:10:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
+Cc: Juliusz Chroboczek <jch@....jussieu.fr>
+Subject: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 03:09:06AM +0400, Solar Designer wrote:
-> Hi,
-> 
-> I'd be interested in more detail on this bug.  So far, the closest to a
-> description of the bug that I saw is this:
-> 
-> http://lists.openwall.net/full-disclosure/2011/07/01/4
-> 
-> but it's not enough.
-> 
-> I'd like to learn not only on my own, but also on others' mistakes. ;-)
-> And for this purpose it does not matter how old the software is and
-> whether it is still supported or not.
-> 
-> Colin - any comments from you?  I realize the bug is not yours, but
-> perhaps you're one of the few people who have figured it out now, for a
-> reason similar to mine.
-> 
-> Red Hat - a lesson for you might be to stop linking sshd against so
-> many libraries (over 20 last time I checked).  Don't wait until your
-> remote root, really. ;-)  Yes, this means dropping some functionality,
+Please use CVE-2011-3596
 
-What a true word, probably not just for RedHat.
-
--s
-
+Thanks.
 
 -- 
+    JB
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+>    a denial of service flaw was found in the way Polipo, a
+>    lightweight
+> caching web proxy, processed certain HTTP POST / PUT requests. If
+> polipo was configured to allow remote client connections and
+> particular
+> host was allowed to connect to polipo server instance, a remote
+> attacker could use this flaw to cause denial of service (polipo
+> daemon
+> abort due to assertion failure) via specially-crafted HTTP POST / PUT
+> request.
+> 
+> References:
+> [1] http://seclists.org/fulldisclosure/2011/Oct/10
+> [2] https://bugs.gentoo.org/show_bug.cgi?id=385307
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=742891
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
