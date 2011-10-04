@@ -1,21 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/5
-Message-ID: <4E0D8CBA.8050309@redhat.com>
-Date: Fri, 01 Jul 2011 17:00:42 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: tomoyo: oops in tomoyo_mount_acl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/3
+Message-ID: <4E8AF66C.70700@redhat.com>
+Date: Tue, 04 Oct 2011 14:05:00 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE-2011-3979 being duplicate of CVE-2011-3352
 Content-Type: text/plain; charset=utf-8
 
-On 06/30/2011 06:13 PM, Petr Matousek wrote:
-> Description of problem:
-> In tomoyo_mount_acl() since 2.6.36, kern_path() was called without
-> checking dev_name != NULL. As a result, an unprivileged user can
-> trigger oops by issuing mount(NULL, "/", "ext3", 0, NULL) request.
-> 
-> Upstream fix:
-> 4e78c724d47e2342aa8fde61f6b8536f662f795f
+Hello Steve, Josh,
 
-Use CVE-2011-2518.
+   originally the CVE identifier of CVE-2011-3352 has been assigned:
+   [1] http://www.openwall.com/lists/oss-security/2011/09/09/5
 
-Eugene
+has been assigned to the following flaw:
+[2] http://www.securityfocus.com/archive/1/519565/30/0/threaded
+[3] https://www.htbridge.ch/advisory/xss_in_zikula.html
+
+Later CVE-2011-3979 has been assigned:
+
+Name: CVE-2011-3979
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3979 [Open URL]
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20111003
+Category:
+Reference: BUGTRAQ:20110907 XSS in Zikula
+Reference: 
+URL:http://www.securityfocus.com/archive/1/archive/1/519565/100/0/threaded 
+[Open URL]
+Reference: MISC:https://www.htbridge.ch/advisory/xss_in_zikula.html 
+[Open URL]
+Reference: 
+CONFIRM:http://community.zikula.org/index.php?module=News&func=display&sid=3075 
+[Open URL]
+Reference: BID:49491
+Reference: URL:http://www.securityfocus.com/bid/49491 [Open URL]
+Reference: OSVDB:75226
+Reference: URL:http://osvdb.org/75226 [Open URL]
+Reference: SECUNIA:45884
+Reference: URL:http://secunia.com/advisories/45884 [Open URL]
+Reference: XF:zikulaapplication-index-xss(69644)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/69644 [Open URL]
+
+Cross-site scripting (XSS) vulnerability in
+ztemp/view_compiled/Theme/theme_admin_setasdefault.php in the theme
+module in Zikula Application Framework 1.3.0 build 3168, 1.2.7, and
+probably other versions allows remote attackers to inject arbitrary
+web script or HTML via the themename parameter in the setasdefault
+action to index.php.
+
+The security focus link URL in the second assignment is slightly
+different, but the content of that post seems to be the same.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3352
+suggests there are three ways / attack vectors, how to exploit this:
+a) via specially-crafted 'themename' parameter in 'setasdefault.php'
+    script,
+b) via specially-crafted 'themename' parameter in modify theme script
+    and,
+c) via specially-crafted 'themename' parameter in delete theme script.
+
+So since CVE-2011-3979 description explicitly mentions 'set as default',
+should this (CVE-2011-3979) identifier be considered to refer only to
+'set as default' case (a) in the above) or are the CVE-2011-3352 and
+CVE-2011-3979 just CVE duplicates for the same issue?
+
+If the latter holds, which is the correct one (assuming the higher one
+is valid, thus CVE-2011-3979) to use for issue referencing purposes?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
