@@ -1,85 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/2
-Message-ID: <CAPYM6VyPBhgLUHc4X8bchXTCEhLuwxnTBLXM_x-FbFBxOy-z1g@mail.gmail.com>
-Date: Thu, 18 Aug 2011 14:15:59 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/8
+Message-ID: <cf622826-4695-4ee2-9a6d-e9ba08523080@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 04 Oct 2011 14:10:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: WebsiteBaker 2.8.1 <= Cross Site Request Forgery (CSRF) Vulnerability
+Cc: Juliusz Chroboczek <jch@....jussieu.fr>
+Subject: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Please use CVE-2011-3596
 
-WebsiteBaker 2.8.1 and lower versions are vulnerable to Cross Site
-Request Forgery (CSRF).
+Thanks.
 
+-- 
+    JB
 
-2. BACKGROUND
-
-WebsiteBaker is a PHP-based Content Management System (CMS) designed
-with one goal in mind: to enable its users to produce websites with
-ease.
-
-
-3. VULNERABILITY DESCRIPTION
-
-WebsiteBaker 2.8.1 and lower versions contain a flaw that allows a
-remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
-exists because the application does not require multiple steps or
-explicit confirmation for sensitive transactions for majority of
-administrator functions such as adding new user. By using a crafted
-URL, an attacker may trick the victim into visiting to his web page to
-take advantage of the trust relationship between the authenticated
-victim and the application. Such an attack could trick the victim into
-executing arbitrary commands in the context of their session with the
-application, without further prompting or verification.
-
-
-4. VERSIONS AFFECTED
-
-2.8.1 <=
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-The following request adds an administrator.
-
-[REQUEST]
-POST /admin/users/add.php HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 193
-
-user_id=&username_fieldname=username_abcdefg&username_abcdefg=test&password=test&password2=test&display_name=test&email=tester%40yehg.net&home_folder=&groups%5B%5D=1&active%5B%5D=1&submit=Add
-[/REQUEST]
-
-
-6. SOLUTION
-
-Upgrade to 2.8.2 or higher
-
-
-7. VENDOR
-
-WebsiteBaker Org e. V.
-http://www.websitebaker2.org/
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2011-01-26: notified vendor
-2011-08-01: vendor released fix
-2011-08-13: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_cross_site_request_forgery
-
-
-#yehg [2011-08-13]
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+>    a denial of service flaw was found in the way Polipo, a
+>    lightweight
+> caching web proxy, processed certain HTTP POST / PUT requests. If
+> polipo was configured to allow remote client connections and
+> particular
+> host was allowed to connect to polipo server instance, a remote
+> attacker could use this flaw to cause denial of service (polipo
+> daemon
+> abort due to assertion failure) via specially-crafted HTTP POST / PUT
+> request.
+> 
+> References:
+> [1] http://seclists.org/fulldisclosure/2011/Oct/10
+> [2] https://bugs.gentoo.org/show_bug.cgi?id=385307
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=742891
+> 
+> Could you allocate a CVE id for this?
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
