@@ -1,51 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/09/9
-Message-Id: <20110209232644.TCSNYOGJPRBGPJ@hackinthebox.org>
-Date: Wed, 9 Feb 2011 23:26:44 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB Magazine Issue 005 Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/9
+Message-ID: <f4401ed0-7452-4a74-b9c9-76d4d24d51d5@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 04 Oct 2011 14:19:26 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Ramon de C Valle <rcvalle@...hat.com>
+Subject: Re: Request for CVE Identifier for perl code injection vulnerability in Digest->new()
 Content-Type: text/plain; charset=utf-8
 
-We are proud to announce the immediate availability of HITB Magazine
-Issue 005 - The first HITB Magazine release for 2011!
 
-HITB Magazine
-=============
-http://magazine.hackinthebox.org/
 
-Direct Link
-===========
-http://magazine.hackinthebox.org/issues/HITB-Ezine-Issue-005.pdf
+----- Original Message -----
+> Hi,
+> 
+> I'd like to request a CVE Identifier for the following bug:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=743010
+> 
 
-Just over a year has passed since Issue 001 and 2010 was definitely a
-great year for our humble magazine with over a 100,000 downloads of the
-4 issues released which included 24 unique technical articles authored
-or co-authored by over 30 security experts from around the world! Since
-April 2010, readers have also had an opportunity to get familiar with
-prominent figures from the IT security industry thanks to the new
-"Interviews" section.
+Please use CVE-2011-3597
 
-As always, feedback of any kind is greatly appreciated so don't hesitate
-to drop us a line if you have any suggestions or comments on the issue.
+Thanks.
 
-Stay tuned for Issue 006 which will be released in May 2011 in
-conjunction with our 2nd annual HITB Security Conference in Europe,
-HITB2011 - Amsterdam!
-
-See you there and in the meantime, enjoy the issue!
-
-- The HITB Editorial Team
-
----
-Hafez Kamal
-HITB Crew
-Hack in The Box (M) Sdn. Bhd.
-Suite 26.3, Level 26, Menara IMC,
-No. 8 Jalan Sultan Ismail,
-50250 Kuala Lumpur,
-Malaysia
-
-Tel: +603-20394724
-Fax: +603-20318359
-
+-- 
+    JB
