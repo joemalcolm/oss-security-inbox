@@ -1,102 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/16/1
-Message-ID: <4EEBB81C.3020108@redhat.com>
-Date: Fri, 16 Dec 2011 14:29:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/5
+Message-ID: <20111004151657.GA29894@openwall.com>
+Date: Tue, 4 Oct 2011 19:16:57 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: TYPO3  typo3-core-sa-2011-004
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2011-004/
+On Tue, Oct 04, 2011 at 09:24:29AM -0500, Tyler Hicks wrote:
+> Hello - I recently joined the Ubuntu Security team and request
+> membership to the closed linux-distros list so that I may participate
+> fully in reporting and fixing vulnerabilities in Ubuntu and FOSS.
 
-http://typo3.org/fileadmin/security-team/bug32571/32571.diff
+I've just subscribed Tyler.
 
-Please use CVE-2011-4614 for this issue.
-
-
-    TYPO3 Security Bulletin TYPO3-CORE-SA-2011-004: Remote Code
-    Execution in TYPO3 Core
-
-*Component Type:* TYPO3 Core
-
-*Affected Versions:* 4.5.0 up to 4.5.8, 4.6.0 and 4.6.1 (+ development
-releases of 4.7 branch)
-
-*Vulnerability Types:* Remote Code Execution
-
-*Overall Severity:* Critical
-
-*Release Date:* December 16, 2011
-
- 
-
- 
-
-
-      Vulnerable subcomponent: TYPO3 workspaces
-
-*Vulnerability Type:* Remote Code Execution
-
-*Severity:* Critical
-
-*Suggested CVSS v2.0:* AV:N/AC:M/Au:N/C:C/I:C/A:C/E:F/RL:OF/RC:C
-<http://jvnrss.ise.chuo-u.ac.jp/jtg/cvss/cvss2.cgi?vector=%28AV:N/AC:M/Au:N/C:C/I:C/A:C/E:F/RL:OF/RC:C%29&g=3&lang=en>
-(What's that?
-<http://buzz.typo3.org/teams/security/article/use-of-common-vulnerability-scoring-system-in-typo3-security-advisories/>)
-
-
-*Problem Description:* A PHP file which is part of the workspaces system
-extension does not validate passed arguments.
-
-You are only vulnerable if *all* of the following conditions are met:
-
- 1. You are using TYPO3 version 4.5.0 up to 4.5.8,  4.6.0 or 4.6.1 (+
-    development releases of 4.7 branch).
- 2. You have all of following PHP configuration variables set to "on":
-    register_globals ("off" by default, advised to be "off" in TYPO3
-    Security Guide
-    <http://typo3.org/documentation/document-library/extension-manuals/doc_guide_security/current/>),
-    allow_url_include ("off" by default) and allow_url_fopen ("on" by
-    default)
-
-If you are using the Suhosin PHP extension you are only vulnerable if
-you have additionally put URL schemes in the configuration
-variable "suhosin.executor.include.whitelist".
-
-The workspaces system extension does not need to be activated for this
-vulnerability to exist.
-
-*Possible Impact:* A crafted request to a vulnerable TYPO3 installation
-will allow an attacker to load PHP code from an external source and
-to execute it on the TYPO3 installation.
-
-*Solution:* You can choose one of the solutions below:
-
- 1. Update to the TYPO3 version 4.5.9 or 4.6.2 that fix the problem
-    described!
- 2. Set at least one of following PHP configuration variables to "off":
-    register_globals, allow_url_include and allow_url_fopen
- 3. Apply the patch that is linked below!
- 4. Set up a mod_security rule:
-    SecRule  ARGS:BACK_PATH  "^(https?|ftp)"  "deny"
-
-*Patch:* how to patch
-<http://typo3.org/development/bug-fixing/diff-and-patch/>
-
- 1. Patch for TYPO3 version 4.5.x and 4.6.x
-    <http://typo3.org/fileadmin/security-team/bug32571/32571.diff> (md5
-    sum: 3779a884b87b93b874b8a21330f43533)
-
-Note: We have been informed that this vulnerability has already
-massively been tried to be exploited.
-
-*Credits:* Credits go to Björn Pedersen and Christian Toffolo who
-discovered and reported the issue and the Security Team member Helmut
-Hummel for providing the patch.
-
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
-
+Alexander
