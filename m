@@ -1,56 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/4
-Message-ID: <4DC8E91E.8060402@pre-sense.de>
-Date: Tue, 10 May 2011 09:28:30 +0200
-From: Timo Warns <warns@...-sense.de>
-To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/1
+Message-ID: <4E8AC434.9090100@redhat.com>
+Date: Tue, 04 Oct 2011 10:30:44 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- phpPgAdmin -- Multiple XSS flaws fixed in v5.0.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Josh, Steve, vendors,
 
-from my point of view, these are different bugs:
+   multiple cross-site scripting (XSS) flaws were reported in phpPgAdmin:
 
-CVE-2011-1577 addresses the overall header size used for a CRC32
-computation.
+1) the 'title' argument of a particular web page was not sanitized
+    properly prior displaying the page header,
 
-CVE-2011-1776 addresses the size of partition entries used for
-allocating a data structure.
+2) the return ULR ('return_url') and return link name ('return_desc')
+    were not sanitized properly prior displaying the requested page data.
 
-Of course, one could argue that this is only one issue "missing input
-validation on GUID partition tables".
+A remote attacker could provide a specially-crafted URL, which once
+visited by an unsuspecting phpPgAdmin user could lead to arbitrary HTML
+or web script execution.
 
-Cheers, Timo
+References:
+[1] https://secunia.com/advisories/46248/
+[2] https://bugs.gentoo.org/show_bug.cgi?id=385505
+[3] http://phppgadmin.sourceforge.net/doku.php?id=download
+[4] 
+http://sourceforge.net/mailarchive/forum.php?thread_name=4E897F6C.90905%40free.fr&forum_name=phppgadmin-news
 
-Am 10.05.2011 09:18, schrieb Sebastian Krahmer:
-> 
-> Hi,
-> 
-> Is this really different than what was assigned CVE-2011-1577 to?
-> See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
-> on the OSS mail on April 12th which reads exactly the same.
-> 
-> Sebastian
-> 
-> On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
->>
->>
->> ----- Original Message -----
->>> The kernel automatically evaluates partition tables of storage
->>> devices.
->>> The code for evaluating GUID partitions (in fs/partitions/efi.c)
->>> contains a bug that can cause a kernel heap overflow on certain
->>> corrupted GUID partition tables.
->>>
->>> http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
->>> http://bugzilla.redhat.com/show_bug.cgi?id=703026
->>>
->>
->> Please use CVE-2011-1776
->>
->> Thanks.
->>
->> -- 
->>     JB
-> 
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=743205
+
+Upstream patch:
+[6] 
+https://github.com/phppgadmin/phppgadmin/commit/1df248203de055f97e092b50b1dd9643ccb73842
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
