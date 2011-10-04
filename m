@@ -1,133 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/5
-Message-ID: <4DA32F9C.2060607@mvista.com>
-Date: Mon, 11 Apr 2011 06:43:08 -1000
-From: akuster <akuster@...sta.com>
-To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/3
+Message-ID: <4E8AF66C.70700@redhat.com>
+Date: Tue, 04 Oct 2011 14:05:00 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE-2011-3979 being duplicate of CVE-2011-3352
 Content-Type: text/plain; charset=utf-8
 
-Alexander,
+Hello Steve, Josh,
 
-Thank you for taking the time to reply.
+   originally the CVE identifier of CVE-2011-3352 has been assigned:
+   [1] http://www.openwall.com/lists/oss-security/2011/09/09/5
 
-I can assure you that none of our customers ever got any advanced notice
-of Embargoed issues. It would have been easier for me to just publicly
-expose those issues internally than take the constant beating over not
-disclosing Embargo information.
+has been assigned to the following flaw:
+[2] http://www.securityfocus.com/archive/1/519565/30/0/threaded
+[3] https://www.htbridge.ch/advisory/xss_in_zikula.html
 
-I do hope I did not "tax" any of the vendors or participants on the old
-vendor sec list. My apologies if I did.
+Later CVE-2011-3979 has been assigned:
 
-Mahalo,
+Name: CVE-2011-3979
+Status: Candidate
+URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3979 [Open URL]
+Final-Decision:
+Interim-Decision:
+Modified:
+Proposed:
+Assigned: 20111003
+Category:
+Reference: BUGTRAQ:20110907 XSS in Zikula
+Reference: 
+URL:http://www.securityfocus.com/archive/1/archive/1/519565/100/0/threaded 
+[Open URL]
+Reference: MISC:https://www.htbridge.ch/advisory/xss_in_zikula.html 
+[Open URL]
+Reference: 
+CONFIRM:http://community.zikula.org/index.php?module=News&func=display&sid=3075 
+[Open URL]
+Reference: BID:49491
+Reference: URL:http://www.securityfocus.com/bid/49491 [Open URL]
+Reference: OSVDB:75226
+Reference: URL:http://osvdb.org/75226 [Open URL]
+Reference: SECUNIA:45884
+Reference: URL:http://secunia.com/advisories/45884 [Open URL]
+Reference: XF:zikulaapplication-index-xss(69644)
+Reference: URL:http://xforce.iss.net/xforce/xfdb/69644 [Open URL]
 
-Armin
+Cross-site scripting (XSS) vulnerability in
+ztemp/view_compiled/Theme/theme_admin_setasdefault.php in the theme
+module in Zikula Application Framework 1.3.0 build 3168, 1.2.7, and
+probably other versions allows remote attackers to inject arbitrary
+web script or HTML via the themename parameter in the setasdefault
+action to index.php.
 
-On 04/09/2011 10:39 AM, Solar Designer wrote:
-> On Fri, Apr 08, 2011 at 11:40:45AM -1000, akuster wrote:
->> Can I get a status on this? (+, -, Ack, Nack)
-> 
-> Postponed.  I'd like to see any support for you getting onto the Linux
-> distros security contacts list, with reasoning, or/and any other
-> suggestions on what to do in this case.  Josh - what do you think (as
-> someone who advocated the setup of a vendor-sec replacement)?
-> 
-> Formally, you sort of qualify (you were on vendor-sec and presumably you
-> have a Linux distro, although I failed to quickly find a way to see what
-> kind of software your distro contains).  However, from your own
-> statement (quoted below), it appears that we're not going to be able to
-> see whether and how you make intended use of the advance notifications:
-> 
->> Our advisories are via a paid subscription service so they are not public.
-> 
-> Obviously, this goes against the attempt at transparency, and also it
-> means that we won't be able to evaluate your need to be on the list in
-> the same way that we do/should/will for other vendors - e.g., we may
-> re-check Frugalware and rPath in a few months from now to see if their
-> security response has sufficiently improved to warrant the advance
-> notifications to them or not, but what do we do for MontaVista? grant
-> you an unconditional exception?
-> 
-> You also wrote:
-> 
->> Our customers require vulnerabilities to be addressed in a timely manner.
-> 
-> So you have contractual relationships with your customers and you're
-> going to use the advance notifications in your business.  Well, many of
-> the more open Linux distros also have paying customers, but in your case
-> this is all you have (if I understood you correctly).
-> 
-> For both kinds of distros, it is possible that the vendor will misuse
-> the advance notifications to notify their customers before the issue is
-> disclosed publicly (which normally happens on the CRD).  We ask and hope
-> that vendors won't do this, but the risk is there.  Arguably, for a
-> vendor that is not making their advisories and updates public, this
-> temptation and thus the risk are higher.
-> 
-> Then, a closed Linux vendor like MontaVista, working for their paying
-> customers only, is somewhat similar to an end-user of Linux who
-> maintains their own Linux distro in-house.  Where do we draw the line?
-> Many legal entities vs. one?  I doubt that this is going to work as
-> desired (and I imagine that different people in here would want it to
-> work differently anyway).  For example, a large enterprise is likely to
-> use multiple legal entities.  Substantially same ownership?  This gets
-> too tricky, non-technical, non-specific, and subject to change.
-> 
-> Clearly, we can't reasonably start to accept end-users of Linux merely
-> because they build their own distro... or just claim to.
-> 
-> I understand that generalization and reductio ad absurdum may lead to a
-> logical fallacy, however unfortunately we're setting a precedent here
-> (one way or the other), so we may need to generalize and consider likely
-> consequences of the precedent... unless we're happy to drop the list
-> when it grows too large and maybe start anew, with stricter rules.
-> 
-> Finally, here's an additional aspect/concern.  The list is being setup
-> as a hopefully better alternative to explicit CC lists.  "Members" of
-> those lists are picked by whoever reports the issue - this person
-> could be from one of the distros or it could be an external reporter.
-> Would many (or any) of those people want to report to MontaVista
-> specifically (along with other distros) or to closed Linux vendors in
-> general?  I think not.  I think that having such vendors on the list
-> would feel like a tax to many reporters, who would have to weigh the
-> pros and cons of using the exploder (ease of use, an up-to-date list of
-> contact persons, encryption, but extra vendors notified) vs. direct e-mail
-> (excluding those who they don't want to or don't care to notify).
-> I think that many would choose the latter (and end up excluding some of
-> the open distros as well, even though they would not mind notifying
-> them), thereby reducing the usefulness of the list.
-> 
-> And you also wrote:
-> 
->> will revisit the wiki issue soon.
-> 
-> Since you pinged me about the status on your subscription, let me ping
-> you about the status on the wiki updates as well. ;-)  Any progress?
-> The pages to update with your info are:
-> 
-> http://oss-security.openwall.org/wiki/vendors
-> http://oss-security.openwall.org/wiki/distro-patches
-> 
-> Please don't take any of the above personal.  I am just trying to
-> provide a useful service to the community.  This is a thankless job, and
-> I'd be happy if someone else does it - and does it better, or just
-> differently to provide an alternative.  I'd be happy if the alternative
-> wins, letting me happily shutdown the list.  (I've been privately asked
-> to provide a hopefully more secure alternative to vendor-sec long before
-> vendor-sec ceased to exist, but I really did not want to get Openwall
-> into the mess, nor did I have time for it.  I only felt like I had to do
-> it when it became clear that the lst.de folks would not host something
-> like this anymore.)
-> 
-> In fact, MontaVista may host such a list as well, which would include
-> MontaVista and more... but I would not expect many (maybe even most?)
-> other distros and reporters to want to write to that list, which would
-> kind of confirm the problem with having MontaVista on the list.
-> 
-> Please let me know if I misunderstood anything or if you have any
-> suggestions.
-> 
-> Thanks,
-> 
-> Alexander
+The security focus link URL in the second assignment is slightly
+different, but the content of that post seems to be the same.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3352
+suggests there are three ways / attack vectors, how to exploit this:
+a) via specially-crafted 'themename' parameter in 'setasdefault.php'
+    script,
+b) via specially-crafted 'themename' parameter in modify theme script
+    and,
+c) via specially-crafted 'themename' parameter in delete theme script.
+
+So since CVE-2011-3979 description explicitly mentions 'set as default',
+should this (CVE-2011-3979) identifier be considered to refer only to
+'set as default' case (a) in the above) or are the CVE-2011-3352 and
+CVE-2011-3979 just CVE duplicates for the same issue?
+
+If the latter holds, which is the correct one (assuming the higher one
+is valid, thus CVE-2011-3979) to use for issue referencing purposes?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
