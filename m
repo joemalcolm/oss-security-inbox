@@ -1,34 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/9
-Message-ID: <20110705050219.GA14223@openwall.com>
-Date: Tue, 5 Jul 2011 09:02:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: HD Moore <hdm@...italoffense.net>
-Cc: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/3
+Message-ID: <CAPYM6Vz6jQ5Nt6ymzjZ59C68NYGrZTaDC48_UujNFFkg71zruA@mail.gmail.com>
+Date: Wed, 5 Oct 2011 18:07:59 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2011 at 08:21:12AM +0400, Solar Designer wrote:
-> On Mon, Jul 04, 2011 at 11:04:00PM -0500, HD Moore wrote:
-> > This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-> > when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
-> > 
-> > http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
-> 
-> This is very helpful, thank you!  How did you find it?
-> 
-> So, I failed to get this server to give me ctime (looked at HTTP headers
-> and also tried several FTP commands), and the mtime is Feb 15.  We could
-> ask the server admins for the ctime.
+vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 
-I think I got the equivalent of the ctime by listing the mtime for ".".
-It is Jul 01 22:35.  Not sure what timezone, though.  Some analysis of
-other timestamps on that server suggests UTC-1, but Wikipedia says UTC+1
-or +2 for Namibia.
 
-So it appears that the backdoor was introduced between June 30 14:15 UTC
-and July 1 23:35 UTC (probably before 21:35, though).
+1. OVERVIEW
 
-I think I'll stop wasting time on this...
+The vTiger CRM 5.2.1 and lower versions are vulnerable to Remote Code
+Execution. No fixed version has been released as of 2011-10-05.
 
-Alexander
+
+2. BACKGROUND
+
+vtiger CRM is a free, full-featured, 100% Open Source CRM software
+ideal for small and medium businesses, with low-cost product support
+available to production users that need reliable support. vtiger CRM
+is a widely used product with thousands of users in dozens of
+countries.  It has a vibrant community of users driving the product
+forward, and contributing to it's development.  Over 2 million copies
+of vtiger CRM have been downloaded so far. It was launched as a fork
+of version 1.0 of the SugarCRM project launched on December 31st,
+2004.
+
+
+3. VULNERABILITY DESCRIPTION
+
+vTiger uses the vulnerable version of phpmailer class file located at
+/cron/class.phpmailer.php .
+
+
+4. VERSIONS AFFECTED
+
+Tested on 5.2.1
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+File: /cron/class.phpmailer.php
+[code]
+
+391:    function SendmailSend($header, $body) {
+392:    if ($this->Sender != "")
+393:       $sendmail = sprintf("%s -oi -f %s -t", $this->Sendmail,
+$this->Sender);
+394:    else
+395:       $sendmail = sprintf("%s -oi -t", $this->Sendmail);
+
+[/code]
+
+
+6. SOLUTION
+
+The vendor hasn't attempted to incorporate the latest version of
+phpMailer class in their vTigerCRM as of version 5.2.1.
+
+The flawed code portion can be patched with:
+
+393: $sendmail = sprintf("%s -oi -f %s -t",
+escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
+395: $sendmail = sprintf("%s -oi -t", escapeshellcmd($this->Sendmail));
+
+
+7. VENDOR
+
+vTiger Development Team
+http://www.vtiger.com/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-08: notified vendor
+2011-10-05: no fixed version released yet
+2011-10-05: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_rce
+Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
+
+#yehg [2011-10-05]
