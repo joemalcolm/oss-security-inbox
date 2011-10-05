@@ -1,22 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/25/1
-Message-ID: <BANLkTikOSEmPyR5agVMmB6TYdvASvFZjWg@mail.gmail.com>
-Date: Tue, 24 May 2011 21:55:13 -0300
-From: Javier Bassi <javierbassi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/7
+Message-ID: <78cda3d9-c891-40db-a4c2-706603f347b5@zmail02.collab.prod.int.phx2.redhat.com>
+Date: Wed, 05 Oct 2011 14:27:09 -0400 (EDT)
+From: Ramon de C Valle <rcvalle@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Post Revolution multiple security vulnerabilities
+Subject: Request for a CVE identifier: XML-RPC SAX Parser Information Exposure
 Content-Type: text/plain; charset=utf-8
 
- Hi,  I need a CVE for Post Revolution 0.8c multiple security
-vulnerabilities. (Post Revolution is a CMS similar to Wordpress
-released under GPLv2)
+I'd like to request a CVE identifier for the following issue:
 
-The vulnerabilities are:
-1. A Denial of service vulnerability.
-2. Cross-site scripting vulnerabilities.
-3. Cross-site request forgery vulnerabilities.
+https://bugzilla.redhat.com/show_bug.cgi?id=705869
+http://old.nabble.com/-PATCH--Setting-SAX-features-for-XML-RPC-td27435656.html
 
-Vendor has publicly confirmed the existence of the vulnerabilities:
-http://translate.google.com/translate?u=http%3A%2F%2Fpostrev.com.ar%2F&sl=es&tl=en&hl=&ie=UTF-8
-I will wait for vendor to fully patch these issues before
-full-disclosure (probably by Friday)
+--
+Ramon de C Valle / Red Hat Security Response Team
+
