@@ -1,44 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/10
-Message-ID: <777583052.141545.1313780108648.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:55:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/6
+Message-ID: <4E8C8834.5050900@mvista.com>
+Date: Wed, 05 Oct 2011 06:39:16 -1000
+From: akuster <akuster@...sta.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-request: pithos symlink vulnerability CWE-61
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
 Content-Type: text/plain; charset=utf-8
 
+What version does this affect ?
 
+- Armin
 
------ Original Message -----
-> Can I get 2010 CVE-ID for Pithos symlink attack vulnerability:
-> https://bugs.launchpad.net/pithos/+bug/667896
+On 10/04/2011 04:34 PM, Huzaifa Sidhpurwala wrote:
+> Hi All,
 > 
-> Software web-page: https://launchpad.net/pithos
-> Found by: lfaraone <https://launchpad.net/~lfaraone>
-> Found at: 2010-10-30 (fix released same day)
-> "Predictable file- or directory-names in /tmp/-directory can lead to
-> symlink attack."
+> Kevan Carstensen reported multiple security flaws in kexec-tools,
+> details are as follows:
 > 
-> Fixed in Debian:
+> 1. CVE-2011-3588:
 > 
-> http://packages.debian.org/changelogs/pool/main/p/pithos/current/changelog
-> says:
-> pithos (0.3.5-1) unstable; urgency=high
+> The default value of "StrictHostKeyChecking=no" has been used for kdump/
+> mkdumprd openssh integration. A remote malicious kdump server could use
+> this flaw to impersonate the intended, correct kdump server to obtain
+> security sensitive information (kdump core files).
 > 
-> * New upstream version.
-> - SECURITY UPDATE: fixes overwriting of arbitrary file via symlinks
-> (LP: #667896)
-> Can be still found from DST:
-> http://security-tracker.debian.org/tracker/TEMP-0000000-14D1F9
+> 2. CVE-2011-3589
 > 
-> And in Ubuntu:
-> http://changelogs.ubuntu.com/changelogs/pool/universe/p/pithos/pithos_0.3.8-1/changelog
+> mkdumprd utility copied content of certain directories into newly
+> created initial ramdisk images, potentially leading to information leak.
 > 
-
-Please use CVE-2010-4817.
-
-Thanks.
-
--- 
-    JB
+> 3. CVE-2011-2390
+> 
+> mkdumprd utility created the final initial ramdisk image with
+> world-readable permissions, possibly leading to information leak.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=716439
+> 
+> 
