@@ -1,31 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/6
-Message-ID: <4EF25B9C.3010002@redhat.com>
-Date: Wed, 21 Dec 2011 15:20:12 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/7
+Message-ID: <78cda3d9-c891-40db-a4c2-706603f347b5@zmail02.collab.prod.int.phx2.redhat.com>
+Date: Wed, 05 Oct 2011 14:27:09 -0400 (EDT)
+From: Ramon de C Valle <rcvalle@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: tight loop and no preemption can cause system stall
+Subject: Request for a CVE identifier: XML-RPC SAX Parser Information Exposure
 Content-Type: text/plain; charset=utf-8
 
-On 12/21/2011 03:10 PM, Petr Matousek wrote:
-> A tight loop in user level process isn't preempted unless a realtime
-> process is woken up on the cpu.  Some important kernel threads such as
-> events/*, kblockd/* can be blocked by the process, and the machine
-> stalls.
->
-> Unprivileged local user could use this flaw to DoS the system.
->
-> Upstream commit:
-> f26f9aff6aaf67e9a430d16c266f91b13a5bff64
->
-> Reference:
-> https://lkml.org/lkml/2010/11/20/212
-> https://bugzilla.redhat.com/show_bug.cgi?id=769711
->
-> Thanks,
-Please use CVE-2011-4621 for this issue.
+I'd like to request a CVE identifier for the following issue:
 
--- 
+https://bugzilla.redhat.com/show_bug.cgi?id=705869
+http://old.nabble.com/-PATCH--Setting-SAX-features-for-XML-RPC-td27435656.html
 
--Kurt Seifried / Red Hat Security Response Team
+--
+Ramon de C Valle / Red Hat Security Response Team
 
