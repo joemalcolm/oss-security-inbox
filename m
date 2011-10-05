@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/8
-Message-ID: <615251549.141401.1313779783256.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 14:49:43 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...bb.co.uk, C Trapt <C.Trapt@...il.com>, coley <coley@...re.org>
-Subject: Re: CVE-request: KaiBB security vulnerabilities without CVE-IDs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/5
+Message-ID: <4E8C4787.7040002@redhat.com>
+Date: Wed, 05 Oct 2011 14:03:19 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- perl-Crypt-DSA -- Cryptographically insecure method used for random numbers generation on systems without /dev/random
 Content-Type: text/plain; charset=utf-8
 
-I don't have enough IDs for this, nor do I have the time to go through all these.
+Hello Josh, Steve, vendors,
 
-Steve, can MITRE take this one.
+   it has been reported that Crypt::DSA, a Perl module for DSA
+signatures and key generation, used cryptographically weak / insecure
+method for random numbers generation on systems, where /dev/random file
+was not present. Due this flaw an attacker could be able to discover
+some portions of / whole secret DSA key, which has been created on such
+system.
 
-Thanks and sorry.
+References:
+[1] http://secunia.com/advisories/46275/
+[2] https://rt.cpan.org/Public/Bug/Display.html?id=71421
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=743567
 
--- 
-    JB
+Proposed upstream patch is to remove the affected fallback code part:
+[4] https://rt.cpan.org/Public/Bug/Display.html?id=71421#txn-984052
+     (though not approved yet)
 
+Could you allocate a CVE id for this?
 
------ Original Message -----
-> Please assign CVE-IDs for following KaiBB issues:
-> 
-> 2011:
-> http://osvdb.org/show/osvdb/71068 - HTB22793
-> 2010:
-> http://osvdb.org/show/osvdb/69346
-> http://osvdb.org/show/osvdb/71885 - HTB22746
-> http://osvdb.org/show/osvdb/70210 - HTB22747, HTB22748
-> http://osvdb.org/show/osvdb/70211 - HTB22749
-> http://osvdb.org/show/osvdb/69347
-> http://osvdb.org/show/osvdb/69345
-> 
-> Haven't tested any of these in actual installation. I can do it if
-> someone requests it.
-> 
-> Vendor/project www-pages:
-> 1) http://code.google.com/p/kaibb/
-> 2) http://www.kaibb.co.uk/
-> 
-> Best regards,
-> Henri Salo
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
