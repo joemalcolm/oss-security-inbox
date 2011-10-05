@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/07/4
-Message-ID: <4E675FF9.5000907@redhat.com>
-Date: Wed, 07 Sep 2011 14:13:45 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/5
+Message-ID: <4E8C4787.7040002@redhat.com>
+Date: Wed, 05 Oct 2011 14:03:19 +0200
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Bugs NotHugs <bugsnothugs@...il.com>, Stjepan Gros <stjepan.gros@...il.com>
-Subject: CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- perl-Crypt-DSA -- Cryptographically insecure method used for random numbers generation on systems without /dev/random
 Content-Type: text/plain; charset=utf-8
 
 Hello Josh, Steve, vendors,
 
-   it was reported that the scanner module for the Open Vulnerability
-Assessment System (OpenVAS) used insecure way for creation of a
-temporary file, when generating OVAL system characteristics document
-from the knowledge base data available, with the ovaldi integrated tool
-enabled. A local attacker could use this flaw to conduct symlink
-attacks to overwrite arbitrary files on the system, accessible with the
-privileges of the user running the SLAD daemon and / or the ovaldi OVAL
-interpreter.
+   it has been reported that Crypt::DSA, a Perl module for DSA
+signatures and key generation, used cryptographically weak / insecure
+method for random numbers generation on systems, where /dev/random file
+was not present. Due this flaw an attacker could be able to discover
+some portions of / whole secret DSA key, which has been created on such
+system.
 
 References:
-[1] http://archives.neohapsis.com/archives/fulldisclosure/2011-09/0057.html
-[2] http://secunia.com/advisories/45836/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=736317
+[1] http://secunia.com/advisories/46275/
+[2] https://rt.cpan.org/Public/Bug/Display.html?id=71421
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=743567
+
+Proposed upstream patch is to remove the affected fallback code part:
+[4] https://rt.cpan.org/Public/Bug/Display.html?id=71421#txn-984052
+     (though not approved yet)
 
 Could you allocate a CVE id for this?
 
