@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/3
-Message-ID: <20111031161452.GC24079@foo.fgeek.fi>
-Date: Mon, 31 Oct 2011 18:14:53 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Jara 1.6 SQL injection and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/10
+Message-ID: <125247b8-3bac-4c37-ad22-bfb5196ecc77@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 05 Oct 2011 15:26:17 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com, Ramon de C Valle <rcvalle@...hat.com>
+Subject: Re: Request for a CVE identifier: XML-RPC SAX Parser Information Exposure
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 31, 2011 at 10:01:39AM -0600, Kurt Seifried wrote:
-> On 10/30/2011 04:48 AM, Henri Salo wrote:
-> > XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
-> > Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
-> >
-> I assume here you are referring to the comment:
-> 
-> "http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
-> 
-> -Kurt
 
-Yes, sorry for not clarifying that out. There is also report of XSS in: http://www.bugsearch.net/en/12471/jara-16-xss-vulnerabilities.html
 
-Best regards,
-Henri Salo
+----- Original Message -----
+> I'd like to request a CVE identifier for the following issue:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=705869
+> http://old.nabble.com/-PATCH--Setting-SAX-features-for-XML-RPC-td27435656.html
+> 
+
+Please use CVE-2011-3600 for this.
+
+Thanks.
+
+-- 
+    JB
