@@ -1,19 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/3
-Message-ID: <20110520144824.GA24579@suse.de>
-Date: Fri, 20 May 2011 16:48:26 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: exim STARTTLS fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/8
+Message-ID: <818b1323-15b9-458e-b17a-ede853ef3982@zmail02.collab.prod.int.phx2.redhat.com>
+Date: Wed, 05 Oct 2011 14:47:53 -0400 (EDT)
+From: Ramon de C Valle <rcvalle@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Request for CVE identifier: Libvoikko NULL Character Improper Input Validation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Do we already have a CVE identifier assigned to this issue?
 
-while reviewing EXIM git for the last security issues, I also found the
-STARTTLS fix:
+http://www.openwall.com/lists/oss-security/2011/06/13/3
 
-http://git.exim.org/exim.git/commitdiff/da80c2a8ed49427334af613c00df65ae301cacdd
+--
+Ramon de C Valle / Red Hat Security Response Team
 
-Is fixed with exim 4.76 apparently.
-
-Ciao, Marcus
