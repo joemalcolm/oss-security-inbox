@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/1
-Message-ID: <20111201001151.GA4975@openwall.com>
-Date: Thu, 1 Dec 2011 04:11:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/1
+Message-ID: <4E8BC22B.6030207@redhat.com>
+Date: Wed, 05 Oct 2011 08:04:19 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: XSSer v1.6 -beta- aka "Grey Swarm!" released.
+Subject: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
 Content-Type: text/plain; charset=utf-8
 
-All -
+Hi All,
 
-On Thu, Dec 01, 2011 at 12:47:56AM +0100, psy wrote:
-> There is released a new version of *XSSer* (v1.6-beta-) - the cross site
-> scripter framework.
+Kevan Carstensen reported multiple security flaws in kexec-tools, 
+details are as follows:
 
-We do not have a strict policy on whether security tool announcements
-are appropriate in here or not.  My current stance on it is that
-one-time announcements of tools with specific relevance to Open Source
-are OK, whereas repeated new version announcements are not.  Thus, I
-approved the announcement of XSSer this one time, but I don't intend to
-approve an announcement of the next version of XSSer.  Please let me
-know if you'd like this approach changed in some way.
+1. CVE-2011-3588:
 
-Meanwhile, the various CFPs and e-magazine issue announcements that are
-arriving to oss-security are being rejected - as we decided previously.
+The default value of "StrictHostKeyChecking=no" has been used for kdump/ 
+mkdumprd openssh integration. A remote malicious kdump server could use 
+this flaw to impersonate the intended, correct kdump server to obtain 
+security sensitive information (kdump core files).
 
-Alexander
+2. CVE-2011-3589
+
+mkdumprd utility copied content of certain directories into newly 
+created initial ramdisk images, potentially leading to information leak.
+
+3. CVE-2011-2390
+
+mkdumprd utility created the final initial ramdisk image with 
+world-readable permissions, possibly leading to information leak.
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=716439
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
