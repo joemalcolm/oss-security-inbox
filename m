@@ -1,68 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/1
-Message-ID: <4E92EF47.3000808@redhat.com>
-Date: Mon, 10 Oct 2011 15:12:39 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-CC: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>, Security Focus Team <vuldb@...urityfocus.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE ASSIGNMENT CORRECTION -- USE CVE-2011-3590 instead of CVE-2011-2390 [was: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/4
+Message-ID: <20111005123710.3def94b0@redhat.com>
+Date: Wed, 5 Oct 2011 12:37:10 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: lists@...g.net
+Subject: Re: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 5 Oct 2011 18:07:59 +0800 YGN Ethical Hacker Group wrote:
 
-Hello vendors,
+> vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 
-   1) apologize for capital letters in the subject. Just wanted this
-message not to be overlooked, since it's important.
+...
 
-On 10/05/2011 04:34 AM, Huzaifa Sidhpurwala wrote:
-> Hi All,
->
-> Kevan Carstensen reported multiple security flaws in kexec-tools,
-> details are as follows:
->
-> 1. CVE-2011-3588:
->
-> The default value of "StrictHostKeyChecking=no" has been used for kdump/
-> mkdumprd openssh integration. A remote malicious kdump server could use
-> this flaw to impersonate the intended, correct kdump server to obtain
-> security sensitive information (kdump core files).
->
-> 2. CVE-2011-3589
->
-> mkdumprd utility copied content of certain directories into newly
-> created initial ramdisk images, potentially leading to information leak.
->
-> 3. CVE-2011-2390
+> vTiger uses the vulnerable version of phpmailer class file located at
+> /cron/class.phpmailer.php .
 
-2) Due to a mistake, an incorrect CVE identifier of CVE-2011-2390 was
-used  here / in the previous post. The proper one should be 
-CVE-2011-3590, as detailed here:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=716439#c61
+...
 
-Since there are some incorrect references present in the public already:
-[2] http://www.securityfocus.com/bid/49944/info
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
 
-we wanted to kindly ask you to update your entries. CVE-2011-2390 is
-NOT the correct one, please use CVE-2011-3590 identifier to reference
-the following security flaw:
+As you point out, application embeds a vulnerable copy of some other
+application, and the issue already has CVE assigned.  In such cases,
+phpmailer CVE should be used in the vtiger updates (if any).
 
-3. kdump/mkdumprd copies all the .ssh keys of root user on the vmcore
-    file. This may include keys which are not-required and may be
-    confidential to the root user also.
+> It was launched as a fork of version 1.0 of the SugarCRM project
+> launched on December 31st, 2004.
 
-in the kexec-tools package.
+Wonder if any of the other reported issues are really sugarcrm issue
+that did not get fix in vtiger.
 
-Apologize to all of the affected parties for the inconvenience.
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> mkdumprd utility created the final initial ramdisk image with
-> world-readable permissions, possibly leading to information leak.
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=716439
->
->
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
