@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/15/2
-Message-ID: <4E48B1DC.7070401@redhat.com>
-Date: Mon, 15 Aug 2011 11:12:52 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/4
+Message-ID: <20111005123710.3def94b0@redhat.com>
+Date: Wed, 5 Oct 2011 12:37:10 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Tim Waugh <twaugh@...hat.com>
-Subject: Re: CVE Request -- foomatic (foomatic-filters): foomatic-rip (debug mode) insecure temporary file use in renderer command line by processing PostScript data
+Cc: lists@...g.net
+Subject: Re: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 07/30/2011 01:34 AM, Josh Bressers wrote:
-> Steve,
-> 
-> Can you weigh in on how to assign this one. I'm thinking we want two IDs,
-> but I know in the past one ID has been used for catchall type IDs (I'm not
-> sure if that's simply done due to lack of details).
-> 
-> Thanks.
-> 
+On Wed, 5 Oct 2011 18:07:59 +0800 YGN Ethical Hacker Group wrote:
 
-Any updates on this one?
+> vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 
+...
+
+> vTiger uses the vulnerable version of phpmailer class file located at
+> /cron/class.phpmailer.php .
+
+...
+
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
+
+As you point out, application embeds a vulnerable copy of some other
+application, and the issue already has CVE assigned.  In such cases,
+phpmailer CVE should be used in the vtiger updates (if any).
+
+> It was launched as a fork of version 1.0 of the SugarCRM project
+> launched on December 31st, 2004.
+
+Wonder if any of the other reported issues are really sugarcrm issue
+that did not get fix in vtiger.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Tomas Hoger / Red Hat Security Response Team
