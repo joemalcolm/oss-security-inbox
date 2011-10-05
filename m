@@ -1,39 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/13
-Message-ID: <1137441234.19166.1300222011542.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:46:51 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/11
+Message-ID: <e705ce83-fa29-4608-a25e-f387eb9769a8@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Wed, 05 Oct 2011 15:34:32 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests - kernel: tpm infoleaks
+To: oss-security@...ts.openwall.com, Ramon de C Valle <rcvalle@...hat.com>
+Subject: Re: Request for CVE identifier: Libvoikko NULL Character Improper Input Validation
 Content-Type: text/plain; charset=utf-8
 
+
+
 ----- Original Message -----
-> [PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
+> Do we already have a CVE identifier assigned to this issue?
 > 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
-> infoleak
-
-Please use CVE-2011-1160
-
-
-> 
-> [PATCH 2/3] char/tpm: Call tpm_transmit with correct size
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
-> infoleak
-
-Please use CVE-2011-1161
-
-
-> 
-> [PATCH 3/3] char/tpm: zero buffer after copying to userspace
-> 
-> http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
-> prevents storing of previous result, leakage to other drivers
+> http://www.openwall.com/lists/oss-security/2011/06/13/3
 > 
 
-Please use CVE-2011-1162
+I'd like MITRE to weigh in on this one:
+
+http://www.openwall.com/lists/oss-security/2011/06/13/17
 
 Thanks.
 
