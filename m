@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/17
-Message-ID: <113495577.1275521.1310502136503.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 16:22:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/1
+Message-ID: <4E8BC22B.6030207@redhat.com>
+Date: Wed, 05 Oct 2011 08:04:19 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: apache mod-auth-external
+Subject: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2688.
+Hi All,
 
-Thanks.
+Kevan Carstensen reported multiple security flaws in kexec-tools, 
+details are as follows:
+
+1. CVE-2011-3588:
+
+The default value of "StrictHostKeyChecking=no" has been used for kdump/ 
+mkdumprd openssh integration. A remote malicious kdump server could use 
+this flaw to impersonate the intended, correct kdump server to obtain 
+security sensitive information (kdump core files).
+
+2. CVE-2011-3589
+
+mkdumprd utility copied content of certain directories into newly 
+created initial ramdisk images, potentially leading to information leak.
+
+3. CVE-2011-2390
+
+mkdumprd utility created the final initial ramdisk image with 
+world-readable permissions, possibly leading to information leak.
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=716439
+
 
 -- 
-    JB
-
-
------ Original Message -----
-> Hi,
-> there has been an SQL injection reported in mod-auth-external.
-> http://code.google.com/p/mod-auth-external/issues/detail?id=5
-> http://bugs.debian.org/633637
-> 
-> Can someone assign a CVE id to this?
-> Cheers
-> Nico
-> 
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+Huzaifa Sidhpurwala / Red Hat Security Response Team
