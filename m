@@ -1,30 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/8
-Message-ID: <1020251845.375296.1299184265420.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 3 Mar 2011 15:31:05 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/3
+Message-ID: <CAPYM6Vz6jQ5Nt6ymzjZ59C68NYGrZTaDC48_UujNFFkg71zruA@mail.gmail.com>
+Date: Wed, 5 Oct 2011 18:07:59 +0800
+From: YGN Ethical Hacker Group <lists@...g.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: VLC bookmark buffer overflow
+Subject: CVE Request: vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+vTiger CRM 5.2.x <= Remote Code Execution Vulnerability
 
 
------ Original Message -----
-> Can I get CVE-identifier for this issue:
-> 
-> "VLC media player is vulnerable to a buffer overflow attack when
-> processing .mp3 file and its metadata. It fails to perform boundry
-> checks when creating a bookmark from the malicious media file playing,
-> resulting in a crash, overwriting ECX register. While the evil .mp3 is
-> playing, you go Playback > Bookmarks > Manage bookmarks > Create."
-> 
-> References:
-> http://osvdb.org/show/osvdb/62728/printer
+1. OVERVIEW
 
-Please use CVE-2011-1087
+The vTiger CRM 5.2.1 and lower versions are vulnerable to Remote Code
+Execution. No fixed version has been released as of 2011-10-05.
 
-Thanks.
 
--- 
-    JB
+2. BACKGROUND
+
+vtiger CRM is a free, full-featured, 100% Open Source CRM software
+ideal for small and medium businesses, with low-cost product support
+available to production users that need reliable support. vtiger CRM
+is a widely used product with thousands of users in dozens of
+countries.  It has a vibrant community of users driving the product
+forward, and contributing to it's development.  Over 2 million copies
+of vtiger CRM have been downloaded so far. It was launched as a fork
+of version 1.0 of the SugarCRM project launched on December 31st,
+2004.
+
+
+3. VULNERABILITY DESCRIPTION
+
+vTiger uses the vulnerable version of phpmailer class file located at
+/cron/class.phpmailer.php .
+
+
+4. VERSIONS AFFECTED
+
+Tested on 5.2.1
+
+
+5. PROOF-OF-CONCEPT/EXPLOIT
+
+File: /cron/class.phpmailer.php
+[code]
+
+391:    function SendmailSend($header, $body) {
+392:    if ($this->Sender != "")
+393:       $sendmail = sprintf("%s -oi -f %s -t", $this->Sendmail,
+$this->Sender);
+394:    else
+395:       $sendmail = sprintf("%s -oi -t", $this->Sendmail);
+
+[/code]
+
+
+6. SOLUTION
+
+The vendor hasn't attempted to incorporate the latest version of
+phpMailer class in their vTigerCRM as of version 5.2.1.
+
+The flawed code portion can be patched with:
+
+393: $sendmail = sprintf("%s -oi -f %s -t",
+escapeshellcmd($this->Sendmail), escapeshellarg($this->Sender));
+395: $sendmail = sprintf("%s -oi -t", escapeshellcmd($this->Sendmail));
+
+
+7. VENDOR
+
+vTiger Development Team
+http://www.vtiger.com/
+
+
+8. CREDIT
+
+This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
+Ethical Hacker Group, Myanmar.
+
+
+9. DISCLOSURE TIME-LINE
+
+2010-12-08: notified vendor
+2011-10-05: no fixed version released yet
+2011-10-05: vulnerability disclosed
+
+
+10. REFERENCES
+
+Original Advisory URL:
+http://yehg.net/lab/pr0js/advisories/%5BvTiger_5.2.1%5D_rce
+Wiki VtigerCRM: https://secure.wikimedia.org/wikipedia/en/wiki/Vtiger_CRM
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3215
+
+#yehg [2011-10-05]
