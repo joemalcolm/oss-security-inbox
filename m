@@ -1,59 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/5
-Message-ID: <4E0454E2.1010401@redhat.com>
-Date: Fri, 24 Jun 2011 11:12:02 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Matthias Clasen <mclasen@...hat.com>, Mark Doliner <markdoliner@...gin.im>
-CC: oss-security@...ts.openwall.com
-Subject: CVE-2011-2485 assignment notification -- gdk-pixbuf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/6
+Message-ID: <4E8C8834.5050900@mvista.com>
+Date: Wed, 05 Oct 2011 06:39:16 -1000
+From: akuster <akuster@...sta.com>
+To: oss-security@...ts.openwall.com
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+What version does this affect ?
 
-   the following security flaw has been found in the way gdk-pixbuf, an
-image loading library, loaded certain Graphics Interchange Format (GIF) 
-image files:
-=======================================================================
+- Armin
 
-It was found that gdk-pixbuf's gdk_pixbuf__gif_image_load() GIF image 
-loader routine did not properly handle certain return values from its
-subroutines. A remote attacker could provide a specially-crafted GIF
-image, which once opened in an application, linked against gdk-pixbuf
-would lead to gdk-pixbuf to return partially initialized pixbuf
-structure, possibly having huge width and height, leading to that
-particular application termination due excessive memory use.
-
-The CVE identifier of CVE-2011-2485 has been assigned to this issue.
-
-References:
-
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2485
-[2] 
-http://git.gnome.org/browse/gdk-pixbuf/commit/?id=f8569bb13e2aa1584dde61ca545144750f7a7c98
-
-This issue could lead (for example) in Pidgin to:
-=================================================
-
-A remote attacker could set a specially-crafted GIF image as their
-buddy icon that could lead to Pidgin being terminated due to excessive
-memory use.
-
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=714754
-[4] http://www.pidgin.im/news/security/?id=52
-
-Credit: Issue has been discovered and reported by Mark Doliner
-         of the Pidgin project.
-
-We did not allocate a second CVE identifier for the Pidgin issue,
-since the true underlying reason for this was the gdk-pixbuf image 
-loading library problem. This is based on last paragraph from:
-[5] http://www.openwall.com/lists/oss-security/2011/03/30/3
-
-more exactly on that part about 'issues like incorrectly
-reporting error status from an API function' (although this not
-being case of compiler, but rather case of library).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+On 10/04/2011 04:34 PM, Huzaifa Sidhpurwala wrote:
+> Hi All,
+> 
+> Kevan Carstensen reported multiple security flaws in kexec-tools,
+> details are as follows:
+> 
+> 1. CVE-2011-3588:
+> 
+> The default value of "StrictHostKeyChecking=no" has been used for kdump/
+> mkdumprd openssh integration. A remote malicious kdump server could use
+> this flaw to impersonate the intended, correct kdump server to obtain
+> security sensitive information (kdump core files).
+> 
+> 2. CVE-2011-3589
+> 
+> mkdumprd utility copied content of certain directories into newly
+> created initial ramdisk images, potentially leading to information leak.
+> 
+> 3. CVE-2011-2390
+> 
+> mkdumprd utility created the final initial ramdisk image with
+> world-readable permissions, possibly leading to information leak.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=716439
+> 
+> 
