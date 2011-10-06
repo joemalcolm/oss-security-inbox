@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/19
-Message-ID: <20110401225852.GA62551@dojo.mi.org>
-Date: Fri, 1 Apr 2011 18:58:52 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/06/1
+Message-ID: <7ihb3mt6tu.fsf@lanthane.pps.jussieu.fr>
+Date: Thu, 06 Oct 2011 18:37:01 +0200
+From: Juliusz Chroboczek <jch@....jussieu.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
-::Hello everyone,
-::
-::This topic has lost focus lately. Rather than let it slip away, I think we
-::should go ahead with the simplest solution right now, we can always do
-::something different at a future date.
-::
-::Openwall has graciously volunteered to run a new list, and they currently
-::have some infrastructure in place to do this. The new list can start up
-::right away. In this instance, I fear perfect is the enemy of the good. I'd
-::rather see something functional in place than nothing.
-::
-::Here is the plan for initial membership (this is also approved by
-::Openwall).
-::
-::Initial members will have had to be a vendor-sec member (no exploders this
-::time around). You must reply to this thread, in public (on oss-security).
-::We want this to be very public, we have nothing to hide. You must have a
-::public gpg key ID included in your reply. The new list will gpg encrypt all
-::mail (it does accept plaintext messages though).
-:
-:-----BEGIN PGP PUBLIC KEY BLOCK-----
-:
-:mQBNAzwu/a0AAAECAMV1jgaqRUGhRysJJwPqVufb66DGM32lQB6opKpTLX6Pbnlm
-:mGuhEB9I2t4YHkyvu4hzCtpfjz+lkS7qTCBbv30ABRG0JU1pY2hhZWwgSi4gTydD
-:b25ub3IgPG1qb0Bkb2pvLm1pLm9yZz6JAFUDBRA8Lv2tkS7qTCBbv30BAYeCAgCk
-:D8/SxFuhSWDK7nRs0cK0DQq31u4DPy3uP60yh5ONRfFCYEz27/j4h5cRllf09Vbe
-:8LMz3gjrgSXMOxuep/Ui
-:=elKt
-:-----END PGP PUBLIC KEY BLOCK-----
+>   a denial of service flaw was found in the way Polipo, a lightweight
+> caching web proxy, processed certain HTTP POST / PUT requests. If
+> polipo was configured to allow remote client connections and particular
+> host was allowed to connect to polipo server instance, a remote
+> attacker could use this flaw to cause denial of service (polipo daemon
+> abort due to assertion failure) via specially-crafted HTTP POST / PUT
+> request.
 
-pub    512R/205BBF7D 2001-12-30
-      Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
-      C1
-uid                  Michael J. O'Connor <mjo@...o.mi.org>
+Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
+it is fixed in the Git trunk, which is unfortunately not ready to be
+released (and might never be unless a maintainer is found).
 
-Content of type "application/pgp-signature" skipped
+At any rate, I do not recommend running Polipo as a publicly accessible
+proxy.  While I have made reasonable efforts to ensure that this is
+safe, Polipo was not designed for that.
+
+Regards,
+
+-- Juliusz
