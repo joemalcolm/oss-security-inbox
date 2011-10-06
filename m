@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/3
-Message-ID: <30557829.A2gxmV9TRs@neon>
-Date: Fri, 19 Aug 2011 13:36:31 +0200
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/06/1
+Message-ID: <7ihb3mt6tu.fsf@lanthane.pps.jussieu.fr>
+Date: Thu, 06 Oct 2011 18:37:01 +0200
+From: Juliusz Chroboczek <jch@....jussieu.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: BusyBox unpack_Z_stream() buffer underflow
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+>   a denial of service flaw was found in the way Polipo, a lightweight
+> caching web proxy, processed certain HTTP POST / PUT requests. If
+> polipo was configured to allow remote client connections and particular
+> host was allowed to connect to polipo server instance, a remote
+> attacker could use this flaw to cause denial of service (polipo daemon
+> abort due to assertion failure) via specially-crafted HTTP POST / PUT
+> request.
 
-Secunia [1] reported a fix in BusyBox for a flaw similar to CVE-2006-1168:
+Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
+it is fixed in the Git trunk, which is unfortunately not ready to be
+released (and might never be unless a maintainer is found).
 
-"The vulnerability is caused due to a boundary error within the 
-"unpack_Z_stream()" function (archival/libarchive/decompress_uncompress.c) and 
-can be exploited to cause a buffer underflow via a specially crafted 
-datastream."
+At any rate, I do not recommend running Polipo as a publicly accessible
+proxy.  While I have made reasonable efforts to ensure that this is
+safe, Polipo was not designed for that.
 
-Patch is available at [2], our bug is [3].
+Regards,
 
-Please assign a CVE.
-
-Thanks,
-Alex
-
-[1] http://secunia.com/advisories/45702/
-[2] 
-http://git.busybox.net/busybox/diff/archival/libarchive/decompress_uncompress.c?id=251fc70e9722f931eec23a34030d05ba5f747b0e
-[3] https://bugs.gentoo.org/show_bug.cgi?id=379857
-
--- 
-Alex Legler <a3li@...too.org>
-Gentoo Security / Ruby
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- Juliusz
