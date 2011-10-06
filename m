@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/2
-Message-ID: <20110531082133.GB15295@suse.de>
-Date: Tue, 31 May 2011 10:21:33 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/06/2
+Message-Id: <201110062259.51947.remi@remlab.net>
+Date: Thu, 6 Oct 2011 22:59:51 +0300
+From: "Rémi Denis-Courmont" <remi@...lab.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: multiple libraries getenv() misuse
+Subject: [CVE REQUEST] VLC media player: NULL dereference in HTTP server
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+        Hello all,
 
-While investigating the libs vs. fscaps issue [1] which showed
-that most libs need patching in order to work properly with fscaps
-binaries, it was also found that a lot of libs do not even honour
-suid binaries correctly. These libs use getenv() to obtain information
-about configuration/files or plugin directories. These info can be
-"chosen with care" by attackers to trick the suid programs to execute
-code as root or do harm otherwise.
-Among these libs are libudev, libdbus, libhal, libgssglue or libcrypto
-(openssl). libudev, libdbus, libhal are linked against suid Xorg.
-libgssglue is linked against mount.nfs.
-Most of these libs were probably never intented to be linked against
-suids, but nevertheless they are.
+Can a CVE ID be reserved for this:
+http://www.videolan.org/security/sa1107.html
 
-Since the issues are all of the same family I would suggest to assign
-one CVE (or two, if you want to separate missing fscaps checks from
-euid != uid issue).
-
--s
-
-[1] http://www.suse.de/~krahmer/libs-vs-fscaps/
-
+Thanks in advance,
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Rémi Denis-Courmont
+http://www.remlab.net/
+http://fi.linkedin.com/in/remidenis
