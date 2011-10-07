@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/11
-Message-ID: <20111107175759.GA5278@pisco.westfalen.local>
-Date: Mon, 7 Nov 2011 18:57:59 +0100
-From: jmm@...ian.org
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: DSA 2338-1 moodle security update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/3
+Message-ID: <4E8EC67B.60201@redhat.com>
+Date: Fri, 07 Oct 2011 14:59:31 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: akuster <akuster@...sta.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 07, 2011 at 07:46:19PM +0200, Henri Salo wrote:
-> Has someone requested CVE-identifiers for these already?
+On 10/05/2011 10:09 PM, akuster wrote:
+> What version does this affect ?
 
-Yes, but to no avail so far:
+My mail should have been more verbose earlier. sorry for that!
 
-1. For MSA-11-0002 to MSA-11-0017:
+The flaw exists in the set of shell scripts, shipped with Red Hat 
+Enterprise Linux and Fedora kexec-tools packages.
 
-Date: Wed, 18 May 2011 23:48:05 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-Subject: [oss-security] CVE request: Several Moodle issues
+(kdump.init and mkdumprd, more specifically)
 
--> Poked 16 Jun 2011 w/o success
+I am not sure what other distros. ship these scripts.
 
-2. For MSA-11-0026 to MSA-11-0041:
 
-Date: Wed, 19 Oct 2011 14:09:42 -0600
-From: Vincent Danen <vdanen@...hat.com>
-Subject: [oss-security] CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
 
-There have been no requests for MSA-11-0018 to MSA-11-0025 so far.
-
-Cheers,
-        Moritz
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
