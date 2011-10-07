@@ -1,51 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/4
-Message-ID: <3cd7f49e-5ae6-4b39-acfc-84d6f830791a@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:26:13 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/7
+Message-ID: <20111007161110.GT12557@redhat.com>
+Date: Fri, 7 Oct 2011 10:11:10 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: CSRF and file inclusion in usebb before 1.0.12
+Cc: Juliusz Chroboczek <jch@....jussieu.fr>
+Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
+* [2011-10-06 18:37:01 +0200] Juliusz Chroboczek wrote:
 
+>>   a denial of service flaw was found in the way Polipo, a lightweight
+>> caching web proxy, processed certain HTTP POST / PUT requests. If
+>> polipo was configured to allow remote client connections and particular
+>> host was allowed to connect to polipo server instance, a remote
+>> attacker could use this flaw to cause denial of service (polipo daemon
+>> abort due to assertion failure) via specially-crafted HTTP POST / PUT
+>> request.
+>
+>Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
+>it is fixed in the Git trunk, which is unfortunately not ready to be
+>released (and might never be unless a maintainer is found).
 
------ Original Message -----
-> http://www.usebb.net/community/topic-2571.html
-> 
-> Vulnerability "HTB22914: Local File Inclusion in UseBB"
-> 
-> Recently, High-Tech Bridge SA discovered a possible issue in UseBB 1.0.11
-> and earlier. The issue exists in the fact that admin.php may possibly
-> include PHP files not used for the UseBB admin control panel (ACP).
-> 
-> The faulty code in question is only executed for logged in administrator
-> accounts, and can only include non-relevant PHP files if a directory
-> "sources/admin_" exists, which is not the case in UseBB 1.  Therefore,
-> the issue does not pose a direct threat to an existing UseBB set-up, but
-> is classified a security issue anyway and has been fixed in UseBB 1.0.12.
+Do you have a link to the commit, or a commit id?  I can't see anything
+on github that looks relevant or recent.
 
-Use CVE-2011-3611 for the above.
-
-
-> 
-> Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
-> UseBB"
-> 
-> High-Tech Bridge SA also discovered possibilities of executing CSRF
-> attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
-> malicious URL or visits a web page containing such URL or JavaScript,
-> requests may be executed that add, edit or delete data on the forum,
-> including topics, posts, account information and settings in the ACP (if
-> the user has logged in into the ACP).
-> 
-> As a solution, UseBB 1.0.12 has implemented URL and form tokens for
-> sensitive actions. Accessing or executing above URLs or scripts now
-> doesn't have an effect on the data.
-> 
-
-Use CVE-2011-3612 for the above.
+We do ship this in Fedora, so it would be nice to have the patch that we
+could apply to what we are already shipping if no releases are
+forthcoming.
 
 Thanks.
 
+>At any rate, I do not recommend running Polipo as a publicly accessible
+>proxy.  While I have made reasonable efforts to ensure that this is
+>safe, Polipo was not designed for that.
+
 -- 
-    JB
+Vincent Danen / Red Hat Security Response Team 
