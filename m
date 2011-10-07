@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/11
-Message-Id: <201103231725.35626.ludwig.nussel@suse.de>
-Date: Wed, 23 Mar 2011 17:25:35 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/6
+Message-ID: <4E8F0F93.8060901@oracle.com>
+Date: Fri, 07 Oct 2011 15:41:23 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> Josh Bressers wrote:
-> > We then will need to assign IDs for various broken uses of /var/log (If
-> > someone has a list of the currently known ones, please pass it along)
-> 
-> AFAICS on openSUSE Factory we have
-> cobbler
+On 07/10/11 14:03, Robert Święcki wrote:
+> On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
+> <huzaifas@...hat.com> wrote:
+>> Shouldnt this be:
+>>
+>>        /* No path traversal */
+>>        if (strstr(iface, "..") || strchr(iface, '/'))
+>>                return -1;
+> FWIW, this will reject too much;
+>
+> /path/to/sth..jpg
+>
 
-The cobbler daemon actually runs as root so having
-/var/log/cobbler/* owned by the web service user is likely not only a
-problem for logrote but also for cobbler itself when it opens files
-there.
+Indeed, since I don't believe that iface can reasonably include a "/"
+its sufficient to check for that.   If not then you need to check for
+"../" at the beginning of iface and "/.." anywhere else in it.   But
+simply forbidding "/" should be fine.
 
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+jch
