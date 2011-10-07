@@ -1,15 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/22/7
-Message-ID: <20111222173107.GA25097@foo.fgeek.fi>
-Date: Thu, 22 Dec 2011 19:31:07 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/9
+Message-ID: <20111007214139.GB12618@radis.liafa.jussieu.fr>
+Date: Fri, 7 Oct 2011 23:41:39 +0200
+From: Julien Cristau <jcristau@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: WordPress flash-album-gallery plugin facebook.php XSS
+Cc: Juliusz Chroboczek <jch@....jussieu.fr>
+Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
-Original report: http://seclists.org/bugtraq/2011/Nov/186
-Fix: http://plugins.trac.wordpress.org/changeset/469785
-Changelog: http://wordpress.org/extend/plugins/flash-album-gallery/changelog/
-Fixed in version: 1.57
+On Fri, Oct  7, 2011 at 23:26:13 +0200, Julien Cristau wrote:
 
-- Henri Salo
+> git bisect using the PoC from the RH bug suggests that was fixed by
+> https://gitweb.torproject.org/chrisd/polipo.git/commitdiff/0e2b44af619e46e365971ea52b97457bc0778cd3
+> 
+However, that change is not in the master branch on github, which still
+crashes AFAICT.
+
+Cheers,
+Julien
