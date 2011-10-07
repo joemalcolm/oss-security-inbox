@@ -1,50 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/20
-Message-ID: <2107589435.508511.1307384934249.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 14:28:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/8
+Message-ID: <20111007212613.GA12618@radis.liafa.jussieu.fr>
+Date: Fri, 7 Oct 2011 23:26:13 +0200
+From: Julien Cristau <jcristau@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- vsftpd -- Do not create network namespace per connection
+Cc: Juliusz Chroboczek <jch@....jussieu.fr>
+Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Oct  7, 2011 at 10:11:10 -0600, Vincent Danen wrote:
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
+> * [2011-10-06 18:37:01 +0200] Juliusz Chroboczek wrote:
 > 
-> It was found that vsftpd, Very Secure FTP daemon, when the network
-> namespace (CONFIG_NET_NS) support was activated in the kernel, used to
-> create a new network namespace per connection. A remote attacker could
-> use this flaw to cause a memory pressure and denial of the vsftpd
-> service.
+> >>  a denial of service flaw was found in the way Polipo, a lightweight
+> >>caching web proxy, processed certain HTTP POST / PUT requests. If
+> >>polipo was configured to allow remote client connections and particular
+> >>host was allowed to connect to polipo server instance, a remote
+> >>attacker could use this flaw to cause denial of service (polipo daemon
+> >>abort due to assertion failure) via specially-crafted HTTP POST / PUT
+> >>request.
+> >
+> >Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
+> >it is fixed in the Git trunk, which is unfortunately not ready to be
+> >released (and might never be unless a maintainer is found).
 > 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
-> [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+> Do you have a link to the commit, or a commit id?  I can't see anything
+> on github that looks relevant or recent.
 > 
-> This one being a bit tricky one -- from my understanding of the issue,
-> vsftpd doesn't necessarily have a security flaw on its side. It's
-> kernel issue / bug, which allows this to be used for vsftpd DoS:
-> [4]
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
-> [5]
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+> We do ship this in Fedora, so it would be nice to have the patch that we
+> could apply to what we are already shipping if no releases are
+> forthcoming.
 > 
-> Short-term solution would be probably to address this on the vsftpd
-> side, the long-term one then being to get this fixed in kernel.
-> 
-> Though not sure, how it would be wrt to CVE identifier(s) assignment.
-> 
+git bisect using the PoC from the RH bug suggests that was fixed by
+https://gitweb.torproject.org/chrisd/polipo.git/commitdiff/0e2b44af619e46e365971ea52b97457bc0778cd3
 
-I'm going to assign CVE-2011-2189 for the kernel. There are numerous
-vendors shipping this bug.
+Cheers,
+Julien
 
-I'll leave it up to MITRE if they think vsftpd should get an ID. I don't
-think it should myself, but they understand these corner cases better than
-I.
-
-Thanks.
-
--- 
-    JB
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
