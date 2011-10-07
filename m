@@ -1,40 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/6
-Message-Id: <201103131933.33082.oeriksson@mandriva.com>
-Date: Sun, 13 Mar 2011 19:33:32 +0100
-From: Oden Eriksson <oeriksson@...driva.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP substr_replace() use-after-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/3
+Message-ID: <4E8EC67B.60201@redhat.com>
+Date: Fri, 07 Oct 2011 14:59:31 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: akuster <akuster@...sta.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images
 Content-Type: text/plain; charset=utf-8
 
-söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
-> Hi,
-> 
-> I just found an use-after-free in PHP's substr_replace() function caused by
-> passing the same variable multiple times to the function, which makes the
-> PHP to use the same pointer in three variables inside the function, so when
-> the pointer is changed by a type conversion inside the function, it
-> invalids the other variables.
-> 
-> The PHP security team has seen noticed, and a bug already was filed in the
-> bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
-> 
-> $ sapi/cli/php ../bug.php
-> array(1) {
-> [0]=>
-> string(5) "0Ȅ y"
-> }
-> array(1) {
-> [0]=>
-> string(1) "0"
-> }
-> 
-> 
-> Thanks.
+On 10/05/2011 10:09 PM, akuster wrote:
+> What version does this affect ?
 
-It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
+My mail should have been more verbose earlier. sorry for that!
+
+The flaw exists in the set of shell scripts, shipped with Red Hat 
+Enterprise Linux and Fedora kexec-tools packages.
+
+(kdump.init and mkdumprd, more specifically)
+
+I am not sure what other distros. ship these scripts.
+
+
 
 -- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+Huzaifa Sidhpurwala / Red Hat Security Response Team
