@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/13/1
-Message-ID: <4d2e6afd.0849960a.6d7e.4efb@mx.google.com>
-Date: Wed, 12 Jan 2011 21:01:09 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: "Steven M. Christey" <coley@...re.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE requests: IO::Socket::SSL, cakephp, collectd, gnash, ocrodjvu, hypermail, libcloud, piwigo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/07/7
+Message-ID: <20111007161110.GT12557@redhat.com>
+Date: Fri, 7 Oct 2011 10:11:10 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Juliusz Chroboczek <jch@....jussieu.fr>
+Subject: Re: Re: CVE Request -- Polipo -- Assertion failure by processing certain HTTP POST / PUT requests
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers wrote:
-[...]
-> Steve, can MITRE take the one below. It's quite large and I don't have
-> time to do it right now. Thanks.
-> 
->> piwigo:
->> a1) CSRF
->> a2) SQL injection
->> a3) stored XSS
->> http://secunia.com/advisories/41365/
->> http://piwigo.org/releases/2.1.3
->> http://www.exploit-db.com/exploits/14973/
->> (the issues mentioned by the exploit-db entry appear to be the same
->> that
->> were fixed in 2.1.3)
->> b) search.php SQL injection
->> http://secunia.com/advisories/38305/
->> http://piwigo.org/releases/2.0.8
->> c) CSRF in the admin panel:
->> http://secunia.com/advisories/37681/
->> http://www.exploit-db.com/exploits/10417
->> (the exploit-db entry details two other issues, but are "admin-only"
->> -- feel
->> free to assign or ignore those.)
->>
+* [2011-10-06 18:37:01 +0200] Juliusz Chroboczek wrote:
 
-Ping.
+>>   a denial of service flaw was found in the way Polipo, a lightweight
+>> caching web proxy, processed certain HTTP POST / PUT requests. If
+>> polipo was configured to allow remote client connections and particular
+>> host was allowed to connect to polipo server instance, a remote
+>> attacker could use this flaw to cause denial of service (polipo daemon
+>> abort due to assertion failure) via specially-crafted HTTP POST / PUT
+>> request.
+>
+>Yes, this is a known bug with Polipo 1.0.4 and 1.0.4.1.  I believe that
+>it is fixed in the Git trunk, which is unfortunately not ready to be
+>released (and might never be unless a maintainer is found).
 
-Not urgent, but I saw them again on the list of issues without ids on our 
-tracker.
+Do you have a link to the commit, or a commit id?  I can't see anything
+on github that looks relevant or recent.
 
-Regards,
+We do ship this in Fedora, so it would be nice to have the patch that we
+could apply to what we are already shipping if no releases are
+forthcoming.
+
+Thanks.
+
+>At any rate, I do not recommend running Polipo as a publicly accessible
+>proxy.  While I have made reasonable efforts to ensure that this is
+>safe, Polipo was not designed for that.
+
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Vincent Danen / Red Hat Security Response Team 
