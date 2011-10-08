@@ -1,21 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/3
-Message-ID: <Pine.GSO.4.64.1103281029530.7261@faron.mitre.org>
-Date: Mon, 28 Mar 2011 10:30:02 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security <oss-security@...ts.openwall.com>, oss-security <oss-security@...ts.openwall.com>
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: CVE Request -- php-doctrine-Doctrine -- SQL injection flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/08/1
+Message-ID: <20111008165504.GA1977@albatros>
+Date: Sat, 8 Oct 2011 20:55:04 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Reuben Hawkins <reubenhwk@...il.com>
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Oct 07, 2011 at 15:41 +0100, John Haxby wrote:
+> On 07/10/11 14:03, Robert Święcki wrote:
+> > On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
+> > <huzaifas@...hat.com> wrote:
+> >> Shouldnt this be:
+> >>
+> >>        /* No path traversal */
+> >>        if (strstr(iface, "..") || strchr(iface, '/'))
+> >>                return -1;
+> > FWIW, this will reject too much;
+> >
+> > /path/to/sth..jpg
+> >
+> 
+> Indeed, since I don't believe that iface can reasonably include a "/"
+> its sufficient to check for that.   If not then you need to check for
+> "../" at the beginning of iface and "/.." anywhere else in it.   But
+> simply forbidding "/" should be fine.
 
-On Fri, 25 Mar 2011, Jan Lieskovsky wrote:
+Crap, thank you for noticing it, guys.  The fix should be:
 
->  a SQL injection flaw has been reported against Doctrine, the PHP Object 
-> Relational Mapper:
->  [1] http://www.doctrine-project.org/blog/doctrine-security-fix
->  [2] https://bugzilla.redhat.com/show_bug.cgi?id=689396
+https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
 
-Use CVE-2011-1522
+Now, "", "..", "." and filenames with "/" inside are denied.
 
-- Steve
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
