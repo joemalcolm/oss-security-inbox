@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/8
-Message-ID: <547066768.96915.1305574770754.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 16 May 2011 15:39:30 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/08/2
+Message-ID: <20111009011422.114caf8a@laverne>
+Date: Sun, 9 Oct 2011 01:14:22 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Matej Vela <vela@...ian.org>, Jakub Jelinek <jakub@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- pmake -- Use of insecure temporary file for 'depend' target
+Subject: CVE request: serendipity freetag plugin before 3.30 and probably others
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1920
+XSS in the tagcloud generation flash in serendipity freetag before 3.30:
+http://blog.s9y.org/archives/234-Security-fix-for-flash-based-cloud-in-Freetag-plugin.html
 
-Thanks.
+The linked vulnerability report indicates that this flash code is also
+used by other software, e.g. the wp cumulus plugin:
+http://websecurity.com.ua/5356/
+
+Though my ukrainian isn't that good ;-)
+
+Please assign cve.
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> it was found that pmake (BSD 4.4 version of make) used insecure
-> temporary file for 'depend' target when building libraries (/usr/share
-> /mk/bsd.lib.mk) and executables (/usr/share/mk/bsd.prog.mk). A local
-> attacker could use this flaw to conduct symlink attacks possibly
-> leading to their ability to replace content of arbitrary files,
-> belonging to user running the pmake tool or ability to modify the
-> integrity of .depend file in the home directory of the victim.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=626673
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=705090
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
