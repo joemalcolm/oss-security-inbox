@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/10
-Message-ID: <Pine.GSO.4.64.1109141437030.18631@faron.mitre.org>
-Date: Wed, 14 Sep 2011 14:43:50 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/08/2
+Message-ID: <20111009011422.114caf8a@laverne>
+Date: Sun, 9 Oct 2011 01:14:22 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: serendipity freetag plugin before 3.30 and probably others
 Content-Type: text/plain; charset=utf-8
 
+XSS in the tagcloud generation flash in serendipity freetag before 3.30:
+http://blog.s9y.org/archives/234-Security-fix-for-flash-based-cloud-in-Freetag-plugin.html
 
-I've assigned CVE's to the rest of these:
+The linked vulnerability report indicates that this flash code is also
+used by other software, e.g. the wp cumulus plugin:
+http://websecurity.com.ua/5356/
 
->> 1, Wireshark CSN.1 dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-16.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737783
+Though my ukrainian isn't that good ;-)
 
-CVE-2011-3482
+Please assign cve.
 
->> 3. Wireshark buffer exception handling vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-14.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737785
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-CVE-2011-3483
-
->> 4. Wireshark OpenSafety dissector vulnerability
->> http://www.wireshark.org/security/wnpa-sec-2011-12.html
->> https://bugzilla.redhat.com/show_bug.cgi?id=737787
-
-CVE-2011-3484
-
-
-- Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
