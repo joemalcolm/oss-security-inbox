@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/17/1
-Message-ID: <4D815C7D.60900@redhat.com>
-Date: Thu, 17 Mar 2011 08:57:33 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/2
+Message-ID: <20111009103931.7023618d@laverne>
+Date: Sun, 9 Oct 2011 10:39:31 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+Subject: CVE request: vanilla forums cookie theft, plugin access control
 Content-Type: text/plain; charset=utf-8
 
-On 03/17/2011 12:26 AM, Menkhus, Mark (GSE Security HP SSRT) wrote:
-> Thanks Eugene,
->
-> I have been looking at how to contribute in FOSS and security, and for me
-> it's been in the area of how to understand what vulnerabilities are already
-> documented.  I might think about looking more at the kernel changelogs and
-> LKML lists.
->
-> For sure, I'll look for some bugs while I am at it, tho.
+http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released
 
-Thanks!
+two issues:
 
-Eugene
+before 2.0.17.9 - [SECURITY] Fixed cookie theft vulnerability.
+
+
+before 2.0.17.10 - [SECURITY] Fixed Facebook, Twitter, and Embed
+plugins' access control.
+
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
