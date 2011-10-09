@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/8
-Message-ID: <358182854.11430.1302892361483.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 15 Apr 2011 14:32:41 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/3
+Message-ID: <20111009104736.12de0a08@laverne>
+Date: Sun, 9 Oct 2011 10:47:36 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Jeff Layton <jlayton@...hat.com>, Steve French <sfrench@...ibm.com>, Suresh Jayaraman <sjayaraman@...ell.com>, coley <coley@...re.org>
-Subject: Re: CVE Request: cifs session reuse
+Subject: CVE request: simple machines forum before 2.0.1 and 1.1.15
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1585
+http://www.simplemachines.org/community/index.php?P=adfcf10856d3f74172b76dd384b6ade6&topic=452888.0
 
-Thanks.
+"Critical security issues have been identified and fixed with this
+patch, therefore it is highly recommended to make sure you update your
+forums immediately."
+
+
+That probably qualifies as "unknown security issue in simple machines
+forum" ;-)
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-
------ Original Message -----
-> Hi,
-> 
-> When one user has mounted a cifs share that requires authentication,
-> another user could mount the same share without knowing the
-> correct password. The following kernel commits fix that:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=4ff67b720c02c36e54d55b88c2931879b7db1cd2
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=fc87a40677bbe0937e2ff0642c7e83c9a4813f3d
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=24e6cf92fde1f140d8eb0bf7cd24c2c78149b6b2
-> 
-> A way to exploit this would be through mount.cifs if it's
-> installed setuid root.
-> 
-> cu
-> Ludwig
-> 
-> --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
