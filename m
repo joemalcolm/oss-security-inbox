@@ -1,18 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/5
-Message-ID: <20110726151953.GA3363@pisco.westfalen.local>
-Date: Tue, 26 Jul 2011 17:19:53 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/4
+Message-ID: <4E91CB52.3080109@gmail.com>
+Date: Sun, 09 Oct 2011 12:26:58 -0400
+From: Sean Amoss <failedtosync@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: meskes@...ian.org
-Subject: Information on CVE-2011-2300/CVE-2011-2305 for VirtualBox ?
+Subject: CVE Request -- Conky 1.8.1 "/tmp/.cesf" Insecure Temporary File Security Issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-does anyone have further information on 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2300 and
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2305
-and whether if affects the open source version of Virtual Box?
+Hello,
 
-Cheers,
-        Moritz
+Can a CVE be assigned for the below issue?
+
+Conky 1.8.1 contains a vulnerability that allows malicious, local users
+to perform certain actions with escalated privileges.
+
+https://bugs.launchpad.net/ubuntu/+source/conky/+bug/607309
+http://secunia.com/advisories/43225/
+
+
+Thanks,
+
+-- 
+Sean Amoss
