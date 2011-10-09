@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/10/3
-Message-ID: <20110310180838.GB19262@florz.florz.dyndns.org>
-Date: Thu, 10 Mar 2011 19:08:38 +0100
-From: Florian Zumbiehl <florz@...rz.de>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Kalu??a <jkaluza@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/3
+Message-ID: <20111009104736.12de0a08@laverne>
+Date: Sun, 9 Oct 2011 10:47:36 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: simple machines forum before 2.0.1 and 1.1.15
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+http://www.simplemachines.org/community/index.php?P=adfcf10856d3f74172b76dd384b6ade6&topic=452888.0
 
-> > >     8) Issue #8: logrotate: TOCTOU race condition by creation of new
-> > >     files (between opening the file and moment, final permissions have
-> > >     been applied) [information disclosure]
-> > >
-> > 
-> 
-> Let' use CVE-2011-1098 for this.
+"Critical security issues have been identified and fixed with this
+patch, therefore it is highly recommended to make sure you update your
+forums immediately."
 
-What about these?:
 
-| However, I think that still #6 (shell injection) and #7 (logrotate
-| DoS with strange characters in file names) should be considered
-| vulnerabilities in logrotate: It would be reasonable to assume that you
-| can use user input that's a valid (slash-less) filename as a (part of a)
-| log file name (assuming that the program is running as the same user that
-| inspects and rotates the logs, so the log directory being writable by
-| the program would not be insecure per-se) without that file name being
-| interpreted by a shell or causing logrotate to stop functioning,
-| respectively.
+That probably qualifies as "unknown security issue in simple machines
+forum" ;-)
 
-Florian
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
