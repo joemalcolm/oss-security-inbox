@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/15
-Message-Id: <20110228165401.849106fa.michael.s.gilbert@gmail.com>
-Date: Mon, 28 Feb 2011 16:54:01 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/1
+Message-ID: <20111009103526.25166a06@laverne>
+Date: Sun, 9 Oct 2011 10:35:26 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: eglibc memory corruption
+Subject: CVE request: CSRF and file inclusion in usebb before 1.0.12
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 28 Feb 2011 15:55:34 -0500 (EST) Josh Bressers wrote:
+http://www.usebb.net/community/topic-2571.html
 
-> ----- Original Message -----
-> > Hi,
-> > 
-> > An issue was disclosed for eglibc [0],[1]. Please assign a CVE id for
-> > it.
-> > 
-> > Thanks,
-> > Mike
-> > 
-> > [0] http://seclists.org/fulldisclosure/2011/Feb/635
-> > [1] http://bugs.debian.org/615120
-> 
-> It should be noted this also affects glibc.
-> Does anyone know when this was fixed in glibc by chance? The bug has no details.
+Vulnerability "HTB22914: Local File Inclusion in UseBB"
 
-According to a follow-up message to the thread above [0], this was fixed
-via [1], which is the patch Debian used to fix the issue.
+Recently, High-Tech Bridge SA discovered a possible issue in UseBB
+1.0.11 and earlier. The issue exists in the fact that admin.php may
+possibly include PHP files not used for the UseBB admin control panel
+(ACP).
 
-Best wishes,
-Mike
+The faulty code in question is only executed for logged in
+administrator accounts, and can only include non-relevant PHP files if
+a directory "sources/admin_" exists, which is not the case in UseBB 1.
+Therefore, the issue does not pose a direct threat to an existing UseBB
+set-up, but is classified a security issue anyway and has been fixed in
+UseBB 1.0.12.
 
-[0]http://seclists.org/fulldisclosure/2011/Feb/644
-[1]http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=f15ce4d8dc139523fe0c273580b604b2453acba6
+Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
+UseBB"
+
+High-Tech Bridge SA also discovered possibilities of executing CSRF
+attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
+malicious URL or visits a web page containing such URL or JavaScript,
+requests may be executed that add, edit or delete data on the forum,
+including topics, posts, account information and settings in the ACP
+(if the user has logged in into the ACP).
+
+As a solution, UseBB 1.0.12 has implemented URL and form tokens for
+sensitive actions. Accessing or executing above URLs or scripts now
+doesn't have an effect on the data.
+
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
