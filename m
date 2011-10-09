@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/8
-Message-ID: <20110422153251.GA6190@albatros>
-Date: Fri, 22 Apr 2011 19:32:51 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Petr Matousek <pmatouse@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: buffer overflow and DoS issues in agp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/5
+Message-ID: <20111009182839.GA4474@pisco.westfalen.local>
+Date: Sun, 9 Oct 2011 20:28:39 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: Tahoe-LAFS and atop
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 22, 2011 at 11:11 -0400, Petr Matousek wrote:
-> > Another problem in agp code is not addressed in the patch - kernel
-> > memory
-> > exhaustion (AGPIOC_RESERVE and AGPIOC_ALLOCATE ioctls). It is not
-> > checked
-> > whether requested pid is a pid of the caller (no check in
-> > agpioc_reserve_wrap()).
-> > Each allocation is limited to 16KB, though, there is no per-process
-> > limit.
-> > This might lead to OOM situation, which is not even solved in case of
-> > the
-> > caller death by OOM killer - the memory is allocated for another
-> > (faked)
-> > process."
-> 
-> Please use CVE-2011-1747.
+Hi,
+please assign CVE IDs for the following issues:
 
-In https://bugzilla.redhat.com/show_bug.cgi?id=698999 it is said
-"Reference and patch:", but there is no patch for the issue (as I said
-in the patch description).  I have no agp hardware and I cannot test
-whether forcing the requested pid to the current pid is a good idea (it
-might not).
+1. Tahoe-LAFS
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641540
 
-Thanks,
+2. atop
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
 
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Cheers,
+        Moritz
