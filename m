@@ -1,58 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/15
-Message-ID: <alpine.LRH.1.00.1103081107240.6869@bronson.owlriver.com>
-Date: Tue, 8 Mar 2011 11:19:43 -0500 (EST)
-From: R P Herrold <herrold@...river.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/1
+Message-ID: <20111009103526.25166a06@laverne>
+Date: Sun, 9 Oct 2011 10:35:26 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Vendor-sec hosting and future of closed lists
+Subject: CVE request: CSRF and file inclusion in usebb before 1.0.12
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 8 Mar 2011, Josh Bressers wrote:
+http://www.usebb.net/community/topic-2571.html
 
-prior content, not from Josh:
->> We would also be willing to host and maintain a closed vendor-sec style
->> mailing list like the previous one with the only condition for member
->> list to be public (not necessarily the individual contact names but at
->> least the entities represented).
+Vulnerability "HTB22914: Local File Inclusion in UseBB"
 
-I guess I do not see the reason for such a listing.  The list 
-that Josh put together from memory does not include the 
-distributions I represented and coordinated vendor-sec matters 
-for.  Having such a list just offers better target 
-identification of those NOT on the list and thus may lag a 
-CRD, no?  How is this beneficial?
+Recently, High-Tech Bridge SA discovered a possible issue in UseBB
+1.0.11 and earlier. The issue exists in the fact that admin.php may
+possibly include PHP files not used for the UseBB admin control panel
+(ACP).
 
-> There is also the option of recreating an old style list. This is a bit
-> more ad-hoc and Openwall has already offered to host such a thing (Solar
-> has quite a bit already in place). I do favor this a bit, as it would make
-> a nice compliment to oss-security
+The faulty code in question is only executed for logged in
+administrator accounts, and can only include non-relevant PHP files if
+a directory "sources/admin_" exists, which is not the case in UseBB 1.
+Therefore, the issue does not pose a direct threat to an existing UseBB
+set-up, but is classified a security issue anyway and has been fixed in
+UseBB 1.0.12.
 
-I favor such as well - I posted an offer to host such pro bono 
-as a neutral vendor (centos inherently trails), but it was 
-caught up in the trashing of the old vendor-sec host and so 
-did not ever pass the old list.  Openwall's offer is fine by 
-me as well.   I mentioned adding opportunistic SSL/TLS 
-transport on the mailserver, to cut out casual MitM 
-eavesdropping
+Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
+UseBB"
 
-> 1) Membership management is a pain. Adding new people is annoying and
->   nobody ever leaves.
-> 2) Nobody is in charge, which means sometimes issues can get ignored or
->   forgotten (also see #1)
+High-Tech Bridge SA also discovered possibilities of executing CSRF
+attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
+malicious URL or visits a web page containing such URL or JavaScript,
+requests may be executed that add, edit or delete data on the forum,
+including topics, posts, account information and settings in the ACP
+(if the user has logged in into the ACP).
 
-These track together -- mailman or such will cull dead email 
-accounts that bounce of course, but that is a pretty mild form 
-of management.  Absent a charter to somehow mandate some 
-'contribution' to remain on a list, there is not a clear rule 
-to 'weed' the list.  But is this really needed except from 
-some idea of avoiding 'too many eyes'?  Frankly running a 
-distribution is work and for non-commercial distributions, 
-unpaid work
+As a solution, UseBB 1.0.12 has implemented URL and form tokens for
+sensitive actions. Accessing or executing above URLs or scripts now
+doesn't have an effect on the data.
 
-If a criteria for remaining on the list is needed, it is 
-needed to make sure that eyes are still reading the content -- 
-handle that with a periodic 'tracer' piece, and drop 
-non-responders
 
--- Russ herrold
- 	(centos, cAos)
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
