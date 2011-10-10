@@ -1,30 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/5
-Message-ID: <20110715104927.GA22533@dztty>
-Date: Fri, 15 Jul 2011 11:49:27 +0100
-From: Djalal Harouni <tixxdz@...ndz.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1764 Exim: DKIM Format String
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/1
+Message-ID: <4E92EF47.3000808@redhat.com>
+Date: Mon, 10 Oct 2011 15:12:39 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>, Security Focus Team <vuldb@...urityfocus.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE ASSIGNMENT CORRECTION -- USE CVE-2011-3590 instead of CVE-2011-2390 [was: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images]
 Content-Type: text/plain; charset=utf-8
 
-A format string vulnerability affects the Exim SMTP server with DomainKeys
-Identified Mail (DKIM) support, version between 4.70 and 4.75. The DKIM
-logging mechanism did not use format string specifiers when logging some
-parts of the DKIM-Signature header field. A remote attacker who is able
-to send emails, can exploit this vulnerability and execute arbitrary
-code with the privileges of the Exim daemon [1].
 
-MITRE assigned CVE-2011-1764 to this vulnerability but the entry was not
-updated [2]. We would appreciate if it can be updated, we are using this
-CVE name in one of our new Nmap scripts smtp-vuln-cve2011-1764.nse [3].
+Hello vendors,
 
-Thanks.
+   1) apologize for capital letters in the subject. Just wanted this
+message not to be overlooked, since it's important.
 
-[1] http://thread.gmane.org/gmane.mail.exim.devel/4946
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=2011-1764
-[3] http://seclists.org/nmap-dev/2011/q3/221
+On 10/05/2011 04:34 AM, Huzaifa Sidhpurwala wrote:
+> Hi All,
+>
+> Kevan Carstensen reported multiple security flaws in kexec-tools,
+> details are as follows:
+>
+> 1. CVE-2011-3588:
+>
+> The default value of "StrictHostKeyChecking=no" has been used for kdump/
+> mkdumprd openssh integration. A remote malicious kdump server could use
+> this flaw to impersonate the intended, correct kdump server to obtain
+> security sensitive information (kdump core files).
+>
+> 2. CVE-2011-3589
+>
+> mkdumprd utility copied content of certain directories into newly
+> created initial ramdisk images, potentially leading to information leak.
+>
+> 3. CVE-2011-2390
 
--- 
-tixxdz
-http://opendz.org
+2) Due to a mistake, an incorrect CVE identifier of CVE-2011-2390 was
+used  here / in the previous post. The proper one should be 
+CVE-2011-3590, as detailed here:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=716439#c61
+
+Since there are some incorrect references present in the public already:
+[2] http://www.securityfocus.com/bid/49944/info
+
+we wanted to kindly ask you to update your entries. CVE-2011-2390 is
+NOT the correct one, please use CVE-2011-3590 identifier to reference
+the following security flaw:
+
+3. kdump/mkdumprd copies all the .ssh keys of root user on the vmcore
+    file. This may include keys which are not-required and may be
+    confidential to the root user also.
+
+in the kexec-tools package.
+
+Apologize to all of the affected parties for the inconvenience.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> mkdumprd utility created the final initial ramdisk image with
+> world-readable permissions, possibly leading to information leak.
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=716439
+>
+>
+
