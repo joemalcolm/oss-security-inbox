@@ -1,55 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/06/1
-Message-ID: <41870251.859383.1315341696513.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 6 Sep 2011 16:41:36 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/6
+Message-ID: <302d8142-632d-48f8-930b-ba9090fd2e83@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:34:23 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
-Subject: Re: CVE request for bcfg2 (remote root)
+Subject: Re: CVE request: simple machines forum before 2.0.1 and 1.1.15
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3211
+----- Original Message -----
+> http://www.simplemachines.org/community/index.php?P=adfcf10856d3f74172b76dd384b6ade6&topic=452888.0
+> 
+> "Critical security issues have been identified and fixed with this patch,
+> therefore it is highly recommended to make sure you update your forums
+> immediately."
+> 
+> 
+> That probably qualifies as "unknown security issue in simple machines
+> forum" ;-)
+
+Indeed. If someone has more details, please speak up. We can assign more
+IDs in the future if needed.
+
+Use CVE-2011-3615
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> Hi,
-> 
-> A bug report in Debian has come to light for which I can find no other
-> information, and therefore I do not believe it has a CVE - but
-> probably
-> should.
-> 
-> From http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=640028 :
-> 
-> "All released stable versions of the bcfg2-server contain several
-> cases
-> where data from the client is used in a shell command without properly
-> escaping it first. The 1.2 prerelease series has been fixed.
-> 
-> "At least the SSHbase plugin has been confirmed as being exploitable.
-> This is a remote root hole, which requires that the SSHbase plugin is
-> enabled and that the attacker has control of a bcfg2 client machine."
-> 
-> A patch for the problem has been commited [1] upstream and backported
-> [2] to
-> the 1.1 series.
-> 
-> 1:
-> https://github.com/solj/bcfg2/commit/f4a35efec1b6a1e54d61cf1b8bfc83dd1d89eef7
-> 2:
-> https://github.com/solj/bcfg2/commit/46795ae451ca6ede55a0edeb726978aef4684b53
-> 
-> Please CC me, I am not subscribed.
-> 
-> Thanks,
-> 
-> --
-> Jonathan Wiltshire jmw@...ian.org
-> Debian Developer http://people.debian.org/~jmw
-> 
-> 4096R: 0xD3524C51 / 0A55 B7C5 1223 3942 86EC 74C3 5394 479D D352 4C51
