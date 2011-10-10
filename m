@@ -1,47 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/5
-Message-ID: <Pine.GSO.4.64.1103021804390.24409@faron.mitre.org>
-Date: Wed, 2 Mar 2011 18:05:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/8
+Message-ID: <4495cba8-d6d6-4878-ae5f-950730497b58@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:41:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: freebsd kernel/tesseract/xinha/proftpd
+Subject: Re: CVE Request -- Conky 1.8.1 "/tmp/.cesf" Insecure Temporary File Security Issue
 Content-Type: text/plain; charset=utf-8
 
+Please use CVE-2011-3616
 
-On Mon, 21 Feb 2011, Moritz Muehlenhoff wrote:
+Thanks.
 
-> 1. FreeBSD kernel: local DoS
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=613312
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611476
-> http://www.exploit-db.com/exploits/16064/
-> http://svn.debian.org/wsvn/glibc-bsd/branches/squeeze/kfreebsd-8/debian/patches/000_tcp_usrreq.diff
-
-Use CVE-2011-1132
-
-> 2. Xinha: Multiple vulnerabilities
-> (The code is included in a few web apps, e.g. serendipity, openacs or dotlrn)
-> http://secunia.com/advisories/40669/
-
-CVE-2011-1133 - XSS in mode param to 
-plugins/ExtendedFileManager/backend.php (David Vieira-Kurz)
-
-CVE-2011-1134 - file upload
-
-CVE-2011-1135 - XSS at end of URL to 
-plugins/ExtendedFileManager/manager.php and 
-plugins/ImageManager/manager.php (Riss McRee)
+-- 
+    JB
 
 
-> 3. tesseract: Insecure temp file handling
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=612032
-
-CVE-2011-1136
-
-> 4. proftpd mod_sftp integer overflow
-> http://bugs.proftpd.org/show_bug.cgi?id=3586
-> http://www.exploit-db.com/exploits/16129/
-
-CVE-2011-1137
-
-
-- Steve
+----- Original Message -----
+> Hello,
+> 
+> Can a CVE be assigned for the below issue?
+> 
+> Conky 1.8.1 contains a vulnerability that allows malicious, local
+> users
+> to perform certain actions with escalated privileges.
+> 
+> https://bugs.launchpad.net/ubuntu/+source/conky/+bug/607309
+> http://secunia.com/advisories/43225/
+> 
+> 
+> Thanks,
+> 
+> --
+> Sean Amoss
+> 
