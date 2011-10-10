@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/11
-Message-ID: <CABqVa38sEf_D63MGfBC+woBx_KCWDJfQOUXOpyiPrnoO1mP7zA@mail.gmail.com>
-Date: Mon, 21 Nov 2011 09:10:11 -0700
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/10
+Message-ID: <9d65396b-ae9b-44ee-a5fc-1375b075a103@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:58:16 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: openssh 5.8p2
+Subject: Re: CVE requests: Tahoe-LAFS and atop
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2011 at 7:44 AM, Marcus Meissner <meissner@...e.de> wrote:
-> Hi,
->
-> http://www.openssh.com/txt/release-5.8p2
-> http://www.openssh.com/txt/portable-keysign-rand-helper.adv
-> http://www.nessus.org/plugins/index.php?view=single&id=53841
->
-> has a security issue listed without a assigned CVE.
->
-> Could someone please assign a CVE id?
->
-> (We are not affected, but as we got customer queries regarding the
-> Nessus check already it should get a CVE id I think.)
->
-> Ciao, Marcus
->
 
-Please use CVE-2011-4327 for this issue.
+
+----- Original Message -----
+> Hi,
+> please assign CVE IDs for the following issues:
+> 
+> 1. Tahoe-LAFS
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641540
+
+This appears to be an unauthorized user can delete files type of issue.
+
+Use CVE-2011-3617
+
+
+> 
+> 2. atop
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
+> 
+
+This is an insecure temporary file use flaw.
+
+Use CVE-2011-3618
+
+Thanks.
 
 -- 
-Kurt Seifried
-kurt@...fried.org
+    JB
