@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/12
-Message-Id: <201101040050.19789.hanno@hboeck.de>
-Date: Tue, 4 Jan 2011 00:50:19 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/4
+Message-ID: <3cd7f49e-5ae6-4b39-acfc-84d6f830791a@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:26:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: silverstripe before 2.4.4
+Subject: Re: CVE request: CSRF and file inclusion in usebb before 1.0.12
 Content-Type: text/plain; charset=utf-8
 
-http://www.silverstripe.org/security-releases/
 
-Silverstripe 2.4.4 notes:
-SQL information disclosure, SQL injection in Translatable extension, Cross 
-Site Request Forgery in various CMS interfaces, XSS in controller action 
-handling
 
-(if someone is motivated one could also assign CVEs to all the old version 
-issues)
+----- Original Message -----
+> http://www.usebb.net/community/topic-2571.html
+> 
+> Vulnerability "HTB22914: Local File Inclusion in UseBB"
+> 
+> Recently, High-Tech Bridge SA discovered a possible issue in UseBB 1.0.11
+> and earlier. The issue exists in the fact that admin.php may possibly
+> include PHP files not used for the UseBB admin control panel (ACP).
+> 
+> The faulty code in question is only executed for logged in administrator
+> accounts, and can only include non-relevant PHP files if a directory
+> "sources/admin_" exists, which is not the case in UseBB 1.  Therefore,
+> the issue does not pose a direct threat to an existing UseBB set-up, but
+> is classified a security issue anyway and has been fixed in UseBB 1.0.12.
+
+Use CVE-2011-3611 for the above.
+
+
+> 
+> Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
+> UseBB"
+> 
+> High-Tech Bridge SA also discovered possibilities of executing CSRF
+> attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
+> malicious URL or visits a web page containing such URL or JavaScript,
+> requests may be executed that add, edit or delete data on the forum,
+> including topics, posts, account information and settings in the ACP (if
+> the user has logged in into the ACP).
+> 
+> As a solution, UseBB 1.0.12 has implemented URL and form tokens for
+> sensitive actions. Accessing or executing above URLs or scripts now
+> doesn't have an effect on the data.
+> 
+
+Use CVE-2011-3612 for the above.
+
+Thanks.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
-
-http://schokokeks.org - professional webhosting
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+    JB
