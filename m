@@ -1,22 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/9
-Message-ID: <20110830195129.GA15630@openwall.com>
-Date: Tue, 30 Aug 2011 23:51:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/7
+Message-ID: <20111010204022.4bd99128@laverne>
+Date: Mon, 10 Oct 2011 20:40:22 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed List
+Subject: CVE request: XSS in phorum before 5.2.18
 Content-Type: text/plain; charset=utf-8
 
-Hi John,
+http://www.phorum.org/phorum5/read.php?64,149588
 
-On Tue, Aug 30, 2011 at 05:06:37PM +0100, John Haxby wrote:
-> I'm John Haxby, a member of the Linux group at Oracle Corporation.  I'm
-> actually in the Linux sustaining team, the team actually responsible for
-> fixing most of the bugs.
-> 
-> Could you please add me to the closed list?   There is one other person
-> on the list for Oracle, but none, yet, from the Linux group.
+cite:
+"It includes a security fix for an XSS issue reported by Paul Davis in
+the admin login screen. Thanks Paul! "
 
-I've just added you.
 
-Alexander
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
