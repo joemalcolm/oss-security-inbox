@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/12
-Message-ID: <506779117.651125.1307993146270.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:25:46 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/3
+Message-ID: <db93d4a5-c28e-44dc-8c8d-4183199fa5e9@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:22:16 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Simon McVittie <smcv@...ian.org>, 629938@...s.debian.org, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- dbus -- Local DoS via messages with non-native byte order
+Subject: Re: CVE request: serendipity freetag plugin before 3.30 and probably others
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> It was found that D-BUS message bus service / messaging facility did
-> not update the byte-order flag of the message properly by swapping the
-> byte order of incoming messages into their native endiannes. A local,
-> authenticated user could use this flaw to send a specially-crafted
-> message to a system service (like Avahi or NetworkManager), using the
-> system bus, potentially leading to disconnect of such a service from
-> system bus (denial of service).
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
-> [2] https://bugs.freedesktop.org/show_bug.cgi?id=38120
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712676
-> 
-> Upstream patches:
-> [4]
-> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.2&id=6519a1f77c61d753d4c97efd6e15630eb275336e
-> (in upstream v1.2.28 version)
-> 
-> [5]
-> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.4&id=c3223ba6c401ba81df1305851312a47c485e6cd7
-> (in upstream v1.4.12 version)
-> 
-
-Please use CVE-2011-2200.
+Please use CVE-2011-3610.
 
 Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> XSS in the tagcloud generation flash in serendipity freetag before
+> 3.30:
+> http://blog.s9y.org/archives/234-Security-fix-for-flash-based-cloud-in-Freetag-plugin.html
+> 
+> The linked vulnerability report indicates that this flash code is
+> also
+> used by other software, e.g. the wp cumulus plugin:
+> http://websecurity.com.ua/5356/
+> 
+> Though my ukrainian isn't that good ;-)
+> 
+> Please assign cve.
+> 
+> --
+> Hanno Böck		mail/jabber: hanno@...eck.de
+> GPG: BBB51E42		http://www.hboeck.de/
+> 
