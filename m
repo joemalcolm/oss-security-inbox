@@ -1,52 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/08/2
-Message-ID: <20110908122534.GA2939@inutil.org>
-Date: Thu, 8 Sep 2011 14:25:34 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Ferdinand <debbug@...tplaza.com>, Russ Allbery <rra@...ian.org>, Sven Verdoolaege <skimo@...net.org>, Chris Weyl <cweyl@...mni.drew.edu>
-Subject: Re: CVE Request -- libfcgi-perl / perl-FCGI: Certain environment variables shared between first and subsequent HTTP requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/1
+Message-ID: <4E92EF47.3000808@redhat.com>
+Date: Mon, 10 Oct 2011 15:12:39 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+CC: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>, Security Focus Team <vuldb@...urityfocus.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE ASSIGNMENT CORRECTION -- USE CVE-2011-3590 instead of CVE-2011-2390 [was: Re: kexec-tools: Multiple security flaws by management of kdump core files and ramdisk images]
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 08, 2011 at 10:32:47AM +0200, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
->
->   it was found that the perl Fast CGI module did not properly clean up
-> certain environment variables, related to a particular HTTP request,
-> between subsequent incoming requests. Any environment variable set in
-> the first pass through the code by processing the first request, that
-> wasn't set in some subsequent request, has been added to the hash
-> containing environment variables for that subsequent request. A remote
-> attacker could use this flaw to bypass the authentication process and
-> obtain access to resources, which would be otherwise protected by
-> authentication.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=736604
->
-> Russ Allbery of Debian (Cc-ed) provides further elaborated analysis
-> of the reasons of the issue:
-> [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607479#10
->
-> Cc-ed also Sven Verdoolaege, the perl FCGI module author (as noted
-> on CPAN) for his opinion too.
->
-> Could you allocate a CVE id for this issue?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-> P.S.: Though the issue has been reported Sat, 18 Dec 2010 22:13:40 +0100
->       already, only Russ's analysis (Wed, 07 Sep 2011 20:24:00 -0700)
->       unveiled the full security implications of this issue. So I
->       assume, the CVE-2011-* identifier would be sufficient to cover
->       this issue. But feel free to correct me if I am wrong here.
->       Thanks, Jan.
 
-FYI: Debian already allocated CVE-2011-2766 to this.
-http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=19;bug=607479
+Hello vendors,
 
-Cheers,
-        Moritz
+   1) apologize for capital letters in the subject. Just wanted this
+message not to be overlooked, since it's important.
+
+On 10/05/2011 04:34 AM, Huzaifa Sidhpurwala wrote:
+> Hi All,
+>
+> Kevan Carstensen reported multiple security flaws in kexec-tools,
+> details are as follows:
+>
+> 1. CVE-2011-3588:
+>
+> The default value of "StrictHostKeyChecking=no" has been used for kdump/
+> mkdumprd openssh integration. A remote malicious kdump server could use
+> this flaw to impersonate the intended, correct kdump server to obtain
+> security sensitive information (kdump core files).
+>
+> 2. CVE-2011-3589
+>
+> mkdumprd utility copied content of certain directories into newly
+> created initial ramdisk images, potentially leading to information leak.
+>
+> 3. CVE-2011-2390
+
+2) Due to a mistake, an incorrect CVE identifier of CVE-2011-2390 was
+used  here / in the previous post. The proper one should be 
+CVE-2011-3590, as detailed here:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=716439#c61
+
+Since there are some incorrect references present in the public already:
+[2] http://www.securityfocus.com/bid/49944/info
+
+we wanted to kindly ask you to update your entries. CVE-2011-2390 is
+NOT the correct one, please use CVE-2011-3590 identifier to reference
+the following security flaw:
+
+3. kdump/mkdumprd copies all the .ssh keys of root user on the vmcore
+    file. This may include keys which are not-required and may be
+    confidential to the root user also.
+
+in the kexec-tools package.
+
+Apologize to all of the affected parties for the inconvenience.
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+>
+> mkdumprd utility created the final initial ramdisk image with
+> world-readable permissions, possibly leading to information leak.
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=716439
+>
+>
+
