@@ -1,70 +1,162 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/1
-Message-ID: <20110403112326.GI13907@genesis.frugalware.org>
-Date: Sun, 3 Apr 2011 13:23:26 +0200
-From: Miklos Vajna <vmiklos@...galware.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/2
+Message-ID: <4E930C82.7070100@redhat.com>
+Date: Mon, 10 Oct 2011 17:17:22 +0200
+From: Petr Lautrbach <plautrba@...hat.com>
+To: MustLive <mustlive@...security.com.ua>
+CC: jlieskov@...hat.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Multiple security issues in various versions of AWStats
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers <bressers@...hat.com> wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+On 10/08/2011 12:53 AM, MustLive wrote:
+> Jan!
+>
+> Petr was not right :-). And I CCed this letter, to let him know about it.
+>
+> 1. As I wrote in my previous letter there is CVE entry already for
+> Redirector vulnerability - Open redirect vulnerability
+> (http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-5020). And as I
+> showed in my advisory in case of #2, this fix can be bypassed, so there can
+> be made update for this CVE entry or made new entry.
+>
+> So CVE, Mitre and all others, who made such entries in their vulnerability
+> databases (including developer, who tried to fix it, but incorrectly and it
+> can be bypassed) already recognized it as vulnerability.
+>
 
-Hi,
+According to mentioned CVE, there is vulnerability in awredir.pl in AWStats before 6.95.
+This vulnerability was fixed in 6.95 by adding key parameter which is generated from secret
+$KEYFORMD5 and url so that awredir.pl is not open redirector by default any more.
 
-Please subscribe me to the new list. I was a vendor-sec subscriber.
+Do you find the problem that key is md5 hash so that it might be somehow vulnerable
+to dictionary attack? Or that administrator can blank $KEYFORMD5 and create open redirector?
+
 
 Thanks,
 
-Miklos
+Petr
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+> 2. Yes, awredir.pl is url redirector and it's only one thing that it should
+> do, but in result we have 7 holes: 3 XSS, 1 SQLi, 1 HTTPRS, 1 CLRFi and one
+> Redirector hole (even redirecting should be done flawless). To which holes
+> redirectors can lead I wrote in my article Redirectors: the phantom menace.
+>
+> 3. Petr and everyone who don't know about Redirector vulnerabilities should
+> read articles about this type of holes:
+>
+> URL Redirector Abuse (WASC-38) in WASC 2.0
+> http://projects.webappsec.org/w/page/13246981/URL%20Redirector%20Abuse
+>
+> And my articles (first one on Ukrainian and others are on English):
+>
+> Redirectors (I wrote this article, with few examples of redirectors, before
+> I posted multiple redirector vulnerabilities in search engines in my 2007's
+> project Month of Search Engines Bugs)
+> http://websecurity.com.ua/987/
+>
+> Redirectors: the phantom menace
+> http://websecurity.com.ua/3495/
+>
+> Attacks via closed redirectors
+> http://websecurity.com.ua/3531/
+>
+> P.S.
+>
+> Since you wrote me, then you can listen my music.
+>
+> In September I've released my first commercial album Originality (http://soundcloud.com/mustlive/sets/originality). And soon I'll release my new single. So you can listen these and other my compositions ;-). I hope you'll enjoy my music.
+>
+> Best wishes & regards,
+> Eugene Dokukin aka MustLive
+> Administrator of Websecurity web site
+> http://websecurity.com.ua
+>
+> ----- Original Message ----- From: "Jan Lieskovsky" <jlieskov@...hat.com>
+> To: "Steven M. Christey" <coley@...us.mitre.org>; "Petr Lautrbach"
+> <plautrba@...hat.com>
+> Cc: <oss-security@...ts.openwall.com>; "MustLive"
+> <mustlive@...security.com.ua>
+> Sent: Friday, October 07, 2011 12:33 PM
+> Subject: Re: [oss-security] CVE Request -- Multiple security issues in
+> various versions of AWStats
+>
+>
+>>
+>> And one correction yet.
+>>
+>> Petr Lautrbach (Cc-ed) commented on Red Hat Bugzilla
+>> bug [1], that:
+>>
+>> <quote>
+>> > URL redirection abuse:
+>> >
+>> >
+>> http://site/awredir.pl?key=0f3830803a70cc1636af3548b66ed978&url=http://websecurity.com.ua
+>>
+>> awredir.pl is url redirector so this is its main/only feature and it
+>> is/can be secured by $KEYFORMD5. So I don't think this is flaw.
+>> </quote>
+>>
+>> Thus explicitly mentioning it here too, so this would not fall out
+>> of the radar and just five CVE ids would be assigned.
+>>
+>> Thank you && Regards, Jan.
+>> --
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
+>> P.S.: Petr, if you have more comments on the rest of the issues,
+>> feel free to do so in order to proper set of CVE ids would
+>> be assigned to these. Thanks, Jan.
+>>
+>> On 10/07/2011 10:17 AM, Jan Lieskovsky wrote:
+>>> Hello Josh, Steve, vendors,
+>>>
+>>> these doesn't look like CVE ids have been already assigned for:
+>>> [1] https://bugzilla.redhat.com/show_bug.cgi?id=740926#c0
+>>> [2] http://secunia.com/advisories/46160/
+>>> [3] http://seclists.org/fulldisclosure/2011/Sep/234
+>>> [4] http://websecurity.com.ua/5380/
+>>>
+>>> If I counted correctly, six CVE ids should be assigned for these
+>>> (since different versions are listed as vulnerable):
+>>>
+>>> 1) XSS (WASC-08) (in versions <=1.1):
+>>> http://site/awredir.pl?url=javascript:alert(document.cookie)
+>>>
+>>> 2) Redirector (URL Redirector Abuse in WASC 2.0) (WASC-38):
+>>> http://site/awredir.pl?url=http://websecurity.com.ua
+>>>
+>>> 3) SQL Injection (WASC-19): (version 1.2)
+>>> http://site/awredir.pl?url='%20and%20benchmark(10000,md5(now()))/*
+>>>
+>>> 4) XSS (WASC-08) (in version 1.2):
+>>>
+>>> http://site/awredir.pl?url=%3Cscript%3Ealert(document.cookie)%3C
+>>> /script%3E
+>>>
+>>> http://site/awredir.pl?key=%3Cscript%3Ealert(document.cookie)%3C
+>>> /script%3E
+>>>
+>>> 5) HTTP Response Splitting (WASC-25):
+>>>
+>>> http://site/awredir.pl?key=04ed5362e853c72ca275818a7c0c5857&
+>>> url=%0AHeader:1
+>>>
+>>> 6) CRLF Injection (Improper Input Handling in WASC 2.0) (WASC-20):
+>>>
+>>> http://site/awredir.pl?key=4b9faa91e2529400c4f3c70833b4e4a5&
+>>> url=%0AText
+>>>
+>>> Could you allocate CVE identifiers for these? (let me know
+>>> if further description of each of the issues is necessary prior
+>>> assignment).
+>>>
+>>> Thank you && Regards, Jan.
+>>> --
+>>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+>
 
-mQGiBD+v1c4RBACAGeKlYgs9ez+iwbf1Je1qh3wIHoiYCWkw3AWh8B69h8Ew2Mij
-+6COP32mX+++d2C3A8Nixchpgqyw4DSPAvJyZ7fA4Qy9YWDLSwQ6YbY03F6lw6RD
-4DnRshjwLmATAbt7cYBeUj822XWXIX74+5aHFEI8Au7erYnvprANiDWtTwCgq4d2
-xJoOxDJUZQHG4dnYszBH0UED/276LST/89nNPKo00ShsNfobn1Q36eRVnp9j5fCc
-eOZXPvXuguZ5nLrXExU/4VHxbXS2mUMyX0+rlaKcCf0WrPyvYJo65CeA1q4g3oXd
-MIjrULUV/Gc0a4DFXCvlm7U9rBRCLsU4aBbHbgiFlE2rEs7HqSwQImK6gz/wGecB
-dN5xA/9JAqNAr36063qDbhk4aB4oqZZseErQ9BYILWDHzJbfk8KJ46C8CMTRw2ev
-9QVI/sOwKzavRhMwbva8YmyzmBRkb1BljtfSVigpMbPDGiR2lFaJMPbuZE2ATLE9
-QRvLMfOfozv8DSvSQSmw+nlIVF4OEkAMtNY+CTwF1bJJr8I3u7QlTWlrbG9zIFZh
-am5hIDx2bWlrbG9zQGZydWdhbHdhcmUub3JnPohmBBMRAgAmBQJEn7PdAhsDBQk/
-6NcABgsJCAcDAgQVAggDBBYCAwECHgECF4AACgkQe81tAgORUJaB3gCgk4fWc89V
-JcUw6334svE6zEw6VNYAn3iSpYWDWE40v3ch/E8TctbUPzD5iGYEExECACYFAkRm
-aWUCGwMFCT/o1wAGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRB7zW0CA5FQloqW
-AJ961cFwLumFClujAuI6TQ0XirwOfQCeMGAncmNveas287pyqR93Qv7OO8OISgQQ
-EQIACgUCR/42YAMFAXgACgkQVWU5RcjdGKJJCwCdGtoBNYmIsrOUXgAmDiqoKizB
-6aQAoOx2qsBhC46tZbcTQLmuBwChzt8utCFNaWtsb3MgVmFqbmEgPG1hbWFqb21A
-YXhlbGVyby5odT6ISQQwEQIACQUCRwNydAIdIAAKCRB7zW0CA5FQlvWZAJ46Yisb
-FYRacbu+6tj+gYOrvNLm0gCbBSojPko3u+/7pCeSz+9CxYYS0PiIZgQTEQIAJgUC
-RJ+yZwIbAwUJP+jXAAYLCQgHAwIEFQIIAwQWAgMBAh4BAheAAAoJEHvNbQIDkVCW
-dn0An3qeiAp+vFCpiVpELdjwN3sHl5qsAJ9UOgTZGDKTFk2KgInEPULX+VN3M7Qi
-VmFqbmEgTWlrbMOzcyA8bWFtYWpvbUBheGVsZXJvLmh1PohJBDARAgAJBQJHA3KI
-Ah0gAAoJEHvNbQIDkVCW7qcAoJOjAcaNqLmGR/EPEHnmseXci8dlAJ4wvCA4Ig8Q
-0y8jn7pEEI+YuDpSw4hGBBARAgAGBQJAO0AWAAoJEG0Fe8AgSekdAtMAoMMw43kc
-EcZHxbodCpZg43Lt5mJ4AKDH//CYF9OgGPrM4dsnCpYObfepkohkBBMRAgAkBQI/
-r9XOAhsDBQk/6NcABgsJCAcDAgMVAgMDFgIBAh4BAheAAAoJEHvNbQIDkVCWxTQA
-n10AyijprgAHg/UtIgt9x6+cvbXUAJ0XwBcUoZjr2TYjiL0lKZBlQ7g6XbQlTWlr
-bG9zIFZham5hIDx2bWlrbG9zQG9wZW5vZmZpY2Uub3JnPohgBDARAgAgBQJHA3K4
-GR0ASXQgd2FzIGp1c3QgYSByZWRpcmVjdC4ACgkQe81tAgORUJadCQCfQMHhBAFK
-FtpMzksF+hPe/pOGQWcAoIbcAuAuDITK5dwUAz4rmREO+6K4iGYEExECACYFAkSf
-soACGwMFCT/o1wAGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRB7zW0CA5FQlvBz
-AKCS3WyvPzBj+BGdfZgdqwOSvMp3dACeLryPTDFfGYZKMRX6i9ywRg3kRH+5AQ0E
-P6/V5BAEAN2LNGC2Zzry8g9VTRWKegeV54CNFOkRGdopJ9QpKi7UGPb5IpXqCQJI
-v7mgvJsHZSu3uFzo4C1P1hE42m+3Mnh7qwFAUv6fkFRGxcZDsqsjV7lbXkovuQVB
-c22Op7ngBey9ppuG6gEZbGWfMtfrm8Rz5d5ldOpMOioN7mZAA9iDAAMGA/9NUOQm
-nOIaQ6KoyokxhfKriBBha+OX9jhv5LrYuDaT7lBIklYDevpwV/Zr7dOuouWNWoqg
-oMy5//RiH3WCFbUJx/HMBFV9MOvO0NaFBjj1hNdIJqw4G2NCiDQZPVoT47EO+wUU
-rfUL4yRx1AfrSs0SH2FuXeHxFmXw/xZrXKgtlIhPBBgRAgAPBQI/r9XkAhsMBQk/
-6NcAAAoJEHvNbQIDkVCWjvwAmwZaVmIKXIFGhpXVdzXxt2SYxsRaAJwMdGeZ37//
-A00ibqu6dhtNkklKCw==
-=Oe5w
------END PGP PUBLIC KEY BLOCK-----
 
-Content of type "application/pgp-signature" skipped
+-- 
+Petr Lautrbach, Red Hat, Inc.
