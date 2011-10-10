@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/10
-Message-ID: <AANLkTimnYgV=38DEZKmenoMQ821H1PqU3FWCFSiAdntt@mail.gmail.com>
-Date: Thu, 6 Jan 2011 13:08:59 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/6
+Message-ID: <302d8142-632d-48f8-930b-ba9090fd2e83@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:34:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-NONE kernel: PHONET signedness issue
+Subject: Re: CVE request: simple machines forum before 2.0.1 and 1.1.15
 Content-Type: text/plain; charset=utf-8
 
-This is a slippery slope.  I'm in favor of not having a CVE assigned
-for this issue.
+----- Original Message -----
+> http://www.simplemachines.org/community/index.php?P=adfcf10856d3f74172b76dd384b6ade6&topic=452888.0
+> 
+> "Critical security issues have been identified and fixed with this patch,
+> therefore it is highly recommended to make sure you update your forums
+> immediately."
+> 
+> 
+> That probably qualifies as "unknown security issue in simple machines
+> forum" ;-)
 
-Otherwise, wouldn't we need a CVE for every vector that allows
-transitioning from various capabilities to root?  The capability
-system may be poorly designed to allow such transitions, but I don't
-think they represent unexpected behavior.
+Indeed. If someone has more details, please speak up. We can assign more
+IDs in the future if needed.
 
--Dan
+Use CVE-2011-3615
 
-On Thu, Jan 6, 2011 at 12:54 PM, Michael Gilbert
-<michael.s.gilbert@...il.com> wrote:
-> On Thu, 06 Jan 2011 13:20:49 +0800, Eugene Teo wrote:
->> re: http://seclists.org/fulldisclosure/2011/Jan/39
->>
->> Just in case someone tries to request a CVE name for this, I'm not
->> requesting for one because if you need CAP_SYS_ADMIN capability to
->> exploit this, you are already privileged.
->
-> Right, but CAP_SYS_ADMIN != root, or at least it isn't meant to be. I
-> mean if CAP_SYS_ADMIN == root, then one or the other doesn't need to
-> exist. There is an exposure here, and for that it deserves a CVE
-> identifier (of course in my opinion).  See Brad Spengler's recent
-> write-up [0]. There should be some effort toward making those 21 root
-> equivalent capabilities discussed there non-equivalent.
->
-> Best wishes,
-> Mike
->
-> [0] http://forums.grsecurity.net/viewtopic.php?f=7&t=2522
->
+Thanks.
+
+-- 
+    JB
