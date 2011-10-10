@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/10
-Message-ID: <183364929.302425.1314218070898.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 24 Aug 2011 16:34:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/3
+Message-ID: <db93d4a5-c28e-44dc-8c8d-4183199fa5e9@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:22:16 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Debian Security Team <team@...urity.debian.org>, Jonathan Wiltshire <jmw@...ian.org>, coley <coley@...re.org>
-Subject: Re: Re: CVE request: multiple vulnerabilities in dtc
+Subject: Re: CVE request: serendipity freetag plugin before 3.30 and probably others
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> > #637477
-> > Insufficient input checking in /shared/inc/sql/lists.php
+Please use CVE-2011-3610.
 
-CVE-2011-3195
-
-
-> > #637485
-> > The setup script for dtc writes the password for the MySQL user in the
-> > world-readable file /etc/apache2/apache2.conf.
-
-CVE-2011-3196
-
-
-> > #637487
-> > Insufficient input checking leads to a SQL injection vulnerability in
-> > shared/inc/forms/domain_info.php.
-> >
-> > #637498
-> > A SQL injection vulnerability in logPushlet.php can overwrite arbitrary
-> > files as the MySQL system user.
-
-I'm grouping the above two together.
-CVE-2011-3197
-
-
-> > #637537
-> > dtc passes passwords to htpasswd using command line arguments, which
-> > can be read by a local user.
-
-CVE-2011-3198
-
-
-> > #637584
-> > dtc does not escape variables in HTML output in many places; for
-> > example in the "Domain root TXT record:" field on the "DNS and MX" page
-> > where JavaScript can be injected.
-
-Let's call this "multiple XSS flaws"
-CVE-2011-3199
-
-Thanks for sorting the original list.
+Thanks.
 
 -- 
     JB
+
+----- Original Message -----
+> XSS in the tagcloud generation flash in serendipity freetag before
+> 3.30:
+> http://blog.s9y.org/archives/234-Security-fix-for-flash-based-cloud-in-Freetag-plugin.html
+> 
+> The linked vulnerability report indicates that this flash code is
+> also
+> used by other software, e.g. the wp cumulus plugin:
+> http://websecurity.com.ua/5356/
+> 
+> Though my ukrainian isn't that good ;-)
+> 
+> Please assign cve.
+> 
+> --
+> Hanno Böck		mail/jabber: hanno@...eck.de
+> GPG: BBB51E42		http://www.hboeck.de/
+> 
