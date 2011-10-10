@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/7
-Message-Id: <20110403210622.d7952b28.michael.s.gilbert@gmail.com>
-Date: Sun, 3 Apr 2011 21:06:22 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/8
+Message-ID: <4495cba8-d6d6-4878-ae5f-950730497b58@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:41:15 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE Request -- Conky 1.8.1 "/tmp/.cesf" Insecure Temporary File Security Issue
 Content-Type: text/plain; charset=utf-8
 
-Michael Gilbert wrote:
+Please use CVE-2011-3616
 
-> Solar Designer wrote:
+Thanks.
+
+-- 
+    JB
+
+
+----- Original Message -----
+> Hello,
 > 
-> > On Sun, Apr 03, 2011 at 08:11:11PM -0400, Michael Gilbert wrote:
-> > > Benji's trolling does raise a couple real issues.  The private keys and
-> > > passphrases of those responding here have now become highly lucrative
-> > > targets for attackers.  Hence, everyone on this new list needs to use
-> > > good practices to keep their keys, hard drives, and computers safe.
-> > > There should probably be some common guidelines for key safety for all
-> > > participants.
-> > 
-> > Right.  We're likely to specify some minimum requirements.  For example,
-> > Mike's 512-bit RSA key won't be allowed.  (It is OK for testing, but not
-> > when we use the list for real.  Yet this is an improvement over the
-> > plaintext vendor-sec and plaintext CC lists anyway.)  Maybe storage of
-> > private keys on a server won't be allowed (but we'd have to trust
-> > members on that).
-> > 
-> > > Perhaps all discussions should be published in the open
-> > > something like 2 months after the initial posting?  That would be a
-> > > kind of maximum private coordination period.
-> > 
-> > Yes, we may do this.  Technically, an archive may be implemented as yet
-> > another subscriber with its public key, where the private key
-> > counterpart is not stored on any server and has a passphrase on it.
-> > Thus, a possible compromise of the list server won't reveal past
-> > messages (archived before the compromise, but not yet made public).
-> > 
-> > Pushing the archive public will then be a manual process, but that's OK
-> > if it's only done once a month (omitting the last month's worth of
-> > messages).  In fact, a posting to oss-security will need to be made
-> > whenever the public archive is updated.
+> Can a CVE be assigned for the below issue?
 > 
-> Wouldn't the easiest solution be to have a cron job check that the age
-> of the message is greater than X days, decrypt it, and mail it to a
-> different archive/public list?
-
-Actually, the ideal destination would be oss-sec itself.
-
-Best wishes,
-Mike
+> Conky 1.8.1 contains a vulnerability that allows malicious, local
+> users
+> to perform certain actions with escalated privileges.
+> 
+> https://bugs.launchpad.net/ubuntu/+source/conky/+bug/607309
+> http://secunia.com/advisories/43225/
+> 
+> 
+> Thanks,
+> 
+> --
+> Sean Amoss
+> 
