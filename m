@@ -1,42 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/5
-Message-ID: <4E128D30.7060703@digitaloffense.net>
-Date: Mon, 04 Jul 2011 23:04:00 -0500
-From: HD Moore <hdm@...italoffense.net>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com, scarybeasts@...il.com
-Subject: Re: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/9
+Message-ID: <20111010204148.78eb24c8@laverne>
+Date: Mon, 10 Oct 2011 20:41:48 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: fluxbb before 1.4.7
 Content-Type: text/plain; charset=utf-8
 
-On 7/4/2011 10:58 PM, Solar Designer wrote:
-> What mirror?  As far as I'm aware, from the announcement by Chris, only
-> the official distribution site for vsftpd was compromised.
-[ snip ]
-> Maybe.  Do you have a copy of the backdoored tarball?  I don't, and no
-> one on forums where I saw this discussed appears to have it (which
-> confirms that it existed for a very short period of time only).
+http://fluxbb.org/forums/viewtopic.php?id=5751
 
-This copy is backdoored and has mtime Feb-15-2011. Chris didn't reply
-when I asked him for a copy from his master (old/vsftpd-2.3.4.tar.gz).
+"This is a security release, however only affects anyone running FluxBB
+behind a reverse proxy, with FORUM_BEHIND_REVERSE_PROXY enabled - we
+expect this to be a small number of users."
 
-http://download.polytechnic.edu.na/pub2/vsftpd/vsftpd-2.3.4.tar.gz
+Whatever that means... I suggest something like
+"Unknown security vulnerability related to reverse proxying"
 
-> Are you trying to say that Debian got the backdoored copy?  This is news
-> to me.
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-No, I am saying that for this to become as widespread as the mtime in
-the mirror above indicates, it would be incredible for distros like
-Debian to not notice it, as they verify the hash of the tarball. This
-indicates that the mtime in the mirror above was forged (since the hash
-is indeed wrong), but the real question is how this mirror obtained the
-copy.
-
-Was the mirror compromised? Was a rsync job used against the real
-server, in which case the mtime was preserved? I couldn't find any
-public copies with the backdoored checksum, but one of the metasploit
-contributors pointed me to the link above.
-
-I would like to believe the exposure was limited to 1-3 days, but the
-mirror above casts doubt on this.
-
--HD
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
