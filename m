@@ -1,31 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/09/5
-Message-ID: <876933418.119306.1304965531432.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 9 May 2011 14:25:31 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/11
+Message-ID: <4E93517D.3010801@gmail.com>
+Date: Mon, 10 Oct 2011 22:11:41 +0200
+From: Michael Harrison <n0idx80@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- virt-v2v: vnc password protection is missing after	vm conversion
+Subject: CVE requests:   <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF, AVI, MP4 demuxers and https://bugs.gentoo.org/show_bug.cgi?id=279340
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Steve, vendors.
-> 
-> Description:
-> It was found that after virtual machine conversion using virt-v2v the
-> target VM does not have VNC password enabled even though the source VM
-> does.  An attacker able to connect to the target VM can possibly use this
-> flaw to operate the VM with privileges of the logged in user.
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=702754
-> 
-> Could you please allocate a CVE identifier for this issue?
-> 
+Hello,
 
-Please use CVE-2011-1773
+Could you please supply a CVE for the following issues:
 
-Thanks.
+1. <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF, 
+AVI, MP4 demuxers
+https://bugs.gentoo.org/show_bug.cgi?id=285370
 
--- 
-    JB
+2. <media-video/vlc-0.9.10 Real RDT Integer Underflow
+https://bugs.gentoo.org/show_bug.cgi?id=279340
