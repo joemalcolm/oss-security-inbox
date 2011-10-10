@@ -1,48 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/6
-Message-ID: <20110629172152.GA2971@albatros>
-Date: Wed, 29 Jun 2011 21:21:52 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/4
+Message-ID: <3cd7f49e-5ae6-4b39-acfc-84d6f830791a@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Mon, 10 Oct 2011 14:26:13 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: CSRF and file inclusion in usebb before 1.0.12
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 29, 2011 at 17:10 +0400, Vasiliy Kulikov wrote:
-> On Wed, Jun 29, 2011 at 15:11 +0400, Vasiliy Kulikov wrote:
-> > 2) as you say here:
-> > 
-> > READ = CONST + SENSITIVE + CONTROLLABLE
-> > 
-> > If CONST is known and CONTROLLABLE is controlled by an attacker then he
-> > may find C1 and C1+1 generating X kb - 1 and (X+1) kb traffic,
+
+
+----- Original Message -----
+> http://www.usebb.net/community/topic-2571.html
 > 
-> (X+1) kb - 1 and (X+1) kb of course, they are rounded to X and X+1 kbs,
-> respectively.
+> Vulnerability "HTB22914: Local File Inclusion in UseBB"
+> 
+> Recently, High-Tech Bridge SA discovered a possible issue in UseBB 1.0.11
+> and earlier. The issue exists in the fact that admin.php may possibly
+> include PHP files not used for the UseBB admin control panel (ACP).
+> 
+> The faulty code in question is only executed for logged in administrator
+> accounts, and can only include non-relevant PHP files if a directory
+> "sources/admin_" exists, which is not the case in UseBB 1.  Therefore,
+> the issue does not pose a direct threat to an existing UseBB set-up, but
+> is classified a security issue anyway and has been fixed in UseBB 1.0.12.
 
-OK, what I've explored:
-
-For the same ssh if try to log and send pubkey/password auth requests:
-
-read = C1 + (C2 + X)*A + C3*B
-
-    where 1 <= A+B <= 6, 0 < A, 0 <= B
-    A - number of pubkey requests
-    B - number of password requests
-    C1, C2, C3 - system dependant constants
-
-Trying all possible pairs (A,B) I get a set of rounded read_characters.
-Comparing it with generated table of all possible lengthes and possible
-inputs (A,B) I learn an interval of possible authorized_keys files
-sizes.  For my system I can learn privkey length because for all
-possible key len values (768, 1024, 2048) the intervals are different.
-
-So, with rounded read_characters value it's possible to learn privkey
-length.
+Use CVE-2011-3611 for the above.
 
 
-Not a password length, but already something.
+> 
+> Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
+> UseBB"
+> 
+> High-Tech Bridge SA also discovered possibilities of executing CSRF
+> attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
+> malicious URL or visits a web page containing such URL or JavaScript,
+> requests may be executed that add, edit or delete data on the forum,
+> including topics, posts, account information and settings in the ACP (if
+> the user has logged in into the ACP).
+> 
+> As a solution, UseBB 1.0.12 has implemented URL and form tokens for
+> sensitive actions. Accessing or executing above URLs or scripts now
+> doesn't have an effect on the data.
+> 
+
+Use CVE-2011-3612 for the above.
+
+Thanks.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+    JB
