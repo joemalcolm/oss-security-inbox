@@ -1,16 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/3
-Message-ID: <20111126121211.GA15385@openwall.com>
-Date: Sat, 26 Nov 2011 16:12:11 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/11/1
+Message-ID: <20111011192311.GA2277@dhcp-25-225.brq.redhat.com>
+Date: Tue, 11 Oct 2011 21:23:11 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Cc: cve-assign@...re.org, Peter.Huewe@...ineon.com, srajiv@...ux.vnet.ibm.com, eteo@...hat.com
+Subject: Please REJECT CVE-2011-1161
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Nov 26, 2011 at 12:53:17PM +0100, Joost Hoogendoorn wrote:
-> I'm also interested. Thanks.
+Patch for this CVE in its original form tried to limit TPM_PARAMSIZE to
+the userspace buffer size. While this is still an unsolved problem
+(because of the patch changes), with patches for CVE-2011-1160 and
+CVE-2011-1162 applied this is a security hardening not a security flaw.
+Please reject this as a dupe of CVE-2011-1160 and/or CVE-2011-1162.
 
-What OS distribution are you a security contact for?  And how do we
-verify that?
+References: 
+https://github.com/torvalds/linux/commit/6b07d30a
+https://bugzilla.redhat.com/show_bug.cgi?id=732629#c13
+http://sourceforge.net/mailarchive/forum.php?thread_name=CAGyNYUPLbujZm0hq9rfBgXk-xw_xm1ofhe59yNkqEupdt5fUrg%40mail.gmail.com&forum_name=tpmdd-devel
 
-Alexander
+Thank you,
+-- 
+Petr Matousek / Red Hat Security Response Team
