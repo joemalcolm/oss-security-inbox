@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/11/1
-Message-ID: <20111011192311.GA2277@dhcp-25-225.brq.redhat.com>
-Date: Tue, 11 Oct 2011 21:23:11 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/5
+Message-ID: <4E960899.3010404@redhat.com>
+Date: Wed, 12 Oct 2011 15:37:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, Peter.Huewe@...ineon.com, srajiv@...ux.vnet.ibm.com, eteo@...hat.com
-Subject: Please REJECT CVE-2011-1161
+Subject: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
 Content-Type: text/plain; charset=utf-8
 
-Patch for this CVE in its original form tried to limit TPM_PARAMSIZE to
-the userspace buffer size. While this is still an unsolved problem
-(because of the patch changes), with patches for CVE-2011-1160 and
-CVE-2011-1162 applied this is a security hardening not a security flaw.
-Please reject this as a dupe of CVE-2011-1160 and/or CVE-2011-1162.
+Got my Ruby/Ruby on rails mixed up.
 
-References: 
-https://github.com/torvalds/linux/commit/6b07d30a
-https://bugzilla.redhat.com/show_bug.cgi?id=732629#c13
-http://sourceforge.net/mailarchive/forum.php?thread_name=CAGyNYUPLbujZm0hq9rfBgXk-xw_xm1ofhe59yNkqEupdt5fUrg%40mail.gmail.com&forum_name=tpmdd-devel
+Various methods in WEBrick::HTTPRequest in Ruby 1.9.2-p290 and
+1.8.7-p352 and earlier and do not validate the X-Forwarded-For,
+X-Forwarded-Host and X-Forwarded-Server headers in requests, which might
+allow remote attackers to inject arbitrary text into log files or bypass
+intended address parsing via a crafted header.
 
-Thank you,
--- 
-Petr Matousek / Red Hat Security Response Team
+https://redmine.ruby-lang.org/issues/5418
+
+Can we get a CVE for this please?
+
+-Kurt Seifried / Red Hat Security Response Team
+
