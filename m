@@ -1,21 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/2
-Message-ID: <1793976656.580420.1312277587730.JavaMail.root@zmail07.collab.prod.int.phx2.redhat.com>
-Date: Tue, 2 Aug 2011 05:33:07 -0400 (EDT)
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: webkit ZDI-11-138 and ZDI-11-139
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/1
+Message-ID: <CAD_8n+QMfYXNrxzGHhfA35trvjoCsPYNws+Q9xx_UyDzSw2r6w@mail.gmail.com>
+Date: Tue, 11 Oct 2011 23:26:55 -0700
+From: Reuben Hawkins <reubenhwk@...il.com>
+To: Vasiliy Kulikov <segoon@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 08/02/2011 02:28 PM, Thomas Biege wrote:
->> http://www.zerodayinitiative.com/advisories/ZDI-11-139/
->> Webkit Anonymous Frame Remote Code Execution Vulnerability
->> ZDI-11-139: April 19th, 2011 
-> 
+On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> On Fri, Oct 07, 2011 at 15:41 +0100, John Haxby wrote:
+>> On 07/10/11 14:03, Robert Święcki wrote:
+>> > On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
+>> > <huzaifas@...hat.com> wrote:
+>> >> Shouldnt this be:
+>> >>
+>> >>        /* No path traversal */
+>> >>        if (strstr(iface, "..") || strchr(iface, '/'))
+>> >>                return -1;
+>> > FWIW, this will reject too much;
+>> >
+>> > /path/to/sth..jpg
+>> >
+>>
+>> Indeed, since I don't believe that iface can reasonably include a "/"
+>> its sufficient to check for that.   If not then you need to check for
+>> "../" at the beginning of iface and "/.." anywhere else in it.   But
+>> simply forbidding "/" should be fine.
+>
+> Crap, thank you for noticing it, guys.  The fix should be:
+>
+> https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
+>
+> Now, "", "..", "." and filenames with "/" inside are denied.
+>
+>
+> Thanks,
+>
+> --
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing environments
+>
 
-This should really be CVE-2011-1442, but there is every possibility that there may be may be a duplicate CVE since, it was reported by two researchers independently.
-
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team 
+Are y'all waiting on me to release 1.8.3 with the latest fix?
