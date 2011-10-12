@@ -1,46 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/4
-Message-id: <7C39A549-C1DA-410D-8B75-8CC0B9D04F06@apple.com>
-Date: Sat, 30 Jul 2011 13:50:40 -0700
-From: Jeffrey Czerniak <jeffcz@...le.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/4
+Message-ID: <4E95E522.5070302@redhat.com>
+Date: Wed, 12 Oct 2011 13:06:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: libxml security fix from apple ... any information?
+Subject: Ruby 3.0.10 WEBrick::HTTPRequest X-Forwarded-*
 Content-Type: text/plain; charset=utf-8
 
-On Jul 29, 2011, at 1:56 AM, Moritz Muehlenhoff wrote:
-> Thomas Biege wrote:
-> 
->> Hello,
->> if the code executed is the same on Windows and on Linux I would assume
->> this affects Linux too. That the bug is not "seen" during fuzzing
->> means nothing.
-> 
-> Grepping through the codebase show quite a few _WIN32 ifdefs, though.
-> 
-> But of course we need to see the patch applied by Apple.
-> 
-> Cheers,
->        Moritz
+Various methods in WEBrick::HTTPRequest in Ruby on Rails 3.0.10 do not
+validate the X-Forwarded-For, X-Forwarded-Host and X-Forwarded-Server
+headers in requests, which might allow remote attackers to inject
+arbitrary text into log files or bypass intended address parsing via a
+crafted header.
 
+https://redmine.ruby-lang.org/issues/5418
 
-Hello Moritz,
+Can we get a CVE for this please?
 
-The patch we applied has been shared with Daniel Veillard of the libxml2 project.
-
-We understand this issue may affect other distributors of libxml2, and we have not seen evidence that our patch has been applied upstream.  We do not feel it is prudent to share the patch on a public mailing list such as oss-security, as we do not wish to inadvertently facilitate exploitation of the issue if other distributors are affected.
-
-We would like to cooperate with other downstream distributors of free and open source software on security issues, as Apple is a major distributor of such software.  However, our previous attempts to engage the community have not been successful.  One-way disclosure of information related to security issues subjects our customers to non-trivial risk without providing any added security benefit.  This is particularly pertinent if the disclosure were to occur in advance of the release of fixed software.
-
-Best regards,
-
-----------------
-Jeffrey Czerniak
-Apple Product Security Response
-jeffcz@...le.com
-----------------
-
-
-
-
-
-
+-Kurt Seifried / Red Hat Security Response Team
