@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/4
-Message-ID: <1316204088.5747.1.camel@scapa>
-Date: Fri, 16 Sep 2011 22:14:42 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/5
+Message-ID: <4E960899.3010404@redhat.com>
+Date: Wed, 12 Oct 2011 15:37:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Subject: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-09-16 at 10:53 -0700, Kees Cook wrote:
-> My last day with Canonical is today. Starting on Sep 19th, I will be
-> working for Google on ChromeOS. I'd like to transition my closed-list
-> membership based on the fact that ChromeOS is also a distro, and I'll
-> still have security responsibilities with it. How should this be
-> handled? 
+Got my Ruby/Ruby on rails mixed up.
 
-I don't have closed-list membership or anything, but I assume you'll
-keep going on Ubuntu security team anyway, even from Google, so it might
-make sense that you keep the membership anyway?
+Various methods in WEBrick::HTTPRequest in Ruby 1.9.2-p290 and
+1.8.7-p352 and earlier and do not validate the X-Forwarded-For,
+X-Forwarded-Host and X-Forwarded-Server headers in requests, which might
+allow remote attackers to inject arbitrary text into log files or bypass
+intended address parsing via a crafted header.
 
-Regards,
--- 
-Yves-Alexis
+https://redmine.ruby-lang.org/issues/5418
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Can we get a CVE for this please?
+
+-Kurt Seifried / Red Hat Security Response Team
+
