@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/10
-Message-ID: <20111115195234.GA10067@openwall.com>
-Date: Tue, 15 Nov 2011 23:52:34 +0400
-From: Solar Designer <solar@...nwall.com>
-To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>, Colin Percival <cperciva@...ebsd.org>, deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/1
+Message-ID: <CAD_8n+QMfYXNrxzGHhfA35trvjoCsPYNws+Q9xx_UyDzSw2r6w@mail.gmail.com>
+Date: Tue, 11 Oct 2011 23:26:55 -0700
+From: Reuben Hawkins <reubenhwk@...il.com>
+To: Vasiliy Kulikov <segoon@...nwall.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: weird crypt-sha* in DragonFly BSD
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 15, 2011 at 06:35:02AM +0400, Solar Designer wrote:
-> There's also minor weirdness in the code - such as two local pointer
-> variables being declared static seemingly for no reason, and only
-> "final" but not "ctx" being zeroized in the end.  But even this lack of
-> proper cleanup is very minor compared to the lack of stretching.
+On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> On Fri, Oct 07, 2011 at 15:41 +0100, John Haxby wrote:
+>> On 07/10/11 14:03, Robert Święcki wrote:
+>> > On Fri, Oct 7, 2011 at 12:35 PM, Huzaifa Sidhpurwala
+>> > <huzaifas@...hat.com> wrote:
+>> >> Shouldnt this be:
+>> >>
+>> >>        /* No path traversal */
+>> >>        if (strstr(iface, "..") || strchr(iface, '/'))
+>> >>                return -1;
+>> > FWIW, this will reject too much;
+>> >
+>> > /path/to/sth..jpg
+>> >
+>>
+>> Indeed, since I don't believe that iface can reasonably include a "/"
+>> its sufficient to check for that.   If not then you need to check for
+>> "../" at the beginning of iface and "/.." anywhere else in it.   But
+>> simply forbidding "/" should be fine.
+>
+> Crap, thank you for noticing it, guys.  The fix should be:
+>
+> https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
+>
+> Now, "", "..", "." and filenames with "/" inside are denied.
+>
+>
+> Thanks,
+>
+> --
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing environments
+>
 
-It turns out that these other minor issues were inherited from phk's
-md5crypt.c from FreeBSD.
-
-Currently in FreeBSD, crypt-md5.c: crypt_md5() has extra static
-declarations (not only the output buffer, but also three pointers), and
-it forgets to zeroize ctx and ctx1 (even though it does zeroize final).
-
-md5crypt.c: __md5crypt() in NetBSD no longer has the extra statics, but
-it does forget to zeroize ctx and ctx1.
-
-md5crypt.c: md5crypt() in OpenBSD has the weird static pointers and
-forgets to zeroize ctx and ctx1.
-
-Not a big deal, but worth fixing, I think.
-
-Alexander
+Are y'all waiting on me to release 1.8.3 with the latest fix?
