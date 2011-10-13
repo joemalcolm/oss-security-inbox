@@ -1,41 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/6
-Message-ID: <4ED3A746.6050407@redhat.com>
-Date: Mon, 28 Nov 2011 08:22:46 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/13/1
+Message-ID: <4E968F6A.4090203@redhat.com>
+Date: Thu, 13 Oct 2011 12:42:42 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Leo Iannacone <l3on@...ntu.com>, Colin Watson <cjwatson@...ian.org>
-Subject: Re: CVE Request -- ClearSilver (neo_cgi) -- Format string flaw by processing CGI error messages in Python module
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 11/27/2011 10:21 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
+On 10/07/2011 04:22 AM, Solar Designer wrote:
+
+> 3) The radvd daemon would not fail on privsep_init() errors, which could
+> cause it to run with full root privileges when it should be running as
+> an unprivileged user. (CVE-2011-3603)
 >
->   a format string flaw was found in the Python CGI Kit (neo_cgi)
-> module of ClearSilver, a language-neutral HTML templating system,
-> processed certain input, leading to Common Gateway Interface (CGI)
-> script errors. A remote attacker could provide a specially-crafted
-> input, which once processed by an application, using the Python
-> language API of ClearSilver neo_cgi module, could lead to that
-> particular application crash, or, potentially arbitrary code
-> execution with the privileges of the user running the application.
->
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649322
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=757542
->
-> Patch, proposed by the issue reporter to the Debian Bug Tracking System:
-> [3]
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=5;filename=fix-cgi-error-format-security.patch;att=1;bug=649322
->
-> Could you allocate a CVE id for this issue?
->
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-Please use CVE-2011-4357 for this issue.
+
+I think this is not an issue at all:
+
+If you look at the unpatched code, in privsep-linux.c, privsep_init() 
+can return -1 at two places.
+
+A. if pipe(pipefds) fails
+B. If fork() fails
+
+If either of these functions fails, the end result is that there is no 
+fork() and radvd runs as a single process.
+
+Now looking at radvd.c
+
+
+         /* drop root privileges if requested. */
+         if (username) {
+                 if (!singleprocess) {
+                         dlog(LOG_DEBUG, 3, "Initializing privsep");
+                         if (privsep_init() < 0)
+                                 flog(LOG_WARNING, "Failed to initialize 
+privsep.");
+                 }
+
+                 if (drop_root_privileges(username) < 0) {
+                         perror("drop_root_privileges");
+                         exit(1);
+                 }
+         }
+
+
+After running privsep_init(), drop_root_privileges() is run, so :
+
+a. if privsep_init() failed and drop_root_privileges() did not fail, you 
+end up running a single radvd process running as radvd user, which is 
+similar to running "radvd --singleprocess"
+
+b. if privsep_init() failed and drop_root_privileges() failed, you bail 
+out of the program, similar to what would happen if privsep_init() did 
+not fail.
+
+c. if privsep_init() and drop_root_privileges() did not fail, we have 
+two radvd process, one running as radvd user and the other is root
+
+So from what i can see, the maximum harm which would occur if 
+privsep_init() fails, is that radvd would effectively run in 
+--singleprocess mode
+
+
+
+
 
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
