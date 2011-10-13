@@ -1,32 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/6
-Message-ID: <AANLkTimFDaP1ZDrpfkMtRpYSFmdi7tMNP00R0ZXADQE9@mail.gmail.com>
-Date: Thu, 20 Jan 2011 18:15:49 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/13/3
+Message-ID: <20111013185122.GA5582@openwall.com>
+Date: Thu, 13 Oct 2011 22:51:22 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: xpdf
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-I identified two issues in xpdf.  I don't think the first requires a
-CVE, since it's incredibly unlikely to be exploitable, but I include
-it here in case someone disagrees.
+On Thu, Oct 13, 2011 at 12:42:42PM +0530, Huzaifa Sidhpurwala wrote:
+> So from what i can see, the maximum harm which would occur if 
+> privsep_init() fails, is that radvd would effectively run in 
+> --singleprocess mode
 
-1. Due to an integer overflow when parsing CharCodes for fonts and a
-failure to check the return value of a memory allocation, it is
-possible to trigger writes to a narrow range of offsets from a NULL
-pointer.  The chance of being able to exploit this for anything other
-than a crash is very remote: on x86 32-bit, there's no chance (since
-the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
-write lands in valid userspace on x86-64, but in my testing this
-memory is never mapped.  Fixed in poppler commit at [1], hopefully
-fixed soon at xpdf upstream.
+I am an outside observer here (I haven't reviewed the code myself), but
+doesn't the above amount to admin-configured privilege separation not
+actually being enabled?  If so, this sounds like a security issue to me.
 
-2. Malformed commands may cause corruption of the internal stack used
-to maintain graphics contexts, leading to potentially exploitable
-memory corruption.  Fixed in poppler commit at [2], hopefully fixed
-soon at xpdf upstream.
-
--Dan
-
-[1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
-[2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
+Alexander
