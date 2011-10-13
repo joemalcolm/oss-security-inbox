@@ -1,97 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/2
-Message-ID: <4ED36686.7040108@gmail.com>
-Date: Mon, 28 Nov 2011 11:46:30 +0100
-From: Michael Harrison <n0idx80@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/13/2
+Message-ID: <20111013144339.GB32345@foo.fgeek.fi>
+Date: Thu, 13 Oct 2011 17:43:39 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: Re: CVE request: fluxbb before 1.4.7
 Content-Type: text/plain; charset=utf-8
 
-Sorry about the confusion. I work for the Gentoo security team, and I am
-not sure whether it would be beneficial for me to be on the closed list
-or not. It is my presumption that the release of non-Linux
-vulnerabilities might better help us identify vulnerabilities across the
-board. If you do not believe this is the case, please disregard my
-request to be on the closed. I apologize for any extra work my request
-caused you. I caught the middle of the thread, and may have missed
-something along the way.
+On Mon, Oct 10, 2011 at 08:41:48PM +0200, Hanno Böck wrote:
+> http://fluxbb.org/forums/viewtopic.php?id=5751
+> 
+> "This is a security release, however only affects anyone running FluxBB
+> behind a reverse proxy, with FORUM_BEHIND_REVERSE_PROXY enabled - we
+> expect this to be a small number of users."
+> 
+> Whatever that means... I suggest something like
+> "Unknown security vulnerability related to reverse proxying"
+> 
+> -- 
+> Hanno Böck		mail/jabber: hanno@...eck.de
+> GPG: BBB51E42		http://www.hboeck.de/
 
-Sincerely,
+Documentation about the feature: http://fluxbb.org/docs/v1.4/constants#forum_behind_reverse_proxy
 
-Michael
+I can ask more details from the vendor.
 
-On 11/28/11 12:13 AM, Solar Designer wrote:
-> All -
->
-> On Mon, Nov 28, 2011 at 02:56:22AM +0400, Solar Designer wrote:
->> OK, now this is starting to look about as ridiculous as the old "closed
->> list" thread did. ;-)  I am approving these messages so far in part
->> because I think they serve as (valid) criticism of the idea of such
->> lists, even if the senders did not intend such meaning.  I have mixed
->> feelings about these advance notification lists myself.
-> Oh, I think I need to clarify.  By "these messages" above, I mean closed
-> list membership requests that lack justification.  I can see how my
-> positive reply to Tim's message might have created the false impression
-> that no justification was required.  In fact, NetBSD/pkgsrc had previously
-> expressed interest in being on such a list (during the "closed list"
-> thread from half a year ago), Tim posted from his @pkgsrc address, and I
-> verified that he was credited for pkgsrc security work just recently:
->
-> http://mail-index.netbsd.org/current-users/2011/10/03/msg017924.html
->
-> "pkgsrc security: OBATA Akio, Guillaume Lasmayous, Fredrik Pettai, Tim
-> Zingelman"
->
-> None of these things were true for Joost's and Michael's requests - so I
-> had no better choice than to ask them for justification.
->
-> It'd help avoid any confusion like that if further requests include
-> justification in a more explicit form, even when the sender can
-> reasonably expect that I'd recognize their OS and themselves and their
-> involvement in security work for their OS.  While I did recall past
-> discussions and notice the @pkgsrc address, not everyone did, which
-> clearly caused confusion.
->
-> Thanks,
->
-> Alexander
-
--- 
-
-It's not about what you know, but what is left to learn~
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v2.0.17 (GNU/Linux)
-
-mQENBE6MJ20BCACsvXUqJyxwgr61LOdRVMmczLC5VHDBEaaCfx4AwSihQm6od14h
-6IQJVyHSp5hQz73n9yOmLeAV51akUSNwUcV85Fjxa169MDut7mexir6YkTDrwSdW
-BRvopP6EuJaLAJwdK0/++YRD9eu6YDPlMp50ceCr47Yy8W0BGTb7Z2CvGnNntr7U
-ZkHR+ALdEQNyqSQ/NGxe7lfO+MVSi0W2eDaUtR6JmmZCWyDRWDsiOsl/q+QnIJ7r
-s3flrDe57zMXkw2rdI6lWm745i9kOyg0+Jw0gQwy8oHh/4ktdboU6WLkv2N9eeMR
-l1a0AZeTSuOfWrepTF1K22E++1NuN3Y5TGKvABEBAAG0MU1pY2hhZWwgUi4gSGFy
-cmlzb24gKEN1cnJlbnQpIDxuMGlkeDgwQGdtYWlsLmNvbT6JAT4EEwECACgFAk6M
-J20CGwMFCQHanAAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGcT+eUbMgJy
-T94H/2F98ZYomipk30ZcEZa+MsqLRcBdIvUgfS43cSih2KlhsjWavwYTYANJG4k0
-TImCpoJymmEK0aozlPqeP9eGTFrAM8HPnlBqMqTP5B0dPn2hGnxFwP1NLq4KiwgH
-YM/j2QqTZGvCaq82OtG8FwGNHRCJu+buN3zJ/VZNj5b05USEPnl8w92r5V4gbRyL
-HZsVyGnPDzTsBDqoKjpMcCVD4uXQWDM9jLk366zLM6ChzhEX02bmKrFqkNnb7rd0
-gFGR8svA4uWc2w58zrbZdMTsXDTimHdUm2KU4Cz49UxmyXW+T3SIEtsH8WYlaL+2
-SAk8zYMMb95WjwZwrFt2hhfMBoa5AQ0ETownbQEIALZJ5AbAwQd4qhkPRDmpvgW3
-AZgMj/s20sBo6XiS9PF4iUYwdKbEGUbKuahHH4dP4lrAKO0telzaLW+PY7NKaQ1k
-iLubuiqr7VD2j3bXXD1bvFdmG6w+R+S3jmgZs20Sj+z8472eXXHSokrO8/jolopb
-1xzZGUUVlVoJ7dSYaByqxQgcQCxrCiF1xj3CN32m51LAmaCFnJkVYwRTzZpCcOkf
-I4eF+d+0OYlCEH9VTwhYJKJMuRFJjPJqzCiJyYky7Y5GqaY2QNnSX2tzGpurR6IP
-HW/ZR4SFcnlL8HvHvT6+KVjfItS1M9ybTsXdf8Hl6BGkng+AO/bJKI2f3z2MXP0A
-EQEAAYkBJQQYAQIADwUCTownbQIbDAUJAdqcAAAKCRBnE/nlGzICclJlCAChlNrr
-CeZ3dzj/FrKQFozovCvgYV8GK83BHB3nBAsoOllvEzjmYbqIuCbbxWT5Dl5uatez
-jV7mrfobmnKTsSCGy9WbLc54djiRRcHXpHCeIOCEt8RL85VLim91842Zxw7wTnB0
-CfPM77scCvpekkzFaUj/yWxd6lzugKZ60AmuUxLWxzxPl+tcgRKCQT1XMe+EzyEd
-yAObBp+Pyk8WAWth+mecxJ131AruPzKwTrvzyyQVaa7qwJzgkwOVKpTwHzvLUQqX
-bPj3ZpIt4C0FLc5x91BYAXlt7rk5q3RZajBca+bODlAOJpU4fQs4ln+ZGt3sdTt4
-HvFqkFebN/ZH/wWf
-=Wk3z
------END PGP PUBLIC KEY BLOCK-----
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (536 bytes)
+Best regards,
+Henri Salo
