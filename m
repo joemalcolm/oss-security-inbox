@@ -1,34 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/2
-Message-ID: <AANLkTi=oxj8oeuGt76gDEjd9SRfC5PBac3o0XBGs0ZV+@mail.gmail.com>
-Date: Tue, 1 Feb 2011 10:42:15 +0100
-From: Pierre Joye <pierre.php@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/13/1
+Message-ID: <4E968F6A.4090203@redhat.com>
+Date: Thu, 13 Oct 2011 12:42:42 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: possible flaw in widely used strtod.c implementation
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-hi,
+On 10/07/2011 04:22 AM, Solar Designer wrote:
 
-Little head up on another affected projected:
-
-http://www.exploringbinary.com/java-hangs-when-converting-2-2250738585072012e-308/
-
-Cheers,
-
-On Tue, Jan 11, 2011 at 1:27 AM, Steven M. Christey
-<coley@...-smtp.mitre.org> wrote:
+> 3) The radvd daemon would not fail on privsep_init() errors, which could
+> cause it to run with full root privileges when it should be running as
+> an unprivileged user. (CVE-2011-3603)
 >
-> Since this problem stems from a single codebase, strtod.c, so it gets a
-> single CVE identifier (already assigned CVE-2010-4645).  The CVE description
-> will "blame" strtod.c and mention PHP, and any other high-profile software
-> that is discovered to use the same vulnerable, shared code.
->
-> - Steve
->
+
+I think this is not an issue at all:
+
+If you look at the unpatched code, in privsep-linux.c, privsep_init() 
+can return -1 at two places.
+
+A. if pipe(pipefds) fails
+B. If fork() fails
+
+If either of these functions fails, the end result is that there is no 
+fork() and radvd runs as a single process.
+
+Now looking at radvd.c
+
+
+         /* drop root privileges if requested. */
+         if (username) {
+                 if (!singleprocess) {
+                         dlog(LOG_DEBUG, 3, "Initializing privsep");
+                         if (privsep_init() < 0)
+                                 flog(LOG_WARNING, "Failed to initialize 
+privsep.");
+                 }
+
+                 if (drop_root_privileges(username) < 0) {
+                         perror("drop_root_privileges");
+                         exit(1);
+                 }
+         }
+
+
+After running privsep_init(), drop_root_privileges() is run, so :
+
+a. if privsep_init() failed and drop_root_privileges() did not fail, you 
+end up running a single radvd process running as radvd user, which is 
+similar to running "radvd --singleprocess"
+
+b. if privsep_init() failed and drop_root_privileges() failed, you bail 
+out of the program, similar to what would happen if privsep_init() did 
+not fail.
+
+c. if privsep_init() and drop_root_privileges() did not fail, we have 
+two radvd process, one running as radvd user and the other is root
+
+So from what i can see, the maximum harm which would occur if 
+privsep_init() fails, is that radvd would effectively run in 
+--singleprocess mode
+
+
 
 
 
 -- 
-Pierre
-
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+Huzaifa Sidhpurwala / Red Hat Security Response Team
