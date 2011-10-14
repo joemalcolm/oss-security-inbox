@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/2
-Message-ID: <4EF009F6.9050408@redhat.com>
-Date: Mon, 19 Dec 2011 21:07:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI, ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/15/1
+Message-ID: <CAD_8n+RGZQ0A4q5n2yskpupdo7Mg93rWMw0vrMa=ehwy4YhG0g@mail.gmail.com>
+Date: Fri, 14 Oct 2011 06:58:56 -0700
+From: Reuben Hawkins <reubenhwk@...il.com>
+To: Vasiliy Kulikov <segoon@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
->Hello Josh, Steve, vendors,
+On Wed, Oct 12, 2011 at 3:09 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+> On Tue, Oct 11, 2011 at 23:26 -0700, Reuben Hawkins wrote:
+>> On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
+>> > Crap, thank you for noticing it, guys.  The fix should be:
+>> >
+>> > https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
+>> >
+>> > Now, "", "..", "." and filenames with "/" inside are denied.
 >
->   based on Debian BTS report:
->   [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
->       (first CVE-2011-XXYY required for Debian case)
+> In case someone didn't fully track the discussion thread, I'll sum it up -
 >
->looked more into original report:
->[2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
+> In the original patch the variable name is typoed/confused - the check
+> should be against "iface" instead of "name".  The check against "name"
+> is totally wrong as it checks a static hint string, which always passes
+> the check.
 >
->and the first paragraph of [2] suggests:
->"When starting a program via "su - user -c program" the user session
->can escape to the parent session by using the TIOCSTI ioctl to push
->characters into the input buffer.  This allows for example a non-root
->session to push "chmod 666 /etc/shadow" or similarly bad commands into
->the input buffer such  that after the end of the session they are
->executed."
+> The confused blacklisted iface set is a bug, but not a security bug;
+> the confused variable name is indeed a security bug (not a flaw per se,
+> but it greatly weakens the privsep model).
 >
->this should get a CVE-2005-YYZZ CVE id.
-
-Please use CVE-2005-4890 for this issue.
-
->Could you allocate these?
 >
->Thank you & Regards, Jan.
->--
->Jan iankko Lieskovsky / Red Hat Security Response Team
+> Thanks to Solar Designer for pointing out that this thing is probably
+> not clear to everybody.
+>
+> --
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing environments
+>
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+radvd-1.8.3 posted.
