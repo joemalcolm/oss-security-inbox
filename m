@@ -1,95 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/8
-Message-ID: <4D9AA5E8.5000805@virgin.net>
-Date: Tue, 05 Apr 2011 06:17:28 +0100
-From: Gareth Randall <gareth.randall@...gin.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/14/2
+Message-ID: <4E97BE87.80608@redhat.com>
+Date: Fri, 14 Oct 2011 10:15:59 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: A new way of writing secure data backups, combining RAID and one time pads.
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 10/14/2011 12:21 AM, Solar Designer wrote:
+> I am an outside observer here (I haven't reviewed the code myself), but
+> doesn't the above amount to admin-configured privilege separation not
+> actually being enabled?  If so, this sounds like a security issue to me.
+>
 
-I have published a free software project called "Triplyx", which writes 
-data to a set of three storage devices in such a way that if any one of 
-them is lost or stolen, it cannot be used to recover the data. Any two 
-storage devices can be brought together to recover the data. It was 
-created for use with offsite data backups.
+I dont think so. From the code i have read so far, here is what seems to 
+happen.
 
-The concept is simple, although I have never seen it done in a 
-commercial or open source product.
-
-Triplyx writes three copies of the data input D to separate storage 
-devices. Each copy is exclusive-OR encrypted with a random "one time 
-pad", and one of the other one time pads is written alongside it in the 
-same "volume" (file). In my code, the output can be any file or a Unix 
-device.
-
-In the following example, the one time pad (random) data streams are A, 
-B and C.
-
-D^A means that each byte of D is XOR'd with the corresponding byte of A.
-
-Volume 1 contains:  D^A and B
-Volume 2 contains:  D^B and C
-Volume 3 contains:  D^C and A
-
-So, for example, storing a 100kbyte file (D) would result in the 
-following being written to the volumes:
-
-Volume 1:  100k of D^A, along with 100k of B.
-Volume 2:  100k of D^B, along with 100k of C.
-Volume 3:  100k of D^C, along with 100k of A.
-
-Note: The D^A and B streams are actually "striped" so that they can both 
-be read and written at the same time without needing to keep copies of 
-large amounts of data. This is designed especially to support tape as a 
-backup medium.
+- radvd starts as root
+- reads the configs
+- if a username is specified (user=radvd in most cases):
+	- if "--singleprocess" is not specified:
+		- run privsep_init(): This forks another process which
+		  runs as root. So after this point we have two
+		  processes both running as root
+		- If privsep_init() fails, we have just one process
+		  running as root
+	- run drop_root_privileges():
+		If this succedes, we have two processes one running as
+		root and another as radvd user, or if privsep_init()
+		failed earlier, we have one process running as radvd
+		user.
+		If this fails, application quits
+- If username was not specified radvd continues to run as a single 
+process as root.
 
 
-Restoring the data simply requires any two volumes. So, for example, 
-volumes 2 and 3 contain C and D^C, allowing the original D to be 
-reconstructed.
+So failure in privsep_init() results in just one process running as 
+radvd user. If it did not fail it would result in one process running as 
+root and another as radvd user.
 
-See:
-http://www.triplyx.com/
-https://sourceforge.net/projects/triplyx/
+I dont think this would be a security issue in my opinion.
 
 
 
-I've also written a paper describing it.
 
-URL of the paper is:
-http://sourceforge.net/projects/triplyx/files/Triplyx/doc/A%20Backup%20Method%20Providing%20Media%20Redundancy%20and%20One%20Time%20Pad%20Encryption%20v1.1.pdf
-
-
-The paper also documents a similar method which allows more data to be 
-stored but with some implications for security. That is, write the data 
-three times, encrypted with different symmetric keys, and then store the 
-other two keys not used for the current data on each storage medium.
-
-I.e.
-Volume 1:  (D enc with J), K, L
-Volume 2:  (D enc with K), J, L
-Volume 3:  (D enc with L), J, K
-
-where J, K and L are encryption keys.
-
-This allows more data to be stored because it does not need to store an 
-entire one time pad, but contains risks of attacks on either the 
-encryption algorithm or the means of choosing the keys.
-
-
-
-Coming from an "enterprise" point of view, offsite backups could now be 
-stored for long periods of time without having to worry about encryption 
-passwords being lost due to staff turnover. Also, compliance with data 
-protection legislation should be easier to demonstrate.
-
-For the one time pad method, if the random number generator is good 
-enough then a single lost backup device can never result in exposure of 
-confidential data.
-
-
-Yours,
 -- 
-======= Gareth Randall =======
+Huzaifa Sidhpurwala / Red Hat Security Response Team
