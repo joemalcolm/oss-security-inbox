@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/1
-Message-Id: <201102081154.16647.thomas@suse.de>
-Date: Tue, 8 Feb 2011 11:54:16 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/14/2
+Message-ID: <4E97BE87.80608@redhat.com>
+Date: Fri, 14 Oct 2011 10:15:59 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xpdf
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
+On 10/14/2011 12:21 AM, Solar Designer wrote:
+> I am an outside observer here (I haven't reviewed the code myself), but
+> doesn't the above amount to admin-configured privilege separation not
+> actually being enabled?  If so, this sounds like a security issue to me.
+>
 
-Should CVE-IDs be assigned to this issues?
+I dont think so. From the code i have read so far, here is what seems to 
+happen.
 
-Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
-> I identified two issues in xpdf.  I don't think the first requires a
-> CVE, since it's incredibly unlikely to be exploitable, but I include
-> it here in case someone disagrees.
-> 
-> 1. Due to an integer overflow when parsing CharCodes for fonts and a
-> failure to check the return value of a memory allocation, it is
-> possible to trigger writes to a narrow range of offsets from a NULL
-> pointer.  The chance of being able to exploit this for anything other
-> than a crash is very remote: on x86 32-bit, there's no chance (since
-> the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
-> write lands in valid userspace on x86-64, but in my testing this
-> memory is never mapped.  Fixed in poppler commit at [1], hopefully
-> fixed soon at xpdf upstream.
-> 
-> 2. Malformed commands may cause corruption of the internal stack used
-> to maintain graphics contexts, leading to potentially exploitable
-> memory corruption.  Fixed in poppler commit at [2], hopefully fixed
-> soon at xpdf upstream.
-> 
-> -Dan
-> 
-> [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
-> [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
-> 
+- radvd starts as root
+- reads the configs
+- if a username is specified (user=radvd in most cases):
+	- if "--singleprocess" is not specified:
+		- run privsep_init(): This forks another process which
+		  runs as root. So after this point we have two
+		  processes both running as root
+		- If privsep_init() fails, we have just one process
+		  running as root
+	- run drop_root_privileges():
+		If this succedes, we have two processes one running as
+		root and another as radvd user, or if privsep_init()
+		failed earlier, we have one process running as radvd
+		user.
+		If this fails, application quits
+- If username was not specified radvd continues to run as a single 
+process as root.
+
+
+So failure in privsep_init() results in just one process running as 
+radvd user. If it did not fail it would result in one process running as 
+root and another as radvd user.
+
+I dont think this would be a security issue in my opinion.
+
+
+
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Huzaifa Sidhpurwala / Red Hat Security Response Team
