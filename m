@@ -1,24 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/9
-Message-ID: <20110628114608.GA7525@dhcp-25-225.brq.redhat.com>
-Date: Tue, 28 Jun 2011 13:46:09 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/14/3
+Message-ID: <20111014081339.GA3598@albatros>
+Date: Fri, 14 Oct 2011 12:13:39 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>
-Subject: CVE request: libvirt: integer overflow in VirDomainGetVcpus
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-It has been found that calling VirDomainGetVcpus with bogus parameters
-can lead to integer overflow and subsequent heap corruption. A remote
-attacker could use this flaw to crash libvirtd (DoS).
+Hi Huzaifa,
 
-Upstream patch:
-https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
+On Fri, Oct 14, 2011 at 10:15 +0530, Huzaifa Sidhpurwala wrote:
+> I dont think so. From the code i have read so far, here is what
+> seems to happen.
+> 
+> - radvd starts as root
+> - reads the configs
+> - if a username is specified (user=radvd in most cases):
+> 	- if "--singleprocess" is not specified:
+> 		- run privsep_init(): This forks another process which
+> 		  runs as root. So after this point we have two
+> 		  processes both running as root
+> 		- If privsep_init() fails, we have just one process
+> 		  running as root
+> 	- run drop_root_privileges():
+> 		If this succedes, we have two processes one running as
+> 		root and another as radvd user, or if privsep_init()
+> 		failed earlier, we have one process running as radvd
+> 		user.
+> 		If this fails, application quits
+> - If username was not specified radvd continues to run as a single
+> process as root.
+> 
+> 
+> So failure in privsep_init() results in just one process running as
+> radvd user. If it did not fail it would result in one process
+> running as root and another as radvd user.
+> 
+> I dont think this would be a security issue in my opinion.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=717199
-https://www.redhat.com/archives/libvir-list/2011-June/msg01278.html
+Indeed, if privsep_init() fails the only visible change would be no
+future changes to interface settings.  I was misled by the option name -
+it looks like privsep disabling (opposition to --username), but in
+reality it totally disables privileged operations.
 
-Thanks,
+Thanks for spotting it, I think CVE-2011-3603 should be rejected.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Vasiliy
