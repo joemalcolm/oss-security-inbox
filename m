@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/3
-Message-ID: <BANLkTi=N4AqFZvf0ph+aPMES9EJFR_XGSw@mail.gmail.com>
-Date: Wed, 13 Apr 2011 18:30:14 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/14/1
+Message-ID: <4E97B380.2060204@gentoo.org>
+Date: Thu, 13 Oct 2011 20:58:56 -0700
+From: Tim Sammut <underling@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: CVE request for SAP issues
+Subject: CVE request: mplayer SAMI subtitle parsing buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-> Hi Kurt,
->
-> On Wed, Apr 13, 2011 at 06:06:42PM -0600, Kurt Seifried wrote:
->> http://dsecrg.com/pages/vul/show.php?id=317
->> [DSECRG-11-017] SAP GUI - Buffer overflow
-> ...
->
-> Is this Open Source software?
->
-> If not, then this is off-topic for oss-security.
+Hi, folks.
 
-Sorry, I sometimes think of this as the CVE allocation list (since
-that seems to be a lot of what goes on =).
+Please assign a CVE for the mplayer SAMI subtitle parsing buffer
+overflow. References:
 
-> Alexander
+http://mplayerhq.hu/pipermail/mplayer-cvslog/2011-May/042075.html
+http://labs.mwrinfosecurity.com/files/Advisories/mwri_mplayer-sami-subtitles_2011-08-12.pdf
+
+thanks and hope all is well
+tim
 
 -- 
-Kurt Seifried
-kurt@...fried.org
-skype: 1-703-879-3176
+Tim Sammut ~ Gentoo Security Team
+underling@...too.org ~ C2375493
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
