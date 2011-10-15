@@ -1,30 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/4
-Message-ID: <20110517121201.0b40eda4@redhat.com>
-Date: Tue, 17 May 2011 12:12:01 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/15/2
+Message-ID: <20111015133636.GA25066@openwall.com>
+Date: Sat, 15 Oct 2011 17:36:36 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2 May 2011 22:40:46 +0400 Solar Designer wrote:
+Hi,
 
-> A secondary goal behind requiring access to advisories and updates
-> (not just metainfo) would be to be able to draw the line between
-> vendors and companies that build their own Linux distros in house.
-> The latter could also publish an RSS feed showing how they update
-> their packages, yet they would not be a vendor to anyone other than
-> themselves...  On the other hand, publishing updates without
-> publishing the distro itself doesn't make them more of a vendor to
-> others.  So to achieve this goal we'd probably need to require the
-> distro itself to be public (in at least one form - e.g., Red
-> Hat's .src.rpm's are sufficient), not just advisories and updates.
+The hardlink(1) program from Fedora is susceptible to buffer overflows
+of fixed-size nambuf1 and nambuf2 buffers when run on a tree with
+deeply nested directories and/or with long directory or file names.
+I was able to reproduce the problem (got a segfault) by running the
+program on a directory containing 20 nested directories with
+250-character names.
 
-I think we are likely to need exceptions to the "open as RHEL srpms"
-requirement.  It seems SUSE's SLE would not satisfy it (see
-distro-patches wiki), and I'm pretty sure we'd not benefit from not
-allowing SUSE folks, or asking them use the list info for OpenSUSE, but
-not for SLE.
+Another problem is that the program uses full pathnames.  It neither
+changes the current directory, nor uses openat(2).  Thus, if a pathname
+component is replaced with a symlink while the program is running, this
+may result in processing of directories/files outside of the intended
+directory tree.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+I fixed the buffer overflows (by (re)allocating the buffers dynamically)
+in the copy that I committed into Owl today:
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/hardlink/
+
+For the unsafe handling of potentially changing directory trees, I
+simply added a BUGS section to the man page:
+
+BUGS
+       hardlink assumes that its target directory trees  do  not  change  from
+       under it.  If a directory tree does change, this may result in hardlink
+       accessing files and/or directories outside of  the  intended  directory
+       tree.   Thus,  you  must avoid running hardlink on potentially changing
+       directory trees, and especially on directory  trees  under  control  of
+       another user.
+
+Red Hat and others are welcome to reuse these changes.
+
+There's also a lesser problem of potentially reading from a device file
+or a FIFO if a regular file is replaced with (a link to) one of these.
+Maybe this problem needs to be documented as well, or it may be patched
+in the code by always using fstat(2) after opening a file.  Only using
+hardlink(1) on non-changing trees avoids this problem as well, though.
+
+Overall, it would be nice if someone rewrote hardlink(1) using fts(3)
+and in a cleaner fashion.  The current program appears to have evolved
+from a hack that was meant for some very specific use case only.  Now
+that the hack is successful at demonstrating that the program is
+generally desirable as well as at what problems it should avoid, it may
+be the right time for a clean rewrite.
+
+<offtopic>
+BTW, hardlink(1) is very useful when run on tzdata - e.g. from %install
+of an RPM package of tzdata:
+
+%install
+rm -rf %buildroot
+sed -i 's|@...tall_root@...uildroot|' Makeconfig
+%__make install
+hardlink -vc %buildroot
+
+This produces the following "verbose output":
+
+Directories 69
+Objects 1812
+IFREG 1743
+Comparisons 627
+Linked 588
+saved 1830912
+
+That's 1.8 MB saved on a filesystem with 4 KB blocks.
+
+I got this idea from ALT Linux and implemented it in Owl now.
+</offtopic>
+
+Alexander
