@@ -1,30 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/16/2
-Message-ID: <1316154511.17824.5.camel@scapa>
-Date: Fri, 16 Sep 2011 08:28:31 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/16/2
+Message-ID: <20111016134058.GA19228@foo.fgeek.fi>
+Date: Sun, 16 Oct 2011 16:40:58 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-Subject: Re: Is there a maintainer for librsvg ?
+Subject: Wrong MLIST link in CVE-2011-3783
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2011-09-15 at 15:23 +0200, Nicolas Grégoire wrote:
-> Hello,
-> 
-> librsvg is a SVG rendering library hosted at librsvg.sourceforge.net. No
-> new version was published since 2005, and a (security) bug that I
-> reported via bugzilla.gnome.org 6 weeks ago wasn't even triaged.
-> 
-> Given that this lib is used by a lot of distros, what can I do in order
-> to get this bug (and others) patched ?
+In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
 
-It seems that librsvg is hosted on GNOME since quite some time, see
-http://git.gnome.org/browse/librsvg/ and
-http://ftp.gnome.org/pub/GNOME/sources/librsvg/2.34/ (and
-https://bugzilla.gnome.org/buglist.cgi?quicksearch=librsvg)
-
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Best regards,
+Henri Salo
