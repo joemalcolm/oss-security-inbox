@@ -1,54 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/4
-Message-ID: <20111229191240.GA11413@openwall.com>
-Date: Thu, 29 Dec 2011 23:12:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/16/3
+Message-ID: <20111016134811.GA19558@foo.fgeek.fi>
+Date: Sun, 16 Oct 2011 16:48:11 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
+Subject: Re: Wrong MLIST link in CVE-2011-3783
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2011 at 07:07:30PM +0100, Andrea Barisani wrote:
-> 2011-11-01: contacted affected distributions
-...
-> 2011-12-28: advisory release
+On Sun, Oct 16, 2011 at 04:40:58PM +0300, Henri Salo wrote:
+> In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
 
-The linux-distros list was made use of.  (I assume oCERT also contacted
-non-Linux distributions separately.)
+Or did someone start assigning CVE-identifiers for everything what has been found in http://code.google.com/p/inspathx/ and this MLIST-link is referer in all of those issues? :)
 
-This was the first major exception to linux-distros' list policy to
-limit embargoes to 14 days at most (after initial posting to the list).
-
-I did not object this time because the underlying issue was publicly
-known and the impact was limited to DoS.  Well, and I was not given an
-opportunity to object other than by asking for the CRD to be moved to an
-earlier date, which would likely not work for others.  (I am not
-complaining.)
-
-Yet I feel that I need to post in here and state that this does not set
-a precedent, that the "14 days" policy is in effect, and that occasional
-exceptions, if any, need to be agreed upon in advance (unlike it
-happened this time).  That is, if someone wants to report an issue via
-the linux-distros or distros lists and propose a longer embargo period,
-they need to state so first, without disclosing much detail about the
-issue to the list.  I think it may be OK (although this might vary on a
-case by case basis) to disclose the minimum required for list members to
-agree to a longer embargo period as a rare exception (like it would
-probably happen for these hash collision issues), object to it (have the
-list notified with detailed info closer to the proposed CRD), or/and opt
-to request the detail individually (not via the list).
-
-I think this is a rare exception to oCERT's policy, too.  It says:
-
-"- under extremely exceptional circumstances, if the oCERT Team and all
-the parties involved feel the need for longer time, a 2 months embargo
-can be applied, in this case we would clearly document the decision for
-public review"
-
-Andrea - you could want to "clearly document the decision for public
-review" now, although I guess your rationale was similar to mine (when I
-decided not to object to the unusually long embargo period this time).
-
-Thank you for your work on this issue!  I imagine it was pretty
-time-consuming with so many affected projects.
-
-Alexander
+Best regards,
+Henri Salo
