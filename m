@@ -1,17 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/04/4
-Message-ID: <20110804141632.GA6443@foo.fgeek.fi>
-Date: Thu, 4 Aug 2011 17:16:32 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/6
+Message-ID: <20111017131430.GA2241@dhcp-25-225.brq.redhat.com>
+Date: Mon, 17 Oct 2011 15:14:30 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: CVE request: coppermine gallery < 1.4.26
+Subject: Re: CVE request: kernel/AppArmor local denial of service
 Content-Type: text/plain; charset=utf-8
 
-This security issue never got CVE-identifier: http://seclists.org/oss-sec/2010/q1/121 and should get 2010 ID.
+On Mon, Oct 17, 2011 at 02:32:43PM +0200, Marcus Meissner wrote:
+> Hi,
+> 
+> A process can cause itself to Ooops by doing an invalid formatted
+> write to the process attr/current when the Apparmor security framework
+> is enabled (even without a apparmor profile).
+> 
+> e.g. by doing "echo 'AAA AAA' > /proc/$$/attr/current"
+> 
+> This will cause a NULL ptr dereference, which oopses the current process and
+> in connection with kdump or panic on oops will halt the machine.
+> 
+> References:
+> https://bugs.launchpad.net/apparmor/+bug/789409
+> https://bugzilla.novell.com/show_bug.cgi?id=717209
+> 
+> Fix is in:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=a5b2c5b2ad5853591a6cac6134cd0f599a720865
+> 
+> This only affected Linux kernel mainline since the introduction of
+> AppArmor up to and including 3.0-rc2
+> 
+> The SUSE patchset used in our older distribution had a additional NULL
+> check avoiding the issue.
+> 
+> Ciao, Marcus
 
-Original advisory: http://forum.coppermine-gallery.net/index.php/topic,63510.0.html
-OSVDB: http://osvdb.org/show/osvdb/62261
+Please use CVE-2011-3619.
 
-Best regards,
-Henri Salo
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
