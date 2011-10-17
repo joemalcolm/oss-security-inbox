@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/09/1
-Message-ID: <20111209051125.GA6884@openwall.com>
-Date: Fri, 9 Dec 2011 09:11:25 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/5
+Message-ID: <20111017123243.GG11883@suse.de>
+Date: Mon, 17 Oct 2011 14:32:43 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: kernel/AppArmor local denial of service
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I've just set this mailing list up:
+A process can cause itself to Ooops by doing an invalid formatted
+write to the process attr/current when the Apparmor security framework
+is enabled (even without a apparmor profile).
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+e.g. by doing "echo 'AAA AAA' > /proc/$$/attr/current"
 
-Yes, it's called distros, and we also still have linux-distros.
+This will cause a NULL ptr dereference, which oopses the current process and
+in connection with kdump or panic on oops will halt the machine.
 
-Currently on the distros list are:
+References:
+https://bugs.launchpad.net/apparmor/+bug/789409
+https://bugzilla.novell.com/show_bug.cgi?id=717209
 
-* All Linux distribution vendors who are also on linux-distros
-* FreeBSD
-* NetBSD/pkgsrc
+Fix is in:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=a5b2c5b2ad5853591a6cac6134cd0f599a720865
 
-Yes, I received and processed some subscription requests off-list.
-I need to document these in here now:
+This only affected Linux kernel mainline since the introduction of
+AppArmor up to and including 3.0-rc2
 
-For FreeBSD, I subscribed Xin Li, who is on the security team:
-http://www.freebsd.org/administration.html#t-secteam
+The SUSE patchset used in our older distribution had a additional NULL
+check avoiding the issue.
 
-For NetBSD/pkgsrc I subscribed Tim Zingelman and Thomas Klausner, whose
-recent activity is clear e.g. from:
-http://mail-index.netbsd.org/current-users/2011/10/03/msg017924.html
-
-Alexander
+Ciao, Marcus
