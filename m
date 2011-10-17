@@ -1,21 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/9
-Message-ID: <20110516215859.GD2430@redhat.com>
-Date: Mon, 16 May 2011 15:59:00 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/2
+Message-ID: <20111017100229.GA27461@vermeer.pre-sense.de>
+Date: Mon, 17 Oct 2011 12:02:29 +0200
+From: Timo Warns <Warns@...-Sense.DE>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: polarssl
+Subject: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
-Could a CVE be assigned to this issue?
+Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
+an insufficient treatment of an error condition that is returned by the
+function get_word() when it is unable to correctly parse its input.
 
-http://polarssl.org/trac/wiki/SecurityAdvisory201101
-https://bugzilla.redhat.com/show_bug.cgi?id=705187
+The following versions of logsurfer are affected:
 
-Possible man-in-the-middle in Diffie Hellman key exchange, fixed in
-0.14.2.
+ Logsurfer 1.5b and previous versions
+ Logsurfer+ 1.7 and previous versions
 
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
