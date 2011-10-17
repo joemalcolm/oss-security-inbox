@@ -1,19 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/02/1
-Message-ID: <20110602153200.GA19621@foo.fgeek.fi>
-Date: Thu, 2 Jun 2011 18:32:00 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/3
+Message-ID: <20111017100738.GC11883@suse.de>
+Date: Mon, 17 Oct 2011 12:07:38 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Multiple security vulnerabilities in ARSC Really Simple Chat
+Subject: Re: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
-Could you assign CVE-identifiers for following security vulnerabilities?
+On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
+> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+> Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
+> an insufficient treatment of an error condition that is returned by the
+> function get_word() when it is unable to correctly parse its input.
+> 
+> The following versions of logsurfer are affected:
+> 
+>  Logsurfer 1.5b and previous versions
+>  Logsurfer+ 1.7 and previous versions
+> 
+> A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
 
-https://sourceforge.net/tracker/?func=detail&aid=3310673&group_id=32699&atid=406296
-http://www.htbridge.ch/advisory/xss_in_a_really_simple_chat_arsc.html
-http://www.htbridge.ch/advisory/multiple_sql_injections_in_a_really_simple_chat_arsc.html
+How can this be exploited?
 
-ARSC seems to be a bit of a sinking boat. I still wonder why htbridge does not request CVE-identifiers at all.
+It seems to happen in the argument handling and I doubt an attacker can inject arguments?
 
-Best regards,
-Henri Salo
+Ciao, Marcus
