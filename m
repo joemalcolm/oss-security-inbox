@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/8
-Message-ID: <4E24AE57.8050303@gentoo.org>
-Date: Tue, 19 Jul 2011 00:06:15 +0200
-From: Stefan Behte <craig@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/1
+Message-ID: <4E9B79CF.4000507@redhat.com>
+Date: Mon, 17 Oct 2011 08:41:51 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Wrong MLIST link in CVE-2011-3783
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
->> Would you mind sharing that patch with us?
+On 10/16/2011 09:48 PM, Henri Salo wrote:
+> On Sun, Oct 16, 2011 at 04:40:58PM +0300, Henri Salo wrote:
+>> In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
 > 
-> We would be willing to provide the patch to all Linux distributors
-> but we do not want to release the patch publicly and wait for the
-> official patch by the packet maintainer of FreeRADIUS.
+> Or did someone start assigning CVE-identifiers for everything what has been found in http://code.google.com/p/inspathx/ and this MLIST-link is referer in all of those issues? :)
 > 
+> Best regards,
+> Henri Salo
 
-Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-sounds like the right thing to do. Gentoo complies to your requirements
-and would like to get the patch directly, if you do not plan to send it
-there.
+If it is incorrect, please contact nvd@...t.gov.
 
-Best regards,
-
-Stefan Behte,
-Gentoo Security
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
