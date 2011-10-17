@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/5
-Message-Id: <0C523CDA-3885-4A60-8F7F-4E9B73924E81@gmail.com>
-Date: Tue, 1 Mar 2011 10:24:48 +0000
-From: Helgi Þormar Þorbjörnsson <helgith@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/3
+Message-ID: <20111017100738.GC11883@suse.de>
+Date: Mon, 17 Oct 2011 12:07:38 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Dan Rosenberg <dan.j.rosenberg@...il.com>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE Request: PEAR Installer 1.9.1 <= - Symlink Attack
+Subject: Re: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
-Hi, 
-On 1 Mar 2011, at 09:11, Pierre Joye wrote:
-
-> hi,
+On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
+> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+> Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
+> an insufficient treatment of an error condition that is returned by the
+> function get_word() when it is unable to correctly parse its input.
 > 
-> 2011/2/28 Dan Rosenberg <dan.j.rosenberg@...il.com>:
->> I'm not familiar with this code or any of the context surrounding this
->> fix, but it appears to be an incomplete fix.  Checking for existence
->> of a symlink and then opening the resource leaves open a window during
->> which a legitimate file can be replaced with a symlink.
+> The following versions of logsurfer are affected:
 > 
-> Not sure it is fixable, or maybe using a lock on the symbolic link
-> while fetching its target (to be tested to be sure that such locks
-> cannot be overridden from shell).
+>  Logsurfer 1.5b and previous versions
+>  Logsurfer+ 1.7 and previous versions
+> 
+> A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
 
-I assume you are referring to the parts for REST.php in the patch in question?
-At a second look, that part could do with improvements; I wrote up a function which takes TOCTOU into consideration.
-I'll have that patch done by the end of the day.
+How can this be exploited?
 
-For other situations I am using tempnam() (via the System class) as those files are only temporary and were being extracted from compressed archives; The predictability of their end destination where the centre part of the reported security problem.
+It seems to happen in the argument handling and I doubt an attacker can inject arguments?
 
-- Helgi
+Ciao, Marcus
