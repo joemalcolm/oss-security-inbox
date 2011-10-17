@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/7
-Message-ID: <20110209005015.66cccfec@laverne>
-Date: Wed, 9 Feb 2011 00:50:15 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/4
+Message-ID: <4E9C025D.5080601@pre-sense.de>
+Date: Mon, 17 Oct 2011 12:24:29 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: wordpress before 3.0.5
+Subject: Re: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
-http://wordpress.org/news/2011/02/wordpress-3-0-5/
+Am 17.10.2011 12:07, schrieb Marcus Meissner:
+> On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
+>> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+>> Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
+>> an insufficient treatment of an error condition that is returned by the
+>> function get_word() when it is unable to correctly parse its input.
+>>
+>> The following versions of logsurfer are affected:
+>>
+>>  Logsurfer 1.5b and previous versions
+>>  Logsurfer+ 1.7 and previous versions
+>>
+>> A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
+> 
+> How can this be exploited?
+> 
+> It seems to happen in the argument handling and I doubt an attacker can inject arguments?
 
-From release announcement, I'm unsure which of them deserves CVEs:
+Logsurfer allows to use substrings of log-file entries as arguments for
+calling external commands. An attacker is able to exploit this
+vulnerability by injecting specially crafted strings into a log-file
+that is processed by logsurfer.
 
-"Two moderate security issues were fixed that could have allowed a
-Contributor- or Author-level user to gain further access to the site.
-
-One information disclosure issue was addressed that could have allowed
-an Author-level user to view contents of posts they should not be able
-to see, such as draft or private posts.
-
-Two security enhancements were added. One improved the security of any
-plugins which were not properly leveraging our security API. The other
-offers additional defense in depth against a vulnerability that was
-fixed in previous release."
-
-
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Cheers, Timo
