@@ -1,20 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/07/1
-Message-ID: <20110207131226.129cc4ef@laverne>
-Date: Mon, 7 Feb 2011 13:12:26 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/7
+Message-ID: <Pine.GSO.4.64.1110171456060.2890@faron.mitre.org>
+Date: Mon, 17 Oct 2011 15:01:23 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: phpbb before 3.0.8
+Subject: Re: Wrong MLIST link in CVE-2011-3783
 Content-Type: text/plain; charset=utf-8
 
-http://www.phpbb.com/support/documents.php?mode=changelog&version=3#v307-PL1
 
-[PHPBB3-9903] - Execute javascript in [flash=] BBCode
+We generally strive to include the first public announcement from the 
+researcher as a reference in all CVEs.  In this case, 
+http://www.openwall.com/lists/oss-security/2011/06/27/6 was the first 
+(vague) announcement that a lot of path-disclosure issues existed in 
+multiple products, so it is included in the various CVEs that were created 
+as a result of examining the 
+http://code.google.com/p/inspathx/source/browse/#svn%2Ftrunk%2Fpaths_vuln 
+that was mentioned in that MLIST.
 
-Seems to be XSS. Please assign CVE.
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Steve
