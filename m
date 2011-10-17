@@ -1,44 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/5
-Message-ID: <20110313162839.GD21770@outflux.net>
-Date: Sun, 13 Mar 2011 09:28:39 -0700
-From: Kees Cook <kees@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/1
+Message-ID: <4E9B79CF.4000507@redhat.com>
+Date: Mon, 17 Oct 2011 08:41:51 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: announcing libwipe
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Wrong MLIST link in CVE-2011-3783
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 12, 2011 at 01:29:13AM -0500, Andrew Clausen wrote:
-> to the original programs.  To use it for all programs in a single shell
-> session, set the LD_PRELOAD environment variable with the shell command
+On 10/16/2011 09:48 PM, Henri Salo wrote:
+> On Sun, Oct 16, 2011 at 04:40:58PM +0300, Henri Salo wrote:
+>> In http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3783 there is MLIST-link: http://www.openwall.com/lists/oss-security/2011/06/27/6 which I think is wrong.
 > 
->         export LD_PRELOAD=/usr/local/lib/libwipe.so
+> Or did someone start assigning CVE-identifiers for everything what has been found in http://code.google.com/p/inspathx/ and this MLIST-link is referer in all of those issues? :)
 > 
-> To use it system-wide, add /usr/local/lib/libwipe.so to the /etc/ld.so.preload
-> configure file.
-> 
-> The program uses two mechanisms:
-> (1) when memory is deallocated with free(3), it is zeroed out.
-> (2) when the process terminates, the entire memory is zeroed out.
+> Best regards,
+> Henri Salo
 
-Cool, thanks for the announcement.
+If it is incorrect, please contact nvd@...t.gov.
 
-#1 can also be done using glibc's $MALLOC_PERTURB_ environment variable (it
-initializes memory with new() to its value, and then fills memory with the
-inverse on free(). For example, "export MALLOC_PERTURB_=85" will get you an
-alternating bit pattern.
-
-Feature #2, however, is not handled by MALLOC_PERTURB_, and there isn't a
-particularly good way I've found to set MALLOC_PERTURB_ globally, unlike
-the /etc/ld.so.preload example for libwipe.
-
-If libwipe grew similar bit-pattern handling for new(), it could be used
-for similar purposes (trying to ferret out use-after-free or
-use-before-init bugs in general).
-
-Thanks,
-
--Kees
-
+Thanks, Eugene
 -- 
-Kees Cook
-Ubuntu Security Team
+Eugene Teo / Red Hat Security Response Team
