@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/10
-Message-ID: <4EF78A61.3000604@redhat.com>
-Date: Sun, 25 Dec 2011 13:41:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/4
+Message-ID: <4E9C025D.5080601@pre-sense.de>
+Date: Mon, 17 Oct 2011 12:24:29 +0200
+From: Timo Warns <warns@...-sense.de>
 To: oss-security@...ts.openwall.com
-CC: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: CVE-2011-4862 is not BSD-specific
+Subject: Re: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
-On 12/25/2011 10:14 AM, Florian Weimer wrote:
-> This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
-> overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
-> seems to have been added at MIT when the BSD telnetd was Kerberized,
-> and it ended up in the Heimdal recryptofication of Kerberos (from
-> where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
-> pre-authentication segfault with both versions (as shipped by Debian).
->
-> The telnetd from netkit does not appear to be affected.
-Good write up at:
+Am 17.10.2011 12:07, schrieb Marcus Meissner:
+> On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
+>> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+>> Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
+>> an insufficient treatment of an error condition that is returned by the
+>> function get_word() when it is unable to correctly parse its input.
+>>
+>> The following versions of logsurfer are affected:
+>>
+>>  Logsurfer 1.5b and previous versions
+>>  Logsurfer+ 1.7 and previous versions
+>>
+>> A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
+> 
+> How can this be exploited?
+> 
+> It seems to happen in the argument handling and I doubt an attacker can inject arguments?
 
-http://thexploit.com/secdev/a-textbook-buffer-overflow-a-look-at-the-freebsd-telnetd-code/
+Logsurfer allows to use substrings of log-file entries as arguments for
+calling external commands. An attacker is able to exploit this
+vulnerability by injecting specially crafted strings into a log-file
+that is processed by logsurfer.
 
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Cheers, Timo
