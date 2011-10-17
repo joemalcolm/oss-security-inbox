@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/19
-Message-ID: <1276258098.291397.1304364815241.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 15:33:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/2
+Message-ID: <20111017100229.GA27461@vermeer.pre-sense.de>
+Date: Mon, 17 Oct 2011 12:02:29 +0200
+From: Timo Warns <Warns@...-Sense.DE>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: libmodplugin stack-buffer overflow
+Subject: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
+Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+Logsurfer affecting the function prepare_exec(). The vulnerability is caused by
+an insufficient treatment of an error condition that is returned by the
+function get_word() when it is unable to correctly parse its input.
 
+The following versions of logsurfer are affected:
 
------ Original Message -----
-> Some details and exploit at:
-> http://www.exploit-db.com/exploits/17222/
-> 
-> From an initial look, it seems that applications embedding libmodplug,
-> sp gstreamer-plugins may not be affected, since it seems to be doing
-> some parameter checking before hand.
-> 
-> Can a CVE be assigned to this please?
-> 
+ Logsurfer 1.5b and previous versions
+ Logsurfer+ 1.7 and previous versions
 
-Please use CVE-2011-1761
-
-Thanks.
-
--- 
-    JB
+A patch is available at http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
