@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/12
-Message-ID: <4EC2D257.2050105@redhat.com>
-Date: Tue, 15 Nov 2011 13:57:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Vincent Danen <vdanen@...hat.com>
-Subject: Re: CVE-2011-3368 suggested patch incomplete for apache2 < 2.2.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/17/5
+Message-ID: <20111017123243.GG11883@suse.de>
+Date: Mon, 17 Oct 2011 14:32:43 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request: kernel/AppArmor local denial of service
 Content-Type: text/plain; charset=utf-8
 
-On 11/15/2011 01:31 PM, Vincent Danen wrote:
-> * [2011-10-26 18:02:00 +0200] Marcus Meissner wrote:
->
->> during our QA we noticed that the mod_proxy fix for CVE-2011-3368
->> was incomplete for HTTP 0.9 style requests.
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=722545
->>
->> to cross check, with the RewriteRules setup as in the exploit:
->>
->> $ telnet testhost 80
->> GET @www.otherhost/foo.png
->> ... should give a 400 error, and not the 404 code from www.otherhost
->
-> Did this ever get a CVE name (aka "incomplete fix of CVE-2011-3368")?
->
-The second fix for this issue was assigned CVE-2011-3639
+Hi,
 
--- 
+A process can cause itself to Ooops by doing an invalid formatted
+write to the process attr/current when the Apparmor security framework
+is enabled (even without a apparmor profile).
 
--Kurt Seifried / Red Hat Security Response Team
+e.g. by doing "echo 'AAA AAA' > /proc/$$/attr/current"
 
+This will cause a NULL ptr dereference, which oopses the current process and
+in connection with kdump or panic on oops will halt the machine.
+
+References:
+https://bugs.launchpad.net/apparmor/+bug/789409
+https://bugzilla.novell.com/show_bug.cgi?id=717209
+
+Fix is in:
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commitdiff;h=a5b2c5b2ad5853591a6cac6134cd0f599a720865
+
+This only affected Linux kernel mainline since the introduction of
+AppArmor up to and including 3.0-rc2
+
+The SUSE patchset used in our older distribution had a additional NULL
+check avoiding the issue.
+
+Ciao, Marcus
