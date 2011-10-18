@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/4
-Message-ID: <20110727092848.537e9528@redhat.com>
-Date: Wed, 27 Jul 2011 09:28:48 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/13
+Message-ID: <c6dc7add-81ad-44af-ae5b-05969d59161b@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:12:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - dhcp clients
+Subject: Re: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 26 Jul 2011 15:35:02 -0400 (EDT) Josh Bressers wrote:
 
-Just to clarify...
 
-> Use CVE-2011-2716 for udhcpc
+----- Original Message -----
+> Am 17.10.2011 12:07, schrieb Marcus Meissner:
+> > On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
+> >> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+> >> Logsurfer affecting the function prepare_exec(). The vulnerability is
+> >> caused by an insufficient treatment of an error condition that is
+> >> returned by the function get_word() when it is unable to correctly
+> >> parse its input.
+> >>
+> >> The following versions of logsurfer are affected:
+> >>
+> >>  Logsurfer 1.5b and previous versions
+> >>  Logsurfer+ 1.7 and previous versions
+> >>
+> >> A patch is available at
+> >> http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
+> > 
+> > How can this be exploited?
+> > 
+> > It seems to happen in the argument handling and I doubt an attacker can
+> > inject arguments?
+> 
+> Logsurfer allows to use substrings of log-file entries as arguments for
+> calling external commands. An attacker is able to exploit this
+> vulnerability by injecting specially crafted strings into a log-file that
+> is processed by logsurfer.
+> 
 
-This is dhcp client that is part of busybox.
+This sounds CVE worthy.
 
-> CVE-2011-2717 for udhcp6c.
+Please use CVE-2011-3626.
 
-This should say dhcp6c and is part of the (now obsolete) dhcpv6 project:
-
-  https://fedorahosted.org/dhcpv6/
+Thanks.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+    JB
