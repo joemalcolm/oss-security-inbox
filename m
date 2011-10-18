@@ -1,55 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/6
-Message-ID: <20110624123406.GA3106@albatros>
-Date: Fri, 24 Jun 2011 16:34:06 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/10
+Message-ID: <33e50a33-28d6-4019-b965-df3643d13344@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:01:36 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org
-Subject: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+Subject: Re: CVE requests:   <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF, AVI, MP4 demuxers and https://bugs.gentoo.org/show_bug.cgi?id=279340
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Tue, Jun 21, 2011 at 15:24 -0400, Josh Bressers wrote:
-> > /*
-> > * This program tries to learn whether ~user/.ssh/authorized_keys exists
-> > * and is nonempty for any user on local machine. It uses world-readable
-> > * taskstats' nature to get somewhat private io statistics information.  If
-> > * implant taskstats or /proc//io polling into ssh client, it would be
-> > * possible to learn precise authorized_keys' size (and estimate private
-> > * key's(s') size).
+
+----- Original Message -----
+> Hello,
 > 
-> Are you considering this a flaw, or just an interesting security exercise?
-> Nothing currently comes to mind, but it's possible there could be other
-> data where knowing it exists and the size would be useful.
+> Could you please supply a CVE for the following issues:
+> 
+> 1. <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF,
+> AVI, MP4 demuxers
+> https://bugs.gentoo.org/show_bug.cgi?id=285370
 
-It can be used to learn ssh and ftp password length.  If privsep is
-enabled in openssh and vsftpd, the unprivileged process' activity very
-precisely shows password information.
+Use CVE-2011-3623 for the above.
 
-For vsftpd read characters count is strlen("USER username\r\n") +
-strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
-related to a privileged parent.  If measure statistics between user and
-passwords commands, actual password length and username length can be
-gathered.
+> 
+> 2. <media-video/vlc-0.9.10 Real RDT Integer Underflow
+> https://bugs.gentoo.org/show_bug.cgi?id=279340
 
-For ssh, vice versa, networking activity is constant in packets length,
-but interprocess communications, specifically passwords, depend on
-user input.
+The bug says this one is CVE-2010-2062
 
-For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars - CONST.
-
-Another daemons with more or less constant io activity might be
-vulnerable too.  PAM greatly complicates precise measurements.
-
-
-I think it needs 2 CVE, one for /proc/PID/io and another for taskstats.
-
-https://lkml.org/lkml/2011/6/24/88
-
-
-Thanks,
+Thanks.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+    JB
