@@ -1,68 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/3
-Message-ID: <BANLkTin27fuWNFNGSaOCpzXysurW-GHLYA@mail.gmail.com>
-Date: Wed, 18 May 2011 18:53:23 +0200
-From: yersinia <yersinia.spiros@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/12
+Message-ID: <48b5a66a-edc9-42b0-b1ab-8923e960a798@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:10:39 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+Subject: Re: CVE request: mplayer SAMI subtitle parsing buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2011 at 8:56 PM, Solar Designer <solar@...nwall.com> wrote:
 
-> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
-> > Its probably about time to review libraries that are commonly
-> > linked to (formerly-) suid programs, such as
-> > libldap, libssl etc. In near future, in the advent of file caps
-> > they are often lacking proper checks.
->
-> Good idea.
->
-> > They usually just compare uid against euid (not even gid sometimes)
-> > and do not check the dumpable flag or AT_SECURE (dont know whether
-> > glibc exports a proper function to easily check that at all).
->
-> glibc exports the __libc_enable_secure variable, which is initialized
-> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
->
-> > The libraries that I had a quick look at and which were found
-> > "vulnerable" are:
-> >
-> > - openssl-1.0.0c
->
-> We've been patching OpenSSL to use __libc_enable_secure for over 10
-> years now. ;-)  The patch is in use at least in Owl and ALT Linux.
->
-> * Sun Apr 22 2001 Solar Designer <solar-at-owl.openwall.com>
-> ...
-> - Use glibc's __libc_enable_secure for the new OPENSSL_issetugid().
->
-> I've attached our patches for OpenSSL, ncurses, S-Lang, termcap, rpm's
-> popt.  Of these, OpenSSL and ncurses apply to recent versions, termcap
-> is old by itself, whereas the rest might be obsoleted by changes made
-> upstream (and they're not strictly for the problem you brought up).
->
-> For OpenSSL, there's another problem: it looks like some getenv()'s
-> were added after the initial introduction of OPENSSL_issetugid() and
-> without consideration for possible security implications.  Some of those
-> should be patched.  This got on my to-do when we updated to OpenSSL
-> 1.0.0d earlier this year - to do myself or delegate, but I never got
-> around to...  Maybe you're the one to look into this and come up with a
-> patch now? ;-)
->
-It happens that I am, with another name, an rpm5/popt comantainer . I am very
-interested to integrate these patches, being also a   security
-professional. Very
-useful to follow this mailing list, but I am not part of a distro, at least
-for now, and I can no longer follow it in the future due to the  recent
-policy change. Thanks anyway.
 
-Elia
+----- Original Message -----
+> Hi, folks.
+> 
+> Please assign a CVE for the mplayer SAMI subtitle parsing buffer
+> overflow. References:
+> 
+> http://mplayerhq.hu/pipermail/mplayer-cvslog/2011-May/042075.html
+> http://labs.mwrinfosecurity.com/files/Advisories/mwri_mplayer-sami-subtitles_2011-08-12.pdf
+> 
 
->
-> Thanks,
->
->
+Please use CVE-2011-3625.
 
-> Alexander
->
+Thanks.
 
+-- 
+    JB
