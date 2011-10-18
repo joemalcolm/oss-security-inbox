@@ -1,33 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/4
-Message-ID: <CAOSRhROHk-cYEuNJ--UCN7vC3M9nCu1+egiQ4xETApW_XBkf5w@mail.gmail.com>
-Date: Tue, 8 Nov 2011 08:08:35 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/16
+Message-ID: <f1249141-c9e0-435b-bb9c-f5c10983e3fb@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:31:09 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Android: vold stack buffer overflow
+Cc: security@...mla.org
+Subject: Re: CVE-request: Joomla 20111001 Core - Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
-> A local user with group "log" on Android may send a malformed message
-> to vold ("volume daemon"), causing a stack buffer overflow.  This has
-> been demonstrated to be exploitable to escalate privileges to root on
-> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
-> arbitrary heap object and triggering a use-after-free condition [1].
-> It appears the bug was silently patched in Honeycomb (3.x), but note
-> that since Honeycomb is not open source, it does not fall within the
-> scope of this list.  Bug discovered and exploited by the Revolutionary
-> team [2].
->
 
-Oops, a few minor corrections.
 
-Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
-the libsysutils library, and was demonstrated to be exploitable via
-vold, which makes use of the affected library function.  Sorry for the
-noise.
+----- Original Message -----
+> Can I get CVE-identifier for this issue?
+> http://developer.joomla.org/security/news/370-20111001-core-information-disclosure.html
+> 
 
-> -Dan
->
-> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
-> [2] http://revolutionary.io/
->
+Please use CVE-2011-3629.
+
+Thanks.
+
+-- 
+    JB
