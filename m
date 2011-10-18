@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/7
-Message-ID: <20110629173519.GA4831@albatros>
-Date: Wed, 29 Jun 2011 21:35:19 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/4
+Message-ID: <4E9D8B1B.90909@redhat.com>
+Date: Tue, 18 Oct 2011 08:20:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Matthias Weckbecker <mweckbecker@...e.de>
+Subject: Re: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 29, 2011 at 10:32 -0700, Linus Torvalds wrote:
-> On Wed, Jun 29, 2011 at 10:21 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> >
-> > So, with rounded read_characters value it's possible to learn privkey
-> > length.
-> 
-> Umm. You can trivially figure that out from the public key lenth
-> already, can't you?
+Matthias Weckbecker <mweckbecker@...e.de> wrote:
+>> https://redmine.ruby-lang.org/issues/5418
+>>
+>> Can we get a CVE for this please?
+>>
+> I think this is already covered by CVE-2011-3187.
 
-No, the attacker here have no information about the key at all.  It
-tries to authorize with a random key and a random password.
+Sort of, similar issue (lack of input verification), but it's in a
+different code base, which traditionally means a different CVE is
+assigned. Also CVE-2011-3187 was fixed in Ruby on Rails 3.0.10, this new
+issue is still unfixed in Ruby.
+ 
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+
+-Kurt Seifried / Red Hat Security Response Team
+
