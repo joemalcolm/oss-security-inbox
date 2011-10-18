@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/24/1
-Message-Id: <201101231955.42970.geissert@debian.org>
-Date: Sun, 23 Jan 2011 19:55:40 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: maradns@...il.com, 610834-submitter@...s.debian.org
-Subject: CVE request: MaraDNS DoS via long queries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/3
+Message-ID: <1318943004.5781.2.camel@mdlinux>
+Date: Tue, 18 Oct 2011 09:03:24 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: pam
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-A crash bug has been reported against MaraDNS 1.4.03 when long queries are 
-sent to the resolver. Details can be found at:
-http://bugs.debian.org/610834
+Could a CVE please be assigned to the following issue:
 
-As of the time of writing, the reporter is testing other versions and at least 
-1.4.05 also seems to be affected.
+A Debian/Ubuntu specific patch in pam, update-motd, calls the scripts
+in /etc/update-motd.d as root without sanitizing the environment.
 
-Josh, Steven: could a CVE id be assigned? Thanks in advance.
+See:
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+https://bugs.launchpad.net/ubuntu/+source/pam/+bug/610125
+
+Thanks,
+
+Marc.
+
+
+
