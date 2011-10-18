@@ -1,54 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/2
-Message-Id: <201106141446.40489.ludwig.nussel@suse.de>
-Date: Tue, 14 Jun 2011 14:46:40 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: Jakub Narebski <jnareb@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: XSS security issue in gitweb for 'blob_plain' view with HTML files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/17
+Message-ID: <623466df-9449-431b-aa79-789d1a417016@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:38:10 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: MySQL executable comment execution on MySQL slave server (from 2009)
 Content-Type: text/plain; charset=utf-8
 
-Jakub Narebski wrote:
-> On Fri, 3 July 2011, Jakub Narebski wrote:
-> [...]
-> > Proposed patch:
-> > ---------------
-> > Note that it includes unrelated fix for $prevent_xss feature.  It would
-> > be split in separate patch (non-security related bugfix).
-> > 
-> > With this patch above lol.xml would be served as text/plain...
-> > 
-> > -- >8 --
-> > diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
-> > index 240dd47..a3c03f3 100755
-> > --- i/gitweb/gitweb.perl
-> > +++ w/gitweb/gitweb.perl
-> > @@ -3595,7 +3595,7 @@ sub blob_mimetype {
-> >  	my $fd = shift;
-> >  	my $filename = shift;
-> >  
-> > -	if ($filename) {
-> > +	if ($filename && !$prevent_xss) {
-> >  		my $mime = mimetype_guess($filename);
-> >  		$mime and return $mime;
-> >  	}
-> 
-> So I think the above is not necessary; it is enough to enable XSS
-> prevention by adding
-> 
->   our $prevent_xss = 1;
-> 
-> in gitweb configuration file.
 
-What about making that the default?
-For convenience it may make sense to s!text/.*!text/plain! and allow
-to display that inline.
 
-cu
-Ludwig
+----- Original Message -----
+> This is an old one that slipped through in 2009:
+> 
+> The executable comment capability in MySQL before 5.1.50 and 5.0.93
+> can be used to execute arbitrary SQL commands as a privileged user.
+> This occurs on MySQL servers configured as slaves in a MySQL
+> replication environment where the slave server is running a newer
+> version of MySQL than the server. The attacker would need the ability
+> to add custom comments to a database on the MySQL server.
+> 
+> http://bugs.mysql.com/bug.php?id=49124
+> http://dev.mysql.com/doc/refman/5.1/en/news-5-1-50.html
+> http://dev.mysql.com/doc/refman/5.0/en/news-5-0-93.html
+
+Please use CVE-2009-5026.
+
+Thanks.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+    JB
