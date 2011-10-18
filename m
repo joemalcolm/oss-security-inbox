@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/11
-Message-Id: <201104051411.49402.thomas@suse.de>
-Date: Tue, 5 Apr 2011 14:11:49 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/2
+Message-Id: <201110181503.17556.mweckbecker@suse.de>
+Date: Tue, 18 Oct 2011 15:03:15 +0200
+From: Matthias Weckbecker <mweckbecker@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: Ruby 1.9.2-p290 WEBrick::HTTPRequest X-Forwarded-*
 Content-Type: text/plain; charset=utf-8
 
-Am Montag, 4. April 2011, 17:07:22 schrieb Matthias Andree:
-> Am 04.04.2011 01:00, schrieb Solar Designer:
-> 
-> > Added.  This gives us three contacts for Ubuntu on the list:
-> 
-> ...
-> 
-> > Maybe this needs to be reduced to two most active ones at a later point.
-> 
-> What sense lies in limiting subscribers per distro?
-> 
-> If you want to coordinate and one of the two most active is on vacation
-> and the other falls sick, the third one is precluded and so is
-> coordination with that particular vendor.
+On Wednesday 12 October 2011 23:37:29 Kurt Seifried wrote:
+> Got my Ruby/Ruby on rails mixed up.
+>
+[...]
+>
+> https://redmine.ruby-lang.org/issues/5418
+>
+> Can we get a CVE for this please?
+>
 
-+1 limiting subscribers makes no sense
+I think this is already covered by CVE-2011-3187.
 
-Cheerio,
-Thomas
-
+> -Kurt Seifried / Red Hat Security Response Team
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Matthias Weckbecker, Junior Software Engineer, SUSE Security Team
+SUSE LINUX Products GmbH, Maxfeldstr. 5, D-90409 Nuernberg, Germany
+Tel: +49-911-74053-0;  http://suse.com/
+SUSE LINUX Products GmbH, GF: Jeff Hawn, HRB 16746 (AG Nuernberg) 
