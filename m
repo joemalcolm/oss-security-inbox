@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/18/13
-Message-ID: <587430679.157372.1305757169621.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 18 May 2011 18:19:29 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/7
+Message-ID: <4E9DCFF3.8060804@redhat.com>
+Date: Tue, 18 Oct 2011 13:13:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Several Moodle issues
+Subject: MySQL executable comment execution on MySQL slave server (from 2009)
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi Steve,
-> (since I assume Josh will pass this on to you :-) )
-> 
-> http://www.moodle.org/security/ lists more than a dozen
-> vulnerabilities requiring a CVE assignment:
-> MSA-11-0002 to MSA-11-0017 require CVE assignments.
-> 
-> (Some issues might be amalgamated to a single CVE)
-> 
+This is an old one that slipped through in 2009:
 
-Yeah, I'll let this one through. I don't have the time to sort it out right now.
+The executable comment capability in MySQL before 5.1.50 and 5.0.93
+can be used to execute arbitrary SQL commands as a privileged user.
+This occurs on MySQL servers configured as slaves in a MySQL
+replication environment where the slave server is running a newer
+version of MySQL than the server. The attacker would need the ability
+to add custom comments to a database on the MySQL server.
 
-Sorry.
+http://bugs.mysql.com/bug.php?id=49124
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-50.html
+http://dev.mysql.com/doc/refman/5.0/en/news-5-0-93.html
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
