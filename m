@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/15/5
-Message-ID: <20110715104927.GA22533@dztty>
-Date: Fri, 15 Jul 2011 11:49:27 +0100
-From: Djalal Harouni <tixxdz@...ndz.org>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1764 Exim: DKIM Format String
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/3
+Message-ID: <1318943004.5781.2.camel@mdlinux>
+Date: Tue, 18 Oct 2011 09:03:24 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com
+Subject: CVE Request: pam
 Content-Type: text/plain; charset=utf-8
 
-A format string vulnerability affects the Exim SMTP server with DomainKeys
-Identified Mail (DKIM) support, version between 4.70 and 4.75. The DKIM
-logging mechanism did not use format string specifiers when logging some
-parts of the DKIM-Signature header field. A remote attacker who is able
-to send emails, can exploit this vulnerability and execute arbitrary
-code with the privileges of the Exim daemon [1].
+Hello,
 
-MITRE assigned CVE-2011-1764 to this vulnerability but the entry was not
-updated [2]. We would appreciate if it can be updated, we are using this
-CVE name in one of our new Nmap scripts smtp-vuln-cve2011-1764.nse [3].
+Could a CVE please be assigned to the following issue:
 
-Thanks.
+A Debian/Ubuntu specific patch in pam, update-motd, calls the scripts
+in /etc/update-motd.d as root without sanitizing the environment.
 
-[1] http://thread.gmane.org/gmane.mail.exim.devel/4946
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=2011-1764
-[3] http://seclists.org/nmap-dev/2011/q3/221
+See:
 
--- 
-tixxdz
-http://opendz.org
+https://bugs.launchpad.net/ubuntu/+source/pam/+bug/610125
+
+Thanks,
+
+Marc.
+
+
+
