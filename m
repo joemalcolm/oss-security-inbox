@@ -1,42 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/13
-Message-ID: <20110301202256.GO2114@redhat.com>
-Date: Tue, 1 Mar 2011 13:22:56 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: Ralf Haferkamp <rhafer@...e.de>
-Cc: oss-security@...ts.openwall.com, Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/1
+Message-ID: <20111018123959.46b52f7c@laverne>
+Date: Tue, 18 Oct 2011 12:39:59 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: recursion level crash in clamav before 0.97.3
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-01 17:38:51 +0100] Ralf Haferkamp wrote:
+Sadly, as we know, upstream clamav doesn't care about publishing
+security advisories. They even seem to have stopped to publish new
+versions on their -announce-list, so the only way to see changes is to
+dig into the tar-file and see the Changelog.
 
->Am Montag 28 Februar 2011, 17:38:43 schrieb Vincent Danen:
->> * [2011-02-28 14:16:06 +0100] Thomas Biege wrote:
->> >The following might also need a CVE-ID.
->> >
->> >https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
->> >---------------------------------------------------------------------
->> >--------- http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
->> >
->> >That's a pretty bad DOS. Everybody (even unauthenticated users) can
->> >kill the server by submitting a MODRDN request with an empty "olddn"
->> >value and "remove
->> >
->> >old RDN" set (-r). Example:
->> >      ldapmodrdn -x -H ldap://ldapserver -r '' o=test
->> >
->> >---------------------------------------------------------------------
->> >---------
->>
->> I've just tried this here.  I noted in your bug report that you
->> indicate that it seems to affect all of your currently maintained
->> products, but I've tried it here against openldap 2.3.43 and do not
->> see a crash (I can reproduce the crash on 2.4.19).
->It seems you are right. Even though the bug slipped into CVS HEAD already
->in 2006 it never got merged into the 2.3 release branch. So only 2.4.x
->releases are affected by this. Sorry for causing confusion here.
+This one here sounds like security relevant:
+Sat Oct  8 12:10:13 EEST 2011 (edwin)
+-------------------------------------
+ * libclamav/bytecode.c,bytecode_api.c: fix recursion level crash (bb
+   #3706).
+Upstream bug is invisible to the public. Please assign CVE
 
-Thanks for that clarification, Ralf.
+
+
+Maybe others have a look at the full Changelog, but I think the rest
+sounds non-security-relevant:
+Mon Oct 17 18:04:30 CEST 2011 (tk)
+----------------------------------
+ * V 0.97.3
+
+Mon Oct 10 14:41:48 CEST 2011 (tk)
+----------------------------------
+ * freshclam/manager.c: fix error when compiling without DNS support
+(bb#3056)
+
+Sat Oct  8 12:19:49 EEST 2011 (edwin)
+-------------------------------------
+ * libclamav/pdf.c: flag and dump PDF objects with /Launch (bb #3514)
+
+Sat Oct  8 12:10:13 EEST 2011 (edwin)
+-------------------------------------
+ * libclamav/bytecode.c,bytecode_api.c: fix recursion level crash (bb
+#3706).
+
+Tue Aug  2 17:03:33 CEST 2011 (tk)
+----------------------------------
+ * docs: clarify behavior of --scan-*/Scan* options (bb#3134)
+
+Mon Jul 25 16:09:19 EEST 2011 (edwin)
+-------------------------------------
+ * libclamav/bytecode_vm.c: fix opcode 20 error (bb #3100)
+
+Thu Sep 15 14:44:11 CEST 2011 (tk)
+----------------------------------
+ * freshclam: fix pidfile removal (bb#3499)
+
+Sun Aug 21 17:05:24 EEST 2011 (edwin)
+-------------------------------------
+ * libclamav/pdf.c:  fix incorrect blocking of some encrypted PDF with
+empty user passwords. (bb #3364)
+
+Wed Aug  3 15:41:28 CEST 2011 (tk)
+----------------------------------
+ * sigtool/sigtool.c: fix calculation of max signature length
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
