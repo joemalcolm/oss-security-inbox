@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/07/4
-Message-ID: <2102528121.13641.1294430082647.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 7 Jan 2011 14:54:42 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/7
+Message-ID: <4E9DCFF3.8060804@redhat.com>
+Date: Tue, 18 Oct 2011 13:13:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request - pimd - Insecure file creation in /var/tmp
+Subject: MySQL executable comment execution on MySQL slave server (from 2009)
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0007
+This is an old one that slipped through in 2009:
 
-Thanks.
+The executable comment capability in MySQL before 5.1.50 and 5.0.93
+can be used to execute arbitrary SQL commands as a privileged user.
+This occurs on MySQL servers configured as slaves in a MySQL
+replication environment where the slave server is running a newer
+version of MySQL than the server. The attacker would need the ability
+to add custom comments to a database on the MySQL server.
+
+http://bugs.mysql.com/bug.php?id=49124
+http://dev.mysql.com/doc/refman/5.1/en/news-5-1-50.html
+http://dev.mysql.com/doc/refman/5.0/en/news-5-0-93.html
 
 -- 
-    JB
 
------ Original Message -----
-> We received this report recently:
-> 
-> --
-> 
-> Hi!
-> 
-> There is a simple security hole in pimd allowing a user to destroy any
-> file in the filesystem. On USR1, pimd will write to /var/tmp/pimd.dump
-> a dump of the multicast route table. Since /var/tmp is writable by any
-> user, a user can create a symlink to any file he wants to destroy with
-> the content of the multicast routing table.
-> 
-> Attached is a simple patch that will instruct pimd to write the dump
-> to /var/lib/misc which is writable by root only and seems a valid
-> target according to the FHS (state files that don't need a
-> subdirectory).
-> 
-> This patch may cause tools that were sending USR1 and waiting for a
-> /var/tmp/pimd.dump file fail. I don't have a solution for this.
-> 
-> The patch also applies to /var/tmp/pimd.cache which is not implemented
-> yet but still creates the file when receiving USR2 signal. Despite its
-> name, this is also a state file, not a cache. The patch also just
-> drops the possibility to use /usr/tmp/pimd.dump based on some C
-> preprocessor conditions since I don't know if the preconditions would
-> work correctly on Debian/kFreeBSD.
+-Kurt Seifried / Red Hat Security Response Team
+
