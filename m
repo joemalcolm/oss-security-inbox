@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/12
-Message-ID: <218169400.125543.1305661630405.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 17 May 2011 15:47:10 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/12
+Message-ID: <48b5a66a-edc9-42b0-b1ab-8923e960a798@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:10:39 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: polarssl
+Subject: Re: CVE request: mplayer SAMI subtitle parsing buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1923
+
+
+----- Original Message -----
+> Hi, folks.
+> 
+> Please assign a CVE for the mplayer SAMI subtitle parsing buffer
+> overflow. References:
+> 
+> http://mplayerhq.hu/pipermail/mplayer-cvslog/2011-May/042075.html
+> http://labs.mwrinfosecurity.com/files/Advisories/mwri_mplayer-sami-subtitles_2011-08-12.pdf
+> 
+
+Please use CVE-2011-3625.
 
 Thanks.
 
 -- 
     JB
-
-
------ Original Message -----
-> Could a CVE be assigned to this issue?
-> 
-> http://polarssl.org/trac/wiki/SecurityAdvisory201101
-> https://bugzilla.redhat.com/show_bug.cgi?id=705187
-> 
-> Possible man-in-the-middle in Diffie Hellman key exchange, fixed in
-> 0.14.2.
-> 
-> Thanks.
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
