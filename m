@@ -1,32 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/22/5
-Message-ID: <AANLkTimYJ2WO0ukQcAqZMqBAOb8u95KDbYcks_V9b38m@mail.gmail.com>
-Date: Tue, 22 Mar 2011 06:55:48 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/6
+Message-ID: <20111018175356.GA14342@bluenote.herrb.net>
+Date: Tue, 18 Oct 2011 19:53:57 +0200
+From: Matthieu Herrb <matthieu.herrb@...s.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests - kernel: irda/decnet issues
+Subject: Fwd: X.Org security advisory: xserver locking code issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 22, 2011 at 3:27 AM, Eugene Teo <eugene@...hat.com> wrote:
-> Both are reported by Dan Rosenberg. Description of the issues can be found
-> in the following links:-
->
-> irda: validate peer name and attribute lengths
-> http://marc.info/?l=linux-netdev&m=130067113628164&w=2
->
-> DECnet: need to validate user data and access data?
-> http://marc.info/?l=linux-netdev&m=130075091711143&w=2
->
+----- Forwarded message from Matthieu Herrb <matthieu.herrb@...s.fr> -----
 
-Steve Whitehouse provided some clarification on DECnet, which not an
-actual security issue (thus the question mark in the thread title):
-http://marc.info/?l=linux-netdev&m=130078511604840&w=2
+Date: Tue, 18 Oct 2011 16:50:21 +0200
+From: Matthieu Herrb <matthieu.herrb@...s.fr>
+To: xorg-announce@...ts.freedesktop.org
+Cc: xorg@...ts.freedesktop.org
+Subject: X.Org security advisory: xserver locking code issues
 
-IrDA seems to be valid though.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
--Dan
+X.Org security advisory, October 18, 2011
+xserver locking vulnerabilities
+CVE IDs: CVE-2011-4028 CVE-2011-4029
 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
->
+Description
+- -----------
+
+Two vulnerabilities have been discovered in the code handling the X
+server lock, that forbids two X servers from serving the same display
+simultaneously.
+
+o CVE-2011-4028 : File disclosure vulnerability:
+  It is possible to deduce if a file exists or not by exploiting the
+  way that Xorg creates its lock files.
+
+  This is caused by the fact that the X server is behaving differently
+  if the lock file already exists as a symbolic link pointing to an
+  existing or non-existing file.
+
+o CVE-2011-4029 : File permission change vulnerability:
+  It is possible for a non-root user to set the permissions for
+  all users on any file or directory to 444, giving unwanted read
+  access or causing denies of service (by removing execute permission).
+  This is caused by a race between creating the lock file and setting
+  its access modes.
+
+Affected Versions
+- -----------------
+
+All X.Org Xserver versions are vulnerable to CVE-2011-4028 when
+running with root privileges.
+
+X.Org Xserver version 1.4 and later are vulnerable to CVE-2011-4029
+when running with root privileges.
+
+Workaround
+- ----------
+
+Removing the setuid bit on the Xorg binary (and using a display
+manager to start it with controlled parameters) makes the issues
+harder to exploit, but not impossible.
+
+Fix
+- ---
+
+Those issues have been fixed by the following two git commits:
+
+CVE-2011-4028: 6ba44b91e37622ef8c146d8f2ac92d708a18ed34
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=6ba44b91e37622ef8c146d8f2ac92d708a18ed34
+
+CVE-2011-4029: b67581cf825940fdf52bf2e0af4330e695d724a4
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=b67581cf825940fdf52bf2e0af4330e695d724a4
+
+A fix of this vulnerability will be included in xserver 1.11.2 and
+xserver 1.12.
+
+The X.Org Foundation thanks vladz (http://vladz.devzero.fr) for
+bringing this issue to our attention and helping testing the fixes.
+
+- -- 
+Matthieu Herrb
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEVAwUBTp2SLPee5zRnIoYlAQJRvQf8D1GyyOVHR1KBUUP7L2PiobbLRp1JXPar
+iOm24Uk+4vH6arnx1zdmsdCkLVmtJxi3Y6KYgv07NOQUstd1s5rifPiFxCek8T2b
+5TNFo1EIxbESh6d29VNi6rkRigK6WVFQiqJj3MbYA4XBqoibi48FG5JQYrjVG6ki
+lPmX4pT2pOCYsSQGJPbRNr7Ra4GWj0lYX1ZC72aD1/kFn1I9t04QoPdW7YpG90eI
+s1VI8JpqdsRdyQ88AQTytLSKYAveEY5RuouOOe8KfIljtLW+elw5LzBZoE60WVB4
+ltZElUNI8neEgeawHm5TnWhvq3ieU7LS5mMZqfDQaZfvc95dS4YdLA==
+=LvrS
+-----END PGP SIGNATURE-----
+_______________________________________________
+xorg-announce mailing list
+xorg-announce@...ts.freedesktop.org
+http://lists.freedesktop.org/mailman/listinfo/xorg-announce
+
+----- End forwarded message -----
+
+-- 
+Matthieu Herrb
