@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/2
-Message-ID: <4E1C2E16.1010708@halfdog.net>
-Date: Tue, 12 Jul 2011 11:20:54 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/8
+Message-ID: <520e4284-7fab-41ad-88d4-2bc6d01a6ec0@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 15:16:08 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Apache symlink issue: can documented behavior be a security problem and hence get a CVE?
+Subject: Re: CVE request: fluxbb before 1.4.7
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Please use CVE-2011-3621.
 
-Hello List,
+Thanks.
 
-Is it possible to assign a CVE for documented behavior? Communication
-with apache security showed, that following symlinks to arbitrary
-locations is a documented feature, even when "-FollowSymLink" option is
-in place. This allows any user with, that can modify some content served
-by apache to access any content accessible by the apache process, also
-content not visible to the user (e.g. outside the ftp-upload directory
-or forbidden like /proc/http-pid/maps). Due to the small window of
-opportunity, this might be relevant mostly when user can already execute
-code on the machine, so it is not a big issue. /proc/<pid>/mem is
-protected, when apache is running with setuid, so key material cannot be
-extracted using range headers. PUT was not tested so far.
+-- 
+    JB
 
-See also
-
-http://www.halfdog.net/Security/2011/ApacheNoFollowSymlinkTimerace/
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFOHC4exFmThv7tq+4RAooyAJ9Vh7F49em+AVT1HosEquCPS+olqQCfdVCO
-PDcCdoHHWTCHe53U+XTzefY=
-=fVzn
------END PGP SIGNATURE-----
+----- Original Message -----
+> http://fluxbb.org/forums/viewtopic.php?id=5751
+> 
+> "This is a security release, however only affects anyone running
+> FluxBB
+> behind a reverse proxy, with FORUM_BEHIND_REVERSE_PROXY enabled - we
+> expect this to be a small number of users."
+> 
+> Whatever that means... I suggest something like
+> "Unknown security vulnerability related to reverse proxying"
+> 
+> --
+> Hanno Böck		mail/jabber: hanno@...eck.de
+> GPG: BBB51E42		http://www.hboeck.de/
+> 
