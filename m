@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/28/4
-Message-ID: <20110228194836.GA9440@albatros>
-Date: Mon, 28 Feb 2011 22:48:36 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/14
+Message-ID: <39628cb6-7c36-4e9c-8a53-766f154a12cc@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:17:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: two bluetooth and one ebtables infoleaks/DoSes
+Subject: Re: CVE request: recursion level crash in clamav before 0.97.3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+----- Original Message -----
+> Sadly, as we know, upstream clamav doesn't care about publishing security
+> advisories. They even seem to have stopped to publish new versions on
+> their -announce-list, so the only way to see changes is to dig into the
+> tar-file and see the Changelog.
+> 
+> This one here sounds like security relevant:
+> Sat Oct  8 12:10:13 EEST 2011 (edwin)
+> -------------------------------------
+>  * libclamav/bytecode.c,bytecode_api.c: fix recursion level crash (bb
+>    #3706).
+> Upstream bug is invisible to the public. Please assign CVE
+> 
 
-"struct sco_conninfo has one padding byte in the end.  Local variable
-cinfo of type sco_conninfo is copied to userspace with this
-uninizialized one byte, leading to old stack contents leak."
+Please use CVE-2011-3627.
 
-https://lkml.org/lkml/2011/2/14/49
-
-
-"Struct ca is copied from userspace.  It is not checked whether the
-"device" field is NULL terminated.  This potentially leads to BUG()
-inside of alloc_netdev_mqs() and/or information leak by creating a
-device with a name made of contents of kernel stack."
-
-https://lkml.org/lkml/2011/2/14/50
-
-
-"Struct tmp is copied from userspace.  It is not checked whether the
-"name" field is NULL terminated.  This may lead to buffer overflow and
-passing contents of kernel stack as a module name to
-try_then_request_module() and, consequently, to modprobe commandline.
-It would be seen by all userspace processes."
-
-https://lkml.org/lkml/2011/2/14/51
-
-
-The vulnerable code was written before the "git epoch".  One needs
-CAP_NET_ADMIN to exploit the 2nd and the 3rd.
-
-
-JFI, the patch to prevent the panic inside of alloc_netdev() (to prevent
-analogues of #2) was rejected by upstream:
-
-https://lkml.org/lkml/2011/2/14/52
-
-
-Thanks,
+Thanks.
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+    JB
