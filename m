@@ -1,72 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/1
-Message-ID: <20110725020827.GA21561@openwall.com>
-Date: Mon, 25 Jul 2011 06:08:27 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-Cc: oss-security <oss-security@...ts.openwall.com>, Panu Matilainen <pmatilai@...hat.com>, Jindrich Novy <jnovy@...hat.com>, Florian Festi <ffesti@...hat.com>, Matt McCutchen <matt@...tmccutchen.net>, yersinia <yersinia.spiros@...il.com>
-Subject: Re: CVE Request -- rpm -- Fails to remove the SUID/SGID bits on package upgrade (RH BZ#598775)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/13
+Message-ID: <c6dc7add-81ad-44af-ae5b-05969d59161b@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 18 Oct 2011 16:12:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: double-free vulnerability in logsurfer
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I know I am being a year late to comment on this, but maybe better late
-than never.  I'll over-quote a little bit:
 
-On Wed, Jun 02, 2010 at 01:43:03PM +0200, Jan Lieskovsky wrote:
->    Matt McCutchen pointed out a deficiency in the way rpm handled rpm 
->    package upgrades --
-> it failed to clear out the SUID/SGID bits of the old file by file 
-> replacement when privileged
-> user performed package upgrade. Under certain circumstances, a local, 
-> authenticated user could
-> use this flaw to escalate their privileges.
+----- Original Message -----
+> Am 17.10.2011 12:07, schrieb Marcus Meissner:
+> > On Mon, Oct 17, 2011 at 12:02:29PM +0200, Timo Warns wrote:
+> >> Gregor Kopf of Recurity Labs GmbH found a double-free vulnerability in
+> >> Logsurfer affecting the function prepare_exec(). The vulnerability is
+> >> caused by an insufficient treatment of an error condition that is
+> >> returned by the function get_word() when it is unable to correctly
+> >> parse its input.
+> >>
+> >> The following versions of logsurfer are affected:
+> >>
+> >>  Logsurfer 1.5b and previous versions
+> >>  Logsurfer+ 1.7 and previous versions
+> >>
+> >> A patch is available at
+> >> http://logsurfer.git.sourceforge.net/git/gitweb.cgi?p=logsurfer/logsurfer;a=commit;h=07983748da9ea3d4954b80f02fed692fe21b1134
+> > 
+> > How can this be exploited?
+> > 
+> > It seems to happen in the argument handling and I doubt an attacker can
+> > inject arguments?
 > 
-> Red Hat Bugzilla entry:
->   [1] https://bugzilla.redhat.com/show_bug.cgi?id=598775
+> Logsurfer allows to use substrings of log-file entries as arguments for
+> calling external commands. An attacker is able to exploit this
+> vulnerability by injecting specially crafted strings into a log-file that
+> is processed by logsurfer.
 > 
-> Upstream changeset:
->   [2] 
->   http://rpm.org/gitweb?p=rpm.git;a=commit;h=ca2d6b2b484f1501eafdde02e1688409340d2383
-> 
-> Could you allocate CVE id for this?
 
-This was assigned CVE-2010-2059.  And there was a similar issue 5 years
-earlier, affecting package removals (rather than upgrades):
+This sounds CVE worthy.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=125517
+Please use CVE-2011-3626.
 
-That one was assigned CVE-2005-4889.
+Thanks.
 
-The descriptions and fixes for these were limited to SUID/SGID bits and
-fscaps (on RPM versions/builds supporting those).  However, what about
-device files, maybe with unsafe permissions (or just extra device files
-that would need to be gone on package removal or on upgrade to a package
-version no longer providing those)?  What about regular files with world
-or group write permissions, which allow for a quota bypass?
-
-Additionally, the fix for SUID/SGID bits ignores the return value from
-chmod(), so it is fail-open.  It would not even print an error message.
-It is unclear what the best action on a partially-failed old package
-removal would be, but at the very least we can print an error message.
-
-Sure, these are relatively minor issues, yet if we're fixing things, we
-could as well fix them more fully.
-
-What I am considering is chmod()'ing everything but symlinks to 0, as
-opposed to the current fix of removing SUID/SGID bits off regular files
-with those bits set only.
-
-I've attached a patch against rpm 4.2 (yes, ancient code), which passed
-my basic tests (but more testing is needed).
-
-I don't care to request a third CVE id for this; I merely want to
-include a better fix.
-
-I'd appreciate any comments.
-
-Thanks,
-
-Alexander
-
-View attachment "rpm-4.2-owl-remove-unsafe-perms.diff" of type "text/plain" (2208 bytes)
+-- 
+    JB
