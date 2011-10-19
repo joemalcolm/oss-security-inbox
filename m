@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/2
-Message-ID: <4DEC731A.4000309@redhat.com>
-Date: Mon, 06 Jun 2011 11:56:34 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "stev >> \"Steven M. Christey\"" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: set cred->user_ns in key_replace_session_keyring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/4
+Message-ID: <1319034455.2700.9.camel@mdlinux>
+Date: Wed, 19 Oct 2011 10:27:35 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: coley@...us.mitre.org
+Cc: oss-security@...ts.openwall.com, security@...ntu.com,  team@...urity.debian.org
+Subject: CVE Request: apt
 Content-Type: text/plain; charset=utf-8
 
-On 06/03/2011 12:10 PM, Eugene Teo wrote:
-> new->user_ns is uninitialised if the cred is not created with
-> copy_creds(). If I'm not mistaken, this was introduced by
-> 47a150edc2ae734c0f4bf50aa19499 (v2.6.39).
-> 
-> Thread starts from https://lkml.org/lkml/2011/5/23/199;
-> Proposed patch: https://lkml.org/lkml/2011/5/25/265
-> 
-> Thanks, Eugene
+Hello,
 
-This has been assigned CVE-2011-2184
+Could a CVE please be assigned to the following issue:
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Apt before 0.8.11 incorrectly handles the Verify-Host configuration
+option, resulting in a successful connection instead of a verification
+failure when the certificate host name doesn't match.
+
+See:
+
+http://bazaar.launchpad.net/~donkult/apt/sid/revision/2053.1.28
+https://bugs.launchpad.net/ubuntu/+source/apt/+bug/868353
+
+
+Thanks,
+
+Marc.
+
+
+
+
