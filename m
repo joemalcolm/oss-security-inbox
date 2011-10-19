@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/13
-Message-ID: <801301764.218205.1314044786894.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 16:26:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/3
+Message-ID: <20111019151912.28c895d0@laverne>
+Date: Wed, 19 Oct 2011 15:19:12 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ruby on rails flaws (4)
+Subject: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
+Okay, this one is a bit more complicated.
 
------ Original Message -----
-> Sorry, there is one more flaw that needs a CVE assignment:
-> 
-> Response splitting flaw in 2.3.x (3.0.0 and later not affected).
-> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6ffc93bde0298768
-> https://github.com/rails/rails/commit/11dafeaa7533be26441a63618be93a03869c83a9
-> https://bugzilla.redhat.com/show_bug.cgi?id=732156
-> 
+Seems piwik decided to jump in to the projects that try to hide
+security issues instead of being transparent. The Changelog for piwik
+1.6 lists the names of people disclosing security issues, but it
+doesn't give any hint of the issues itself.
 
-Use CVE-2011-3186
+Cite from http://piwik.org/blog/2011/10/piwik-1-6/:
+"Security: we would like to thank the following people for their
+responsible disclosure: Alexandru Pitis, Alexander Schmid, Secure
+Business Austria, Krzysztof Kotowicz, David Vieira-Kurz, Szymon
+Gruszecki, Mateusz Goik, Mauro Gentile."
 
-Thanks.
+Although they have a section on their webpage with security advisories,
+there's none for 1.6. (reminds me of clamav, they've been doing that
+for years)
+
+Regarding CVEs, i suggest adding one for every name, e.g.
+"Unknown security vulnerability in piwik before 1.6 discovered by
+Alexandru Pitis" etc., until we know more about it.
+
+
+If anyone knows any piwik devs, please tell them that it'd be a good
+idea to get back to a transparent handling of security issues.
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
