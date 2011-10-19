@@ -1,27 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/2
-Message-ID: <20111020091016.GC23346@dhcp-25-225.brq.redhat.com>
-Date: Thu, 20 Oct 2011 11:10:17 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/3
+Message-ID: <20111019151912.28c895d0@laverne>
+Date: Wed, 19 Oct 2011 15:19:12 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: qemu: CVE-2011-3346
+Subject: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-3346 qemu: local DoS with SCSI CD-ROM
+Okay, this one is a bit more complicated.
 
-Paolo Bonzini of Red Hat found a buffer overflow in QEMU's SCSI
-subsystem. hw/scsi-disk.c tries to zero a user-provided number of
-bytes in a fixed-size buffer. An unprivileged local guest user
-can potentially use this flaw to crash the guest.
+Seems piwik decided to jump in to the projects that try to hide
+security issues instead of being transparent. The Changelog for piwik
+1.6 lists the names of people disclosing security issues, but it
+doesn't give any hint of the issues itself.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=736038
-https://bugzilla.redhat.com/show_bug.cgi?id=736038#c1
+Cite from http://piwik.org/blog/2011/10/piwik-1-6/:
+"Security: we would like to thank the following people for their
+responsible disclosure: Alexandru Pitis, Alexander Schmid, Secure
+Business Austria, Krzysztof Kotowicz, David Vieira-Kurz, Szymon
+Gruszecki, Mateusz Goik, Mauro Gentile."
 
-Upstream patches:
-http://repo.or.cz/w/qemu.git/commit/7285477ab11831b1cf56e45878a89170dd06d9b9
-http://repo.or.cz/w/qemu.git/commit/103b40f51e4012b3b0ad20f615562a1806d7f49a
+Although they have a section on their webpage with security advisories,
+there's none for 1.6. (reminds me of clamav, they've been doing that
+for years)
 
-Thanks,
+Regarding CVEs, i suggest adding one for every name, e.g.
+"Unknown security vulnerability in piwik before 1.6 discovered by
+Alexandru Pitis" etc., until we know more about it.
+
+
+If anyone knows any piwik devs, please tell them that it'd be a good
+idea to get back to a transparent handling of security issues.
+
 -- 
-Petr Matousek / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
