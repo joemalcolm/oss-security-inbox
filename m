@@ -1,23 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/6
-Message-ID: <20110403202434.GA8721@openwall.com>
-Date: Mon, 4 Apr 2011 00:24:34 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/8
+Message-Id: <201110192230.p9JMUVMC026416@linus.mitre.org>
+Date: Wed, 19 Oct 2011 18:30:31 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: cve-assign@...re.org, security@...ngoproject.com
+Subject: Re: CVE Request -- Django: v1.3.1, v1.2.7 multiple security flaws
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 08:06:37PM +0100, Mark J Cox wrote:
-> >You must reply to this thread, in public (on oss-security).
-> 
-> Long time v-s member through RH exploder:
-> 
-> pub   1024R/49A563D9 1997-02-24
-> uid                  Mark Cox <mjc@...hat.com>
-> 
-> https://www.apache.org/dist/httpd/KEYS
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've subscribed Mark.  So we have two representatives for Red Hat (Mark
-and Josh).
+>Date: Sun, 11 Sep 2011 16:09:44 +0200
 
-Alexander
+>multiple security flaws have been recently addressed in the v1.3.1
+>and v1.2.7 versions of the Django Python Web framework ...
+
+This maps to 6 CVE identifiers (5 new ones); they're now on the CVE
+web site.
+
+> 1, Session manipulation,
+
+CVE-2011-4136
+
+> 2, Denial of service attack via URLField,
+
+CVE-2011-4137
+
+> 3, URLField redirection,
+
+3a. "no validation of the resulting redirected URL is performed,
+    including basic checks for supported protocols (HTTP, HTTPS
+    and FTP) ... This issue is ultimately rooted in a bug in
+    Python itself"
+
+    CVE-2011-1521
+
+3b. "although the initial request issued by Django uses the HEAD
+    method for HTTP/HTTPS, the request to the target of the
+    redirect is issued using GET. This may create further issues
+    for systems which implicitly trust GET requests from the
+    local machine/network."
+
+    CVE-2011-4138
+
+> 4, Host header cache poisoning,
+
+CVE-2011-4139
+
+> 5, Host header and CSRF,
+
+CVE-2011-4140
+
+> 6, Cross-subdomain CSRF attacks,
+
+This one is not a vulnerability for CVE.
+
+> 7, DEBUG pages and sensitive POST data
+
+This one is also not a vulnerability for CVE.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S S145
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through keyserver.pgp.com or pgp.mit.edu ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (SunOS)
+
+iQEcBAEBAgAGBQJOn00KAAoJEGvefgSNfHMdulcH/2CnWceFdH+bWZ6gFeC/qjU4
+Q0G/tGXZC7/lUdsnABAdxzsiI91hrT17RY5s1wkSFORf+yXI0OceqxQrZdrIE15g
+2YqHvDP/oN74yulVfXjr8olgSsxYtSFXVIHq3HGsydQATTFtRpgnTXbfLPb++1Qx
+m25y/51U4BmdyE5GYJUjQgvuo70cYAJ7G68VHJFTWtGOPzEYtGFqHXPeXr8s4y/m
+w4Fl4zAyI0FpNqskHy9XMQFHd3aobGzWKRKbgqZVbibkD3EaDuIKx3zGJ7uNbR3Z
+P6rDvY++DX4SE0TVX+5IYrCbv5GsjTaq1Rf48lwGJEYHiT+F+UnulBLXw6l6N4Q=
+=zq5f
+-----END PGP SIGNATURE-----
