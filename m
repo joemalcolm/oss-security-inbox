@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/16
-Message-ID: <19865.44445.981637.137043@ornendil.otp.ericsson.se>
-Date: Mon, 4 Apr 2011 13:38:05 +0200
-From: Hans Bolinder <hans.bolinder@...csson.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Patrik Nyblom <pan@...ang.org>
-Subject: Re: CVE Request -- Erlang/OTP R14, Erlang/OTP R14B01, Erlang/OTP R14B02 -- multiple security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/1
+Message-ID: <4E9E439A.70007@gentoo.org>
+Date: Tue, 18 Oct 2011 20:27:22 -0700
+From: Tim Sammut <underling@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: mplayer RDT parsing integer underlow
 Content-Type: text/plain; charset=utf-8
 
-[Jan Lieskovsky:]
->    based on:
->    [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=619857
-> 
->    and:
->    [2] http://www.erlang.org/download/otp_src_R14B.readme
->    [3] http://www.erlang.org/download/otp_src_R14B01.readme
->    [4] http://www.erlang.org/download/otp_src_R14B02.readme
-> 
-> performed some initial issues review -- erlang-CVE-request.txt
-> attached. But since not sure, which of those are real security
-> flaws and how many CVE ids will be needed for those, Cc-ing
-> also Erlang upstream developers to shed more light into this.
-> ...
-> could you please have a look at the attached review file
-> and reply which of the #20 OTPs in the list are security flaws
-> (so we would know the count of CVE identifiers needed) and which
-> are just bugs? (since you know the Erlang code better than me)
+Hi,
 
-> stdlib:
->   - 20), race condition/silent data corruption in dets OTP-8898
->     Patch: https://github.com/erlang/otp/commit/4e79fa3b1b6797f2583848d307d6b85cec94a920
->     Note: Hard to tell if has security implications
+Please assign a CVE for this issue from 2009. From [1]:
 
-It's a bug fix, and I believe it has no security implications.
+"Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
+(Real Data Transport) chunks headers from the network and after that it
+will parse them. A controled variable is used to allocate a buffer and
+later passed on to the rtsp_read_data() function in order to specify the
+length of an RDT chunk data to read from the network. An integer
+underflow can be triggered when parsing a malformed RDT header chunk,
+a remote attacker can exploit it to execute arbitrary code in the
+context of the application."
 
-Best regards,
+[1] http://seclists.org/fulldisclosure/2009/Jul/418
+[2] https://secunia.com/advisories/36041/3/
 
-Hans Bolinder, Erlang/OTP team, Ericsson
+thank you
+tim
+
+-- 
+Tim Sammut ~ Gentoo Security Team
+underling@...too.org ~ C2375493
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
