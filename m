@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/5
-Message-ID: <1049149449.563527.1307563174968.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 8 Jun 2011 15:59:34 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/5
+Message-ID: <Pine.GSO.4.64.1110191256430.25818@faron.mitre.org>
+Date: Wed, 19 Oct 2011 12:58:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: nospam@...il.it, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- WebSVN -- execCommand() remote commands injection vulnerability
+Subject: Re: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
 
+On Wed, 19 Oct 2011, Hanno B�ck wrote:
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> it was found that WebSVN is prone to remote commands injection
-> vulnerability due improper escaping / quoting of strings, to be
-> sent to the command line. Microsoft Windows specific issue and
-> different vulnerability than CVE-2008-5918, CVE-2008-5919,
-> CVE-2008-5920, and CVE-2009-0240.
-> 
-> References:
-> [1] http://seclists.org/bugtraq/2011/Jun/34
-> [2] http://retrogod.altervista.org/rgod_websvn_adv.html
-> [3] http://retrogod.altervista.org/rgod_websvn_poc.html
-> 
-> Could you allocate a CVE id for this?
-> 
+> Regarding CVEs, i suggest adding one for every name, e.g.
+> "Unknown security vulnerability in piwik before 1.6 discovered by
+> Alexandru Pitis" etc., until we know more about it.
 
-Please use CVE-2011-2195.
+This is consistent with current practice, where we assign separate CVEs 
+for issues found by different researchers.  With the (limited) knowledge 
+that's available right now, all the vulns are the same type, i.e., 
+"unspecified."
 
-Thanks.
-
--- 
-    JB
+- Steve
