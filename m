@@ -1,37 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/15
-Message-ID: <20110621195128.GA10524@albatros>
-Date: Tue, 21 Jun 2011 23:51:28 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/5
+Message-ID: <Pine.GSO.4.64.1110191256430.25818@faron.mitre.org>
+Date: Wed, 19 Oct 2011 12:58:11 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: taskstats authorized_keys presence infoleak PoC
+Subject: Re: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
 
-On Tue, Jun 21, 2011 at 15:24 -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > /*
-> > * This program tries to learn whether ~user/.ssh/authorized_keys exists
-> > * and is nonempty for any user on local machine. It uses world-readable
-> > * taskstats' nature to get somewhat private io statistics information.  If
-> > * implant taskstats or /proc//io polling into ssh client, it would be
-> > * possible to learn precise authorized_keys' size (and estimate private
-> > * key's(s') size).
-> 
-> Are you considering this a flaw, or just an interesting security exercise?
+On Wed, 19 Oct 2011, Hanno B�ck wrote:
 
-The PoC itself is the latter, but i *suppose* procfs and taskstats may
-be used to get much more private information (hey, this is just a PoC!)
-and to carry out something like timing attack against specific programs,
-but using this statistic information instead of time deltas.
+> Regarding CVEs, i suggest adding one for every name, e.g.
+> "Unknown security vulnerability in piwik before 1.6 discovered by
+> Alexandru Pitis" etc., until we know more about it.
 
-However, I'm not familiar with timing attack carrying and cannot realize
-whether it is generic or highly conditional flaw.  So, I'd not request
-CVE or anything for it.
+This is consistent with current practice, where we assign separate CVEs 
+for issues found by different researchers.  With the (limited) knowledge 
+that's available right now, all the vulns are the same type, i.e., 
+"unspecified."
 
-
-Thanks,
-
--- 
-Vasiliy
+- Steve
