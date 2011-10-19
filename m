@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/3
-Message-ID: <20111022032137.GA31920@openwall.com>
-Date: Sat, 22 Oct 2011 07:21:37 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/2
+Message-ID: <20111019064509.GI5009@hall.aurel32.net>
+Date: Wed, 19 Oct 2011 08:45:09 +0200
+From: Aurelien Jarno <aurel32@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Subject: CVE Request: FreeBSD kernel
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 22, 2011 at 05:19:03AM +0400, Solar Designer wrote:
-> On Sat, Oct 22, 2011 at 04:56:21AM +0400, Solar Designer wrote:
-> >       strcpy (p, di->d_name);
-> > 
-> > where "p" points somewhere inside nambuf1.
-> > 
-> > These will just need different reproducers.
-> 
-> Actually, I think my proposed reproducer (many nested 250-char dirs)
-> triggers this one and not the strcat().  On one build, hardlink then
-> crashes after dereferencing the "dirs" pointer, which happens to be
-> overwritten with a directory name.  On another build (different gcc
-> version and arch), hardlink does not crash (although I think it would on
-> even more nested directories), but reports a ridiculous directory count
-> (so "ndirs" is overwritten).  -D_FORTIFY_SOURCE=2 didn't make a
-> difference here (different program binary, same observed behavior).
+Hello,
 
-I investigated the non-crashing build further.  No, adding more
-directories did not cause a crash either.  What happens is that lstat()
-starts failing with ENAMETOOLONG shortly _after_ the overflow occurs.
-This happens to limit the largest overflow size.  If "dirs" is not yet
-overwritten by this point (was not reached by the overflow), then the
-program may proceed without crashing and without descending to deeper
-directories (thus not overflowing the buffer even further).  So
-different builds may be affected to a different extent, depending on
-relative placement of variables in .bss.  The behavior may also vary by
-kernel version, though (when lstat() starts to fail is a property of the
-kernel, whereas NAMELEN in hardlink.c is fixed).  I am able to make this
-build crash with "*** buffer overflow detected ***" on the strcat(),
-though, by carefully adjusting the directory name lengths (but that's
-relatively uninteresting).
+As far as I know the FreeBSD-SA-11:05.unix didn't get any CVE entry
+assigned. Would it be possible to get one assigned?
 
-Alexander
+See:
+
+   http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+
+Thanks,
+Aurelien
+
+-- 
+Aurelien Jarno	                        GPG: 1024D/F1BCDB73
+aurelien@...el32.net                 http://www.aurel32.net
+
+Download attachment "signature.asc" of type "application/pgp-signature" (191 bytes)
