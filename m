@@ -1,32 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/5
-Message-ID: <78370d3f-0d25-4d90-988b-681368766450@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 14:41:54 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/6
+Message-ID: <20111019200942.GF1920@redhat.com>
+Date: Wed, 19 Oct 2011 14:09:42 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: X.org ProcRenderGlyps input sanitation issue
+Subject: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2010-4819
+There's a whole bunch of fixes in new moodle releases.  The below list
+summarizes them.  Could CVEs be assigned to these please?
 
-Thanks.
+MSA-11-0041: Global search authentication issue
+Affects: 2.1.x 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=5eb1cec34f013fdcb559b66bc401f2845ce0bbb7
+Reference: http://moodle.org/mod/forum/discuss.php?d=188323
+
+MSA-11-0040: Potential personal information leak
+Affects: 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git&a=search&s=MDL-28615
+Reference: http://moodle.org/mod/forum/discuss.php?d=188322
+
+MSA-11-0039: Wiki section vulnerability
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=41017112cff7f5bd7969c72d321320f3090e7c68
+Reference: http://moodle.org/mod/forum/discuss.php?d=188321
+
+MSA-11-0038: Database injection protection strengthened
+Affects: 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=4a2acd8c7e6c869d5fd5aa686e6e0a3f20c97f15
+Reference: http://moodle.org/mod/forum/discuss.php?d=188320
+
+MSA-11-0037: Course section editing injection vulnerability
+Affects: 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=4a2acd8c7e6c869d5fd5aa686e6e0a3f20c97f15
+Reference: http://moodle.org/mod/forum/discuss.php?d=188319
+
+MSA-11-0036: Messaging refresh vulnerability
+Affects: 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=97f258fabb3ebfa7acc7c02cb59de92b01710f99
+Reference: http://moodle.org/mod/forum/discuss.php?d=188318
+
+MSA-11-0035: Cookie-less session vulnerability
+Affects: 2.1.x, 2.0.x, (1.9.x if misconfigured)
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=e1e082a809b9a2d3a408cb4d6faa34fdfcf3165c
+Reference: http://moodle.org/mod/forum/discuss.php?d=188317
+
+MSA-11-0034: Chat module information leak
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=d0157d827bc254ba386a5e5b41b13be2698ee76e
+Reference: http://moodle.org/mod/forum/discuss.php?d=188316
+
+MSA-11-0033: Site-hub registration identity issue
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=ca896fdfcfcc87846fa91a297d0aa6999a68c48a
+Reference: http://moodle.org/mod/forum/discuss.php?d=188315
+
+MSA-11-0032: MNET SSL validation issue
+Affects: 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=54941685e3e86ec085641dcb7ebb1f96f06735b2
+Reference: http://moodle.org/mod/forum/discuss.php?d=188314
+
+MSA-11-0031: Forms API constant issue
+Affects: 2.1.x, 2.0.x, 1.9.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=f1f70bd4dde6cd1ea4bdb8ab28fa3d36a53b89d8
+Reference: http://moodle.org/mod/forum/discuss.php?d=188313
+
+MSA-11-0030: Box.net repository integration authentication issue
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=3deff6c9d2bb4ab3144b3ca7b93d6a2ef6a87af2
+Reference: http://moodle.org/mod/forum/discuss.php?d=188312
+
+MSA-11-0029: File visibility issue
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=f6b07c4da54a9db24723beb147e8a19a3d487e00
+Reference: http://moodle.org/mod/forum/discuss.php?d=188311
+
+MSA-11-0028: Wiki comments XSS issue
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=a459fd90625ae44d7b3ac10b65da2dc631a418e7
+Reference: http://moodle.org/mod/forum/discuss.php?d=188310
+
+MSA-11-0027: Wiki pages reference forgery issue
+Affects: 2.1.x, 2.0.x
+Fix: http://git.moodle.org/gw?p=moodle.git;a=commit;h=48346fb11f8ced06a05c0618b02a3a925b34ec59
+Reference: http://moodle.org/mod/forum/discuss.php?d=188309
+
+MSA-11-0026: Fields in user upload CSV not being escaped
+Affects: 1.9.x
+Reference: http://moodle.org/mod/forum/discuss.php?d=182743
+
+
+Thanks!
 
 -- 
-    JB
-
------ Original Message -----
-> Hi,
-> 
-> Also from 2010 and me@...fdog.net and the x.org bugtracker:
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=28801
-> 
-> Adam in comment #c2 thinks this might just discloses memory
-> but could not overwrite arbitrary x server memory ...
-> However the comment #c0 has a x.org server crash, so I am unsure
-> about code execution possibilities.
-> 
-> Needs one 2010 CVE id I guess.
-> 
-> Ciao, Marcus
-> 
+Vincent Danen / Red Hat Security Response Team 
