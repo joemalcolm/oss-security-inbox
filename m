@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/30/1
-Message-ID: <20111230112656.5c9df449@redhat.com>
-Date: Fri, 30 Dec 2011 11:26:56 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, hanno@...eck.de
-Cc: Andrea Barisani <lcars@...rt.org>
-Subject: Re: More CVEs? (was Re:  [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/19/1
+Message-ID: <4E9E439A.70007@gentoo.org>
+Date: Tue, 18 Oct 2011 20:27:22 -0700
+From: Tim Sammut <underling@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: mplayer RDT parsing integer underlow
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Dec 2011 13:13:42 +0100 Hanno Böck wrote:
+Hi,
 
-> Am Wed, 28 Dec 2011 19:07:30 +0100
-> schrieb Andrea Barisani <lcars@...rt.org>:
+Please assign a CVE for this issue from 2009. From [1]:
 
-> > CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
-> > (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
-> 
-> Kurt or other CVE assigners, can you please assign a bunch for python,
-> java, tomcat etc. pp.
+"Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
+(Real Data Transport) chunks headers from the network and after that it
+will parse them. A controled variable is used to allocate a buffer and
+later passed on to the rtsp_read_data() function in order to specify the
+length of an RDT chunk data to read from the network. An integer
+underflow can be triggered when parsing a malformed RDT header chunk,
+a remote attacker can exploit it to execute arbitrary code in the
+context of the application."
 
-Few already assigned:
+[1] http://seclists.org/fulldisclosure/2009/Jul/418
+[2] https://secunia.com/advisories/36041/3/
 
-ASP.NET
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-3414
-
-Apache Geronimo
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5034
-
-Oracle Glassfish
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5035
-
-Rack
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5036
-
-Google V8
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5037
+thank you
+tim
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Tim Sammut ~ Gentoo Security Team
+underling@...too.org ~ C2375493
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
