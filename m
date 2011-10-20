@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/10
-Message-Id: <201109092308.11859.Jan-Oliver.Wagner@greenbone.net>
-Date: Fri, 9 Sep 2011 23:07:34 +0200
-From: "Jan-Oliver Wagner" <Jan-Oliver.Wagner@...enbone.net>
-To: openvas-devel@...d.intevation.org
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Stjepan Gros <stjepan.gros@...il.com>, Bugs NotHugs <bugsnothugs@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: [Openvas-devel] CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/11
+Message-ID: <1319128663.31111.7.camel@scapa>
+Date: Thu, 20 Oct 2011 18:37:43 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On ven., 2011-10-14 at 12:13 +0400, Vasiliy Kulikov wrote:
+> Thanks for spotting it, I think CVE-2011-3603 should be rejected.
 
-On Friday 09 September 2011 19:45:03 Josh Bressers wrote:
-> Let's go with one ID. I don't see a reason to split these.
-> Use CVE-2011-3351
+It seems it wasn't rejected yet (or maybe it's just that MITRE/NVD lag,
+since they aren't even showing it as ACCEPTED either).
 
-I think it should be clarified:
-_No one_ who is properly using OpenVAS with OpenVAS Feed or with the
-Greenbone Feed is affected.
-
-No OVAL script is even tried to be executed: no OVAL file is in the feed and
-if you/someone copies one into your feed copy it is not being executed because
-it has no valid signature.
-
-So you need to switch to unsecure mode, then place OVAL files into your
-feed copy, install ovaldi etc, etc.
-
-Of course the OpenVAS developers will be fixing the problem regardless
-of the practical relevance!
-
-What frightens me is that a security advisory about OpenVAS 2 (a already
-deprecated version) made it even into official advisories of CERTs.
-The review process seems to not work as it should, no one ever checked
-back wether this version is deprecated. So it should be easy to get faked
-security alerts about some tools you don't like into official CERT advisories.
-Or am I getting something wrong here?
-
-Best
-
-	Jan
-
+Regards,
 -- 
-Dr. Jan-Oliver Wagner |  ++49-541-335084-0  |  http://www.greenbone.net/
-Greenbone Networks GmbH, Neuer Graben 17, 49074 Osnabrück | AG Osnabrück, HR B 202460
-Geschäftsführer: Lukas Grunwald, Dr. Jan-Oliver Wagner
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
