@@ -1,77 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/3
-Message-ID: <4E8AF66C.70700@redhat.com>
-Date: Tue, 04 Oct 2011 14:05:00 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: CVE-2011-3979 being duplicate of CVE-2011-3352
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/15
+Message-ID: <20111020162340.GA5703@inutil.org>
+Date: Thu, 20 Oct 2011 18:23:40 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mplayer RDT parsing integer underlow
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, Josh,
+On Thu, Oct 20, 2011 at 12:22:37PM -0400, Josh Bressers wrote:
+> Please use CVE-2009-5027
 
-   originally the CVE identifier of CVE-2011-3352 has been assigned:
-   [1] http://www.openwall.com/lists/oss-security/2011/09/09/5
+This has already received a CVE ID, although for some reason it was     
+never set public on the MITRE website:  
+                                  
+http://www.debian.org/security/2010/dsa-2043                    
+http://www.debian.org/security/2010/dsa-2044                    
 
-has been assigned to the following flaw:
-[2] http://www.securityfocus.com/archive/1/519565/30/0/threaded
-[3] https://www.htbridge.ch/advisory/xss_in_zikula.html
+-> CVE-2010-2062
 
-Later CVE-2011-3979 has been assigned:
+Cheers,             
+         Moritz        
 
-Name: CVE-2011-3979
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3979 [Open URL]
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20111003
-Category:
-Reference: BUGTRAQ:20110907 XSS in Zikula
-Reference: 
-URL:http://www.securityfocus.com/archive/1/archive/1/519565/100/0/threaded 
-[Open URL]
-Reference: MISC:https://www.htbridge.ch/advisory/xss_in_zikula.html 
-[Open URL]
-Reference: 
-CONFIRM:http://community.zikula.org/index.php?module=News&func=display&sid=3075 
-[Open URL]
-Reference: BID:49491
-Reference: URL:http://www.securityfocus.com/bid/49491 [Open URL]
-Reference: OSVDB:75226
-Reference: URL:http://osvdb.org/75226 [Open URL]
-Reference: SECUNIA:45884
-Reference: URL:http://secunia.com/advisories/45884 [Open URL]
-Reference: XF:zikulaapplication-index-xss(69644)
-Reference: URL:http://xforce.iss.net/xforce/xfdb/69644 [Open URL]
 
-Cross-site scripting (XSS) vulnerability in
-ztemp/view_compiled/Theme/theme_admin_setasdefault.php in the theme
-module in Zikula Application Framework 1.3.0 build 3168, 1.2.7, and
-probably other versions allows remote attackers to inject arbitrary
-web script or HTML via the themename parameter in the setasdefault
-action to index.php.
 
-The security focus link URL in the second assignment is slightly
-different, but the content of that post seems to be the same.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-3352
-suggests there are three ways / attack vectors, how to exploit this:
-a) via specially-crafted 'themename' parameter in 'setasdefault.php'
-    script,
-b) via specially-crafted 'themename' parameter in modify theme script
-    and,
-c) via specially-crafted 'themename' parameter in delete theme script.
 
-So since CVE-2011-3979 description explicitly mentions 'set as default',
-should this (CVE-2011-3979) identifier be considered to refer only to
-'set as default' case (a) in the above) or are the CVE-2011-3352 and
-CVE-2011-3979 just CVE duplicates for the same issue?
 
-If the latter holds, which is the correct one (assuming the higher one
-is valid, thus CVE-2011-3979) to use for issue referencing purposes?
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> Thanks.
+> 
+> -- 
+>     JB
+> 
+> ----- Original Message -----
+> > Hi,
+> > 
+> > Please assign a CVE for this issue from 2009. From [1]:
+> > 
+> > "Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
+> > (Real Data Transport) chunks headers from the network and after that
+> > it
+> > will parse them. A controled variable is used to allocate a buffer
+> > and
+> > later passed on to the rtsp_read_data() function in order to specify
+> > the
+> > length of an RDT chunk data to read from the network. An integer
+> > underflow can be triggered when parsing a malformed RDT header chunk,
+> > a remote attacker can exploit it to execute arbitrary code in the
+> > context of the application."
+> > 
+> > [1] http://seclists.org/fulldisclosure/2009/Jul/418
+> > [2] https://secunia.com/advisories/36041/3/
+> > 
+> > thank you
+> > tim
+> > 
+> > --
+> > Tim Sammut ~ Gentoo Security Team
+> > underling@...too.org ~ C2375493
+> > 
+> > 
+> 
