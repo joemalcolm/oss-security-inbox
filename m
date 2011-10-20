@@ -1,18 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/08/1
-Message-ID: <BANLkTimoAZTRQuD_fhS_16j_RRey+OF7Lg@mail.gmail.com>
-Date: Sun, 8 May 2011 14:54:51 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/9
+Message-ID: <20111020162649.GA6235@inutil.org>
+Date: Thu, 20 Oct 2011 18:26:49 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: DCCP invalid options
+Subject: Re: CVE Request: FreeBSD kernel
 Content-Type: text/plain; charset=utf-8
 
-On a providing a bad option length for certain DCCP options, a remote
-host may cause parsing to read beyond the bounds of the incoming
-packet.  This may possibly cause a DoS by reading unmapped memory (if
-you're unlucky), or it may allow an attacker to infer the contents of
-kernel heap memory based on the parser's response.
+On Thu, Oct 20, 2011 at 12:25:28PM -0400, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+> > Hello,
+> > 
+> > As far as I know the FreeBSD-SA-11:05.unix didn't get any CVE entry
+> > assigned. Would it be possible to get one assigned?
+> > 
+> > See:
+> > 
+> >    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+> > 
+> 
+> Please use CVE-2011-3633.
 
--Dan
+This has been assigned CVE-2011-4062 by MITRE in the mean time.
 
-[1] http://marc.info/?l=linux-kernel&m=130468845209036&w=2
+Cheers,
+        Moritz
