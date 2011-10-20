@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/9
-Message-ID: <20110718223746.GA23838@openwall.com>
-Date: Tue, 19 Jul 2011 02:37:46 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: dfncert@...-cert.de
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/4
+Message-ID: <4EA012AF.2060608@redhat.com>
+Date: Thu, 20 Oct 2011 14:23:11 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Florian Weimer <fw@...eb.enyo.de>
+CC: oss-security@...ts.openwall.com, Juraj Somorovsky <juraj.somorovsky@....de>
+Subject: Re: PR attack against XML Encryption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Florian,
 
-We have almost 800 subscribers on oss-security, but DFN-CERT doesn't
-appear to be subscribed - so I've re-added the CC on this reply, and
-I'll over-quote a little.
+   check with Juraj Somorovsky of the Ruhr University Bochum
+for further details on this flaw.
 
-dfncert@...-cert.de wrote:
-> > We would be willing to provide the patch to all Linux distributors
-> > but we do not want to release the patch publicly and wait for the
-> > official patch by the packet maintainer of FreeRADIUS.
+Btw., the CVE identifier of CVE-2011-1096 has been already assigned
+to this issue.
 
-On Tue, Jul 19, 2011 at 12:06:15AM +0200, Stefan Behte wrote:
-> Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-> sounds like the right thing to do.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-This is not exactly the new vendor-sec.  As the name suggests, it is a
-Linux distros only list.  Also, please note that the maximum acceptable
-embargo period on this list is 14 days.  We need to communicate this
-detail to whoever we're asking to disclose anything to the list, before
-they disclose.  When posting to the list, you may encrypt messages to
-the attached key.
+On 10/20/2011 12:58 PM, Florian Weimer wrote:
+> A German university has released a press release, alleging a
+> vulnerability in the W3C XML Encryption standard.  Apparently, error
+> reporting from existing implementations can be used as an oracle to
+> recover information from messages encrypted in CBC mode.
+>
+> Details have not been published, as far as I know.  Does anybody know
+> more?
 
-For FreeRADIUS specifically, it sounds like non-Linux vendors could be
-interested as well.  DFN-CERT did mention Linux distros specifically in
-the quote above, so the suggestion to use the list was appropriate, but
-perhaps requests from other distros shipping FreeRADIUS should be
-accommodated as well.  If something like this arrived to the Linux
-distros list without prior discussion on oss-security, I would bring
-this up and suggest that we contact *BSD's at least.  Since this is
-already on oss-security, I assume that interested *BSD's and others may
-ask DFN-CERT themselves. ;-)
-
-> Gentoo complies to your requirements
-> and would like to get the patch directly, if you do not plan to send it
-> there.
-
-Alexander
-
-View attachment "linux-distros.asc" of type "text/plain" (1858 bytes)
