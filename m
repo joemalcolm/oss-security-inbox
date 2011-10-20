@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/2
-Message-Id: <201104011437.24983.ludwig.nussel@suse.de>
-Date: Fri, 1 Apr 2011 14:37:24 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/14
+Message-ID: <20111020192243.46b81805@laverne>
+Date: Thu, 20 Oct 2011 19:22:43 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+Cc: bressers@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
 Content-Type: text/plain; charset=utf-8
 
-Patrick J. Volkerding wrote:
-> On 03/31/2011 08:43 AM, Dan Rosenberg wrote:
-> > I'd also
-> > like to see distributions migrating away from /etc/mtab in general,
-> > since /proc/mounts seems like a much better replacement.
-> 
-> I imagine that mount's -f (fake mount by editing mtab) and -n (mount 
-> without editing mtab) options are not going to work if /etc/mtab becomes 
-> a symbolic link to /proc/mounts, so that's liable to break a few things. 
->   In the long run it does seem like a good plan, but there might be a 
-> few bumps in the road.  I wonder what the rationale was for faking mtab 
-> mounts in the first place?
+Am Thu, 20 Oct 2011 13:17:48 -0400 (EDT)
+schrieb Josh Bressers <bressers@...hat.com>:
 
-Our system boot scripts used -n as long as / was mounted read only
-and -f to update mtab once / was remounted rw.
-Since openSUSE 11.4 /etc/mtab is a symlink to /proc/self/mounts
-which works fine so far AFAIK.
+> Can MITRE take this one? It's far bigger than I'm able to handle.
 
-cu
-Ludwig
+I read this in the past...
+the outcome was usually that nothing happened at all. This is not good.
+See here:
+http://www.openwall.com/lists/oss-security/2011/01/04/11
 
+The CVE assignment here usually works pretty well, but some requests
+keep unanswered forever. You CVE assigners should try to work out a way
+to avoid that.
+
+cu,
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
