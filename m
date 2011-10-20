@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/14
-Message-ID: <20110318162816.GO5174@redhat.com>
-Date: Fri, 18 Mar 2011 10:28:17 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/9
+Message-ID: <20111020162649.GA6235@inutil.org>
+Date: Thu, 20 Oct 2011 18:26:49 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Oden Eriksson <oeriksson@...driva.com>
-Subject: Re: CVE request: PHP substr_replace() use-after-free
+Subject: Re: CVE Request: FreeBSD kernel
 Content-Type: text/plain; charset=utf-8
 
-* [2011-03-13 15:41:55 -0300] Felipe Pena wrote:
+On Thu, Oct 20, 2011 at 12:25:28PM -0400, Josh Bressers wrote:
+> 
+> ----- Original Message -----
+> > Hello,
+> > 
+> > As far as I know the FreeBSD-SA-11:05.unix didn't get any CVE entry
+> > assigned. Would it be possible to get one assigned?
+> > 
+> > See:
+> > 
+> >    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+> > 
+> 
+> Please use CVE-2011-3633.
 
->2011/3/13 Oden Eriksson <oeriksson@...driva.com>
->
->> söndagen den 13 mars 2011 15.00.10 skrev  Felipe Pena:
->> > Hi,
->> >
->> > I just found an use-after-free in PHP's substr_replace() function caused
->> by
->> > passing the same variable multiple times to the function, which makes the
->> > PHP to use the same pointer in three variables inside the function, so
->> when
->> > the pointer is changed by a type conversion inside the function, it
->> > invalids the other variables.
->> >
->> > The PHP security team has seen noticed, and a bug already was filed in
->> the
->> > bugtracker (http://bugs.php.net/bug.php?id=54238 [private])
->> >
->> > $ sapi/cli/php ../bug.php
->> > array(1) {
->> > [0]=>
->> > string(5) "0?? y"
->> > }
->> > array(1) {
->> > [0]=>
->> > string(1) "0"
->> > }
->> >
->> >
->> > Thanks.
->>
->> It seems only 5.2 is affected because I couldn't reproduce it on 5.3. Or?
->>
->>
->It affects 5.2, 5.3 and even trunk. I can reproduce it in all the branches.
+This has been assigned CVE-2011-4062 by MITRE in the mean time.
 
-Do you have a reproducer for this issue that you could share?  The bug
-is still private.
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Cheers,
+        Moritz
