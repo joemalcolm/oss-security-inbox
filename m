@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/11
-Message-ID: <1313187126.25152.3.camel@scapa>
-Date: Sat, 13 Aug 2011 00:12:06 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/7
+Message-ID: <6894f7c9-a6ca-46dd-9bd4-be8542d11081@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Oct 2011 12:22:37 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: mplayer RDT parsing integer underlow
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-12 at 13:31 +0800, Eugene Teo wrote:
-> >> Btw, can you please mail me a copy of the /boot/config of the most
-> >> recent Debian kernel for my reference?
-> > 
-> > Please let me know if you need anything in addition to the files
-> > Yves-Alexis sent you.
-> 
-> I didn't receive his mail.
+Please use CVE-2009-5027
 
-For some reason Evolution “reply-all” stripped you from the recipients
-(maybe because of the reply-to header). I've bounced you the mail I sent
-before (it didn't reach the list either because it was too large, sorry
-for that).
+Thanks.
 
-Regards,
 -- 
-Yves-Alexis
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+----- Original Message -----
+> Hi,
+> 
+> Please assign a CVE for this issue from 2009. From [1]:
+> 
+> "Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
+> (Real Data Transport) chunks headers from the network and after that
+> it
+> will parse them. A controled variable is used to allocate a buffer
+> and
+> later passed on to the rtsp_read_data() function in order to specify
+> the
+> length of an RDT chunk data to read from the network. An integer
+> underflow can be triggered when parsing a malformed RDT header chunk,
+> a remote attacker can exploit it to execute arbitrary code in the
+> context of the application."
+> 
+> [1] http://seclists.org/fulldisclosure/2009/Jul/418
+> [2] https://secunia.com/advisories/36041/3/
+> 
+> thank you
+> tim
+> 
+> --
+> Tim Sammut ~ Gentoo Security Team
+> underling@...too.org ~ C2375493
+> 
+> 
