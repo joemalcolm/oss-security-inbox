@@ -1,34 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/3
-Message-ID: <20111128134516.5cce493c@mail.a3li.li>
-Date: Mon, 28 Nov 2011 13:45:16 +0100
-From: Alex Legler <a3li@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/3
+Message-ID: <87k4800w1o.fsf@mid.deneb.enyo.de>
+Date: Thu, 20 Oct 2011 12:58:11 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: n0idx80@...il.com
-Subject: Re: non-Linux advance notification list
+Subject: PR attack against XML Encryption
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 28 Nov 2011 11:46:30 +0100
-Michael Harrison <n0idx80@...il.com> wrote:
+A German university has released a press release, alleging a
+vulnerability in the W3C XML Encryption standard.  Apparently, error
+reporting from existing implementations can be used as an oracle to
+recover information from messages encrypted in CBC mode.
 
-> Sorry about the confusion. I work for the Gentoo security team, and I
-> am not sure whether it would be beneficial for me to be on the closed
-> list or not. It is my presumption that the release of non-Linux
-> vulnerabilities might better help us identify vulnerabilities across
-> the board.
-
-We are already part of the actual Linux distributions list, and
-according to the first message of this thread we would be included in
-this new list as well. So I think we're good.
-
-Alexander, fyi, Michael is training to be part of our security
-team, but not yet a full member. Please disregard this request.
-
-Sorry for the additional OT,
-Alex
-
--- 
-Alex Legler <a3li@...too.org>
-Gentoo Security/Ruby/Infrastructure
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Details have not been published, as far as I know.  Does anybody know
+more?
