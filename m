@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/7
-Message-ID: <4EF7763D.8040402@redhat.com>
-Date: Sun, 25 Dec 2011 12:15:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/5
+Message-ID: <1319114047.31111.3.camel@scapa>
+Date: Thu, 20 Oct 2011 14:34:07 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>, security@...mla.org
-Subject: Re: CVE-request for three 2009 Joomla issues
+Subject: Re: PR attack against XML Encryption
 Content-Type: text/plain; charset=utf-8
 
-On 12/24/2011 05:27 PM, Henri Salo wrote:
-> I didn't find CVE-identifiers for these issues:
->
-> 1) Joomla! TinyMCE Editor Tiny Browser Plugin File Upload Arbitrary PHP Code Execution
-> http://osvdb.org/show/osvdb/56276
-> http://developer.joomla.org/security/news/301-20090722-core-file-upload.html
+On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
+> A German university has released a press release, alleging a
+> vulnerability in the W3C XML Encryption standard.  Apparently, error
+> reporting from existing implementations can be used as an oracle to
+> recover information from messages encrypted in CBC mode.
+> 
+> Details have not been published, as far as I know.  Does anybody know
+> more? 
 
-Please use CVE-2011-4906 for this issue.
->
-> 2) Joomla! Missing JEXEC Check Weakness Path Disclosure
-> http://osvdb.org/show/osvdb/56277
-> http://developer.joomla.org/security/news/302-20090722-core-missing-jexec-check.html
-Please use CVE-2011-4907 for this issue.
->
-> 3) TinyBrowser Plugin for Joomla! upload.php folder Parameter Arbitrary File Upload
-> http://osvdb.org/show/osvdb/64578
-Please ue CVE-2011-4908 for this issue.
+Paper was just presented at ACM CCS
+(http://www.sigsac.org/ccs/CCS2011/paper_list.shtml). Proceedings are
+available at
+http://dl.acm.org/citation.cfm?id=2046756&dl=ACM&coll=DL&CFID=61633880&CFTOKEN=38378828
 
-> Secunia advisory for three issues: http://secunia.com/advisories/35899/
->
-> - Henri Salo
+but afaict the paper is not (yet?) available freely.
 
-
+Regards,
 -- 
+Yves-Alexis
 
--Kurt Seifried / Red Hat Security Response Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
