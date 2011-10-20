@@ -1,22 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/5
-Message-ID: <1849403901.384299.1314370023764.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 26 Aug 2011 10:47:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/8
+Message-ID: <b4ed2ff0-d542-4ace-9fb4-5ccdd5d3bf4b@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Oct 2011 12:25:28 -0400 (EDT)
 From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: CVE Assignment - evolution CVE-2011-3201
+Subject: Re: CVE Request: FreeBSD kernel
 Content-Type: text/plain; charset=utf-8
 
-Matt McCutchen reported a flaw in the way handles mailto: urls.
 
-A malicious site can specify an attach= parameter to the URL, which can
-attach arbitrary files to a mail message.
 
-I've assigned CVE-2011-3201 to the issue.
+----- Original Message -----
+> Hello,
+> 
+> As far as I know the FreeBSD-SA-11:05.unix didn't get any CVE entry
+> assigned. Would it be possible to get one assigned?
+> 
+> See:
+> 
+>    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+> 
 
-Our bug contains what we currently know:
-https://bugzilla.redhat.com/show_bug.cgi?id=733504
+Please use CVE-2011-3633.
 
 Thanks.
 
