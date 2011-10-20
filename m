@@ -1,32 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/14
-Message-ID: <CAHmME9qtybOoJgpe_bD179rEOiVuu1kEWFGVmF8jM8RNx--0_g@mail.gmail.com>
-Date: Fri, 4 Nov 2011 16:53:41 -0400
-From: "Jason A. Donenfeld" <Jason@...c4.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/6
+Message-ID: <fb1366e8-2104-4f08-8a5a-02479e56b015@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Oct 2011 10:57:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for Calibre
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
-current version that has been out for quite some time now. These require a
-CVE. Issues 8 through 14 are ones introduced only during development and
-were not released, and do not need a CVE.
 
-On Fri, Nov 4, 2011 at 16:51, Steven M. Christey
-<coley@...-smtp.mitre.org>wrote:
 
->
-> All,
->
-> I haven't followed the Calibre saga too closely, barring glancing through
-> the bug report comments.
->
-> If bugs are introduced into a development version but also fixed within
-> that same version, then unless there's some strong evidence that the dev
-> version is extensively used or distributed to the public, then (in general)
-> it would not get a CVE.  (The Linux kernel is a special case depending on
-> what versions you consider to be "development.")
->
-> - Steve
->
+----- Original Message -----
+> Hi,
+> 
+> The hardlink(1) program from Fedora is susceptible to buffer overflows of
+> fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
+> nested directories and/or with long directory or file names.  I was able
+> to reproduce the problem (got a segfault) by running the program on a
+> directory containing 20 nested directories with 250-character names.
+> 
+> Another problem is that the program uses full pathnames.  It neither
+> changes the current directory, nor uses openat(2).  Thus, if a pathname
+> component is replaced with a symlink while the program is running, this
+> may result in processing of directories/files outside of the intended
+> directory tree.
+> 
+> I fixed the buffer overflows (by (re)allocating the buffers dynamically)
+> in the copy that I committed into Owl today:
+> 
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/hardlink/
+> 
 
+Based on the above commits, I'm giving this three IDs.
+
+CVE-2011-3630 hardlink buffer overflows
+https://bugzilla.redhat.com/show_bug.cgi?id=746709
+
+CVE-2011-3631 hardlink integer overflows
+https://bugzilla.redhat.com/show_bug.cgi?id=746710
+
+CVE-2011-3632 hardlink symlink attacks
+https://bugzilla.redhat.com/show_bug.cgi?id=746713
+
+The Red Hat bugs have more details and links.
+
+Thanks.
+
+-- 
+    JB
