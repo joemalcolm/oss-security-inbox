@@ -1,30 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/23/11
-Message-Id: <201103231725.35626.ludwig.nussel@suse.de>
-Date: Wed, 23 Mar 2011 17:25:35 +0100
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/15
+Message-ID: <20111020162340.GA5703@inutil.org>
+Date: Thu, 20 Oct 2011 18:23:40 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: CVE Request: mplayer RDT parsing integer underlow
 Content-Type: text/plain; charset=utf-8
 
-Ludwig Nussel wrote:
-> Josh Bressers wrote:
-> > We then will need to assign IDs for various broken uses of /var/log (If
-> > someone has a list of the currently known ones, please pass it along)
+On Thu, Oct 20, 2011 at 12:22:37PM -0400, Josh Bressers wrote:
+> Please use CVE-2009-5027
+
+This has already received a CVE ID, although for some reason it was     
+never set public on the MITRE website:  
+                                  
+http://www.debian.org/security/2010/dsa-2043                    
+http://www.debian.org/security/2010/dsa-2044                    
+
+-> CVE-2010-2062
+
+Cheers,             
+         Moritz        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> Thanks.
 > 
-> AFAICS on openSUSE Factory we have
-> cobbler
-
-The cobbler daemon actually runs as root so having
-/var/log/cobbler/* owned by the web service user is likely not only a
-problem for logrote but also for cobbler itself when it opens files
-there.
-
-cu
-Ludwig
-
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+> -- 
+>     JB
+> 
+> ----- Original Message -----
+> > Hi,
+> > 
+> > Please assign a CVE for this issue from 2009. From [1]:
+> > 
+> > "Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
+> > (Real Data Transport) chunks headers from the network and after that
+> > it
+> > will parse them. A controled variable is used to allocate a buffer
+> > and
+> > later passed on to the rtsp_read_data() function in order to specify
+> > the
+> > length of an RDT chunk data to read from the network. An integer
+> > underflow can be triggered when parsing a malformed RDT header chunk,
+> > a remote attacker can exploit it to execute arbitrary code in the
+> > context of the application."
+> > 
+> > [1] http://seclists.org/fulldisclosure/2009/Jul/418
+> > [2] https://secunia.com/advisories/36041/3/
+> > 
+> > thank you
+> > tim
+> > 
+> > --
+> > Tim Sammut ~ Gentoo Security Team
+> > underling@...too.org ~ C2375493
+> > 
+> > 
+> 
