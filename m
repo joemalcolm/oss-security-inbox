@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/12
-Message-ID: <1322000323.8503.59.camel@mdlinux>
-Date: Tue, 22 Nov 2011 17:18:43 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/11
+Message-ID: <1319128663.31111.7.camel@scapa>
+Date: Thu, 20 Oct 2011 18:37:43 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Subject: Re: radvd 1.8.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2011-11-22 at 22:39 +0100, Yves-Alexis Perez wrote:
-> On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
-> > On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
-> > > On 11/11/11 08:06, Guido Berhoerster wrote:
-> > > > Replacing the file between the lstat and the open would change
-> > > > its inode and then be caught by the check before the fchown, no?
-> > > 
-> > > Nope.   There is no reason why the same inode should not be reused.
-> > > 
-> > > On ext4 (btrfs seems to be different):
-> > > 
-> > > $ touch test; ls -i test; rm test; touch test; ls -i test
-> > > 656078 test
-> > > 656078 test
-> > > 
-> > > jch
-> > 
-> > How about the attached patch?
-> > 
-> > Marc.
-> 
-> Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
-> on other ports?
+On ven., 2011-10-14 at 12:13 +0400, Vasiliy Kulikov wrote:
+> Thanks for spotting it, I think CVE-2011-3603 should be rejected.
 
-It should be available on kFreeBSD also, isn't it?
+It seems it wasn't rejected yet (or maybe it's just that MITRE/NVD lag,
+since they aren't even showing it as ACCEPTED either).
 
-Honestly, you can probably just remove that whole section of code. It's
-only there to handle a bug in old versions of lightdm that incorrectly
-created the ~/.Xauthority file as root.
+Regards,
+-- 
+Yves-Alexis
 
-Marc.
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
