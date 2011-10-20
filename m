@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/6
-Message-ID: <87834720.1022071.1315591310297.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 9 Sep 2011 14:01:50 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/2
+Message-ID: <20111020091016.GC23346@dhcp-25-225.brq.redhat.com>
+Date: Thu, 20 Oct 2011 11:10:17 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- kernel: fuse: check size of FUSE_NOTIFY_INVAL_ENTRY message
+Subject: qemu: CVE-2011-3346
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3353
+CVE-2011-3346 qemu: local DoS with SCSI CD-ROM
 
-Thanks.
+Paolo Bonzini of Red Hat found a buffer overflow in QEMU's SCSI
+subsystem. hw/scsi-disk.c tries to zero a user-provided number of
+bytes in a fixed-size buffer. An unprivileged local guest user
+can potentially use this flaw to crash the guest.
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=736038
+https://bugzilla.redhat.com/show_bug.cgi?id=736038#c1
+
+Upstream patches:
+http://repo.or.cz/w/qemu.git/commit/7285477ab11831b1cf56e45878a89170dd06d9b9
+http://repo.or.cz/w/qemu.git/commit/103b40f51e4012b3b0ad20f615562a1806d7f49a
+
+Thanks,
 -- 
-    JB
-
-
------ Original Message -----
-> FUSE_NOTIFY_INVAL_ENTRY didn't check the length of the write so the
-> message processing could overrun and result in a BUG_ON() in
-> fuse_copy_fill().
-> 
-> User able to mount FUSE filesystems can use this flaw to crash the
-> system.
-> 
-> References:
-> http://permalink.gmane.org/gmane.linux.kernel.commits.head/313266
-> http://sourceforge.net/mailarchive/forum.php?thread_name=87liut4i7w.fsf%40tucsk.pomaz.szeredi.hu&forum_name=fuse-devel
-> 
-> Upstream fix:
-> c2183d1e9b3f313dd8ba2b1b0197c8d9fb86a7ae
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
