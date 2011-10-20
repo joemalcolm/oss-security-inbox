@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/29/4
-Message-ID: <20110429194208.GV2160@redhat.com>
-Date: Fri, 29 Apr 2011 13:42:08 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/16
+Message-ID: <20111020181827.GB3779@pisco.westfalen.local>
+Date: Thu, 20 Oct 2011 20:18:27 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Subject: vulnerability in sssd 1.5.0+ (CVE-2011-1758)
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
 Content-Type: text/plain; charset=utf-8
 
-Hello all.
+On Thu, Oct 20, 2011 at 01:17:48PM -0400, Josh Bressers wrote:
+> Steve,
+> 
+> Can MITRE take this one? It's far bigger than I'm able to handle.
 
-Anyone shipping sssd 1.5.0 or higher will want to be aware of a flaw
-that was found in how it handled cached passwords when renewal kerberos
-tickets is enabled (this is a new feature in 1.5.0).  Due to a bug, the
-cached password was overwritten with a (moderately) predictable
-filename, which could allow a user to authenticate as someone else if
-they knew the name of the cache file (under some pretty specific
-conditions).
+Steve,
+As a reminder, my previous CVE request for Moodle is still open:
+http://www.openwall.com/lists/oss-security/2011/05/18/12
 
-We've assigned the name CVE-2011-1758 to this issue and it is now fixed
-upstream.
-
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=700867
-http://git.fedorahosted.org/git/?p=sssd.git;a=commitdiff;h=fffdae81651b460f3d2c119c56d5caa09b4de42a
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Cheers,
+        Moritz
