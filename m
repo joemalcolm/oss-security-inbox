@@ -1,24 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/1
-Message-ID: <4DA4F1A0.8000004@redhat.com>
-Date: Wed, 13 Apr 2011 08:43:12 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/3
+Message-ID: <87k4800w1o.fsf@mid.deneb.enyo.de>
+Date: Thu, 20 Oct 2011 12:58:11 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-CC: Timo Warns <warns@...-sense.de>
-Subject: Re: CVE Request: kernel: fs/partitions: Corrupted GUID partition tables can cause kernel oops
+Subject: PR attack against XML Encryption
 Content-Type: text/plain; charset=utf-8
 
-On 04/13/2011 05:53 AM, Timo Warns wrote:
-> The Linux kernel automatically evaluates partition tables of storage
-> devices. The code for evaluating EFI GUID partitions (in
-> fs/partitions/efi.c) contains a bug that causes a kernel oops on certain
-> corrupted GUID partition tables.
->
-> A patch is available at
-> http://www.spinics.net/lists/mm-commits/msg83274.html
+A German university has released a press release, alleging a
+vulnerability in the W3C XML Encryption standard.  Apparently, error
+reporting from existing implementations can be used as an oracle to
+recover information from messages encrypted in CBC mode.
 
-Please use CVE-2011-1577.
-
-Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Details have not been published, as far as I know.  Does anybody know
+more?
