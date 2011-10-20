@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/21/1
-Message-ID: <20110221114858.439da53b@laverne>
-Date: Mon, 21 Feb 2011 11:48:58 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/7
+Message-ID: <6894f7c9-a6ca-46dd-9bd4-be8542d11081@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Oct 2011 12:22:37 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: clamav 0.97
+Subject: Re: CVE Request: mplayer RDT parsing integer underlow
 Content-Type: text/plain; charset=utf-8
 
-A new clamav version is out and as usual, they don't mention if it's
-security-relevant.
+Please use CVE-2009-5027
 
-Though from the changelog
-http://git.clamav.net/gitweb?p=clamav-devel.git;a=blob_plain;f=ChangeLog;hb=clamav-0.97
-
-at least this sounds like security:
- * libclamav/vba_extract.c: fix error path double free (bb#2486)
+Thanks.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+    JB
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+----- Original Message -----
+> Hi,
+> 
+> Please assign a CVE for this issue from 2009. From [1]:
+> 
+> "Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
+> (Real Data Transport) chunks headers from the network and after that
+> it
+> will parse them. A controled variable is used to allocate a buffer
+> and
+> later passed on to the rtsp_read_data() function in order to specify
+> the
+> length of an RDT chunk data to read from the network. An integer
+> underflow can be triggered when parsing a malformed RDT header chunk,
+> a remote attacker can exploit it to execute arbitrary code in the
+> context of the application."
+> 
+> [1] http://seclists.org/fulldisclosure/2009/Jul/418
+> [2] https://secunia.com/advisories/36041/3/
+> 
+> thank you
+> tim
+> 
+> --
+> Tim Sammut ~ Gentoo Security Team
+> underling@...too.org ~ C2375493
+> 
+> 
