@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/2
-Message-ID: <4D66F488.5000809@redhat.com>
-Date: Fri, 25 Feb 2011 08:15:04 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/10
+Message-ID: <aea8dbaa-2d1e-43b8-8bce-80a2b3c3c9d5@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Oct 2011 12:28:02 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: kernel: /proc/$pid/ leaks contents across setuid exec
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2011 07:57 AM, Kees Cook wrote:
-> Hi,
->
-> I'd like to get a CVE assigned for this information leak issue:
-> https://lkml.org/lkml/2011/2/7/368
->
-> Pre-opened file descriptors in /proc/$pid/ can bypass DAC allowing
-> visibility into setuid process state, especially leaking ASLR offset.
+Steve,
 
-Please use CVE-2011-1020.
+Can MITRE take this thread. I'm a bit fearful as to what this one is going to become.
 
-Eugene
+Thanks.
+
+----- Original Message -----
+> p.s. I see a CVE ID hasn't been issued for:
+> 
+> http://piwik.org/blog/2011/06/piwik-1-5-security-advisory/
+> 
+
 -- 
-Eugene Teo / Red Hat Security Response Team
+    JB
