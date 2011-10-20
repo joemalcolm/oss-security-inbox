@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/6
-Message-ID: <42390634.57980.1299876372996.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 11 Mar 2011 15:46:12 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/14
+Message-ID: <20111020192243.46b81805@laverne>
+Date: Thu, 20 Oct 2011 19:22:43 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Matthew Nicholson <mnicholson@...ium.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
+Cc: bressers@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
 Content-Type: text/plain; charset=utf-8
 
+Am Thu, 20 Oct 2011 13:17:48 -0400 (EDT)
+schrieb Josh Bressers <bressers@...hat.com>:
 
+> Can MITRE take this one? It's far bigger than I'm able to handle.
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> this doesn't seem to have a CVE identifier yet:
-> [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
-> 
+I read this in the past...
+the outcome was usually that nothing happened at all. This is not good.
+See here:
+http://www.openwall.com/lists/oss-security/2011/01/04/11
 
-Please use CVE-2011-1147
+The CVE assignment here usually works pretty well, but some requests
+keep unanswered forever. You CVE assigners should try to work out a way
+to avoid that.
 
-Thanks.
-
+cu,
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
