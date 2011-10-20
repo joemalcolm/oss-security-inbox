@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/5
-Message-ID: <20111221221436.GD7178@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Dec 2011 23:14:37 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/6
+Message-ID: <fb1366e8-2104-4f08-8a5a-02479e56b015@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Thu, 20 Oct 2011 10:57:29 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-Sorry, I forgot to put "CVE Request" into the subject.
 
-Petr
 
-On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
-> User space may create the PIT and forget about setting up the irqchips.
-> In that case, firing PIT IRQs will crash the host:
+----- Original Message -----
+> Hi,
 > 
-> BUG: unable to handle kernel NULL pointer dereference at
-> 0000000000000128
-> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
-> ...
-> Call Trace:
->  [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
->  [<ffffffff81071431>] process_one_work+0x111/0x4d0
->  [<ffffffff81071bb2>] worker_thread+0x152/0x340
->  [<ffffffff81075c8e>] kthread+0x7e/0x90
->  [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
+> The hardlink(1) program from Fedora is susceptible to buffer overflows of
+> fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
+> nested directories and/or with long directory or file names.  I was able
+> to reproduce the problem (got a segfault) by running the program on a
+> directory containing 20 nested directories with 250-character names.
 > 
-> Reference:
-> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
-> https://bugzilla.redhat.com/show_bug.cgi?id=769721
+> Another problem is that the program uses full pathnames.  It neither
+> changes the current directory, nor uses openat(2).  Thus, if a pathname
+> component is replaced with a symlink while the program is running, this
+> may result in processing of directories/files outside of the intended
+> directory tree.
 > 
-> Thanks,
-> -- 
-> Petr Matousek / Red Hat Security Response Team
+> I fixed the buffer overflows (by (re)allocating the buffers dynamically)
+> in the copy that I committed into Owl today:
+> 
+> http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/hardlink/
+> 
+
+Based on the above commits, I'm giving this three IDs.
+
+CVE-2011-3630 hardlink buffer overflows
+https://bugzilla.redhat.com/show_bug.cgi?id=746709
+
+CVE-2011-3631 hardlink integer overflows
+https://bugzilla.redhat.com/show_bug.cgi?id=746710
+
+CVE-2011-3632 hardlink symlink attacks
+https://bugzilla.redhat.com/show_bug.cgi?id=746713
+
+The Red Hat bugs have more details and links.
+
+Thanks.
 
 -- 
-Petr Matousek / Red Hat Security Response Team
+    JB
