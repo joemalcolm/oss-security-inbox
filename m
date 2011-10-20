@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/7
-Message-ID: <20110929152542.GA14652@openwall.com>
-Date: Thu, 29 Sep 2011 19:25:42 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Joerg Sonnenberger <joerg@...tannica.bec.de>
-Cc: Tavis Ormandy <taviso@...xchg8b.com>, oss-security@...ts.openwall.com, joerg@...bsd.org
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/5
+Message-ID: <1319114047.31111.3.camel@scapa>
+Date: Thu, 20 Oct 2011 14:34:07 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: PR attack against XML Encryption
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2011 at 02:50:22PM +0200, Joerg Sonnenberger wrote:
-> This is not about GNU (g)zip, but the NetBSD/FreeBSD tool of the same
-> name. The corresponding NetBSD advisory explicitly lists GNU gzip and
-> libarchive as not vulnerable.
+On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
+> A German university has released a press release, alleging a
+> vulnerability in the W3C XML Encryption standard.  Apparently, error
+> reporting from existing implementations can be used as an oracle to
+> recover information from messages encrypted in CBC mode.
+> 
+> Details have not been published, as far as I know.  Does anybody know
+> more? 
 
-Thanks!  My current understanding is that both the NetBSD/FreeBSD gzip
-and GNU gzip reuse mid-1980's code from compress, which was in the
-public domain.  Those revisions thus could use different licenses (BSD
-vs. GPL), and indeed the code is quite different by now.  (Also there's
-a lot of code that is not from compress.)
+Paper was just presented at ACM CCS
+(http://www.sigsac.org/ccs/CCS2011/paper_list.shtml). Proceedings are
+available at
+http://dl.acm.org/citation.cfm?id=2046756&dl=ACM&coll=DL&CFID=61633880&CFTOKEN=38378828
 
-Tomas, Tim - thank you for explaining the "maxbits < 12" check.  It
-appears that we don't need it for GNU gzip, and NetBSD/FreeBSD gzip
-could want to relax the check too.
+but afaict the paper is not (yet?) available freely.
 
-Alexander
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
