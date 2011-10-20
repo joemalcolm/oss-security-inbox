@@ -1,23 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/20/16
-Message-ID: <BANLkTimxm84Qm+31Hab7QwLhrVEurkKQNA@mail.gmail.com>
-Date: Mon, 20 Jun 2011 15:16:52 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/16
+Message-ID: <20111020181827.GB3779@pisco.westfalen.local>
+Date: Thu, 20 Oct 2011 20:18:27 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
 Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: inet_diag: fix inet_diag_bc_audit()
+Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
 Content-Type: text/plain; charset=utf-8
 
->> Also make sure each instruction is aligned on 4 bytes boundary, to avoid
->> unaligned accesses.
->
-> Should this get a seperate ID?
->
+On Thu, Oct 20, 2011 at 01:17:48PM -0400, Josh Bressers wrote:
+> Steve,
+> 
+> Can MITRE take this one? It's far bigger than I'm able to handle.
 
-AFAIK, on some architectures, unaligned accesses will generate a
-fault, which will be handled by emulating the access via byte-size
-loads and stores (for example).  So while unaligned accesses like this
-should be avoided, I don't think there's a security impact.  Anyone
-who knows better, please correct me if I'm wrong.
+Steve,
+As a reminder, my previous CVE request for Moodle is still open:
+http://www.openwall.com/lists/oss-security/2011/05/18/12
 
--Dan
+Cheers,
+        Moritz
