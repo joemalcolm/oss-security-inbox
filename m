@@ -1,31 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/25/3
-Message-ID: <20110725123432.03d1209c@redhat.com>
-Date: Mon, 25 Jul 2011 12:34:32 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request - dhcp clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/3
+Message-ID: <87pqhq362s.fsf@mid.deneb.enyo.de>
+Date: Fri, 21 Oct 2011 14:03:07 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: PR attack against XML Encryption
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+* Yves-Alexis Perez:
 
-Earlier this year, CVE-2011-0997 was assigned to ICS's dhclient and
-CVE-2011-0996 dhcpcd for an insufficient DHCP option checking.
+> On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
+>> A German university has released a press release, alleging a
+>> vulnerability in the W3C XML Encryption standard.  Apparently, error
+>> reporting from existing implementations can be used as an oracle to
+>> recover information from messages encrypted in CBC mode.
+>> 
+>> Details have not been published, as far as I know.  Does anybody know
+>> more? 
 
-Similar issue affects busybox's udhcpc.
+> but afaict the paper is not (yet?) available freely.
 
-dhcpv6's dhcp6c was previously mentioned and it seems also fixed in
-SUSE, but did not get its own CVE.
+I took a brief look at the paper, and it's basically rehashing older
+work on decryption error oracles.  Full message recovery is apparently
+possible, but leaves traces in the server log.  It's the standard
+which is at fault: encryption without authentication is just not safe
+in general.
 
-The impact for DHCPv6 clients seems significantly lower, as there's no
-support for hostname option, only domain search option.  I'm not sure
-if anyone identified any good target that handles search option
-insecurely, I've only found shtool's sh.echo that may use it in sed
-script, resulting in sed script injection with file overwrite or code
-execution impact.
+IBM has already changed error reporting in response to this issue:
 
-Given that dhclient and dhcpcd got separate CVEs, udhcpc and dhcp6c
-should probably get separate ids too.
+<http://www-01.ibm.com/support/docview.wss?uid=swg1IC76651>
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Of course, without an application-independent way to check the
+integrity of the decrypted message (which would be provided by a
+combiend encryption/authentication mode), this is only a partial
+solution.
+
+The authors also mention a second issue, where implementations confuse
+signed and encrypted parts of a SOAP message, allowing attackers to
+inject unsigned data which is presented as signed to the application.
+This probably needs a separate fix.
