@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/4
-Message-ID: <87vcqwewu1.fsf@mid.deneb.enyo.de>
-Date: Sun, 06 Nov 2011 22:59:34 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/3
+Message-ID: <87pqhq362s.fsf@mid.deneb.enyo.de>
+Date: Fri, 21 Oct 2011 14:03:07 +0200
 From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: caml-light insecure temporary files
+Subject: Re: PR attack against XML Encryption
 Content-Type: text/plain; charset=utf-8
 
-* David Holland:
+* Yves-Alexis Perez:
 
-> I don't know if anyone besides us still ships caml-light; it is long
-> dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
-> Hat does. But just in case: it uses mktemp() insecurely, and also does
-> unsafe things in /tmp during make install.
+> On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
+>> A German university has released a press release, alleging a
+>> vulnerability in the W3C XML Encryption standard.  Apparently, error
+>> reporting from existing implementations can be used as an oracle to
+>> recover information from messages encrypted in CBC mode.
+>> 
+>> Details have not been published, as far as I know.  Does anybody know
+>> more? 
 
-Moscow ML includes a copy of the affected code, and it's perhaps less
-obsolete than caml-light.  It seems to be part of the FreeBSD ports
-collection.
+> but afaict the paper is not (yet?) available freely.
+
+I took a brief look at the paper, and it's basically rehashing older
+work on decryption error oracles.  Full message recovery is apparently
+possible, but leaves traces in the server log.  It's the standard
+which is at fault: encryption without authentication is just not safe
+in general.
+
+IBM has already changed error reporting in response to this issue:
+
+<http://www-01.ibm.com/support/docview.wss?uid=swg1IC76651>
+
+Of course, without an application-independent way to check the
+integrity of the decrypted message (which would be provided by a
+combiend encryption/authentication mode), this is only a partial
+solution.
+
+The authors also mention a second issue, where implementations confuse
+signed and encrypted parts of a SOAP message, allowing attackers to
+inject unsigned data which is presented as signed to the application.
+This probably needs a separate fix.
