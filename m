@@ -1,93 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/07/13
-Message-Id: <201103071827.05353.sgrubb@redhat.com>
-Date: Mon, 7 Mar 2011 18:27:05 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/1
+Message-ID: <4EA1428D.4020109@redhat.com>
+Date: Fri, 21 Oct 2011 15:29:41 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: ldd can execute an app unexpectedly
+CC: Solar Designer <solar@...nwall.com>
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 10/20/2011 08:27 PM, Josh Bressers wrote:
 
-After reading the thread about logrotate and the revelation that sometimes CVEs are 
-assigned because of admin bad practices, I wanted to ask about the ldd program. 
+>> The hardlink(1) program from Fedora is susceptible to buffer overflows of
+>> fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
+>> nested directories and/or with long directory or file names.  I was able
+>> to reproduce the problem (got a segfault) by running the program on a
+>> directory containing 20 nested directories with 250-character names.
+>>
+>
+> CVE-2011-3630 hardlink buffer overflows
+> https://bugzilla.redhat.com/show_bug.cgi?id=746709
+>
 
-What do you do when you find an unexpected app on a system? First you might query your 
-package manager to see what it might be. If that fails, then what do you do? You might 
-run the file program against it to see what kind of file it might be. Then you might run 
-strings to see what kinds of hints you might get based on the strings stored inside 
-it. You might also run ldd to see what kinds of things it links against for more 
-clues. That last step can get you pwned.
+FORTIFY_SOURCE should really be able to catch this buffer overflow.
+The buffer being overflown here in in BSS, But strcat() is used to 
+append to this buffer and __builtin___strcat_chk catches it, resulting 
+in the program being terminated.
 
- http://reverse.lostrealm.com/protect/ldd.html
- http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
-
-Besides telling everyone don't do that. ldd could take the PoV that it should only 
-call runtime linkers in trusted directories like /sbin or /usr/sbin. Or it could 
-simply detect that another linker was requested and make you add a "--force" so that 
-you are fully aware that you just let another linker run. (The suggested patch can 
-certainly be improved. But its here just in case you want it.)
-
--Steve
+Nice one though!
 
 
-
-test.c:
-#include <stdio.h>
-int main(void)
-{
-        printf("Hello World\n");
-        return 0;
-}
-
-$ gcc -static -static-libgcc -Wl,-static test.c -o testbin
-$ gcc -Wl,-dynamic-linker=$(pwd)/testbin test.c -o testtrap
-$ ldd ./testtrap 
-
-
-
---- ldd.orig    2010-04-22 10:29:52.000000000 -0400
-+++ ldd 2010-04-22 10:32:10.000000000 -0400
-@@ -31,6 +31,7 @@
- warn=
- bind_now=
- verbose=
-+force=0
- 
- while test $# -gt 0; do
-   case "$1" in
-@@ -49,6 +50,7 @@
-       --help              print this help and exit
-       --version           print version information and exit
-   -d, --data-relocs       process data relocations
-+  -f, --force             allow non-standard dynamic linkers
-   -r, --function-relocs   process data and function relocations
-   -u, --unused            print unused direct dependencies
-   -v, --verbose           print all information
-@@ -63,6 +65,10 @@
-     warn=yes
-     shift
-     ;;
-+  -f | --f | --fo | --for | --forc | --force )
-+    force=1
-+    shift
-+    ;;
-   -r | --f | --fu | --fun | --func | --funct | --functi | --functio | \
-   --function | --function- | --function-r | --function-re | --function-rel | 
-\
-   --function-relo | --function-reloc | --function-relocs)
-@@ -172,6 +178,13 @@
-       # If the program exits with exit code 5, it means the process has been
-       # invoked with __libc_enable_secure.  Fall back to running it through
-       # the dynamic linker.
-+      if [ -x /usr/bin/eu-readelf ] ; then
-+        interp="`/usr/bin/eu-readelf -l $file | grep interpreter | tr '[]' ' ' 
-| awk '{ print $4 }'`"
-+        if [ "x$interp" != "x" -a $force -eq 0 ] ; then
-+          echo "Non-standard dynamic linker is requested: $interp"
-+          exit 1
-+        fi
-+      fi
-       try_trace "$file"
-       rc=$?
-       if [ $rc = 5 ]; then
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
