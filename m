@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/4
-Message-ID: <4EBFE854.7090005@redhat.com>
-Date: Sun, 13 Nov 2011 08:55:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/4
+Message-ID: <20111021132429.GB10069@dhcp-25-225.brq.redhat.com>
+Date: Fri, 21 Oct 2011 15:24:30 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: jbd/jbd2: invalid value of first log block leads to oops
+Subject: CVE Request -- kernel: ext4: ext4_ext_insert_extent() kernel oops
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/2011 03:50 PM, Petr Matousek wrote:
-> A flaw was found in the way Linux kernel's Journaling Block Device (JBD)
-> handled invalid log first block value. An attacker able to mount
-> malicious ext3 or ext4 image could use this flaw to crash the system.
->
-> Upstream commit:
-> 8762202dd0d6e46854f786bdb6fb3780a1625efe
->
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=753341
->
-> Thanks,
-With apologies, I replied to a previous message twice, the correct CVE
-assignment for this issue is:
+A flaw was found in the way splitting two extents in
+ext4_ext_convert_to_initialized() worked. Althrough ex has been updated
+in memory, it is not dirtied both in ext4_ext_convert_to_initialized()
+and ext4_ext_insert_extent(). The disk layout is corrupted. Then it
+will meet with a BUG_ON() when writting at the start of that extent
+again.
 
-CVE-2011-4132 is for kernel: jbd/jbd2: invalid value of first log block
-leads to oops
+Local unprivileged users can use this flaw to crash the system when ext4
+filesystem is in use.
 
+Introduced in:
+56055d3ae4cc7fa6d2b10885f20269de8a989ed7
+
+Upstream fix:
+667eff35a1f56fa74ce98a0c7c29a40adc1ba4e3
+
+Credits:
+Zheng Liu
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=747942
+
+Thanks,
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Petr Matousek / Red Hat Security Response Team
