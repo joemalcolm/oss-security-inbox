@@ -1,21 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/14/3
-Message-ID: <20110114200459.6897e16f@redhat.com>
-Date: Fri, 14 Jan 2011 20:04:59 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/21/4
+Message-ID: <20111021132429.GB10069@dhcp-25-225.brq.redhat.com>
+Date: Fri, 21 Oct 2011 15:24:30 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, Moritz Mühlenhoff <jmm@...til.org>
-Subject: Re: CVE requests: ftpls, xdigger, lbreakout2, calibre, typo3
+Subject: CVE Request -- kernel: ext4: ext4_ext_insert_extent() kernel oops
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 14 Jan 2011 12:47:59 -0500 (EST) Steven M. Christey wrote:
+A flaw was found in the way splitting two extents in
+ext4_ext_convert_to_initialized() worked. Althrough ex has been updated
+in memory, it is not dirtied both in ext4_ext_convert_to_initialized()
+and ext4_ext_insert_extent(). The disk layout is corrupted. Then it
+will meet with a BUG_ON() when writting at the start of that extent
+again.
 
-> > 6. Jetty (That's a CVE-2009 ID)
-> > http://www.ush.it/team/ush/hack-jetty6x7x/jetty-adv.txt
-> 
-> There are a number of CVEs to assign here.
+Local unprivileged users can use this flaw to crash the system when ext4
+filesystem is in use.
 
-These do have CVEs already - CVE-2009-4609 - CVE-2009-4612
+Introduced in:
+56055d3ae4cc7fa6d2b10885f20269de8a989ed7
 
+Upstream fix:
+667eff35a1f56fa74ce98a0c7c29a40adc1ba4e3
+
+Credits:
+Zheng Liu
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=747942
+
+Thanks,
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
