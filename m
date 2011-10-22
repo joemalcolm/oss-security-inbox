@@ -1,119 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/8
-Message-ID: <20110305213552.GA32000@openwall.com>
-Date: Sun, 6 Mar 2011 00:35:52 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/1
+Message-ID: <20111022005621.GA31654@openwall.com>
+Date: Sat, 22 Oct 2011 04:56:21 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Florian Zumbiehl <florz@...rz.de>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2011 at 07:51:02PM +0100, Jan Lieskovsky wrote:
-> I got your point. But still think there is a difference between the
-> case privileged system user would use 'cp' by accident in untrusted
-> directory and corrupt the system and case, when some utility is
-> running under privileged user account on regular basis and not
-> taking 'untrusted directories' into account / not having a policy,
-> how to behave while processing them.
-
-Definitely.  I fully agree that there's a vulnerability in the system if
-it has a non-root writable log directory yet runs logrotate on that
-directory as root.  The question is what part of the system the
-vulnerability lies in.  I say that it's in the directory permissions,
-which usually come from the service package.  We could harden logrotate
-to deal with such misconfigurations in a safer way (once we figure out
-how), but not blame it.
-
-> For example CVE-2010-2055 has been assigned to Ghostscript's reading
-> of initialization files from $CWD. CVE-2010-3349, 3350, 3355, 3369 and
-> many others have been assigned to insecure library loading vulnerabilities.
+On Fri, Oct 21, 2011 at 03:29:41PM +0530, Huzaifa Sidhpurwala wrote:
+> On 10/20/2011 08:27 PM, Josh Bressers wrote:
 > 
-> In comparison with the above, how running of logrotate utlity on untrusted
-> directory differs? Even when it is often run regularly and under root
-> user account.
-
-Reading files from cwd, unless very explicitly documented, may
-reasonably be an unexpected risk for a knowledgeable user.  In contrast,
-logrotate is being explicitly told to access a certain directory.  It's
-more similar to cp'ing a file, where you give the filename explicitly.
-So neither cp nor logrotate are to blame.
-
-> How many system users check the directory permissions prior running
-> the utility? How many administrators check them regularly?
-
-If properly configured initially, log directory permissions are not to
-change on their own.  Otherwise, your argument could be extended onto
-any other part of the system - "how many administrators check the
-permissions on /, on /bin/sh, and on /etc/passwd regularly?"  This
-becomes a system integrity checking question, which applies or does
-not apply regardless of logrotate.
-
-> Agree, the majority of these issue would disappear when logrotate
-> would just refuse to process such a directory. But currently it
-> doesn't. That CVE request is just attempt to pinpoint the need
-> of change.
-
-OK, the need of change.  Would that change be, as you say, to have
-logrotate refuse to process an unsafe directory?  If so, I support this
-(although calling the lack of this hardening measure a vulnerability in
-logrotate is a stretch).  However, I am concerned that another change
-may go in (fine by itself) and it would be used as an excuse not to fix
-the service packages (not fine).  I am commenting in this thread mostly
-to avoid responsibility being taken off those flawed service packages.
-I really don't mind having logrotate hardened in one way or another as
-long as the service packages are to be fixed as well.
-
-> >Almost all other commands and programs are unsafe on untrusted
-> >directories.  In my opinion, that's the only correct assumption for a
-> >sysadmin to make, and any other assumption is naive.
+> >>The hardlink(1) program from Fedora is susceptible to buffer overflows of
+> >>fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
+> >>nested directories and/or with long directory or file names.  I was able
+> >>to reproduce the problem (got a segfault) by running the program on a
+> >>directory containing 20 nested directories with 250-character names.
+> >
+> >CVE-2011-3630 hardlink buffer overflows
+> >https://bugzilla.redhat.com/show_bug.cgi?id=746709
 > 
-> Agree here. But as stated above, how many sysadmins perform this task
-> prior running the tool? How many do it regularly?
-[...]
-> See above. Ghostscript vs logrotate. How untrusted directory for GS
-> differs from untrusted directory for logrotate?
+> FORTIFY_SOURCE should really be able to catch this buffer overflow.
+> The buffer being overflown here in in BSS, But strcat() is used to 
+> append to this buffer and __builtin___strcat_chk catches it, resulting 
+> in the program being terminated.
 
-I think I've addressed these same questions above, so I am not repeating
-the answers here.
+Besides the strcpy() and strcat() with obviously known target buffer
+size, there are also:
 
-> >No software is perfect, and almost any piece of software can be improved
-> >endlessly.  But that's mere rhetoric.
-> 
-> Sure. Just wanted to differentiate the 'unsupported functionality'
-> from undocumented functionality, which may be harmful.
+          strcpy (stpcpy (nambuf2, n2), ".$$$___cleanit___$$$");
 
-Understood and agreed.  But in this case we're dealing with
-"undocumented functionality" that is expected by anyone familiar
-with Unix.  Much like it is expected that "cp" in an untrusted directory
-may happen to follow a link.  This is different from some program
-checking cwd for its config file, which could not be inferred from
-general Unix experience.
+and:
 
-> >I don't mind logrotate being hardened against these issues.  We do a lot
-> >of hardening in other areas, so why not here.  I just don't blame
-> >logrotate for the issues. 
-> 
-> See above -- absence of policy how to deal with untrusted directories.
+      strcpy (p, di->d_name);
 
-Yes, but that's the case for almost all other Unix programs, with very
-few exceptions.  So a person familiar with Unix should assume that if no
-policy is stated, the program is unsafe to use on untrusted directories.
+where "p" points somewhere inside nambuf1.
 
-> How many users check content of their $CWD prior launching gs?
-
-I agree with you that undocumented reading from cwd is a vulnerability.
-(Also, even if users checked their cwd, there would be a race.)
-
-This is just different from the issue at hand.  I've tried to explain
-(in several paragraphs above) why/how I see it different.
-
-> Same from my side. Thanks for the thoughts, which initiated (partial)
-> discussion.
-
-A "full" discussion of the issues involved can be very time-consuming,
-as evidenced by the length of these messages...  So I think we'll have
-to wrap up soon. ;-)
-
-Thanks,
+These will just need different reproducers.
 
 Alexander
