@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/5
-Message-ID: <723654629.3189.1295375239162.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Jan 2011 13:27:19 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/3
+Message-ID: <20111022032137.GA31920@openwall.com>
+Date: Sat, 22 Oct 2011 07:21:37 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Michael Gilbert <michael.s.gilbert@...il.com>
-Subject: Re: CVE request
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Tuesday 18 January 2011 16:40:42 Michael Gilbert wrote:
-> >
-> > You're looking for vendor-sec:
-> > http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+On Sat, Oct 22, 2011 at 05:19:03AM +0400, Solar Designer wrote:
+> On Sat, Oct 22, 2011 at 04:56:21AM +0400, Solar Designer wrote:
+> >       strcpy (p, di->d_name);
+> > 
+> > where "p" points somewhere inside nambuf1.
+> > 
+> > These will just need different reproducers.
 > 
-> That's a closed list though isn't it? If anyone wants to sponsor me on to
-> it, I'm willing to put my OpenVAS hat on and jump through the necessary
-> hoops :)
-> 
+> Actually, I think my proposed reproducer (many nested 250-char dirs)
+> triggers this one and not the strcat().  On one build, hardlink then
+> crashes after dereferencing the "dirs" pointer, which happens to be
+> overwritten with a directory name.  On another build (different gcc
+> version and arch), hardlink does not crash (although I think it would on
+> even more nested directories), but reports a ridiculous directory count
+> (so "ndirs" is overwritten).  -D_FORTIFY_SOURCE=2 didn't make a
+> difference here (different program binary, same observed behavior).
 
-You can still post to the list with flaws and CVE requests even if you're
-not a member. In fact many projects and researchers are not members but
-still post info.
+I investigated the non-crashing build further.  No, adding more
+directories did not cause a crash either.  What happens is that lstat()
+starts failing with ENAMETOOLONG shortly _after_ the overflow occurs.
+This happens to limit the largest overflow size.  If "dirs" is not yet
+overwritten by this point (was not reached by the overflow), then the
+program may proceed without crashing and without descending to deeper
+directories (thus not overflowing the buffer even further).  So
+different builds may be affected to a different extent, depending on
+relative placement of variables in .bss.  The behavior may also vary by
+kernel version, though (when lstat() starts to fail is a property of the
+kernel, whereas NAMELEN in hardlink.c is fixed).  I am able to make this
+build crash with "*** buffer overflow detected ***" on the strcat(),
+though, by carefully adjusting the directory name lengths (but that's
+relatively uninteresting).
 
-You are also welcome to mail me directly if you need a CVE ID.
-
-Thanks.
-
--- 
-    JB
+Alexander
