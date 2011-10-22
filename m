@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/2
-Message-ID: <20111009103931.7023618d@laverne>
-Date: Sun, 9 Oct 2011 10:39:31 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/2
+Message-ID: <20111022011903.GA31685@openwall.com>
+Date: Sat, 22 Oct 2011 05:19:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: vanilla forums cookie theft, plugin access control
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-http://vanillaforums.org/discussion/14397/vanilla-2.0.17-released
+On Sat, Oct 22, 2011 at 04:56:21AM +0400, Solar Designer wrote:
+>       strcpy (p, di->d_name);
+> 
+> where "p" points somewhere inside nambuf1.
+> 
+> These will just need different reproducers.
 
-two issues:
+Actually, I think my proposed reproducer (many nested 250-char dirs)
+triggers this one and not the strcat().  On one build, hardlink then
+crashes after dereferencing the "dirs" pointer, which happens to be
+overwritten with a directory name.  On another build (different gcc
+version and arch), hardlink does not crash (although I think it would on
+even more nested directories), but reports a ridiculous directory count
+(so "ndirs" is overwritten).  -D_FORTIFY_SOURCE=2 didn't make a
+difference here (different program binary, same observed behavior).
 
-before 2.0.17.9 - [SECURITY] Fixed cookie theft vulnerability.
-
-
-before 2.0.17.10 - [SECURITY] Fixed Facebook, Twitter, and Embed
-plugins' access control.
-
-
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
