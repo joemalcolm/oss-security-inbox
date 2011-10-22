@@ -1,12 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/06/1
-Message-ID: <20111206095525.GG4940@foo.fgeek.fi>
-Date: Tue, 6 Dec 2011 11:55:25 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/1
+Message-ID: <20111022005621.GA31654@openwall.com>
+Date: Sat, 22 Oct 2011 04:56:21 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: C|Net Download.Com is now bundling Nmap with malware!
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-http://seclists.org/nmap-hackers/2011/5
+On Fri, Oct 21, 2011 at 03:29:41PM +0530, Huzaifa Sidhpurwala wrote:
+> On 10/20/2011 08:27 PM, Josh Bressers wrote:
+> 
+> >>The hardlink(1) program from Fedora is susceptible to buffer overflows of
+> >>fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
+> >>nested directories and/or with long directory or file names.  I was able
+> >>to reproduce the problem (got a segfault) by running the program on a
+> >>directory containing 20 nested directories with 250-character names.
+> >
+> >CVE-2011-3630 hardlink buffer overflows
+> >https://bugzilla.redhat.com/show_bug.cgi?id=746709
+> 
+> FORTIFY_SOURCE should really be able to catch this buffer overflow.
+> The buffer being overflown here in in BSS, But strcat() is used to 
+> append to this buffer and __builtin___strcat_chk catches it, resulting 
+> in the program being terminated.
 
-- Henri Salo
+Besides the strcpy() and strcat() with obviously known target buffer
+size, there are also:
+
+          strcpy (stpcpy (nambuf2, n2), ".$$$___cleanit___$$$");
+
+and:
+
+      strcpy (p, di->d_name);
+
+where "p" points somewhere inside nambuf1.
+
+These will just need different reproducers.
+
+Alexander
