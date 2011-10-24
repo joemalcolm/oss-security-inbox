@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/13
-Message-ID: <20111122225135.GE10743@wopr>
-Date: Tue, 22 Nov 2011 23:51:36 +0100
-From: Guido Berhoerster <gber@...nsuse.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/9
+Message-ID: <20111024181944.GH1540@redhat.com>
+Date: Mon, 24 Oct 2011 12:19:44 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+Subject: CVE request: phpldapadmin <= 1.2.1.1 XSS and and code injection flaws
 Content-Type: text/plain; charset=utf-8
 
-* Yves-Alexis Perez <corsac@...ian.org> [2011-11-22 22:39]:
-> On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
-> > On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
-> > > On 11/11/11 08:06, Guido Berhoerster wrote:
-> > > > Replacing the file between the lstat and the open would change
-> > > > its inode and then be caught by the check before the fchown, no?
-> > > 
-> > > Nope.   There is no reason why the same inode should not be reused.
-> > > 
-> > > On ext4 (btrfs seems to be different):
-> > > 
-> > > $ touch test; ls -i test; rm test; touch test; ls -i test
-> > > 656078 test
-> > > 656078 test
-> > > 
-> > > jch
-> > 
-> > How about the attached patch?
-> > 
-> > Marc.
-> 
-> Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
-> on other ports?
+Two flaws were found in phpldapadmin <= 1.2.1.1 that can lead to an XSS
+or code injection:
 
-No, it's specified in POSIX.1-2008, at least Linux, FreeBSD and
-Solaris 10 implemented it long before that.
+1) Input appended to the URL in cmd.php (when "cmd" is set to "_debug")
+is not properly sanitised before being returned to the user. This can be
+exploited to execute arbitrary HTML and script code in a user's browser
+session in context of an affected site.
+
+2) Input passed to the "orderby" parameter in cmd.php (when "cmd" is set
+to "query_engine", "query" is set to "none", and "search" is set to e.g.
+"1") is not properly sanitised in lib/functions.php before being used in
+a "create_function()" function call. This can be exploited to inject and
+execute arbitrary PHP code.
+
+Could CVEs be assigned to these please?
+
+References:
+
+http://sourceforge.net/tracker/index.php?func=detail&aid=3417184&group_id=61828&atid=498546
+http://www.exploit-db.com/exploits/18021/
+https://secunia.com/advisories/46551/
+http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=htdocs/cmd.php;h=0ddf0044355abc94160be73122eb34f3e48ab2d9;hp=34f3848fe4a6d4c00c7c568afa81f59579f5d724;hb=64668e882b8866fae0fa1b25375d1a2f3b4672e2;hpb=caeba72171ade4f588fef1818aa4f6243a68b85e
+http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=lib/functions.php;h=eb160dc9f7d74e563131e21d4c85d7849a0c6638;hp=19fde9974d4e5eb3bfac04bb223ccbefdb98f9a0;hb=76e6dad13ef77c5448b8dfed1a61e4acc7241165;hpb=5d4245f93ae6f065e7535f268e3cd87a23b07744
+
 -- 
-Guido Berhoerster
+Vincent Danen / Red Hat Security Response Team 
