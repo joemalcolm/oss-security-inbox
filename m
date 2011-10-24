@@ -1,71 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/1
-Message-ID: <CAPYM6VxVh4mtW4B_SBSTZnOj4dW2c0uDghh1=7T6SRweD9JJHg@mail.gmail.com>
-Date: Thu, 18 Aug 2011 14:14:15 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: WebsiteBaker 2.8.1 <= Arbitrary File Upload Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/4
+Message-ID: <4EA53E3F.8020103@redhat.com>
+Date: Mon, 24 Oct 2011 12:30:23 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>
+Subject: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+Hello Josh, Steve, vendors,
 
-WebsiteBaker 2.8.1 and lower versions are vulnerable to Arbitrary File Upload.
+   a security flaw was found in the way nss, the Network Security
+Services (NSS) set of libraries, performed their initialization (the
+file path for "pkcs11.txt" configuration file was constructed 
+incorrectly). When that configuration file was loaded from remote WebDAV 
+or Samba CIFS share, it could lead to arbitrary security module
+load, potentially leading to execution of arbitrary code (execution of
+code from untrusted security module).
 
+Upstream bug report:
+[1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
 
-2. BACKGROUND
+Other references:
+[2] https://secunia.com/advisories/46557/
+[3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+[4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
 
-WebsiteBaker helps you to create the website you want: A free, easy
-and secure, flexible and extensible open source content management
-system (CMS). Create new templates within minutes - powered by
-(X)HTML, CSS and jQuery. With WebsiteBaker it's quite natural your
-site is W3C-valid, SEO-friendly and accessible - there are no
-limitations at all.
+Could you allocate a CVE id for this? (as it looks there isn't one
+for this deficiency yet)
 
-
-3. VULNERABILITY DESCRIPTION
-
-WebsiteBaker 2.8.1 and lower versions contain a flaw related to the
-/admin/media/upload.php script failing to restrict uploaded files with
-extensions - .htaccess, .php4, .php5, .phtml. This may allow an
-attacker to execute arbitrary PHP code. User account to WebsiteBaker
-admin backend is required. Attacker could gain access it by way of
-either brute force or CSRFing to currently-logged in admin users.
-
-
-4. VERSIONS AFFECTED
-
-2.8.1 <=
-
-
-5. SOLUTION
-
-Upgrade to 2.8.2 or higher
-
-
-6. VENDOR
-
-WebsiteBaker Org e. V.
-http://www.websitebaker2.org/
-
-
-7. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-8. DISCLOSURE TIME-LINE
-
-2011-01-26: notified vendor
-2011-08-01: vendor released fix
-2011-08-13: vulnerability disclosed
-
-
-9. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_arbitrary_file_upload
-http://www.gnucitizen.org/blog/cross-site-file-upload-attacks/
-
-
-#yehg [2011-08-13]
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
