@@ -1,50 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/3
-Message-Id: <201102081215.41570.thomas@suse.de>
-Date: Tue, 8 Feb 2011 12:15:41 +0100
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/3
+Message-ID: <4EA52CF0.8060009@redhat.com>
+Date: Mon, 24 Oct 2011 17:16:32 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xpdf
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: kernel; CVE-2011-2942 and CVE-2011-3209
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 08 Februar 2011 11:54:16 schrieb Thomas Biege:
-> 
-> Should CVE-IDs be assigned to this issues?
+CVE-2011-2942; In the br_forward_finish() function, we may call kfree()
+on the skb we are forwarding, and so, after it, we should not
+dereference skb->dev pointer. With the fix, we save skb->dev before
+calling the br_forward_finish() function, so that we can use it
+afterwards. It's a regression from a commit that we have backported to
+our kernels. It doesn't affect the upstream kernel as the code was
+rewritten.
 
-Sorry, I missed Josh'd mail.
+https://bugzilla.redhat.com/CVE-2011-2942
+https://www.redhat.com/security/data/cve/CVE-2011-2942.html
 
-> 
-> Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
-> > I identified two issues in xpdf.  I don't think the first requires a
-> > CVE, since it's incredibly unlikely to be exploitable, but I include
-> > it here in case someone disagrees.
-> > 
-> > 1. Due to an integer overflow when parsing CharCodes for fonts and a
-> > failure to check the return value of a memory allocation, it is
-> > possible to trigger writes to a narrow range of offsets from a NULL
-> > pointer.  The chance of being able to exploit this for anything other
-> > than a crash is very remote: on x86 32-bit, there's no chance (since
-> > the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
-> > write lands in valid userspace on x86-64, but in my testing this
-> > memory is never mapped.  Fixed in poppler commit at [1], hopefully
-> > fixed soon at xpdf upstream.
-> > 
-> > 2. Malformed commands may cause corruption of the internal stack used
-> > to maintain graphics contexts, leading to potentially exploitable
-> > memory corruption.  Fixed in poppler commit at [2], hopefully fixed
-> > soon at xpdf upstream.
-> > 
-> > -Dan
-> > 
-> > [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
-> > [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
-> > 
-> 
-> 
+CVE-2011-3209; divide error issue in the clock implementation.
 
+http://git.kernel.org/linus/f8bd2258e2d520dff28c855658bd24bdafb5102d
+https://bugzilla.redhat.com/CVE-2011-3209
+https://www.redhat.com/security/data/cve/CVE-2011-3209.html
+
+Thanks, Eugene
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Eugene Teo / Red Hat Security Response Team
