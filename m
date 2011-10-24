@@ -1,23 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/19
-Message-ID: <20110403222237.GI9516@openwall.com>
-Date: Mon, 4 Apr 2011 02:22:37 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/6
+Message-ID: <4EA54117.2050806@redhat.com>
+Date: Mon, 24 Oct 2011 12:42:31 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: Reed Loden <reed@...dloden.com>
+CC: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 10:54:54PM +0100, Steve Kemp wrote:
-> I too was subscribed through the team@...urity.debian.org exploder. My key:
-> 
-> pub   1024D/CD4C0D9D 2002-05-29
-> uid                  Steve Kemp <steve@...ve.org.uk>
-> uid                  Steve Kemp <skx@...ian.org>
-> sub   2048g/AC995563 2002-05-29
-> 
->   Full key at : http://www.steve.org.uk/contact/steve_kemp.gpg
 
-Added.  This gives us three representatives from Debian, which feels
-like a bit too many.
+Cc-ing Reed on this post yet, so he could clarify
+if Mozilla (Security) Team has already assigned a CVE identifier
+for this one or not.
 
-Alexander
+Reed?
+
+Thanks && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+>
+> a security flaw was found in the way nss, the Network Security
+> Services (NSS) set of libraries, performed their initialization (the
+> file path for "pkcs11.txt" configuration file was constructed
+> incorrectly). When that configuration file was loaded from remote WebDAV
+> or Samba CIFS share, it could lead to arbitrary security module
+> load, potentially leading to execution of arbitrary code (execution of
+> code from untrusted security module).
+>
+> Upstream bug report:
+> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+>
+> Other references:
+> [2] https://secunia.com/advisories/46557/
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
+>
+> Could you allocate a CVE id for this? (as it looks there isn't one
+> for this deficiency yet)
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
