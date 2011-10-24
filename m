@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/1
-Message-ID: <4EE9B7E2.6050508@redhat.com>
-Date: Thu, 15 Dec 2011 17:03:30 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/5
+Message-ID: <20111024034027.278f5144@angelo.pretender.us>
+Date: Mon, 24 Oct 2011 03:40:27 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: perf, powerpc: Handle events that raise an exception without overflowing
+Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, Dan Veditz <dveditz@...illa.com>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-This does not affect the upstream kernel as it is already fixed. This is
-an issue that was introduced when fixing https://bugzilla.redhat.com/740465.
+On Mon, 24 Oct 2011 12:30:23 +0200
+Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-A PMC is 32 bits (ie an int). When we pass it around as an unsigned
-long, we need to cast it before doing the comparison. Using perf on
-power machine with a local, unprivileged user account can cause a denial
-of service.
+>    a security flaw was found in the way nss, the Network Security
+> Services (NSS) set of libraries, performed their initialization (the
+> file path for "pkcs11.txt" configuration file was constructed 
+> incorrectly). When that configuration file was loaded from remote WebDAV 
+> or Samba CIFS share, it could lead to arbitrary security module
+> load, potentially leading to execution of arbitrary code (execution of
+> code from untrusted security module).
+> 
+> Upstream bug report:
+> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
 
-Upstream commit:
-http://git.kernel.org/linus/0837e3242c73566fc1c0196b4ec61779c25ffc93
+Mozilla is a CNA. Any reason you aren't requesting the CVE from them
+since NSS is a Mozilla product? Also, the upstream bug isn't tagged as a
+security issue, so Mozilla might not even know about this problem.
 
-Reference:
-https://bugzilla.redhat.com/767914
+cc'ing Dan Veditz of the Mozilla Security Group for CVE assignment and
+notification.
 
-Thanks, Eugene
+~reed
+
+--
+Reed Loden
+reed@...dloden.com
