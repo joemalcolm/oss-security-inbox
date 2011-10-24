@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/27/2
-Message-ID: <20111227172604.GA11555@albatros>
-Date: Tue, 27 Dec 2011 21:26:04 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Eugene Teo <eteo@...hat.com>
-Cc: kseifried@...hat.com, oss-security@...ts.openwall.com, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/10
+Message-ID: <CAF6rxg=cdFBEpXvRQ5MjJBEdKoxMG0YhMz_o89u5k=ar8H77Qg@mail.gmail.com>
+Date: Mon, 24 Oct 2011 15:12:53 -0400
+From: Eitan Adler <eadler@...ebsd.org>
+To: oss-security@...ts.openwall.com
+Cc: secteam@...ebsd.org, security@...ian.org
+Subject: Re: CVE Request: FreeBSD kernel
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Oct 20, 2011 at 12:26 PM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+>> >    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+> This has been assigned CVE-2011-4062 by MITRE in the mean time.
 
-On Sun, Dec 25, 2011 at 05:53 +0800, Eugene Teo wrote:
-> >> 2: /proc/$PID/{sched,schedstat} information leak
-> >> Vasiliy Kulikov of OpenWall posted a demo exploit.
-> >> http://openwall.com/lists/oss-security/2011/11/05/3
-> >>
-> >> AFAICS no CVE ID was assigned to this?
-...
-> IIRC, it's an issue but there's no resolution as existing code may break.
-> 
-> There are also,
-> /proc/{interrupts, stat}
-> https://lkml.org/lkml/2011/11/7/340
-> 
-> /dev/pts/, /dev/tty*
-> https://lkml.org/lkml/2011/11/7/355
+Something is odd with the MITRE CVE:
 
-Correct, neither of these are fixed yet :-(
+According to http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-4062
+the bug is in the Linux emulation code. However the bug is really in
+the bind(2) system call. There was a different bug in the emulation
+code exposed by fixing the bind vulnerability but the system is
+vulnerable even without linux emulation turned on.
+
+Additionally Debian appears to have copied the incorrect data from the
+MITRE cve (http://www.debian.org/security/2011/dsa-2325)/
 
 
-/proc/$pid/* vuln will be fixed in the following patch series by introducing
-a restricted procfs permission mode:
-
-https://lkml.org/lkml/2011/11/19/41
-https://lkml.org/lkml/2011/12/11/62
-
-Currently these series are in the -mm tree.
-
-Thanks,
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Eitan Adler
+Ports committer
+X11, Bugbusting teams
