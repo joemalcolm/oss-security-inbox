@@ -1,32 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/17
-Message-ID: <113495577.1275521.1310502136503.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 16:22:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: apache mod-auth-external
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/8
+Message-ID: <4EA59F39.7060707@redhat.com>
+Date: Mon, 24 Oct 2011 10:24:09 -0700
+From: Elio Maldonado <emaldona@...hat.com>
+To: Robert Relyea <rrelyea@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Reed Loden <reed@...dloden.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2688.
+On 10/24/2011 10:01 AM, Robert Relyea wrote:
+> On 10/24/2011 03:42 AM, Jan Lieskovsky wrote:
+>> Cc-ing Reed on this post yet, so he could clarify
+>> if Mozilla (Security) Team has already assigned a CVE identifier
+>> for this one or not.
+>>
+>> Reed?
+>>
+>> Thanks&&  Regards, Jan.
+> It's likely the Mozilla security team hasn't assigned a CVE. The issue
+> only affects applications initializing NSS with NSS_NoDB_Init(). Usually
+> the application specifies the actual path to these files. In particular
+> Mozilla apps always specify (though some corner cases it may fall back
+> to NSS_NoDB_Init(). I think that's rare at this point because
+> NSS_NoDB_Init() does not provide any trust information, which all
+> Mozilla apps need.).
+>
+> In general NSS applications on Linux should be initializing with
+> /etc/pki/nssdb.
+>
+> bob
+>
+> NOTE: the patch is in FIPS related code.  Elio, please get a 6.2 Bug
+> created for this ASAP. The patch is already upstream. Component is
+> nss-softokn.
+Done, https://bugzilla.redhat.com/show_bug.cgi?id=748524 and set various 
+flags.
+Will start back-porting the patch to our 3.12.9 softoken right away.
 
-Thanks.
+Elio
+>
+> bob
+>> -- 
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
+>> On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
+>>> Hello Josh, Steve, vendors,
+>>>
+>>> a security flaw was found in the way nss, the Network Security
+>>> Services (NSS) set of libraries, performed their initialization (the
+>>> file path for "pkcs11.txt" configuration file was constructed
+>>> incorrectly). When that configuration file was loaded from remote WebDAV
+>>> or Samba CIFS share, it could lead to arbitrary security module
+>>> load, potentially leading to execution of arbitrary code (execution of
+>>> code from untrusted security module).
+>>>
+>>> Upstream bug report:
+>>> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+>>>
+>>> Other references:
+>>> [2] https://secunia.com/advisories/46557/
+>>> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+>>> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+>>> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
+>>>
+>>> Could you allocate a CVE id for this? (as it looks there isn't one
+>>> for this deficiency yet)
+>>>
+>>> Thank you&&  Regards, Jan.
+>>> -- 
+>>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
--- 
-    JB
-
-
------ Original Message -----
-> Hi,
-> there has been an SQL injection reported in mod-auth-external.
-> http://code.google.com/p/mod-auth-external/issues/detail?id=5
-> http://bugs.debian.org/633637
-> 
-> Can someone assign a CVE id to this?
-> Cheers
-> Nico
-> 
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
