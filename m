@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/21
-Message-ID: <1051637035.451757.1299619488131.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 16:24:48 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: glibc locale escaping issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/11
+Message-ID: <4EA5C0B1.6080008@freebsd.org>
+Date: Mon, 24 Oct 2011 12:46:57 -0700
+From: Colin Percival <cperciva@...ebsd.org>
+To: Eitan Adler <eadler@...ebsd.org>
+CC: oss-security@...ts.openwall.com, security@...ian.org,  secteam@...ebsd.org
+Subject: Re: CVE Request: FreeBSD kernel
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi!
+On 10/24/11 12:12, Eitan Adler wrote:
+> On Thu, Oct 20, 2011 at 12:26 PM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+>>>>    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+>> This has been assigned CVE-2011-4062 by MITRE in the mean time.
 > 
-> Following glibc upstream and gentoo bug reports describe a bug in the
-> way locale command escapes its output.
+> Something is odd with the MITRE CVE:
 > 
-> http://sources.redhat.com/bugzilla/show_bug.cgi?id=11904
-> http://bugs.gentoo.org/show_bug.cgi?id=330923
-> 
-> Gentoo bug points out possible security implications. I've not managed to
-> find an example where the locale command is used in a problematic way and
-> where this may cross trust boundaries, so I wonder if this is worth
-> handling as security fix vs. security enhancement. Comments are welcome.
-> 
-> The issue was fixed in GLSA 201011-01, but its text really only mentions
-> Tavis' issues.
-> 
+> According to http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-4062
+> the bug is in the Linux emulation code. However the bug is really in
+> the bind(2) system call. There was a different bug in the emulation
+> code exposed by fixing the bind vulnerability but the system is
+> vulnerable even without linux emulation turned on.
 
-I think this deserves an ID: CVE-2011-1095
+Indeed, the text on the CVE page is entirely bogus.  I'd recommend using this
+text, from our advisory:
+> When a UNIX-domain socket is attached to a location using the bind(2)
+> system call, the length of the provided path is not validated.  Later,
+> when this address was returned via other system calls, it is copied into
+> a fixed-length buffer.
 
-The documentation clearly states that the output of this command will be
-properly quoted. Even if we can't find a bad usage, there is quite likely a
-shell script doing this in the universe.
+The places where the FreeBSD advisory mentions linux emulation relate only to
+the non-security bugfix which we rolled into the patch for the sake of avoiding
+breakage.
 
-I think the line between fix vs enhancement is crossed when we're talking
-about documented behavior.
-
-Thanks.
+(Is there anyone on the list who can fix the CVE description?  If not, I'll
+poke the CVE folks directly.)
 
 -- 
-    JB
+Colin Percival
+Security Officer, FreeBSD | freebsd.org | The power to serve
+Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
