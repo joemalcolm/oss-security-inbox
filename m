@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/10
-Message-ID: <9d65396b-ae9b-44ee-a5fc-1375b075a103@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:58:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: Tahoe-LAFS and atop
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/1
+Message-ID: <4EA4EA6E.7020100@redhat.com>
+Date: Mon, 24 Oct 2011 10:02:46 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
+On 10/22/2011 08:51 AM, Solar Designer wrote:
+>
+> I investigated the non-crashing build further.  No, adding more
+> directories did not cause a crash either.  What happens is that lstat()
+> starts failing with ENAMETOOLONG shortly _after_ the overflow occurs.
+> This happens to limit the largest overflow size.  If "dirs" is not yet
+> overwritten by this point (was not reached by the overflow), then the
+> program may proceed without crashing and without descending to deeper
+> directories (thus not overflowing the buffer even further).  So
+> different builds may be affected to a different extent, depending on
+> relative placement of variables in .bss.  The behavior may also vary by
+> kernel version, though (when lstat() starts to fail is a property of the
+> kernel, whereas NAMELEN in hardlink.c is fixed).  I am able to make this
+> build crash with "*** buffer overflow detected ***" on the strcat(),
+> though, by carefully adjusting the directory name lengths (but that's
+> relatively uninteresting).
+>
 
+I think this is exactly what i hit, when testing on some Fedora/RHEL 
+machines.
 
------ Original Message -----
-> Hi,
-> please assign CVE IDs for the following issues:
-> 
-> 1. Tahoe-LAFS
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=641540
+Kernel defines the following:
+#define PATH_MAX        4096    /* # chars in a path name including nul */
 
-This appears to be an unauthorized user can delete files type of issue.
+And in the lstat implementation:
 
-Use CVE-2011-3617
+      if (dentry->d_name.len > NAME_MAX)
+                 return ERR_PTR(-ENAMETOOLONG);
 
-
-> 
-> 2. atop
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622794
-> 
-
-This is an insecure temporary file use flaw.
-
-Use CVE-2011-3618
-
-Thanks.
 
 -- 
-    JB
+Huzaifa Sidhpurwala / Red Hat Security Response Team
