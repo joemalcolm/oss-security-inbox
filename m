@@ -1,59 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/7
-Message-ID: <4D6497DC.2000701@redhat.com>
-Date: Wed, 23 Feb 2011 13:15:08 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/5
+Message-ID: <20111024034027.278f5144@angelo.pretender.us>
+Date: Mon, 24 Oct 2011 03:40:27 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Cc: jlieskov@...hat.com, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, Dan Veditz <dveditz@...illa.com>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-On 02/23/2011 01:11 PM, Eugene Teo wrote:
-> On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
->> I originally started writing this as a response to the recent CVE
->> requests for issues in partition handling, but thought it might be a
->> useful discussion on its own. I was wondering if there are any
->> clear-cut policies on issues involving physical access, since these
->> can be very difficult in terms of assigning blame.
->>
->> For example, many Linux distributions will auto-mount filesystems on
->> removable storage, often going so far as to load corresponding kernel
->> modules for filesystems that aren't compiled in or don't already have
->> an LKM loaded. Sometimes, this will happen even if the screen is
->> locked.
->>
->> Incidentally, many Linux filesystem implementations don't have
->> especially robust error handling for failures during attempts to mount
->> corrupt filesystems. As an example, I have a deliberately corrupted
->> btrfs filesystem that triggers a BUG() if you attempt to mount it. I
->> formatted a USB stick with this filesystem, so now I have a USB stick
->> that will panic the kernels of distributions that support
->> auto-mounting, in some cases even when the screen is locked.
->>
->> Should this be considered a vulnerability? Probably. But what should
->> be fixed? Should auto-mounting be disabled entirely? Is it no longer
->> a vulnerability if auto-mounting is disabled only when the screen is
->> locked? Should all filesystems have graceful error handling for every
->> possible edge case that can occur when dealing with corruption?
->>
->> I'd be interested to hear opinions on this. And depending on how the
->> discussion goes, I'd be happy to provide more details on specific
->> cases, such as the btrfs example.
->
->  From the security response perspective, I will likely classify them as
-> security bugs but with a /very/ low impact. The attacking party must
-> already have some form of physical access to the affected system, or the
-> attack must require some social engineering to trick the user to mount a
-> corrupted file system using a portable media.
->
-> It will be hard to break existing user experience if we were to disable
+On Mon, 24 Oct 2011 12:30:23 +0200
+Jan Lieskovsky <jlieskov@...hat.com> wrote:
 
-It will be hard *not* to... :)
+>    a security flaw was found in the way nss, the Network Security
+> Services (NSS) set of libraries, performed their initialization (the
+> file path for "pkcs11.txt" configuration file was constructed 
+> incorrectly). When that configuration file was loaded from remote WebDAV 
+> or Samba CIFS share, it could lead to arbitrary security module
+> load, potentially leading to execution of arbitrary code (execution of
+> code from untrusted security module).
+> 
+> Upstream bug report:
+> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
 
-> auto-mounting entirely, but it makes sense to disable it if the screen
-> is locked. I'm not sure if this will affect how we classify such bugs.
-> I'm happy to hear more thoughts on this.
+Mozilla is a CNA. Any reason you aren't requesting the CVE from them
+since NSS is a Mozilla product? Also, the upstream bug isn't tagged as a
+security issue, so Mozilla might not even know about this problem.
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+cc'ing Dan Veditz of the Mozilla Security Group for CVE assignment and
+notification.
+
+~reed
+
+--
+Reed Loden
+reed@...dloden.com
