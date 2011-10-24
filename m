@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/12
-Message-ID: <20110729163415.GW1476@redhat.com>
-Date: Fri, 29 Jul 2011 10:34:16 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/2
+Message-ID: <4EA51A3C.1030009@redhat.com>
+Date: Mon, 24 Oct 2011 15:56:44 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE mistake in libsoup release notes
+Subject: Re: CVE Request -- kernel: ext4: ext4_ext_insert_extent() kernel oops
 Content-Type: text/plain; charset=utf-8
 
-Upstream mistakenly used the wrong CVE name in the recent libsoup
-releases.  They should have used CVE-2011-2524, but used CVE-2011-2054
-instead.
+On 10/21/2011 09:24 PM, Petr Matousek wrote:
+> A flaw was found in the way splitting two extents in
+> ext4_ext_convert_to_initialized() worked. Althrough ex has been updated
+> in memory, it is not dirtied both in ext4_ext_convert_to_initialized()
+> and ext4_ext_insert_extent(). The disk layout is corrupted. Then it
+> will meet with a BUG_ON() when writting at the start of that extent
+> again.
+> 
+> Local unprivileged users can use this flaw to crash the system when ext4
+> filesystem is in use.
+> 
+> Introduced in:
+> 56055d3ae4cc7fa6d2b10885f20269de8a989ed7
+> 
+> Upstream fix:
+> 667eff35a1f56fa74ce98a0c7c29a40adc1ba4e3
+> 
+> Credits:
+> Zheng Liu
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=747942
+> 
+> Thanks,
 
-I don't know who's pool CVE-2011-2054 might be in, but I would recommend
-rejecting that CVE name and duping it against CVE-2011-2524.
+Use CVE-2011-3638.
 
-I've seen both Gentoo and Novell reference the wrong CVE name in
-bugzilla entries, so I thought I should bring this up.
-
-See:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=720509#c15 and it's
-follow-up comment from upstream (they've made the appropriate changes in
-git now to reflect the correct CVE name).
-
-So CVE-2011-2524 is the correct CVE, and CVE-2011-2054 is the _wrong_
-CVE.
-
-Thanks.
-
+Thanks, Eugene
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Eugene Teo / Red Hat Security Response Team
