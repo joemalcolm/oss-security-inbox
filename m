@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/22/3
-Message-ID: <656741753.185619.1303463295393.JavaMail.root@zmail05.collab.prod.int.phx2.redhat.com>
-Date: Fri, 22 Apr 2011 05:08:15 -0400 (EDT)
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/2
+Message-ID: <4EA51A3C.1030009@redhat.com>
+Date: Mon, 24 Oct 2011 15:56:44 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- qemu-kvm: virtio-blk: heap buffer overflow caused by unaligned requests
+Subject: Re: CVE Request -- kernel: ext4: ext4_ext_insert_extent() kernel oops
 Content-Type: text/plain; charset=utf-8
 
-"It was found that virtio-blk driver in qemu-kvm did not properly validate 
-read and write requests from the guest. A privileged guest user could use
-this flaw to cause heap corruption, causing the guest to crash (denial of
-service) or, possibly, resulting in the privileged guest user escalating
-their privileges on the host."
+On 10/21/2011 09:24 PM, Petr Matousek wrote:
+> A flaw was found in the way splitting two extents in
+> ext4_ext_convert_to_initialized() worked. Althrough ex has been updated
+> in memory, it is not dirtied both in ext4_ext_convert_to_initialized()
+> and ext4_ext_insert_extent(). The disk layout is corrupted. Then it
+> will meet with a BUG_ON() when writting at the start of that extent
+> again.
+> 
+> Local unprivileged users can use this flaw to crash the system when ext4
+> filesystem is in use.
+> 
+> Introduced in:
+> 56055d3ae4cc7fa6d2b10885f20269de8a989ed7
+> 
+> Upstream fix:
+> 667eff35a1f56fa74ce98a0c7c29a40adc1ba4e3
+> 
+> Credits:
+> Zheng Liu
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=747942
+> 
+> Thanks,
 
-References:
-http://www.spinics.net/lists/kvm/msg51877.html
-https://bugzilla.redhat.com/show_bug.cgi?id=698906
+Use CVE-2011-3638.
 
-Upstream commit:
-http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=52c050236eaa4f0b5e1d160cd66dc18106445c4d
-
-Thanks,
---
-Petr Matousek / Red Hat Security Response Team
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
