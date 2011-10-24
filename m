@@ -1,16 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/13
-Message-ID: <20110403215128.GC9516@openwall.com>
-Date: Mon, 4 Apr 2011 01:51:28 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/3
+Message-ID: <4EA52CF0.8060009@redhat.com>
+Date: Mon, 24 Oct 2011 17:16:32 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: kernel; CVE-2011-2942 and CVE-2011-3209
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 08:51:43PM +0200, Thijs Kinkhorst wrote:
-> I am on the Debian security team and was part of the vendor-sec list through 
-> our exploder. Please add me to the new list.
+CVE-2011-2942; In the br_forward_finish() function, we may call kfree()
+on the skb we are forwarding, and so, after it, we should not
+dereference skb->dev pointer. With the fix, we save skb->dev before
+calling the br_forward_finish() function, so that we can use it
+afterwards. It's a regression from a commit that we have backported to
+our kernels. It doesn't affect the upstream kernel as the code was
+rewritten.
 
-Added.  You're one of two contacts for Debian currently on the new list.
+https://bugzilla.redhat.com/CVE-2011-2942
+https://www.redhat.com/security/data/cve/CVE-2011-2942.html
 
-Alexander
+CVE-2011-3209; divide error issue in the clock implementation.
+
+http://git.kernel.org/linus/f8bd2258e2d520dff28c855658bd24bdafb5102d
+https://bugzilla.redhat.com/CVE-2011-3209
+https://www.redhat.com/security/data/cve/CVE-2011-3209.html
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
