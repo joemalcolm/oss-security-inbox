@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/1
-Message-ID: <4EA91FEF.1030408@redhat.com>
-Date: Thu, 27 Oct 2011 17:10:07 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: crypto: ghash: null pointer deref if no key is set
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/4
+Message-ID: <4EA53E3F.8020103@redhat.com>
+Date: Mon, 24 Oct 2011 12:30:23 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>
+Subject: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-Description from the commit: The ghash_update function passes a pointer
-to gf128mul_4k_lle which will be NULL if ghash_setkey is not called or
-if the most recent call to ghash_setkey failed to allocate memory.  This
-causes an oops.  Fix this up by returning an error code in the null case.
+Hello Josh, Steve, vendors,
 
-This is trivially triggered from unprivileged userspace through the
-AF_ALG interface by simply writing to the socket without setting a key.
+   a security flaw was found in the way nss, the Network Security
+Services (NSS) set of libraries, performed their initialization (the
+file path for "pkcs11.txt" configuration file was constructed 
+incorrectly). When that configuration file was loaded from remote WebDAV 
+or Samba CIFS share, it could lead to arbitrary security module
+load, potentially leading to execution of arbitrary code (execution of
+code from untrusted security module).
 
-The ghash_final function has a similar issue, but triggering it requires
-a memory allocation failure in ghash_setkey _after_ at least one
-successful call to ghash_update.
+Upstream bug report:
+[1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=749475
-https://secunia.com/advisories/46584/
-https://bugs.gentoo.org/show_bug.cgi?id=388581
+Other references:
+[2] https://secunia.com/advisories/46557/
+[3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+[4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
 
-Upstream commit:
-http://git.kernel.org/linus/7ed47b7d142ec99ad6880bbbec51e9f12b3af74c
+Could you allocate a CVE id for this? (as it looks there isn't one
+for this deficiency yet)
 
-+config CRYPTO_GHASH
-was added in commit 2cdc6899, v2.6.32-rc1.
-
-Thanks, Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
