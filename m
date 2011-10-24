@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/12/3
-Message-ID: <20111012100931.GA8290@albatros>
-Date: Wed, 12 Oct 2011 14:09:32 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Reuben Hawkins <reubenhwk@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/11
+Message-ID: <4EA5C0B1.6080008@freebsd.org>
+Date: Mon, 24 Oct 2011 12:46:57 -0700
+From: Colin Percival <cperciva@...ebsd.org>
+To: Eitan Adler <eadler@...ebsd.org>
+CC: oss-security@...ts.openwall.com, security@...ian.org,  secteam@...ebsd.org
+Subject: Re: CVE Request: FreeBSD kernel
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 11, 2011 at 23:26 -0700, Reuben Hawkins wrote:
-> On Sat, Oct 8, 2011 at 9:55 AM, Vasiliy Kulikov <segoon@...nwall.com> wrote:
-> > Crap, thank you for noticing it, guys.  The fix should be:
-> >
-> > https://github.com/reubenhwk/radvd/commit/7a1471b62da88373e8f4209d503307c5d841b81f
-> >
-> > Now, "", "..", "." and filenames with "/" inside are denied.
+On 10/24/11 12:12, Eitan Adler wrote:
+> On Thu, Oct 20, 2011 at 12:26 PM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+>>>>    http://security.freebsd.org/advisories/FreeBSD-SA-11:05.unix.asc
+>> This has been assigned CVE-2011-4062 by MITRE in the mean time.
+> 
+> Something is odd with the MITRE CVE:
+> 
+> According to http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-4062
+> the bug is in the Linux emulation code. However the bug is really in
+> the bind(2) system call. There was a different bug in the emulation
+> code exposed by fixing the bind vulnerability but the system is
+> vulnerable even without linux emulation turned on.
 
-In case someone didn't fully track the discussion thread, I'll sum it up -
+Indeed, the text on the CVE page is entirely bogus.  I'd recommend using this
+text, from our advisory:
+> When a UNIX-domain socket is attached to a location using the bind(2)
+> system call, the length of the provided path is not validated.  Later,
+> when this address was returned via other system calls, it is copied into
+> a fixed-length buffer.
 
-In the original patch the variable name is typoed/confused - the check
-should be against "iface" instead of "name".  The check against "name"
-is totally wrong as it checks a static hint string, which always passes
-the check.
+The places where the FreeBSD advisory mentions linux emulation relate only to
+the non-security bugfix which we rolled into the patch for the sake of avoiding
+breakage.
 
-The confused blacklisted iface set is a bug, but not a security bug;
-the confused variable name is indeed a security bug (not a flaw per se,
-but it greatly weakens the privsep model).
-
-
-Thanks to Solar Designer for pointing out that this thing is probably
-not clear to everybody.
+(Is there anyone on the list who can fix the CVE description?  If not, I'll
+poke the CVE folks directly.)
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Colin Percival
+Security Officer, FreeBSD | freebsd.org | The power to serve
+Founder / author, Tarsnap | tarsnap.com | Online backups for the truly paranoid
