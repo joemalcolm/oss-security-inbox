@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/10
-Message-ID: <20110621180916.GK1952@redhat.com>
-Date: Tue, 21 Jun 2011 12:09:16 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/9
+Message-ID: <20111024181944.GH1540@redhat.com>
+Date: Mon, 24 Oct 2011 12:19:44 -0600
 From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: CVE request: phpldapadmin <= 1.2.1.1 XSS and and code injection flaws
 Content-Type: text/plain; charset=utf-8
 
-* [2011-06-21 21:55:26 +0400] Solar Designer wrote:
+Two flaws were found in phpldapadmin <= 1.2.1.1 that can lead to an XSS
+or code injection:
 
->On Tue, Jun 21, 2011 at 10:50:18AM -0600, Vincent Danen wrote:
->> So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
->> know why that is?
->
->It is based on the same code, but the author made changes when merging
->the code.  Specifically, he switched to using "unsigned char *".
->
->> I can't promise I will have time to look at it, but I will try if I can
->> find the time.
->
->Thanks!
+1) Input appended to the URL in cmd.php (when "cmd" is set to "_debug")
+is not properly sanitised before being returned to the user. This can be
+exploited to execute arbitrary HTML and script code in a user's browser
+session in context of an affected site.
 
-Ok, so taking a quick look at php-suhosin, we have:
+2) Input passed to the "orderby" parameter in cmd.php (when "cmd" is set
+to "query_engine", "query" is set to "none", and "search" is set to e.g.
+"1") is not properly sanitised in lib/functions.php before being used in
+a "create_function()" function call. This can be exploited to inject and
+execute arbitrary PHP code.
 
-...
-  61 typedef unsigned int BF_word;
-...
-558     BF_word tmp;
-559 
-560     for (i = 0; i < BF_N + 2; i++) {
-561         tmp = 0;
-562         for (j = 0; j < 4; j++) {
-563             tmp <<= 8;
-564             tmp |= *ptr;
+Could CVEs be assigned to these please?
 
-I'm assuming the above means it is vulnerable (unsigned int vs unsigned
-char).
+References:
+
+http://sourceforge.net/tracker/index.php?func=detail&aid=3417184&group_id=61828&atid=498546
+http://www.exploit-db.com/exploits/18021/
+https://secunia.com/advisories/46551/
+http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=htdocs/cmd.php;h=0ddf0044355abc94160be73122eb34f3e48ab2d9;hp=34f3848fe4a6d4c00c7c568afa81f59579f5d724;hb=64668e882b8866fae0fa1b25375d1a2f3b4672e2;hpb=caeba72171ade4f588fef1818aa4f6243a68b85e
+http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=lib/functions.php;h=eb160dc9f7d74e563131e21d4c85d7849a0c6638;hp=19fde9974d4e5eb3bfac04bb223ccbefdb98f9a0;hb=76e6dad13ef77c5448b8dfed1a61e4acc7241165;hpb=5d4245f93ae6f065e7535f268e3cd87a23b07744
 
 -- 
 Vincent Danen / Red Hat Security Response Team 
