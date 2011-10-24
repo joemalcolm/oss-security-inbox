@@ -1,88 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/2
-Message-ID: <CANbgwsFy5SQO_Q7YwyMJmjKA3DOVzdY-PtoaOjV4eSHD+sVwqQ@mail.gmail.com>
-Date: Sat, 30 Jul 2011 22:06:17 +0530
-From: Abhijeet Patil <getabhijeetpatil@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/7
+Message-ID: <4EA599EC.9080706@REDHAT.COM>
+Date: Mon, 24 Oct 2011 10:01:32 -0700
+From: Robert Relyea <rrelyea@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CFP open for ClubHack2011
+CC: Jan Lieskovsky <jlieskov@...hat.com>, Reed Loden <reed@...dloden.com>, "Steven M. Christey" <coley@...us.mitre.org>, Elio Maldonado <emaldona@...hat.com>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-Its time for hackers across the globe to gather in India.
-ClubHack announces its CFP open for ClubHack2011. See
-http://clubhack.com/2011/cfp
+On 10/24/2011 03:42 AM, Jan Lieskovsky wrote:
+>
+> Cc-ing Reed on this post yet, so he could clarify
+> if Mozilla (Security) Team has already assigned a CVE identifier
+> for this one or not.
+>
+> Reed?
+>
+> Thanks && Regards, Jan.
 
-ClubHack2011 is expecting a good deep knowledge technical
-presentations/demonstrations on topics from the world of Information
-Security. These presentations are expected to be of 40 minutes each. The
-schedule time for each presenter would be 50 minutes out of which 40 minutes
-are for the presentation & 10 for the question-answer sessions. We’d request
-you to submit the papers keeping the time constraint in mind.
+It's likely the Mozilla security team hasn't assigned a CVE. The issue
+only affects applications initializing NSS with NSS_NoDB_Init(). Usually
+the application specifies the actual path to these files. In particular
+Mozilla apps always specify (though some corner cases it may fall back
+to NSS_NoDB_Init(). I think that's rare at this point because
+NSS_NoDB_Init() does not provide any trust information, which all
+Mozilla apps need.).
 
-:: Event ::
-Date: 3rd & 4th December (As Usual the first weekend of December)
+In general NSS applications on Linux should be initializing with
+/etc/pki/nssdb.
 
+bob
 
-:: Scope ::
-(includes, but not limited to)
+NOTE: the patch is in FIPS related code.  Elio, please get a 6.2 Bug
+created for this ASAP. The patch is already upstream. Component is
+nss-softokn.
 
-# Cloud Application Security
-# Mobile Security (cellular technologies)
-# Mobile platform attacks (iOS, Android, BB, Win7, Symbian)
-# Cyber Intelligence
-# Cyber warfare
-# Hardware mods
-# Critical Infrastructure Attack & Protection
-# Protocol based vulnerability in networks and computers
-# Firewall Evasion techniques
-# Data Recovery and Incident Response
-# WLAN and Bluetooth Security
-# Cryptography and Cryptanalysis
-# Computer forensics
-# Open source hacking toolkit
-# Cyber Crime & law
-
-:: Exclusion ::
-# Sales Pitch
-
-
-:: Deadlines ::
-Opening: 30th July 2011
-Abstract Submission: 15th October 2011
-Announcement of selected papers: 5th November 2011
-Full Paper Submission: 12th November 2011
-
-:: Speakers' Privileges ::
-# 100% Travel reimbursement of economy return tickets for all Indian speaker
-# Travel arrangement (not reimbursement) for all foreign speakers
-# Accommodation for 2
-# Complementary passes for event & party for 2
-# Gift hampers & freebies
-
-
-:: Sponsors ::
-That reminds, if you are interested in supporting the event in any
-possible way, please write to us sponsor@...bhack.com
-
-
-:: Other details ::
-All other details are available at
-Event website: http://clubhack.com/2011.
-
-See previous years websites at
-    http://clubhack.com/2007
-    http://clubhack.com/2008
-    http://clubhack.com/2009
-    http://clubhack.com/2010
+bob
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
+>> Hello Josh, Steve, vendors,
+>>
+>> a security flaw was found in the way nss, the Network Security
+>> Services (NSS) set of libraries, performed their initialization (the
+>> file path for "pkcs11.txt" configuration file was constructed
+>> incorrectly). When that configuration file was loaded from remote WebDAV
+>> or Samba CIFS share, it could lead to arbitrary security module
+>> load, potentially leading to execution of arbitrary code (execution of
+>> code from untrusted security module).
+>>
+>> Upstream bug report:
+>> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+>>
+>> Other references:
+>> [2] https://secunia.com/advisories/46557/
+>> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+>> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+>> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
+>>
+>> Could you allocate a CVE id for this? (as it looks there isn't one
+>> for this deficiency yet)
+>>
+>> Thank you && Regards, Jan.
+>> -- 
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
 
-:: Submission ::
-Check submission details at http://clubhack.com/2011/cfp & send it to
-cfp@...bhack.com
 
-
-See you in India this winter.
-
-Thanks
-team ClubHack
-
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6276 bytes)
