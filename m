@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/11
-Message-ID: <20110222204712.GA7594@kroah.com>
-Date: Tue, 22 Feb 2011 12:47:12 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/1
+Message-ID: <4EA4EA6E.7020100@redhat.com>
+Date: Mon, 24 Oct 2011 10:02:46 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 22, 2011 at 03:44:29PM -0500, Josh Bressers wrote:
-> 
-> 
-> ----- Original Message -----
-> > Reported by Timo Warns, "Validate number of blocks in map and remove
-> > redundant variable."
-> > 
-> > http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
-> > https://bugzilla.redhat.com/show_bug.cgi?id=679282
-> > 
-> 
-> I don't understand the security implication of this bug. Can you explain it?
+On 10/22/2011 08:51 AM, Solar Designer wrote:
+>
+> I investigated the non-crashing build further.  No, adding more
+> directories did not cause a crash either.  What happens is that lstat()
+> starts failing with ENAMETOOLONG shortly _after_ the overflow occurs.
+> This happens to limit the largest overflow size.  If "dirs" is not yet
+> overwritten by this point (was not reached by the overflow), then the
+> program may proceed without crashing and without descending to deeper
+> directories (thus not overflowing the buffer even further).  So
+> different builds may be affected to a different extent, depending on
+> relative placement of variables in .bss.  The behavior may also vary by
+> kernel version, though (when lstat() starts to fail is a property of the
+> kernel, whereas NAMELEN in hardlink.c is fixed).  I am able to make this
+> build crash with "*** buffer overflow detected ***" on the strcat(),
+> though, by carefully adjusting the directory name lengths (but that's
+> relatively uninteresting).
+>
 
-Incorrectly formed mac partition tables could cause bad things to happen
-when it was automatically scanned after plugging in a device with this
-type of partition table on it.
+I think this is exactly what i hit, when testing on some Fedora/RHEL 
+machines.
 
-Hope this helps,
+Kernel defines the following:
+#define PATH_MAX        4096    /* # chars in a path name including nul */
 
-greg k-h
+And in the lstat implementation:
+
+      if (dentry->d_name.len > NAME_MAX)
+                 return ERR_PTR(-ENAMETOOLONG);
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
