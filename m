@@ -1,62 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/12/8
-Message-ID: <1606538479.1272180.1310495267637.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 12 Jul 2011 14:27:47 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests; issues fixed in MySQL 5.1.52
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/8
+Message-ID: <4EA59F39.7060707@redhat.com>
+Date: Mon, 24 Oct 2011 10:24:09 -0700
+From: Elio Maldonado <emaldona@...hat.com>
+To: Robert Relyea <rrelyea@...hat.com>
+CC: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Reed Loden <reed@...dloden.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-Did these ever get IDs? I've been away and don't want to dupe these.
+On 10/24/2011 10:01 AM, Robert Relyea wrote:
+> On 10/24/2011 03:42 AM, Jan Lieskovsky wrote:
+>> Cc-ing Reed on this post yet, so he could clarify
+>> if Mozilla (Security) Team has already assigned a CVE identifier
+>> for this one or not.
+>>
+>> Reed?
+>>
+>> Thanks&&  Regards, Jan.
+> It's likely the Mozilla security team hasn't assigned a CVE. The issue
+> only affects applications initializing NSS with NSS_NoDB_Init(). Usually
+> the application specifies the actual path to these files. In particular
+> Mozilla apps always specify (though some corner cases it may fall back
+> to NSS_NoDB_Init(). I think that's rare at this point because
+> NSS_NoDB_Init() does not provide any trust information, which all
+> Mozilla apps need.).
+>
+> In general NSS applications on Linux should be initializing with
+> /etc/pki/nssdb.
+>
+> bob
+>
+> NOTE: the patch is in FIPS related code.  Elio, please get a 6.2 Bug
+> created for this ASAP. The patch is already upstream. Component is
+> nss-softokn.
+Done, https://bugzilla.redhat.com/show_bug.cgi?id=748524 and set various 
+flags.
+Will start back-porting the patch to our 3.12.9 softoken right away.
 
-Thanks.
+Elio
+>
+> bob
+>> -- 
+>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>>
+>> On 10/24/2011 12:30 PM, Jan Lieskovsky wrote:
+>>> Hello Josh, Steve, vendors,
+>>>
+>>> a security flaw was found in the way nss, the Network Security
+>>> Services (NSS) set of libraries, performed their initialization (the
+>>> file path for "pkcs11.txt" configuration file was constructed
+>>> incorrectly). When that configuration file was loaded from remote WebDAV
+>>> or Samba CIFS share, it could lead to arbitrary security module
+>>> load, potentially leading to execution of arbitrary code (execution of
+>>> code from untrusted security module).
+>>>
+>>> Upstream bug report:
+>>> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+>>>
+>>> Other references:
+>>> [2] https://secunia.com/advisories/46557/
+>>> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+>>> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+>>> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
+>>>
+>>> Could you allocate a CVE id for this? (as it looks there isn't one
+>>> for this deficiency yet)
+>>>
+>>> Thank you&&  Regards, Jan.
+>>> -- 
+>>> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
--- 
-    JB
-
------ Original Message -----
-> Vincent Danen wrote:
-> > I see the following changes as fixed in MySQL 5.1.52, but cannot
-> > find
-> > any CVEs for them:
-> >
-> > InnoDB Storage Engine: Security Fix: Issuing TRUNCATE TABLE and
-> > examining the same table's information in the INFORMATION_SCHEMA
-> > database at the same time could cause a crash in the debug version
-> > of
-> > the server. (Bug #54678)
-> >
-> > Security Fix: The server crashed for assignment of values of types
-> > other
-> > than Geometry to items of type GeometryCollection (MultiPoint,
-> > MultiCurve, MultiSurface). Now the server checks the field type and
-> > fails with bad geometry value if it detects incorrect parameters.
-> > (Bug
-> > #55531)
-> >
-> > Security Fix: EXPLAIN EXTENDED caused a server crash with some
-> > prepared
-> > statements. (Bug #54494)
-> >
-> > Security Fix: In prepared-statement mode, EXPLAIN for a SELECT from
-> > a
-> > derived table caused a server crash. (Bug #54488)
-> >
-> > There are a whole bunch of other crash-type bugs corrected in 5.1.52
-> > that upstream did not explicitly flag as security, which might be
-> > considered security-relevant as well:
-> >
-> > http://dev.mysql.com/doc/refman/5.1/en/news-5-1-52.html
-> 
-> Looks like this CVE request got lost.
-> 
-> cu
-> Ludwig
-> 
-> --
-> (o_ Ludwig Nussel
-> //\
-> V_/_ http://www.suse.de/
-> SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix
-> Imendörffer, HRB 16746 (AG Nürnberg)
