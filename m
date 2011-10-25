@@ -1,95 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/27/5
-Message-ID: <2025608634.170697.1296160616674.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 27 Jan 2011 15:36:56 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/4
+Message-ID: <4EA71BCC.2040907@redhat.com>
+Date: Tue, 25 Oct 2011 14:27:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request:Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
+CC: Jamie Strandboge <jamie@...onical.com>, thierry@...nstack.org, security <security@...ntu.com>
+Subject: Re: CVE request: nova
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0526. Thanks.
+On 10/25/2011 11:11 AM, Jamie Strandboge wrote:
+> A flaw was discovered in OpenStack nova[1] which allows someone with
+> access to an EC2_ACCESS_KEY (equivalent to a username) to obtain the
+> EC2_SECRET_KEY (equivalent to a password). While the EC2_ACCESS_KEY is
+> typically not public, if the user exposes it via http or tools that
+> allow MITM over https, then an attacker could obtain the EC2_SECRET_KEY
+> easily. An attacker could also presumably brute force values for
+> EC2_ACCESS_KEY.
+>
+> Fix:
+> https://review.openstack.org/#change,794
+>
+> [1]https://launchpad.net/bugs/868360
+>
+Please use CVE-2011-4076 for this issue
 
 -- 
-    JB
 
------ Original Message -----
-> ===========================================
-> Vanilla Forums 2.0.16 <= Cross Site Scripting Vulnerability
-> ===========================================
-> 
-> 
-> 1. OVERVIEW
-> 
-> The Vanilla Forums 2.0.16 and lower versions were vulnerable to Cross
-> Site Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Vanilla Forums are open-source, standards-compliant, customizable
-> discussion forums.
-> It is specially made to help small communities grow larger through SEO
-> mojo, totally customizable social tools,
-> and great user experience. Vanilla is also built with integration at
-> the forefront, so it can
-> seamlessly integrate with your existing website, blog, or custom-built
-> application.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The 'Target' parameter was not properly sanitized after user logs in,
-> which allows attacker to conduct Cross Site Scripting attack.
-> An attacker could prepare a link in a forum post that includes a link
-> to a file which seems to require authentication.
-> Upon logging in, user will get XSSed.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.0.16 and lower
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://vanilla/index.php?p=/entry/signin&Target=javascript:alert(document.cookie)//http://
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to Vanilla Forums 2.0.17 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> Vanilla Forums Development Team
-> http://vanillaforums.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2010-12-14: notified vendor
-> 2011-01-18: vendor released fix
-> 2011-01-27: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[vanilla_forums-2.0.16]_cross_site_scripting
-> What XSS Can Do:
-> http://yehg.net/lab/pr0js/view.php/What%20XSS%20Can%20Do.pdf
-> XSS FAQs: http://www.cgisecurity.com/articles/xss-faq.shtml
-> XSS (wiki): http://en.wikipedia.org/wiki/Cross-site_scripting
-> XSS (owasp): http://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-01-27]
+-Kurt Seifried / Red Hat Security Response Team
+
