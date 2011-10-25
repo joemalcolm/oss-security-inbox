@@ -1,16 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/4
-Message-ID: <20111225144135.GB571@foo.fgeek.fi>
-Date: Sun, 25 Dec 2011 16:41:35 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/1
+Message-ID: <57e84e1f-2b6f-4de0-b6b4-6e76a76be525@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Oct 2011 10:32:56 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Joomla com_mailto automated mail timeout bypass (2009)
+Cc: Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Reed Loden <reed@...dloden.com>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-Can I get CVE-identifier assigned for this issue:
+Reed asked me to give this a CVE id.
 
-http://developer.joomla.org/security/news/303-20090723-core-com-mailto-timeout-issue.html
-http://osvdb.org/show/osvdb/56714
-http://secunia.com/advisories/36097/
+Please use CVE-2011-3640
 
-- Henri Salo
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
+> 
+>    a security flaw was found in the way nss, the Network Security
+> Services (NSS) set of libraries, performed their initialization (the
+> file path for "pkcs11.txt" configuration file was constructed
+> incorrectly). When that configuration file was loaded from remote
+> WebDAV
+> or Samba CIFS share, it could lead to arbitrary security module
+> load, potentially leading to execution of arbitrary code (execution
+> of
+> code from untrusted security module).
+> 
+> Upstream bug report:
+> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+> 
+> Other references:
+> [2] https://secunia.com/advisories/46557/
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
+> 
+> Could you allocate a CVE id for this? (as it looks there isn't one
+> for this deficiency yet)
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
