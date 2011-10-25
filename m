@@ -1,49 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/1
-Message-Id: <20110424164429.c07d917f.michael.s.gilbert@gmail.com>
-Date: Sun, 24 Apr 2011 16:44:29 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/1
+Message-ID: <57e84e1f-2b6f-4de0-b6b4-6e76a76be525@zmail01.collab.prod.int.phx2.redhat.com>
+Date: Tue, 25 Oct 2011 10:32:56 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Elio Maldonado <emaldona@...hat.com>, Robert Relyea <rrelyea@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Reed Loden <reed@...dloden.com>
+Subject: Re: CVE Request -- nss: Did honour /pkcs11.txt and /secmod.db files by initialization
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
+Reed asked me to give this a CVE id.
 
-> On Wed, Apr 20, 2011 at 10:19:01PM -0700, Drew Yao wrote:
-> > It seems that you're not opposed to Apple's inclusion on the list. Would you reconsider and allow us on the list?
+Please use CVE-2011-3640
+
+Thanks.
+
+-- 
+    JB
+
+----- Original Message -----
+> Hello Josh, Steve, vendors,
 > 
-> Personally, I'd be happy to invite Apple, *BSD's, and Google security
-> folks to have a sit at the table.  Since Google doesn't release a Linux
-> distro for others to use, this precedent probably means subscribing
-> MontaVista and Wind River without any requirements on them making
-> advisories, updates, or whatever public.
-
-I know that there is increasing momentum for the new setup, but I
-think this solution is wrong.  Its starting to look a lot like the old
-vendor-sec (too many participants), and drawing an appropriate line for
-participation is impossible and seems wrong.
-
-The ideal solution to the "too many eyes" problem would be to empower
-the researcher (issue submitter) to choose exactly which eyes they want
-involved.  A way to achieve this would be a ml that accepts only
-encrypted messages for participants (participation would be unlimited)
-and an "archive participant".  The list of participants is open to all
-(for the purpose of the researcher seeing which keys they want to
-encrypt for).
-
-When sending a message to the list, the researcher has to encrypt the
-message for archive key and at least one other valid participant (if
-not the message should be rejected, and instructions sent with a list of
-valid participant key fingerprints). In order to make sure the message
-was validly received, a checksum of the message should be published to
-an open list (probably oss-sec).  The researcher can check this right
-away.
-
-Finally, the cleartext message should be posted to an open list after a
-period of time (probably two months max) so that the entire community
-can see and validate the closed discussion .  This eliminates the
-possibility of a secret cabal forming or at least empowers the outside
-world to see the true reality (although with a delay).
-
-Best wishes,
-Mike
+>    a security flaw was found in the way nss, the Network Security
+> Services (NSS) set of libraries, performed their initialization (the
+> file path for "pkcs11.txt" configuration file was constructed
+> incorrectly). When that configuration file was loaded from remote
+> WebDAV
+> or Samba CIFS share, it could lead to arbitrary security module
+> load, potentially leading to execution of arbitrary code (execution
+> of
+> code from untrusted security module).
+> 
+> Upstream bug report:
+> [1] https://bugzilla.mozilla.org/show_bug.cgi?id=641052
+> 
+> Other references:
+> [2] https://secunia.com/advisories/46557/
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=388045
+> [4] http://code.google.com/p/chromium/issues/detail?id=97426#c8
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=748379
+> 
+> Could you allocate a CVE id for this? (as it looks there isn't one
+> for this deficiency yet)
+> 
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+> 
