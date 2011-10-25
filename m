@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/11
-Message-ID: <1321997943.13759.12.camel@scapa>
-Date: Tue, 22 Nov 2011 22:39:03 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/4
+Message-ID: <4EA71BCC.2040907@redhat.com>
+Date: Tue, 25 Oct 2011 14:27:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+CC: Jamie Strandboge <jamie@...onical.com>, thierry@...nstack.org, security <security@...ntu.com>
+Subject: Re: CVE request: nova
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-11-11 at 13:27 -0500, Marc Deslauriers wrote:
-> On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
-> > On 11/11/11 08:06, Guido Berhoerster wrote:
-> > > Replacing the file between the lstat and the open would change
-> > > its inode and then be caught by the check before the fchown, no?
-> > 
-> > Nope.   There is no reason why the same inode should not be reused.
-> > 
-> > On ext4 (btrfs seems to be different):
-> > 
-> > $ touch test; ls -i test; rm test; touch test; ls -i test
-> > 656078 test
-> > 656078 test
-> > 
-> > jch
-> 
-> How about the attached patch?
-> 
-> Marc.
+On 10/25/2011 11:11 AM, Jamie Strandboge wrote:
+> A flaw was discovered in OpenStack nova[1] which allows someone with
+> access to an EC2_ACCESS_KEY (equivalent to a username) to obtain the
+> EC2_SECRET_KEY (equivalent to a password). While the EC2_ACCESS_KEY is
+> typically not public, if the user exposes it via http or tools that
+> allow MITM over https, then an attacker could obtain the EC2_SECRET_KEY
+> easily. An attacker could also presumably brute force values for
+> EC2_ACCESS_KEY.
+>
+> Fix:
+> https://review.openstack.org/#change,794
+>
+> [1]https://launchpad.net/bugs/868360
+>
+Please use CVE-2011-4076 for this issue
 
-Note that O_NOFOLLOW seems to be Linux-only. Any idea how to handle it
-on other ports?
-
-Regards,
 -- 
-Yves-Alexis
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-Kurt Seifried / Red Hat Security Response Team
+
