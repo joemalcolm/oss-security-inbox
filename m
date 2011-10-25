@@ -1,135 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/6
-Message-ID: <mpro.ls8xbd3w5e11106u2.taviso@cmpxchg8b.com>
-Date: Wed, 28 Sep 2011 20:42:56 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/3
+Message-ID: <1319562711.16989.5.camel@localhost>
+Date: Tue, 25 Oct 2011 12:11:51 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: thierry@...nstack.org, security <security@...ntu.com>
+Subject: CVE request: nova
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...nwall.com> wrote:
+A flaw was discovered in OpenStack nova[1] which allows someone with
+access to an EC2_ACCESS_KEY (equivalent to a username) to obtain the
+EC2_SECRET_KEY (equivalent to a password). While the EC2_ACCESS_KEY is
+typically not public, if the user exposes it via http or tools that
+allow MITM over https, then an attacker could obtain the EC2_SECRET_KEY
+easily. An attacker could also presumably brute force values for
+EC2_ACCESS_KEY.
 
-> Hi,
-> 
-> On Wed, Aug 10, 2011 at 08:22:20PM +0200, Tomas Hoger wrote:
-> > We've recently came across an issue in commonly re-used LZW
-> > decompression implementations - original BSD compress and GIF reader
-> > written by David Koblas.  Due to an insufficient input checking, invalid
-> > LZW stream can create a loop in the decompression table, leading to the
-> > decompression stack buffer overflow.
-> > 
-> > Following bugzillas list various code bases that were checked for the
-> > issue and if they are affected or not:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2895
-> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2896
-> 
-> FreeBSD has just released an advisory for this:
-> 
-> http://security.freebsd.org/advisories/FreeBSD-SA-11:04.compress.asc
-> 
-> To my surprise, it lists gzip as affected (and provides a patch for it
-> too), even though it was believed that neither CVE-2011-2895 nor
-> CVE-2011-2896 affected current versions of gzip (at least per Tomas'
-> off-list notification to distro vendors).
-> 
-> The latest security fix in upstream gzip is from January 2010, for
-> CVE-2010-0001:
-> 
->
-http://git.savannah.gnu.org/gitweb/?p=gzip.git;a=commitdiff;h=a3db5806d012082b9e25cc36d09f19cd736a468f
-> 
-> (no idea if that issue was present in FreeBSD's gzip or not).
-> 
-> Trying to match the changes to usr.bin/gzip/zuncompress.c in
-> 
-> http://security.freebsd.org/patches/SA-11:04/compress.patch
-> 
-> against code in gzip 1.4 tarball, it appears that FreeBSD's patch actually
-> introduces more checks than gzip upstream has - although it is difficult
-> to tell for sure because of other differences in the code.
-> 
-> For example gzip-1.4/unlzw.c has:
-> 
->     if (maxbits > BITS) {
-> 
-> FreeBSD now patches it as:
-> 
-> -	if (zs->zs_maxbits > BITS) { +	if (zs->zs_maxbits > BITS ||
-> zs->zs_maxbits < 12) {
-> 
-> Do we possibly want to add the "maxbits < 12" check as well?  And does it
-> matter for security?
-> 
-> Then there are non-obvious differences related to the "oldcode" variable.
-> In one of those places, gzip-1.4/unlzw.c has:
-> 
-> if (code >= free_ent) { /* Special case for KwKwK string. */ if (code >
-> free_ent) {
-> 
-> whereas the FreeBSD patch has:
-> 
->  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
-> +			if (zs->u.r.zs_code > zs->zs_free_ent || +			    zs->u.r.zs_oldcode ==
-> -1) { +				/* Bad stream. */
-> 
-> which adds an extra "or" condition.
-> 
-> Similarly, gzip-1.4/unlzw.c has:
-> 
-> if ((code = free_ent) < maxmaxcode) { /* Generate the new entry. */
-> 
-> whereas the FreeBSD patch has:
-> 
->  		/* Generate the new entry. */
-> -		if ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode) { +		if
-> ((zs->u.r.zs_code = zs->zs_free_ent) < zs->zs_maxmaxcode && +
-> zs->u.r.zs_oldcode != -1) {
-> 
-> (an extra "and" condition this time).
-> 
-> Are these differences only a result of other differences in the FreeBSD
-> revision of gzip?  Or are they generic hardening that could get into gzip
-> proper and into other distros' revisions of gzip?  Or are they even
-> security fixes for issues known to FreeBSD (but presumably not to others
-> yet, in gzip context)?
+Fix:
+https://review.openstack.org/#change,794
 
-I believe I wrote that patch, I found a lot of vulnerabilities in gzip a few
-years ago, and added lots of additional sanity checks. Most distributions
-decided to take an alternative (smaller) patch written by SuSE.
-
-I don't know why everyone preferred SuSE patches, they originally claimed I
-was wrong and there were no bugs, until I downloaded their rpm's and
-verified with the actual binaries they were shipping that the testcases I
-sent them reproduced (!?!). This was on vendor-sec, I suppose smaller was
-considered superior.
-
-FreeBSD went with my patch, which I think was much safer.
-
-At the time gzip was effetively unmaintained Jean-Loup had dissapeared, and
-it wasn't until a year or two later that a new maintainer appeared and a new
-official release was made. I guess they went with SuSE patch as well.
-
-Tavis.
-
-
-> ...looking at similar changes to usr.bin/compress/zopen.c in the same
-> patch, I guess this may be how those changes were made to the gzip code as
-> well - due to similarities between the two codebases.  However, even if so
-> this does not fully address my questions above.
-> 
-> Colin - any comments?
-> 
-> Thanks,
-> 
-> Alexander
-> 
-> 
-> 
-> 
-
+[1]https://launchpad.net/bugs/868360
 
 -- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+Jamie Strandboge             | http://www.canonical.com
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
