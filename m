@@ -1,55 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/4
-Message-ID: <4ECAFBD3.8040104@redhat.com>
-Date: Mon, 21 Nov 2011 18:33:07 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Did this ArchLinux/shaman thing ever get a CVE?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/3
+Message-ID: <1319562711.16989.5.camel@localhost>
+Date: Tue, 25 Oct 2011 12:11:51 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: thierry@...nstack.org, security <security@...ntu.com>
+Subject: CVE request: nova
 Content-Type: text/plain; charset=utf-8
 
-On 11/14/2011 09:15 AM, Kurt Seifried wrote:
-> Did this ever get a CVE #? I can't find one.
->
-> https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
->
-> ====================
-> The point of this thread was that you don't need to enter the root
-> password at all. Not the first time, not ever.
->
-> As far as I understand, it is supposed to work like this: When you
-> first use shaman too install anything, it asks for the root password
-> You can tick a "Do not ask me again"-box, so you don't have to enter
-> the password again. If you tick the box and enter the password, shaman
-> add the lines
-> [auth]
-> askforpwd=false
-> to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
-> time shaman is run, it checks the config file, and if the askforpwd
-> value is set to false, it grants itself root privileges (with some
-> nifty setuuid root-thingy, I imagine) This is not the problem - this
-> is the feature.
->
-> The bug is this:
-> the fact that any user can add the lines
-> [auth]
-> askforpwd=false
-> to his own shaman.conf file, without ever entering the root password
-> in shaman. The next time shaman is run, it checks the config file, and
-> if the askforpwd value is set to false, it grants itself root
-> privileges - even though the user has never entered the root password.
-> This works for any unprivileged user on the system.
->
-> If that is indeed a feature intended by any sane person, then I'm
-> Mother Mary. And that can't be, seeing as I don't have breasts.
-> ====================
->
->
-> Appears to never have been fixed, the last release of shaman appears
-> to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
->
-Please use CVE-2011-4338 for this issue.
+A flaw was discovered in OpenStack nova[1] which allows someone with
+access to an EC2_ACCESS_KEY (equivalent to a username) to obtain the
+EC2_SECRET_KEY (equivalent to a password). While the EC2_ACCESS_KEY is
+typically not public, if the user exposes it via http or tools that
+allow MITM over https, then an attacker could obtain the EC2_SECRET_KEY
+easily. An attacker could also presumably brute force values for
+EC2_ACCESS_KEY.
+
+Fix:
+https://review.openstack.org/#change,794
+
+[1]https://launchpad.net/bugs/868360
 
 -- 
+Jamie Strandboge             | http://www.canonical.com
 
--Kurt Seifried / Red Hat Security Response Team
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
