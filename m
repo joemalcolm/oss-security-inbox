@@ -1,126 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/4
-Message-ID: <20110306105427.GO24629@florz.florz.dyndns.org>
-Date: Sun, 6 Mar 2011 11:54:27 +0100
-From: Florian Zumbiehl <florz@...rz.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/2
+Message-ID: <4EA6D1C7.5020302@redhat.com>
+Date: Tue, 25 Oct 2011 09:12:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: phpldapadmin <= 1.2.1.1 XSS and and code injection flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 10/24/2011 12:19 PM, Vincent Danen wrote:
+> Two flaws were found in phpldapadmin <= 1.2.1.1 that can lead to an XSS
+> or code injection:
+>
+> 1) Input appended to the URL in cmd.php (when "cmd" is set to "_debug")
+> is not properly sanitised before being returned to the user. This can be
+> exploited to execute arbitrary HTML and script code in a user's browser
+> session in context of an affected site.
 
-> If a log file directory is writable by the service pseudo-user, and you
-> make both the service and patched logrotate work with it safely, there's
-> still the problem of how the sysadmin can access those logs safely.
+Please use CVE-2011-4074 for this one
+>
+> 2) Input passed to the "orderby" parameter in cmd.php (when "cmd" is set
+> to "query_engine", "query" is set to "none", and "search" is set to e.g.
+> "1") is not properly sanitised in lib/functions.php before being used in
+> a "create_function()" function call. This can be exploited to inject and
+> execute arbitrary PHP code.
+Please use CVE-2011-4075 for this one
 
-I always suspected logfiles weren't there just to be rotated ...
+>
+> Could CVEs be assigned to these please?
+>
+> References:
+>
+> http://sourceforge.net/tracker/index.php?func=detail&aid=3417184&group_id=61828&atid=498546
+>
+> http://www.exploit-db.com/exploits/18021/
+> https://secunia.com/advisories/46551/
+> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=htdocs/cmd.php;h=0ddf0044355abc94160be73122eb34f3e48ab2d9;hp=34f3848fe4a6d4c00c7c568afa81f59579f5d724;hb=64668e882b8866fae0fa1b25375d1a2f3b4672e2;hpb=caeba72171ade4f588fef1818aa4f6243a68b85e
+>
+> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=lib/functions.php;h=eb160dc9f7d74e563131e21d4c85d7849a0c6638;hp=19fde9974d4e5eb3bfac04bb223ccbefdb98f9a0;hb=76e6dad13ef77c5448b8dfed1a61e4acc7241165;hpb=5d4245f93ae6f065e7535f268e3cd87a23b07744
+>
+>
 
-> The admin could "su" to the service pseudo-user, but that allows the
-> compromised service to attack the admin's terminal, accessing the fd via
-> /proc or ptrace of a process such as "less" running under the "su"
+-- 
 
-/proc/<pid>/fd/? I think that doesn't work. I don't know the exact
-semantics, but from experience there seem to be some more checks in place
-than in a "remote-dup()". That doesn't change anything about ptrace()
-of course ...
+-Kurt Seifried / Red Hat Security Response Team
 
-> session.  Only "su" itself is immune from such attacks (since it has its
-> "dumpable" flag cleared); its child processes are not.  The attacker
-> would be able to print control characters directly to the terminal fd,
-> and to issue ioctl's on it, changing the terminal mode.  This might have
-> a security impact worse than DoS.  Sebastian - you could want to comment
-> on this (I recall your research).
-
-DoS is obvious, worse than that I'd be highly interested in details.
-
-> A more reliable solution (in terms of being safe from the attacks being
-> discussed here even when the sysadmins don't specifically try to access
-> log files safely) is simply to have services create log files before
-> they drop root (and indeed to have the directory only writable by root).
-> This is the case for all services that we currently have in Owl.  By the
-> way, our syslogd runs as non-root, but it starts up as root and it
-> creates its log files in /var/log if necessary - before dropping to the
-> syslogd pseudo-user.  In my opinion, that's how it should be done.
-
-That could be problematic with services that either generally create
-log files dynamically or that implement some dynamic config reload that
-is intended to retain current processing state/connections/whatever.
-The latter could be solved by pre-creating log files before initiating
-the reload, of course.
-
-> If a service starts up as non-root right away (such as via "su" in its
-> startup script), then there's also a problem with its pidfile.  It has
-> to write the pidfile as non-root, and thus into a directory writable by
-> the service pseudo-user (well, or rewrite a file in-place, which has
-> its own issues).  However, the pidfile is likely to be accessed by other
-> parts of the system - such as by startup scripts that use
-> /etc/init.d/functions and by programs invoked from there (such as
-> start-stop-daemon).  Such accesses are likely to be made as root, and
-> the file contents are parsed by scripts/programs running as root.  If
-> such parsing is not robust when faced with incorrectly formatted input,
-> we may have a local root vulnerability.  And we almost certainly have
-> DoS potential via spoofed PIDs (have another service killed) and via
-> links to device files, like what I described above.
-
-Well, _actually_ pid files should just be deprecated, given that PIDs
-are only really usable for anything in the parent process ... ;-)
-
-> On Fri, Mar 04, 2011 at 06:58:17PM +0100, Florian Zumbiehl wrote:
-> [...]
-> > it is planned to add a new config directive that allows to specify
-> > the credentials to be used for manipulating specific sets of log files,
-> > thus obviating the need for separate logrotate invocations but still
-> > letting the kernel take care of separating privileges.
-> 
-> This sounds good to me, but it does not solve other problems I pointed
-> out above.  Would you also add a similar option to start-stop-daemon and
-> to the daemon() function in /etc/init.d/functions (or whatever a given
-
-You mean for pid file accesses?
-
-> As to services that a non-root user may want to run on their own, the
-> user would not be able to use the new user-switching feature of logrotate
-> anyway (no root access).  So the user will run an instance of logrotate
-> under their account, which is already possible.
-
-A similar problem could exist there with group-writable log directories
-when multiple users are in the group.
-
-> > I guess I don't really have much of an opinion on that. The vulnerabilities
-> > should be fixed, and probably in a way that breaks existing setups as
-> > little as possible, I don't really care which side is declared defective
-> > and subsequently fixed in order to achieve that ;-)
-> 
-> I care because, in this case, I think that "which side is declared
-> defective" affects whether the vulnerabilities are fixed for real or
-> not.  Thus, one side (service packages) needs vulnerability fixes and
-> the other (logrotate) may use some hardening (but that's tricky).
-
-Yep, I see your point and thus now am of the opinion that the affected
-service packages should be fixed.
-
-However, I think that still #6 (shell injection) and #7 (logrotate
-DoS with strange characters in file names) should be considered
-vulnerabilities in logrotate: It would be reasonable to assume that you
-can use user input that's a valid (slash-less) filename as a (part of a)
-log file name (assuming that the program is running as the same user that
-inspects and rotates the logs, so the log directory being writable by
-the program would not be insecure per-se) without that file name being
-interpreted by a shell or causing logrotate to stop functioning,
-respectively.
-
-> Maybe logrotate should simply refuse to run when the target directory is
-> writable by other than the user running logrotate (typically root), with
-> an option to accept the risk and force logrotate to run anyway.  Sure,
-> this would break existing security-broken setups, but it would also
-> force package maintainers to fix their packages in this respect. ;-)
-
-Precisely for the latter reason it should be done ;-)
-
-> I am sorry for the length of this message, yet I hope it helps.
-
-Yes, thanks a lot--without it I'd probably have ignored the fact that
-people do occasionally actually want to look at log files ;-)
-
-Florian
