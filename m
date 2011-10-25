@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/1
-Message-ID: <20110308000010.GD11663@altlinux.org>
-Date: Tue, 8 Mar 2011 03:00:11 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/25/2
+Message-ID: <4EA6D1C7.5020302@redhat.com>
+Date: Tue, 25 Oct 2011 09:12:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ldd can execute an app unexpectedly
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: phpldapadmin <= 1.2.1.1 XSS and and code injection flaws
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 07, 2011 at 06:27:05PM -0500, Steve Grubb wrote:
-[...]
->  http://reverse.lostrealm.com/protect/ldd.html
->  http://www.catonmat.net/blog/ldd-arbitrary-code-execution/
-> 
-> Besides telling everyone don't do that. ldd could take the PoV that it should only 
-> call runtime linkers in trusted directories like /sbin or /usr/sbin. Or it could 
-> simply detect that another linker was requested and make you add a "--force" so that 
-> you are fully aware that you just let another linker run. (The suggested patch can 
-> certainly be improved. But its here just in case you want it.)
+On 10/24/2011 12:19 PM, Vincent Danen wrote:
+> Two flaws were found in phpldapadmin <= 1.2.1.1 that can lead to an XSS
+> or code injection:
+>
+> 1) Input appended to the URL in cmd.php (when "cmd" is set to "_debug")
+> is not properly sanitised before being returned to the user. This can be
+> exploited to execute arbitrary HTML and script code in a user's browser
+> session in context of an affected site.
 
-In June of 2002, I suggested to change ldd to avoid invoking programs
-directly, even when it seems like that would work, and invoke the dynamic
-linker as a program instead.
-This change was implemented at least in Owl and ALT Linux:
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/glibc-2.3.6-owl-alt-ldd.diff
-http://git.altlinux.org/gears/g/glibc.git?p=glibc.git;a=commitdiff;h=788577027d2950e9508a434475e04c3af864d169
+Please use CVE-2011-4074 for this one
+>
+> 2) Input passed to the "orderby" parameter in cmd.php (when "cmd" is set
+> to "query_engine", "query" is set to "none", and "search" is set to e.g.
+> "1") is not properly sanitised in lib/functions.php before being used in
+> a "create_function()" function call. This can be exploited to inject and
+> execute arbitrary PHP code.
+Please use CVE-2011-4075 for this one
 
+>
+> Could CVEs be assigned to these please?
+>
+> References:
+>
+> http://sourceforge.net/tracker/index.php?func=detail&aid=3417184&group_id=61828&atid=498546
+>
+> http://www.exploit-db.com/exploits/18021/
+> https://secunia.com/advisories/46551/
+> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=htdocs/cmd.php;h=0ddf0044355abc94160be73122eb34f3e48ab2d9;hp=34f3848fe4a6d4c00c7c568afa81f59579f5d724;hb=64668e882b8866fae0fa1b25375d1a2f3b4672e2;hpb=caeba72171ade4f588fef1818aa4f6243a68b85e
+>
+> http://phpldapadmin.git.sourceforge.net/git/gitweb.cgi?p=phpldapadmin/phpldapadmin;a=blobdiff;f=lib/functions.php;h=eb160dc9f7d74e563131e21d4c85d7849a0c6638;hp=19fde9974d4e5eb3bfac04bb223ccbefdb98f9a0;hb=76e6dad13ef77c5448b8dfed1a61e4acc7241165;hpb=5d4245f93ae6f065e7535f268e3cd87a23b07744
+>
+>
 
 -- 
-ldv
 
-Content of type "application/pgp-signature" skipped
+-Kurt Seifried / Red Hat Security Response Team
+
