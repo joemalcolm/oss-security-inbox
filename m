@@ -1,59 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/8
-Message-ID: <4DD2B3AE.1090503@oracle.com>
-Date: Tue, 17 May 2011 10:43:10 -0700
-From: Oracle Security Alerts <secalert_us@...cle.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, "secalert_us@...cle.com" <secalert_us@...cle.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/10
+Message-ID: <4EA826AC.8060808@redhat.com>
+Date: Wed, 26 Oct 2011 09:26:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On 04/30/11 08:26 AM, Solar Designer wrote:
-> Does Oracle start to prepare security updates for Oracle Enterprise
-> Linux before or after Red Hat releases theirs?  If it's after, then
-> there's too little need for Oracle to have advance notification.
+On 10/26/2011 09:16 AM, Petr Matousek wrote:
+> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> to reset dmesg_restrict to 0.
+>
+> This is an issue when e.g.  LXC (Linux Containers) are used and complete
+> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+> root user can bypass the dmesg_restrict protection.
+>
+> Introduced by:
+> eaf06b241b091357e72b76863ba16e89610d31bd
+>
+> Fixed by:
+> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+>
+> Thanks,
+Please use CVE-2011-4080 for this issue.
 
-If we know about vulnerabilities in advance, our fixing process
-starts before Red Hat releases their updates. It starts with
-assessment of issue, reviewing the fix for completeness and
-applicability to our kernel and components we maintain or provide in
-our Linux distribution. See
-http://www.oracle.com/us/technologies/linux/026042.htm
-or http://oss.oracle.com/
+-- 
 
-We do not expect Red Hat or other vendors to evaluate impact of
-security vulnerabilities on Oracle Linux, nor fix it in a way that
-is applicable to our releases. Hence the request for subscription.
+-Kurt Seifried / Red Hat Security Response Team
 
-We have a large user base to protect. We do get reports of
-vulnerabilities in our Linux distribution which we may want to fix
-in collaboration with rest of the community.
-
-> Oracle was never actually accepted to vendor-sec for Oracle Enterprise Linux.
-
-Not correct. From archives of vendor-sec I see there had been at
-least two representatives from Oracle Linux at vendor-sec and we had
-membership ever since Oracle started distributing Linux.
-
-This discussion was held whenever they requested to subscribe to
-vendor-sec and it was concluded that while we may be redistributing
-some packages, Oracle Linux is a distro in its own right.
-
-> Then, the only @oracle.com person currently on oss-security (judging by
-> the e-mail addresses) appears not to be involved with Oracle Enterprise
-> Linux specifically.
-
-There are other ways to subscribe to this list than email. See:
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security
-
-> Can you please add your info to the following wiki pages?
-> http://oss-security.openwall.org/wiki/vendors
-
-Done,
-
-Thanks,
--Chandan
---
-Oracle Security Alerts
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (250 bytes)
