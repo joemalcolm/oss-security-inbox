@@ -1,38 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/11/2
-Message-ID: <4DA27B9F.8010605@redhat.com>
-Date: Mon, 11 Apr 2011 11:55:11 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1479 (was Re: CVE request: kernel: inotify memory leak)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/11
+Message-ID: <20111026155310.GA14081@albatros>
+Date: Wed, 26 Oct 2011 19:53:10 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On 04/11/2011 11:32 AM, Eugene Teo wrote:
-> On 11/24/2010 09:17 PM, Josh Bressers wrote:
->>
->> ----- "Eugene Teo"<eugene@...hat.com> wrote:
->>
->>> Reported by Vegard Nossum, if inotify_init is unable to allocate a new
->>>
->>> file for the new inotify group we leak the new group.
->>>
->>> Reproducer: http://lkml.org/lkml/2010/11/23/418 (this test case is
->>> only
->>> relevant if c44dcc56 (v2.6.34-rc1) is backported)
->>>
->>> Issue was introduced in 63c882a0 (v2.6.31-rc1).
->>>
->>> https://bugzilla.redhat.com/656830
->>
->> Please use CVE-2010-4250
->
-> A regression was found. We assigned it with CVE-2011-1479. Fix for it
-> can be found at: http://git.kernel.org/linus/d0de4dc5. More info here:
-> https://bugzilla.redhat.com/CVE-2011-1479.
+Hi,
 
-Repost just to make the subject clearer.
+On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+> On 10/26/2011 09:16 AM, Petr Matousek wrote:
+> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> > to reset dmesg_restrict to 0.
+> >
+> > This is an issue when e.g.  LXC (Linux Containers) are used and complete
+> > user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+> > root user can bypass the dmesg_restrict protection.
+> >
+> > Introduced by:
+> > eaf06b241b091357e72b76863ba16e89610d31bd
+> >
+> > Fixed by:
+> > bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+> >
+> > Thanks,
+> Please use CVE-2011-4080 for this issue.
 
-Eugene
+Why does it worth CVE?  Procfs is not ready for containers yet.  You can
+use other sysctls for more harmful things.  E.g. kernel.core_pattern
+allows arbitrary code execution as a full root - does it need a CVE too
+then? :-)
+
+root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
+root@...-ubuntu:/proc/sys/kernel# cat 
+^\Quit (core dumped)
+
+(In the root namespace)
+$ ls /tmp/pwned
+/tmp/pwned
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
