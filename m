@@ -1,50 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/3
-Message-Id: <201102081215.41570.thomas@suse.de>
-Date: Tue, 8 Feb 2011 12:15:41 +0100
-From: Thomas Biege <thomas@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xpdf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/7
+Message-ID: <20111026142935.GB13364@suse.de>
+Date: Wed, 26 Oct 2011 16:29:35 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Am Dienstag 08 Februar 2011 11:54:16 schrieb Thomas Biege:
-> 
-> Should CVE-IDs be assigned to this issues?
+On Wed, Oct 26, 2011 at 04:26:45PM +0200, Marcus Meissner wrote:
+> Hi,
 
-Sorry, I missed Josh'd mail.
+Dup from Sebastians mail, which he mailed at the same tiem.
 
+Ciao, Marcus
+ 
+> From our openldap2 Maintainer Ralf:
+> |A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
+> |is passed a zero length string. (Can e.g. be triggered by passing a
+> |"postalAddressAttribute" with the value "$" (or no value a all). What the code
+> |does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
+> |least as far as I understand it)
+> |
+> |Upstream Bug: ITS#7059
+> |http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
+> |
+> |This bug is present in older releases as well.
+> |
+> |I wonder if this is really security relevant as it seem the worst that might
+> |happen is that an authenticated user can crash the daemon. I was not able to do
+> |so during a short test but I guess that is just a matter of trying long enough.
 > 
-> Am Freitag 21 Januar 2011 00:15:49 schrieb Dan Rosenberg:
-> > I identified two issues in xpdf.  I don't think the first requires a
-> > CVE, since it's incredibly unlikely to be exploitable, but I include
-> > it here in case someone disagrees.
-> > 
-> > 1. Due to an integer overflow when parsing CharCodes for fonts and a
-> > failure to check the return value of a memory allocation, it is
-> > possible to trigger writes to a narrow range of offsets from a NULL
-> > pointer.  The chance of being able to exploit this for anything other
-> > than a crash is very remote: on x86 32-bit, there's no chance (since
-> > the write occurs between 0xffffffc4 and 0xfffffffc).  At least the
-> > write lands in valid userspace on x86-64, but in my testing this
-> > memory is never mapped.  Fixed in poppler commit at [1], hopefully
-> > fixed soon at xpdf upstream.
-> > 
-> > 2. Malformed commands may cause corruption of the internal stack used
-> > to maintain graphics contexts, leading to potentially exploitable
-> > memory corruption.  Fixed in poppler commit at [2], hopefully fixed
-> > soon at xpdf upstream.
-> > 
-> > -Dan
-> > 
-> > [1] http://cgit.freedesktop.org/poppler/poppler/commit/?id=cad66a7d25abdb6aa15f3aa94a35737b119b2659
-> > [2] http://cgit.freedesktop.org/poppler/poppler/commit/?id=8284008aa8230a92ba08d547864353d3290e9bf9
-> > 
-> 
+> Ciao, Marcus
 > 
 
 -- 
- Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
- SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+Working, but not speaking, for the following german company:
+SUSE LINUX Products GmbH, HRB 16746 (AG Nuernberg)
+Geschaeftsfuehrer: Jeff Hawn, Jennifer Guild, Felix Imendoerffer
