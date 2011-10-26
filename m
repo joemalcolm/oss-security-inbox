@@ -1,30 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/5
-Message-ID: <20110120175218.GU2115@redhat.com>
-Date: Thu, 20 Jan 2011 10:52:18 -0700
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2010-4225: XSP/mod_mono source code disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/11
+Message-ID: <20111026155310.GA14081@albatros>
+Date: Wed, 26 Oct 2011 19:53:10 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-* [2011-01-20 18:22:03 +0100] Oden Eriksson wrote:
+Hi,
 
->fredag 07 januari 2011 10:36:00 skrev  Thomas Biege:
->> Hello,
->>
->> our Mono team released a security update to fix a source-code disclosure
->> bug.
->>
->> http://www.mono-project.com/Vulnerabilities
->> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
->>
->> Cheers,
->> Thomas
->
->Where's the fix for this?
+On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+> On 10/26/2011 09:16 AM, Petr Matousek wrote:
+> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> > to reset dmesg_restrict to 0.
+> >
+> > This is an issue when e.g.  LXC (Linux Containers) are used and complete
+> > user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+> > root user can bypass the dmesg_restrict protection.
+> >
+> > Introduced by:
+> > eaf06b241b091357e72b76863ba16e89610d31bd
+> >
+> > Fixed by:
+> > bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+> >
+> > Thanks,
+> Please use CVE-2011-4080 for this issue.
 
-It's fixed in mod_mono 2.8.2.  I have no idea where a patch can be found
-(in their git repo somewhere probably).
+Why does it worth CVE?  Procfs is not ready for containers yet.  You can
+use other sysctls for more harmful things.  E.g. kernel.core_pattern
+allows arbitrary code execution as a full root - does it need a CVE too
+then? :-)
+
+root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
+root@...-ubuntu:/proc/sys/kernel# cat 
+^\Quit (core dumped)
+
+(In the root namespace)
+$ ls /tmp/pwned
+/tmp/pwned
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
