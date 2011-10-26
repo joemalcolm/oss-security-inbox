@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/25
-Message-ID: <20110403225754.GB10158@openwall.com>
-Date: Mon, 4 Apr 2011 02:57:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/9
+Message-ID: <4EA82599.9040007@redhat.com>
+Date: Wed, 26 Oct 2011 09:22:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 10:13:05PM -0400, Mike O'Connor wrote:
-> I use my personal address rather than my work address for handling
-> vendor security matters because:
+On 10/26/2011 08:26 AM, Marcus Meissner wrote:
+> Hi,
+>
+> From our openldap2 Maintainer Ralf:
+> |A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
+> |is passed a zero length string. (Can e.g. be triggered by passing a
+> |"postalAddressAttribute" with the value "$" (or no value a all). What the code
+> |does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
+> |least as far as I understand it)
+> |
+> |Upstream Bug: ITS#7059
+> |http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
+> |
+> |This bug is present in older releases as well.
+> |
+> |I wonder if this is really security relevant as it seem the worst that might
+> |happen is that an authenticated user can crash the daemon. I was not able to do
+> |so during a short test but I guess that is just a matter of trying long enough.
+>
+> Ciao, Marcus
+Please use CVE-2011-4079 for this issue
 
-Thank you for explaining this in here.
+-- 
 
-> The vetting should be about more than email domains.  There should be
-> periodic maintenance of who's on the list to cull out those who aren't
-> involved.  Marcus did that to some degree with the vendor-sec of old.
+-Kurt Seifried / Red Hat Security Response Team
 
-Right.
-
-> I think the biggest problems there were the exploders and the lack of
-> encryption,
-
-Maybe (re: "biggest").
-
-> and both of those are being addressed with this new list
-> as I understand things.
-
-Yes, they are.
-
-> I think that having a couple lists, one for "tactical" issues (e.g.
-> embargoes and CVE assignment) and another for "strategic" discussions
-> (e.g. "how to deal with vagaries in gcc vs. C standards with general
-> security impact") may be appropriate.  I'm part of another security
-> community which has such a notion, and it seems to help in keeping
-> things focused, FWIW.
-
-It appears that this is what we will have, but I am starting with one
-list that is more obviously needed (alternative to CC lists).
-
-Your specific example re: "how to deal with vagaries in gcc vs. C
-standards with general security impact" would be best discussed on
-oss-security (that is, on a public list), though.  It does not benefit
-from a short embargo, and long embargoes are inappropriate.
-
-Alexander
