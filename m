@@ -1,50 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/1
-Message-ID: <4EBCBEBC.2080004@canonical.com>
-Date: Fri, 11 Nov 2011 17:20:44 +1100
-From: Robert Ancell <robert.ancell@...onical.com>
-To: oss-security@...ts.openwall.com,  Guido Berhoerster <gber@...nsuse.org>
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/16
+Message-ID: <CAOSRhRMYs921N+a5zJAv7sqGkr2C5tka7-PdaKJXt62rBJfnyA@mail.gmail.com>
+Date: Wed, 26 Oct 2011 13:43:16 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On 10/11/11 23:57, Guido Berhoerster wrote:
-> * Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
->> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
->>> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
->>>> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
->>>>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
->>>>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
->>>>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
->>>>>>> cause LightDM to set the destination of the link to user ownership.
->>>>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
->>>>>>>
->>>>>>> Overview of changes in lightdm 1.0.6
->>>>>>>
->>>>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
->>>>>> Could a CVE be assigned for this?
->>>>>>
->>>>>> Regards,
->>>>> Can you send me the link to this announcement so I can confirm it? Thanks.
->>>>>
->>>> Here's the link to the mailing list mail:
->>>> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
->>>>
->>>> Regards,
->>> Thanks, confirmed (first hand info is much better). Please use
->>> CVE-2011-4105 for this issue.
->>>
->> BTW, the fix that is in 1.0.6 is probably not enough for distros that
->> don't implement hard link restrictions, such as the Yama LSM that is
->> used in Ubuntu.
-> Does an incomplete fix in a released version warrant a new CVE?
+On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
+> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> to reset dmesg_restrict to 0.
 >
-> I've attached a suggested fix.
-Note the attached patch can still be exploited; if the file changes from
-a standard file to a hard link / symlink between the lstat and the
-fchown then lightdm can be fooled into thinking it's safe when it's
-not.  A malicious program could sit there creating a file, deleting it,
-then creating a link as fast as possible and eventually it would work. 
-We need an atomic operation like lchown, and if that doesn't work the
-only safe thing I can think of doing is a) nothing (requiring the user
-to manually fix the bug) or b) delete the file (could delete information
-set by other programs).
+
+Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
+with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
+correct that CAP_SYS_ADMIN is now required to modify the sysctl.
+
+I also agree with Vasiliy's point that LXC security boundaries in the
+mainline kernel are not well defined at this point, so the whole thing
+is a bit silly.
+
+-Dan
