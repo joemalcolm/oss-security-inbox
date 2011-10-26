@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/06/1
-Message-ID: <20110306082425.GA16673@bluenote.herrb.net>
-Date: Sun, 6 Mar 2011 09:24:26 +0100
-From: Matthieu Herrb <matthieu.herrb@...s.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/15
+Message-ID: <20111026164022.GA10041@albatros>
+Date: Wed, 26 Oct 2011 20:40:22 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 04, 2011 at 01:49:20AM +0300, Solar Designer wrote:
-> 
-> As to projects such as, say, Samba and X.org, I'd exclude them.
-> There's no difficulty for a researcher to notify one of these directly,
-> and there's not much difficulty in CC'ing the proper one of these on a
-> discussion.
+On Wed, Oct 26, 2011 at 10:11 -0600, Kurt Seifried wrote:
+> >> Please use CVE-2011-4080 for this issue.
+> >
+> > Why does it worth CVE?  
+>
+> This allows an attacker to bypass a security boundary. The root user is
+> able to gain privileges they shouldn't have.
 
-I think that as far as X.Org is concerned, we're ok with that.
-There are already security people from Linux distributions subscribed
-to  the xorg-security@ list and they also have access to restricted
-'security' bugs in bugzilla. 
+You have much bigger problems if you rely on the security boundaries
+defined by LXC.  As I've already showed, LXC root may execute arbitrary
+code as the full root in the root namespaces.
+
+(I assume we're talking about the mainline kernel, not OpenVZ or any
+other kernel fork/patchset/etc.)
+
+Thanks,
 
 -- 
-Matthieu Herrb
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
