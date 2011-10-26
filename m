@@ -1,82 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/13
-Message-ID: <4ED54E45.8000601@redhat.com>
-Date: Tue, 29 Nov 2011 14:27:33 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/10
+Message-ID: <4EA826AC.8060808@redhat.com>
+Date: Wed, 26 Oct 2011 09:26:36 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Stefan Bühler <stbuehler@...httpd.net>, security@...httpd.net, Xi Wang <xi.wang@...il.com>
-Subject: Re: CVE Request: lighttpd/mod_auth out-of-bounds read due to signedness error
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On 11/29/2011 06:25 AM, Stefan Bühler wrote:
-> Hi,
+On 10/26/2011 09:16 AM, Petr Matousek wrote:
+> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> to reset dmesg_restrict to 0.
 >
-> Xi Wang discovered the following issue in lighttpd:
+> This is an issue when e.g.  LXC (Linux Containers) are used and complete
+> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+> root user can bypass the dmesg_restrict protection.
 >
-> for http auth we need to base64-decode user input; the allowed
-> character range includes non ASCII characters above 0x7f.
+> Introduced by:
+> eaf06b241b091357e72b76863ba16e89610d31bd
 >
-> The function to decode this string takes a "const char *in"; and reads
-> each character into an "int ch", which is used as offset in the table.
+> Fixed by:
+> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
 >
-> So characters above 0x7f lead to negative indices (as char is signed
-> on most platforms).
->
-> Here the vulnerable code (src/http_auth.c:67)
->
-> ---
-> static const short base64_reverse_table[256] = ...;
-> static unsigned char * base64_decode(buffer *out, const char *in) {
->     ...
->     int ch, ...;
->     size_t i;
->     ...
->     
->         ch = in[i];
->         ...
->         ch = base64_reverse_table[ch];
->     ...
-> }
-> ---
->
-> It doesn't matter if "broken" data is read - it just may allow more
-> encodings of the correct login information.
->
-> The only possible impact is a segfault, leading to DoS.
->
-> I had a look at some debian and openSUSE binaryies, and it looks like
-> there is always enough data (>= 256 bytes) in the .rodata section
-> before the base64_reverse_table table, so these binaries are not
-> vulnerable afaict.
->
-> we plan to release 1.4.30 soon, including the fix for this issue.
->
-> regards,
-> stefan
->
-> bug tracked as:
->   http://redmine.lighttpd.net/issues/2370
-> announcement (not complete yet):
->   http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2011_01.txt
->
-> proposed patch
-> ===
-> diff --git a/src/http_auth.c b/src/http_auth.c
-> index f2f86dd..33adf71 100644
-> --- a/src/http_auth.c
-> +++ b/src/http_auth.c
-> @@ -99,7 +99,7 @@ static unsigned char * base64_decode(buffer *out,
-> const char *in) {
->      ch = in[0];
->      /* run through the whole string, converting as we go */
->      for (i = 0; i < in_len; i++) {
-> -        ch = in[i];
-> +        ch = (unsigned char) in[i];
->
->          if (ch == '\0') break;
->
-> ===
-Please use CVE-2011-4362 for this issue.
+> Thanks,
+Please use CVE-2011-4080 for this issue.
 
 -- 
 
