@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/1
-Message-ID: <4E266FFD.6000901@redhat.com>
-Date: Wed, 20 Jul 2011 11:34:45 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/1
+Message-ID: <20111026110536.GE28067@dhcp-25-225.brq.redhat.com>
+Date: Wed, 26 Oct 2011 13:05:37 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Ludwig Nussel <ludwig.nussel@...e.de>, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>, Joshua Bressers <bressers@...hat.com>
-Subject: Re: CVE Request: ruby PRNG fixes
+Subject: CVE Request -- kernel: xfs: potential buffer overflow in xfs_readlink()
 Content-Type: text/plain; charset=utf-8
 
-On 07/11/2011 02:07 PM, Ludwig Nussel wrote:
+A flaw was found in the way Linux kernel's XFS filesystem implementation
+handled links with pathname larger than MAXPATHLEN. When
+CONFIG_XFS_DEBUG configuration option was not enabled when compiling
+Linux kernel, an attacker able to mount malicious XFS image could use
+this flaw to crash the system, or potentially, elevate his privileges
+on that system.
 
-> http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-> http://redmine.ruby-lang.org/issues/4579
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+Proposed upstream patch:
+http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
 
-Looking at the above patches, there seems to be two issues here, perhaps
-it needs two CVE ids to be assigned?
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=749156
+http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
 
-1. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-
-This one pertains to rand returning same values in forked processes.
-http://redmine.ruby-lang.org/issues/show/4338
-This is a regression, as it was fixed in 1.8.6-p114, but re-appeared in
-1.8.6-p399.
-
-2. http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
-
-This is an issue in the securerandom.rb module.
-http://redmine.ruby-lang.org/issues/4579
-
-Josh,
-
-Can we please assign CVE-2011-2686 to one of the issues and have another
-CVE id to the other issue?
-
-Thanks.
-
-
-
-
+Thanks,
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Petr Matousek / Red Hat Security Response Team
