@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/24/11
-Message-ID: <2140623688.254048.1306238348454.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 24 May 2011 07:59:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Robert Scheck <robert@...oraproject.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- phpMyAdmin -- PMASA-2011-3 & PMASA-2011-4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/5
+Message-ID: <20111026142645.GA13364@suse.de>
+Date: Wed, 26 Oct 2011 16:26:45 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> the following two security flaws have been recently reported against
-> phpMyAdmin:
-> [1] http://www.phpmyadmin.net/home_page/security/PMASA-2011-3.php
+Hi,
 
-This one is an XSS flaw. Use CVE-2011-1940.
+From our openldap2 Maintainer Ralf:
+|A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
+|is passed a zero length string. (Can e.g. be triggered by passing a
+|"postalAddressAttribute" with the value "$" (or no value a all). What the code
+|does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
+|least as far as I understand it)
+|
+|Upstream Bug: ITS#7059
+|http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
+|
+|This bug is present in older releases as well.
+|
+|I wonder if this is really security relevant as it seem the worst that might
+|happen is that an authenticated user can crash the daemon. I was not able to do
+|so during a short test but I guess that is just a matter of trying long enough.
 
-
-> [2] http://www.phpmyadmin.net/home_page/security/PMASA-2011-4.php
-
-This one is a URL redirection flaw. Use CVE-2011-1941
-
-
-> References:
-> [3] http://bugs.gentoo.org/show_bug.cgi?id=368495
-> 
-
-Thanks.
-
--- 
-    JB
+Ciao, Marcus
