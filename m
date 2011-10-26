@@ -1,63 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/26/18
-Message-ID: <20110726234727.GA28271@openwall.com>
-Date: Wed, 27 Jul 2011 03:47:27 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: iputils ping6 -s buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/12
+Message-ID: <20111026160159.GA29335@suse.de>
+Date: Wed, 26 Oct 2011 18:02:00 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE-2011-3368 suggested patch incomplete for apache2 < 2.2.18
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-FWIW, I looked into this issue yesterday:
+during our QA we noticed that the mod_proxy fix for CVE-2011-3368
+was incomplete for HTTP 0.9 style requests. 
 
-http://www.halfdog.net/Security/2011/Ping6BufferOverflow/
+https://bugzilla.novell.com/show_bug.cgi?id=722545
 
-It turns out it's already been patched upstream sometime in 2010, so the
-fix is included in iputils s20101006, and according to the RELNOTES file
-s20100418 already had the fix as well:
+to cross check, with the RewriteRules setup as in the exploit:
 
-[s20100418]
-...
-      ping6: do not allow too large packet size by -s option.
+$ telnet testhost 80
+GET @www.otherhost/foo.png
+... should give a 400 error, and not the 404 code from www.otherhost
 
-ping_common.c:
-
-	case 's':               /* size of packet to send */
-		datalen = atoi(optarg);
-		if (datalen < 0) {
-			fprintf(stderr, "ping: illegal negative packet size %d.\n", datalen);
-			exit(2);
-		}
-		if (datalen > maxpacket - 8) {
-			fprintf(stderr, "ping: packet size too large: %d\n",
-				datalen);
-			exit(2);
-		}
-		break;
-
-I am unhappy that there's no (redundant) bounds checking near the actual
-array writes, though:
-
-	if (!(options & F_PINGFILLED)) {
-		int i;
-		u_char *p = outpack+8;
-
-		/* Do not forget about case of small datalen,
-		 * fill timestamp area too!
-		 */
-		for (i = 0; i < datalen; ++i)
-			*p++ = i;
-	}
-
-When the bounds check is far from the actual write, the problem is too
-easy to inadvertently reintroduce in a revision of the code.
-
-...and I do find it somewhat ridiculous that an issue like this was
-still found in a ping program in 2010.  Well, at least both ping and
-ping6 are smart enough to drop root (if run SUID root and invoked by
-non-root) right after acquiring the raw socket, before parsing the
-command-line.  So even if the issue were exploitable and ping6 were
-installed SUID root, the impact would be limited.
-
-Alexander
+Ciao, Marcus
