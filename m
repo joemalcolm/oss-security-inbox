@@ -1,81 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/4
-Message-ID: <Pine.GSO.4.64.1112201258220.24379@faron.mitre.org>
-Date: Tue, 20 Dec 2011 13:07:59 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-cc: Tim Sammut <underling@...too.org>
-Subject: Re: CVE assignment from previous years
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/15
+Message-ID: <20111026164022.GA10041@albatros>
+Date: Wed, 26 Oct 2011 20:40:22 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-
-Note that the year does NOT include when the vuln was found (and if it was 
-silently fixed, that's not a factor either).
-
-The year is almost always obtained from either:
-
-1) When the CVE was first privately reserved.  We already have more than
-    two hundred CVE-2012-XXXX numbers reserved for various CNAs who are
-    using them to coordinate disclosures that are scheduled to
-    happen in 2012.  This date often correlates with the year that the vuln
-    was found, but not always.
-
-2) When the issue was first made public.  There can be some disagreement
-    about when a vuln is first published (e.g. a bug report may lie
-    unresolved, technically viewable by anybody, for a few years before it
-    reaches general awareness, or something might be published on December
-    31 in one part of the world when it is January 1 in another part of the
-    world.)
-
-Some CNAs who have a pool of CVEs from one year, will continue to use that 
-pool in the next year if there are any CVEs left over, though I generally 
-discourage it.
-
-In January and February 2012, you will probably still see a fairly large 
-number of new CVE-2011-xxxx identifiers released, as MITRE/etc. assign 
-CVEs to issues that were first published in 2011.
-
-- Steve
-
-
-On Mon, 19 Dec 2011, Kurt Seifried wrote:
-
+On Wed, Oct 26, 2011 at 10:11 -0600, Kurt Seifried wrote:
+> >> Please use CVE-2011-4080 for this issue.
+> >
+> > Why does it worth CVE?  
 >
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 12/19/2011 07:52 PM, Tim Sammut wrote:
->> Hi,
->>
->> Is there a general guideline that is commonly used when deciding to
->> issue a CVE name from the pool of a previous year versus the current
->> year's pool?
->>
->> thanks and hope all is well
->> tim
->>
-> Generally speaking the year the vuln was found or reported is the year
-> that gets used for the CVE. Example: I just assigned a CVE-2005.
->
-> - --
->
-> - -Kurt Seifried / Red Hat Security Response Team
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v2.0.14 (GNU/Linux)
->
-> iQIcBAEBAgAGBQJO8AxkAAoJEBYNRVNeJnmTxqsP/R5Zo+nEt1ks1qlVe2zT1b/v
-> 3OBhXhwGlzFvEHjiWb3+4PPvTc3qQBrnt+CySl5ZsIePJ4XObtwSDY6QKoP41Uvx
-> CvatEQsAtAX/RN04t3B8RlB3Q4SJviin9MdaaTs7pKimNrR9ZrwiBYW0Nf/7RFG0
-> r0BYhHlEr7oxTSW7ni1O80s9UFqxJvJwe36NyJPIPXEYsgZYhsYdI+8zMnxNufGP
-> NKg3ZGH7CJ7vcVNbqx+EjKn2Qoi/g3VE1zCPjFdL3kX/lAD5GuN/CRAn/TlLRchZ
-> R3Y2YaserNMRku/GjvBi6Fj+t1neqOrXdmH6OoUKNimMdtt7oqGZe9pe9gcr4S/K
-> NHqR18t5LDJfwUphGwa62+s78CH5x2UP78hrxOf2JtI2SJkXj3t9/mg5b1RGXmae
-> zge9gnO9zBE1BonR0j+llIPtG7zd0GEASq97TnGalsipsQkuNx1Yf8pTZI46Jea9
-> CQyP4X+aF1+ZNNzzEiRPyQyzXMh93xLHlNOrPX7Oj9pF6sI1qpoJYgGr5TZYy4FK
-> 0n7Z4WSuKwUlVNMd/koW6wGIoEvAi1F6hvjBpZTUIB+iUXTBQF526Y2ikIgJZw0L
-> h7J9VI//0oLZ/76yEDk0zeV1IZyh08SwlttCQJtt/f4T7r5IzAFjH7eZ0J0zupsX
-> syNxyLPeENLlA83aB+Pm
-> =Srqi
-> -----END PGP SIGNATURE-----
->
->
+> This allows an attacker to bypass a security boundary. The root user is
+> able to gain privileges they shouldn't have.
+
+You have much bigger problems if you rely on the security boundaries
+defined by LXC.  As I've already showed, LXC root may execute arbitrary
+code as the full root in the root namespaces.
+
+(I assume we're talking about the mainline kernel, not OpenVZ or any
+other kernel fork/patchset/etc.)
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
