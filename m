@@ -1,48 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/19/1
-Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A712334A7@GVW0671EXC.americas.hpqcorp.net>
-Date: Sat, 19 Mar 2011 18:45:57 +0000
-From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "aungkhant@...g.net" <aungkhant@...g.net>
-Subject: RE: CVE Request: HP System Management Homepage(SMH) | Open URL Redirection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/9
+Message-ID: <4EA82599.9040007@redhat.com>
+Date: Wed, 26 Oct 2011 09:22:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 10/26/2011 08:26 AM, Marcus Meissner wrote:
+> Hi,
+>
+> From our openldap2 Maintainer Ralf:
+> |A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
+> |is passed a zero length string. (Can e.g. be triggered by passing a
+> |"postalAddressAttribute" with the value "$" (or no value a all). What the code
+> |does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
+> |least as far as I understand it)
+> |
+> |Upstream Bug: ITS#7059
+> |http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
+> |
+> |This bug is present in older releases as well.
+> |
+> |I wonder if this is really security relevant as it seem the worst that might
+> |happen is that an authenticated user can crash the daemon. I was not able to do
+> |so during a short test but I guess that is just a matter of trying long enough.
+>
+> Ciao, Marcus
+Please use CVE-2011-4079 for this issue
 
-SMH is not FOSS. The CVE assigned to this issue is CVE-2010-1586, and the
-security bulletin is at
-http://h20000.www2.hp.com/bizsupport/TechSupport/Document.jsp?objectID=c0251
-8794 which was published a while back  
+-- 
 
-Something fell through the cracks and we did not notify the reporter.
-Apologies to Aung Khant.
+-Kurt Seifried / Red Hat Security Response Team
 
-Thanks,
-Mark Menkhus
-Hewlett Packard Software Security Response Team
-> -----Original Message-----
-> From: Mike O'Connor [mailto:mjo@...o.mi.org]
-> Sent: Friday, March 18, 2011 1:05 PM
-> To: oss-security@...ts.openwall.com
-> Subject: Re: [oss-security] CVE Request: HP System Management
-> Homepage(SMH) | Open URL Redirection
-> 
-> :Discovered by
-> :Aung Khant (aungkhant<@>yehg.net)
-> :YGN Ethical Hacker Group, Myanmar
-> :http://yehg.net/
-> :
-> :Product:
-> :HP System Management Homepage
-> 
-> Is this open source software?
-> 
-> --
->  Michael J. O'Connor
-> mjo@...o.mi.org
->  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==-
-> -==--=
-> "Nothing in fine print is ever good news.                        -Andy
-> Rooney
-
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
