@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/3
-Message-ID: <1320093282.17057.3.camel@henriknordstrom.net>
-Date: Mon, 31 Oct 2011 21:34:42 +0100
-From: Henrik Nordström <henrik@...riknordstrom.net>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jiri Skala <jskala@...hat.com>
-Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/6
+Message-ID: <4EA818AA.5020907@redhat.com>
+Date: Wed, 26 Oct 2011 08:26:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Round Cube Webmail -- DoS (unavailability to access user's INBOX) after receiving an email message with the URL in the Subject
 Content-Type: text/plain; charset=utf-8
 
-mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
+On 10/26/2011 07:14 AM, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+>
+>   a security flaw was found in the way Round Cube Webmail,
+> a browser-based multilingual IMAP client, processed certail
+> email-messages containing URL link in the message Subject,
+> when the Suhosin check for dangerous PHP files inclusion
+> was enabled. A remote attacker could send a specially-crafted
+> email message to the victim, leading to denial of service
+> (situation, where victim could not open their mail INBOX
+> folder with the crafted email message present).
+>
+> References:
+> [1] http://trac.roundcube.net/ticket/1488086
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=646675
+> [3] https://bugs.php.net/bug.php?id=55475
+>
+> Note: This is a strange one. The original source of the issue
+>       seems to be PHP-Pear is_a() routine autoload bug:
+>       https://bugs.php.net/bug.php?id=55475
+>
+>       and truly this deficiency might affect another package,
+>       than roundcubemail (php-pear-MDB2 in Fedora case).
+>
+>       But it is a combination of this php-pear-MDB2 deficiency,
+>       roundcube's handling of is_a() routine and Suhosin's
+>       check for dangerous *.php files inclusion, which in
+>       result might lead into situation, where valid roundcubemail
+>       user couldn't access their INBOX just for some email
+>       message being present in it.
+>
+>       In short, not sure if the CVE id should be assigned to
+>       the PHP PEAR bug or to the roundcubemail package.
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-> > Could you allocate a CVE id for this? (cc-ed Henrik and Jiri 
-> > for their opinion / comments too, if this should be considered 
-> > a security issue or not) 
-> 
-> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
-> CVE-2009-3700, etc. Lots of similar ones.
+Please use CVE-2011-4078 for this issue
 
-Agreed.
+-- 
 
-Regards
-Henrik
+-Kurt Seifried / Red Hat Security Response Team
 
