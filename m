@@ -1,23 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/16/4
-Message-ID: <4D5B8DBA.8040600@redhat.com>
-Date: Wed, 16 Feb 2011 16:41:30 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/13
+Message-ID: <4EA83120.80106@redhat.com>
+Date: Wed, 26 Oct 2011 10:11:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request - kernel: xfs infoleak
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
- From Dan R0s3nbug5, "The FSGEOMETRY_V1 ioctl (and its compat 
-equivalent) calls out to xfs_fs_geometry() with a version number of 3. 
-This code path does not fill in the logsunit member of the passed 
-xfs_fsop_geom_t, leading to the leaking of four bytes of uninitialized 
-stack data to potentially unprivileged callers.  Since all other members 
-are filled in all code paths and there are no padding bytes in this 
-structure, it's safe to avoid an expensive memset() in favor of just 
-clearing this one field."
+On 10/26/2011 09:53 AM, Vasiliy Kulikov wrote:
+> Hi,
+>
+> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+>> On 10/26/2011 09:16 AM, Petr Matousek wrote:
+>>> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+>>> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+>>> to reset dmesg_restrict to 0.
+>>>
+>>> This is an issue when e.g.  LXC (Linux Containers) are used and complete
+>>> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+>>> root user can bypass the dmesg_restrict protection.
+>>>
+>>> Introduced by:
+>>> eaf06b241b091357e72b76863ba16e89610d31bd
+>>>
+>>> Fixed by:
+>>> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+>>>
+>>> Thanks,
+>> Please use CVE-2011-4080 for this issue.
+> Why does it worth CVE?  
+This allows an attacker to bypass a security boundary. The root user is
+able to gain privileges they shouldn't have.
 
-https://patchwork.kernel.org/patch/555461/
-https://bugzilla.redhat.com/show_bug.cgi?id=677260
+-- 
 
-Eugene
+-Kurt Seifried / Red Hat Security Response Team
+
