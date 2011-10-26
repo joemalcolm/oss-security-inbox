@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/11
-Message-ID: <1313187126.25152.3.camel@scapa>
-Date: Sat, 13 Aug 2011 00:12:06 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, Eugene Teo <eugene@...hat.com>
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/4
+Message-ID: <20111026142429.GA23713@suse.de>
+Date: Wed, 26 Oct 2011 16:24:29 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: slapd off by one
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-12 at 13:31 +0800, Eugene Teo wrote:
-> >> Btw, can you please mail me a copy of the /boot/config of the most
-> >> recent Debian kernel for my reference?
-> > 
-> > Please let me know if you need anything in addition to the files
-> > Yves-Alexis sent you.
-> 
-> I didn't receive his mail.
+Hi,
 
-For some reason Evolution “reply-all” stripped you from the recipients
-(maybe because of the reply-to header). I've bounced you the mail I sent
-before (it didn't reach the list either because it was too large, sorry
-for that).
+Is there already a CVE for this one?
 
-Regards,
+http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
+
+(UTF8StringNormalize() off by one)
+
+Also see:
+
+https://bugzilla.novell.com/show_bug.cgi?id=724201
+
+Sebastian
+
 -- 
-Yves-Alexis
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
