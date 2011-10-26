@@ -1,17 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/7
-Message-ID: <20110720103525.GA8295@foo.fgeek.fi>
-Date: Wed, 20 Jul 2011 13:35:25 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/3
+Message-ID: <4EA8172F.50005@redhat.com>
+Date: Wed, 26 Oct 2011 08:20:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: minhbq@...v.com.vn
-Subject: CVE request: sNews 1.7.1 XSS in reorder
+Subject: Re: CVE Request -- kernel: xfs: potential buffer overflow in xfs_readlink()
 Content-Type: text/plain; charset=utf-8
 
-This vulnerability does not seem to have CVE-identifier assigned. Can I get one? :)
+On 10/26/2011 05:05 AM, Petr Matousek wrote:
+> A flaw was found in the way Linux kernel's XFS filesystem implementation
+> handled links with pathname larger than MAXPATHLEN. When
+> CONFIG_XFS_DEBUG configuration option was not enabled when compiling
+> Linux kernel, an attacker able to mount malicious XFS image could use
+> this flaw to crash the system, or potentially, elevate his privileges
+> on that system.
+>
+> Proposed upstream patch:
+> http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=749156
+> http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
+>
+> Thanks,
+Please use CVE-2011-4077 for this issue.
 
-Bkis page: http://security.bkis.com/snews-1-7-1-xss-vulnerability/
-Original report: http://seclists.org/fulldisclosure/2011/May/300
+-- 
 
-Best regards,
-Henri Salo
+-Kurt Seifried / Red Hat Security Response Team
+
