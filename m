@@ -1,106 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/1
-Message-ID: <Pine.GSO.4.64.1101182205280.9694@faron.mitre.org>
-Date: Tue, 18 Jan 2011 22:09:45 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: tor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/13
+Message-ID: <4EA83120.80106@redhat.com>
+Date: Wed, 26 Oct 2011 10:11:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-
-On Tue, 18 Jan 2011, Josh Bressers wrote:
-
-> ----- Original Message -----
->> Hi,
->>
->> Tor 0.2.1.29 fixes three security issues:
->> http://archives.seul.org/or/announce/Jan-2011/msg00000.html
->>
->> While the first already has a CVE ID listed, two more are
->> still needed.
->>
+On 10/26/2011 09:53 AM, Vasiliy Kulikov wrote:
+> Hi,
 >
-> Here you go:
-> CVE-2011-0015 Tor zlib DoS
-> CVE-2011-0016 Tor keys not zeroed in memory
+> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+>> On 10/26/2011 09:16 AM, Petr Matousek wrote:
+>>> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+>>> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+>>> to reset dmesg_restrict to 0.
+>>>
+>>> This is an issue when e.g.  LXC (Linux Containers) are used and complete
+>>> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+>>> root user can bypass the dmesg_restrict protection.
+>>>
+>>> Introduced by:
+>>> eaf06b241b091357e72b76863ba16e89610d31bd
+>>>
+>>> Fixed by:
+>>> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+>>>
+>>> Thanks,
+>> Please use CVE-2011-4080 for this issue.
+> Why does it worth CVE?  
+This allows an attacker to bypass a security boundary. The root user is
+able to gain privileges they shouldn't have.
 
+-- 
 
-The advisory above also has a section on crashes which the Tor developers 
-"think are hard to exploit remotely," but still (most likely) qualify for 
-CVE inclusion.
-
-CVE-2011-0490 - libevent
-CVE-2011-0491 - tor_realloc crash / "underflow errors"
-CVE-2011-0492 - assertion failure on specific file sizes
-CVE-2011-0493 - assertion failure / malformed router caches
-
-
-- Steve
-
-
-======================================================
-Name: CVE-2011-0490
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0490
-Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
-Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
-Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
-Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
-Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2190
-
-Tor before 0.2.1.29 and 0.2.2.x before 0.2.2.21-alpha makes calls to
-Libevent within Libevent log handlers, which might allow remote
-attackers to cause a denial of service (daemon crash) via vectors that
-trigger certain log messages.
-
-
-======================================================
-Name: CVE-2011-0491
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0491
-Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
-Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
-Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
-Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
-Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2324
-
-The tor_realloc function in Tor before 0.2.1.29 and 0.2.2.x before
-0.2.2.21-alpha does not validate a certain size value during memory
-allocation, which might allow remote attackers to cause a denial of
-service (daemon crash) via unspecified vectors, related to "underflow
-errors."
-
-
-======================================================
-Name: CVE-2011-0492
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0492
-Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
-Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
-Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
-Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
-Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2326
-
-Tor before 0.2.1.29 and 0.2.2.x before 0.2.2.21-alpha allows remote
-attackers to cause a denial of service (assertion failure and daemon
-exit) via blobs that trigger a certain file size, as demonstrated by
-the cached-descriptors.new file.
-
-
-======================================================
-Name: CVE-2011-0493
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-0493
-Reference: MLIST:[or-announce] 20110117 Tor 0.2.1.29 is released (security patches)
-Reference: URL:http://archives.seul.org/or/announce/Jan-2011/msg00000.html
-Reference: CONFIRM:http://blog.torproject.org/blog/tor-02129-released-security-patches
-Reference: CONFIRM:https://gitweb.torproject.org/tor.git/blob/refs/heads/release-0.2.2:/ChangeLog
-Reference: CONFIRM:https://trac.torproject.org/projects/tor/ticket/2352
-
-Tor before 0.2.1.29 and 0.2.2.x before 0.2.2.21-alpha might allow
-remote attackers to cause a denial of service (assertion failure and
-daemon exit) via vectors related to malformed router caches and
-improper handling of integer values.
-
+-Kurt Seifried / Red Hat Security Response Team
 
