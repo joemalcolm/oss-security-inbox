@@ -1,20 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/4
-Message-ID: <20111201095900.GA25680@foo.fgeek.fi>
-Date: Thu, 1 Dec 2011 11:59:00 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/6
+Message-ID: <4EA818AA.5020907@redhat.com>
+Date: Wed, 26 Oct 2011 08:26:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Round Cube Webmail -- DoS (unavailability to access user's INBOX) after receiving an email message with the URL in the Subject
 Content-Type: text/plain; charset=utf-8
 
-Original post: http://seclists.org/bugtraq/2011/Nov/15
-Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
-New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+On 10/26/2011 07:14 AM, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
+>
+>   a security flaw was found in the way Round Cube Webmail,
+> a browser-based multilingual IMAP client, processed certail
+> email-messages containing URL link in the message Subject,
+> when the Suhosin check for dangerous PHP files inclusion
+> was enabled. A remote attacker could send a specially-crafted
+> email message to the victim, leading to denial of service
+> (situation, where victim could not open their mail INBOX
+> folder with the crafted email message present).
+>
+> References:
+> [1] http://trac.roundcube.net/ticket/1488086
+> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=646675
+> [3] https://bugs.php.net/bug.php?id=55475
+>
+> Note: This is a strange one. The original source of the issue
+>       seems to be PHP-Pear is_a() routine autoload bug:
+>       https://bugs.php.net/bug.php?id=55475
+>
+>       and truly this deficiency might affect another package,
+>       than roundcubemail (php-pear-MDB2 in Fedora case).
+>
+>       But it is a combination of this php-pear-MDB2 deficiency,
+>       roundcube's handling of is_a() routine and Suhosin's
+>       check for dangerous *.php files inclusion, which in
+>       result might lead into situation, where valid roundcubemail
+>       user couldn't access their INBOX just for some email
+>       message being present in it.
+>
+>       In short, not sure if the CVE id should be assigned to
+>       the PHP PEAR bug or to the roundcubemail package.
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
+Please use CVE-2011-4078 for this issue
 
-This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
+-- 
 
-Please notify me if this is not enough information.
+-Kurt Seifried / Red Hat Security Response Team
 
-- Henri Salo
