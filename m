@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/2
-Message-ID: <4D7DD02A.2050307@redhat.com>
-Date: Mon, 14 Mar 2011 16:22:02 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE requests - kernel: tpm infoleaks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/5
+Message-ID: <20111026142645.GA13364@suse.de>
+Date: Wed, 26 Oct 2011 16:26:45 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: openldap2 UTF8StringNormalize() can cause a (one-byte) buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-[PATCH 1/3] char/tpm: Fix uninitialized usage of data buffer
- 
-http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=459e0537ebb7b786cd29a26f4e41c721632cd840
-infoleak
+Hi,
 
-[PATCH 2/3] char/tpm: Call tpm_transmit with correct size
- 
-http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=f0bbed1ee49a4779dfb32159fea669ced8789336
-infoleak
+From our openldap2 Maintainer Ralf:
+|A bug in UTF8StringNormalize() can cause a (one-byte) buffer overflow when it
+|is passed a zero length string. (Can e.g. be triggered by passing a
+|"postalAddressAttribute" with the value "$" (or no value a all). What the code
+|does is writing a '\0' past a 1-byte long buffer allocated on the heap. (At
+|least as far as I understand it)
+|
+|Upstream Bug: ITS#7059
+|http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
+|
+|This bug is present in older releases as well.
+|
+|I wonder if this is really security relevant as it seem the worst that might
+|happen is that an authenticated user can crash the daemon. I was not able to do
+|so during a short test but I guess that is just a matter of trying long enough.
 
-[PATCH 3/3] char/tpm: zero buffer after copying to userspace
- 
-http://tpmdd.git.sourceforge.net/git/gitweb.cgi?p=tpmdd/tpmdd;a=commitdiff;h=44480e4077cd782aa8f54eb472b292547f030520
-prevents storing of previous result, leakage to other drivers
-
-Credit to Peter Huewe.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=684671
-
-Thanks, Eugene
--- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Ciao, Marcus
