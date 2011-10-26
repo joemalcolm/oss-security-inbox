@@ -1,17 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/3
-Message-ID: <20111229184849.GA11332@openwall.com>
-Date: Thu, 29 Dec 2011 22:48:49 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/14
+Message-ID: <20111026161408.GA6104@openwall.com>
+Date: Wed, 26 Oct 2011 20:14:08 +0400
 From: Solar Designer <solar@...nwall.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: closed-list
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 27, 2011 at 08:32:00PM -0700, Kurt Seifried wrote:
-> Can you add me to the linux and non-linux list[*]? I'm on Eugene Teo's team 
-> (within Red Hat SRT)
+On Wed, Oct 26, 2011 at 05:16:12PM +0200, Petr Matousek wrote:
+> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> to reset dmesg_restrict to 0.
 
-Added.
+FWIW, here's how this is implemented in OpenVZ, at least in RHEL5 branch
+kernels:
+
+suse114:/ # id
+uid=0(root) gid=0(root) groups=0(root)
+suse114:/ # sysctl -a|fgrep dmesg
+kernel.dmesg_restrict = 1
+suse114:/ # sysctl -w kernel.dmesg_restrict=0
+error: "Operation not permitted" setting key "kernel.dmesg_restrict"
+suse114:/ # uname -mrs
+Linux 2.6.18-274.3.1.el5.028stab094.3.owl1 x86_64
+suse114:/ # dmesg
+klogctl: Operation not permitted
+
+This is OpenSUSE 11.4 (arbitrary, whatever I happened to have as a
+result of some other testing) inside an OpenVZ container on Owl. ;-)
+
+I was actually thinking of making dmesg_restrict tri-state in OpenVZ, to
+have a setting that would allow dmesg to work in containers but not on
+host.  With OpenVZ, containers have their own dmesg buffers anyway, with
+very little info getting in there (e.g., output from virtualized
+iptables logging goes in there, but I've never seen any kernel pointer
+exposed in an in-container dmesg).  Fully disabling dmesg in containers
+just because we want it disabled for non-root on host seems overkill for
+some uses, but that's what is currently implemented when a host admin
+sets dmesg_restrict to 1.  There's room for improvement here, from a
+usability standpoint.
+
+As to security, this shows that OpenVZ is mature and LXC is not. ;-)
 
 Alexander
