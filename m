@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/12
-Message-ID: <4DA8A1AB.5070003@mvista.com>
-Date: Fri, 15 Apr 2011 09:51:07 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/1
+Message-ID: <20111026110536.GE28067@dhcp-25-225.brq.redhat.com>
+Date: Wed, 26 Oct 2011 13:05:37 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Subject: CVE Request -- kernel: xfs: potential buffer overflow in xfs_readlink()
 Content-Type: text/plain; charset=utf-8
 
+A flaw was found in the way Linux kernel's XFS filesystem implementation
+handled links with pathname larger than MAXPATHLEN. When
+CONFIG_XFS_DEBUG configuration option was not enabled when compiling
+Linux kernel, an attacker able to mount malicious XFS image could use
+this flaw to crash the system, or potentially, elevate his privileges
+on that system.
 
-Does affected code have to be in the main K.O repo or can it be in any
-of the other git kernel repos to get a CVE #?
+Proposed upstream patch:
+http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
 
-We have least one product possible affected in
-arch/arm/mach-omap2/debobs.c but this file does not exist in K.O, maybe
-somewhere else (our paper trail on this is coming up cold so I don't
-know where is came from).
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=749156
+http://oss.sgi.com/archives/xfs/2011-10/msg00345.html
 
-- Armin
-
-On 02/22/2011 03:01 AM, Josh Bressers wrote:
-> Do we know the affected versions? This probably won't be 20 IDs,
-> but I suspect it won't be one either.
-> 
-> Thanks.
-> 
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
