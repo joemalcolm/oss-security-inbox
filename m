@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/07/1
-Message-ID: <20110607070821.GA20767@suse.de>
-Date: Tue, 7 Jun 2011 09:08:21 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/14
+Message-ID: <20111026161408.GA6104@openwall.com>
+Date: Wed, 26 Oct 2011 20:14:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: pam_ssh not dropping root gid(s)
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Oct 26, 2011 at 05:16:12PM +0200, Petr Matousek wrote:
+> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> to reset dmesg_restrict to 0.
 
-It might not be the worst issue ever, true, but it somehow doesnt sound right to
-me starting a user ssh-agent with gid 0.
+FWIW, here's how this is implemented in OpenVZ, at least in RHEL5 branch
+kernels:
 
-Sebastian
+suse114:/ # id
+uid=0(root) gid=0(root) groups=0(root)
+suse114:/ # sysctl -a|fgrep dmesg
+kernel.dmesg_restrict = 1
+suse114:/ # sysctl -w kernel.dmesg_restrict=0
+error: "Operation not permitted" setting key "kernel.dmesg_restrict"
+suse114:/ # uname -mrs
+Linux 2.6.18-274.3.1.el5.028stab094.3.owl1 x86_64
+suse114:/ # dmesg
+klogctl: Operation not permitted
 
-On Mon, Jun 06, 2011 at 02:03:07PM -0400, Josh Bressers wrote:
-> ----- Original Message -----
-> > Hi,
-> > 
-> > In certain configs, pam_ssh is not completely dropping its privileges to
-> > user. It just forgets to call setgid() and initgroups(). A fix can be
-> > found at [1].  Can someone assign a CVE?
-> > 
-> > thx,
-> > Sebastian
-> > 
-> > [1] https://bugzilla.novell.com/show_bug.cgi?id=665061
-> > 
-> 
-> Is this a security flaw? From doing a little ssh-agent research, it sounds
-> harmless without another flaw. I'm not terribly familiar with it though, so
-> I could be missing something.
-> 
-> Thanks.
-> 
-> -- 
->     JB
+This is OpenSUSE 11.4 (arbitrary, whatever I happened to have as a
+result of some other testing) inside an OpenVZ container on Owl. ;-)
 
--- 
+I was actually thinking of making dmesg_restrict tri-state in OpenVZ, to
+have a setting that would allow dmesg to work in containers but not on
+host.  With OpenVZ, containers have their own dmesg buffers anyway, with
+very little info getting in there (e.g., output from virtualized
+iptables logging goes in there, but I've never seen any kernel pointer
+exposed in an in-container dmesg).  Fully disabling dmesg in containers
+just because we want it disabled for non-root on host seems overkill for
+some uses, but that's what is currently implemented when a host admin
+sets dmesg_restrict to 1.  There's room for improvement here, from a
+usability standpoint.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+As to security, this shows that OpenVZ is mature and LXC is not. ;-)
 
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Alexander
