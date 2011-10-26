@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/7
-Message-ID: <20111117102917.GA2186@foo.fgeek.fi>
-Date: Thu, 17 Nov 2011 12:29:17 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/16
+Message-ID: <CAOSRhRMYs921N+a5zJAv7sqGkr2C5tka7-PdaKJXt62rBJfnyA@mail.gmail.com>
+Date: Wed, 26 Oct 2011 13:43:16 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 17, 2011 at 06:22:17AM +0400, Solar Designer wrote:
-> On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
-> > Alternatively, crypt(3) and crypt_r(3) (and the reference code for
-> > SHA-crypt?) could refuse to work on overly long key or/and salt strings,
-> > but then the question is what they should do on error.
-> 
-> Here's another related option:
-> 
-> 	if (strlen(key) > 100000 || strlen(salt) > 100000)
-> 		abort();
-> 
-> (or something like this).  Ridiculous?  Sure, but it's better than
-> overwriting another thread's stack or the heap with somewhat higher
-> lengths, and 100001 chars is not a more reasonable password length to
-> support than, say, 2 million or 10 million (typical thread stack sizes).
-> 
-> So if we can't decide on a proper fix (does anyone besides me even
-> care?), something as trivial as the above would be an improvement.
-> 
-> Alexander
+On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
+> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> to reset dmesg_restrict to 0.
+>
 
-I care, but I don't have much to contribute. Seems valid discussion for this list in my opinion.
+Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
+with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
+correct that CAP_SYS_ADMIN is now required to modify the sysctl.
 
-Best regards,
-Henri Salo
+I also agree with Vasiliy's point that LXC security boundaries in the
+mainline kernel are not well defined at this point, so the whole thing
+is a bit silly.
+
+-Dan
