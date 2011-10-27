@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/05/1
-Message-ID: <1312532620.2261.7.camel@localhost.localdomain>
-Date: Fri, 05 Aug 2011 09:23:35 +0100
-From: Tim Waugh <twaugh@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/7
+Message-ID: <CAOSRhRMb5htcjczxk5WaE-0EQxTLO1o_KZz=HRFik4nKthi4mg@mail.gmail.com>
+Date: Thu, 27 Oct 2011 16:58:18 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com, coley@...us.mitre.org
-Subject: Re: CVE Request: foomatic-gui
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-08-04 at 13:53 -0400, Josh Bressers wrote:
-> My impression is that the code is the same, which means they will share the
-> same ID. If the code is totally different, we will want to split. Time, you
-> know best, is the code in question the same, or is it different?
+>>
+>> I also agree with Vasiliy's point that LXC security boundaries in the
+>> mainline kernel are not well defined at this point, so the whole thing
+>> is a bit silly.
+>
+> Just wondering - do you usually ack patches that you consider silly?
+>
 
-Oh, it's largely the same by the look of it, but there may be some
-differences.
+Just because a patch doesn't fix an immediate problem right now
+doesn't mean it isn't the right thing to do.  For consistency's sake,
+it makes sense that it should require CAP_SYS_ADMIN to modify this
+sysctl, and it's certainty not a bad idea to move towards a more
+well-defined security boundary for LXC for the future.  That's why I
+ack'ed the patch.  I simply meant that assigning a CVE for this case
+was silly because it doesn't represent a violation of a real security
+boundary.
 
-Tim.
-*/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (483 bytes)
+-Dan
