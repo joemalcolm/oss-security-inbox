@@ -1,34 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/3
-Message-ID: <db93d4a5-c28e-44dc-8c8d-4183199fa5e9@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 10 Oct 2011 14:22:16 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/5
+Message-ID: <20111027193547.GH28067@dhcp-25-225.brq.redhat.com>
+Date: Thu, 27 Oct 2011 21:35:47 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: serendipity freetag plugin before 3.30 and probably others
+Cc: kseifried@...hat.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-3610.
+On Wed, Oct 26, 2011 at 07:53:10PM +0400, Vasiliy Kulikov wrote:
+> Hi,
+> 
+> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+> > On 10/26/2011 09:16 AM, Petr Matousek wrote:
+> > > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> > > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> > > to reset dmesg_restrict to 0.
+> > >
+> > > This is an issue when e.g.  LXC (Linux Containers) are used and complete
+> > > user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+> > > root user can bypass the dmesg_restrict protection.
+> > >
+> > > Introduced by:
+> > > eaf06b241b091357e72b76863ba16e89610d31bd
+> > >
+> > > Fixed by:
+> > > bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+> > >
+> > > Thanks,
+> > Please use CVE-2011-4080 for this issue.
+> 
+> Why does it worth CVE?  Procfs is not ready for containers yet.  You can
+> use other sysctls for more harmful things.  E.g. kernel.core_pattern
+> allows arbitrary code execution as a full root - does it need a CVE too
+> then? :-)
 
-Thanks.
+Yes, you are right. I was aware of the procfs limitations, still it looked
+to me that boundary explicitly defined in eaf06b2 is directly crossed in
+this case.
+
+Anyway I agree that it is useless to issue CVE for each procfs flaw of
+this kind.
+
+Kurt, could you please reject the CVE?
+
+Sorry for the noise,
+Petr
+
+> 
+> root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
+> root@...-ubuntu:/proc/sys/kernel# cat 
+> ^\Quit (core dumped)
+> 
+> (In the root namespace)
+> $ ls /tmp/pwned
+> /tmp/pwned
+> 
+> -- 
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing environments
 
 -- 
-    JB
-
------ Original Message -----
-> XSS in the tagcloud generation flash in serendipity freetag before
-> 3.30:
-> http://blog.s9y.org/archives/234-Security-fix-for-flash-based-cloud-in-Freetag-plugin.html
-> 
-> The linked vulnerability report indicates that this flash code is
-> also
-> used by other software, e.g. the wp cumulus plugin:
-> http://websecurity.com.ua/5356/
-> 
-> Though my ukrainian isn't that good ;-)
-> 
-> Please assign cve.
-> 
-> --
-> Hanno Böck		mail/jabber: hanno@...eck.de
-> GPG: BBB51E42		http://www.hboeck.de/
-> 
+Petr Matousek / Red Hat Security Response Team
