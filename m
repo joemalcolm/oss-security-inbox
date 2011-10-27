@@ -1,38 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/25/9
-Message-ID: <CAEZPtU5smwcEAhWaBXx=Za7yJuGpK4gEwvanoC_7uEP7OfOUkw@mail.gmail.com>
-Date: Sun, 25 Sep 2011 16:10:12 +0200
-From: Pierre Joye <pierre.php@...il.com>
-To: Zeev Suraski <zeev@...d.com>
-Cc: Vincent Danen <vdanen@...hat.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "security@....net" <security@....net>,  Stas Malyshev <smalyshev@...arcrm.com>
-Subject: Re: CVE request: is_a() function may allow arbitrary code execution in PHP 5.3.7/5.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/4
+Message-ID: <4EA97604.8020404@redhat.com>
+Date: Thu, 27 Oct 2011 09:17:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Dmitry Butskoy <buc@...sz.so-cdu.ru>
+Subject: Re: CVE Request -- phpLDAPadmin -- Local file inclusion flaw in "common.php" via "Accept-Language" HTTP header leading to DoS
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 25, 2011 at 3:47 PM, Zeev Suraski <zeev@...d.com> wrote:
-
-> There aren't any security issues in PHP in that context.  Assigning a CVE to PHP in that context would create the impression that there is indeed an issue in PHP here.
-> It's not a matter of who's 'guilty' in terms of positioning - but in terms of where the actual security issue resides.  And it does not reside in PHP.
+On 10/27/2011 06:07 AM, Jan Lieskovsky wrote:
+> Hello Josh, Steve, vendors,
 >
-> So I agree with Stas, it doesn't make sense to have a CVE here.  Otherwise, almost every change we make, including bug fixes, could somehow result in some faulty piece of code somewhere becoming vulnerable to something.
+>   a local file inclusion flaw was found in the way the phpLDAPadmin,
+> a web based LDAP client for managing LDAP servers, processed certain
+> values of the "Accept-Language" HTTP header. A remote attacker could
+> use this flaw to cause a denial of service (generate recursive
+> inclusions leading to resource exhaustion) via specially-crafted request.
+>
+> Note: A different issue than CVE-2011-4075 (due the different
 
-The whole point is that some code was not having any issue before this
-change. If the check was done earlier using is_a then this unexpected
-behavior will happen, and that actually causes a security issue in
-existing working code. The example in the blog post is very good one,
-it clearly shows that the impact on existing code is not only about
-wrongly implemented autoloader, or someone not disabling
-allow_url_fopen (I can imagine local file include being an issue as
-well under some circumstances).
+Confirmed, vulnerable in 0.9.7 and before, fixed in 0.9.8, so it's a
+much older issue.
 
-All in all, there is no shame or bad image to get a new CVE for
-something like that, I even see it as a good thing as it will:
+Please use CVE-2011-4082 for this issue.
 
-1. clearly explain the is_a issue and how it can impact existing code
-(with the hope that our users will review/fix their code)
-2. bring to the light again some good practices
+>       attack vector and different source code file in question).
+>
+> References:
+> [1] http://www.securityfocus.com/bid/50328/info
+>
+> Relevant exploit:
+> [2] http://www.securityfocus.com/data/vulnerabilities/exploits/50328.java
+>
+> According to Dmitry, this issue should be fixed in upstream v0.9.8.5
+> version too.
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Cheers,
+
 -- 
-Pierre
 
-@pierrejoye | http://blog.thepimp.net | http://www.libgd.org
+-Kurt Seifried / Red Hat Security Response Team
+
