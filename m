@@ -1,25 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/3
-Message-ID: <4D65D3F2.6090408@redhat.com>
-Date: Thu, 24 Feb 2011 11:43:46 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/9
+Message-ID: <4EA9D585.2060308@redhat.com>
+Date: Thu, 27 Oct 2011 16:04:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-Check values passed in to AARESOLVE_OFFSET on r300. It can be used to 
-write arbitrary data to VRAM, GTT, etc. This is specific to a range of 
-GPUs only.
+Please revoke
 
-drm/radeon/kms: check AA resolve registers on r300
-http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
+CVE-2011-4080
 
-[PATCH] drm/radeon: fix regression with AA resolve checking
-https://patchwork.kernel.org/patch/576101/
+On 10/27/2011 01:35 PM, Petr Matousek wrote:
+> On Wed, Oct 26, 2011 at 07:53:10PM +0400, Vasiliy Kulikov wrote:
+>> Hi,
+>>
+>> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+>>> On 10/26/2011 09:16 AM, Petr Matousek wrote:
+>>>> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+>>>> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+>>>> to reset dmesg_restrict to 0.
+>>>>
+>>>> This is an issue when e.g.  LXC (Linux Containers) are used and complete
+>>>> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+>>>> root user can bypass the dmesg_restrict protection.
+>>>>
+>>>> Introduced by:
+>>>> eaf06b241b091357e72b76863ba16e89610d31bd
+>>>>
+>>>> Fixed by:
+>>>> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+>>>>
+>>>> Thanks,
+>>> Please use CVE-2011-4080 for this issue.
+>> Why does it worth CVE?  Procfs is not ready for containers yet.  You can
+>> use other sysctls for more harmful things.  E.g. kernel.core_pattern
+>> allows arbitrary code execution as a full root - does it need a CVE too
+>> then? :-)
+> Yes, you are right. I was aware of the procfs limitations, still it looked
+> to me that boundary explicitly defined in eaf06b2 is directly crossed in
+> this case.
+>
+> Anyway I agree that it is useless to issue CVE for each procfs flaw of
+> this kind.
+>
+> Kurt, could you please reject the CVE?
+>
+> Sorry for the noise,
+> Petr
+>
+>> root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
+>> root@...-ubuntu:/proc/sys/kernel# cat 
+>> ^\Quit (core dumped)
+>>
+>> (In the root namespace)
+>> $ ls /tmp/pwned
+>> /tmp/pwned
+>>
+>> -- 
+>> Vasiliy Kulikov
+>> http://www.openwall.com - bringing security into open computing environments
 
-https://bugzilla.redhat.com/show_bug.cgi?id=680000
 
-Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
