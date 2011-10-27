@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/4
-Message-ID: <20110811064811.GG32249@dannf.org>
-Date: Thu, 11 Aug 2011 00:48:11 -0600
-From: dann frazier <dannf@...nf.org>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
-Subject: Re: CVE request: perf: may parse user-controlled config file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/1
+Message-ID: <4EA91FEF.1030408@redhat.com>
+Date: Thu, 27 Oct 2011 17:10:07 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: crypto: ghash: null pointer deref if no key is set
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 09, 2011 at 09:18:07AM -0400, Steve Grubb wrote:
-> On Sunday, August 07, 2011 01:34:38 PM dann frazier wrote:
-> > This was reported by Christian Ohm at:
-> >   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
-> > 
-> > The perf command, provided as part of the Linux kernel source, looks
-> > for and honors configuration settings in ./config. A local user could
-> > obtain elevated privileges by convincing a superuser to run the perf
-> > command from a directory the user controls.
-> 
-> And in recent kernels has an executable stack:
-> https://bugzilla.redhat.com/show_bug.cgi?id=704296
+Description from the commit: The ghash_update function passes a pointer
+to gf128mul_4k_lle which will be NULL if ghash_setkey is not called or
+if the most recent call to ghash_setkey failed to allocate memory.  This
+causes an oops.  Fix this up by returning an error code in the null case.
 
-fyi, that bug appears to be locked
+This is trivially triggered from unprivileged userspace through the
+AF_ALG interface by simply writing to the socket without setting a key.
+
+The ghash_final function has a similar issue, but triggering it requires
+a memory allocation failure in ghash_setkey _after_ at least one
+successful call to ghash_update.
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=749475
+https://secunia.com/advisories/46584/
+https://bugs.gentoo.org/show_bug.cgi?id=388581
+
+Upstream commit:
+http://git.kernel.org/linus/7ed47b7d142ec99ad6880bbbec51e9f12b3af74c
+
++config CRYPTO_GHASH
+was added in commit 2cdc6899, v2.6.32-rc1.
+
+Thanks, Eugene
+-- 
+Eugene Teo / Red Hat Security Response Team
