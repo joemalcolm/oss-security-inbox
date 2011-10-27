@@ -1,43 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/6
-Message-ID: <20110401110950.3a211ee3@angelo.pretender.us>
-Date: Fri, 1 Apr 2011 11:09:50 -0700
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/9
+Message-ID: <4EA9D585.2060308@redhat.com>
+Date: Thu, 27 Oct 2011 16:04:53 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Please revoke
 
-On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
+CVE-2011-4080
 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+On 10/27/2011 01:35 PM, Petr Matousek wrote:
+> On Wed, Oct 26, 2011 at 07:53:10PM +0400, Vasiliy Kulikov wrote:
+>> Hi,
+>>
+>> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+>>> On 10/26/2011 09:16 AM, Petr Matousek wrote:
+>>>> When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+>>>> kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+>>>> to reset dmesg_restrict to 0.
+>>>>
+>>>> This is an issue when e.g.  LXC (Linux Containers) are used and complete
+>>>> user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+>>>> root user can bypass the dmesg_restrict protection.
+>>>>
+>>>> Introduced by:
+>>>> eaf06b241b091357e72b76863ba16e89610d31bd
+>>>>
+>>>> Fixed by:
+>>>> bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+>>>>
+>>>> Thanks,
+>>> Please use CVE-2011-4080 for this issue.
+>> Why does it worth CVE?  Procfs is not ready for containers yet.  You can
+>> use other sysctls for more harmful things.  E.g. kernel.core_pattern
+>> allows arbitrary code execution as a full root - does it need a CVE too
+>> then? :-)
+> Yes, you are right. I was aware of the procfs limitations, still it looked
+> to me that boundary explicitly defined in eaf06b2 is directly crossed in
+> this case.
+>
+> Anyway I agree that it is useless to issue CVE for each procfs flaw of
+> this kind.
+>
+> Kurt, could you please reject the CVE?
+>
+> Sorry for the noise,
+> Petr
+>
+>> root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
+>> root@...-ubuntu:/proc/sys/kernel# cat 
+>> ^\Quit (core dumped)
+>>
+>> (In the root namespace)
+>> $ ls /tmp/pwned
+>> /tmp/pwned
+>>
+>> -- 
+>> Vasiliy Kulikov
+>> http://www.openwall.com - bringing security into open computing environments
 
-I'm a (now former) vendor-sec member who would like to be added to the
-new closed list.
 
-My GPG key:
- pub 1024D/F3C33D5A 2008-11-19
- Key fingerprint = 6B56 F9AC 07B6 85D7 DC45 60DA 6BA2 2226 F3C3 3D5A
- uid Reed Loden
- sub 4096g/C0B72052 2008-11-19
+-- 
 
-Thanks,
-~reed
+-Kurt Seifried / Red Hat Security Response Team
 
-- -- 
-Reed Loden
-reed@...dloden.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAk2WFO4ACgkQa6IiJvPDPVqpTwCg3O5e+uTYtDcLCxHCJ8EF+zYD
-fTsAnjv8NnRnsQRFHswnj5IvASxpj7A+
-=pBPQ
------END PGP SIGNATURE-----
