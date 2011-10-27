@@ -1,29 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/24/6
-Message-ID: <20111124174935.GF1081@dhcp-25-225.brq.redhat.com>
-Date: Thu, 24 Nov 2011 18:49:36 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/5
+Message-ID: <20111027193547.GH28067@dhcp-25-225.brq.redhat.com>
+Date: Thu, 27 Oct 2011 21:35:47 +0200
 From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- kernel: kvm: device assignment DoS
+Cc: kseifried@...hat.com
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-It was found that kvm_vm_ioctl_assign_device function did not check if
-the user requesting assignment was privileged or not. Together with
-/dev/kvm being 666, unprivileged user could assign unused pci devices,
-or even devices that were in use and whose resources were not properly
-claimed by the respective drivers.
+On Wed, Oct 26, 2011 at 07:53:10PM +0400, Vasiliy Kulikov wrote:
+> Hi,
+> 
+> On Wed, Oct 26, 2011 at 09:26 -0600, Kurt Seifried wrote:
+> > On 10/26/2011 09:16 AM, Petr Matousek wrote:
+> > > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> > > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> > > to reset dmesg_restrict to 0.
+> > >
+> > > This is an issue when e.g.  LXC (Linux Containers) are used and complete
+> > > user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
+> > > root user can bypass the dmesg_restrict protection.
+> > >
+> > > Introduced by:
+> > > eaf06b241b091357e72b76863ba16e89610d31bd
+> > >
+> > > Fixed by:
+> > > bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
+> > >
+> > > Thanks,
+> > Please use CVE-2011-4080 for this issue.
+> 
+> Why does it worth CVE?  Procfs is not ready for containers yet.  You can
+> use other sysctls for more harmful things.  E.g. kernel.core_pattern
+> allows arbitrary code execution as a full root - does it need a CVE too
+> then? :-)
 
-Please note that privileged access was still needed to re-program the
-device to for example issue DMA requests. This is typically achieved by
-touching files on sysfs filesystem. These files are usually not
-accessible to unprivileged users.
+Yes, you are right. I was aware of the procfs limitations, still it looked
+to me that boundary explicitly defined in eaf06b2 is directly crossed in
+this case.
 
-As a result, local user could use this flaw to crash the system.
+Anyway I agree that it is useless to issue CVE for each procfs flaw of
+this kind.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=756084
-http://thread.gmane.org/gmane.comp.emulators.kvm.devel/82043
+Kurt, could you please reject the CVE?
 
-Thanks,
+Sorry for the noise,
+Petr
+
+> 
+> root@...-ubuntu:/proc/sys/kernel# echo "|/usr/bin/touch /tmp/pwned" > core_pattern
+> root@...-ubuntu:/proc/sys/kernel# cat 
+> ^\Quit (core dumped)
+> 
+> (In the root namespace)
+> $ ls /tmp/pwned
+> /tmp/pwned
+> 
+> -- 
+> Vasiliy Kulikov
+> http://www.openwall.com - bringing security into open computing environments
+
 -- 
 Petr Matousek / Red Hat Security Response Team
