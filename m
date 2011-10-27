@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/12
-Message-ID: <722866113.398030.1306872098185.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 31 May 2011 16:01:38 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/6
+Message-ID: <20111027194003.GI28067@dhcp-25-225.brq.redhat.com>
+Date: Thu, 27 Oct 2011 21:40:04 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Could I get a CVE name for the issue in
-> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+On Wed, Oct 26, 2011 at 01:43:16PM -0400, Dan Rosenberg wrote:
+> On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
+> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> > to reset dmesg_restrict to 0.
+> >
 > 
+> Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
+> with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
+> correct that CAP_SYS_ADMIN is now required to modify the sysctl.
 
-Please use CVE-2011-1947.
+RHEL uses only CAP_SYS_ADMIN. I haven't checked upstream for
+correctness of the description.
 
-I can't help but wonder what else could be vulnerable to a similar flaw.
-Has anyone looked?
+> 
+> I also agree with Vasiliy's point that LXC security boundaries in the
+> mainline kernel are not well defined at this point, so the whole thing
+> is a bit silly.
 
-Thanks.
+Just wondering - do you usually ack patches that you consider silly?
 
--- 
-    JB
+Petr
+
+> 
+> -Dan
+
