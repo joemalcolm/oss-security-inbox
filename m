@@ -1,53 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/02/3
-Message-Id: <201108021734.28433.thomas@suse.de>
-Date: Tue, 2 Aug 2011 17:34:28 +0200
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/6
+Message-ID: <20111027194003.GI28067@dhcp-25-225.brq.redhat.com>
+Date: Thu, 27 Oct 2011 21:40:04 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: GIF loader buffer overflow when initializing decompression tables
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
-this one might need a CVE-ID...
+On Wed, Oct 26, 2011 at 01:43:16PM -0400, Dan Rosenberg wrote:
+> On Wed, Oct 26, 2011 at 11:16 AM, Petr Matousek <pmatouse@...hat.com> wrote:
+> > When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
+> > kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
+> > to reset dmesg_restrict to 0.
+> >
+> 
+> Minor correction: CAP_SYSLOG is needed to read the kernel ring buffer,
+> with CAP_SYS_ADMIN being a fallback for legacy reasons.  But it's
+> correct that CAP_SYS_ADMIN is now required to modify the sysctl.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=727081
+RHEL uses only CAP_SYS_ADMIN. I haven't checked upstream for
+correctness of the description.
 
-Tomas Hoger 2011-08-01 05:48:32 EDT
+> 
+> I also agree with Vasiliy's point that LXC security boundaries in the
+> mainline kernel are not well defined at this point, so the whole thing
+> is a bit silly.
 
-GDK's GIF image reader is based on David Koblas' code that is also used in
-several other GIF image readers.  This code contained an input validation flaw.
- Input code size was read from input GIF file and used to initialize decoding
-tables without checking the value, leading to buffer overflow.  Relevant GDK
-code is:
+Just wondering - do you usually ack patches that you consider silly?
 
-  941 static int
-  942 gif_prepare_lzw (GifContext *context)
-  943 {
-    ...
-  946   if (!gif_read (context, &(context->lzw_set_code_size), 1)) {
-  947       /*g_message (_("GIF: EOF / read error on image data\n"));*/
-  948       return -1;
-  949   }
-    ...
-  952   context->lzw_clear_code = 1 << context->lzw_set_code_size;
-    ...
-  962   for (i = 0; i < context->lzw_clear_code; ++i) {
-  963       context->lzw_table[0][i] = 0;
-  964       context->lzw_table[1][i] = i;
-  965   }
+Petr
 
-The same flaw was previously reported for several other components that include
-GIF reading code based on David Koblas' parser, such as: gd (CVE-2006-4484),
-SDL_image (CVE-2007-6697), tk (CVE-2008-0553), netbpm (CVE-2008-0554), cups
-(CVE-2008-1373).
+> 
+> -Dan
 
-This problem was corrected upstream long ago:
-
-http://git.gnome.org/browse/gdk-pixbuf/commit/gdk-pixbuf/io-gif.c?id=3bac204e0d0241a0d68586ece7099e6acf0e9bea
-
-The fix can be found in all gdk-pixbuf versions embedded in gtk2 packages, but
-it seems it never got it to stand-alone gdk-pixbuf version for gtk+ 1.x.
-
-Gimp corrected this bug ~2 years after GDK:
-
-http://git.gnome.org/browse/gimp/commit/plug-ins/common/gifload.c?id=cac290d093d0c318bbe33a4ff290c2abbd9698d3
