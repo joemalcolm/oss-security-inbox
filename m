@@ -1,19 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/11
-Message-ID: <4E93517D.3010801@gmail.com>
-Date: Mon, 10 Oct 2011 22:11:41 +0200
-From: Michael Harrison <n0idx80@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/2
+Message-ID: <4EA924B0.5080208@redhat.com>
+Date: Thu, 27 Oct 2011 15:00:24 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests:   <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF, AVI, MP4 demuxers and https://bugs.gentoo.org/show_bug.cgi?id=279340
+Subject: Re: CVE request: kernel: crypto: ghash: null pointer deref if no key is set
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 10/27/2011 02:40 PM, Eugene Teo wrote:
+> Description from the commit: The ghash_update function passes a pointer
+> to gf128mul_4k_lle which will be NULL if ghash_setkey is not called or
+> if the most recent call to ghash_setkey failed to allocate memory.  This
+> causes an oops.  Fix this up by returning an error code in the null case.
+>
+> This is trivially triggered from unprivileged userspace through the
+> AF_ALG interface by simply writing to the socket without setting a key.
+>
+> The ghash_final function has a similar issue, but triggering it requires
+> a memory allocation failure in ghash_setkey _after_ at least one
+> successful call to ghash_update.
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=749475
+> https://secunia.com/advisories/46584/
+> https://bugs.gentoo.org/show_bug.cgi?id=388581
+>
+> Upstream commit:
+> http://git.kernel.org/linus/7ed47b7d142ec99ad6880bbbec51e9f12b3af74c
+>
+> +config CRYPTO_GHASH
+> was added in commit 2cdc6899, v2.6.32-rc1.
+>
 
-Could you please supply a CVE for the following issues:
+This has been assigned CVE-2011-4081
 
-1. <media-video/vlc-1.0.2: Multiple stack-based buffer overflows in ASF, 
-AVI, MP4 demuxers
-https://bugs.gentoo.org/show_bug.cgi?id=285370
 
-2. <media-video/vlc-0.9.10 Real RDT Integer Underflow
-https://bugs.gentoo.org/show_bug.cgi?id=279340
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
