@@ -1,89 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/28/5
-Message-ID: <20111228084433.GA16259@suse.de>
-Date: Wed, 28 Dec 2011 09:44:33 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/7
+Message-ID: <CAOSRhRMb5htcjczxk5WaE-0EQxTLO1o_KZz=HRFik4nKthi4mg@mail.gmail.com>
+Date: Thu, 27 Oct 2011 16:58:18 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Jeff Mitchell <mitchell@....org>, ossi@....org
-Subject: Re: Disputing CVE-2011-4122
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
+>>
+>> I also agree with Vasiliy's point that LXC security boundaries in the
+>> mainline kernel are not well defined at this point, so the whole thing
+>> is a bit silly.
+>
+> Just wondering - do you usually ack patches that you consider silly?
+>
 
-FWIW, one could have also used the pam helper from squid or squid3
-which calls pam_start() in the same way.
-It is wrong from OpenPAM to blindly trust the service parameter
-and append it to /etc/pam.d. In particular since PAM's primary reason
-is to bring security, so it should be security-aware.
-But its also wrong from applications to pass everything they get
-from *users* to pam_start() w/o filtering. That likely hurts the system
-policy _at least_. Defensive programming, anyone? :)
+Just because a patch doesn't fix an immediate problem right now
+doesn't mean it isn't the right thing to do.  For consistency's sake,
+it makes sense that it should require CAP_SYS_ADMIN to modify this
+sysctl, and it's certainty not a bad idea to move towards a more
+well-defined security boundary for LXC for the future.  That's why I
+ack'ed the patch.  I simply meant that assigning a CVE for this case
+was silly because it doesn't represent a violation of a real security
+boundary.
 
-regards,
-Sebastian
-
-
-On Wed, Dec 28, 2011 at 03:25:09AM +0400, Solar Designer wrote:
-> On Mon, Dec 26, 2011 at 11:39:55PM -0500, Jeff Mitchell wrote:
-> > So kcheckpass, at least for the moment, punts all of this down to
-> > OpenPAM. Is it *nice*? No. Is it *valid*? Yes, unless OpenPAM changes
-> > its programming guide to require sanity checking of inputs at a higher
-> > level (and then it should still do its own checking anyways).
-> 
-> Sure, but is it valid and not a vulnerability when installing a package
-> (containing kcheckpass) unexpectedly (for a sysadmin) lets any user on
-> the system invoke any of the configured PAM stacks, some of which may
-> have side-effects?
-> 
-> I think it is not valid, and I think it is a vulnerability on its own,
-> albeit a relatively minor one, regardless of PAM's pam_start() service
-> name directory traversal possibility or lack thereof.
-> 
-> In other words, I say that kcheckpass is vulnerable (in this different
-> way) even on systems that don't use OpenPAM (or that use fixed OpenPAM).
-> 
-> > That's the basis for the maintainer wanting to challenge this CVE. Even
-> > if everyone agrees that kcheckpass should do some kind of filtering of
-> > service names, the fact remains that OpenPAM should have been doing its
-> > own sanity checking anyways (since it should never simply trust user
-> > input), and OpenPAM wasn't. If it wasn't kcheckpass that exposed this
-> > problem, it would eventually have been something else.
-> 
-> Like I said before, this definitely makes some sense to me.  The service
-> name was not supposed to be user input, though.  Normally, the same
-> application provides the service name and cares about the authentication
-> result, so it would not reasonably let the user choose the service name
-> arbitrarily (as that would also let the user affect the authentication
-> result in possibly unintended ways).  We have a rare exception here,
-> where the authentication result actually does not matter to kcheckpass
-> itself, but matters to another application - one in control of the
-> supplied service name.  OK, that's a peculiar exception and a somewhat
-> valid use case, and I fully support the OpenPAM hardening change that
-> this prompted.
-> 
-> > I'll happily pass your comments along to the kcheckpass maintainer, and
-> > he indicated to me during our discussions that some level of filtering
-> > would probably be appropriate, but this CVE is due to OpenPAM's lack of
-> > sanity checking and blaming the program that exposes it via valid (if
-> > ugly) usage scenarios is misguided.
-> 
-> We need two CVE ids then - one for OpenPAM, the other for the kcheckpass
-> issue (namely, letting a user run arbitrary PAM stacks, including those
-> that a sysadmin may never have intended for the user to be able to run).
-> 
-> Makes sense?
-> 
-> Alexander
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+-Dan
