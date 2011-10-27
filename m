@@ -1,57 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/03/12
-Message-ID: <20110303213640.GG372@outflux.net>
-Date: Thu, 3 Mar 2011 13:36:40 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/8
+Message-ID: <1319749248.4817.11.camel@localhost>
+Date: Thu, 27 Oct 2011 16:00:48 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: Craig Barratt <cbarratt@...rs.sourceforge.net>, coley@...us.mitre.org,  oss-security <oss-security@...ts.openwall.com>
+Cc: security@...ntu.com
+Subject: CVE Request: Security issue in backuppc
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 06:31:08PM +0000, Mark J Cox wrote:
-> We monitor how we first found out about every issue we eventually
-> fix, and if we found out before or after the issue was public.
-> 
-> For vendor-sec, during last calendar years
-> 
-> date		# issues in advance		# issues already public
-> 2008		69				32
-> 2009		57				17
-> 2010		29				22
-> 
-> That 29 represents just 4% of the total number of our
-> vulnerabilities fixed in 2010.  The median time of embargo for those
-> 29 issues was 15 days (average 24)
+Hi Craig,
 
-This certainly underscores that very few flaws need vendor-sec
-coordination, but I would suspect that out of those roughly 725 flaws,
-many of the really critical ones came through vendor-sec. Does that match
-your records? (Ubuntu doesn't currently track the origin of flaws beyond
-giving credit, so I'm curious if RH's data matches my sense of critical
-flaw origin.)
+While preparing updates to fix CVE-2011-3361 in Ubuntu I discovered
+another XSS vulnerability in View.pm when accessing the following URLs
+in backuppc:
+index.cgi?action=view&type=XferLOG&num=<XSS here>&host=<some host>
+index.cgi?action=view&type=XferErr&num=<XSS here>&host=<some host>
 
-I'm also curious what "issues already public but found out about it on
-vendor-sec" means? Does that mean it was inappropriately brought to
-vendor-sec after it was already public, or that RH found out about it
-after it was public even though it had already been discussed privately
-on vendor-sec?
+You are being emailed as the upstream contact. Please keep
+oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
 
-> But I think that trend is what was expected, as upstream projects
-> communicate with affected vendors directly, and we use oss-security
-> for issues that don't need embargo or co-ordination.
-
-Several upstreams, though disappointingly not the Linux kernel, are very
-good about keeping their end-users in mind and providing direct distro
-coordination for important security updates (MIT Kerberos comes to mind
-first as a great example). This number of upstreams has been growing,
-but it's not nearly large enough to supplant a vendor-sec-like mailing
-list, IMO.
-
-I'm all for the public disclosure of things that are low priority. But I
-think it's important to maintain coordination for really nasty flaws,
-otherwise we're in a position to really do a disservice to end-users.
-
--Kees
+To oss-security, can I have a CVE for this? It is essentially the same
+vulnerability and fix as for CVE-2011-3361, but in CGI/View.pm instead
+of CGI/Browse.pm. Attached is a patch to fix this issue. Tested on
+3.0.0, 3.1.0, 3.2.0 and 3.2.1.
 
 -- 
-Kees Cook
-Ubuntu Security Team
+Jamie Strandboge             | http://www.canonical.com
+
+View attachment "view.diff" of type "text/x-patch" (410 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
