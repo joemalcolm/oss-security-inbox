@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/18/14
-Message-ID: <39628cb6-7c36-4e9c-8a53-766f154a12cc@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 18 Oct 2011 16:17:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/2
+Message-ID: <4EA924B0.5080208@redhat.com>
+Date: Thu, 27 Oct 2011 15:00:24 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: recursion level crash in clamav before 0.97.3
+Subject: Re: CVE request: kernel: crypto: ghash: null pointer deref if no key is set
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Sadly, as we know, upstream clamav doesn't care about publishing security
-> advisories. They even seem to have stopped to publish new versions on
-> their -announce-list, so the only way to see changes is to dig into the
-> tar-file and see the Changelog.
-> 
-> This one here sounds like security relevant:
-> Sat Oct  8 12:10:13 EEST 2011 (edwin)
-> -------------------------------------
->  * libclamav/bytecode.c,bytecode_api.c: fix recursion level crash (bb
->    #3706).
-> Upstream bug is invisible to the public. Please assign CVE
-> 
+On 10/27/2011 02:40 PM, Eugene Teo wrote:
+> Description from the commit: The ghash_update function passes a pointer
+> to gf128mul_4k_lle which will be NULL if ghash_setkey is not called or
+> if the most recent call to ghash_setkey failed to allocate memory.  This
+> causes an oops.  Fix this up by returning an error code in the null case.
+>
+> This is trivially triggered from unprivileged userspace through the
+> AF_ALG interface by simply writing to the socket without setting a key.
+>
+> The ghash_final function has a similar issue, but triggering it requires
+> a memory allocation failure in ghash_setkey _after_ at least one
+> successful call to ghash_update.
+>
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=749475
+> https://secunia.com/advisories/46584/
+> https://bugs.gentoo.org/show_bug.cgi?id=388581
+>
+> Upstream commit:
+> http://git.kernel.org/linus/7ed47b7d142ec99ad6880bbbec51e9f12b3af74c
+>
+> +config CRYPTO_GHASH
+> was added in commit 2cdc6899, v2.6.32-rc1.
+>
 
-Please use CVE-2011-3627.
+This has been assigned CVE-2011-4081
 
-Thanks.
 
 -- 
-    JB
+Huzaifa Sidhpurwala / Red Hat Security Response Team
