@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/6
-Message-ID: <BANLkTinqqGvnk_dCx4ttNSY4Ph-41nK4kg@mail.gmail.com>
-Date: Mon, 13 Jun 2011 13:37:48 -0300
-From: Javier Bassi <javierbassi@...il.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: XSS in Webmin 1.540
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/27/3
+Message-ID: <4EA94975.30401@redhat.com>
+Date: Thu, 27 Oct 2011 14:07:17 +0200
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Dmitry Butskoy <buc@...sz.so-cdu.ru>
+Subject: CVE Request -- phpLDAPadmin -- Local file inclusion flaw in "common.php" via "Accept-Language" HTTP header leading to DoS
 Content-Type: text/plain; charset=utf-8
 
-After your email, I searched for this mailing list and asked for CVE.
-http://seclists.org/oss-sec/2011/q2/478
-CVE-2011-1937.
+Hello Josh, Steve, vendors,
 
-On Mon, Jun 13, 2011 at 10:40 AM, Henri Salo <henri@...v.fi> wrote:
-> Hi,
->
-> I would like to receive CVE-identifier for this issue in Webmin. References:
->
-> http://seclists.org/fulldisclosure/2011/Apr/393
->
-> Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB. Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881 which is included to Webmin 1.550 release.
->
-> Should be 2011 identifier.
->
-> Best regards,
-> Henri Salo
->
+   a local file inclusion flaw was found in the way the phpLDAPadmin,
+a web based LDAP client for managing LDAP servers, processed certain
+values of the "Accept-Language" HTTP header. A remote attacker could
+use this flaw to cause a denial of service (generate recursive 
+inclusions leading to resource exhaustion) via specially-crafted request.
+
+Note: A different issue than CVE-2011-4075 (due the different
+       attack vector and different source code file in question).
+
+References:
+[1] http://www.securityfocus.com/bid/50328/info
+
+Relevant exploit:
+[2] http://www.securityfocus.com/data/vulnerabilities/exploits/50328.java
+
+According to Dmitry, this issue should be fixed in upstream v0.9.8.5
+version too.
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
