@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/25/2
-Message-ID: <4ECFB086.6010200@redhat.com>
-Date: Fri, 25 Nov 2011 16:13:10 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: colord sql injections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/11
+Message-ID: <4EAAA0C4.7030704@tokidev.fr>
+Date: Fri, 28 Oct 2011 14:32:04 +0200
+From: Benjamin Renaut <benml@...idev.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
 Content-Type: text/plain; charset=utf-8
 
-Hi Ludwig,
+Hi,
 
-   thank you for the report.
+I do not believe gzexe is affected, as it doesn't use ln but instead 
+create a temporary directory with umask 77 - preventing any race condition.
 
-On 11/25/2011 11:55 AM, Ludwig Nussel wrote:
-> Hi,
+Best regards,
+Benjamin Renaut.
+
+On 28/10/11 14:22, Hanno Böck wrote:
+> Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
+> schrieb Ramon de C Valle<rcvalle@...hat.com>:
 >
-> colord did not quote user supplied strings which made it prone to
-> SQL injections:
-> https://bugs.freedesktop.org/show_bug.cgi?id=42904
-> https://bugzilla.novell.com/show_bug.cgi?id=698250
-
-Just to have this one sorted out wrt to the patches, the relevant
-upstream patches are these two:
-[1] 
-http://gitorious.org/colord/master/commit/1fadd90afcb4bbc47513466ee9bb1e4a8632ac3b
-[2] 
-http://gitorious.org/colord/master/commit/36549e0ed255e7dfa7852d08a75dd5f00cbd270e
-
-right?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
->
-> When colord runs as root and local active users are allowed to
-> create new devices (both are the defaults AFAIK) this allows not
-> only to corrupt colord's own database but also to leverage it to
-> modify other databases in the system (PackageKit for example also
-> uses sqlite).
->
-> PoC available on request.
->
-> cu
-> Ludwig
+>> This is a security issue reported by vladz in bzexe. This is a low
+>> impact security issue, since bzexe is rarely used and the race
+>> condition window is very narrow, but still exploitable.
+> Have you checked if this also affects gzexe? It is pretty much the same
+> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
 >
 
