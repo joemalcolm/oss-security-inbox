@@ -1,40 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/5
-Message-ID: <AANLkTinj0P1AU31XWEswr+0p0dGHDvPvuTFecMcwQMG2@mail.gmail.com>
-Date: Tue, 22 Feb 2011 23:17:54 -0500
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Physical access vulnerabilities and auto-mounting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/1
+Message-ID: <Pine.GSO.4.64.1110272304280.21599@faron.mitre.org>
+Date: Thu, 27 Oct 2011 23:38:47 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+cc: cve-assign@...re.org
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-I originally started writing this as a response to the recent CVE
-requests for issues in partition handling, but thought it might be a
-useful discussion on its own.  I was wondering if there are any
-clear-cut policies on issues involving physical access, since these
-can be very difficult in terms of assigning blame.
 
-For example, many Linux distributions will auto-mount filesystems on
-removable storage, often going so far as to load corresponding kernel
-modules for filesystems that aren't compiled in or don't already have
-an LKM loaded.  Sometimes, this will happen even if the screen is
-locked.
+All,
 
-Incidentally, many Linux filesystem implementations don't have
-especially robust error handling for failures during attempts to mount
-corrupt filesystems.  As an example, I have a deliberately corrupted
-btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
-formatted a USB stick with this filesystem, so now I have a USB stick
-that will panic the kernels of distributions that support
-auto-mounting, in some cases even when the screen is locked.
+There was some discussion in January 2011 regarding CAP_SYS_ADMIN and how 
+security boundaries are defined:
 
-Should this be considered a vulnerability?  Probably.  But what should
-be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-a vulnerability if auto-mounting is disabled only when the screen is
-locked?  Should all filesystems have graceful error handling for every
-possible edge case that can occur when dealing with corruption?
+   http://openwall.com/lists/oss-security/2011/01/07/1
 
-I'd be interested to hear opinions on this.  And depending on how the
-discussion goes, I'd be happy to provide more details on specific
-cases, such as the btrfs example.
+By this kind of logic, even though it's "silly" and a very low risk 
+because it requires such high privileges to exploit, the ability for an 
+attacker to bypass CAP_SYS_ADMIN by modifying dmesg_restrict so that the 
+attacker can read the kernel ring buffer, seems to bypass an intended 
+security policy, at least as the policy as it's currently implemented.
 
--Dan
+There are a couple other statements worth considering:
+
+1) Vasiliy (with Dan's agreement) saying that "LXC security boundaries in
+    the mainline kernel are not well defined at this point."
+    http://openwall.com/lists/oss-security/2011/10/26/11
+
+2) Vasiliy's statement that "Procfs is not ready for containers yet."
+    I'm not sure what this means, exactly - is procfs code being modified
+    to support containers, and development isn't complete?
+
+3) Vasiliy's statement that an attacker can "use other sysctls for
+    more harmful things."  If a user already has legitimate, "acceptable"
+    privileges to perform an action that is equivalent to
+    CAP_SYS_ADMIN/dmesg_restrict, then the bypass does not cross security
+    boundaries.
+
+If we can get agreement that there isn't a well-defined security policy 
+yet (at least by the kernel people who are on oss-security), and if 
+there's agreement that procfs isn't being advertised to conform to any 
+such policy in the first place, then there could be some collective 
+community decision to decide that these kinds of issues don't (yet) 
+represent any violation of an explicit security policy.  This could then 
+shape future decisions for whether we continue to assign CVEs for these 
+kinds of issues, at least until some more explicit policy is defined.
+
+So, I'll repeat my subtle request in January for someone to try and define 
+what the acceptable security boundaries are at this stage, and then it 
+should make it easier to interpret what needs a CVE (or not).  It sounds 
+like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
+blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
+great start; based on my (limited) understanding, this suggests that 
+CAP_SYS_ADMIN can legitimately transition to full root.
+
+- Steve
