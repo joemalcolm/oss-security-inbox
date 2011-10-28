@@ -1,69 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/1
-Message-ID: <20111108121412.GA14450@albatros>
-Date: Tue, 8 Nov 2011 16:14:12 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/9
+Message-ID: <20111028142213.52f499e8@laverne>
+Date: Fri, 28 Oct 2011 14:22:13 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: multiple flaws allowing to sniff keystrokes timings
+Cc: rcvalle@...hat.com
+Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
+schrieb Ramon de C Valle <rcvalle@...hat.com>:
 
-I don't know whether these need several CVEs, but they allow to do
-roughly the same thing: monitor the time when users push keys on the
-keyboard/ttys and get at least password length or with a more
-sophisticated technique learn the precise input characters sequence by
-matching the timings against the statistical information.
+> This is a security issue reported by vladz in bzexe. This is a low
+> impact security issue, since bzexe is rarely used and the race
+> condition window is very narrow, but still exploitable.
 
-
-1) https://lkml.org/lkml/2011/11/7/340 
-
-"/proc/interrupts contains the number of emitted interrupts, which
-should not be world readable.  The information about keyboard
-interrupts number may be used to learn the precise number of characters
-in users' passwords by simply watching the changes of number of emitted
-interrupts during the life of gksu-like programs."
-
-PoC: http://www.openwall.com/lists/oss-security/2011/11/07/9
-
-Vulnerable: all Linux versions, all distros with procfs mounted.
-
-(The patch misses the same infoleak via /proc/stat, which must be
-closed too.)
-
-
-2) https://lkml.org/lkml/2011/11/7/355
-
-The same as (1), but via tty devices' atime and mtime.
-
-"You can still figure it out by watching the files in /dev/pts/ and
-/dev/tty* for changes in last-modify time."
-
-Vulnerable: all Linux versions, all distros with world readable
-directories containing tty and pts device files.
-
-
-3) https://lkml.org/lkml/2011/11/8/136
-
-"/proc/$PID/{sched,schedstat} contain debugging scheduler counters, which
-should not be world readable.  They may be used to gather private information
-about processes' activity.  E.g. it can be used to count the number of
-characters typed in gksu dialog."
-
-PoC: http://www.openwall.com/lists/oss-security/2011/11/05/3
-
-Vulnerable: all Linux >= 2.6.9, all distros with procfs mounted.
-
-
-These are not fixed yet, the solution might be introducing revoke() with
-permission restrictions, see the first link in (1) with the discussion.
-
-
-Also, security@...nel.org is unavailable, is there any substitution of
-this email?
-
-Thanks,
+Have you checked if this also affects gzexe? It is pretty much the same
+as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
 
 -- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
