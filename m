@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/6
-Message-ID: <20110621155623.GI1952@redhat.com>
-Date: Tue, 21 Jun 2011 09:56:23 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/14
+Message-ID: <4EAAC8F9.30102@redhat.com>
+Date: Fri, 28 Oct 2011 09:23:37 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Marcus Meissner <meissner@...e.de>
+Subject: Re: CVE Request: Multiple remote denial of service in Linux bridge networking code 2.6.37-3.0
 Content-Type: text/plain; charset=utf-8
 
-* [2011-06-20 09:01:11 +0400] Solar Designer wrote:
-
-[...]
->As to what's affected besides crypt_blowfish itself, I expect it to be
->PHP (the code in php-5.3.7RC1 looks affected), Linux distros that use
->crypt_blowfish (Owl, ALT Linux, SUSE), and some others (I'll try to
->identify them and notify the maintainers).
-
-PostgreSQL is affected as well (the pgcrypto module):
-
-% head crypt-blowfish.c 
-/*
-  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 14:48:52 momjian Exp $
-  *
-  * This code comes from John the Ripper password cracker, with reentrant
-  * and crypt(3) interfaces added, but optimizations specific to password
-  * cracking removed.
-
-php-suhosin also contains the same code.
+On 10/28/2011 02:06 AM, Marcus Meissner wrote:
+> Hi,
+>
+> Linux kernel 2.6.37 introduced with this commit
+> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=462fb2af9788a82a534f8184abfde31574e1cfa0
+> several regressions that be used to trigger remote denial of service attacks when
+> bridging is in use.
+>
+> Reporter thread is on:
+> 	http://thread.gmane.org/gmane.linux.network/191713
+>
+> Fixes are in git commits:
+> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=f8e9881c2aef1e982e5abc25c046820cd0b7cf64
+> 		In 2.6.39
+> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=66944e1c5797562cebe2d1857d46dff60bf9a69e
+> 		In 2.6.39
+> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=c65353daf137dd41f3ede3baf62d561fca076228
+> 		In 3.0
+> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=10949550bd1e50cc91c0f5085f7080a44b0871fe
+> 		In 3.0
+> So it can be considered fixed with Linux kernel 3.0.
+> Thanks to Eugene for looking up the commit ids.
+>
+> I think it just needs one CVE, as it was one introducing patch.
+>
+> Ciao, Marcus
+Please use CVE-2011-4087 for this issue.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+-Kurt Seifried / Red Hat Security Response Team
+
