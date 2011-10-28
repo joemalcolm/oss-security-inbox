@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/5
-Message-ID: <20110502161206.GA19512@openwall.com>
-Date: Mon, 2 May 2011 20:12:06 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/9
+Message-ID: <20111028142213.52f499e8@laverne>
+Date: Fri, 28 Oct 2011 14:22:13 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: rcvalle@...hat.com
+Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 02, 2011 at 04:56:30AM -1000, akuster wrote:
-> On 04/30/2011 04:51 AM, Solar Designer wrote:
-> <snipped>
-> 
-> > Hence, I've saved your subscription request to a separate folder, to
-> > revisit it if a decision is made to start adding "closed" vendors to the
-> > list, if Wind River starts to publish advisories and updates (in other
-> > words, if it becomes no more closed than Red Hat), or if a suitable
-> > separate list is setup.
-> 
-> Can you clarify what is meant by updates?
+Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
+schrieb Ramon de C Valle <rcvalle@...hat.com>:
 
-RHEL-like .src.rpm's or equivalent will do.  Something else might do.
+> This is a security issue reported by vladz in bzexe. This is a low
+> impact security issue, since bzexe is rarely used and the race
+> condition window is very narrow, but still exploitable.
 
-While we're at it, just what software do MontaVista and Wind River ship?
-My guess is that embedded Linux distro vendors would not care about
-vulnerabilities in desktop-specific apps (e.g., the X server), but I
-could be wrong.  And there are other software categories, which may or
-may not be relevant.  It'd be nice for potential reporters of security
-issues to know which vendors might be affected.
+Have you checked if this also affects gzexe? It is pretty much the same
+as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
 
-Alexander
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
