@@ -1,55 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/01/11
-Message-Id: <201103011738.52055.rhafer@suse.de>
-Date: Tue, 1 Mar 2011 17:38:51 +0100
-From: Ralf Haferkamp <rhafer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/6
+Message-ID: <4EAA8F3F.7070601@gmail.com>
+Date: Fri, 28 Oct 2011 07:17:19 -0400
+From: Sean Amoss <failedtosync@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Vincent Danen <vdanen@...hat.com>, Ludwig Nussel <ludwig.nussel@...e.de>
-Subject: Re: CVE Request -- OpenLDAP -- two issues
+Subject: CVE Request -- Opera Manipulating fonts in SVG can allow execution of arbitrary code
 Content-Type: text/plain; charset=utf-8
 
-Am Montag 28 Februar 2011, 17:38:43 schrieb Vincent Danen:
-> * [2011-02-28 14:16:06 +0100] Thomas Biege wrote:
-> >The following might also need a CVE-ID.
-> >
-> >https://bugzilla.novell.com/show_bug.cgi?id=674985#c1
-> >---------------------------------------------------------------------
-> >--------- http://www.openldap.org/its/index.cgi/Software Bugs?id=6768
-> >
-> >That's a pretty bad DOS. Everybody (even unauthenticated users) can
-> >kill the server by submitting a MODRDN request with an empty "olddn"
-> >value and "remove
-> >
-> >old RDN" set (-r). Example:
-> >      ldapmodrdn -x -H ldap://ldapserver -r '' o=test
-> >
-> >---------------------------------------------------------------------
-> >---------
-> 
-> I've just tried this here.  I noted in your bug report that you
-> indicate that it seems to affect all of your currently maintained
-> products, but I've tried it here against openldap 2.3.43 and do not
-> see a crash (I can reproduce the crash on 2.4.19).
-It seems you are right. Even though the bug slipped into CVS HEAD already 
-in 2006 it never got merged into the 2.3 release branch. So only 2.4.x 
-releases are affected by this. Sorry for causing confusion here.
+Hello,
 
-> Have you tested this one against older openldap, or is it just an
-> assumption (it might be ACLs or something that is preventing me from
-> seeing the crash, but I don't believe so if no authentication is
-> required to affect this).
->
-> Seems that this is the patch to fix it:
-> 
-> http://www.openldap.org/devel/cvsweb.cgi/servers/slapd/modrdn.c.diff?r
-> 1=1.170.2.8&r2=1.170.2.9&hideattic=1&sortbydate=0
-> 
-> The code is different enough in 2.3.x that I can't tell by looking at
-> it whether or not it is affected (enough looks similar that perhaps
-> it might be and may just require a changed ldapmodrdn command).
+Can a CVE be assigned for the below issue?
 
-regards,
-	Ralf
+"Certain font manipulations inside a dynamically added and specifically
+embedded SVG image can cause Opera to crash. Additional techniques can
+reliably be used in combination with this crash to allow execution of
+arbitrary code.
+
+Opera Software has released Opera 11.52, where this issue has been fixed."
+
+http://www.opera.com/support/kb/view/1002/
+http://spa-s3c.blogspot.com/2011/10/spas3c-sv-006opera-browser-101112-0-day.html
+
+
+Thank you
+Sean
+
 
 -- 
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+Sean Amoss
