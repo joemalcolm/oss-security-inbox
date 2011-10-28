@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/3
-Message-ID: <4E13FFA4.4090001@redhat.com>
-Date: Wed, 06 Jul 2011 14:24:36 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/13
+Message-ID: <4EAAC48B.4000300@redhat.com>
+Date: Fri, 28 Oct 2011 09:04:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: perf, x86: fix Intel fixed counters base initialization
+Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
 Content-Type: text/plain; charset=utf-8
 
-The following patch solves the problems introduced by Robert's commit
-41bf498 and reported by Arun Sharma. This commit gets rid of the base +
-index notation for reading and writing PMU msrs.
+On 10/28/2011 02:02 AM, Hanno Böck wrote:
+> http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>
+> "Fixes a backend XSS issue in the karma plugin and media database
+> filtering, thanks to Stefan Schurtz!"
+>
+> If anyone asks: Backend XSS are a security issue in multiuser webapps,
+> one less priviliged user can use them to gain more privilege.
+>
+> Please assign CVE.
+>
+Can you please send more details, i.e. which file is responsible/or a
+link to a commit fixing this? Thanks.
 
-The problem is that for fixed counters, the new calculation for the base
-did not take into account the fixed counter indexes, thus all fixed
-counters were read/written from fixed counter 0.  Although all fixed
-counters share the same config MSR, they each have their own counter
-register.
+-- 
 
-This can cause a local denial of service.
+-Kurt Seifried / Red Hat Security Response Team
 
-Upstream commit:
-http://git.kernel.org/linus/fc66c5210ec2539e800e87d7b3a985323c7be96e
-
-Introduced in:
-http://git.kernel.org/linus/41bf498949a263fa0b2d32524b89d696ac330e94
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=719228
-
-Thanks, Eugene
