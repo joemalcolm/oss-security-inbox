@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/4
-Message-ID: <20110819145226.6da97b47@redhat.com>
-Date: Fri, 19 Aug 2011 14:52:26 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/7
+Message-ID: <1319802316.20049.9.camel@scapa>
+Date: Fri, 28 Oct 2011 13:45:16 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: BusyBox unpack_Z_stream() buffer underflow
+Cc: Sean Amoss <failedtosync@...il.com>
+Subject: Re: CVE Request -- Opera Manipulating fonts in SVG can allow execution of arbitrary code
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 19 Aug 2011 13:36:31 +0200 Alex Legler wrote:
+On ven., 2011-10-28 at 07:17 -0400, Sean Amoss wrote:
+> Can a CVE be assigned for the below issue?
+> 
+> "Certain font manipulations inside a dynamically added and
+> specifically
+> embedded SVG image can cause Opera to crash. Additional techniques can
+> reliably be used in combination with this crash to allow execution of
+> arbitrary code.
+> 
+> Opera Software has released Opera 11.52, where this issue has been
+> fixed."
+> 
+> http://www.opera.com/support/kb/view/1002/
+> http://spa-s3c.blogspot.com/2011/10/spas3c-sv-006opera-browser-101112-0-day.html 
 
-> Secunia [1] reported a fix in BusyBox for a flaw similar to
-> CVE-2006-1168:
+Note that *OSS*-sec is for Open Source Software, which Opera is not,
+afair.
 
-We had that mentioned here:
-  https://bugzilla.redhat.com/show_bug.cgi?id=727624#c8
-
-> Please assign a CVE.
-
-Given that busybox embeds ncompress code, I believe old CVE can /
-should be used for busybox too.  I'm happy to be corrected if I'm wrong.
-
+Regards,
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
