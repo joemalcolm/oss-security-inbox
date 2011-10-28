@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/18/2
-Message-ID: <20110218165125.GA4245@albatros>
-Date: Fri, 18 Feb 2011 19:51:25 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: patch directory traversal flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/3
+Message-ID: <20111028070425.GD14711@foo.fgeek.fi>
+Date: Fri, 28 Oct 2011 10:04:25 +0300
+From: Henri Salo <henri@...v.fi>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
-The patch of Jim Meyering introduces interdiff regression:
+On Sun, Oct 23, 2011 at 02:41:17PM -0400, Josh Bressers wrote:
+> The advisory just says there are a bunch of security fixes by all these
+> people, with no actual information. Such vagueness is only going to create
+> confusion, which will create extra work for me if I try to assign IDs to
+> such an advisory.
 
-$ interdiff -z john-1.7.6-jumbo-9.diff.gz john-1.7.6-jumbo-10.diff.gz
-patch: **** rejecting absolute target file name: /tmp/.private/genie/interdiff-1.7yovIC
-interdiff: Error applying patch1 to reconstructed file
+Now there is information in the URI.
 
-interdiff creates a patch with absolute filenames, but doesn't pass the
-target filename as an argument to patch.
+Facts:
 
-It is fixed in the latest upstream version 0.3.2.  The fix itself is as
-follows:
+- Affect all Piwik users that have let granted some access to the "anonymous" user
+- Remotely exploitable vulnerability that could allow a remote attacker to execute arbitrary code
+- Versions affected Piwik 1.2, 1.3, and 1.4
+- Credits: Neal Poole
 
---- patchutils-0.3.1.orig/src/interdiff.c	2011-02-18 17:57:05.000000000 +0300
-+++ patchutils-0.3.1/src/interdiff.c	2011-02-18 17:57:24.000000000 +0300
-@@ -808,7 +808,7 @@ apply_patch (FILE *patch, const char *fi
- 	FILE *w;
- 
- 	w = xpipe(PATCH, &child, "w", PATCH,
--		  reverted ? "-Rsp0" : "-sp0", NULL);
-+		  reverted ? "-Rsp0" : "-sp0", file, NULL);
- 
- 	fprintf (w, "--- %s\n+++ %s\n", file, file);
- 	line = NULL;
---
+These details should be enough information for CVE assignment. I can also verify this issue if you want for every version? If there isn't enough details I can dig more :)
 
-
-Thanks,
-
--- 
-Vasiliy
+Best regards,
+Henri Salo
