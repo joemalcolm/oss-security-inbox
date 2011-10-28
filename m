@@ -1,25 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/8
-Message-ID: <4D992FB9.3080908@redhat.com>
-Date: Mon, 04 Apr 2011 10:40:57 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/10
+Message-ID: <e21730d7-849d-46db-80c3-373bf2c12b0f@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Fri, 28 Oct 2011 09:07:00 -0400 (EDT)
+From: Ramon de C Valle <rcvalle@...hat.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
 Content-Type: text/plain; charset=utf-8
 
-On 04/02/2011 02:03 AM, Josh Bressers wrote:
-> Hello everyone,
->
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
 
-pub   4096R/51BF6EF3 2011-04-04
-     Key fingerprint = 7664 496C 62A9 7BC2 7229  B654 FF73 C155 51BF 6EF3
-uid                  Eugene Teo <eugene[0x40]redhat.com>
-uid                  Eugene Teo <eteo[0x40]redhat.com>
+> Have you checked if this also affects gzexe? It is pretty much the
+> same
+> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
+It seems this issue affects only executables compressed by bzexe. The self-uncompressing executable created by gzexe seems to make appropriate use of the /tmp directory uncompressing the executable file to a previously created subdirectory created with mkdir--all with appropriate permissions.
 
-Thanks, Eugene
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Ramon de C Valle / Red Hat Security Response Team
