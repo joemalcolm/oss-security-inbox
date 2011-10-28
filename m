@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/18/2
-Message-ID: <4DAC11B9.8010708@redhat.com>
-Date: Mon, 18 Apr 2011 15:56:01 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Wireshark 1.2.16 / 1.4.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/1
+Message-ID: <Pine.GSO.4.64.1110272304280.21599@faron.mitre.org>
+Date: Thu, 27 Oct 2011 23:38:47 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+cc: cve-assign@...re.org
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I noticed that new wireshark versions 1.2.16/1.4.5 were released on
-14th/15th April 2011 and some of issues fixed appear to have security impact
+All,
 
-1. Use of un-initialised variables:
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5793
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5754
-Patch: http://anonsvn.wireshark.org/viewvc?revision=36608&view=revision
-Versions affected: 1.2.0 to 1.2.15 and 1.4.0 to 1.4.4
+There was some discussion in January 2011 regarding CAP_SYS_ADMIN and how 
+security boundaries are defined:
 
-2. Buffer overflow in DECT dissector
-The advisory does not list the bug number or the relevant patch.
+   http://openwall.com/lists/oss-security/2011/01/07/1
 
-3. Crash in NFS dissector
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=5209
-Versions affected: 1.4.0 to 1.4.4.
-This affects Windows only.
+By this kind of logic, even though it's "silly" and a very low risk 
+because it requires such high privileges to exploit, the ability for an 
+attacker to bypass CAP_SYS_ADMIN by modifying dmesg_restrict so that the 
+attacker can read the kernel ring buffer, seems to bypass an intended 
+security policy, at least as the policy as it's currently implemented.
 
-http://www.wireshark.org/security/wnpa-sec-2011-05.html
-http://www.wireshark.org/security/wnpa-sec-2011-06.html
+There are a couple other statements worth considering:
 
+1) Vasiliy (with Dan's agreement) saying that "LXC security boundaries in
+    the mainline kernel are not well defined at this point."
+    http://openwall.com/lists/oss-security/2011/10/26/11
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+2) Vasiliy's statement that "Procfs is not ready for containers yet."
+    I'm not sure what this means, exactly - is procfs code being modified
+    to support containers, and development isn't complete?
+
+3) Vasiliy's statement that an attacker can "use other sysctls for
+    more harmful things."  If a user already has legitimate, "acceptable"
+    privileges to perform an action that is equivalent to
+    CAP_SYS_ADMIN/dmesg_restrict, then the bypass does not cross security
+    boundaries.
+
+If we can get agreement that there isn't a well-defined security policy 
+yet (at least by the kernel people who are on oss-security), and if 
+there's agreement that procfs isn't being advertised to conform to any 
+such policy in the first place, then there could be some collective 
+community decision to decide that these kinds of issues don't (yet) 
+represent any violation of an explicit security policy.  This could then 
+shape future decisions for whether we continue to assign CVEs for these 
+kinds of issues, at least until some more explicit policy is defined.
+
+So, I'll repeat my subtle request in January for someone to try and define 
+what the acceptable security boundaries are at this stage, and then it 
+should make it easier to interpret what needs a CVE (or not).  It sounds 
+like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
+blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
+great start; based on my (limited) understanding, this suggests that 
+CAP_SYS_ADMIN can legitimately transition to full root.
+
+- Steve
