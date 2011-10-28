@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/03/1
-Message-ID: <4ED9E006.6020007@googlemail.com>
-Date: Sat, 03 Dec 2011 09:38:30 +0100
-From: dishix <dishix@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/13
+Message-ID: <4EAAC48B.4000300@redhat.com>
+Date: Fri, 28 Oct 2011 09:04:43 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: CSRF in xt:commerce 3.04 SP2.1
+Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/28/2011 02:02 AM, Hanno Böck wrote:
+> http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
+>
+> "Fixes a backend XSS issue in the karma plugin and media database
+> filtering, thanks to Stefan Schurtz!"
+>
+> If anyone asks: Backend XSS are a security issue in multiuser webapps,
+> one less priviliged user can use them to gain more privilege.
+>
+> Please assign CVE.
+>
+Can you please send more details, i.e. which file is responsible/or a
+link to a commit fixing this? Thanks.
 
-Hi,
+-- 
 
-Can I get CVE-identifier for this:
+-Kurt Seifried / Red Hat Security Response Team
 
-xt:commerce 3.04 SP2.1 is prone to CSRF. An attacker can exploit this
-vulnerability to escalate his/her privileges to gain administrator access.
-
-> http://dishix.blogspot.com/2011/11/exploiting-xtcommerce-v304-sp21-cross.html
-> http://dishix.blogspot.com/p/xtcommerce-v304-sp21-cross-site-request_29.html
-
-
-Best regards,
-dishix
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQEcBAEBAgAGBQJO2d/7AAoJEKmqdCCWk7VQDpsIAJQNWNIaDXNTAuQrf8767R+n
-U1ZQxSxRCVDkX7DsOINQgHxBYnetaycfKmBfX8KlOZvZYtvtOM7YrDlx2q8Pbcf7
-nGF2IhZBIDOE9I67Gpwx1wAoHQogynXS7o/PGyZL9o7j4tzUmodbPG8nFMIK9c+8
-BwchXmaV95J99V6scaL/MVwMG7K235UVuRkd6sxKDOPT9rYU8Ex/7Mpru9LQqeYf
-zS4WlzTJ+zgJ/3YmzvJo59AfTmTFGNbahgkl1YsgmEkq79lQoVewf72Q5kY50zbX
-njegk+xl1OJpbyoqa99x0Vxy789mqo97bfWreGgr445VLgIWG4LtkwEPemBpg/s=
-=H1Cx
------END PGP SIGNATURE-----
