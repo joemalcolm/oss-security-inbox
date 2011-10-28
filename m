@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/1
-Message-ID: <AANLkTi=YzqfJGbHzjCPaqGEw7mFF6mFV8bf9q5H+dE7+@mail.gmail.com>
-Date: Fri, 18 Mar 2011 07:18:30 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/6
+Message-ID: <4EAA8F3F.7070601@gmail.com>
+Date: Fri, 28 Oct 2011 07:17:19 -0400
+From: Sean Amoss <failedtosync@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: AudioScience HPI driver
+Subject: CVE Request -- Opera Manipulating fonts in SVG can allow execution of arbitrary code
 Content-Type: text/plain; charset=utf-8
 
-"The user-supplied index into the adapters array needs to be checked, or
-an out-of-bounds kernel pointer could be accessed and used, leading to
-potentially exploitable memory corruption."
+Hello,
 
-This may be triggered by a user with access to an appropriate device
-file, which I'd expect would be restricted to group 'audio'.  And
-you'd need to have this particular driver loaded, either by using the
-appropriate hardware or finding a new way to force it to be loaded in
-violation of security policy.
+Can a CVE be assigned for the below issue?
 
-Regards,
-Dan
+"Certain font manipulations inside a dynamically added and specifically
+embedded SVG image can cause Opera to crash. Additional techniques can
+reliably be used in combination with this crash to allow execution of
+arbitrary code.
 
-[1] http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=4a122c10fbfe9020df469f0f669da129c5757671
+Opera Software has released Opera 11.52, where this issue has been fixed."
+
+http://www.opera.com/support/kb/view/1002/
+http://spa-s3c.blogspot.com/2011/10/spas3c-sv-006opera-browser-101112-0-day.html
+
+
+Thank you
+Sean
+
+
+-- 
+Sean Amoss
