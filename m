@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/10
-Message-ID: <20110519192445.GB2430@redhat.com>
-Date: Thu, 19 May 2011 13:24:45 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/11
+Message-ID: <4EAAA0C4.7030704@tokidev.fr>
+Date: Fri, 28 Oct 2011 14:32:04 +0200
+From: Benjamin Renaut <benml@...idev.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: DoS in apr due to CVE-2011-0419 fix
+Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
 Content-Type: text/plain; charset=utf-8
 
-* [2011-05-19 12:35:24 -0600] Vincent Danen wrote:
+Hi,
 
->This was posted today:
->
->http://mail-archives.apache.org/mod_mbox/httpd-announce/201105.mbox/%3C4DD55092.3030403@apache.org%3E
->
->Essentially the fix for CVE-2011-0419 in apr caused another security
->flaw.
->
->Could a CVE be assigned to this?
->
->Thanks.
+I do not believe gzexe is affected, as it doesn't use ln but instead 
+create a temporary directory with umask 77 - preventing any race condition.
 
-Answering my own question.  This was pre-assigned CVE-2011-1928.
+Best regards,
+Benjamin Renaut.
 
-Thanks.
+On 28/10/11 14:22, Hanno Böck wrote:
+> Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT)
+> schrieb Ramon de C Valle<rcvalle@...hat.com>:
+>
+>> This is a security issue reported by vladz in bzexe. This is a low
+>> impact security issue, since bzexe is rarely used and the race
+>> condition window is very narrow, but still exploitable.
+> Have you checked if this also affects gzexe? It is pretty much the same
+> as bzexe, just using gzip instead of bzip2. (afaik, no xzexe exists)
+>
 
--- 
-Vincent Danen / Red Hat Security Response Team 
