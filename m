@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/17
-Message-ID: <1434241886.291160.1304364270167.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 15:24:30 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/16
+Message-ID: <4EAAED3B.5050109@redhat.com>
+Date: Fri, 28 Oct 2011 11:58:19 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Stephane Chauveau <stephane.chauveau@...s-entreprise.com>, Maynard Johnson <maynardj@...ibm.com>, William Cohen <wcohen@...hat.com>, Robert Richter <robert.richter@....com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+CC: vladz <vladz@...zero.fr>, rcvalle@...hat.com
+Subject: Re: Request for CVE Identifier: bzexe insecure	temporary file
 Content-Type: text/plain; charset=utf-8
 
+On 10/28/2011 07:10 AM, vladz wrote:
+> Hi,
+>
+> On Fri, Oct 28, 2011 at 02:22:13PM +0200, Hanno Böck wrote:
+>> Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT) schrieb Ramon de C Valle <rcvalle@...hat.com>:
+>>> This is a security issue reported by vladz in bzexe. This is a low
+>>> impact security issue, since bzexe is rarely used and the race
+>>> condition window is very narrow, but still exploitable.
 
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> It was found that oprofile profiling system did not properly sanitize
-> the content of event argument, provided to oprofile profiling control
-> utility (opcontrol). If a local unprivileged user was authorized by
-> sudoers file to run the opcontrol utility, they could use the flaw
-> to escalate their privileges (execute arbitrary code with the
-> privileges
-> of the privileged system user, root). Different vulnerability than
-> CVE-2006-0576.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700883
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you & Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
-> 
-> P.S.: Oprofile is not encouraged to be run under sudo, but still
-> should not allow escalation of privileges.
-
-
-I'm giving this an ID. oprofile is one of those tools that is likely to be
-run as a privileged user.
-
-Please use CVE-2011-1760
-
-Thanks.
+Please use CVE-2011-4089 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
