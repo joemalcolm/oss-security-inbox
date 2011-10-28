@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/6
-Message-ID: <20110324200652.GA2320@foo.fgeek.fi>
-Date: Thu, 24 Mar 2011 22:06:52 +0200
-From: Henri Salo <fgeek@....fgeek.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: VLC bookmark buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/3
+Message-ID: <20111028070425.GD14711@foo.fgeek.fi>
+Date: Fri, 28 Oct 2011 10:04:25 +0300
+From: Henri Salo <henri@...v.fi>
+To: Josh Bressers <bressers@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: piwik before 1.6
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 03:31:59PM -0500, Josh Bressers wrote:
-> Argh, this should have gotten a 2010 ID.
-> 
-> Steve, does MITRE want to reassign, or just leave it as is?
-> 
-> Thanks.
-> 
-> -- 
->     JB
+On Sun, Oct 23, 2011 at 02:41:17PM -0400, Josh Bressers wrote:
+> The advisory just says there are a bunch of security fixes by all these
+> people, with no actual information. Such vagueness is only going to create
+> confusion, which will create extra work for me if I try to assign IDs to
+> such an advisory.
 
-Any updates in this case?
+Now there is information in the URI.
+
+Facts:
+
+- Affect all Piwik users that have let granted some access to the "anonymous" user
+- Remotely exploitable vulnerability that could allow a remote attacker to execute arbitrary code
+- Versions affected Piwik 1.2, 1.3, and 1.4
+- Credits: Neal Poole
+
+These details should be enough information for CVE assignment. I can also verify this issue if you want for every version? If there isn't enough details I can dig more :)
 
 Best regards,
 Henri Salo
