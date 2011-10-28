@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/07/6
-Message-Id: <20110407191737.B31D25653E@rebar.astron.com>
-Date: Thu, 7 Apr 2011 15:17:37 -0400
-From: christos@...las.com (Christos Zoulas)
-To: Vincent Danen <vdanen@...hat.com>, oss-security@...ts.openwall.com,  file@...gw.com
-Subject: Re: Possible security fixes in 5.05?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/5
+Message-ID: <20111028080642.GH29335@suse.de>
+Date: Fri, 28 Oct 2011 10:06:42 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Multiple remote denial of service in Linux bridge networking code 2.6.37-3.0
 Content-Type: text/plain; charset=utf-8
 
-On Apr 7, 11:37am, vdanen@...hat.com (Vincent Danen) wrote:
--- Subject: Re: [oss-security] Possible security fixes in 5.05?
+Hi,
 
-| Looks like there are a few issues here:
-| 
-| 2011-01-16  19:31  Reuben Thomas <rrt at sc3d.org>
-|      * Fix two potential buffer overruns in apprentice_list.
-| 
-| https://github.com/glensc/file/commit/148f1089b5c4f5ec5d51c2f147379817cb9ac47d
+Linux kernel 2.6.37 introduced with this commit
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=462fb2af9788a82a534f8184abfde31574e1cfa0
+several regressions that be used to trigger remote denial of service attacks when
+bridging is in use.
 
-This is an order of evaluation issue, that could read memory over the allocated
-limit. The limit check is done after the read instead of before. The code
-has not been present in any release.
+Reporter thread is on:
+	http://thread.gmane.org/gmane.linux.network/191713
 
-| 2010-09-20  15:24  Reuben Thomas <rrt at sc3d.org>
-|      * Minor security fix to softmagic.c (don't use untrusted
-|        string as printf format).
-| 
-| https://github.com/glensc/file/commit/b05926f28f3cab0ef77101f89be154329dcb8dea
+Fixes are in git commits:
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=f8e9881c2aef1e982e5abc25c046820cd0b7cf64
+		In 2.6.39
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=66944e1c5797562cebe2d1857d46dff60bf9a69e
+		In 2.6.39
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=c65353daf137dd41f3ede3baf62d561fca076228
+		In 3.0
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=10949550bd1e50cc91c0f5085f7080a44b0871fe
+		In 3.0
+So it can be considered fixed with Linux kernel 3.0.
+Thanks to Eugene for looking up the commit ids.
 
-The code is present in [5.00-5.04]. It should not be an issue because the desc
-printf formats are checked during parsing. It is mostly to silence a compiler
-warning for printf(ms->desc) -> printf("%s", ms->desc). The code does
-printf(ms->desc, argument) in a ton of other places.
+I think it just needs one CVE, as it was one introducing patch.
 
-
-christos
+Ciao, Marcus
