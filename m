@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/7
-Message-ID: <20111117102917.GA2186@foo.fgeek.fi>
-Date: Thu, 17 Nov 2011 12:29:17 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/5
+Message-ID: <20111028080642.GH29335@suse.de>
+Date: Fri, 28 Oct 2011 10:06:42 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Multiple remote denial of service in Linux bridge networking code 2.6.37-3.0
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 17, 2011 at 06:22:17AM +0400, Solar Designer wrote:
-> On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
-> > Alternatively, crypt(3) and crypt_r(3) (and the reference code for
-> > SHA-crypt?) could refuse to work on overly long key or/and salt strings,
-> > but then the question is what they should do on error.
-> 
-> Here's another related option:
-> 
-> 	if (strlen(key) > 100000 || strlen(salt) > 100000)
-> 		abort();
-> 
-> (or something like this).  Ridiculous?  Sure, but it's better than
-> overwriting another thread's stack or the heap with somewhat higher
-> lengths, and 100001 chars is not a more reasonable password length to
-> support than, say, 2 million or 10 million (typical thread stack sizes).
-> 
-> So if we can't decide on a proper fix (does anyone besides me even
-> care?), something as trivial as the above would be an improvement.
-> 
-> Alexander
+Hi,
 
-I care, but I don't have much to contribute. Seems valid discussion for this list in my opinion.
+Linux kernel 2.6.37 introduced with this commit
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=462fb2af9788a82a534f8184abfde31574e1cfa0
+several regressions that be used to trigger remote denial of service attacks when
+bridging is in use.
 
-Best regards,
-Henri Salo
+Reporter thread is on:
+	http://thread.gmane.org/gmane.linux.network/191713
+
+Fixes are in git commits:
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=f8e9881c2aef1e982e5abc25c046820cd0b7cf64
+		In 2.6.39
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=66944e1c5797562cebe2d1857d46dff60bf9a69e
+		In 2.6.39
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=c65353daf137dd41f3ede3baf62d561fca076228
+		In 3.0
+	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=10949550bd1e50cc91c0f5085f7080a44b0871fe
+		In 3.0
+So it can be considered fixed with Linux kernel 3.0.
+Thanks to Eugene for looking up the commit ids.
+
+I think it just needs one CVE, as it was one introducing patch.
+
+Ciao, Marcus
