@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/4
-Message-ID: <20111219163945.GH3479@ngolde.de>
-Date: Mon, 19 Dec 2011 17:39:45 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/4
+Message-ID: <20111028100225.30092af1@laverne>
+Date: Fri, 28 Oct 2011 10:02:25 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: python-virtualenv
+Subject: CVE request: serendipity before 1.6 backend XSS in karma plugin
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Kurt Seifried <kseifried@...hat.com> [2011-12-19 17:38]:
-> 
-> On 12/19/2011 09:21 AM, Nico Golde wrote:
-> > An insecure /tmp file handling was found in python-virtualenv:
-> > https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5o
-> >
-> > Can someone assign a CVE id for this?
-> Link is 404
+http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
 
-Sorry, c&p mistake:
-https://bitbucket.org/ianb/virtualenv/changeset/8be37c509fe5
+"Fixes a backend XSS issue in the karma plugin and media database
+filtering, thanks to Stefan Schurtz!"
 
-Cheers
-Nico
+If anyone asks: Backend XSS are a security issue in multiuser webapps,
+one less priviliged user can use them to gain more privilege.
+
+Please assign CVE.
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
