@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/5
-Message-ID: <20110601154308.GC13831@dhcp-25-225.brq.redhat.com>
-Date: Wed, 1 Jun 2011 17:43:09 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE request -- libvirt: regression introduced in disk probe logic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/1
+Message-ID: <20111029143748.21b577ee@laverne>
+Date: Sat, 29 Oct 2011 14:37:48 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
 Content-Type: text/plain; charset=utf-8
 
-Hello Steve, vendors.
+Am Fri, 28 Oct 2011 09:04:43 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Description:
-Regression introduced in commit d6623003 (v0.8.8) - using the
-wrong sizeof operand meant that security manager private data
-was overlaying the allowDiskFOrmatProbing member of struct
-_virSecurityManager.  This reopens disk probing, which was
-supposed to be prevented by the solution to CVE-2010-2238.
+> Can you please send more details, i.e. which file is responsible/or a
+> link to a commit fixing this? Thanks.
 
-References:
-https://www.redhat.com/archives/libvir-list/2011-May/msg01935.html
-https://bugzilla.redhat.com/show_bug.cgi?id=709769
+Commit is here:
+https://github.com/s9y/Serendipity/commit/a7861fabd328c3c468f0853355686dd7e39cc4ac#plugins/serendipity_event_karma/serendipity_event_karma.php
 
-Could you please allocate a CVE identifier for this issue?
+Responsible file:
+plugins/serendipity_event_karma/serendipity_event_karma.php
 
-Thank you,
---
-Petr Matousek / Red Hat Security Response Team
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
