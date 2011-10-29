@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/25/6
-Message-ID: <1576686929.150732.1303761665047.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 25 Apr 2011 16:01:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request -- qemu-kvm: virtio-blk: heap buffer overflow caused by unaligned requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/2
+Message-ID: <1319896259.21316.19.camel@scapa>
+Date: Sat, 29 Oct 2011 15:50:59 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> "It was found that virtio-blk driver in qemu-kvm did not properly
-> validate read and write requests from the guest. A privileged guest user
-> could use this flaw to cause heap corruption, causing the guest to crash
-> (denial of service) or, possibly, resulting in the privileged guest user
-> escalating their privileges on the host."
+On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
+> Please use CVE-2011-3362.
 > 
-> References:
-> http://www.spinics.net/lists/kvm/msg51877.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=698906
-> 
-> Upstream commit:
-> http://git.kernel.org/?p=virt/kvm/qemu-kvm.git;a=commit;h=52c050236eaa4f0b5e1d160cd66dc18106445c4d
+> Thanks.
 > 
 
-Please use CVE-2011-1750.
+It seems that CVE-2011-3973 has been assigned as a duplicate to this
+issue. Is there a way to know who assigned it and have it rejected?
 
-Thanks.
-
+Regards
 -- 
-    JB
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
