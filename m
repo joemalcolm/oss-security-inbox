@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/2
-Message-ID: <4D65B37F.3000408@redhat.com>
-Date: Thu, 24 Feb 2011 09:25:19 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/2
+Message-ID: <1319896259.21316.19.camel@scapa>
+Date: Sat, 29 Oct 2011 15:50:59 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: Josh Bressers <bressers@...hat.com>, Timo Warns <warns@...-sense.de>
-Subject: Re: CVE request: kernel: fs/partitions: Kernel heap overflow via corrupted LDM partition tables
+Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
 Content-Type: text/plain; charset=utf-8
 
-On 02/24/2011 03:59 AM, Josh Bressers wrote:
-> ----- Original Message -----
->>
->> The kernel automatically evaluates partition tables of storage devices.
->> The code for evaluating LDM partitions (in fs/partitions/ldm.c) contains
->> a bug that allows to overflow the kernel heap. It may be possible to
->> escalate privileges by exploiting this bug.
->>
->> (This bug is distinct from the LDM bug reported by Eugene Teo on
->> 2011-02-23.)
->>
->> This should affect both, 2.4 and 2.6 kernel. As a prerequisite,
->> CONFIG_LDM_PARTITION needs to be set.
->>
->
-> Can you point to a commit message or something else that is public? It's
-> not clear how this differs from Eugene's request.
+On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
+> Please use CVE-2011-3362.
+> 
+> Thanks.
+> 
 
-As far as I can tell, it's not public yet. Timo will follow-up once his 
-patch is accepted.
+It seems that CVE-2011-3973 has been assigned as a duplicate to this
+issue. Is there a way to know who assigned it and have it rejected?
 
-Eugene
+Regards
 -- 
-Eugene Teo / Red Hat Security Response Team
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
