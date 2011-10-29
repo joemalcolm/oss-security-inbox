@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/2
-Message-ID: <4E549126.2000309@redhat.com>
-Date: Wed, 24 Aug 2011 13:50:30 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/3
+Message-ID: <1319897055.21316.25.camel@scapa>
+Date: Sat, 29 Oct 2011 16:04:15 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, David Jorm <djorm@...hat.com>
-Subject: Re: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
+Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
 Content-Type: text/plain; charset=utf-8
 
-On 08/24/2011 10:36 AM, Eugene Teo wrote:
-> The name_len variable in CIFSFindNext is a signed int that gets set to
-> the resume_name_len in the cifs_search_info. The resume_name_len however
-> is unsigned and for some infolevels is populated directly from a 32 bit
-> value sent by the server.
+On sam., 2011-10-29 at 15:50 +0200, Yves-Alexis Perez wrote:
+> On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
+> > Please use CVE-2011-3362.
+> > 
+> > Thanks.
+> > 
 > 
-> If the server sends a very large value for this, then that value could
-> look negative when converted to a signed int. That would make that value
-> pass the PATH_MAX check later in CIFSFindNext. The name_len would then
-> be used as a length value for a memcpy. It would then be treated as
-> unsigned again, and the memcpy scribbles over a ton of memory.
-> 
-> Fix this by making the name_len an unsigned value in CIFSFindNext.
-> 
-> http://www.spinics.net/lists/linux-cifs/msg03950.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=732869
+> It seems that CVE-2011-3973 has been assigned as a duplicate to this
+> issue. Is there a way to know who assigned it and have it rejected?
 
-David Jorm from my team assigned CVE-2011-3191 to this.
+Sorry for that, it looks that 3973 and 3974 are indeed in the same files
+but are a different vulnerability.
 
-Thanks, Eugene
+Regards,
+-- 
+Yves-Alexis
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
