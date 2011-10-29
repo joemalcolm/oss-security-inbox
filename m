@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/26/1
-Message-ID: <1306408152.20221.12.camel@mochrul.balabit>
-Date: Thu, 26 May 2011 13:09:12 +0200
-From: Szalay Attila <sasa@...abit.hu>
-To: Open Source Software Security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- syslog-ng -- Possible DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/1
+Message-ID: <20111029143748.21b577ee@laverne>
+Date: Sat, 29 Oct 2011 14:37:48 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Am Fri, 28 Oct 2011 09:04:43 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-In syslog-ng if a recent enough libpcre is installed (ie. 8.12 or newer)
-there is a possible Denial of Service.
+> Can you please send more details, i.e. which file is responsible/or a
+> link to a commit fixing this? Thanks.
 
-In our (BalaBit) opinion tis is not a big security issue, because if you
-use the vulnerable setting you will run into the DoS for sure without
-any malicious attack.
+Commit is here:
+https://github.com/s9y/Serendipity/commit/a7861fabd328c3c468f0853355686dd7e39cc4ac#plugins/serendipity_event_karma/serendipity_event_karma.php
 
-The attack vector is that the attacker send a message which the regexp
-not match. 
-
-But because of this bug get this amount of attention, it' may worth the
-CVE id.
-
-References:
-http://git.balabit.hu/?p=bazsi/syslog-ng-3.2.git;a=commit;h=09710c0b105e579d35c7b5f6c66d1ea5e3a3d3ff
-http://www.securityfocus.com/bid/47800/
-
+Responsible file:
+plugins/serendipity_event_karma/serendipity_event_karma.php
 
 -- 
-Szalay Attila
-BalaBit IT Kft.
-Security Team Leader
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
