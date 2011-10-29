@@ -1,22 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/28/1
-Message-ID: <4D8FF689.5050502@redhat.com>
-Date: Mon, 28 Mar 2011 10:46:33 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/29/3
+Message-ID: <1319897055.21316.25.camel@scapa>
+Date: Sat, 29 Oct 2011 16:04:15 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE-2011-1478 kernel: gro: reset dev and skb_iff on skb reuse
+Subject: Re: CVE request: ffmpeg/libav insufficuent boundary check in CAVS	decoding
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/CVE-2011-1478
+On sam., 2011-10-29 at 15:50 +0200, Yves-Alexis Perez wrote:
+> On mer., 2011-09-14 at 14:33 -0400, Josh Bressers wrote:
+> > Please use CVE-2011-3362.
+> > 
+> > Thanks.
+> > 
+> 
+> It seems that CVE-2011-3973 has been assigned as a duplicate to this
+> issue. Is there a way to know who assigned it and have it rejected?
 
-There is an issue in the core GRO code where an skb belonging to an 
-unknown VLAN is reused as we don't reset skb->dev in the reuse case. 
-This could result in a NULL pointer dereference.
+Sorry for that, it looks that 3973 and 3974 are indeed in the same files
+but are a different vulnerability.
 
-6d152e23ad1a7a5b40fef1f42e017d66e6115159 gro: reset skb_iif on reuse
-66c46d741e2e60f0e8b625b80edb0ab820c46d7a gro: Reset dev pointer on reuse
-
-Thanks, Eugene
+Regards,
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
