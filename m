@@ -1,28 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/1
-Message-ID: <CAOSRhRMiAK_K1kTtGkHy8_tq9AmN4ncRgpWRP=ehjYX96yKGuA@mail.gmail.com>
-Date: Tue, 9 Aug 2011 20:14:42 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/3
+Message-ID: <20111030120834.GA15185@albatros>
+Date: Sun, 30 Oct 2011 16:08:34 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+Cc: Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
+Subject: CVE request: 3 flaws in libobby and libnet6
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 9, 2011 at 6:49 PM, Eugene Teo <eugene@...hat.com> wrote:
-> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:>
->> 2. [SCSI] pmcraid: reject negative request size
->> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
->
-> I don't have a PMC Sierra MaxRAID controller, so I am not sure what's
-> the permissions give to /dev/pmcsas%u. I'm checking. Meanwhile, use
-> CVE-2011-2906 for this issue.
->
-> Thanks, Eugene
->
+Hi,
 
-This isn't a security issue because there's a check for CAP_SYS_ADMIN
-on pmcraid_chr_open(), which is necessary to obtain a file descriptor
-to the device file in order to call the affected ioctl.  Which is why
-I didn't bother CC'ing security@...nel.org. ;-)
+1) the libobby's server checks for users' color collisions before
+checking users' passwords.  Any user without password authentication
+may check whether a specific color is used by someone.  With knowledge
+of person's color preferences he may learn whether a specific person
+uses the server.  Also, he may enumerate all default colors and learn
+the number of users.
 
--Dan
+    inc/server_buffer.hpp: 
+
+    bool basic_server_buffer<Document, Selector>::on_auth()
+    {
+    ...
+        // Check colour
+        if(!basic_buffer<Document, Selector>::check_colour(colour) )
+        {
+            error = login::ERROR_COLOUR_IN_USE;
+            return false;
+        }
+
+        // Check global password
+        if(!m_global_password.empty() )
+        {
+            if(global_password != m_global_password)
+            {
+                error = login::ERROR_WRONG_GLOBAL_PASSWORD;
+                return false;
+            }
+        }
+    ...
+    }
+
+
+2) libobby doesn't check server's SSL certificate and passes the
+password in plain text over SSL channel.  All remote clients are
+vulnerable to a MITM attack.
+
+    • The attacker (A) learns the client's (C) and the server's (S) IP
+        addresses and used ports.
+    • A breaks the established TCP connection between C and S.
+    • A changes the way C's packets with dst = S are routed, resulting
+        in all packets from C to S's IP go to A.  The simplest way is
+        ARP cache poisoning.
+    • A starts listening on the same IP:port as S did.
+    • C notices the connection interruption and tries to reconnect to S.
+        (Note: if the client is gobby, this step needs user's interaction.)
+    • As all C's packets intended for S are routed to A, so, in reality
+        C connects to A, not S.
+    • C starts SSL session and, as C doesn't check SSL certificate, he
+        think it talks to S.
+    • A requests C' password.
+    • C passes the password in plain text over SSL channel.
+
+
+3) libnet6 doesn't check basic_server::id_counter for integer overflow.
+This number is used to distinguish among different users.  An attacker
+may open UINT_MAX successive connections and get an identifier of the
+already established connection, resulting in the connection hijacking.
+On i686 uint is a 32 bit counter, so an attacker should be able to open
+4.000.000.000 connections to complete the attack.  This is a rather big
+number: if an attacker may create 2000 connections per second, it would
+took ~24 days of continuous connection attempts.  However, it is a real
+threat for servers with a huge uptime.
+
+Thanks,
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
