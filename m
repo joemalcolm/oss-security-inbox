@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/28
-Message-ID: <20110404144131.GM543@ngolde.de>
-Date: Mon, 4 Apr 2011 16:41:31 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/4
+Message-ID: <20111030161606.GA11526@albatros>
+Date: Sun, 30 Oct 2011 20:16:06 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Armin Burgmeier <armin@...ur.net>
+Cc: oss-security@...ts.openwall.com, Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
+Subject: Re: CVE request: 3 flaws in libobby and libnet6
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-* Solar Designer <solar@...nwall.com> [2011-04-04 15:41]:
-> On Mon, Apr 04, 2011 at 02:07:16PM +0200, Nico Golde wrote:
-[...] 
-> > or alternatively a stronger key:
-> > pub   4096R/A0A0AAAA 2009-06-01
-> >       Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
-> > uid                  Nico Golde <nion@...ian.org>
-> > uid                  Nico Golde <nico@...lde.de>
-> > uid                  Nico Golde <nion@...tu-berlin.de>
-> > uid                  Nico Golde <nion@....net>
-> > sub   4096R/E89CCA30 2009-06-02
-> 
-> Please suggest a specific e-mail address and key combination.  And if
-> you suggest other than your @debian.org address, please suggest a way to
-> verify that the address is really "yours" (the Debian security person's).
+Armin,
 
-Ok please use nion@...ian.org with E1AB DE0E FFCA AEF3 9494 7592 CD4B 2AF3 A0A0 AAAA.
-This key is signed by 73647CFF which is in the Debian keyring and a transition 
-statement signed by 73647CFF as well is online at http://nion.modprobe.de/key-transition-2008-06-01.txt.asc
+On Sun, Oct 30, 2011 at 17:20 +0100, Armin Burgmeier wrote:
+> I have fixed the issues 1+3 in git [1,2]. It would be great if you could
+> confirm the patches to really fix the issues you raised.
 
-Cheers
-Nico
+Looks like they do.  FWIW, the counter overflow could be fixed by simply
+using uint_64, which would overflow in 20 billion years :)
+
+
+> As for the second issue, I do not think it is worth the effort to
+> implement SSL certificate handling in obby. Both net6 and obby are
+> replaced by libinfinity in the current development version of Gobby.
+> libinfinity makes use of SSL certificates.
+
+Some distros probably don't want to switch to the development version of
+Gobby (which also uses a different dependency), but to fix the bugs of
+their own stable versions.
+
+As personally I am not a maintainer of a distro with the official Gobby
+support, I don't care about maintaining old versions much, though.  I'm
+happy with the fixes in the dev version.
+
+
+> We would be pleased if you could check for similar flaws in libinfinity
+> though I admit that it is much more code and probably more complicated
+> to analyze.
+
+OK, I'll probably look at libinfinity at my spare time as I did it with obby.
+
+Thanks,
+
 -- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
-
-Content of type "application/pgp-signature" skipped
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
