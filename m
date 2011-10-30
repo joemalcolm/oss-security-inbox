@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/2
-Message-ID: <4EA51A3C.1030009@redhat.com>
-Date: Mon, 24 Oct 2011 15:56:44 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/1
+Message-ID: <4EACA0B6.6010501@redhat.com>
+Date: Sat, 29 Oct 2011 18:56:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: ext4: ext4_ext_insert_extent() kernel oops
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
 Content-Type: text/plain; charset=utf-8
 
-On 10/21/2011 09:24 PM, Petr Matousek wrote:
-> A flaw was found in the way splitting two extents in
-> ext4_ext_convert_to_initialized() worked. Althrough ex has been updated
-> in memory, it is not dirtied both in ext4_ext_convert_to_initialized()
-> and ext4_ext_insert_extent(). The disk layout is corrupted. Then it
-> will meet with a BUG_ON() when writting at the start of that extent
-> again.
-> 
-> Local unprivileged users can use this flaw to crash the system when ext4
-> filesystem is in use.
-> 
-> Introduced in:
-> 56055d3ae4cc7fa6d2b10885f20269de8a989ed7
-> 
-> Upstream fix:
-> 667eff35a1f56fa74ce98a0c7c29a40adc1ba4e3
-> 
-> Credits:
-> Zheng Liu
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=747942
-> 
-> Thanks,
+On 10/29/2011 06:37 AM, Hanno Böck wrote:
+> Am Fri, 28 Oct 2011 09:04:43 -0600
+> schrieb Kurt Seifried <kseifried@...hat.com>:
+>
+>> Can you please send more details, i.e. which file is responsible/or a
+>> link to a commit fixing this? Thanks.
+> Commit is here:
+> https://github.com/s9y/Serendipity/commit/a7861fabd328c3c468f0853355686dd7e39cc4ac#plugins/serendipity_event_karma/serendipity_event_karma.php
+>
+> Responsible file:
+> plugins/serendipity_event_karma/serendipity_event_karma.php
+>
+Ahh our good friend htmlspecialchars().
 
-Use CVE-2011-3638.
+Please use CVE-2011-4090 for this issue.
 
-Thanks, Eugene
 -- 
-Eugene Teo / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
