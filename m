@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/20/6
-Message-ID: <130440303.95055.1303332767672.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Apr 2011 16:52:47 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/2
+Message-ID: <20111030104857.GA14677@foo.fgeek.fi>
+Date: Sun, 30 Oct 2011 12:48:57 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: missing socket check in can/bcm release
+Subject: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1598
+Can I get CVE-identifiers for these issues:
 
-Thanks.
+SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
+Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
 
--- 
-    JB
+XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
 
+No vendor reply. No fix.
 
------ Original Message -----
-> A missing socket check in can/bcm release
-> 
-> Proposed patch: http://permalink.gmane.org/gmane.linux.network/192898
-> https://bugzilla.redhat.com/show_bug.cgi?id=698057
-> 
-> Thanks, Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i);
-> }
+Best regards,
+Henri Salo
