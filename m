@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/10
-Message-Id: <201104141531.06743.meltem@pardus.org.tr>
-Date: Thu, 14 Apr 2011 15:31:06 +0300
-From: Meltem Parmaksız <meltem@...dus.org.tr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/1
+Message-ID: <4EACA0B6.6010501@redhat.com>
+Date: Sat, 29 Oct 2011 18:56:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Closed list
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: serendipity before 1.6 backend XSS in karma plugin
 Content-Type: text/plain; charset=utf-8
 
-12 Nisan 2011 Salı günü (saat 19:58:18) Onur Küçük şunları yazmıştı:
-> On Fri, 1 Apr 2011 14:03:12 -0400 (EDT)
-> Josh Bressers <bressers@...hat.com> wrote:
-> ...
-> 
-> > Initial members will have had to be a vendor-sec member (no exploders
-> > this time around). You must reply to this thread, in public (on
-> > oss-security). We want this to be very public, we have nothing to
-> > hide. You must have a public gpg key ID included in your reply. The
-> > new list will gpg encrypt all mail (it does accept plaintext messages
-> > though).
-> 
->  Sorry for the late reply, we had to resolve some issues on our side
-> about who should join. I was a subscriber of vendor-sec as a
-> representitive of Pardus, please add me to the new list(s).
+On 10/29/2011 06:37 AM, Hanno Böck wrote:
+> Am Fri, 28 Oct 2011 09:04:43 -0600
+> schrieb Kurt Seifried <kseifried@...hat.com>:
+>
+>> Can you please send more details, i.e. which file is responsible/or a
+>> link to a commit fixing this? Thanks.
+> Commit is here:
+> https://github.com/s9y/Serendipity/commit/a7861fabd328c3c468f0853355686dd7e39cc4ac#plugins/serendipity_event_karma/serendipity_event_karma.php
+>
+> Responsible file:
+> plugins/serendipity_event_karma/serendipity_event_karma.php
+>
+Ahh our good friend htmlspecialchars().
 
-Sorry, I'm late. I was  a vendor-sec member representing Pardus, please add me 
-to the new list.  
+Please use CVE-2011-4090 for this issue.
 
-pub   4096R/29661BF8 2011-04-14 [son kullanma tarihi: 2016-04-12]
-         Key fingerprint = 0136 2B51 FD70 0545 30D2  5C3F FDA1 B5DB 2966 1BF8 
-uid                  Meltem Parmaksız <meltem@...dus.org.tr>
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
 
 
-Thanks.
