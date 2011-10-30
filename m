@@ -1,33 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/22/6
-Message-ID: <4ECB202E.60607@redhat.com>
-Date: Mon, 21 Nov 2011 21:08:14 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/2
+Message-ID: <20111030104857.GA14677@foo.fgeek.fi>
+Date: Sun, 30 Oct 2011 12:48:57 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
+Subject: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 02:26 PM, Kurt Seifried wrote:
-> On 11/21/2011 10:51 AM, Petr Matousek wrote:
->> There is a NULL pointer deref in the user-defined key type whereby
->> updating a negative key into a fully instantiated key will cause
->> an oops to occur when the code attempts to free the non-existent
->> old payload.
->>
->> Upstream commit:
->> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
->>
->> References:
->> https://lkml.org/lkml/2011/11/15/363
->> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
->>
->> Thanks,
-> Please use CVE-2011-4331 for this issue.
->
-I failed to read the subject line and need to go to remedial reading
-classes. Please reject CVE-2011-4331
+Can I get CVE-identifiers for these issues:
 
--- 
+SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
+Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
 
--Kurt Seifried / Red Hat Security Response Team
+XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
 
+No vendor reply. No fix.
+
+Best regards,
+Henri Salo
