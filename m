@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/2
-Message-ID: <4D9C2766.7050004@redhat.com>
-Date: Wed, 06 Apr 2011 16:42:14 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: CVE request: kernel: two issues in mpt2sas
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/30/4
+Message-ID: <20111030161606.GA11526@albatros>
+Date: Sun, 30 Oct 2011 20:16:06 +0400
+From: Vasiliy Kulikov <segoon@...nwall.com>
+To: Armin Burgmeier <armin@...ur.net>
+Cc: oss-security@...ts.openwall.com, Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
+Subject: Re: CVE request: 3 flaws in libobby and libnet6
 Content-Type: text/plain; charset=utf-8
 
-On 04/06/2011 01:00 AM, Dan Rosenberg wrote:
-> "At two points in handling device ioctls via /dev/mpt2ctl,
-> user-supplied length values are used to copy data from userspace into
-> heap buffers without bounds checking, allowing controllable heap
-> corruption and subsequently privilege escalation.
+Armin,
 
-CVE-2011-1494
+On Sun, Oct 30, 2011 at 17:20 +0100, Armin Burgmeier wrote:
+> I have fixed the issues 1+3 in git [1,2]. It would be great if you could
+> confirm the patches to really fix the issues you raised.
 
-> Additionally, user-supplied values are used to determine the size of a
-> copy_to_user() as well as the offset into the buffer to be read, with
-> no bounds checking, allowing users to read arbitrary kernel memory."
-> [1]
+Looks like they do.  FWIW, the counter overflow could be fixed by simply
+using uint_64, which would overflow in 20 billion years :)
 
-CVE-2011-1495
 
-> These issues require access to the /dev/mpt2sas device (LSI MPT Fusion
-> SAS 2.0).  While the kernel creates this device file root-root 660 by
-> default, I've seen it with more open permissions on live systems, so
-> perhaps there's some common use case that requires modifying these
-> default permissions.
->
-> -Dan
->
-> [1] http://marc.info/?l=linux-kernel&m=130202198105756&w=2
+> As for the second issue, I do not think it is worth the effort to
+> implement SSL certificate handling in obby. Both net6 and obby are
+> replaced by libinfinity in the current development version of Gobby.
+> libinfinity makes use of SSL certificates.
 
-Thanks, Eugene
+Some distros probably don't want to switch to the development version of
+Gobby (which also uses a different dependency), but to fix the bugs of
+their own stable versions.
+
+As personally I am not a maintainer of a distro with the official Gobby
+support, I don't care about maintaining old versions much, though.  I'm
+happy with the fixes in the dev version.
+
+
+> We would be pleased if you could check for similar flaws in libinfinity
+> though I admit that it is much more code and probably more complicated
+> to analyze.
+
+OK, I'll probably look at libinfinity at my spare time as I did it with obby.
+
+Thanks,
+
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
