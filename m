@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/11
-Message-ID: <972003981.506786.1307380922212.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 13:22:02 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/4
+Message-ID: <4EAECC21.9010105@redhat.com>
+Date: Mon, 31 Oct 2011 10:26:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Russell Coker <rcoker@...hat.com>, Daniel Ruoso <daniel@...so.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request -- coreutils -- tty hijacking possible in "su" via TIOCSTI ioctl
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> based on Debian BTS report:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=628843
-> (first CVE-2011-XXYY required for Debian case)
-> 
-> looked more into original report:
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=173008
-> 
-> and the first paragraph of [2] suggests:
-> "When starting a program via "su - user -c program" the user session
-> can escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the input buffer. This allows for example a non-root
-> session to push "chmod 666 /etc/shadow" or similarly bad commands into
-> the input buffer such that after the end of the session they are
-> executed."
-> 
-> this should get a CVE-2005-YYZZ CVE id.
-> 
+On 10/31/2011 10:01 AM, Kurt Seifried wrote:
+> On 10/30/2011 04:48 AM, Henri Salo wrote:
+>> Can I get CVE-identifiers for these issues:
+>>
+>> SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
+>> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
+>>
+Please use CVE-2011-4094 for the SQL injection issue.
+>> XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+>> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+>>
+> I assume here you are referring to the comment:
+>
+> "http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
+>
+Please use CVE-2011-4095 for the XSS issue.
+>> No vendor reply. No fix.
+>>
+>> Best regards,
+>> Henri Salo
 
-This really shouldn't get a CVE id. It's well known, and sadly not easy to
-fix. There are more details in this bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=479145
-
-I would classify this as an administration issue, not a flaw in su or sudo.
-If you're running arbitrary things, you're in far more trouble than this.
-
-I'm happy to let MITRE overrule me.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
