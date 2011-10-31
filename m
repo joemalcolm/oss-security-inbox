@@ -1,43 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/01/11
-Message-ID: <4ED7E282.8010801@redhat.com>
-Date: Thu, 01 Dec 2011 13:24:34 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/6
+Message-ID: <4EAF0326.9020805@redhat.com>
+Date: Mon, 31 Oct 2011 14:20:54 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: Serendipity 'serendipity[filter][bp.ALT]' Cross-Site Scripting vulnerability
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Henrik Nordstrom <henrik@...riknordstrom.net>, Jiri Skala <jskala@...hat.com>
+Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
-On 12/01/2011 10:14 AM, Kurt Seifried wrote:
-> On 12/01/2011 03:16 AM, Henri Salo wrote:
->> On Thu, Dec 01, 2011 at 11:59:00AM +0200, Henri Salo wrote:
->>> Original post: http://seclists.org/bugtraq/2011/Nov/15
->>> Advisory URL: http://www.rul3z.de/advisories/SSCHADV2011-015.txt
->>> New version announcement: http://blog.s9y.org/archives/233-Serendipity-1.6-released.html
->>>
->>> I contacted Garvin Hicking and he said this is indeed fixed in 1.6 code, but they changed from SVN to Git so can't really refer to proper commit. Secunia is linking in http://secunia.com/advisories/46666/ to https://github.com/s9y/Serendipity/commit/1f037b462761cd592b90541ce4dfda2518ad4711, which has nothing to do with the actual issue. Shame on Secunia.
->>>
->>> This is one of logs, which can act like proof: https://github.com/s9y/Serendipity/commit/db590df6087969e5ef3b07b1b7040e7ec122a4fd
->>>
->>> Please notify me if this is not enough information.
->> These vulnerabilities also doesn't have CVE-identifiers assigned nor requested if I have correct information:
->>
->> http://www.rul3z.de/advisories/SSCHADV2011-016.txt http://osvdb.org/show/osvdb/75777
->> http://www.rul3z.de/advisories/SSCHADV2011-017.txt http://osvdb.org/show/osvdb/76856
->>
->> If my opinion counts these XSS issues could be put to one CVE-identifier. These have been verified by the author of Serendipity.
->>
->> - Henri Salo
-> Merging these two as the fix is to update serendipity for both, the
-> plug-in appears to simply expose another avenue of attack, not create an
-> actual XSS as such.
+On 10/31/2011 11:21 AM, Jan Lieskovsky wrote:
+> Hello Steve, vendors,
 >
-> Please use CVE-2011-4366 for this issue.
+>   an invalid free flaw was found in the way Squid proxy caching server
+> processed DNS requests, where one CNAME record pointed to another CNAME
+> record pointing to an empty A-record. A remote attacker could issue a
+> specially-crafted DNS request, leading to denial of service (squid
+> daemon abort).
+Please use CVE-2011-4096 for this issue
+
 >
-My mistake, this should have been merged into CVE-2011-4090, it's the
-same vuln type (XSS) and the same version of Serendipity, CVE-2011-4366
-is a bad assignment and should be marked as a duplicate of CVE-2011-4090.
+> Upstream bug report:
+> [1] http://bugs.squid-cache.org/show_bug.cgi?id=3237
+>
+> Relevant upstream patch:
+> [2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10384
+>
+> References:
+> [3]
+> http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_16.html
+> [4] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c4
+> [5] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c5
+> [6] https://bugzilla.redhat.com/show_bug.cgi?id=750316
+>
+> Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
+> for their opinion / comments too, if this should be considered
+> a security issue or not)
+
+I'd say so, in the past we have: CVE-2010-2951
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2951>,
+CVE-2010-0639
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-0639>,
+CVE-2009-3700
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3700>, etc. Lots
+of similar ones.
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+
 
 -- 
 
 -Kurt Seifried / Red Hat Security Response Team
+
 
