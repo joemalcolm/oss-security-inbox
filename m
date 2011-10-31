@@ -1,62 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/05/1
-Message-ID: <BANLkTi=xt65GERu-o1HGNo2eQRNy_+dvsg@mail.gmail.com>
-Date: Thu, 5 May 2011 00:08:47 -0600
-From: Kurt Seifried <kurt@...fried.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/2
+Message-ID: <4EAEC663.3060409@redhat.com>
+Date: Mon, 31 Oct 2011 10:01:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/30/2011 04:48 AM, Henri Salo wrote:
+> Can I get CVE-identifiers for these issues:
+>
+> SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
+> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
+>
+> XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+>
+I assume here you are referring to the comment:
 
-I would like to announce the release of MediaWiki 1.16.5. Two security
-issues were discovered.
+"http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
 
-The first issue is yet another recurrence of the Internet Explorer 6
-XSS vulnerability that caused the release of 1.16.4. It was pointed
-out that there are dangerous extensions with more than four
-characters, so the regular expressions we introduced had to be updated
-to match longer extensions.
+> No vendor reply. No fix.
+>
+> Best regards,
+> Henri Salo
 
-For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28534
+-Kurt
 
-The second issue allows unauthenticated users to gain additional
-rights, on wikis where $wgBlockDisablesLogin is enabled. By default,
-it is disabled. The issue occurs when a malicious user sends cookies
-which contain the user name and user ID of a "victim" account. In
-certain circumstances, the rights of the victim are loaded and persist
-throughout the malicious request, allowing the malicious user to
-perform actions with the victim's rights.
+-- 
 
-$wgBlockDisablesLogin is a feature which is sometimes used on private
-wikis to prevent users who have an account from logging in and viewing
-content on the wiki.
+-Kurt Seifried / Red Hat Security Response Team
 
-For more details, see https://bugzilla.wikimedia.org/show_bug.cgi?id=28639
 
-**********************************************************************
-Download:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz
-
-Patch to previous version (1.16.4), without interface text:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz
-Interface text changes:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz
-
-GPG signatures:
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.tar.gz.sig
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-1.16.5.patch.gz.sig
-http://download.wikimedia.org/mediawiki/1.16/mediawiki-i18n-1.16.5.patch.gz.sig
-
-Public keys:
-https://secure.wikimedia.org/keys.html
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iEYEARECAAYFAk3COwsACgkQgkA+Wfn4zXmfgwCfYuYKhtC/EFlXvUFXTMDeqahh
-zTcAoN0iL2Lg1uTOiWNmNJVnIDOXdTTA
-=dU8u
------END PGP SIGNATURE-----
