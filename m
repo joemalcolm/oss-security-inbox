@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/19/1
-Message-ID: <4EEEC615.3000700@redhat.com>
-Date: Sun, 18 Dec 2011 22:05:25 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE for HTML-Template-Pro 0.9506 XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/5
+Message-ID: <4EAED91F.8000404@redhat.com>
+Date: Mon, 31 Oct 2011 18:21:35 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Henrik Nordstrom <henrik@...riknordstrom.net>, Jiri Skala <jskala@...hat.com>
+Subject: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652587
-http://search.cpan.org/~viy/HTML-Template-Pro-0.9507/lib/HTML/Template/Pro.pm
+Hello Steve, vendors,
 
-diff -ru HTML-Template-Pro-0.9506/templates-Pro/test_var3.out
-HTML-Template-Pro-0.9507/templates-Pro/test_var3.out
---- HTML-Template-Pro-0.9506/templates-Pro/test_var3.out    2007-05-07
-04:09:54.000000000 -0600
-+++ HTML-Template-Pro-0.9507/templates-Pro/test_var3.out    2011-12-09
-00:41:53.000000000 -0700
-@@ -8,7 +8,7 @@
-  \&lt;&gt;&quot;; %FAhidden:
- end
- 
-- \\<>\"; %FAhidden:\r\nend
-+ \\&lt;&gt;\"; %FAhidden:\r\nend
- 
- <H1> END test_var3 </H1>
- </body></html>
+   an invalid free flaw was found in the way Squid proxy caching server
+processed DNS requests, where one CNAME record pointed to another CNAME
+record pointing to an empty A-record. A remote attacker could issue a
+specially-crafted DNS request, leading to denial of service (squid 
+daemon abort).
 
-Please use CVE-2011-4616 for this issue.
+Upstream bug report:
+[1] http://bugs.squid-cache.org/show_bug.cgi?id=3237
 
--- 
+Relevant upstream patch:
+[2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10384
 
--Kurt Seifried / Red Hat Security Response Team
+References:
+[3] http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_16.html
+[4] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c4
+[5] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c5
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=750316
 
+Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
+for their opinion / comments too, if this should be considered
+a security issue or not)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
