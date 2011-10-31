@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/14
-Message-ID: <20110406180648.GA3660@suse.de>
-Date: Wed, 6 Apr 2011 20:06:51 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Moonlight release 2.4.1 with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/4
+Message-ID: <4EAECC21.9010105@redhat.com>
+Date: Mon, 31 Oct 2011 10:26:09 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-The Novell Mono developers are just releasing Moonlight (the Mono
-Silverlight equivalent) security updates for several critical issues.
-
-The first 3 issues were reported to the Mono team by Jeroen Frijters
-(http://www.ikvm.net/).
-
-The fixed versions is 2.4.1 for the 2.4 branch and 3.99.3 for the 3.99
-(Moonlight 4 preview) branch.
-
-The main Novell tracker bug for this update:
-https://bugzilla.novell.com/show_bug.cgi?id=667077
-
-
-CVE-2011-0989: modification of read-only values via
-RuntimeHelpers.InitializeArray
-https://github.com/mono/mono/commit/035c8587c0d8d307e45f1b7171a0d337bb451f1e
-
-The modification of read-only variables (e.g. from outside the sandbox)
-could be used for breaking out of the moonlight sandboxing.
-
-
-CVE-2011-0990: buffer overflow due to race condition in in Array.FastCopy
-https://github.com/mono/mono/commit/2f00e4bbb2137130845afb1b2a1e678552fc8e5c
-
-Similar to the above, an array element could be changed to a privileged
-read-only element which would then be overwritten.
-(So not a lowlevel buffer overflow, but a sandboxing violation/break out.)
+On 10/31/2011 10:01 AM, Kurt Seifried wrote:
+> On 10/30/2011 04:48 AM, Henri Salo wrote:
+>> Can I get CVE-identifiers for these issues:
+>>
+>> SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
+>> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
+>>
+Please use CVE-2011-4094 for the SQL injection issue.
+>> XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+>> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+>>
+> I assume here you are referring to the comment:
+>
+> "http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
+>
+Please use CVE-2011-4095 for the XSS issue.
+>> No vendor reply. No fix.
+>>
+>> Best regards,
+>> Henri Salo
 
 
+-- 
 
-CVE-2011-0991: use-after-free due to DynamicMethod resurrection
-https://github.com/mono/mono/commit/8eb1189099e02372fd45ca1c67230eccf1edddc0
-https://github.com/mono/mono/commit/89d1455a80ef13cddee5d79ec00c06055da3085c
+-Kurt Seifried / Red Hat Security Response Team
 
-
-Also fixed in this update:
-CVE-2011-0992: information leak due to improper thread finalization
-https://bugzilla.novell.com/show_bug.cgi?id=678515
-https://github.com/mono/mono/commit/722f9890f09aadfc37ae479e7d946d5fc5ef7b91
-
-Ciao, Marcus
