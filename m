@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/20/4
-Message-Id: <201101201822.03830.oeriksson@mandriva.com>
-Date: Thu, 20 Jan 2011 18:22:03 +0100
-From: Oden Eriksson <oeriksson@...driva.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/3
+Message-ID: <20111031161452.GC24079@foo.fgeek.fi>
+Date: Mon, 31 Oct 2011 18:14:53 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2010-4225: XSP/mod_mono source code disclosure
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
-fredag 07 januari 2011 10:36:00 skrev  Thomas Biege:
-> Hello,
+On Mon, Oct 31, 2011 at 10:01:39AM -0600, Kurt Seifried wrote:
+> On 10/30/2011 04:48 AM, Henri Salo wrote:
+> > XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+> > Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+> >
+> I assume here you are referring to the comment:
 > 
-> our Mono team released a security update to fix a source-code disclosure
-> bug.
+> "http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
 > 
-> http://www.mono-project.com/Vulnerabilities
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4225
-> 
-> Cheers,
-> Thomas
+> -Kurt
 
-Where's the fix for this?
+Yes, sorry for not clarifying that out. There is also report of XSS in: http://www.bugsearch.net/en/12471/jara-16-xss-vulnerabilities.html
 
--- 
-Regards // Oden Eriksson
-Security team manager - Mandriva
-CEO NUX AB
+Best regards,
+Henri Salo
