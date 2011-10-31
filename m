@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/22/1
-Message-ID: <Pine.GSO.4.64.1101221511360.23018@faron.mitre.org>
-Date: Sat, 22 Jan 2011 15:13:29 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Eugene Teo <eugeneteo@...nel.org>
-cc: Vasiliy Kulikov <segoon@...nwall.com>, oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Re: [PATCH] acpi: debugfs: fix buffer overflows, double free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/3
+Message-ID: <1320093282.17057.3.camel@henriknordstrom.net>
+Date: Mon, 31 Oct 2011 21:34:42 +0100
+From: Henrik Nordström <henrik@...riknordstrom.net>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jiri Skala <jskala@...hat.com>
+Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
+mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
 
-On Fri, 21 Jan 2011, Eugene Teo wrote:
+> > Could you allocate a CVE id for this? (cc-ed Henrik and Jiri 
+> > for their opinion / comments too, if this should be considered 
+> > a security issue or not) 
+> 
+> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
+> CVE-2009-3700, etc. Lots of similar ones.
 
-> On 01/21/2011 04:08 AM, Vasiliy Kulikov wrote:
->> File position is not controlled, it may lead to overwrites of arbitrary
->> kernel memory.  Also the code may kfree() the same pointer multiple
->> times.
->
-> http://lkml.org/lkml/2011/1/20/348
-> https://bugzilla.redhat.com/CVE-2011-0023
->
-> Please use CVE-2011-0023 (this does not include the unresolved flaw described 
-> in the following paragraph below).
+Agreed.
 
-There seem to be 2 types of issues described above - the uncontrolled file 
-position / memory overwrite, and a "double free".  So there should 
-probably be 2 separate CVEs, not one.  Am I missing something?
+Regards
+Henrik
 
-- Steve
