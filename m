@@ -1,37 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/13/10
-Message-Id: <201103131455.44998.sgrubb@redhat.com>
-Date: Sun, 13 Mar 2011 14:55:44 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/6
+Message-ID: <4EAF0326.9020805@redhat.com>
+Date: Mon, 31 Oct 2011 14:20:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Henrik Nordstrom <henrik@...riknordstrom.net>, Jiri Skala <jskala@...hat.com>
+Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
-On Saturday, March 12, 2011 12:03:45 pm Vasiliy Kulikov wrote:
-> While POSIX restricts the character set used in filenames, some Linux
-> filesystems (at least ext2) permit reserved filenames ".", ".." and
-> filenames with "/" inside.  I have a crafted flash drive with ext2 that
-> has such files:
+On 10/31/2011 11:21 AM, Jan Lieskovsky wrote:
+> Hello Steve, vendors,
+>
+>   an invalid free flaw was found in the way Squid proxy caching server
+> processed DNS requests, where one CNAME record pointed to another CNAME
+> record pointing to an empty A-record. A remote attacker could issue a
+> specially-crafted DNS request, leading to denial of service (squid
+> daemon abort).
+Please use CVE-2011-4096 for this issue
 
-I can confirm that ext3/4, xfs, cramfs, and reiserfs also allow these kinds of names. 
-I'm sure that with some patience, there are more.
+>
+> Upstream bug report:
+> [1] http://bugs.squid-cache.org/show_bug.cgi?id=3237
+>
+> Relevant upstream patch:
+> [2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10384
+>
+> References:
+> [3]
+> http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_16.html
+> [4] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c4
+> [5] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c5
+> [6] https://bugzilla.redhat.com/show_bug.cgi?id=750316
+>
+> Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
+> for their opinion / comments too, if this should be considered
+> a security issue or not)
+
+I'd say so, in the past we have: CVE-2010-2951
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-2951>,
+CVE-2010-0639
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-0639>,
+CVE-2009-3700
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3700>, etc. Lots
+of similar ones.
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
-> Guess what does "rm" with such filenames :-)
+-- 
 
-and tar
+-Kurt Seifried / Red Hat Security Response Team
 
- 
-> What I suggest is something like "-o untrusted" option to mount.  This
-> would mean that the system considers the input from such fs as a malicious
-> input.  Such mounted fs would try to consider the data on disk as
-> untrusted and to be as robust as possible, e.g. check against
-> "/"-filenames, against corrupted fs structures, etc.  I'd be happy to
-> hear opinions about the usefulness of this feature.
 
-Something else I was noticing is that fsck does not also enforce the correct naming 
-constraints. Maybe what can be done is fix fsck and force it to scan the file system 
-before making it accessible.
-
--Steve
