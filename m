@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/08/9
-Message-ID: <4EE14163.80109@kde.org>
-Date: Thu, 08 Dec 2011 17:59:47 -0500
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/3
+Message-ID: <20111031161452.GC24079@foo.fgeek.fi>
+Date: Mon, 31 Oct 2011 18:14:53 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Disputing CVE-2011-4122
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
-On 12/8/2011 4:53 PM, Kurt Seifried wrote:
->  
->>
->> The documentation you linked to above is for LinuxPAM, not OpenPAM.
->> They're different systems and the bug only affects OpenPAM.
->>
->> --Jeff
->>
-> Right, my thought/comment is more around the point that this isn't
-> defined in general very well anywhere (that I can find, and I assume
-> OpenPAM and Linux PAM are going to implement things in a roughly similar
-> manner) and that it probably should be defined better. In the meantime
-> though it is likely that restrictions/filtering can be implemented but
-> it needs to be done carefully since there is the potential for weirdness.
+On Mon, Oct 31, 2011 at 10:01:39AM -0600, Kurt Seifried wrote:
+> On 10/30/2011 04:48 AM, Henri Salo wrote:
+> > XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+> > Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+> >
+> I assume here you are referring to the comment:
+> 
+> "http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
+> 
+> -Kurt
 
-Sorry, misunderstood what you were getting at  :-)
+Yes, sorry for not clarifying that out. There is also report of XSS in: http://www.bugsearch.net/en/12471/jara-16-xss-vulnerabilities.html
 
-Yes, agreed. It should be defined better, and as you pointed out apps
-trying to filter or restrict things can be prone to mistakes. Which I
-think exactly points out why this CVE is invalid; the lack of real
-specification means that an application cannot successfully guess what
-is valid, nor is it specified that an application should even try to
-make such guesses. Given the current situation, OpenPAM is culpable
-here, both for not checking the data it's receiving, and for having a
-specification that makes it impossible for upstream apps to properly try
-to help out.
-
---Jeff
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (261 bytes)
+Best regards,
+Henri Salo
