@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/50
-Message-ID: <1489200095.372119.1301944143949.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 15:09:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/2
+Message-ID: <4EAEC663.3060409@redhat.com>
+Date: Mon, 31 Oct 2011 10:01:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>, coley <coley@...re.org>
-Subject: Re: CVE request: roundcube < 0.5.1 CSRF
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: Jara 1.6 SQL injection and XSS
 Content-Type: text/plain; charset=utf-8
 
-Thanks for sorting this Jan.
+On 10/30/2011 04:48 AM, Henri Salo wrote:
+> Can I get CVE-identifiers for these issues:
+>
+> SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
+> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
+>
+> XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
+> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
+>
+I assume here you are referring to the comment:
 
-> > http://trac.roundcube.net/wiki/Changelog
-> >
-> > two cross site request forgery, one additional issue fixed in 0.5.1:
-> >
-> > "Security: add optional referer check to prevent CSRF in GET
-> > requests
-> 
-> Looks this one being just security hardening with the patches:
-> [1] http://trac.roundcube.net/changeset/4503
-> [2] http://trac.roundcube.net/changeset/4504
-> 
-> For the CSRF flaws:
-> 
-> > Security: protect login form submission from CSRF
-> Patch: [3] http://trac.roundcube.net/changeset/4490
+"http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
 
-Use CVE-2011-1491 for the above.
+> No vendor reply. No fix.
+>
+> Best regards,
+> Henri Salo
 
-> 
-> > Security: prevent from relaying malicious requests through
-> > modcss.inc"
-> Patch: [4] http://trac.roundcube.net/changeset/4488
-> 
-
-Use CVE-2011-1492 for the above.
-
-Thanks.
+-Kurt
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
