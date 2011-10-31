@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/37
-Message-ID: <20110405230056.GU543@ngolde.de>
-Date: Wed, 6 Apr 2011 01:00:56 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE id request: tmux (debian specific)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/3
+Message-ID: <1320093282.17057.3.camel@henriknordstrom.net>
+Date: Mon, 31 Oct 2011 21:34:42 +0100
+From: Henrik Nordström <henrik@...riknordstrom.net>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Jiri Skala <jskala@...hat.com>
+Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
-Hey,
-due to a patch that was introduced to our tmux package, tmux is not properly 
-dropping group privileges anymore when invoked with -S (tmux is installed 
-setgid).
+mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
 
-Bug report: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=620304
-Can I get a CVE id for this?
+> > Could you allocate a CVE id for this? (cc-ed Henrik and Jiri 
+> > for their opinion / comments too, if this should be considered 
+> > a security issue or not) 
+> 
+> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
+> CVE-2009-3700, etc. Lots of similar ones.
 
-Cheers
-Nico
+Agreed.
 
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Regards
+Henrik
 
-Content of type "application/pgp-signature" skipped
