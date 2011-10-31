@@ -1,43 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/12
-Message-ID: <4ED54D52.3030303@redhat.com>
-Date: Tue, 29 Nov 2011 14:23:30 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/1
+Message-ID: <4EAEBFE9.8000209@redhat.com>
+Date: Mon, 31 Oct 2011 09:34:01 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: mediawiki before 1.17.1
+CC: Vasiliy Kulikov <segoon@...nwall.com>, Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
+Subject: Re: CVE request: 3 flaws in libobby and libnet6
 Content-Type: text/plain; charset=utf-8
 
-On 11/29/2011 03:12 AM, Hanno Böck wrote:
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2011-November/000104.html
+On 10/30/2011 06:08 AM, Vasiliy Kulikov wrote:
+> Hi,
 >
-> From announce mail:
+> 1) the libobby's server checks for users' color collisions before
+> checking users' passwords.  Any user without password authentication
+> may check whether a specific color is used by someone.  With knowledge
+> of person's color preferences he may learn whether a specific person
+> uses the server.  Also, he may enumerate all default colors and learn
+> the number of users.
 >
-> -------------
-> I would like to announce the release of MediaWiki 1.17.1. Two security
-> issues were discovered.
+>     inc/server_buffer.hpp: 
 >
-> Alexandre Emsenhuber discovered an issue where page titles on private
-> wikis could be exposed bypassing different page ids to index.php. In the
-> case of the user not having correct permissions, they will now be
-> redirected to Special:BadTitle.
+>     bool basic_server_buffer<Document, Selector>::on_auth()
+>     {
+>     ...
+>         // Check colour
+>         if(!basic_buffer<Document, Selector>::check_colour(colour) )
+>         {
+>             error = login::ERROR_COLOUR_IN_USE;
+>             return false;
+>         }
 >
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=32276
-Please use CVE-2011-4360 for this issue.
+>         // Check global password
+>         if(!m_global_password.empty() )
+>         {
+>             if(global_password != m_global_password)
+>             {
+>                 error = login::ERROR_WRONG_GLOBAL_PASSWORD;
+>                 return false;
+>             }
+>         }
+>     ...
+>     }
+>
+>
+Please use CVE-2011-4091 for this issue.
 
-> The second issue was found by Tim Starling, who discovered that
-> action=ajax requests were dispatched to the relevant function without
-> any read permission checks being done. This could have led to data
-> leakage on private wikis.
+> 2) libobby doesn't check server's SSL certificate and passes the
+> password in plain text over SSL channel.  All remote clients are
+> vulnerable to a MITM attack.
 >
-> For more details, see
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=32616
-Please use CVE-2011-4361 for this issue.
+>     • The attacker (A) learns the client's (C) and the server's (S) IP
+>         addresses and used ports.
+>     • A breaks the established TCP connection between C and S.
+>     • A changes the way C's packets with dst = S are routed, resulting
+>         in all packets from C to S's IP go to A.  The simplest way is
+>         ARP cache poisoning.
+>     • A starts listening on the same IP:port as S did.
+>     • C notices the connection interruption and tries to reconnect to S.
+>         (Note: if the client is gobby, this step needs user's interaction.)
+>     • As all C's packets intended for S are routed to A, so, in reality
+>         C connects to A, not S.
+>     • C starts SSL session and, as C doesn't check SSL certificate, he
+>         think it talks to S.
+>     • A requests C' password.
+>     • C passes the password in plain text over SSL channel.
+>
+Please use CVE-2011-4092 for this issue
+> 3) libnet6 doesn't check basic_server::id_counter for integer overflow.
+> This number is used to distinguish among different users.  An attacker
+> may open UINT_MAX successive connections and get an identifier of the
+> already established connection, resulting in the connection hijacking.
+> On i686 uint is a 32 bit counter, so an attacker should be able to open
+> 4.000.000.000 connections to complete the attack.  This is a rather big
+> number: if an attacker may create 2000 connections per second, it would
+> took ~24 days of continuous connection attempts.  However, it is a real
+> threat for servers with a huge uptime.
+>
+Please use CVE-2011-4093 for this issue.
 
-> ------------------------
->
-> Please assign two CVEs.
+Note: these are all available from http://gobby.0x539.de/trac/wiki/Download
+> Thanks,
 >
 
 
