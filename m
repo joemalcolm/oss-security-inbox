@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/20
-Message-ID: <1802386215.451633.1299619079125.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 8 Mar 2011 16:17:59 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: KDE SSL name check issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/5
+Message-ID: <4EAED91F.8000404@redhat.com>
+Date: Mon, 31 Oct 2011 18:21:35 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Henrik Nordstrom <henrik@...riknordstrom.net>, Jiri Skala <jskala@...hat.com>
+Subject: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1094.
+Hello Steve, vendors,
 
-Thanks.
+   an invalid free flaw was found in the way Squid proxy caching server
+processed DNS requests, where one CNAME record pointed to another CNAME
+record pointing to an empty A-record. A remote attacker could issue a
+specially-crafted DNS request, leading to denial of service (squid 
+daemon abort).
 
--- 
-    JB
+Upstream bug report:
+[1] http://bugs.squid-cache.org/show_bug.cgi?id=3237
 
+Relevant upstream patch:
+[2] http://bazaar.launchpad.net/~squid/squid/3.1/revision/10384
 
------ Original Message -----
-> Hi!
-> 
-> KDE recently fixed an issue in the code checking host names of the
-> server SSL certificates. Previously, it accepted certificate as valid
-> for the site if it was issued for the user-specified host name, or if
-> it was issued for an IP address to which user-specified host name
-> resolved.
-> 
-> An attacker able to get an SSL certificate form a trusted CA issued
-> for
-> an attacker-controlled IP address could perform a MITM attack, if they
-> were also able to hijack victim's DNS to resolve host names to the
-> attacker's IP.
-> 
-> Fixed upstream in:
-> https://projects.kde.org/projects/kde/kdelibs/repository/revisions/76f935197599a335a5fe09b78751ddb455248cf7
-> 
-> Patch is included in kdelibs 4.6.1.
-> 
-> --
-> Tomas Hoger / Red Hat Security Response Team
+References:
+[3] http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID_3_1_16.html
+[4] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c4
+[5] http://bugs.squid-cache.org/show_bug.cgi?id=3237#c5
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=750316
+
+Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
+for their opinion / comments too, if this should be considered
+a security issue or not)
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
