@@ -1,19 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/3
-Message-ID: <20110403175045.GA7431@openwall.com>
-Date: Sun, 3 Apr 2011 21:50:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/1
+Message-ID: <4EAEBFE9.8000209@redhat.com>
+Date: Mon, 31 Oct 2011 09:34:01 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Vasiliy Kulikov <segoon@...nwall.com>, Armin Burgmeier <armin@...39.de>, Philipp Kern <phil@...39.de>
+Subject: Re: CVE request: 3 flaws in libobby and libnet6
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 12:43:59PM +0200, Es gibt immer etwas zu tratschen wrote:
-> I also want to stay with you!
+On 10/30/2011 06:08 AM, Vasiliy Kulikov wrote:
+> Hi,
+>
+> 1) the libobby's server checks for users' color collisions before
+> checking users' passwords.  Any user without password authentication
+> may check whether a specific color is used by someone.  With knowledge
+> of person's color preferences he may learn whether a specific person
+> uses the server.  Also, he may enumerate all default colors and learn
+> the number of users.
+>
+>     inc/server_buffer.hpp: 
+>
+>     bool basic_server_buffer<Document, Selector>::on_auth()
+>     {
+>     ...
+>         // Check colour
+>         if(!basic_buffer<Document, Selector>::check_colour(colour) )
+>         {
+>             error = login::ERROR_COLOUR_IN_USE;
+>             return false;
+>         }
+>
+>         // Check global password
+>         if(!m_global_password.empty() )
+>         {
+>             if(global_password != m_global_password)
+>             {
+>                 error = login::ERROR_WRONG_GLOBAL_PASSWORD;
+>                 return false;
+>             }
+>         }
+>     ...
+>     }
+>
+>
+Please use CVE-2011-4091 for this issue.
 
-Nice try, and it sort of proves a point (let's say, that attacks on a
-closed list may start as early as during its discussion and initial
-member subscription, and that we can't fully trust anyone), but I think
-that's enough, thanks.  No need to post more of these (unreasonable
-subscription requests).
+> 2) libobby doesn't check server's SSL certificate and passes the
+> password in plain text over SSL channel.  All remote clients are
+> vulnerable to a MITM attack.
+>
+>     • The attacker (A) learns the client's (C) and the server's (S) IP
+>         addresses and used ports.
+>     • A breaks the established TCP connection between C and S.
+>     • A changes the way C's packets with dst = S are routed, resulting
+>         in all packets from C to S's IP go to A.  The simplest way is
+>         ARP cache poisoning.
+>     • A starts listening on the same IP:port as S did.
+>     • C notices the connection interruption and tries to reconnect to S.
+>         (Note: if the client is gobby, this step needs user's interaction.)
+>     • As all C's packets intended for S are routed to A, so, in reality
+>         C connects to A, not S.
+>     • C starts SSL session and, as C doesn't check SSL certificate, he
+>         think it talks to S.
+>     • A requests C' password.
+>     • C passes the password in plain text over SSL channel.
+>
+Please use CVE-2011-4092 for this issue
+> 3) libnet6 doesn't check basic_server::id_counter for integer overflow.
+> This number is used to distinguish among different users.  An attacker
+> may open UINT_MAX successive connections and get an identifier of the
+> already established connection, resulting in the connection hijacking.
+> On i686 uint is a 32 bit counter, so an attacker should be able to open
+> 4.000.000.000 connections to complete the attack.  This is a rather big
+> number: if an attacker may create 2000 connections per second, it would
+> took ~24 days of continuous connection attempts.  However, it is a real
+> threat for servers with a huge uptime.
+>
+Please use CVE-2011-4093 for this issue.
 
-Alexander
+Note: these are all available from http://gobby.0x539.de/trac/wiki/Download
+> Thanks,
+>
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
