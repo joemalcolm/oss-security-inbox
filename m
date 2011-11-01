@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/1
-Message-ID: <4E44BAAE.3040106@redhat.com>
-Date: Fri, 12 Aug 2011 13:31:26 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Moritz Muehlenhoff <jmm@...ian.org>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE requests: Two kernel issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/5
+Message-ID: <CAJzxamJXJbT5aaui=ed19OPB=gjchjXZeJ1D01m7WQko4hEOFg@mail.gmail.com>
+Date: Wed, 2 Nov 2011 04:11:28 +1100
+From: David Black <disclosure@....org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-On 08/11/2011 01:23 AM, Moritz Muehlenhoff wrote:
-> On Wed, Aug 10, 2011 at 06:49:59AM +0800, Eugene Teo wrote:
->> On 08/10/2011 04:42 AM, Moritz Muehlenhoff wrote:
->>> Hi,
->>> the following two issues also seem to warrant a CVE assignment:
->>>
->>> 1. staging: comedi: fix infoleak to userspace
->>> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
->>>
->>> (It's a staging driver and I'm unsure whether we have assigned
->>>  CVE IDs for staging drivers in the past. OTOH, this driver
->>>  is enabled in the Debian 6.0 kernel)
->>
->> We don't as code from the staging drivers are usually are substandard
->> and usually not supported.
-> 
-> I agree on that approach for new drivers in the works (e.g. gma500), but
-> the Comedi driver is quite old and in use outside the kernel/staging
-> version as well. (Debian is providing a separate comedi source package 
-> since 2002.).
+"It was discovered that both Piston and Tastypie share a similar
+vulnerability with respect to their de-serialization of YAML post
+data. Both Piston and Tastypie used the yaml.load method, which is
+unsafe. In certain circumstances this could be used to allow remote
+execution of arbitrary code." [0]
 
-Please use CVE-2011-2909.
+Can a CVE be assigned to both Tastypie and Django-piston regarding
+these issues ?
 
->> Btw, can you please mail me a copy of the /boot/config of the most
->> recent Debian kernel for my reference?
-> 
-> Please let me know if you need anything in addition to the files
-> Yves-Alexis sent you.
 
-I didn't receive his mail.
-
-Eugene
+[0] https://www.djangoproject.com/weblog/2011/nov/01/piston-and-tastypie-security-releases/
