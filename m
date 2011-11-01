@@ -1,31 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/2
-Message-ID: <493030fa-0b5b-4665-8c10-e8da4813f9f9@zmail15.collab.prod.int.phx2.redhat.com>
-Date: Sat, 24 Dec 2011 19:37:35 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/4
+Message-ID: <4EB00F35.1090909@redhat.com>
+Date: Tue, 01 Nov 2011 20:54:37 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request for Apache ActiveMQ DoS
+Subject: libcap/capsh: does not chdir after chroot
 Content-Type: text/plain; charset=utf-8
 
-A flaw in Apache ActiveMQ before 5.6.0 could allow a remote unauthenticated
-attacker to abuse the 'failover' feature, allowing them to trigger a denial of
-service against the broker service.  An attacker can issue multiple ActiveMQ
-openwire connection requests using the string 'failover:tcp://[IP]:61616', and
-due to the 'failure' mechanism, all TCP connections remain active even if a
-valid session is not created.  After a few thousand requests, a
-'java.net.SocketException: Too many open files' exception is triggered, leading
-to a freeze or crash of the broker (and possibly connected systems as well).
+Hi All,
 
-Upstream bug:
-https://issues.apache.org/jira/browse/AMQ-3294
+It was found that capsh program, usually shipped with the libcap
+package, did not do a chdir("/") after calling chroot, when called with
+a "--chroot" option. This resulted in the current directory being
+outside the chroot.
 
-Secunia advisory:
-http://secunia.com/advisories/47112
+This has been assigned CVE-2011-4099
 
-Patch commits:
-http://svn.apache.org/viewvc?view=revision&revision=1209700
-http://svn.apache.org/viewvc?view=revision&revision=1211844
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=722694
+
 
 -- 
-David Jorm / Red Hat Security Response Team
-
+Huzaifa Sidhpurwala / Red Hat Security Response Team
