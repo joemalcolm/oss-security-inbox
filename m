@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/1
-Message-ID: <4EEFF851.6030003@gentoo.org>
-Date: Mon, 19 Dec 2011 18:52:01 -0800
-From: Tim Sammut <underling@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/10
+Message-ID: <4EB07265.6070300@redhat.com>
+Date: Tue, 01 Nov 2011 16:27:49 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE assignment from previous years
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Is there a general guideline that is commonly used when deciding to
-issue a CVE name from the pool of a previous year versus the current
-year's pool?
-
-thanks and hope all is well
-tim
+On 11/01/2011 03:58 PM, Vincent Danen wrote:
+> * [2011-11-01 13:15:53 -0600] Kurt Seifried wrote:
+>
+>> On 11/01/2011 11:11 AM, David Black wrote:
+>>> y with respect to their de-serialization of YAML post
+>>> data. Both Piston and Tastypie used the yaml.load method, which is
+>>> unsafe. In certain
+>> Can you please send me links for Piston and Tastypie announcements/code
+>> commits showing the vuln please? Thanks.
+>
+> Can't speak for Tastypie (we don't ship it so I didn't look), but for
+> Piston:
+>
+> https://bitbucket.org/jespern/django-piston/changeset/91bdaec89543
+> https://bugzilla.redhat.com/show_bug.cgi?id=750658
+>
+> There is no Piston announcement that I can see.
+>
+Please use CVE-2011-4103 for the Piston yaml.load issue.
 
 -- 
-Tim Sammut ~ Gentoo Security Team
-underling@...too.org ~ C2375493
 
+-Kurt Seifried / Red Hat Security Response Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
