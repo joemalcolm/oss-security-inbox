@@ -1,48 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/20/3
-Message-ID: <4EF00C64.8010205@redhat.com>
-Date: Mon, 19 Dec 2011 21:17:40 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/10
+Message-ID: <4EB07265.6070300@redhat.com>
+Date: Tue, 01 Nov 2011 16:27:49 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tim Sammut <underling@...too.org>
-Subject: Re: CVE assignment from previous years
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 12/19/2011 07:52 PM, Tim Sammut wrote:
-> Hi,
+On 11/01/2011 03:58 PM, Vincent Danen wrote:
+> * [2011-11-01 13:15:53 -0600] Kurt Seifried wrote:
 >
-> Is there a general guideline that is commonly used when deciding to
-> issue a CVE name from the pool of a previous year versus the current
-> year's pool?
+>> On 11/01/2011 11:11 AM, David Black wrote:
+>>> y with respect to their de-serialization of YAML post
+>>> data. Both Piston and Tastypie used the yaml.load method, which is
+>>> unsafe. In certain
+>> Can you please send me links for Piston and Tastypie announcements/code
+>> commits showing the vuln please? Thanks.
 >
-> thanks and hope all is well
-> tim
+> Can't speak for Tastypie (we don't ship it so I didn't look), but for
+> Piston:
 >
-Generally speaking the year the vuln was found or reported is the year
-that gets used for the CVE. Example: I just assigned a CVE-2005.
+> https://bitbucket.org/jespern/django-piston/changeset/91bdaec89543
+> https://bugzilla.redhat.com/show_bug.cgi?id=750658
+>
+> There is no Piston announcement that I can see.
+>
+Please use CVE-2011-4103 for the Piston yaml.load issue.
 
-- -- 
+-- 
 
-- -Kurt Seifried / Red Hat Security Response Team
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iQIcBAEBAgAGBQJO8AxkAAoJEBYNRVNeJnmTxqsP/R5Zo+nEt1ks1qlVe2zT1b/v
-3OBhXhwGlzFvEHjiWb3+4PPvTc3qQBrnt+CySl5ZsIePJ4XObtwSDY6QKoP41Uvx
-CvatEQsAtAX/RN04t3B8RlB3Q4SJviin9MdaaTs7pKimNrR9ZrwiBYW0Nf/7RFG0
-r0BYhHlEr7oxTSW7ni1O80s9UFqxJvJwe36NyJPIPXEYsgZYhsYdI+8zMnxNufGP
-NKg3ZGH7CJ7vcVNbqx+EjKn2Qoi/g3VE1zCPjFdL3kX/lAD5GuN/CRAn/TlLRchZ
-R3Y2YaserNMRku/GjvBi6Fj+t1neqOrXdmH6OoUKNimMdtt7oqGZe9pe9gcr4S/K
-NHqR18t5LDJfwUphGwa62+s78CH5x2UP78hrxOf2JtI2SJkXj3t9/mg5b1RGXmae
-zge9gnO9zBE1BonR0j+llIPtG7zd0GEASq97TnGalsipsQkuNx1Yf8pTZI46Jea9
-CQyP4X+aF1+ZNNzzEiRPyQyzXMh93xLHlNOrPX7Oj9pF6sI1qpoJYgGr5TZYy4FK
-0n7Z4WSuKwUlVNMd/koW6wGIoEvAi1F6hvjBpZTUIB+iUXTBQF526Y2ikIgJZw0L
-h7J9VI//0oLZ/76yEDk0zeV1IZyh08SwlttCQJtt/f4T7r5IzAFjH7eZ0J0zupsX
-syNxyLPeENLlA83aB+Pm
-=Srqi
------END PGP SIGNATURE-----
+-Kurt Seifried / Red Hat Security Response Team
 
