@@ -1,51 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/29/9
-Message-ID: <CAPQRN=UZoJgd71qfzAEKdJC37mT4+2hPmzs6=zz9hCXArbZmoA@mail.gmail.com>
-Date: Tue, 29 Nov 2011 11:35:30 -0200
-From: Raphael Bastos <tecnologia@...tosservice.com.br>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, security@...ckware.com
-Subject: Re: Fwd: Bug script install slackware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/8
+Message-ID: <20111101215805.GC22739@redhat.com>
+Date: Tue, 1 Nov 2011 15:58:05 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-2011/11/29 Solar Designer <solar@...nwall.com>
+* [2011-11-01 13:15:53 -0600] Kurt Seifried wrote:
 
-> Raphael -
->
-> On Mon, Nov 28, 2011 at 09:18:50PM -0200, Raphael Bastos wrote:
-> > Take a look.... this is the correction sugest to script "SeTpartitions".
->
-> As Kurt said, you definitely need to provide more information.  I found
-> your posting cryptic and I was unsure about approving it for
-> distribution to the list (yet I did), because it could at best result in
-> a request for more info.  Security relevance of your finding is unclear
-> from what you posted.
->
-> Please clarify.
->
-> Thanks,
->
-> Alexander
->
+>On 11/01/2011 11:11 AM, David Black wrote:
+>> y with respect to their de-serialization of YAML post
+>> data. Both Piston and Tastypie used the yaml.load method, which is
+>> unsafe. In certain
+>Can you please send me links for Piston and Tastypie announcements/code
+>commits showing the vuln please? Thanks.
 
+Can't speak for Tastypie (we don't ship it so I didn't look), but for
+Piston:
 
-Sorry for my bad English, I am Brazilian. kkkkkkkkk
-I am quoting a bug in the script "SeTpartitions," the official Slackware
-installer. I suggested a correction in lines 374, 495, 496, 503, where
-instead of using / mnt, which is used for the variable mountpoint '$ T_PX'.
+https://bitbucket.org/jespern/django-piston/changeset/91bdaec89543
+https://bugzilla.redhat.com/show_bug.cgi?id=750658
 
-I found this bug since 2002 used the installer for my Slackware Linux
-distribution based on Gentoo. After modifying the installer could normally
-use.
-PS: I use a different mount point / mnt as used by Pat use another LiveCD, also
-created by me.
+There is no Piston announcement that I can see.
 
-Thank you for listening. I tried to send this email to Patrick, but
-went 30 days
-without response, so headed here for the list.
-
-Any other questions just give me a report.
-
-Sds,
-Raphael Bastos aka chemonz
-
+-- 
+Vincent Danen / Red Hat Security Response Team 
