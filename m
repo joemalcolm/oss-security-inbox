@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/4
-Message-ID: <4EE3B365.50104@redhat.com>
-Date: Sat, 10 Dec 2011 12:30:45 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/1
+Message-ID: <4EAF38A9.1010603@redhat.com>
+Date: Tue, 01 Nov 2011 08:09:13 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Paul <pawlkt@...il.com>
-Subject: Re: cve request: bat_socket_read memory corruption
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: oom: fix integer overflow of points in oom_badness
 Content-Type: text/plain; charset=utf-8
 
-On 12/10/2011 09:13 AM, Paul wrote:
-> Hi
->
-> can I get a CVE for this:
-> https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005904.html
-> ?
->
-> If root does read() on a specific socket, it's possible to corrupt
-> (kernel) memory over network, with an ICMP packet, if B.A.T.M.A.N. mesh
-> protocol is used.
->
-I'm going to need first hand source information, i.e. links to the
-code/commits/project stating it's an issue or something similar.
+An integer overflow will happen on 64bit archs if task's sum of rss,
+swapents and nr_ptes exceeds (2^31)/1000 value. This was introduced by
+commit f755a04 oom: use pte pages in OOM score. This can cause a denial
+of service.
 
+https://lkml.org/lkml/2011/10/31/138
+
+Eugene
 -- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Eugene Teo / Red Hat Security Response Team
