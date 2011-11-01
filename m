@@ -1,59 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/01/2
-Message-ID: <4DE5F7FF.5000400@gmx.de>
-Date: Wed, 01 Jun 2011 10:27:43 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/9
+Message-ID: <4EB06CB5.50807@redhat.com>
+Date: Tue, 01 Nov 2011 16:03:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for fetchmail STARTTLS hang (Denial of Service)
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request for wireshark flaws
 Content-Type: text/plain; charset=utf-8
 
-Am 31.05.2011 22:41, schrieb Matthias Andree:
-> Am 31.05.2011 22:01, schrieb Josh Bressers:
->>
->>
->> ----- Original Message -----
->>> Could I get a CVE name for the issue in
->>> <http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
->>>
->>
->> Please use CVE-2011-1947.
-> 
-> Thanks.
-> 
->> I can't help but wonder what else could be vulnerable to a similar flaw.
->> Has anyone looked?
-> 
-> I seriously considered not asking for a CVE in the first place because
-> it's rather close to a resource-hogging-through-slowdowns attack vector,
-> if you send at a very slow pace just avoiding the timeout by a notch,
-> you hog your peer's resources for extended amounts of time -- and I
-> can't think of good heuristics to tell abuse from legit use by those on
-> slow links apart, and it's pointless listing CVEs for the unfixable
-> situations.
-> 
-> 
-> Anecdotal story from the fix: I've been particularly disappointed that
-> Solaris 10 doesn't support setsockopt(n, SOL_SOCKET, SO_RCVTIMEO, &foo,
-> sizeof foo); (returns -1 with errno == EAFNOSUPPORT), which would have
-> been the thorough and easy way out.  I've had the code in place and
-> released as candidate, but umm, no, didn't work. I do set SO_KEEPALIVE
-> now, but that's not anywhere close of defending against malice.
+For the record: this is a *perfect* CVE request =). It's descriptive, it
+has versions, it has all the links to verify it with the original
+sources, all that good stuff.
 
-I wrote too fast.
-Just so that the list archives reflect the actual fix:
+On 11/01/2011 03:51 PM, Vincent Danen wrote:
+> Can I get CVEs assigned to the following wireshark flaws?
+>
+>
+> 1) An uninitialized variable in the CSN.1 dissector could cause a crash.
+>
+> Affects: 1.6.0 to 1.6.2, fixed in 1.6.3
+>
+> References:
+> http://www.wireshark.org/security/wnpa-sec-2011-17.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6351
+> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39140
+> https://bugzilla.redhat.com/show_bug.cgi?id=750643
+>
+Please use CVE-2011-4100 for this.
 
-The fixed fetchmail version 6.3.20 runs the SSL_connect() [OpenSSL]
-under a real-time setitimer() that triggers SIGALRM after a
-user-configurable setting (default 300 s).
-
-SO_KEEPALIVE takes more than two hours on some systems' defaults before
-even sending the first TCP keepalive probe, which is too long, but can
-be tuned through sysctl or ndd on many relevant systems -- and, more
-importantly, bears no relation to what happens up in the application
-layer. That's what I meant with "does not defend against malice" (for
-instance, a server deliberately keeping the TCP connection open without
-responding), and that situation is what the real-time setitimer() will
-signal.
+>
+> 2) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered that
+> the Infiniband dissector could dereference a NULL pointer.
+>
+> Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
+>
+> References:
+> http://www.wireshark.org/security/wnpa-sec-2011-18.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6476
+> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39500
+> https://bugzilla.redhat.com/show_bug.cgi?id=750645
+>
+Please use CVE-2011-4101 for this.
+>
+> 3) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered a
+> buffer overflow in the ERF file reader.
+>
+> Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
+>
+> References:
+> http://www.wireshark.org/security/wnpa-sec-2011-19.html
+> https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6479
+> http://anonsvn.wireshark.org/viewvc?view=revision&revision=39508
+> https://bugzilla.redhat.com/show_bug.cgi?id=750648
+>
+Please use CVE-2011-4102 for this.
 
 -- 
-Matthias Andree
+
+-Kurt Seifried / Red Hat Security Response Team
+
