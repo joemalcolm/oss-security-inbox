@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/23/6
-Message-ID: <20111223211218.GA19763@openwall.com>
-Date: Sat, 24 Dec 2011 01:12:18 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/2
+Message-ID: <4EAF45C9.4020902@redhat.com>
+Date: Mon, 31 Oct 2011 19:05:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Status of two Linux kernel issues w/o CVE assignments
+CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE request: kernel: oom: fix integer overflow of points in oom_badness
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2011 at 01:52:24PM -0700, Kurt Seifried wrote:
-> On 12/22/2011 09:44 AM, Moritz Muehlenhoff wrote:
-> >2: /proc/$PID/{sched,schedstat} information leak
-> >Vasiliy Kulikov of OpenWall posted a demo exploit.
-> >http://openwall.com/lists/oss-security/2011/11/05/3
-> >
-> >AFAICS no CVE ID was assigned to this?
-> 
-> I believe we are not assigning CVE's for these types of proc related 
-> issues, some discussion was had:
-> 
-> https://lkml.org/lkml/2011/2/7/368
+On 10/31/2011 06:09 PM, Eugene Teo wrote:
+> An integer overflow will happen on 64bit archs if task's sum of rss,
+> swapents and nr_ptes exceeds (2^31)/1000 value. This was introduced by
+> commit f755a04 oom: use pte pages in OOM score. This can cause a denial
+> of service.
+>
+> https://lkml.org/lkml/2011/10/31/138
+>
+> Eugene
+Please use CVE-2011-4097 for this issue
 
-For "these types" (what types?) of proc related issues, or for all
-infoleak issues related to procfs?  To me, a timing attack based on data
-in a world-readable proc file is totally different from a data leak via
-fd preserved across SUID exec.  Thus, a CVE (non-)assignment decision
-for one of these should have nothing to do with CVE (non-)assignment for
-the other.
+-- 
 
-Alexander
+-Kurt Seifried / Red Hat Security Response Team
+
