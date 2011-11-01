@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/7
-Message-ID: <956948156.90449.1297975227221.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 17 Feb 2011 15:40:27 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/7
+Message-ID: <20111101215133.GA22739@redhat.com>
+Date: Tue, 1 Nov 2011 15:51:35 -0600
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: telepathy-gabble
+Subject: CVE request for wireshark flaws
 Content-Type: text/plain; charset=utf-8
 
-As best as I can tell, we should only need one ID:
+Can I get CVEs assigned to the following wireshark flaws?
 
-CVE-2011-1000
-• In jingle-factory.c, a malicious contact can trick Gabble into relaying media
-through a server of their choosing. This allows any contact to intercept your
-audio and video calls (as opposed to only attacker who can passively intercept
-your network traffic, which is the normal state of affairs for unencrypted
-calls).
 
-If you think any of the others deserve an ID, let me know.
+1) An uninitialized variable in the CSN.1 dissector could cause a crash.
 
-Thanks.
+Affects: 1.6.0 to 1.6.2, fixed in 1.6.3
+
+References:
+http://www.wireshark.org/security/wnpa-sec-2011-17.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6351
+http://anonsvn.wireshark.org/viewvc?view=revision&revision=39140
+https://bugzilla.redhat.com/show_bug.cgi?id=750643
+
+
+2) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered that
+the Infiniband dissector could dereference a NULL pointer.
+
+Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
+
+References:
+http://www.wireshark.org/security/wnpa-sec-2011-18.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6476
+http://anonsvn.wireshark.org/viewvc?view=revision&revision=39500
+https://bugzilla.redhat.com/show_bug.cgi?id=750645
+
+
+3) Huzaifa Sidhpurwala of Red Hat Security Response Team discovered a
+buffer overflow in the ERF file reader.
+
+Affects: 1.4.0 to 1.4.9, 1.6.0 to 1.6.2, fixed in 1.6.3
+
+References:
+http://www.wireshark.org/security/wnpa-sec-2011-19.html
+https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=6479
+http://anonsvn.wireshark.org/viewvc?view=revision&revision=39508
+https://bugzilla.redhat.com/show_bug.cgi?id=750648
 
 -- 
-    JB
-
------ Original Message -----
-> Can I get a CVE id for:
-> https://bugs.freedesktop.org/show_bug.cgi?id=34048
-> 
-> Thanks!
-> 
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+Vincent Danen / Red Hat Security Response Team 
