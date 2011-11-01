@@ -1,22 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/52
-Message-ID: <1301945504.1154.6.camel@hidalgo>
-Date: Mon, 04 Apr 2011 21:31:44 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/8
+Message-ID: <20111101215805.GC22739@redhat.com>
+Date: Tue, 1 Nov 2011 15:58:05 -0600
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-On lun., 2011-04-04 at 02:38 +0400, Solar Designer wrote:
-> "Good" employers, let alone non-commercial Open Source projects, don't
-> remove e-mail addresses when a person leaves.  Someone having an
-> @debian.org address does not mean they're currently with Debian. 
+* [2011-11-01 13:15:53 -0600] Kurt Seifried wrote:
 
-In Debian case, that is wrong, mail redirection to @debian.org address
-is disabled when retiring from the Debian project.
+>On 11/01/2011 11:11 AM, David Black wrote:
+>> y with respect to their de-serialization of YAML post
+>> data. Both Piston and Tastypie used the yaml.load method, which is
+>> unsafe. In certain
+>Can you please send me links for Piston and Tastypie announcements/code
+>commits showing the vuln please? Thanks.
 
-Regards,
+Can't speak for Tastypie (we don't ship it so I didn't look), but for
+Piston:
+
+https://bitbucket.org/jespern/django-piston/changeset/91bdaec89543
+https://bugzilla.redhat.com/show_bug.cgi?id=750658
+
+There is no Piston announcement that I can see.
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team 
