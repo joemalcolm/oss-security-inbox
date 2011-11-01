@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/23/4
-Message-ID: <1408065980.896976.1308858392489.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 23 Jun 2011 15:46:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/01/1
+Message-ID: <4EAF38A9.1010603@redhat.com>
+Date: Tue, 01 Nov 2011 08:09:13 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: incidents@...rt.org, henri@...v.fi
-Subject: Re: CVE request: Joomla unspecified information disclosure vulnerability
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE request: kernel: oom: fix integer overflow of points in oom_badness
 Content-Type: text/plain; charset=utf-8
 
+An integer overflow will happen on 64bit archs if task's sum of rss,
+swapents and nr_ptes exceeds (2^31)/1000 value. This was introduced by
+commit f755a04 oom: use pte pages in OOM score. This can cause a denial
+of service.
 
+https://lkml.org/lkml/2011/10/31/138
 
------ Original Message -----
-> Couldn't find a CVE-identifier for this issue. Joomla does have too
-> many vulnerabilities. Joomla prior to 1.5.23 contains a flaw that may
-> lead to an unauthorized information disclosure. Should this one get a
-> 2010 or 2011 identifier?
-> 
-> Reported: 2010-12-08
-> Joomla advisory: 2011-04-01
-> Release with a fix (version 1.5.23): 2011-04-04
-> 
-> References:
-> http://developer.joomla.org/security/news/9-security/10-core-security/340-20110401-core-information-disclosure.html
-> http://www.joomla.org/announcements/release-news/5367-joomla-1523-released.html
-> http://osvdb.org/show/osvdb/71587
-> http://secunia.com/advisories/44028/
-> 
-> I hope this request isn't duplicate. I included oCERT to this email as
-> Joomla is part of that group. Please notify me and mailing-list if
-> this issue already has a CVE-identifier.
-> 
-
-I'm giving this CVE-2011-2488.
-
-While the flaw was reported in 2010 they claim, I consider 2011 when
-it went public.
-
-Thanks.
-
+Eugene
 -- 
-    JB
+Eugene Teo / Red Hat Security Response Team
