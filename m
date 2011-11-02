@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/31/2
-Message-ID: <4EAEC663.3060409@redhat.com>
-Date: Mon, 31 Oct 2011 10:01:39 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: Jara 1.6 SQL injection and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/3
+Message-ID: <CAHmME9oGDZPfstr3g9fMnbugmcB0Qo_Exgf8iaN8CmoP2mUjew@mail.gmail.com>
+Date: Wed, 2 Nov 2011 02:03:29 -0400
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-On 10/30/2011 04:48 AM, Henri Salo wrote:
-> Can I get CVE-identifiers for these issues:
->
-> SQL injection: http://seclists.org/fulldisclosure/2011/Oct/767 (http://seclists.org/bugtraq/2011/Oct/201)
-> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3428075&group_id=294500&atid=1243901
->
-> XSS: http://packetstormsecurity.org/files/106114/jara-sql.txt
-> Bug report to vendor: https://sourceforge.net/tracker/?func=detail&aid=3430384&group_id=294500&atid=1243901
->
-I assume here you are referring to the comment:
+Oh, and I suppose there's a very obvious but critical #6:
 
-"http://localhost/jara/search.php?term=<script>alert('Faille XSS')</script>"
+6. An unprivileged user an mount/unmount/eject whatever he wants, with
+root permissions. Danger.
 
-> No vendor reply. No fix.
->
-> Best regards,
-> Henri Salo
-
--Kurt
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
+This may help to "confirm":
+https://bugs.launchpad.net/calibre/+bug/885027/
 
 
+As well, the maintainer has already issued a fix. From the bug report:
+"Fixed in branch lp:calibre. The fix will be in the next release.
+calibre is usually released every Friday.", which means the above
+source link, that went to the trunk, now shows the fixed result. The
+old broken code is still available here:
+http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
+
+Note that the maintainer has chosen only to address #5.
