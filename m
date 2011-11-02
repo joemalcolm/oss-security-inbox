@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/08/13
-Message-ID: <20110308153641.33166a46@orphan>
-Date: Tue, 8 Mar 2011 15:36:41 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: KDE SSL name check issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/3
+Message-ID: <CAHmME9oGDZPfstr3g9fMnbugmcB0Qo_Exgf8iaN8CmoP2mUjew@mail.gmail.com>
+Date: Wed, 2 Nov 2011 02:03:29 -0400
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Oh, and I suppose there's a very obvious but critical #6:
 
-KDE recently fixed an issue in the code checking host names of the
-server SSL certificates.  Previously, it accepted certificate as valid
-for the site if it was issued for the user-specified host name, or if
-it was issued for an IP address to which user-specified host name
-resolved.
+6. An unprivileged user an mount/unmount/eject whatever he wants, with
+root permissions. Danger.
 
-An attacker able to get an SSL certificate form a trusted CA issued for
-an attacker-controlled IP address could perform a MITM attack, if they
-were also able to hijack victim's DNS to resolve host names to the
-attacker's IP.
+This may help to "confirm":
+https://bugs.launchpad.net/calibre/+bug/885027/
 
-Fixed upstream in:
-https://projects.kde.org/projects/kde/kdelibs/repository/revisions/76f935197599a335a5fe09b78751ddb455248cf7
 
-Patch is included in kdelibs 4.6.1.
+As well, the maintainer has already issued a fix. From the bug report:
+"Fixed in branch lp:calibre. The fix will be in the next release.
+calibre is usually released every Friday.", which means the above
+source link, that went to the trunk, now shows the fixed result. The
+old broken code is still available here:
+http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Note that the maintainer has chosen only to address #5.
