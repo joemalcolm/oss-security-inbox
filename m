@@ -1,25 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/24/3
-Message-ID: <4D65D3F2.6090408@redhat.com>
-Date: Thu, 24 Feb 2011 11:43:46 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: CVE request: kernel: drm/radeon/kms: check AA resolve registers on r300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/2
+Message-ID: <CAHmME9r-riJFGhmBxbcMOt6dpuPOqyJ-yCdbdshnUpEWzW778A@mail.gmail.com>
+Date: Tue, 1 Nov 2011 21:43:04 -0400
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-Check values passed in to AARESOLVE_OFFSET on r300. It can be used to 
-write arbitrary data to VRAM, GTT, etc. This is specific to a range of 
-GPUs only.
+Hello,
 
-drm/radeon/kms: check AA resolve registers on r300
-http://git.kernel.org/linus/fff1ce4dc6113b6fdc4e3a815ca5fd229408f8ef
+There are 5 separate vulnerabilities with the calibre SUID mount
+helper, with each possibly requiring a different CVE, or perhaps two
+can be clumped together:
 
-[PATCH] drm/radeon: fix regression with AA resolve checking
-https://patchwork.kernel.org/patch/576101/
+These vulnerabilities concern /src/calibre/devices/linux_mount_helper.c
+http://bazaar.launchpad.net/~kovid/calibre/trunk/view/head:/src/calibre/devices/linux_mount_helper.c
 
-https://bugzilla.redhat.com/show_bug.cgi?id=680000
+1. Ability to create root owned directory anywhere. The mount helper
+calls mkdir(argv[3], ...) on line 48.
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+2. Ability to remove any empty directory on the system. For example, line 172.
+
+3. Ability to create and delete
+user_controlled_dir/.created_by_calibre_mount_helper anywhere on the
+filesystem, lines 55 and 165.
+
+4. Ability to inject arguments into 'mount' being exec'd. On lines 78,
+81, and 83, the final two arguments to mount are user controlled. On
+lines 1033, 106, 108, 139, and 141, the last argument to unmount/eject
+is user controlled. The "exists()" check can be subverted via race
+condition or by creating an existing file in the working directory
+with a filename equal to the desired injected argument.
+
+5. Ability to execute any program as root. The mount helper makes use
+of execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the
+first argument does not start with a / character. Because of this,
+execlp will search PATH for the executable to run. PATH is user
+controlled, and thus it is trivial to write a program that spawns a
+shell and give it "mount" as a filename, and direct PATH to its
+directory.
+
+These have been reported in bug 885027 for the Calibre project.
+
+Thanks,
+Jason
