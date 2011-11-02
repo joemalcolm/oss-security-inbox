@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/08/6
-Message-ID: <20110208202708.59e6cd14@laverne>
-Date: Tue, 8 Feb 2011 20:27:08 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/4
+Message-ID: <1320228187.13156.157.camel@spiral.ashpool.org>
+Date: Wed, 02 Nov 2011 10:03:07 +0000
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpbb before 3.0.8
+Subject: kiwi shell meta char injection
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 8 Feb 2011 14:22:54 -0500 (EST)
-schrieb Josh Bressers <bressers@...hat.com>:
+Hi,
+my colleagues found the following:
+https://github.com/openSUSE/kiwi/commit/f0f74b3f6ac6d47f7919aa9db380c0ad41ffe55f
 
-> Sadly I can't find any public information, it seems you need a login
-> to view the changelog. If someone has an upstream contact can you ask
-> them to change this policy.
+CVE-2011-3180: The path of overlay files was not escaped which allowed
+shell meta character injection via the chown(1) command-line.
 
-There is some more info including patch:
-http://www.phpbb.com/community/viewtopic.php?f=14&t=2111068
+https://github.com/openSUSE/kiwi/commit/88bf491d16942766016c606e4210b4e072c1019f
+CVE-2011-4195: The image name was not escaped properly and can be used
+in conjunction with other applications to execute arbitrary shell
+commands.
 
+Cheers,
+Thomas
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+Thomas Biege <thomas@...e.de>, Project Manager IT-Security
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
