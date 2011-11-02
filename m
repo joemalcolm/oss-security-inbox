@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/3
-Message-ID: <4EBCF374.60800@oracle.com>
-Date: Fri, 11 Nov 2011 10:05:40 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/7
+Message-ID: <4EB16C66.6060603@redhat.com>
+Date: Wed, 02 Nov 2011 10:14:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [LightDM] Version 1.0.6 released
+CC: David Black <disclosure@....org>
+Subject: Re: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-On 11/11/11 08:06, Guido Berhoerster wrote:
-> Replacing the file between the lstat and the open would change
-> its inode and then be caught by the check before the fchown, no?
+On 11/01/2011 07:35 PM, David Black wrote:
+> The Tastypie announcement can be found at
+> http://groups.google.com/group/django-tastypie/browse_thread/thread/8b668d1831d35012
+>
+> and the patch to fix this bug can be found at
+> https://github.com/toastdriven/django-tastypie/commit/e8af315211b07c8f48f32a063233cc3f76dd5bc2
+Thanks, first hand info is much better. Please use CVE-2011-4104 for
+this issue.
 
-Nope.   There is no reason why the same inode should not be reused.
+-- 
 
-On ext4 (btrfs seems to be different):
+-Kurt Seifried / Red Hat Security Response Team
 
-$ touch test; ls -i test; rm test; touch test; ls -i test
-656078 test
-656078 test
-
-jch
