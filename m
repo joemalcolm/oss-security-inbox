@@ -1,97 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/15
-Message-ID: <20111020162340.GA5703@inutil.org>
-Date: Thu, 20 Oct 2011 18:23:40 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: mplayer RDT parsing integer underlow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/1
+Message-ID: <CAJzxamLah2HQnPtbHgFH2ZJtx5PfO70bcxrdobGpcHCwnifwyg@mail.gmail.com>
+Date: Wed, 2 Nov 2011 12:35:55 +1100
+From: David Black <disclosure@....org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 20, 2011 at 12:22:37PM -0400, Josh Bressers wrote:
-> Please use CVE-2009-5027
+The Tastypie announcement can be found at
+http://groups.google.com/group/django-tastypie/browse_thread/thread/8b668d1831d35012
 
-This has already received a CVE ID, although for some reason it was     
-never set public on the MITRE website:  
-                                  
-http://www.debian.org/security/2010/dsa-2043                    
-http://www.debian.org/security/2010/dsa-2044                    
-
--> CVE-2010-2062
-
-Cheers,             
-         Moritz        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-> Thanks.
-> 
-> -- 
->     JB
-> 
-> ----- Original Message -----
-> > Hi,
-> > 
-> > Please assign a CVE for this issue from 2009. From [1]:
-> > 
-> > "Function real_get_rdt_chunk() calls rtsp_read_data() to read RDT
-> > (Real Data Transport) chunks headers from the network and after that
-> > it
-> > will parse them. A controled variable is used to allocate a buffer
-> > and
-> > later passed on to the rtsp_read_data() function in order to specify
-> > the
-> > length of an RDT chunk data to read from the network. An integer
-> > underflow can be triggered when parsing a malformed RDT header chunk,
-> > a remote attacker can exploit it to execute arbitrary code in the
-> > context of the application."
-> > 
-> > [1] http://seclists.org/fulldisclosure/2009/Jul/418
-> > [2] https://secunia.com/advisories/36041/3/
-> > 
-> > thank you
-> > tim
-> > 
-> > --
-> > Tim Sammut ~ Gentoo Security Team
-> > underling@...too.org ~ C2375493
-> > 
-> > 
-> 
+and the patch to fix this bug can be found at
+https://github.com/toastdriven/django-tastypie/commit/e8af315211b07c8f48f32a063233cc3f76dd5bc2
