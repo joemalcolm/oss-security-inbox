@@ -1,17 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/04/5
-Message-ID: <20111004151657.GA29894@openwall.com>
-Date: Tue, 4 Oct 2011 19:16:57 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/1
+Message-ID: <CAJzxamLah2HQnPtbHgFH2ZJtx5PfO70bcxrdobGpcHCwnifwyg@mail.gmail.com>
+Date: Wed, 2 Nov 2011 12:35:55 +1100
+From: David Black <disclosure@....org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 04, 2011 at 09:24:29AM -0500, Tyler Hicks wrote:
-> Hello - I recently joined the Ubuntu Security team and request
-> membership to the closed linux-distros list so that I may participate
-> fully in reporting and fixing vulnerabilities in Ubuntu and FOSS.
+The Tastypie announcement can be found at
+http://groups.google.com/group/django-tastypie/browse_thread/thread/8b668d1831d35012
 
-I've just subscribed Tyler.
-
-Alexander
+and the patch to fix this bug can be found at
+https://github.com/toastdriven/django-tastypie/commit/e8af315211b07c8f48f32a063233cc3f76dd5bc2
