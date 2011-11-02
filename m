@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/6
-Message-ID: <loom.20110824T050953-567@post.gmane.org>
-Date: Wed, 24 Aug 2011 03:12:36 +0000 (UTC)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/4
+Message-ID: <1320228187.13156.157.camel@spiral.ashpool.org>
+Date: Wed, 02 Nov 2011 10:03:07 +0000
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: cifs: singedness issue in CIFSFindNext()
+Subject: kiwi shell meta char injection
 Content-Type: text/plain; charset=utf-8
 
-Eugene Teo <eugene@...> writes:
+Hi,
+my colleagues found the following:
+https://github.com/openSUSE/kiwi/commit/f0f74b3f6ac6d47f7919aa9db380c0ad41ffe55f
 
-> Fix this by making the name_len an unsigned value in CIFSFindNext.
-> 
-> http://www.spinics.net/lists/linux-cifs/msg03950.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=732869
-> 
-> Thanks, Eugene
-> 
-> 
+CVE-2011-3180: The path of overlay files was not escaped which allowed
+shell meta character injection via the chown(1) command-line.
 
-Please use CVE-2011-3191.
+https://github.com/openSUSE/kiwi/commit/88bf491d16942766016c606e4210b4e072c1019f
+CVE-2011-4195: The image name was not escaped properly and can be used
+in conjunction with other applications to execute arbitrary shell
+commands.
 
-Thanks
+Cheers,
+Thomas
+-- 
+Thomas Biege <thomas@...e.de>, Project Manager IT-Security
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
 --
-David Jorm / Red Hat Security Response Team
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+
 
