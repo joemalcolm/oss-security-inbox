@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/8
-Message-ID: <20110722214235.GA9254@openwall.com>
-Date: Sat, 23 Jul 2011 01:42:35 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/9
+Message-ID: <1320251483.8441.27.camel@scapa>
+Date: Wed, 02 Nov 2011 17:31:23 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 22, 2011 at 12:21:36AM +1000, Steffen Joeris wrote:
-> Please add me to the new closed list. As a member of the debian security 
-> team[0] I was formerly subscribed to the vendor-sec@ list via our team@ 
-> address.
+On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+> > On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+> >> Fixes a security issue where using ~/.Xauthority as a symlink would
+> >> cause LightDM to set the destination of the link to user ownership.
+> >> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+> >>
+> >> Overview of changes in lightdm 1.0.6
+> >>
+> >>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+> >
+> > Could a CVE be assigned for this?
+> >
+> > Regards,
+> Can you send me the link to this announcement so I can confirm it? Thanks.
 > 
-> pub   1024D/893FAD07 2004-07-12
-> uid                  Steffen Joeris <white@...ian.org>
-> uid                  Steffen Joeris (white) <Steffen.joeris@....de>
-> uid                  Steffen Joeris (white) <steffen.joeris@...lelinux.de>
-> uid                  Steffen Joeris (white) <white@....snow-crash.org>
-> uid                  Steffen Joeris <white@...lelinux.org>
-> sub   1024g/6F2AA41F 2004-07-12
-> 
-> Cheers,
-> Steffen
-> 
-> [0]: http://www.debian.org/intro/organization
 
-Added.
+Here's the link to the mailing list mail:
+http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
 
-Alexander
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
