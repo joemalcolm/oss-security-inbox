@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/14/2
-Message-ID: <4E97BE87.80608@redhat.com>
-Date: Fri, 14 Oct 2011 10:15:59 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/10
+Message-ID: <4EB17280.8020803@redhat.com>
+Date: Wed, 02 Nov 2011 10:40:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: radvd 1.8.2 released with security fixes
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-On 10/14/2011 12:21 AM, Solar Designer wrote:
-> I am an outside observer here (I haven't reviewed the code myself), but
-> doesn't the above amount to admin-configured privilege separation not
-> actually being enabled?  If so, this sounds like a security issue to me.
+On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+>>>> cause LightDM to set the destination of the link to user ownership.
+>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+>>>>
+>>>> Overview of changes in lightdm 1.0.6
+>>>>
+>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+>>> Could a CVE be assigned for this?
+>>>
+>>> Regards,
+>> Can you send me the link to this announcement so I can confirm it? Thanks.
+>>
+> Here's the link to the mailing list mail:
+> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
 >
-
-I dont think so. From the code i have read so far, here is what seems to 
-happen.
-
-- radvd starts as root
-- reads the configs
-- if a username is specified (user=radvd in most cases):
-	- if "--singleprocess" is not specified:
-		- run privsep_init(): This forks another process which
-		  runs as root. So after this point we have two
-		  processes both running as root
-		- If privsep_init() fails, we have just one process
-		  running as root
-	- run drop_root_privileges():
-		If this succedes, we have two processes one running as
-		root and another as radvd user, or if privsep_init()
-		failed earlier, we have one process running as radvd
-		user.
-		If this fails, application quits
-- If username was not specified radvd continues to run as a single 
-process as root.
-
-
-So failure in privsep_init() results in just one process running as 
-radvd user. If it did not fail it would result in one process running as 
-root and another as radvd user.
-
-I dont think this would be a security issue in my opinion.
-
-
-
+> Regards,
+Thanks, confirmed (first hand info is much better). Please use
+CVE-2011-4105 for this issue.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
