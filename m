@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/12/4
-Message-ID: <20111212174705.GE1648@redhat.com>
-Date: Mon, 12 Dec 2011 10:47:06 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/5
+Message-ID: <1320230242.13156.161.camel@spiral.ashpool.org>
+Date: Wed, 02 Nov 2011 10:37:22 +0000
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: putty does not wipe keyboard-interactive replies from memory after authentication
+Subject: Re: kiwi shell meta char injection
 Content-Type: text/plain; charset=utf-8
 
-Putty 0.59-0.61 does not wipe keyboard-interactive replies from memory
-after authentication.  If malware is installed on the system and can
-access arbitrary memory locations, or if the memory is swapped to disk
-or written in a crash dump file, it can expose sensitive authentication
-information like passwords, public-key passphrases, etc.
 
-This is fixed upstream in 0.62.
+This email was sent a bit too early.
 
-Could a CVE be assigned to this?
+On Mi, 2011-11-02 at 10:03 +0000, Thomas Biege wrote:
+> Hi,
+> my colleagues found the following:
+> https://github.com/openSUSE/kiwi/commit/f0f74b3f6ac6d47f7919aa9db380c0ad41ffe55f
+> 
+> CVE-2011-3180: The path of overlay files was not escaped which allowed
+> shell meta character injection via the chown(1) command-line.
+> 
+> https://github.com/openSUSE/kiwi/commit/88bf491d16942766016c606e4210b4e072c1019f
+> CVE-2011-4195: The image name was not escaped properly and can be used
+> in conjunction with other applications to execute arbitrary shell
+> commands.
 
-References:
+In the master branch the following commits are interesting:
+  14881958878d54e6ed0c5153a1915891d94d1622
+  8ada4156a781e799b84ad9b0a1f4fffb2d0250e8
+  88bf491d16942766016c606e4210b4e072c1019f
+  a9433189740fc71b0156103c0a3c01d873b04dfd
 
-http://www.chiark.greenend.org.uk/~sgtatham/putty/wishlist/password-not-wiped.html
-http://svn.tartarus.org/sgt?view=rev&revision=9357
-https://bugzilla.redhat.com/show_bug.cgi?id=766865
-http://bugs.gentoo.org/show_bug.cgi?id=394429
-
-Thanks.
+> Cheers,
+> Thomas
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+Thomas Biege <thomas@...e.de>, Project Manager IT-Security
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+
