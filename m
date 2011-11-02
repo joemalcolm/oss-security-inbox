@@ -1,50 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/7
-Message-ID: <20111229225821.GS27039@core.inversepath.com>
-Date: Thu, 29 Dec 2011 23:58:21 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/7
+Message-ID: <4EB16C66.6060603@redhat.com>
+Date: Wed, 02 Nov 2011 10:14:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: David Black <disclosure@....org>
+Subject: Re: Re: CVE request for Django-piston and Tastypie
 Content-Type: text/plain; charset=utf-8
 
-
-Hi Solar,
-
-> I think this is a rare exception to oCERT's policy, too.  It says:
+On 11/01/2011 07:35 PM, David Black wrote:
+> The Tastypie announcement can be found at
+> http://groups.google.com/group/django-tastypie/browse_thread/thread/8b668d1831d35012
 >
-> "- under extremely exceptional circumstances, if the oCERT Team and all
-> the parties involved feel the need for longer time, a 2 months embargo
-> can be applied, in this case we would clearly document the decision for
-> public review"
-
-> Andrea - you could want to "clearly document the decision for public
-> review" now, although I guess your rationale was similar to mine (when I
-> decided not to object to the unusually long embargo period this time).
-
-As stated in our timeline the embargo date was requested by reporters:
-"2011-09-25: vulnerability report received, reporters set embargo date to December 27th"
-
-Our disclosure policy also says:
-"- in any circumstance reporter preference will always be honoured in case a
-joint agreement is not reached, as oCERT would be anyway unable to force its
-embargo"
-
-We tried to negotiate an earlier embargo time as, obviously, many complained
-about the unfortunate timing considering xmas holidays but the reporters really
-wanted to release this after the CCC talk.
-
-It is oCERT policy to not leak reports before the desired date set by the
-reporters if a more favourable one is not agreed upon.
-
-Hope this clarifies the exception.
-
-Cheers
+> and the patch to fix this bug can be found at
+> https://github.com/toastdriven/django-tastypie/commit/e8af315211b07c8f48f32a063233cc3f76dd5bc2
+Thanks, first hand info is much better. Please use CVE-2011-4104 for
+this issue.
 
 -- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
 
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+-Kurt Seifried / Red Hat Security Response Team
+
