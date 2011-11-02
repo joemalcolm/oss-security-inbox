@@ -1,49 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/9
-Message-ID: <1314389676.10232.22.camel@localhost>
-Date: Fri, 26 Aug 2011 15:14:33 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: geoff@...ttered.org, dwyer@...lab.ee.mu.oz.au, jgifford@...ksmart.net
-Cc: oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Security issue in hammerhead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/9
+Message-ID: <1320251483.8441.27.camel@scapa>
+Date: Wed, 02 Nov 2011 17:31:23 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-A security bug was reported against hammerhead in Ubuntu. You are being
-emailed as the upstream contact. Please keep
-oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
+On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+> > On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+> >> Fixes a security issue where using ~/.Xauthority as a symlink would
+> >> cause LightDM to set the destination of the link to user ownership.
+> >> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+> >>
+> >> Overview of changes in lightdm 1.0.6
+> >>
+> >>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+> >
+> > Could a CVE be assigned for this?
+> >
+> > Regards,
+> Can you send me the link to this announcement so I can confirm it? Thanks.
+> 
 
-This issue should be considered public and has not yet been assigned a CVE.
+Here's the link to the mailing list mail:
+http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
 
-Details from the public bug follow:
-https://launchpad.net/bugs/826679
-
-----
-From the reporter:
-
-"hammerhead blindly writes to to /tmp/hammer.log without prior checks.
-It is possible to put a symbolic link at /tmp/hammer.log pointing at
-another file - that hammerhead will then end up appending data into.
-(it appears that hammerhead uses the file location as specified
-in /etc/hammerhead/hh.conf - which in debian/ubuntu
-is /tmp/hammer.log)."
-----
-
-A quick check shows that HH_LOG and REPORT_LOG are indeed being
-unconditionally opened with 'fopen(..., "a+")' in src/hammerhead.cc. 
-
-Thanks in advance for your cooperation in coordinating a fix for this
-issue,
-
-Jamie Strandboge
-
-[1] oss-security@...ts.openwall.com is a public mailing list for
-    people to collaborate on security vulnerabilities and coordinate
-    security updates.
-
-PS - I couldn't find a security contact for hammerhead, so emailed to
-those I could find in AUTHORS.
-
+Regards,
 -- 
-Jamie Strandboge             | http://www.canonical.com
+Yves-Alexis
 
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
