@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/3
-Message-ID: <CAOSRhRN4fz7L1ZiD4T7Pinbt6KWr-Ou0ng4=Aag9ArTn3tUaOA@mail.gmail.com>
-Date: Tue, 9 Aug 2011 23:33:04 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/8
+Message-ID: <4EB16CE2.8030609@redhat.com>
+Date: Wed, 02 Nov 2011 10:16:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: csmall@...ian.org
-Subject: CVE request (and disclosure): ax25d missing setuid return code check
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-The AX.25 daemon (ax25d), typically provided in the ax25-tools
-package, allows administrators to associate incoming AX.25, NET/ROM,
-and ROSE traffic with the execution of an endpoint program (most
-commonly "node"), which is run under a specified user account.
-Because ax25d is missing a check on the return code for a setuid call
-responsible for dropping privileges to the specified user, it may be
-possible to cause setuid to fail, after which the chosen program will
-be executed with root privileges.  In other words, if you're in the
-business of handing out unprivileged shells over amateur radio (don't
-we all? :p ), this would allow for remote compromise.
+On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+>> Fixes a security issue where using ~/.Xauthority as a symlink would
+>> cause LightDM to set the destination of the link to user ownership.
+>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+>>
+>> Overview of changes in lightdm 1.0.6
+>>
+>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+>
+> Could a CVE be assigned for this?
+>
+> Regards,
+Can you send me the link to this announcement so I can confirm it? Thanks.
 
--Dan
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
