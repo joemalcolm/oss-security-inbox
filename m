@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/14/7
-Message-ID: <709823227.88477.1302779423715.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 14 Apr 2011 07:10:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/10
+Message-ID: <4EB17280.8020803@redhat.com>
+Date: Wed, 02 Nov 2011 10:40:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> 
-> "security updates" and "public advisories" aren't the same thing,
-> That's not just a semantic distinction. There's many s vendors who
-> release security updates, but not necessarily public advisories on
-> them. They may have constituencies that would simply get confused
-> by advisories, or they have auto-update mechanisms, or part of their
-> support model involves pushing their customers to keep up with all
-> fixes, security or otherwise. They may simply thing that advisories
-> are a waste of time because customers don't read.
-> 
-> For linux-distros, I think what you really want to go for here are
-> *timely* updates. If a distro isn't generally capable of producing a
-> security update within, say, a month of when the issue was released,
-> then their getting the issue in advance through linux-distros isn't
-> going to do them or their distro community a lot of good because they
-> have other constraints in getting fixes out the door. Focusing on how
-> you think an update ought to *look* (e.g. should the advisories be
-> public?) isn't as important as the update getting *out*. Especially
-> since you're dealing with GPL'ed code, I think that's something you
-> can measure. Just ask the constituency a month or so after some major
-> kernel issue who has released updates/fixes and who hasn't, show the
-> relevant source, and take it from there.
-> 
-
-I think the whole point comes down to how can you prove you've updated what
-you claim you have? It doesn't matter *what* is public, just as long as
-something is (and it needs to be reasonable, expecting others to dig
-through source would be silly). If someone is untrustworthy and using a
-private list inappropriately, do you really think they're going to tell the
-truth if they're asked about releasing timely updates? Clearly advisories
-are the easiest way to verify this, but if someone has a better idea that
-includes verifiable information, please speak up.
-
-Thanks.
+On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+>>>> cause LightDM to set the destination of the link to user ownership.
+>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+>>>>
+>>>> Overview of changes in lightdm 1.0.6
+>>>>
+>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+>>> Could a CVE be assigned for this?
+>>>
+>>> Regards,
+>> Can you send me the link to this announcement so I can confirm it? Thanks.
+>>
+> Here's the link to the mailing list mail:
+> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+>
+> Regards,
+Thanks, confirmed (first hand info is much better). Please use
+CVE-2011-4105 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
