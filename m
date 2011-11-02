@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/6
-Message-ID: <20110622142847.GA14951@suse.de>
-Date: Wed, 22 Jun 2011 16:28:47 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/6
+Message-ID: <1320249249.8441.25.camel@scapa>
+Date: Wed, 02 Nov 2011 16:54:09 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: opie off by one and setuid() failure
+Subject: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Can someone assign 2 CVE's for a off by one in opiesu
-and a missing setuid() retval check in opielogin which
-leads to easy root compromise? Reviewed opie-2.4.
-
-Patches are available here:
-
-https://bugzilla.novell.com/show_bug.cgi?id=698772
-
-thx,
-Sebastian
+On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+> Fixes a security issue where using ~/.Xauthority as a symlink would
+> cause LightDM to set the destination of the link to user ownership.
+> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+> 
+> Overview of changes in lightdm 1.0.6
+> 
+>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
 
 
+Could a CVE be assigned for this?
+
+Regards,
 -- 
+Yves-Alexis
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
