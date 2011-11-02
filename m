@@ -1,63 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/20/1
-Message-ID: <1387428885.2901743.1313814595534.JavaMail.root@zmail04.collab.prod.int.phx2.redhat.com>
-Date: Sat, 20 Aug 2011 00:29:55 -0400 (EDT)
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/5
+Message-ID: <1320230242.13156.161.camel@spiral.ashpool.org>
+Date: Wed, 02 Nov 2011 10:37:22 +0000
+From: Thomas Biege <thomas@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Michael Koziarski <michael@...iarski.com>, aaron@...derlovemaking.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: ruby on rails flaws (4)
+Subject: Re: kiwi shell meta char injection
 Content-Type: text/plain; charset=utf-8
 
-Sorry, there is one more flaw that needs a CVE assignment:
 
-Response splitting flaw in 2.3.x (3.0.0 and later not affected).
-http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6ffc93bde0298768
-https://github.com/rails/rails/commit/11dafeaa7533be26441a63618be93a03869c83a9
-https://bugzilla.redhat.com/show_bug.cgi?id=732156
+This email was sent a bit too early.
 
-Sorry I missed this one earlier, I was looking at the 3.x advisory page and missed this one.
+On Mi, 2011-11-02 at 10:03 +0000, Thomas Biege wrote:
+> Hi,
+> my colleagues found the following:
+> https://github.com/openSUSE/kiwi/commit/f0f74b3f6ac6d47f7919aa9db380c0ad41ffe55f
+> 
+> CVE-2011-3180: The path of overlay files was not escaped which allowed
+> shell meta character injection via the chown(1) command-line.
+> 
+> https://github.com/openSUSE/kiwi/commit/88bf491d16942766016c606e4210b4e072c1019f
+> CVE-2011-4195: The image name was not escaped properly and can be used
+> in conjunction with other applications to execute arbitrary shell
+> commands.
 
------ Original Message -----
-> ----- Original Message -----
-> > Could we get CVEs assigned to these flaws? Upstream had requested
-> > CVEs
-> > prior to disclosure, but didn't receive any.
-> >
-> > http://weblog.rubyonrails.org/2011/8/16/ann-rails-3-1-0-rc6
-> >
-> > 1) Filter Skipping bugs
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/3420ac71aed312d6
-> > https://github.com/rails/rails/commit/5f94b93279f6d0682fafb237c301302c107a9552
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731432
-> 
-> Use CVE-2011-2929
-> 
-> 
-> >
-> > 2) SQL Injection issues
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/6a1e473744bc389b
-> > https://github.com/rails/rails/commit/8a39f411dc3c806422785b1f4d5c7c9d58e4bf85
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731438
-> 
-> Use CVE-2011-2930
-> 
-> 
-> >
-> > 3) Parse error in strip_tags
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b9130749b74ea12
-> > https://github.com/rails/rails/commit/586a944ddd4d03e66dea1093306147594748037a
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731436
-> 
-> Use CVE-2011-2931
-> 
-> 
-> >
-> > 4) UTF-8 escaping vulnerability
-> > http://groups.google.com/group/rubyonrails-security/browse_thread/thread/56bffb5923ab1195
-> > https://github.com/rails/rails/commit/bfc432574d0b141fd7fe759edfe9b6771dd306bd
-> > https://bugzilla.redhat.com/show_bug.cgi?id=731435
-> 
-> Use CVE-2011-2932
+In the master branch the following commits are interesting:
+  14881958878d54e6ed0c5153a1915891d94d1622
+  8ada4156a781e799b84ad9b0a1f4fffb2d0250e8
+  88bf491d16942766016c606e4210b4e072c1019f
+  a9433189740fc71b0156103c0a3c01d873b04dfd
+
+> Cheers,
+> Thomas
 
 -- 
-Vincent Danen / Red Hat Security Response Team
+Thomas Biege <thomas@...e.de>, Project Manager IT-Security
+SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
+21284 (AG Nürnberg)
+--
+  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
+                            -- Marie von Ebner-Eschenbach
+
