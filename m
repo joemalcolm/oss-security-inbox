@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/53
-Message-ID: <20110404194016.GA14684@openwall.com>
-Date: Mon, 4 Apr 2011 23:40:16 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/1
+Message-ID: <CAOSRhRNqCGvtx=z57gZ5q_GkgkjEc3SsyRjV3209ioE2zQFp0g@mail.gmail.com>
+Date: Thu, 3 Nov 2011 07:14:26 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 09:31:44PM +0200, Yves-Alexis Perez wrote:
-> On lun., 2011-04-04 at 02:38 +0400, Solar Designer wrote:
-> > "Good" employers, let alone non-commercial Open Source projects, don't
-> > remove e-mail addresses when a person leaves.  Someone having an
-> > @debian.org address does not mean they're currently with Debian. 
-> 
-> In Debian case, that is wrong, mail redirection to @debian.org address
-> is disabled when retiring from the Debian project.
+> Oh, and I suppose there's a very obvious but critical #6:
+>
+> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
+> root permissions. Danger.
+>
+> This may help to "confirm":
+> https://bugs.launchpad.net/calibre/+bug/885027/
+>
+>
+> As well, the maintainer has already issued a fix. From the bug report:
+> "Fixed in branch lp:calibre. The fix will be in the next release.
+> calibre is usually released every Friday.", which means the above
+> source link, that went to the trunk, now shows the fixed result. The
+> old broken code is still available here:
+> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
+>
+> Note that the maintainer has chosen only to address #5.
+>
 
-Oh, I was wrong, then.  I made my assumption thinking that @debian.org
-addresses are typically used in changelogs and the like, so it felt
-weird to disable those.
+I'd recommend holding off on the CVE assignments for now, since these
+issues are currently in progress and the final tally of issues isn't
+complete.
 
-Alexander
+-Dan
