@@ -1,19 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/33
-Message-ID: <4D7148F5.2090205@gmail.com>
-Date: Sat, 05 Mar 2011 03:17:57 +0700
-From: Pavel Labushev <p.labushev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/1
+Message-ID: <CAOSRhRNqCGvtx=z57gZ5q_GkgkjEc3SsyRjV3209ioE2zQFp0g@mail.gmail.com>
+Date: Thu, 3 Nov 2011 07:14:26 -0400
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Cc: Josh Bressers <bressers@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-04.03.2011 21:52, Solar Designer пишет:
+> Oh, and I suppose there's a very obvious but critical #6:
+>
+> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
+> root permissions. Danger.
+>
+> This may help to "confirm":
+> https://bugs.launchpad.net/calibre/+bug/885027/
+>
+>
+> As well, the maintainer has already issued a fix. From the bug report:
+> "Fixed in branch lp:calibre. The fix will be in the next release.
+> calibre is usually released every Friday.", which means the above
+> source link, that went to the trunk, now shows the fixed result. The
+> old broken code is still available here:
+> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
+>
+> Note that the maintainer has chosen only to address #5.
+>
 
-> I've just skimmed over the list, and I only see one issue that I'd call
-> a vulnerability in logrotate, issue #8.  And we need more info on #5.
-> 
-> The rest, as described, appear to rely on sysadmin error and to assume
+I'd recommend holding off on the CVE assignments for now, since these
+issues are currently in progress and the final tally of issues isn't
+complete.
 
-Or on package maintainer error. At least in Gentoo there are packages
-(ebuilds and eclasses) that create user/group-writable directories in
-/var/log and enable logrotate to handle the log files there.
+-Dan
