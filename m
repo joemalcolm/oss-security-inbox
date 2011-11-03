@@ -1,53 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/21
-Message-ID: <20110404135224.GD12101@openwall.com>
-Date: Mon, 4 Apr 2011 17:52:24 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/5
+Message-ID: <4EB2BA04.7020908@redhat.com>
+Date: Thu, 03 Nov 2011 09:57:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, phpMyAdmin Security Team <security@...myadmin.net>
+Subject: Re: CVE Request -- phpMyAdmin -- Arbitrary local file read flaw by loading XML strings / importing XML files
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 03, 2011 at 08:52:13PM -0400, Michael Gilbert wrote:
-> Solar Designer wrote:
-> 
-> > Yes, we may do this.  Technically, an archive may be implemented as yet
-> > another subscriber with its public key, where the private key
-> > counterpart is not stored on any server and has a passphrase on it.
-> > Thus, a possible compromise of the list server won't reveal past
-> > messages (archived before the compromise, but not yet made public).
-> > 
-> > Pushing the archive public will then be a manual process, but that's OK
-> > if it's only done once a month (omitting the last month's worth of
-> > messages).  In fact, a posting to oss-security will need to be made
-> > whenever the public archive is updated.
-> 
-> Wouldn't the easiest solution be to have a cron job check that the age
-> of the message is greater than X days, decrypt it, and mail it to a
-> different archive/public list?
+On 11/03/2011 09:01 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors, phpMyAdmin Security Team,
+>
+>   a local file inclusion flaw was found in the way XML import plug-in of
+> phpMyAdmin, a tool written in PHP intended to handle the administration
+> of MySQL over the World Wide Web, performed import of malformed XML
+> files. A remote attacker could provide a specially-crafted XML file,
+> which once imported into the phpMyAdmin service instance would lead to
+> arbitrary local file (accessible with the privileges of the phpMyAdmin
+> user) read / retrieval.
+>
+> References:
+> [1] http://seclists.org/fulldisclosure/2011/Nov/21
+> [2] http://www.wooyun.org/bugs/wooyun-2010-03185
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=751112
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: Cc-ed phpMyAdmin security team to clarify upstream patch status.
+>
+Please use CVE-2011-4107 for this issue.
 
-This would require that the private key (to decrypt the archive) be
-stored on a server.  Then if the server is compromised, the intruder
-will gain access not only to new list traffic, but also to archived but
-not yet published postings.  Since the compromise _might_ be detected as
-soon as on the same day (it depends), this might make a lot of a
-difference (like, one day vs. one month worth of list traffic leaked).
+-- 
 
-> I think automatic publishing is the only way this is going to work.
-> No one is going to want to manually do the work.
+-Kurt Seifried / Red Hat Security Response Team
 
-I wouldn't mind running a script manually and entering a passphrase once
-a month.  Of course, the script would need to be prepared first, which I
-am not going to work on yet.  At this time, we're just discussing.
-
-> Plus an automatically
-> enforced maximum time frame will force issues to get fixed.
-
-Hopefully, yes.
-
-> Automation
-> also means that nothing is being veiled.  Computers don't discriminate,
-> humans do.
-
-Computers are managed by humans anyway.
-
-Alexander
