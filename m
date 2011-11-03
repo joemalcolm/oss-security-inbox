@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/3
-Message-ID: <20110727013720.GA28937@openwall.com>
-Date: Wed, 27 Jul 2011 05:37:20 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/4
+Message-ID: <4EB2B99D.3000800@redhat.com>
+Date: Thu, 03 Nov 2011 09:56:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple libraries getenv() misuse
+Subject: Re: CVE request: wordpress plugin timthumb before 2.0 remote code execution
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 31, 2011 at 10:21:33AM +0200, Sebastian Krahmer wrote:
-> While investigating the libs vs. fscaps issue [1] which showed
-> that most libs need patching in order to work properly with fscaps
-> binaries, it was also found that a lot of libs do not even honour
-> suid binaries correctly. These libs use getenv() to obtain information
-> about configuration/files or plugin directories. These info can be
-> "chosen with care" by attackers to trick the suid programs to execute
-> code as root or do harm otherwise.
-> Among these libs are libudev, libdbus, libhal, libgssglue or libcrypto
-> (openssl). libudev, libdbus, libhal are linked against suid Xorg.
-> libgssglue is linked against mount.nfs.
-> Most of these libs were probably never intented to be linked against
-> suids, but nevertheless they are.
-> 
-> Since the issues are all of the same family I would suggest to assign
-> one CVE (or two, if you want to separate missing fscaps checks from
-> euid != uid issue).
+On 11/03/2011 05:23 AM, Hanno Böck wrote:
+> http://markmaunder.com/2011/08/01/zero-day-vulnerability-in-many-wordpress-themes/
+>
+> Seems this never got a CVE. German newspage heise reports lots of
+> hacked wordpress blogs, most likely due to this issue:
+> http://www.heise.de/security/meldung/Tausende-WordPress-Blogs-zur-Verbreitung-von-Schadcode-genutzt-1370660.html
+>
+Yes I remember this one (I actually had a friend's WordPress get nailed
+via this).
 
-I think it'd be a good idea to keep track of these issues per-library on
-the wiki:
+Fix: http://code.google.com/p/timthumb/
 
-http://oss-security.openwall.org/wiki/code-reviews
+Please use CVE-2011-4106 for this issue.
 
-> [1] http://www.suse.de/~krahmer/libs-vs-fscaps/
+-- 
 
-I got your OpenSSL changes into Owl-current yesterday (except for the
-changes to OPENSSL_issetugid() itself, which on Owl was already using
-__libc_enable_secure).  The rest of the libraries that you mention are
-not in Owl.
+-Kurt Seifried / Red Hat Security Response Team
 
-Thanks,
-
-Alexander
