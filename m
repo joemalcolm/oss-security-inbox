@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/02/4
-Message-ID: <Pine.GSO.4.64.1103021752050.24409@faron.mitre.org>
-Date: Wed, 2 Mar 2011 17:55:17 -0500 (EST)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/4
+Message-ID: <4EB2B99D.3000800@redhat.com>
+Date: Thu, 03 Nov 2011 09:56:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: simple machines forum before 1.1.13
+Subject: Re: CVE request: wordpress plugin timthumb before 2.0 remote code execution
 Content-Type: text/plain; charset=utf-8
 
-
-On Wed, 23 Feb 2011, Josh Bressers wrote:
-
-> ----- Original Message -----
->> http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
->>
->> No useful info on the kind of vulnerability, just states "Several
->> security-related fixes"
->>
+On 11/03/2011 05:23 AM, Hanno Böck wrote:
+> http://markmaunder.com/2011/08/01/zero-day-vulnerability-in-many-wordpress-themes/
 >
-> Steve,
+> Seems this never got a CVE. German newspage heise reports lots of
+> hacked wordpress blogs, most likely due to this issue:
+> http://www.heise.de/security/meldung/Tausende-WordPress-Blogs-zur-Verbreitung-von-Schadcode-genutzt-1370660.html
 >
-> Can MITRE take this one.
+Yes I remember this one (I actually had a friend's WordPress get nailed
+via this).
 
-I almost gave this a single CVE for "multiple unspecified" but there's a 
-readable patch file that gives more hints:
-http://custom.simplemachines.org/mods/downloads/smf_patch_2.0-RC4_security.zip
+Fix: http://code.google.com/p/timthumb/
 
+Please use CVE-2011-4106 for this issue.
 
-Reversing the patches suggests the following (assuming that ONLY security 
-patches are included in the ZIP, as stated in the initial post).
+-- 
 
+-Kurt Seifried / Red Hat Security Response Team
 
-CVE-2011-1127 - guest access to SSI.php
-
-CVE-2011-1128 - "brute force" on Load.php
-
-CVE-2011-1129 - ManageNews.php, probably XSS
-
-CVE-2011-1130 - improper input validation for a number in
-   $_REQUEST['start'] in QueryString.php, and also $start variable in
-   Subs.php
-
-CVE-2011-1131 - unspecified query issues in Search.php, related to 
-$createTemporary variable.
-
-
-- Steve
