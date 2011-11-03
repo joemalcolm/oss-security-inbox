@@ -1,76 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/3
-Message-ID: <1350430544.125849.1294080440354.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 13:47:20 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/6
+Message-ID: <4EB321F1.7050706@redhat.com>
+Date: Thu, 03 Nov 2011 17:21:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Robert Relyea <rrelyea@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- 1, ccid -- int.overflow leading to array index error 2, pcsc-lite stack-based buffer overflow in ATR decoder [was: CVE request: opensc buffer overflow ]
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> Rafael Dominguez Vega of MWR InfoSecurity reported two more flaws
-> related with smart cards:
-> 
-> I), CCID: Integer overflow, leading to array index error when
-> processing crafted serial number of certain cards
-> 
-> Description:
-> An integer overflow, leading to array index error was found
-> in the way USB CCID (Chip/Smart Card Interface Devices) driver
-> processed certain values of card serial number. A local attacker
-> could use this flaw to execute arbitrary code, with the privileges
-> of the user running the pcscd daemon, via a malicious smart card
-> with specially-crafted value of its serial number, inserted to
-> the system USB port.
-> 
-> References:
-> [1]
-> http://labs.mwrinfosecurity.com/files/Advisories/mwri_pcsc-libccid-buffer-overflow_2010-12-13.pdf
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607780
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=664986
-> 
-> Upstream changesets:
-> [4]
-> http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004934.html
-> [5]
-> http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004935.html
-
-Please use CVE-2010-4530 for the above issue.
-
-
-> 
-> II), pcsc-lite: Stack-based buffer overflow in Answer-to-Reset (ATR)
-> decoder
-> 
-> Description:
-> A stack-based buffer overflow flaw was found in the way
-> PC/SC Lite smart card framework decoded certain attribute
-> values of the Answer-to-Reset (ATR) message, received back
-> from the card after connecting. A local attacker could
-> use this flaw to execute arbitrary code with the privileges
-> of the user running the pcscd daemon, via a malicious smart
-> card inserted to the system USB port.
-> 
-> References:
-> [1]
-> http://labs.mwrinfosecurity.com/files/Advisories/mwri_pcsc-atr-handler-buffer-overflow_2010-12-13.pdf
-> [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607781
-> [3] http://www.vupen.com/english/advisories/2010/3264
-> [4] https://bugzilla.redhat.com/show_bug.cgi?id=664999
-> 
-> Upstream changeset:
-> [5]
-> http://lists.alioth.debian.org/pipermail/pcsclite-cvs-commit/2010-November/004923.html
-> 
-
-Please use CVE-2010-4531 for the above issue.
-
-Thanks.
+On 11/03/2011 05:14 AM, Dan Rosenberg wrote:
+>> Oh, and I suppose there's a very obvious but critical #6:
+>>
+>> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
+>> root permissions. Danger.
+>>
+>> This may help to "confirm":
+>> https://bugs.launchpad.net/calibre/+bug/885027/
+>>
+>>
+>> As well, the maintainer has already issued a fix. From the bug report:
+>> "Fixed in branch lp:calibre. The fix will be in the next release.
+>> calibre is usually released every Friday.", which means the above
+>> source link, that went to the trunk, now shows the fixed result. The
+>> old broken code is still available here:
+>> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
+>>
+>> Note that the maintainer has chosen only to address #5.
+>>
+> I'd recommend holding off on the CVE assignments for now, since these
+> issues are currently in progress and the final tally of issues isn't
+> complete.
+>
+> -Dan
+I took a quick look at that, I'm not clear on which ones have
+beenaddressed , if you could comment on the original issues, which are
+addressed and link to code commit I can start assigning CVEs.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
