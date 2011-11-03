@@ -1,50 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/20/19
-Message-ID: <1020327824.1475004.1311193706140.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 20 Jul 2011 16:28:26 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/2
+Message-ID: <20111103122334.69edea24@laverne>
+Date: Thu, 3 Nov 2011 12:23:34 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: Fwd: Joomla! Security News
+Subject: CVE request: wordpress plugin timthumb before 2.0 remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2708
+http://markmaunder.com/2011/08/01/zero-day-vulnerability-in-many-wordpress-themes/
 
-Thanks.
+Seems this never got a CVE. German newspage heise reports lots of
+hacked wordpress blogs, most likely due to this issue:
+http://www.heise.de/security/meldung/Tausende-WordPress-Blogs-zur-Verbreitung-von-Schadcode-genutzt-1370660.html
 
 -- 
-    JB
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
------ Original Message -----
-> Joomla! Developer Network - Security News
-> 
-> ///////////////////////////////////////////
-> [20110701] - XSS Vulnerability
-> 
-> Posted: 19 Jul 2011 09:15 PM PDT
-> http://feedproxy.google.com/~r/JoomlaSecurityNews/~3/4KDvSjZRIvs/357-20110701-xss-vulnerability.html?utm_source=feedburner&utm_medium=email
-> 
-> 
-> Project: Joomla!
-> SubProject: All
-> Severity: Medium
-> Versions: 1.6.5 and all earlier 1.6.x versions
-> Exploit type: XSS
-> Reported Date: 2011-July-11
-> Fixed Date: 2011-July-19
-> 
-> Description
-> 
-> Inadequate escaping leads to XSS vulnerability.
-> 
-> Affected Installs
-> 
-> Joomla! version 1.6.5 and all earlier 1.6.x versions
-> Solution
-> 
-> Upgrade to the latest Joomla! version (1.7.0 or later)
-> 
-> Reported by Aung Khant
-> Contact
-> 
-> The JSST at the Joomla! Security Center.
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
