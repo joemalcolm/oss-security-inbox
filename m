@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/12
-Message-ID: <20110405121852.GA17504@openwall.com>
-Date: Tue, 5 Apr 2011 16:18:52 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/6
+Message-ID: <4EB321F1.7050706@redhat.com>
+Date: Thu, 03 Nov 2011 17:21:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vouching system (was Re: Closed list)
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-Eugene,
+On 11/03/2011 05:14 AM, Dan Rosenberg wrote:
+>> Oh, and I suppose there's a very obvious but critical #6:
+>>
+>> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
+>> root permissions. Danger.
+>>
+>> This may help to "confirm":
+>> https://bugs.launchpad.net/calibre/+bug/885027/
+>>
+>>
+>> As well, the maintainer has already issued a fix. From the bug report:
+>> "Fixed in branch lp:calibre. The fix will be in the next release.
+>> calibre is usually released every Friday.", which means the above
+>> source link, that went to the trunk, now shows the fixed result. The
+>> old broken code is still available here:
+>> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
+>>
+>> Note that the maintainer has chosen only to address #5.
+>>
+> I'd recommend holding off on the CVE assignments for now, since these
+> issues are currently in progress and the final tally of issues isn't
+> complete.
+>
+> -Dan
+I took a quick look at that, I'm not clear on which ones have
+beenaddressed , if you could comment on the original issues, which are
+addressed and link to code commit I can start assigning CVEs.
 
-On Tue, Apr 05, 2011 at 05:23:40PM +0800, Eugene Teo wrote:
-> Maybe once we have a list of initial members, we should start using a
-> vouching system, that the applicant must be referred by someone from the
-> list, and we only accept members whom we met and trust. Just a suggestion.
+-- 
 
-I'm afraid that we'll have to introduce something like this if/when we
-create a list not limited to Linux distros (and maybe sooner), but then
-we'll have the problem of it being an el8 list.  I think it will be an
-improvement over CC lists anyway, but many others appear to disagree.
+-Kurt Seifried / Red Hat Security Response Team
 
-Alexander
