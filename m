@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/24/3
-Message-ID: <20110324102431.50e9aba2@laverne>
-Date: Thu, 24 Mar 2011 10:24:31 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/5
+Message-ID: <4EB2BA04.7020908@redhat.com>
+Date: Thu, 03 Nov 2011 09:57:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: roundcube < 0.5.1 CSRF
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, phpMyAdmin Security Team <security@...myadmin.net>
+Subject: Re: CVE Request -- phpMyAdmin -- Arbitrary local file read flaw by loading XML strings / importing XML files
 Content-Type: text/plain; charset=utf-8
 
-http://trac.roundcube.net/wiki/Changelog
-
-two cross site request forgery, one additional issue fixed in 0.5.1:
-
-"Security: add optional referer check to prevent CSRF in GET requests
-Security: protect login form submission from CSRF
-Security: prevent from relaying malicious requests through modcss.inc"
+On 11/03/2011 09:01 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors, phpMyAdmin Security Team,
+>
+>   a local file inclusion flaw was found in the way XML import plug-in of
+> phpMyAdmin, a tool written in PHP intended to handle the administration
+> of MySQL over the World Wide Web, performed import of malformed XML
+> files. A remote attacker could provide a specially-crafted XML file,
+> which once imported into the phpMyAdmin service instance would lead to
+> arbitrary local file (accessible with the privileges of the phpMyAdmin
+> user) read / retrieval.
+>
+> References:
+> [1] http://seclists.org/fulldisclosure/2011/Nov/21
+> [2] http://www.wooyun.org/bugs/wooyun-2010-03185
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=751112
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: Cc-ed phpMyAdmin security team to clarify upstream patch status.
+>
+Please use CVE-2011-4107 for this issue.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
 
-JETZT zu Ökostrom wechseln: http://atomausstieg-selber-machen.de
+-Kurt Seifried / Red Hat Security Response Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
