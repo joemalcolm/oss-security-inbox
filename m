@@ -1,20 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/1
-Message-ID: <20110424103344.GA32078@openwall.com>
-Date: Sun, 24 Apr 2011 14:33:44 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/03/3
+Message-ID: <4EB2ACC6.5030306@redhat.com>
+Date: Thu, 03 Nov 2011 16:01:26 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, phpMyAdmin Security Team <security@...myadmin.net>
+Subject: CVE Request -- phpMyAdmin -- Arbitrary local file read flaw by loading XML strings / importing XML files
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 14, 2011 at 03:31:06PM +0300, Meltem Parmaks??z wrote:
-> Sorry, I'm late. I was  a vendor-sec member representing Pardus, please add me 
-> to the new list.  
-> 
-> pub   4096R/29661BF8 2011-04-14 [son kullanma tarihi: 2016-04-12]
->          Key fingerprint = 0136 2B51 FD70 0545 30D2  5C3F FDA1 B5DB 2966 1BF8 
-> uid                  Meltem Parmaks??z <meltem@...dus.org.tr>
+Hello Kurt, Steve, vendors, phpMyAdmin Security Team,
 
-Added.
+   a local file inclusion flaw was found in the way XML import plug-in of
+phpMyAdmin, a tool written in PHP intended to handle the administration
+of MySQL over the World Wide Web, performed import of malformed XML
+files. A remote attacker could provide a specially-crafted XML file,
+which once imported into the phpMyAdmin service instance would lead to
+arbitrary local file (accessible with the privileges of the phpMyAdmin 
+user) read / retrieval.
 
-Alexander
+References:
+[1] http://seclists.org/fulldisclosure/2011/Nov/21
+[2] http://www.wooyun.org/bugs/wooyun-2010-03185
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=751112
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: Cc-ed phpMyAdmin security team to clarify upstream patch status.
+
