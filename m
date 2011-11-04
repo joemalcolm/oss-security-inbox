@@ -1,109 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/17
-Message-ID: <1280434049.193561.1294340814006.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 6 Jan 2011 14:06:54 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/2
+Message-ID: <4EB3FAD5.6000806@nixnuts.net>
+Date: Fri, 04 Nov 2011 09:46:45 -0500
+From: John Lightsey <john@...nuts.net>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, lists@...g.net
-Subject: Re: CVE Request for Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
+Subject: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0005.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
-
--- 
-    JB
+These were reported to the upstream authors a while back. None of these
+bugs are fixed in the currently available versions:
 
 
------ Original Message -----
-> http://seclists.org/fulldisclosure/2011/Jan/43
-> 
-> http://yehg.net/lab/pr0js/advisories/joomla/core/%5Bjoomla_1.0.x~15%5D_cross_site_scripting
-> 
-> 
-> 
-> ==============================================================================
-> Joomla! 1.0.x ~ 1.0.15 | Cross Site Scripting (XSS) Vulnerability
-> ==============================================================================
-> 
-> 
-> 1. OVERVIEW
-> 
-> The Joomla! 1.0.x series are currently vulnerable to Cross Site
-> Scripting.
-> 
-> 
-> 2. BACKGROUND
-> 
-> Joomla! is a free and open source content management system (CMS) for
-> publishing content on the World Wide Web and intranets.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> The "ordering" parameter in a core module,com_search, is not properly
-> sanitized and thus vulnerable to XSS.
-> By leveraging this vulnerability, attackers can compromise currently
-> logged-in user/administrator session and impersonate arbitrary user
-> actions available under /administrator/ functions. As the
-> vulnerability is based on the core module, it affects both classic and
-> customized Joomla! 1.0.x based web sites.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> Joomla! 1.0.x ~ 1.0.15 series
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> http://attacker.in/joomla1015/index.php?option=com_search&searchword=xss&searchphrase=any&ordering=newest%22%20onmousemove=alert%28document.cookie%29%20style=position:fixed;top:0;left:0;width:100%;height:100%;%22
-> 
-> 
-> 6. SOLUTION
-> 
-> Joomla 1.0.x series has been at end of life since 2009-07-22.
-> 
-> Upgrade to Joomla! 1.5.x family (1.5.22 as of 2011-01-06)
-> 
-> 
-> 7. VENDOR
-> 
-> Joomla! Developer Team
-> http://www.joomla.org
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-01-03: notified Joomla! Security Strike Team regardless of EOL
-> status
-> 2011-01-06: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.0.x~15]_cross_site_scripting
-> Joomla! 1.0.x End of Life -
-> http://community.joomla.org/blogs/community/509-an-old-friend-comes-of-age.html
-> OWASP Top 10:
-> http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-> CWE-79: http://cwe.mitre.org/data/definitions/79.html
-> 
-> 
-> #yehg [2011-01-06]
-> 
-> ---------------------------------
-> Best regards,
-> YGN Ethical Hacker Group
-> Yangon, Myanmar
-> http://yehg.net
-> Our Lab | http://yehg.net/lab
-> Our Directory | http://yehg.net/hwd
+PAR::Packer - PAR packed files are extracted to unsafe and predictable
+temporary directories
+
+https://rt.cpan.org/Public/Bug/Display.html?id=69560
+
+
+Parallel::ForkManager - Insecure /tmp file handling
+
+https://rt.cpan.org/Public/Bug/Display.html?id=68298
+
+
+File::Temp - _is_safe() allows unsafe traversal of symlinks
+
+https://rt.cpan.org/Public/Bug/Display.html?id=69106
+
+
+Batch::BatchRun - Unsafe /tmp file usage
+
+https://rt.cpan.org/Public/Bug/Display.html?id=69594
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJOs/rHAAoJEORPgBbTYw+JY8kP/RTQuY2il0nMIRnG2D1OrBpu
+vHA9uyeOx5QuEliatgWaaAFrlXCi7gSkMdq91JxCK2QM8feJ2EGqOBhbrX9CShsb
+jpVO5xvo9mUVe70yBpplu3y0S5qPaNw3BjN6baiVlN04sl/rrhFeGigfkJo7erPH
+RSBaTTUyNTHjwEjyl8WFgpl8kJDyeQoHDGEZhb106l6uAsNCscF+6thxUoEZUMo8
+8ljxylnobzvzL2TNhhTuTX5NtFH5TjvKGm/NeuSH2avCrY+S4dM9MZtAI+ofp1Z6
+3DuTSUpjA4hJDK43KqWGEpxvEpVjwd5jo887uYvfzLev9YTz3fc78H+rb0ishkH3
+mdsmq42n8WGdoFMduZpDWzxdYi5mBCDipgd95PuQAT6+ya7/hSZRZ4KvgInP6Bcv
+bLCyqtMFm+z3KaufFKK6M3wafR+DCvsBM/8MT+EyQJgrClPBLFJ2J3d0N4u6qZCc
+vNYMrj4L6Vxfm7VoEe6gSwKKaRxvPdboXlxS6ubK6E9LLNcWewObm6foFIddXotD
+RtCSnROZrWubG73RFTKrjqrHIaK4ktO/x6bCdQyA3ziBIQOM9xUvTHkJeDtuIe+W
+RcwZVAtM4U8wmVVlkqBgEde2ipBKITEUPXLbLyQ7MrAeiuRBLT6wsfTqPh+EJ5ga
+r7V7cmFNq/btoySXFcI8
+=WTKm
+-----END PGP SIGNATURE-----
