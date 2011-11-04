@@ -1,46 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/8
-Message-ID: <493485158.650175.1307991363905.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 14:56:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/12
+Message-ID: <CAHmME9pmGn0Mqwep7ziynNPbp5-OuooWjp-AFBqAmn_yx3Kjgg@mail.gmail.com>
+Date: Fri, 4 Nov 2011 16:47:04 -0400
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-Cc: webadmin-devel@...ts.sourceforge.net, javierbassi@...il.com, Henri Salo <henri@...v.fi>
-Subject: Re: Re: CVE-request: XSS in Webmin 1.540
+Cc: Josh Bressers <bressers@...hat.com>, kseifried@...hat.com
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On 13/Jun/2011 06:40 Henri Salo <henri@...v.fi> wrote ..
-> > Hi,
-> >
-> > I would like to receive CVE-identifier for this issue in Webmin.
-> > References:
-> >
-> > http://seclists.org/fulldisclosure/2011/Apr/393
-> >
-> > Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this
-> > from OSVDB.
-> > Fixed in commit:
-> > https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881
-> > which is included to Webmin 1.550 release.
-> >
-> > Should be 2011 identifier.
-> 
-> There is no CVE for this - the original submitter Javier had trouble
-> obtaining one.
-> 
-> Actually, I have no idea where CVEs come from either!
-> 
+7.1. Ability to unmount any device.
 
-A CVE id was assigned here:
-http://seclists.org/oss-sec/2011/q2/478
-
-As for getting an ID in the future, your best bet is to mail me directly
-with your request. MITRE is generally swamped with requests, where I don't
-service near the volume they do.
-
-If you have any questions, I'd be happy to answer them.
-
-Thanks.
-
--- 
-    JB
