@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/7
-Message-ID: <20110621161850.GA6761@openwall.com>
-Date: Tue, 21 Jun 2011 20:18:50 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/1
+Message-ID: <4EB3C32C.6080201@redhat.com>
+Date: Fri, 04 Nov 2011 11:49:16 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Drupal (v6.x based) Views module - SQL injection due improper escaping of database parameters for certain filters / arguments (SA-CONTRIB-2011-052)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
-> PostgreSQL is affected as well (the pgcrypto module):
-> 
-> % head crypt-blowfish.c 
-> /*
->  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11 
->  14:48:52 momjian Exp $
+Hello Kurt, Steve, vendors,
 
-We need to actually review and/or test this revision of the code before
-we conclusively say that it's affected.  Maybe you did that already?
+   a SQL injection flaw was found in the way the views module for the
+Drupal (v6.x based), open-source content-management platform, performed
+sanitization of the database parameters for certain filters / arguments
+on certain types of views with specific configuration of arguments. A
+remote attacker could provide a specially-crafted SQL query, which once
+processed by the Drupal system instance could lead to arbitrary SQL
+commands execution.
 
-So far, there's one example where a revision of the code turned out to
-be unaffected - Crypt::Eksblowfish in CPAN.  In fact, this is what has
-resulted in discovery of the bug (even though it was fixed in
-Crypt::Eksblowfish during its initial integration of the code in 2007).
+References:
+[1] http://drupal.org/node/1329898
+[2] http://drupal.org/node/1329846
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=751325
 
-> php-suhosin also contains the same code.
+Could you allocate a CVE id for this?
 
-Yes.  These two are listed at http://www.openwall.com/crypt/
-
-We need to go over those listed on that page and then also search the
-web for possible other users of the code.  Then try to figure out which
-are actually affected (probably most of them are) and notify the
-maintainers.  For now, my focus is to push crypt_blowfish 1.1 out, but I
-do need to include a few sentences on roughly what software is affected
-in my announcement.  I'd appreciate any help with those reviews/testing.
-
-Thank you!
-
-Alexander
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
