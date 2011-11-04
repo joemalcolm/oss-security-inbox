@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/15
-Message-ID: <4D7FD193.5050904@cert.org>
-Date: Tue, 15 Mar 2011 16:52:35 -0400
-From: Art Manion <amanion@...t.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Andrea Barisani <lcars@...rt.org>
-Subject: Re: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/4
+Message-ID: <4EB41048.4050009@redhat.com>
+Date: Fri, 04 Nov 2011 10:18:16 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: John Lightsey <john@...nuts.net>
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-On 2011-03-08 14:56, Andrea Barisani wrote:
-> On Tue, Mar 08, 2011 at 10:59:57AM -0500, Josh Bressers wrote:
->> 3) Are we going to annoy other CERTs? Will they even care?
-> 
-> I don't think this is an issue. We positively worked with other CERTs when that
-> was applicable anyway.
+On 11/04/2011 08:46 AM, John Lightsey wrote:
+> These were reported to the upstream authors a while back. None of these
+> bugs are fixed in the currently available versions:
+>
+>
+> PAR::Packer - PAR packed files are extracted to unsafe and predictable
+> temporary directories
+>
+> https://rt.cpan.org/Public/Bug/Display.html?id=69560
+Please use CVE-2011-4114 for this issue
 
-Speaking for CERT/CC, we have no problem with oCERT or anyone else
-running a private coordination list/function.  In fact, we have no
-illusion of control over such activity.
+> Parallel::ForkManager - Insecure /tmp file handling
+>
+> https://rt.cpan.org/Public/Bug/Display.html?id=68298
+>
+Please use CVE-2011-4115 for this issue
 
-I think some sort of private coordination/embargo period capability is
-useful, it seems like the vendor-sec model worked reasonably well for
-the constituency -- low overhead, some leaking, but on the balance
-fairly effective during its lifespan.  My observation is that CERT/CC's
-process is probably too much overhead for typical open source
-vulnerabilities, although we'll still be involved in some cases that
-cross multiple open/closed/commercial/non-commercial vendors.
+> File::Temp - _is_safe() allows unsafe traversal of symlinks
+>
+> https://rt.cpan.org/Public/Bug/Display.html?id=69106
+>
+Please use CVE-2011-4116 for this issue
 
-CERT/CC could also possibly host a "vendor-sec replacement" mailing
-list, however we'd have to consider (as already noted in this thread)
-how to vet members, encryption (or not), overhead, etc.  I'd think this
-capability would be better provided by oCERT or Openwall or someone
-closer to the community.
+> Batch::BatchRun - Unsafe /tmp file usage
+>
+> https://rt.cpan.org/Public/Bug/Display.html?id=69594
+>
+Please use CVE-2011-4117 for this issue
 
+-- 
 
- - Art
+-Kurt Seifried / Red Hat Security Response Team
+
