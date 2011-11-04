@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/11/3
-Message-ID: <20110111225246.GU9238@redhat.com>
-Date: Tue, 11 Jan 2011 15:52:46 -0700
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/6
+Message-ID: <20111104170406.GA10071@openwall.com>
+Date: Fri, 4 Nov 2011 21:04:06 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: sudo does not ask for password on GID changes
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-A Debian bug report noted that sudo does not access for a password on
-GID changes, like it does for UID changes.  This could allow a user to
-execute commands using '-g [group]' without being prompted for their
-password.
+Hi Steve,
 
-It uses a (newer?) syntax; on 1.6.7p5 at least the '(ALL:ALL)'
-specification gives a syntax error; I'm not sure when this behaviour was
-introduced.
+On Thu, Oct 27, 2011 at 11:38:47PM -0400, Steven M. Christey wrote:
+> So, I'll repeat my subtle request in January for someone to try and define 
+> what the acceptable security boundaries are at this stage, and then it 
+> should make it easier to interpret what needs a CVE (or not).  It sounds 
+> like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
+> blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
+> great start; based on my (limited) understanding, this suggests that 
+> CAP_SYS_ADMIN can legitimately transition to full root.
 
-References:
+What's "full root"?  Full root in the current container or full root on
+the host system?
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=609641
-http://www.sudo.ws/repos/sudo/rev/fe8a94f96542
-http://www.sudo.ws/repos/sudo/rev/07d1b0ce530e
-https://bugzilla.redhat.com/show_bug.cgi?id=668879
+Without container-based virtualization, CAP_SYS_ADMIN is pretty much
+equivalent to full root (and I wouldn't ask what that is).
 
-Could a CVE name be assigned to this please?
+With containers, CAP_SYS_ADMIN inside a container is not supposed to be
+equivalent to full root on the host.  Such privilege escalation
+possibilities are CVE-worthy.  However, LXC with procfs mounted is
+currently an exception.  We can instead have a CVE id for this exception
+(not for dmesg_restrict specifically), if desired/appropriate.
 
-Thanks.
+With OpenVZ, it is OK to have procfs mounted in a container and not
+have a CAP_SYS_ADMIN in container (or other container root access
+equivalent) to host root privilege escalation vulnerability (or rather,
+such vulnerabilities when found would deserve CVEs of their own).
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+Since such container-based virtualization for Linux exists where
+CAP_SYS_ADMIN is not meant to be equivalent to host root, we should not
+disregard CAP_SYS_ADMIN to root privilege escalation bugs in Linux in
+general.  Many of these are CVE-worthy.  However, there are occasional
+exceptions, such as this case with LXC and procfs where individual
+bypasses are not CVE-worthy (but this entire exception might be
+CVE-worthy on its own).
+
+I hope this helps.
+
+Alexander
