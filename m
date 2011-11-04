@@ -1,90 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/14/5
-Message-Id: <201106141624.52899.jnareb@gmail.com>
-Date: Tue, 14 Jun 2011 16:24:52 +0200
-From: Jakub Narebski <jnareb@...il.com>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, dave b <db.pub.mail@...il.com>, Jamie Strandboge <jamie@...onical.com>, Junio C Hamano <gitster@...ox.com>
-Subject: [CVE-2011-2186] [PATCH] gitweb: Enable $prevent_xss by default
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/9
+Message-ID: <4EB43DE2.6030001@nixnuts.net>
+Date: Fri, 04 Nov 2011 14:32:50 -0500
+From: John Lightsey <john@...nuts.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 14 June 2011, Jakub Narebski wrote:
-> On Tue, 14 June 2011, Ludwig Nussel wrote:
-> > Jakub Narebski wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/04/2011 01:14 PM, John Lightsey wrote:
+> On 11/04/2011 11:36 AM, Solar Designer wrote:
+>> On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
+>>> File::Temp - _is_safe() allows unsafe traversal of symlinks
+>>>
+>>> https://rt.cpan.org/Public/Bug/Display.html?id=69106
+>>
 > 
-> > > [...] it is enough to enable XSS prevention by adding
-> > > 
-> > >   our $prevent_xss = 1;
-> > > 
-> > > in gitweb configuration file.
-> > 
-> > What about making that the default?
+>> As to the proposed fix (symlink-safety.patch), it partially helps in
+>> certain special misuse cases.  Namely, when the pathname is not
+>> untrusted/malicious, but is poorly chosen, yet it contains just one
+>> unsafe component.  However, even in that case this fix doesn't protect
+>> from hard-linking of an existing suitable symlink (of a trusted user)
+>> into /tmp (possibly under a different name, although the symlink target
+>> name remains that of the original symlink).  And the limitation of
+>> working for just one unsafe path component is no good; perhaps HIGH's
+>> checks of parent directories would be better enabled unconditionally,
+>> and even then this stuff is highly questionable.
 > 
-> I'll come up with a patch...
+> I'm not sure I follow how that would work as an attack vector. If I
+> hardlink a symlink of another user into /tmp, I can't easily remove the
+> symlink afterwards to point it somewhere else. If _is_safe() checks the
+> ownership of the symlink and the ownership of the symlink target it
+> would be very difficult to misuse a symlink in this fashion.
 
-And here it is (though I am not sure if it is the correct form
-of including attributions / acknowledgements):
+I see the problem now.
 
-Based on 'maint', applies to 'master'.
--- >8 --
-From: Jakub Narebski <jnareb@...il.com>
-Subject: [PATCH] gitweb: Enable $prevent_xss by default
+Symlink A points to foo/bar
+Symlink B points to /some/real/directory
 
-This fixes issue CVE-2011-2186 originally reported in
-https://launchpad.net/bugs/777804
+Code asks for /tmp/parent/childXXXX
 
-Reported-by: dave b <db.pub.mail@...il.com>
-Signed-off-by: Jakub Narebski <jnareb@...il.com>
----
- git-instaweb.sh    |    4 ++++
- gitweb/README      |    5 +++--
- gitweb/gitweb.perl |    2 +-
- 3 files changed, 8 insertions(+), 3 deletions(-)
+Attacker hardlinks symlink A to /tmp/parent
+Attacker creates /tmp/foo directory
+Attacker hardlinks symlink B to /tmp/foo/bar
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 8bfa8a0..e541164 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -583,6 +583,10 @@ our \$projectroot = "$(dirname "$fqgitdir")";
- our \$git_temp = "$fqgitdir/gitweb/tmp";
- our \$projects_list = \$projectroot;
- 
-+# we can trust our own repository, so disable XSS prevention
-+# to enable some extra features
-+our \$prevent_xss = 0;
-+
- \$feature{'remote_heads'}{'default'} = [1];
- EOF
- }
-diff --git a/gitweb/README b/gitweb/README
-index a92bde7..9ae5d84 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -236,8 +236,9 @@ not include variables usually directly set during build):
-  * $prevent_xss
-    If true, some gitweb features are disabled to prevent content in
-    repositories from launching cross-site scripting (XSS) attacks.  Set this
--   to true if you don't trust the content of your repositories. The default
--   is false.
-+   to false if you trust the content of your repositories, and want to use
-+   per-repository README.html, or use gitweb as deployment platform
-+   via 'blob_plain' view and path_info links. The default is true.
-  * $maxload
-    Used to set the maximum load that we will still respond to gitweb queries.
-    If server load exceed this value then return "503 Service Unavailable" error.
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index f8db40a..0351338 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -162,7 +162,7 @@ our @diff_opts = ('-M'); # taken from git_commit
- 
- # Disables features that would allow repository owners to inject script into
- # the gitweb domain.
--our $prevent_xss = 0;
-+our $prevent_xss = 1;
- 
- # Path to the highlight executable to use (must be the one from
- # http://www.andre-simon.de due to assumptions about parameters and output).
--- 
-1.7.5
+Now everything looks safe, but it relies on the attacker controled
+/tmp/foo directory.
 
+It'd probably be simplest if File::Temp::_is_safe() didn't allow any
+symlinks at all.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk60PdEACgkQBYeybkXz+/lTBQCfVSkNh3Rx//dXID4/EdZek2Oe
+qI8AoNAmriAsRNAl9E1ji/aEb49Pj/8X
+=B77I
+-----END PGP SIGNATURE-----
