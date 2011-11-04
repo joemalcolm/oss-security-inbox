@@ -1,54 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/23/3
-Message-ID: <20110823093209.GA18198@suse.de>
-Date: Tue, 23 Aug 2011 11:32:09 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/5
+Message-ID: <20111104163648.GA10002@openwall.com>
+Date: Fri, 4 Nov 2011 20:36:48 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: daniel.lezcano@...e.fr
-Subject: lxc + fscaps
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
+John,
 
-Hi Daniel, oss-sec,
+Thank you for reporting these!
 
-I was checking the lxc container framework for some use-cases
-and found that it supports usage of containers by users.
-It is installed with file caps in this case. (and a lot
-of caps indeed, so actually you have almost all caps distributed
-across the binaries). Particular interesting of course is
-cap_dac_override and it looks like most lxc- binaries are
-not really prepared to handle such cases:
+On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
+> PAR::Packer - PAR packed files are extracted to unsafe and predictable
+> temporary directories
+> 
+> https://rt.cpan.org/Public/Bug/Display.html?id=69560
 
-linux:~> /sbin/getcap /usr/local/bin/lxc-start
-/usr/local/bin/lxc-start = cap_dac_override,cap_fowner,cap_setpcap,\
-cap_net_admin,cap_net_raw,cap_sys_chroot,cap_sys_admin+ep
-linux:~> /usr/local/bin/lxc-start -n foo -c /etc/foo /usr/bin/id
-lxc-start: failed to spawn 'foo'
-linux:~> ls -la /etc/foo
--rw------- 1 jim users 0 Aug 23 09:38 /etc/foo
-linux:~>
+I think that your description for this one happens to encourage a poor
+fix for it.  Specifically, starting the description by "par_mktmpdir()
+makes no effort to verify that the /tmp/par-<username> directory is safe
+to use" may result in this function being patched to do such checks,
+which I think would be a poor fix.  A better fix would be to properly
+create a temporary files directory, with a less predictable name and
+with due retries (with new names) if the directory already exists -
+preferably using File::Temp's tempdir().
 
-That means you have a trivial root exploit if lxc is installed for users.
-There is a lxc-setuid script too but I guess that the lxc binaries
-are similarily not intended for such use.
-I dont know whether any distributor ships lxc with file caps, but
-probably the tools need some hardening if you want to allow
-lxc for users at all. I checked the latest 0.7.5 version.
+> Parallel::ForkManager - Insecure /tmp file handling
+> 
+> https://rt.cpan.org/Public/Bug/Display.html?id=68298
 
-regards,
-Sebastian
+Sounds like the classic issue there.
 
+> File::Temp - _is_safe() allows unsafe traversal of symlinks
+> 
+> https://rt.cpan.org/Public/Bug/Display.html?id=69106
 
--- 
+This one is tricky.  I am not convinced that it is CVE-worthy and that
+your proposed fix is the right thing to do.  To me, File::Temp's MEDIUM
+and HIGH safety levels are questionable; if I were the maintainer, I
+would probably not introduce these, or I'd explicitly document them as
+safety and not security features.  Here's what I mean by this subtle
+distinction:
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Basically, with these safety levels, File::Temp provides certain safety
+checks against a Perl script author or user shooting themselves in the
+foot.  Then the question is whether those safety checks are supposed to
+be exhaustive or not.  In other words, whether this is merely safety
+against inadvertent misuses or also security against malicious uses of
+properly written scripts that actually deliberately rely on these safety
+levels.  Re-wording this even further, is a script that deliberately
+relies on these safety levels for security properly written?  I think
+not.  Maybe it'd make more sense to assign CVEs to such scripts.
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+Currently, the three safety levels (STANDARD, MEDIUM, and HIGH) are
+documented to do certain specific checks, but the intended use and
+whether those checks are supposed to be exhaustive (sufficient for
+security) or not is unclear from the documentation.  It can be said that
+the behavior is consistent with documentation (it says what checks are
+performed at what level, and as far as I'm aware this matches the code),
+and thus there's no security vulnerability.
 
+Specifically, HIGH only cares about parent directories if chown giveaway
+is potentially allowed by the OS.  To me, this is flawed logic (but it
+is documented).  Maybe this stuff was introduced when the initial
+motivation behind the safety checks was forgotten (the safety vs.
+security distinction), although that's just a guess.  I am also guessing
+that the logic when implementing HIGH was that without chown giveaway,
+safe ownership and permissions on the target directory itself would seem
+to imply that the directory was deliberately created by a trusted user,
+and thus its parent directories were presumably trusted by that user
+(and don't need to be checked by the script).  This assumption works
+fine for safety, but not for security.  The question here is where the
+pathname being checked comes from.  Is it trusted input (and only needs
+safety checks) or is it untrusted and potentially deliberately malicious
+input (and thus needs exhaustive security checks)?  No answer to this is
+given in the documentation, that I can see.  If the pathname is
+potentially malicious, then on one hand parent directories need to be
+checked regardless of chown giveaway availability, but on the other hand
+even a safely-looking directory and full path leading to it do not imply
+that it is safe to create arbitrary files in this directory (e.g., think
+/etc/cron.d).
+
+Thus, File::Temp's HIGH safety level makes no sense to me, and I see no
+way to fix it.  For safety, it is no better than MEDIUM (chown giveaway
+is irrelevant in the safety context).  For security, it is insufficient
+and it can't be made sufficient.
+
+As to the proposed fix (symlink-safety.patch), it partially helps in
+certain special misuse cases.  Namely, when the pathname is not
+untrusted/malicious, but is poorly chosen, yet it contains just one
+unsafe component.  However, even in that case this fix doesn't protect
+from hard-linking of an existing suitable symlink (of a trusted user)
+into /tmp (possibly under a different name, although the symlink target
+name remains that of the original symlink).  And the limitation of
+working for just one unsafe path component is no good; perhaps HIGH's
+checks of parent directories would be better enabled unconditionally,
+and even then this stuff is highly questionable.
+
+Whatever we do or don't do to the code, I think the most important fix
+would be to the documentation.  We need to document that these are not
+security features and that they must not be relied upon.  Maybe we
+should even deprecate HIGH because it doesn't make sense for any use.
+
+> Batch::BatchRun - Unsafe /tmp file usage
+> 
+> https://rt.cpan.org/Public/Bug/Display.html?id=69594
+
+Another classic here.
+
+Alexander
