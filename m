@@ -1,55 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/5
-Message-ID: <20110803155646.GA26540@ngolde.de>
-Date: Wed, 3 Aug 2011 17:56:46 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/2
+Message-ID: <4EB3FAD5.6000806@nixnuts.net>
+Date: Fri, 04 Nov 2011 09:46:45 -0500
+From: John Lightsey <john@...nuts.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE id request: shttpd/mongoose/yassl embedded webserver
+Subject: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I found a buffer overflow in the PUT processing of shttpd/mongoose/yassl 
-embedded webserver (all based on the same source code).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can someone assign a CVE id to this?
-Upstream fix: https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
+These were reported to the upstream authors a while back. None of these
+bugs are fixed in the currently available versions:
 
-The bug:
-_shttpd_put_dir()/put_dir() function:
-26         for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
-27                 len = p - path;
-28                 assert(len < sizeof(buf));
-29                 (void) memcpy(buf, path, len);
-30                 buf[len] = '\0';
-31
-32                 /* Try to create intermediate directory */
-33                 if (_shttpd_stat(buf, &st) == -1 &&
-34                     _shttpd_mkdir(buf, 0755) != 0)
-35                         return (-1);
-36
-37                 /* Is path itself a directory ? */
-38                 if (p[1] == '\0')
-39                         return (0);
-40         }
 
-The only guard here to avoid a buffer overflow with a long path is
-the assert call in line 28. Unfortunately this is disabled if
-you compile with -DNDEBUG and from what I see quite a lot of people
-are doing that in order to reduce the binary size (those are embedded
-webservers intended to be used in embedded environments).
+PAR::Packer - PAR packed files are extracted to unsafe and predictable
+temporary directories
 
-It seems quite some projects actually do that, including a
-deployed product embedded product I'm currently
-looking at (and that was rooted because of this bug).
-From what I see -DNDEBUG in the mongoose makefile this is also the default for the mingw
-binary.
+https://rt.cpan.org/Public/Bug/Display.html?id=69560
 
-If this is not the case, this is still a DoS bug.
 
-Kind regards
-Nico
--- 
-Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG: 0xA0A0AAAA
-For security reasons, all text in this mail is double-rot13 encrypted.
+Parallel::ForkManager - Insecure /tmp file handling
 
-Content of type "application/pgp-signature" skipped
+https://rt.cpan.org/Public/Bug/Display.html?id=68298
+
+
+File::Temp - _is_safe() allows unsafe traversal of symlinks
+
+https://rt.cpan.org/Public/Bug/Display.html?id=69106
+
+
+Batch::BatchRun - Unsafe /tmp file usage
+
+https://rt.cpan.org/Public/Bug/Display.html?id=69594
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJOs/rHAAoJEORPgBbTYw+JY8kP/RTQuY2il0nMIRnG2D1OrBpu
+vHA9uyeOx5QuEliatgWaaAFrlXCi7gSkMdq91JxCK2QM8feJ2EGqOBhbrX9CShsb
+jpVO5xvo9mUVe70yBpplu3y0S5qPaNw3BjN6baiVlN04sl/rrhFeGigfkJo7erPH
+RSBaTTUyNTHjwEjyl8WFgpl8kJDyeQoHDGEZhb106l6uAsNCscF+6thxUoEZUMo8
+8ljxylnobzvzL2TNhhTuTX5NtFH5TjvKGm/NeuSH2avCrY+S4dM9MZtAI+ofp1Z6
+3DuTSUpjA4hJDK43KqWGEpxvEpVjwd5jo887uYvfzLev9YTz3fc78H+rb0ishkH3
+mdsmq42n8WGdoFMduZpDWzxdYi5mBCDipgd95PuQAT6+ya7/hSZRZ4KvgInP6Bcv
+bLCyqtMFm+z3KaufFKK6M3wafR+DCvsBM/8MT+EyQJgrClPBLFJ2J3d0N4u6qZCc
+vNYMrj4L6Vxfm7VoEe6gSwKKaRxvPdboXlxS6ubK6E9LLNcWewObm6foFIddXotD
+RtCSnROZrWubG73RFTKrjqrHIaK4ktO/x6bCdQyA3ziBIQOM9xUvTHkJeDtuIe+W
+RcwZVAtM4U8wmVVlkqBgEde2ipBKITEUPXLbLyQ7MrAeiuRBLT6wsfTqPh+EJ5ga
+r7V7cmFNq/btoySXFcI8
+=WTKm
+-----END PGP SIGNATURE-----
