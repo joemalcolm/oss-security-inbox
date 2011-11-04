@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/10
-Message-ID: <20110304025613.GA22405@altlinux.org>
-Date: Fri, 4 Mar 2011 05:56:13 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/3
+Message-ID: <4EB403A2.4050606@redhat.com>
+Date: Fri, 04 Nov 2011 09:24:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Drupal (v6.x based) Views module - SQL injection due improper escaping of database parameters for certain filters / arguments (SA-CONTRIB-2011-052)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 09:42:17PM -0500, Dan Rosenberg wrote:
-[...]
-> I discovered that essentially every suid mount helper that uses
-> addmntent() (or invokes util-linux mount, which in turn calls
-> addmntent()) to add entries to /etc/mtab fails to anticipate a low
-> value for RLIMIT_FSIZE, allowing unprivileged users to corrupt
-> /etc/mtab and possibly manipulate mountpoint options.  Affected
-> software includes at least:
-[...]
-> There are a few possible options
-
-One more option is to replace /etc/mtab regular file with a symlink to
-/proc/mounts, thus making any /etc/mtab editing unneeded.
-
+On 11/04/2011 04:49 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a SQL injection flaw was found in the way the views module for the
+> Drupal (v6.x based), open-source content-management platform, performed
+> sanitization of the database parameters for certain filters / arguments
+> on certain types of views with specific configuration of arguments. A
+> remote attacker could provide a specially-crafted SQL query, which once
+> processed by the Drupal system instance could lead to arbitrary SQL
+> commands execution.
+>
+> References:
+> [1] http://drupal.org/node/1329898
+> [2] http://drupal.org/node/1329846
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=751325
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2011-4113 for this issue.
 
 -- 
-ldv
 
-Content of type "application/pgp-signature" skipped
+-Kurt Seifried / Red Hat Security Response Team
+
