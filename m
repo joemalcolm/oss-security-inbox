@@ -1,53 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/1
-Message-ID: <20110510071821.GA9917@suse.de>
-Date: Tue, 10 May 2011 09:18:21 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/8
+Message-ID: <4EB42B96.5080506@nixnuts.net>
+Date: Fri, 04 Nov 2011 13:14:46 -0500
+From: John Lightsey <john@...nuts.net>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi,
-
-Is this really different than what was assigned CVE-2011-1577 to?
-See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
-on the OSS mail on April 12th which reads exactly the same.
-
-Sebastian
-
-On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
+On 11/04/2011 11:36 AM, Solar Designer wrote:
+> On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
+>> PAR::Packer - PAR packed files are extracted to unsafe and predictable
+>> temporary directories
+>>
+>> https://rt.cpan.org/Public/Bug/Display.html?id=69560
 > 
+> I think that your description for this one happens to encourage a poor
+> fix for it.  Specifically, starting the description by "par_mktmpdir()
+> makes no effort to verify that the /tmp/par-<username> directory is safe
+> to use" may result in this function being patched to do such checks,
+> which I think would be a poor fix.  A better fix would be to properly
+> create a temporary files directory, with a less predictable name and
+> with due retries (with new names) if the directory already exists -
+> preferably using File::Temp's tempdir().
 > 
-> ----- Original Message -----
-> > The kernel automatically evaluates partition tables of storage
-> > devices.
-> > The code for evaluating GUID partitions (in fs/partitions/efi.c)
-> > contains a bug that can cause a kernel heap overflow on certain
-> > corrupted GUID partition tables.
-> > 
-> > http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
-> > http://bugzilla.redhat.com/show_bug.cgi?id=703026
-> > 
+
+The problem with using random directory names here is that the
+/tmp/par-user directory is being used as a caching mechanism to avoid
+extracting the PAR contents over and over. A better alternative may be
+to use $ENV{'HOME'}/.par or something along those lines.
+
+>> File::Temp - _is_safe() allows unsafe traversal of symlinks
+>>
+>> https://rt.cpan.org/Public/Bug/Display.html?id=69106
 > 
-> Please use CVE-2011-1776
-> 
-> Thanks.
-> 
-> -- 
->     JB
 
--- 
+> As to the proposed fix (symlink-safety.patch), it partially helps in
+> certain special misuse cases.  Namely, when the pathname is not
+> untrusted/malicious, but is poorly chosen, yet it contains just one
+> unsafe component.  However, even in that case this fix doesn't protect
+> from hard-linking of an existing suitable symlink (of a trusted user)
+> into /tmp (possibly under a different name, although the symlink target
+> name remains that of the original symlink).  And the limitation of
+> working for just one unsafe path component is no good; perhaps HIGH's
+> checks of parent directories would be better enabled unconditionally,
+> and even then this stuff is highly questionable.
 
---
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+I'm not sure I follow how that would work as an attack vector. If I
+hardlink a symlink of another user into /tmp, I can't easily remove the
+symlink afterwards to point it somewhere else. If _is_safe() checks the
+ownership of the symlink and the ownership of the symlink target it
+would be very difficult to misuse a symlink in this fashion.
 
----
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+I would definitely agree that using File::Temp is preferable to someone
+implementing custom /tmp handling logic. Most of the CPAN code that
+messes with /tmp directly should be using File::Temp instead.
 
+I've not seen any code on CPAN uses File::Temp to create nested
+subdirectories in the fashion that would be required for an unsafe
+intermediate symlink to be a problem. IE: /tmp/foo/barXXXXX with
+/tmp/foo being the unsafe symlink.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJOtCuUAAoJEORPgBbTYw+JLNIP/2XGGZX2fsnjf1TSREmAHZOa
+b7p8W/4MHR05EgY+Zp9eMv/sEx22CmeptCHfNtBhNpxWVmQ4yuvamk9mazaUTCqD
+2iGjsftKRXn3OxLRg5RduiWBJD/4Jwm7XUfUy3E8P566JagxevxduVu7kYNVWGrJ
+I1lb8xoLM9NcgGVzlK9G5pk1rQr50vSXJLF/H9sk7dtKv0FToJgJJBbixJDNdhBD
+EsUowkoIDcOejDZLnT5XCdwJSk6RO2wNGry81gfvMirasPtEj1L4TDv6sauB6MEE
+yKr09EVpUwdM+DnGDj4fHWdTHESQFMIXjUNMmgcmzOupIKyrNxeS2CWU1RYImzaE
+lSmehWFVR4acpjHChXVDnKW8fhA3nypYkk1i4QjpaMecHarHMckU0ZzXwsLZQ8P3
+GKd07BRvqZSZZS0crjv+o9lqa6v/itsn+Fplf47s9CGHdVKlVQeKta5yXywRa3yL
+RnNLkoVmCyVphO6Wt5Dt1YKnteHoZb4d6kWlTNGGfbdY5Ymm/L+ZnJQsrc6RNPSL
+Kx7DDWoxfAe2CLFW/kaxIuXsMf3jalNVd43JvudCAwuxKBJJPTeu7CZPN/nkuK3y
+iZUSXMW++yX6OsEqdESBYYPQKjSqjX8ufpJKWybdFSthFF2b69rr3E2DpowVo0k8
+GYiMgjNKCRwbXfJmPJAr
+=gUmO
+-----END PGP SIGNATURE-----
