@@ -1,95 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/5
-Message-ID: <1330262815.154246.1298379715067.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 08:01:55 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/11
+Message-ID: <CAHmME9qcmx=xbSpYz02kCxcBar4fB+YQd+SqPcE=JwfQ7Zm=Zg@mail.gmail.com>
+Date: Fri, 4 Nov 2011 16:45:11 -0400
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: a collection of world-writable debugfs bugs
+Cc: Josh Bressers <bressers@...hat.com>, kseifried@...hat.com
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-Do we know the affected versions? This probably won't be 20 IDs,
-but I suspect it won't be one either.
+Aaaa boy this has been quite the saga. Everybody should check out
+https://bugs.launchpad.net/calibre/+bug/885027 for a good example of how *
+not* to respond to security bug reports. Quite amusing. It's been a fun
+couple of days writing weaponized exploit after
+exploit.<http://git.zx2c4.com/calibre-mount-helper-exploit/tree/>
 
-Thanks.
+In the end though, it looks like he agreed to fix it, "@Jason: Well, if you
+do not wish to help, that leaves me with no choice but to remove the mount
+helper."
+
+So where does that leave us with the CVEs? Well, there are the issues that
+were "released" with a "version" of Calibre, and then the trove of bugs he
+introduced in the middle. I'll try to recap and separate which is which:
+
+1. Ability to create root owned directory anywhere. The mount helper calls
+mkdir(argv[3], ...).
+
+2. Ability to remove any empty directory on the system.
+
+3. Ability to create user_controlled_dir/.created_by_calibre_mount_helper
+anywhere on the filesystem.
+
+4. Ability to delete user_controlled_dir/.created_by_calibre_mount_helper
+anywhere on the filesystem.
+
+5. Ability to inject arguments into 'mount' being exec'd. On lines 78, 81,
+and 83, the final two arguments to mount are user controlled. On lines
+1033, 106, 108, 139, and 141, the last argument to unmount/eject is user
+controlled. The "exists()" check can be subverted via race condition or by
+creating an existing file in the working directory with a filename equal to
+the desired injected argument.
+
+6. Ability to execute any program as root. The mount helper makes use of
+execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the first
+argument does not start with a / character. Because of this, execlp will
+search PATH for the executable to run. PATH is user controlled, and thus it
+is trivial to write a program that spawns a shell and give it "mount" as a
+filename, and direct PATH to its directory.
+
+7. Ability to mount any device to anywhere. This leads to local root, since
+you can mount over /etc/ or /etc/pam.d/ or choose-your-own-adventure.
+
+--- bugs introduced along the saga: ---
+
+8. Race with checking for /dev
+
+9. Race with checking for /media
+
+10. Race with symlinks
+
+11. Another race with symlinks
+
+12. Another race with symlinks
+
+13. ...
+
+14. Probably more things.
+
+
+Probably CVEs are only assigned for issues 1-7, though? Should these be
+grouped together in anyway, or should there be 7 CVEs assigned?
+
+
+On Thu, Nov 3, 2011 at 19:21, Kurt Seifried <kseifried@...hat.com> wrote:
+
+> On 11/03/2011 05:14 AM, Dan Rosenberg wrote:
+> >> Oh, and I suppose there's a very obvious but critical #6:
+> >>
+> >> 6. An unprivileged user an mount/unmount/eject whatever he wants, with
+> >> root permissions. Danger.
+> >>
+> >> This may help to "confirm":
+> >> https://bugs.launchpad.net/calibre/+bug/885027/
+> >>
+> >>
+> >> As well, the maintainer has already issued a fix. From the bug report:
+> >> "Fixed in branch lp:calibre. The fix will be in the next release.
+> >> calibre is usually released every Friday.", which means the above
+> >> source link, that went to the trunk, now shows the fixed result. The
+> >> old broken code is still available here:
+> >>
+> http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
+> >>
+> >> Note that the maintainer has chosen only to address #5.
+> >>
+> > I'd recommend holding off on the CVE assignments for now, since these
+> > issues are currently in progress and the final tally of issues isn't
+> > complete.
+> >
+> > -Dan
+> I took a quick look at that, I'm not clear on which ones have
+> beenaddressed , if you could comment on the original issues, which are
+> addressed and link to code commit I can start assigning CVEs.
+>
+> --
+>
+> -Kurt Seifried / Red Hat Security Response Team
+>
+>
+
 
 -- 
-    JB
+Jason A. Donenfeld
+Deep Space Explorer
++1-513-476-1200
+www.jasondonenfeld.com
 
------ Original Message -----
-> There are 20 patches here - some are accepted, some are probably
-> pending. All from Vasiliy Kulikov.
-> 
-> [PATCH 01/20] mach-omap2: mux: world-writable debugfs files
-> https://lkml.org/lkml/2011/2/4/66 arm arch
-> 
-> [PATCH 02/20] mach-omap2: pm: world-writable debugfs timer files
-> https://lkml.org/lkml/2011/2/4/67 arm arch
-> 
-> [PATCH 03/20] mach-omap2: smartreflex: world-writable debugfs voltage
-> files
-> https://lkml.org/lkml/2011/2/4/68 arm arch
-> 
-> [PATCH 04/20] mach-ux500: mbox-db5500: world-writable sysfs fifo file
-> https://lkml.org/lkml/2011/2/4/69 arm arch
-> 
-> [PATCH 05/20] leds: lp5521: world-writable sysfs engine* files
-> https://lkml.org/lkml/2011/2/4/70
-> 
-> [PATCH 06/20] leds: lp5523: world-writable engine* sysfs files
-> https://lkml.org/lkml/2011/2/4/81
-> 
-> [PATCH 07/20] video: sn9c102: world-wirtable sysfs files
-> https://lkml.org/lkml/2011/2/4/85
-> 
-> [PATCH 08/20] mfd: ab3100: world-writable debugfs *_priv files
-> https://lkml.org/lkml/2011/2/4/82
-> 
-> [PATCH 09/20] mfd: ab3500: world-writable debugfs register-* files
-> https://lkml.org/lkml/2011/2/4/84
-> 
-> [PATCH 10/20] mfd: ab8500: world-writable debugfs register-* files
-> https://lkml.org/lkml/2011/2/4/71
-> 
-> [PATCH 11/20] misc: ep93xx_pwm: world-writable sysfs files
-> https://lkml.org/lkml/2011/2/4/83
-> 
-> [PATCH 12/20] net: can: at91_can: world-writable sysfs files
-> https://lkml.org/lkml/2011/2/4/80
-> fef52b0171dfd7dd9b85c9cc201bd433b42a8ded
-> 
-> [PATCH 13/20] net: can: janz-ican3: world-writable sysfs termination
-> file
-> https://lkml.org/lkml/2011/2/4/72
-> 1e6d93e45b231b3ae87c01902ede2315aacfe976
-> 
-> [PATCH 14/20] platform: x86: acer-wmi: world-writable sysfs threeg
-> file
-> https://lkml.org/lkml/2011/2/4/79
-> b80b168f918bba4b847e884492415546b340e19d
-> 
-> [PATCH 15/20] platform: x86: asus_acpi: world-writable procfs files
-> https://lkml.org/lkml/2011/2/4/73
-> 8040835760adf0ef66876c063d47f79f015fb55d
-> 
-> [PATCH 16/20] platform: x86: tc1100-wmi: world-writable sysfs wireless
-> and jogdial files
-> https://lkml.org/lkml/2011/2/4/78
-> 8a6a142c1286797978e4db266d22875a5f424897
-> 
-> [PATCH 17/20] rtc: rtc-ds1511: world-writable sysfs nvram file
-> https://lkml.org/lkml/2011/2/4/74
-> 
-> [PATCH 18/20] scsi: aic94xx: world-writable sysfs update_bios file
-> https://lkml.org/lkml/2011/2/4/75
-> 
-> [PATCH 19/20] scsi: iscsi: world-writable sysfs priv_sess file
-> https://lkml.org/lkml/2011/2/4/76
-> 
-> [PATCH 20/20] fs: ubifs: world-writable debugfs dump_* files
-> https://lkml.org/lkml/2011/2/4/77
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=679303
-> --
-> Eugene Teo / Red Hat Security Response Team
