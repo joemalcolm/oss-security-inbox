@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/2
-Message-ID: <4D36C719.3070200@redhat.com>
-Date: Wed, 19 Jan 2011 12:12:25 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Matthew Nicholson <mnicholson@...ium.com>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/7
+Message-ID: <20111104175410.GA4115@pisco.westfalen.local>
+Date: Fri, 4 Nov 2011 18:54:10 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mahara
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors,
+Hi,
+please assign a CVE ID for this issue in Mahara:
 
-   Asterisk upstream yesterday released AST-2011-001, also with patches for supported versions.
-   References:
-   [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
-   [2] http://seclists.org/fulldisclosure/2011/Jan/297
-   [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
-   [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
+http://mahara.org/interaction/forum/topic.php?id=4138
+https://bugs.launchpad.net/mahara/+bug/884223
 
-Could you allocate CVE id for this?
+Already released as DSA 2334.
 
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Cheers,
+        Moritz
