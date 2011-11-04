@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/38
-Message-ID: <1337719293.350430.1301873888561.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Sun, 3 Apr 2011 19:38:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/10
+Message-ID: <4EB44A86.4080007@redhat.com>
+Date: Fri, 04 Nov 2011 14:26:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: CVE request: Mahara
 Content-Type: text/plain; charset=utf-8
 
-> 
-> Josh - I subscribed you to the new list per your off-list request (with
-> info on your new PGP key), but I think you should follow your own rule
-> and post such a request to the list. ;-)
-> 
-
-Yes certainly.
-
-pub   2048R/BBE09A0F 2011-04-02
-      Key fingerprint = CFB1 136C 6DD0 5BB9 D798  A78E 1CD8 ACDD BBE0 9A0F
-uid                  Josh Bressers <bressers@...hat.com>
-uid                  Josh Bressers <josh@...ss.net>
-sub   2048R/2D54149F 2011-04-02
-sub   2048R/55215DC1 2011-04-02
-
-
-I generated new keys this weekend which live on an OpenPGP smart card. I
-worry about the security of my key when I'll be using it multiple times a
-day with the new list.
-
-Thanks.
+On 11/04/2011 11:54 AM, Moritz Muehlenhoff wrote:
+> Hi,
+> please assign a CVE ID for this issue in Mahara:
+>
+> http://mahara.org/interaction/forum/topic.php?id=4138
+> https://bugs.launchpad.net/mahara/+bug/884223
+>
+> Already released as DSA 2334.
+>
+> Cheers,
+>         Moritz
+Please use CVE-2011-4118 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
