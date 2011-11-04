@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/18
-Message-ID: <20110502192825.GA21926@rh.iggy.bress.home>
-Date: Mon, 2 May 2011 15:29:29 -0400
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/14
+Message-ID: <CAHmME9qtybOoJgpe_bD179rEOiVuu1kEWFGVmF8jM8RNx--0_g@mail.gmail.com>
+Date: Fri, 4 Nov 2011 16:53:41 -0400
+From: "Jason A. Donenfeld" <Jason@...c4.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, cyril.jaquier@...l2ban.org, Tomasz Papszun <tomek@...z.tpsa.pl>, Yaroslav Halchenko <debian@...russian.com>
-Subject: Re: CVE Request -- fail2ban -- Use of insecure default temporary file when unbanning an IP (tmpfile = /tmp/fail2ban-mail.txt)
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 29, 2011 at 01:02:04PM +0200, Jan Lieskovsky wrote:
-> 
-> Hello Josh, Steve, vendors,
-> 
->   It was found that fail2ban IPs banner used insecure default temporary file
-> when unbanning an IP address. A local attacker could use this flaw to conduct
-> symlink attacks in order to gain access to sensitive information or potentially
-> to overwrite arbitrary file on the system.
-> 
-> References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=544232
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=700763
-> 
-> Patch applied by Debian distribution:
-> [3] http://git.onerussian.com/?p=deb/fail2ban.git;a=commitdiff;h=ea7d352616b1e2232fcaa99b11807a86ce29ed8b
-> 
-> Could you allocate a CVE id for this? (Note: It should CVE-2009-* identifier)
-> 
+Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
+current version that has been out for quite some time now. These require a
+CVE. Issues 8 through 14 are ones introduced only during development and
+were not released, and do not need a CVE.
 
-Please use CVE-2009-5023
+On Fri, Nov 4, 2011 at 16:51, Steven M. Christey
+<coley@...-smtp.mitre.org>wrote:
 
-Thanks.
+>
+> All,
+>
+> I haven't followed the Calibre saga too closely, barring glancing through
+> the bug report comments.
+>
+> If bugs are introduced into a development version but also fixed within
+> that same version, then unless there's some strong evidence that the dev
+> version is extensively used or distributed to the public, then (in general)
+> it would not get a CVE.  (The Linux kernel is a special case depending on
+> what versions you consider to be "development.")
+>
+> - Steve
+>
 
--- 
-    JB
