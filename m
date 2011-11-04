@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/8
-Message-ID: <20110624201950.GA8319@dhcp-25-225.brq.redhat.com>
-Date: Fri, 24 Jun 2011 22:19:50 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Joshua Bressers <bressers@...hat.com>, Eugene Teo <eteo@...hat.com>
-Subject: CVE request: kernel: mm: avoid wrapping vm_pgoff in mremap() and stack expansions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/1
+Message-ID: <4EB3C32C.6080201@redhat.com>
+Date: Fri, 04 Nov 2011 11:49:16 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Drupal (v6.x based) Views module - SQL injection due improper escaping of database parameters for certain filters / arguments (SA-CONTRIB-2011-052)
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
-The normal mmap paths all avoid creating a mapping where the pgoff
-inside the mapping could wrap around due to overflow.  However, an
-expanding mremap() can take such a non-wrapping mapping and make it
-bigger and cause a wrapping condition. There is also another case
-where we expand mappings hiding in plain sight: the automatic stack
-expansion.
+Hello Kurt, Steve, vendors,
 
-The wrapping condition can cause a BUG_ON() due to terminally
-confusing the vma_prio_tree code.
-
-Upstream patches:
-982134ba62618c2d69fbbbd166d0a11ee3b7e3d8 mremap
-a626ca6a656450e9f4df91d0dda238fff23285f4 stack expansion downwards
-42c36f63ac1366ab0ecc2d5717821362c259f517 stack expansion upwards
+   a SQL injection flaw was found in the way the views module for the
+Drupal (v6.x based), open-source content-management platform, performed
+sanitization of the database parameters for certain filters / arguments
+on certain types of views with specific configuration of arguments. A
+remote attacker could provide a specially-crafted SQL query, which once
+processed by the Drupal system instance could lead to arbitrary SQL
+commands execution.
 
 References:
-https://bugzilla.redhat.com/show_bug.cgi?id=716538
-http://www.spinics.net/lists/stable-commits/msg11385.html
-http://www.spinics.net/lists/linux-mm/msg17093.html
-http://groups.google.com/group/fa.linux.kernel/msg/9e43ab898c5e6d16
+[1] http://drupal.org/node/1329898
+[2] http://drupal.org/node/1329846
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=751325
 
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
