@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/18
-Message-ID: <20110314171620.GI31820@redhat.com>
-Date: Mon, 14 Mar 2011 11:16:21 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/13
+Message-ID: <Pine.GSO.4.64.1111041648200.28484@faron.mitre.org>
+Date: Fri, 4 Nov 2011 16:51:29 -0400 (EDT)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for python-feedparser
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-python-feedparser 5.0.1 fixes three flaws:
 
-https://code.google.com/p/feedparser/
+All,
 
-* Fix  issue 91  (invalid text in XML declaration causes sanitizer to crash)
-* Fix  issue 254  (sanitization can be bypassed by malformed XML comments)
-* Fix  issue 255  (sanitizer doesn't strip unsafe URI schemes) 
+I haven't followed the Calibre saga too closely, barring glancing through 
+the bug report comments.
 
-Could CVE names be assigned to these issues?
+If bugs are introduced into a development version but also fixed within 
+that same version, then unless there's some strong evidence that the dev 
+version is extensively used or distributed to the public, then (in 
+general) it would not get a CVE.  (The Linux kernel is a special case 
+depending on what versions you consider to be "development.")
 
-It looks like the last two issues were introduced in 5.0, the first
-issue was reported against 4.1.
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+- Steve
