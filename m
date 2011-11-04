@@ -1,23 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/1
-Message-Id: <201108090918.08245.sgrubb@redhat.com>
-Date: Tue, 9 Aug 2011 09:18:07 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/9
+Message-ID: <4EB43DE2.6030001@nixnuts.net>
+Date: Fri, 04 Nov 2011 14:32:50 -0500
+From: John Lightsey <john@...nuts.net>
 To: oss-security@...ts.openwall.com
-Cc: dann frazier <dannf@...ian.org>, Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
-Subject: Re: CVE request: perf: may parse user-controlled config file
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-On Sunday, August 07, 2011 01:34:38 PM dann frazier wrote:
-> This was reported by Christian Ohm at:
->   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 11/04/2011 01:14 PM, John Lightsey wrote:
+> On 11/04/2011 11:36 AM, Solar Designer wrote:
+>> On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
+>>> File::Temp - _is_safe() allows unsafe traversal of symlinks
+>>>
+>>> https://rt.cpan.org/Public/Bug/Display.html?id=69106
+>>
 > 
-> The perf command, provided as part of the Linux kernel source, looks
-> for and honors configuration settings in ./config. A local user could
-> obtain elevated privileges by convincing a superuser to run the perf
-> command from a directory the user controls.
+>> As to the proposed fix (symlink-safety.patch), it partially helps in
+>> certain special misuse cases.  Namely, when the pathname is not
+>> untrusted/malicious, but is poorly chosen, yet it contains just one
+>> unsafe component.  However, even in that case this fix doesn't protect
+>> from hard-linking of an existing suitable symlink (of a trusted user)
+>> into /tmp (possibly under a different name, although the symlink target
+>> name remains that of the original symlink).  And the limitation of
+>> working for just one unsafe path component is no good; perhaps HIGH's
+>> checks of parent directories would be better enabled unconditionally,
+>> and even then this stuff is highly questionable.
+> 
+> I'm not sure I follow how that would work as an attack vector. If I
+> hardlink a symlink of another user into /tmp, I can't easily remove the
+> symlink afterwards to point it somewhere else. If _is_safe() checks the
+> ownership of the symlink and the ownership of the symlink target it
+> would be very difficult to misuse a symlink in this fashion.
 
-And in recent kernels has an executable stack:
-https://bugzilla.redhat.com/show_bug.cgi?id=704296
+I see the problem now.
 
--Steve
+Symlink A points to foo/bar
+Symlink B points to /some/real/directory
+
+Code asks for /tmp/parent/childXXXX
+
+Attacker hardlinks symlink A to /tmp/parent
+Attacker creates /tmp/foo directory
+Attacker hardlinks symlink B to /tmp/foo/bar
+
+Now everything looks safe, but it relies on the attacker controled
+/tmp/foo directory.
+
+It'd probably be simplest if File::Temp::_is_safe() didn't allow any
+symlinks at all.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk60PdEACgkQBYeybkXz+/lTBQCfVSkNh3Rx//dXID4/EdZek2Oe
+qI8AoNAmriAsRNAl9E1ji/aEb49Pj/8X
+=B77I
+-----END PGP SIGNATURE-----
