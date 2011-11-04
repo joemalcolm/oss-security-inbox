@@ -1,49 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/3
-Message-ID: <CAM4uigfMzY+ZZA2_CXMvzv9wT8hD6pk-mSHv_pcZPTbqE5Sp+w@mail.gmail.com>
-Date: Thu, 28 Jul 2011 21:59:22 -0700
-From: Billy Rios <billy.rios@...il.com>
-To: Marcus Meissner <meissner@...e.de>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, veillard@...hat.com
-Subject: Re: libxml security fix from apple ... any information?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/6
+Message-ID: <20111104170406.GA10071@openwall.com>
+Date: Fri, 4 Nov 2011 21:04:06 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
 Content-Type: text/plain; charset=utf-8
 
-The crash was indeed in libxml2, but I could not get the bug to repro in
-Linux.  We took the crash file and fuzzed a bit more on Linux, but no
-crashes were observed.
+Hi Steve,
 
-BK
+On Thu, Oct 27, 2011 at 11:38:47PM -0400, Steven M. Christey wrote:
+> So, I'll repeat my subtle request in January for someone to try and define 
+> what the acceptable security boundaries are at this stage, and then it 
+> should make it easier to interpret what needs a CVE (or not).  It sounds 
+> like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
+> blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
+> great start; based on my (limited) understanding, this suggests that 
+> CAP_SYS_ADMIN can legitimately transition to full root.
 
+What's "full root"?  Full root in the current container or full root on
+the host system?
 
-On Thu, Jul 28, 2011 at 6:22 AM, Marcus Meissner <meissner@...e.de> wrote:
+Without container-based virtualization, CAP_SYS_ADMIN is pretty much
+equivalent to full root (and I wouldn't ask what that is).
 
-> Hi folks, Billy, Daniel,
->
-> On
-> http://support.apple.com/kb/HT4808
-> there is a libxml security issue listed:
->
-> -----------------------------------------
-> libxml
->
-> Available for: Windows 7, Vista, XP SP2 or later
->
-> Impact: Visiting a maliciously crafted website may lead to an unexpected
-> application termination or arbitrary code execution
->
-> Description: A one-byte heap buffer overflow existed in libxml's handling
-> of XML data. Visiting a maliciously crafted website may lead to an
-> unexpected application termination or arbitrary code execution.
->
-> CVE-ID
->
-> CVE-2011-0216 : Billy Rios of the Google Security Team
-> -----------------------------------------
->
-> I suspect this is libxml2 and it likely also affects Linux?
->
-> If this is correct, could you identify the commit fixing this issue?
->
-> Ciao, Marcus
->
+With containers, CAP_SYS_ADMIN inside a container is not supposed to be
+equivalent to full root on the host.  Such privilege escalation
+possibilities are CVE-worthy.  However, LXC with procfs mounted is
+currently an exception.  We can instead have a CVE id for this exception
+(not for dmesg_restrict specifically), if desired/appropriate.
 
+With OpenVZ, it is OK to have procfs mounted in a container and not
+have a CAP_SYS_ADMIN in container (or other container root access
+equivalent) to host root privilege escalation vulnerability (or rather,
+such vulnerabilities when found would deserve CVEs of their own).
+
+Since such container-based virtualization for Linux exists where
+CAP_SYS_ADMIN is not meant to be equivalent to host root, we should not
+disregard CAP_SYS_ADMIN to root privilege escalation bugs in Linux in
+general.  Many of these are CVE-worthy.  However, there are occasional
+exceptions, such as this case with LXC and procfs where individual
+bypasses are not CVE-worthy (but this entire exception might be
+CVE-worthy on its own).
+
+I hope this helps.
+
+Alexander
