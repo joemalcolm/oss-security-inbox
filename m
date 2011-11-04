@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/3
-Message-ID: <4DBEC773.3080005@redhat.com>
-Date: Mon, 02 May 2011 17:02:11 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- WordPress v3.1.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/14
+Message-ID: <CAHmME9qtybOoJgpe_bD179rEOiVuu1kEWFGVmF8jM8RNx--0_g@mail.gmail.com>
+Date: Fri, 4 Nov 2011 16:53:41 -0400
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
+Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
+current version that has been out for quite some time now. These require a
+CVE. Issues 8 through 14 are ones introduced only during development and
+were not released, and do not need a CVE.
 
-Hello Josh, Steve, vendors,
+On Fri, Nov 4, 2011 at 16:51, Steven M. Christey
+<coley@...-smtp.mitre.org>wrote:
 
-   WordPress upstream has released v3.1.2 addressing one security issue:
-   [1] http://wordpress.org/news/
+>
+> All,
+>
+> I haven't followed the Calibre saga too closely, barring glancing through
+> the bug report comments.
+>
+> If bugs are introduced into a development version but also fixed within
+> that same version, then unless there's some strong evidence that the dev
+> version is extensively used or distributed to the public, then (in general)
+> it would not get a CVE.  (The Linux kernel is a special case depending on
+> what versions you consider to be "development.")
+>
+> - Steve
+>
 
-   More from [1]:
-   "This release addresses a vulnerability that allowed Contributor-level users to improperly publish posts.
-   The issue was discovered by a member of our security team, WordPress developer Andrew Nacin, with Benjamin Balter."
-
-Could you allocate a CVE id for this?
-
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
