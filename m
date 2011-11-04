@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/31
-Message-ID: <20110404175934.3541eb88@orphan>
-Date: Mon, 4 Apr 2011 17:59:34 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/3
+Message-ID: <4EB403A2.4050606@redhat.com>
+Date: Fri, 04 Nov 2011 09:24:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Drupal (v6.x based) Views module - SQL injection due improper escaping of database parameters for certain filters / arguments (SA-CONTRIB-2011-052)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 4 Apr 2011 01:54:35 +0400 Solar Designer wrote:
-
-> On Sat, Apr 02, 2011 at 01:28:18PM -0400, R P Herrold wrote:
-> > Key fingerprint:	0x9B649644
-> > Distribution:		CentOS
-> 
-> Subscribed.
-
-Given the aim to keep the subscriber list very limited, this probably
-falls into a tentatively subscribed category too.  AFAIK, CentOS has
-rather few components that are not rebuilds of the RHEL SRPMs, the
-question is how often a v-s info was useful in the past in providing
-security updates for those extra packages.
+On 11/04/2011 04:49 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a SQL injection flaw was found in the way the views module for the
+> Drupal (v6.x based), open-source content-management platform, performed
+> sanitization of the database parameters for certain filters / arguments
+> on certain types of views with specific configuration of arguments. A
+> remote attacker could provide a specially-crafted SQL query, which once
+> processed by the Drupal system instance could lead to arbitrary SQL
+> commands execution.
+>
+> References:
+> [1] http://drupal.org/node/1329898
+> [2] http://drupal.org/node/1329846
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=751325
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+Please use CVE-2011-4113 for this issue.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
