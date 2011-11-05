@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/20
-Message-ID: <993223035.189172.1298486813018.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 13:46:53 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/4
+Message-ID: <20111105123536.GA10062@foo.fgeek.fi>
+Date: Sat, 5 Nov 2011 14:35:36 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: simple machines forum before 1.1.13
+Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> http://www.simplemachines.org/community/index.php?P=2fd5266e000b83407b05d142bd006d4a&topic=421547.0
+On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
+> Are these duplicates:
 > 
-> No useful info on the kind of vulnerability, just states "Several
-> security-related fixes"
+> CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
+> CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
 > 
+> I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
 
-Steve,
+This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
 
-Can MITRE take this one.
+I am really sorry about duplicate CVEs. :(
 
-Thanks.
-
--- 
-    JB
+Best regards,
+Henri Salo
