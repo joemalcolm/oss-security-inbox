@@ -1,59 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/5
-Message-ID: <4E0454E2.1010401@redhat.com>
-Date: Fri, 24 Jun 2011 11:12:02 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>, Matthias Clasen <mclasen@...hat.com>, Mark Doliner <markdoliner@...gin.im>
-CC: oss-security@...ts.openwall.com
-Subject: CVE-2011-2485 assignment notification -- gdk-pixbuf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/1
+Message-ID: <20111105102754.GA11970@openwall.com>
+Date: Sat, 5 Nov 2011 14:27:54 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Fri, Nov 04, 2011 at 02:32:50PM -0500, John Lightsey wrote:
+> Symlink A points to foo/bar
+> Symlink B points to /some/real/directory
+> 
+> Code asks for /tmp/parent/childXXXX
+> 
+> Attacker hardlinks symlink A to /tmp/parent
+> Attacker creates /tmp/foo directory
+> Attacker hardlinks symlink B to /tmp/foo/bar
+> 
+> Now everything looks safe, but it relies on the attacker controled
+> /tmp/foo directory.
 
-   the following security flaw has been found in the way gdk-pixbuf, an
-image loading library, loaded certain Graphics Interchange Format (GIF) 
-image files:
-=======================================================================
+Yes, in the above scenario everything would look safe to the current
+code with your symlink-safety.patch.  We could enhance the patch to also
+check parent directories of each symlink, but even then an attack would
+remain possible:
 
-It was found that gdk-pixbuf's gdk_pixbuf__gif_image_load() GIF image 
-loader routine did not properly handle certain return values from its
-subroutines. A remote attacker could provide a specially-crafted GIF
-image, which once opened in an application, linked against gdk-pixbuf
-would lead to gdk-pixbuf to return partially initialized pixbuf
-structure, possibly having huge width and height, leading to that
-particular application termination due excessive memory use.
+Attacker hardlinks symlink B to /tmp/parent
 
-The CVE identifier of CVE-2011-2485 has been assigned to this issue.
+Then depending on what /some/real/directory actually is, this may be a
+security problem - e.g., if /some/real/directory is /etc/cron.d or /bin.
+And even for most other directories, there's likely a DoS and quota
+bypass possibility here.
 
-References:
+> It'd probably be simplest if File::Temp::_is_safe() didn't allow any
+> symlinks at all.
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2485
-[2] 
-http://git.gnome.org/browse/gdk-pixbuf/commit/?id=f8569bb13e2aa1584dde61ca545144750f7a7c98
+Many systems have /tmp itself as a symlink.
 
-This issue could lead (for example) in Pidgin to:
-=================================================
-
-A remote attacker could set a specially-crafted GIF image as their
-buddy icon that could lead to Pidgin being terminated due to excessive
-memory use.
-
-References:
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=714754
-[4] http://www.pidgin.im/news/security/?id=52
-
-Credit: Issue has been discovered and reported by Mark Doliner
-         of the Pidgin project.
-
-We did not allocate a second CVE identifier for the Pidgin issue,
-since the true underlying reason for this was the gdk-pixbuf image 
-loading library problem. This is based on last paragraph from:
-[5] http://www.openwall.com/lists/oss-security/2011/03/30/3
-
-more exactly on that part about 'issues like incorrectly
-reporting error status from an API function' (although this not
-being case of compiler, but rather case of library).
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Alexander
