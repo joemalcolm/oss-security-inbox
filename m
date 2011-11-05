@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/12/14
-Message-ID: <20110412213344.GA16664@openwall.com>
-Date: Wed, 13 Apr 2011 01:33:44 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/2
+Message-ID: <20111105103508.GB11970@openwall.com>
+Date: Sat, 5 Nov 2011 14:35:08 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 12, 2011 at 07:58:18PM +0300, Onur K??????k wrote:
->  Sorry for the late reply, we had to resolve some issues on our side
-> about who should join. I was a subscriber of vendor-sec as a
-> representitive of Pardus, please add me to the new list(s).
+On Fri, Nov 04, 2011 at 01:14:46PM -0500, John Lightsey wrote:
+> On 11/04/2011 11:36 AM, Solar Designer wrote:
+> > On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
+> >> PAR::Packer - PAR packed files are extracted to unsafe and predictable
+> >> temporary directories
+> >>
+> >> https://rt.cpan.org/Public/Bug/Display.html?id=69560
+> > 
+> > I think that your description for this one happens to encourage a poor
+> > fix for it.  Specifically, starting the description by "par_mktmpdir()
+> > makes no effort to verify that the /tmp/par-<username> directory is safe
+> > to use" may result in this function being patched to do such checks,
+> > which I think would be a poor fix.  A better fix would be to properly
+> > create a temporary files directory, with a less predictable name and
+> > with due retries (with new names) if the directory already exists -
+> > preferably using File::Temp's tempdir().
 > 
-> 
-> pub   4096R/FCE5D06C 2011-04-12 [expires: 2021-04-09]
->      Key fingerprint = BC21 D72C C9F8 F020 320F FA8B 85B8 C631 FCE5D06C
-> uid                  Onur K??????k <onur@...dus.org.tr>
-> sub   4096R/77FE269F 2011-04-12 [expires: 2021-04-09]
+> The problem with using random directory names here is that the
+> /tmp/par-user directory is being used as a caching mechanism to avoid
+> extracting the PAR contents over and over.
 
-Added.
+Oh, I did not realize that.
 
-BTW, I am applying this restriction:
+> A better alternative may be
+> to use $ENV{'HOME'}/.par or something along those lines.
 
-| 2. Be on oss-security by the time Josh posted the above (if you did not
-| care to join oss-security until now, you hardly have a legitimate need
-| to be on the closed list now).
-
-per-distro rather than per-person.  (And it will become obsolete in some
-months anyway since new distros are appearing, etc.)
+Makes sense to me.  Use of env vars is unsafe in a potentially SUID
+script, but I don't know what the current policy regarding this is in
+CPAN.  Are CPAN modules by default supposed to be safe for use in SUID
+Perl scripts or not - I guess not, or we'd have plenty of CVE ids for
+those issues by now?  An alternative would be to find the home
+directory path from the real UID.
 
 Alexander
