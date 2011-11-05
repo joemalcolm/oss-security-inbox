@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/9
-Message-ID: <4E32CD19.6010608@redhat.com>
-Date: Fri, 29 Jul 2011 17:09:13 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Jeffrey Layton <jlayton@...hat.com>
-Subject: CVE-2011-2724 assignment notification -- samba -- incomplete fix for CVE-2010-0547 issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/4
+Message-ID: <20111105123536.GA10062@foo.fgeek.fi>
+Date: Sat, 5 Nov 2011 14:35:36 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
+> Are these duplicates:
+> 
+> CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
+> CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
+> 
+> I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
 
-   during creation of automated test case for samba CVE-2010-0547 issue 
-I have noticed still to be possible mount.cifs to succeed to mount Samba 
-share to specially-crafted mount point (containing newline character), 
-potentially resulting into mtab corruption (on systems, where glibc 
-package was not patched against CVE-2010-0296 flaw yet).
+This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
 
-The new CVE identifier of CVE-2011-2724 has been assigned to this issue
-(as an incomplete fix for CVE-2010-0547 issue).
+I am really sorry about duplicate CVEs. :(
 
-Kudos to Tomas Hoger and Jeffrey Layton for their analysis of the issue:
-
-check_mtab() calls check_newline() to check device and directory name.
-check_newline() returns EX_USAGE (1) when error is detected, while 
-check_mtab() expects -1 to indicate an error.
-
-and to Jeffrey Layton again for providing the patch almost immediately:
-[1] http://comments.gmane.org/gmane.linux.kernel.cifs/3827
-
-References:
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2724
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Best regards,
+Henri Salo
