@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/21
-Message-ID: <1468293795.510191.1307388979417.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 6 Jun 2011 15:36:19 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/05/2
+Message-ID: <20111105103508.GB11970@openwall.com>
+Date: Sat, 5 Nov 2011 14:35:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request -- Cherokee -- server admin vulnerable to csrf
+Subject: Re: CVE request: unsafe use of /tmp in multiple CPAN modules
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Can a CVE be assigned to
-> http://code.google.com/p/cherokee/issues/detail?id=1212 regarding weak
-> admin password generation ?
+On Fri, Nov 04, 2011 at 01:14:46PM -0500, John Lightsey wrote:
+> On 11/04/2011 11:36 AM, Solar Designer wrote:
+> > On Fri, Nov 04, 2011 at 09:46:45AM -0500, John Lightsey wrote:
+> >> PAR::Packer - PAR packed files are extracted to unsafe and predictable
+> >> temporary directories
+> >>
+> >> https://rt.cpan.org/Public/Bug/Display.html?id=69560
+> > 
+> > I think that your description for this one happens to encourage a poor
+> > fix for it.  Specifically, starting the description by "par_mktmpdir()
+> > makes no effort to verify that the /tmp/par-<username> directory is safe
+> > to use" may result in this function being patched to do such checks,
+> > which I think would be a poor fix.  A better fix would be to properly
+> > create a temporary files directory, with a less predictable name and
+> > with due retries (with new names) if the directory already exists -
+> > preferably using File::Temp's tempdir().
 > 
+> The problem with using random directory names here is that the
+> /tmp/par-user directory is being used as a caching mechanism to avoid
+> extracting the PAR contents over and over.
 
-Please use CVE-2011-2190.
+Oh, I did not realize that.
 
-Thanks.
+> A better alternative may be
+> to use $ENV{'HOME'}/.par or something along those lines.
 
--- 
-    JB
+Makes sense to me.  Use of env vars is unsafe in a potentially SUID
+script, but I don't know what the current policy regarding this is in
+CPAN.  Are CPAN modules by default supposed to be safe for use in SUID
+Perl scripts or not - I guess not, or we'd have plenty of CVE ids for
+those issues by now?  An alternative would be to find the home
+directory path from the real UID.
+
+Alexander
