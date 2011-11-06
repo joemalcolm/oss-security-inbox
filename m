@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/29/2
-Message-ID: <eec049a5-91a3-4c6a-9b77-803873bcc030@zmail14.collab.prod.int.phx2.redhat.com>
-Date: Thu, 29 Dec 2011 12:31:48 -0500 (EST)
-From: Kurt Seifried <kseifrie@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/3
+Message-ID: <20111106215755.GB29061@suse.de>
+Date: Sun, 6 Nov 2011 22:57:55 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com
-Subject: Re: More CVEs? (was Re: [oCERT-2011-003] multiple implementations denial-of-service via hash algorithm collision)
+Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
 Content-Type: text/plain; charset=utf-8
 
->> Credit: vulnerability report and PoC code received from Alexander
->> Klink <alexander.klink AT nruns.com> and Julian Waelde <jwaelde AT
->> cdc.informatik.tu-darmstadt.de>.
->> 
->> CVE: CVE-2011-4461 (Jetty), CVE-2011-4838 (JRuby), CVE-2011-4885
->> (PHP), CVE-2011-4462 (Plone), CVE-2011-4815 (Ruby)
->
->Kurt or other CVE assigners, can you please assign a bunch for python,
->java, tomcat etc. pp.
->
->-- 
->Hanno Böck		mail/jabber: hanno@...eck.de
->GPG: BBB51E42		http://www.hboeck.de/
+On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
+> On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
+> > Are these duplicates:
+> > 
+> > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
+> > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
+> > 
+> > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+> 
+> This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
+> 
+> I am really sorry about duplicate CVEs. :(
 
-I am going to defer this to Steve/etc, as I had nothing to do with the original CVE assignments so I have no idea (maybe they got assigned but not published? Not assigned yet due to split/merge issues? not assigned due to other reasons?). 
+Did you mail the new cve-assign alias they have?
 
--- Kurt Seifried / Red Hat Security Repsonse Team
+Ciao, Marcus
