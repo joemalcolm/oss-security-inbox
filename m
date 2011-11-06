@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/6
-Message-ID: <1649708043.1926401.1312919589034.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 9 Aug 2011 15:53:09 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/4
+Message-ID: <87vcqwewu1.fsf@mid.deneb.enyo.de>
+Date: Sun, 06 Nov 2011 22:59:34 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Cc: Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org, coley <coley@...re.org>
-Subject: Re: CVE request: perf: may parse user-controlled config file
+Subject: Re: caml-light insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
+* David Holland:
 
+> I don't know if anyone besides us still ships caml-light; it is long
+> dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
+> Hat does. But just in case: it uses mktemp() insecurely, and also does
+> unsafe things in /tmp during make install.
 
------ Original Message -----
-> This was reported by Christian Ohm at:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
-> 
-> The perf command, provided as part of the Linux kernel source, looks
-> for and honors configuration settings in ./config. A local user could
-> obtain elevated privileges by convincing a superuser to run the perf
-> command from a directory the user controls.
-
-Please use CVE-2011-2905.
-
-Thanks.
-
--- 
-    JB
+Moscow ML includes a copy of the affected code, and it's perhaps less
+obsolete than caml-light.  It seems to be part of the FreeBSD ports
+collection.
