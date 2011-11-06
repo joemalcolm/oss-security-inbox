@@ -1,31 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/3
-Message-ID: <20110928155329.GA10472@openwall.com>
-Date: Wed, 28 Sep 2011 19:53:29 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/2
+Message-ID: <20111106200911.GC13652@netbsd.org>
+Date: Sun, 6 Nov 2011 20:09:11 +0000
+From: David Holland <dholland-oss-security@...bsd.org>
 To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>
-Subject: Re: LZW decompression issues
+Subject: caml-light insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
-Here's a guess:
+I apologize for sending this out on a weekend... but I found out it
+accidentally got broadcast to one of our mailing lists so there's
+nothing much to be gained from waiting. And besides, it's neither
+particularly critical nor of particularly broad interest.
 
-On Wed, Sep 28, 2011 at 07:42:03PM +0400, Solar Designer wrote:
-> whereas the FreeBSD patch has:
-> 
->  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
-> +			if (zs->u.r.zs_code > zs->zs_free_ent ||
-> +			    zs->u.r.zs_oldcode == -1) {
-> +				/* Bad stream. */
+Anyway.
 
-Perhaps the FreeBSD "affected" statement for gzip was based on it missing
-the "zs->u.r.zs_code > zs->zs_free_ent" check prior to this patch.  This
-check was already added upstream before gzip 1.4, which is why gzip was
-"not affected" this time for other distro vendors (the issue was patched
-years ago).
+I don't know if anyone besides us still ships caml-light; it is long
+dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
+Hat does. But just in case: it uses mktemp() insecurely, and also does
+unsafe things in /tmp during make install.
 
-The rest of the changes are probably for detection of some corrupted
-archives that were of no security risk.  But that's just a guess, which
-I did not confirm.
+Patches follow; reference URL (including copies of the patches) is
+http://gnats.netbsd.org/45558.
 
-Alexander
+I'm not sure it's worth allocating a CVE number for this if it turns
+out nobody else ships it.
+
+--- src/yacc/main.c~	1995-06-07 09:34:32.000000000 -0400
++++ src/yacc/main.c
+@@ -1,4 +1,5 @@
+ #include <signal.h>
++#include <stdlib.h> /* for mkstemp(), getenv() */
+ #include "defs.h"
+ 
+ char dflag;
+@@ -31,6 +32,11 @@ char *text_file_name;
+ char *union_file_name;
+ char *verbose_file_name;
+ 
++static int action_fd = -1;
++static int entry_fd = -1;
++static int text_fd = -1;
++static int union_fd = -1;
++
+ FILE *action_file;	/*  a temp file, used to save actions associated    */
+ 			/*  with rules until the parser is written	    */
+ FILE *entry_file;
+@@ -69,9 +75,6 @@ char  *rassoc;
+ short **derives;
+ char *nullable;
+ 
+-extern char *mktemp();
+-extern char *getenv();
+-
+ 
+ done(k)
+ int k;
+@@ -276,12 +279,21 @@ create_file_names()
+     union_file_name[len + 5] = 'u';
+ 
+ #ifndef NO_UNIX
+-    mktemp(action_file_name);
+-    mktemp(entry_file_name);
+-    mktemp(text_file_name);
+-    mktemp(union_file_name);
++    action_fd = mkstemp(action_file_name);
++    entry_fd = mkstemp(entry_file_name);
++    text_fd = mkstemp(text_file_name);
++    union_fd = mkstemp(union_file_name);
+ #endif
+ 
++    if (action_fd < 0)
++	open_error(action_file_name);
++    if (entry_fd < 0)
++	open_error(entry_file_name);
++    if (text_fd < 0)
++	open_error(text_file_name);
++    if (union_fd < 0)
++	open_error(union_file_name);
++
+     len = strlen(file_prefix);
+ 
+     output_file_name = MALLOC(len + 7);
+@@ -321,15 +333,15 @@ open_files()
+ 	    open_error(input_file_name);
+     }
+ 
+-    action_file = fopen(action_file_name, "w");
++    action_file = fdopen(action_fd, "w");
+     if (action_file == 0)
+ 	open_error(action_file_name);
+ 
+-    entry_file = fopen(entry_file_name, "w");
++    entry_file = fdopen(entry_fd, "w");
+     if (entry_file == 0)
+ 	open_error(entry_file_name);
+ 
+-    text_file = fopen(text_file_name, "w");
++    text_file = fdopen(text_fd, "w");
+     if (text_file == 0)
+ 	open_error(text_file_name);
+ 
+@@ -345,7 +357,7 @@ open_files()
+ 	defines_file = fopen(defines_file_name, "w");
+ 	if (defines_file == 0)
+ 	    open_error(defines_file_name);
+-	union_file = fopen(union_file_name, "w");
++	union_file = fdopen(union_fd, "w");
+ 	if (union_file ==  0)
+ 	    open_error(union_file_name);
+     }
+
+--- src/launch/Makefile~	1995-02-22 04:33:26.000000000 -0500
++++ src/launch/Makefile
+@@ -10,19 +10,20 @@ all: camlc camllight camlmktop camlexec 
+ # Also, "make install" is done with root permissions, meaning that we don't
+ # have write permission in the current directory if NFS-mounted...
+ 
++#	(echo "#!$(BINDIR)/camlrun"; \
++#	 echo "exit 2"; \
++#	 cat testprog) > /tmp/testscr
++#	chmod a+x /tmp/testscr
++#	sh -c 'if sh -c /tmp/testscr 2>/dev/null; \
++#               then echo "#!$(BINDIR)/camlrun" > $(LIBDIR)/header; \
++#               else cp camlexec $(LIBDIR)/header; \
++#               fi'
++#	rm -f /tmp/testscr
+ install:
+-	(echo "#!$(BINDIR)/camlrun"; \
+-	 echo "exit 2"; \
+-	 cat testprog) > /tmp/testscr
+-	chmod a+x /tmp/testscr
+-	sh -c 'if sh -c /tmp/testscr 2>/dev/null; \
+-               then echo "#!$(BINDIR)/camlrun" > $(LIBDIR)/header; \
+-               else cp camlexec $(LIBDIR)/header; \
+-               fi'
+-	rm -f /tmp/testscr
++	echo "#!$(BINDIR)/camlrun" > $(DESTDIR)$(LIBDIR)/header
+ 	for script in camlc camllight camlmktop; do \
+-	  cp $$script $(BINDIR)/$$script; \
+-	  chmod a+x $(BINDIR)/$$script; \
++	  cp $$script $(DESTDIR)$(BINDIR)/$$script; \
++	  chmod a+x $(DESTDIR)$(BINDIR)/$$script; \
+ 	done
+ 
+ SEDCOMMANDS=\
+
+
+-- 
+David A. Holland
+dholland@...bsd.org
