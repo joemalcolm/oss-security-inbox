@@ -1,46 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/2
-Message-ID: <1314349111.23138.13.camel@scapa>
-Date: Fri, 26 Aug 2011 10:58:26 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Sebastian Krahmer <krahmer@...e.de>
-Cc: 639151@...s.debian.org, Moritz Muehlenhoff <jmm@...ian.org>,  robert.ancell@...onical.com, oss-security@...ts.openwall.com
-Subject: Re: [Pkg-xfce-devel] Bug#639151: Bug#639151: Bug#639151: Local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/1
+Message-ID: <20111106164932.GA394@devzero.fr>
+Date: Sun, 6 Nov 2011 17:49:32 +0100
+From: vladz <vladz@...zero.fr>
+To: oss-security@...ts.openwall.com
+Cc: benml@...idev.fr
+Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-08-26 at 10:43 +0200, Sebastian Krahmer wrote:
-> Hi,
-> 
-> You probably dont take into account the chown() that happens in lightdm.
-> Just unlink the created ~/.dmrc or ~/.Xauthority files after creation and make a symlink
-> to /etc/passwd to chown it to yourself.
 
-The chown will be applied to the symlink, not the target. I've tried to
-make .Xauthority a symlink to a root-owned file and the destination was
-indeed destroyed, but it's still root-owned.
+Hi,
 
-> However I didnt dig deep enough into it to write an exploit as I dont have
-> a working lightdm setup. The correct behavior is to temporarily drop euid/fsuid
-> to that of the user if doing anything with his files.
+Here is a PoC for this race condition.  It uses the Inotify API and
+always succeed on my Dual-core CPU.  
 
-Yeah, I'm currently cooking patches doing that, though they'll need
-review before apply.
-> 
-> The PAM issue that I was curious about was that a pam_start() etc is done
-> for the greeter-user (which I expect to be some "lightdm" user)?
-
-Yes
-> 
-> I would expect all pam_ calls are only done for the user who is actually
-> about to login. The question that came up to me was whether pam_environment
-> from the user would have impact on uid-0 called programs/scripts since
-> you transfer the PAM env to the process env.
-
-Yeah, that looks fishy, though I have no idea how it's exactly cooked
-that way, we'll have to wait for an answer from Robert.
+  http://vladz.devzero.fr/other/bzexe_PoC.c.html
 
 Regards,
 -- 
-Yves-Alexis
+http://vladz.devzero.fr
+PGP key 8F7E2D3C from pgp.mit.edu
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
