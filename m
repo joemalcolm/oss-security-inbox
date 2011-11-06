@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/1
-Message-ID: <4D7D6349.8020004@redhat.com>
-Date: Mon, 14 Mar 2011 08:37:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/1
+Message-ID: <20111106164932.GA394@devzero.fr>
+Date: Sun, 6 Nov 2011 17:49:32 +0100
+From: vladz <vladz@...zero.fr>
 To: oss-security@...ts.openwall.com
-CC: Michael Gilbert <michael.s.gilbert@...il.com>, mark@...gant.net, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Please REJECT CVE-2008-2956
+Cc: benml@...idev.fr
+Subject: Re: Request for CVE Identifier: bzexe insecure temporary file
 Content-Type: text/plain; charset=utf-8
 
-On 03/14/2011 12:12 AM, Michael Gilbert wrote:
-> According to upstream, this is not a real issue.  See the following for
-> discussion:
-> http://developer.pidgin.im/ticket/11470
-> https://bugzilla.redhat.com/show_bug.cgi?id=453739
-> http://bugs.debian.org/488632
->
-> Please REJECT this issue.
->
-> Thanks,
-> Mike
 
-Cc'ed Steve.
+Hi,
 
-Eugene
+Here is a PoC for this race condition.  It uses the Inotify API and
+always succeed on my Dual-core CPU.  
+
+  http://vladz.devzero.fr/other/bzexe_PoC.c.html
+
+Regards,
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+http://vladz.devzero.fr
+PGP key 8F7E2D3C from pgp.mit.edu
+
