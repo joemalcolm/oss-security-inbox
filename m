@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/23/6
-Message-ID: <96984075-0b95-4a7d-843d-1ab82a964017@zmail04.collab.prod.int.phx2.redhat.com>
-Date: Fri, 23 Sep 2011 18:24:40 -0400 (EDT)
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/06/3
+Message-ID: <20111106215755.GB29061@suse.de>
+Date: Sun, 6 Nov 2011 22:57:55 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Missing input sanitation in various X GLX calls
+Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
 Content-Type: text/plain; charset=utf-8
 
-For more information on this, please see our bugzilla entry:
+On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
+> On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
+> > Are these duplicates:
+> > 
+> > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
+> > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
+> > 
+> > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+> 
+> This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
+> 
+> I am really sorry about duplicate CVEs. :(
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4818
+Did you mail the new cve-assign alias they have?
 
-I emailed ajax about this and it doesn't seem to be quite as scary as it sounds, and the bug has a good analysis of the various patches noted in the upstream bug report.
-
------ Original Message -----
-> Hi,
-> 
-> https://bugs.freedesktop.org/show_bug.cgi?id=28823
-> is a tracker bug for input sanitation lacking in various GLX X calls.
-> 
-> Reporter is me@...fdog.net
-> 
-> These can probably allow a attacker with access to the GLX calls
-> (typically just the logged in user) to crash the X server or execute
-> code within it.
-> 
-> (Not thought about WebGL introduced crash potential here.)
-> 
-> The lacking checks were reported and fixed in x.org git in 2010, so
-> they
-> probably need a 2010 CVE id. (Single one should be sufficient I
-> guess.)
-
--- 
-Vincent Danen / Red Hat Security Response Team
+Ciao, Marcus
