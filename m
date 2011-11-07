@@ -1,40 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/14
-Message-ID: <4EAAC8F9.30102@redhat.com>
-Date: Fri, 28 Oct 2011 09:23:37 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/1
+Message-ID: <4EB74C76.20606@redhat.com>
+Date: Sun, 06 Nov 2011 20:11:50 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE Request: Multiple remote denial of service in Linux bridge networking code 2.6.37-3.0
+CC: "Jason A. Donenfeld" <Jason@...c4.com>
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-On 10/28/2011 02:06 AM, Marcus Meissner wrote:
-> Hi,
+On 11/04/2011 02:45 PM, Jason A. Donenfeld wrote:
+> Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
+> current version that has been out for quite some time now. These require a
+> CVE. Issues 8 through 14 are ones introduced only during development and
+So to confirm these issues will be assigned a CVE (double checking since
+this has been quite the mess):
+> were not released, and do not need a CVE.
 >
-> Linux kernel 2.6.37 introduced with this commit
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=462fb2af9788a82a534f8184abfde31574e1cfa0
-> several regressions that be used to trigger remote denial of service attacks when
-> bridging is in use.
+> So where does that leave us with the CVEs? Well, there are the issues that
+> were "released" with a "version" of Calibre, and then the trove of bugs he
+> introduced in the middle. I'll try to recap and separate which is which:
 >
-> Reporter thread is on:
-> 	http://thread.gmane.org/gmane.linux.network/191713
+> 1. Ability to create root owned directory anywhere. The mount helper calls
+> mkdir(argv[3], ...).
 >
-> Fixes are in git commits:
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=f8e9881c2aef1e982e5abc25c046820cd0b7cf64
-> 		In 2.6.39
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=66944e1c5797562cebe2d1857d46dff60bf9a69e
-> 		In 2.6.39
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=c65353daf137dd41f3ede3baf62d561fca076228
-> 		In 3.0
-> 	http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=10949550bd1e50cc91c0f5085f7080a44b0871fe
-> 		In 3.0
-> So it can be considered fixed with Linux kernel 3.0.
-> Thanks to Eugene for looking up the commit ids.
+> 2. Ability to remove any empty directory on the system.
 >
-> I think it just needs one CVE, as it was one introducing patch.
+> 3. Ability to create user_controlled_dir/.created_by_calibre_mount_helper
+> anywhere on the filesystem.
 >
-> Ciao, Marcus
-Please use CVE-2011-4087 for this issue.
+> 4. Ability to delete user_controlled_dir/.created_by_calibre_mount_helper
+> anywhere on the filesystem.
+>
+> 5. Ability to inject arguments into 'mount' being exec'd. On lines 78, 81,
+> and 83, the final two arguments to mount are user controlled. On lines
+> 1033, 106, 108, 139, and 141, the last argument to unmount/eject is user
+> controlled. The "exists()" check can be subverted via race condition or by
+> creating an existing file in the working directory with a filename equal to
+> the desired injected argument.
+>
+> 6. Ability to execute any program as root. The mount helper makes use of
+> execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the first
+> argument does not start with a / character. Because of this, execlp will
+> search PATH for the executable to run. PATH is user controlled, and thus it
+> is trivial to write a program that spawns a shell and give it "mount" as a
+> filename, and direct PATH to its directory.
+>
+> 7. Ability to mount any device to anywhere. This leads to local root, since
+> you can mount over /etc/ or /etc/pam.d/ or choose-your-own-adventure.
+>
+> 7.1. Ability to unmount any device.
+
 
 -- 
 
