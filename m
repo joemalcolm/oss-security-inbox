@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/25/4
-Message-ID: <4D3E480D.9090609@redhat.com>
-Date: Tue, 25 Jan 2011 11:48:29 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/8
+Message-ID: <4EB803C5.3020707@redhat.com>
+Date: Mon, 07 Nov 2011 09:13:57 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>, coley <coley@...re.org>
-Subject: Re: CVE request: linux kernel heap issues
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Ruby (OpenSSL extension) -- Insecure way of creation exponent value by private RSA key generation
 Content-Type: text/plain; charset=utf-8
 
-On 01/25/2011 05:46 AM, Kees Cook wrote:
-> Hello,
+On 11/07/2011 08:55 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 >
-> I don't think these minor issues I reported to the Linux Kernel have
-> had CVEs assigned to them:
+>   a security flaw was found in the way the OpenSSL extension of the
+> Ruby programming language (of version from the Git trunk repository
+> after 2011-09-01 up to 2011-11-03) generated exponent value to be used
+> for private RSA key generation (the bug caused the exponent for the
+> generated key to be always '1'). A remote attacker could use this flaw
+> to bypass / corrupt integrity of services, depending on strong private
+> RSA keys generation mechanism.
 >
-> heap contents leak for CAP_NET_ADMIN via ethtool ioctl
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b00916b189d13a615ff05c9242201135992fcda3
+> Relevant upstream patch:
+> [1]
+> http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=33633
+>
+> References:
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=751800
+>
+> Could you allocate a CVE id for this?
+Please use CVE-2011-4121 for this issue.
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-These require CAP_NET_ADMIN.
 
-CVE-2010-4655.
+-- 
 
-> iowarrior usb device heap overflow
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=3ed780117dbe5acb64280d218f0347f238dafed0
+-Kurt Seifried / Red Hat Security Response Team
 
-CVE-2010-4656.
-
-Eugene
