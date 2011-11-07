@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/7
-Message-ID: <681126650.1798699.1312403968294.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Aug 2011 16:39:28 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: Linux kernel af_packet information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/7
+Message-ID: <4EB7FF66.9090506@redhat.com>
+Date: Mon, 07 Nov 2011 16:55:18 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Ruby (OpenSSL extension) -- Insecure way of creation exponent value by private RSA key generation
 Content-Type: text/plain; charset=utf-8
 
+Hello Kurt, Steve, vendors,
 
+   a security flaw was found in the way the OpenSSL extension of the
+Ruby programming language (of version from the Git trunk repository
+after 2011-09-01 up to 2011-11-03) generated exponent value to be used
+for private RSA key generation (the bug caused the exponent for the
+generated key to be always '1'). A remote attacker could use this flaw
+to bypass / corrupt integrity of services, depending on strong private
+RSA keys generation mechanism.
 
------ Original Message -----
-> Hi,
-> please assign a CVE ID for
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=13fcb7bd322164c67926ffe272846d4860196dc6
-> 
+Relevant upstream patch:
+[1] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=33633
 
-Please use CVE-2011-2898
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=751800
 
-Thanks.
+Could you allocate a CVE id for this?
 
--- 
-    JB
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
