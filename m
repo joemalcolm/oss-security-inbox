@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/3
-Message-Id: <201101051224.40565.hanno@hboeck.de>
-Date: Wed, 5 Jan 2011 12:24:40 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/2
+Message-ID: <4EB74E6D.9060105@redhat.com>
+Date: Sun, 06 Nov 2011 20:20:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: hastymail before 1.01 XSS
+CC: David Holland <dholland-oss-security@...bsd.org>
+Subject: Re: caml-light insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
-See
-http://www.hastymail.org/security/
+On 11/06/2011 01:09 PM, David Holland wrote:
+> I apologize for sending this out on a weekend... but I found out it
+> accidentally got broadcast to one of our mailing lists so there's
+> nothing much to be gained from waiting. And besides, it's neither
+> particularly critical nor of particularly broad interest.
+>
+> Anyway.
+>
+> I don't know if anyone besides us still ships caml-light; it is long
+> dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
+> Hat does. But just in case: it uses mktemp() insecurely, and also does
+> unsafe things in /tmp during make install.
+>
+> Patches follow; reference URL (including copies of the patches) is
+> http://gnats.netbsd.org/45558.
+>
+> I'm not sure it's worth allocating a CVE number for this if it turns
+> out nobody else ships it.
 
-"Many thanks to Julien CAYSSOL who discovered and reported the issue. The 
-specific problem is an XSS attack vector in HTML formatted messages that takes 
-advantage of background attributes used with table cell elements. Due to an 
-incorrect implementation of the new htmLawed HTML filter this attribute value 
-was not properly sanitized and could be used to inject executable JavaScript. 
-This was NOT a flaw in the htmLawed filter code itself, but a problem with 
-it's specific use in Hastymail2. The Hastymail2 1.01 release was pacakages 
-specifically to address this one issue. "
+Please use CVE-2011-4119 for this issue.
 
 -- 
-Hanno Böck		Blog:		http://www.hboeck.de/
-GPG: 3DBD3B20		Jabber/Mail:	hanno@...eck.de
 
-http://schokokeks.org - professional webhosting
+-Kurt Seifried / Red Hat Security Response Team
 
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
