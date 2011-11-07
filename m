@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/19/12
-Message-ID: <1311089309.4e25a29d1a173@webmail.free.fr>
-Date: Tue, 19 Jul 2011 17:28:29 +0200
-From: Even Rouault <even.rouault@...es-paris.org>
-To: oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, oss-security@...ts.openwall.com, Even Rouault <even.rouault@...es-paris.org>, Pavel Lisý <pavel.lisy@...il.com>, aboudreault@...gears.com
-Subject: Re: CVE Request -- MapServer -- SQL injections in OGC filter encoding and in WMS time support.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/2
+Message-ID: <4EB74E6D.9060105@redhat.com>
+Date: Sun, 06 Nov 2011 20:20:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: David Holland <dholland-oss-security@...bsd.org>
+Subject: Re: caml-light insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
-Selon Jan Lieskovsky <jlieskov@...hat.com>:
+On 11/06/2011 01:09 PM, David Holland wrote:
+> I apologize for sending this out on a weekend... but I found out it
+> accidentally got broadcast to one of our mailing lists so there's
+> nothing much to be gained from waiting. And besides, it's neither
+> particularly critical nor of particularly broad interest.
+>
+> Anyway.
+>
+> I don't know if anyone besides us still ships caml-light; it is long
+> dead upstream and obsoleted by ocaml. AFAICT neither Debian nor Red
+> Hat does. But just in case: it uses mktemp() insecurely, and also does
+> unsafe things in /tmp during make install.
+>
+> Patches follow; reference URL (including copies of the patches) is
+> http://gnats.netbsd.org/45558.
+>
+> I'm not sure it's worth allocating a CVE number for this if it turns
+> out nobody else ships it.
 
-Jan,
+Please use CVE-2011-4119 for this issue.
 
-I believe Alan Boudreault (MapServer team member that I've added to the CC list)
-has already asked the Debian security team to request for a CVE number, but
-without any result for now. Maybe he can confirm.
+-- 
 
-Best regards,
-
-Even
-
-> Hello Josh, Steve, vendors,
->
->    the following has been brought to our attention:
->    [1] https://bugzilla.redhat.com/show_bug.cgi?id=722545
->    [2] http://trac.osgeo.org/mapserver/ticket/3903
->
-> More from [2]:
->
-> This ticket is to track fixes to prevent SQL injections through OGC
-> filter encoding (in WMS, WFS and SOS), as well as a potential SQL
-> injection in WMS time support.
->
-> Your system may be vulnerable if it has MapServer with OGC protocols
-> enabled, with layers connecting to an SQL RDBMS backend, either natively
-> or via OGR.
->
-> All versions of MapServer 4.x, 5.x and 6.x are potentially vulnerable.
-> All users are ** strongly encouraged ** to upgrade to one of the latest
-> releases with the fixes.
->
-> Could you allocate a CVE id for this?
->
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
->
-
+-Kurt Seifried / Red Hat Security Response Team
 
