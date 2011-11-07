@@ -1,42 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/11
-Message-ID: <876004730.18832.1300220902526.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:28:22 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/4
+Message-ID: <CAF6rxgkrHepe2b2J27+LmvJ8QVd_+u0pvzpO36YSjXkHnKT-3g@mail.gmail.com>
+Date: Sun, 6 Nov 2011 23:32:45 -0500
+From: Eitan Adler <lists@...anadler.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request for python-feedparser
+Subject: Re: caml-light insecure temporary files
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Nov 6, 2011 at 4:59 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
+> It seems to be part of the FreeBSD ports
+> collection.
 
------ Original Message -----
-> python-feedparser 5.0.1 fixes three flaws:
-> 
-> https://code.google.com/p/feedparser/
-> 
-> * Fix issue 91 (invalid text in XML declaration causes sanitizer to
-> crash)
-
-https://code.google.com/p/feedparser/issues/detail?id=91
-
-Use CVE-2011-1156
-
-
-> * Fix issue 254 (sanitization can be bypassed by malformed XML
-> comments)
-
-https://code.google.com/p/feedparser/issues/detail?id=254
-
-Use CVE-2011-1157
-
-
-> * Fix issue 255 (sanitizer doesn't strip unsafe URI schemes)
-
-https://code.google.com/p/feedparser/issues/detail?id=255
-
-Use CVE-2011-1158
-
-Thanks.
+I added an alert to our package vulnerability reporting system and
+notified the maintainer of the port in question.
 
 -- 
-    JB
+Eitan Adler
