@@ -1,18 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/18
-Message-ID: <20110223143951.58751d5a@laverne>
-Date: Wed, 23 Feb 2011 14:39:51 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/10
+Message-ID: <20111107174619.GB27092@foo.fgeek.fi>
+Date: Mon, 7 Nov 2011 19:46:19 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: pmwiki before 2.2.21
+Cc: jmm@...ian.org
+Subject: Fwd: DSA 2338-1 moodle security update
 Content-Type: text/plain; charset=utf-8
 
-http://www.securelist.com/en/advisories/42608
-http://www.pmwiki.org/wiki/PmWiki/ChangeLog
-"Fix potential XSS vulnerability, reported by DFaure."
+Has someone requested CVE-identifiers for these already?
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+- Henri
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+----- Forwarded message from Moritz Muehlenhoff <jmm@...ian.org> -----
+
+Date: Mon, 7 Nov 2011 18:18:55 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: debian-security-announce@...ts.debian.org
+Subject: [Full-disclosure] [SECURITY] [DSA 2338-1] moodle security update
+User-Agent: Mutt/1.5.21 (2010-09-15)
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- -------------------------------------------------------------------------
+Debian Security Advisory DSA-2338-1                   security@...ian.org
+http://www.debian.org/security/                        Moritz Muehlenhoff
+November 07, 2011                      http://www.debian.org/security/faq
+- -------------------------------------------------------------------------
+
+Package        : moodle
+Vulnerability  : several
+Problem type   : remote
+Debian-specific: no
+CVE ID         : not yet available
+
+Several cross-site scripting and information disclosure issues have
+been fixed in Moodle, a course management system for online learning:
+
+* MSA-11-0020 Continue links in error messages can lead offsite
+* MSA-11-0024 Recaptcha images were being authenticated from an older 
+              server
+* MSA-11-0025 Group names in user upload CSV not escaped
+* MSA-11-0026 Fields in user upload CSV not escaped
+* MSA-11-0031 Forms API constant issue
+* MSA-11-0032 MNET SSL validation issue
+* MSA-11-0036 Messaging refresh vulnerability
+* MSA-11-0037 Course section editing injection vulnerability
+* MSA-11-0038 Database injection protection strengthened
+
+For the stable distribution (squeeze), this problem has been fixed in
+version 1.9.9.dfsg2-2.1+squeeze2.
+
+For the unstable distribution (sid), this problem has been fixed in
+version 1.9.9.dfsg2-4.
+
+We recommend that you upgrade your moodle packages.
+
+Further information about Debian Security Advisories, how to apply
+these updates to your system and frequently asked questions can be
+found at: http://www.debian.org/security/
+
+Mailing list: debian-security-announce@...ts.debian.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk64EswACgkQXm3vHE4uylqZjQCg4xG5p108miVitHbsEiagUhvQ
+KJ0AniojypPOT9jDQ+ICyBa5+AoCI1xk
+=adle
+-----END PGP SIGNATURE-----
+
+_______________________________________________
+Full-Disclosure - We believe in it.
+Charter: http://lists.grok.org.uk/full-disclosure-charter.html
+Hosted and sponsored by Secunia - http://secunia.com/
+
+----- End forwarded message -----
