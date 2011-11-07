@@ -1,62 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/15
-Message-ID: <915205642.1685717.1311969545367.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 29 Jul 2011 15:59:05 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/10
+Message-ID: <20111107174619.GB27092@foo.fgeek.fi>
+Date: Mon, 7 Nov 2011 19:46:19 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE-request Tribiq CMS path disclosure HTB22857
+Cc: jmm@...ian.org
+Subject: Fwd: DSA 2338-1 moodle security update
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2727
+Has someone requested CVE-identifiers for these already?
 
-Thanks
+- Henri
 
--- 
-    JB
+----- Forwarded message from Moritz Muehlenhoff <jmm@...ian.org> -----
 
+Date: Mon, 7 Nov 2011 18:18:55 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: debian-security-announce@...ts.debian.org
+Subject: [Full-disclosure] [SECURITY] [DSA 2338-1] moodle security update
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
------ Original Message -----
-> Can I get CVE-identifier for this issue? Verified that this is a valid
-> bug.
-> 
-> Best regards,
-> Henri Salo
-> 
-> ----- Forwarded message from advisory@...ridge.ch -----
-> 
-> Date: Thu, 3 Mar 2011 12:50:21 +0100 (CET)
-> From: advisory@...ridge.ch
-> To: bugtraq@...urityfocus.com
-> Subject: HTB22857: Path disclosure in Tribiq CMS
-> 
-> Vulnerability ID: HTB22857
-> Reference:
-> http://www.htbridge.ch/advisory/full_path_disclosure_in_tribiq_cms.html
-> Product: Tribiq CMS
-> Vendor: Tribal Limited ( http://tribiq.com/ )
-> Vulnerable Version: 5.2.7b and probably prior versions
-> Vendor Notification: 17 February 2011
-> Vulnerability Type: Path disclosure
-> Status: Fixed by Vendor
-> Risk level: Low
-> Credit: High-Tech Bridge SA - Ethical Hacking & Penetration Testing
-> (http://www.htbridge.ch/)
-> 
-> Vulnerability Details:
-> The vulnerability exists due to failure in the
-> "templatewrap/templatefoot.php", "cmsjs/plugin.js.php",
-> "cmsincludes/cms_plugin_api_link.inc.php" scripts, it's possible to
-> generate an error that will reveal the full path of the script.
-> A remote user can determine the full path to the web root directory
-> and other potentially sensitive information.
-> 
-> 
-> http://host/templatewrap/templatefoot.php
-> http://host/cmsjs/plugin.js.php
-> http://host/cmsincludes/cms_plugin_api_link.inc.php
-> 
-> Solution: Upgrade to the most recent version
-> 
-> 
-> ----- End forwarded message -----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+- -------------------------------------------------------------------------
+Debian Security Advisory DSA-2338-1                   security@...ian.org
+http://www.debian.org/security/                        Moritz Muehlenhoff
+November 07, 2011                      http://www.debian.org/security/faq
+- -------------------------------------------------------------------------
+
+Package        : moodle
+Vulnerability  : several
+Problem type   : remote
+Debian-specific: no
+CVE ID         : not yet available
+
+Several cross-site scripting and information disclosure issues have
+been fixed in Moodle, a course management system for online learning:
+
+* MSA-11-0020 Continue links in error messages can lead offsite
+* MSA-11-0024 Recaptcha images were being authenticated from an older 
+              server
+* MSA-11-0025 Group names in user upload CSV not escaped
+* MSA-11-0026 Fields in user upload CSV not escaped
+* MSA-11-0031 Forms API constant issue
+* MSA-11-0032 MNET SSL validation issue
+* MSA-11-0036 Messaging refresh vulnerability
+* MSA-11-0037 Course section editing injection vulnerability
+* MSA-11-0038 Database injection protection strengthened
+
+For the stable distribution (squeeze), this problem has been fixed in
+version 1.9.9.dfsg2-2.1+squeeze2.
+
+For the unstable distribution (sid), this problem has been fixed in
+version 1.9.9.dfsg2-4.
+
+We recommend that you upgrade your moodle packages.
+
+Further information about Debian Security Advisories, how to apply
+these updates to your system and frequently asked questions can be
+found at: http://www.debian.org/security/
+
+Mailing list: debian-security-announce@...ts.debian.org
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAk64EswACgkQXm3vHE4uylqZjQCg4xG5p108miVitHbsEiagUhvQ
+KJ0AniojypPOT9jDQ+ICyBa5+AoCI1xk
+=adle
+-----END PGP SIGNATURE-----
+
+_______________________________________________
+Full-Disclosure - We believe in it.
+Charter: http://lists.grok.org.uk/full-disclosure-charter.html
+Hosted and sponsored by Secunia - http://secunia.com/
+
+----- End forwarded message -----
