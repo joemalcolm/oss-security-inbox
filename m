@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/03/1
-Message-ID: <20110703211627.GA7688@openwall.com>
-Date: Mon, 4 Jul 2011 01:16:27 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: vsftpd download backdoored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/7
+Message-ID: <4EB7FF66.9090506@redhat.com>
+Date: Mon, 07 Nov 2011 16:55:18 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Ruby (OpenSSL extension) -- Insecure way of creation exponent value by private RSA key generation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello Kurt, Steve, vendors,
 
-Here's a great example of why maintainers should sign their release
-tarballs, why distributions should insist on that, and why they should
-actually check the signatures indeed.
+   a security flaw was found in the way the OpenSSL extension of the
+Ruby programming language (of version from the Git trunk repository
+after 2011-09-01 up to 2011-11-03) generated exponent value to be used
+for private RSA key generation (the bug caused the exponent for the
+generated key to be always '1'). A remote attacker could use this flaw
+to bypass / corrupt integrity of services, depending on strong private
+RSA keys generation mechanism.
 
-I think we should be referring to this when convincing people to do that
-(I had moderate success so far - some projects started signing their
-tarballs after my suggestions/requests, some did not).
+Relevant upstream patch:
+[1] http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=33633
 
-http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+References:
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=751800
 
-New vsftpd homepage:
+Could you allocate a CVE id for this?
 
-https://security.appspot.com/vsftpd.html
-
-Alexander
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
