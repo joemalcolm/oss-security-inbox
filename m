@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/10/7
-Message-ID: <20111010204022.4bd99128@laverne>
-Date: Mon, 10 Oct 2011 20:40:22 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in phorum before 5.2.18
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/5
+Message-ID: <4EB7BDE4.4000100@redhat.com>
+Date: Mon, 07 Nov 2011 12:15:48 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Dennis Gilmore <dennis@...il.us>
+Subject: CVE Request -- pam_yubico -- Authentication bypass via NULL password
 Content-Type: text/plain; charset=utf-8
 
-http://www.phorum.org/phorum5/read.php?64,149588
+Hello Kurt, Steve, vendors,
 
-cite:
-"It includes a security fix for an XSS issue reported by Paul Davis in
-the admin login screen. Thanks Paul! "
+   a security flaw was found in the way pam_yubico, a pluggable
+authentication module for yubikeys, performed user authentication,
+when 'use_first_pass' PAM configuration option was not used and
+pam_yubico module was configured as 'sufficient' in the PAM 
+configuration. A remote attacker could use this flaw to circumvent
+common authentication process and obtain access to the account in
+question by providing a NULL value (pressing Ctrl-D keyboard
+sequence) as the password string.
 
+Relevant upstream patch:
+[1] 
+https://github.com/Yubico/yubico-pam/commit/4712da70cac159d5ca9579c1e4fac0645b674043
 
--- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
+References:
+[2] 
+http://groups.google.com/group/yubico-devel/browse_thread/thread/3f179ec0e6845deb
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=733322
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
