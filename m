@@ -1,94 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/4
-Message-ID: <AANLkTimvizFt4PJE+RfG9xP0mxVEMgXDcZAtvc7UqW5v@mail.gmail.com>
-Date: Fri, 18 Mar 2011 14:15:25 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/11
+Message-ID: <20111107175759.GA5278@pisco.westfalen.local>
+Date: Mon, 7 Nov 2011 18:57:59 +0100
+From: jmm@...ian.org
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Joomla! 1.5.21 <= SQL Injection Vulnerability
+Subject: Re: Fwd: DSA 2338-1 moodle security update
 Content-Type: text/plain; charset=utf-8
 
-1. OVERVIEW
+On Mon, Nov 07, 2011 at 07:46:19PM +0200, Henri Salo wrote:
+> Has someone requested CVE-identifiers for these already?
 
-Potential SQL Injection Flaws were detected Joomla! CMS version 1.5.20.
+Yes, but to no avail so far:
 
+1. For MSA-11-0002 to MSA-11-0017:
 
-2. PRODUCT DESCRIPTION
+Date: Wed, 18 May 2011 23:48:05 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+Subject: [oss-security] CVE request: Several Moodle issues
 
-Joomla is a free and open source content management system (CMS) for
-publishing content on the World Wide Web and intranets. It comprises a
-model–view–controller (MVC) Web application framework that can also be
-used independently.
-Joomla is written in PHP, uses object-oriented programming (OOP)
-techniques and software design patterns, stores data in a MySQL
-database, and includes features such as page caching, RSS feeds,
-printable versions of pages, news flashes, blogs, polls, search, and
-support for language internationalization.
+-> Poked 16 Jun 2011 w/o success
 
+2. For MSA-11-0026 to MSA-11-0041:
 
-3. VULNERABILITY DESCRIPTION
+Date: Wed, 19 Oct 2011 14:09:42 -0600
+From: Vincent Danen <vdanen@...hat.com>
+Subject: [oss-security] CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
 
-Parameters (filter_order, filer_order_Dir) were not properly sanitized
-in Joomla! that lead to SQL Injection vulnerability.
+There have been no requests for MSA-11-0018 to MSA-11-0025 so far.
 
-
-4. VERSIONS AFFECTED
-
-Joomla! 1.5.21  and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-Exploits:
-/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir=&filter_order=%00'
-/index.php?option=com_weblinks&view=category&id=2&filter_order_Dir='&filter_order=asc
-
-Screenshots:
-http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_(filter_order)_front.jpg
-http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_front.jpg
-http://yehg.net/lab/pr0js/advisories/joomla/core/1.5.21/sql_injection/sqli_%28filter_order_Dir%29_back.jpg
-
-
-6. IMPACT
-
-Attackers could successfully execution malicious sql command injection
-in Joomla! CMS by bypassing filers in place.
-
-
-7. SOLUTION
-
-Upgrade to Joomla! 1.5.22
-
-
-8. VENDOR
-
-Joomla! Developer Team
-http://www.joomla.org
-
-
-9. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-10. DISCLOSURE TIME-LINE
-
-2010-10-06  : Notified Joomla! Security Strike Team
-2010-11-01  : Vulnerability disclosed
-2010-11-05  : Patched version (1.5.22) released
-
-
-11. REFERENCES
-
-Vendor Advisory URL:
-http://developer.joomla.org/security/news/9-security/10-core-security/323-20101101-core-sqli-info-disclosurevulnerabilities.html
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/joomla/core/[joomla_1.5_21]_sql_injection
-Assigned CVE: http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-4166
-OWASP Top 10: http://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
-CWE-89: http://cwe.mitre.org/data/definitions/89.html
-
-
-#yehg [2010-11-05]
-
-last updated: 2010-12-24
+Cheers,
+        Moritz
