@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/29
-Message-ID: <20110405163619.GA18727@openwall.com>
-Date: Tue, 5 Apr 2011 20:36:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/5
+Message-ID: <4EB7BDE4.4000100@redhat.com>
+Date: Mon, 07 Nov 2011 12:15:48 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Dennis Gilmore <dennis@...il.us>
+Subject: CVE Request -- pam_yubico -- Authentication bypass via NULL password
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 05, 2011 at 09:46:25AM -0500, Tim Zingelman wrote:
-> I'll also second the question someone else posed about how cc'ing
-> others off the list could reasonably work if all messages are
-> encrypted.
+Hello Kurt, Steve, vendors,
 
-Messages from the list to members are always encrypted.  Messages to the
-list are preferably encrypted, but this is not enforced.  (If a message
-arrives to the list unencrypted, it is flagged as such in the encrypted
-copies that are sent to members, so they're aware that the information
-contained in the message is more likely to leak.)
+   a security flaw was found in the way pam_yubico, a pluggable
+authentication module for yubikeys, performed user authentication,
+when 'use_first_pass' PAM configuration option was not used and
+pam_yubico module was configured as 'sufficient' in the PAM 
+configuration. A remote attacker could use this flaw to circumvent
+common authentication process and obtain access to the account in
+question by providing a NULL value (pressing Ctrl-D keyboard
+sequence) as the password string.
 
-So there are two ways to CC someone external:
+Relevant upstream patch:
+[1] 
+https://github.com/Yubico/yubico-pam/commit/4712da70cac159d5ca9579c1e4fac0645b674043
 
-1. Send the message to the list and to them unencrypted.
+References:
+[2] 
+http://groups.google.com/group/yubico-devel/browse_thread/thread/3f179ec0e6845deb
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=733322
 
-2. Send the message to both the list and the external address encrypted,
-to their respective keys - e.g., GnuPG and Mutt support this just fine
-(messages encrypted to more than one key).
+Could you allocate a CVE id for this?
 
-The list currently does not propagate the To/CC headers to messages
-arriving to members, though.  Maybe this is something to improve such
-that discussions CC'ing someone external can be maintained.
-
-Alexander
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
