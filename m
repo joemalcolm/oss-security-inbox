@@ -1,26 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/26/1
-Message-ID: <4EF8206F.5080804@redhat.com>
-Date: Mon, 26 Dec 2011 12:51:19 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/6
+Message-ID: <4EB7FE03.7090805@redhat.com>
+Date: Mon, 07 Nov 2011 08:49:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2011-4862 is not BSD-specific
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Dennis Gilmore <dennis@...il.us>
+Subject: Re: CVE Request -- pam_yubico -- Authentication bypass via NULL password
 Content-Type: text/plain; charset=utf-8
 
-On 12/25/2011 10:44 PM, Florian Weimer wrote:
-> This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
-> overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
-> seems to have been added at MIT when the BSD telnetd was Kerberized,
-> and it ended up in the Heimdal recryptofication of Kerberos (from
-> where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
-> pre-authentication segfault with both versions (as shipped by Debian).
+On 11/07/2011 04:15 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 >
-> The telnetd from netkit does not appear to be affected.
-
-The patch seems to be applicable though, probably you need to do 
-something else to make it segfault?
-
+>   a security flaw was found in the way pam_yubico, a pluggable
+> authentication module for yubikeys, performed user authentication,
+> when 'use_first_pass' PAM configuration option was not used and
+> pam_yubico module was configured as 'sufficient' in the PAM
+> configuration. A remote attacker could use this flaw to circumvent
+> common authentication process and obtain access to the account in
+> question by providing a NULL value (pressing Ctrl-D keyboard
+> sequence) as the password string.
+>
+> Relevant upstream patch:
+> [1]
+> https://github.com/Yubico/yubico-pam/commit/4712da70cac159d5ca9579c1e4fac0645b674043
+>
+> References:
+> [2]
+> http://groups.google.com/group/yubico-devel/browse_thread/thread/3f179ec0e6845deb
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=733322
+>
+> Could you allocate a CVE id for this?
+>
+Please use CVE-2011-4120 for this issue.
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
