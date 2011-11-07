@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/2
-Message-ID: <20110830155918.GH9091@dhcp-25-225.brq.redhat.com>
-Date: Tue, 30 Aug 2011 17:59:18 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/6
+Message-ID: <4EB7FE03.7090805@redhat.com>
+Date: Mon, 07 Nov 2011 08:49:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kernel: xen: CVE-2011-2901
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Dennis Gilmore <dennis@...il.us>
+Subject: Re: CVE Request -- pam_yubico -- Authentication bypass via NULL password
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-2901 kernel: xen: off-by-one shift in x86_64 __addr_ok()
+On 11/07/2011 04:15 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a security flaw was found in the way pam_yubico, a pluggable
+> authentication module for yubikeys, performed user authentication,
+> when 'use_first_pass' PAM configuration option was not used and
+> pam_yubico module was configured as 'sufficient' in the PAM
+> configuration. A remote attacker could use this flaw to circumvent
+> common authentication process and obtain access to the account in
+> question by providing a NULL value (pressing Ctrl-D keyboard
+> sequence) as the password string.
+>
+> Relevant upstream patch:
+> [1]
+> https://github.com/Yubico/yubico-pam/commit/4712da70cac159d5ca9579c1e4fac0645b674043
+>
+> References:
+> [2]
+> http://groups.google.com/group/yubico-devel/browse_thread/thread/3f179ec0e6845deb
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=733322
+>
+> Could you allocate a CVE id for this?
+>
+Please use CVE-2011-4120 for this issue.
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-The x86_64 __addr_ok() macro intends to ensure that the checked address
-is either in the positive half of the 48-bit virtual address space, or
-above the Xen-reserved area. However, the current shift count is
-off-by-one, allowing full access to the "negative half" too, via
-certain hypercalls which ignore virtual-address bits [63:48]. 
 
-As a result, a malicious guest administrator on a vulnerable system is
-able to crash the host.
-
-Upstream status: 
-This issue only affects very old hypervisors, Xen 3.3 and earlier.
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=728042
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
