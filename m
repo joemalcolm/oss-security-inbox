@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/3
-Message-ID: <4EBA98F3.2010706@redhat.com>
-Date: Wed, 09 Nov 2011 16:14:59 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
-Subject: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/3
+Message-ID: <CAOSRhROOAg33GnudkF910gx+a3Ee=VY3Z=qKOVJ3HngwUK_0Ww@mail.gmail.com>
+Date: Tue, 8 Nov 2011 08:03:45 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, Steve, vendors,
+A local user with group "log" on Android may send a malformed message
+to vold ("volume daemon"), causing a stack buffer overflow.  This has
+been demonstrated to be exploitable to escalate privileges to root on
+all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+arbitrary heap object and triggering a use-after-free condition [1].
+It appears the bug was silently patched in Honeycomb (3.x), but note
+that since Honeycomb is not open source, it does not fall within the
+scope of this list.  Bug discovered and exploited by the Revolutionary
+team [2].
 
-   a security flaw was found in the way the libsocialweb,
-a social network data aggregator, performed its initialization
-when this service start was initiated by the dbus daemon.
-Due to a deficiency in a way the libsocialweb service was
-initialized, an untrusted (non-SSL) network connection has
-been opened to remote Twitter service servers without explicit
-approval of the user, running the libsocialweb service on the
-local host. A remote attacker could use this flaw to conduct
-various MITM attacks and potentially alter integrity of the user
-account in question.
+-Dan
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
-
-Could you allocate a CVE id for this?
-
-Thank you && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
-
-P.S.: This one being on the border a bit (since clear security
-       consequences of this deficiency not completely investigated),
-       but in any case it's a bad programming practice to open
-       untrusted connection to remote servers by default without
-       particular users' approval (trust boundary crossing).
+[1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+[2] http://revolutionary.io/
