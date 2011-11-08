@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/7
-Message-ID: <20110624130517.GA18027@dztty>
-Date: Fri, 24 Jun 2011 14:05:17 +0100
-From: Djalal Harouni <tixxdz@...ndz.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/4
+Message-ID: <CAOSRhROHk-cYEuNJ--UCN7vC3M9nCu1+egiQ4xETApW_XBkf5w@mail.gmail.com>
+Date: Tue, 8 Nov 2011 08:08:35 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 20, 2011 at 09:01:11AM +0400, Solar Designer wrote:
-> Oh, also some builds of crypt_blowfish (and of affected systems/apps)
-> for PowerPC are probably unaffected, because char is typically unsigned
-> there (unless overridden in compiler flags for compatibility with more
-> typical systems).
-Just to add that on some (perhaps all) ARM plateforms char is by
-default: "unsigned" (unless you compile with -fsigned-char as you have
-noted).
+On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+> A local user with group "log" on Android may send a malformed message
+> to vold ("volume daemon"), causing a stack buffer overflow.  This has
+> been demonstrated to be exploitable to escalate privileges to root on
+> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+> arbitrary heap object and triggering a use-after-free condition [1].
+> It appears the bug was silently patched in Honeycomb (3.x), but note
+> that since Honeycomb is not open source, it does not fall within the
+> scope of this list.  Bug discovered and exploited by the Revolutionary
+> team [2].
+>
 
-This is an old link that expose some problems when you just use 'char var'
-on ARM (perhaps not only on ARM):
-http://www.arm.linux.org.uk/docs/faqs/signedchar.php
+Oops, a few minor corrections.
 
--- 
-tixxdz
-http://opendz.org
+Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
+the libsysutils library, and was demonstrated to be exploitable via
+vold, which makes use of the affected library function.  Sorry for the
+noise.
+
+> -Dan
+>
+> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+> [2] http://revolutionary.io/
+>
