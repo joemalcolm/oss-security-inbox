@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/4
-Message-ID: <4DBC2618.8080204@kde.org>
-Date: Sat, 30 Apr 2011 11:09:12 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/10
+Message-ID: <4EB95D1B.5080508@redhat.com>
+Date: Tue, 08 Nov 2011 09:47:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Re: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 04/30/2011 10:03 AM, Solar Designer wrote:
-> Hi Jeff,
-> 
-> On Sat, Apr 30, 2011 at 08:38:57AM -0400, Jeff Mitchell wrote:
->> I didn't hear back about this -- can someone confirm?
-> 
-> I am sorry about the delay in getting back to you on this.  I don't
-> treat these subscription requests as high priority, but I do "flag" them
-> such that I don't miss any.  As you might have noticed, I handle them in
-> batches; the delay for some has been over 10 days so far (OK, that might
-> have been excessive).
+On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
+> On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+>> A local user with group "log" on Android may send a malformed message
+>> to vold ("volume daemon"), causing a stack buffer overflow.  This has
+>> been demonstrated to be exploitable to escalate privileges to root on
+>> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+>> arbitrary heap object and triggering a use-after-free condition [1].
+>> It appears the bug was silently patched in Honeycomb (3.x), but note
+>> that since Honeycomb is not open source, it does not fall within the
+>> scope of this list.  Bug discovered and exploited by the Revolutionary
+>> team [2].
+>>
+> Oops, a few minor corrections.
+>
+> Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
+> the libsysutils library, and was demonstrated to be exploitable via
+> vold, which makes use of the affected library function.  Sorry for the
+> noise.
+>
+>> -Dan
+>>
+>> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+>> [2] http://revolutionary.io/
+>>
+Please use CVE-2011-4123 for this issue.
 
-No problem; I didn't actually notice you handling them in batches, but
-that explains it.
+-- 
 
-> The list that has been setup so far is Linux distro security contacts;
-> KDE is not a Linux distro, hence it should not be on the list.  That
-> said, I'll save your request to a separate folder in case we ever setup
-> a suitable list.  There have been no requests for the setup of a
-> non-OS-distro vendor security contacts list so far, and I see too little
-> use for such a list.
+-Kurt Seifried / Red Hat Security Response Team
 
-OK. I got a bit confused (it's been a long, long thread), because when
-people were added their information was also put on the wiki, and the
-wiki has multiple pages for different contact types. So I guess I got a
-bit confused as to exactly who the target was.
-
-Thanks,
-Jeff
