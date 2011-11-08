@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/15
-Message-ID: <4D7E2D7E.9080703@redhat.com>
-Date: Mon, 14 Mar 2011 16:00:14 +0100
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, David King <amigadave@...gadave.com>, Mark McLoughlin <mark@...net.ie>, David Woodhouse <dwmw2@...radead.org>
-Subject: CVE Request / Discussion -- vino -- reports the desktop being reachable only over the local network, when reachable from everywhere
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/9
+Message-ID: <4EB95C76.4070701@redhat.com>
+Date: Tue, 08 Nov 2011 09:44:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: potential OpenPAM vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, David, vendors,
+On 11/08/2011 08:56 AM, Sebastian Krahmer wrote:
+> Hi,
+>
+> OpenPAM, until recently, was not filtering the service argument of
+> pam_start() invocations. This can lead to a root compromise.
+> Note that Linux-PAM is entirely different as forbids anything with '/'
+> inside.
+>
+> Please see 
+>
+> http://c-skills.blogspot.com/2011/11/openpam-trickery.html
+>
+> for more discussion and PoC.
+> This most likely affects FreeBSD and Solaris via the kcheckpass
+> vector.
+>
+> regards,
+> Sebastian
+>
+>
+Please use CVE-2011-4122 for this issue.
 
-   this is due the following vino deficiency:
-   [1] https://bugzilla.redhat.com/show_bug.cgi?id=553477#c0
-   [2] https://bugzilla.redhat.com/show_bug.cgi?id=678846
+-- 
 
-As noted in [1] Vino may incorrectly report, that relevant user desktop
-is reachable only over local network, when in fact it's reachable from everywhere.
+-Kurt Seifried / Red Hat Security Response Team
 
-As this is issue slightly on the border, not sure it should receive a CVE identifier,
-so Cc-ed David Woodhouse to elaborate more on issue impact if necessary.
-
-Under my opinion, the trust boundary is crossed (it is wrongly reported to the the user, they
-have a secure setup, when they do not have it and otherwise would perform steps to correct the
-settings). But left the final decision for further discussion.
-
-What are the thoughts of the others? Should this one get a CVE identifier or not?
-
-Upstream bug report:
-[3] https://bugzilla.gnome.org/show_bug.cgi?id=596190
-
-Ubuntu bug report (IPv6 specific):
-[4] https://bugs.launchpad.net/ubuntu/+source/vino/+bug/344489
-
-To David King -- David, what are the upstream plans for this issue? Is there by any
-chance upstream patch for the bug [3] yet?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
