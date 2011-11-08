@@ -1,28 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/30/1
-Message-ID: <4E5C60F7.8060602@redhat.com>
-Date: Tue, 30 Aug 2011 12:03:03 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/11
+Message-ID: <4EB975DC.6020201@redhat.com>
+Date: Tue, 08 Nov 2011 11:33:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: kernel: CVE-2011-2482/2519
+CC: "Jason A. Donenfeld" <Jason@...c4.com>
+Subject: Re: Re: CVE request for Calibre
 Content-Type: text/plain; charset=utf-8
 
-CVE-2011-2482 sctp DoS
-This does not affect the upstream kernel. Our kernel left out a chunk of
-upstream ea2bc483ff5 that was not needed at the time of the backport,
-but was later required for a feature that we introduced in the kernel.
+On 11/06/2011 08:11 PM, Kurt Seifried wrote:
+> On 11/04/2011 02:45 PM, Jason A. Donenfeld wrote:
+>> Just do clarify: Issues 1 through 7.1 (8 issues) were released with the
+>> current version that has been out for quite some time now. These
+require a
+>> CVE. Issues 8 through 14 are ones introduced only during development and
+> So to confirm these issues will be assigned a CVE (double checking since
+> this has been quite the mess):
+>> were not released, and do not need a CVE.
+>>
+>> So where does that leave us with the CVEs? Well, there are the issues
+that
+>> were "released" with a "version" of Calibre, and then the trove of
+bugs he
+>> introduced in the middle. I'll try to recap and separate which is which:
 
-https://bugzilla.redhat.com/CVE-2011-2482
-http://git.kernel.org/linus/ea2bc483ff5caada7c4aa0d5fbf87d3a6590273d
+Ok this is quite the mess but to summarize:
 
-CVE-2011-2519 xen: x86_emulate: fix SAHF emulation
-This has been addressed in the upstream xen implementation. The patched
-code would cause a hypervisor crash due to dereferencing a bogus address
-(in the first 4 MBs of address space, as EFLAGS bits above bit 21 are
-always 0, but more likely in the first page).
+http://bazaar.launchpad.net/~kovid/calibre/trunk/view/9675/src/calibre/devices/linux_mount_helper.c
 
-http://xenbits.xen.org/hg/xen-3.1-testing.hg/rev/15644
-https://bugzilla.redhat.com/CVE-2011-2519
+>> 1. Ability to create root owned directory anywhere. The mount helper
+calls
+>> mkdir(argv[3], ...).
 
-Thanks, Eugene
+Input validation
+
+>> 2. Ability to remove any empty directory on the system.
+
+Input validation
+
+>> 3. Ability to create user_controlled_dir/.created_by_calibre_mount_helper
+>> anywhere on the filesystem.
+
+Input validation
+
+>> 4. Ability to delete user_controlled_dir/.created_by_calibre_mount_helper
+>> anywhere on the filesystem.
+
+Input validation
+
+>> 5. Ability to inject arguments into 'mount' being exec'd. On lines
+78, 81,
+>> and 83, the final two arguments to mount are user controlled. On lines
+>> 1033, 106, 108, 139, and 141, the last argument to unmount/eject is user
+>> controlled. The "exists()" check can be subverted via race condition
+or by
+>> creating an existing file in the working directory with a filename
+equal to
+>> the desired injected argument.
+
+Input validation
+
+>> 6. Ability to execute any program as root. The mount helper makes use of
+>> execlp on lines 78, 81, 83, 103, 106, 108, 139, and 141, and the first
+>> argument does not start with a / character. Because of this, execlp will
+>> search PATH for the executable to run. PATH is user controlled, and
+thus it
+>> is trivial to write a program that spawns a shell and give it "mount"
+as a
+>> filename, and direct PATH to its directory.
+
+Untrusted search path
+
+>> 7. Ability to mount any device to anywhere. This leads to local root,
+since
+>> you can mount over /etc/ or /etc/pam.d/ or choose-your-own-adventure.
+
+Race condition
+
+>> 7.1. Ability to unmount any device.
+
+Input validation (assuming you mean all the unmount(mp)'s in the code.
+
+===========
+
+So for the input validation issues please use CVE-2011-4124
+
+For the untrusted search path please use CVE-2011-4125
+
+For the race condition please use CVE-2011-4126
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
