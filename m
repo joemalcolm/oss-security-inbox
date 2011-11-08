@@ -1,21 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/29/1
-Message-ID: <4E32093F.1020401@redhat.com>
-Date: Fri, 29 Jul 2011 09:13:35 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/10
+Message-ID: <4EB95D1B.5080508@redhat.com>
+Date: Tue, 08 Nov 2011 09:47:23 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Kees Cook <kees@...ntu.com>
-Subject: Re: CVE request: kernel: gro: Only reset frag0 when skb can be pulled
+CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
+Subject: Re: Re: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 07/29/2011 06:30 AM, Kees Cook wrote:
-> Hi,
-> 
-> This fixes a remote crasher under certain network device configurations:
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=17dd759c67f21e34f2156abcf415e1f60605a188
+On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
+> On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+>> A local user with group "log" on Android may send a malformed message
+>> to vold ("volume daemon"), causing a stack buffer overflow.  This has
+>> been demonstrated to be exploitable to escalate privileges to root on
+>> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+>> arbitrary heap object and triggering a use-after-free condition [1].
+>> It appears the bug was silently patched in Honeycomb (3.x), but note
+>> that since Honeycomb is not open source, it does not fall within the
+>> scope of this list.  Bug discovered and exploited by the Revolutionary
+>> team [2].
+>>
+> Oops, a few minor corrections.
+>
+> Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
+> the libsysutils library, and was demonstrated to be exploitable via
+> vold, which makes use of the affected library function.  Sorry for the
+> noise.
+>
+>> -Dan
+>>
+>> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+>> [2] http://revolutionary.io/
+>>
+Please use CVE-2011-4123 for this issue.
 
-I'm looking at this too.
+-- 
 
-CVE-2011-2723
+-Kurt Seifried / Red Hat Security Response Team
 
-Eugene
