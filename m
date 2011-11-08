@@ -1,44 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/15
-Message-ID: <667287819.1024512.1309377483164.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 29 Jun 2011 15:58:03 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/8
+Message-ID: <20111108155647.GC3561@suse.de>
+Date: Tue, 8 Nov 2011 16:56:47 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: qemu-kvm: OOB memory access caused by negative vq notifies
+Subject: potential OpenPAM vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2512.
+Hi,
 
-Thanks.
+OpenPAM, until recently, was not filtering the service argument of
+pam_start() invocations. This can lead to a root compromise.
+Note that Linux-PAM is entirely different as forbids anything with '/'
+inside.
+
+Please see 
+
+http://c-skills.blogspot.com/2011/11/openpam-trickery.html
+
+for more discussion and PoC.
+This most likely affects FreeBSD and Solaris via the kcheckpass
+vector.
+
+regards,
+Sebastian
+
 
 -- 
-    JB
 
------ Original Message -----
-> The virtio_queue_notify() function checks that the virtqueue number is
-> less than the maximum number of virtqueues. A signed comparison is
-> used but the virtqueue number could be negative if a buggy or
-> malicious
-> guest is run. This results in memory accesses outside of the virtqueue
-> array.
-> 
-> To trigger this issue the attacker needs to issue 32bit write to Queue
-> Notify field of Virtio Header in the virtio pci config space even
-> though
-> the field is 16bit only by specs. Qemu-kvm allows that for the moment
-> and provides whole 32bit value to the underlying functions.
-> 
-> Unprivileged guest user could use this flaw to crash the guest (denial
-> of service) or, possibly, escalate their privileges on the host.
-> 
-> Upstream patch:
-> http://patchwork.ozlabs.org/patch/94604/
-> 
-> References:
-> https://bugzilla.redhat.com/show_bug.cgi?id=717399
-> http://patchwork.ozlabs.org/patch/94604/
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+---
+SUSE LINUX Products GmbH,
+GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
+Maxfeldstraße 5
+90409 Nürnberg
+Germany
+
