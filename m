@@ -1,39 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/4
-Message-ID: <4DBC2618.8080204@kde.org>
-Date: Sat, 30 Apr 2011 11:09:12 -0400
-From: Jeff Mitchell <mitchell@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/7
+Message-ID: <1320763429.6018.83@d.hx.id.au>
+Date: Wed, 09 Nov 2011 01:43:49 +1100
+From: David Hicks <d@...id.au>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Subject: Re: /proc/interrupts PoC: spy-interrupts
 Content-Type: text/plain; charset=utf-8
 
-On 04/30/2011 10:03 AM, Solar Designer wrote:
-> Hi Jeff,
-> 
-> On Sat, Apr 30, 2011 at 08:38:57AM -0400, Jeff Mitchell wrote:
->> I didn't hear back about this -- can someone confirm?
-> 
-> I am sorry about the delay in getting back to you on this.  I don't
-> treat these subscription requests as high priority, but I do "flag" them
-> such that I don't miss any.  As you might have noticed, I handle them in
-> batches; the delay for some has been over 10 days so far (OK, that might
-> have been excessive).
+On Mon, 2011-11-07 at 21:41 +0400, Vasiliy Kulikov wrote:
+> /*
+>  * A PoC for spying for keystrokes in gksu via /proc/interrupts in Linux <= 3.1.
+>  * 
+>  * The file /proc/interrupts is world readable.  It contains information
+>  * about how many interrupts were emitted since the system boot.  We may loop
+>  * on one CPU core while the victim is executed on another, and learn the length
+>  * of victim's passord via monitoring emitted interrupts' counters of the keyboard
+>  * interrupt.  The PoC counts only keystrokes number, but it can be easily extended
+>  * to note the delays between the keystrokes and do the statistical analysis to
+>  * learn the precise input characters.
+>  *
 
-No problem; I didn't actually notice you handling them in batches, but
-that explains it.
+If you're after another idea[1], you could also try writing some code to
+analyse context switch counters:
 
-> The list that has been setup so far is Linux distro security contacts;
-> KDE is not a Linux distro, hence it should not be on the list.  That
-> said, I'll save your request to a separate folder in case we ever setup
-> a suitable list.  There have been no requests for the setup of a
-> non-OS-distro vendor security contacts list so far, and I see too little
-> use for such a list.
+1. Wait for a user to spawn an instance of gnome-terminal[2].
+2. Monitor the value of nonvoluntary_ctxt_switches in /proc/{pid of
+gnome-terminal instance}/status.
+3. Wait for the user to spawn an instance of su/sudo.
+4. Analyse timing of changes to nonvoluntary_ctxt_switches as context
+switches to gnome-terminal on each key press at the password prompt.
+5. Stop monitoring once the su/sudo process indicates a successful login
+(there are various ways of doing this including waiting for a pause in
+key presses). You should now have the length of the password and an idea
+of timing between key presses.
 
-OK. I got a bit confused (it's been a long, long thread), because when
-people were added their information was also put on the wiki, and the
-wiki has multiple pages for different contact types. So I guess I got a
-bit confused as to exactly who the target was.
+Mouse movements over the gnome-terminal window can be separated out
+easily. You'll see 100's of context switches in a short time frame,
+followed by a pause as the user moves their hands to the keyboard and
+then a few context switches as keyboard events are received. You would
+also need to subtract context switches due to the blinking cursor
+(periodic screen redraw).
 
-Thanks,
-Jeff
+Taking this to another extreme you could also watch
+nonvoluntary_ctxt_switches before and after su/sudo is called, coupled
+with knowledge of processes that have been spawned as a result of
+keystrokes, to develop a statistical model for timings between
+keystrokes (assuming you can get enough resolution or samples of typing
+patterns).
+
+There was a relevant thread of discussion on LKML, 7 Feb 2011[3],
+discussing information leakage of ASLR offsets from /proc/$pid/. The
+issue, considerations and solutions are likely similar. Prior
+discussions about loose HPET/high resolution counter access vs. crypto
+implementations, detecting "Blue Pill rootkits" via timing analysis[4]
+and so forth are also relevant reading.
+
+
+
+[1] At the moment this is just an unproven/unimplemented idea (according
+to a quick search). However, similar research indicates that it is
+highly likely that root passwords could be recovered using this
+approach. Unless you're an OpenBSD developer, don't be too concerned :)
+
+[2] This idea may work against other UI terminal software/desktop
+environments or poorly implemented authentication daemons where key
+presses are sent individually over a network or socket.
+
+[3] https://lkml.org/lkml/2011/2/7/368
+
+[4] First example I found,
+http://www.matasano.com/research/bh-usa-07-ptacek_goldsmith_and_lawson.pdf
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
