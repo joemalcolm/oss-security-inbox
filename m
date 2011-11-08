@@ -1,28 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/1
-Message-ID: <4E1AB63A.1010508@suse.de>
-Date: Mon, 11 Jul 2011 10:37:14 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
-To: oss-security@...ts.openwall.com, Marcus Rueckert <mrueckert@...e.de>, security@...y-lang.org, Urabe Shyouhei <shyouhei@...y-lang.org>
-Subject: CVE Request: ruby PRNG fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/7
+Message-ID: <1320763429.6018.83@d.hx.id.au>
+Date: Wed, 09 Nov 2011 01:43:49 +1100
+From: David Hicks <d@...id.au>
+To: oss-security@...ts.openwall.com
+Subject: Re: /proc/interrupts PoC: spy-interrupts
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, 2011-11-07 at 21:41 +0400, Vasiliy Kulikov wrote:
+> /*
+>  * A PoC for spying for keystrokes in gksu via /proc/interrupts in Linux <= 3.1.
+>  * 
+>  * The file /proc/interrupts is world readable.  It contains information
+>  * about how many interrupts were emitted since the system boot.  We may loop
+>  * on one CPU core while the victim is executed on another, and learn the length
+>  * of victim's passord via monitoring emitted interrupts' counters of the keyboard
+>  * interrupt.  The PoC counts only keystrokes number, but it can be easily extended
+>  * to note the delays between the keystrokes and do the statistical analysis to
+>  * learn the precise input characters.
+>  *
 
-Ruby 1.8.7-p352 fixes initialization of the PRNG in forked
-processes:
+If you're after another idea[1], you could also try writing some code to
+analyse context switch counters:
 
-http://www.ruby-lang.org/en/news/2011/07/02/ruby-1-8-7-p352-released/
-http://redmine.ruby-lang.org/issues/4579
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=31713
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=32050
+1. Wait for a user to spawn an instance of gnome-terminal[2].
+2. Monitor the value of nonvoluntary_ctxt_switches in /proc/{pid of
+gnome-terminal instance}/status.
+3. Wait for the user to spawn an instance of su/sudo.
+4. Analyse timing of changes to nonvoluntary_ctxt_switches as context
+switches to gnome-terminal on each key press at the password prompt.
+5. Stop monitoring once the su/sudo process indicates a successful login
+(there are various ways of doing this including waiting for a pause in
+key presses). You should now have the length of the password and an idea
+of timing between key presses.
 
-cu
-Ludwig
+Mouse movements over the gnome-terminal window can be separated out
+easily. You'll see 100's of context switches in a short time frame,
+followed by a pause as the user moves their hands to the keyboard and
+then a few context switches as keyboard events are received. You would
+also need to subtract context switches due to the blinking cursor
+(periodic screen redraw).
 
--- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
-Imendörffer, HRB 16746 (AG Nürnberg)
+Taking this to another extreme you could also watch
+nonvoluntary_ctxt_switches before and after su/sudo is called, coupled
+with knowledge of processes that have been spawned as a result of
+keystrokes, to develop a statistical model for timings between
+keystrokes (assuming you can get enough resolution or samples of typing
+patterns).
+
+There was a relevant thread of discussion on LKML, 7 Feb 2011[3],
+discussing information leakage of ASLR offsets from /proc/$pid/. The
+issue, considerations and solutions are likely similar. Prior
+discussions about loose HPET/high resolution counter access vs. crypto
+implementations, detecting "Blue Pill rootkits" via timing analysis[4]
+and so forth are also relevant reading.
+
+
+
+[1] At the moment this is just an unproven/unimplemented idea (according
+to a quick search). However, similar research indicates that it is
+highly likely that root passwords could be recovered using this
+approach. Unless you're an OpenBSD developer, don't be too concerned :)
+
+[2] This idea may work against other UI terminal software/desktop
+environments or poorly implemented authentication daemons where key
+presses are sent individually over a network or socket.
+
+[3] https://lkml.org/lkml/2011/2/7/368
+
+[4] First example I found,
+http://www.matasano.com/research/bh-usa-07-ptacek_goldsmith_and_lawson.pdf
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
