@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/08/6
-Message-ID: <1897040229.564616.1307564898406.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 8 Jun 2011 16:28:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/6
+Message-ID: <20111108151040.GA31470@foo.fgeek.fi>
+Date: Tue, 8 Nov 2011 17:10:40 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Coppermine Photo Gallery -- cpg1.4.27 / cpg1.5.12 -- XSS flaw
+Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
+On Sun, Nov 06, 2011 at 10:57:55PM +0100, Marcus Meissner wrote:
+> On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
+> > On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
+> > > Are these duplicates:
+> > > 
+> > > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
+> > > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
+> > > 
+> > > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+> > 
+> > This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
+> > 
+> > I am really sorry about duplicate CVEs. :(
 > 
-> Coppermine Photo Gallery upstream in the past addressed one XSS flaw
-> in cpg1.4.27 / cpg1.5.12 versions. Further details:
-> [1] http://bugs.gentoo.org/show_bug.cgi?id=347287
-> [2]
-> http://forum.coppermine-gallery.net/index.php/topic,65023.msg322935.html#msg322935
-> [3] http://forum.coppermine-gallery.net/index.php/topic,69495.0.html
-> [4] http://sourceforge.net/news/?group_id=89658
+> Did you mail the new cve-assign alias they have?
 > 
-> There doesn't seem to be a CVE id for this issue yet (or at least I
-> couldn't find one).
-> 
-> Note: Should be CVE-2010-XXYY CVE id.
-> 
-> Could you allocate one?
-> 
+> Ciao, Marcus
 
-Please use CVE-2010-4667.
+http://cve.mitre.org/cve/editorial_policies/duplicates.html
 
-Thanks.
+I contacted cve@...dress. I would also like to point out that they have never replied to any of my emails, which I have also heard from others.
 
--- 
-    JB
+Best regards,
+Henri Salo
