@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/06/3
-Message-ID: <20110406094738.GA3124@suse.de>
-Date: Wed, 6 Apr 2011 11:47:38 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/4
+Message-ID: <CAOSRhROHk-cYEuNJ--UCN7vC3M9nCu1+egiQ4xETApW_XBkf5w@mail.gmail.com>
+Date: Tue, 8 Nov 2011 08:08:35 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE for ruby on rails XSS fixes
+Subject: Re: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+> A local user with group "log" on Android may send a malformed message
+> to vold ("volume daemon"), causing a stack buffer overflow.  This has
+> been demonstrated to be exploitable to escalate privileges to root on
+> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+> arbitrary heap object and triggering a use-after-free condition [1].
+> It appears the bug was silently patched in Honeycomb (3.x), but note
+> that since Honeycomb is not open source, it does not fall within the
+> scope of this list.  Bug discovered and exploited by the Revolutionary
+> team [2].
+>
 
-Can someone assign a CVE for the XSS issue described in
+Oops, a few minor corrections.
 
-https://github.com/rails/rails/blob/38df020c95beca7e12f0188cb7e18f3c37789e20/actionpack/CHANGELOG
+Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
+the libsysutils library, and was demonstrated to be exploitable via
+vold, which makes use of the affected library function.  Sorry for the
+noise.
 
-?
-thx,
--s
-
-
--- 
-~
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-~ SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
-
+> -Dan
+>
+> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+> [2] http://revolutionary.io/
+>
