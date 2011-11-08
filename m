@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/15
-Message-ID: <20111026164022.GA10041@albatros>
-Date: Wed, 26 Oct 2011 20:40:22 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/6
+Message-ID: <20111108151040.GA31470@foo.fgeek.fi>
+Date: Tue, 8 Nov 2011 17:10:40 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: Duplicate CVE assigned: CVE-2011-2708 CVE-2011-2710
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 26, 2011 at 10:11 -0600, Kurt Seifried wrote:
-> >> Please use CVE-2011-4080 for this issue.
-> >
-> > Why does it worth CVE?  
->
-> This allows an attacker to bypass a security boundary. The root user is
-> able to gain privileges they shouldn't have.
+On Sun, Nov 06, 2011 at 10:57:55PM +0100, Marcus Meissner wrote:
+> On Sat, Nov 05, 2011 at 02:35:36PM +0200, Henri Salo wrote:
+> > On Sun, Oct 16, 2011 at 04:23:29PM +0300, Henri Salo wrote:
+> > > Are these duplicates:
+> > > 
+> > > CVE-2011-2708 was requested here: http://seclists.org/oss-sec/2011/q3/149
+> > > CVE-2011-2710 was requested here: http://seclists.org/oss-sec/2011/q3/166
+> > > 
+> > > I did report about asking CVE to YGN Ethical Hacker Group and also when I received one.
+> > 
+> > This never got reply in here. I got email that I should contact MITRE to get this removed. They haven't replied to my emails at all. How to proceed?
+> > 
+> > I am really sorry about duplicate CVEs. :(
+> 
+> Did you mail the new cve-assign alias they have?
+> 
+> Ciao, Marcus
 
-You have much bigger problems if you rely on the security boundaries
-defined by LXC.  As I've already showed, LXC root may execute arbitrary
-code as the full root in the root namespaces.
+http://cve.mitre.org/cve/editorial_policies/duplicates.html
 
-(I assume we're talking about the mainline kernel, not OpenVZ or any
-other kernel fork/patchset/etc.)
+I contacted cve@...dress. I would also like to point out that they have never replied to any of my emails, which I have also heard from others.
 
-Thanks,
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Best regards,
+Henri Salo
