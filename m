@@ -1,27 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/30/6
-Message-ID: <20110430163639.GA30650@openwall.com>
-Date: Sat, 30 Apr 2011 20:36:39 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/9
+Message-ID: <4EB95C76.4070701@redhat.com>
+Date: Tue, 08 Nov 2011 09:44:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+CC: Sebastian Krahmer <krahmer@...e.de>
+Subject: Re: potential OpenPAM vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 24, 2011 at 04:44:29PM -0400, Michael Gilbert wrote:
-> Finally, the cleartext message should be posted to an open list after a
-> period of time (probably two months max) so that the entire community
-> can see and validate the closed discussion .  This eliminates the
-> possibility of a secret cabal forming or at least empowers the outside
-> world to see the true reality (although with a delay).
+On 11/08/2011 08:56 AM, Sebastian Krahmer wrote:
+> Hi,
+>
+> OpenPAM, until recently, was not filtering the service argument of
+> pam_start() invocations. This can lead to a root compromise.
+> Note that Linux-PAM is entirely different as forbids anything with '/'
+> inside.
+>
+> Please see 
+>
+> http://c-skills.blogspot.com/2011/11/openpam-trickery.html
+>
+> for more discussion and PoC.
+> This most likely affects FreeBSD and Solaris via the kcheckpass
+> vector.
+>
+> regards,
+> Sebastian
+>
+>
+Please use CVE-2011-4122 for this issue.
 
-Does anyone in here know of an existing program to mass-decrypt all
-PGP/MIME messages in an mbox file, resulting in another mbox file?
-Note: the messages may contain multiple MIME parts.
+-- 
 
-Could this possibly be a script around Mutt (which includes PGP/MIME
-handling)?
+-Kurt Seifried / Red Hat Security Response Team
 
-Suggestions are welcome (but let's not turn this into a lengthy thread
-of its own).
-
-Alexander
