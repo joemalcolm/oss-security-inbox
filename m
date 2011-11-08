@@ -1,47 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/20
-Message-ID: <20110404134024.GC12101@openwall.com>
-Date: Mon, 4 Apr 2011 17:40:24 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/08/3
+Message-ID: <CAOSRhROOAg33GnudkF910gx+a3Ee=VY3Z=qKOVJ3HngwUK_0Ww@mail.gmail.com>
+Date: Tue, 8 Nov 2011 08:03:45 -0500
+From: Dan Rosenberg <dan.j.rosenberg@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 04, 2011 at 02:07:16PM +0200, Nico Golde wrote:
-> I can understand that you want to keep the list of subscribers low in order to 
-> prevent leaks. But from a practical point of view I see really no difference 
-> if a mail is passed to a team exploder of a distro by one of the allowed 
-> subscribers or directly sent to these members, at least in terms of attack 
-> surface/leaking risks.
+A local user with group "log" on Android may send a malformed message
+to vold ("volume daemon"), causing a stack buffer overflow.  This has
+been demonstrated to be exploitable to escalate privileges to root on
+all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+arbitrary heap object and triggering a use-after-free condition [1].
+It appears the bug was silently patched in Honeycomb (3.x), but note
+that since Honeycomb is not open source, it does not fall within the
+scope of this list.  Bug discovered and exploited by the Revolutionary
+team [2].
 
-I was thinking that only a subset of issues discussed on the list will
-be relevant to a given distro, and only a subset of those will need to
-be communicated to the distro's entire security team right away.  Maybe
-this is not true for large distros, which package almost all software
-that Linux distros package at all.
+-Dan
 
-> That being said, my key data (I was added as part of Debian):
-> pub   1024D/73647CFF 2003-11-15
->       Key fingerprint = FF46 E565 5CC1 E2E5 3F69  C739 1D87 E549 7364 7CFF
-> uid                  Nico Golde <nion@...ian.org>
-> uid                  Nico Golde <nico@...lde.de>
-> uid                  Nico Golde <nion@....net>
-> uid                  Nico Golde <nion@...tu-berlin.de>
-> sub   2048g/F774030E 2003-11-15
-> 
-> or alternatively a stronger key:
-> pub   4096R/A0A0AAAA 2009-06-01
->       Key fingerprint = E1AB DE0E FFCA AEF3 9494  7592 CD4B 2AF3 A0A0 AAAA
-> uid                  Nico Golde <nion@...ian.org>
-> uid                  Nico Golde <nico@...lde.de>
-> uid                  Nico Golde <nion@...tu-berlin.de>
-> uid                  Nico Golde <nion@....net>
-> sub   4096R/E89CCA30 2009-06-02
-
-Please suggest a specific e-mail address and key combination.  And if
-you suggest other than your @debian.org address, please suggest a way to
-verify that the address is really "yours" (the Debian security person's).
-
-Thanks,
-
-Alexander
+[1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+[2] http://revolutionary.io/
