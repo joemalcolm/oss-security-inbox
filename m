@@ -1,78 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/30
-Message-ID: <20111121224129.GA25272@foo.fgeek.fi>
-Date: Tue, 22 Nov 2011 00:41:29 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: sschurtz@...nline.de
-Subject: CVE-request: Contao 2.10.1 Cross-site scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/6
+Message-ID: <1320853637.3014.123.camel@mdlinux>
+Date: Wed, 09 Nov 2011 10:47:17 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
------ Forwarded message from sschurtz@...nline.de -----
+On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
+> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+> > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+> >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+> >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+> >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+> >>>> cause LightDM to set the destination of the link to user ownership.
+> >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+> >>>>
+> >>>> Overview of changes in lightdm 1.0.6
+> >>>>
+> >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+> >>> Could a CVE be assigned for this?
+> >>>
+> >>> Regards,
+> >> Can you send me the link to this announcement so I can confirm it? Thanks.
+> >>
+> > Here's the link to the mailing list mail:
+> > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+> >
+> > Regards,
+> Thanks, confirmed (first hand info is much better). Please use
+> CVE-2011-4105 for this issue.
+> 
 
-Date: Sat, 8 Oct 2011 07:59:27 GMT
-From: sschurtz@...nline.de
-To: bugtraq@...urityfocus.com
-Subject: Contao 2.10.1 Cross-site scripting vulnerability
-X-Mailer: MIME-tools 5.420 (Entity 5.420)
+BTW, the fix that is in 1.0.6 is probably not enough for distros that
+don't implement hard link restrictions, such as the Yama LSM that is
+used in Ubuntu.
 
-Advisory:              	Contao 2.10.1 Cross-site scripting vulnerability
-Advisory ID:           	SSCHADV2011-025
-Author:                	Stefan Schurtz
-Affected Software:  	Successfully tested on Contao 2.10.1
-Vendor URL:          	http://www.contao.org/
-Vendor Status:       	fixed
-CVE-ID:                	-
+Marc.
 
-==========================
-Vulnerability Description:
-==========================
 
-Contao 2.10 is prone to multiple Cross-site scripting vulnerability
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
 
-==================
-Technical Details:
-==================
-
-http://<target>/contao-2.10.1/index.php/teachers.html?"/><script>alert('xss')</script>
-http://<target>/contao-2.10.1/index.php/teachers/'"</style></script><script>alert(document.cookie)</script>
-
-=========
-Solution:
-=========
-
-- Vendor patch available - http://dev.contao.org/projects/typolight/repository/revisions/1041
-- Release of a new version 2.10.2 next week
-
-====================
-Disclosure Timeline:
-====================
-
-07-Oct-2011 - informed developers (contao@...trobots.com)
-07-Oct-2011 - vendor fix
-08-Oct-2011 - release date of this security advisory
-
-========
-Credits:
-========
-
-Vulnerability found and advisory written by Stefan Schurtz.
-
-===========
-U
-References:
-===========
-
-http://www.contao.org/
-http://dev.contao.org/projects/typolight/repository/revisions/1041
-http://www.rul3z.de/advisories/SSCHADV2011-025.txt
-
------ End forwarded message -----
-
-Can you assign CVE-identifier for this vulnerability?
-
-http://dev.contao.org/projects/typolight/repository/revisions/8de5b536973a38ba75ebebfff16a5f0f29d99671 (reported 10/10/2011 03:09 pm)
-http://dev.contao.org/projects/typolight/repository/revisions/b7b2c2281227ad9c1647bf1f03e6d663b8387959 (reported 10/07/2011 01:33 pm)
-
-Best regards,
-Henri Salo
