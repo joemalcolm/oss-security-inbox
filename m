@@ -1,31 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/28/3
-Message-ID: <20110928155329.GA10472@openwall.com>
-Date: Wed, 28 Sep 2011 19:53:29 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Colin Percival <cperciva@...ebsd.org>
-Subject: Re: LZW decompression issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/6
+Message-ID: <1320853637.3014.123.camel@mdlinux>
+Date: Wed, 09 Nov 2011 10:47:17 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: kseifried@...hat.com
+Cc: oss-security@...ts.openwall.com, Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Here's a guess:
-
-On Wed, Sep 28, 2011 at 07:42:03PM +0400, Solar Designer wrote:
-> whereas the FreeBSD patch has:
+On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
+> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+> > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+> >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+> >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+> >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+> >>>> cause LightDM to set the destination of the link to user ownership.
+> >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+> >>>>
+> >>>> Overview of changes in lightdm 1.0.6
+> >>>>
+> >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+> >>> Could a CVE be assigned for this?
+> >>>
+> >>> Regards,
+> >> Can you send me the link to this announcement so I can confirm it? Thanks.
+> >>
+> > Here's the link to the mailing list mail:
+> > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+> >
+> > Regards,
+> Thanks, confirmed (first hand info is much better). Please use
+> CVE-2011-4105 for this issue.
 > 
->  		if (zs->u.r.zs_code >= zs->zs_free_ent) {
-> +			if (zs->u.r.zs_code > zs->zs_free_ent ||
-> +			    zs->u.r.zs_oldcode == -1) {
-> +				/* Bad stream. */
 
-Perhaps the FreeBSD "affected" statement for gzip was based on it missing
-the "zs->u.r.zs_code > zs->zs_free_ent" check prior to this patch.  This
-check was already added upstream before gzip 1.4, which is why gzip was
-"not affected" this time for other distro vendors (the issue was patched
-years ago).
+BTW, the fix that is in 1.0.6 is probably not enough for distros that
+don't implement hard link restrictions, such as the Yama LSM that is
+used in Ubuntu.
 
-The rest of the changes are probably for detection of some corrupted
-archives that were of no security risk.  But that's just a guess, which
-I did not confirm.
+Marc.
 
-Alexander
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
+
