@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/6
-Message-ID: <4D9F80DD.80509@mvista.com>
-Date: Fri, 08 Apr 2011 11:40:45 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/4
+Message-ID: <4EBA9CBA.4060404@redhat.com>
+Date: Wed, 09 Nov 2011 08:31:06 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE request: gnutls possible DoS (GNUTLS-SA-2011-2)
 Content-Type: text/plain; charset=utf-8
 
-Can I get a status on this? (+, -, Ack, Nack)
+On 11/08/2011 11:40 PM, Vincent Danen wrote:
+> A potential DoS flaw was found in gnutls:
+>
+> http://www.gnu.org/s/gnutls/security.html
+> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/5596
+> https://bugzilla.redhat.com/show_bug.cgi?id=752308
+>
+> Fixes are available in git, and fixed in upstream 2.12.14 and 3.0.7
+> versions:
+>
+> http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=190cef6eed37d0e73a73c1e205eb31d45ab60a3c
+>
+> http://git.savannah.gnu.org/gitweb/?p=gnutls.git;a=commitdiff;h=e82ef4545e9e98cbcb032f55d7c750b81e3a0450
+>
+>
+> It seems to me like the DoS is on the client side, from a malicious
+> server, and upstream also indicates it is unaware of any clients that
+> use the code improperly (as not documented) and would be vulnerable.
+>
+> Could a CVE be assigned to this issue please?
+>
+> Thanks.
+>
+Please use CVE-2011-4128  for this issue.
 
-- Armin
+-- 
 
-On 04/06/2011 06:57 AM, Solar Designer wrote:
-> On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
->> Please subscribe me to the new list. I was a vendor-sec subscriber for
->> MontaVista Software.
->>
->> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
->> uid Armin Kuster <akuster@...sta.com>
->> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
-> 
-> Looks like you forgot to make this public key available.  Please provide
-> it to me and I'll subscribe you.
-> 
-> While we're at it, the MontaVista Software entry at:
-> 
-> http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
-> 
-> says: "The process for distribution of security advisories is currently
-> under discussion."  Perhaps this has already been discussed and decided
-> upon?  If so, please update the wiki page with specific link(s) to your
-> security advisories, updates, relevant mailing list archive - or
-> whatever you have.  Without this info, it is unclear whether you would
-> be making timely intended use of the advance notifications or not.
-> 
-> Thanks,
-> 
-> Alexander
+-Kurt Seifried / Red Hat Security Response Team
+
