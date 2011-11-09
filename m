@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/24
-Message-ID: <20110405153904.GA18405@openwall.com>
-Date: Tue, 5 Apr 2011 19:39:04 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/3
+Message-ID: <4EBA98F3.2010706@redhat.com>
+Date: Wed, 09 Nov 2011 16:14:59 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
+Subject: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 01, 2011 at 06:58:52PM -0400, Mike O'Connor wrote:
-> pub    512R/205BBF7D 2001-12-30
->       Key fingerprint = 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9
->       C1
-> uid                  Michael J. O'Connor <mjo@...o.mi.org>
+Hello Kurt, Steve, vendors,
 
-As discussed with Mike off-list, he does not currently qualify for the
-Linux distros list (he posted the subscription request above before I
-added that requirement), and a new PGP key would be needed anyway.  So
-I've just unsubscribed Mike.  He may qualify for a non-Linux list if we
-set one up.
+   a security flaw was found in the way the libsocialweb,
+a social network data aggregator, performed its initialization
+when this service start was initiated by the dbus daemon.
+Due to a deficiency in a way the libsocialweb service was
+initialized, an untrusted (non-SSL) network connection has
+been opened to remote Twitter service servers without explicit
+approval of the user, running the libsocialweb service on the
+local host. A remote attacker could use this flaw to conduct
+various MITM attacks and potentially alter integrity of the user
+account in question.
 
-Alexander
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
+
+Could you allocate a CVE id for this?
+
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
+
+P.S.: This one being on the border a bit (since clear security
+       consequences of this deficiency not completely investigated),
+       but in any case it's a bad programming practice to open
+       untrusted connection to remote servers by default without
+       particular users' approval (trust boundary crossing).
