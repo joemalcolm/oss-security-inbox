@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/11/3
-Message-ID: <4E1B0B0C.1080308@suse.de>
-Date: Mon, 11 Jul 2011 16:39:08 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/5
+Message-ID: <4EBA9D55.7020401@redhat.com>
+Date: Wed, 09 Nov 2011 08:33:41 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Michael Matz <matz@...e.de>, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>, Zefram <zefram@...h.org>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
+Subject: Re: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote:
-> [...]
-> Also, it brings up the question: why merely use $2a$ running the new
-> code rather than fully emulate the bug even for newly set passwords,
-> which would make all passwords work, even on other networked machines?
-> Sure, that would be even nastier for security, so maybe you managed to
-> strike a balance well.  But nevertheless the question is there.  One of
-> your options results in full backwards compatibility at a security cost
-> (for the local system), but the other somehow chooses to strike a
-> balance between compatibility and security without achieving either of
-> these fully (for a network of systems).
+On 11/09/2011 08:14 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
 >
-> Maybe you can afford to drop BLOWFISH_2y to avoid those inconsistencies?
-> I imagine that people won't know to enable this option unless/until they
-> have already run into an issue anyway (that is, someone is already
-> unable to log in).  At this point, they could likely upgrade the rest of
-> their networked systems as well... or downgrade this one. ;-(
-
-I'm not sure I understand what you are suggesting. Keep using the buggy
-algorithm for new passwords and keep storing them as 2a as long as
-BLOWFISH_2a2x is turned on?
-
-cu
-Ludwig
+>   a security flaw was found in the way the libsocialweb,
+> a social network data aggregator, performed its initialization
+> when this service start was initiated by the dbus daemon.
+> Due to a deficiency in a way the libsocialweb service was
+> initialized, an untrusted (non-SSL) network connection has
+> been opened to remote Twitter service servers without explicit
+> approval of the user, running the libsocialweb service on the
+> local host. A remote attacker could use this flaw to conduct
+> various MITM attacks and potentially alter integrity of the user
+> account in question.
+>
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: This one being on the border a bit (since clear security
+>       consequences of this deficiency not completely investigated),
+>       but in any case it's a bad programming practice to open
+>       untrusted connection to remote servers by default without
+>       particular users' approval (trust boundary crossing).
+Please use CVE-2011-4129  for this issue.
 
 -- 
-  (o_   Ludwig Nussel
-  //\
-  V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix 
-Imendörffer, HRB 16746 (AG Nürnberg)
+
+-Kurt Seifried / Red Hat Security Response Team
+
