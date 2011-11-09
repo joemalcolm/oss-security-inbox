@@ -1,60 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/27/5
-Message-ID: <20110727085739.GA16080@suse.de>
-Date: Wed, 27 Jul 2011 10:57:39 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request - dhcp clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/1
+Message-ID: <CAFJ0LnE0AMi4x8rSdNjp-Ja7YRap-7qUgSYUiJRFk-GKY=vL=g@mail.gmail.com>
+Date: Wed, 9 Nov 2011 15:03:38 -0800
+From: Nick Kralevich <nnk@...gle.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: dan.j.rosenberg@...il.com
+Subject: Re: Re: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+Hi Kurt / Dan,
 
-Can you point us to the exact version and location in code where
-the vulnerability is? I remember to have checked udhcpc at that
-time and neither I found it setting a hostname or parsing
-the options for a hostname.
-The hostname it is using must be passed on the commandline
-and are rather added to the request than parsed from a reply.
+Nick Kralevich here from the Android security team.
 
-While we are on the hostname issue again, AFAIR the kernel contains
-a DHCP client and was accepting hostname options so it could
-theoretically be attacked the same way as with dhclient. However
-this seems only a use-case for thin clients with NFS-root
-or so and in such a case you can execute code on the client anyways.
-So its not really worth fixing, except for vendors which lock
-down their embedded devices before shipping it to their customers, but
-who is doing that? :)
+Google is a CNA (CVE Numbering Authority), and we've already assigned
+this vulnerability CVE-2011-3874. To avoid confusion, I would
+appreciate it if CVE-2011-3874 would be considered the authoritative
+CVE for this vulnerability, and CVE-2011-4123 should be marked as a
+duplicate. More information on the vold vulnerability, including a
+patch, can be found at
+http://code.google.com/p/android/issues/detail?id=21681
 
-Sebastian
+For the record, Google maintains several security contact mailing
+lists.  In general, you can reach Google security by e-mailing
+security@...gle.com or visiting
+http://www.google.com/about/corporate/company/security.html
 
+For Android specific security issues, the preferred e-mail address is
+security@...roid.com, or you can visit
+http://developer.android.com/resources/faq/security.html#issue
 
-On Wed, Jul 27, 2011 at 09:28:48AM +0200, Tomas Hoger wrote:
-> On Tue, 26 Jul 2011 15:35:02 -0400 (EDT) Josh Bressers wrote:
-> 
-> Just to clarify...
-> 
-> > Use CVE-2011-2716 for udhcpc
-> 
-> This is dhcp client that is part of busybox.
-> 
-> > CVE-2011-2717 for udhcp6c.
-> 
-> This should say dhcp6c and is part of the (now obsolete) dhcpv6 project:
-> 
->   https://fedorahosted.org/dhcpv6/
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
+For Chrome specific security issues, the preferred e-mail address is
+security@...omium.org, or you can visit
+http://dev.chromium.org/Home/chromium-security/reporting-security-bugs
 
--- 
+In general, e-mailing security@...gle.com will eventually get to
+Chrome or Android, although it's faster to contact the product
+specific security alias first.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Because Google is a CNA, we maintain our own pool of CVEs from Mitre.
+Any of the addresses above can issue CVEs for Google related
+vulnerabilities.
 
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+Thanks!
+-- Nick Kralevich
+   Android Security Team
 
+> On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
+> > On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+> >> A local user with group "log" on Android may send a malformed message
+> >> to vold ("volume daemon"), causing a stack buffer overflow.  This has
+> >> been demonstrated to be exploitable to escalate privileges to root on
+> >> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+> >> arbitrary heap object and triggering a use-after-free condition [1].
+> >> It appears the bug was silently patched in Honeycomb (3.x), but note
+> >> that since Honeycomb is not open source, it does not fall within the
+> >> scope of this list.  Bug discovered and exploited by the Revolutionary
+> >> team [2].
+> >>
+> > Oops, a few minor corrections.
+> >
+> > Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
+> > the libsysutils library, and was demonstrated to be exploitable via
+> > vold, which makes use of the affected library function.  Sorry for the
+> > noise.
+> >
+> >> -Dan
+> >>
+> >> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+> >> [2] http://revolutionary.io/
+> >>
+> Please use CVE-2011-4123 for this issue.
+>
+> --
+>
+> -Kurt Seifried / Red Hat Security Response Team
+>
