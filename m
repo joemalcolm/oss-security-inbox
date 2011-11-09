@@ -1,80 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/15/2
-Message-ID: <20111015133636.GA25066@openwall.com>
-Date: Sat, 15 Oct 2011 17:36:36 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: hardlink(1) has buffer overflows, is unsafe on changing trees
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/1
+Message-ID: <CAFJ0LnE0AMi4x8rSdNjp-Ja7YRap-7qUgSYUiJRFk-GKY=vL=g@mail.gmail.com>
+Date: Wed, 9 Nov 2011 15:03:38 -0800
+From: Nick Kralevich <nnk@...gle.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: dan.j.rosenberg@...il.com
+Subject: Re: Re: CVE request: Android: vold stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Kurt / Dan,
 
-The hardlink(1) program from Fedora is susceptible to buffer overflows
-of fixed-size nambuf1 and nambuf2 buffers when run on a tree with
-deeply nested directories and/or with long directory or file names.
-I was able to reproduce the problem (got a segfault) by running the
-program on a directory containing 20 nested directories with
-250-character names.
+Nick Kralevich here from the Android security team.
 
-Another problem is that the program uses full pathnames.  It neither
-changes the current directory, nor uses openat(2).  Thus, if a pathname
-component is replaced with a symlink while the program is running, this
-may result in processing of directories/files outside of the intended
-directory tree.
+Google is a CNA (CVE Numbering Authority), and we've already assigned
+this vulnerability CVE-2011-3874. To avoid confusion, I would
+appreciate it if CVE-2011-3874 would be considered the authoritative
+CVE for this vulnerability, and CVE-2011-4123 should be marked as a
+duplicate. More information on the vold vulnerability, including a
+patch, can be found at
+http://code.google.com/p/android/issues/detail?id=21681
 
-I fixed the buffer overflows (by (re)allocating the buffers dynamically)
-in the copy that I committed into Owl today:
+For the record, Google maintains several security contact mailing
+lists.  In general, you can reach Google security by e-mailing
+security@...gle.com or visiting
+http://www.google.com/about/corporate/company/security.html
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/hardlink/
+For Android specific security issues, the preferred e-mail address is
+security@...roid.com, or you can visit
+http://developer.android.com/resources/faq/security.html#issue
 
-For the unsafe handling of potentially changing directory trees, I
-simply added a BUGS section to the man page:
+For Chrome specific security issues, the preferred e-mail address is
+security@...omium.org, or you can visit
+http://dev.chromium.org/Home/chromium-security/reporting-security-bugs
 
-BUGS
-       hardlink assumes that its target directory trees  do  not  change  from
-       under it.  If a directory tree does change, this may result in hardlink
-       accessing files and/or directories outside of  the  intended  directory
-       tree.   Thus,  you  must avoid running hardlink on potentially changing
-       directory trees, and especially on directory  trees  under  control  of
-       another user.
+In general, e-mailing security@...gle.com will eventually get to
+Chrome or Android, although it's faster to contact the product
+specific security alias first.
 
-Red Hat and others are welcome to reuse these changes.
+Because Google is a CNA, we maintain our own pool of CVEs from Mitre.
+Any of the addresses above can issue CVEs for Google related
+vulnerabilities.
 
-There's also a lesser problem of potentially reading from a device file
-or a FIFO if a regular file is replaced with (a link to) one of these.
-Maybe this problem needs to be documented as well, or it may be patched
-in the code by always using fstat(2) after opening a file.  Only using
-hardlink(1) on non-changing trees avoids this problem as well, though.
+Thanks!
+-- Nick Kralevich
+   Android Security Team
 
-Overall, it would be nice if someone rewrote hardlink(1) using fts(3)
-and in a cleaner fashion.  The current program appears to have evolved
-from a hack that was meant for some very specific use case only.  Now
-that the hack is successful at demonstrating that the program is
-generally desirable as well as at what problems it should avoid, it may
-be the right time for a clean rewrite.
-
-<offtopic>
-BTW, hardlink(1) is very useful when run on tzdata - e.g. from %install
-of an RPM package of tzdata:
-
-%install
-rm -rf %buildroot
-sed -i 's|@...tall_root@...uildroot|' Makeconfig
-%__make install
-hardlink -vc %buildroot
-
-This produces the following "verbose output":
-
-Directories 69
-Objects 1812
-IFREG 1743
-Comparisons 627
-Linked 588
-saved 1830912
-
-That's 1.8 MB saved on a filesystem with 4 KB blocks.
-
-I got this idea from ALT Linux and implemented it in Owl now.
-</offtopic>
-
-Alexander
+> On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
+> > On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
+> >> A local user with group "log" on Android may send a malformed message
+> >> to vold ("volume daemon"), causing a stack buffer overflow.  This has
+> >> been demonstrated to be exploitable to escalate privileges to root on
+> >> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
+> >> arbitrary heap object and triggering a use-after-free condition [1].
+> >> It appears the bug was silently patched in Honeycomb (3.x), but note
+> >> that since Honeycomb is not open source, it does not fall within the
+> >> scope of this list.  Bug discovered and exploited by the Revolutionary
+> >> team [2].
+> >>
+> > Oops, a few minor corrections.
+> >
+> > Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
+> > the libsysutils library, and was demonstrated to be exploitable via
+> > vold, which makes use of the affected library function.  Sorry for the
+> > noise.
+> >
+> >> -Dan
+> >>
+> >> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
+> >> [2] http://revolutionary.io/
+> >>
+> Please use CVE-2011-4123 for this issue.
+>
+> --
+>
+> -Kurt Seifried / Red Hat Security Response Team
+>
