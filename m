@@ -1,42 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/24/7
-Message-ID: <20110824140827.GA1477@suse.de>
-Date: Wed, 24 Aug 2011 16:08:27 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/1
+Message-ID: <4EBA07D4.70101@redhat.com>
+Date: Wed, 09 Nov 2011 12:55:48 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: robert.ancell@...onical.com
-Subject: lightdm issues
+CC: Vasiliy Kulikov <segoon@...nwall.com>
+Subject: Re: CVE request: kernel: multiple flaws allowing to sniff keystrokes timings
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 11/08/2011 09:20 PM, Eugene Teo wrote:
+>> Also, security@...nel.org is unavailable, is there any substitution of
+>> this email?
+> 
+> I'm still finding out. Meanwhile, if you need help with coordination,
+> ping me.
 
-lightdm (0.9.2) which aims to be a xdm replacement seems to
-fall into the same pitfalls like kdm and gdm recently. There is
-a lot of uid 0 code creating and chown()ing files in user dirs such as
-for ~/.dmrc and ~/.Xauthority. Probably more, depending on
-how the permissions of cache and log directories are set up. For example
-process_start() also creates and chown()s logfiles on users behalf.
+Looks like it works now.
 
-There is also one thing that I dont understand about the lightdm
-user itself and why pam sessions seem to be started for it inside
-the greeter session code.
-
-The xdmcp code seems to be OK so far, after a quick review.
-
-l8er,
--s
-
-
+Thanks, Eugene
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+Eugene Teo / Red Hat Security Response Team
