@@ -1,89 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/19/13
-Message-ID: <1649414500.142079.1313781155628.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Fri, 19 Aug 2011 15:12:35 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/5
+Message-ID: <4EBA9D55.7020401@redhat.com>
+Date: Wed, 09 Nov 2011 08:33:41 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE Request: WebsiteBaker 2.8.1 <= Cross Site Request Forgery (CSRF) Vulnerability
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
+Subject: Re: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2934
+On 11/09/2011 08:14 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a security flaw was found in the way the libsocialweb,
+> a social network data aggregator, performed its initialization
+> when this service start was initiated by the dbus daemon.
+> Due to a deficiency in a way the libsocialweb service was
+> initialized, an untrusted (non-SSL) network connection has
+> been opened to remote Twitter service servers without explicit
+> approval of the user, running the libsocialweb service on the
+> local host. A remote attacker could use this flaw to conduct
+> various MITM attacks and potentially alter integrity of the user
+> account in question.
+>
+> References:
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: This one being on the border a bit (since clear security
+>       consequences of this deficiency not completely investigated),
+>       but in any case it's a bad programming practice to open
+>       untrusted connection to remote servers by default without
+>       particular users' approval (trust boundary crossing).
+Please use CVE-2011-4129  for this issue.
 
------ Original Message -----
-> 1. OVERVIEW
-> 
-> WebsiteBaker 2.8.1 and lower versions are vulnerable to Cross Site
-> Request Forgery (CSRF).
-> 
-> 
-> 2. BACKGROUND
-> 
-> WebsiteBaker is a PHP-based Content Management System (CMS) designed
-> with one goal in mind: to enable its users to produce websites with
-> ease.
-> 
-> 
-> 3. VULNERABILITY DESCRIPTION
-> 
-> WebsiteBaker 2.8.1 and lower versions contain a flaw that allows a
-> remote Cross-site Request Forgery (CSRF / XSRF) attack. The flaw
-> exists because the application does not require multiple steps or
-> explicit confirmation for sensitive transactions for majority of
-> administrator functions such as adding new user. By using a crafted
-> URL, an attacker may trick the victim into visiting to his web page to
-> take advantage of the trust relationship between the authenticated
-> victim and the application. Such an attack could trick the victim into
-> executing arbitrary commands in the context of their session with the
-> application, without further prompting or verification.
-> 
-> 
-> 4. VERSIONS AFFECTED
-> 
-> 2.8.1 <=
-> 
-> 
-> 5. PROOF-OF-CONCEPT/EXPLOIT
-> 
-> The following request adds an administrator.
-> 
-> [REQUEST]
-> POST /admin/users/add.php HTTP/1.1
-> Content-Type: application/x-www-form-urlencoded
-> Content-Length: 193
-> 
-> user_id=&username_fieldname=username_abcdefg&username_abcdefg=test&password=test&password2=test&display_name=test&email=tester%40yehg.net&home_folder=&groups%5B%5D=1&active%5B%5D=1&submit=Add
-> [/REQUEST]
-> 
-> 
-> 6. SOLUTION
-> 
-> Upgrade to 2.8.2 or higher
-> 
-> 
-> 7. VENDOR
-> 
-> WebsiteBaker Org e. V.
-> http://www.websitebaker2.org/
-> 
-> 
-> 8. CREDIT
-> 
-> This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-> Ethical Hacker Group, Myanmar.
-> 
-> 
-> 9. DISCLOSURE TIME-LINE
-> 
-> 2011-01-26: notified vendor
-> 2011-08-01: vendor released fix
-> 2011-08-13: vulnerability disclosed
-> 
-> 
-> 10. REFERENCES
-> 
-> Original Advisory URL:
-> http://yehg.net/lab/pr0js/advisories/[websitebaker-2.8.1]_cross_site_request_forgery
-> 
-> 
-> #yehg [2011-08-13]
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
