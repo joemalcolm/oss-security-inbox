@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/10/3
-Message-ID: <4EE38547.8000001@gmail.com>
-Date: Sat, 10 Dec 2011 17:13:59 +0100
-From: Paul <pawlkt@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: cve request: bat_socket_read memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/09/3
+Message-ID: <4EBA98F3.2010706@redhat.com>
+Date: Wed, 09 Nov 2011 16:14:59 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Peter Robinson <pbrobinson@...il.com>, Ross Burton <ross@...ux.intel.com>, Rob Bradford <rob@...ux.intel.com>, Sandu Adrian <dexter@...t3r01.tk>
+Subject: CVE Request -- libsocialweb -- Untrusted connection opened to Twitter social service without user's approval upon service start via dbus
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello Kurt, Steve, vendors,
 
-can I get a CVE for this:
-https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2011-December/005904.html
-?
+   a security flaw was found in the way the libsocialweb,
+a social network data aggregator, performed its initialization
+when this service start was initiated by the dbus daemon.
+Due to a deficiency in a way the libsocialweb service was
+initialized, an untrusted (non-SSL) network connection has
+been opened to remote Twitter service servers without explicit
+approval of the user, running the libsocialweb service on the
+local host. A remote attacker could use this flaw to conduct
+various MITM attacks and potentially alter integrity of the user
+account in question.
 
-If root does read() on a specific socket, it's possible to corrupt
-(kernel) memory over network, with an ICMP packet, if B.A.T.M.A.N. mesh
-protocol is used.
+References:
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=752022
 
--- 
-Regards,             twitter.com/pa_kt
-Paul
+Could you allocate a CVE id for this?
 
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
+P.S.: This one being on the border a bit (since clear security
+       consequences of this deficiency not completely investigated),
+       but in any case it's a bad programming practice to open
+       untrusted connection to remote servers by default without
+       particular users' approval (trust boundary crossing).
