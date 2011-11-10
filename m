@@ -1,61 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/4
-Message-Id: <201108181246.48471.thomas@osterried.de>
-Date: Thu, 18 Aug 2011 12:46:47 +0200
-From: Thomas Osterried <thomas@...erried.de>
-To: Jon Oberheide <jon@...rheide.org>
-Cc: oss-security@...ts.openwall.com, Eren Türkay <eren@...dus.org.tr>, Thomas Osterried <ax25@...erg.in-berlin.de>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/4
+Message-ID: <4EBBF9BB.5080209@redhat.com>
+Date: Thu, 10 Nov 2011 09:20:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- ProFTPD -- Response pool use-after-free flaw (ZDI-CAN-1420)
 Content-Type: text/plain; charset=utf-8
 
-Thank you for your information.
+On 11/10/2011 06:58 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a use-after-free flaw was found in the way ProFTPD, an enhanced FTP
+> server, performed retrieval of the response pool for the old command
+> (when ProFTPD was in the midst of the data transfer, when new command
+> arrived) used by the Response API. A remote attacker could provide a
+> specially-crafted request (resulting in a need the server to handle an
+> exceptional condition), leading to memory corruption and potentially
+> arbitrary code execution, with the privileges of the user running the
+> proftpd server.
+>
+> Upstream bug report:
+> [1] http://bugs.proftpd.org/show_bug.cgi?id=3711
+>
+> Relevant upstream patch:
+> [2] http://bugs.proftpd.org/show_bug.cgi?id=3711#c1
+>
+> References:
+> [3] https://secunia.com/advisories/46811/
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=390075
+> [5] http://www.zerodayinitiative.com/advisories/upcoming/
+> [6] https://bugzilla.redhat.com/show_bug.cgi?id=752812
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: According to the upstream bug report [1], the ZDI-CAN-1420
+>       issue has been disclosed 2011-10-28, thus grepped OSS
+>       archives for CVE request due this proftpd deficiency,
+>       and there doesn't seem to be one yet (also ZDI-CAN-1420
+>       doesn't seem to reference a CVE id).
+Please use CVE CVE-2011-4130 for this issue.
 
-The issue is now fixed in the upstream version.
+-- 
 
-vy 73,
-	- Thomas  dl9sau
+-Kurt Seifried / Red Hat Security Response Team
 
-Am Donnerstag, den 11. August 2011 um 16:21:11 Uhr, schrieb Jon Oberheide <jon@...rheide.org> in <1313072471.19030.0.camel@...alhost.localdomain>:
-> On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
-> > On Thu, Aug 11, 2011 at 02:13:23PM +0200, Thomas Osterried wrote:
-> > 
-> > > Am Donnerstag, den 11. August 2011 um 07:20:41 Uhr, schrieb Eren Türkay <eren@...dus.org.tr> in <20110811052041.GB2043@...t-is@...some>:
-> > > > On Tue, Aug 09, 2011 at 11:33:04PM -0400, Dan Rosenberg wrote:
-> > > > > The AX.25 daemon (ax25d), typically provided in the ax25-tools
-> > > > > package, allows administrators to associate incoming AX.25, NET/ROM,
-> > > > > and ROSE traffic with the execution of an endpoint program (most
-> > > > > commonly "node"), which is run under a specified user account.
-> > > > > Because ax25d is missing a check on the return code for a setuid call
-> > > > > responsible for dropping privileges to the specified user, it may be
-> > > > > possible to cause setuid to fail, after which the chosen program will
-> > > > > be executed with root privileges.  In other words, if you're in the
-> > > > > business of handing out unprivileged shells over amateur radio (don't
-> > > > > we all? :p ), this would allow for remote compromise.
-> > > > 
-> > > > Hello,
-> > > > 
-> > > > Thank you for your investigation on the topic. Although this issue seems
-> > > > to be low-priority, it's good to let the maintainers know.
-> > > > 
-> > > > I'm CCing Ralf Baechle, and Thomas Osterried who, accordingly to
-> > > > linux-ac25 site, are the maintainers of ax25 utilities.
-> > > 
-> > > thank you for your information.
-> > > 
-> > > I know that code fragment, but I never imagined that if root calls
-> > > setuid/setgid that this could fail, because root has by definition enough
-> > > rights.
-> > 
-> > Welcome to the new world where things are more complicated ...
-> > 
-> > These days setuid and similar syscalls need to allocate memory for the
-> > credentials of a process and memory allocations may fail.  A system could
-> > even be put under massive memory pressure with the intend to make this
-> > allocation fail.
-> 
-> The important vector is RLIMIT_NPROC.
-> 
-> Regards,
-> Jon Oberheide
-> 
-> 
