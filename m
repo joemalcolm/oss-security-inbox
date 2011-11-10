@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/13/3
-Message-ID: <20110713105302.GA25485@suse.de>
-Date: Wed, 13 Jul 2011 12:53:02 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/2
+Message-ID: <20111110125714.GA8669@wopr.local.invalid>
+Date: Thu, 10 Nov 2011 13:57:15 +0100
+From: Guido Berhoerster <gber@...nsuse.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: hplip/foomatic-filters
+Cc: Robert Ancell <robert.ancell@...onical.com>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Hi
+* Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
+> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
+> > On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+> > > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+> > >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+> > >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+> > >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+> > >>>> cause LightDM to set the destination of the link to user ownership.
+> > >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+> > >>>>
+> > >>>> Overview of changes in lightdm 1.0.6
+> > >>>>
+> > >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+> > >>> Could a CVE be assigned for this?
+> > >>>
+> > >>> Regards,
+> > >> Can you send me the link to this announcement so I can confirm it? Thanks.
+> > >>
+> > > Here's the link to the mailing list mail:
+> > > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+> > >
+> > > Regards,
+> > Thanks, confirmed (first hand info is much better). Please use
+> > CVE-2011-4105 for this issue.
+> > 
+> 
+> BTW, the fix that is in 1.0.6 is probably not enough for distros that
+> don't implement hard link restrictions, such as the Yama LSM that is
+> used in Ubuntu.
 
-The foomatic filters of the hplip package allow remote users
-to execute arbitrary commands as the lp user. The flaw allows
-hosts which are listed in the printing ACL or local users to
-pass PPD file arguments to the foomatic filters. A PoC was
-demonstrated using the CUPS server.
+Does an incomplete fix in a released version warrant a new CVE?
 
-More info and patches are here:
-
-https://bugzilla.novell.com/show_bug.cgi?id=698451
-
-
-Sebastian
-
+I've attached a suggested fix.
 -- 
+Guido Berhoerster
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
-
+View attachment "fix-xauthority-ownership-fix.patch" of type "text/x-patch" (1555 bytes)
