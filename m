@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/18/8
-Message-ID: <4E24AE57.8050303@gentoo.org>
-Date: Tue, 19 Jul 2011 00:06:15 +0200
-From: Stefan Behte <craig@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/4
+Message-ID: <4EBBF9BB.5080209@redhat.com>
+Date: Thu, 10 Nov 2011 09:20:11 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: vulnerability in FreeRADIUS (OCSP)
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- ProFTPD -- Response pool use-after-free flaw (ZDI-CAN-1420)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 11/10/2011 06:58 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a use-after-free flaw was found in the way ProFTPD, an enhanced FTP
+> server, performed retrieval of the response pool for the old command
+> (when ProFTPD was in the midst of the data transfer, when new command
+> arrived) used by the Response API. A remote attacker could provide a
+> specially-crafted request (resulting in a need the server to handle an
+> exceptional condition), leading to memory corruption and potentially
+> arbitrary code execution, with the privileges of the user running the
+> proftpd server.
+>
+> Upstream bug report:
+> [1] http://bugs.proftpd.org/show_bug.cgi?id=3711
+>
+> Relevant upstream patch:
+> [2] http://bugs.proftpd.org/show_bug.cgi?id=3711#c1
+>
+> References:
+> [3] https://secunia.com/advisories/46811/
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=390075
+> [5] http://www.zerodayinitiative.com/advisories/upcoming/
+> [6] https://bugzilla.redhat.com/show_bug.cgi?id=752812
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: According to the upstream bug report [1], the ZDI-CAN-1420
+>       issue has been disclosed 2011-10-28, thus grepped OSS
+>       archives for CVE request due this proftpd deficiency,
+>       and there doesn't seem to be one yet (also ZDI-CAN-1420
+>       doesn't seem to reference a CVE id).
+Please use CVE CVE-2011-4130 for this issue.
 
->> Would you mind sharing that patch with us?
-> 
-> We would be willing to provide the patch to all Linux distributors
-> but we do not want to release the patch publicly and wait for the
-> official patch by the packet maintainer of FreeRADIUS.
-> 
+-- 
 
-Then posting it to the new vendor-sec (linux-distros@...openwall.org)
-sounds like the right thing to do. Gentoo complies to your requirements
-and would like to get the patch directly, if you do not plan to send it
-there.
+-Kurt Seifried / Red Hat Security Response Team
 
-Best regards,
-
-Stefan Behte,
-Gentoo Security
