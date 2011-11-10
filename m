@@ -1,124 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/13
-Message-ID: <f550bba7-8ee9-42e2-84c1-87ab89f77397@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 20 Oct 2011 13:17:48 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/2
+Message-ID: <20111110125714.GA8669@wopr.local.invalid>
+Date: Thu, 10 Nov 2011 13:57:15 +0100
+From: Guido Berhoerster <gber@...nsuse.org>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: moodle 2.1.2, 2.0.5, 1.9.14 fixes
+Cc: Robert Ancell <robert.ancell@...onical.com>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Steve,
+* Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
+> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
+> > On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+> > > On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+> > >> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+> > >>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+> > >>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+> > >>>> cause LightDM to set the destination of the link to user ownership.
+> > >>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+> > >>>>
+> > >>>> Overview of changes in lightdm 1.0.6
+> > >>>>
+> > >>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+> > >>> Could a CVE be assigned for this?
+> > >>>
+> > >>> Regards,
+> > >> Can you send me the link to this announcement so I can confirm it? Thanks.
+> > >>
+> > > Here's the link to the mailing list mail:
+> > > http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+> > >
+> > > Regards,
+> > Thanks, confirmed (first hand info is much better). Please use
+> > CVE-2011-4105 for this issue.
+> > 
+> 
+> BTW, the fix that is in 1.0.6 is probably not enough for distros that
+> don't implement hard link restrictions, such as the Yama LSM that is
+> used in Ubuntu.
 
-Can MITRE take this one? It's far bigger than I'm able to handle.
+Does an incomplete fix in a released version warrant a new CVE?
 
-Thanks.
-
+I've attached a suggested fix.
 -- 
-    JB
+Guido Berhoerster
 
-
------ Original Message -----
-> There's a whole bunch of fixes in new moodle releases.  The below
-> list
-> summarizes them.  Could CVEs be assigned to these please?
-> 
-> MSA-11-0041: Global search authentication issue
-> Affects: 2.1.x 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=5eb1cec34f013fdcb559b66bc401f2845ce0bbb7
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188323
-> 
-> MSA-11-0040: Potential personal information leak
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix: http://git.moodle.org/gw?p=moodle.git&a=search&s=MDL-28615
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188322
-> 
-> MSA-11-0039: Wiki section vulnerability
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=41017112cff7f5bd7969c72d321320f3090e7c68
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188321
-> 
-> MSA-11-0038: Database injection protection strengthened
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=4a2acd8c7e6c869d5fd5aa686e6e0a3f20c97f15
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188320
-> 
-> MSA-11-0037: Course section editing injection vulnerability
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=4a2acd8c7e6c869d5fd5aa686e6e0a3f20c97f15
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188319
-> 
-> MSA-11-0036: Messaging refresh vulnerability
-> Affects: 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=97f258fabb3ebfa7acc7c02cb59de92b01710f99
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188318
-> 
-> MSA-11-0035: Cookie-less session vulnerability
-> Affects: 2.1.x, 2.0.x, (1.9.x if misconfigured)
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=e1e082a809b9a2d3a408cb4d6faa34fdfcf3165c
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188317
-> 
-> MSA-11-0034: Chat module information leak
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=d0157d827bc254ba386a5e5b41b13be2698ee76e
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188316
-> 
-> MSA-11-0033: Site-hub registration identity issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=ca896fdfcfcc87846fa91a297d0aa6999a68c48a
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188315
-> 
-> MSA-11-0032: MNET SSL validation issue
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=54941685e3e86ec085641dcb7ebb1f96f06735b2
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188314
-> 
-> MSA-11-0031: Forms API constant issue
-> Affects: 2.1.x, 2.0.x, 1.9.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=f1f70bd4dde6cd1ea4bdb8ab28fa3d36a53b89d8
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188313
-> 
-> MSA-11-0030: Box.net repository integration authentication issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=3deff6c9d2bb4ab3144b3ca7b93d6a2ef6a87af2
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188312
-> 
-> MSA-11-0029: File visibility issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=f6b07c4da54a9db24723beb147e8a19a3d487e00
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188311
-> 
-> MSA-11-0028: Wiki comments XSS issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=a459fd90625ae44d7b3ac10b65da2dc631a418e7
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188310
-> 
-> MSA-11-0027: Wiki pages reference forgery issue
-> Affects: 2.1.x, 2.0.x
-> Fix:
-> http://git.moodle.org/gw?p=moodle.git;a=commit;h=48346fb11f8ced06a05c0618b02a3a925b34ec59
-> Reference: http://moodle.org/mod/forum/discuss.php?d=188309
-> 
-> MSA-11-0026: Fields in user upload CSV not being escaped
-> Affects: 1.9.x
-> Reference: http://moodle.org/mod/forum/discuss.php?d=182743
-> 
-> 
-> Thanks!
-> 
-> --
-> Vincent Danen / Red Hat Security Response Team
-> 
+View attachment "fix-xauthority-ownership-fix.patch" of type "text/x-patch" (1555 bytes)
