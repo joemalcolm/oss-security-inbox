@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/22/1
-Message-ID: <20111022005621.GA31654@openwall.com>
-Date: Sat, 22 Oct 2011 04:56:21 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/4
+Message-ID: <20111111164824.GA28950@dhcp-25-225.brq.redhat.com>
+Date: Fri, 11 Nov 2011 17:48:24 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+Subject: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 21, 2011 at 03:29:41PM +0530, Huzaifa Sidhpurwala wrote:
-> On 10/20/2011 08:27 PM, Josh Bressers wrote:
-> 
-> >>The hardlink(1) program from Fedora is susceptible to buffer overflows of
-> >>fixed-size nambuf1 and nambuf2 buffers when run on a tree with deeply
-> >>nested directories and/or with long directory or file names.  I was able
-> >>to reproduce the problem (got a segfault) by running the program on a
-> >>directory containing 20 nested directories with 250-character names.
-> >
-> >CVE-2011-3630 hardlink buffer overflows
-> >https://bugzilla.redhat.com/show_bug.cgi?id=746709
-> 
-> FORTIFY_SOURCE should really be able to catch this buffer overflow.
-> The buffer being overflown here in in BSS, But strcat() is used to 
-> append to this buffer and __builtin___strcat_chk catches it, resulting 
-> in the program being terminated.
+"nfs4_getfacl decoding causes a kernel Oops when a server returns more
+than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
+request.
 
-Besides the strcpy() and strcat() with obviously known target buffer
-size, there are also:
+While the NFS client only asks for one attribute (FATTR4_ACL) in the
+first bitmap word, the NFSv4 protocol allows for the server to return
+unbounded bitmaps (more than two)."
 
-          strcpy (stpcpy (nambuf2, n2), ".$$$___cleanit___$$$");
+Upstream commit:
+e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
+case when 2 words are expected and 3 are returned
 
-and:
+Proposed complete upstream patch:
+http://www.spinics.net/lists/linux-nfs/msg25288.html
 
-      strcpy (p, di->d_name);
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=747106
 
-where "p" points somewhere inside nambuf1.
+Credit: Andy Adamson
 
-These will just need different reproducers.
-
-Alexander
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
