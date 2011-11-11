@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/11
-Message-ID: <20110222204712.GA7594@kroah.com>
-Date: Tue, 22 Feb 2011 12:47:12 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/6
+Message-ID: <20111111225001.GB28950@dhcp-25-225.brq.redhat.com>
+Date: Fri, 11 Nov 2011 23:50:02 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
+Subject: CVE Request -- kernel: jbd/jbd2: invalid value of first log block leads to oops
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 22, 2011 at 03:44:29PM -0500, Josh Bressers wrote:
-> 
-> 
-> ----- Original Message -----
-> > Reported by Timo Warns, "Validate number of blocks in map and remove
-> > redundant variable."
-> > 
-> > http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
-> > https://bugzilla.redhat.com/show_bug.cgi?id=679282
-> > 
-> 
-> I don't understand the security implication of this bug. Can you explain it?
+A flaw was found in the way Linux kernel's Journaling Block Device (JBD)
+handled invalid log first block value. An attacker able to mount
+malicious ext3 or ext4 image could use this flaw to crash the system.
 
-Incorrectly formed mac partition tables could cause bad things to happen
-when it was automatically scanned after plugging in a device with this
-type of partition table on it.
+Upstream commit:
+8762202dd0d6e46854f786bdb6fb3780a1625efe
 
-Hope this helps,
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=753341
 
-greg k-h
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
