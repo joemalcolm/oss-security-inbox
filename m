@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/2
-Message-ID: <4D9F1CE1.1000600@debian.org>
-Date: Fri, 08 Apr 2011 10:34:09 -0400
-From: Luke Faraone <lfaraone@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/3
+Message-ID: <4EBCF374.60800@oracle.com>
+Date: Fri, 11 Nov 2011 10:05:40 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for pithos information disclosure
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Ian Daniher discovered that 'pithos' stores the username and password
-for external services in plain text in a configuration file. This
-configuration file is world-readable by defualt, resulting in a loss of
-user privacy.
+On 11/11/11 08:06, Guido Berhoerster wrote:
+> Replacing the file between the lstat and the open would change
+> its inode and then be caught by the check before the fchown, no?
 
-Reference: http://pad.lv/733307
+Nope.   There is no reason why the same inode should not be reused.
 
-Can I get a CVE identifier for this flaw?
+On ext4 (btrfs seems to be different):
 
--- 
-Luke Faraone;; Debian & Ubuntu Developer; Sugar Labs, Systems
-lfaraone on irc.[freenode,oftc].net -- http://luke.faraone.cc
-PGP fprint: 5189 2A7D 16D0 49BB 046B DC77 9732 5DD8 F9FD D506
+$ touch test; ls -i test; rm test; touch test; ls -i test
+656078 test
+656078 test
 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+jch
