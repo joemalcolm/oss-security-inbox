@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/06/1
-Message-ID: <AANLkTika9qwJUfh_+LEGS1bP_w8Q6gfm6YZfTG-RB+hK@mail.gmail.com>
-Date: Wed, 5 Jan 2011 19:46:02 -0500
-From: Anthon Pang <anthon.pang@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: Multiple XSS Vulnerabiliies < Piwik 1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/5
+Message-ID: <1321036033.22556.12.camel@mdlinux>
+Date: Fri, 11 Nov 2011 13:27:13 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Piwik 1.1 released on Jan 4, 2011, addresses numerous security issues
-following a security audit by SektionEins (led by Stefan Esser), an internal
-review, and coordinated disclosures from Jarosław Sajko (Pentesters.pl) and
-Fabian Becker.
+On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
+> On 11/11/11 08:06, Guido Berhoerster wrote:
+> > Replacing the file between the lstat and the open would change
+> > its inode and then be caught by the check before the fchown, no?
+> 
+> Nope.   There is no reason why the same inode should not be reused.
+> 
+> On ext4 (btrfs seems to be different):
+> 
+> $ touch test; ls -i test; rm test; touch test; ls -i test
+> 656078 test
+> 656078 test
+> 
+> jch
 
-Notably, versions of Piwik prior to 1.1 contain multiple persistent and
-reflective XSS vulnerabilities through unescaped parameters and/or output.
+How about the attached patch?
 
-Security advisory:
-http://piwik.org/blog/2011/01/piwik-1-1-security-advisory/
-Other advisory:
-http://piwik.org/blog/2011/01/professional-security-audit-in-piwik/
-Changelog: http://piwik.org/blog/2011/01/piwik-1-1-2/
+Marc.
 
+
+
+
+View attachment "04_CVE-2011-4105.patch" of type "text/x-patch" (1512 bytes)
