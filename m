@@ -1,31 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/22/7
-Message-ID: <20110622143356.GA8729@albatros>
-Date: Wed, 22 Jun 2011 18:33:56 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: opie off by one and setuid() failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/1
+Message-ID: <4EBCBEBC.2080004@canonical.com>
+Date: Fri, 11 Nov 2011 17:20:44 +1100
+From: Robert Ancell <robert.ancell@...onical.com>
+To: oss-security@...ts.openwall.com,  Guido Berhoerster <gber@...nsuse.org>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Wed, Jun 22, 2011 at 16:28 +0200, Sebastian Krahmer wrote:
-> Can someone assign 2 CVE's for a off by one in opiesu
-> and a missing setuid() retval check in opielogin which
-> leads to easy root compromise? Reviewed opie-2.4.
-> 
-> Patches are available here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=698772
-
-I don't see memory zeroing before strcat():
-
-argvbuf[0] = 0;
-
-Probably it is not spotted as it is the first malloc(), but it is a bug.
-
-
-Thanks,
-
--- 
-Vasiliy
+On 10/11/11 23:57, Guido Berhoerster wrote:
+> * Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
+>> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
+>>> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+>>>> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+>>>>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+>>>>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+>>>>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+>>>>>>> cause LightDM to set the destination of the link to user ownership.
+>>>>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+>>>>>>>
+>>>>>>> Overview of changes in lightdm 1.0.6
+>>>>>>>
+>>>>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+>>>>>> Could a CVE be assigned for this?
+>>>>>>
+>>>>>> Regards,
+>>>>> Can you send me the link to this announcement so I can confirm it? Thanks.
+>>>>>
+>>>> Here's the link to the mailing list mail:
+>>>> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+>>>>
+>>>> Regards,
+>>> Thanks, confirmed (first hand info is much better). Please use
+>>> CVE-2011-4105 for this issue.
+>>>
+>> BTW, the fix that is in 1.0.6 is probably not enough for distros that
+>> don't implement hard link restrictions, such as the Yama LSM that is
+>> used in Ubuntu.
+> Does an incomplete fix in a released version warrant a new CVE?
+>
+> I've attached a suggested fix.
+Note the attached patch can still be exploited; if the file changes from
+a standard file to a hard link / symlink between the lstat and the
+fchown then lightdm can be fooled into thinking it's safe when it's
+not.  A malicious program could sit there creating a file, deleting it,
+then creating a link as fast as possible and eventually it would work. 
+We need an atomic operation like lchown, and if that doesn't work the
+only safe thing I can think of doing is a) nothing (requiring the user
+to manually fix the bug) or b) delete the file (could delete information
+set by other programs).
