@@ -1,18 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/1
-Message-ID: <4D23F024.2030804@redhat.com>
-Date: Wed, 05 Jan 2011 12:14:28 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/4
+Message-ID: <20111111164824.GA28950@dhcp-25-225.brq.redhat.com>
+Date: Fri, 11 Nov 2011 17:48:24 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>, Greg KH <gregkh@...e.de>
-Subject: CVE-2010-4525 kvm: x86: zero kvm_vcpu_events->interrupt.pad infoleak
+Subject: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
 Content-Type: text/plain; charset=utf-8
 
-In addition to CVE-2010-3881, some versions of the Linux kernel forgot 
-to initialize the kvm_vcpu_events.interrupt.pad field before being 
-copied to userspace. I have assigned CVE-2010-4525 to this. I briefly 
-checked, linux-2.6.33/34.y are affected, linux-2.6/.31/.32.y are not.
+"nfs4_getfacl decoding causes a kernel Oops when a server returns more
+than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
+request.
 
-https://bugzilla.redhat.com/CVE-2010-4525
+While the NFS client only asks for one attribute (FATTR4_ACL) in the
+first bitmap word, the NFSv4 protocol allows for the server to return
+unbounded bitmaps (more than two)."
 
-Thanks, Eugene
+Upstream commit:
+e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
+case when 2 words are expected and 3 are returned
+
+Proposed complete upstream patch:
+http://www.spinics.net/lists/linux-nfs/msg25288.html
+
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=747106
+
+Credit: Andy Adamson
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
