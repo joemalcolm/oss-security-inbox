@@ -1,55 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/6
-Message-ID: <4D64971C.8030208@redhat.com>
-Date: Wed, 23 Feb 2011 13:11:56 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/3
+Message-ID: <4EBCF374.60800@oracle.com>
+Date: Fri, 11 Nov 2011 10:05:40 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>
-Subject: Re: Physical access vulnerabilities and auto-mounting
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-On 02/23/2011 12:17 PM, Dan Rosenberg wrote:
-> I originally started writing this as a response to the recent CVE
-> requests for issues in partition handling, but thought it might be a
-> useful discussion on its own.  I was wondering if there are any
-> clear-cut policies on issues involving physical access, since these
-> can be very difficult in terms of assigning blame.
->
-> For example, many Linux distributions will auto-mount filesystems on
-> removable storage, often going so far as to load corresponding kernel
-> modules for filesystems that aren't compiled in or don't already have
-> an LKM loaded.  Sometimes, this will happen even if the screen is
-> locked.
->
-> Incidentally, many Linux filesystem implementations don't have
-> especially robust error handling for failures during attempts to mount
-> corrupt filesystems.  As an example, I have a deliberately corrupted
-> btrfs filesystem that triggers a BUG() if you attempt to mount it.  I
-> formatted a USB stick with this filesystem, so now I have a USB stick
-> that will panic the kernels of distributions that support
-> auto-mounting, in some cases even when the screen is locked.
->
-> Should this be considered a vulnerability?  Probably.  But what should
-> be fixed?  Should auto-mounting be disabled entirely?  Is it no longer
-> a vulnerability if auto-mounting is disabled only when the screen is
-> locked?  Should all filesystems have graceful error handling for every
-> possible edge case that can occur when dealing with corruption?
->
-> I'd be interested to hear opinions on this.  And depending on how the
-> discussion goes, I'd be happy to provide more details on specific
-> cases, such as the btrfs example.
+On 11/11/11 08:06, Guido Berhoerster wrote:
+> Replacing the file between the lstat and the open would change
+> its inode and then be caught by the check before the fchown, no?
 
- From the security response perspective, I will likely classify them as 
-security bugs but with a /very/ low impact. The attacking party must 
-already have some form of physical access to the affected system, or the 
-attack must require some social engineering to trick the user to mount a 
-corrupted file system using a portable media.
+Nope.   There is no reason why the same inode should not be reused.
 
-It will be hard to break existing user experience if we were to disable 
-auto-mounting entirely, but it makes sense to disable it if the screen 
-is locked. I'm not sure if this will affect how we classify such bugs. 
-I'm happy to hear more thoughts on this.
+On ext4 (btrfs seems to be different):
 
-Eugene
--- 
-Eugene Teo / Red Hat Security Response Team
+$ touch test; ls -i test; rm test; touch test; ls -i test
+656078 test
+656078 test
+
+jch
