@@ -1,45 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/28/1
-Message-ID: <4DB9083A.3040600@windriver.com>
-Date: Thu, 28 Apr 2011 14:24:58 +0800
-From: Hui Zhu <hui.zhu@...driver.com>
-To: <oss-security@...ts.openwall.com>, <bressers@...hat.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/1
+Message-ID: <4EBCBEBC.2080004@canonical.com>
+Date: Fri, 11 Nov 2011 17:20:44 +1100
+From: Robert Ancell <robert.ancell@...onical.com>
+To: oss-security@...ts.openwall.com,  Guido Berhoerster <gber@...nsuse.org>
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
-
-Please add me to the new maillist.  I am from Wind River.
-
-Thanks,
-Hui
-
-On 04/02/11 02:03, Josh Bressers wrote:
-> Hello everyone,
-> 
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
-> 
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
-> 
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
-> 
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
-> 
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
-> 
-> Thanks.
-> 
-
-
-Download attachment "0x9DD74CDB.asc" of type "application/pgp-keys" (1696 bytes)
+On 10/11/11 23:57, Guido Berhoerster wrote:
+> * Marc Deslauriers <marc.deslauriers@...onical.com> [2011-11-09 16:47]:
+>> On Wed, 2011-11-02 at 10:40 -0600, Kurt Seifried wrote:
+>>> On 11/02/2011 10:31 AM, Yves-Alexis Perez wrote:
+>>>> On mer., 2011-11-02 at 10:16 -0600, Kurt Seifried wrote:
+>>>>> On 11/02/2011 09:54 AM, Yves-Alexis Perez wrote:
+>>>>>> On mer., 2011-11-02 at 11:42 -0400, Robert Ancell wrote:
+>>>>>>> Fixes a security issue where using ~/.Xauthority as a symlink would
+>>>>>>> cause LightDM to set the destination of the link to user ownership.
+>>>>>>> All users of 1.0.4 or 1.0.5 should upgrade immediately.
+>>>>>>>
+>>>>>>> Overview of changes in lightdm 1.0.6
+>>>>>>>
+>>>>>>>     * Use lchown for correcting ownership of ~/.Xauthority instead of chown
+>>>>>> Could a CVE be assigned for this?
+>>>>>>
+>>>>>> Regards,
+>>>>> Can you send me the link to this announcement so I can confirm it? Thanks.
+>>>>>
+>>>> Here's the link to the mailing list mail:
+>>>> http://lists.freedesktop.org/archives/lightdm/2011-November/000178.html 
+>>>>
+>>>> Regards,
+>>> Thanks, confirmed (first hand info is much better). Please use
+>>> CVE-2011-4105 for this issue.
+>>>
+>> BTW, the fix that is in 1.0.6 is probably not enough for distros that
+>> don't implement hard link restrictions, such as the Yama LSM that is
+>> used in Ubuntu.
+> Does an incomplete fix in a released version warrant a new CVE?
+>
+> I've attached a suggested fix.
+Note the attached patch can still be exploited; if the file changes from
+a standard file to a hard link / symlink between the lstat and the
+fchown then lightdm can be fooled into thinking it's safe when it's
+not.  A malicious program could sit there creating a file, deleting it,
+then creating a link as fast as possible and eventually it would work. 
+We need an atomic operation like lchown, and if that doesn't work the
+only safe thing I can think of doing is a) nothing (requiring the user
+to manually fix the bug) or b) delete the file (could delete information
+set by other programs).
