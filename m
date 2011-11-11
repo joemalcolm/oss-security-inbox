@@ -1,77 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/10/1
-Message-ID: <CAFJ0LnE0AMi4x8rSdNjp-Ja7YRap-7qUgSYUiJRFk-GKY=vL=g@mail.gmail.com>
-Date: Wed, 9 Nov 2011 15:03:38 -0800
-From: Nick Kralevich <nnk@...gle.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: dan.j.rosenberg@...il.com
-Subject: Re: Re: CVE request: Android: vold stack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/11/5
+Message-ID: <1321036033.22556.12.camel@mdlinux>
+Date: Fri, 11 Nov 2011 13:27:13 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: [LightDM] Version 1.0.6 released
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt / Dan,
+On Fri, 2011-11-11 at 10:05 +0000, John Haxby wrote:
+> On 11/11/11 08:06, Guido Berhoerster wrote:
+> > Replacing the file between the lstat and the open would change
+> > its inode and then be caught by the check before the fchown, no?
+> 
+> Nope.   There is no reason why the same inode should not be reused.
+> 
+> On ext4 (btrfs seems to be different):
+> 
+> $ touch test; ls -i test; rm test; touch test; ls -i test
+> 656078 test
+> 656078 test
+> 
+> jch
 
-Nick Kralevich here from the Android security team.
+How about the attached patch?
 
-Google is a CNA (CVE Numbering Authority), and we've already assigned
-this vulnerability CVE-2011-3874. To avoid confusion, I would
-appreciate it if CVE-2011-3874 would be considered the authoritative
-CVE for this vulnerability, and CVE-2011-4123 should be marked as a
-duplicate. More information on the vold vulnerability, including a
-patch, can be found at
-http://code.google.com/p/android/issues/detail?id=21681
+Marc.
 
-For the record, Google maintains several security contact mailing
-lists.  In general, you can reach Google security by e-mailing
-security@...gle.com or visiting
-http://www.google.com/about/corporate/company/security.html
 
-For Android specific security issues, the preferred e-mail address is
-security@...roid.com, or you can visit
-http://developer.android.com/resources/faq/security.html#issue
 
-For Chrome specific security issues, the preferred e-mail address is
-security@...omium.org, or you can visit
-http://dev.chromium.org/Home/chromium-security/reporting-security-bugs
 
-In general, e-mailing security@...gle.com will eventually get to
-Chrome or Android, although it's faster to contact the product
-specific security alias first.
-
-Because Google is a CNA, we maintain our own pool of CVEs from Mitre.
-Any of the addresses above can issue CVEs for Google related
-vulnerabilities.
-
-Thanks!
--- Nick Kralevich
-   Android Security Team
-
-> On 11/08/2011 06:08 AM, Dan Rosenberg wrote:
-> > On Tue, Nov 8, 2011 at 8:03 AM, Dan Rosenberg <dan.j.rosenberg@...il.com> wrote:
-> >> A local user with group "log" on Android may send a malformed message
-> >> to vold ("volume daemon"), causing a stack buffer overflow.  This has
-> >> been demonstrated to be exploitable to escalate privileges to root on
-> >> all Froyo (2.2.x) and Gingerbread (2.4.x)  devices via freeing an
-> >> arbitrary heap object and triggering a use-after-free condition [1].
-> >> It appears the bug was silently patched in Honeycomb (3.x), but note
-> >> that since Honeycomb is not open source, it does not fall within the
-> >> scope of this list.  Bug discovered and exploited by the Revolutionary
-> >> team [2].
-> >>
-> > Oops, a few minor corrections.
-> >
-> > Typo: Gingerbread is 2.3.x.  Also, the vulnerability actually lives in
-> > the libsysutils library, and was demonstrated to be exploitable via
-> > vold, which makes use of the affected library function.  Sorry for the
-> > noise.
-> >
-> >> -Dan
-> >>
-> >> [1] https://github.com/revolutionary/zergRush/blob/master/zergRush.c
-> >> [2] http://revolutionary.io/
-> >>
-> Please use CVE-2011-4123 for this issue.
->
-> --
->
-> -Kurt Seifried / Red Hat Security Response Team
->
+View attachment "04_CVE-2011-4105.patch" of type "text/x-patch" (1512 bytes)
