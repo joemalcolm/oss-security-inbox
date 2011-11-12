@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/12/2
-Message-ID: <handler.629938.B629938.13078837126379.ackinfo@bugs.debian.org>
-Date: Sun, 12 Jun 2011 13:03:07 +0000
-From: owner@...s.debian.org (Debian Bug Tracking System)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/12/2
+Message-ID: <4EBDF7DC.7020106@redhat.com>
+Date: Fri, 11 Nov 2011 21:36:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Bug#629938: Info received (CVE Request -- dbus -- Local DoS via messages with non-native byte order)
+Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the additional information you have supplied regarding
-this Bug report.
-
-This is an automatically generated reply to let you know your message
-has been received.
-
-Your message is being forwarded to the package maintainers and other
-interested parties for their attention; they will reply in due course.
-
-Your message has been sent to the package maintainer(s):
- Utopia Maintenance Team <pkg-utopia-maintainers@...ts.alioth.debian.org>
-
-If you wish to submit further information on this problem, please
-send it to 629938@...s.debian.org.
-
-Please do not send mail to owner@...s.debian.org unless you wish
-to report a problem with the Bug-tracking system.
+On 11/11/2011 09:48 AM, Petr Matousek wrote:
+> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
+> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
+> request.
+>
+> While the NFS client only asks for one attribute (FATTR4_ACL) in the
+> first bitmap word, the NFSv4 protocol allows for the server to return
+> unbounded bitmaps (more than two)."
+>
+> Upstream commit:
+> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
+> case when 2 words are expected and 3 are returned
+>
+> Proposed complete upstream patch:
+> http://www.spinics.net/lists/linux-nfs/msg25288.html
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=747106
+>
+> Credit: Andy Adamson
+>
+> Thanks,
+Please use CVE-2011-4132 for this issue.
 
 -- 
-629938: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
-Debian Bug Tracking System
-Contact owner@...s.debian.org with problems
+
+-Kurt Seifried / Red Hat Security Response Team
+
