@@ -1,49 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/4
-Message-ID: <1323973540.3281.77.camel@localhost>
-Date: Thu, 15 Dec 2011 12:25:40 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: icecast-dev@...h.org
-Cc: oss-security@...ts.openwall.com, security@...ntu.com,  security@...itz-naumann.com
-Subject: Security issue in icecast
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/12/2
+Message-ID: <4EBDF7DC.7020106@redhat.com>
+Date: Fri, 11 Nov 2011 21:36:44 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
 Content-Type: text/plain; charset=utf-8
 
-A security bug was reported by Moritz Naumann against icecast in
-Ubuntu. You are being emailed as the upstream contact. Please keep
-oss-security@...ts.openwall.com[1] CC'd for any updates on this issue.
-
-This issue should be considered public and has not yet been assigned a
-CVE.
-
-Details from the public bug follow:
-https://launchpad.net/bugs/894782
-
-From the reporter:
-"Newline injection in error.log
-
-Running this command against an icecast2 running on 127.0.0.1...
-
-echo -ne "GET /non-existent"'"'"%20No%20such%20file%20or%20directory%0d%
-0a[1970-01-01%20%2000:00:00]%20PHUN%20I'm%20feeling%20phunny%0d%
-0a["`date "+%Y-%m-%d%%20%%20%H:%M:%S"`"]%20WARN%
-20fserve/fserve_client_create%20req%20for%20file%
-20"'"'"/usr/share/icecast2/web/ HTTP/1.0\n\n" | nc -vv 127.0.0.1 8000
-> /dev/null
-
-...causes the following to be written to /var/log/icecast2/error.log:
-[2011-11-25 15:37:31] INFO fserve/fserve_client_create checking for
-file /non-existent" No such file or directory
-[1970-01-01 00:00:00] PHUN I'm feeling phunny
-..."
-
-Thanks in advance for your cooperation in coordinating a fix for this
-issue.
-
-[1] oss-security@...ts.openwall.com is a public mailing list for
-    people to collaborate on security vulnerabilities and coordinate
-    security updates.
+On 11/11/2011 09:48 AM, Petr Matousek wrote:
+> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
+> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
+> request.
+>
+> While the NFS client only asks for one attribute (FATTR4_ACL) in the
+> first bitmap word, the NFSv4 protocol allows for the server to return
+> unbounded bitmaps (more than two)."
+>
+> Upstream commit:
+> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
+> case when 2 words are expected and 3 are returned
+>
+> Proposed complete upstream patch:
+> http://www.spinics.net/lists/linux-nfs/msg25288.html
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=747106
+>
+> Credit: Andy Adamson
+>
+> Thanks,
+Please use CVE-2011-4132 for this issue.
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-Kurt Seifried / Red Hat Security Response Team
+
