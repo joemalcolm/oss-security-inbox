@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/19/5
-Message-ID: <1295444206.15884.32.camel@solo.digium.internal>
-Date: Wed, 19 Jan 2011 07:36:46 -0600
-From: Matthew Nicholson <mnicholson@...ium.com>
-To: "Steven M. Christey" <coley@...-smtp.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request -- Asterisk: Stack-based buffer overflow by forming an outgoing SIP request with specially-crafted caller ID information (AST-2011-001)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/12/1
+Message-ID: <4EBDF7C4.9060407@redhat.com>
+Date: Fri, 11 Nov 2011 21:36:20 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2011-01-19 at 07:21 -0500, Steven M. Christey wrote:
-> On Wed, 19 Jan 2011, Jan Lieskovsky wrote:
-> 
-> >  Asterisk upstream yesterday released AST-2011-001, also with patches for 
-> > supported versions.
-> >  References:
-> >  [1] http://downloads.asterisk.org/pub/security/AST-2011-001.html
-> >  [2] http://seclists.org/fulldisclosure/2011/Jan/297
-> >  [3] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=610487
-> >  [4] https://bugzilla.redhat.com/show_bug.cgi?id=670777
-> 
-> Use CVE-2011-0495
-> 
-> - Steve
-
-Our website has been updated with this information.
+On 11/11/2011 09:48 AM, Petr Matousek wrote:
+> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
+> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
+> request.
+>
+> While the NFS client only asks for one attribute (FATTR4_ACL) in the
+> first bitmap word, the NFSv4 protocol allows for the server to return
+> unbounded bitmaps (more than two)."
+>
+> Upstream commit:
+> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
+> case when 2 words are expected and 3 are returned
+>
+> Proposed complete upstream patch:
+> http://www.spinics.net/lists/linux-nfs/msg25288.html
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=747106
+>
+> Credit: Andy Adamson
+>
+> Thanks,
+Please use CVE-2011-4131 for this issue
 
 -- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
+
+-Kurt Seifried / Red Hat Security Response Team
 
