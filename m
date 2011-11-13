@@ -1,23 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/01/2
-Message-ID: <4E0D8815.5090002@redhat.com>
-Date: Fri, 01 Jul 2011 14:10:53 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com
-Subject: Please reject CVE-2011-0705
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/2
+Message-ID: <20111113121527.2a809ab3@laverne>
+Date: Sun, 13 Nov 2011 12:15:27 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: ResourceSpace before 4.2.2833 insufficient access check
 Content-Type: text/plain; charset=utf-8
 
-Hi Steven,
+http://www.resourcespace.org/download.php
 
-Can you please reject CVE-2011-0705.
-
-This is not a bug.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=696082#c6
-
-Thanks.
+"Security fix for an insufficient check on access keys given for
+resources"
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
