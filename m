@@ -1,40 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/18/7
-Message-ID: <1313683700.15727.27.camel@localhost.localdomain>
-Date: Fri, 19 Aug 2011 02:08:17 +1000
-From: David Hicks <d@...id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/2
+Message-ID: <20111113121527.2a809ab3@laverne>
+Date: Sun, 13 Nov 2011 12:15:27 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MantisBT <1.2.7 search.php multiple XSS vulnerabilities
+Subject: CVE request: ResourceSpace before 4.2.2833 insufficient access check
 Content-Type: text/plain; charset=utf-8
 
-Original vulnerability report by Net.Edit0r (Net.Edit0r@....net) from
-BlACK Hat Group [http://black-hg.org] is available at:
-http://packetstormsecurity.org/files/104149
+http://www.resourcespace.org/download.php
 
-MantisBT bug report for full details of the issue:
-http://www.mantisbt.org/bugs/view.php?id=13245
+"Security fix for an insufficient check on access keys given for
+resources"
 
-Please note that the second SQL injection vulnerability identified by
-Net.Edit0r is not reproducible (refer to the MantisBT bug report above
-for reasons why).
-
-A patch for 1.2.6 is available at:
-https://github.com/mantisbt/mantisbt/commit/317f3db3a3c68775de3acf3b15f55b1e3c18f93b
-
-MantisBT 1.2.7 is currently being packaged and will be available shortly
-through usual channels for distributions and standalone users to pick
-up.
-
-Bug reports cross-posted elsewhere:
-Gentoo: https://bugs.gentoo.org/show_bug.cgi?id=379739
-Fedora/Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=731777
-Debian: Submitted (queued)
-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/mantis/+bug/828857
-
-Thanks,
-
-David Hicks
-MantisBT Developer
-mantisbt.org, #mantishelp on freenode
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
