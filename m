@@ -1,23 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/16
-Message-ID: <4EAAED3B.5050109@redhat.com>
-Date: Fri, 28 Oct 2011 11:58:19 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/3
+Message-ID: <4EBFE827.5080303@redhat.com>
+Date: Sun, 13 Nov 2011 08:54:15 -0700
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: vladz <vladz@...zero.fr>, rcvalle@...hat.com
-Subject: Re: Request for CVE Identifier: bzexe insecure	temporary file
+Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
 Content-Type: text/plain; charset=utf-8
 
-On 10/28/2011 07:10 AM, vladz wrote:
-> Hi,
+On 11/11/2011 09:36 PM, Kurt Seifried wrote:
+> On 11/11/2011 09:48 AM, Petr Matousek wrote:
+>> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
+>> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
+>> request.
+>>
+>> While the NFS client only asks for one attribute (FATTR4_ACL) in the
+>> first bitmap word, the NFSv4 protocol allows for the server to return
+>> unbounded bitmaps (more than two)."
+>>
+>> Upstream commit:
+>> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
+>> case when 2 words are expected and 3 are returned
+>>
+>> Proposed complete upstream patch:
+>> http://www.spinics.net/lists/linux-nfs/msg25288.html
+>>
+>> Reference:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=747106
+>>
+>> Credit: Andy Adamson
+>>
+>> Thanks,
+> Please use CVE-2011-4131 for this issue
 >
-> On Fri, Oct 28, 2011 at 02:22:13PM +0200, Hanno Böck wrote:
->> Am Fri, 28 Oct 2011 07:48:16 -0400 (EDT) schrieb Ramon de C Valle <rcvalle@...hat.com>:
->>> This is a security issue reported by vladz in bzexe. This is a low
->>> impact security issue, since bzexe is rarely used and the race
->>> condition window is very narrow, but still exploitable.
+With apologies, I replied to the same message twice, the correct CVE
+assignment should be:
 
-Please use CVE-2011-4089 for this issue.
+CVE-2011-4131 kernel: nfs4_getfacl decoding kernel oops (correct for
+this email)
+
+The second one, CVE-2011-4132 is for kernel: jbd/jbd2: invalid value of
+first log block leads to oops which is in a second email.
+
+
 
 -- 
 
