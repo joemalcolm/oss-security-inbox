@@ -1,17 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/25/5
-Message-ID: <87mxag7ew7.fsf@mid.deneb.enyo.de>
-Date: Sun, 25 Dec 2011 18:14:00 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/3
+Message-ID: <4EBFE827.5080303@redhat.com>
+Date: Sun, 13 Nov 2011 08:54:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2011-4862 is not BSD-specific
+Subject: Re: CVE Request -- kernel: nfs4_getfacl decoding kernel oops
 Content-Type: text/plain; charset=utf-8
 
-This is just a heads-up: CVE-2011-4862, a pre-authentication buffer
-overflow in telnetd recently fixed by FreeBSD is not BSD-specific.  It
-seems to have been added at MIT when the BSD telnetd was Kerberized,
-and it ended up in the Heimdal recryptofication of Kerberos (from
-where FreeBSD got it) and later in GNU inetutils.  I have reproduced a
-pre-authentication segfault with both versions (as shipped by Debian).
+On 11/11/2011 09:36 PM, Kurt Seifried wrote:
+> On 11/11/2011 09:48 AM, Petr Matousek wrote:
+>> "nfs4_getfacl decoding causes a kernel Oops when a server returns more
+>> than 2 GETATTR bitmap words in response to the FATTR4_ACL attribute
+>> request.
+>>
+>> While the NFS client only asks for one attribute (FATTR4_ACL) in the
+>> first bitmap word, the NFSv4 protocol allows for the server to return
+>> unbounded bitmaps (more than two)."
+>>
+>> Upstream commit:
+>> e5012d1f3861d18c7f3814e757c1c3ab3741dbcd - incomplete, handles only the
+>> case when 2 words are expected and 3 are returned
+>>
+>> Proposed complete upstream patch:
+>> http://www.spinics.net/lists/linux-nfs/msg25288.html
+>>
+>> Reference:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=747106
+>>
+>> Credit: Andy Adamson
+>>
+>> Thanks,
+> Please use CVE-2011-4131 for this issue
+>
+With apologies, I replied to the same message twice, the correct CVE
+assignment should be:
 
-The telnetd from netkit does not appear to be affected.
+CVE-2011-4131 kernel: nfs4_getfacl decoding kernel oops (correct for
+this email)
+
+The second one, CVE-2011-4132 is for kernel: jbd/jbd2: invalid value of
+first log block leads to oops which is in a second email.
+
+
+
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
