@@ -1,55 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/2
-Message-ID: <4EB3FAD5.6000806@nixnuts.net>
-Date: Fri, 04 Nov 2011 09:46:45 -0500
-From: John Lightsey <john@...nuts.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/4
+Message-ID: <4EBFE854.7090005@redhat.com>
+Date: Sun, 13 Nov 2011 08:55:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: unsafe use of /tmp in multiple CPAN modules
+Subject: Re: CVE Request -- kernel: jbd/jbd2: invalid value of first log block leads to oops
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/11/2011 03:50 PM, Petr Matousek wrote:
+> A flaw was found in the way Linux kernel's Journaling Block Device (JBD)
+> handled invalid log first block value. An attacker able to mount
+> malicious ext3 or ext4 image could use this flaw to crash the system.
+>
+> Upstream commit:
+> 8762202dd0d6e46854f786bdb6fb3780a1625efe
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=753341
+>
+> Thanks,
+With apologies, I replied to a previous message twice, the correct CVE
+assignment for this issue is:
 
-These were reported to the upstream authors a while back. None of these
-bugs are fixed in the currently available versions:
+CVE-2011-4132 is for kernel: jbd/jbd2: invalid value of first log block
+leads to oops
 
+-- 
 
-PAR::Packer - PAR packed files are extracted to unsafe and predictable
-temporary directories
+-Kurt Seifried / Red Hat Security Response Team
 
-https://rt.cpan.org/Public/Bug/Display.html?id=69560
-
-
-Parallel::ForkManager - Insecure /tmp file handling
-
-https://rt.cpan.org/Public/Bug/Display.html?id=68298
-
-
-File::Temp - _is_safe() allows unsafe traversal of symlinks
-
-https://rt.cpan.org/Public/Bug/Display.html?id=69106
-
-
-Batch::BatchRun - Unsafe /tmp file usage
-
-https://rt.cpan.org/Public/Bug/Display.html?id=69594
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQIcBAEBAgAGBQJOs/rHAAoJEORPgBbTYw+JY8kP/RTQuY2il0nMIRnG2D1OrBpu
-vHA9uyeOx5QuEliatgWaaAFrlXCi7gSkMdq91JxCK2QM8feJ2EGqOBhbrX9CShsb
-jpVO5xvo9mUVe70yBpplu3y0S5qPaNw3BjN6baiVlN04sl/rrhFeGigfkJo7erPH
-RSBaTTUyNTHjwEjyl8WFgpl8kJDyeQoHDGEZhb106l6uAsNCscF+6thxUoEZUMo8
-8ljxylnobzvzL2TNhhTuTX5NtFH5TjvKGm/NeuSH2avCrY+S4dM9MZtAI+ofp1Z6
-3DuTSUpjA4hJDK43KqWGEpxvEpVjwd5jo887uYvfzLev9YTz3fc78H+rb0ishkH3
-mdsmq42n8WGdoFMduZpDWzxdYi5mBCDipgd95PuQAT6+ya7/hSZRZ4KvgInP6Bcv
-bLCyqtMFm+z3KaufFKK6M3wafR+DCvsBM/8MT+EyQJgrClPBLFJ2J3d0N4u6qZCc
-vNYMrj4L6Vxfm7VoEe6gSwKKaRxvPdboXlxS6ubK6E9LLNcWewObm6foFIddXotD
-RtCSnROZrWubG73RFTKrjqrHIaK4ktO/x6bCdQyA3ziBIQOM9xUvTHkJeDtuIe+W
-RcwZVAtM4U8wmVVlkqBgEde2ipBKITEUPXLbLyQ7MrAeiuRBLT6wsfTqPh+EJ5ga
-r7V7cmFNq/btoySXFcI8
-=WTKm
------END PGP SIGNATURE-----
