@@ -1,71 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/31/14
-Message-ID: <20110531130959.708b8844@angelo.pretender.us>
-Date: Tue, 31 May 2011 13:09:59 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/1
+Message-ID: <20111113121234.0603015c@laverne>
+Date: Sun, 13 Nov 2011 12:12:34 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: bressers@...hat.com, coley <coley@...re.org>, Dan Veditz <dveditz@...illa.com>
-Subject: Re: CVE request: firefox doesn't (re)validate certificates when loading HTTPS page
+Subject: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
 Content-Type: text/plain; charset=utf-8
 
-Looks like Red Hat reported this upstream to Mozilla late last night...
+http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
 
-Mozilla is tracking this as
-https://bugzilla.mozilla.org/show_bug.cgi?id=660749.
-
-No CVE has been assigned yet (afaict), but I'll see about getting one
-assigned once this has been confirmed.
-
-~reed
-
-On Tue, 31 May 2011 15:42:58 -0400 (EDT)
-Josh Bressers <bressers@...hat.com> wrote:
-
-> I'm going to save this one for upstream. It's possible they've already
-> assigned something (Mozilla is a CNA).
-> 
-> I've CC'd Reed in the rare event he doesn't know about this.
-> 
-> Thanks.
-> 
-> -- 
->     JB
-> 
-> ----- Original Message -----
-> > Hi,
-> > found this in RH's bugzilla:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=709165
-> > 
-> > Vincent Danen 2011-05-30 18:38:43 EDT
-> > 
-> > A Debian bug report [1] indicated that Firefox 4.0.x handled the
-> > validation/revalidation of SSL certificates improperly. If a user were
-> > to
-> > visit a site with an untrusted certificate, Firefox would correctly
-> > display the
-> > warning about the untrusted connection. If a user were to confirm the
-> > security
-> > exception for a single session (not check off the "permanently store
-> > this
-> > exception"), then restart the browser and re-load the page, the
-> > contents of the
-> > page would be displayed from the Firefox cache. Upon reloading the
-> > page, the
-> > security warning would appear, but incorrectly indicates that the site
-> > provides
-> > a valid, verified certificate and there is no way to confirm the
-> > exception.
-> > [...]
-> > 
-> > --
-> > Thomas Biege <thomas@...e.de>, SUSE LINUX, Security Support & Auditing
-> > SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-> > 21284 (AG Nürnberg
-> > --
-> > Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-> > -- Marie von Ebner-Eschenbach
-
+"Today we have released CMSMS 1.9.4.3, a minor release that fixes a
+single security issue in the news module. Essentially, a malicious
+person could via accessing a sincle URL corrupt your news articles."
 
 -- 
-Reed Loden
-reed@...dloden.com
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
