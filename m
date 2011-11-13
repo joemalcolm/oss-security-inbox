@@ -1,25 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/13/1
-Message-ID: <4EE6CC84.9000309@redhat.com>
-Date: Tue, 13 Dec 2011 09:24:44 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/1
+Message-ID: <20111113121234.0603015c@laverne>
+Date: Sun, 13 Nov 2011 12:12:34 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: OpenIPMI: IPMI event daemon creates PID file with world writeable permissions
+Subject: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
 
-A insecure file permissions flaw was found in the way IPMI event daemon 
-of the OpenIPMI (Intelligent Platform Management Interface) library and 
-tools created its PID file (it was created with 0666 permissions). A 
-local user could use this flaw to kill arbitrary running process during 
-ipmievd service shutdown.
-
-This has been assigned CVE-2011-4339
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=742837
-
+"Today we have released CMSMS 1.9.4.3, a minor release that fixes a
+single security issue in the news module. Essentially, a malicious
+person could via accessing a sincle URL corrupt your news articles."
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
