@@ -1,56 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/03/5
-Message-ID: <1296751535.3409.25.camel@localhost>
-Date: Thu, 03 Feb 2011 11:45:35 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/13/4
+Message-ID: <4EBFE854.7090005@redhat.com>
+Date: Sun, 13 Nov 2011 08:55:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: fuse
+Subject: Re: CVE Request -- kernel: jbd/jbd2: invalid value of first log block leads to oops
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-02-03 at 11:17 -0500, Josh Bressers wrote:
-> ----- Original Message -----
-> > 
-> > A few more fixes have made their way to FUSE to prevent TOCTTOU symlink
-> > attacks. An unprivileged user was able to unmount arbitrary mounts:
-> > 
-> > http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
-> > http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
-> > http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
-> > 
-> > Could we please get one or more CVE numbers for them?
-> > 
-> 
-> I don't understand what these flaws are just by reading the commit
-> messages. Can you explain them?
-> 
-> Thanks.
-> 
+On 11/11/2011 03:50 PM, Petr Matousek wrote:
+> A flaw was found in the way Linux kernel's Journaling Block Device (JBD)
+> handled invalid log first block value. An attacker able to mount
+> malicious ext3 or ext4 image could use this flaw to crash the system.
+>
+> Upstream commit:
+> 8762202dd0d6e46854f786bdb6fb3780a1625efe
+>
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=753341
+>
+> Thanks,
+With apologies, I replied to a previous message twice, the correct CVE
+assignment for this issue is:
 
-Sure!
+CVE-2011-4132 is for kernel: jbd/jbd2: invalid value of first log block
+leads to oops
 
-http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=bf5ffb5fd8558bd799791834def431c0cee5a11f
+-- 
 
-Fuse tries to mount a directory without resolving symlinks, and then
-tries to update mtab. If it couldn't update mtab, it would unmount the
-directory while resolving symlinks this time, resulting in a different
-directory being unmounted.
-
-http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=1e7607ff89c65b005f69e27aeb1649d624099873
-
-This prevents local users from changing the location of the current
-directory from under fuse using a timing attack.
-
-http://fuse.git.sourceforge.net/git/gitweb.cgi?p=fuse/fuse;a=commit;h=cbd3a2a84068aae6e3fe32939d88470d712dbf47
-
-Fuse uses the --no-canonicalize mount option to prevent a symlink attack
-on the mount point written to mtab. For backwards compatibility reasons,
-it would fallback to using mount in an insecure way. This fallback could
-get triggered by a user when an entry already existed in mtab.
-
-
-All three of these issues allowed local users to trick fuse into
-unmounting arbitrary directories.
-
-Marc.
-
+-Kurt Seifried / Red Hat Security Response Team
 
