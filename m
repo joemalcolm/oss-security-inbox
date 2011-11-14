@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/6
-Message-ID: <BANLkTinqqGvnk_dCx4ttNSY4Ph-41nK4kg@mail.gmail.com>
-Date: Mon, 13 Jun 2011 13:37:48 -0300
-From: Javier Bassi <javierbassi@...il.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: XSS in Webmin 1.540
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/2
+Message-ID: <4EC13E0C.4010402@redhat.com>
+Date: Mon, 14 Nov 2011 09:13:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
 Content-Type: text/plain; charset=utf-8
 
-After your email, I searched for this mailing list and asked for CVE.
-http://seclists.org/oss-sec/2011/q2/478
-CVE-2011-1937.
+On 11/13/2011 04:12 AM, Hanno Böck wrote:
+> http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
+>
+> "Today we have released CMSMS 1.9.4.3, a minor release that fixes a
+> single security issue in the news module. Essentially, a malicious
+> person could via accessing a sincle URL corrupt your news articles."
+>
+Please use CVE-2011-4310 for this issue.
 
-On Mon, Jun 13, 2011 at 10:40 AM, Henri Salo <henri@...v.fi> wrote:
-> Hi,
->
-> I would like to receive CVE-identifier for this issue in Webmin. References:
->
-> http://seclists.org/fulldisclosure/2011/Apr/393
->
-> Javier Bassi told me that the Bugtraq ID is 47558. Couldn't find this from OSVDB. Fixed in commit: https://github.com/webmin/webmin/commit/46e3d3ad195dcdc1af1795c96b6e0dc778fb6881 which is included to Webmin 1.550 release.
->
-> Should be 2011 identifier.
->
-> Best regards,
-> Henri Salo
->
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
