@@ -1,42 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/11/9
-Message-ID: <20110811185513.GA1924@openwall.com>
-Date: Thu, 11 Aug 2011 22:55:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/3
+Message-ID: <4EC13E63.709@redhat.com>
+Date: Mon, 14 Nov 2011 09:14:27 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Ralf Baechle <ralf@...ux-mips.org>, Thomas Osterried <thomas@...erried.de>, Thomas Osterried <ax25@...erg.in-berlin.de>
-Subject: Re: CVE request (and disclosure): ax25d missing setuid return code check
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: ResourceSpace before 4.2.2833 insufficient access check
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-08-11 at 15:05 +0100, Ralf Baechle wrote:
-> These days setuid and similar syscalls need to allocate memory for the
-> credentials of a process and memory allocations may fail.  A system could
-> even be put under massive memory pressure with the intend to make this
-> allocation fail.
+On 11/13/2011 04:15 AM, Hanno Böck wrote:
+> http://www.resourcespace.org/download.php
+>
+> "Security fix for an insufficient check on access keys given for
+> resources"
+>
+Please use CVE-2011-4311 for this issue.
 
-Per the discussion on kernel-hardening, this specific allocation
-currently can't fail, but my opinion is that we need to harden the
-kernel code to kill the process if the allocation does fail (which might
-become possible in a future revision of the code).  I introduced such
-process-killing into Owl-current recently (although, as I said, this
-code path is believed to be never reached).
+-- 
 
-On Thu, Aug 11, 2011 at 10:21:11AM -0400, Jon Oberheide wrote:
-> The important vector is RLIMIT_NPROC.
+-Kurt Seifried / Red Hat Security Response Team
 
-Right.  This one will be gone in Linux 3.1 (patch applied today, after a
-lengthy discussion and several revisions):
-
-http://www.openwall.com/lists/kernel-hardening/2011/08/11/3
-http://www.openwall.com/lists/kernel-hardening/2011/08/08/2
-
-This is also in Owl-current.
-
-Even though we're hardening the kernel in this respect, userspace
-programs should continue to check return value from setuid() anyway, as
-well as from syscalls in general.  And we should continue to treat
-missing setuid() return value checks as security bugs, even if they
-would normally not be triggerable on Linux 3.1+ (except in case the
-process is running with lowered capabilities).
-
-Alexander
