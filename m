@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/15
-Message-ID: <4D99518E.5020505@ubuntu.com>
-Date: Mon, 04 Apr 2011 00:05:18 -0500
-From: Micah Gersten <micah@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/5
+Message-ID: <CABqVa3--fZxG+52j7ocmySwCvFzMEOevSp341vOG00BgK0HD7Q@mail.gmail.com>
+Date: Sun, 13 Nov 2011 22:51:57 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Arch Linux Shaman issue
 Content-Type: text/plain; charset=utf-8
 
-On 04/01/2011 01:03 PM, Josh Bressers wrote:
-> Hello everyone,
->
-> This topic has lost focus lately. Rather than let it slip away, I think we
-> should go ahead with the simplest solution right now, we can always do
-> something different at a future date.
->
-> Openwall has graciously volunteered to run a new list, and they currently
-> have some infrastructure in place to do this. The new list can start up
-> right away. In this instance, I fear perfect is the enemy of the good. I'd
-> rather see something functional in place than nothing.
->
-> Here is the plan for initial membership (this is also approved by
-> Openwall).
->
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
->
-> Once we have an initial seed group, we can focus on future membership
-> ideas.
->
-> Thanks.
->
-Please add me to the new list, I was a member through the Ubuntu exploder:
-pub   1024D/AA97FD59 2009-06-02 [expires: 2014-06-01]
-      Key fingerprint = FBB7 9514 0F36 1784 7CD8  734E 4E78 AFE1 AA97 FD59
-uid                  Micah Gersten <micah@...ntu.com>
-sub   4096g/FD0EAC79 2009-06-02 [expires: 2014-06-01]
+Did this ever get a CVE #? I can't find one.
 
-Thanks.
+https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+
+The point of this thread was that you don't need to enter the root
+password at all. Not the first time, not ever.
+
+As far as I understand, it is supposed to work like this: When you
+first use shaman too install anything, it asks for the root password
+You can tick a "Do not ask me again"-box, so you don't have to enter
+the password again. If you tick the box and enter the password, shaman
+add the lines
+[auth]
+askforpwd=false
+to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
+time shaman is run, it checks the config file, and if the askforpwd
+value is set to false, it grants itself root privileges (with some
+nifty setuuid root-thingy, I imagine) This is not the problem - this
+is the feature.
+
+The bug is this:
+the fact that any user can add the lines
+[auth]
+askforpwd=false
+to his own shaman.conf file, without ever entering the root password
+in shaman. The next time shaman is run, it checks the config file, and
+if the askforpwd value is set to false, it grants itself root
+privileges - even though the user has never entered the root password.
+This works for any unprivileged user on the system.
+
+If that is indeed a feature intended by any sane person, then I'm
+Mother Mary. And that can't be, seeing as I don't have breasts.
+
+Appears to never have been fixed, the last release of shaman appears
+to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
 
 -- 
-Micah Gersten
-Ubuntu Security Team
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Kurt Seifried
+kurt@...fried.org
+skype: (206) 905-9462
