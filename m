@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/05/4
-Message-ID: <20110305192106.GB31605@openwall.com>
-Date: Sat, 5 Mar 2011 22:21:06 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/5
+Message-ID: <CABqVa3--fZxG+52j7ocmySwCvFzMEOevSp341vOG00BgK0HD7Q@mail.gmail.com>
+Date: Sun, 13 Nov 2011 22:51:57 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- logrotate -- nine issues
+Subject: Arch Linux Shaman issue
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 05, 2011 at 03:17:57AM +0700, Pavel Labushev wrote:
-> 04.03.2011 21:52, Solar Designer пишет:
-> 
-> > I've just skimmed over the list, and I only see one issue that I'd call
-> > a vulnerability in logrotate, issue #8.  And we need more info on #5.
-> > 
-> > The rest, as described, appear to rely on sysadmin error and to assume
-> 
-> Or on package maintainer error.
+Did this ever get a CVE #? I can't find one.
 
-Right.
+https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
 
-> At least in Gentoo there are packages
-> (ebuilds and eclasses) that create user/group-writable directories in
-> /var/log and enable logrotate to handle the log files there.
+The point of this thread was that you don't need to enter the root
+password at all. Not the first time, not ever.
 
-Is this something you can get fixed?
+As far as I understand, it is supposed to work like this: When you
+first use shaman too install anything, it asks for the root password
+You can tick a "Do not ask me again"-box, so you don't have to enter
+the password again. If you tick the box and enter the password, shaman
+add the lines
+[auth]
+askforpwd=false
+to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
+time shaman is run, it checks the config file, and if the askforpwd
+value is set to false, it grants itself root privileges (with some
+nifty setuuid root-thingy, I imagine) This is not the problem - this
+is the feature.
 
-Alexander
+The bug is this:
+the fact that any user can add the lines
+[auth]
+askforpwd=false
+to his own shaman.conf file, without ever entering the root password
+in shaman. The next time shaman is run, it checks the config file, and
+if the askforpwd value is set to false, it grants itself root
+privileges - even though the user has never entered the root password.
+This works for any unprivileged user on the system.
+
+If that is indeed a feature intended by any sane person, then I'm
+Mother Mary. And that can't be, seeing as I don't have breasts.
+
+Appears to never have been fixed, the last release of shaman appears
+to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
+
+-- 
+Kurt Seifried
+kurt@...fried.org
+skype: (206) 905-9462
