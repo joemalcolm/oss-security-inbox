@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/24/7
-Message-ID: <20110624130517.GA18027@dztty>
-Date: Fri, 24 Jun 2011 14:05:17 +0100
-From: Djalal Harouni <tixxdz@...ndz.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/4
+Message-ID: <4EC13E87.4000807@redhat.com>
+Date: Mon, 14 Nov 2011 09:15:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Did this ArchLinux/shaman thing ever get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 20, 2011 at 09:01:11AM +0400, Solar Designer wrote:
-> Oh, also some builds of crypt_blowfish (and of affected systems/apps)
-> for PowerPC are probably unaffected, because char is typically unsigned
-> there (unless overridden in compiler flags for compatibility with more
-> typical systems).
-Just to add that on some (perhaps all) ARM plateforms char is by
-default: "unsigned" (unless you compile with -fsigned-char as you have
-noted).
+Did this ever get a CVE #? I can't find one.
 
-This is an old link that expose some problems when you just use 'char var'
-on ARM (perhaps not only on ARM):
-http://www.arm.linux.org.uk/docs/faqs/signedchar.php
+https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+
+====================
+The point of this thread was that you don't need to enter the root
+password at all. Not the first time, not ever.
+
+As far as I understand, it is supposed to work like this: When you
+first use shaman too install anything, it asks for the root password
+You can tick a "Do not ask me again"-box, so you don't have to enter
+the password again. If you tick the box and enter the password, shaman
+add the lines
+[auth]
+askforpwd=false
+to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
+time shaman is run, it checks the config file, and if the askforpwd
+value is set to false, it grants itself root privileges (with some
+nifty setuuid root-thingy, I imagine) This is not the problem - this
+is the feature.
+
+The bug is this:
+the fact that any user can add the lines
+[auth]
+askforpwd=false
+to his own shaman.conf file, without ever entering the root password
+in shaman. The next time shaman is run, it checks the config file, and
+if the askforpwd value is set to false, it grants itself root
+privileges - even though the user has never entered the root password.
+This works for any unprivileged user on the system.
+
+If that is indeed a feature intended by any sane person, then I'm
+Mother Mary. And that can't be, seeing as I don't have breasts.
+====================
+
+
+Appears to never have been fixed, the last release of shaman appears
+to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
 
 -- 
-tixxdz
-http://opendz.org
+
+-Kurt Seifried / Red Hat Security Response Team
+
+
