@@ -1,42 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/12/2
-Message-ID: <1349870341.72848.1294841820197.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 12 Jan 2011 09:17:00 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Cc: coley@...us.mitre.org
-Subject: Re: CVE request: qemu-kvm: Setting VNC password to empty string silently disables all authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/6
+Message-ID: <Pine.GSO.4.64.1111141737030.17128@faron.mitre.org>
+Date: Mon, 14 Nov 2011 17:42:24 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-0011
 
-Thanks.
+In general, an attacker-triggered crash in any type of product that acts 
+as an "intermediary" between two parties - such as a proxy, firewall, mail 
+server, anti-virus, etc. - is typically counted as a vulnerability for 
+CVE, since the crash of the intermediary may cause many active sessions to 
+be lost, not just the session for the attacker.  Add repeated crashes and 
+you can have a substantive DoS on your hands.
 
--- 
-    JB
+For "passive" intermediaries like IDS and sniffers that just monitor 
+traffic, a crash/DoS can lead to loss of visibility/awareness (passing 
+traffic doesn't get captured), which can allow an attacker to hide 
+activities.
+
+- Steve
 
 
------ Original Message -----
-> "The semantics of the ',password' option to -vnc are that it enables
-> the VNC
-> auth scheme. If the VNC server password is unset or empty string, all
-> attempts
-> to authenticate with the server will be explicitly blocked.
-> 
-> This allows applications to enable and selectively allow access for a
-> period of
-> time, before clearing the password again to prevent further access.
-> 
-> Upstream changes have introduced a flaw by disabling all
-> authentication when
-> the password was cleared with upstream commit [1].
-> 
-> [1]
-> http://www.qemu.com/qemu.git/commit/?id=52c18be9e99dabe295321153fda7fce9f76647ac"
-> 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=668589
-> 
-> Thanks,
-> --
-> Petr Matousek / Red Hat Security Response Team
+On Mon, 31 Oct 2011, Henrik Nordstr�m wrote:
+
+> mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
+>
+>>> Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
+>>> for their opinion / comments too, if this should be considered
+>>> a security issue or not)
+>>
+>> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
+>> CVE-2009-3700, etc. Lots of similar ones.
+>
+> Agreed.
+>
+> Regards
+> Henrik
+>
+>
