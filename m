@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/16/10
-Message-ID: <20110516222154.GF2430@redhat.com>
-Date: Mon, 16 May 2011 16:21:54 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/2
+Message-ID: <4EC13E0C.4010402@redhat.com>
+Date: Mon, 14 Nov 2011 09:13:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: DoS in tor
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: cmsmadesimple before 1.9.4.3 - remote database corruption
 Content-Type: text/plain; charset=utf-8
 
-Tor 0.2.1.30 was released and includes a fix for a remote DoS flaw:
-
-https://lists.torproject.org/pipermail/tor-announce/2011-February/000000.html
-http://secunia.com/advisories/43548/
-https://bugzilla.redhat.com/show_bug.cgi?id=705192
-
-Could a CVE be assigned please?
+On 11/13/2011 04:12 AM, Hanno Böck wrote:
+> http://www.cmsmadesimple.org/2011/08/Announcing-CMSMS-1-9-4-3---Security-Release/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+cmsmadesimple%2Fblog+%28CMS+Made+Simple%29
+>
+> "Today we have released CMSMS 1.9.4.3, a minor release that fixes a
+> single security issue in the news module. Essentially, a malicious
+> person could via accessing a sincle URL corrupt your news articles."
+>
+Please use CVE-2011-4310 for this issue.
 
 -- 
-Vincent Danen / Red Hat Security Response Team 
+
+-Kurt Seifried / Red Hat Security Response Team
+
