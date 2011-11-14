@@ -1,44 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/35
-Message-ID: <944211187.369459.1301939335237.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 4 Apr 2011 13:48:55 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/4
+Message-ID: <4EC13E87.4000807@redhat.com>
+Date: Mon, 14 Nov 2011 09:15:03 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- perl -- lc(), uc() routines are laundering tainted data
+Subject: Did this ArchLinux/shaman thing ever get a CVE?
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-1487
+Did this ever get a CVE #? I can't find one.
 
-Thanks.
+https://bbs.archlinux.org/viewtopic.php?id=64066&p=1
+
+====================
+The point of this thread was that you don't need to enter the root
+password at all. Not the first time, not ever.
+
+As far as I understand, it is supposed to work like this: When you
+first use shaman too install anything, it asks for the root password
+You can tick a "Do not ask me again"-box, so you don't have to enter
+the password again. If you tick the box and enter the password, shaman
+add the lines
+[auth]
+askforpwd=false
+to the users shaman.conf-file (~./config/shaman/shaman.conf) The next
+time shaman is run, it checks the config file, and if the askforpwd
+value is set to false, it grants itself root privileges (with some
+nifty setuuid root-thingy, I imagine) This is not the problem - this
+is the feature.
+
+The bug is this:
+the fact that any user can add the lines
+[auth]
+askforpwd=false
+to his own shaman.conf file, without ever entering the root password
+in shaman. The next time shaman is run, it checks the config file, and
+if the askforpwd value is set to false, it grants itself root
+privileges - even though the user has never entered the root password.
+This works for any unprivileged user on the system.
+
+If that is indeed a feature intended by any sane person, then I'm
+Mother Mary. And that can't be, seeing as I don't have breasts.
+====================
+
+
+Appears to never have been fixed, the last release of shaman appears
+to have been 1.0.9 in 2008-09-06, the bug report was filed 2009-01-28.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
 
 
------ Original Message -----
-> Hello Josh, Steve, vendors,
-> 
-> A security flaw was found in the way Perl performed
-> laundering of tainted data. A remote attacker could
-> use this flaw to bypass Perl TAINT mode protection
-> mechanism (leading to commands execution on dirty
-> arguments or file system access via contaminated
-> variables) via specially-crafted input provided
-> to the web application / CGI script.
-> 
-> Upstream bug report:
-> http://rt.perl.org/rt3/Public/Bug/Display.html?id=87336
-> 
-> Relevant patch:
-> http://perl5.git.perl.org/perl.git/commitdiff/539689e74a3bcb04d29e4cd9396de91a81045b99
-> (contains also information when the issue was introduced)
-> 
-> References:
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=692844
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thanks && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
