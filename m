@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/28/7
-Message-ID: <1319802316.20049.9.camel@scapa>
-Date: Fri, 28 Oct 2011 13:45:16 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/14/6
+Message-ID: <Pine.GSO.4.64.1111141737030.17128@faron.mitre.org>
+Date: Mon, 14 Nov 2011 17:42:24 -0500 (EST)
+From: "Steven M. Christey" <coley@...-smtp.mitre.org>
 To: oss-security@...ts.openwall.com
-Cc: Sean Amoss <failedtosync@...il.com>
-Subject: Re: CVE Request -- Opera Manipulating fonts in SVG can allow execution of arbitrary code
+Subject: Re: CVE Request -- Squid v3.1.16 -- Invalid free by processing CNAME DNS record pointing to another CNAME record pointing to an empty A-record
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2011-10-28 at 07:17 -0400, Sean Amoss wrote:
-> Can a CVE be assigned for the below issue?
-> 
-> "Certain font manipulations inside a dynamically added and
-> specifically
-> embedded SVG image can cause Opera to crash. Additional techniques can
-> reliably be used in combination with this crash to allow execution of
-> arbitrary code.
-> 
-> Opera Software has released Opera 11.52, where this issue has been
-> fixed."
-> 
-> http://www.opera.com/support/kb/view/1002/
-> http://spa-s3c.blogspot.com/2011/10/spas3c-sv-006opera-browser-101112-0-day.html 
 
-Note that *OSS*-sec is for Open Source Software, which Opera is not,
-afair.
+In general, an attacker-triggered crash in any type of product that acts 
+as an "intermediary" between two parties - such as a proxy, firewall, mail 
+server, anti-virus, etc. - is typically counted as a vulnerability for 
+CVE, since the crash of the intermediary may cause many active sessions to 
+be lost, not just the session for the attacker.  Add repeated crashes and 
+you can have a substantive DoS on your hands.
 
-Regards,
--- 
-Yves-Alexis
+For "passive" intermediaries like IDS and sniffers that just monitor 
+traffic, a crash/DoS can lead to loss of visibility/awareness (passing 
+traffic doesn't get captured), which can allow an attacker to hide 
+activities.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- Steve
+
+
+On Mon, 31 Oct 2011, Henrik Nordstr�m wrote:
+
+> mån 2011-10-31 klockan 14:20 -0600 skrev Kurt Seifried:
+>
+>>> Could you allocate a CVE id for this? (cc-ed Henrik and Jiri
+>>> for their opinion / comments too, if this should be considered
+>>> a security issue or not)
+>>
+>> I'd say so, in the past we have: CVE-2010-2951, CVE-2010-0639,
+>> CVE-2009-3700, etc. Lots of similar ones.
+>
+> Agreed.
+>
+> Regards
+> Henrik
+>
+>
