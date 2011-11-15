@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/10/7
-Message-ID: <CAOSRhRPihYYsJ-Jfch=Q0R+ed5XuAj8AT38j69gGdq4u_-9Hqw@mail.gmail.com>
-Date: Wed, 10 Aug 2011 10:04:34 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: ocert-announce@...ts.ocert.org
-Subject: Re: [oCERT-2011-002] libavcodec insufficient boundary check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/8
+Message-ID: <4EC26E78.8080802@redhat.com>
+Date: Tue, 15 Nov 2011 14:51:52 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Christian Hammond <chipx86@...px86.com>
+Subject: CVE Request -- ReviewBoard v1.5.7 && v1.6.3 -- XSS in the commenting system (diff viewer and screenshot pages components)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 10, 2011 at 9:19 AM, Daniele Bianco <danbia@...rt.org> wrote:
->
-> #2011-002 libavcodec insufficient boundary check
->
-> Description:
->
-> The libavcodec library, an open source video encoding/decoding library part
-> of the FFmpeg and Libav projects, performs insufficient boundary check
-> against a buffer index. The missing check can result in arbitrary read/write
-> of data outside a destination buffer boundaries.
->
-> The vulnerability affects the Chinese AVS video (CAVS) file format decoder,
-> specially crafted CAVS files may lead to arbitrary code execution during
-> decoding.
->
+Hello Kurt, Steve, vendors,
 
-While you're at it, here are a couple more:
+   a cross-site scripting (XSS) flaw was found in the way the commenting
+system of the ReviewBoard, a web-based code review tool, sanitized user
+input (new comments to be loaded). A remote attacker could provide a
+specially-crafted URL, which once visited by valid ReviewBoard user
+could lead to arbitrary HTML or web script execution in the 'diff
+viewer' or 'screenshot pages' components.
 
-* Out-of-bounds read on lines 166-171 due to signedness error
-* Out-of-bounds read on lines 224-240 due to signedness error
+References:
+[1] http://www.reviewboard.org/news/
+[2] http://www.reviewboard.org/docs/releasenotes/dev/reviewboard/1.6.3/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=754126
 
-Line numbers based on upstream git:
-http://git.videolan.org/?p=ffmpeg.git;a=blob;f=libavcodec/cavsdec.c;h=acf040788c9a4c34807ba2efa10312b5b8e84f02;hb=6481a36010d8f7d834676f17ba555d0a3815c760
+Relevant upstream patch:
+[4] 
+https://github.com/reviewboard/reviewboard/commit/7a0a9d94555502278534dedcf2d75e9fccce8c3d
 
+Could you allocate a CVE id for this?
 
-Hint to distributions and software developers: if you're going to use
-libavcodec (or libavformat, etc.) for your project, consider
-restricting the default build to include only *commonly* used codecs
-and demuxers.  The code quality of many of the more obscure formats is
-questionable at best.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Regards,
-Dan
+P.S.: Cc-ed Christian Hammond, who committed change [4] to the
+       upstream Git repository too, so they could update CVE id
+       in their advisory, if / where needed.
