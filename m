@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/19/1
-Message-Id: <201105190944.01123.ludwig.nussel@suse.de>
-Date: Thu, 19 May 2011 09:44:00 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/4
+Message-ID: <20111115032305.GA8310@openwall.com>
+Date: Tue, 15 Nov 2011 07:23:05 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: viewvc DoS
+Cc: Colin Percival <cperciva@...ebsd.org>
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> 3. Maybe glibc and the SHA-crypt reference code should stop using
+> alloca() in favor of having the underlying MD5, SHA-256, and SHA-512
+> implementations accepting potentially unaligned buffers like e.g.
+> OpenSSL's implementations do.  Unfortunately, this might have
+> performance impact.
 
-cvsdb.py in viewvc before 1.1.11 did not honor an admin defined row limit:
-http://viewvc.tigris.org/source/browse/*checkout*/viewvc/tags/1.1.11/CHANGES
-http://viewvc.tigris.org/issues/show_bug.cgi?id=433
-http://viewvc.tigris.org/source/browse/viewvc/trunk/lib/cvsdb.py?diff_format=u&view=log
+This is what FreeBSD's revision of the code does, but it still has two
+alloca()s per function (the alignment-unrelated ones):
 
-cu
-Ludwig
+http://svnweb.freebsd.org/base/head/lib/libcrypt/
 
--- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg) 
+More context:
+
+http://www.openwall.com/lists/oss-security/2011/11/15/1
+
+Alexander
