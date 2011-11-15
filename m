@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/17/7
-Message-ID: <20110517170746.GI2430@redhat.com>
-Date: Tue, 17 May 2011 11:07:46 -0600
-From: Vincent Danen <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: wouter@...ian.org
-Subject: Re: CVE request: nbd-server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/2
+Message-ID: <20111115023502.GA8095@openwall.com>
+Date: Tue, 15 Nov 2011 06:35:02 +0400
+From: Solar Designer <solar@...nwall.com>
+To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
-* [2011-05-17 10:38:20 +0200] Thijs Kinkhorst wrote:
+Hi,
 
->Hi,
->
->In Debian the following was reported:
->nbd-server 2.9.21 has a NULL-pointer dereference in its negotiation
->phase, which allows unauthenticated users to DoS the server by causing
->the negotiation to fail (e.g., by specifying a non-existing name for an
->export).
->
->Filed as http://bugs.debian.org/627042. This affects only 2.9.21 so for us
->goes that only our unstable distribution is affected.
->
->We'd like to have a CVE name for this.
+Matthew - when I read that DragonFly moved to using SHA-256 for
+passwords by default, I thought this was referring to the SHA-256 based
+flavor of Ulrich Drepper's SHA-crypt.  This would not be the best choice
+to make, in my opinion, but it would not be that bad.  However, I just
+found this:
 
-The Debian bug is really light on details, so here is the git commit
-that fixes this:
+http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/lib/libcrypt
 
-http://nbd.git.sourceforge.net/git/gitweb.cgi?p=nbd/nbd;a=commitdiff;h=ebbbe0b3ce5393fa42a259f5e03d549508586aaa
+Are these crypt-sha256.c and/or crypt-sha512.c files actually in use?
+I hope not...  They do not include any password stretching, resulting in
+password hashes that are much quicker to crack than MD5-crypt's.
 
-But I don't see any evidence that this _only_ affects 2.9.21.  Are we
-sure that it doesn't affect earlier versions?  The reporter doesn't
-indicate one way or the other.
+There's also minor weirdness in the code - such as two local pointer
+variables being declared static seemingly for no reason, and only
+"final" but not "ctx" being zeroized in the end.  But even this lack of
+proper cleanup is very minor compared to the lack of stretching.
 
-CC'ing Wouter for clarification.
+Oh, also the "$3$" prefix was apparently previously used for NTLM:
 
--- 
-Vincent Danen / Red Hat Security Response Team 
+http://en.wikipedia.org/wiki/Crypt_(Unix)#NT_Hash_Scheme
+
+"FreeBSD used the $3$ prefix for this."
+
+http://search.cpan.org/~zefram/Authen-Passphrase/lib/Authen/Passphrase/NTHash.pm
+
+"... crypt string must consist of "$3$$" (note the extra "$") followed
+by the hash in lowercase hexadecimal."
+
+BTW, I looked at DragonFly's code while analyzing a more subtle issue
+with Ulrich's SHA-crypt:
+
+http://www.openwall.com/lists/oss-security/2011/11/15/1
+
+I thought that maybe you reimplemented it in a better fashion avoiding
+that issue, but I found this... %-)
+
+Alexander
