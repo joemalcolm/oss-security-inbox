@@ -1,114 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/26/7
-Message-ID: <CAPYM6Vx5ZXrsFOMuNoc+QcKbBdj0+R-m5AAhuLZM4-nJm_ZHsg@mail.gmail.com>
-Date: Sat, 27 Aug 2011 00:00:20 +0800
-From: YGN Ethical Hacker Group <lists@...g.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/9
+Message-ID: <4EC28C7E.3050405@redhat.com>
+Date: Tue, 15 Nov 2011 08:59:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Christian Hammond <chipx86@...px86.com>
+Subject: Re: CVE Request -- ReviewBoard v1.5.7 && v1.6.3 -- XSS in the commenting system (diff viewer and screenshot pages components)
 Content-Type: text/plain; charset=utf-8
 
-Jcow CMS 4.x:4.2 <= , 5.x:5.2 <= | Arbitrary Code Execution
+On 11/15/2011 06:51 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a cross-site scripting (XSS) flaw was found in the way the commenting
+> system of the ReviewBoard, a web-based code review tool, sanitized user
+> input (new comments to be loaded). A remote attacker could provide a
+> specially-crafted URL, which once visited by valid ReviewBoard user
+> could lead to arbitrary HTML or web script execution in the 'diff
+> viewer' or 'screenshot pages' components.
+>
+> References:
+> [1] http://www.reviewboard.org/news/
+> [2] http://www.reviewboard.org/docs/releasenotes/dev/reviewboard/1.6.3/
+> [3] https://bugzilla.redhat.com/show_bug.cgi?id=754126
+>
+> Relevant upstream patch:
+> [4]
+> https://github.com/reviewboard/reviewboard/commit/7a0a9d94555502278534dedcf2d75e9fccce8c3d
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
+> P.S.: Cc-ed Christian Hammond, who committed change [4] to the
+>       upstream Git repository too, so they could update CVE id
+>       in their advisory, if / where needed.
 
+Please use CVE-2011-4312 for this issue.
 
+-- 
 
-1. OVERVIEW
+-Kurt Seifried / Red Hat Security Response Team
 
-Jcow CMS versions  (4.x: 4.2 and lower, 5.x: 5.2 and lower) are
-vulnerable to Arbitrary Code Execution.
-
-
-2. BACKGROUND
-
-Jcow is a flexible Social Networking software written in PHP. It can
-help you to build a social network for your interests and passions, a
-member community for your existing website and a social networking
-site like facebook/myspace/twitter.
-
-
-3. VULNERABILITY DESCRIPTION
-
-The parameter "attachment" is not properly sanitized upon submission
-to /index.php, which allows attacker to execute arbitrary PHP code of
-his own.
-
-
-4. VERSIONS AFFECTED
-
-Free version:  4.x: 4.2 and lower
-Commercial version:  5.x: 5.2 and lower
-
-
-5. PROOF-OF-CONCEPT/EXPLOIT
-
-http://dev.metasploit.com/redmine/attachments/1660/jcow_eval.rb
-
-jcow 4.2.1:
-file: /includes/libs/ss.inc.php
-line: 167
-
-       $app = $_POST['attachment'];
-   if (strlen($app) && $app != 'status') {
-       include_once('modules/'.$app.'/'.$app.'.php');
-       $c_run = $app.'::ajax_post();';
-       eval($c_run);
-       exit;
-   }
-
-
-jcow 5.2.0:
-file: /includes/libs/ss.inc.php
-line: 45
-
- $Vd2a57dc1 = $_POST['attachment']; if (strlen($Vd2a57dc1) &&
-$Vd2a57dc1 != 'status') {
- include_once('modules/'.$Vd2a57dc1.'/'.$Vd2a57dc1.'.php'); $Ve8200cee
-= $Vd2a57dc1.'::ajax_post();';
-eval($Ve8200cee); exit; }
-
-
-
-6. SOLUTION
-
-Free version users can upgrade to 4.3.1 or higher.
-Commercial users can upgrade to 5.3 or higher.
-
-
-7. VENDOR
-
-Jcow CMS Development Team
-http://www.jcow.net
-
-
-8. CREDIT
-
-This vulnerability was discovered by Aung Khant, http://yehg.net, YGN
-Ethical Hacker Group, Myanmar.
-
-
-9. DISCLOSURE TIME-LINE
-
-2010-06-03: notified vendor
-2010-06-03: vendor replied fix would be available within 48hrs
-2011-08-24: vendor released fixed versions for 4.x and 5.x,
-                       4.3.1 for free release
-                       5.3 for commercial release
-2011-08-26: vulnerability disclosed
-
-
-10. REFERENCES
-
-Original Advisory URL:
-http://yehg.net/lab/pr0js/advisories/[jcow_4.2,5.2]_arbitrary_code_execution
-Jcow CMS: http://sourceforge.net/projects/jcow/files/jcow4/jcow.4.2.1.zip/download
-
-
-#yehg [2011-08-26]
-
-
----------------------------------
-Best regards,
-YGN Ethical Hacker Group
-Yangon, Myanmar
-http://yehg.net
-Our Lab | http://yehg.net/lab
-Our Directory | http://yehg.net/hwd
