@@ -1,49 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/04/6
-Message-ID: <20111104170406.GA10071@openwall.com>
-Date: Fri, 4 Nov 2011 21:04:06 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/3
+Message-ID: <20111115031417.GA8192@openwall.com>
+Date: Tue, 15 Nov 2011 07:14:17 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Cc: Colin Percival <cperciva@...ebsd.org>
+Subject: OpenBSD bcrypt error return
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hi,
 
-On Thu, Oct 27, 2011 at 11:38:47PM -0400, Steven M. Christey wrote:
-> So, I'll repeat my subtle request in January for someone to try and define 
-> what the acceptable security boundaries are at this stage, and then it 
-> should make it easier to interpret what needs a CVE (or not).  It sounds 
-> like this could have some benefits beyond CVE.  Looks like Brad Spengler's 
-> blog post at http://forums.grsecurity.net/viewtopic.php?f=7&t=2522 is a 
-> great start; based on my (limited) understanding, this suggests that 
-> CAP_SYS_ADMIN can legitimately transition to full root.
+The bcrypt implementation from OpenBSD, now also found in FreeBSD and
+NetBSD, returns a constant string on error.
 
-What's "full root"?  Full root in the current container or full root on
-the host system?
+http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/crypt/
+http://www.freebsd.org/cgi/cvsweb.cgi/src/secure/lib/libcrypt/
+http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libcrypt/
 
-Without container-based virtualization, CAP_SYS_ADMIN is pretty much
-equivalent to full root (and I wouldn't ask what that is).
+static char    error[] = ":";
 
-With containers, CAP_SYS_ADMIN inside a container is not supposed to be
-equivalent to full root on the host.  Such privilege escalation
-possibilities are CVE-worthy.  However, LXC with procfs mounted is
-currently an exception.  We can instead have a CVE id for this exception
-(not for dmesg_restrict specifically), if desired/appropriate.
+Clearly, ":" can't match a field value in an /etc/passwd-like file,
+which is great, but what happens if one of those errors occurs when
+setting a new password?  Luckily, the specific errors being checked for
+have to do with unsupported or invalid salt strings, so they can't
+happen on a properly configured system.  Nevertheless, this may be a
+disaster waiting to happen - e.g., if a new "$2" prefix is introduced
+(like I did when dealing with the crypt_blowfish bug), support for it is
+added to a password-changing program, but an appropriate update to libc
+or libcrypt is not yet deployed on a system.
 
-With OpenVZ, it is OK to have procfs mounted in a container and not
-have a CAP_SYS_ADMIN in container (or other container root access
-equivalent) to host root privilege escalation vulnerability (or rather,
-such vulnerabilities when found would deserve CVEs of their own).
+Thus, to avoid this disaster, this poor way of handling errors may also
+get in the way of adding support for such extra "$2" prefixes on *BSD,
+unfortunately.  This is something I forgot about when deciding on those
+this summer, even though I was aware of this issue in OpenBSD since 1998
+or so.
 
-Since such container-based virtualization for Linux exists where
-CAP_SYS_ADMIN is not meant to be equivalent to host root, we should not
-disregard CAP_SYS_ADMIN to root privilege escalation bugs in Linux in
-general.  Many of these are CVE-worthy.  However, there are occasional
-exceptions, such as this case with LXC and procfs where individual
-bypasses are not CVE-worthy (but this entire exception might be
-CVE-worthy on its own).
+Yes, I did report this issue to OpenBSD folks at least twice - last time
+this summer, after it was independently discovered by Zefram.
 
-I hope this helps.
+Maybe FreeBSD and/or NetBSD will want to patch it, or at least to be
+aware of the risk - hence the posting in here.
+
+The fix may be to reuse the approach from crypt_blowfish:
+
+int _crypt_output_magic(const char *setting, char *output, int size)
+{
+	if (size < 3)
+		return -1;
+
+	output[0] = '*';
+	output[1] = '0';
+	output[2] = '\0';
+
+	if (setting[0] == '*' && setting[1] == '0')
+		output[1] = '1';
+
+	return 0;
+}
+
+This may be done in bcrypt.c or in wrapper code common for all crypt(3)
+hash types.
+
+Proactive security, anyone?
 
 Alexander
