@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/6
-Message-ID: <69692494.381930.1302002348960.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 5 Apr 2011 07:19:08 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/10
+Message-ID: <20111115195234.GA10067@openwall.com>
+Date: Tue, 15 Nov 2011 23:52:34 +0400
+From: Solar Designer <solar@...nwall.com>
+To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>, Colin Percival <cperciva@...ebsd.org>, deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
-> 
-> We found the vendor-sec email list useful not just for reporting issues
-> in open-source projects, but also for receiving advance notification
-> about issues that affect the various open-source libraries and
-> applications that Apple ships. (More details can be found at
-> http://www.opensource.apple.com/)
-> 
-> If you are not willing to grant us full membership to the new list, we at
-> least hope we can be cc-ed on all userland issues reported to the list.
-> 
+On Tue, Nov 15, 2011 at 06:35:02AM +0400, Solar Designer wrote:
+> There's also minor weirdness in the code - such as two local pointer
+> variables being declared static seemingly for no reason, and only
+> "final" but not "ctx" being zeroized in the end.  But even this lack of
+> proper cleanup is very minor compared to the lack of stretching.
 
-Not adding Apple to any coordination list would be plain silly. They were
-far more active than most of the distributions.
+It turns out that these other minor issues were inherited from phk's
+md5crypt.c from FreeBSD.
 
-I'm starting to worry we've created rules for the sake of rules, which
-almost never has a net positive outcome.
+Currently in FreeBSD, crypt-md5.c: crypt_md5() has extra static
+declarations (not only the output buffer, but also three pointers), and
+it forgets to zeroize ctx and ctx1 (even though it does zeroize final).
 
--- 
-    JB
+md5crypt.c: __md5crypt() in NetBSD no longer has the extra statics, but
+it does forget to zeroize ctx and ctx1.
+
+md5crypt.c: md5crypt() in OpenBSD has the weird static pointers and
+forgets to zeroize ctx and ctx1.
+
+Not a big deal, but worth fixing, I think.
+
+Alexander
