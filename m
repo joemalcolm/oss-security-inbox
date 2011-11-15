@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/12
-Message-ID: <20110401202235.GA9674@nxnw.org>
-Date: Fri, 1 Apr 2011 13:22:36 -0700
-From: Steve Beattie <sbeattie@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/8
+Message-ID: <4EC26E78.8080802@redhat.com>
+Date: Tue, 15 Nov 2011 14:51:52 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Christian Hammond <chipx86@...px86.com>
+Subject: CVE Request -- ReviewBoard v1.5.7 && v1.6.3 -- XSS in the commenting system (diff viewer and screenshot pages components)
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh,
+Hello Kurt, Steve, vendors,
 
-On Fri, Apr 01, 2011 at 02:03:12PM -0400, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+   a cross-site scripting (XSS) flaw was found in the way the commenting
+system of the ReviewBoard, a web-based code review tool, sanitized user
+input (new comments to be loaded). A remote attacker could provide a
+specially-crafted URL, which once visited by valid ReviewBoard user
+could lead to arbitrary HTML or web script execution in the 'diff
+viewer' or 'screenshot pages' components.
 
-I was a subscriber of vender-sec, please add me to the new list.
+References:
+[1] http://www.reviewboard.org/news/
+[2] http://www.reviewboard.org/docs/releasenotes/dev/reviewboard/1.6.3/
+[3] https://bugzilla.redhat.com/show_bug.cgi?id=754126
 
-gpg information:
+Relevant upstream patch:
+[4] 
+https://github.com/reviewboard/reviewboard/commit/7a0a9d94555502278534dedcf2d75e9fccce8c3d
 
-pub   4096R/005E81F4 2010-06-08 [expires: 2020-06-05]
-      Key fingerprint = A606 3BB5 6023 09A4 3C8E  BBD4 2F09 9E8D 005E 81F4
-uid                  Steve Beattie (Ubuntu) <sbeattie@...ntu.com>
+Could you allocate a CVE id for this?
 
-Thanks.
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
 
--- 
-Steve Beattie
-<sbeattie@...ntu.com>
-http://NxNW.org/~steve/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+P.S.: Cc-ed Christian Hammond, who committed change [4] to the
+       upstream Git repository too, so they could update CVE id
+       in their advisory, if / where needed.
