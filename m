@@ -1,50 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/21/8
-Message-ID: <20110621165018.GJ1952@redhat.com>
-Date: Tue, 21 Jun 2011 10:50:18 -0600
-From: Vincent Danen <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/6
+Message-ID: <20111115041614.GB8578@openwall.com>
+Date: Tue, 15 Nov 2011 08:16:14 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: magnum <rawsmooth@...dband.net>, Pierre Joye <pierre.php@...il.com>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+Subject: Re: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
 Content-Type: text/plain; charset=utf-8
 
-* [2011-06-21 20:18:50 +0400] Solar Designer wrote:
+On Tue, Nov 15, 2011 at 07:54:04AM +0400, Solar Designer wrote:
+> What happens when the salt string contains characters outside of the
+> usual base-64 alphabet is implementation-specific.  Typically,
+> implementations map those invalid salts onto the 12-bit values in one of
+> several ways.  FreeSec, an otherwise very good implementation by David
+> Burren, appears to be the only widespread implementation that maps all
+> invalid salt characters onto just one 6-bit value - zero.  FreeSec is
+> the implementation used by FreeBSD, OpenBSD, DragonFly BSD.  The code in
+> NetBSD is different, but it appears to share this problem.
 
->On Tue, Jun 21, 2011 at 09:56:23AM -0600, Vincent Danen wrote:
->> PostgreSQL is affected as well (the pgcrypto module):
->>
->> % head crypt-blowfish.c
->> /*
->>  * $PostgreSQL: pgsql/contrib/pgcrypto/crypt-blowfish.c,v 1.14 2009/06/11
->>  14:48:52 momjian Exp $
->
->We need to actually review and/or test this revision of the code before
->we conclusively say that it's affected.  Maybe you did that already?
->
->So far, there's one example where a revision of the code turned out to
->be unaffected - Crypt::Eksblowfish in CPAN.  In fact, this is what has
->resulted in discovery of the bug (even though it was fixed in
->Crypt::Eksblowfish during its initial integration of the code in 2007).
+Speaking of NetBSD, it also appears to have out of bounds array reads on
+salt characters with the 8th bit set:
 
-Ahhh... ok.  I only did a code review, I didn't test the actual
-functionality to make that determination.
+static unsigned char a64toi[128];	/* ascii-64 => 0..63 */
+[...]
+		/* get iteration count */
+		num_iter = 0;
+		for (i = 4; --i >= 0; ) {
+			if ((t = (unsigned char)setting[i]) == '\0')
+				t = '.';
+			encp[i] = t;
+			num_iter = (num_iter<<6) | a64toi[t];
+		}
+[...]
+	salt = 0;
+	for (i = salt_size; --i >= 0; ) {
+		if ((t = (unsigned char)setting[i]) == '\0')
+			t = '.';
+		encp[i] = t;
+		salt = (salt<<6) | a64toi[t];
+	}
 
-So Crypt::Eksblowfish uses the same code but wasn't affected?  Do we
-know why that is?
+This has no security impact that I can see, though.  Perhaps with PHP
+safe_mode and the like it could be used to read data beyond array
+bounds, but unless the order of variables in .bss is heavily changed by
+the compiler or linker there's nothing interesting to read in the 128
+bytes following a64toi[], and it would not result in a crash either.
 
->> php-suhosin also contains the same code.
->
->Yes.  These two are listed at http://www.openwall.com/crypt/
->
->We need to go over those listed on that page and then also search the
->web for possible other users of the code.  Then try to figure out which
->are actually affected (probably most of them are) and notify the
->maintainers.  For now, my focus is to push crypt_blowfish 1.1 out, but I
->do need to include a few sentences on roughly what software is affected
->in my announcement.  I'd appreciate any help with those reviews/testing.
-
-I can't promise I will have time to look at it, but I will try if I can
-find the time.
-
--- 
-Vincent Danen / Red Hat Security Response Team 
+Alexander
