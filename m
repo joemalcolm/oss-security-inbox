@@ -1,22 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/1
-Message-Id: <201102211852.34619.geissert@debian.org>
-Date: Mon, 21 Feb 2011 18:52:33 -0600
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/5
+Message-ID: <20111115035404.GA8377@openwall.com>
+Date: Tue, 15 Nov 2011 07:54:04 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...re.org>
-Subject: CVE-2011-0436: dtc sends password of new users to site admin by unencrypted email
+Subject: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
 Content-Type: text/plain; charset=utf-8
 
-retitle 614302 CVE-2011-0436: new users' unencrypted passwords emailed to site admin
-thanks
+Hi,
 
-Hi Steven, vendors,
+The traditional DES-based crypt(3) accepts a salt string consisting of
+characters from a certain base-64 alphabet, normally encoding a 12-bit
+salt value in two characters.
 
-I have assigned CVE-2011-0436 to the following issue:
-http://bugs.debian.org/614302
+What happens when the salt string contains characters outside of the
+usual base-64 alphabet is implementation-specific.  Typically,
+implementations map those invalid salts onto the 12-bit values in one of
+several ways.  FreeSec, an otherwise very good implementation by David
+Burren, appears to be the only widespread implementation that maps all
+invalid salt characters onto just one 6-bit value - zero.  FreeSec is
+the implementation used by FreeBSD, OpenBSD, DragonFly BSD.  The code in
+NetBSD is different, but it appears to share this problem.  Indeed,
+these systems don't use the DES-based hashes by default, and even if
+they did they'd be OK because they'd use valid salts, but the issue here
+is with third-party programs that are not as careful - especially web
+apps invoking this code via PHP's crypt() (whether the underlying
+system's crypt(3) or PHP's own code is used depends on PHP version and
+build).
 
-Regards,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Thus, with poorly written programs combined with this property of
+crypt(3) on *BSD's we get effectively matching salts, which a password
+cracker aware of this property can take advantage of for much faster
+offline attacks.
+
+I patched the FreeSec code to match UFC-crypt's handling of invalid
+salts about 20 months ago:
+
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.c
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/Owl/packages/glibc/crypt_freesec.h
+
+This did not matter much for Owl because we do not actually override
+glibc's UFC-crypt for the traditional hashes (we use FreeSec for
+"extended" hashes with 24-bit salts, which are not produced by naive
+apps), however I made those changes primarily for reuse of the code in
+PHP - and the changes went into a certain version of PHP (5.3.2+, IIRC).
+
+Now I welcome *BSD's to reuse these as well.  Yes, this sort of breaks
+compatibility with existing invalid-salt hashes produced on those
+systems, but those will be easy to fix if necessary by explicitly
+changing their invalid salt characters to '.' (and thus making the
+problem even more apparent).
+
+Alexander
