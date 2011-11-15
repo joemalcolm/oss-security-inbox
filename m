@@ -1,31 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/15/6
-Message-ID: <1323976628.3281.82.camel@localhost>
-Date: Thu, 15 Dec 2011 13:17:08 -0600
-From: Jamie Strandboge <jamie@...onical.com>
-To: icecast-dev@...h.org
-Cc: security@...itz-naumann.com, security@...ntu.com, oss-security <oss-security@...ts.openwall.com>
-Subject: Re: RE: [Icecast-dev] Security issue in icecast
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/11
+Message-ID: <20111115203129.GN2404@redhat.com>
+Date: Tue, 15 Nov 2011 13:31:31 -0700
+From: Vincent Danen <vdanen@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2011-3368 suggested patch incomplete for apache2 < 2.2.18
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2011-12-15 at 20:31 +0200, Thomas.Rucker@...to.com wrote:
-> *snip*
-> Sending this to a public mailing list might not have been the smartest idea.
+* [2011-10-26 18:02:00 +0200] Marcus Meissner wrote:
 
-I considered this a low impact vulnerability and therefore followed the
-procedures for reporting to oss-security. Additionally, I looked for a
-security contact at http://www.icecast.org/contact.php but could not
-find one, so I sent to the list since it said this was a valid way to
-submit bugs. If the issue were more severe, I would have followed a
-different procedure. I apologize for the inconvenience.
+>during our QA we noticed that the mod_proxy fix for CVE-2011-3368
+>was incomplete for HTTP 0.9 style requests.
+>
+>https://bugzilla.novell.com/show_bug.cgi?id=722545
+>
+>to cross check, with the RewriteRules setup as in the exploit:
+>
+>$ telnet testhost 80
+>GET @www.otherhost/foo.png
+>... should give a 400 error, and not the 404 code from www.otherhost
 
-> We're already aware of Moritz's finding and are working on a fix.
-> 
-> Expect icecast release 2.3.3 soon.
-
-Glad to hear. Thanks!
+Did this ever get a CVE name (aka "incomplete fix of CVE-2011-3368")?
 
 -- 
-Jamie Strandboge             | http://www.canonical.com
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Vincent Danen / Red Hat Security Response Team 
