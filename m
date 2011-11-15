@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/16/12
-Message-ID: <DDFFF4D8159CAA4881A60FDDAEA4E5482A71185095@GVW0671EXC.americas.hpqcorp.net>
-Date: Wed, 16 Mar 2011 16:26:53 +0000
-From: "Menkhus, Mark (GSE Security HP SSRT)" <mark.menkhus@...com>
-To: Eugene Teo <eugene@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Vendor-sec hosting and future of closed lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/6
+Message-ID: <20111115041614.GB8578@openwall.com>
+Date: Tue, 15 Nov 2011 08:16:14 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: *BSD's DES-based crypt(3) treats all invalid salt chars as '.'
 Content-Type: text/plain; charset=utf-8
 
-Thanks Eugene,
+On Tue, Nov 15, 2011 at 07:54:04AM +0400, Solar Designer wrote:
+> What happens when the salt string contains characters outside of the
+> usual base-64 alphabet is implementation-specific.  Typically,
+> implementations map those invalid salts onto the 12-bit values in one of
+> several ways.  FreeSec, an otherwise very good implementation by David
+> Burren, appears to be the only widespread implementation that maps all
+> invalid salt characters onto just one 6-bit value - zero.  FreeSec is
+> the implementation used by FreeBSD, OpenBSD, DragonFly BSD.  The code in
+> NetBSD is different, but it appears to share this problem.
 
-I have been looking at how to contribute in FOSS and security, and for me
-it's been in the area of how to understand what vulnerabilities are already
-documented.  I might think about looking more at the kernel changelogs and
-LKML lists.
+Speaking of NetBSD, it also appears to have out of bounds array reads on
+salt characters with the 8th bit set:
 
-For sure, I'll look for some bugs while I am at it, tho.
+static unsigned char a64toi[128];	/* ascii-64 => 0..63 */
+[...]
+		/* get iteration count */
+		num_iter = 0;
+		for (i = 4; --i >= 0; ) {
+			if ((t = (unsigned char)setting[i]) == '\0')
+				t = '.';
+			encp[i] = t;
+			num_iter = (num_iter<<6) | a64toi[t];
+		}
+[...]
+	salt = 0;
+	for (i = salt_size; --i >= 0; ) {
+		if ((t = (unsigned char)setting[i]) == '\0')
+			t = '.';
+		encp[i] = t;
+		salt = (salt<<6) | a64toi[t];
+	}
 
-Mark
-> -----Original Message-----
-> From: Eugene Teo [mailto:eugene@...hat.com]
-> Sent: Tuesday, March 15, 2011 11:45 PM
-> To: oss-security@...ts.openwall.com
-> Cc: Menkhus, Mark (GSE Security HP SSRT)
-> Subject: Re: [oss-security] Vendor-sec hosting and future of closed
-> lists
-> 
-> On 03/16/2011 12:07 PM, Menkhus, Mark (GSE Security HP SSRT) wrote:
-> [...]
-> > Not being the one fixing the code for our kernel left me with little
-> to
-> > immediately contribute, but I requested and coordinated with several
-> folks
-> > who got vendor sec for HP.  Likely, we would still want to be part of
-> > vendor-sec.new.
-> 
-> Many of the kernel vulnerabilities I have seen over the past two years
-> at least, were reported and fixed upstream. Only a handful of them were
-> reported privately. I can't remember when was the last time we had a
-> kernel issue reported via vendor-sec. There were, but it must have been
-> quite some time ago. LKML is still one of the better places to find
-> vulnerabilities :) Contributions welcomed.
-> 
-> Eugene
-> --
-> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+This has no security impact that I can see, though.  Perhaps with PHP
+safe_mode and the like it could be used to read data beyond array
+bounds, but unless the order of variables in .bss is heavily changed by
+the compiler or linker there's nothing interesting to read in the 128
+bytes following a64toi[], and it would not result in a crash either.
 
-Download attachment "smime.p7s" of type "application/x-pkcs7-signature" (4916 bytes)
+Alexander
