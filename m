@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/1
-Message-ID: <AANLkTi=YzqfJGbHzjCPaqGEw7mFF6mFV8bf9q5H+dE7+@mail.gmail.com>
-Date: Fri, 18 Mar 2011 07:18:30 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/12
+Message-ID: <4EC2D257.2050105@redhat.com>
+Date: Tue, 15 Nov 2011 13:57:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: AudioScience HPI driver
+CC: Vincent Danen <vdanen@...hat.com>
+Subject: Re: CVE-2011-3368 suggested patch incomplete for apache2 < 2.2.18
 Content-Type: text/plain; charset=utf-8
 
-"The user-supplied index into the adapters array needs to be checked, or
-an out-of-bounds kernel pointer could be accessed and used, leading to
-potentially exploitable memory corruption."
+On 11/15/2011 01:31 PM, Vincent Danen wrote:
+> * [2011-10-26 18:02:00 +0200] Marcus Meissner wrote:
+>
+>> during our QA we noticed that the mod_proxy fix for CVE-2011-3368
+>> was incomplete for HTTP 0.9 style requests.
+>>
+>> https://bugzilla.novell.com/show_bug.cgi?id=722545
+>>
+>> to cross check, with the RewriteRules setup as in the exploit:
+>>
+>> $ telnet testhost 80
+>> GET @www.otherhost/foo.png
+>> ... should give a 400 error, and not the 404 code from www.otherhost
+>
+> Did this ever get a CVE name (aka "incomplete fix of CVE-2011-3368")?
+>
+The second fix for this issue was assigned CVE-2011-3639
 
-This may be triggered by a user with access to an appropriate device
-file, which I'd expect would be restricted to group 'audio'.  And
-you'd need to have this particular driver loaded, either by using the
-appropriate hardware or finding a new way to force it to be loaded in
-violation of security policy.
+-- 
 
-Regards,
-Dan
+-Kurt Seifried / Red Hat Security Response Team
 
-[1] http://git.kernel.org/?p=linux/kernel/git/tiwai/sound-2.6.git;a=commit;h=4a122c10fbfe9020df469f0f669da129c5757671
