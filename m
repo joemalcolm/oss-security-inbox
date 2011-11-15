@@ -1,23 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/1
-Message-ID: <4DEC7304.2000207@redhat.com>
-Date: Mon, 06 Jun 2011 11:56:12 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/7
+Message-ID: <20111115042029.GA8748@openwall.com>
+Date: Tue, 15 Nov 2011 08:20:29 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Eugene Teo <eugene@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: ksm: race between ksmd and exiting task
+Cc: Colin Percival <cperciva@...ebsd.org>, dillon@...llo.backplane.com
+Subject: Re: OpenBSD bcrypt error return
 Content-Type: text/plain; charset=utf-8
 
-On 06/03/2011 11:37 AM, Eugene Teo wrote:
-> A race condition issue was found in the KSM implementation.
+On Tue, Nov 15, 2011 at 07:14:17AM +0400, Solar Designer wrote:
+> The bcrypt implementation from OpenBSD, now also found in FreeBSD and
+> NetBSD, returns a constant string on error.
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=710338
-> Report: http://www.spinics.net/lists/linux-mm/msg20233.html
-> Proposed patch: http://www.spinics.net/lists/linux-mm/msg20301.html
+> http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/crypt/
+> http://www.freebsd.org/cgi/cvsweb.cgi/src/secure/lib/libcrypt/
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libcrypt/
+
+Oh, and of course it is also in DragonFly:
+
+http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/secure/lib/libcrypt
+
+> static char    error[] = ":";
 > 
-> Thanks, Eugene
-
-This has been assigned CVE-2011-2183
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+> Clearly, ":" can't match a field value in an /etc/passwd-like file,
+> which is great, but what happens if one of those errors occurs when
+> setting a new password?  Luckily, the specific errors being checked for
+> have to do with unsupported or invalid salt strings, so they can't
+> happen on a properly configured system.  Nevertheless, this may be a
+> disaster waiting to happen - e.g., if a new "$2" prefix is introduced
+> (like I did when dealing with the crypt_blowfish bug), support for it is
+> added to a password-changing program, but an appropriate update to libc
+> or libcrypt is not yet deployed on a system.
+> 
+> Thus, to avoid this disaster, this poor way of handling errors may also
+> get in the way of adding support for such extra "$2" prefixes on *BSD,
+> unfortunately.  This is something I forgot about when deciding on those
+> this summer, even though I was aware of this issue in OpenBSD since 1998
+> or so.
+> 
+> Yes, I did report this issue to OpenBSD folks at least twice - last time
+> this summer, after it was independently discovered by Zefram.
+> 
+> Maybe FreeBSD and/or NetBSD will want to patch it, or at least to be
+> aware of the risk - hence the posting in here.
+> 
+> The fix may be to reuse the approach from crypt_blowfish:
+> 
+> int _crypt_output_magic(const char *setting, char *output, int size)
+> {
+> 	if (size < 3)
+> 		return -1;
+> 
+> 	output[0] = '*';
+> 	output[1] = '0';
+> 	output[2] = '\0';
+> 
+> 	if (setting[0] == '*' && setting[1] == '0')
+> 		output[1] = '1';
+> 
+> 	return 0;
+> }
+> 
+> This may be done in bcrypt.c or in wrapper code common for all crypt(3)
+> hash types.
+> 
+> Proactive security, anyone?
+> 
+> Alexander
