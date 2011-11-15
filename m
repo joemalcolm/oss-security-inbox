@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/11/8
-Message-ID: <1299877110.4898.96.camel@solo.digium.internal>
-Date: Fri, 11 Mar 2011 14:58:30 -0600
-From: Matthew Nicholson <mnicholson@...ium.com>
-To: Josh Bressers <bressers@...hat.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Asterisk AST-2011-002 / Multiple array overflow and crash vulnerabilities in UDPTL code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/4
+Message-ID: <20111115032305.GA8310@openwall.com>
+Date: Tue, 15 Nov 2011 07:23:05 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Colin Percival <cperciva@...ebsd.org>
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2011-03-11 at 15:46 -0500, Josh Bressers wrote:
-> 
-> ----- Original Message -----
-> > Hello Josh, Steve, vendors,
-> > 
-> > this doesn't seem to have a CVE identifier yet:
-> > [1] http://downloads.asterisk.org/pub/security/AST-2011-002.html
-> > [2] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614580
-> > 
-> 
-> Please use CVE-2011-1147
-> 
-> Thanks.
-> 
+On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> 3. Maybe glibc and the SHA-crypt reference code should stop using
+> alloca() in favor of having the underlying MD5, SHA-256, and SHA-512
+> implementations accepting potentially unaligned buffers like e.g.
+> OpenSSL's implementations do.  Unfortunately, this might have
+> performance impact.
 
-The advisory on our website has been updated.
--- 
-Matthew Nicholson
-Digium, Inc. | Software Developer
+This is what FreeBSD's revision of the code does, but it still has two
+alloca()s per function (the alignment-unrelated ones):
 
+http://svnweb.freebsd.org/base/head/lib/libcrypt/
+
+More context:
+
+http://www.openwall.com/lists/oss-security/2011/11/15/1
+
+Alexander
