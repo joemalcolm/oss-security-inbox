@@ -1,96 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/30
-Message-ID: <20110304175817.GL24629@florz.florz.dyndns.org>
-Date: Fri, 4 Mar 2011 18:58:17 +0100
-From: Florian Zumbiehl <florz@...rz.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/7
+Message-ID: <20111115042029.GA8748@openwall.com>
+Date: Tue, 15 Nov 2011 08:20:29 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Colin Percival <cperciva@...ebsd.org>, dillon@...llo.backplane.com
+Subject: Re: OpenBSD bcrypt error return
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-> On Fri, Mar 04, 2011 at 04:14:00PM +0100, Florian Zumbiehl wrote:
-> > In which scenarios exactly logrotate is supposed to be safe to use is
-> > mostly undefined.
+On Tue, Nov 15, 2011 at 07:14:17AM +0400, Solar Designer wrote:
+> The bcrypt implementation from OpenBSD, now also found in FreeBSD and
+> NetBSD, returns a constant string on error.
 > 
-> Maybe.  We just need to (hopefully) agree on what is common, expected,
-> correct - and this may be changing over the years.  Apply our common
-> sense and experience.
+> http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/crypt/
+> http://www.freebsd.org/cgi/cvsweb.cgi/src/secure/lib/libcrypt/
+> http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libcrypt/
 
-Well, yeah, what other choice do we have? =:-)
+Oh, and of course it is also in DragonFly:
 
-> > (so they can create missing log files, for example).
+http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/secure/lib/libcrypt
+
+> static char    error[] = ":";
 > 
-> I think that services should either do that before they drop root at
-> startup, or they should not do it at all (leave it to logrotate).
-
-Well, not doing it at all leaves a race condition where the service may
-not be able to start or at least to log, lacking a log file, when
-started while logrotate is running. At least given how logrotate currently
-handles the creation of new log files (rename old file and create new one
-afterwards, potentially even with temporarily restricted permissions,
-which could also prevent an unprivileged process from opening the newly
-created file) ...
-
-Other than that, that doesn't sound unreasonable to me as a design
-principle.
-
-> However, if it's somehow desired that a service running as non-root be
-> able to create log files (other than just at startup?), then the correct
-> approach would be to run a dedicated instance of logrotate for that
-> service under the service pseudo-user.  Don't mix the pseudo-user and
-> root for the same task (dealing with log files of the same service),
-> which creates unnecessary risks.
-
-Which is essentially how I think the fix should work (and it seems
-like all parties involved in the discussion so far have agreed on that
-in principle, even if not necessarily embracing it fully), though the
-current plan is to implement this as a part of logrotate, basically
-accepting the expectation that logrotate can be operated securely in
-a manner similar to what's currently the case. Practically, that means
-that it is planned to add a new config directive that allows to specify
-the credentials to be used for manipulating specific sets of log files,
-thus obviating the need for separate logrotate invocations but still
-letting the kernel take care of separating privileges.
-
-Now, I guess the major motivation for such an approach over executing
-logrotate as the unprivileged user directly is backwards compatibility
-and how much of a nightmare the transition will be, somehow implicitly
-assuming that the similarity with the old mode of operation should
-provide for an easier change.
-
-However, this implicit assumption may actually be just that and nothing
-more. Namely, there are some ideas how logrotate could guess the
-credentials for some common setups when none have been specified in the
-config file so as to avoid having to security-patch dozens of packages,
-at least as a transitional mechanism. But it's rather unclear whether
-any of that will actually work to a sufficient degree to be useful (and
-the security of the heuristics to be used is what most of the remaining
-contention as to how to fix is about).
-
-If that doesn't work out and you have to patch dozens of packages in
-order to change their logrotate configs, you probably may just as well
-patch packages to switch to using their own logrotate instance. Or to a
-different strategy for logfile handling altogether. In particular so,
-given that quite a few of the affected packages in the case of debian
-(and I guess it's similar for other distros) do a chown -R on the log
-dir in their postinst scripts and thus will need a security patch for
-that anyhow.
-
-> > In such setups, the service user can elevate its privileges to root
-> > or corrupt root-owned files using the various bugs.
+> Clearly, ":" can't match a field value in an /etc/passwd-like file,
+> which is great, but what happens if one of those errors occurs when
+> setting a new password?  Luckily, the specific errors being checked for
+> have to do with unsupported or invalid salt strings, so they can't
+> happen on a properly configured system.  Nevertheless, this may be a
+> disaster waiting to happen - e.g., if a new "$2" prefix is introduced
+> (like I did when dealing with the crypt_blowfish bug), support for it is
+> added to a password-changing program, but an appropriate update to libc
+> or libcrypt is not yet deployed on a system.
 > 
-> Indeed.  A vulnerability in the service package, in my opinion.  Now
-> that would require CVE id assignment and a fix to the package, whereas
-> logrotate could merely use some hardening with no CVE ids (except for
-> issue #8, which was different).
+> Thus, to avoid this disaster, this poor way of handling errors may also
+> get in the way of adding support for such extra "$2" prefixes on *BSD,
+> unfortunately.  This is something I forgot about when deciding on those
+> this summer, even though I was aware of this issue in OpenBSD since 1998
+> or so.
 > 
-> What do you say?
-
-I guess I don't really have much of an opinion on that. The vulnerabilities
-should be fixed, and probably in a way that breaks existing setups as
-little as possible, I don't really care which side is declared defective
-and subsequently fixed in order to achieve that ;-)
-
-Florian
+> Yes, I did report this issue to OpenBSD folks at least twice - last time
+> this summer, after it was independently discovered by Zefram.
+> 
+> Maybe FreeBSD and/or NetBSD will want to patch it, or at least to be
+> aware of the risk - hence the posting in here.
+> 
+> The fix may be to reuse the approach from crypt_blowfish:
+> 
+> int _crypt_output_magic(const char *setting, char *output, int size)
+> {
+> 	if (size < 3)
+> 		return -1;
+> 
+> 	output[0] = '*';
+> 	output[1] = '0';
+> 	output[2] = '\0';
+> 
+> 	if (setting[0] == '*' && setting[1] == '0')
+> 		output[1] = '1';
+> 
+> 	return 0;
+> }
+> 
+> This may be done in bcrypt.c or in wrapper code common for all crypt(3)
+> hash types.
+> 
+> Proactive security, anyone?
+> 
+> Alexander
