@@ -1,36 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/17/7
-Message-ID: <956948156.90449.1297975227221.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Thu, 17 Feb 2011 15:40:27 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: telepathy-gabble
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/2
+Message-ID: <20111115023502.GA8095@openwall.com>
+Date: Tue, 15 Nov 2011 06:35:02 +0400
+From: Solar Designer <solar@...nwall.com>
+To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
-As best as I can tell, we should only need one ID:
+Hi,
 
-CVE-2011-1000
-• In jingle-factory.c, a malicious contact can trick Gabble into relaying media
-through a server of their choosing. This allows any contact to intercept your
-audio and video calls (as opposed to only attacker who can passively intercept
-your network traffic, which is the normal state of affairs for unencrypted
-calls).
+Matthew - when I read that DragonFly moved to using SHA-256 for
+passwords by default, I thought this was referring to the SHA-256 based
+flavor of Ulrich Drepper's SHA-crypt.  This would not be the best choice
+to make, in my opinion, but it would not be that bad.  However, I just
+found this:
 
-If you think any of the others deserve an ID, let me know.
+http://gitweb.dragonflybsd.org/dragonfly.git/tree/HEAD:/lib/libcrypt
 
-Thanks.
+Are these crypt-sha256.c and/or crypt-sha512.c files actually in use?
+I hope not...  They do not include any password stretching, resulting in
+password hashes that are much quicker to crack than MD5-crypt's.
 
--- 
-    JB
+There's also minor weirdness in the code - such as two local pointer
+variables being declared static seemingly for no reason, and only
+"final" but not "ctx" being zeroized in the end.  But even this lack of
+proper cleanup is very minor compared to the lack of stretching.
 
------ Original Message -----
-> Can I get a CVE id for:
-> https://bugs.freedesktop.org/show_bug.cgi?id=34048
-> 
-> Thanks!
-> 
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+Oh, also the "$3$" prefix was apparently previously used for NTLM:
+
+http://en.wikipedia.org/wiki/Crypt_(Unix)#NT_Hash_Scheme
+
+"FreeBSD used the $3$ prefix for this."
+
+http://search.cpan.org/~zefram/Authen-Passphrase/lib/Authen/Passphrase/NTHash.pm
+
+"... crypt string must consist of "$3$$" (note the extra "$") followed
+by the hash in lowercase hexadecimal."
+
+BTW, I looked at DragonFly's code while analyzing a more subtle issue
+with Ulrich's SHA-crypt:
+
+http://www.openwall.com/lists/oss-security/2011/11/15/1
+
+I thought that maybe you reimplemented it in a better fashion avoiding
+that issue, but I found this... %-)
+
+Alexander
