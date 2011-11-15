@@ -1,45 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/09/10
-Message-Id: <201109092308.11859.Jan-Oliver.Wagner@greenbone.net>
-Date: Fri, 9 Sep 2011 23:07:34 +0200
-From: "Jan-Oliver Wagner" <Jan-Oliver.Wagner@...enbone.net>
-To: openvas-devel@...d.intevation.org
-Cc: Josh Bressers <bressers@...hat.com>, oss-security@...ts.openwall.com, Jan Lieskovsky <jlieskov@...hat.com>, Stjepan Gros <stjepan.gros@...il.com>, Bugs NotHugs <bugsnothugs@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: [Openvas-devel] CVE Request -- openvas-scanner -- Insecure temporary file use by generation of an OVAL system characteristics document, when ovaldi support enabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/1
+Message-ID: <20111115021324.GA7993@openwall.com>
+Date: Tue, 15 Nov 2011 06:13:24 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-On Friday 09 September 2011 19:45:03 Josh Bressers wrote:
-> Let's go with one ID. I don't see a reason to split these.
-> Use CVE-2011-3351
+Here's a subtle issue for discussion.  I am not sure whether and how to
+deal with this one in glibc and PHP (and in other "affected libraries");
+it is more obvious how to deal with it in applications, but not all will.
 
-I think it should be clarified:
-_No one_ who is properly using OpenVAS with OpenVAS Feed or with the
-Greenbone Feed is affected.
+I actually share some responsibility for this one.  In 2000, I reported
+that glibc's md5-crypt code would sometimes perform unaligned accesses -
+I actually observed this in normal usage on an Alpha.  Ulrich promptly
+fixed the code, and I was happy.  I even pointed out some minor issues
+to fix in the initial fix, which were also fixed.  What I overlooked,
+though, was the potential security impact of the uses of alloca()
+introduced by Ulrich's fix.  Here's the original ChangeLog entry:
 
-No OVAL script is even tried to be executed: no OVAL file is in the feed and
-if you/someone copies one into your feed copy it is not being executed because
-it has no valid signature.
+2000-07-04  Ulrich Drepper  <drepper@...hat.com>
+[...]
+	* crypt/md5-crypt.c (__md5_crypt_r): If buffers for key and salt
+	are not aligned to alignof(md5_uint32) do it before calling
+	__md5_process_bytes.
+	* crypt/md5.c: Make sure buffers are aligned.
+	* crypt/md5.h: Likewise.
+	Reported by Solar Designer <solar@...se.com>.
 
-So you need to switch to unsecure mode, then place OVAL files into your
-feed copy, install ovaldi etc, etc.
+The patch with some later fixes (August 2000) may be found here:
 
-Of course the OpenVAS developers will be fixing the problem regardless
-of the practical relevance!
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/glibc/Attic/glibc-2.1.3-cvs-20000824-md5-align-clean.diff?rev=1.1
 
-What frightens me is that a security advisory about OpenVAS 2 (a already
-deprecated version) made it even into official advisories of CERTs.
-The review process seems to not work as it should, no one ever checked
-back wether this version is deprecated. So it should be easy to get faked
-security alerts about some tools you don't like into official CERT advisories.
-Or am I getting something wrong here?
+It introduced two uses of alloca() - on key and salt - but only in case
+the original key and/or salt are not already aligned.  In practice, I
+think they just happen to be properly aligned in most builds of most
+programs most of the time, so the code paths with alloca()s are not
+taken.  But in some programs/builds/invocations, they are.
 
-Best
+This code is still in current glibc.  And the newer SHA-crypt code (both
+flavors of it) was based on it, including the two alloca()s and more:
 
-	Jan
+$ fgrep alloca glibc-2.14.1/crypt/*
+glibc-2.14.1/crypt/md5-crypt.c:      char *tmp = (char *) alloca (key_len + __alignof__ (md5_uint32));
+glibc-2.14.1/crypt/md5-crypt.c:      char *tmp = (char *) alloca (salt_len + __alignof__ (md5_uint32));
+glibc-2.14.1/crypt/sha256-crypt.c:      char *tmp = (char *) alloca (key_len + __alignof__ (uint32_t));
+glibc-2.14.1/crypt/sha256-crypt.c:      char *tmp = (char *) alloca (salt_len + __alignof__ (uint32_t));
+glibc-2.14.1/crypt/sha256-crypt.c:  cp = p_bytes = alloca (key_len);
+glibc-2.14.1/crypt/sha256-crypt.c:  cp = s_bytes = alloca (salt_len);
+glibc-2.14.1/crypt/sha512-crypt.c:      char *tmp = (char *) alloca (key_len + __alignof__ (uint64_t));
+glibc-2.14.1/crypt/sha512-crypt.c:      char *tmp = (char *) alloca (salt_len + __alignof__ (uint64_t));
+glibc-2.14.1/crypt/sha512-crypt.c:  cp = p_bytes = alloca (key_len);
+glibc-2.14.1/crypt/sha512-crypt.c:  cp = s_bytes = alloca (salt_len);
 
--- 
-Dr. Jan-Oliver Wagner |  ++49-541-335084-0  |  http://www.greenbone.net/
-Greenbone Networks GmbH, Neuer Graben 17, 49074 Osnabrück | AG Osnabrück, HR B 202460
-Geschäftsführer: Lukas Grunwald, Dr. Jan-Oliver Wagner
+The public domain SHA-crypt code also got into PHP 5.3.2+.
+
+One problem with this is that programs that accept potentially really
+long passwords (millions of characters), don't sanitize their length,
+and pass them into crypt(3), crypt_r(3), or PHP's crypt() might have
+portions of another thread's stack or the heap overwritten.  For usual
+Unix daemons and programs written in C this is unrealistic since they
+typically use fixed-size buffers (and have to limit the password length,
+or they'd have buffer overflow vulnerabilities).  However, for programs
+written in languages or with frameworks providing dynamically-allocated
+strings (which may include some relatively modern C programs, starting
+with qmail), this becomes quite realistic.  Ideally, such programs should
+sanitize the password length anyway (such as to avoid excessive CPU time
+consumption on maliciously long passwords), but it is fairly likely that
+they don't.
+
+Another problem is that it could allow for bypassing of questionable
+sandboxes, such as PHP's safe_mode.  In this case, not only key, but
+also salt is untrusted input.
+
+More importantly, salt may be considered not fully trusted e.g. when a
+web app processes user database records imported from elsewhere.
+
+Now, chances are that dynamically allocated string buffers are properly
+aligned such as due to use of malloc().  There might be exceptions,
+but I am not aware of any specific ones.  In fact, even though I
+mentioned PHP's crypt() here, I did not verify whether it is possible
+for a PHP script to have an unaligned address passed into PHP's included
+SHA-crypt code or into the underlying system's crypt(3).
+
+However, the two extra alloca()s seen in sha256-crypt.c and
+sha512-crypt.c above appear to be invoked irrespective of alignment.
+
+I did some testing against glibc's md5-crypt with a multi-threaded
+program on Linux/x86_64, with 10 MB per-thread stacks.  By playing with
+password lengths of around 10 MB (slightly lower and higher than 10 MB)
+in an unaligned buffer, I was able to get the malicious thread itself to
+crash either on the callq instruction to memcpy() (because the stack
+pointer did not point into a valid stack at the time) or inside
+memcpy().  In the latter case, some portion of another thread's stack
+was presumably overwritten before the malicious thread would crash.
+I did not proceed to develop this further into a more convincing PoC.
+
+As to fixing this, ideally several things need to happen:
+
+1. Programs should sanitize password length.  This should include web
+apps written in PHP.  This is desirable irrespective of the alloca()
+risk or lack thereof.  For example, Drupal 7 limits password length to
+128 characters (not only in HTML, but also in PHP code, indeed) even
+though it does not use crypt().
+
+2. PHP itself should probably sanitize password length as well, although
+it may use a much higher limit such that this limit is never hit when
+the app has a length check too.  To deal with the alloca() issue, 2048
+bytes (half a page on x86) feels right.
+
+Maybe PHP already got something like this since I did report the issue:
+http://news.php.net/php.internals/54270
+
+(I did not re-check the latest PHP before posting this, sorry.)
+
+3. Maybe glibc and the SHA-crypt reference code should stop using
+alloca() in favor of having the underlying MD5, SHA-256, and SHA-512
+implementations accepting potentially unaligned buffers like e.g.
+OpenSSL's implementations do.  Unfortunately, this might have
+performance impact.  Thus, maybe alloca() should continue to be used
+when the respective string is reasonably short (e.g., up to 2048 bytes),
+and otherwise a fallback to the potentially slower implementation should
+be made (avoiding the arbitrarily large copying).  Unfortunately, this
+may significantly complicate the code (there may have to be some code
+duplication and/or more extensive use of cpp macros).
+
+Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+SHA-crypt?) could refuse to work on overly long key or/and salt strings,
+but then the question is what they should do on error.  crypt(3)
+returning NULL and setting errno is SUSv2-compliant, but in practice is
+unexpected by many programs.  Thus, I think the functions would need to
+return a string that is guaranteed not to match the salt string, e.g.
+with something like:
+
+	buffer[0] = '*';
+	buffer[1] = '0';
+	buffer[2] = '\0';
+	if (salt[0] == '*' && salt[1] == '0')
+		buffer[1] = '1';
+
+(but also need to check buflen).
+
+Finally, we could use malloc() instead of alloca(), but this doesn't
+eliminate the need to potentially handle an error condition (what if
+malloc() returns NULL?)
+
+I'd appreciate any comments.  This is not a CVE request, but rather a
+request for discussion.  I did not report this via glibc Bugzilla yet -
+I feel that discussing it in here first is preferable.
+
+Alexander
