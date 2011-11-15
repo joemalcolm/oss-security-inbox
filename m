@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/12/7
-Message-ID: <20110812213719.53839a8d@redhat.com>
-Date: Fri, 12 Aug 2011 21:37:19 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- libgssapi, libgssglue -- Ability to load untrusted configuration file, when loading GSS mechanisms and their definitions during initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/15/10
+Message-ID: <20111115195234.GA10067@openwall.com>
+Date: Tue, 15 Nov 2011 23:52:34 +0400
+From: Solar Designer <solar@...nwall.com>
+To: dillon@...llo.backplane.com, Nolan Lum <nol888@...il.com>, Colin Percival <cperciva@...ebsd.org>, deraadt@...nbsd.org, Todd Miller <Todd.Miller@...rtesan.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: weird crypt-sha* in DragonFly BSD
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 25 Jul 2011 08:57:10 +0200 Sebastian Krahmer wrote:
+On Tue, Nov 15, 2011 at 06:35:02AM +0400, Solar Designer wrote:
+> There's also minor weirdness in the code - such as two local pointer
+> variables being declared static seemingly for no reason, and only
+> "final" but not "ctx" being zeroized in the end.  But even this lack of
+> proper cleanup is very minor compared to the lack of stretching.
 
-> On Fri, Jul 22, 2011 at 03:56:22PM -0400, Josh Bressers wrote:
-> > I presume this only needs one ID
-> > 
-> > Use CVE-2011-2709
-> 
-> You probably speak about:
-> 
-> http://www.suse.de/~krahmer/libs-vs-fscaps/
+It turns out that these other minor issues were inherited from phk's
+md5crypt.c from FreeBSD.
 
-I believe Josh was referring to libgssapi and libgssglue mentioned in
-the subject.  It's the same code in both, libgssglue is libgssapi
-renamed.
+Currently in FreeBSD, crypt-md5.c: crypt_md5() has extra static
+declarations (not only the output buffer, but also three pointers), and
+it forgets to zeroize ctx and ctx1 (even though it does zeroize final).
 
-Would you mind sharing the patch you used in SLE packages?  It does not
-seem to have been fixed in OpenSUSE yet.  Thanks!
+md5crypt.c: __md5crypt() in NetBSD no longer has the extra statics, but
+it does forget to zeroize ctx and ctx1.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+md5crypt.c: md5crypt() in OpenBSD has the weird static pointers and
+forgets to zeroize ctx and ctx1.
+
+Not a big deal, but worth fixing, I think.
+
+Alexander
