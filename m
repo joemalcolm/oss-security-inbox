@@ -1,16 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/30/1
-Message-ID: <4DE36EC3.7010104@gmx.de>
-Date: Mon, 30 May 2011 12:17:39 +0200
-From: Matthias Andree <matthias.andree@....de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/16/2
+Message-ID: <20111116194325.GA17162@openwall.com>
+Date: Wed, 16 Nov 2011 23:43:25 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for fetchmail STARTTLS hang (Denial of Service)
+Subject: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
-Could I get a CVE name for the issue in
-<http://gitorious.org/fetchmail/fetchmail/blobs/legacy_63/fetchmail-SA-2011-01.txt>?
+Hi,
 
-Thanks.
+This says it was posted today:
 
--- 
-Matthias Andree
+http://www.isc.org/software/bind/advisories/cve-2011-4313
+
+"Versions affected:
+All currently supported versions of BIND, 9.4-ESV, 9.6-ESV, 9.7.x, 9.8.x"
+
+Does anyone readily know if BIND 9.3.x is affected as well?  It is not
+"currently supported" upstream (per the table below), but is still found
+in and supported by some distros.
+
+http://www.isc.org/software/bind/versions
+
+Alexander
