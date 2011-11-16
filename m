@@ -1,20 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/17/1
-Message-ID: <20110117184629.GA3220@pisco.westfalen.local>
-Date: Mon, 17 Jan 2011 19:46:29 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/16/1
+Message-ID: <4651786d-e56e-4e05-a9f0-49642fe6f1d4@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Nov 2011 04:43:28 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: tor
+Subject: CVE Request: openid4java not properly verifying the signature of Attribute Exchange (AX) information
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+It was found that openid4java was not checking that all Attribute Exchange (AX) information passed to it was signed. This is a security concern if AX is being used to receive information that an application only trusts the identity provider to assert.
 
-Tor 0.2.1.29 fixes three security issues:
-http://archives.seul.org/or/announce/Jan-2011/msg00000.html
+Upstream advisory: http://openid.net/2011/05/05/attribute-exchange-security-alert/
+Patch commit: http://code.google.com/p/openid4java/source/detail?r=661
+Secunia advisory: http://secunia.com/advisories/44496/
 
-While the first already has a CVE ID listed, two more are
-still needed.
-
-Cheers,
-        Moritz
+Thanks
+-- 
+David Jorm / Red Hat Security Response Team
 
