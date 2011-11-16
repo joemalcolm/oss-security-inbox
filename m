@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/18/17
-Message-Id: <201103181252.33447.geissert@debian.org>
-Date: Fri, 18 Mar 2011 12:52:32 -0600
-From: Raphael Geissert <geissert@...ian.org>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: oss-security@...ts.openwall.com, list@...adns.org, bressers@...hat.com, coley@...re.org
-Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/16/1
+Message-ID: <4651786d-e56e-4e05-a9f0-49642fe6f1d4@zmail15.collab.prod.int.phx2.redhat.com>
+Date: Wed, 16 Nov 2011 04:43:28 -0500 (EST)
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: openid4java not properly verifying the signature of Attribute Exchange (AX) information
 Content-Type: text/plain; charset=utf-8
 
-On Friday 18 March 2011 12:11:15 Vincent Danen wrote:
-> * [2011-01-29 22:21:08 -0700] Sam Trenholme wrote:
-> >In 2002, when I rewrote the compression code for MaraDNS for the first
-> >time, I made a mistake in allocating an array of integers, allocating
-> >it in bytes instead of sizeof(int) units.  The resulted in a buffer
-> >being too small, allowing it to be overwritten.
-> >
-> >The impact of this programming error is that MaraDNS can be crashed by
-> >sending MaraDNS a single "packet of death".  Since the data placed in
-> >the overwritten array can not be remotely controlled (it is a list of
-> >increasing integers), there is no way to increase privileges
-> >exploiting this bug.
-> >
-> >The attached patch resolves this issue by allocating in sizeof(int)
-> >units instead of byte-sized units for an integer array.  In addition,
-> >it uses a smaller array because a DNS name can only have, at most, 128
-> >labels.
-> 
-> Was a CVE name ever assigned to this issue?
+It was found that openid4java was not checking that all Attribute Exchange (AX) information passed to it was signed. This is a security concern if AX is being used to receive information that an application only trusts the identity provider to assert.
 
-Yes, Josh assigned CVE-2011-0520.
-(his message is also recorded on the Debian bug you CC'ed)
+Upstream advisory: http://openid.net/2011/05/05/attribute-exchange-security-alert/
+Patch commit: http://code.google.com/p/openid4java/source/detail?r=661
+Secunia advisory: http://secunia.com/advisories/44496/
 
-Regards,
+Thanks
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+David Jorm / Red Hat Security Response Team
+
