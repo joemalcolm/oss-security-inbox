@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/28
-Message-ID: <4ECAC9D3.2010405@redhat.com>
-Date: Mon, 21 Nov 2011 14:59:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/7
+Message-ID: <20111117102917.GA2186@foo.fgeek.fi>
+Date: Thu, 17 Nov 2011 12:29:17 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Henri Salo <henri@...v.fi>
-Subject: Re: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2011 02:30 PM, Henri Salo wrote:
-> On Mon, Nov 21, 2011 at 02:23:49PM -0700, Kurt Seifried wrote:
->> On 11/21/2011 10:53 AM, Henri Salo wrote:
->>> Can I get CVE-identifier for this issue:
->>>
->>> http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
->>>
->>> Other references:
->>>
->>> http://osvdb.org/show/osvdb/76933
->>> http://osvdb.org/show/osvdb/76934
->>> http://osvdb.org/show/osvdb/76932
->>> http://secunia.com/advisories/46762/
->>>
->>> Best regards,
->>> Henri Salo
->> There appear to be two separate issues here, can you confirm this?
->>
->> -- 
->>
->> -Kurt Seifried / Red Hat Security Response Team
-> I think this needs three different CVE-identifiers. Here is a description from Secunia and the last item seems critical.
->
-> 1) Input passed to the "from" parameter in index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
->
-> 2) Input passed to the "page_no" parameter in recentchanges.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+On Thu, Nov 17, 2011 at 06:22:17AM +0400, Solar Designer wrote:
+> On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> > Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+> > SHA-crypt?) could refuse to work on overly long key or/and salt strings,
+> > but then the question is what they should do on error.
+> 
+> Here's another related option:
+> 
+> 	if (strlen(key) > 100000 || strlen(salt) > 100000)
+> 		abort();
+> 
+> (or something like this).  Ridiculous?  Sure, but it's better than
+> overwriting another thread's stack or the heap with somewhat higher
+> lengths, and 100001 chars is not a more reasonable password length to
+> support than, say, 2 million or 10 million (typical thread stack sizes).
+> 
+> So if we can't decide on a proper fix (does anyone besides me even
+> care?), something as trivial as the above would be an improvement.
+> 
+> Alexander
 
-Ok merging these two issues (as per ADT4 specification)  please use
-CVE-2011-4333 for this issue.
+I care, but I don't have much to contribute. Seems valid discussion for this list in my opinion.
 
-> 3) Input passed to the "userfile" POST parameter in edit.php is not properly verified before being used to upload files. This can be exploited to e.g. upload arbitrary PHP files with e.g. a ".gif" extension.
->
-Please use CVE-2011-4334 for this issue.
-
-> Best regards,
-> Henri Salo
-
-
--- 
-
--Kurt Seifried / Red Hat Security Response Team
-
+Best regards,
+Henri Salo
