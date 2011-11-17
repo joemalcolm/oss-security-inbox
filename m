@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/21/3
-Message-ID: <4D86DB49.4010009@redhat.com>
-Date: Mon, 21 Mar 2011 12:59:53 +0800
-From: Eugene Teo <eugene@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/10
+Message-ID: <4EC52F2A.2020001@redhat.com>
+Date: Thu, 17 Nov 2011 08:58:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Dan Rosenberg <dan.j.rosenberg@...il.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: heap corruption in IrDA
+Subject: Re: CVE Request: nginx resolver heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On 03/21/2011 03:26 AM, Dan Rosenberg wrote:
-> When providing an invalid IrDA nickname for an IrNET peer, a local
-> attacker can cause a kernel panic due to an underflow in a memcpy()
-> size calculation or cause a controllable heap overflow that may lead
-> to privilege escalation.  Write access to the /dev/irnet device file
-> is required to trigger the vulnerability.
+On 11/17/2011 08:37 AM, Kurt Seifried wrote:
+> On 11/16/2011 10:50 PM, Ben Hawkes wrote:
+>> Hi,
+>>
+>> The nginx team have released stable version 1.0.10, which includes a fix 
+>> for a heap overflow bug in the custom DNS resolver:
+>>
+>> http://trac.nginx.org/nginx/changeset/4268/nginx
+>>
+>> The resolver is most commonly used with the proxy and fastcgi modules,
+>> which are not enabled by default.
+>>
+>> In order to trigger this condition an attacker would need to be in
+>> control of an upstream resolver host, or be in a position to brute-force
+>> the weakly generated 16-bit transaction identifier.
+>>
+>> Thanks,
+>> Ben Hawkes
+> Do you need a CVE # for this issue?
 >
-> Reference:
-> http://marc.info/?l=linux-netdev&m=130060169116047&w=2
+And this is why coffee is a popular morning drink (and Kurt should have
+some =).
 
-The default permissions for /dev/irnet is root-read/write only. In the 
-past I have ignored such issues that can only be triggered by root, even 
-though the permissions can be changed. I wouldn't assign a CVE name for 
-this. CC'ed Steve.
+Please use CVE-2011-4315 for this issue.
 
-Thanks, Eugene
 -- 
-main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) && main(++i); }
+
+-Kurt Seifried / Red Hat Security Response Team
+
