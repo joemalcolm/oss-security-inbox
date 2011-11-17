@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/04/9
-Message-ID: <4D233932.2080509@summersault.com>
-Date: Tue, 04 Jan 2011 10:13:54 -0500
-From: Mark Stosberg <mark@...mersault.com>
-To: Jan Lieskovsky <jlieskov@...hat.com>
-CC: Andy Armstrong <andy@...ten.net>, oss-security@...ts.openwall.com,  Marcela Maslanova <mmaslano@...hat.com>, Petr Pisar <ppisar@...hat.com>,  Chris 'BinGOs' Williams <chris@...gosnet.co.uk>, Reed Loden <reed@...dloden.com>,  Masahiro Yamada <masa141421356@...il.com>, Byron Jones <glob@...b.com.au>, Lincoln Stein <lincoln.stein@...il.com>,  Tom spot Callaway <tcallawa@...hat.com>
-Subject: Re: Re: CVE Request -- perl-CGI two ids, perl-CGI-Simple one id (CVE-2010-3172 already assigned for Bugzilla part)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/5
+Message-Id: <201111162132.45745.sgrubb@redhat.com>
+Date: Wed, 16 Nov 2011 21:32:45 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-
->   Are there some patches to come yet wrt to Perl's CPAN CGI-Simple module
-> and those two CVE ids yet?
-
-Yes, this one. It is not currently applied in the master branch yet:
-
-https://github.com/markstos/CGI--Simple/commit/e811ab874a5e0ac8a99e76b645a0e537d8f714da
-
-> I can see latest CGi-Simple-v113 released on Monday, 27-th December 2010:
-> [1] http://search.cpan.org/dist/CGI-Simple/
+On Wednesday, November 16, 2011 09:22:17 PM Solar Designer wrote:
+> On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> > Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+> > SHA-crypt?) could refuse to work on overly long key or/and salt strings,
+> > but then the question is what they should do on error.
 > 
-> Does it contain fixes for both CVE issues (so it is possible to rebase
-> to new
-> version) or anything else to be done in this part of the world yet?
+> Here's another related option:
+> 
+> 	if (strlen(key) > 100000 || strlen(salt) > 100000)
+> 		abort();
+> 
+> (or something like this).  Ridiculous?  Sure, but it's better than
+> overwriting another thread's stack or the heap with somewhat higher
+> lengths, and 100001 chars is not a more reasonable password length to
+> support than, say, 2 million or 10 million (typical thread stack sizes).
+> 
+> So if we can't decide on a proper fix (does anyone besides me even
+> care?), something as trivial as the above would be an improvement.
 
-It contains only a partial fix, mirroring what happened with CGI.pm.
+raise(SIGKILL) might be better because abort requests a core dump and you are in 
+crypto code.
 
-> Is the fix, we were waiting for on the CGI-Simple side:
-> [2]
-> https://github.com/AndyA/CGI--Simple/commit/5a861280ef524661105e132536ff7d1a9084941f
-
-That's not it, that's separate.
-
-Lincoln is the primary maintainer of CGI.pm, but I have upload rights.
-However, we haven't heard from recently. A week ago I asked again for
-his input and notified him that I would upload a new release myself I
-hadn't heard from him in another week. That time has come now-- I will
-plan to upload a new release of CGI.pm in the next 24 hours.
-
-   Mark
+-Steve
