@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/2
-Message-ID: <mpro.lp1g063w5e11102h5.taviso@cmpxchg8b.com>
-Date: Thu, 28 Jul 2011 12:04:54 +0200
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/12
+Message-ID: <20111117184351.GA21076@openwall.com>
+Date: Thu, 17 Nov 2011 22:43:51 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: two systemtap flaws: CVE-2011-2502 and CVE-2011-2503
+Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
-Vincent Danen <vdanen@...hat.com> wrote:
-
-> This is just a heads up to notify those who are shipping systemtap that
-> two flaws were found that could allow members of group stapusr to elevate
-> their privileges:
+On Thu, Nov 17, 2011 at 10:13:41AM -0700, Vincent Danen wrote:
+> Our bind maintainer believes that 9.3.6 is affected (but possibly harder
+> to exploit or via a different vector).
 > 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2502
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2503
+> However, he does not believe that 9.2.x and earlier are affected due to
+> the old DNSSEC implementation (so 9.2.x wouldn't understand current
+> DNSSEC signatures so would not cache them).
+
+Thanks for the info!
+
+> Some further details can be found in our bug:
 > 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4313
 
-Interesting, I also looked at systemtap and found a local root
-(CVE-2010-4170), but was under the impression we had agreed it should be
-restricted to a privileged group?
+This has Adam Tkac's comment about the patch for 9.3.x that I posted
+yesterday:
 
-https://wiki.egi.eu/wiki/EGI_CSIRT:Alerts/systemtap-2010-11-18
+"The patch is not 100% correct because 9.3.X version handles negative rdatasets
+differently. The rbtdb.c part of the patch uses RDATASET_ATTR_NEGATIVE
+attribute but this attribute is never set. However the query.c part of the
+patch is correct and in my opinion it's sufficient to prevent the crash."
 
-I stopped looking because I concluded that had eliminated any security risk,
-is that no longer the case?
+This confirms my understanding that the changes to rbtdb.c were a no-op
+in 9.3.x and it adds the opinion that the changes to query.c are both
+needed and sufficient to prevent the crash.
 
-(I dont have an up to date RHEL machine to check)
+So do we (distro vendors) choose to go ahead and release updates with
+just those changes for now?
 
+So far, I haven't heard a single report of 9.3.x crashing in the wild
+(ours are running fine, too, but most of them are built without DNSSEC),
+and several reports regarding newer versions crashing.
 
-Tavis.
+It's a pity that we do not have a reproducer even though the crashes are
+happening in the wild.
 
-
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
-
+Alexander
