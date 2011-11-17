@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/04/18
-Message-ID: <20110304151400.GJ24629@florz.florz.dyndns.org>
-Date: Fri, 4 Mar 2011 16:14:00 +0100
-From: Florian Zumbiehl <florz@...rz.de>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...us.mitre.org>, Stefan Fritsch <sf@...itsch.de>, Jan Kaluza <jkaluza@...hat.com>, Paul Martin <pm@...ian.org>, Petr Uzel <petr.uzel@...e.cz>, Thomas Biege <thomas@...e.de>
-Subject: Re: CVE Request -- logrotate -- nine issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/13
+Message-ID: <20111117205517.GA21920@openwall.com>
+Date: Fri, 18 Nov 2011 00:55:17 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Speaking of BIND 9.3.x:
 
-> The rest, as described, appear to rely on sysadmin error and to assume
-> security properties that logrotate never advertised it had.  Specifically,
-> logrotate was never declared to be safe to use on untrusted directories,
-> and it was an error for a sysadmin to make such an assumption.
-> 
-> I don't mind logrotate being enhanced/hardened in this respect, but to
-> call these vulnerabilities sounds like a stretch.  Also, even if
-> logrotate is hardened, it should not be declared to be safe to use on
-> untrusted directories.  It'd be better to explicitly state that it is
-> not, to avoid this sort of confusion.
+On Thu, Nov 17, 2011 at 10:43:51PM +0400, Solar Designer wrote:
+> So do we (distro vendors) choose to go ahead and release updates with
+> just those changes for now?
 
-In which scenarios exactly logrotate is supposed to be safe to use is
-mostly undefined.
+Red Hat has just released an update for 9.3.6 in RHEL5:
 
-However, it is currently a common setup (as in: what distributions do out
-of the box) to have a daily logrotate cron job run as root that rotates
-the logs of all the services and to have log directories owned by service
-users (so they can create missing log files, for example).
+https://rhn.redhat.com/errata/RHSA-2011-1458.html
 
-In such setups, the service user can elevate its privileges to root
-or corrupt root-owned files using the various bugs.
+bind-9.3.6-16.P1.el5_7.1.src.rpm
 
-Florian
+Meanwhile, per my further analysis, BIND 9.3.x's affected code in
+query.c is only reached if the dnssec-enable option is set to yes,
+regardless of whether the build of BIND includes full DNSSEC support
+(is linked against OpenSSL) or not.
+
+In 9.4.x+, it probably does not take "dnssec-enable yes" to make the
+issue triggerable, because of the added query_addadditional2() function
+with an extra instance of the assertion.  This extra function does not
+have the same check for DNSSEC being enabled that query_addadditional()
+does.  Here's query_addadditional()'s check in 9.3.x:
+
+	if (!WANTDNSSEC(client) && dns_rdatatype_isdnssec(qtype))
+		return (ISC_R_SUCCESS);
+
+where WANTDNSSEC() is:
+
+#define WANTDNSSEC(c)           (((c)->attributes & \
+                                  NS_CLIENTATTR_WANTDNSSEC) != 0)
+
+where the NS_CLIENTATTR_WANTDNSSEC flag is set when:
+
+	if (!client->view->enablednssec) {
+		message->flags &= ~DNS_MESSAGEFLAG_CD;
+		client->extflags &= ~DNS_MESSAGEEXTFLAG_DO;
+	}
+[...]
+	if ((client->extflags & DNS_MESSAGEEXTFLAG_DO) != 0)
+		client->attributes |= NS_CLIENTATTR_WANTDNSSEC;
+
+where server.c sets:
+
+	result = ns_config_get(maps, "dnssec-enable", &obj);
+	INSIST(result == ISC_R_SUCCESS);
+	view->enablednssec = cfg_obj_asboolean(obj);
+
+I hope I am not misreading this.
+
+Alexander
