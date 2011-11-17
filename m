@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/24/1
-Message-ID: <4EA4EA6E.7020100@redhat.com>
-Date: Mon, 24 Oct 2011 10:02:46 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: hardlink(1) has buffer overflows, is unsafe on changing trees
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/9
+Message-ID: <4EC52A29.5040804@redhat.com>
+Date: Thu, 17 Nov 2011 08:37:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: nginx resolver heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On 10/22/2011 08:51 AM, Solar Designer wrote:
+On 11/16/2011 10:50 PM, Ben Hawkes wrote:
+> Hi,
 >
-> I investigated the non-crashing build further.  No, adding more
-> directories did not cause a crash either.  What happens is that lstat()
-> starts failing with ENAMETOOLONG shortly _after_ the overflow occurs.
-> This happens to limit the largest overflow size.  If "dirs" is not yet
-> overwritten by this point (was not reached by the overflow), then the
-> program may proceed without crashing and without descending to deeper
-> directories (thus not overflowing the buffer even further).  So
-> different builds may be affected to a different extent, depending on
-> relative placement of variables in .bss.  The behavior may also vary by
-> kernel version, though (when lstat() starts to fail is a property of the
-> kernel, whereas NAMELEN in hardlink.c is fixed).  I am able to make this
-> build crash with "*** buffer overflow detected ***" on the strcat(),
-> though, by carefully adjusting the directory name lengths (but that's
-> relatively uninteresting).
+> The nginx team have released stable version 1.0.10, which includes a fix 
+> for a heap overflow bug in the custom DNS resolver:
 >
-
-I think this is exactly what i hit, when testing on some Fedora/RHEL 
-machines.
-
-Kernel defines the following:
-#define PATH_MAX        4096    /* # chars in a path name including nul */
-
-And in the lstat implementation:
-
-      if (dentry->d_name.len > NAME_MAX)
-                 return ERR_PTR(-ENAMETOOLONG);
-
+> http://trac.nginx.org/nginx/changeset/4268/nginx
+>
+> The resolver is most commonly used with the proxy and fastcgi modules,
+> which are not enabled by default.
+>
+> In order to trigger this condition an attacker would need to be in
+> control of an upstream resolver host, or be in a position to brute-force
+> the weakly generated 16-bit transaction identifier.
+>
+> Thanks,
+> Ben Hawkes
+Do you need a CVE # for this issue?
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
