@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/16/4
-Message-ID: <20110616173820.GA4176@pisco.westfalen.local>
-Date: Thu, 16 Jun 2011 19:38:20 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/8
+Message-ID: <20111117055022.GB24831@sota.gen.nz>
+Date: Thu, 17 Nov 2011 05:50:22 +0000
+From: Ben Hawkes <hawkes@...a.gen.nz>
 To: oss-security@...ts.openwall.com
-Cc: cve@...re.org
-Subject: Re: CVE request: Several Moodle issues
+Subject: CVE Request: nginx resolver heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 18, 2011 at 11:48:05PM +0200, Moritz Muehlenhoff wrote:
-> Hi Steve,
-> (since I assume Josh will pass this on to you :-) )
-> 
-> http://www.moodle.org/security/ lists more than a dozen
-> vulnerabilities requiring a CVE assignment:
-> MSA-11-0002 to MSA-11-0017 require CVE assignments.
-> 
-> (Some issues might be amalgamated to a single CVE)
+Hi,
 
-*ping*
+The nginx team have released stable version 1.0.10, which includes a fix 
+for a heap overflow bug in the custom DNS resolver:
 
-Cheers,
-        Moritz
+http://trac.nginx.org/nginx/changeset/4268/nginx
+
+The resolver is most commonly used with the proxy and fastcgi modules,
+which are not enabled by default.
+
+In order to trigger this condition an attacker would need to be in
+control of an upstream resolver host, or be in a position to brute-force
+the weakly generated 16-bit transaction identifier.
+
+Thanks,
+Ben Hawkes
