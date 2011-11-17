@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/22/1
-Message-ID: <1297945425.870762.1313996134579.JavaMail.root@zmail07.collab.prod.int.phx2.redhat.com>
-Date: Mon, 22 Aug 2011 02:55:34 -0400 (EDT)
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/7
+Message-ID: <20111117102917.GA2186@foo.fgeek.fi>
+Date: Thu, 17 Nov 2011 12:29:17 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: mark@...gant.net
-Subject: Re: CVE request: Pidgin crash
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hi Mark,
+On Thu, Nov 17, 2011 at 06:22:17AM +0400, Solar Designer wrote:
+> On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> > Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+> > SHA-crypt?) could refuse to work on overly long key or/and salt strings,
+> > but then the question is what they should do on error.
+> 
+> Here's another related option:
+> 
+> 	if (strlen(key) > 100000 || strlen(salt) > 100000)
+> 		abort();
+> 
+> (or something like this).  Ridiculous?  Sure, but it's better than
+> overwriting another thread's stack or the heap with somewhat higher
+> lengths, and 100001 chars is not a more reasonable password length to
+> support than, say, 2 million or 10 million (typical thread stack sizes).
+> 
+> So if we can't decide on a proper fix (does anyone besides me even
+> care?), something as trivial as the above would be an improvement.
+> 
+> Alexander
 
->Hi!  Would it be possible to issue a CVE for a new crash in Pidgin?
+I care, but I don't have much to contribute. Seems valid discussion for this list in my opinion.
 
->http://pidgin.im/news/security/?id=53
-
-Please use CVE-2011-2942 for this issue.
-
-Also looking at http://pidgin.im/news/security it seems two other security issues were also
-fixed in 2.10.0, do you want CVEs to be assigned for them as well?
-
-Thanks.
-
---
-
-Huzaifa Sidhpurwala / Red Hat Security Response Team.
-
+Best regards,
+Henri Salo
