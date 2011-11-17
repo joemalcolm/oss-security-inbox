@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/8
-Message-ID: <20111026151612.GG28067@dhcp-25-225.brq.redhat.com>
-Date: Wed, 26 Oct 2011 17:16:12 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/10
+Message-ID: <4EC52F2A.2020001@redhat.com>
+Date: Thu, 17 Nov 2011 08:58:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- kernel: sysctl: restrict write access to dmesg_restrict
+Subject: Re: CVE Request: nginx resolver heap overflow
 Content-Type: text/plain; charset=utf-8
 
-When dmesg_restrict is set to 1 CAP_SYS_ADMIN is needed to read the
-kernel ring buffer. But a root user without CAP_SYS_ADMIN is able
-to reset dmesg_restrict to 0.
+On 11/17/2011 08:37 AM, Kurt Seifried wrote:
+> On 11/16/2011 10:50 PM, Ben Hawkes wrote:
+>> Hi,
+>>
+>> The nginx team have released stable version 1.0.10, which includes a fix 
+>> for a heap overflow bug in the custom DNS resolver:
+>>
+>> http://trac.nginx.org/nginx/changeset/4268/nginx
+>>
+>> The resolver is most commonly used with the proxy and fastcgi modules,
+>> which are not enabled by default.
+>>
+>> In order to trigger this condition an attacker would need to be in
+>> control of an upstream resolver host, or be in a position to brute-force
+>> the weakly generated 16-bit transaction identifier.
+>>
+>> Thanks,
+>> Ben Hawkes
+> Do you need a CVE # for this issue?
+>
+And this is why coffee is a popular morning drink (and Kurt should have
+some =).
 
-This is an issue when e.g.  LXC (Linux Containers) are used and complete
-user space is running without CAP_SYS_ADMIN.  A unprivileged and jailed
-root user can bypass the dmesg_restrict protection.
+Please use CVE-2011-4315 for this issue.
 
-Introduced by:
-eaf06b241b091357e72b76863ba16e89610d31bd
-
-Fixed by:
-bfdc0b497faa82a0ba2f9dddcf109231dd519fcc
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
