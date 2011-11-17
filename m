@@ -1,42 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/5
-Message-ID: <17328238.1261288.1316024384673.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:19:44 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/2
+Message-ID: <20111117010045.GA18158@openwall.com>
+Date: Thu, 17 Nov 2011 05:00:45 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Gerald Combs <gerald@...eshark.org>, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple issues fixed in wireshark 1.6.2
+Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-
-> 2. Wireshark Lua script execution vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-15.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737784
-
-Use CVE-2011-3360 for the above.
-
-
-Are the below worth assigning CVE ids to? The advisory seems to suggest
-they are crash only fixes. Do those deserve CVE IDs? I know we've been
-fairly generous with wireshark in the past, but I'm wondering if we need to
-draw a line somewhere.
-
+On Wed, Nov 16, 2011 at 11:43:25PM +0400, Solar Designer wrote:
+> http://www.isc.org/software/bind/advisories/cve-2011-4313
 > 
-> 1, Wireshark CSN.1 dissector vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-16.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737783
+> "Versions affected:
+> All currently supported versions of BIND, 9.4-ESV, 9.6-ESV, 9.7.x, 9.8.x"
 > 
-> 3. Wireshark buffer exception handling vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-14.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737785
-> 
-> 4. Wireshark OpenSafety dissector vulnerability
-> http://www.wireshark.org/security/wnpa-sec-2011-12.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=737787
-> 
+> Does anyone readily know if BIND 9.3.x is affected as well?
 
-Thanks.
+So I downloaded bind-9.4-ESV-R5-P1.tar.gz and bind-9.4-ESV-R5.tar.gz,
+verified signatures, diff'ed these two trees, and then tried to apply
+the resulting patch to 9.3.5 (just whatever version we happen to need a
+patch for - obviously, only in case it is actually affected).  The
+result of this is inconclusive.  On one hand, the code being patched is
+mostly present in 9.3.5 as well, but on the other the checks that the
+patch adds to lib/dns/rbtdb.c use the NEGATIVE() macro, which is not
+present in 9.3.5.  While back-porting this macro definition is trivial,
+and I've done just that, this source file in 9.3.5 lacks other likely
+relevant pieces of code, including this one present in 9.4-ESV-R5's
+lib/dns/rbtdb.c: addrdataset():
 
--- 
-    JB
+			newheader->attributes |= RDATASET_ATTR_NEGATIVE;
+
+If 9.3.5 can't set this flag, then perhaps not checking for it was not a
+problem.  Then the question becomes whether the fixes to
+bin/named/query.c are required even when lib/dns/rbtdb.c did not have
+the problem.  In other words, are these a security fix for a separate
+attack vector (even if a similar one) or merely a hardening measure?
+Or are the changes to lib/dns/rbtdb.c merely a hardening measure?  I am
+not familiar with this code and with the specific attack(s), so I don't
+know the answers.
+
+I've attached the 9.4-ESV-R5 to 9.4-ESV-R5-P1 diffs, and a "patch"
+against 9.3.5 - even though in the latter the changes to lib/dns/rbtdb.c
+are almost certainly not needed, as I explained above.
+
+Also, is BIND built without DNSSEC support affected?  The ISC advisory
+does not mention DNSSEC and RRSIG, but bind-9.4-ESV-R5-P1/CHANGES
+mentions RRSIG, which is a DNSSEC thing.  (Yes, we build BIND without
+DNSSEC on Owl currently since DNSSEC proved to be more of a risk than a
+solution so far - and it looks like we have yet another example here.
+This is going to change, though, as DNSSEC gets deployed in more places.
+So we might have to revert that temporary decision and re-include DNSSEC
+support already in our next release.)
+
+I am still looking for more conclusive info and more detail on this.
+
+Alexander
+
+View attachment "bind-9.4-ESV-R5-P1.diff" of type "text/plain" (3831 bytes)
+
+View attachment "bind-9.3.5-up-CVE-2011-4313.diff" of type "text/plain" (2513 bytes)
