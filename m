@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/10
-Message-ID: <20110403213301.GA9234@openwall.com>
-Date: Mon, 4 Apr 2011 01:33:01 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/11
+Message-ID: <20111117171341.GM1686@redhat.com>
+Date: Thu, 17 Nov 2011 10:13:41 -0700
+From: Vincent Danen <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
-Ben,
+* [2011-11-17 02:40:28 +0000] The Fungi wrote:
 
-On Sun, Apr 03, 2011 at 10:06:03PM +0100, Ben Laurie wrote:
-> OK, but ... I wasn't on vendor-sec, but (IMO) am at least as qualified
-> as most of the people who were. Now what?
+>On 2011-11-16 23:43:25 +0400 (+0400), Solar Designer wrote:
+>[...]
+>> Does anyone readily know if BIND 9.3.x is affected as well?
+>[...]
+>
+>While obviously not conclusive, I can say that our 9.3.4-P1.2
+>resolvers were not impacted and ran clean through while our 9.5.1-P3
+>and 9.6-ESV-R4 resolvers crashed and had to be restarted several
+>times overnight.
 
-What do you propose?
+Our bind maintainer believes that 9.3.6 is affected (but possibly harder
+to exploit or via a different vector).
 
-In what capacity do you feel you're qualified?
+However, he does not believe that 9.2.x and earlier are affected due to
+the old DNSSEC implementation (so 9.2.x wouldn't understand current
+DNSSEC signatures so would not cache them).
 
-Don't get me wrong, I have a lot of respect for you - in fact, in my
-sysadmin role, I am flattered that you'd want to be on a list I setup.
-I just think that you providing answers to the questions above will help
-the discussion.  I don't know what your answers would be (I can try to
-guess, but I might be wrong).  I do think that you might propose
-something we have not yet thought of.
+Some further details can be found in our bug:
 
-The vendor-sec membership requirement was just for the initial seed
-membership of the new list.  Its purpose is to ensure we're not making
-things worse in terms of pre-CRD leaks, at least not right away. ;-)
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4313
 
-As you can see from another message I posted, I've only setup a
-Linux distros list for now, which lets us side-step the issue of
-comparing one security researcher vs. another for membership of that
-list.  I'd be happy to setup a separate list with only security
-researchers on it, and we can ask folks to CC that list whenever a
-discussion on the Linux distros list is expected to significantly
-benefit from participation of the researchers.
-
-I'd be happy if you have a better proposal.
-
-Thanks,
-
-Alexander
+--
+Vincent Danen / Red Hat Security Response Team
