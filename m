@@ -1,70 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/06/11
-Message-ID: <87zkkrp6cc.fsf@mid.deneb.enyo.de>
-Date: Wed, 06 Jul 2011 21:16:51 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/1
+Message-ID: <4EC44F0B.6020909@redhat.com>
+Date: Wed, 16 Nov 2011 17:02:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Bind incident
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE Request: openid4java not properly verifying the signature of Attribute Exchange (AX) information
 Content-Type: text/plain; charset=utf-8
 
-* Mike O'Connor:
-
-> Note that the BIND 9.4 ESV formally EOLed just last month:
+On 11/16/2011 02:43 AM, David Jorm wrote:
+> It was found that openid4java was not checking that all Attribute Exchange (AX) information passed to it was signed. This is a security concern if AX is being used to receive information that an application only trusts the identity provider to assert.
 >
-> http://www.isc.org/softwaresupportpolicy
+> Upstream advisory: http://openid.net/2011/05/05/attribute-exchange-security-alert/
+> Patch commit: http://code.google.com/p/openid4java/source/detail?r=661
+> Secunia advisory: http://secunia.com/advisories/44496/
 >
-> So, if you are distributing an older rev of BIND and some new security
-> issue comes up that you are prone to, it _might_ not be quite as easy to
-> backport the fixes.
+> Thanks
+Please use CVE-2011-4314 for this issue.
 
-If you move from 9.4 or 9.5 to 9.6, your users might hit an issue in
-the OpenSSL initialization function:
+-- 
 
-<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=584911>
-
-We've applied the kludge below to our 9.6 version, which seems to
-address the most common cause of a silently dying named process.
-(There are others, but those are more difficult to check.)
-
-diff --git a/lib/dns/openssl_link.c b/lib/dns/openssl_link.c
-index 2dc7d7e..80e6e00 100644
---- a/lib/dns/openssl_link.c
-+++ b/lib/dns/openssl_link.c
-@@ -48,12 +48,16 @@
- #include "dst_internal.h"
- #include "dst_openssl.h"
- 
-+#include <dns/log.h>
-+
- #include <openssl/err.h>
- #include <openssl/rand.h>
- #include <openssl/evp.h>
- #include <openssl/conf.h>
- #include <openssl/crypto.h>
- 
-+#include <unistd.h>
-+
- #if defined(CRYPTO_LOCK_ENGINE) && (OPENSSL_VERSION_NUMBER >= 0x0090707f)
- #define USE_ENGINE 1
- #endif
-@@ -188,7 +192,19 @@ dst__openssl_init() {
- 	rm->pseudorand = entropy_getpseudo;
- 	rm->status = entropy_status;
- #ifdef USE_ENGINE
-+	const char *cnf_path = "/usr/lib/ssl/openssl.cnf";
-+	if (access(cnf_path, R_OK) == -1 && errno != ENOENT) {
-+		isc_log_write(dns_lctx, DNS_LOGCATEGORY_GENERAL,
-+			      DNS_LOGMODULE_CONFIG, ISC_LOG_CRITICAL,
-+			      "The OpenSSL configuration file %s exists, "
-+			      "but it is not readable.", cnf_path);
-+		isc_log_write(dns_lctx, DNS_LOGCATEGORY_GENERAL,
-+			      DNS_LOGMODULE_CONFIG, ISC_LOG_CRITICAL,
-+			      "The process may terminate without further "
-+			      "notice.");
-+	}
- 	OPENSSL_config(NULL);
-+
- #ifdef USE_PKCS11
- #ifndef PKCS11_SO_PATH
- #define PKCS11_SO_PATH		"/usr/local/lib/engines/engine_pkcs11.so"
+-Kurt Seifried / Red Hat Security Response Team
 
