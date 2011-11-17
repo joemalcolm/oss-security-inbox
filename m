@@ -1,80 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/27/3
-Message-ID: <4ED2A001.8000201@gmail.com>
-Date: Sun, 27 Nov 2011 21:39:29 +0100
-From: Michael Harrison <n0idx80@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/2
+Message-ID: <20111117010045.GA18158@openwall.com>
+Date: Thu, 17 Nov 2011 05:00:45 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
-Alexander,
-This is a formal request to be on the non-Linux advance notification
-list. I have signed signed this message. Please let me know if you need
-something more, and thanks again for sending this out.
+On Wed, Nov 16, 2011 at 11:43:25PM +0400, Solar Designer wrote:
+> http://www.isc.org/software/bind/advisories/cve-2011-4313
+> 
+> "Versions affected:
+> All currently supported versions of BIND, 9.4-ESV, 9.6-ESV, 9.7.x, 9.8.x"
+> 
+> Does anyone readily know if BIND 9.3.x is affected as well?
 
-Sincerely,
+So I downloaded bind-9.4-ESV-R5-P1.tar.gz and bind-9.4-ESV-R5.tar.gz,
+verified signatures, diff'ed these two trees, and then tried to apply
+the resulting patch to 9.3.5 (just whatever version we happen to need a
+patch for - obviously, only in case it is actually affected).  The
+result of this is inconclusive.  On one hand, the code being patched is
+mostly present in 9.3.5 as well, but on the other the checks that the
+patch adds to lib/dns/rbtdb.c use the NEGATIVE() macro, which is not
+present in 9.3.5.  While back-porting this macro definition is trivial,
+and I've done just that, this source file in 9.3.5 lacks other likely
+relevant pieces of code, including this one present in 9.4-ESV-R5's
+lib/dns/rbtdb.c: addrdataset():
 
-Michael
+			newheader->attributes |= RDATASET_ATTR_NEGATIVE;
 
-On 11/26/11 9:16 AM, Solar Designer wrote:
-> Hi Tim,
->
-> On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
->> On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
->>
->>> I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
->>> specific people that they're interested.  So please reply to this
->>> message to indicate your interest and we'll proceed.
->> I am interested.  Thanks for doing this.
-> Please send me (off-list is OK) your PGP key and e-mail address to
-> subscribe to the new list.
->
-> I thought there would be more interest in this, but I don't mind setting
-> this up as just pkgsrc + Linux distros initially.
->
-> (And, like I said, the Linux distros list will also continue to exist on
-> its own, letting message senders decide on who to notify.)
->
-> Thanks,
->
-> Alexander
+If 9.3.5 can't set this flag, then perhaps not checking for it was not a
+problem.  Then the question becomes whether the fixes to
+bin/named/query.c are required even when lib/dns/rbtdb.c did not have
+the problem.  In other words, are these a security fix for a separate
+attack vector (even if a similar one) or merely a hardening measure?
+Or are the changes to lib/dns/rbtdb.c merely a hardening measure?  I am
+not familiar with this code and with the specific attack(s), so I don't
+know the answers.
 
--- 
+I've attached the 9.4-ESV-R5 to 9.4-ESV-R5-P1 diffs, and a "patch"
+against 9.3.5 - even though in the latter the changes to lib/dns/rbtdb.c
+are almost certainly not needed, as I explained above.
 
-It's not about what you know, but what is left to learn~
+Also, is BIND built without DNSSEC support affected?  The ISC advisory
+does not mention DNSSEC and RRSIG, but bind-9.4-ESV-R5-P1/CHANGES
+mentions RRSIG, which is a DNSSEC thing.  (Yes, we build BIND without
+DNSSEC on Owl currently since DNSSEC proved to be more of a risk than a
+solution so far - and it looks like we have yet another example here.
+This is going to change, though, as DNSSEC gets deployed in more places.
+So we might have to revert that temporary decision and re-include DNSSEC
+support already in our next release.)
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v2.0.17 (GNU/Linux)
+I am still looking for more conclusive info and more detail on this.
 
-mQENBE6MJ20BCACsvXUqJyxwgr61LOdRVMmczLC5VHDBEaaCfx4AwSihQm6od14h
-6IQJVyHSp5hQz73n9yOmLeAV51akUSNwUcV85Fjxa169MDut7mexir6YkTDrwSdW
-BRvopP6EuJaLAJwdK0/++YRD9eu6YDPlMp50ceCr47Yy8W0BGTb7Z2CvGnNntr7U
-ZkHR+ALdEQNyqSQ/NGxe7lfO+MVSi0W2eDaUtR6JmmZCWyDRWDsiOsl/q+QnIJ7r
-s3flrDe57zMXkw2rdI6lWm745i9kOyg0+Jw0gQwy8oHh/4ktdboU6WLkv2N9eeMR
-l1a0AZeTSuOfWrepTF1K22E++1NuN3Y5TGKvABEBAAG0MU1pY2hhZWwgUi4gSGFy
-cmlzb24gKEN1cnJlbnQpIDxuMGlkeDgwQGdtYWlsLmNvbT6JAT4EEwECACgFAk6M
-J20CGwMFCQHanAAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGcT+eUbMgJy
-T94H/2F98ZYomipk30ZcEZa+MsqLRcBdIvUgfS43cSih2KlhsjWavwYTYANJG4k0
-TImCpoJymmEK0aozlPqeP9eGTFrAM8HPnlBqMqTP5B0dPn2hGnxFwP1NLq4KiwgH
-YM/j2QqTZGvCaq82OtG8FwGNHRCJu+buN3zJ/VZNj5b05USEPnl8w92r5V4gbRyL
-HZsVyGnPDzTsBDqoKjpMcCVD4uXQWDM9jLk366zLM6ChzhEX02bmKrFqkNnb7rd0
-gFGR8svA4uWc2w58zrbZdMTsXDTimHdUm2KU4Cz49UxmyXW+T3SIEtsH8WYlaL+2
-SAk8zYMMb95WjwZwrFt2hhfMBoa5AQ0ETownbQEIALZJ5AbAwQd4qhkPRDmpvgW3
-AZgMj/s20sBo6XiS9PF4iUYwdKbEGUbKuahHH4dP4lrAKO0telzaLW+PY7NKaQ1k
-iLubuiqr7VD2j3bXXD1bvFdmG6w+R+S3jmgZs20Sj+z8472eXXHSokrO8/jolopb
-1xzZGUUVlVoJ7dSYaByqxQgcQCxrCiF1xj3CN32m51LAmaCFnJkVYwRTzZpCcOkf
-I4eF+d+0OYlCEH9VTwhYJKJMuRFJjPJqzCiJyYky7Y5GqaY2QNnSX2tzGpurR6IP
-HW/ZR4SFcnlL8HvHvT6+KVjfItS1M9ybTsXdf8Hl6BGkng+AO/bJKI2f3z2MXP0A
-EQEAAYkBJQQYAQIADwUCTownbQIbDAUJAdqcAAAKCRBnE/nlGzICclJlCAChlNrr
-CeZ3dzj/FrKQFozovCvgYV8GK83BHB3nBAsoOllvEzjmYbqIuCbbxWT5Dl5uatez
-jV7mrfobmnKTsSCGy9WbLc54djiRRcHXpHCeIOCEt8RL85VLim91842Zxw7wTnB0
-CfPM77scCvpekkzFaUj/yWxd6lzugKZ60AmuUxLWxzxPl+tcgRKCQT1XMe+EzyEd
-yAObBp+Pyk8WAWth+mecxJ131AruPzKwTrvzyyQVaa7qwJzgkwOVKpTwHzvLUQqX
-bPj3ZpIt4C0FLc5x91BYAXlt7rk5q3RZajBca+bODlAOJpU4fQs4ln+ZGt3sdTt4
-HvFqkFebN/ZH/wWf
-=Wk3z
------END PGP PUBLIC KEY BLOCK-----
+Alexander
 
+View attachment "bind-9.4-ESV-R5-P1.diff" of type "text/plain" (3831 bytes)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (536 bytes)
+View attachment "bind-9.3.5-up-CVE-2011-4313.diff" of type "text/plain" (2513 bytes)
