@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/01/3
-Message-ID: <20110201152723.3b36d8c1@orphan>
-Date: Tue, 1 Feb 2011 15:27:23 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: CVE request: glibc CVE-2010-3847 fix regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/1
+Message-ID: <4EC44F0B.6020909@redhat.com>
+Date: Wed, 16 Nov 2011 17:02:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: David Jorm <djorm@...hat.com>
+Subject: Re: CVE Request: openid4java not properly verifying the signature of Attribute Exchange (AX) information
 Content-Type: text/plain; charset=utf-8
 
-Hi!
-
-It seems this does not have any CVE assigned yet...
-
-The original patch for CVE-2010-3847, as used by multiple vendors,
-introduced a bug in the way $ORIGIN is (not-)expanded when used in ELF
-R*PATH.  This could allow a local user to escalate privileges via
-privileged program using a library with $ORIGIN in R*PATH (such as
-certain glibc iconv modules).
-
-There are at least Debian and Ubuntu advisories addressing this issue:
-http://lists.debian.org/debian-security-announce/2011/msg00005.html
-https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-January/001226.html
-
-Note that privileged programs that themselves have $ORIGIN in R*PATH
-could have been abused before and are not addressed in the above
-advisories.  It's unclear if any distro provides any privileged program
-with such R*PATH though.
+On 11/16/2011 02:43 AM, David Jorm wrote:
+> It was found that openid4java was not checking that all Attribute Exchange (AX) information passed to it was signed. This is a security concern if AX is being used to receive information that an application only trusts the identity provider to assert.
+>
+> Upstream advisory: http://openid.net/2011/05/05/attribute-exchange-security-alert/
+> Patch commit: http://code.google.com/p/openid4java/source/detail?r=661
+> Secunia advisory: http://secunia.com/advisories/44496/
+>
+> Thanks
+Please use CVE-2011-4314 for this issue.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
