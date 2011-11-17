@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/30/3
-Message-ID: <20110730172731.GA17353@openwall.com>
-Date: Sat, 30 Jul 2011 21:27:31 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/4
+Message-ID: <20111117022217.GA18757@openwall.com>
+Date: Thu, 17 Nov 2011 06:22:17 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Abhijeet Patil <getabhijeetpatil@...il.com>
-Subject: Re: CFP open for ClubHack2011
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+> SHA-crypt?) could refuse to work on overly long key or/and salt strings,
+> but then the question is what they should do on error.
 
-I made an exception and approved this one CFP for the following reasons:
+Here's another related option:
 
-1. To show what's coming to the list, and to make sure everyone in here
-approves that we reject these things unconditionally going forward.
+	if (strlen(key) > 100000 || strlen(salt) > 100000)
+		abort();
 
-If anyone in here wants to see these on the list, please let me know.
-Otherwise, I'll assume that we've voted unanimously to have them rejected.
+(or something like this).  Ridiculous?  Sure, but it's better than
+overwriting another thread's stack or the heap with somewhat higher
+lengths, and 100001 chars is not a more reasonable password length to
+support than, say, 2 million or 10 million (typical thread stack sizes).
 
-Ditto for e-magazine issue announcements - that is, unless anyone tells
-me they want to see those in here, I'll be rejecting any and all of them
-without having to analyze them for content relevant to both security and
-Open Source at once.
-
-2. Not to give the other Indian conference a competitive advantage,
-since I had similarly approved their CFP:
-
-http://www.openwall.com/lists/oss-security/2011/07/27/2
-
-No one appeared to care about the issues I raised when approving that
-previous CFP, which to me means that no one cared to see the CFP itself
-as well - so we got very close to the decision to be rejecting these
-unconditionally, which would make things easy for me as a moderator. :-)
-
-Thanks,
+So if we can't decide on a proper fix (does anyone besides me even
+care?), something as trivial as the above would be an improvement.
 
 Alexander
-
-On Sat, Jul 30, 2011 at 10:06:17PM +0530, Abhijeet Patil wrote:
-> Its time for hackers across the globe to gather in India.
-> ClubHack announces its CFP open for ClubHack2011. See
-> http://clubhack.com/2011/cfp
-...
