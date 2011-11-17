@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/23/22
-Message-ID: <1443616220.189724.1298488018409.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 23 Feb 2011 14:06:58 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/9
+Message-ID: <4EC52A29.5040804@redhat.com>
+Date: Thu, 17 Nov 2011 08:37:13 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>, Shawn M Moore <sartak@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>, security@...tpractical.com, Jan Lieskovsky <jlieskov@...hat.com>
-Subject: Re: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+Subject: Re: CVE Request: nginx resolver heap overflow
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hi folks,
-> 
-> Is Redhat packaging RT now, or are you just handling the CVEs?
-
-I'm not aware of Red Hat packaging RT. I'm just assign CVE ids to
-public issues.
-
-Thanks.
+On 11/16/2011 10:50 PM, Ben Hawkes wrote:
+> Hi,
+>
+> The nginx team have released stable version 1.0.10, which includes a fix 
+> for a heap overflow bug in the custom DNS resolver:
+>
+> http://trac.nginx.org/nginx/changeset/4268/nginx
+>
+> The resolver is most commonly used with the proxy and fastcgi modules,
+> which are not enabled by default.
+>
+> In order to trigger this condition an attacker would need to be in
+> control of an upstream resolver host, or be in a position to brute-force
+> the weakly generated 16-bit transaction identifier.
+>
+> Thanks,
+> Ben Hawkes
+Do you need a CVE # for this issue?
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
