@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/02/16
-Message-ID: <599679687.290447.1304362741031.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 2 May 2011 14:59:01 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/4
+Message-ID: <20111117022217.GA18757@openwall.com>
+Date: Thu, 17 Nov 2011 06:22:17 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE request: kernel (ARM): heap corruption in OABI semtimedop
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+> SHA-crypt?) could refuse to work on overly long key or/and salt strings,
+> but then the question is what they should do on error.
 
+Here's another related option:
 
------ Original Message -----
-> The OABI wrapper for semtimedop does not bound the nsops argument. A
-> sufficiently large value will cause an integer overflow in allocation
-> size, followed by copying too much data into the allocated buffer.
-> This only affects ARM systems with CONFIG_OABI_COMPAT set.
-> 
-> This is exploitable for local privilege escalation, but successful
-> exploitation requires winning a race. Because user-to-kernel copy
-> functions on ARM zero the destination buffer even on failure to access
-> the provided user pointer, the copy loop in the vulnerable function
-> that causes the overflow will zero out large amounts of kernel heap if
-> not interrupted, crashing the system. This should be possible to work
-> around though.
-> 
-> -Dan
-> 
-> [1] http://marc.info/?l=linux-kernel&m=130408851326428&w=2
+	if (strlen(key) > 100000 || strlen(salt) > 100000)
+		abort();
 
-Please use CVE-2011-1759.
+(or something like this).  Ridiculous?  Sure, but it's better than
+overwriting another thread's stack or the heap with somewhat higher
+lengths, and 100001 chars is not a more reasonable password length to
+support than, say, 2 million or 10 million (typical thread stack sizes).
 
-Thanks.
+So if we can't decide on a proper fix (does anyone besides me even
+care?), something as trivial as the above would be an improvement.
 
--- 
-    JB
+Alexander
