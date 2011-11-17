@@ -1,35 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/25/10
-Message-ID: <20110225121010.GA3213@albatros>
-Date: Fri, 25 Feb 2011 15:10:10 +0300
-From: Vasiliy Kulikov <segoon@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/13
+Message-ID: <20111117205517.GA21920@openwall.com>
+Date: Fri, 18 Nov 2011 00:55:17 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel: /sys/kernel/debug/acpi/custom_method can bypass module restrictions
+Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
-Kees,
+Speaking of BIND 9.3.x:
 
-On Thu, Feb 24, 2011 at 16:32 -0800, Kees Cook wrote:
-> Having a system with acpi and debugfs built into the kernel allows
-> a uid=0 user (without capabilities, e.g. in containers)
+On Thu, Nov 17, 2011 at 10:43:51PM +0400, Solar Designer wrote:
+> So do we (distro vendors) choose to go ahead and release updates with
+> just those changes for now?
 
-Does it fit into any current security model?  I mean that containers of
-vanilla kernel are not fully restricted, neither sysfs or procfs differ
-much in different namespaces.  If one may locate one sysfs file it may
-locate all of them (chrooting into /sys is rather pointless :-D); with
-sysfs one may change many hardware setting, they are driver-dependend,
-but still very sensitive.  With /proc/sys/ one (inside of namespace
-constainer) may change sysctl settings.  I suppose that it is not hard
-to gain full root in such situation even without any bugs in sysfs file
-read/write implementations (I didn't tried it, though).
+Red Hat has just released an update for 9.3.6 in RHEL5:
 
-UID 0 without capabilities has not been made really unprivileged yet.
-It makes sense only within namespace container without any virtual
-filesystem which handles permissions with uid/gid checks (not CAP_*).
-But this is rather strange.
+https://rhn.redhat.com/errata/RHSA-2011-1458.html
 
+bind-9.3.6-16.P1.el5_7.1.src.rpm
 
-Thanks,
+Meanwhile, per my further analysis, BIND 9.3.x's affected code in
+query.c is only reached if the dnssec-enable option is set to yes,
+regardless of whether the build of BIND includes full DNSSEC support
+(is linked against OpenSSL) or not.
 
--- 
-Vasiliy
+In 9.4.x+, it probably does not take "dnssec-enable yes" to make the
+issue triggerable, because of the added query_addadditional2() function
+with an extra instance of the assertion.  This extra function does not
+have the same check for DNSSEC being enabled that query_addadditional()
+does.  Here's query_addadditional()'s check in 9.3.x:
+
+	if (!WANTDNSSEC(client) && dns_rdatatype_isdnssec(qtype))
+		return (ISC_R_SUCCESS);
+
+where WANTDNSSEC() is:
+
+#define WANTDNSSEC(c)           (((c)->attributes & \
+                                  NS_CLIENTATTR_WANTDNSSEC) != 0)
+
+where the NS_CLIENTATTR_WANTDNSSEC flag is set when:
+
+	if (!client->view->enablednssec) {
+		message->flags &= ~DNS_MESSAGEFLAG_CD;
+		client->extflags &= ~DNS_MESSAGEEXTFLAG_DO;
+	}
+[...]
+	if ((client->extflags & DNS_MESSAGEEXTFLAG_DO) != 0)
+		client->attributes |= NS_CLIENTATTR_WANTDNSSEC;
+
+where server.c sets:
+
+	result = ns_config_get(maps, "dnssec-enable", &obj);
+	INSIST(result == ISC_R_SUCCESS);
+	view->enablednssec = cfg_obj_asboolean(obj);
+
+I hope I am not misreading this.
+
+Alexander
