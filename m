@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/8
-Message-ID: <20110728132251.GA16357@suse.de>
-Date: Thu, 28 Jul 2011 15:22:51 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, veillard@...hat.com, billy.rios@...il.com
-Subject: libxml security fix from apple ... any information?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/5
+Message-Id: <201111162132.45745.sgrubb@redhat.com>
+Date: Wed, 16 Nov 2011 21:32:45 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: glibc crypt(3), crypt_r(3), PHP crypt() may use alloca()
 Content-Type: text/plain; charset=utf-8
 
-Hi folks, Billy, Daniel,
+On Wednesday, November 16, 2011 09:22:17 PM Solar Designer wrote:
+> On Tue, Nov 15, 2011 at 06:13:24AM +0400, Solar Designer wrote:
+> > Alternatively, crypt(3) and crypt_r(3) (and the reference code for
+> > SHA-crypt?) could refuse to work on overly long key or/and salt strings,
+> > but then the question is what they should do on error.
+> 
+> Here's another related option:
+> 
+> 	if (strlen(key) > 100000 || strlen(salt) > 100000)
+> 		abort();
+> 
+> (or something like this).  Ridiculous?  Sure, but it's better than
+> overwriting another thread's stack or the heap with somewhat higher
+> lengths, and 100001 chars is not a more reasonable password length to
+> support than, say, 2 million or 10 million (typical thread stack sizes).
+> 
+> So if we can't decide on a proper fix (does anyone besides me even
+> care?), something as trivial as the above would be an improvement.
 
-On
-http://support.apple.com/kb/HT4808
-there is a libxml security issue listed:
+raise(SIGKILL) might be better because abort requests a core dump and you are in 
+crypto code.
 
------------------------------------------
-libxml
-
-Available for: Windows 7, Vista, XP SP2 or later
-
-Impact: Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution
-
-Description: A one-byte heap buffer overflow existed in libxml's handling of XML data. Visiting a maliciously crafted website may lead to an unexpected application termination or arbitrary code execution.
-
-CVE-ID
-
-CVE-2011-0216 : Billy Rios of the Google Security Team
------------------------------------------
-
-I suspect this is libxml2 and it likely also affects Linux?
-
-If this is correct, could you identify the commit fixing this issue?
-
-Ciao, Marcus
+-Steve
