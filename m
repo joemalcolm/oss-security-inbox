@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/15/12
-Message-ID: <1833559043.18998.1300221590506.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 15 Mar 2011 16:39:50 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/8
+Message-ID: <20111117055022.GB24831@sota.gen.nz>
+Date: Thu, 17 Nov 2011 05:50:22 +0000
+From: Ben Hawkes <hawkes@...a.gen.nz>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: 2 acpid flaws
+Subject: CVE Request: nginx resolver heap overflow
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hi,
-> 
-> Looks like this implicit CVE request got lost:
-> http://www.openwall.com/lists/oss-security/2011/01/19/4
-> 
-> The first issue deserves a CVE I guess as unprivileged users could
-> block acpid.
-> 
+Hi,
 
-Sorry for missing this. I agree, the first issue deserves an ID. I'd rather
-not give the second an ID, since it's not actually a security flaw (it's
-certainly a bug though).
+The nginx team have released stable version 1.0.10, which includes a fix 
+for a heap overflow bug in the custom DNS resolver:
 
-Use CVE-2011-1159
+http://trac.nginx.org/nginx/changeset/4268/nginx
 
-Thanks.
+The resolver is most commonly used with the proxy and fastcgi modules,
+which are not enabled by default.
 
--- 
-    JB
+In order to trigger this condition an attacker would need to be in
+control of an upstream resolver host, or be in a position to brute-force
+the weakly generated 16-bit transaction identifier.
+
+Thanks,
+Ben Hawkes
