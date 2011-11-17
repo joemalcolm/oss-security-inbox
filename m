@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/05/11
-Message-ID: <e705ce83-fa29-4608-a25e-f387eb9769a8@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 05 Oct 2011 15:34:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
-To: oss-security@...ts.openwall.com, Ramon de C Valle <rcvalle@...hat.com>
-Subject: Re: Request for CVE identifier: Libvoikko NULL Character Improper Input Validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/17/6
+Message-ID: <20111117024027.GJ723@yuggoth.org>
+Date: Thu, 17 Nov 2011 02:40:28 +0000
+From: The Fungi <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2011-4313: BIND 9 Resolver crashes after logging an error in query.c
 Content-Type: text/plain; charset=utf-8
 
+On 2011-11-16 23:43:25 +0400 (+0400), Solar Designer wrote:
+[...]
+> Does anyone readily know if BIND 9.3.x is affected as well?
+[...]
 
-
------ Original Message -----
-> Do we already have a CVE identifier assigned to this issue?
-> 
-> http://www.openwall.com/lists/oss-security/2011/06/13/3
-> 
-
-I'd like MITRE to weigh in on this one:
-
-http://www.openwall.com/lists/oss-security/2011/06/13/17
-
-Thanks.
-
+While obviously not conclusive, I can say that our 9.3.4-P1.2
+resolvers were not impacted and ran clean through while our 9.5.1-P3
+and 9.6-ESV-R4 resolvers crashed and had to be restarted several
+times overnight.
 -- 
-    JB
+{ IRL(Jeremy_Stanley); WWW(http://fungi.yuggoth.org/); PGP(43495829);
+WHOIS(STANL3-ARIN); SMTP(fungi@...goth.org); FINGER(fungi@...goth.org);
+MUD(kinrui@...arsis.mudpy.org:6669); IRC(fungi@....yuggoth.org#ccl); }
