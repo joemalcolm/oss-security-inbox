@@ -1,44 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/13/12
-Message-ID: <506779117.651125.1307993146270.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 13 Jun 2011 15:25:46 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/7
+Message-ID: <4EC68954.4030502@redhat.com>
+Date: Fri, 18 Nov 2011 09:35:32 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Simon McVittie <smcv@...ian.org>, 629938@...s.debian.org, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- dbus -- Local DoS via messages with non-native byte order
+CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Timo Sirainen <tss@....fi>
+Subject: Re: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
 Content-Type: text/plain; charset=utf-8
 
-
-
------ Original Message -----
-> Hello, Josh, Steve, vendors,
-> 
-> It was found that D-BUS message bus service / messaging facility did
-> not update the byte-order flag of the message properly by swapping the
-> byte order of incoming messages into their native endiannes. A local,
-> authenticated user could use this flaw to send a specially-crafted
-> message to a system service (like Avahi or NetworkManager), using the
-> system bus, potentially leading to disconnect of such a service from
-> system bus (denial of service).
-> 
+On 11/18/2011 06:37 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a security flaw was found in the way Dovecot, an IMAP and POP3 email
+> server, performed remote server identity verification (x509
+> certificate's Common Name field was not checked to match provided
+> remote server host name), when Dovecot was configured to proxy IMAP and
+> POP3 connections to remote hosts and TLS/SSL protocols were requested
+> (ssl=yes or starttls=yes) in the configuration to secure these
+> connections to the destination server. A remote attacker could use
+> this flaw to conduct man-in-the-middle (MITM) attacks via specially-
+> crafted x509v3 certificate.
+>
 > References:
-> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629938
-> [2] https://bugs.freedesktop.org/show_bug.cgi?id=38120
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=712676
-> 
-> Upstream patches:
-> [4]
-> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.2&id=6519a1f77c61d753d4c97efd6e15630eb275336e
-> (in upstream v1.2.28 version)
-> 
-> [5]
-> http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.4&id=c3223ba6c401ba81df1305851312a47c485e6cd7
-> (in upstream v1.4.12 version)
-> 
+> [1] http://www.dovecot.org/list/dovecot-news/2011-November/000200.html
+> [2] https://secunia.com/advisories/46886/
+> [3] https://bugs.gentoo.org/show_bug.cgi?id=390887
+> [4] http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
+>
+> Relevant upstream patch:
+> [5] http://hg.dovecot.org/dovecot-2.0/rev/5e9eaf63a6b1
+>
+> Could you allocate a CVE id for this?
+>
+> Note: This isn't a 'direct security flaw', in the sense it would be
+> discovered / reported at some time point. This behaviour (do not check
+> x509v3 cert CN against remote server hostname), when TLS/SSL protocols
+> are configured, and the danger of MITM is already described
+> on relevant Dovecot's page:
+> http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
+>
+> thus one could say, for those administrators, who are aware of [4]
+> page and configured Dovecot in safe way there is no trust boundary
+> crossing and this upstream change is just security hardening.
+>
+> But on the other hand, this change is important enough, to be
+> backported to all affected versions, (regardless to the fact if
+> particular administrator has or hasn't read [4]). Thus I would vote
+> for a CVE identifier to be assigned to this issue. But opened for
+> discussion if someone else (MITRE?) thinks this should be dealt
+> with rather as with security hardening, than with a real security
+> flaw.
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-Please use CVE-2011-2200.
-
-Thanks.
+Please use CVE-2011-4318  for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
