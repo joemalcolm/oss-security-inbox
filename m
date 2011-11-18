@@ -1,34 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/8
-Message-ID: <4ED3BC91.7000608@redhat.com>
-Date: Mon, 28 Nov 2011 09:53:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE assigned for gdb: arbitrary code execution via .debug_gdb_scripts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/4
+Message-ID: <4EC65F80.1020005@redhat.com>
+Date: Fri, 18 Nov 2011 14:37:04 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com, Timo Sirainen <tss@....fi>
+Subject: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
 Content-Type: text/plain; charset=utf-8
 
-This issue is now public.
+Hello Kurt, Steve, vendors,
 
-gdb: arbitrary code execution via .debug_gdb_scripts
+   a security flaw was found in the way Dovecot, an IMAP and POP3 email
+server, performed remote server identity verification (x509
+certificate's Common Name field was not checked to match provided
+remote server host name), when Dovecot was configured to proxy IMAP and
+POP3 connections to remote hosts and TLS/SSL protocols were requested
+(ssl=yes or starttls=yes) in the configuration to secure these
+connections to the destination server. A remote attacker could use
+this flaw to conduct man-in-the-middle (MITM) attacks via specially-
+crafted x509v3 certificate.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=703238
+References:
+[1] http://www.dovecot.org/list/dovecot-news/2011-November/000200.html
+[2] https://secunia.com/advisories/46886/
+[3] https://bugs.gentoo.org/show_bug.cgi?id=390887
+[4] http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
 
-Vincent Danen 
-It was discovered [1],[2] the the GNU Debugger (gdb) would load
-untrusted files
-from the current working directory when .debug_gdb_scripts was defined. 
-While
-this was a design decision, it is an insecure one and users who do not
-pre-inspect untrusted files may execute arbitrary code with their
-privileges.
+Relevant upstream patch:
+[5] http://hg.dovecot.org/dovecot-2.0/rev/5e9eaf63a6b1
 
-[1] http://sourceware.org/ml/gdb-patches/2011-04/msg00559.html
-[2] http://sourceware.org/ml/gdb-patches/2011-05/msg00202.html
+Could you allocate a CVE id for this?
 
-This issue has been assigned CVE-2011-4355
+Note: This isn't a 'direct security flaw', in the sense it would be
+discovered / reported at some time point. This behaviour (do not check
+x509v3 cert CN against remote server hostname), when TLS/SSL protocols
+are configured, and the danger of MITM is already described
+on relevant Dovecot's page:
+http://wiki.dovecot.org/PasswordDatabase/ExtraFields/Proxy
 
--- 
+thus one could say, for those administrators, who are aware of [4]
+page and configured Dovecot in safe way there is no trust boundary
+crossing and this upstream change is just security hardening.
 
--Kurt Seifried / Red Hat Security Response Team
+But on the other hand, this change is important enough, to be
+backported to all affected versions, (regardless to the fact if
+particular administrator has or hasn't read [4]). Thus I would vote
+for a CVE identifier to be assigned to this issue. But opened for
+discussion if someone else (MITRE?) thinks this should be dealt
+with rather as with security hardening, than with a real security
+flaw.
 
-
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
