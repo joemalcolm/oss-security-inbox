@@ -1,35 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/17
-Message-ID: <Pine.GSO.4.64.1104051014001.20885@faron.mitre.org>
-Date: Tue, 5 Apr 2011 10:28:51 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
-To: Josh Bressers <bressers@...hat.com>
-cc: oss-security@...ts.openwall.com, "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/3
+Message-ID: <CAAsmaPa1AEmhRT=UsEZDJH61f0NYj8qEMT2=xNt+uL4=wjVPGg@mail.gmail.com>
+Date: Fri, 18 Nov 2011 07:20:14 -0600
+From: Tim Zingelman <tez@...src.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com> wrote:
 
-Given the complexity/number of patches, one could arguably call it "lack 
-of length validation" entirely, but I think it's reasonable to give it a 
-few CVE's.  Note - we need different CVE's for the issues found by Dan 
-Hutchings versus those found by Dan Rosenberg.
+> I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
+> specific people that they're interested.  So please reply to this
+> message to indicate your interest and we'll proceed.
 
-Dan, could you confirm that this breakdown makes sense?
+I am interested.  Thanks for doing this.
 
-1) buffer overflows (not validating length is <= the maximum)
-
-2) use of negative signed integers in memcpy() and other operations where
-    conversion creates a large unsigned integer, referred to as
-    "underflow"
-
-3) any other types of problems that aren't covered by those two?  (The
-    length validation checks don't always have enough context in the source
-    code).
-
-We would need separate CVE's for the issues found by Dan versus the issues 
-found by Ben Hutchings.
-
-Arguably, #2 could probably be broken down further, but without enough 
-source code context in the patches, it's not immediately clear.
-
-- Steve
+ - Tim
