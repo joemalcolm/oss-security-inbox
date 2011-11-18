@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/7
-Message-ID: <20110809204226.GA5178@inutil.org>
-Date: Tue, 9 Aug 2011 22:42:26 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/5
+Message-ID: <1321627655.11489.11.camel@hurina>
+Date: Fri, 18 Nov 2011 16:47:35 +0200
+From: Timo Sirainen <tss@....fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: Two kernel issues
+Cc: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: CVE Request -- Dovecot -- Validate certificate's CN against requested remote server hostname when proxying
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-the following two issues also seem to warrant a CVE assignment:
+On Fri, 2011-11-18 at 14:37 +0100, Jan Lieskovsky wrote:
 
-1. staging: comedi: fix infoleak to userspace
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=819cbb120eaec7e014e5abd029260db1ca8c5735
+>    a security flaw was found in the way Dovecot, an IMAP and POP3 email
+> server, performed remote server identity verification (x509
+> certificate's Common Name field was not checked to match provided
+> remote server host name), when Dovecot was configured to proxy IMAP and
+> POP3 connections to remote hosts and TLS/SSL protocols were requested
+> (ssl=yes or starttls=yes) in the configuration to secure these
+> connections to the destination server. A remote attacker could use
+> this flaw to conduct man-in-the-middle (MITM) attacks via specially-
+> crafted x509v3 certificate.
+..
+> But on the other hand, this change is important enough, to be
+> backported to all affected versions,
 
-(It's a staging driver and I'm unsure whether we have assigned
- CVE IDs for staging drivers in the past. OTOH, this driver
- is enabled in the Debian 6.0 kernel)
- 
-2. [SCSI] pmcraid: reject negative request size
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=b5b515445f4f5a905c5dd27e6e682868ccd6c09d
+SSL proxy connections were added in some Dovecot v1.x version, but v1.x
+doesn't support giving hostname as proxy destination, only IP address.
+So this can't really be backported to v1.x.
 
-Cheers,
-        Moritz
+My v2.0 change keeps this backwards compatible with existing setups that
+use IP addresses, so that the hostname check is skipped when connecting
+with IP.
+
+Upcoming v2.1 is stricter and doesn't skip the check, which basically
+means that ssl=yes with IP address as destination always fails.
+
+
