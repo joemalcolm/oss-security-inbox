@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/31/2
-Message-ID: <20110131120054.53312d3d@orphan>
-Date: Mon, 31 Jan 2011 12:00:54 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: strenholme.usenet@...il.com
-Cc: oss-security@...ts.openwall.com, list@...adns.org, geissert@...ian.org, atomo64@...il.com, coley@...re.org
-Subject: Re: MaraDNS 1.4.06 and 1.3.07.11 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/1
+Message-ID: <20111118023657.GA24321@openwall.com>
+Date: Fri, 18 Nov 2011 06:36:57 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: linux-distros list setup update
 Content-Type: text/plain; charset=utf-8
 
-Hi Sam!
+Hi,
 
-On Sat, 29 Jan 2011 22:21:08 -0700 Sam Trenholme wrote:
+Not surprisingly, we started receiving spam to the linux-distros list.
+PGP-encrypted spam is fun, yet I decided to introduce an anti-spam
+measure, now documented on this new wiki page:
 
-> I would like to thank Mr. Witold Baryluk for pointing out this issue,
-> taking the time to backtrace the bug, and for bringing it to my
-> attention by posting to the MaraDNS mailing list.  However, I need to
-> let him know that making this public by filing a public Debian bug
-> without first trying to contact me is not the appropriate way to
-> handle a security problem with MaraDNS.  The appropriate way to do so
-> is via private email.  My email address is here:
-> 
-> http://samiam.org/mailme.php
+http://oss-security.openwall.org/wiki/mailing-lists/linux-distros
 
-I think it may be a good idea to have this preferred way of receiving
-security reports for MaraDNS documented on the project web site in a
-way that does not make it hard to find.
+"Be sure to include [vs] (four characters) in the Subject line, or your
+message will most likely be rejected by the mail server."
 
-I took a quick look at the maradns.org web to see what contact info I
-can find as someone who may want to report a security flaw, but does
-not have any closer relationship with project's upstream or community.
+Some kinds of messages should pass despite of lacking [vs] in the
+Subject - for example, this should be the case for most PGP-encrypted or
+PGP-signed messages - but to be safe, please use the [vs] thing even if
+you encrypt and/or sign.  The rejected messages are rejected at SMTP
+level, so senders should receive bounces from their own mail relays.
 
-The main page suggests using mailing list for bug reports.  There is
-the contact.html page that does document what to do when reporting
-security issue, but the page does not seem to be linked from other pages
-(I noticed it thanks to the web site copy bundled in the maradns source
-tarball).  There's a link from sponsors.html, but that page is no longer
-linked from the site menu.
-
-So while the info is there, I don't see an easy way to find it by
-following links from the main page.  Maybe that's something you may
-want to change.
-
-Just my 2c, HTH.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Alexander
