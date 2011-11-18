@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/1
-Message-ID: <20111120120457.7c413ff2@laverne>
-Date: Sun, 20 Nov 2011 12:04:57 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/8
+Message-ID: <4EC6899F.6090400@redhat.com>
+Date: Fri, 18 Nov 2011 09:36:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
+Subject: Re: CVE Request -- Ruby on Rails / rubygem-actionpack -- XSS in the 'translate' helper method
 Content-Type: text/plain; charset=utf-8
 
+On 11/18/2011 07:52 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a cross-site scripting (XSS) flaw was found in the way the
+> 'translate' helper method of the Ruby on Rails performed HTML
+> escaping of interpolated user input, when interpolation in
+> combination with HTML-safe translations were used. A remote
+> attacker could use this flaw to execute arbitrary HTML or web
+> script by providing a specially-crafted input to Ruby on Rails
+> application, using the ActionPack module and its 'translate'
+> helper method without explicit (application specific) sanitization
+> of user provided input.
+>
+> References:
+> [1]
+> http://weblog.rubyonrails.org/2011/11/18/rails-3-1-2-has-been-released
+> [2]
+> http://weblog.rubyonrails.org/2011/11/18/rails-3-0-11-has-been-released
+> [3] https://secunia.com/advisories/46877/
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=390915
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=755004
+>
+> Relevant upstream patches:
+> [6]
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b61d70fb73c7cc5
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> -- 
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
-
-Description
-Weak random number generation during password reset leads to
-possibility of changing a user's password.
-
-Affected Installs
-Joomla! version 1.5.24 and all earlier 1.5 versions
-
-Solution
-Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
-
-
+Please use CVE-2011-4319 for this issue.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-Kurt Seifried / Red Hat Security Response Team
+
