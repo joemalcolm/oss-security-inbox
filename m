@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/6
-Message-ID: <20110728124154.GE9382@foo.fgeek.fi>
-Date: Thu, 28 Jul 2011 15:41:54 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/8
+Message-ID: <4EC6899F.6090400@redhat.com>
+Date: Fri, 18 Nov 2011 09:36:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>, Josh Bressers <bressers@...hat.com>
-Subject: Re: CVE request: gri < 2.12.18 insecure temp file generation
+Subject: Re: CVE Request -- Ruby on Rails / rubygem-actionpack -- XSS in the 'translate' helper method
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 03, 2011 at 03:38:32PM -0500, Josh Bressers wrote:
-> ----- Original Message -----
-> > Can I get CVE-identifier for this vulnerability? It's old one :)
-> > 
-> > Software gri is vulnerable to insecure temp file generation.
-> > 
-> > References:
-> > http://gri.sourceforge.net/gridoc/html/Version_2_12.html
-> > http://security-tracker.debian.org/tracker/TEMP-0000000-6359AF (please
-> > note that this URL is not meant for public use as it is temporary)
-> > 
-> 
-> Steve,
-> 
-> Can MITRE take this. It needs a 2008 ID. It appears the commit for this fix
-> is here:
-> https://github.com/dankelley/gri/commit/ddd3ce40b77214f870f3c8f8e495411e01c0f90e
-> 
-> Thanks.
-> 
+On 11/18/2011 07:52 AM, Jan Lieskovsky wrote:
+> Hello Kurt, Steve, vendors,
+>
+>   a cross-site scripting (XSS) flaw was found in the way the
+> 'translate' helper method of the Ruby on Rails performed HTML
+> escaping of interpolated user input, when interpolation in
+> combination with HTML-safe translations were used. A remote
+> attacker could use this flaw to execute arbitrary HTML or web
+> script by providing a specially-crafted input to Ruby on Rails
+> application, using the ActionPack module and its 'translate'
+> helper method without explicit (application specific) sanitization
+> of user provided input.
+>
+> References:
+> [1]
+> http://weblog.rubyonrails.org/2011/11/18/rails-3-1-2-has-been-released
+> [2]
+> http://weblog.rubyonrails.org/2011/11/18/rails-3-0-11-has-been-released
+> [3] https://secunia.com/advisories/46877/
+> [4] https://bugs.gentoo.org/show_bug.cgi?id=390915
+> [5] https://bugzilla.redhat.com/show_bug.cgi?id=755004
+>
+> Relevant upstream patches:
+> [6]
+> http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b61d70fb73c7cc5
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
 > -- 
->     JB
+> Jan iankko Lieskovsky / Red Hat Security Response Team
 
-This is still unhandled. What is the status?
+Please use CVE-2011-4319 for this issue.
 
-Best regards,
-Henri Salo
+-- 
+
+-Kurt Seifried / Red Hat Security Response Team
+
