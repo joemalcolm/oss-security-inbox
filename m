@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/29/9
-Message-ID: <4E8495EA.4010803@redhat.com>
-Date: Thu, 29 Sep 2011 17:59:38 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/6
+Message-ID: <4EC6711F.5070608@redhat.com>
+Date: Fri, 18 Nov 2011 15:52:15 +0100
 From: Jan Lieskovsky <jlieskov@...hat.com>
 To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security@...ts.openwall.com, Plone Security Team <security@...ne.org>
-Subject: CVE Request -- Zope/Plone -- Unspecified vulnerability in Zope v2.12.x and Zope v2.13.x allowing arbitrary code execution
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Ruby on Rails / rubygem-actionpack -- XSS in the 'translate' helper method
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors,
+Hello Kurt, Steve, vendors,
 
-   Plone upstream has published a pre-announcement about a security
-flaw, present in Zope v2.12.x and Zope v2.13.x, which could allow
-execution of arbitrary code by anonymous users. An authenticated
-attacker could provide a specially-crafted web page, which once
-visited by an unsuspecting Zope user would lead to arbitrary commands
-execution with the privileges of the Zope/Plone service.
+   a cross-site scripting (XSS) flaw was found in the way the
+'translate' helper method of the Ruby on Rails performed HTML
+escaping of interpolated user input, when interpolation in
+combination with HTML-safe translations were used. A remote
+attacker could use this flaw to execute arbitrary HTML or web
+script by providing a specially-crafted input to Ruby on Rails
+application, using the ActionPack module and its 'translate'
+helper method without explicit (application specific) sanitization
+of user provided input.
 
 References:
-[1] http://plone.org/products/plone/security/advisories/20110928
-[2] http://secunia.com/advisories/46221/
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=742297
+[1] http://weblog.rubyonrails.org/2011/11/18/rails-3-1-2-has-been-released
+[2] http://weblog.rubyonrails.org/2011/11/18/rails-3-0-11-has-been-released
+[3] https://secunia.com/advisories/46877/
+[4] https://bugs.gentoo.org/show_bug.cgi?id=390915
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=755004
 
-Note: The vendor announced the final version of the advisory and
-       the patch to be available at 2011-10-04 15:00 UTC at the
-       following location:
-       [4] http://plone.org/products/plone/security/advisories/20110928
+Relevant upstream patches:
+[6] 
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b61d70fb73c7cc5
 
 Could you allocate a CVE id for this?
 
