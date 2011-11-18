@@ -1,77 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/12
-Message-ID: <699844942.168715.1298407868110.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 15:51:08 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/2
+Message-ID: <20111118024538.GA24375@openwall.com>
+Date: Fri, 18 Nov 2011 06:45:38 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Shawn M Moore <sartak@...tpractical.com>, Thomas Sibley <trs@...tpractical.com>, Ralf Corsépius <rc040203@...enet.de>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- rt3 -- two issues: 1) Improper management of form data resubmittion upon user log out 2) SQL queries information leak by user account transition
+Subject: non-Linux advance notification list
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> 2) * Redirect users to their desired pages after login.
-> This prevents possible back button attacks after a user logs out.
+Hi,
 
-Use CVE-2011-1007 for this one.
+As our experiment with advance notification exploders for distros
+proceeds, I am ready to setup a list with operating system distro
+vendors not limited to Linux.
 
-> 
-> Further issue details:
-> A security flaw was found in the way the RT3 ticketing
-> system handled resubmitting of form data after the user
-> has logged out of the browser (but not closed it).
-> A local attacker could use this flaw to access the user
-> account of the victim (login without providing a password
-> or obtain user credentials).
-> 
-> References:
-> [a] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614575
-> [b]
-> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
-> 
-> Upstream bug report:
-> [c] http://issues.bestpractical.com/Ticket/Display.html?id=15804
-> 
-> Upstream changeset:
-> [d]
-> https://github.com/bestpractical/rt/commit/917c211820590950f7eb0521f7f43b31aeed44c4
-> 
-> Thomas, could you please confirm [d] is the proper fix for 2) issue?
-> Thank you.
-> (* Redirect users to their desired pages after login.)
-> 
-> 3) * Clone Scrip's TicketObj since we change the CurrentUser and it can
-> leak information (Custom field values, etc)
+Of course, it'd be non-obvious where to stop (do we add Microsoft if
+they ask to join?), but for now I'd like to see who is interested in
+joining - and be liberal in accepting them.
 
-Use CVE-2011-1008 for this one.
+I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
+specific people that they're interested.  So please reply to this
+message to indicate your interest and we'll proceed.
 
-> 
-> Further issue details:
-> A security flaw was found in the way the RT3 ticketing
-> system handled logging of SQL queries during performing
-> of user account transition. A remote, authenticated RT3
-> user could use this flaw to obtain sensitive information.
-> 
-> References:
-> [i] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=614576
-> [ii]
-> http://lists.bestpractical.com/pipermail/rt-announce/2011-February/000186.html
-> 
-> Upstream changeset (needs confirmation from upstream if it's
-> real fix for the issue yet):
-> [iii]
-> https://github.com/bestpractical/rt/commit/56e20b874e8d67ab93aa80c2c00155110a27e764
-> 
-> Shawn, could you please confirm [iii] is the proper fix for 3) issue?
-> (* Clone Scrip's TicketObj since we change the CurrentUser and it can
-> leak)
-> 
-> If [iii] not being the correct one for 3) issue, could you point us
-> to the right one? Thank you.
-> 
-> 
+I intend to include the linux-distros members on this new list as well.
+I have difficulty imagining an issue that would affect several diverse
+distros, but obviously (to the sender) not affect any Linux distros.
+I don't mind setting up a third list that would exclude Linux if there's
+demand, though.
 
-Thanks.
+I'd appreciate any comments.
 
--- 
-    JB
+Thanks,
+
+Alexander
