@@ -1,30 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/03/2
-Message-ID: <4E89AB0B.2090200@kde.org>
-Date: Mon, 03 Oct 2011 08:31:07 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: oss-security@...ts.openwall.com,  Tim Brown <timb@...-dimension.org.uk>
-Subject: KDE Security Advisory 20111003-1 published
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/18/6
+Message-ID: <4EC6711F.5070608@redhat.com>
+Date: Fri, 18 Nov 2011 15:52:15 +0100
+From: Jan Lieskovsky <jlieskov@...hat.com>
+To: "Steven M. Christey" <coley@...us.mitre.org>
+CC: oss-security@...ts.openwall.com
+Subject: CVE Request -- Ruby on Rails / rubygem-actionpack -- XSS in the 'translate' helper method
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Kurt, Steve, vendors,
 
-KDE Security Advisory 20111003-1 has been published and is available at
-http://www.kde.org/info/security/advisory-20111003-1.txt.
+   a cross-site scripting (XSS) flaw was found in the way the
+'translate' helper method of the Ruby on Rails performed HTML
+escaping of interpolated user input, when interpolation in
+combination with HTML-safe translations were used. A remote
+attacker could use this flaw to execute arbitrary HTML or web
+script by providing a specially-crafted input to Ruby on Rails
+application, using the ActionPack module and its 'translate'
+helper method without explicit (application specific) sanitization
+of user provided input.
 
-This advisory concerns input validation failures affecting kdelibs and
-Rekonq, due to using the default QLabel::AutoText behavior to display
-externally-provided strings. This can be abused to show certificate
-dialogs with spoofed Common Names (CNs), among other things.
+References:
+[1] http://weblog.rubyonrails.org/2011/11/18/rails-3-1-2-has-been-released
+[2] http://weblog.rubyonrails.org/2011/11/18/rails-3-0-11-has-been-released
+[3] https://secunia.com/advisories/46877/
+[4] https://bugs.gentoo.org/show_bug.cgi?id=390915
+[5] https://bugzilla.redhat.com/show_bug.cgi?id=755004
 
-The vulnerability and technical information about the exploit were
-provided by Tim Brown of Nth Dimension. We thank them for their
-responsible disclosure and cooperative handling of the matter.
+Relevant upstream patches:
+[6] 
+http://groups.google.com/group/rubyonrails-security/browse_thread/thread/2b61d70fb73c7cc5
 
-The relevant CVEs are: CVE-2011-3365 KSSL and CVE-2011-3366 Rekonq
+Could you allocate a CVE id for this?
 
-Thanks,
-Jeff
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (260 bytes)
+Thank you && Regards, Jan.
+--
+Jan iankko Lieskovsky / Red Hat Security Response Team
