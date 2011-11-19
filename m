@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/25
-Message-ID: <20110606220106.GD19803@dhcp-25-225.brq.redhat.com>
-Date: Tue, 7 Jun 2011 00:01:06 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/2
+Message-ID: <4EC8050B.1060005@redhat.com>
+Date: Sat, 19 Nov 2011 12:35:39 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org
-Subject: CVE-2011-1576 kernel: net: Fix memory leak/corruption on VLAN GRO_DROP
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: ejabberd before 2.1.9
 Content-Type: text/plain; charset=utf-8
 
-The function napi_reuse_skb is only meant to be used for packets merged
-by GRO. Using it on the VLAN path will lead to memory leaks/corruption.
+On 11/19/2011 04:18 AM, Hanno Böck wrote:
+> Hi,
+>
+> From
+> http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_2.1.9
+>
+> This looks like its security-relevant:
+> - Fix Denial of Service when user sends malformed publish stanza
+>   (EJAB-1498)
+>
+> Upstream bug report:
+> https://support.process-one.net/browse/EJAB-1498
+>
+>
+Please use CVE-2011-4320  for this issue.
 
-The fix for CVE-2011-1478 unveiled this issue. Note, this is not a
-CVE-2011-1478 regression.
-
-This issue does not affect the upstream kernel as the code path in
-question is no longer reachable due to changes in the VLAN subsystem.
-
-https://bugzilla.redhat.com/CVE-2011-1576
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
