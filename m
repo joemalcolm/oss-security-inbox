@@ -1,42 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/4
-Message-ID: <4E157938.8060007@redhat.com>
-Date: Thu, 07 Jul 2011 17:15:36 +0800
-From: Eugene Teo <eugene@...hat.com>
-To: Barry Greene <bgreene@....org>
-CC: oss-security@...ts.openwall.com, security-officer@....org
-Subject: Re: The Bind incident
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/1
+Message-ID: <20111119121858.4d373fa3@laverne>
+Date: Sat, 19 Nov 2011 12:18:58 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: ejabberd before 2.1.9
 Content-Type: text/plain; charset=utf-8
 
-On 07/07/2011 03:09 AM, Barry Greene wrote:
-> Hi Eugene,
-> 
-> Yes, we worked hard to contain disclosure process. Politics took over. We will put factors in place for the next security advisory cycle to remediate so it does not happen again.
-> 
-> Thanks,
+Hi,
 
-Thanks Barry.
+From
+http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_2.1.9
 
-Eugene
+This looks like its security-relevant:
+- Fix Denial of Service when user sends malformed publish stanza
+  (EJAB-1498)
 
-> Barry
-> 
-> On Jul 5, 2011, at 4:21 AM, Eugene Teo wrote:
-> 
->> (Cc'ed the ISC folks)
->>
->> On 07/05/2011 07:17 PM, Eugene Teo wrote:
->>> You might have read about AusCert's accidental disclosure of the ISC
->>> Bind advisories today. If you have more information about this, please
->>> share. AFAICS, the bind source packages are still not available at the
->>> ISC website.
->>>
->>> https://bugzilla.redhat.com/CVE-2011-2464
->>> https://bugzilla.redhat.com/CVE-2011-2465
->>> http://risky.biz/auscert-bind
->>> http://pastebin.com/9NUt8Pk0
->>>
->>> Thanks, Eugene
->>
-> 
+Upstream bug report:
+https://support.process-one.net/browse/EJAB-1498
 
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
