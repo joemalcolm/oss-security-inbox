@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/07/6
-Message-ID: <1310054195.2993.93.camel@localhost>
-Date: Thu, 07 Jul 2011 10:56:35 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: William Cohen <wcohen@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request -- oprofile -- Local privilege escalation via crafted opcontrol event parameter when authorized by sudo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/3
+Message-ID: <20111119223800.GA4092@openwall.com>
+Date: Sun, 20 Nov 2011 02:38:00 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2011-05-10 at 17:05 -0400, William Cohen wrote:
-> The patches mentioned in the previous email.
+On Mon, Sep 19, 2011 at 02:36:34PM +0400, Solar Designer wrote:
+> Per the Chromium OS FAQ:
 > 
-> -Will
+> http://www.chromium.org/chromium-os/chromium-os-faq
+> 
+> it appears that Chrome OS is only available with a Chromebook purchase,
+> but those may be purchased from multiple OEMs.  I think this latter fact
+> qualifies Chrome OS for the closed list since it's similar to how
+> multiple hardware product vendors redistribute the distros of MontaVista
+> Software and Wind River, who we accepted (thereby setting a precedent).
+> 
+> "Multiple" is the keyword here.  (We might have difficulty making a
+> determination in case a distro is only used by a very low and fixed
+> number of hardware vendors, though - like just two.)
+> 
+> Also, Chromium OS is generally available, albeit not in a form suitable
+> for end-users (there's a public git repository, but no images ready to
+> boot/install).  Arguably, this makes Chromium OS eligible too, and I
+> guess the security team behind Chrome OS and Chromium OS is the same.
 
-Thanks for these patches. I was reviewing them and noticed that
-0003-Avoid-blindly-source-SETUP_FILE-with.patch undoes the 
-'error_if_not_basename $arg $val' for --save added in
-0002-Ensure-that-save-only-saves-things-in-SESSION_DIR.patch such that
-if you apply all 4 patches, method #2 from the Debian bug[1] is no
-longer fixed. Attached is a patch to correct this (to be applied after
-the other 4).
+Is this the real Chromium OS thing pre-built for end-users? -
 
-[1]http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=624212#14
+http://chromeos.hexxeh.net
 
--- 
-Jamie Strandboge             | http://www.canonical.com
+Anyway, I updated my notes on Kees' subscription to the linux-distros
+list noting that he's there for Chrome OS now, even though in practice I
+think Kees also remains active at Debian/Ubuntu, which is great.
 
-View attachment "0005-add-back-error_if_not_basename.patch" of type "text/x-patch" (506 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
