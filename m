@@ -1,40 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/08/6
-Message-ID: <4D9F80DD.80509@mvista.com>
-Date: Fri, 08 Apr 2011 11:40:45 -1000
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/3
+Message-ID: <20111119223800.GA4092@openwall.com>
+Date: Sun, 20 Nov 2011 02:38:00 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>
-Subject: Re: Closed list
+Subject: Re: closed-list membership transition
 Content-Type: text/plain; charset=utf-8
 
-Can I get a status on this? (+, -, Ack, Nack)
+On Mon, Sep 19, 2011 at 02:36:34PM +0400, Solar Designer wrote:
+> Per the Chromium OS FAQ:
+> 
+> http://www.chromium.org/chromium-os/chromium-os-faq
+> 
+> it appears that Chrome OS is only available with a Chromebook purchase,
+> but those may be purchased from multiple OEMs.  I think this latter fact
+> qualifies Chrome OS for the closed list since it's similar to how
+> multiple hardware product vendors redistribute the distros of MontaVista
+> Software and Wind River, who we accepted (thereby setting a precedent).
+> 
+> "Multiple" is the keyword here.  (We might have difficulty making a
+> determination in case a distro is only used by a very low and fixed
+> number of hardware vendors, though - like just two.)
+> 
+> Also, Chromium OS is generally available, albeit not in a form suitable
+> for end-users (there's a public git repository, but no images ready to
+> boot/install).  Arguably, this makes Chromium OS eligible too, and I
+> guess the security team behind Chrome OS and Chromium OS is the same.
 
-- Armin
+Is this the real Chromium OS thing pre-built for end-users? -
 
-On 04/06/2011 06:57 AM, Solar Designer wrote:
-> On Wed, Apr 06, 2011 at 06:26:01AM -1000, akuster wrote:
->> Please subscribe me to the new list. I was a vendor-sec subscriber for
->> MontaVista Software.
->>
->> pub  4096R/AEB9ED8D 2011-04-06 [expires: 2016-4-4]
->> uid Armin Kuster <akuster@...sta.com>
->> Fingerprint D51D 9911 B1C7 F763 9F82 F19F 7F75 7295 AEB9 ED8D
-> 
-> Looks like you forgot to make this public key available.  Please provide
-> it to me and I'll subscribe you.
-> 
-> While we're at it, the MontaVista Software entry at:
-> 
-> http://oss-security.openwall.org/wiki/vendors#montavista-software-llc
-> 
-> says: "The process for distribution of security advisories is currently
-> under discussion."  Perhaps this has already been discussed and decided
-> upon?  If so, please update the wiki page with specific link(s) to your
-> security advisories, updates, relevant mailing list archive - or
-> whatever you have.  Without this info, it is unclear whether you would
-> be making timely intended use of the advance notifications or not.
-> 
-> Thanks,
-> 
-> Alexander
+http://chromeos.hexxeh.net
+
+Anyway, I updated my notes on Kees' subscription to the linux-distros
+list noting that he's there for Chrome OS now, even though in practice I
+think Kees also remains active at Debian/Ubuntu, which is great.
+
+Alexander
