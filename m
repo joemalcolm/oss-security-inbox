@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/09/1
-Message-Id: <201108090918.08245.sgrubb@redhat.com>
-Date: Tue, 9 Aug 2011 09:18:07 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/1
+Message-ID: <20111119121858.4d373fa3@laverne>
+Date: Sat, 19 Nov 2011 12:18:58 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: dann frazier <dannf@...ian.org>, Peter Zijlstra <a.p.zijlstra@...llo.nl>, Christian Ohm <chr.ohm@....net>, Paul Mackerras <paulus@...ba.org>, Ingo Molnar <mingo@...e.hu>, Arnaldo Carvalho de Melo <acme@...stprotocols.net>, 632923@...s.debian.org
-Subject: Re: CVE request: perf: may parse user-controlled config file
+Subject: CVE request: ejabberd before 2.1.9
 Content-Type: text/plain; charset=utf-8
 
-On Sunday, August 07, 2011 01:34:38 PM dann frazier wrote:
-> This was reported by Christian Ohm at:
->   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=632923
-> 
-> The perf command, provided as part of the Linux kernel source, looks
-> for and honors configuration settings in ./config. A local user could
-> obtain elevated privileges by convincing a superuser to run the perf
-> command from a directory the user controls.
+Hi,
 
-And in recent kernels has an executable stack:
-https://bugzilla.redhat.com/show_bug.cgi?id=704296
+From
+http://www.process-one.net/en/ejabberd/release_notes/release_note_ejabberd_2.1.9
 
--Steve
+This looks like its security-relevant:
+- Fix Denial of Service when user sends malformed publish stanza
+  (EJAB-1498)
+
+Upstream bug report:
+https://support.process-one.net/browse/EJAB-1498
+
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
