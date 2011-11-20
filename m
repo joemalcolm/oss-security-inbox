@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/28/7
-Message-ID: <20111128164423.GB25644@openwall.com>
-Date: Mon, 28 Nov 2011 20:44:23 +0400
-From: Solar Designer <solar@...nwall.com>
-To: "Patrick J. Volkerding" <security@...ckware.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: linux-distros Slackware membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/1
+Message-ID: <20111120120457.7c413ff2@laverne>
+Date: Sun, 20 Nov 2011 12:04:57 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi Patrick,
 
-On Mon, Nov 28, 2011 at 09:05:14AM -0600, Patrick J. Volkerding wrote:
-> I believe I was supposed to be subscribed with my security at slackware 
-> dt com address (only read by me), but have never received any messages 
-> from the list.  Unless there's some reason that Slackware was not 
-> included (and in that case I would be curious why, and how the situation 
-> could be rectified), could you subscribe me?  My GPG key is:
-> 
-> pub   1024D/40102233 2003-02-26 [expires: 2012-12-21]
-> uid                  Slackware Linux Project <security@...ckware.com>
+http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
 
-You were in fact subscribed at this address, and messages are being
-accepted by your mail server (most recent message was today).  Please
-let me know off-list whether this has enabled you to figure out what the
-problem is or if you need help debugging it.
+Description
+Weak random number generation during password reset leads to
+possibility of changing a user's password.
 
-Alexander
+Affected Installs
+Joomla! version 1.5.24 and all earlier 1.5 versions
+
+Solution
+Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
+
+
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
