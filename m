@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/20/5
-Message-ID: <1319114047.31111.3.camel@scapa>
-Date: Thu, 20 Oct 2011 14:34:07 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/1
+Message-ID: <20111120120457.7c413ff2@laverne>
+Date: Sun, 20 Nov 2011 12:04:57 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: PR attack against XML Encryption
+Subject: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2011-10-20 at 12:58 +0200, Florian Weimer wrote:
-> A German university has released a press release, alleging a
-> vulnerability in the W3C XML Encryption standard.  Apparently, error
-> reporting from existing implementations can be used as an oracle to
-> recover information from messages encrypted in CBC mode.
-> 
-> Details have not been published, as far as I know.  Does anybody know
-> more? 
 
-Paper was just presented at ACM CCS
-(http://www.sigsac.org/ccs/CCS2011/paper_list.shtml). Proceedings are
-available at
-http://dl.acm.org/citation.cfm?id=2046756&dl=ACM&coll=DL&CFID=61633880&CFTOKEN=38378828
+http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
 
-but afaict the paper is not (yet?) available freely.
+Description
+Weak random number generation during password reset leads to
+possibility of changing a user's password.
 
-Regards,
+Affected Installs
+Joomla! version 1.5.24 and all earlier 1.5 versions
+
+Solution
+Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
+
+
+
 -- 
-Yves-Alexis
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
 Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
