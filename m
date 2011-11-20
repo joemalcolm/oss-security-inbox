@@ -1,61 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/03/14/8
-Message-ID: <AANLkTindXDTxdQgFUatKbPw2ZFUvQRALS5B4tMXuWQ0Z@mail.gmail.com>
-Date: Mon, 14 Mar 2011 08:56:45 -0400
-From: Dan Rosenberg <dan.j.rosenberg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/3
+Message-ID: <20111120121451.0ac057cd@laverne>
+Date: Sun, 20 Nov 2011 12:14:51 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Stephan Mueller <stephan.mueller@...ec.com>, Vasiliy Kulikov <segoon@...nwall.com>
-Subject: Re: Untrusted fs and invalid filenames
+Subject: CVE request: drupal before 7.5 access bypass
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 14, 2011 at 4:12 AM, Stephan Mueller
-<stephan.mueller@...ec.com> wrote:
-> Am Samstag, 12. März 2011, um 18:03:45 schrieb Vasiliy Kulikov:
->
-> Therefore, if you consider a file system untrusted, a simple flag "untrusted"
-> which disables some high-level logic (like symlinks across partitions or funky
-> file names) may just be window-dressing until the entire parsing of the
-> physical data structure layout is hardened.
->
+http://drupal.org/node/1231510
 
-I'd like to add that while this kind of hardening would be nice in
-theory, there is little urgency in making these improvements since the
-proposed attack vectors are extremely limited.  As I see it, there are
-four scenarios where this might matter:
+If a Drupal site is using these features on comments, and the parent
+node is denied access (either by a node access module or by being
+unpublished), the file attached to the comment can still be downloaded
+by non-privileged users if they know or guess its direct URL.
 
-1. An attacker convinces a victim to download an evil filesystem image
-and manually mount it.
 
-2. An attacker with physical access leverages automounting features to
-cause the mounting of evil filesystems residing on external media.
 
-3. An attacker wishes to escalate from CAP_SYS_ADMIN to full root by
-mounting a malformed an evil filesystem.
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
 
-4. An attacker leverages a setuid mount helper to mount an evil
-filesystem image.
-
-The first case is clearly unlikely.  The second case can be addressed
-by restricting automounting in circumstances where it is
-inappropriate, such as when the screen is locked.  The third case is
-silly, since being able to mount arbitrary filesystems can easily get
-you root without having to trick someone into doing something
-inappropriate with an evil filesystem (e.g. mount over /etc/pam.d).
-
-The final case is something distros can do something about now.  It
-should be solved by restricting the usage of setuid root mount
-helpers.  There have been far too many vulnerabilities in these types
-of utilities to be worth the risk - I think distros should strip the
-setuid bits from these helpers when possible, and otherwise ship these
-helpers with 4750 permissions and restrict their execution to trusted
-groups.  I understand that FUSE must be an exception on some
-distributions (such as Ubuntu), but other helpers (cifs, ncpfs, hgfs,
-etc.) can probably be restricted a bit more.
-
-So while improving this aspect of the kernel is on my longterm
-wishlist, I think once the actual threat model is considered, these
-kinds of attacks pose little security risk in real life that can't be
-handled by fixing problems outside the kernel.
-
-Regards,
-Dan
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
