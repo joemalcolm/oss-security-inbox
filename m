@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/04/30
-Message-ID: <20110404174540.2e166a47@orphan>
-Date: Mon, 4 Apr 2011 17:45:40 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/2
+Message-ID: <20111120120712.00d358d8@laverne>
+Date: Sun, 20 Nov 2011 12:07:12 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: coley@...us.mitre.org, John Bailey <rekkanoryo@...kanoryo.org>
-Subject: Re: Local memory disclosure (was: libpurple CVE UnRequest)
+Subject: CVE request: websitebaker 2.8.1 and earlier: authentication error in backup module
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 21 Mar 2011 12:02:40 -0400 (EDT) Steven M. Christey wrote:
+http://www.websitebaker2.org/posts/security-vulnerability-backup-module-in-wb-core-13.php
 
-> Disclosure of "local" memory to another user on the same system could 
-> qualify for CVE inclusion, if the memory can contain something
-> sensitive.
+Extended information: Everybody can use the backup module from anywhere
+and download the backup directly on every PC the "exploiter" likes
+without any noticing by you.
 
-The patches fixes the code that was intended to clean up wipe certain
-buffers that were used to store crypto material before freeing them.
-As the CC on John was dropped, I guess he did not see your follow-up to
-clarify his "local".
-
-My understanding is that this issue may increase impact of some other
-memory disclosure issue (encryption key leaked vs. e.g. a random chat
-message), but requires some other flaw to be an issue.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
