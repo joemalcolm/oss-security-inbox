@@ -1,20 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/03/3
-Message-ID: <1105031112410.23136@mjc.redhat.com>
-Date: Tue, 3 May 2011 11:17:10 +0100 (BST)
-From: Mark J Cox <mjc@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/20/3
+Message-ID: <20111120121451.0ac057cd@laverne>
+Date: Sun, 20 Nov 2011 12:14:51 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE request: drupal before 7.5 access bypass
 Content-Type: text/plain; charset=utf-8
 
->> This advisory ends with:  (The unlinked packages above are only available from
->> the Red Hat Network)
-...
-> Yes, it's weird.
+http://drupal.org/node/1231510
 
-It's historical due to us having products like Red Hat Linux that were 
-served by Red Hat Network but which had all packages linked to the ftp 
-site for download; so only some advisories had 'unlinked packages'.  I'll 
-make a note to get that text updated to something more appropriate.
+If a Drupal site is using these features on comments, and the parent
+node is denied access (either by a node access module or by being
+unpublished), the file attached to the comment can still be downloaded
+by non-privileged users if they know or guess its direct URL.
 
-Mark
+
+
+-- 
+Hanno Böck		mail/jabber: hanno@...eck.de
+GPG: BBB51E42		http://www.hboeck.de/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
