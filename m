@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/03/16
-Message-ID: <20110403220938.GE9516@openwall.com>
-Date: Mon, 4 Apr 2011 02:09:38 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/9
+Message-ID: <20111121155455.GA7800@dhcp-25-225.brq.redhat.com>
+Date: Mon, 21 Nov 2011 16:54:56 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE Request -- kernel: wrong headroom check in udp6_ufo_fragment()
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 02, 2011 at 06:00:40AM +0200, klondike wrote:
-> Will the list provide protection against rubber-hose cryptanalisys?,
+"A bug was found in the way headroom check was performed in
+udp6_ufo_fragment() function. A remote attacker could use this flaw to
+crash the system."
 
-No, it won't.  Worse, people will also have the temptation to make use
-of the information at their other jobs, etc.  For example, a security
-contact for a distro might not only prepare updated packages, but also
-patch their personal server early... which adds to the risk.
+Details:
+http://bugzilla.redhat.com/show_bug.cgi?id=755584#c1
 
-I see no way to deal with this technically, other than by keeping the
-number of subscribers relatively low (only those who "need to know") and
-by only discussing medium-severity issues on the list (thus high
-severity ones will have even more focused distribution).
+Upstream commit:
+a9cf73ea7ff78f52662c8658d93c226effbbedde
 
-Arguably, medium-severity issues are not worth rubber-hose cryptanalysis
-and are not as tempting to patch, yet their handling may benefit from
-some coordination between distro vendors.
+References:
+http://bugzilla.redhat.com/show_bug.cgi?id=755584
+http://bugzilla.redhat.com/show_bug.cgi?id=682066
 
-> Sometime ago I was taught that the best way to be sure a secret was not
-> known was not saying it, so if you, researchers, want to make sure your
-> PoC aren't abused do things properly, warn the vendors to upgrade the
-> product because of your security finding and avoid providing PoCs until
-> enough time has passed for you to be sure everybody has had a chance to
-> upgrade.
-
-This makes sense to me.  No need to provide vendors with more info than
-they need to properly patch the issue and verify the fix.  The latter
-will sometimes require access to a PoC, though, but I'd prefer such PoCs
-to be sent directly to vendors who express interest in testing their
-fixes rather than posted to a multi-vendor exploder list.
-
-> Any other solution can be easily flawed since you can't make sure I
-> won't buy/kidnap/kidnap relatives of/steal data from etc. on anybody on
-> such a private list.
-
-Sure, but it's always a tradeoff, and the risk is there even if you
-share a vulnerability report without a PoC.
-
-Alexander
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
