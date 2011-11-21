@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/20/2
-Message-ID: <20110520140200.459a81e7@redhat.com>
-Date: Fri, 20 May 2011 14:02:00 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Cc: systemtap@...rceware.org
-Subject: systemtap divide-by-zero issues (CVE-2011-1769, CVE-2011-1781)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/20
+Message-ID: <4ECABEC4.9040808@redhat.com>
+Date: Mon, 21 Nov 2011 14:12:36 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: Moritz Muehlenhoff <jmm@...ian.org>
+CC: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>, cve@...re.org
+Subject: Re: CVE request: drupal before 7.5 access bypass
 Content-Type: text/plain; charset=utf-8
 
-Hi!
-
-Two divide-by-zero flaws were recently discovered and fixed in
-systemtap:
-
-http://sourceware.org/git/?p=systemtap.git;a=commit;h=fa2e3415185a28542d419a641ecd6cddd52e3cd9
-
-These issues can be use to crash the system.  The decision was to
-handle these issues as security because of the unprivileged systemtap
-mode, where stap author is not to be considered a root-equivalent.  In
-normal mode, unprivileged user can only trigger this if she's able to
-trick some privileged user to instrument specially crafted ELF file.
-
-More details on the CVE allocation is in:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=702687#c29
+On 11/21/2011 10:55 AM, Moritz Muehlenhoff wrote:
+> On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
+>> On 11/20/2011 04:14 AM, Hanno Böck wrote:
+>>> http://drupal.org/node/1231510
+>>>
+>>> If a Drupal site is using these features on comments, and the parent
+>>> node is denied access (either by a node access module or by being
+>>> unpublished), the file attached to the comment can still be downloaded
+>>> by non-privileged users if they know or guess its direct URL.
+>>>
+>>>
+>>>
+>> Please use CVE-2011-4323 for this issue.
+> This has already been assigned CVE-2011-2726, see 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
+>
+> Cheers,
+>         Moritz
+Correct. CVE-2011-4323 is a duplicate of CVE-2011-2726. My bad.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+
+-Kurt Seifried / Red Hat Security Response Team
+
