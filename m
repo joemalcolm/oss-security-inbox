@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/15/4
-Message-ID: <1302875648.2013.6.camel@oban>
-Date: Fri, 15 Apr 2011 15:54:08 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/28
+Message-ID: <4ECAC9D3.2010405@redhat.com>
+Date: Mon, 21 Nov 2011 14:59:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for Thunar (format string errors)
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Two format string errors were recently fixed in Thunar (file manager for
-Xfce).
+On 11/21/2011 02:30 PM, Henri Salo wrote:
+> On Mon, Nov 21, 2011 at 02:23:49PM -0700, Kurt Seifried wrote:
+>> On 11/21/2011 10:53 AM, Henri Salo wrote:
+>>> Can I get CVE-identifier for this issue:
+>>>
+>>> http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
+>>>
+>>> Other references:
+>>>
+>>> http://osvdb.org/show/osvdb/76933
+>>> http://osvdb.org/show/osvdb/76934
+>>> http://osvdb.org/show/osvdb/76932
+>>> http://secunia.com/advisories/46762/
+>>>
+>>> Best regards,
+>>> Henri Salo
+>> There appear to be two separate issues here, can you confirm this?
+>>
+>> -- 
+>>
+>> -Kurt Seifried / Red Hat Security Response Team
+> I think this needs three different CVE-identifiers. Here is a description from Secunia and the last item seems critical.
+>
+> 1) Input passed to the "from" parameter in index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+>
+> 2) Input passed to the "page_no" parameter in recentchanges.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
 
-The first one is
-http://git.xfce.org/xfce/thunar/commit/?id=1d4dfafda30df071d7c1e0b370f0613cbc92ba74 (bug at https://bugzilla.xfce.org/show_bug.cgi?id=7128)  fixed in Thunar 1.2.1) and triggers when creating file from templates and calling it with a format string.
+Ok merging these two issues (as per ADT4 specification)  please use
+CVE-2011-4333 for this issue.
 
-The second is
-http://git.xfce.org/xfce/thunar/commit/?id=03dd312e157d4fa8a11d5fa402706ae5b05806fa and is triggered when copy/pasting a file named from a format string. There's no released version including the fix right now.
+> 3) Input passed to the "userfile" POST parameter in edit.php is not properly verified before being used to upload files. This can be exploited to e.g. upload arbitrary PHP files with e.g. a ".gif" extension.
+>
+Please use CVE-2011-4334 for this issue.
 
-I've triggered the (second) bug using file named %s or %n but didn't
-really manage to exploit it (it crashes just fine).
+> Best regards,
+> Henri Salo
 
-I'm not so sure it really needs a CVE so it's a request for discussion
-as well :)
 
-As a side note, I do use -Wformat -Wformat-security
--Werror=format-security (thanks to hardening-includes) for my Debian
-builds, but as those function are wrappers of wrappers of wrappers to
-printf() and stuff like that, -Wformat-security won't help. Is there a
-way to work around that?
-
-Regards,
 -- 
-Yves-Alexis
+
+-Kurt Seifried / Red Hat Security Response Team
 
