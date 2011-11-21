@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/8
-Message-ID: <1301683688.2521.12.camel@mdlinux>
-Date: Fri, 01 Apr 2011 14:48:08 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/16
+Message-ID: <20111121175306.GA21065@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 19:53:06 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+Subject: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Can I get CVE-identifier for this issue:
 
-On Fri, 2011-04-01 at 14:03 -0400, Josh Bressers wrote:
-> Initial members will have had to be a vendor-sec member (no exploders this
-> time around). You must reply to this thread, in public (on oss-security).
-> We want this to be very public, we have nothing to hide. You must have a
-> public gpg key ID included in your reply. The new list will gpg encrypt all
-> mail (it does accept plaintext messages though).
+http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
 
-Please subscribe me to the new list. I was a vendor-sec subscriber.
+Other references:
 
-pub  4096R/A744BE93 2010-09-30
-uid Marc Deslauriers <marc.deslauriers@...onical.com>
-Fingerprint 50C4 A0DD CF31 E452 CEB1 9B51 6569 D855 A744 BE93
+http://osvdb.org/show/osvdb/76933
+http://osvdb.org/show/osvdb/76934
+http://osvdb.org/show/osvdb/76932
+http://secunia.com/advisories/46762/
 
-Thanks,
-
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Best regards,
+Henri Salo
