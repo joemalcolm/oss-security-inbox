@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/26/4
-Message-ID: <20111026142429.GA23713@suse.de>
-Date: Wed, 26 Oct 2011 16:24:29 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/27
+Message-ID: <4ECAC6CD.2090901@redhat.com>
+Date: Mon, 21 Nov 2011 14:46:53 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: slapd off by one
+CC: Henri Salo <henri@...v.fi>, cve@...re.org
+Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3 - CVE-2011-2710 / CVE-2011-2708 issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+ 
+> CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
+>  
+>
+> Best regards,
+> Henri Salo
 
-Is there already a CVE for this one?
+Ok CVE-2011-2710 is public in CVE and NVD:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2710, and
+CVE-2011-2708 is still marked as reserved so we should probably quietly
+take CVE-2011-2708 out back and shoot it.
 
-http://www.openldap.org/its/index.cgi/Software%20Bugs?id=7059;selectid=7059
-
-(UTF8StringNormalize() off by one)
-
-Also see:
-
-https://bugzilla.novell.com/show_bug.cgi?id=724201
-
-Sebastian
+CC'ing mitre.
 
 -- 
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
----
-SUSE LINUX Products GmbH,
-GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB 16746 (AG Nürnberg)
-Maxfeldstraße 5
-90409 Nürnberg
-Germany
+-Kurt Seifried / Red Hat Security Response Team
 
