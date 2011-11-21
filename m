@@ -1,111 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/05/19
-Message-ID: <Pine.GSO.4.64.1104051036410.20885@faron.mitre.org>
-Date: Tue, 5 Apr 2011 10:37:48 -0400 (EDT)
-From: "Steven M. Christey" <coley@...-smtp.mitre.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/15
+Message-ID: <20111121171800.GC18979@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 19:18:00 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-cc: "Steven M. Christey" <coley@...-smtp.mitre.org>, Eugene Teo <eugene@...hat.com>
-Subject: Re: CVE request: kernel: multiple issues in ROSE
+Cc: n0b0d13s@...il.com
+Subject: Fwd: Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
+Can we get CVE assigned for this issue?
 
-Pending Dan's followup to my post, we can make CVE-2011-1493 specific to 
-Dan's FAC_NATIONAL_DIGIS overflow.
+Best regards,
+Henri Salo
 
-- Steve
+----- Forwarded message from n0b0d13s@...il.com -----
+
+Date: Sat, 19 Nov 2011 15:27:47 GMT
+From: n0b0d13s@...il.com
+To: bugtraq@...urityfocus.com
+Subject: Support Incident Tracker <= 3.65 (translate.php) Remote Code
+	Execution Vulnerability
+X-Mailer: MIME-tools 5.420 (Entity 5.420)
+
+Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
 
 
-On Mon, 4 Apr 2011, Josh Bressers wrote:
+author...............: Egidio Romano aka EgiX
+mail.................: n0b0d13s[at]gmail[dot]com
+software link........: http://sitracker.org/
+affected versions....: from 3.45 to 3.65
 
-> One it is then. Thanks.
->
-> Use CVE-2011-1493.
->
-> --
->    JB
->
-> ----- Original Message -----
->> On Mon, Apr 4, 2011 at 2:41 PM, Josh Bressers <bressers@...hat.com>
->> wrote:
->>> How do we want this broken down? If nobody complains, I'll just give
->>> it one.
->>>
->>
->> I think one makes sense, since all the problems were in a single
->> protocol and were addressed at the same time.
->>
->> -Dan
->>
->>> Thanks.
->>>
->>> --
->>>    JB
->>>
->>> ----- Original Message -----
->>>> Any update on this?
->>>>
->>>> Thanks,
->>>> Dan
->>>>
->>>> On Mon, Mar 21, 2011 at 12:47 AM, Eugene Teo <eugene@...hat.com>
->>>> wrote:
->>>>> On 03/21/2011 03:40 AM, Dan Rosenberg wrote:
->>>>>>
->>>>>> I sent in a patch [1] resolving two issues in ROSE:
->>>>>>
->>>>>> "When parsing the FAC_NATIONAL_DIGIS facilities field, it's
->>>>>> possible
->>>>>> for a remote host to provide more digipeaters than expected,
->>>>>> resulting
->>>>>> in heap corruption. Check against ROSE_MAX_DIGIS to prevent
->>>>>> overflows, and abort facilities parsing on failure.
->>>>>>
->>>>>> Additionally, when parsing the FAC_CCITT_DEST_NSAP and
->>>>>> FAC_CCITT_SRC_NSAP facilities fields, a remote host can provide
->>>>>> a
->>>>>> length of less than 10, resulting in an underflow in a memcpy
->>>>>> size,
->>>>>> causing a kernel panic due to massive heap corruption. A length
->>>>>> of
->>>>>> greater than 20 results in a stack overflow of the callsign
->>>>>> array.
->>>>>> Abort facilities parsing on these invalid length values."
->>>>>>
->>>>>> These issues may both result in code execution. They may be
->>>>>> triggered
->>>>>> by a remote attacker if the victim has a listening ROSE socket,
->>>>>> or
->>>>>> by
->>>>>> a local attacker (for privilege escalation) if a ROSE device
->>>>>> exists
->>>>>> (e.g. rose0).
->>>>>>
->>>>>> Ben Hutchings followed up with a patch [2] that resolves a
->>>>>> number
->>>>>> of
->>>>>> other ROSE issues related to lack of size field validation, some
->>>>>> of
->>>>>> which may also result in heap corruption.
->>>>>>
->>>>>> Not sure about the proper CVE breakdown for all these issues,
->>>>>> since
->>>>>> the entire protocol was quite broken. Perhaps one is enough to
->>>>>> cover
->>>>>> everything.
->>>>>
->>>>> I am not sure. I would just assign one for the collection of
->>>>> issues
->>>>> here but
->>>>> I will let Steve decide instead.
->>>>>
->>>>>> [1] http://marc.info/?l=linux-netdev&m=130060344616926
->>>>>> [2] http://marc.info/?l=linux-netdev&m=130063972406389&w=2
->>>>>
->>>>> Thanks, Eugene
->>>>> --
->>>>> main(i) { putchar(182623909 >> (i-1) * 5&31|!!(i<7)<<6) &&
->>>>> main(++i); }
->>>>>
->>>
->
->
+
+[-] vulnerable code in /translate.php
+
+234.        foreach (array_keys($_POST) as $key)
+235.        {
+236.            if (!empty($_POST[$key]) AND substr($key, 0, 3) == "str")
+237.            {
+238.                if ($lastchar!='' AND substr($key, 3, 1) != $lastchar) $i18nfile .= "\n";
+239.                $i18nfile .= "\${$key} = '".addslashes($_POST[$key])."';\n";
+240.                $lastchar = substr($key, 3, 1);
+241.                $translatedcount++;
+242.            }
+243.        }
+
+Input passed via keys of $_POST array isn't properly sanitized before being stored into $i18nfile variable
+at line 239, that variable will be the contents of a language file stored into 'i18n' directory with a php
+extension. This could allow authenticated users to inject and execute arbitrary PHP code. Furthermore,
+access directly to /translate.php?mode=save will reveal the full installation path of the application.
+
+
+[-] Disclosure timeline:
+
+[13/11/2011] - Vulnerability discovered
+[13/11/2011] - Issue reported to http://bugs.sitracker.org/view.php?id=1737
+[13/11/2011] - Vendor replied that this issue is fixed in the current SVN trunk
+[19/11/2011] - Public disclosure
+
+
+[-] Proof of concept:
+
+http://www.exploit-db.com/exploits/18132
+
+----- End forwarded message -----
