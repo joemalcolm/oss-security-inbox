@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/3
-Message-ID: <4D95E5ED.1050903@redhat.com>
-Date: Fri, 01 Apr 2011 16:49:17 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request -- perl -- lc(), uc() routines are laundering tainted data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/8
+Message-ID: <20111121144412.GH23814@suse.de>
+Date: Mon, 21 Nov 2011 15:44:12 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: openssh 5.8p2
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Hello Josh, Steve, vendors,
+http://www.openssh.com/txt/release-5.8p2
+http://www.openssh.com/txt/portable-keysign-rand-helper.adv
+http://www.nessus.org/plugins/index.php?view=single&id=53841
 
-   A security flaw was found in the way Perl performed
-laundering of tainted data. A remote attacker could
-use this flaw to bypass Perl TAINT mode protection
-mechanism (leading to commands execution on dirty
-arguments or file system access via contaminated
-variables) via specially-crafted input provided
-to the web application / CGI script.
+has a security issue listed without a assigned CVE.
 
-Upstream bug report:
-http://rt.perl.org/rt3/Public/Bug/Display.html?id=87336
+Could someone please assign a CVE id?
 
-Relevant patch:
-http://perl5.git.perl.org/perl.git/commitdiff/539689e74a3bcb04d29e4cd9396de91a81045b99
-(contains also information when the issue was introduced)
+(We are not affected, but as we got customer queries regarding the
+Nessus check already it should get a CVE id I think.)
 
-References:
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=692844
-
-Could you allocate a CVE id for this?
-
-Thanks && Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Ciao, Marcus
