@@ -1,27 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/05/12
-Message-ID: <20110705054919.GA14599@openwall.com>
-Date: Tue, 5 Jul 2011 09:49:19 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Colin Percival <cperciva@...ebsd.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD 4.x OpenSSH/libopie remote root hole
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/21
+Message-ID: <4ECAC080.8070007@redhat.com>
+Date: Mon, 21 Nov 2011 14:20:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Henri Salo <henri@...v.fi>, advisories@...itunasecurity.com
+Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 04, 2011 at 09:24:45PM -0700, Colin Percival wrote:
-> I haven't had time to investigate, in part because I don't have any systems
-> running that ancient openssh any more.  I'm interested to hear if anyone has
-> tracked down exactly where the bug was, though.
+On 11/21/2011 11:01 AM, Henri Salo wrote:
+> Can we get CVE-identifier assigned for this issue, thank you?
+>
+> Best regards,
+> Henri Salo
+>
+> ----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
+>
+> Date: Thu, 10 Nov 2011 16:32:12 +0200
+> From: Netsparker Advisories <advisories@...itunasecurity.com>
+> To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
+> Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
+>
+> Information
+> --------------------
+> Name :  XSS vulnerability in Joomla 1.6.3.
+> Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
+> Vendor Hompeage :  http://www.joomla.org
+> Vulnerability Type :  Cross-Site Scripting
+> Severity :  High
+> Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
+> Advisory Reference :  NS-11-009
+>
+> Description
+> ------------------
+> Joomla is an award-winning content management system (CMS), which
+> enables you to build Web sites and powerful online applications. Many
+> aspects, including its ease-of-use and extensibility, have made Joomla
+> the most popular Web site software available. Best of all, Joomla is
+> an open source solution that is freely available to everyone.
+>
+> Details
+> -------------------
+> Joomla is affected by a XSS vulnerability in various administrator
+> screens. All 1.6.x installs prior to and including 1.6.3 are affected.
+> You can read the full article about Cross-Site Scripting
+> vulnerabilities from here :
+> http://www.mavitunasecurity.com/crosssite-scripting-xss/
+>
+> Solution
+> -------------------
+> Upgrade to the latest Joomla! version (1.6.4 or later).
+>
+> Credits
+> -------------------
+> It has been discovered on testing of Netsparker, Web Application
+> Security Scanner - http://www.mavitunasecurity.com/netsparker/
+>
+> References
+> -------------------
+> 1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+> 2. MSL Advisory Link :
+> http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
+> 3. Netsparker Advisories :
+> http://www.mavitunasecurity.com/netsparker-advisories/
+>
+> About Netsparker
+> -------------------
+> Netsparker® can find and report security issues such as SQL Injection
+> and Cross-site Scripting (XSS) in all web applications regardless of
+> the platform and the technology they are built on. Netsparker's unique
+> detection and exploitation techniques allows it to be dead accurate in
+> reporting hence it's the first and the only False Positive Free web
+> application security scanner.
+>
+Can you confirm that this is a different issue from CVE-2011-2708 and
+CVE-2011-3595?
 
-Thanks for your reply.
+-- 
 
-Since I also have other uses for my time, would anyone else investigate,
-please?  I'd appreciate it.  Perhaps install FreeBSD 4.x into a VM.
-Sounds like fun for someone who has time.
+-Kurt Seifried / Red Hat Security Response Team
 
-I don't think the bug is in OpenSSH per se, nor in FreeBSD 4's PAM (my
-understanding is that it was cut-down Linux-PAM at the time, which was
-replaced with OpenPAM in 5.x), nor in pam_opie.  libopie sounds more
-plausible.  But I could be wrong.
-
-Alexander
