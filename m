@@ -1,35 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/03/5
-Message-ID: <1592608722.126042.1294081074377.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Mon, 3 Jan 2011 13:57:54 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/5
+Message-ID: <4EC9E9D2.1090404@redhat.com>
+Date: Mon, 21 Nov 2011 14:04:02 +0800
+From: Eugene Teo <eugene@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Luke Macken <lmacken@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE Request -- Django 1.2.4, Django 1.1.3 and Django 1.3 beta 1 -- addressing two security flaws
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: kernel: hfs: add sanity check for file name length
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> Hello Steve, vendors,
-> 
-> Django upstream recently released Django 1.2.4, Django 1.1.3 and
-> Django 1.3 beta 1
-> versions of Django addressing two security flaws:
-> 
-> I), Information leakage in Django administrative interface
+https://lkml.org/lkml/2011/11/9/303
+https://bugzilla.redhat.com/show_bug.cgi?id=755431
+http://git.kernel.org/linus/bc5b8a9003132ae44559edd63a1623
 
-Use CVE-2010-4534
+On a corrupted file system the ->len field could be wrong leading to a
+buffer overflow.
 
-> II), Denial-of-service attack in password-reset mechanism
-
-Use CVE-2010-4535
-
-> 
-> References:
-> [1] http://www.djangoproject.com/weblog/2010/dec/22/security/
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=665373
-> 
-
-Thanks.
-
--- 
-    JB
+Thanks, Eugene
