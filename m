@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/02/5
-Message-ID: <1320230242.13156.161.camel@spiral.ashpool.org>
-Date: Wed, 02 Nov 2011 10:37:22 +0000
-From: Thomas Biege <thomas@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/22
+Message-ID: <4ECAC165.6050206@redhat.com>
+Date: Mon, 21 Nov 2011 14:23:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: kiwi shell meta char injection
+CC: Henri Salo <henri@...v.fi>
+Subject: Re: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-
-This email was sent a bit too early.
-
-On Mi, 2011-11-02 at 10:03 +0000, Thomas Biege wrote:
-> Hi,
-> my colleagues found the following:
-> https://github.com/openSUSE/kiwi/commit/f0f74b3f6ac6d47f7919aa9db380c0ad41ffe55f
-> 
-> CVE-2011-3180: The path of overlay files was not escaped which allowed
-> shell meta character injection via the chown(1) command-line.
-> 
-> https://github.com/openSUSE/kiwi/commit/88bf491d16942766016c606e4210b4e072c1019f
-> CVE-2011-4195: The image name was not escaped properly and can be used
-> in conjunction with other applications to execute arbitrary shell
-> commands.
-
-In the master branch the following commits are interesting:
-  14881958878d54e6ed0c5153a1915891d94d1622
-  8ada4156a781e799b84ad9b0a1f4fffb2d0250e8
-  88bf491d16942766016c606e4210b4e072c1019f
-  a9433189740fc71b0156103c0a3c01d873b04dfd
-
-> Cheers,
-> Thomas
+On 11/21/2011 10:53 AM, Henri Salo wrote:
+> Can I get CVE-identifier for this issue:
+>
+> http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
+>
+> Other references:
+>
+> http://osvdb.org/show/osvdb/76933
+> http://osvdb.org/show/osvdb/76934
+> http://osvdb.org/show/osvdb/76932
+> http://secunia.com/advisories/46762/
+>
+> Best regards,
+> Henri Salo
+There appear to be two separate issues here, can you confirm this?
 
 -- 
-Thomas Biege <thomas@...e.de>, Project Manager IT-Security
-SUSE LINUX GmbH, GF: Jeff Hawn, Jennifer Guild, Felix Imendörffer, HRB
-21284 (AG Nürnberg)
---
-  Wer aufhoert besser werden zu wollen, hoert auf gut zu sein.
-                            -- Marie von Ebner-Eschenbach
+
+-Kurt Seifried / Red Hat Security Response Team
 
