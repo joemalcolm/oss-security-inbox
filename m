@@ -1,31 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/1
-Message-ID: <4EC9BDF6.9000907@redhat.com>
-Date: Sun, 20 Nov 2011 19:56:54 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/24
+Message-ID: <20111121212657.GA23629@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 23:26:57 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>
-Subject: Re: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
+Subject: CVE-request: XSS in Tiki Wiki CMS Groupware (HTB23027)
 Content-Type: text/plain; charset=utf-8
 
-On 11/20/2011 04:04 AM, Hanno Böck wrote:
-> http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
->
-> Description
-> Weak random number generation during password reset leads to
-> possibility of changing a user's password.
->
-> Affected Installs
-> Joomla! version 1.5.24 and all earlier 1.5 versions
->
-> Solution
-> Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
->
->
->
-Please use CVE-2011-4321 for this issue.
+Can I get CVE-identifier for this issue:
 
--- 
+https://www.htbridge.ch/advisory/xss_in_tiki_wiki_cms_groupware.html
+http://secunia.com/advisories/45283/
 
--Kurt Seifried / Red Hat Security Response Team
-
+Best regards,
+Henri Salo
