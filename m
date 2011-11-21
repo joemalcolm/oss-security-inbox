@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/01/2
-Message-Id: <201104011437.24983.ludwig.nussel@suse.de>
-Date: Fri, 1 Apr 2011 14:37:24 +0200
-From: Ludwig Nussel <ludwig.nussel@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/1
+Message-ID: <4EC9BDF6.9000907@redhat.com>
+Date: Sun, 20 Nov 2011 19:56:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Suid mount helpers fail to anticipate RLIMIT_FSIZE
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Patrick J. Volkerding wrote:
-> On 03/31/2011 08:43 AM, Dan Rosenberg wrote:
-> > I'd also
-> > like to see distributions migrating away from /etc/mtab in general,
-> > since /proc/mounts seems like a much better replacement.
-> 
-> I imagine that mount's -f (fake mount by editing mtab) and -n (mount 
-> without editing mtab) options are not going to work if /etc/mtab becomes 
-> a symbolic link to /proc/mounts, so that's liable to break a few things. 
->   In the long run it does seem like a good plan, but there might be a 
-> few bumps in the road.  I wonder what the rationale was for faking mtab 
-> mounts in the first place?
-
-Our system boot scripts used -n as long as / was mounted read only
-and -f to update mtab once / was remounted rw.
-Since openSUSE 11.4 /etc/mtab is a symlink to /proc/self/mounts
-which works fine so far AFAIK.
-
-cu
-Ludwig
+On 11/20/2011 04:04 AM, Hanno Böck wrote:
+> http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
+>
+> Description
+> Weak random number generation during password reset leads to
+> possibility of changing a user's password.
+>
+> Affected Installs
+> Joomla! version 1.5.24 and all earlier 1.5 versions
+>
+> Solution
+> Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
+>
+>
+>
+Please use CVE-2011-4321 for this issue.
 
 -- 
- (o_   Ludwig Nussel
- //\
- V_/_  http://www.suse.de/
-SUSE LINUX Products GmbH, GF: Markus Rex, HRB 16746 (AG Nuernberg)
+
+-Kurt Seifried / Red Hat Security Response Team
+
