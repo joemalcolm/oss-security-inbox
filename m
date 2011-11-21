@@ -1,39 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/06/8
-Message-ID: <4DECFE21.6010609@redhat.com>
-Date: Mon, 06 Jun 2011 18:19:45 +0200
-From: Jan Lieskovsky <jlieskov@...hat.com>
-To: "Steven M. Christey" <coley@...us.mitre.org>
-CC: oss-security <oss-security@...ts.openwall.com>, Chris Evans <scarybeasts@...il.com>, Greg KH <greg@...ah.com>, Kees Cook <kees@...ntu.com>
-Subject: CVE Request -- vsftpd -- Do not create network namespace per connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/18
+Message-ID: <20111121180112.GA21332@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 20:01:12 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: advisories@...itunasecurity.com
+Subject: Fwd: XSS vulnerability in Joomla 1.6.3
 Content-Type: text/plain; charset=utf-8
 
-Hello, Josh, Steve, vendors,
+Can we get CVE-identifier assigned for this issue, thank you?
 
-   It was found that vsftpd, Very Secure FTP daemon, when the network
-namespace (CONFIG_NET_NS) support was activated in the kernel, used to
-create a new network namespace per connection. A remote attacker could
-use this flaw to cause a memory pressure and denial of the vsftpd
-service.
+Best regards,
+Henri Salo
 
-References:
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=629373
-[2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095
-[3] https://bugzilla.redhat.com/show_bug.cgi?id=711134
+----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
 
-This one being a bit tricky one -- from my understanding of the issue,
-vsftpd doesn't necessarily have a security flaw on its side. It's
-kernel issue / bug, which allows this to be used for vsftpd DoS:
-[4] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/31
-[5] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/720095/comments/32
+Date: Thu, 10 Nov 2011 16:32:12 +0200
+From: Netsparker Advisories <advisories@...itunasecurity.com>
+To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
+Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
 
-Short-term solution would be probably to address this on the vsftpd
-side, the long-term one then being to get this fixed in kernel.
+Information
+--------------------
+Name :  XSS vulnerability in Joomla 1.6.3.
+Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
+Vendor Hompeage :  http://www.joomla.org
+Vulnerability Type :  Cross-Site Scripting
+Severity :  High
+Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
+Advisory Reference :  NS-11-009
 
-Though not sure, how it would be wrt to CVE identifier(s) assignment.
+Description
+------------------
+Joomla is an award-winning content management system (CMS), which
+enables you to build Web sites and powerful online applications. Many
+aspects, including its ease-of-use and extensibility, have made Joomla
+the most popular Web site software available. Best of all, Joomla is
+an open source solution that is freely available to everyone.
 
-Steve, could you advice here?
+Details
+-------------------
+Joomla is affected by a XSS vulnerability in various administrator
+screens. All 1.6.x installs prior to and including 1.6.3 are affected.
+You can read the full article about Cross-Site Scripting
+vulnerabilities from here :
+http://www.mavitunasecurity.com/crosssite-scripting-xss/
 
-Thank you & Regards, Jan.
---
-Jan iankko Lieskovsky / Red Hat Security Response Team
+Solution
+-------------------
+Upgrade to the latest Joomla! version (1.6.4 or later).
+
+Credits
+-------------------
+It has been discovered on testing of Netsparker, Web Application
+Security Scanner - http://www.mavitunasecurity.com/netsparker/
+
+References
+-------------------
+1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+2. MSL Advisory Link :
+http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
+3. Netsparker Advisories :
+http://www.mavitunasecurity.com/netsparker-advisories/
+
+About Netsparker
+-------------------
+Netsparker® can find and report security issues such as SQL Injection
+and Cross-site Scripting (XSS) in all web applications regardless of
+the platform and the technology they are built on. Netsparker's unique
+detection and exploitation techniques allows it to be dead accurate in
+reporting hence it's the first and the only False Positive Free web
+application security scanner.
+
+-- 
+Netsparker Advisories, <advisories@...itunasecurity.com>
+Homepage, http://www.mavitunasecurity.com/netsparker-advisories/
+
+_______________________________________________
+Full-Disclosure - We believe in it.
+Charter: http://lists.grok.org.uk/full-disclosure-charter.html
+Hosted and sponsored by Secunia - http://secunia.com/
+
+----- End forwarded message -----
