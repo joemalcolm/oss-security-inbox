@@ -1,48 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/28/14
-Message-ID: <706988880.998704.1309292560379.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 28 Jun 2011 16:22:40 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/2
+Message-ID: <4EC9BE2C.6060906@redhat.com>
+Date: Sun, 20 Nov 2011 19:57:48 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...nel.org
-Subject: Re: CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: websitebaker 2.8.1 and earlier: authentication error in backup module
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> 
-> It can be used to learn ssh and ftp password length. If privsep is
-> enabled in openssh and vsftpd, the unprivileged process' activity very
-> precisely shows password information.
-> 
-> For vsftpd read characters count is strlen("USER username\r\n") +
-> strlen("PASSWD pass\r\n") + 1, where 1 is one byte read from a pipe
-> related to a privileged parent. If measure statistics between user and
-> passwords commands, actual password length and username length can be
-> gathered.
-> 
-> For ssh, vice versa, networking activity is constant in packets length,
-> but interprocess communications, specifically passwords, depend on user
-> input.
-> 
-> For ssh pass_len = wchars - CONST, for vsftpd pass_len = rchars -
-> CONST.
-> 
-> Another daemons with more or less constant io activity might be
-> vulnerable too. PAM greatly complicates precise measurements.
-> 
-> 
-> I think it needs 2 CVE, one for /proc/PID/io and another for
-> taskstats.
-> 
-> https://lkml.org/lkml/2011/6/24/88
-> 
+On 11/20/2011 04:07 AM, Hanno Böck wrote:
+> http://www.websitebaker2.org/posts/security-vulnerability-backup-module-in-wb-core-13.php
+>
+> Extended information: Everybody can use the backup module from anywhere
+> and download the backup directly on every PC the "exploiter" likes
+> without any noticing by you.
+>
+>
 
-I can't find a nice description of both issues. Can you give me one or two
-sentence explanations with a few references for the CVE database?
-
-Once I have those I'll give it two IDs.
-
-Thanks.
+Please use CVE-2011-4322 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
