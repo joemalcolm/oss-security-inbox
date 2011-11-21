@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/02/22/15
-Message-ID: <648243128.170008.1298410056466.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Tue, 22 Feb 2011 16:27:36 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/3
+Message-ID: <4EC9BE67.6070109@redhat.com>
+Date: Sun, 20 Nov 2011 19:58:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: fs/partitions: validate map_count in mac partition tables
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: drupal before 7.5 access bypass
 Content-Type: text/plain; charset=utf-8
 
+On 11/20/2011 04:14 AM, Hanno Böck wrote:
+> http://drupal.org/node/1231510
+>
+> If a Drupal site is using these features on comments, and the parent
+> node is denied access (either by a node access module or by being
+> unpublished), the file attached to the comment can still be downloaded
+> by non-privileged users if they know or guess its direct URL.
+>
+>
+>
 
-
------ Original Message -----
-> On Tue, Feb 22, 2011 at 03:44:29PM -0500, Josh Bressers wrote:
-> >
-> >
-> > ----- Original Message -----
-> > > Reported by Timo Warns, "Validate number of blocks in map and remove
-> > > redundant variable."
-> > >
-> > > http://git.kernel.org/linus/fa7ea87a057958a8b7926c1a60a3ca6d696328ed
-> > > https://bugzilla.redhat.com/show_bug.cgi?id=679282
-> > >
-> >
-> > I don't understand the security implication of this bug. Can you
-> > explain it?
-> 
-> Incorrectly formed mac partition tables could cause bad things to happen
-> when it was automatically scanned after plugging in a device with this
-> type of partition table on it.
-> 
-
-This is good enough for me. Please use CVE-2011-1010.
-
-Thanks.
+Please use CVE-2011-4323 for this issue.
 
 -- 
-    JB
+
+-Kurt Seifried / Red Hat Security Response Team
+
