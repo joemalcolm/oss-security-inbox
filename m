@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/24/3
-Message-ID: <20110424110003.GA32248@openwall.com>
-Date: Sun, 24 Apr 2011 15:00:03 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/17
+Message-ID: <20111121175556.GD3573@pisco.westfalen.local>
+Date: Mon, 21 Nov 2011 18:55:56 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: drupal before 7.5 access bypass
 Content-Type: text/plain; charset=utf-8
 
-Jason -
-
-On Thu, Apr 21, 2011 at 08:20:48AM -0400, Jason A. Donenfeld wrote:
-> Likewise,
+On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
+> On 11/20/2011 04:14 AM, Hanno Böck wrote:
+> > http://drupal.org/node/1231510
+> >
+> > If a Drupal site is using these features on comments, and the parent
+> > node is denied access (either by a node access module or by being
+> > unpublished), the file attached to the comment can still be downloaded
+> > by non-privileged users if they know or guess its direct URL.
+> >
+> >
+> >
 > 
-> pub   4096R/A5DE03AE 2011-01-15
->       Key fingerprint = AB99 42E6 D4A4 CFC3 4126  20A7 49FC 7012 A5DE 03AE
-> uid                  Jason A. Donenfeld <Jason@...c4.com>
-> sub   4096R/FB1EFB7F 2011-01-15
+> Please use CVE-2011-4323 for this issue.
 
-What Linux distro are you a security contact for, how do we verify that,
-and how were you receiving vendor-sec mail before?  (These are some of
-the eligibility criteria for the initial seed membership of the new
-list.  The requirement "was a vendor-sec member" is likely to be lifted
-after a while.)
+This has already been assigned CVE-2011-2726, see 
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
 
-All -
-
-The moderators of oss-security approved all subscription requests and
-criticism to be posted to this thread so far, but perhaps it's time to
-start rejecting unjustified requests to keep the noise down, asking the
-senders to re-post with due justification included.  This is what we
-will likely start doing should more requests without justification be
-sent to the list address.  I don't view this as censorship; it's merely
-getting people to include all info in one message, which reduces noise.
-
-This doesn't apply to messages with criticism and/or suggestions, which
-we will continue to approve.
-
-I am pleased to see that this thread is calming down, letting us focus
-on discussing actual software security issues (in other/new threads).
-Although the thread was/is noisy, I think it also helped us highlight
-several real issues, some of which we don't have good solutions for.
-
-Alexander
+Cheers,
+        Moritz
