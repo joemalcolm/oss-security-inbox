@@ -1,20 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/24/5
-Message-ID: <20110724152327.GA25309@foo.fgeek.fi>
-Date: Sun, 24 Jul 2011 18:23:27 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/30
+Message-ID: <20111121224129.GA25272@foo.fgeek.fi>
+Date: Tue, 22 Nov 2011 00:41:29 +0200
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: justin@...irish.net
-Subject: CVE request: Drupal Data-module multiple vulnerabilities
+Cc: sschurtz@...nline.de
+Subject: CVE-request: Contao 2.10.1 Cross-site scripting vulnerability
 Content-Type: text/plain; charset=utf-8
 
-These issues does not have CVE-identifiers. Could we get one?
+----- Forwarded message from sschurtz@...nline.de -----
 
-http://seclists.org/fulldisclosure/2011/Feb/219
+Date: Sat, 8 Oct 2011 07:59:27 GMT
+From: sschurtz@...nline.de
+To: bugtraq@...urityfocus.com
+Subject: Contao 2.10.1 Cross-site scripting vulnerability
+X-Mailer: MIME-tools 5.420 (Entity 5.420)
 
-I asked from Justin Klein Keane and he wasn't aware of CVE-identifier. I think this needs identifier even this is an alpha release as this module is used by some production instances. If I am correct two identifiers should be enough. One for XSS and another for SQL injections.
+Advisory:              	Contao 2.10.1 Cross-site scripting vulnerability
+Advisory ID:           	SSCHADV2011-025
+Author:                	Stefan Schurtz
+Affected Software:  	Successfully tested on Contao 2.10.1
+Vendor URL:          	http://www.contao.org/
+Vendor Status:       	fixed
+CVE-ID:                	-
 
-Discussion about the issue: http://drupal.org/node/1056470
+==========================
+Vulnerability Description:
+==========================
+
+Contao 2.10 is prone to multiple Cross-site scripting vulnerability
+
+==================
+Technical Details:
+==================
+
+http://<target>/contao-2.10.1/index.php/teachers.html?"/><script>alert('xss')</script>
+http://<target>/contao-2.10.1/index.php/teachers/'"</style></script><script>alert(document.cookie)</script>
+
+=========
+Solution:
+=========
+
+- Vendor patch available - http://dev.contao.org/projects/typolight/repository/revisions/1041
+- Release of a new version 2.10.2 next week
+
+====================
+Disclosure Timeline:
+====================
+
+07-Oct-2011 - informed developers (contao@...trobots.com)
+07-Oct-2011 - vendor fix
+08-Oct-2011 - release date of this security advisory
+
+========
+Credits:
+========
+
+Vulnerability found and advisory written by Stefan Schurtz.
+
+===========
+U
+References:
+===========
+
+http://www.contao.org/
+http://dev.contao.org/projects/typolight/repository/revisions/1041
+http://www.rul3z.de/advisories/SSCHADV2011-025.txt
+
+----- End forwarded message -----
+
+Can you assign CVE-identifier for this vulnerability?
+
+http://dev.contao.org/projects/typolight/repository/revisions/8de5b536973a38ba75ebebfff16a5f0f29d99671 (reported 10/10/2011 03:09 pm)
+http://dev.contao.org/projects/typolight/repository/revisions/b7b2c2281227ad9c1647bf1f03e6d663b8387959 (reported 10/07/2011 01:33 pm)
 
 Best regards,
 Henri Salo
