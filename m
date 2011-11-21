@@ -1,56 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/09/14/4
-Message-ID: <733775406.1261153.1316024118779.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 14 Sep 2011 14:15:18 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/18
+Message-ID: <20111121180112.GA21332@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 20:01:12 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: D-Link DCS-2121 Semicolon Vulnerability
+Cc: advisories@...itunasecurity.com
+Subject: Fwd: XSS vulnerability in Joomla 1.6.3
 Content-Type: text/plain; charset=utf-8
 
-I'm going to leave this one to MITRE. I want to stick with the current list policy of only assigning IDs to open source projects.
+Can we get CVE-identifier assigned for this issue, thank you?
 
-Thanks.
+Best regards,
+Henri Salo
+
+----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
+
+Date: Thu, 10 Nov 2011 16:32:12 +0200
+From: Netsparker Advisories <advisories@...itunasecurity.com>
+To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
+Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
+
+Information
+--------------------
+Name :  XSS vulnerability in Joomla 1.6.3.
+Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
+Vendor Hompeage :  http://www.joomla.org
+Vulnerability Type :  Cross-Site Scripting
+Severity :  High
+Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
+Advisory Reference :  NS-11-009
+
+Description
+------------------
+Joomla is an award-winning content management system (CMS), which
+enables you to build Web sites and powerful online applications. Many
+aspects, including its ease-of-use and extensibility, have made Joomla
+the most popular Web site software available. Best of all, Joomla is
+an open source solution that is freely available to everyone.
+
+Details
+-------------------
+Joomla is affected by a XSS vulnerability in various administrator
+screens. All 1.6.x installs prior to and including 1.6.3 are affected.
+You can read the full article about Cross-Site Scripting
+vulnerabilities from here :
+http://www.mavitunasecurity.com/crosssite-scripting-xss/
+
+Solution
+-------------------
+Upgrade to the latest Joomla! version (1.6.4 or later).
+
+Credits
+-------------------
+It has been discovered on testing of Netsparker, Web Application
+Security Scanner - http://www.mavitunasecurity.com/netsparker/
+
+References
+-------------------
+1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+2. MSL Advisory Link :
+http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
+3. Netsparker Advisories :
+http://www.mavitunasecurity.com/netsparker-advisories/
+
+About Netsparker
+-------------------
+Netsparker® can find and report security issues such as SQL Injection
+and Cross-site Scripting (XSS) in all web applications regardless of
+the platform and the technology they are built on. Netsparker's unique
+detection and exploitation techniques allows it to be dead accurate in
+reporting hence it's the first and the only False Positive Free web
+application security scanner.
 
 -- 
-    JB
+Netsparker Advisories, <advisories@...itunasecurity.com>
+Homepage, http://www.mavitunasecurity.com/netsparker-advisories/
 
------ Original Message -----
-> Hello,
-> 
-> I've come up with this [0] blog post which, accordingly to author,
-> describes a 0day vulnerability within D-Link DCS-2121 camera.
-> 
-> In summary, the data posted from the web configuration interface to
-> samba is
-> directly used as a parameter without proper sanitization. This leads
-> to
-> an unwanted system call.
-> 
-> Although the author says that the vulnerability can only be used by
-> authenticated users via web interface, it would be dangerous together
-> with CSRF on authenticated user. I think that it's worth looking, or,
-> at
-> least let the vendor know.
-> 
-> """
-> Disclaimer (for not-so-funny people): yes this is "0day", unreported
-> to
-> the vendor. I even suspect the whole D-Link product line is vulnerable
-> to the same bug (if not the whole world of low-end embedded systems
-> (and
-> even business class products)). However, since Web access requires
-> authentication, this bug might be exploitable by administrators only,
-> so
-> it is only useful for people who would like to gain a shell on their
-> own
-> systems. Do not panic :)
-> """
-> 
-> [0]
-> http://newsoft-tech.blogspot.com/2010/09/d-link-dcs-2121-and-state-of-embedded.html
-> 
-> Regards,
-> 
-> --
-> . 73! DE TA1AET
+_______________________________________________
+Full-Disclosure - We believe in it.
+Charter: http://lists.grok.org.uk/full-disclosure-charter.html
+Hosted and sponsored by Secunia - http://secunia.com/
+
+----- End forwarded message -----
