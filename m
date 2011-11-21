@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/08/2
-Message-ID: <20110708152345.7e6115bc@redhat.com>
-Date: Fri, 8 Jul 2011 15:23:45 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: SSL renegotiation DoS CVE-2011-1473
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/4
+Message-ID: <4EC9C65D.3040803@redhat.com>
+Date: Mon, 21 Nov 2011 11:32:45 +0800
+From: Eugene Teo <eugene@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: CVE-2011-4112 kernel: null ptr deref at dev_queue_xmit+0x35/0x4d0
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+This can be triggered by setting up a bridge over vlan, and running pktgen.
 
-FYI, as this has a nessus test, and likely to be seen and reported by
-users.
+Reference:
+https://bugzilla.redhat.com/CVE-2011-4112
 
-CVE-2011-1473 is used seemingly for the SSL protocol issue.  Most
-TLS/SSL implementations handle session renegotiation by default, client
-may trigger high CPU use by renegotiating repeatedly and taking
-advantage of the fact that there's more work to do on the server side
-than on the client side.  Similar problem affects initial handshake
-too, renegotiation allows achieving the same over single / few
-connections.
+Upstream commits:
+After the last patch, We are left in a state in which only drivers
+calling ether_setup have IFF_TX_SKB_SHARING set (we assume that drivers
+touching real hardware call ether_setup for their net_devices and don't
+hold any state in their skbs.  There are a handful of drivers that
+violate this assumption of course, and need to be fixed up.  This patch
+identifies those drivers, and marks them as not being able to support
+the safe transmission of skbs by clearning the IFF_TX_SKB_SHARING flag
+in priv_flags
+http://git.kernel.org/linus/550fd08c2cebad61c548def135f67aba284c6162
 
-This should affect most server apps using openssl and nss, but not
-recent httpd/mod_ssl.
-
-Original blog post is not accessible, but TLS WG list post has all the
-relevant info.
-
-http://orchilles.com/2011/03/ssl-renegotiation-dos.html
-http://www.ietf.org/mail-archive/web/tls/current/msg07553.html
-http://www.nessus.org/plugins/index.php?view=single&id=53491
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+Pktgen attempts to transmit shared skbs to net devices, which can't be
+used by some drivers as they keep state information in skbs.  This patch
+adds a flag marking drivers as being able to handle shared skbs in their
+tx path.  Drivers are defaulted to being unable to do so, but calling
+ether_setup enables this flag, as 90% of the drivers calling ether_setup
+touch real hardware and can handle shared skbs.  A subsequent patch will
+audit drivers to ensure that the flag is set properly
+http://git.kernel.org/linus/d8873315065f1f527c7c380402cf59b1e1d0ae36
