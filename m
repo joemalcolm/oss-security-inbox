@@ -1,106 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/05/4
-Message-ID: <881228981.167400.1294243783522.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 5 Jan 2011 11:09:43 -0500 (EST)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/15
+Message-ID: <20111121171800.GC18979@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 19:18:00 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kurt@...fried.org>, "Steven M. Christey" <coley@...us.mitre.org>, Joe Orton <jorton@...hat.com>, Subversion Development <dev@...version.apache.org>
-Subject: Re: CVE request for subversion
+Cc: n0b0d13s@...il.com
+Subject: Fwd: Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-> On Tue, Jan 4, 2011 at 10:02 AM, Jan Lieskovsky <jlieskov@...hat.com>
-> wrote:
-> > Hello Kurt, Josh, vendors,
-> >
-> > Josh Bressers wrote:
-> >>
-> >> ----- Original Message -----
-> >>>
-> >>> Unspecified vulnerability in the server component in Apache
-> >>> Subversion
-> >>> 1.6.x before 1.6.15 allows remote attackers to cause a denial of
-> >>> service via unknown vectors, related to a "several bug fixes,
-> >>> including two which can cause client-initiated crashes on the
-> >>> server."
-> >>>
-> >>> [1] http://svn.haxx.se/dev/archive-2010-11/0475.shtml
-> >
-> >  Cc-ed Hyrum to shed more light into this one. [1] mentions two
-> >  issues:
-> > <begin quote>
-> > ...
-> > several bug fixes, including two which can cause client-initiated
-> > crashes on the server.
-> > </end quote>
-> >
-> > Further look at:
-> > [2] http://svn.apache.org/repos/asf/subversion/tags/1.6.15/CHANGES
-> >
-> > suggest:
-> >
-> > A, "* prevent crash in mod_dav_svn when using SVNParentPath
-> > (r1033166)"
-> > being the first one.
-> >   Upstream changeset:
-> >   http://svn.apache.org/viewvc?view=revision&revision=1033166
-> >
-> > and after discussion with Joe Orton, Joe suggested:
-> >
-> > B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
-> >   References:
-> >   http://svn.haxx.se/dev/archive-2010-11/0102.shtml
-> >   Upstream changeset:
-> >   http://svn.apache.org/viewvc?view=revision&revision=1032808
-> >
-> >   being the second one as denial of service attack (by memory
-> >   consumption)
-> > against
-> >   svnserve.
-> >
-> > Questions:
-> > ----------
-> > Hyrum, could you confirm A, and B, issues are those two, mentioned
-> > in [2]
-> > to be able to cause client-initiated crashes on the server?
-> 
-> I can confirm that A and B are the two issues mentioned in [2].
-> 
-> >> I admit, this isn't obvious, so let's use CVE-2010-4539 for now.
-> >> We can split it if needed once more information is known.
-> >
-> > Josh, since CVE-2010-4539 was assigned. Once Hyrum confirms, can
-> > we consider CVE-2010-4539 to be a CVE identifier for A, issue
-> > and request yet another / second one for B, issue?
-> 
-> We didn't initially reserve CVEs for these vulnerabilities, but will
-> be happy to update our documentation to reflect them. (See
-> http://subversion.apache.org/security/ ) The two issues really are
-> orthogonal, so B should probably not be included in a CVE for A.
-> 
-> I've CC'd dev@...version.apache.org to help coordinate advisory
-> authoring.
-> 
+Can we get CVE assigned for this issue?
 
-OK, let's split the CVE id then.
+Best regards,
+Henri Salo
 
-So for 
-A, "* prevent crash in mod_dav_svn when using SVNParentPath (r1033166)"
-  Upstream changeset:
-  http://svn.apache.org/viewvc?view=revision&revision=1033166
+----- Forwarded message from n0b0d13s@...il.com -----
 
-Let's use CVE-2010-4539.
+Date: Sat, 19 Nov 2011 15:27:47 GMT
+From: n0b0d13s@...il.com
+To: bugtraq@...urityfocus.com
+Subject: Support Incident Tracker <= 3.65 (translate.php) Remote Code
+	Execution Vulnerability
+X-Mailer: MIME-tools 5.420 (Entity 5.420)
 
-For 
-B, * fix server-side memory leaks triggered by 'blame -g' (r1032808)
-  References:
-  http://svn.haxx.se/dev/archive-2010-11/0102.shtml
-  Upstream changeset:
-  http://svn.apache.org/viewvc?view=revision&revision=1032808
+Support Incident Tracker <= 3.65 (translate.php) Remote Code Execution Vulnerability
 
-Let's use CVE-2010-4644.
 
-Thanks.
+author...............: Egidio Romano aka EgiX
+mail.................: n0b0d13s[at]gmail[dot]com
+software link........: http://sitracker.org/
+affected versions....: from 3.45 to 3.65
 
--- 
-    JB
+
+[-] vulnerable code in /translate.php
+
+234.        foreach (array_keys($_POST) as $key)
+235.        {
+236.            if (!empty($_POST[$key]) AND substr($key, 0, 3) == "str")
+237.            {
+238.                if ($lastchar!='' AND substr($key, 3, 1) != $lastchar) $i18nfile .= "\n";
+239.                $i18nfile .= "\${$key} = '".addslashes($_POST[$key])."';\n";
+240.                $lastchar = substr($key, 3, 1);
+241.                $translatedcount++;
+242.            }
+243.        }
+
+Input passed via keys of $_POST array isn't properly sanitized before being stored into $i18nfile variable
+at line 239, that variable will be the contents of a language file stored into 'i18n' directory with a php
+extension. This could allow authenticated users to inject and execute arbitrary PHP code. Furthermore,
+access directly to /translate.php?mode=save will reveal the full installation path of the application.
+
+
+[-] Disclosure timeline:
+
+[13/11/2011] - Vulnerability discovered
+[13/11/2011] - Issue reported to http://bugs.sitracker.org/view.php?id=1737
+[13/11/2011] - Vendor replied that this issue is fixed in the current SVN trunk
+[19/11/2011] - Public disclosure
+
+
+[-] Proof of concept:
+
+http://www.exploit-db.com/exploits/18132
+
+----- End forwarded message -----
