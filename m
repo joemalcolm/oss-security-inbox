@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/28/5
-Message-ID: <4E31578B.2080804@kde.org>
-Date: Thu, 28 Jul 2011 08:35:23 -0400
-From: Jeff Mitchell <mitchell@....org>
-To: "Steven M. Christey" <coley@...-smtp.mitre.org>
-CC: oss-security@...ts.openwall.com, KDE Security Team <security@....org>,  security@...nokia.com, Tim Brown <timb@...-dimension.org.uk>
-Subject: Re: CVE: Input validation failure affecting multiple KDE applications, as well as many other Qt-based applications
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/1
+Message-ID: <4EC9BDF6.9000907@redhat.com>
+Date: Sun, 20 Nov 2011 19:56:54 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: joomla 1.5 before 1.5.25 password change vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 07/27/2011 04:57 PM, Steven M. Christey wrote:
-> 
-> On Mon, 25 Jul 2011, Jeff Mitchell wrote:
-> 
->> The Arora and Rekonq web browsers are also vulnerable to the same attack
->> vector, and other Qt-based programs may be as well. We're working with
->> the Qt team to help enhance their documentation to warn developers to
->> take care sanitizing their inputs, but it's not actually a Qt flaw. So
->> we're a bit unsure how to proceed here.
-> 
-> This sounds like a limitation of the Qt API, which can be avoided by
-> programmers who are aware of the limitation.  Kind of like how strcpy()
-> can be subject to buffer overflows, *if* the programmer isn't careful.
-> Also happened with confusing return values from certain OpenSSL API
-> functions a couple years ago.  (The PHP_SELF example is similar.)  So,
-> this should probably get separate CVEs for each application/library that
-> misuses the relevant function(s).
+On 11/20/2011 04:04 AM, Hanno Böck wrote:
+> http://developer.joomla.org/security/news/9-security/10-core-security/375-20111103-core-password-change
+>
+> Description
+> Weak random number generation during password reset leads to
+> possibility of changing a user's password.
+>
+> Affected Installs
+> Joomla! version 1.5.24 and all earlier 1.5 versions
+>
+> Solution
+> Upgrade to the latest Joomla! 1.5 version (1.5.25 or later)
+>
+>
+>
+Please use CVE-2011-4321 for this issue.
 
-That sounds good. On the KDE side, this is kdelibs, Kleopatra, and
-Konqueror.
+-- 
 
-> If Qt itself contains misuse of its own functions - which happens
-> sometimes (CVE-2008-5077 for OpenSSL) - then Qt might need its own CVE,
-> too.
+-Kurt Seifried / Red Hat Security Response Team
 
-As far as I'm aware Qt itself is not affected, but we've not done an
-exhaustive analysis.
-
-Thanks,
-Jeff
