@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/10/09/1
-Message-ID: <20111009103526.25166a06@laverne>
-Date: Sun, 9 Oct 2011 10:35:26 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/23
+Message-ID: <4ECAC205.4040906@redhat.com>
+Date: Mon, 21 Nov 2011 14:26:29 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: CSRF and file inclusion in usebb before 1.0.12
+Subject: Re: CVE-2011-4110 kernel: keys: NULL pointer deref in the user-defined key type
 Content-Type: text/plain; charset=utf-8
 
-http://www.usebb.net/community/topic-2571.html
-
-Vulnerability "HTB22914: Local File Inclusion in UseBB"
-
-Recently, High-Tech Bridge SA discovered a possible issue in UseBB
-1.0.11 and earlier. The issue exists in the fact that admin.php may
-possibly include PHP files not used for the UseBB admin control panel
-(ACP).
-
-The faulty code in question is only executed for logged in
-administrator accounts, and can only include non-relevant PHP files if
-a directory "sources/admin_" exists, which is not the case in UseBB 1.
-Therefore, the issue does not pose a direct threat to an existing UseBB
-set-up, but is classified a security issue anyway and has been fixed in
-UseBB 1.0.12.
-
-Vulnerability "HTB22913: Multiple CSRF (Cross-Site Request Forgery) in
-UseBB"
-
-High-Tech Bridge SA also discovered possibilities of executing CSRF
-attacks in UseBB 1.0.11 and earlier. This way, when a user is given a
-malicious URL or visits a web page containing such URL or JavaScript,
-requests may be executed that add, edit or delete data on the forum,
-including topics, posts, account information and settings in the ACP
-(if the user has logged in into the ACP).
-
-As a solution, UseBB 1.0.12 has implemented URL and form tokens for
-sensitive actions. Accessing or executing above URLs or scripts now
-doesn't have an effect on the data.
-
+On 11/21/2011 10:51 AM, Petr Matousek wrote:
+> There is a NULL pointer deref in the user-defined key type whereby
+> updating a negative key into a fully instantiated key will cause
+> an oops to occur when the code attempts to free the non-existent
+> old payload.
+>
+> Upstream commit:
+> 9f35a33b8d06263a165efe3541d9aa0cdbd70b3b
+>
+> References:
+> https://lkml.org/lkml/2011/11/15/363
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-4110
+>
+> Thanks,
+Please use CVE-2011-4331 for this issue.
 
 -- 
-Hanno Böck		mail/jabber: hanno@...eck.de
-GPG: BBB51E42		http://www.hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-Kurt Seifried / Red Hat Security Response Team
+
