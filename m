@@ -1,43 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/06/29/9
-Message-ID: <20110629180304.GA5060@albatros>
-Date: Wed, 29 Jun 2011 22:03:04 +0400
-From: Vasiliy Kulikov <segoon@...nwall.com>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: Andrew Morton <akpm@...ux-foundation.org>, oss-security@...ts.openwall.com, security@...nel.org
-Subject: Re: [Security] CVE request: kernel: taskstats/procfs io infoleak (was: taskstats authorized_keys presence infoleak PoC)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/24
+Message-ID: <20111121212657.GA23629@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 23:26:57 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-request: XSS in Tiki Wiki CMS Groupware (HTB23027)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Can I get CVE-identifier for this issue:
 
-One more thing, this is more dangerous, but very conditional.
+https://www.htbridge.ch/advisory/xss_in_tiki_wiki_cms_groupware.html
+http://secunia.com/advisories/45283/
 
-Create one system account with no files (a victim).  This simplifies
-measurements.
-
-As an attacker:
-    Start taskstats listener in the background.
-    Swith to tty1, push SAK to kill current login task.
-    Enter some fake username and password, e.g. 1:1.
-    The login fails, of course.
-
-Now the attacker hides and the victim comes to tty1.
-    He enters his username:password.
-    The login succeeds from the first try.
-    The victim exits from the shell.
-
-Attacker measures login's read_characters value.  The victim has to
-succeed from the first try and shouldn't push SAK :)
-
-Now the attacker has to increment the fake password length (incrementing
-the resulted read_characters of the dead login task) and wait for
-the successful victim's login.  After ~log2(1024) tries (binary search)
-he learns precise password length.
-
-
-As exiting "login" just waits for the child to exit to call
-pam_close_session(), victim's activity doesn't really add any noise.
-
--- 
-Vasiliy Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Best regards,
+Henri Salo
