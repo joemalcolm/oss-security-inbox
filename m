@@ -1,36 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/07/22/7
-Message-ID: <20110722203544.GA30239@blizzard>
-Date: Fri, 22 Jul 2011 22:35:44 +0200
-From: Lukas Fleischer <cgit@...ptocrack.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- cGit -- XSS flaw in rename hint
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/26
+Message-ID: <20111121213919.GD23629@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 23:39:19 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: advisories@...itunasecurity.com
+Subject: Re: Fwd: XSS vulnerability in Joomla 1.6.3
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 22, 2011 at 06:48:38PM +0200, Jan Lieskovsky wrote:
-> Hello Josh, Steve, vendors,
+On Mon, Nov 21, 2011 at 02:20:00PM -0700, Kurt Seifried wrote:
+> On 11/21/2011 11:01 AM, Henri Salo wrote:
+> > Can we get CVE-identifier assigned for this issue, thank you?
+> >
+> > Best regards,
+> > Henri Salo
+> >
+> > ----- Forwarded message from Netsparker Advisories <advisories@...itunasecurity.com> -----
+> >
+> > Date: Thu, 10 Nov 2011 16:32:12 +0200
+> > From: Netsparker Advisories <advisories@...itunasecurity.com>
+> > To: bugtraq@...urityfocus.com, full-disclosure@...ts.grok.org.uk
+> > Subject: [Full-disclosure] XSS vulnerability in Joomla 1.6.3
+> >
+> > Information
+> > --------------------
+> > Name :  XSS vulnerability in Joomla 1.6.3.
+> > Software :  All 1.6.x installs prior to and including 1.6.3 are affected.
+> > Vendor Hompeage :  http://www.joomla.org
+> > Vulnerability Type :  Cross-Site Scripting
+> > Severity :  High
+> > Researcher :  Mesut Timur <mesut [at] mavitunasecurity [dot] com>
+> > Advisory Reference :  NS-11-009
+> >
+> > Description
+> > ------------------
+> > Joomla is an award-winning content management system (CMS), which
+> > enables you to build Web sites and powerful online applications. Many
+> > aspects, including its ease-of-use and extensibility, have made Joomla
+> > the most popular Web site software available. Best of all, Joomla is
+> > an open source solution that is freely available to everyone.
+> >
+> > Details
+> > -------------------
+> > Joomla is affected by a XSS vulnerability in various administrator
+> > screens. All 1.6.x installs prior to and including 1.6.3 are affected.
+> > You can read the full article about Cross-Site Scripting
+> > vulnerabilities from here :
+> > http://www.mavitunasecurity.com/crosssite-scripting-xss/
+> >
+> > Solution
+> > -------------------
+> > Upgrade to the latest Joomla! version (1.6.4 or later).
+> >
+> > Credits
+> > -------------------
+> > It has been discovered on testing of Netsparker, Web Application
+> > Security Scanner - http://www.mavitunasecurity.com/netsparker/
+> >
+> > References
+> > -------------------
+> > 1. Vendor URL: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
+> > 2. MSL Advisory Link :
+> > http://www.mavitunasecurity.com/xss-vulnerability-in-joomla-163/
+> > 3. Netsparker Advisories :
+> > http://www.mavitunasecurity.com/netsparker-advisories/
+> >
+> > About Netsparker
+> > -------------------
+> > Netsparker® can find and report security issues such as SQL Injection
+> > and Cross-site Scripting (XSS) in all web applications regardless of
+> > the platform and the technology they are built on. Netsparker's unique
+> > detection and exploitation techniques allows it to be dead accurate in
+> > reporting hence it's the first and the only False Positive Free web
+> > application security scanner.
+> >
+> Can you confirm that this is a different issue from CVE-2011-2708 and
+> CVE-2011-3595?
 > 
->   an cross-site scripting (XSS) flaw was found in the way cgit, a fast
-> web interface for Git, displayed the file name in the rename hint. A
-> remote attacker could provide a specially-crafted web page, which once
-> visited by an authenticated Cgit user, with push access to the
-> repository, would lead to arbitrary web script or HTML code execution.
+> -- 
+> 
+> -Kurt Seifried / Red Hat Security Response Team
 
-I think you are a tad off, here. The vulnerability I discovered actually
-is only exploitable *by* a user with push access as it requires to push
-a commit that renames any file to a file with a malicious file name.
+CVE-2011-2708 and CVE-2011-2710 are both about 20110701 XSS vulnerability: http://developer.joomla.org/security/news/357-20110701-xss-vulnerability.html and I have already contacted MITRE twice to get another one marked as obsolete.
 
-The description (and the categorization of the vulnerability, which
-definitely is a low severity one if it counts as a vulnerability at all)
-should be corrected to reflect that.
+This new is about: 20110601 XSS Vulnerabilities: http://developer.joomla.org/security/news/349-20110601-xss-vulnerabilities.html
 
-> 
-> References:
-> [1] http://hjemli.net/pipermail/cgit/2011-July/000276.html
-> [2] https://bugzilla.redhat.com/show_bug.cgi?id=725042
-> 
-> Could you allocate a CVE id for this?
-> 
-> Thank you && Regards, Jan.
-> --
-> Jan iankko Lieskovsky / Red Hat Security Response Team
+Sorry, but I don't know where to find SVN/GIT/CVS logs.
+
+Best regards,
+Henri Salo
