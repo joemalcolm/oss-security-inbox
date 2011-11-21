@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/12/21/5
-Message-ID: <20111221221436.GD7178@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Dec 2011 23:14:37 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/25
+Message-ID: <20111121213047.GB23629@foo.fgeek.fi>
+Date: Mon, 21 Nov 2011 23:30:47 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: kernel: kvm: pit timer with no irqchip crashes the system
+Cc: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: CVE-request: LabWiki <= 1.1 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Sorry, I forgot to put "CVE Request" into the subject.
-
-Petr
-
-On Wed, Dec 21, 2011 at 11:12:10PM +0100, Petr Matousek wrote:
-> User space may create the PIT and forget about setting up the irqchips.
-> In that case, firing PIT IRQs will crash the host:
+On Mon, Nov 21, 2011 at 02:23:49PM -0700, Kurt Seifried wrote:
+> On 11/21/2011 10:53 AM, Henri Salo wrote:
+> > Can I get CVE-identifier for this issue:
+> >
+> > http://archives.neohapsis.com/archives/fulldisclosure/current/0112.html
+> >
+> > Other references:
+> >
+> > http://osvdb.org/show/osvdb/76933
+> > http://osvdb.org/show/osvdb/76934
+> > http://osvdb.org/show/osvdb/76932
+> > http://secunia.com/advisories/46762/
+> >
+> > Best regards,
+> > Henri Salo
+> There appear to be two separate issues here, can you confirm this?
 > 
-> BUG: unable to handle kernel NULL pointer dereference at
-> 0000000000000128
-> IP: [<ffffffffa10f6280>] kvm_set_irq+0x30/0x170 [kvm]
-> ...
-> Call Trace:
->  [<ffffffffa11228c1>] pit_do_work+0x51/0xd0 [kvm]
->  [<ffffffff81071431>] process_one_work+0x111/0x4d0
->  [<ffffffff81071bb2>] worker_thread+0x152/0x340
->  [<ffffffff81075c8e>] kthread+0x7e/0x90
->  [<ffffffff815a4474>] kernel_thread_helper+0x4/0x10
-> 
-> Reference:
-> http://permalink.gmane.org/gmane.comp.emulators.kvm.devel/83564
-> https://bugzilla.redhat.com/show_bug.cgi?id=769721
-> 
-> Thanks,
 > -- 
-> Petr Matousek / Red Hat Security Response Team
+> 
+> -Kurt Seifried / Red Hat Security Response Team
 
--- 
-Petr Matousek / Red Hat Security Response Team
+I think this needs three different CVE-identifiers. Here is a description from Secunia and the last item seems critical.
+
+1) Input passed to the "from" parameter in index.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+
+2) Input passed to the "page_no" parameter in recentchanges.php is not properly sanitised before being returned to the user. This can be exploited to execute arbitrary HTML and script code in a user's browser session in context of an affected site.
+
+3) Input passed to the "userfile" POST parameter in edit.php is not properly verified before being used to upload files. This can be exploited to e.g. upload arbitrary PHP files with e.g. a ".gif" extension.
+
+Best regards,
+Henri Salo
