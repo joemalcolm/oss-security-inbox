@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/04/13/12
-Message-ID: <4DA5D476.9070609@mvista.com>
-Date: Wed, 13 Apr 2011 06:51:02 -1000
-From: akuster <akuster@...sta.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>
-CC: oss-security@...ts.openwall.com, Josh Bressers <bressers@...hat.com>
-Subject: Re: Closed list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/17
+Message-ID: <20111121175556.GD3573@pisco.westfalen.local>
+Date: Mon, 21 Nov 2011 18:55:56 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: CVE request: drupal before 7.5 access bypass
 Content-Type: text/plain; charset=utf-8
 
-
-Dan,
-
-I personally want a public list but its more of an internal Company
-philosophy / process issue and more importantly what our customers
-think. There could even be contractual issues involved.
-
-If one would look at our customer list, I think one could indirectly
-determine that we would have to provide security fixes (
-http://mvista.com/customers.php ).
-
-How do I meet the requirement of "Proof"?
-
-- Armin
-
-
-On 04/13/2011 06:19 AM, Dan Rosenberg wrote:
-> Hi Armin,
+On Sun, Nov 20, 2011 at 07:58:47PM -0700, Kurt Seifried wrote:
+> On 11/20/2011 04:14 AM, Hanno Böck wrote:
+> > http://drupal.org/node/1231510
+> >
+> > If a Drupal site is using these features on comments, and the parent
+> > node is denied access (either by a node access module or by being
+> > unpublished), the file attached to the comment can still be downloaded
+> > by non-privileged users if they know or guess its direct URL.
+> >
+> >
+> >
 > 
->> What method of proving this would be acceptable? screen shot, temporary
->> access to our site, public list or other?
->>
-> 
-> I'm confused why you think posting an advisory publicly would somehow
-> put your customers in any sort of additional danger.  All of the
-> vulnerabilities you would be fixing are certain to have public
-> advisories for other distributions, so it seems obvious that your
-> customers would be affected also.  It's not as though your advisories
-> are the only indication to an attacker that your customers are
-> vulnerable.
-> 
-> Regards,
-> Dan
+> Please use CVE-2011-4323 for this issue.
+
+This has already been assigned CVE-2011-2726, see 
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2011-2726 for details ;-)
+
+Cheers,
+        Moritz
