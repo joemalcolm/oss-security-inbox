@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/19/3
-Message-ID: <20111119223800.GA4092@openwall.com>
-Date: Sun, 20 Nov 2011 02:38:00 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/11
+Message-ID: <CABqVa38sEf_D63MGfBC+woBx_KCWDJfQOUXOpyiPrnoO1mP7zA@mail.gmail.com>
+Date: Mon, 21 Nov 2011 09:10:11 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: closed-list membership transition
+Subject: Re: CVE Request: openssh 5.8p2
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 19, 2011 at 02:36:34PM +0400, Solar Designer wrote:
-> Per the Chromium OS FAQ:
-> 
-> http://www.chromium.org/chromium-os/chromium-os-faq
-> 
-> it appears that Chrome OS is only available with a Chromebook purchase,
-> but those may be purchased from multiple OEMs.  I think this latter fact
-> qualifies Chrome OS for the closed list since it's similar to how
-> multiple hardware product vendors redistribute the distros of MontaVista
-> Software and Wind River, who we accepted (thereby setting a precedent).
-> 
-> "Multiple" is the keyword here.  (We might have difficulty making a
-> determination in case a distro is only used by a very low and fixed
-> number of hardware vendors, though - like just two.)
-> 
-> Also, Chromium OS is generally available, albeit not in a form suitable
-> for end-users (there's a public git repository, but no images ready to
-> boot/install).  Arguably, this makes Chromium OS eligible too, and I
-> guess the security team behind Chrome OS and Chromium OS is the same.
+On Mon, Nov 21, 2011 at 7:44 AM, Marcus Meissner <meissner@...e.de> wrote:
+> Hi,
+>
+> http://www.openssh.com/txt/release-5.8p2
+> http://www.openssh.com/txt/portable-keysign-rand-helper.adv
+> http://www.nessus.org/plugins/index.php?view=single&id=53841
+>
+> has a security issue listed without a assigned CVE.
+>
+> Could someone please assign a CVE id?
+>
+> (We are not affected, but as we got customer queries regarding the
+> Nessus check already it should get a CVE id I think.)
+>
+> Ciao, Marcus
+>
 
-Is this the real Chromium OS thing pre-built for end-users? -
+Please use CVE-2011-4327 for this issue.
 
-http://chromeos.hexxeh.net
-
-Anyway, I updated my notes on Kees' subscription to the linux-distros
-list noting that he's there for Chrome OS now, even though in practice I
-think Kees also remains active at Debian/Ubuntu, which is great.
-
-Alexander
+-- 
+Kurt Seifried
+kurt@...fried.org
