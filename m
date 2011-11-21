@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/01/18/2
-Message-Id: <20110118114042.f13f5cd7.michael.s.gilbert@gmail.com>
-Date: Tue, 18 Jan 2011 11:40:42 -0500
-From: Michael Gilbert <michael.s.gilbert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/12
+Message-ID: <CABqVa38cMq29tXqYnQyYQ4hZsiQ2aqODzCWpyYW_o_a6iFfd3w@mail.gmail.com>
+Date: Mon, 21 Nov 2011 09:11:13 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request
+Subject: Re: CVE Request (minor) -- gnash -- Unsafe management of HTTP cookies
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 18 Jan 2011 12:22:05 +0000, Tim Brown wrote:
-> Guys,
-> 
-> What's the best way for an open source project to request a CVE prior to 
-> disclosure?  I'm more that happy to coordinate the disclosure with 
-> distributions where appropriate if that makes a difference.
+On Mon, Nov 21, 2011 at 4:37 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> Hello Kurt, Steve, vendors,
+>
+>  a security flaw was found in the way Shockwave Flash plug-in of the
+> gnash, a GNU flash movie player, performed management of HTTP cookies
+> (they were stored under /tmp directory with predictable name and world-
+> readable permissions). A local attacker could use this flaw to obtain
+> sensitive information.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649384
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=755518
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
-You're looking for vendor-sec:
-http://oss-security.openwall.org/wiki/mailing-lists/vendor-sec
+Please use CVE-2011-4328 for this issue.
 
-Best wishes,
-Mike
+
+-- 
+Kurt Seifried
+kurt@...fried.org
