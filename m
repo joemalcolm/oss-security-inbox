@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/26/2
-Message-ID: <CAPBnJLvzZGpJ1vBFgthHBZFjj_zKh4wP8nWM6kKzRLnvFp+JFw@mail.gmail.com>
-Date: Sat, 26 Nov 2011 12:53:17 +0100
-From: Joost Hoogendoorn <joost@...ced.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/11
+Message-ID: <CABqVa38sEf_D63MGfBC+woBx_KCWDJfQOUXOpyiPrnoO1mP7zA@mail.gmail.com>
+Date: Mon, 21 Nov 2011 09:10:11 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: non-Linux advance notification list
+Subject: Re: CVE Request: openssh 5.8p2
 Content-Type: text/plain; charset=utf-8
 
-I'm also interested. Thanks.
-
-
-2011/11/26 Solar Designer <solar@...nwall.com>
-
-> Hi Tim,
+On Mon, Nov 21, 2011 at 7:44 AM, Marcus Meissner <meissner@...e.de> wrote:
+> Hi,
 >
-> On Fri, Nov 18, 2011 at 07:20:14AM -0600, Tim Zingelman wrote:
-> > On Thu, Nov 17, 2011 at 8:45 PM, Solar Designer <solar@...nwall.com>
-> wrote:
-> >
-> > > I'd expect to add *BSD's, Apple, Solaris - but we need to hear from
-> > > specific people that they're interested.  So please reply to this
-> > > message to indicate your interest and we'll proceed.
-> >
-> > I am interested.  Thanks for doing this.
+> http://www.openssh.com/txt/release-5.8p2
+> http://www.openssh.com/txt/portable-keysign-rand-helper.adv
+> http://www.nessus.org/plugins/index.php?view=single&id=53841
 >
-> Please send me (off-list is OK) your PGP key and e-mail address to
-> subscribe to the new list.
+> has a security issue listed without a assigned CVE.
 >
-> I thought there would be more interest in this, but I don't mind setting
-> this up as just pkgsrc + Linux distros initially.
+> Could someone please assign a CVE id?
 >
-> (And, like I said, the Linux distros list will also continue to exist on
-> its own, letting message senders decide on who to notify.)
+> (We are not affected, but as we got customer queries regarding the
+> Nessus check already it should get a CVE id I think.)
 >
-> Thanks,
->
-> Alexander
+> Ciao, Marcus
 >
 
+Please use CVE-2011-4327 for this issue.
+
+-- 
+Kurt Seifried
+kurt@...fried.org
