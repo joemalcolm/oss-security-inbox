@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/08/03/9
-Message-ID: <22819575.1799200.1312405217097.JavaMail.root@zmail01.collab.prod.int.phx2.redhat.com>
-Date: Wed, 3 Aug 2011 17:00:17 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/12
+Message-ID: <CABqVa38cMq29tXqYnQyYQ4hZsiQ2aqODzCWpyYW_o_a6iFfd3w@mail.gmail.com>
+Date: Mon, 21 Nov 2011 09:11:13 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-Cc: coley <coley@...re.org>
-Subject: Re: CVE id request: shttpd/mongoose/yassl embedded webserver
+Subject: Re: CVE Request (minor) -- gnash -- Unsafe management of HTTP cookies
 Content-Type: text/plain; charset=utf-8
 
-Please use CVE-2011-2900.
+On Mon, Nov 21, 2011 at 4:37 AM, Jan Lieskovsky <jlieskov@...hat.com> wrote:
+> Hello Kurt, Steve, vendors,
+>
+>  a security flaw was found in the way Shockwave Flash plug-in of the
+> gnash, a GNU flash movie player, performed management of HTTP cookies
+> (they were stored under /tmp directory with predictable name and world-
+> readable permissions). A local attacker could use this flaw to obtain
+> sensitive information.
+>
+> References:
+> [1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=649384
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=755518
+>
+> Could you allocate a CVE id for this?
+>
+> Thank you && Regards, Jan.
+> --
+> Jan iankko Lieskovsky / Red Hat Security Response Team
+>
 
-Thanks.
+Please use CVE-2011-4328 for this issue.
+
 
 -- 
-    JB
-
-
------ Original Message -----
-> Hi,
-> I found a buffer overflow in the PUT processing of
-> shttpd/mongoose/yassl
-> embedded webserver (all based on the same source code).
-> 
-> Can someone assign a CVE id to this?
-> Upstream fix:
-> https://code.google.com/p/mongoose/source/detail?r=556f4de91eae4bac40dc5d4ddbd9ec7c424711d0#
-> 
-> The bug:
-> _shttpd_put_dir()/put_dir() function:
-> 26 for (s = p = path + 2; (p = strchr(s, '/')) != NULL; s = ++p) {
-> 27 len = p - path;
-> 28 assert(len < sizeof(buf));
-> 29 (void) memcpy(buf, path, len);
-> 30 buf[len] = '\0';
-> 31
-> 32 /* Try to create intermediate directory */
-> 33 if (_shttpd_stat(buf, &st) == -1 &&
-> 34 _shttpd_mkdir(buf, 0755) != 0)
-> 35 return (-1);
-> 36
-> 37 /* Is path itself a directory ? */
-> 38 if (p[1] == '\0')
-> 39 return (0);
-> 40 }
-> 
-> The only guard here to avoid a buffer overflow with a long path is
-> the assert call in line 28. Unfortunately this is disabled if
-> you compile with -DNDEBUG and from what I see quite a lot of people
-> are doing that in order to reduce the binary size (those are embedded
-> webservers intended to be used in embedded environments).
-> 
-> It seems quite some projects actually do that, including a
-> deployed product embedded product I'm currently
-> looking at (and that was rooted because of this bug).
-> From what I see -DNDEBUG in the mongoose makefile this is also the
-> default for the mingw
-> binary.
-> 
-> If this is not the case, this is still a DoS bug.
-> 
-> Kind regards
-> Nico
-> --
-> Nico Golde - http://www.ngolde.de - nion@...ber.ccc.de - GPG:
-> 0xA0A0AAAA
-> For security reasons, all text in this mail is double-rot13 encrypted.
+Kurt Seifried
+kurt@...fried.org
