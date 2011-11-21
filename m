@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/05/10/4
-Message-ID: <4DC8E91E.8060402@pre-sense.de>
-Date: Tue, 10 May 2011 09:28:30 +0200
-From: Timo Warns <warns@...-sense.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2011/11/21/10
+Message-ID: <CABqVa39kjp6ROj=SBYGRHQBxYEy4kvHXvQKn9VNtaYHzVj+tJA@mail.gmail.com>
+Date: Mon, 21 Nov 2011 09:07:49 -0700
+From: Kurt Seifried <kurt@...fried.org>
 To: oss-security@...ts.openwall.com
-CC: Sebastian Krahmer <krahmer@...e.de>,  "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: CVE request: kernel: validate size of EFI GUID partition entries
+Subject: Re: CVE Request -- kernel: wrong headroom check in udp6_ufo_fragment()
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Nov 21, 2011 at 8:54 AM, Petr Matousek <pmatouse@...hat.com> wrote:
+> "A bug was found in the way headroom check was performed in
+> udp6_ufo_fragment() function. A remote attacker could use this flaw to
+> crash the system."
+>
+> Details:
+> http://bugzilla.redhat.com/show_bug.cgi?id=755584#c1
+>
+> Upstream commit:
+> a9cf73ea7ff78f52662c8658d93c226effbbedde
+>
+> References:
+> http://bugzilla.redhat.com/show_bug.cgi?id=755584
+> http://bugzilla.redhat.com/show_bug.cgi?id=682066
+>
+> Thanks,
+> --
+> Petr Matousek / Red Hat Security Response Team
+>
 
-from my point of view, these are different bugs:
+Sorry having some laptop/email issues. Please use CVE-2011-4326 for this issue.
 
-CVE-2011-1577 addresses the overall header size used for a CRC32
-computation.
-
-CVE-2011-1776 addresses the size of partition entries used for
-allocating a data structure.
-
-Of course, one could argue that this is only one issue "missing input
-validation on GUID partition tables".
-
-Cheers, Timo
-
-Am 10.05.2011 09:18, schrieb Sebastian Krahmer:
-> 
-> Hi,
-> 
-> Is this really different than what was assigned CVE-2011-1577 to?
-> See http://www.spinics.net/lists/mm-commits/msg83274.html or the text
-> on the OSS mail on April 12th which reads exactly the same.
-> 
-> Sebastian
-> 
-> On Mon, May 09, 2011 at 03:01:06PM -0400, Josh Bressers wrote:
->>
->>
->> ----- Original Message -----
->>> The kernel automatically evaluates partition tables of storage
->>> devices.
->>> The code for evaluating GUID partitions (in fs/partitions/efi.c)
->>> contains a bug that can cause a kernel heap overflow on certain
->>> corrupted GUID partition tables.
->>>
->>> http://git.kernel.org/linus/fa039d5f6b126fbd65eefa05db2f67e44df8f121
->>> http://bugzilla.redhat.com/show_bug.cgi?id=703026
->>>
->>
->> Please use CVE-2011-1776
->>
->> Thanks.
->>
->> -- 
->>     JB
-> 
+-- 
+Kurt Seifried
+kurt@...fried.org
